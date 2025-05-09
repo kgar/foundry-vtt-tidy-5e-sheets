@@ -166,8 +166,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
       senses: this._getSenses(),
+      skills: [],
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
+      tools: [],
       ...actorContext,
     };
 
@@ -188,6 +190,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     await this._prepareFacilities(context);
+
+    context.skills = this._getSkillsToolsContext(context, 'skills');
+    context.tools = this._getSkillsToolsContext(context, 'tools');
 
     context.customContent = await CharacterSheetQuadroneRuntime.getContent(
       context
@@ -533,7 +538,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       renderData ?? {},
       'system.attributes.hp.value'
     );
-    
+
     if (isUpdate && hp === 0) {
       this._showDeathSaves = context.showDeathSaves = true;
     }

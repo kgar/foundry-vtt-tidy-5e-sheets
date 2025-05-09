@@ -13,7 +13,7 @@ import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
+import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -973,7 +973,15 @@ export type CreatureTypeContext = {
   title?: string;
   subtitle?: string;
   reference?: string;
-}
+};
+
+export type ActorSkillsToolsContext<T> = {
+  abbreviation: string;
+  baseAbility: string;
+  hover: string;
+  label: string;
+  source: T;
+} & T;
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
@@ -989,6 +997,8 @@ export type CharacterSheetQuadroneContext = {
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   senses: CharacterSpeedSenseContext;
+  skills: ActorSkillsToolsContext<SkillData>[];
+  tools: ActorSkillsToolsContext<ToolData>[];
   speeds: CharacterSpeedSenseContext;
 } & ActorSheetQuadroneContext;
 

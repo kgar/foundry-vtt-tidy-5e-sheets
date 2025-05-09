@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import type { SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -17,6 +18,7 @@ import type {
   ActorAbilityContextEntry,
   ActorSaves,
   ActorSheetQuadroneContext,
+  ActorSkillsToolsContext as ActorSkillsToolsContext,
   DamageModificationContextEntry,
   DamageModificationData,
   SpecialTraitSectionField,
@@ -527,6 +529,39 @@ export function Tidy5eActorSheetQuadroneBase<
         );
         debug('Damage Modification error troubleshooting info', { context });
       }
+    }
+
+    /**
+     * Prepare actor skills or tools for display.
+     * @param context     Context being prepared.
+     * @param property    Type of data being prepared.
+     */
+    _getSkillsToolsContext<T extends 'skills' | 'tools'>(
+      context: ActorSheetQuadroneContext,
+      property: T
+    ): (T extends 'skills'
+      ? ActorSkillsToolsContext<SkillData>
+      : ActorSkillsToolsContext<ToolData>)[] {
+      const baseAbility = (key: string) => {
+        let src = context.source[property]?.[key]?.ability;
+        if (src) return src;
+        if (property === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
+        return src ?? 'int';
+      };
+      return Object.entries(context.system[property] ?? {}).map(
+        ([key, entry]: [string, any]) => ({
+          ...entry,
+          key,
+          abbreviation: CONFIG.DND5E.abilities[entry.ability]?.abbreviation,
+          baseAbility: baseAbility(key),
+          hover: CONFIG.DND5E.proficiencyLevels[entry.value],
+          label:
+            property === 'skills'
+              ? CONFIG.DND5E.skills[key]?.label
+              : dnd5e.documents.Trait.keyLabel(key, { trait: 'tool' }),
+          source: context.source[property]?.[key],
+        })
+      );
     }
 
     /* -------------------------------------------- */
