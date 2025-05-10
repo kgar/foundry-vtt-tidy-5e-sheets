@@ -1293,4 +1293,21 @@
       text-transform: uppercase;
     }
   }
+
+  .tidy-tab.attributes {
+    &.active{
+      display: flex;
+    }
+    
+    flex-direction: row;
+    gap: 0.75rem;
+
+    .left {
+      flex: 0 0 12.5rem;
+    }
+
+    .right {
+      flex: 1;
+    }
+  }
 }

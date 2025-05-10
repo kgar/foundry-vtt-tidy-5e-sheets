@@ -958,7 +958,10 @@ export type CharacterSpeedSenseEntryContext = {
 };
 
 export type CharacterClassEntryContext = {
+  uuid: string;
   name: string;
+  img: string;
+  item: Item5e;
   levels: number;
   isOriginalClass: boolean;
   // TODO: Consider boosting so that it can be used for spellcasting cards
@@ -966,6 +969,7 @@ export type CharacterClassEntryContext = {
     dc: number;
     ability: string;
   };
+  availableLevels: AvailableClassLevel[];
 };
 
 export type CreatureTypeContext = {

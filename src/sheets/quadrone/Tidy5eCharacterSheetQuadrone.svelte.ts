@@ -210,7 +210,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   _getClasses(): CharacterClassEntryContext[] {
     return Object.values(this.actor.classes)
-      .map((cls: Item5e) => {
+      .map<CharacterClassEntryContext>((cls: Item5e) => {
+        const maxLevelDelta =
+          CONFIG.DND5E.maxLevel - this.actor.system.details.level;
+
         const spellcasting = cls.system.spellcasting
           ? {
               dc: cls.system.spellcasting.save,
@@ -226,6 +229,15 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           levels: cls.system.levels,
           isOriginalClass: cls.system.isOriginalClass,
           spellcasting,
+          item: cls,
+          img: cls.img,
+          availableLevels: Array.fromRange(CONFIG.DND5E.maxLevel + 1)
+            .slice(1)
+            .map((level) => {
+              const delta = level - cls.system.levels;
+              return { level, delta, disabled: delta > maxLevelDelta };
+            }),
+          uuid: cls.uuid,
         };
       })
       .toSorted((left, right) => right.levels - left.levels);
