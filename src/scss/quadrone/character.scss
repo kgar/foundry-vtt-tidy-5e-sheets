@@ -1174,6 +1174,7 @@
       flex: 1;
       display: flex;
       flex-direction: row;
+      gap: 1rem;
       overflow-x: hidden;
       overflow-y: auto;
       padding: var(--t5e-size-3x) var(--t5e-size-4x);
@@ -1182,7 +1183,7 @@
         flex-basis: var(--sidebar-expanded-width);
         transition: margin var(--t5e-transition-default);
         margin-inline-end: 0;
-        margin-inline-start: calc(var(--sidebar-expanded-width) * -1);
+        margin-inline-start: calc(var(--sidebar-expanded-width) * -1 - 1rem);
         overflow-x: clip;
 
         &.expanded {
@@ -1217,6 +1218,79 @@
       .sheet-header {
         border-bottom: 1px solid var(--t5e-color-palette-gold-45);
       }
+    }
+  }
+
+  // 👋 hightouch - I'm not sure the best location for our Skills Card CSS; it's here temporarily
+  .skills, .tools {
+    h3 {
+      font: var(--t5e-font-label-medium);
+
+      .skill-expand-button i{
+        transition: var(--t5e-transition-default);
+
+        &.expanded {
+          transform: rotate(90deg);
+        }
+      }
+    }
+
+    button.skill, button.tool {
+      --_fill: var(--proficiency-cycle-enabled-color, var(--t5e-primary-accent-color));
+      
+      position: relative;
+      border: none;
+      background: transparent;
+      aspect-ratio: 1;
+
+      &:is(:disabled, :focus-visible) {
+        --_fill: var(
+          --proficiency-cycle-disabled-color,
+          var(--dnd5e-color-gold)
+        );
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        display: block;
+        inset: 0.1875rem;
+        border: 1px solid var(--_fill);
+        border-radius: 100%;
+      }
+
+      &:is([data-proficiency='1'])::before {
+        background: var(--_fill);
+      }
+
+      &:is([data-proficiency='0.5'], [data-proficiency='2'])::after {
+        content: '';
+        position: absolute;
+        background: var(--_fill);
+      }
+
+      &:is([data-proficiency='0.5'])::after {
+        inset: 0.25rem;
+        width: 0.25rem;
+        aspect-ratio: 1 / 2;
+        border-radius: 100% 0 0 100%;
+      }
+
+      &:is([data-proficiency='2']) {
+        &::before {
+          inset: 1px;
+          border-width: 2px;
+        }
+
+        &::after {
+          inset: 5px;
+          border-radius: 100%;
+        }
+      }
+    }
+    
+    .skill-ability {
+      text-transform: uppercase;
     }
   }
 }

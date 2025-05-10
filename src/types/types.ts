@@ -976,6 +976,7 @@ export type CreatureTypeContext = {
 };
 
 export type ActorSkillsToolsContext<T> = {
+  key: string;
   abbreviation: string;
   baseAbility: string;
   hover: string;
@@ -1004,6 +1005,8 @@ export type CharacterSheetQuadroneContext = {
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  skills: ActorSkillsToolsContext<SkillData>[];
+  tools: ActorSkillsToolsContext<ToolData>[];
 } & ActorSheetQuadroneContext;
 
 export type GroupSheetQuadroneContext = {

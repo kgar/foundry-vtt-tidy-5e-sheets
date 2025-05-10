@@ -44,6 +44,8 @@ export type SkillData = {
   passive: number;
   prof: ActorProficiency;
   proficient: number;
+  total: number; // mod + bonuses
+  value: number;
 } & RollConfigField;
 
 export type CharacterFavorite = {
