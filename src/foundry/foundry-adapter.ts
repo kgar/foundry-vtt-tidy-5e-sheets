@@ -898,6 +898,11 @@ export const FoundryAdapter = {
   renderDeathConfig(document: any) {
     return new dnd5e.applications.actor.DeathConfig({ document }).render(true);
   },
+  renderLanguagesConfig(actor: Actor5e) {
+    new dnd5e.applications.actor.LanguagesConfig({
+      document: actor,
+    }).render({ force: true })
+  },
   renderMovementSensesConfig(document: any, type: 'movement' | 'senses') {
     return new dnd5e.applications.shared.MovementSensesConfig({
       document,

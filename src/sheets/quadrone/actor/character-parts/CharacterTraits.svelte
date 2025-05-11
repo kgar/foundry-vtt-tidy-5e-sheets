@@ -67,7 +67,12 @@
               })}
             </span>
           {/if}
-          <div><em>TODO: Handle Present and Missing Subclass; also handle right-click context menu for Class and Subclass</em></div>
+          <div>
+            <em
+              >TODO: Handle Present and Missing Subclass; also handle
+              right-click context menu for Class and Subclass</em
+            >
+          </div>
         </div>
       {/each}
       {#if context.unlocked}
@@ -91,12 +96,194 @@
     <div class="form-fields"></div>
   </div>
   <!-- Background -->
+  <div class="form-group">
+    <label>
+      {localize('TYPES.Item.background')}
+    </label>
+    <div class="form-fields">
+      {#if context.actor.system.details.background}
+        TODO: A single pill here
+        <span class="pill"> </span>
+      {:else}
+        TODO: Add Background Compendium Button here
+      {/if}
+    </div>
+  </div>
   <!-- Size -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.Size')}
+    </label>
+    <div class="form-fields"></div>
+  </div>
   <!-- Speed -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.Speed')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) =>
+            FoundryAdapter.renderMovementSensesConfig(
+              context.actor,
+              'movement',
+            )}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
   <!-- Senses -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.Senses')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) =>
+            FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
   <!-- Resistances -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.Resistances')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) =>
+            FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
+  <!-- Damage Immunities -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.TraitDIPlural.other')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) =>
+            FoundryAdapter.openDamagesConfig(context.actor, 'di')}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
+  <!-- Condition Immunities -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.TraitCIPlural.other')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) =>
+            FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
+  <!-- Vulnerabilities -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.Vulnerabilities')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) =>
+            FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
   <!-- Damage Modification -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.DamageModification.Label')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) =>
+            FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
   <!-- Armor -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.Armor')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) => FoundryAdapter.renderArmorConfig(context.actor)}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
   <!-- Weapons -->
+  <div class="form-group">
+    <label>
+      {localize('TYPES.Item.weaponPl')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) => FoundryAdapter.renderWeaponsConfig(context.actor)}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
   <!-- Languages -->
+  <div class="form-group">
+    <label>
+      {localize('DND5E.Languages')}
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless icon-only config-button"
+          onclick={(ev) => FoundryAdapter.renderLanguagesConfig(context.actor)}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </label>
+    <ul class="form-fields"></ul>
+  </div>
 </fieldset>
