@@ -166,6 +166,16 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
       senses: this._getSenses(),
+      size: {
+        key: this.actor.system.traits.size,
+        label:
+          CONFIG.DND5E.actorSizes[this.actor.system.traits.size]?.label ??
+          this.actor.system.traits.size,
+        abbr:
+          CONFIG.DND5E.actorSizes[this.actor.system.traits.size]
+            ?.abbreviation ?? '—',
+        mod: this.actor.system.attributes.encumbrance.mod,
+      },
       skills: [],
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),

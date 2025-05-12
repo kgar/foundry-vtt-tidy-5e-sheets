@@ -901,7 +901,7 @@ export const FoundryAdapter = {
   renderLanguagesConfig(actor: Actor5e) {
     new dnd5e.applications.actor.LanguagesConfig({
       document: actor,
-    }).render({ force: true })
+    }).render({ force: true });
   },
   renderMovementSensesConfig(document: any, type: 'movement' | 'senses') {
     return new dnd5e.applications.shared.MovementSensesConfig({
@@ -1520,6 +1520,28 @@ export const FoundryAdapter = {
       locked: {
         types: new Set(['class']),
         arbitrary: arbitrary,
+      },
+    };
+
+    return await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters,
+    });
+  },
+  async showBackgroundCompendiumBrowser(actor: Actor5e) {
+    const filters = {
+      locked: {
+        types: new Set(['background']),
+      },
+    };
+
+    return await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters,
+    });
+  },
+  async showSpeciesCompendiumBrowser(actor: Actor5e) {
+    const filters = {
+      locked: {
+        types: new Set(['race']),
       },
     };
 

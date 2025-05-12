@@ -906,6 +906,13 @@ export type DocumentSheetQuadroneContext<TDocument> = {
   user: any;
 };
 
+export type ActorSizeContext = {
+  key: string;
+  label: string;
+  abbr: string;
+  mod: number
+}
+
 export type ActorSheetQuadroneContext = {
   abilities: ActorAbilityContextEntry[];
   actor: Actor5e;
@@ -1002,6 +1009,7 @@ export type CharacterSheetQuadroneContext = {
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   senses: CharacterSpeedSenseContext;
+  size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   tools: ActorSkillsToolsContext<ToolData>[];
   speeds: CharacterSpeedSenseContext;
