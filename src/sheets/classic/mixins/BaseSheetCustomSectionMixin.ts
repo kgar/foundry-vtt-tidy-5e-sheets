@@ -19,7 +19,7 @@ type OwnedItemsFunction = (object: any) => Map<string, Item5e>;
  */
 export function BaseSheetCustomSectionMixin<
   T extends new (...args: any[]) => {
-    _onDropItemCreate(item: any, event: DragEvent): Promise<any> | void;
+    _onDropItemCreate(item: any, event: DragEvent, behavior: DropEffectValue): Promise<any> | void;
     _onSortItem(
       event: DragEvent,
       itemData: Record<string, unknown>,
@@ -49,7 +49,7 @@ export function BaseSheetCustomSectionMixin<
         return this._onSortItem(event, item.toObject(), !removingFromContainer);
       }
 
-      return this._onDropItemCreate(item, event);
+      return this._onDropItemCreate(item, event, behavior);
     }
 
     async _onSortItem(
