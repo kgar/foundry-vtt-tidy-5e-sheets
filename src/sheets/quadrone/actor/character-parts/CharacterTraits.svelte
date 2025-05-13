@@ -184,6 +184,7 @@
     </div>
   </div>
   <!-- Size -->
+
   <div class="pills-group">
     <h4>
       {localize('DND5E.Size')}
@@ -207,6 +208,44 @@
 
   <!-- TODO: Continue here -->
   <!-- Speed -->
+  {#if context.unlocked || context.speeds.traitEntries.length}
+    <div class="list">
+      <div class="list-entry">
+        <div class="list-label">
+          <h4>
+            <i class="fa-solid fa-rabbit-running"></i>
+            {localize('DND5E.Speed')}
+          </h4>
+        </div>
+        <div class="list-values">
+          {#if context.speeds.traitEntries.length}
+            <ActorTraitPills values={context.speeds.traitEntries} />
+          {/if}
+          {#if context.unlocked && !context.speeds.traitEntries.length}
+            <button type="button" class="button button-borderless">
+              {localize('CONTROLS.CommonEdit')}
+            </button>
+          {/if}
+        </div>
+        {#if context.unlocked}
+          <div class="list-controls">
+            <button
+              type="button"
+              class="button button-borderless button-icon-only button-config"
+              onclick={(ev) =>
+                FoundryAdapter.renderMovementSensesConfig(
+                  context.actor,
+                  'movement',
+                )}
+            >
+              <i class="fa-solid fa-cog"></i>
+            </button>
+          </div>
+        {/if}
+      </div>
+    </div>
+  {/if}
+
   <div class="pills-group">
     <div class="flexrow space-between">
       <h4>
