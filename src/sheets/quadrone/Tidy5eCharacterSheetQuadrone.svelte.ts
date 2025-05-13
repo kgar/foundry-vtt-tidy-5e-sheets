@@ -7,6 +7,7 @@ import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
 import type {
   ActorSheetQuadroneContext,
+  ActorTraitContext,
   AttributePinContext,
   CharacterClassEntryContext,
   CharacterSheetQuadroneContext,
@@ -306,6 +307,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return {
       main: main,
       secondary: senses,
+      traitEntries: [...main, ...senses],
     };
   }
 
@@ -349,9 +351,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       });
     }
 
+    const main = speeds.slice(0, 2);
+    const secondary = speeds.slice(2);
     return {
-      main: speeds.slice(0, 2),
-      secondary: speeds.slice(2),
+      main: main,
+      secondary: secondary,
+      traitEntries: [...main, ...secondary],
     };
   }
 

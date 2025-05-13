@@ -966,6 +966,7 @@ export type ActorAbilityContextEntry = Ability & {
 export type CharacterSpeedSenseContext = {
   main: CharacterSpeedSenseEntryContext[];
   secondary: CharacterSpeedSenseEntryContext[];
+  traitEntries: ActorTraitContext[];
 };
 
 export type CharacterSpeedSenseEntryContext = {
@@ -973,7 +974,7 @@ export type CharacterSpeedSenseEntryContext = {
   label: string;
   value: string;
   units: string;
-};
+} & ActorTraitContext;
 
 export type CharacterClassEntryContext = {
   uuid: string;
