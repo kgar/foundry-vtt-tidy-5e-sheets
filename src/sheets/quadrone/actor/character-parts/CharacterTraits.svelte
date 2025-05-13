@@ -1,18 +1,22 @@
 <script lang="ts">
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import ActorTraitPills from '../parts/ActorTraitPills.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset class="character-traits">
-  <legend>
-    {localize('TIDY5E.CharacterTraits.Title')}
-
+<section class="character-traits">
+  <div class="flexrow space-between">
+    <h3 class="font-title-small">
+      {localize('TIDY5E.CharacterTraits.Title')}
+    </h3>
     {#if context.unlocked}
       <button
         type="button"
@@ -23,17 +27,18 @@
         {localize('DND5E.SpecialTraits')}
       </button>
     {/if}
-  </legend>
+  </div>
+  <tidy-gold-header-underline></tidy-gold-header-underline>
 
   <!-- Classes -->
-  <div class="form-group">
-    <label>
+  <div class="pills-group">
+    <h4>
       {localize('TYPES.Item.class')}
-    </label>
+    </h4>
 
-    <div class="form-fields trait-cards">
+    <div class="pills-lg">
       {#each context.classes as cls (cls.uuid)}
-        <div class="trait class">
+        <div class="pill-lg">
           <img src={cls.img} alt={cls.name} class="item-image flex0" />
           <button
             class="button button-borderless"
@@ -78,7 +83,7 @@
       {#if context.unlocked}
         <button
           type="button"
-          class="add-item-card-button"
+          class="pill-lg empty"
           onclick={(ev) =>
             FoundryAdapter.showClassCompendiumBrowser(context.actor)}
         >
@@ -89,37 +94,124 @@
   </div>
 
   <!-- Species -->
-  <div class="form-group">
-    <label>
+  <div class="pills-group">
+    <h4>
       {localize('TYPES.Item.race')}
-    </label>
-    <div class="form-fields"></div>
+    </h4>
+    <div class="pills-lg">
+      {#if context.actor.system.details.race}
+        {@const species = context.actor.system.details.race}
+        <div class="pill-lg">
+          <img src={species.img} alt={species.name} class="item-image flex0" />
+          <button
+            class="button button-borderless"
+            onclick={(ev) =>
+              species.sheet.render({
+                force: true,
+                mode: context.unlocked
+                  ? CONSTANTS.SHEET_MODE_EDIT
+                  : CONSTANTS.SHEET_MODE_PLAY,
+              })}
+          >
+            <span class="font-weight-label">
+              {species.name}
+            </span>
+          </button>
+          <span class="font-weight-default color-text-lighter">
+            {context.creatureType.title}
+          </span>
+          {#if context.creatureType.subtitle}
+            <span class="font-weight-default color-text-lighter">
+              {context.creatureType.subtitle}
+            </span>
+          {/if}
+        </div>
+      {:else}
+        <button
+          class="pill-lg empty"
+          onclick={(ev) =>
+            FoundryAdapter.showSpeciesCompendiumBrowser(context.actor)}
+        >
+          {localize('DND5E.Species.Add')}
+        </button>
+      {/if}
+    </div>
   </div>
   <!-- Background -->
-  <div class="form-group">
-    <label>
+  <div class="pills-group">
+    <h4>
       {localize('TYPES.Item.background')}
-    </label>
-    <div class="form-fields">
+    </h4>
+    <div class="pills-lg">
       {#if context.actor.system.details.background}
-        TODO: A single pill here
-        <span class="pill"> </span>
+        {@const bg = context.actor.system.details.background}
+        <div class="pill-lg">
+          <div class="pill-lg">
+            <img src={bg.img} alt={bg.name} class="item-image flex0" />
+            <button
+              class="button button-borderless"
+              onclick={(ev) =>
+                bg.sheet.render({
+                  force: true,
+                  mode: context.unlocked
+                    ? CONSTANTS.SHEET_MODE_EDIT
+                    : CONSTANTS.SHEET_MODE_PLAY,
+                })}
+            >
+              <span class="font-weight-label">
+                {bg.name}
+              </span>
+            </button>
+            <span class="font-weight-default color-text-lighter">
+              {context.creatureType.title}
+            </span>
+            {#if context.creatureType.subtitle}
+              <span class="font-weight-default color-text-lighter">
+                {context.creatureType.subtitle}
+              </span>
+            {/if}
+          </div>
+        </div>
       {:else}
-        TODO: Add Background Compendium Button here
+        <button
+          class="pill-lg empty"
+          onclick={(ev) =>
+            FoundryAdapter.showBackgroundCompendiumBrowser(context.actor)}
+        >
+          {localize('DND5E.BackgroundAdd')}
+        </button>
       {/if}
     </div>
   </div>
   <!-- Size -->
-  <div class="form-group">
-    <label>
+  <div class="pills-group">
+    <h4>
       {localize('DND5E.Size')}
-    </label>
-    <div class="form-fields"></div>
+    </h4>
+    <ul class="pills">
+      <li class="pill">
+        {#if context.unlocked}
+          <SelectQuadrone
+            document={context.actor}
+            field="system.traits.size"
+            value={context.system.traits.size}
+          >
+            <SelectOptions data={context.config.actorSizes} labelProp="label" />
+          </SelectQuadrone>
+        {:else}
+          {context.size.label}
+        {/if}
+      </li>
+    </ul>
   </div>
+
+  <!-- TODO: Continue here -->
   <!-- Speed -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.Speed')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.Speed')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -133,13 +225,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Senses -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.Senses')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.Senses')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -150,13 +244,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Resistances -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.Resistances')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.Resistances')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -167,13 +263,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Damage Immunities -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.TraitDIPlural.other')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.TraitDIPlural.other')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -184,13 +282,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Condition Immunities -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.TraitCIPlural.other')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.TraitCIPlural.other')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -201,13 +301,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Vulnerabilities -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.Vulnerabilities')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.Vulnerabilities')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -218,13 +320,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Damage Modification -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.DamageModification.Label')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.DamageModification.Label')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -235,13 +339,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Armor -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.Armor')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.Armor')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -251,13 +357,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Weapons -->
-  <div class="form-group">
-    <label>
-      {localize('TYPES.Item.weaponPl')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('TYPES.Item.weaponPl')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -267,13 +375,15 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
   <!-- Languages -->
-  <div class="form-group">
-    <label>
-      {localize('DND5E.Languages')}
+  <div class="pills-group">
+    <div class="flexrow space-between">
+      <h4>
+        {localize('DND5E.Languages')}
+      </h4>
       {#if context.unlocked}
         <button
           type="button"
@@ -283,7 +393,7 @@
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}
-    </label>
-    <ul class="form-fields"></ul>
+    </div>
+    <ul class="pills"></ul>
   </div>
-</fieldset>
+</section>

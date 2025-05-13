@@ -386,6 +386,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * @protected
      */
     _prepareTraits(system: any) {
+      // TODO: Account for sign and units where applicable
       const traits = {};
       for (const [trait, config] of Object.entries(CONFIG.DND5E.traits)) {
         const key = config.actorKeyPath ?? `system.traits.${trait}`;
