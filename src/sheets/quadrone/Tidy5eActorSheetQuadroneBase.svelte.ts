@@ -19,6 +19,7 @@ import type {
   ActorSaves,
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
+  ActorTraitContext,
   DamageModificationContextEntry,
   DamageModificationData,
   SpecialTraitSectionField,
@@ -26,6 +27,7 @@ import type {
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
+import { getModifierData } from 'src/utils/formatting';
 import { debug, error } from 'src/utils/logging';
 import { firstOfSet } from 'src/utils/set';
 
@@ -210,7 +212,7 @@ export function Tidy5eActorSheetQuadroneBase<
         system: this.actor.system,
         tabs: [],
         token: this.token,
-        traits: this._prepareTraits(this.actor.system),
+        traits: this._prepareTraits(),
         warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
         ...documentSheetContext,
       };
@@ -385,29 +387,38 @@ export function Tidy5eActorSheetQuadroneBase<
      * @returns {Record<string, object[]>}
      * @protected
      */
-    _prepareTraits(system: any) {
+    _prepareTraits(): Record<string, ActorTraitContext[]> {
       // TODO: Account for sign and units where applicable
-      const traits = {};
+      const traits: Record<string, ActorTraitContext[]> = {};
       for (const [trait, config] of Object.entries(CONFIG.DND5E.traits)) {
-        const key = config.actorKeyPath ?? `system.traits.${trait}`;
+        const actorKeyPath =
+          'actorKeyPath' in config ? config.actorKeyPath : undefined;
+        const key = actorKeyPath ?? `system.traits.${trait}`;
         const data = foundry.utils.deepClone(
           foundry.utils.getProperty(this.actor, key)
         );
         if (['dm', 'languages'].includes(trait) || !data) continue;
 
         let values = data.value;
-        if (!values) values = [];
-        else if (values instanceof Set) values = Array.from(values);
-        else if (!Array.isArray(values)) values = [values];
-        values = values.map((key) => {
-          const value = {
+        if (!values) {
+          values = [];
+        } else if (values instanceof Set) {
+          values = Array.from(values);
+        } else if (!Array.isArray(values)) values = [values];
+        values = values.map((key: string) => {
+          const value: {
+            key: string;
+            label: string;
+            icons: { icon: string; label: string }[];
+          } = {
             key,
             label: dnd5e.documents.Trait.keyLabel(key, { trait }) ?? key,
+            icons: [],
           };
-          const icons = (value.icons = []);
+          const icons = value.icons;
           if (data.bypasses?.size && CONFIG.DND5E.damageTypes[key]?.isPhysical)
             icons.push(
-              ...data.bypasses.map((p) => {
+              ...data.bypasses.map((p: string) => {
                 const type = CONFIG.DND5E.itemProperties[p]?.label;
                 return {
                   icon: p,
@@ -437,19 +448,26 @@ export function Tidy5eActorSheetQuadroneBase<
         const rollData = this.actor.getRollData({ deterministic: true });
         const values = Object.entries(dm.amount)
           .map(([k, v]) => {
-            const total = simplifyBonus(v, rollData);
+            const total = dnd5e.utils.simplifyBonus(v, rollData);
             if (!total) return null;
-            const value = {
-              label: `${CONFIG.DND5E.damageTypes[k]?.label ?? k} ${formatNumber(
-                total,
-                { signDisplay: 'always' }
-              )}`,
-              color: total > 0 ? 'maroon' : 'green',
+            const mod = getModifierData(total);
+            const value: {
+              label: string;
+              cssClass: string;
+              icons: { icon: string; label: string }[];
+              value: string;
+              sign: string;
+            } = {
+              label: `${CONFIG.DND5E.damageTypes[k]?.label ?? k}`,
+              sign: mod.sign,
+              value: mod.value,
+              cssClass: total > 0 ? 'positive' : 'negative',
+              icons: [],
             };
-            const icons = (value.icons = []);
+            const icons = value.icons;
             if (dm.bypasses.size && CONFIG.DND5E.damageTypes[k]?.isPhysical)
               icons.push(
-                ...dm.bypasses.map((p) => {
+                ...dm.bypasses.map((p: string) => {
                   const type = CONFIG.DND5E.itemProperties[p]?.label;
                   return {
                     icon: p,
@@ -462,14 +480,17 @@ export function Tidy5eActorSheetQuadroneBase<
               );
             return value;
           })
-          .filter((f) => f);
+          .filter((f) => !!f);
+
         if (values.length) traits.dm = values;
       }
 
       // Prepare languages
       const languages = this.actor.system.traits?.languages?.labels;
       if (languages?.languages?.length)
-        traits.languages = languages.languages.map((label) => ({ label }));
+        traits.languages = languages.languages.map((label: string) => ({
+          label,
+        }));
       for (const [key, { label }] of Object.entries(
         CONFIG.DND5E.communicationTypes
       )) {
@@ -493,7 +514,7 @@ export function Tidy5eActorSheetQuadroneBase<
           traits.weapon ??= [];
           traits.weapon.push(value);
         }
-        value.icons.push({
+        (value.icons ??= []).push({
           icon: 'mastery',
           label: game.i18n.format('DND5E.WEAPON.Mastery.Label'),
         });

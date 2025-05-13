@@ -17,6 +17,7 @@ import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
+import type { ClassValue } from 'svelte/elements';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -910,8 +911,18 @@ export type ActorSizeContext = {
   key: string;
   label: string;
   abbr: string;
-  mod: number
-}
+  mod: number;
+};
+
+export type ActorTraitContext = {
+  key?: string;
+  icons?: { icon: string; label: string }[];
+  label: string;
+  sign?: string;
+  value?: unknown;
+  units?: string;
+  cssClass?: ClassValue;
+};
 
 export type ActorSheetQuadroneContext = {
   abilities: ActorAbilityContextEntry[];
@@ -939,7 +950,7 @@ export type ActorSheetQuadroneContext = {
   system: Actor5e['system'];
   tabs: Tab[];
   token: TokenDocument | null;
-  traits: any; // TODO: Type this
+  traits: Record<string, ActorTraitContext[]>;
   warnings: DocumentPreparationWarning;
 } & DocumentSheetQuadroneContext<Actor5e>;
 
