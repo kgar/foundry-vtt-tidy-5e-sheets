@@ -1,10 +1,8 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import ActorTraitPills from '../parts/ActorTraitPills.svelte';
   import CharacterTraitClasses from './CharacterTraitClasses.svelte';
   import CharacterTraitSpecies from './CharacterTraitSpecies.svelte';
   import CharacterTraitBackground from './CharacterTraitBackground.svelte';
@@ -48,24 +46,21 @@
         </h4>
       </div>
       <div class="list-values">
-        <ul class="pills">
-          <li class="pill">
-            {#if context.unlocked}
-              <SelectQuadrone
-                document={context.actor}
-                field="system.traits.size"
-                value={context.system.traits.size}
-              >
-                <SelectOptions
-                  data={context.config.actorSizes}
-                  labelProp="label"
-                />
-              </SelectQuadrone>
-            {:else}
+        {#if context.unlocked}
+          <SelectQuadrone
+            document={context.actor}
+            field="system.traits.size"
+            value={context.system.traits.size}
+          >
+            <SelectOptions data={context.config.actorSizes} labelProp="label" />
+          </SelectQuadrone>
+        {:else}
+          <ul class="pills">
+            <li class="pill">
               {context.size.label}
-            {/if}
-          </li>
-        </ul>
+            </li>
+          </ul>
+        {/if}
       </div>
     </div>
 
@@ -138,7 +133,7 @@
     <!-- Weapons -->
     <CharacterTraitConfigurableListEntry
       label={localize('TYPES.Item.weaponPl')}
-      entries={context.traits.weapons}
+      entries={context.traits.weapon}
       onconfig={() => FoundryAdapter.renderWeaponsConfig(context.actor)}
       icon="fa-solid fa-swords"
     />

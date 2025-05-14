@@ -23,7 +23,7 @@
 
 {#if context.unlocked || entries.length}
   <div class={['list-entry', { empty }]}>
-    <div class={['list-label', { ['text-color-disabled']: empty }]}>
+    <div class={['list-label']}>
       <h4>
         <i class={icon}></i>
         {label}

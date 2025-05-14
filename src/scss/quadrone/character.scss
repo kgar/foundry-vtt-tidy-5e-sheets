@@ -245,6 +245,7 @@
           }
 
           .dead-overlay {
+            pointer-events: none;
 
             // &::before {
             content: '';
@@ -294,6 +295,12 @@
         left: 0;
         right: 0;
         bottom: var(--t5e-size-8x);
+
+        pointer-events: none;
+
+        >* {
+          pointer-events: all;
+        }
 
         :where(.successes, .failures) button {
           cursor: pointer;
