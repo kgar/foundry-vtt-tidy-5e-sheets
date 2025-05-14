@@ -31,6 +31,7 @@
 
       <img src={bg.img} alt={bg.name} class="item-image flex0" />
       <button
+        type="button"
         class="button button-borderless"
         onclick={() =>
           bg.sheet.render({
