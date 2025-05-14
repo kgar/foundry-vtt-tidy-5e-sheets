@@ -67,8 +67,9 @@
         },
       )}
     class="death-save-roll-button button button-borderless button-icon-only"
+    data-tooltip="DND5E.DeathSave"
   >
-    <i class="fa-light fa-dice-d20"></i>
+    <i class="fas fa-dice-d20"></i>
   </button>
   <div class="successes flexcol">
     {#each Array(halfSaves) as _, i}
