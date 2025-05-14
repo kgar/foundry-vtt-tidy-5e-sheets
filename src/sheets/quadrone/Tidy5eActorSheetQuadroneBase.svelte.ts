@@ -461,7 +461,7 @@ export function Tidy5eActorSheetQuadroneBase<
               label: `${CONFIG.DND5E.damageTypes[k]?.label ?? k}`,
               sign: mod.sign,
               value: mod.value,
-              cssClass: total > 0 ? 'positive' : 'negative',
+              cssClass: total > 0 ? 'negative' : 'positive',
               icons: [],
             };
             const icons = value.icons;

@@ -283,18 +283,19 @@ export const FoundryAdapter = {
     }
 
     const delta = Number(event.currentTarget.value);
-    const classId = item.id;
-    if (!delta || !classId) {
+
+    if (!delta || !item.id) {
       return;
     }
 
-    const classItem = actor.items.get(classId);
-
+    return FoundryAdapter.changeLevel(actor, item, delta);
+  },
+  async changeLevel(actor: Actor5e, item: Item5e, delta: number) {
     if (!game.settings.get('dnd5e', 'disableAdvancements')) {
       const manager =
         dnd5e.applications.advancement.AdvancementManager.forLevelChange(
           actor,
-          classId,
+          item.id,
           delta
         );
       if (manager.steps.length) {
@@ -302,7 +303,7 @@ export const FoundryAdapter = {
         try {
           const shouldRemoveAdvancements =
             await dnd5e.applications.advancement.AdvancementConfirmationDialog.forLevelDown(
-              classItem
+              item
             );
           if (shouldRemoveAdvancements) return manager.render(true);
         } catch (err) {
@@ -311,8 +312,8 @@ export const FoundryAdapter = {
       }
     }
 
-    return classItem.update({
-      'system.levels': classItem.system.levels + delta,
+    return item.update({
+      'system.levels': item.system.levels + delta,
     });
   },
   getSpellComponentLabels() {

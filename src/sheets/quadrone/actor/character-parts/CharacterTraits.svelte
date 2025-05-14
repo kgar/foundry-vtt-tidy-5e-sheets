@@ -3,9 +3,12 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import ActorTraitPills from '../parts/ActorTraitPills.svelte';
+  import CharacterTraitClasses from './CharacterTraitClasses.svelte';
+  import CharacterTraitSpecies from './CharacterTraitSpecies.svelte';
+  import CharacterTraitBackground from './CharacterTraitBackground.svelte';
+  import CharacterTraitConfigurableListEntry from './CharacterTraitConfigurableListEntry.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -30,409 +33,122 @@
   </div>
   <tidy-gold-header-underline></tidy-gold-header-underline>
 
-  <!-- Classes -->
-  <div class="pills-group">
-    <h4>
-      {localize('TYPES.Item.class')}
-    </h4>
+  <div class="list">
+    <CharacterTraitClasses />
 
-    <div class="pills-lg">
-      {#each context.classes as cls (cls.uuid)}
-        <div class="pill-lg">
-          <img src={cls.img} alt={cls.name} class="item-image flex0" />
-          <button
-            class="button button-borderless"
-            onclick={(ev) =>
-              cls.item.sheet.render({
-                force: true,
-                mode: context.unlocked
-                  ? CONSTANTS.SHEET_MODE_EDIT
-                  : CONSTANTS.SHEET_MODE_PLAY,
-              })}
-          >
-            {localize(cls.name)}
-          </button>
-          {#if cls.isOriginalClass}
-            <i
-              class="flex0 fa-solid fa-chess-queen"
-              data-tooltip="DND5E.ClassOriginal"
-              aria-label={localize('DND5E.ClassOriginal')}
-            ></i>
-          {/if}
-          {#if context.unlocked}
-            <LevelUpDropdown
-              availableLevels={cls.availableLevels}
-              item={cls.item}
-              class="level-selector"
-            />
-          {:else}
-            <span>
-              {@html localize('DND5E.LevelNumber', {
-                level: `<span class="font-weight-label">${cls.levels}</span>`,
-              })}
-            </span>
-          {/if}
-          <div>
-            <em
-              >TODO: Handle Present and Missing Subclass; also handle
-              right-click context menu for Class and Subclass</em
-            >
-          </div>
-        </div>
-      {/each}
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="pill-lg empty"
-          onclick={(ev) =>
-            FoundryAdapter.showClassCompendiumBrowser(context.actor)}
-        >
-          {localize('DND5E.ClassAdd')}
-        </button>
-      {/if}
-    </div>
-  </div>
+    <CharacterTraitSpecies />
 
-  <!-- Species -->
-  <div class="pills-group">
-    <h4>
-      {localize('TYPES.Item.race')}
-    </h4>
-    <div class="pills-lg">
-      {#if context.actor.system.details.race}
-        {@const species = context.actor.system.details.race}
-        <div class="pill-lg">
-          <img src={species.img} alt={species.name} class="item-image flex0" />
-          <button
-            class="button button-borderless"
-            onclick={(ev) =>
-              species.sheet.render({
-                force: true,
-                mode: context.unlocked
-                  ? CONSTANTS.SHEET_MODE_EDIT
-                  : CONSTANTS.SHEET_MODE_PLAY,
-              })}
-          >
-            <span class="font-weight-label">
-              {species.name}
-            </span>
-          </button>
-          <span class="font-weight-default color-text-lighter">
-            {context.creatureType.title}
-          </span>
-          {#if context.creatureType.subtitle}
-            <span class="font-weight-default color-text-lighter">
-              {context.creatureType.subtitle}
-            </span>
-          {/if}
-        </div>
-      {:else}
-        <button
-          class="pill-lg empty"
-          onclick={(ev) =>
-            FoundryAdapter.showSpeciesCompendiumBrowser(context.actor)}
-        >
-          {localize('DND5E.Species.Add')}
-        </button>
-      {/if}
-    </div>
-  </div>
-  <!-- Background -->
-  <div class="pills-group">
-    <h4>
-      {localize('TYPES.Item.background')}
-    </h4>
-    <div class="pills-lg">
-      {#if context.actor.system.details.background}
-        {@const bg = context.actor.system.details.background}
-        <div class="pill-lg">
-          <div class="pill-lg">
-            <img src={bg.img} alt={bg.name} class="item-image flex0" />
-            <button
-              class="button button-borderless"
-              onclick={(ev) =>
-                bg.sheet.render({
-                  force: true,
-                  mode: context.unlocked
-                    ? CONSTANTS.SHEET_MODE_EDIT
-                    : CONSTANTS.SHEET_MODE_PLAY,
-                })}
-            >
-              <span class="font-weight-label">
-                {bg.name}
-              </span>
-            </button>
-            <span class="font-weight-default color-text-lighter">
-              {context.creatureType.title}
-            </span>
-            {#if context.creatureType.subtitle}
-              <span class="font-weight-default color-text-lighter">
-                {context.creatureType.subtitle}
-              </span>
+    <CharacterTraitBackground />
+
+    <!-- Size -->
+    <div class="list-entry">
+      <div class="list-label">
+        <h4>
+          {localize('DND5E.Size')}
+        </h4>
+      </div>
+      <div class="list-values">
+        <ul class="pills">
+          <li class="pill">
+            {#if context.unlocked}
+              <SelectQuadrone
+                document={context.actor}
+                field="system.traits.size"
+                value={context.system.traits.size}
+              >
+                <SelectOptions
+                  data={context.config.actorSizes}
+                  labelProp="label"
+                />
+              </SelectQuadrone>
+            {:else}
+              {context.size.label}
             {/if}
-          </div>
-        </div>
-      {:else}
-        <button
-          class="pill-lg empty"
-          onclick={(ev) =>
-            FoundryAdapter.showBackgroundCompendiumBrowser(context.actor)}
-        >
-          {localize('DND5E.BackgroundAdd')}
-        </button>
-      {/if}
-    </div>
-  </div>
-  <!-- Size -->
-
-  <div class="pills-group">
-    <h4>
-      {localize('DND5E.Size')}
-    </h4>
-    <ul class="pills">
-      <li class="pill">
-        {#if context.unlocked}
-          <SelectQuadrone
-            document={context.actor}
-            field="system.traits.size"
-            value={context.system.traits.size}
-          >
-            <SelectOptions data={context.config.actorSizes} labelProp="label" />
-          </SelectQuadrone>
-        {:else}
-          {context.size.label}
-        {/if}
-      </li>
-    </ul>
-  </div>
-
-  <!-- TODO: Continue here -->
-  <!-- Speed -->
-  {#if context.unlocked || context.speeds.traitEntries.length}
-    <div class="list">
-      <div class="list-entry">
-        <div class="list-label">
-          <h4>
-            <i class="fa-solid fa-rabbit-running"></i>
-            {localize('DND5E.Speed')}
-          </h4>
-        </div>
-        <div class="list-values">
-          {#if context.speeds.traitEntries.length}
-            <ActorTraitPills values={context.speeds.traitEntries} />
-          {/if}
-          {#if context.unlocked && !context.speeds.traitEntries.length}
-            <button type="button" class="button button-borderless">
-              {localize('CONTROLS.CommonEdit')}
-            </button>
-          {/if}
-        </div>
-        {#if context.unlocked}
-          <div class="list-controls">
-            <button
-              type="button"
-              class="button button-borderless button-icon-only button-config"
-              onclick={(ev) =>
-                FoundryAdapter.renderMovementSensesConfig(
-                  context.actor,
-                  'movement',
-                )}
-            >
-              <i class="fa-solid fa-cog"></i>
-            </button>
-          </div>
-        {/if}
+          </li>
+        </ul>
       </div>
     </div>
-  {/if}
 
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.Speed')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) =>
-            FoundryAdapter.renderMovementSensesConfig(
-              context.actor,
-              'movement',
-            )}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Senses -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.Senses')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) =>
-            FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Resistances -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.Resistances')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) =>
-            FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Damage Immunities -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.TraitDIPlural.other')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) =>
-            FoundryAdapter.openDamagesConfig(context.actor, 'di')}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Condition Immunities -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.TraitCIPlural.other')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) =>
-            FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Vulnerabilities -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.Vulnerabilities')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) =>
-            FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Damage Modification -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.DamageModification.Label')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) =>
-            FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Armor -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.Armor')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) => FoundryAdapter.renderArmorConfig(context.actor)}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Weapons -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('TYPES.Item.weaponPl')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) => FoundryAdapter.renderWeaponsConfig(context.actor)}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
-  </div>
-  <!-- Languages -->
-  <div class="pills-group">
-    <div class="flexrow space-between">
-      <h4>
-        {localize('DND5E.Languages')}
-      </h4>
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless icon-only config-button"
-          onclick={(ev) => FoundryAdapter.renderLanguagesConfig(context.actor)}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
-    <ul class="pills"></ul>
+    <!-- Speed -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.Speed')}
+      entries={context.speeds.traitEntries}
+      onconfig={() =>
+        FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
+      icon="fa-solid fa-rabbit-running"
+    />
+
+    <!-- Senses -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.Senses')}
+      entries={context.senses.traitEntries}
+      onconfig={() =>
+        FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
+      icon="fa-solid fa-eye"
+    />
+
+    <!-- Resistances -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.Resistances')}
+      entries={context.traits.dr}
+      onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
+      icon="fa-solid fa-shield-halved"
+    />
+
+    <!-- Damage Immunities -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.TraitDIPlural.other')}
+      entries={context.traits.di}
+      onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
+      icon="fa-solid fa-shield"
+    />
+
+    <!-- Condition Immunities -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.TraitCIPlural.other')}
+      entries={context.traits.ci}
+      onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
+      icon="fa-solid fa-shield-virus"
+    />
+
+    <!-- Vulnerabilities -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.Vulnerabilities')}
+      entries={context.traits.dv}
+      onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
+      icon="fa-solid fa-heart-crack"
+    />
+
+    <!-- Damage Modification -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.DamageModification.Label')}
+      entries={context.traits.dm}
+      onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
+      icon="fa-solid fa-heart-circle-plus"
+    />
+
+    <!-- Armor -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.Armor')}
+      entries={context.traits.armor}
+      onconfig={() => FoundryAdapter.renderArmorConfig(context.actor)}
+      icon="fa-solid fa-shield-quartered"
+    />
+
+    <!-- Weapons -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('TYPES.Item.weaponPl')}
+      entries={context.traits.weapons}
+      onconfig={() => FoundryAdapter.renderWeaponsConfig(context.actor)}
+      icon="fa-solid fa-swords"
+    />
+
+    <!-- Languages -->
+    <CharacterTraitConfigurableListEntry
+      label={localize('DND5E.Languages')}
+      entries={context.traits.languages}
+      onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
+      icon="fa-solid fa-comments"
+    />
   </div>
 </section>
