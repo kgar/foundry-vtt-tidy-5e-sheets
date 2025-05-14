@@ -220,6 +220,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _getClasses(): CharacterClassEntryContext[] {
+    const subclasses = this.actor.subclasses;
     return Object.values(this.actor.classes)
       .map<CharacterClassEntryContext>((cls: Item5e) => {
         const maxLevelDelta =
@@ -235,6 +236,18 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             }
           : undefined;
 
+        const subclass = subclasses.findSplice(
+          (s: Item5e) => s.system.classIdentifier === cls.identifier
+        );
+
+        let needsSubclass = false;
+        if (!subclass) {
+          const subclassAdvancement = cls.advancement.byType.Subclass?.[0];
+          needsSubclass =
+            subclassAdvancement &&
+            subclassAdvancement.level <= cls.system.levels;
+        }
+
         return {
           name: cls.name,
           levels: cls.system.levels,
@@ -249,6 +262,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
               return { level, delta, disabled: delta > maxLevelDelta };
             }),
           uuid: cls.uuid,
+          subclass,
+          needsSubclass,
         };
       })
       .toSorted((left, right) => right.levels - left.levels);

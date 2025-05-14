@@ -989,6 +989,8 @@ export type CharacterClassEntryContext = {
     ability: string;
   };
   availableLevels: AvailableClassLevel[];
+  subclass?: Item5e;
+  needsSubclass: boolean;
 };
 
 export type CreatureTypeContext = {
