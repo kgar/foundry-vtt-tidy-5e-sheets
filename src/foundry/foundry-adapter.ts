@@ -1507,7 +1507,6 @@ export const FoundryAdapter = {
       return obj;
     }, {} satisfies Record<string, SenseInfo>);
   },
-
   async showClassCompendiumBrowser(actor: Actor5e) {
     const existingIdentifiers = new Set(Object.keys(actor.classes));
     const arbitrary = [
@@ -1520,6 +1519,26 @@ export const FoundryAdapter = {
     const filters = {
       locked: {
         types: new Set(['class']),
+        arbitrary: arbitrary,
+      },
+    };
+
+    return await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters,
+    });
+  },
+  async showSubclassCompendiumBrowser(actor: Actor5e) {
+    const existingIdentifiers = new Set(Object.keys(actor.subclasses));
+    const arbitrary = [
+      {
+        o: 'NOT',
+        v: { k: 'system.identifier', o: 'in', v: existingIdentifiers },
+      },
+    ];
+
+    const filters = {
+      locked: {
+        types: new Set(['subclass']),
         arbitrary: arbitrary,
       },
     };

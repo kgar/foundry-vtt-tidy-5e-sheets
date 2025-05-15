@@ -5,10 +5,15 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { EventHelper } from 'src/utils/events';
   import type { CharacterClassEntryContext } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
+
+  let hitLevelCap = $derived(
+    context.system.details.level >= CONFIG.DND5E.maxLevel,
+  );
 
   let firstClass = $derived(context.classes[0]);
   let restClasses = $derived(context.classes.slice(1));
@@ -23,17 +28,6 @@
     <h4>
       {localize('TYPES.Item.class')}
     </h4>
-    {#if context.unlocked}
-      <button
-        type="button"
-        class="button button-borderless button-icon-only"
-        data-tooltip="DND5E.ClassAdd"
-        onclick={(ev) =>
-          FoundryAdapter.showClassCompendiumBrowser(context.actor)}
-      >
-        <i class="fa-solid fa-plus"></i>
-      </button>
-    {/if}
   </div>
 
   {#if firstClass}
@@ -43,12 +37,42 @@
   {/if}
 </div>
 
+{@render subclassRow(firstClass)}
+
 {#each restClasses as cls (cls.uuid)}
   <div class="list-entry">
     <div class="list-label"></div>
     {@render classValueControls(cls)}
   </div>
+
+  {@render subclassRow(cls)}
 {/each}
+
+{#if context.unlocked && !hitLevelCap}
+  <div class="list-entry">
+    <div class="list-label"></div>
+    <div class="list-values">
+      <button
+        type="button"
+        class="button button-borderless"
+        data-tooltip="DND5E.ClassAdd"
+        onclick={(ev) =>
+          FoundryAdapter.createItem({ type: 'class' }, context.actor)}
+      >
+        {localize('DND5E.ClassAdd')}
+      </button>
+      <button
+        type="button"
+        class="button button-borderless button-icon-only"
+        data-tooltip="DND5E.ClassAdd"
+        onclick={(ev) =>
+          FoundryAdapter.showClassCompendiumBrowser(context.actor)}
+      >
+        <i class="fa-solid fa-book-open-reader"></i>
+      </button>
+    </div>
+  </div>
+{/if}
 
 {#snippet classValueControls(cls: CharacterClassEntryContext)}
   <div class="list-values trait-class trait-item">
@@ -77,12 +101,6 @@
           })}
         </span>
       {/if}
-      <div>
-        <em
-          >TODO: Handle Present and Missing Subclass; also handle right-click
-          context menu for Class and Subclass</em
-        >
-      </div>
     {/if}
   </div>
   {#if context.unlocked && cls}
@@ -91,7 +109,7 @@
         type="button"
         class="button button-borderless button-icon-only button-level-up"
         data-tooltip="DND5E.LevelActionIncrease"
-        disabled={context.system.details.level >= CONFIG.DND5E.maxLevel}
+        disabled={hitLevelCap}
         onclick={() => FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
       >
         <i class="fa-solid fa-square-up"></i>
@@ -117,4 +135,82 @@
       </button>
     </div>
   {/if}
+{/snippet}
+
+{#snippet subclassRow(cls?: CharacterClassEntryContext)}
+  {#if cls?.subclass}
+    {@render subclassListEntry(cls.subclass)}
+  {:else if cls?.needsSubclass}
+    {@render needsSubclassListEntry(firstClass.item)}
+  {/if}
+{/snippet}
+
+{#snippet subclassListEntry(subclass: Item5e)}
+  <div
+    class="list-entry"
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+    data-item-id={subclass.id}
+  >
+    <div class="list-label"></div>
+    <div class="list-values">
+      <i class="fa-solid fa-arrow-turn-down-right"></i>
+      <img src={subclass.img} alt={subclass.name} class="item-image flex0" />
+      <span class="trait-name">
+        {localize(subclass.name)}
+      </span>
+    </div>
+    {#if context.unlocked}
+      <div class="list-controls">
+        <button
+          type="button"
+          class="button button-borderless button-icon-only"
+          data-tooltip="DND5E.ItemEdit"
+          onclick={() =>
+            subclass.item.sheet.render({
+              force: true,
+              mode: CONSTANTS.SHEET_MODE_EDIT,
+            })}
+        >
+          <i class="fa-solid fa-edit"></i>
+        </button>
+        <button
+          type="button"
+          class="button button-borderless button-icon-only"
+          onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+        >
+          <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+        </button>
+      </div>
+    {/if}
+  </div>
+{/snippet}
+
+{#snippet needsSubclassListEntry(cls: Item5e)}
+  <div class="list-entry">
+    <div class="list-label"></div>
+    <div class="list-values">
+      <button
+        type="button"
+        class="button button-borderless"
+        onclick={() =>
+          FoundryAdapter.createItem(
+            {
+              type: 'subclass',
+              identifier: cls.system.identifier,
+            },
+            context.actor,
+          )}
+      >
+        {localize('DND5E.SubclassAdd')}
+      </button>
+      <button
+        type="button"
+        class="button button-borderless button-icon-only"
+        onclick={() =>
+          FoundryAdapter.showSubclassCompendiumBrowser(context.actor)}
+      >
+        <i class="fa-solid fa-book-open-reader"></i>
+      </button>
+    </div>
+  </div>
 {/snippet}

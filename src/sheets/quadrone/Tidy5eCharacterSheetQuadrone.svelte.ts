@@ -220,8 +220,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _getClasses(): CharacterClassEntryContext[] {
-    const subclasses = this.actor.subclasses;
-    return Object.values(this.actor.classes)
+    const subclasses: Item5e[] = Object.values(this.actor.subclasses);
+    const classes = Object.values(this.actor.classes)
       .map<CharacterClassEntryContext>((cls: Item5e) => {
         const maxLevelDelta =
           CONFIG.DND5E.maxLevel - this.actor.system.details.level;
@@ -267,6 +267,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         };
       })
       .toSorted((left, right) => right.levels - left.levels);
+
+    return classes;
   }
 
   _getCreatureType(): CreatureTypeContext {
