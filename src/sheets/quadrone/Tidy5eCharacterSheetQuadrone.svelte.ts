@@ -157,7 +157,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           }
         ),
       },
-      classes: this._getClasses(),
       conditions: conditions,
       creatureType: this._getCreatureType(),
       defenders: [],
@@ -181,6 +180,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
       tools: [],
+      ...this._getClassesAndOrphanedSubclasses(),
       ...actorContext,
     };
 
@@ -219,7 +219,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return context;
   }
 
-  _getClasses(): CharacterClassEntryContext[] {
+  _getClassesAndOrphanedSubclasses(): {
+    classes: CharacterClassEntryContext[];
+    orphanedSubclasses: Item5e[];
+  } {
     const subclasses: Item5e[] = Object.values(this.actor.subclasses);
     const classes = Object.values(this.actor.classes)
       .map<CharacterClassEntryContext>((cls: Item5e) => {
@@ -268,7 +271,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       })
       .toSorted((left, right) => right.levels - left.levels);
 
-    return classes;
+    return { classes, orphanedSubclasses: subclasses };
   }
 
   _getCreatureType(): CreatureTypeContext {

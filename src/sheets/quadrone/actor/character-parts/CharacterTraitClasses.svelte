@@ -74,6 +74,10 @@
   </div>
 {/if}
 
+{#each context.orphanedSubclasses as subclass}
+  {@render subclassListEntry(subclass, true)}
+{/each}
+
 {#snippet classValueControls(cls: CharacterClassEntryContext)}
   <div class="list-values trait-class trait-item">
     {#if cls}
@@ -137,15 +141,15 @@
   {/if}
 {/snippet}
 
-{#snippet subclassRow(cls?: CharacterClassEntryContext)}
+{#snippet subclassRow(cls?: CharacterClassEntryContext, orphaned?: boolean)}
   {#if cls?.subclass}
-    {@render subclassListEntry(cls.subclass)}
+    {@render subclassListEntry(cls.subclass, orphaned)}
   {:else if cls?.needsSubclass}
     {@render needsSubclassListEntry(firstClass.item)}
   {/if}
 {/snippet}
 
-{#snippet subclassListEntry(subclass: Item5e)}
+{#snippet subclassListEntry(subclass: Item5e, orphaned: boolean = false)}
   <div
     class="list-entry"
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
@@ -153,7 +157,11 @@
   >
     <div class="list-label"></div>
     <div class="list-values">
-      <i class="fa-solid fa-arrow-turn-down-right"></i>
+      {#if !orphaned}
+        <i class="fa-solid fa-arrow-turn-down-right"></i>
+      {:else}
+        <i class="fa-solid fa-link-slash"></i>
+      {/if}
       <img src={subclass.img} alt={subclass.name} class="item-image flex0" />
       <span class="trait-name">
         {localize(subclass.name)}
@@ -166,7 +174,7 @@
           class="button button-borderless button-icon-only"
           data-tooltip="DND5E.ItemEdit"
           onclick={() =>
-            subclass.item.sheet.render({
+            subclass.sheet.render({
               force: true,
               mode: CONSTANTS.SHEET_MODE_EDIT,
             })}

@@ -1016,6 +1016,7 @@ export type CharacterSheetQuadroneContext = {
     description: string;
   };
   classes: CharacterClassEntryContext[];
+  orphanedSubclasses: Item5e[];
   conditions: Dnd5eActorCondition[];
   creatureType: CreatureTypeContext;
   showDeathSaves: boolean;
