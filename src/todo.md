@@ -6,6 +6,7 @@
   - [x] Set up Quadrone runtime content, including the default tabs
   - [x] Implement SkillsCard
   - [x] Implement ToolsCard
+  - [ ] Character Traits: Add icons to damage modification, damage resistances, and damage vulnerabilities
   - [ ] Structure the sheet - 
     - [ ] Tab Content area
       - [x] Sidebar
