@@ -18,36 +18,35 @@
       {localize('TYPES.Item.background')}
     </h4>
   </div>
-  <div class="list-values">
-    {#if context.actor.system.details.background}
-      {@const bg = context.actor.system.details.background}
-
-      <img src={bg.img} alt={bg.name} class="item-image flex0" />
-      <button
-        type="button"
-        class="button button-borderless"
-        onclick={() =>
-          bg.sheet.render({
-            force: true,
-            mode: context.unlocked
-              ? CONSTANTS.SHEET_MODE_EDIT
-              : CONSTANTS.SHEET_MODE_PLAY,
-          })}
-      >
-        <span class="font-weight-label">
-          {bg.name}
-        </span>
-      </button>
-      <span class="font-weight-default color-text-lighter">
-        {context.creatureType.title}
-      </span>
-      {#if context.creatureType.subtitle}
+  <div class="list-content">
+    <div class="list-values">
+      {#if context.actor.system.details.background}
+        {@const bg = context.actor.system.details.background}
+        <img src={bg.img} alt={bg.name} class="item-image flex0" />
+        <button
+          type="button"
+          class="button button-borderless"
+          onclick={() =>
+            bg.sheet.render({
+              force: true,
+              mode: context.unlocked
+                ? CONSTANTS.SHEET_MODE_EDIT
+                : CONSTANTS.SHEET_MODE_PLAY,
+            })}
+        >
+          <span class="font-weight-label">
+            {bg.name}
+          </span>
+        </button>
         <span class="font-weight-default color-text-lighter">
-          {context.creatureType.subtitle}
+          {context.creatureType.title}
         </span>
-      {/if}
-    {:else if context.unlocked}
-      <div class="list-values">
+        {#if context.creatureType.subtitle}
+          <span class="font-weight-default color-text-lighter">
+            {context.creatureType.subtitle}
+          </span>
+        {/if}
+      {:else if context.unlocked}
         <button
           type="button"
           class="button button-borderless"
@@ -69,7 +68,7 @@
         >
           <i class="fa-solid fa-book-open-reader"></i>
         </button>
-      </div>
-    {/if}
+      {/if}
+    </div>
   </div>
 </div>

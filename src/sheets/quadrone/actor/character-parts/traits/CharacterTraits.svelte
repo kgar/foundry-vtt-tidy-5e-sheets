@@ -44,33 +44,34 @@
           {localize('DND5E.CreatureType')}
         </h4>
       </div>
-      <div class="list-values">
-        {#if context.system.details.race}
-          <i class="fa-solid fa-arrow-turn-down-right"></i>
-        {/if}
-
-        <span class="trait-name">
-          {context.creatureType.title}
-        </span>
-        {#if context.creatureType.subtitle}
-          <span class="font-weight-default color-text-lighter">
-            {context.creatureType.subtitle}
+      <div class="list-content">
+        <div class="list-values">
+          {#if context.system.details.race}
+            <i class="fa-solid fa-arrow-turn-down-right"></i>
+          {/if}
+          <span class="trait-name">
+            {context.creatureType.title}
           </span>
+          {#if context.creatureType.subtitle}
+            <span class="font-weight-default color-text-lighter">
+              {context.creatureType.subtitle}
+            </span>
+          {/if}
+        </div>
+        {#if context.unlocked && context.system.details.race}
+          <div class="list-controls">
+            <button
+              type="button"
+              class="button button-borderless button-icon-only"
+              data-tooltip="DND5E.ItemEdit"
+              onclick={() =>
+                FoundryAdapter.renderCreatureTypeConfig(context.actor)}
+            >
+              <i class="fa-solid fa-edit"></i>
+            </button>
+          </div>
         {/if}
       </div>
-      {#if context.unlocked && context.system.details.race}
-        <div class="list-controls">
-          <button
-            type="button"
-            class="button button-borderless button-icon-only"
-            data-tooltip="DND5E.ItemEdit"
-            onclick={() =>
-              FoundryAdapter.renderCreatureTypeConfig(context.actor)}
-          >
-            <i class="fa-solid fa-edit"></i>
-          </button>
-        </div>
-      {/if}
     </div>
 
     <CharacterTraitBackground />
@@ -82,22 +83,24 @@
           {localize('DND5E.Size')}
         </h4>
       </div>
-      <div class="list-values">
-        {#if context.unlocked}
-          <SelectQuadrone
-            document={context.actor}
-            field="system.traits.size"
-            value={context.system.traits.size}
-          >
-            <SelectOptions data={context.config.actorSizes} labelProp="label" />
-          </SelectQuadrone>
-        {:else}
-          <ul class="pills">
-            <li class="pill">
-              {context.size.label}
-            </li>
-          </ul>
-        {/if}
+      <div class="list-content">
+        <div class="list-values">
+          {#if context.unlocked}
+            <SelectQuadrone
+              document={context.actor}
+              field="system.traits.size"
+              value={context.system.traits.size}
+            >
+              <SelectOptions data={context.config.actorSizes} labelProp="label" />
+            </SelectQuadrone>
+          {:else}
+            <ul class="pills">
+              <li class="pill">
+                {context.size.label}
+              </li>
+            </ul>
+          {/if}
+        </div>
       </div>
     </div>
 

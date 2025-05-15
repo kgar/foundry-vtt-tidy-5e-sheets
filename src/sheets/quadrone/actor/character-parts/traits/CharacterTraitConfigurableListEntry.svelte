@@ -29,30 +29,32 @@
         {label}
       </h4>
     </div>
-    <div class="list-values">
-      {#if entries.length}
-        <ActorTraitPills values={entries} />
-      {/if}
-      {#if context.unlocked && !entries.length}
-        <button
-          type="button"
-          class="button button-borderless"
-          onclick={(ev) => onconfig()}
-        >
-          {localize('CONTROLS.CommonEdit')}
-        </button>
+    <div class="list-content">
+      <div class="list-values">
+        {#if entries.length}
+          <ActorTraitPills values={entries} />
+        {/if}
+        {#if context.unlocked && !entries.length}
+          <button
+            type="button"
+            class="button button-borderless"
+            onclick={(ev) => onconfig()}
+          >
+            {localize('CONTROLS.CommonEdit')}
+          </button>
+        {/if}
+      </div>
+      {#if context.unlocked}
+        <div class="list-controls">
+          <button
+            type="button"
+            class="button button-borderless button-icon-only button-config"
+            onclick={(ev) => onconfig()}
+          >
+            <i class="fa-solid fa-cog"></i>
+          </button>
+        </div>
       {/if}
     </div>
-    {#if context.unlocked}
-      <div class="list-controls">
-        <button
-          type="button"
-          class="button button-borderless button-icon-only button-config"
-          onclick={(ev) => onconfig()}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      </div>
-    {/if}
   </div>
 {/if}
