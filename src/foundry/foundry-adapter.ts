@@ -283,18 +283,19 @@ export const FoundryAdapter = {
     }
 
     const delta = Number(event.currentTarget.value);
-    const classId = item.id;
-    if (!delta || !classId) {
+
+    if (!delta || !item.id) {
       return;
     }
 
-    const classItem = actor.items.get(classId);
-
+    return FoundryAdapter.changeLevel(actor, item, delta);
+  },
+  async changeLevel(actor: Actor5e, item: Item5e, delta: number) {
     if (!game.settings.get('dnd5e', 'disableAdvancements')) {
       const manager =
         dnd5e.applications.advancement.AdvancementManager.forLevelChange(
           actor,
-          classId,
+          item.id,
           delta
         );
       if (manager.steps.length) {
@@ -302,7 +303,7 @@ export const FoundryAdapter = {
         try {
           const shouldRemoveAdvancements =
             await dnd5e.applications.advancement.AdvancementConfirmationDialog.forLevelDown(
-              classItem
+              item
             );
           if (shouldRemoveAdvancements) return manager.render(true);
         } catch (err) {
@@ -311,8 +312,8 @@ export const FoundryAdapter = {
       }
     }
 
-    return classItem.update({
-      'system.levels': classItem.system.levels + delta,
+    return item.update({
+      'system.levels': item.system.levels + delta,
     });
   },
   getSpellComponentLabels() {
@@ -898,6 +899,11 @@ export const FoundryAdapter = {
   renderDeathConfig(document: any) {
     return new dnd5e.applications.actor.DeathConfig({ document }).render(true);
   },
+  renderLanguagesConfig(actor: Actor5e) {
+    new dnd5e.applications.actor.LanguagesConfig({
+      document: actor,
+    }).render({ force: true });
+  },
   renderMovementSensesConfig(document: any, type: 'movement' | 'senses') {
     return new dnd5e.applications.shared.MovementSensesConfig({
       document,
@@ -1257,8 +1263,7 @@ export const FoundryAdapter = {
   onDropStackConsumablesForActor(
     actor: Actor5e,
     itemData: any,
-    { container = null }: { container?: any | null } = {},
-    event?: DragEvent
+    { container = null }: { container?: any | null } = {}
   ): Promise<Item5e> | null {
     // TODO: Move this to the base actor sheet in app V2 when all actors go App V2.
     const droppedSourceId =

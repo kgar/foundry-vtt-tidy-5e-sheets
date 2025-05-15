@@ -52,5 +52,58 @@
   & > header {
     /* Edit Mode Toggle */
   }
-}
 
+  /*
+  .list
+    .list-entry
+      .list-label
+      .list-content
+        .list-values
+        .list-controls
+  */
+  // generic trait-like lists
+  // 👋 hightouch - I wasn't sure where to put this; temp styles to help me dev, until you're ready to implement
+  :where(.list) {
+    display: flex;
+    flex-direction: column;
+
+    :where(.list-entry) {
+      display: flex;
+
+      &.empty {
+        .list-label :is(h4, i) {
+          color: var(--t5e-color-text-lighter);
+        }
+      }
+
+      .item-image {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .list-label {
+        flex: 1;
+      }
+
+      :where(.list-content) {
+        flex: 2;
+        display: flex;
+
+        .list-values {
+          flex: 1;
+
+          display: flex;
+          align-items: center;
+
+          select {
+            width: auto;
+          }
+        }
+
+        .list-controls {
+          // TODO?
+        }
+      }
+    }
+  }
+}

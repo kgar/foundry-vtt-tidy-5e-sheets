@@ -7,6 +7,7 @@ import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
 import type {
   ActorSheetQuadroneContext,
+  ActorTraitContext,
   AttributePinContext,
   CharacterClassEntryContext,
   CharacterSheetQuadroneContext,
@@ -156,7 +157,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           }
         ),
       },
-      classes: this._getClasses(),
       conditions: conditions,
       creatureType: this._getCreatureType(),
       defenders: [],
@@ -166,8 +166,21 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
       senses: this._getSenses(),
+      size: {
+        key: this.actor.system.traits.size,
+        label:
+          CONFIG.DND5E.actorSizes[this.actor.system.traits.size]?.label ??
+          this.actor.system.traits.size,
+        abbr:
+          CONFIG.DND5E.actorSizes[this.actor.system.traits.size]
+            ?.abbreviation ?? '—',
+        mod: this.actor.system.attributes.encumbrance.mod,
+      },
+      skills: [],
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
+      tools: [],
+      ...this._getClassesAndOrphanedSubclasses(),
       ...actorContext,
     };
 
@@ -189,6 +202,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     await this._prepareFacilities(context);
 
+    context.skills = this._getSkillsToolsContext(context, 'skills');
+    context.tools = this._getSkillsToolsContext(context, 'tools');
+
     context.customContent = await CharacterSheetQuadroneRuntime.getContent(
       context
     );
@@ -203,9 +219,16 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return context;
   }
 
-  _getClasses(): CharacterClassEntryContext[] {
-    return Object.values(this.actor.classes)
-      .map((cls: Item5e) => {
+  _getClassesAndOrphanedSubclasses(): {
+    classes: CharacterClassEntryContext[];
+    orphanedSubclasses: Item5e[];
+  } {
+    const subclasses: Item5e[] = Object.values(this.actor.subclasses);
+    const classes = Object.values(this.actor.classes)
+      .map<CharacterClassEntryContext>((cls: Item5e) => {
+        const maxLevelDelta =
+          CONFIG.DND5E.maxLevel - this.actor.system.details.level;
+
         const spellcasting = cls.system.spellcasting
           ? {
               dc: cls.system.spellcasting.save,
@@ -216,14 +239,39 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             }
           : undefined;
 
+        const subclass = subclasses.findSplice(
+          (s: Item5e) => s.system.classIdentifier === cls.identifier
+        );
+
+        let needsSubclass = false;
+        if (!subclass) {
+          const subclassAdvancement = cls.advancement.byType.Subclass?.[0];
+          needsSubclass =
+            subclassAdvancement &&
+            subclassAdvancement.level <= cls.system.levels;
+        }
+
         return {
           name: cls.name,
           levels: cls.system.levels,
           isOriginalClass: cls.system.isOriginalClass,
           spellcasting,
+          item: cls,
+          img: cls.img,
+          availableLevels: Array.fromRange(CONFIG.DND5E.maxLevel + 1)
+            .slice(1)
+            .map((level) => {
+              const delta = level - cls.system.levels;
+              return { level, delta, disabled: delta > maxLevelDelta };
+            }),
+          uuid: cls.uuid,
+          subclass,
+          needsSubclass,
         };
       })
       .toSorted((left, right) => right.levels - left.levels);
+
+    return { classes, orphanedSubclasses: subclasses };
   }
 
   _getCreatureType(): CreatureTypeContext {
@@ -279,6 +327,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return {
       main: main,
       secondary: senses,
+      traitEntries: [...main, ...senses],
     };
   }
 
@@ -322,9 +371,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       });
     }
 
+    const main = speeds.slice(0, 2);
+    const secondary = speeds.slice(2);
     return {
-      main: speeds.slice(0, 2),
-      secondary: speeds.slice(2),
+      main: main,
+      secondary: secondary,
+      traitEntries: [...main, ...secondary],
     };
   }
 
@@ -533,7 +585,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       renderData ?? {},
       'system.attributes.hp.value'
     );
-    
+
     if (isUpdate && hp === 0) {
       this._showDeathSaves = context.showDeathSaves = true;
     }
@@ -542,5 +594,59 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   toggleDeathSaves(force?: boolean) {
     this._showDeathSaves = force ?? !this._showDeathSaves;
     this.render();
+  }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  /**
+   * Handle finding an available item of a given type.
+   */
+  async findItem(args: {
+    event: Event;
+    type: string;
+    classIdentifier?: string;
+    facilityType?: string;
+  }) {
+    const { event, classIdentifier, facilityType, type } = args;
+
+    const filters: Record<string, any> = {
+      locked: { types: new Set([type]) },
+    };
+
+    if (classIdentifier) {
+      filters.locked.additional = { class: { [classIdentifier]: 1 } };
+    }
+
+    if (type === 'class') {
+      const existingIdentifiers = new Set(Object.keys(this.actor.classes));
+      filters.locked.arbitrary = [
+        {
+          o: 'NOT',
+          v: { k: 'system.identifier', o: 'in', v: existingIdentifiers },
+        },
+      ];
+    }
+
+    if (type === 'facility' && facilityType) {
+      const otherType = facilityType === 'basic' ? 'special' : 'basic';
+      filters.locked.additional = {
+        type: { [facilityType]: 1, [otherType]: -1 },
+        level: { max: this.actor.system.details.level },
+      };
+    }
+
+    let result = await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters,
+    });
+
+    if (result) {
+      this._onDropItemCreate(
+        game.items.fromCompendium(await fromUuid(result), { keepId: true }),
+        event,
+        'copy'
+      );
+    }
   }
 }

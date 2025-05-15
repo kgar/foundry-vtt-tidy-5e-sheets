@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import type { SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -17,14 +18,14 @@ import type {
   ActorAbilityContextEntry,
   ActorSaves,
   ActorSheetQuadroneContext,
-  DamageModificationContextEntry,
-  DamageModificationData,
+  ActorSkillsToolsContext as ActorSkillsToolsContext,
+  ActorTraitContext,
   SpecialTraitSectionField,
 } from 'src/types/types';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
-import { debug, error } from 'src/utils/logging';
+import { getModifierData } from 'src/utils/formatting';
 import { firstOfSet } from 'src/utils/set';
 
 /*
@@ -208,7 +209,7 @@ export function Tidy5eActorSheetQuadroneBase<
         system: this.actor.system,
         tabs: [],
         token: this.token,
-        traits: this._prepareTraits(this.actor.system),
+        traits: this._prepareTraits(),
         warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
         ...documentSheetContext,
       };
@@ -223,9 +224,6 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Concentration
       this._applyConcentration(context);
-
-      // Damage Modification
-      this._applyDamageModifications(context);
 
       return context;
     }
@@ -381,101 +379,142 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /**
-     * Prepare the data structure for traits data like languages, resistances & vulnerabilities, and proficiencies.
-     * @param {object} systemData  System data for the Actor being prepared.
-     * @returns {object}           Prepared trait data.
+     * Prepare actor traits for display.
+     * @param {ApplicationRenderContext} context  Context being prepared.
+     * @returns {Record<string, object[]>}
      * @protected
      */
-    _prepareTraits(systemData: any) {
-      // TODO: strongly type this
-      const traits: Record<string, any> = {};
-      for (const [trait, traitConfig] of Object.entries(CONFIG.DND5E.traits)) {
-        if (trait === 'dm') continue;
-        const key =
-          // @ts-expect-error
-          traitConfig.actorKeyPath?.replace('system.', '') ?? `traits.${trait}`;
+    _prepareTraits(): Record<string, ActorTraitContext[]> {
+      // TODO: Account for sign and units where applicable
+      const traits: Record<string, ActorTraitContext[]> = {};
+      for (const [trait, config] of Object.entries(CONFIG.DND5E.traits)) {
+        const actorKeyPath =
+          'actorKeyPath' in config ? config.actorKeyPath : undefined;
+        const key = actorKeyPath ?? `system.traits.${trait}`;
         const data = foundry.utils.deepClone(
-          foundry.utils.getProperty(systemData, key)
+          foundry.utils.getProperty(this.actor, key)
         );
-
-        if (!data) {
-          continue;
-        }
-
-        foundry.utils.setProperty(traits, key, data);
+        if (['dm', 'languages'].includes(trait) || !data) continue;
 
         let values = data.value;
-
         if (!values) {
           values = [];
         } else if (values instanceof Set) {
           values = Array.from(values);
-        } else if (!Array.isArray(values)) {
-          values = [values];
-        }
-
-        // Split physical damage types from others if bypasses is set
-        const physical: string[] = [];
-        if (data.bypasses?.size) {
-          values = values.filter((t: string) => {
-            if (!CONFIG.DND5E.damageTypes[t]?.isPhysical) return true;
-            physical.push(t);
-            return false;
-          });
-        }
-
-        data.selected = values.reduce(
-          (obj: Record<string, string>, key: string) => {
-            obj[key] = dnd5e.documents.Trait.keyLabel(key, { trait }) ?? key;
-            return obj;
-          },
-          {} as Record<string, string>
-        );
-
-        // Display bypassed damage types
-        if (physical.length) {
-          const damageTypesFormatter = new Intl.ListFormat(game.i18n.lang, {
-            style: 'long',
-            type: 'conjunction',
-          });
-          const bypassFormatter = new Intl.ListFormat(game.i18n.lang, {
-            style: 'long',
-            type: 'disjunction',
-          });
-          data.selected.physical = game.i18n.format(
-            'DND5E.DamagePhysicalBypasses',
-            {
-              damageTypes: damageTypesFormatter.format(
-                physical.map((t) =>
-                  dnd5e.documents.Trait.keyLabel(t, { trait })
-                )
-              ),
-              bypassTypes: bypassFormatter.format(
-                data.bypasses.reduce((acc: string[], t: string) => {
-                  const v = CONFIG.DND5E.itemProperties[t];
-                  if (v && v.isPhysical) acc.push(v.label);
-                  return acc;
-                }, [])
-              ),
-            }
-          );
-        }
-
-        // Add custom entries
+        } else if (!Array.isArray(values)) values = [values];
+        values = values.map((key: string) => {
+          const value: {
+            key: string;
+            label: string;
+            icons: { icon: string; label: string }[];
+          } = {
+            key,
+            label: dnd5e.documents.Trait.keyLabel(key, { trait }) ?? key,
+            icons: [],
+          };
+          const icons = value.icons;
+          if (data.bypasses?.size && CONFIG.DND5E.damageTypes[key]?.isPhysical)
+            icons.push(
+              ...data.bypasses.map((p: string) => {
+                const type = CONFIG.DND5E.itemProperties[p]?.label;
+                return {
+                  icon: p,
+                  label: game.i18n.format('DND5E.DamagePhysicalBypassesShort', {
+                    type,
+                  }),
+                };
+              })
+            );
+          return value;
+        });
         if (data.custom)
-          splitSemicolons(data.custom).forEach(
-            (c, i) => (data.selected[`custom${i + 1}`] = c)
+          splitSemicolons(data.custom).forEach((label) =>
+            values.push({ label })
           );
-        data.cssClass = !foundry.utils.isEmpty(data.selected) ? '' : 'inactive';
+        if (values.length) traits[trait] = values;
+      }
 
-        // If petrified, display "All Damage" instead of all damage types separately
-        if (
-          trait === 'dr' &&
-          this.document.hasConditionEffect('petrification')
-        ) {
-          data.selected = { custom1: game.i18n.localize('DND5E.DamageAll') };
-          data.cssClass = '';
+      // If petrified, display "All Damage" instead of all damage types separately
+      if (this.document.hasConditionEffect('petrification')) {
+        traits.dr = [{ label: game.i18n.localize('DND5E.DamageAll') }];
+      }
+
+      // Prepare damage modifications
+      const dm = this.actor.system.traits?.dm;
+      if (dm) {
+        const rollData = this.actor.getRollData({ deterministic: true });
+        const values = Object.entries(dm.amount)
+          .map(([k, v]) => {
+            const total = dnd5e.utils.simplifyBonus(v, rollData);
+            if (!total) return null;
+            const mod = getModifierData(total);
+            const value: {
+              label: string;
+              cssClass: string;
+              icons: { icon: string; label: string }[];
+              value: string;
+              sign: string;
+            } = {
+              label: `${CONFIG.DND5E.damageTypes[k]?.label ?? k}`,
+              sign: mod.sign,
+              value: mod.value,
+              cssClass: total > 0 ? 'negative' : 'positive',
+              icons: [],
+            };
+            const icons = value.icons;
+            if (dm.bypasses.size && CONFIG.DND5E.damageTypes[k]?.isPhysical)
+              icons.push(
+                ...dm.bypasses.map((p: string) => {
+                  const type = CONFIG.DND5E.itemProperties[p]?.label;
+                  return {
+                    icon: p,
+                    label: game.i18n.format(
+                      'DND5E.DamagePhysicalBypassesShort',
+                      { type }
+                    ),
+                  };
+                })
+              );
+            return value;
+          })
+          .filter((f) => !!f);
+
+        if (values.length) traits.dm = values;
+      }
+
+      // Prepare languages
+      const languages = this.actor.system.traits?.languages?.labels;
+      if (languages?.languages?.length)
+        traits.languages = languages.languages.map((label: string) => ({
+          label,
+        }));
+      for (const [key, { label }] of Object.entries(
+        CONFIG.DND5E.communicationTypes
+      )) {
+        const data = this.actor.system.traits?.languages?.communication?.[key];
+        if (!data?.value) continue;
+        traits.languages ??= [];
+        traits.languages.push({ label, value: data.value });
+      }
+
+      // Display weapon masteries
+      for (const key of this.actor.system.traits?.weaponProf?.mastery?.value ??
+        []) {
+        let value = traits.weapon?.find((w) => w.key === key);
+        if (!value) {
+          value = {
+            key,
+            label:
+              dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key,
+            icons: [],
+          };
+          traits.weapon ??= [];
+          traits.weapon.push(value);
         }
+        (value.icons ??= []).push({
+          icon: 'mastery',
+          label: game.i18n.format('DND5E.WEAPON.Mastery.Label'),
+        });
       }
 
       return traits;
@@ -483,50 +522,37 @@ export function Tidy5eActorSheetQuadroneBase<
 
     /* -------------------------------------------- */
 
-    _applyDamageModifications(context: ActorSheetQuadroneContext) {
-      try {
-        const dm: DamageModificationData | undefined =
-          context.actor.system.traits?.dm;
-        if (dm) {
-          const rollData = context.actor.getRollData({ deterministic: true });
-          const mods = Object.entries(dm.amount)
-            .map(([key, value]) => {
-              const total = dnd5e.utils.simplifyBonus(value, rollData);
-              if (!total) return null;
-
-              const damageType =
-                CONFIG.DND5E.damageTypes[
-                  key as keyof typeof CONFIG.DND5E.damageTypes
-                ] ?? {};
-
-              const mod: DamageModificationContextEntry = {
-                label: `${damageType?.label ?? key} ${dnd5e.utils.formatNumber(
-                  total,
-                  { signDisplay: 'always' }
-                )}`,
-                consequence: total > 0 ? 'detriment' : 'benefit',
-              };
-              const icons: string[] = (mod.icons = []);
-              if (
-                dm.bypasses.size &&
-                'isPhysical' in damageType &&
-                damageType?.isPhysical
-              )
-                icons.push(...dm.bypasses);
-              return mod;
-            })
-            .filter((f) => f);
-
-          context.traits.traits.dm = mods;
-        }
-      } catch (e) {
-        error(
-          'An error occurred while preparing Damage Modification data',
-          false,
-          e
-        );
-        debug('Damage Modification error troubleshooting info', { context });
-      }
+    /**
+     * Prepare actor skills or tools for display.
+     * @param context     Context being prepared.
+     * @param property    Type of data being prepared.
+     */
+    _getSkillsToolsContext<T extends 'skills' | 'tools'>(
+      context: ActorSheetQuadroneContext,
+      property: T
+    ): (T extends 'skills'
+      ? ActorSkillsToolsContext<SkillData>
+      : ActorSkillsToolsContext<ToolData>)[] {
+      const baseAbility = (key: string) => {
+        let src = context.source[property]?.[key]?.ability;
+        if (src) return src;
+        if (property === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
+        return src ?? 'int';
+      };
+      return Object.entries(context.system[property] ?? {}).map(
+        ([key, entry]: [string, any]) => ({
+          ...entry,
+          key,
+          abbreviation: CONFIG.DND5E.abilities[entry.ability]?.abbreviation,
+          baseAbility: baseAbility(key),
+          hover: CONFIG.DND5E.proficiencyLevels[entry.value],
+          label:
+            property === 'skills'
+              ? CONFIG.DND5E.skills[key]?.label
+              : dnd5e.documents.Trait.keyLabel(key, { trait: 'tool' }),
+          source: context.source[property]?.[key],
+        })
+      );
     }
 
     /* -------------------------------------------- */
@@ -794,8 +820,8 @@ export function Tidy5eActorSheetQuadroneBase<
      * Handle the final creation of dropped Item data on the Actor.
      */
     async _onDropItemCreate(
-      itemData: Item5e[] | Item5e,
-      event: DragEvent,
+      itemData: Item5e[] | Item5e | object,
+      event: Event,
       behavior?: DropEffectValue
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
@@ -824,7 +850,7 @@ export function Tidy5eActorSheetQuadroneBase<
       // Create the owned items & contents as normal
       const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
         transformFirst: (item: Item5e) =>
-          this._onDropSingleItem(item.toObject(), event),
+          this._onDropSingleItem(item.toObject?.() ?? item, event),
       });
 
       const created = await dnd5e.documents.Item5e.createDocuments(toCreate, {
@@ -849,7 +875,7 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     async _onDropSingleItem(
       itemData: any,
-      event: DragEvent
+      event: Event
     ): Promise<object | boolean> {
       const unsupportedItemTypes: Set<string> =
         //@ts-expect-error
@@ -899,7 +925,7 @@ export function Tidy5eActorSheetQuadroneBase<
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData, {}, event);
+      const stacked = this._onDropStackConsumables(itemData, {});
 
       if (stacked) {
         return false;
@@ -932,7 +958,7 @@ export function Tidy5eActorSheetQuadroneBase<
         }
 
         const manager =
-          dnd5e.applications.advacement.AdvancementManager.forNewItem(
+          dnd5e.applications.advancement.AdvancementManager.forNewItem(
             this.actor,
             itemData
           );
@@ -956,14 +982,12 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     _onDropStackConsumables(
       itemData: any,
-      { container = null } = {},
-      event: DragEvent
+      { container = null } = {}
     ): Promise<Item5e> | null {
       return FoundryAdapter.onDropStackConsumablesForActor(
         this.actor,
         itemData,
-        { container },
-        event
+        { container }
       );
     }
 
@@ -981,7 +1005,7 @@ export function Tidy5eActorSheetQuadroneBase<
     /**
      * Adjust the preparation mode of a dropped spell depending on the drop location on the sheet.
      */
-    _onDropSpell(itemData: any, event: DragEvent) {
+    _onDropSpell(itemData: any, event: Event) {
       if (
         ![CONSTANTS.SHEET_TYPE_NPC, CONSTANTS.SHEET_TYPE_CHARACTER].includes(
           this.document.type

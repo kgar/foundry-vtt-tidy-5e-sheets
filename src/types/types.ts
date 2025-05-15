@@ -13,10 +13,12 @@ import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type { Activity5e } from 'src/foundry/dnd5e.types';
+import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
+import type { ClassValue } from 'svelte/elements';
+import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -906,9 +908,26 @@ export type DocumentSheetQuadroneContext<TDocument> = {
   user: any;
 };
 
-export type ActorSheetQuadroneContext = {
+export type ActorSizeContext = {
+  key: string;
+  label: string;
+  abbr: string;
+  mod: number;
+};
+
+export type ActorTraitContext = {
+  key?: string;
+  icons?: { icon: string; label: string }[];
+  label: string;
+  sign?: string;
+  value?: unknown;
+  units?: string;
+  cssClass?: ClassValue;
+};
+
+export type ActorSheetQuadroneContext<TSheet = any> = {
   abilities: ActorAbilityContextEntry[];
-  actor: Actor5e;
+  actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
@@ -932,7 +951,7 @@ export type ActorSheetQuadroneContext = {
   system: Actor5e['system'];
   tabs: Tab[];
   token: TokenDocument | null;
-  traits: any; // TODO: Type this
+  traits: Record<string, ActorTraitContext[]>;
   warnings: DocumentPreparationWarning;
 } & DocumentSheetQuadroneContext<Actor5e>;
 
@@ -942,12 +961,13 @@ export type ActorAbilityContextEntry = Ability & {
   hover: string; // not used? probably tooltip
   icon: string; // not used? probably tooltip
   label: string; // tooltip and aria label
-  source: { value: number }; // source.value on the input
+  source: Ability; // source.value on the input
 };
 
 export type CharacterSpeedSenseContext = {
   main: CharacterSpeedSenseEntryContext[];
   secondary: CharacterSpeedSenseEntryContext[];
+  traitEntries: ActorTraitContext[];
 };
 
 export type CharacterSpeedSenseEntryContext = {
@@ -955,10 +975,13 @@ export type CharacterSpeedSenseEntryContext = {
   label: string;
   value: string;
   units: string;
-};
+} & ActorTraitContext;
 
 export type CharacterClassEntryContext = {
+  uuid: string;
   name: string;
+  img: string;
+  item: Item5e;
   levels: number;
   isOriginalClass: boolean;
   // TODO: Consider boosting so that it can be used for spellcasting cards
@@ -966,6 +989,9 @@ export type CharacterClassEntryContext = {
     dc: number;
     ability: string;
   };
+  availableLevels: AvailableClassLevel[];
+  subclass?: Item5e;
+  needsSubclass: boolean;
 };
 
 export type CreatureTypeContext = {
@@ -973,7 +999,16 @@ export type CreatureTypeContext = {
   title?: string;
   subtitle?: string;
   reference?: string;
-}
+};
+
+export type ActorSkillsToolsContext<T> = {
+  key: string;
+  abbreviation: string;
+  baseAbility: string;
+  hover: string;
+  label: string;
+  source: T;
+} & T;
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
@@ -982,6 +1017,7 @@ export type CharacterSheetQuadroneContext = {
     description: string;
   };
   classes: CharacterClassEntryContext[];
+  orphanedSubclasses: Item5e[];
   conditions: Dnd5eActorCondition[];
   creatureType: CreatureTypeContext;
   showDeathSaves: boolean;
@@ -989,20 +1025,25 @@ export type CharacterSheetQuadroneContext = {
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   senses: CharacterSpeedSenseContext;
+  size: ActorSizeContext;
+  skills: ActorSkillsToolsContext<SkillData>[];
+  tools: ActorSkillsToolsContext<ToolData>[];
   speeds: CharacterSpeedSenseContext;
-} & ActorSheetQuadroneContext;
+} & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & ActorSheetQuadroneContext;
+  skills: ActorSkillsToolsContext<SkillData>[];
+  tools: ActorSkillsToolsContext<ToolData>[];
+} & ActorSheetQuadroneContext<unknown>;
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & ActorSheetQuadroneContext;
+} & ActorSheetQuadroneContext<unknown>;
 
 export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & ActorSheetQuadroneContext;
+} & ActorSheetQuadroneContext<unknown>;
 
 /* Misc - Svelte */
 

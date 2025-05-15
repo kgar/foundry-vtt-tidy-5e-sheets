@@ -325,7 +325,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData, {}, event);
+      const stacked = this._onDropStackConsumables(itemData, {});
       if (stacked) return false;
 
       // Bypass normal creation flow for any items with advancement
@@ -359,7 +359,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         }
 
         const manager =
-          dnd5e.applications.advacement.AdvancementManager.forNewItem(
+          dnd5e.applications.advancement.AdvancementManager.forNewItem(
             this.actor,
             itemData
           );
@@ -380,14 +380,12 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      */
     _onDropStackConsumables(
       itemData: any,
-      { container = null } = {},
-      event: DragEvent
+      { container = null } = {}
     ): Promise<Item5e> | null {
       return FoundryAdapter.onDropStackConsumablesForActor(
         this.actor,
         itemData,
-        { container },
-        event
+        { container }
       );
     }
 

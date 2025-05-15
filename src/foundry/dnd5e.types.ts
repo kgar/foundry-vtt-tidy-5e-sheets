@@ -1,3 +1,53 @@
+/* Actors */
+
+export type RollConfigField = {
+  ability: string;
+  roll: {
+    min: number;
+    max: number;
+    mode: number;
+  };
+};
+
+export type ActorProficiency = {
+  deterministic: boolean;
+  multiplier: number;
+  rounding: string;
+  _baseProficiency: number;
+  dice: string;
+  flag: number;
+  hasProficiency: boolean;
+  term: string;
+};
+
+export type ToolData = {
+  value: number;
+  ability: string;
+  bonuses: {
+    check: string;
+  };
+  effectValue: number;
+  bonus: number;
+  mod: number;
+  prof: ActorProficiency;
+  total: number;
+};
+
+export type SkillData = {
+  bonus: number;
+  bonuses: {
+    check: string;
+    passive: string;
+  };
+  effectValue: number;
+  mod: number;
+  passive: number;
+  prof: ActorProficiency;
+  proficient: number;
+  total: number; // mod + bonuses
+  value: number;
+} & RollConfigField;
+
 export type CharacterFavorite = {
   type: 'item' | 'effect' | 'activity';
   sort: number;

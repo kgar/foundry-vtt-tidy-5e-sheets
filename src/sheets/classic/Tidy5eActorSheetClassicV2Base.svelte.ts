@@ -1367,7 +1367,7 @@ export function Tidy5eActorSheetClassicV2Base<
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData, {}, event);
+      const stacked = this._onDropStackConsumables(itemData, {});
 
       if (stacked) {
         return false;
@@ -1400,7 +1400,7 @@ export function Tidy5eActorSheetClassicV2Base<
         }
 
         const manager =
-          dnd5e.applications.advacement.AdvancementManager.forNewItem(
+          dnd5e.applications.advancement.AdvancementManager.forNewItem(
             this.actor,
             itemData
           );
@@ -1424,14 +1424,12 @@ export function Tidy5eActorSheetClassicV2Base<
      */
     _onDropStackConsumables(
       itemData: any,
-      { container = null } = {},
-      event: DragEvent
+      { container = null } = {}
     ): Promise<Item5e> | null {
       return FoundryAdapter.onDropStackConsumablesForActor(
         this.actor,
         itemData,
-        { container },
-        event
+        { container }
       );
     }
 
