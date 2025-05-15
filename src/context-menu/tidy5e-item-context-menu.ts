@@ -13,6 +13,7 @@ import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import { isNil } from 'src/utils/data';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 export function configureItemContextMenu(element: HTMLElement, app: any) {
   const id = element.closest('[data-item-id]')?.getAttribute('data-item-id');
@@ -382,6 +383,7 @@ export function getItemContextOptions(
       ).render(true),
     condition: () =>
       item.isOwner &&
+      SheetSections.itemSupportsCustomSections(item.type) &&
       app.currentTabId !== CONSTANTS.TAB_ACTOR_ACTIONS &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'sections',
@@ -398,6 +400,7 @@ export function getItemContextOptions(
       ).render(true),
     condition: () =>
       item.isOwner &&
+      SheetSections.itemSupportsCustomSections(item.type) &&
       app.currentTabId === CONSTANTS.TAB_ACTOR_ACTIONS &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'sections',
