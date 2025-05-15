@@ -487,7 +487,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         }
 
         const manager =
-          dnd5e.applications.advacement.AdvancementManager.forNewItem(
+          dnd5e.applications.advancement.AdvancementManager.forNewItem(
             this.actor,
             itemData
           );
