@@ -860,5 +860,6 @@
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Scheda Contenitore Tidy 5e",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Scheda Personaggio Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Lanciato al {ordinal}",
-    "TIDY5E.AddSpecific": "Aggiungi {name}"
+    "TIDY5E.AddSpecific": "Aggiungi {name}",
+    "TIDY5E.Ability.EditScore.label": "Modifica punteggio"
 }
