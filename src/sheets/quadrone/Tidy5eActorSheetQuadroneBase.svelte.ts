@@ -20,15 +20,12 @@ import type {
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorTraitContext,
-  DamageModificationContextEntry,
-  DamageModificationData,
   SpecialTraitSectionField,
 } from 'src/types/types';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
-import { debug, error } from 'src/utils/logging';
 import { firstOfSet } from 'src/utils/set';
 
 /*
@@ -823,8 +820,8 @@ export function Tidy5eActorSheetQuadroneBase<
      * Handle the final creation of dropped Item data on the Actor.
      */
     async _onDropItemCreate(
-      itemData: Item5e[] | Item5e,
-      event: DragEvent,
+      itemData: Item5e[] | Item5e | object,
+      event: Event,
       behavior?: DropEffectValue
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
@@ -853,7 +850,7 @@ export function Tidy5eActorSheetQuadroneBase<
       // Create the owned items & contents as normal
       const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
         transformFirst: (item: Item5e) =>
-          this._onDropSingleItem(item.toObject(), event),
+          this._onDropSingleItem(item.toObject?.() ?? item, event),
       });
 
       const created = await dnd5e.documents.Item5e.createDocuments(toCreate, {
@@ -878,7 +875,7 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     async _onDropSingleItem(
       itemData: any,
-      event: DragEvent
+      event: Event
     ): Promise<object | boolean> {
       const unsupportedItemTypes: Set<string> =
         //@ts-expect-error
@@ -928,7 +925,7 @@ export function Tidy5eActorSheetQuadroneBase<
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData, {}, event);
+      const stacked = this._onDropStackConsumables(itemData, {});
 
       if (stacked) {
         return false;
@@ -985,14 +982,12 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     _onDropStackConsumables(
       itemData: any,
-      { container = null } = {},
-      event: DragEvent
+      { container = null } = {}
     ): Promise<Item5e> | null {
       return FoundryAdapter.onDropStackConsumablesForActor(
         this.actor,
         itemData,
-        { container },
-        event
+        { container }
       );
     }
 
@@ -1010,7 +1005,7 @@ export function Tidy5eActorSheetQuadroneBase<
     /**
      * Adjust the preparation mode of a dropped spell depending on the drop location on the sheet.
      */
-    _onDropSpell(itemData: any, event: DragEvent) {
+    _onDropSpell(itemData: any, event: Event) {
       if (
         ![CONSTANTS.SHEET_TYPE_NPC, CONSTANTS.SHEET_TYPE_CHARACTER].includes(
           this.document.type

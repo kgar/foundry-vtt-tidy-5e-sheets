@@ -41,7 +41,7 @@
 
 <button
   type="button"
-  class={['button', 'borderless-button', 'skill', classValue]}
+  class={['button', 'button-borderless', 'proficiency', classValue]}
   {...rest}
   onclick={() => step(true)}
   oncontextmenu={() => step(false)}

@@ -18,6 +18,7 @@ import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue } from 'svelte/elements';
+import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -924,9 +925,9 @@ export type ActorTraitContext = {
   cssClass?: ClassValue;
 };
 
-export type ActorSheetQuadroneContext = {
+export type ActorSheetQuadroneContext<TSheet = any> = {
   abilities: ActorAbilityContextEntry[];
-  actor: Actor5e;
+  actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
@@ -960,7 +961,7 @@ export type ActorAbilityContextEntry = Ability & {
   hover: string; // not used? probably tooltip
   icon: string; // not used? probably tooltip
   label: string; // tooltip and aria label
-  source: { value: number }; // source.value on the input
+  source: Ability; // source.value on the input
 };
 
 export type CharacterSpeedSenseContext = {
@@ -1028,21 +1029,21 @@ export type CharacterSheetQuadroneContext = {
   skills: ActorSkillsToolsContext<SkillData>[];
   tools: ActorSkillsToolsContext<ToolData>[];
   speeds: CharacterSpeedSenseContext;
-} & ActorSheetQuadroneContext;
+} & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   skills: ActorSkillsToolsContext<SkillData>[];
   tools: ActorSkillsToolsContext<ToolData>[];
-} & ActorSheetQuadroneContext;
+} & ActorSheetQuadroneContext<unknown>;
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & ActorSheetQuadroneContext;
+} & ActorSheetQuadroneContext<unknown>;
 
 export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-} & ActorSheetQuadroneContext;
+} & ActorSheetQuadroneContext<unknown>;
 
 /* Misc - Svelte */
 

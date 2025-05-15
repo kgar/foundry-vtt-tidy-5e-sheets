@@ -595,4 +595,58 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     this._showDeathSaves = force ?? !this._showDeathSaves;
     this.render();
   }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  /**
+   * Handle finding an available item of a given type.
+   */
+  async findItem(args: {
+    event: Event;
+    type: string;
+    classIdentifier?: string;
+    facilityType?: string;
+  }) {
+    const { event, classIdentifier, facilityType, type } = args;
+
+    const filters: Record<string, any> = {
+      locked: { types: new Set([type]) },
+    };
+
+    if (classIdentifier) {
+      filters.locked.additional = { class: { [classIdentifier]: 1 } };
+    }
+
+    if (type === 'class') {
+      const existingIdentifiers = new Set(Object.keys(this.actor.classes));
+      filters.locked.arbitrary = [
+        {
+          o: 'NOT',
+          v: { k: 'system.identifier', o: 'in', v: existingIdentifiers },
+        },
+      ];
+    }
+
+    if (type === 'facility' && facilityType) {
+      const otherType = facilityType === 'basic' ? 'special' : 'basic';
+      filters.locked.additional = {
+        type: { [facilityType]: 1, [otherType]: -1 },
+        level: { max: this.actor.system.details.level },
+      };
+    }
+
+    let result = await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters,
+    });
+
+    if (result) {
+      this._onDropItemCreate(
+        game.items.fromCompendium(await fromUuid(result), { keepId: true }),
+        event,
+        'copy'
+      );
+    }
+  }
 }

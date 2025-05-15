@@ -28,7 +28,7 @@
     <span>{localize('TYPES.Item.toolPl')}</span>
     <button
       type="button"
-      class="button borderless-button button-icon-only"
+      class="button button-borderless button-icon-only"
       onclick={(ev) => FoundryAdapter.renderToolsConfig(context.actor)}
     >
       <i class="fa-solid fa-cog"></i>
@@ -68,7 +68,7 @@
           {/if}
           <button
             type="button"
-            class="button borderless-button skill-roll-button"
+            class="button button-borderless skill-roll-button"
             onclick={(event) =>
               context.actor.rollToolCheck({ tool: tool.key, event })}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
@@ -86,7 +86,7 @@
           {#if context.unlocked}
             <button
               type="button"
-              class="button borderless-button button-icon-only"
+              class="button button-borderless button-icon-only"
               onclick={(ev) =>
                 FoundryAdapter.renderSkillToolConfig(
                   context.actor,

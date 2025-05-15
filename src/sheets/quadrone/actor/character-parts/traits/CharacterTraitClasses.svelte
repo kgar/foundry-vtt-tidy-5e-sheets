@@ -40,7 +40,11 @@
 {@render subclassRow(firstClass)}
 
 {#each restClasses as cls (cls.uuid)}
-  <div class="list-entry">
+  <div
+    class="list-entry"
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+    data-item-id={cls?.item?.id}
+  >
     <div class="list-label"></div>
     {@render classValueControls(cls)}
   </div>
@@ -66,7 +70,10 @@
         class="button button-borderless button-icon-only"
         data-tooltip="DND5E.ClassAdd"
         onclick={(ev) =>
-          FoundryAdapter.showClassCompendiumBrowser(context.actor)}
+          context.actor.sheet.findItem({
+            event: ev,
+            type: 'class',
+          })}
       >
         <i class="fa-solid fa-book-open-reader"></i>
       </button>
@@ -92,22 +99,23 @@
           aria-label={localize('DND5E.ClassOriginal')}
         ></i>
       {/if}
-      {#if context.unlocked}
-        <LevelUpDropdown
-          availableLevels={cls.availableLevels}
-          item={cls.item}
-          class="level-selector"
-        />
-      {:else}
-        <span class="trait-class-level">
+      {#if !context.unlocked}
+        <span class="trait-class-level text-color-lighter">
           {@html localize('DND5E.LevelNumber', {
-            level: `<span class="font-weight-label">${cls.levels}</span>`,
+            level: `<span class="font-weight-label text-color-default">${cls.levels}</span>`,
           })}
         </span>
       {/if}
     {/if}
   </div>
   {#if context.unlocked && cls}
+    {#if context.unlocked}
+      <LevelUpDropdown
+        availableLevels={cls.availableLevels}
+        item={cls.item}
+        class="level-selector flex0"
+      />
+    {/if}
     <div class="list-controls">
       <button
         type="button"
@@ -160,7 +168,10 @@
       {#if !orphaned}
         <i class="fa-solid fa-arrow-turn-down-right"></i>
       {:else}
-        <i class="fa-solid fa-link-slash"></i>
+        <i
+          data-tooltip="DND5E.SubclassMismatchWarn"
+          class="fa-solid fa-link-slash"
+        ></i>
       {/if}
       <img src={subclass.img} alt={subclass.name} class="item-image flex0" />
       <span class="trait-name">
@@ -204,7 +215,7 @@
           FoundryAdapter.createItem(
             {
               type: 'subclass',
-              identifier: cls.system.identifier,
+              system: { classIdentifier: cls.system.identifier },
             },
             context.actor,
           )}
@@ -214,8 +225,12 @@
       <button
         type="button"
         class="button button-borderless button-icon-only"
-        onclick={() =>
-          FoundryAdapter.showSubclassCompendiumBrowser(context.actor)}
+        onclick={async (ev) =>
+          await context.actor.sheet.findItem({
+            event: ev,
+            type: 'subclass',
+            classIdentifier: cls.system.identifier,
+          })}
       >
         <i class="fa-solid fa-book-open-reader"></i>
       </button>

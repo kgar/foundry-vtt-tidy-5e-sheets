@@ -36,7 +36,7 @@
     <i class="fa-solid fa-briefcase color-text-lightest"></i>
     <button
       type="button"
-      class={['button borderless-button skill-expand-button']}
+      class={['button button-borderless skill-expand-button']}
       onclick={async () => {
         const newValue = !expanded;
         expanded = newValue;
@@ -48,15 +48,15 @@
       {localize('DND5E.Skills')}
       <i class={['fa-solid', 'fa-angle-right', { expanded }]}></i>
     </button>
-    <span class="modifier-passive-label">
-      {localize('DND5E.Modifier')} /
-      {localize('DND5E.Passive')}
-    </span>
   </h3>
+  <span class="modifier-passive-label color-text-lightest">
+    {localize('DND5E.Modifier')} /
+    {localize('DND5E.Passive')}
+  </span>
   {#if skills.length}
     <ul>
       {#each skills as skill (skill.key)}
-        {@const modTotal = getModifierData(skill.total)}
+        {@const modifier = getModifierData(skill.total)}
         <li>
           <ProficiencyCycle
             actor={context.actor}
@@ -86,7 +86,7 @@
           {/if}
           <button
             type="button"
-            class="button borderless-button skill-roll-button"
+            class="button button-borderless skill-roll-button"
             onclick={(event) =>
               context.actor.rollSkill({ skill: skill.key, event })}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
@@ -95,16 +95,16 @@
           </button>
           <span class="modifier">
             <span class="color-text-lightest">
-              {modTotal.sign}
+              {modifier.sign}
             </span>
             <span>
-              {modTotal.value}
+              {modifier.value}
             </span>
           </span>
           {#if context.unlocked}
             <button
               type="button"
-              class="button borderless-button button-icon-only"
+              class="button button-borderless button-icon-only"
               onclick={(ev) =>
                 FoundryAdapter.renderSkillToolConfig(
                   context.actor,

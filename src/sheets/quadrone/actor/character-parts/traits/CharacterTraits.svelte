@@ -15,9 +15,12 @@
 
 <section class="character-traits">
   <div class="flexrow space-between">
-    <h3 class="font-title-small">
-      {localize('TIDY5E.CharacterTraits.Title')}
-    </h3>
+    <div>
+      <h3 class="font-title-small">
+        {localize('TIDY5E.CharacterTraits.Title')}
+      </h3>
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </div>
     {#if context.unlocked}
       <button
         type="button"
@@ -29,12 +32,46 @@
       </button>
     {/if}
   </div>
-  <tidy-gold-header-underline></tidy-gold-header-underline>
 
   <div class="list">
     <CharacterTraitClasses />
 
     <CharacterTraitSpecies />
+
+    <div class="list-entry">
+      <div class="list-label">
+        <h4>
+          {localize('DND5E.CreatureType')}
+        </h4>
+      </div>
+      <div class="list-values">
+        {#if context.system.details.race}
+          <i class="fa-solid fa-arrow-turn-down-right"></i>
+        {/if}
+
+        <span class="trait-name">
+          {context.creatureType.title}
+        </span>
+        {#if context.creatureType.subtitle}
+          <span class="font-weight-default color-text-lighter">
+            {context.creatureType.subtitle}
+          </span>
+        {/if}
+      </div>
+      {#if context.unlocked && context.system.details.race}
+        <div class="list-controls">
+          <button
+            type="button"
+            class="button button-borderless button-icon-only"
+            data-tooltip="DND5E.ItemEdit"
+            onclick={() =>
+              FoundryAdapter.renderCreatureTypeConfig(context.actor)}
+          >
+            <i class="fa-solid fa-edit"></i>
+          </button>
+        </div>
+      {/if}
+    </div>
 
     <CharacterTraitBackground />
 

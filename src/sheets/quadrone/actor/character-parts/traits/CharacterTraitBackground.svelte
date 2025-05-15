@@ -8,22 +8,15 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="list-entry">
+<div
+  class="list-entry"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+  data-item-id={context.system.details.background?.id}
+>
   <div class="list-label">
     <h4>
       {localize('TYPES.Item.background')}
     </h4>
-    {#if context.unlocked && !context.actor.system.details.background}
-      <button
-        type="button"
-        class="button button-borderless button-icon-only"
-        data-tooltip="DND5E.BackgroundAdd"
-        onclick={() =>
-          FoundryAdapter.showBackgroundCompendiumBrowser(context.actor)}
-      >
-        <i class="fa-solid fa-plus"></i>
-      </button>
-    {/if}
   </div>
   <div class="list-values">
     {#if context.actor.system.details.background}
@@ -53,6 +46,30 @@
           {context.creatureType.subtitle}
         </span>
       {/if}
+    {:else if context.unlocked}
+      <div class="list-values">
+        <button
+          type="button"
+          class="button button-borderless"
+          data-tooltip="DND5E.BackgroundAdd"
+          onclick={(ev) =>
+            FoundryAdapter.createItem({ type: 'background' }, context.actor)}
+        >
+          {localize('DND5E.BackgroundAdd')}
+        </button>
+        <button
+          type="button"
+          class="button button-borderless button-icon-only"
+          data-tooltip="DND5E.BackgroundAdd"
+          onclick={(ev) =>
+            context.actor.sheet.findItem({
+              event: ev,
+              type: 'background',
+            })}
+        >
+          <i class="fa-solid fa-book-open-reader"></i>
+        </button>
+      </div>
     {/if}
   </div>
 </div>

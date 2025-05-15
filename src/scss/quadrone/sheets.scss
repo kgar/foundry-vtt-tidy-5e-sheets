@@ -55,7 +55,7 @@
 
   // generic trait-like lists
   // 👋 hightouch - I wasn't sure where to put this; temp styles to help me dev, until you're ready to implement
-  .list {
+  :where(.list) {
     display: flex;
     flex-direction: column;
 

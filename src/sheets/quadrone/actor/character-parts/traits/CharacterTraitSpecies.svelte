@@ -3,7 +3,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { EventHelper } from 'src/utils/events';
-  
+
   let context = $derived(getCharacterSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
@@ -18,35 +18,39 @@
     <h4>
       {localize('TYPES.Item.race')}
     </h4>
-    {#if context.unlocked && !context.system.details.race}
-      <button
-        type="button"
-        class="button button-borderless button-icon-only"
-        data-tooltip="DND5E.Species.Add"
-        onclick={(ev) =>
-          FoundryAdapter.showSpeciesCompendiumBrowser(context.actor)}
-      >
-        <i class="fa-solid fa-plus"></i>
-      </button>
-    {/if}
   </div>
   <div class="list-values">
     {#if context.actor.system.details.race}
       {@const species = context.actor.system.details.race}
       <img src={species.img} alt={species.name} class="item-image flex0" />
 
-      <span class="font-weight-label">
+      <span class="font-weight-label trait-name">
         {species.name}
       </span>
-
-      <span class="font-weight-default color-text-lighter">
-        {context.creatureType.title}
-      </span>
-      {#if context.creatureType.subtitle}
-        <span class="font-weight-default color-text-lighter">
-          {context.creatureType.subtitle}
-        </span>
-      {/if}
+    {:else if context.unlocked}
+      <div class="list-values">
+        <button
+          type="button"
+          class="button button-borderless"
+          data-tooltip="DND5E.Species.Add"
+          onclick={(ev) =>
+            FoundryAdapter.createItem({ type: 'race' }, context.actor)}
+        >
+          {localize('DND5E.Species.Add')}
+        </button>
+        <button
+          type="button"
+          class="button button-borderless button-icon-only"
+          data-tooltip="DND5E.Species.Add"
+          onclick={(ev) =>
+            context.actor.sheet.findItem({
+              event: ev,
+              type: 'race',
+            })}
+        >
+          <i class="fa-solid fa-book-open-reader"></i>
+        </button>
+      </div>
     {/if}
   </div>
   {#if context.unlocked && context.actor.system.details.race}

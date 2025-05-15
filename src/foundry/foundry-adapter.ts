@@ -1263,8 +1263,7 @@ export const FoundryAdapter = {
   onDropStackConsumablesForActor(
     actor: Actor5e,
     itemData: any,
-    { container = null }: { container?: any | null } = {},
-    event?: DragEvent
+    { container = null }: { container?: any | null } = {}
   ): Promise<Item5e> | null {
     // TODO: Move this to the base actor sheet in app V2 when all actors go App V2.
     const droppedSourceId =
@@ -1506,67 +1505,5 @@ export const FoundryAdapter = {
       if (value) obj[k] = { label, value, unit: units.abbreviation };
       return obj;
     }, {} satisfies Record<string, SenseInfo>);
-  },
-  async showClassCompendiumBrowser(actor: Actor5e) {
-    const existingIdentifiers = new Set(Object.keys(actor.classes));
-    const arbitrary = [
-      {
-        o: 'NOT',
-        v: { k: 'system.identifier', o: 'in', v: existingIdentifiers },
-      },
-    ];
-
-    const filters = {
-      locked: {
-        types: new Set(['class']),
-        arbitrary: arbitrary,
-      },
-    };
-
-    return await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters,
-    });
-  },
-  async showSubclassCompendiumBrowser(actor: Actor5e) {
-    const existingIdentifiers = new Set(Object.keys(actor.subclasses));
-    const arbitrary = [
-      {
-        o: 'NOT',
-        v: { k: 'system.identifier', o: 'in', v: existingIdentifiers },
-      },
-    ];
-
-    const filters = {
-      locked: {
-        types: new Set(['subclass']),
-        arbitrary: arbitrary,
-      },
-    };
-
-    return await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters,
-    });
-  },
-  async showBackgroundCompendiumBrowser(actor: Actor5e) {
-    const filters = {
-      locked: {
-        types: new Set(['background']),
-      },
-    };
-
-    return await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters,
-    });
-  },
-  async showSpeciesCompendiumBrowser(actor: Actor5e) {
-    const filters = {
-      locked: {
-        types: new Set(['race']),
-      },
-    };
-
-    return await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters,
-    });
   },
 };

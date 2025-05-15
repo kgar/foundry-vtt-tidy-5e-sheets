@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import ActorTraitPills from '../parts/ActorTraitPills.svelte';
+  import ActorTraitPills from 'src/sheets/quadrone/actor/parts/ActorTraitPills.svelte';
   import type { ActorTraitContext } from 'src/types/types';
   import type { ClassValue } from 'svelte/elements';
 
