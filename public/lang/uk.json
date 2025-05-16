@@ -853,5 +853,7 @@
     "TIDY5E.Ability.EditScore.label": "Редагувати партитуру",
     "TIDY5E.HitDice.Max.Label": "Кубики максимального влучання",
     "TIDY5E.HitDice.Abbreviation": "HD",
-    "TIDY5E.HitDice.Current.Label": "Поточні кубики хітів"
+    "TIDY5E.HitDice.Current.Label": "Поточні кубики хітів",
+    "TIDY5E.CharacterTraits.Title": "Риси характеру",
+    "TIDY5E.SidebarPinnedTab.Title": "Закріплено"
 }
