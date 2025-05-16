@@ -861,5 +861,10 @@
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Scheda Personaggio Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Lanciato al {ordinal}",
     "TIDY5E.AddSpecific": "Aggiungi {name}",
-    "TIDY5E.Ability.EditScore.label": "Modifica punteggio"
+    "TIDY5E.Ability.EditScore.label": "Modifica punteggio",
+    "TIDY5E.HitDice.Abbreviation": "DV",
+    "TIDY5E.HitDice.Max.Label": "Dadi Vita Massimi",
+    "TIDY5E.CharacterTraits.Title": "Tratti Personaggio",
+    "TIDY5E.HitDice.Current.Label": "Dadi Vita Attuali",
+    "TIDY5E.SidebarPinnedTab.Title": "Fissato"
 }
