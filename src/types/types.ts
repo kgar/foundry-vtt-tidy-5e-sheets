@@ -1010,6 +1010,36 @@ export type ActorSkillsToolsContext<T> = {
   source: T;
 } & T;
 
+export type FavoriteContextEntry = {
+  id: unknown;
+  img: unknown;
+  type: unknown;
+  title: unknown;
+  value: unknown;
+  uses: unknown;
+  sort: unknown;
+  save: unknown;
+  modifier: unknown;
+  passive: unknown;
+  range: unknown;
+  reference: unknown;
+  suppressed: unknown;
+  level: unknown;
+  itemId: unknown;
+  draggable: boolean;
+  effectId: string | null;
+  parentId: string | null;
+  activityId: string | null;
+  preparationMode: string | null;
+  key: string | null;
+  toggle: { applicable: boolean; value: boolean } | null;
+  quantity: number | string;
+  rollableClass: string;
+  css: string;
+  bareName: boolean;
+  subtitle?: string;
+};
+
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   attributePins: AttributePinContext[];
@@ -1017,18 +1047,19 @@ export type CharacterSheetQuadroneContext = {
     description: string;
   };
   classes: CharacterClassEntryContext[];
-  orphanedSubclasses: Item5e[];
   conditions: Dnd5eActorCondition[];
   creatureType: CreatureTypeContext;
-  showDeathSaves: boolean;
   defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
+  favorites: FavoriteContextEntry[];
+  orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
+  showDeathSaves: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
-  tools: ActorSkillsToolsContext<ToolData>[];
   speeds: CharacterSpeedSenseContext;
+  tools: ActorSkillsToolsContext<ToolData>[];
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
 
 export type NpcSheetQuadroneContext = {

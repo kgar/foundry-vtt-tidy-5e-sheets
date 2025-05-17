@@ -4,7 +4,7 @@
   import type { Tab } from 'src/types/types';
   import SidebarTabSkills from 'src/sheets/quadrone/actor/tabs/SidebarTabSkills.svelte';
   import SidebarTabTraits from 'src/sheets/quadrone/actor/tabs/SidebarTabTraits.svelte';
-  import SidebarTabPinned from 'src/sheets/quadrone/actor/tabs/SidebarTabPinned.svelte';
+  import SidebarTabFavorites from 'src/sheets/quadrone/actor/tabs/SidebarTabFavorites.svelte';
 
   let selectedTabId = $state('');
   let tabs: Tab[] = $state([
@@ -26,10 +26,10 @@
     } satisfies Tab,
     {
       id: 'sidebar-pinned',
-      title: 'TIDY5E.SidebarPinnedTab.Title',
+      title: 'DND5E.Favorites',
       content: {
         type: 'svelte',
-        component: SidebarTabPinned,
+        component: SidebarTabFavorites,
       },
     } satisfies Tab,
   ]);

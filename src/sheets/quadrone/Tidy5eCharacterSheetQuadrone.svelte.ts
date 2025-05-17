@@ -18,6 +18,7 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   FacilityOccupantContext,
+  FavoriteContextEntry,
   LocationToSearchTextMap,
   MessageBus,
 } from 'src/types/types';
@@ -35,7 +36,10 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { debug } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { FacilityOccupants } from 'src/foundry/dnd5e.types';
+import type {
+  CharacterFavorite,
+  FacilityOccupants,
+} from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from 'src/utils/data';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
@@ -165,6 +169,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         basic: { chosen: [], available: [], value: 0, max: 0 },
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
+      favorites: await this._prepareFavorites(),
       senses: this._getSenses(),
       size: {
         key: this.actor.system.traits.size,
@@ -288,6 +293,205 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       reference: CONFIG.DND5E.creatureTypes[details.type.value]?.reference,
       subtitle: details.type.subtype,
     };
+  }
+
+  /**
+   * Prepare favorites for display.
+   * @param {ApplicationRenderContext} context  Context being prepared.
+   * @returns {Promise<object>}
+   * @protected
+   */
+  async _prepareFavorites() {
+    let entries: FavoriteContextEntry[] = [];
+
+    for (let f of this.actor.system.favorites as CharacterFavorite[]) {
+      const { id, type, sort } = f;
+      const favorite = await fromUuid(id, { relative: this.actor });
+      if (
+        !favorite &&
+        (type === 'item' || type === 'effect' || type === 'activity')
+      ) {
+        continue;
+      }
+
+      let data;
+
+      if (type === 'item') {
+        data = await favorite.system.getFavoriteData();
+      } else if (type === 'effect' || type === 'activity') {
+        data = await favorite.getFavoriteData();
+      } else {
+        data = await this._getFavoriteData(type, id);
+      }
+
+      if (!data) {
+        continue;
+      }
+
+      let {
+        img,
+        title,
+        subtitle,
+        value,
+        uses,
+        quantity,
+        modifier,
+        passive,
+        save,
+        range,
+        reference,
+        toggle,
+        suppressed,
+        level,
+      } = data;
+
+      if (foundry.utils.getType(save?.ability) === 'Set')
+        save = {
+          ...save,
+          ability:
+            save.ability.size > 2
+              ? game.i18n.localize('DND5E.AbbreviationDC')
+              : Array.from<string>(save.ability)
+                  .map((k) => CONFIG.DND5E.abilities[k]?.abbreviation)
+                  .filterJoin(' / '),
+        };
+
+      const css = [];
+      if (uses?.max) {
+        css.push('uses');
+        uses.value = Math.round(uses.value);
+      } else if (modifier !== undefined) css.push('modifier');
+      else if (save?.dc) css.push('save');
+      else if (value !== undefined) css.push('value');
+
+      if (toggle === false) css.push('disabled');
+      if (uses?.max > 99) css.push('uses-sm');
+      if (modifier !== undefined) {
+        const value = Number(modifier.replace?.(/\s+/g, '') ?? modifier);
+        if (!isNaN(value)) modifier = value;
+      }
+
+      const rollableClass = [];
+      if (this.isEditable && type !== 'slots') rollableClass.push('rollable');
+      if (type === 'skill') rollableClass.push('skill-name');
+      else if (type === 'tool') rollableClass.push('tool-name');
+
+      if (suppressed) subtitle = game.i18n.localize('DND5E.Suppressed');
+      const itemId =
+        type === 'item'
+          ? favorite.id
+          : type === 'activity'
+          ? favorite.item.id
+          : null;
+
+      entries.push({
+        id,
+        img,
+        type,
+        title,
+        value,
+        uses,
+        sort,
+        save,
+        modifier,
+        passive,
+        range,
+        reference,
+        suppressed,
+        level,
+        itemId,
+        draggable: ['item', 'effect'].includes(type),
+        effectId: type === 'effect' ? favorite.id : null,
+        parentId:
+          type === 'effect' && favorite.parent !== favorite.target
+            ? favorite.parent.id
+            : null,
+        activityId: type === 'activity' ? favorite.id : null,
+        preparationMode:
+          type === 'slots' ? (/spell\d+/.test(id) ? 'prepared' : id) : null,
+        key: type === 'skill' || type === 'tool' ? id : null,
+        toggle:
+          toggle === undefined ? null : { applicable: true, value: toggle },
+        quantity: quantity > 1 ? quantity : '',
+        rollableClass: rollableClass.filterJoin(' '),
+        css: css.filterJoin(' '),
+        bareName: type === 'slots',
+        subtitle: Array.isArray(subtitle)
+          ? subtitle.filterJoin(' &bull; ')
+          : subtitle,
+      });
+    }
+
+    return entries;
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare data for a favorited entry.
+   * @param {"skill"|"tool"|"slots"} type  The type of favorite.
+   * @param {string} id                    The favorite's identifier.
+   * @returns {Promise<FavoriteData5e|void>}
+   * @protected
+   */
+  async _getFavoriteData(type: 'skill' | 'tool' | 'slots', id: string) {
+    // Spell slots
+    if (type === 'slots') {
+      const { value, max, level } = this.actor.system.spells[id] ?? {};
+      const uses = { value, max, name: `system.spells.${id}.value` };
+      if (!/spell\d+/.test(id))
+        return {
+          uses,
+          level,
+          title: game.i18n.localize(`DND5E.SpellSlots${id.capitalize()}`),
+          subtitle: [
+            game.i18n.localize(`DND5E.SpellLevel${level}`),
+            game.i18n.localize(
+              `DND5E.Abbreviation${
+                CONFIG.DND5E.spellcastingTypes[id]?.shortRest ? 'SR' : 'LR'
+              }`
+            ),
+          ],
+          img:
+            CONFIG.DND5E.spellcastingTypes[id]?.img ||
+            CONFIG.DND5E.spellcastingTypes.pact.img,
+        };
+
+      const plurals = new Intl.PluralRules(game.i18n.lang, { type: 'ordinal' });
+      const isSR = CONFIG.DND5E.spellcastingTypes.leveled.shortRest;
+      return {
+        uses,
+        level,
+        title: game.i18n.format(`DND5E.SpellSlotsN.${plurals.select(level)}`, {
+          n: level,
+        }),
+        subtitle: game.i18n.localize(`DND5E.Abbreviation${isSR ? 'SR' : 'LR'}`),
+        img: CONFIG.DND5E.spellcastingTypes.leveled.img.replace('{id}', id),
+      };
+    }
+
+    // Skills & Tools
+    else {
+      const data = this.actor.system[`${type}s`]?.[id];
+      if (!data) return;
+      const { total, ability, passive } = data ?? {};
+      const subtitle = game.i18n.format('DND5E.AbilityPromptTitle', {
+        ability: CONFIG.DND5E.abilities[ability].label,
+      });
+      let img;
+      let title;
+      let reference;
+      if (type === 'tool') {
+        reference = dnd5e.documents.Trait.getBaseItemUUID(
+          CONFIG.DND5E.tools[id]?.id
+        );
+        ({ img, name: title } = dnd5e.documents.Trait.getBaseItem(reference, {
+          indexOnly: true,
+        }));
+      } else if (type === 'skill')
+        ({ icon: img, label: title, reference } = CONFIG.DND5E.skills[id]);
+      return { img, title, subtitle, modifier: total, passive, reference };
+    }
   }
 
   _getSenses(): CharacterSpeedSenseContext {

@@ -80,6 +80,8 @@ export type ConditionType = {
   };
 };
 
+export type ToolConfig = { ability: string; id: string };
+
 export type CONFIG = {
   debug: {
     applications: boolean;
@@ -2828,43 +2830,43 @@ export type CONFIG = {
       vehicle: string;
     };
     tools: {
-      alchemist: { ability: string; id: string };
-      bagpipes: { ability: string; id: string };
-      brewer: { ability: string; id: string };
-      calligrapher: { ability: string; id: string };
-      card: { ability: string; id: string };
-      carpenter: { ability: string; id: string };
-      cartographer: { ability: string; id: string };
-      chess: { ability: string; id: string };
-      cobbler: { ability: string; id: string };
-      cook: { ability: string; id: string };
-      dice: { ability: string; id: string };
-      disg: { ability: string; id: string };
-      drum: { ability: string; id: string };
-      dulcimer: { ability: string; id: string };
-      flute: { ability: string; id: string };
-      forg: { ability: string; id: string };
-      glassblower: { ability: string; id: string };
-      herb: { ability: string; id: string };
-      horn: { ability: string; id: string };
-      jeweler: { ability: string; id: string };
-      leatherworker: { ability: string; id: string };
-      lute: { ability: string; id: string };
-      lyre: { ability: string; id: string };
-      mason: { ability: string; id: string };
-      navg: { ability: string; id: string };
-      painter: { ability: string; id: string };
-      panflute: { ability: string; id: string };
-      pois: { ability: string; id: string };
-      potter: { ability: string; id: string };
-      shawm: { ability: string; id: string };
-      smith: { ability: string; id: string };
-      thief: { ability: string; id: string };
-      tinker: { ability: string; id: string };
-      viol: { ability: string; id: string };
-      weaver: { ability: string; id: string };
-      woodcarver: { ability: string; id: string };
-    };
+      alchemist: ToolConfig;
+      bagpipes: ToolConfig;
+      brewer: ToolConfig;
+      calligrapher: ToolConfig;
+      card: ToolConfig;
+      carpenter: ToolConfig;
+      cartographer: ToolConfig;
+      chess: ToolConfig;
+      cobbler: ToolConfig;
+      cook: ToolConfig;
+      dice: ToolConfig;
+      disg: ToolConfig;
+      drum: ToolConfig;
+      dulcimer: ToolConfig;
+      flute: ToolConfig;
+      forg: ToolConfig;
+      glassblower: ToolConfig;
+      herb: ToolConfig;
+      horn: ToolConfig;
+      jeweler: ToolConfig;
+      leatherworker: ToolConfig;
+      lute: ToolConfig;
+      lyre: ToolConfig;
+      mason: ToolConfig;
+      navg: ToolConfig;
+      painter: ToolConfig;
+      panflute: ToolConfig;
+      pois: ToolConfig;
+      potter: ToolConfig;
+      shawm: ToolConfig;
+      smith: ToolConfig;
+      thief: ToolConfig;
+      tinker: ToolConfig;
+      viol: ToolConfig;
+      weaver: ToolConfig;
+      woodcarver: ToolConfig;
+    } & Record<string, ToolConfig>;
     scalarTimePeriods: {
       turn: string;
       round: string;
@@ -4024,13 +4026,14 @@ export type CONFIG = {
             roundUp: boolean;
           };
         };
+        shortRest?: boolean;
       };
       pact: {
         label: string;
         img: string;
         shortRest: boolean;
       };
-    };
+    } & Record<string, any>;
     spellProgression: {
       none: string;
       full: string;
