@@ -1,4 +1,4 @@
-:where(.tidy5e-sheet.actor.quadrone) {
+.tidy5e-sheet.application:where(.quadrone.actor) {
   .window-header {
     .window-title {
       visibility: hidden;
@@ -11,18 +11,346 @@
     }
   }
 
-  // 👋 hightouch - not sure where to put these, but here are prototype styles for the saving throws card
-  .card.saving-throws {
-    .saving-throws-ability-columns {
-      display: flex;
-      column-gap: 1rem;
+
+  // TODO: Move this to a more specific component file
+  .attributes {
+    .character-traits {
+      padding-bottom: var(--t5e-size-12x);
     }
 
-    .saving-throws-ability-column {
-      flex: 1;
+    .character-traits-header {
+      align-items: flex-start;
+      gap: var(--t5e-size-2x);
 
+      .character-traits-title {
+        padding-top: var(--t5e-size-1x);
+      }
+
+      .button {
+        flex: 0;
+        text-wrap: nowrap;
+      }
+    }
+
+    .list {
+      .trait-item {
+        gap: var(--t5e-size-1x);
+      }
+
+      .list-label {
+        flex: 1;
+
+        i {
+          color: var(--t5e-color-icon-diminished);
+        }
+      }
+
+      .list-content {
+        flex: 2;
+      }
+
+
+      .list-entry {
+        padding: var(--t5e-size-1x) 0;
+        border-bottom: 1px solid var(--t5e-table-row-divider);
+
+        .item-image-link {
+          width: 1.75rem;
+          height: 1.75rem;
+          margin-right: var(--t5e-size-1x);
+        }
+
+        &.empty {
+          .list-label {
+            h4 {
+              color: var(--t5e-color-text-lighter);
+            }
+
+            i {
+              color: var(--t5e-color-icon-disabled);
+            }
+          }
+        }
+      }
+
+      .list-sub-entry {
+        .item-image-link {
+          width: 1.5rem;
+          height: 1.5rem;
+          background-color: var(--t5e-color-palette-gold-56);
+        }
+
+        .sub-entry-icon {
+          color: var(--t5e-color-icon-disabled);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: var(--font-size-12);
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+
+      .item-image-link {
+        border: 1px solid var(--t5e-color-gold);
+        border-radius: 0.125rem;
+        transition: box-shadow var(--t5e-transition-default);
+
+        &:hover {
+          box-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+        }
+      }
+
+      .divider-dot {
+        margin: 0;
+      }
+
+      .icon-class-original {
+        margin-left: var(--t5e-size-1x);
+        padding-bottom: 1px;
+      }
+
+      .list-controls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        select {
+          margin-right: var(--t5e-size-1x);
+        }
+      }
+
+      .pill {
+        background-color: var(--t5e-component-field-background);
+
+        .units {
+          margin-left: var(--t5e-size-halfx);
+        }
+      }
+    }
+  }
+
+
+
+  .card {
+    background-color: var(--t5e-component-card-default);
+    padding: 5px 14px 8px;
+
+  }
+
+
+
+  .use-ability-header {
+    display: flex;
+    border-bottom: 1px solid var(--t5e-color-gold);
+    height: var(--t5e-field-size-default);
+
+    .button {
+      gap: var(--t5e-size-2x);
+      padding: 0 var(--t5e-size-2x);
+
+      &:hover {
+        i {
+          color: var(--t5e-color-icon-default);
+        }
+      }
+    }
+
+    h3 {
+      align-items: start;
       display: flex;
-      flex-direction: column;
+      gap: var(--t5e-size-1x);
+      flex: 1;
+      text-shadow: inherit;
+    }
+
+    .skill-expand-button i {
+      transition: var(--t5e-transition-default);
+      margin-top: 1px;
+
+      &.expanded {
+        transform: rotate(90deg);
+      }
+    }
+
+    .modifier-label {
+      display: flex;
+      justify-content: end;
+    }
+  }
+
+  .saving-throws {
+    .use-ability-header {
+      gap: var(--t5e-size-2x);
+      padding: 0 var(--t5e-size-2x);
+
+      i {
+        flex: 0;
+      }
+    }
+  }
+
+  // 👋 hightouch - I'm not sure the best location for our Skills Card CSS; it's here temporarily
+  .use-ability-list {
+
+    button.proficiency {
+      --_fill: var(--t5e-theme-color-default);
+
+      aspect-ratio: 1;
+      background: transparent;
+      border: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover,
+      &:focus,
+      &:active {
+        border: none;
+      }
+
+      &.button-icon-only:hover {
+        border: none;
+        outline: none;
+        background: transparent;
+      }
+
+      &::before {
+        content: '';
+        background: var(--_fill);
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' fill='none' viewBox='0 0 11 11'%3E%3Cpath fill='%239F9275' d='M5.5 0a5.5 5.5 0 1 1 0 11 5.5 5.5 0 0 1 0-11Zm0 1.5a4 4 0 1 0 0 8 4 4 0 0 0 0-8Z' class='Exclude'/%3E%3C/svg%3E ");
+        width: 11px;
+        height: 11px;
+      }
+
+      &:is([data-proficiency='0']) {
+        --_fill: var(--t5e-color-gold);
+      }
+
+      &:is([data-proficiency='0.5'])::before {
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' fill='none' viewBox='0 0 11 11'%3E%3Cpath fill='%23741B2B' d='M5.5 0a5.424 5.424 0 0 1 .397.016c.035.002.069.003.103.006v.001a5.5 5.5 0 0 1 0 10.953v.001c-.034.004-.068.005-.103.007A5.585 5.585 0 0 1 5.5 11a5.5 5.5 0 1 1 0-11ZM6 9.468A4 4 0 0 0 6 1.53v7.937Z' class='Union'/%3E%3C/svg%3E%0A");
+      }
+
+      &:is([data-proficiency='1'])::before {
+        mask: none;
+        background: var(--_fill);
+        border-radius: 100%;
+      }
+
+      &:is([data-proficiency='2'])::before {
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 12 12'%3E%3Cpath fill='%23741B2B' d='M6 0a6 6 0 1 1 0 12A6 6 0 0 1 6 0Zm0 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM6 3a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z' /%3E%3C/svg%3E ");
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    &:not(.disabled) {
+      select {
+        font: var(--t5e-font-label-medium);
+        color: var(--t5e-color-text-gold-emphasis);
+        background-color: transparent;
+        background-position: right 0 center;
+        border: none;
+        box-shadow: none;
+        margin-right: 0.25rem;
+        padding: 0 1rem 0 0;
+        width: fit-content;
+
+        &:hover,
+        &:active,
+        &:focus {
+          background-color: transparent;
+          text-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+          outline: none;
+
+          option {
+            background-color: transparent;
+            text-shadow: none;
+          }
+        }
+      }
+    }
+
+    li {
+      min-width: 13.75rem;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+
+      :is(button, .button) {
+        padding-inline: 0;
+      }
+
+      .skill-ability {
+        text-transform: uppercase;
+      }
+
+      .use-ability-roll-button {
+        flex: 1;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      >* {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        min-width: var(--t5e-field-size-default);
+        min-height: var(--t5e-field-size-default);
+      }
+
+      >i {
+        justify-content: center;
+      }
+
+      .modifier,
+      .passive {
+        justify-content: flex-end;
+        padding-right: var(--t5e-size-2x);
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid var(--t5e-table-row-divider);
+      }
+    }
+
+    &.saving-throws-ability-column {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      column-gap: var(--t5e-size-2x);
+      border-bottom: 1px solid var(--t5e-component-card-default);
+      box-sizing: content-box;
+      position: relative;
+
+      li {
+        min-width: auto;
+        flex: 1;
+        flex-basis: calc(50% - var(--t5e-size-1x));
+        max-width: calc(50% - var(--t5e-size-1x));
+        border-bottom: 1px solid var(--t5e-table-row-divider);
+      }
+
+      &::after {
+        content: '';
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        height: 1px;
+        background-color: var(--t5e-component-card-default);
+      }
+
+
+      @container tab-right-column (inline-size < 440px) {
+        li {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+      }
     }
   }
 
