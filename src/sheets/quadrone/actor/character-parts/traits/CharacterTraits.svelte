@@ -14,23 +14,21 @@
 </script>
 
 <section class="character-traits">
-  <div class="flexrow space-between">
-    <div>
+  <div class="flexrow space-between character-traits-header">
+    <div class="character-traits-title">
       <h3 class="font-title-small">
         {localize('TIDY5E.CharacterTraits.Title')}
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
-    {#if context.unlocked}
-      <button
-        type="button"
-        class="button"
-        onclick={() => alert('TODO: Make Special Traits App')}
-      >
-        <i class="fa-solid fa-star"></i>
-        {localize('DND5E.SpecialTraits')}
-      </button>
-    {/if}
+    <button
+      type="button"
+      class="button"
+      onclick={() => alert('TODO: Make Special Traits App')}
+    >
+      <i class="fa-solid fa-star"></i>
+      {localize('DND5E.SpecialTraits')}
+    </button>
   </div>
 
   <div class="list">
@@ -38,48 +36,12 @@
 
     <CharacterTraitSpecies />
 
-    <div class="list-entry">
-      <div class="list-label">
-        <h4>
-          {localize('DND5E.CreatureType')}
-        </h4>
-      </div>
-      <div class="list-content">
-        <div class="list-values">
-          {#if context.system.details.race}
-            <i class="fa-solid fa-arrow-turn-down-right"></i>
-          {/if}
-          <span class="trait-name">
-            {context.creatureType.title}
-          </span>
-          {#if context.creatureType.subtitle}
-            <span class="font-weight-default color-text-lighter">
-              {context.creatureType.subtitle}
-            </span>
-          {/if}
-        </div>
-        {#if context.unlocked && context.system.details.race}
-          <div class="list-controls">
-            <button
-              type="button"
-              class="button button-borderless button-icon-only"
-              data-tooltip="DND5E.ItemEdit"
-              onclick={() =>
-                FoundryAdapter.renderCreatureTypeConfig(context.actor)}
-            >
-              <i class="fa-solid fa-edit"></i>
-            </button>
-          </div>
-        {/if}
-      </div>
-    </div>
-
     <CharacterTraitBackground />
 
     <!-- Size -->
     <div class="list-entry">
       <div class="list-label">
-        <h4>
+        <h4 class="font-weight-label">
           {localize('DND5E.Size')}
         </h4>
       </div>

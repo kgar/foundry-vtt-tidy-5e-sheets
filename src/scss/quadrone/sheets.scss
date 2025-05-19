@@ -49,7 +49,7 @@
 }
 
 .tidy5e-sheet:where(.quadrone:is(.item, .actor)) {
-  & > header {
+  &>header {
     /* Edit Mode Toggle */
   }
 
@@ -70,19 +70,11 @@
     :where(.list-entry) {
       display: flex;
 
-      &.empty {
-        .list-label :is(h4, i) {
-          color: var(--t5e-color-text-lighter);
-        }
-      }
-
-      .item-image {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
-
       .list-label {
+        align-content: center;
         flex: 1;
+        height: 1.75rem;
+        padding-bottom: 1px;
       }
 
       :where(.list-content) {
@@ -106,4 +98,5 @@
       }
     }
   }
+
 }

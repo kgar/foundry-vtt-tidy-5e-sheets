@@ -22,20 +22,22 @@
 </script>
 
 <!-- TODO: add tooltips to config buttons -->
-<div class="tools">
-  <h3>
-    <i class="fa-solid fa-hammer color-text-lightest"></i>
-    <span>{localize('TYPES.Item.toolPl')}</span>
+<div class="tools card filigree-card">
+  <div class="use-ability-header flexrow">
     <button
       type="button"
-      class="button button-borderless button-icon-only"
+      class="button button-borderless skill-expand-button"
       onclick={(ev) => FoundryAdapter.renderToolsConfig(context.actor)}
     >
+    <i class="fa-solid fa-hammer color-text-lightest"></i>
+    <h3 class="font-label-medium">
+      <span>{localize('TYPES.Item.toolPl')}</span>
       <i class="fa-solid fa-cog"></i>
+    </h3>
     </button>
-  </h3>
+  </div>
   {#if context.tools.length}
-    <ul>
+    <ul class="tool-list unlist use-ability-list">
       {#each context.tools as tool (tool.key)}
         {@const modTotal = getModifierData(tool.total)}
 
@@ -62,7 +64,7 @@
               />
             </SelectQuadrone>
           {:else}
-            <span class="skill-ability tranform-uppercase color-text-gold">
+            <span class="skill-ability font-label-medium color-text-gold-emphasis">
               {tool.abbreviation}
             </span>
           {/if}

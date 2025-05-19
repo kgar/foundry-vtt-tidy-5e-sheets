@@ -31,9 +31,8 @@
   );
 </script>
 
-<div class="skills">
-  <h3>
-    <i class="fa-solid fa-briefcase color-text-lightest"></i>
+<div class="skills card filigree-card">
+  <div class="use-ability-header flexrow">
     <button
       type="button"
       class={['button button-borderless skill-expand-button']}
@@ -45,16 +44,19 @@
         await TidyFlags.skillsExpanded.set(context.actor, newValue);
       }}
     >
-      {localize('DND5E.Skills')}
-      <i class={['fa-solid', 'fa-angle-right', { expanded }]}></i>
+      <i class="fa-solid fa-briefcase color-text-lightest"></i>
+      <h3 class="font-label-medium">
+        {localize('DND5E.Skills')}
+        <i class={['fa-solid', 'fa-angle-right', { expanded }]}></i>
+      </h3>
+      <span class="modifier-label color-text-lightest font-default-medium">
+        {localize('DND5E.Modifier')} /
+        {localize('DND5E.Passive')}
+      </span>
     </button>
-  </h3>
-  <span class="modifier-passive-label color-text-lightest">
-    {localize('DND5E.Modifier')} /
-    {localize('DND5E.Passive')}
-  </span>
+  </div>
   {#if skills.length}
-    <ul>
+    <ul class="skill-list unlist use-ability-list">
       {#each skills as skill (skill.key)}
         {@const modifier = getModifierData(skill.total)}
         <li>
@@ -80,13 +82,13 @@
               />
             </SelectQuadrone>
           {:else}
-            <span class="skill-ability tranform-uppercase color-text-gold">
+            <span class="skill-ability font-label-medium color-text-gold-emphasis">
               {skill.abbreviation}
             </span>
           {/if}
           <button
             type="button"
-            class="button button-borderless skill-roll-button"
+            class="button button-borderless use-ability-roll-button"
             onclick={(event) =>
               context.actor.rollSkill({ skill: skill.key, event })}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
@@ -94,10 +96,10 @@
             {skill.label}
           </button>
           <span class="modifier">
-            <span class="color-text-lightest">
-              {modifier.sign}
+            <span class="color-text-lightest font-label-medium">
+              {modifier.sign} 
             </span>
-            <span>
+            <span class="font-data-medium">
               {modifier.value}
             </span>
           </span>

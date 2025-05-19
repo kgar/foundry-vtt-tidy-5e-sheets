@@ -115,6 +115,19 @@
     }
   }
 
+  &.button-tertiary {
+    border-style: dashed;
+    background: transparent;
+    border-radius: 3px;
+    box-shadow: none;
+
+    &:hover {
+      background: transparent;
+      border-style: dashed;
+      text-shadow: 0px 0px 8px var(--t5e-color-gold);
+    }
+  }
+
   /* Toggle Buttons */
   &.button-toggle {
     --input-height: auto;

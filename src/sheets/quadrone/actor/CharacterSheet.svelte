@@ -490,9 +490,11 @@
     />
   </div>
 </header>
-<div class="main-content">
-  <div class={['sidebar', { expanded: sidebarExpanded }]}>
-    <ActorSidebar />
+<div class="sheet-body">
+  <div class="main-content">
+    <div class={['sidebar', { expanded: sidebarExpanded }]}>
+      <ActorSidebar />
+    </div>
+    <TabContents tabs={context.tabs} {selectedTabId} />
   </div>
-  <TabContents tabs={context.tabs} {selectedTabId} />
 </div>

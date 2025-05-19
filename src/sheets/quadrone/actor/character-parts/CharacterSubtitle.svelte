@@ -44,7 +44,7 @@
     <span class="color-text-default font-data-medium">{speed.value}</span>
     <span class="color-text-lighter font-label-medium">{speed.units}</span>
   </span>
-  <span class={[hide, "divider"]}></span>
+  <div class={[hide, "divider-dot"]}></div>
 {/snippet}
 
 <div class="character-details-subtitle-row">
@@ -65,7 +65,7 @@
       <span class="size">
         <span class="color-text-gold">{size}</span>
       </span>
-      <div class="divider"></div>
+      <div class="divider-dot"></div>
     {/if}
     {#if context.creatureType?.title}
       <span class="creature-type">
@@ -76,7 +76,7 @@
           {/if}
         </span>
       </span>
-      <div class="divider"></div>
+      <div class="divider-dot"></div>
     {/if}
     {#if species}
       <span class="species">
@@ -109,7 +109,7 @@
           <!-- </button> -->
         {/if}
       </span>
-      <div class="divider hide-under-600"></div>
+      <div class="divider-dot hide-under-600"></div>
     {/each}
   </div>
   {#if context.enableXp}
