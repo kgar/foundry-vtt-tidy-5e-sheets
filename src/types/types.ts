@@ -13,7 +13,12 @@ import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
+import type {
+  Activity5e,
+  CharacterFavoriteType,
+  SkillData,
+  ToolData,
+} from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -1011,10 +1016,10 @@ export type ActorSkillsToolsContext<T> = {
 } & T;
 
 export type FavoriteContextEntry = {
-  id: unknown;
-  img: unknown;
-  type: unknown;
-  title: unknown;
+  id: string;
+  img?: string;
+  type: CharacterFavoriteType;
+  title: string;
   value: unknown;
   uses: unknown;
   sort: unknown;
