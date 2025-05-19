@@ -121,10 +121,13 @@
       }
 
       .pill {
-        background-color: var(--t5e-component-field-background);
 
         .units {
           margin-left: var(--t5e-size-halfx);
+        }
+
+        &:not(.positive, .negative) {
+          background-color: var(--t5e-component-field-background);
         }
       }
     }
@@ -332,6 +335,12 @@
         flex-basis: calc(50% - var(--t5e-size-1x));
         max-width: calc(50% - var(--t5e-size-1x));
         border-bottom: 1px solid var(--t5e-table-row-divider);
+      }
+
+      /* Apply 100% width only if last child is odd-numbered */
+      li:last-child:nth-child(odd) {
+        flex-basis: 100%;
+        max-width: 100%;
       }
 
       &::after {
