@@ -76,14 +76,53 @@
       >.tidy-tabs {}
     }
 
-    .main-content {
-      background-color: var(--t5e-component-card-default);
-      flex: 1;
+    .sheet-body {
       display: flex;
+      flex: 1;
+      flex-direction: row;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position: relative;
+      z-index: 0;
+
+      background-color: var(--t5e-component-card-default);
+      background-image: url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp);
+      background-position: bottom center;
+      background-repeat: no-repeat;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+        background-image: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp);
+        background-position: top center;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .main-content {
+      display: flex;
+      flex: 1;
       flex-direction: row;
       overflow-x: hidden;
       overflow-y: auto;
       padding: var(--t5e-size-3x) var(--t5e-size-4x);
+
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+      }
+
 
       >.sidebar {
         flex-basis: var(--sidebar-expanded-width);
@@ -783,23 +822,13 @@
       container-type: inline-size;
       container-name: subtitle;
 
-      >* {
+      >span {
         flex: 0;
         text-wrap: nowrap;
       }
 
-      >.divider {
-        width: 3px;
-        height: 3px;
-        border-radius: 100%;
-        background-color: var(--t5e-color-gold);
-        opacity: 0.5;
-        margin: 0 5px;
-        flex: initial;
-
-        &:last-child {
-          display: none;
-        }
+      >.divider-dot:last-child {
+        display: none;
       }
 
       .dc {
@@ -1543,8 +1572,20 @@
     }
   }
 
+  div.divider-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+    background-color: var(--t5e-color-gold);
+    opacity: 0.5;
+    margin: 0 5px;
+    flex: initial;
+  }
+
   // 👋 hightouch - I'm not sure the best location for our Skills Card CSS; it's here temporarily
-  .skills, .tools, .saving-throws {
+  .skills,
+  .tools,
+  .saving-throws {
     h3 {
       font: var(--t5e-font-label-medium);
 
@@ -1566,10 +1607,8 @@
       aspect-ratio: 1;
 
       &:is(:disabled, :focus-visible) {
-        --_fill: var(
-          --proficiency-cycle-disabled-color,
-          var(--dnd5e-color-gold)
-        );
+        --_fill: var(--proficiency-cycle-disabled-color,
+            var(--dnd5e-color-gold));
       }
 
       &::before {
@@ -1610,17 +1649,17 @@
         }
       }
     }
-    
+
     .skill-ability {
       text-transform: uppercase;
     }
   }
 
   .tidy-tab.attributes {
-    &.active{
+    &.active {
       display: flex;
     }
-    
+
     flex-direction: row;
     gap: 0.75rem;
 

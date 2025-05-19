@@ -49,7 +49,7 @@
 }
 
 .tidy5e-sheet:where(.quadrone:is(.item, .actor)) {
-  & > header {
+  &>header {
     /* Edit Mode Toggle */
   }
 
@@ -76,13 +76,11 @@
         }
       }
 
-      .item-image {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
-
       .list-label {
+        align-content: center;
         flex: 1;
+        height: 1.75rem;
+        padding-bottom: 1px;
       }
 
       :where(.list-content) {
@@ -102,6 +100,82 @@
 
         .list-controls {
           // TODO?
+        }
+      }
+    }
+  }
+
+  .attributes {
+    .list {
+
+      .pill {
+        background-color: var(--t5e-component-field-background);
+      }
+
+
+      .list-entry {
+        padding: var(--t5e-size-1x) 0;
+        border-bottom: 1px solid var(--t5e-table-row-divider);
+
+        .list-label {
+          flex: 1;
+        }
+
+        .item-image-link {
+          width: 1.75rem;
+          height: 1.75rem;
+          margin-right: var(--t5e-size-1x);
+        }
+      }
+
+      .list-sub-entry {
+        .item-image-link {
+          width: 1.5rem;
+          height: 1.5rem;
+          background-color: var(--t5e-color-palette-gold-56);
+        }
+
+        .sub-entry-icon {
+          color: var(--t5e-color-icon-disabled);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: var(--font-size-12);
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+
+      .item-image-link {
+        border: 1px solid var(--t5e-color-gold);
+        border-radius: 0.125rem;
+        transition: box-shadow var(--t5e-transition-default);
+
+        &:hover {
+          box-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+        }
+      }
+
+      .divider-dot {
+        margin: 0;
+      }
+
+      .trait-item {
+        gap: var(--t5e-size-1x);
+      }
+
+      .icon-class-original {
+        margin-left: var(--t5e-size-1x);
+        padding-bottom: 1px;
+      }
+
+      .list-controls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        select {
+          margin-right: var(--t5e-size-1x);
         }
       }
     }

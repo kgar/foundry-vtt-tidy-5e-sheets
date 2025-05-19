@@ -18,17 +18,18 @@
           <i class={icon.icon} data-tooltip={icon.label}></i>
         {/each}
       {/if}
-      <span class="label font-label-medium">
+      <span class="label">
         {value.label}
       </span>
-      <span>
-        {#if value.sign}
-          <span class="sign color-text-lighter font-label-medium">
+      {#if value.sign || value.value || value.units}
+        <span>
+          {#if value.sign}
+            <span class="sign color-text-lighter">
             {value.sign}
           </span>
         {/if}
         {#if value.value}
-          <span class="value font-data-medium">
+          <span class="value">
             {value.value}
           </span>
         {/if}
@@ -36,8 +37,9 @@
           <span class="units color-text-lighter">
             {value.units}
           </span>
-        {/if}
-      </span>
+          {/if}
+        </span>
+      {/if}
     </li>
   {/each}
 </ul>

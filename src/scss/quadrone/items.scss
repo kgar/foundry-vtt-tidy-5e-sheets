@@ -239,6 +239,14 @@
     .pills:not(:has(.pill)) {
       display: none;
     }
+
+    .pill {
+      min-height: 1.5625rem;
+
+      .label {
+        padding-top: 0.0625rem;
+      }
+    }
   }
 
   .item-image-container {
