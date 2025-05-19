@@ -116,18 +116,15 @@
   }
 
   &.button-tertiary {
-    border: none;
+    border-style: dashed;
     background: transparent;
-    color: var(--t5e-color-text-gold-emphasis);
-    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='2' ry='2' stroke='currentColor' stroke-width='1' stroke-dasharray='3%2c4' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
     border-radius: 3px;
     box-shadow: none;
 
     &:hover {
-      background-color: var(--t5e-component-field-background-hover);
-      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='2' ry='2' stroke='currentColor' stroke-width='1' stroke-dasharray='3%2c4' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
-      border: none;
-      color: var(--t5e-color-palette-gold-45);
+      background: transparent;
+      border-style: dashed;
+      text-shadow: 0px 0px 8px var(--t5e-color-gold);
     }
   }
 

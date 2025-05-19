@@ -45,7 +45,7 @@
         <button
           aria-label="Add {localize('TYPES.Item.background')}"
           type="button"
-          class="button button-borderless"
+          class="button button-primary"
           data-tooltip="DND5E.BackgroundAdd"
           onclick={(ev) =>
             FoundryAdapter.createItem({ type: 'background' }, context.actor)}

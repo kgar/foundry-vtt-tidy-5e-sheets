@@ -22,7 +22,7 @@
     </h4>
   </div>
   <div class="list-content">
-    <div class="list-values">
+    <div class="list-values trait-item">
       {#if context.actor.system.details.race}
         {@const species = context.actor.system.details.race}
         <a
@@ -47,7 +47,7 @@
         <button
           aria-label="Add {localize('TYPES.Item.race')}"
           type="button"
-          class="button button-borderless"
+          class="button button-primary"
           data-tooltip="DND5E.Species.Add"
           onclick={(ev) =>
             FoundryAdapter.createItem({ type: 'race' }, context.actor)}

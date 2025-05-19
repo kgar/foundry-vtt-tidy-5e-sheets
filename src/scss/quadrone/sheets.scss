@@ -128,10 +128,6 @@
         }
       }
 
-      .add-trait-container {
-        gap: var(--t5e-size-1x);
-      }
-
       .list-content {
         flex: 2;
       }
@@ -209,6 +205,10 @@
 
       .pill {
         background-color: var(--t5e-component-field-background);
+
+        .units {
+          margin-left: var(--t5e-size-halfx);
+        }
       }
     }
   }

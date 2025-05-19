@@ -41,8 +41,11 @@
   word-break: break-word;
   flex-wrap: wrap;
 
+  &.pill-medium {
+    font-size: var(--font-size-13);
+  }
+
   span {
-    gap: var(--t5e-size-halfx);
     line-height: var(--t5e-lineheight-default);
   }
 

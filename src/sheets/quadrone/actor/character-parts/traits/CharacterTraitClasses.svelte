@@ -61,11 +61,11 @@
       {/if}
     </div>
     <div class="list-content">
-      <div class="list-values add-trait-container">
+      <div class="list-values trait-item">
         <button
           aria-label="Add {localize('TYPES.Item.class')}"
           type="button"
-          class="button button-secondary"
+          class="button {context.classes.length > 0 ? 'button-secondary' : 'button-primary'}"
           data-tooltip="DND5E.ClassAdd"
           onclick={(ev) =>
             FoundryAdapter.createItem({ type: 'class' }, context.actor)}
