@@ -21,43 +21,41 @@
   );
 </script>
 
-<div class="card saving-throws">
-  <h3>
-    <i class="fa-solid fa-shield-heart"></i>
-    {localize('DND5E.ClassSaves')}
-  </h3>
-  <span class="modifier-label color-text-lightest">
-    {localize('DND5E.Modifier')}
-  </span>
-
-  <div class="saving-throws-ability-columns">
-    <ul class="saving-throws-ability-column unlist">
-      {#each leftAbilities as ability}
-        <li>
-          {@render savingThrowRow(ability)}
-        </li>
-      {/each}
-    </ul>
-    <ul class="saving-throws-ability-column unlist">
-      {#each rightAbilities as ability}
-        <li>
-          {@render savingThrowRow(ability)}
-        </li>
-      {/each}
-    </ul>
+<div class="saving-throws card filigree-card">
+  <div class="use-ability-header flexrow">
+    <i class="fa-solid fa-shield-heart color-text-lightest"></i>
+    <h3 class="font-label-medium">
+      {localize('DND5E.ClassSaves')}
+    </h3>
+    <span class="modifier-label color-text-lightest font-default-medium">
+      {localize('DND5E.Modifier')}
+    </span>
   </div>
+
+  <ul class="saving-throws-ability-column unlist use-ability-list">
+    {#each leftAbilities as ability, index}
+      <li style="order: {2 * index + 1}">
+        {@render savingThrowRow(ability)}
+      </li>
+    {/each}
+    {#each rightAbilities as ability, index}
+      <li style="order: {2 * index + 2}">
+        {@render savingThrowRow(ability)}
+      </li>
+    {/each}
+  <!-- </ul> -->
   <!-- Concentration here -->
   {#if context.saves.concentration && (context.isConcentrating || context.unlocked)}
     {@const conc = context.saves.concentration}
     {@const tooltip = localize('DND5E.AbilityConfigure', {
       ability: context.saves.concentration.label,
     })}
-    <ul class="saving-throws-special-column unlist">
-      <li>
+    <!-- <ul class="saving-throws-special-column unlist use-ability-list"> -->
+      <li style="order: 50">
         <i class="fas fa-head-side-brain color-text-gold"></i>
         <button
           type="button"
-          class="button button-borderless saving-throw-roll-button"
+          class="button button-borderless use-ability-roll-button"
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
           onclick={(ev) =>
             context.actor.rollConcentration({ event: ev, legacy: false })}
@@ -84,8 +82,8 @@
           </button>
         {/if}
       </li>
-    </ul>
   {/if}
+  </ul>
 </div>
 
 {#snippet savingThrowRow(ability: ActorAbilityContextEntry)}
@@ -104,7 +102,7 @@
   />
   <button
     type="button"
-    class="button button-borderless saving-throw-roll-button"
+    class="button button-borderless use-ability-roll-button"
     onclick={(event) =>
       context.actor.rollSavingThrow({ ability: ability.key, event })}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}

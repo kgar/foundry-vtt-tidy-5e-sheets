@@ -35,9 +35,7 @@
   ]);
 </script>
 
-<div class="sidebar">
-  <div class="sidebar-header">
-    <Tabs bind:selectedTabId {tabs} cssClass="sidebar-tab-strip" />
-  </div>
-  <TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents" />
+<div class="sidebar-header">
+  <Tabs bind:selectedTabId {tabs} cssClass="sidebar-tab-strip" />
 </div>
+<TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents" />
