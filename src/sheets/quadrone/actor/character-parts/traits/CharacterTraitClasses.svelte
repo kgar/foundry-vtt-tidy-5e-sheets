@@ -61,7 +61,7 @@
       {/if}
     </div>
     <div class="list-content">
-      <div class="list-values">
+      <div class="list-values add-trait-container">
         <button
           aria-label="Add {localize('TYPES.Item.class')}"
           type="button"
@@ -256,7 +256,7 @@
   <div class="list-entry">
     <div class="list-label"></div>
     <div class="list-content">
-      <div class="list-values">
+      <div class="list-values add-trait-container">
         <button
           aria-label="Add Subclass"
           type="button"

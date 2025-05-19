@@ -24,7 +24,7 @@
 {#if context.unlocked || entries.length}
   <div class={['list-entry', { empty }]}>
     <div class={['list-label']}>
-      <h4>
+      <h4 class="font-weight-label">
         <i class={icon}></i>
         {label}
       </h4>
@@ -37,7 +37,7 @@
         {#if context.unlocked && !entries.length}
           <button
             type="button"
-            class="button button-borderless"
+            class="button button-tertiary"
             onclick={(ev) => onconfig()}
           >
             {localize('CONTROLS.CommonEdit')}
@@ -47,6 +47,7 @@
       {#if context.unlocked}
         <div class="list-controls">
           <button
+            aria-label="Configure {label}"
             type="button"
             class="button button-borderless button-icon-only button-config"
             onclick={(ev) => onconfig()}

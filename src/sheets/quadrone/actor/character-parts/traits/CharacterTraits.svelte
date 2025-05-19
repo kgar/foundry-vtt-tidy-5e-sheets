@@ -14,8 +14,8 @@
 </script>
 
 <section class="character-traits">
-  <div class="flexrow space-between">
-    <div>
+  <div class="flexrow space-between character-traits-header">
+    <div class="character-traits-title">
       <h3 class="font-title-small">
         {localize('TIDY5E.CharacterTraits.Title')}
       </h3>
