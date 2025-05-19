@@ -10,9 +10,10 @@
     onconfig: () => void;
     icon?: ClassValue;
     label: string;
+    pillClass?: ClassValue;
   }
 
-  let { entries = [], onconfig, icon, label }: Props = $props();
+  let { entries = [], onconfig, icon, label, pillClass }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -32,7 +33,7 @@
     <div class="list-content">
       <div class="list-values">
         {#if entries.length}
-          <ActorTraitPills values={entries} />
+          <ActorTraitPills values={entries} {pillClass} />
         {/if}
         {#if context.unlocked && !entries.length}
           <button
