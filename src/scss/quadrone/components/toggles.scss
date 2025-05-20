@@ -56,7 +56,7 @@
 
     &[aria-checked='true'] {
       border-color: var(--t5e-component-toggle-toggled-border, transparent);
-      background-color: var(--t5e-theme-color-default);
+      background-color: var(--t5e-theme-color-highlight);
 
       &::before,
       .thumb-icon {
@@ -65,7 +65,7 @@
       }
 
       &:hover {
-        background-color: var(--t5e-theme-color-highlight);
+        background-color: var(--t5e-theme-color-lighter);
 
         .thumb-icon {
           color: var(--t5e-color-palette-black);
@@ -76,7 +76,7 @@
 
     &:hover {
       cursor: pointer;
-      background-color: rgba(0, 0, 0, 0.75);
+      background-color: var(--t5e-theme-color-default);
 
       .thumb-icon {
         background-color: var(--t5e-color-palette-white);
