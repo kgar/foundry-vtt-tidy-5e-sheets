@@ -902,6 +902,7 @@
     .level-container {
       align-items: center;
       position: relative;
+      margin-top: calc(var(--t5e-size-2x) + var(--t5e-size-halfx));
 
       .inspiration-badge {
         position: absolute;
@@ -1054,7 +1055,7 @@
       position: relative;
       min-height: 106px;
       gap: var(--t5e-size-1x);
-      padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-2x) 0;
+      padding: var(--t5e-size-2x) var(--t5e-size-3x) var(--t5e-size-halfx) 0;
       margin-left: var(--header-padding);
       align-items: flex-start;
       container-name: abilities;
