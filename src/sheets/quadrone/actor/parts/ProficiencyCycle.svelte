@@ -48,4 +48,13 @@
   data-proficiency={value.toString()}
   {disabled}
 >
+  {#if value === 0.5}
+    <i class="fa-solid fa-circle-half-stroke"></i>
+  {:else if value === 1}
+    <i class="fa-solid fa-circle"></i>
+  {:else if value === 2}
+    <i class="fa-solid fa-circle-star"></i>
+  {:else}
+    <i class="fa-regular fa-circle"></i>
+  {/if}
 </button>

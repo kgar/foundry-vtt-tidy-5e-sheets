@@ -5,6 +5,7 @@
     ActorAbilityContextEntry,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
+  import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import ProficiencyCycle from '../parts/ProficiencyCycle.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getModifierData } from 'src/utils/formatting';
@@ -21,7 +22,7 @@
   );
 </script>
 
-<div class="saving-throws card filigree-card">
+<FiligreeCard class="saving-throws card">
   <div class="use-ability-header flexrow">
     <i class="fa-solid fa-shield-heart color-text-lightest"></i>
     <h3 class="font-label-medium">
@@ -63,10 +64,10 @@
           {conc.label}
         </button>
         <span class="modifier">
-          <span class="color-text-lightest">
+          <span class="font-label-medium color-text-lightest">
             {conc.sign}
           </span>
-          <span>
+          <span class="font-data-medium">
             {conc.mod}
           </span>
         </span>
@@ -84,7 +85,7 @@
       </li>
   {/if}
   </ul>
-</div>
+</FiligreeCard>
 
 {#snippet savingThrowRow(ability: ActorAbilityContextEntry)}
   {@const modifier = getModifierData(ability.save.value)}
@@ -110,10 +111,10 @@
     {ability.label}
   </button>
   <span class="modifier">
-    <span class="color-text-lightest">
+    <span class="font-label-medium color-text-lightest">
       {modifier.sign}
     </span>
-    <span>
+    <span class="font-data-medium">
       {modifier.value}
     </span>
   </span>
