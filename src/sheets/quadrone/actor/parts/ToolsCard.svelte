@@ -36,6 +36,9 @@
       <span>{localize('TYPES.Item.toolPl')}</span>
       <i class="fa-solid fa-cog"></i>
     </h3>
+    <span class="modifier-label color-text-lightest font-default-medium">
+      {localize('DND5E.Modifier')}
+    </span>
     </button>
   </div>
   {#if context.tools.length}
@@ -80,10 +83,10 @@
             {tool.label}
           </button>
           <span class="modifier">
-            <span class="color-text-lightest">
+            <span class="font-label-medium color-text-lightest">
               {modTotal.sign}
             </span>
-            <span>
+            <span class="font-data-medium">
               {modTotal.value}
             </span>
           </span>

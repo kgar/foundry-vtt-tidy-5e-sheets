@@ -64,10 +64,10 @@
           {conc.label}
         </button>
         <span class="modifier">
-          <span class="color-text-lightest">
+          <span class="font-label-medium color-text-lightest">
             {conc.sign}
           </span>
-          <span>
+          <span class="font-data-medium">
             {conc.mod}
           </span>
         </span>
@@ -111,10 +111,10 @@
     {ability.label}
   </button>
   <span class="modifier">
-    <span class="color-text-lightest">
+    <span class="font-label-medium color-text-lightest">
       {modifier.sign}
     </span>
-    <span>
+    <span class="font-data-medium">
       {modifier.value}
     </span>
   </span>
