@@ -5,12 +5,18 @@
     block: "M 0 0 L 10 0 L 10 3.1 L 0 3.1 L 0 0 Z",
     inline: "M 0 10 L 0 0 L 2.99 0 L 2.989 10 L 0 10 Z M 6.9 10 L 6.9 0 L 8.6 0 L 8.6 10 L 6.9 10 Z"
   };
+
+  interface Props {
+    class?: string;
+  }
+
+  let { 
+    class: cssClass,
+  }: Props = $props();
   
-  // Add prop to accept custom classes
-  export let className = '';
 </script>
 
-<div class="filigree-card {className}">
+<div class="filigree-card {cssClass}">
   <div class="backdrop"></div>
   
   <!-- Corners -->

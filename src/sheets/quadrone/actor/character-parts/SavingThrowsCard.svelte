@@ -22,7 +22,7 @@
   );
 </script>
 
-<FiligreeCard className="saving-throws card">
+<FiligreeCard class="saving-throws card">
   <div class="use-ability-header flexrow">
     <i class="fa-solid fa-shield-heart color-text-lightest"></i>
     <h3 class="font-label-medium">

@@ -32,7 +32,7 @@
   );
 </script>
 
-<FiligreeCard className="skills card">
+<FiligreeCard class="skills card">
   <div class="use-ability-header flexrow">
     <button
       type="button"

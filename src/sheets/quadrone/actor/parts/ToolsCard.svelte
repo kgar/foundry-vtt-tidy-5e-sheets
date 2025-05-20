@@ -24,7 +24,7 @@
 </script>
 
 <!-- TODO: add tooltips to config buttons -->
-<FiligreeCard className="tools card">
+<FiligreeCard class="tools card">
   <div class="use-ability-header flexrow">
     <button
       type="button"
