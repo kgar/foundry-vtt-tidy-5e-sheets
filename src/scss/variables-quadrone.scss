@@ -56,6 +56,7 @@
 
   /* Palette ------------ */
   /* Grey */
+  --t5e-color-grey: var(--t5e-color-palette-grey-40);
   --t5e-color-palette-grey-0: rgba(0, 0, 0, 1);
   --t5e-color-palette-grey-11: rgba(22, 24, 29, 1);
   --t5e-color-palette-grey-19: rgba(37, 40, 48, 1);
@@ -135,7 +136,7 @@
   --t5e-color-palette-pink-31: rgba(77, 34, 57, 1);
 
   /* Theme ------------ */
-  --t5e-theme-color-default: var(--t5e-color-palette-red-45);
+  --t5e-theme-color-default: var(--t5e-color-red);
   //--t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
   // TODO: When a custom theme color is set, use the formula above.
   --t5e-primary-accent-color: var(--t5e-theme-color-default);

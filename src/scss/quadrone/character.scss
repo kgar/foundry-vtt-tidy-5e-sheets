@@ -931,6 +931,12 @@
           &:not(.inspired) .level {
             color: var(--t5e-color-text-lighter);
           }
+
+          &:hover,
+          &:focus,
+          &:active {
+            background-color: var(--t5e-theme-color-highlight);
+          }
         }
 
         &.single {
@@ -954,7 +960,10 @@
             top: 50%;
           }
 
-          &:hover {
+          &:hover,
+          &:focus,
+          &:active {
+            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
             filter: drop-shadow(0 0 6px var(--t5e-theme-color-highlight));
           }
 
@@ -1002,6 +1011,13 @@
             .level {
               font-size: var(--font-size-16);
             }
+          }
+
+          &:hover,
+          &:focus,
+          &:active {
+            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
+            filter: drop-shadow(0 0 6px var(--t5e-theme-color-highlight));
           }
         }
       }
@@ -1258,10 +1274,13 @@
       min-height: auto;
       text-transform: uppercase;
       transition: all var(--t5e-transition-default);
-      z-index: 1;
 
       ~div span {
         transition: all var(--t5e-transition-default);
+      }
+
+      +div:not(:has(.ability-score-input)) {
+        pointer-events: none;
       }
 
       &:hover,
