@@ -8,6 +8,7 @@
   import ProficiencyCycle from './ProficiencyCycle.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getModifierData } from 'src/utils/formatting';
 
@@ -19,10 +20,11 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
+  
 </script>
 
 <!-- TODO: add tooltips to config buttons -->
-<div class="tools card filigree-card">
+<FiligreeCard class="tools card">
   <div class="use-ability-header flexrow">
     <button
       type="button"
@@ -34,6 +36,9 @@
       <span>{localize('TYPES.Item.toolPl')}</span>
       <i class="fa-solid fa-cog"></i>
     </h3>
+    <span class="modifier-label color-text-lightest font-default-medium">
+      {localize('DND5E.Modifier')}
+    </span>
     </button>
   </div>
   {#if context.tools.length}
@@ -70,7 +75,7 @@
           {/if}
           <button
             type="button"
-            class="button button-borderless skill-roll-button"
+            class="button button-borderless use-ability-roll-button"
             onclick={(event) =>
               context.actor.rollToolCheck({ tool: tool.key, event })}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
@@ -78,10 +83,10 @@
             {tool.label}
           </button>
           <span class="modifier">
-            <span class="color-text-lightest">
+            <span class="font-label-medium color-text-lightest">
               {modTotal.sign}
             </span>
-            <span>
+            <span class="font-data-medium">
               {modTotal.value}
             </span>
           </span>
@@ -105,4 +110,4 @@
   {:else}
     <!-- Do we want any kind of content for when there are no proficient tools? -->
   {/if}
-</div>
+</FiligreeCard>

@@ -3,7 +3,7 @@
   // --header-image: url(../../modules/tidy5e-sheet/images/background-character.webp);
   --header-shadow: 0 0 8px rgba(0, 0, 0, 0.64);
 
-  background: rgba(116, 27, 43, 1); // TODO: Fix scoping so this can use T5e variables.
+  background: var(--t5e-theme-color-default);
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -44,7 +44,6 @@
     height: 100%;
     max-height: 200px; // TODO: Delete and use a wrapper around the header bar and sheet header.
   }
-
 
   .window-content {
     display: flex;
@@ -903,6 +902,7 @@
     .level-container {
       align-items: center;
       position: relative;
+      margin-top: calc(var(--t5e-size-2x) + var(--t5e-size-halfx));
 
       .inspiration-badge {
         position: absolute;
@@ -932,6 +932,12 @@
           &:not(.inspired) .level {
             color: var(--t5e-color-text-lighter);
           }
+
+          &:hover,
+          &:focus,
+          &:active {
+            background-color: var(--t5e-theme-color-highlight);
+          }
         }
 
         &.single {
@@ -955,7 +961,10 @@
             top: 50%;
           }
 
-          &:hover {
+          &:hover,
+          &:focus,
+          &:active {
+            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
             filter: drop-shadow(0 0 6px var(--t5e-theme-color-highlight));
           }
 
@@ -1004,6 +1013,13 @@
               font-size: var(--font-size-16);
             }
           }
+
+          &:hover,
+          &:focus,
+          &:active {
+            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
+            filter: drop-shadow(0 0 6px var(--t5e-theme-color-highlight));
+          }
         }
       }
 
@@ -1039,7 +1055,7 @@
       position: relative;
       min-height: 106px;
       gap: var(--t5e-size-1x);
-      padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-2x) 0;
+      padding: var(--t5e-size-2x) var(--t5e-size-3x) var(--t5e-size-halfx) 0;
       margin-left: var(--header-padding);
       align-items: flex-start;
       container-name: abilities;
@@ -1241,7 +1257,7 @@
     }
 
     .ability-roll-button {
-      margin-bottom: -2.125rem;
+      margin-bottom: -2.25rem;
       padding: 0 .75rem 2rem;
     }
 
@@ -1259,10 +1275,13 @@
       min-height: auto;
       text-transform: uppercase;
       transition: all var(--t5e-transition-default);
-      z-index: 1;
 
       ~div span {
         transition: all var(--t5e-transition-default);
+      }
+
+      +div:not(:has(.ability-score-input)) {
+        pointer-events: none;
       }
 
       &:hover,
@@ -1559,10 +1578,14 @@
   &.theme-dark,
   .theme-dark {
 
-    .main-content {
+    .sheet-body {
       background: url(../../modules/tidy5e-sheet/images/denim065.png) top center / auto repeat,
         var(--t5e-component-card-dark-darker);
       background-size: auto;
+
+      &::before {
+        content: none;
+      }
     }
 
     .window-content {
@@ -1588,7 +1611,7 @@
     }
 
     flex-direction: row;
-    gap: 0.75rem;
+    gap: var(--t5e-size-6x);
 
     .left {
       flex: 0 0 12.5rem;

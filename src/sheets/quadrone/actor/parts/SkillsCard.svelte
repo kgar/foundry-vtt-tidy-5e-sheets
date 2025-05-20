@@ -10,6 +10,7 @@
   import { CONSTANTS } from 'src/constants';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
 
@@ -31,7 +32,7 @@
   );
 </script>
 
-<div class="skills card filigree-card">
+<FiligreeCard class="skills card">
   <div class="use-ability-header flexrow">
     <button
       type="button"
@@ -127,4 +128,4 @@
   {:else}
     <!-- Do we want any kind of content for when there are no proficient skills? -->
   {/if}
-</div>
+</FiligreeCard>

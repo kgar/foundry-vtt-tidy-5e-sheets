@@ -46,7 +46,7 @@
 <header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
     <div class="flexcol">
-      <div class="flexrow">
+      <div class="character-context-row flexrow">
         <div class="flexcol flex1">
           <div class="character-details-name-row">
             {#if context.unlocked}
