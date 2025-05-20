@@ -8,6 +8,7 @@
   import ProficiencyCycle from './ProficiencyCycle.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getModifierData } from 'src/utils/formatting';
 
@@ -19,10 +20,11 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
+  
 </script>
 
 <!-- TODO: add tooltips to config buttons -->
-<div class="tools card filigree-card">
+<FiligreeCard className="tools card">
   <div class="use-ability-header flexrow">
     <button
       type="button"
@@ -105,4 +107,4 @@
   {:else}
     <!-- Do we want any kind of content for when there are no proficient tools? -->
   {/if}
-</div>
+</FiligreeCard>

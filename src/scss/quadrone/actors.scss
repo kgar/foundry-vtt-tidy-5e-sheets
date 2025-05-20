@@ -210,6 +210,7 @@
       i {
         font-size: var(--font-size-11);
         color: var(--_fill);
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.24);
       }
 
       &.button-icon-only:hover {
@@ -230,11 +231,13 @@
       &:focus,
       &:active {
         i {
-          color: var(--t5e-theme-color-darkest);
+          --_fill: var(--t5e-theme-color-darkest);
+          color: var(--_fill);
         }
 
         &:is([data-proficiency='0']) i {
-          color: var(--t5e-color-textgold-emphasis);
+          --_fill: var(--t5e-color-text-gold-emphasis);
+          color: var(--_fill);
         }
       }
     }
@@ -356,5 +359,31 @@
 
   .level-selector {
     width: auto;
+  }
+
+  &.theme-dark,
+  .theme-dark {
+    .use-ability-list {
+
+      button.proficiency {
+        --_fill: var(--t5e-theme-color-lighter);
+
+
+        &.button-icon-only:hover {
+          border: none;
+          outline: none;
+          background: transparent;
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+          i {
+            --_fill: var(--t5e-theme-color-lightest);
+            color: var(--_fill);
+          }
+        }
+      }
+    }
   }
 }
