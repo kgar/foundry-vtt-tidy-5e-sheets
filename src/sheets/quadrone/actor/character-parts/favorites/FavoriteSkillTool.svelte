@@ -23,10 +23,31 @@
       ability: CONFIG.DND5E.abilities[data.ability].label,
     }),
   );
+
+  async function handleClick(
+    event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+  ) {
+    if (favorite.type === 'skill') {
+      await context.actor.rollSkill({ skill: favorite.key, event });
+      return;
+    }
+
+    await context.actor.rollToolCheck({ tool: favorite.key, event });
+  }
 </script>
 
 <li class="favorite" data-reference-tooltip={favorite.reference}>
-  <img src={favorite.img} alt={favorite.name} class="item-image" />
+  {#if context.editable}
+    <a class="item-use-button" onclick={handleClick}>
+      <img src={favorite.img} alt={favorite.name} class="item-image" />
+      <span class="roll-prompt">
+        <i class="fa fa-dice-d20"></i>
+      </span>
+    </a>
+  {:else}
+    <img src={favorite.img} alt={favorite.name} class="item-image" />
+  {/if}
+
   <div class="name stacked">
     <span class="title">
       {favorite.name}
@@ -35,6 +56,7 @@
       {subtitle}
     </span>
   </div>
+
   <div class="info">
     <span class="modifier">
       <span class="sign">

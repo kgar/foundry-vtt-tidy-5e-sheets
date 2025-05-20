@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import FavoriteSkillTool from '../character-parts/favorites/FavoriteSkillTool.svelte';
+  import FavoriteSlot from '../character-parts/favorites/FavoriteSlot.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 </script>
@@ -36,10 +37,7 @@
           {favorite.activity.name}
         </li>
       {:else if favorite.type === 'slots'}
-        <li class="favorite">
-          <img src={favorite.img} alt={favorite.name} class="item-image" />
-          {favorite.name}
-        </li>
+        <FavoriteSlot {favorite} />
       {:else if favorite.type === 'skill' || favorite.type === 'tool'}
         <FavoriteSkillTool {favorite} />
       {/if}
