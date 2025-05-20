@@ -79,15 +79,15 @@
       <div class="divider-dot"></div>
     {/if}
     {#if species}
-      <span class="species">
+      <span class="species hide-under-600">
         <span class="color-text-gold">{species}</span>
       </span>
-      <div class="divider hide-under-600"></div>
+      <div class="divider-dot hide-under-600"></div>
     {/if}
-    <span class="alignment hide-under-600">
+    <span class="alignment {context.speeds.secondary.length > 0 ? 'hide-under-600' : 'hide-under-700'}">
       <span class="color-text-gold">{alignment}</span>
     </span>
-    <div class="divider hide-under-600"></div>
+    <div class="divider-dot {context.speeds.secondary.length > 0 ? 'hide-under-600' : 'hide-under-700'}"></div>
     {#each context.classes as entry, i}
       <span class="class" class:hide-under-600={i > 0}>
         <span class="color-text-gold font-label-medium">{entry.name}</span>
