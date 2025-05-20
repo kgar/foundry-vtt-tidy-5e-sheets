@@ -297,15 +297,15 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   /**
    * Prepare favorites for display.
-   * @param {ApplicationRenderContext} context  Context being prepared.
-   * @returns {Promise<object>}
-   * @protected
    */
   async _prepareFavorites() {
     let entries: FavoriteContextEntry[] = [];
 
-    for (let f of this.actor.system.favorites as CharacterFavorite[]) {
-      const { id, type, sort } = f;
+    let favorites = this.actor.system.favorites.sort(
+      (a: CharacterFavorite, b: CharacterFavorite) => a.sort - b.sort
+    ) as CharacterFavorite[];
+
+    for (let { id, type } of favorites) {
       const favorite = await fromUuid(id, { relative: this.actor });
       if (
         !favorite &&
@@ -314,112 +314,83 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         continue;
       }
 
-      let data;
-
       if (type === 'item') {
-        data = await favorite.system.getFavoriteData();
-      } else if (type === 'effect' || type === 'activity') {
-        data = await favorite.getFavoriteData();
-      } else {
-        data = await this._getFavoriteData(type, id);
-      }
-
-      if (!data) {
+        entries.push({
+          type: 'item',
+          item: favorite,
+        });
         continue;
+      } else if (type === 'effect') {
+        entries.push({
+          type: 'effect',
+          effect: favorite,
+        });
+        continue;
+      } else if (type === 'activity') {
+        entries.push({
+          type: 'activity',
+          activity: favorite,
+        });
+        continue;
+      } else if (type === 'slots') {
+        const { value, max, level } = this.actor.system.spells[id] ?? {};
+        const uses = { value, max, field: `system.spells.${id}.value` };
+
+        const isLeveledSpell = /spell\d+/.test(id);
+        let img = !isLeveledSpell
+          ? CONFIG.DND5E.spellcastingTypes[id]?.img ||
+            CONFIG.DND5E.spellcastingTypes.pact.img
+          : CONFIG.DND5E.spellcastingTypes.leveled.img.replace('{id}', id);
+
+        const plurals = new Intl.PluralRules(game.i18n.lang, {
+          type: 'ordinal',
+        });
+
+        let name = !isLeveledSpell
+          ? game.i18n.localize(`DND5E.SpellSlots${id.capitalize()}`)
+          : game.i18n.format(`DND5E.SpellSlotsN.${plurals.select(level)}`, {
+              n: level,
+            });
+
+        entries.push({
+          type: 'slots',
+          id,
+          uses,
+          level,
+          name,
+          img,
+        });
+      } else if (['skill', 'tool'].includes(type)) {
+        const data = this.actor.system[`${type}s`]?.[id];
+
+        if (!data) {
+          continue;
+        }
+
+        let img;
+        let name;
+        let reference;
+
+        if (type === 'tool') {
+          reference = dnd5e.documents.Trait.getBaseItemUUID(
+            CONFIG.DND5E.tools[id]?.id
+          );
+          ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
+            indexOnly: true,
+          }));
+        } else if (type === 'skill') {
+          ({ icon: img, label: name, reference } = CONFIG.DND5E.skills[id]);
+        }
+
+        entries.push({
+          type,
+          id,
+          key: id,
+          img: img,
+          name,
+          reference,
+        });
       }
-
-      let {
-        img,
-        title,
-        subtitle,
-        value,
-        uses,
-        quantity,
-        modifier,
-        passive,
-        save,
-        range,
-        reference,
-        toggle,
-        suppressed,
-        level,
-      } = data;
-
-      if (foundry.utils.getType(save?.ability) === 'Set')
-        save = {
-          ...save,
-          ability:
-            save.ability.size > 2
-              ? game.i18n.localize('DND5E.AbbreviationDC')
-              : Array.from<string>(save.ability)
-                  .map((k) => CONFIG.DND5E.abilities[k]?.abbreviation)
-                  .filterJoin(' / '),
-        };
-
-      const css = [];
-      if (uses?.max) {
-        css.push('uses');
-        uses.value = Math.round(uses.value);
-      } else if (modifier !== undefined) css.push('modifier');
-      else if (save?.dc) css.push('save');
-      else if (value !== undefined) css.push('value');
-
-      if (toggle === false) css.push('disabled');
-      if (uses?.max > 99) css.push('uses-sm');
-      if (modifier !== undefined) {
-        const value = Number(modifier.replace?.(/\s+/g, '') ?? modifier);
-        if (!isNaN(value)) modifier = value;
-      }
-
-      const rollableClass = [];
-      if (this.isEditable && type !== 'slots') rollableClass.push('rollable');
-      if (type === 'skill') rollableClass.push('skill-name');
-      else if (type === 'tool') rollableClass.push('tool-name');
-
-      if (suppressed) subtitle = game.i18n.localize('DND5E.Suppressed');
-      const itemId =
-        type === 'item'
-          ? favorite.id
-          : type === 'activity'
-          ? favorite.item.id
-          : null;
-
-      entries.push({
-        id,
-        img,
-        type,
-        title,
-        value,
-        uses,
-        sort,
-        save,
-        modifier,
-        passive,
-        range,
-        reference,
-        suppressed,
-        level,
-        itemId,
-        draggable: ['item', 'effect'].includes(type),
-        effectId: type === 'effect' ? favorite.id : null,
-        parentId:
-          type === 'effect' && favorite.parent !== favorite.target
-            ? favorite.parent.id
-            : null,
-        activityId: type === 'activity' ? favorite.id : null,
-        preparationMode:
-          type === 'slots' ? (/spell\d+/.test(id) ? 'prepared' : id) : null,
-        key: type === 'skill' || type === 'tool' ? id : null,
-        toggle:
-          toggle === undefined ? null : { applicable: true, value: toggle },
-        quantity: quantity > 1 ? quantity : '',
-        rollableClass: rollableClass.filterJoin(' '),
-        css: css.filterJoin(' '),
-        bareName: type === 'slots',
-        subtitle: Array.isArray(subtitle)
-          ? subtitle.filterJoin(' &bull; ')
-          : subtitle,
-      });
     }
 
     return entries;

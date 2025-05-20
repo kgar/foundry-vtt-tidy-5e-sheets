@@ -1015,35 +1015,45 @@ export type ActorSkillsToolsContext<T> = {
   source: T;
 } & T;
 
-export type FavoriteContextEntry = {
+export type ItemFavoriteContextEntry = {
+  type: 'item';
+  item: Item5e;
+};
+
+export type EffectFavoriteContextEntry = {
+  type: 'effect';
+  effect: ActiveEffect5e;
+};
+
+export type ActivityFavoriteContextEntry = {
+  type: 'activity';
+  activity: Activity5e;
+};
+
+export type SlotsFavoriteContextEntry = {
+  type: 'slots';
   id: string;
   img?: string;
-  type: CharacterFavoriteType;
-  title: string;
-  value: unknown;
-  uses: unknown;
-  sort: unknown;
-  save: unknown;
-  modifier: unknown;
-  passive: unknown;
-  range: unknown;
-  reference: unknown;
-  suppressed: unknown;
-  level: unknown;
-  itemId: unknown;
-  draggable: boolean;
-  effectId: string | null;
-  parentId: string | null;
-  activityId: string | null;
-  preparationMode: string | null;
-  key: string | null;
-  toggle: { applicable: boolean; value: boolean } | null;
-  quantity: number | string;
-  rollableClass: string;
-  css: string;
-  bareName: boolean;
-  subtitle?: string;
+  level?: number;
+  name: string;
+  uses: { value: number; max: number; field: string };
 };
+
+export type SkillToolFavoriteContextEntry = {
+  type: 'skill' | 'tool';
+  id: string;
+  img?: string;
+  key: string | null;
+  name: string;
+  reference?: string;
+};
+
+export type FavoriteContextEntry =
+  | ItemFavoriteContextEntry
+  | EffectFavoriteContextEntry
+  | ActivityFavoriteContextEntry
+  | SlotsFavoriteContextEntry
+  | SkillToolFavoriteContextEntry;
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
