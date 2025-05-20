@@ -35,10 +35,12 @@
     .list {
       .trait-item {
         gap: var(--t5e-size-1x);
+        margin-right: var(--t5e-size-2x);
       }
 
       .list-label {
         flex: 1;
+        margin-right: var(--t5e-size-4x);
 
         i {
           color: var(--t5e-color-icon-diminished);
