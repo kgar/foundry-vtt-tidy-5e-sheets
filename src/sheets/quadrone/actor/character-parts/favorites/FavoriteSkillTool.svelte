@@ -65,9 +65,9 @@
       <span>
         {modifier.value}
       </span>
-      {#if data.passive}
-        <span class="passive">({data.passive})</span>
-      {/if}
     </span>
+    {#if data.passive}
+      <span class="passive">({data.passive})</span>
+    {/if}
   </div>
 </li>

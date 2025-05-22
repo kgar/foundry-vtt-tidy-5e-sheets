@@ -1392,7 +1392,7 @@ export const FoundryAdapter = {
 
     return documentWithUses.update({ [spentProp]: max - uses });
   },
-  handleActivityUsesChanged(
+  async handleActivityUsesChanged(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
@@ -1407,7 +1407,7 @@ export const FoundryAdapter = {
     const uses = clamp(0, value, activity.uses.max);
     event.currentTarget.value = uses.toString();
 
-    return activity.update({ 'system.uses.spent': activity.uses.max - uses });
+    return await activity.update({ 'uses.spent': activity.uses.max - uses });
   },
   // TEMP: Find better home
   groupSelectOptions(entries: [string, any][]) {

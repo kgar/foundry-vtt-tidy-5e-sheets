@@ -3,9 +3,12 @@
   import FavoriteSkillTool from '../character-parts/favorites/FavoriteSkillTool.svelte';
   import FavoriteSlot from '../character-parts/favorites/FavoriteSlot.svelte';
     import FavoriteEffect from '../character-parts/favorites/FavoriteEffect.svelte';
+    import FavoriteActivity from '../character-parts/favorites/FavoriteActivity.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 </script>
+
+<!-- 👋 hightouch - we'll need to visualize a convenient / obvious way to delete favorites -->
 
 {#if context.favorites.length}
   <ul class="favorites unlist">
@@ -22,14 +25,7 @@
       {:else if favorite.type === 'effect'}
         <FavoriteEffect {favorite} />
       {:else if favorite.type === 'activity'}
-        <li class="favorite">
-          <img
-            src={favorite.activity.img}
-            alt={favorite.activity.name}
-            class="item-image"
-          />
-          {favorite.activity.name}
-        </li>
+        <FavoriteActivity {favorite} />
       {:else if favorite.type === 'slots'}
         <FavoriteSlot {favorite} />
       {:else if favorite.type === 'skill' || favorite.type === 'tool'}
