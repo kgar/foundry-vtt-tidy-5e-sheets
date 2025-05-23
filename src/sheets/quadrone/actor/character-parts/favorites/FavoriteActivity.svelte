@@ -16,8 +16,6 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
-  let localize = FoundryAdapter.localize;
-
   let configurable = $derived(Activities.isConfigurable(favorite.activity));
 
   let subtitle = $derived(
@@ -123,8 +121,18 @@
       {/if}
     </div>
     <div class="secondary">
-      <!-- if range.value -->
-      <!-- else if range.reach  -->
+      {#if range?.value}
+        <span class="range">
+          {range.value}
+          {#if range.long}&sol; {range.long}{/if}
+          {range.units}
+        </span>
+      {:else if range?.reach}
+        <span class="range">
+          {range.reach}
+          {range.units}
+        </span>
+      {/if}
     </div>
   </div>
 </li>
