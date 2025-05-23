@@ -1,3 +1,96 @@
+
+```js
+// Base Item
+  /**
+   * Prepare item favorite data.
+   * @returns {Promise<FavoriteData5e>}
+   */
+  async getFavoriteData() {
+    return {
+      img: this.parent.img,
+      title: this.parent.name,
+      subtitle: game.i18n.localize(CONFIG.Item.typeLabels[this.parent.type])
+    };
+  }
+
+// Class
+  /** @inheritDoc */
+  async getFavoriteData() {
+    const context = await super.getFavoriteData();
+    if ( this.parent.subclass ) context.subtitle = this.parent.subclass.name;
+    context.value = this.levels;
+    return context;
+  }
+
+// Consumable
+  /** @inheritDoc */
+  async getFavoriteData() {
+    return foundry.utils.mergeObject(await super.getFavoriteData(), {
+      subtitle: [this.type.label, this.parent.labels.activation],
+      uses: this.hasLimitedUses ? this.getUsesData() : null,
+      quantity: this.quantity
+    });
+  }
+
+// Container
+  /** @inheritDoc */
+  async getFavoriteData() {
+    const data = super.getFavoriteData();
+    const capacity = await this.computeCapacity();
+    if ( Number.isFinite(capacity.max) ) return foundry.utils.mergeObject(await data, { uses: capacity });
+    return await data;
+  }
+
+// Equipment
+  /** @inheritDoc */
+  async getFavoriteData() {
+    return foundry.utils.mergeObject(await super.getFavoriteData(), {
+      subtitle: [this.type.label, this.parent.labels.activation],
+      uses: this.hasLimitedUses ? this.getUsesData() : null
+    });
+  }
+
+// Feat
+  /** @inheritDoc */
+  async getFavoriteData() {
+    return foundry.utils.mergeObject(await super.getFavoriteData(), {
+      subtitle: [this.parent.labels.activation, this.parent.labels.recovery],
+      uses: this.hasLimitedUses ? this.getUsesData() : null
+    });
+  }
+
+// Spell
+  /** @inheritDoc */
+  async getFavoriteData() {
+    return foundry.utils.mergeObject(await super.getFavoriteData(), {
+      subtitle: [this.parent.labels.components.vsm, this.parent.labels.activation],
+      modifier: this.parent.labels.modifier,
+      range: this.range,
+      save: this.activities.getByType("save")[0]?.save
+    });
+  }
+
+// Tool
+  /** @inheritDoc */
+  async getFavoriteData() {
+    return foundry.utils.mergeObject(await super.getFavoriteData(), {
+      subtitle: this.type.label,
+      modifier: this.parent.parent?.system.tools?.[this.type.baseItem]?.total
+    });
+  }
+
+// Weapon
+  /** @inheritDoc */
+  async getFavoriteData() {
+    return foundry.utils.mergeObject(await super.getFavoriteData(), {
+      subtitle: CONFIG.DND5E.itemActionTypes[this.activities.contents[0]?.actionType],
+      modifier: this.parent.labels.modifier,
+      range: this.range
+    });
+  }
+```
+
+
 ```hbs
     {{!-- Favorites --}}
     <div class="favorites">
@@ -140,3 +233,4 @@
         </ul>
     </div>
 ```
+

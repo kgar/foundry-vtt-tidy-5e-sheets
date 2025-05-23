@@ -1,43 +1,32 @@
 <script lang="ts">
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { Activities } from 'src/features/activities/activities';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import type { ActivityFavoriteContextEntry } from 'src/types/types';
+  import type { ItemFavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
 
   interface Props {
-    favorite: ActivityFavoriteContextEntry;
+    favorite: ItemFavoriteContextEntry;
   }
 
   let { favorite }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
-  let configurable = $derived(Activities.isConfigurable(favorite.activity));
+  let subtitle = 'todo';
 
-  let subtitle = $derived(
-    [
-      favorite.activity.labels.activation,
-      favorite.activity.labels.recovery,
-    ].filterJoin(` <span class="divider-dot"></span> `),
-  );
-
-  let range = $derived(favorite.activity.range);
-
-  let uses = $derived({ ...favorite.activity.uses, field: 'uses.value' });
-
-  let modifier = $derived(favorite.activity.labels.modifier);
-
-  let save = $derived(favorite.activity.save);
+  let uses = $derived({
+    ...favorite.item.system.uses,
+    field: 'system.uses.value',
+  });
 
   async function handleClick(
     event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
   ) {
     if (context.editable) {
-      await favorite.activity.use({ event });
+      FoundryAdapter.actorTryUseItem(favorite.item, event);
     }
   }
 </script>
@@ -45,38 +34,32 @@
 <li
   class="favorite"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
-  data-item-id={favorite.activity.item?.id}
-  data-activity-id={favorite.activity.id}
-  data-configurable={configurable}
+  data-item-id={favorite.item.id}
 >
   <a
     class={['item-use-button', { disabled: !context.editable }]}
     onclick={handleClick}
   >
-    <img
-      src={favorite.activity.img}
-      alt={favorite.activity.name}
-      class="item-image"
-    />
+    <img src={favorite.item.img} alt={favorite.item.name} class="item-image" />
     <span class="roll-prompt">
       <i class="fa fa-dice-d20"></i>
     </span>
   </a>
   <div class="name stacked">
     <span class="title">
-      {favorite.activity.name}
+      {favorite.item.name}
     </span>
     <span class="subtitle">
-      {@html subtitle}
+      {subtitle}
     </span>
   </div>
   <div class="info">
-    <div class="primary">
+    <span class="primary">
       {#if uses.max}
         <span class="uses">
           {#if context.owner}
             <TextInputQuadrone
-              document={favorite.activity}
+              document={favorite.item}
               field={uses.field}
               enableDeltaChanges={true}
               class="value"
@@ -84,12 +67,11 @@
               selectOnFocus={true}
               onSaveChange={(event) => {
                 const el = event.currentTarget;
-                FoundryAdapter.handleActivityUsesChanged(
-                  event,
-                  favorite.activity,
-                ).then(() => {
-                  el?.select();
-                });
+                FoundryAdapter.handleItemUsesChanged(event, favorite.item).then(
+                  () => {
+                    el?.select();
+                  },
+                );
 
                 return false;
               }}
@@ -123,21 +105,20 @@
             {save.ability}
           </span>
         </span>
+      {:else if !isNil(value)}
+        <!-- TODO -->
+      {:else if quantity}
+        <!-- TODO -->
       {/if}
-    </div>
-    <div class="secondary">
-      {#if range?.value}
-        <span class="range">
-          {range.value}
-          {#if range.long}&sol; {range.long}{/if}
-          {range.units}
-        </span>
+    </span>
+    <span class="secondary">
+      {#if uses && quantity}
+        <!-- TODO -->
+      {:else if range?.value}
+        <!-- TODO -->
       {:else if range?.reach}
-        <span class="range">
-          {range.reach}
-          {range.units}
-        </span>
+        <!-- TODO -->
       {/if}
-    </div>
+    </span>
   </div>
 </li>

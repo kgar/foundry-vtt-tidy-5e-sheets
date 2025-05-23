@@ -27,6 +27,10 @@
   async function handleClick(
     event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
   ) {
+    if (!context.editable) {
+      return;
+    }
+
     if (favorite.type === 'skill') {
       await context.actor.rollSkill({ skill: favorite.key, event });
       return;
@@ -38,7 +42,10 @@
 
 <li class="favorite" data-reference-tooltip={favorite.reference}>
   {#if context.editable}
-    <a class="item-use-button" onclick={handleClick}>
+    <a
+      class={['item-use-button', { disabled: !context.editable }]}
+      onclick={handleClick}
+    >
       <img src={favorite.img} alt={favorite.name} class="item-image" />
       <span class="roll-prompt">
         <i class="fa fa-dice-d20"></i>

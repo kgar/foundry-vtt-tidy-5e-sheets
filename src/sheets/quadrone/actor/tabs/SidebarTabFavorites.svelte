@@ -2,8 +2,9 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import FavoriteSkillTool from '../character-parts/favorites/FavoriteSkillTool.svelte';
   import FavoriteSlot from '../character-parts/favorites/FavoriteSlot.svelte';
-    import FavoriteEffect from '../character-parts/favorites/FavoriteEffect.svelte';
-    import FavoriteActivity from '../character-parts/favorites/FavoriteActivity.svelte';
+  import FavoriteEffect from '../character-parts/favorites/FavoriteEffect.svelte';
+  import FavoriteActivity from '../character-parts/favorites/FavoriteActivity.svelte';
+  import FavoriteItem from '../character-parts/favorites/FavoriteItem.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 </script>
@@ -14,14 +15,7 @@
   <ul class="favorites unlist">
     {#each context.favorites as favorite}
       {#if favorite.type === 'item'}
-        <li class="favorite">
-          <img
-            src={favorite.item.img}
-            alt={favorite.item.name}
-            class="item-image"
-          />
-          {favorite.item.name}
-        </li>
+        <FavoriteItem {favorite} />
       {:else if favorite.type === 'effect'}
         <FavoriteEffect {favorite} />
       {:else if favorite.type === 'activity'}
