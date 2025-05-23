@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -32,15 +31,12 @@
   );
 </script>
 
-<!-- TODO: Owner behavior | default sheets: clicks toggle the effect -->
-<!-- TODO: Observer behavior | default sheets: the click behavior is ignored -->
 <li
   class={['favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
 >
-  <!-- 👋 hightouch -->
   <button
     type="button"
     class="button button-borderless button-secondary"
