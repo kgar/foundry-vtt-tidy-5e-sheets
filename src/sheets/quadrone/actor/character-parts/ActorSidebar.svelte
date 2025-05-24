@@ -3,7 +3,6 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Tab } from 'src/types/types';
   import SidebarTabSkills from 'src/sheets/quadrone/actor/tabs/SidebarTabSkills.svelte';
-  import SidebarTabTraits from 'src/sheets/quadrone/actor/tabs/SidebarTabTraits.svelte';
   import SidebarTabFavorites from 'src/sheets/quadrone/actor/tabs/SidebarTabFavorites.svelte';
 
   let selectedTabId = $state('');
@@ -14,14 +13,6 @@
       content: {
         type: 'svelte',
         component: SidebarTabSkills,
-      },
-    } satisfies Tab,
-    {
-      id: 'sidebar-traits',
-      title: 'DND5E.Traits',
-      content: {
-        type: 'svelte',
-        component: SidebarTabTraits,
       },
     } satisfies Tab,
     {
