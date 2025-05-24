@@ -3132,7 +3132,7 @@ export type CONFIG = {
       heal: string;
       util: string;
       other: string;
-    };
+    } & Record<string, string>;
     itemCapacityTypes: {
       items: string;
       weight: string;
