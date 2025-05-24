@@ -45,7 +45,7 @@
       {favorite.item.name}
     </span>
     <span class="subtitle">
-      {subtitle}
+      {@html subtitle}
     </span>
   </div>
   <div class="info">
