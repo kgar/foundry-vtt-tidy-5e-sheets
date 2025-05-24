@@ -16,11 +16,12 @@
       },
     } satisfies Tab,
     {
-      id: 'sidebar-pinned',
+      id: 'sidebar-favorites',
       title: 'DND5E.Favorites',
       content: {
         type: 'svelte',
         component: SidebarTabFavorites,
+        cssClass: 'favorites',
       },
     } satisfies Tab,
   ]);

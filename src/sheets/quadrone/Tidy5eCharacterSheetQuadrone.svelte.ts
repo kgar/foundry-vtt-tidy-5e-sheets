@@ -6,6 +6,7 @@ import type {
 import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
 import type {
+  ActiveEffect5e,
   ActorSheetQuadroneContext,
   ActorTraitContext,
   AttributePinContext,
@@ -37,6 +38,7 @@ import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.sve
 import { debug } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type {
+  Activity5e,
   CharacterFavorite,
   FacilityOccupants,
 } from 'src/foundry/dnd5e.types';
@@ -709,6 +711,75 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   toggleDeathSaves(force?: boolean) {
     this._showDeathSaves = force ?? !this._showDeathSaves;
     this.render();
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+
+  async _onDrop(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+  ) {
+    if (!event.target.closest('.favorites')) {
+      return super._onDrop(event);
+    }
+
+    const dragData =
+      event.dataTransfer!.getData('application/json') ||
+      event.dataTransfer!.getData('text/plain');
+
+    if (!dragData) {
+      return super._onDrop(event);
+    }
+
+    let data;
+
+    try {
+      data = JSON.parse(dragData);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+    const { action, type, id } = data.dnd5e ?? {};
+    if (action === 'favorite') {
+      return this._onDropFavorite(event, { type, id });
+    }
+    if (data.type === 'Activity') {
+      const activity = await fromUuid(data.uuid);
+      if (activity) return this._onDropActivity(event, data);
+    }
+    return super._onDrop(event);
+  }
+
+  /** @inheritDoc */
+  async _onDropActiveEffect(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    effect: ActiveEffect5e
+  ) {
+    if (!event.target.closest('.favorites') || effect.target !== this.actor) {
+      return super._onDropActiveEffect(event, effect);
+    }
+    const uuid = effect.getRelativeUUID(this.actor);
+    return this._onDropFavorite(event, { type: 'effect', id: uuid });
+  }
+
+  /**
+   * Handle dropping an Activity onto the sheet.
+   * @param {DragEvent} event    The originating drag event.
+   * @param {Activity} activity  The dropped Activity document.
+   * @returns {Promise<Actor5e|void>}
+   * @protected
+   */
+  async _onDropActivity(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    activity: Activity5e
+  ) {
+    if (!event.target.closest('.favorites') || activity.actor !== this.actor)
+      return;
+    const uuid = `${activity.item.getRelativeUUID(this.actor)}.Activity.${
+      activity.id
+    }`;
+    return this._onDropFavorite(event, { type: 'activity', id: uuid });
   }
 
   /* -------------------------------------------- */
