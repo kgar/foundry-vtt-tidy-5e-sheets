@@ -3,6 +3,7 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SkillToolFavoriteContextEntry } from 'src/types/types';
   import { getModifierData } from 'src/utils/formatting';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
 
   interface Props {
     favorite: SkillToolFavoriteContextEntry;
@@ -24,13 +25,9 @@
     }),
   );
 
-  async function handleClick(
+  async function handleOnUse(
     event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
   ) {
-    if (!context.editable) {
-      return;
-    }
-
     if (favorite.type === 'skill') {
       await context.actor.rollSkill({ skill: favorite.key, event });
       return;
@@ -41,20 +38,12 @@
 </script>
 
 <li class="favorite" data-reference-tooltip={favorite.reference}>
-  {#if context.editable}
-    <a
-      class={['item-use-button', { disabled: !context.editable }]}
-      onclick={handleClick}
-    >
-      <img src={favorite.img} alt={favorite.name} class="item-image" />
-      <span class="roll-prompt">
-        <i class="fa fa-dice-d20"></i>
-      </span>
-    </a>
-  {:else}
-    <img src={favorite.img} alt={favorite.name} class="item-image" />
-  {/if}
-
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.img}
+    title={favorite.name}
+    onUse={handleOnUse}
+  />
   <div class="name stacked">
     <span class="title">
       {favorite.name}

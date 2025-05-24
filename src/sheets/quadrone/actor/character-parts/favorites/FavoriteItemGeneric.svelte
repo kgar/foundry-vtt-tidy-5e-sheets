@@ -3,8 +3,9 @@
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
-  import FavoriteItemRollButton from './parts/FavoriteItemRollButton.svelte';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
@@ -36,7 +37,13 @@
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.item.id}
 >
-  <FavoriteItemRollButton {favorite} />
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.item.img}
+    title={favorite.item.name}
+    onUse={async (ev) =>
+      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+  />
   <div class="name stacked">
     <span class="title">
       {favorite.item.name}

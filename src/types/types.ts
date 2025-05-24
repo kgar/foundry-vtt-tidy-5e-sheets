@@ -1016,17 +1016,20 @@ export type ActorSkillsToolsContext<T> = {
 } & T;
 
 export type ItemFavoriteContextEntry = {
+  id: string;
   type: 'item';
   item: Item5e;
-  capacity?: ContainerCapacityContext
+  capacity?: ContainerCapacityContext;
 };
 
 export type EffectFavoriteContextEntry = {
+  id: string;
   type: 'effect';
   effect: ActiveEffect5e;
 };
 
 export type ActivityFavoriteContextEntry = {
+  id: string;
   type: 'activity';
   activity: Activity5e;
 };

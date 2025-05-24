@@ -3,6 +3,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { EffectFavoriteContextEntry } from 'src/types/types';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
 
   interface Props {
     favorite: EffectFavoriteContextEntry;
@@ -37,6 +38,12 @@
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
 >
+  <FavoriteRollButton
+    {favorite}
+    img={favorite.effect.img}
+    title={favorite.effect.name}
+  />
+
   <button
     type="button"
     class="button button-borderless button-secondary"
@@ -45,12 +52,6 @@
       toggleable &&
       favorite.effect.update({ disabled: !favorite.effect.disabled })}
   >
-    <img
-      src={favorite.effect.img}
-      alt={favorite.effect.name}
-      class="item-image"
-    />
-
     <div class="name stacked">
       <span class="title">
         {favorite.effect.name}

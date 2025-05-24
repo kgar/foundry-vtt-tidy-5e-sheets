@@ -7,6 +7,7 @@
   import type { ActivityFavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
 
   interface Props {
     favorite: ActivityFavoriteContextEntry;
@@ -32,14 +33,6 @@
   let modifier = $derived(favorite.activity.labels.modifier);
 
   let save = $derived(favorite.activity.save);
-
-  async function handleClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-  ) {
-    if (context.editable) {
-      await favorite.activity.use({ event });
-    }
-  }
 </script>
 
 <li
@@ -49,19 +42,12 @@
   data-activity-id={favorite.activity.id}
   data-configurable={configurable}
 >
-  <a
-    class={['item-use-button', { disabled: !context.editable }]}
-    onclick={handleClick}
-  >
-    <img
-      src={favorite.activity.img}
-      alt={favorite.activity.name}
-      class="item-image"
-    />
-    <span class="roll-prompt">
-      <i class="fa fa-dice-d20"></i>
-    </span>
-  </a>
+  <FavoriteRollButton
+    {favorite}
+    img={favorite.activity.img}
+    title={favorite.activity.name}
+    onUse={async (event) => await favorite.activity.use({ event })}
+  />
   <div class="name stacked">
     <span class="title">
       {favorite.activity.name}

@@ -316,6 +316,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
       if (type === 'item') {
         entries.push({
+          id,
           type: 'item',
           item: favorite,
           capacity:
@@ -326,12 +327,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         continue;
       } else if (type === 'effect') {
         entries.push({
+          id,
           type: 'effect',
           effect: favorite,
         });
         continue;
       } else if (type === 'activity') {
         entries.push({
+          id,
           type: 'activity',
           activity: favorite,
         });

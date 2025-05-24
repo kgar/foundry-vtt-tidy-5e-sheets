@@ -2,6 +2,7 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SlotsFavoriteContextEntry } from 'src/types/types';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
 
   interface Props {
     favorite: SlotsFavoriteContextEntry;
@@ -20,8 +21,7 @@
 </script>
 
 <li class="favorite">
-  <img src={favorite.img} alt={favorite.name} class="item-image" />
-
+  <FavoriteItemRollButton {favorite} img={favorite.img} title={favorite.name} />
   <div class="name stacked">
     <span class="title">
       {favorite.name}

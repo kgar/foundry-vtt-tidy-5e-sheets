@@ -1000,7 +1000,7 @@ export const FoundryAdapter = {
   lookupAbility(abbr: string) {
     return game.dnd5e.config.abilities[abbr];
   },
-  actorTryUseItem(item: Item5e, event: Event) {
+  async actorTryUseItem(item: Item5e, event: Event) {
     const config = { legacy: false, event };
 
     const suppressItemUse =
@@ -1010,7 +1010,7 @@ export const FoundryAdapter = {
       return;
     }
 
-    item.use(config);
+    return await item.use(config);
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.

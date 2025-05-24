@@ -1,9 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemRollButton from './parts/FavoriteItemRollButton.svelte';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
@@ -23,8 +24,23 @@
   let range = $derived(favorite.item.system.range);
 
   let save = $derived(
-    favorite.item.system.activities.getByType('save')[0]?.save,
+    getSaveData(favorite.item.system.activities.getByType('save')[0]?.save),
   );
+
+  function getSaveData(save: any) {
+    if (foundry.utils.getType(save?.ability) === 'Set')
+      save = {
+        ...save,
+        ability:
+          save.ability.size > 2
+            ? game.i18n.localize('DND5E.AbbreviationDC')
+            : Array.from<string>(save.ability)
+                .map((k: string) => CONFIG.DND5E.abilities[k]?.abbreviation)
+                .filterJoin(' / '),
+      };
+
+    return save;
+  }
 </script>
 
 <li
@@ -32,13 +48,19 @@
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.item.item?.id}
 >
-  <FavoriteItemRollButton {favorite} />
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.item.img}
+    title={favorite.item.name}
+    onUse={async (ev) =>
+      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+  />
   <div class="name stacked">
     <span class="title">
       {favorite.item.name}
     </span>
     <span class="subtitle">
-      {subtitle}
+      {@html subtitle}
     </span>
   </div>
   <div class="info">

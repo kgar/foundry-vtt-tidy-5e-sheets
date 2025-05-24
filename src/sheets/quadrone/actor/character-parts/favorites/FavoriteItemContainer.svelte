@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemRollButton from './parts/FavoriteItemRollButton.svelte';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
@@ -20,7 +20,13 @@
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.item.item?.id}
 >
-  <FavoriteItemRollButton {favorite} />
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.item.img}
+    title={favorite.item.name}
+    onUse={async (ev) =>
+      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+  />
   <div class="name stacked">
     <span class="title">
       {favorite.item.name}
