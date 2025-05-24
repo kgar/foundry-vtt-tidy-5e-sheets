@@ -187,7 +187,7 @@
                 class={['tidy-table-button', 'tidy-table-row-use-button']}
                 onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
               >
-                <img class="item-image" alt="" src={item.img} />
+                <img class="item-image" alt={item.name} src={item.img} />
                 <span class="roll-prompt">
                   <i class="fa fa-dice-d20"></i>
                 </span>

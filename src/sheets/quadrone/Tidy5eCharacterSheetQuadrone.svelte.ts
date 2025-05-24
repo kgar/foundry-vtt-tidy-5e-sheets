@@ -6,6 +6,7 @@ import type {
 import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
 import type {
+  ActiveEffect5e,
   ActorSheetQuadroneContext,
   ActorTraitContext,
   AttributePinContext,
@@ -18,6 +19,7 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   FacilityOccupantContext,
+  FavoriteContextEntry,
   LocationToSearchTextMap,
   MessageBus,
 } from 'src/types/types';
@@ -35,7 +37,11 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { debug } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { FacilityOccupants } from 'src/foundry/dnd5e.types';
+import type {
+  Activity5e,
+  CharacterFavorite,
+  FacilityOccupants,
+} from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from 'src/utils/data';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
@@ -165,6 +171,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         basic: { chosen: [], available: [], value: 0, max: 0 },
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
+      favorites: await this._prepareFavorites(),
       senses: this._getSenses(),
       size: {
         key: this.actor.system.traits.size,
@@ -289,6 +296,116 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       subtitle: details.type.subtype,
     };
   }
+
+  /**
+   * Prepare favorites for display.
+   */
+  async _prepareFavorites() {
+    let entries: FavoriteContextEntry[] = [];
+
+    let favorites = this.actor.system.favorites.sort(
+      (a: CharacterFavorite, b: CharacterFavorite) => a.sort - b.sort
+    ) as CharacterFavorite[];
+
+    for (let { id, type } of favorites) {
+      const favorite = await fromUuid(id, { relative: this.actor });
+      if (
+        !favorite &&
+        (type === 'item' || type === 'effect' || type === 'activity')
+      ) {
+        continue;
+      }
+
+      if (type === 'item') {
+        entries.push({
+          id,
+          type: 'item',
+          item: favorite,
+          capacity:
+            favorite.type === CONSTANTS.SHEET_TYPE_CONTAINER
+              ? await favorite.system.computeCapacity()
+              : null,
+        });
+        continue;
+      } else if (type === 'effect') {
+        entries.push({
+          id,
+          type: 'effect',
+          effect: favorite,
+        });
+        continue;
+      } else if (type === 'activity') {
+        entries.push({
+          id,
+          type: 'activity',
+          activity: favorite,
+        });
+        continue;
+      } else if (type === 'slots') {
+        const { value, max, level } = this.actor.system.spells[id] ?? {};
+        const uses = { value, max, field: `system.spells.${id}.value` };
+
+        const isLeveledSpell = /spell\d+/.test(id);
+        let img = !isLeveledSpell
+          ? CONFIG.DND5E.spellcastingTypes[id]?.img ||
+            CONFIG.DND5E.spellcastingTypes.pact.img
+          : CONFIG.DND5E.spellcastingTypes.leveled.img.replace('{id}', id);
+
+        const plurals = new Intl.PluralRules(game.i18n.lang, {
+          type: 'ordinal',
+        });
+
+        let name = !isLeveledSpell
+          ? game.i18n.localize(`DND5E.SpellSlots${id.capitalize()}`)
+          : game.i18n.format(`DND5E.SpellSlotsN.${plurals.select(level)}`, {
+              n: level,
+            });
+
+        entries.push({
+          type: 'slots',
+          id,
+          uses,
+          level,
+          name,
+          img,
+        });
+      } else if (['skill', 'tool'].includes(type)) {
+        const data = this.actor.system[`${type}s`]?.[id];
+
+        if (!data) {
+          continue;
+        }
+
+        let img;
+        let name;
+        let reference;
+
+        if (type === 'tool') {
+          reference = dnd5e.documents.Trait.getBaseItemUUID(
+            CONFIG.DND5E.tools[id]?.id
+          );
+          ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
+            indexOnly: true,
+          }));
+        } else if (type === 'skill') {
+          ({ icon: img, label: name, reference } = CONFIG.DND5E.skills[id]);
+        }
+
+        entries.push({
+          type,
+          id,
+          key: id,
+          img: img,
+          name,
+          reference,
+        });
+      }
+    }
+
+    return entries;
+  }
+
+  /* -------------------------------------------- */
 
   _getSenses(): CharacterSpeedSenseContext {
     const senseConfig = this.actor.system.attributes.senses;
@@ -594,6 +711,75 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   toggleDeathSaves(force?: boolean) {
     this._showDeathSaves = force ?? !this._showDeathSaves;
     this.render();
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+
+  async _onDrop(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+  ) {
+    if (!event.target.closest('.favorites')) {
+      return super._onDrop(event);
+    }
+
+    const dragData =
+      event.dataTransfer!.getData('application/json') ||
+      event.dataTransfer!.getData('text/plain');
+
+    if (!dragData) {
+      return super._onDrop(event);
+    }
+
+    let data;
+
+    try {
+      data = JSON.parse(dragData);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+    const { action, type, id } = data.dnd5e ?? {};
+    if (action === 'favorite') {
+      return this._onDropFavorite(event, { type, id });
+    }
+    if (data.type === 'Activity') {
+      const activity = await fromUuid(data.uuid);
+      if (activity) return this._onDropActivity(event, data);
+    }
+    return super._onDrop(event);
+  }
+
+  /** @inheritDoc */
+  async _onDropActiveEffect(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    effect: ActiveEffect5e
+  ) {
+    if (!event.target.closest('.favorites') || effect.target !== this.actor) {
+      return super._onDropActiveEffect(event, effect);
+    }
+    const uuid = effect.getRelativeUUID(this.actor);
+    return this._onDropFavorite(event, { type: 'effect', id: uuid });
+  }
+
+  /**
+   * Handle dropping an Activity onto the sheet.
+   * @param {DragEvent} event    The originating drag event.
+   * @param {Activity} activity  The dropped Activity document.
+   * @returns {Promise<Actor5e|void>}
+   * @protected
+   */
+  async _onDropActivity(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    activity: Activity5e
+  ) {
+    if (!event.target.closest('.favorites') || activity.actor !== this.actor)
+      return;
+    const uuid = `${activity.item.getRelativeUUID(this.actor)}.Activity.${
+      activity.id
+    }`;
+    return this._onDropFavorite(event, { type: 'activity', id: uuid });
   }
 
   /* -------------------------------------------- */

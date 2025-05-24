@@ -94,7 +94,6 @@
         <span class="color-text-default font-data-medium">{entry.levels}</span>
         <!-- TODO: Add button to roll a save request to chat here (enricher?) -->
         {#if entry.spellcasting}
-        {console.log(entry.spellcasting)}
           <!-- <button 
             type="button"
             onclick={(ev) => entry.spellcasting && onRollAbility?.(ev, entry.spellcasting.ability, entry.spellcasting.dc)}
