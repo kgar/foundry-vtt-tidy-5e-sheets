@@ -318,6 +318,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         entries.push({
           type: 'item',
           item: favorite,
+          capacity:
+            favorite.type === CONSTANTS.SHEET_TYPE_CONTAINER
+              ? await favorite.system.computeCapacity()
+              : null,
         });
         continue;
       } else if (type === 'effect') {
@@ -397,73 +401,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   /* -------------------------------------------- */
-
-  /**
-   * Prepare data for a favorited entry.
-   * @param {"skill"|"tool"|"slots"} type  The type of favorite.
-   * @param {string} id                    The favorite's identifier.
-   * @returns {Promise<FavoriteData5e|void>}
-   * @protected
-   */
-  async _getFavoriteData(type: 'skill' | 'tool' | 'slots', id: string) {
-    // Spell slots
-    if (type === 'slots') {
-      const { value, max, level } = this.actor.system.spells[id] ?? {};
-      const uses = { value, max, name: `system.spells.${id}.value` };
-      if (!/spell\d+/.test(id))
-        return {
-          uses,
-          level,
-          title: game.i18n.localize(`DND5E.SpellSlots${id.capitalize()}`),
-          subtitle: [
-            game.i18n.localize(`DND5E.SpellLevel${level}`),
-            game.i18n.localize(
-              `DND5E.Abbreviation${
-                CONFIG.DND5E.spellcastingTypes[id]?.shortRest ? 'SR' : 'LR'
-              }`
-            ),
-          ],
-          img:
-            CONFIG.DND5E.spellcastingTypes[id]?.img ||
-            CONFIG.DND5E.spellcastingTypes.pact.img,
-        };
-
-      const plurals = new Intl.PluralRules(game.i18n.lang, { type: 'ordinal' });
-      const isSR = CONFIG.DND5E.spellcastingTypes.leveled.shortRest;
-      return {
-        uses,
-        level,
-        title: game.i18n.format(`DND5E.SpellSlotsN.${plurals.select(level)}`, {
-          n: level,
-        }),
-        subtitle: game.i18n.localize(`DND5E.Abbreviation${isSR ? 'SR' : 'LR'}`),
-        img: CONFIG.DND5E.spellcastingTypes.leveled.img.replace('{id}', id),
-      };
-    }
-
-    // Skills & Tools
-    else {
-      const data = this.actor.system[`${type}s`]?.[id];
-      if (!data) return;
-      const { total, ability, passive } = data ?? {};
-      const subtitle = game.i18n.format('DND5E.AbilityPromptTitle', {
-        ability: CONFIG.DND5E.abilities[ability].label,
-      });
-      let img;
-      let title;
-      let reference;
-      if (type === 'tool') {
-        reference = dnd5e.documents.Trait.getBaseItemUUID(
-          CONFIG.DND5E.tools[id]?.id
-        );
-        ({ img, name: title } = dnd5e.documents.Trait.getBaseItem(reference, {
-          indexOnly: true,
-        }));
-      } else if (type === 'skill')
-        ({ icon: img, label: title, reference } = CONFIG.DND5E.skills[id]);
-      return { img, title, subtitle, modifier: total, passive, reference };
-    }
-  }
 
   _getSenses(): CharacterSpeedSenseContext {
     const senseConfig = this.actor.system.attributes.senses;

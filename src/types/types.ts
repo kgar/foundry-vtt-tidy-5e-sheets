@@ -1018,6 +1018,7 @@ export type ActorSkillsToolsContext<T> = {
 export type ItemFavoriteContextEntry = {
   type: 'item';
   item: Item5e;
+  capacity?: ContainerCapacityContext
 };
 
 export type EffectFavoriteContextEntry = {
