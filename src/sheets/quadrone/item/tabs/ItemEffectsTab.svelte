@@ -118,7 +118,7 @@
           <TidyEffectTableRow effectContext={effect}>
             {#snippet children({ toggleSummary, expanded })}
               <span
-                class="tidy-table-button tidy-table-row-use-button disabled"
+                class="tidy-table-row-use-button disabled"
               >
                 <img
                   class="item-image"

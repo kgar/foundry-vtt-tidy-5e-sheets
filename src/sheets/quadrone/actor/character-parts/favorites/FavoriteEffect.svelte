@@ -32,8 +32,9 @@
   );
 </script>
 
+
 <li
-  class={['favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
+  class={['favorite tidy-table-row', { suppressed: favorite.effect.isSuppressed, toggleable }]}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
@@ -52,17 +53,20 @@
       toggleable &&
       favorite.effect.update({ disabled: !favorite.effect.disabled })}
   >
-    <div class="name stacked">
-      <span class="title">
-        {favorite.effect.name}
-      </span>
-      <span class="subtitle">
-        {subtitle}
-      </span>
+    <div class="tidy-table-cell">
+      <div class="item-name stacked">
+        <span class="title">
+          {favorite.effect.name}
+        </span>
+        <span class="subtitle">
+          {subtitle}
+        </span>
+      </div>
     </div>
 
-    <div class="info">
-      <i
+    <div class="tidy-table-cell">
+      <div class="info">
+        <i
         class={[
           'fas',
           {

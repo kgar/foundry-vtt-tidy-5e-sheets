@@ -3,7 +3,7 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SkillToolFavoriteContextEntry } from 'src/types/types';
   import { getModifierData } from 'src/utils/formatting';
-  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import FavoriteItemTemplate from './FavoriteItemTemplate.svelte';
 
   interface Props {
     favorite: SkillToolFavoriteContextEntry;
@@ -25,9 +25,7 @@
     }),
   );
 
-  async function handleOnUse(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-  ) {
+  async function handleOnUse(event: MouseEvent) {
     if (favorite.type === 'skill') {
       await context.actor.rollSkill({ skill: favorite.key, event });
       return;
@@ -37,33 +35,25 @@
   }
 </script>
 
-<li class="favorite" data-reference-tooltip={favorite.reference}>
-  <FavoriteItemRollButton
-    {favorite}
-    img={favorite.img}
-    title={favorite.name}
-    onUse={handleOnUse}
-  />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.name}
+<FavoriteItemTemplate
+  {favorite}
+  img={favorite.img || ''}
+  name={favorite.name}
+  onUse={handleOnUse}
+  subtitle={subtitle}
+  dataAttributes={{
+    'reference-tooltip': favorite.reference,
+  }}
+>
+  <span class="modifier">
+    <span class="sign">
+      {modifier.sign}
     </span>
-    <span class="subtitle">
-      {subtitle}
+    <span>
+      {modifier.value}
     </span>
-  </div>
-
-  <div class="info">
-    <span class="modifier">
-      <span class="sign">
-        {modifier.sign}
-      </span>
-      <span>
-        {modifier.value}
-      </span>
-    </span>
-    {#if data.passive}
-      <span class="passive">({data.passive})</span>
-    {/if}
-  </div>
-</li>
+  </span>
+  {#if data.passive}
+    <span class="passive">({data.passive})</span>
+  {/if}
+</FavoriteItemTemplate>
