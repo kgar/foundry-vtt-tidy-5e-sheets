@@ -36,6 +36,6 @@
 </script>
 
 <div class="sidebar-header">
-  <Tabs bind:selectedTabId {tabs} cssClass="sidebar-tab-strip" />
+  <Tabs bind:selectedTabId {tabs} cssClass="sidebar-tab-strip button-group" tabCssClass="button button-secondary button-toggle" />
 </div>
-<TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents" />
+<TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents flexcol" />

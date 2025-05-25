@@ -125,15 +125,27 @@
 
       >.sidebar {
         flex-basis: var(--sidebar-expanded-width);
-        transition: margin var(--t5e-transition-default);
+        gap: var(--t5e-size-3x);
         margin-inline-end: var(--t5e-size-4x);
         margin-inline-start: calc((var(--sidebar-expanded-width) + var(--t5e-size-4x)) * -1);
         overflow-x: clip;
+        transition: margin var(--t5e-transition-default);
 
         &.expanded {
           margin-inline-start: 0;
           margin-inline-end: var(--t5e-size-6x);
           max-width: var(--sidebar-expanded-width);
+        }
+      }
+
+      .sidebar-tab-contents {
+        gap: var(--t5e-size-4x);
+        padding-bottom: var(--t5e-size-6x);
+      }
+
+      .sidebar-tab-strip {
+        .tab-option {
+          flex: 1;
         }
       }
 
