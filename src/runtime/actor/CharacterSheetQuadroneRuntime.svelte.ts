@@ -1,7 +1,6 @@
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
 import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
 import type { RegisteredTab } from '../types';
-import ActorActionsTab from 'src/sheets/quadrone/actor/tabs/ActorActionsTab.svelte';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
@@ -12,19 +11,10 @@ import CharacterBiographyTab from 'src/sheets/quadrone/actor/tabs/CharacterBiogr
 import CharacterFeaturesTab from 'src/sheets/quadrone/actor/tabs/CharacterFeaturesTab.svelte';
 import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastionTab.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import CharacterSheetTab from 'src/sheets/quadrone/actor/tabs/CharacterFavoritesTab.svelte';
+import CharacterActionsTab from 'src/sheets/quadrone/actor/tabs/CharacterActionsTab.svelte';
 
 const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>[] =
   [
-    {
-      title: 'TIDY5E.Action.TabName',
-      content: {
-        component: ActorActionsTab,
-        type: 'svelte',
-      },
-      id: CONSTANTS.TAB_ACTOR_ACTIONS,
-      layout: 'quadrone',
-    },
     {
       title: 'DND5E.Effects',
       content: {
@@ -112,17 +102,17 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
     {
       title: 'Sheet',
       content: {
-        component: CharacterSheetTab,
+        component: CharacterActionsTab,
         type: 'svelte',
       },
-      id: CONSTANTS.TAB_CHARACTER_FAVORITES,
+      id: CONSTANTS.TAB_ACTOR_ACTIONS,
       layout: 'quadrone',
     },
   ];
 
 /** Here today so I can worry about tab selection later */
 export const TempDefaultCharacterQuadroneTabs = [
-  CONSTANTS.TAB_CHARACTER_FAVORITES,
+  CONSTANTS.TAB_ACTOR_ACTIONS,
   CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
   CONSTANTS.TAB_ACTOR_INVENTORY,
   CONSTANTS.TAB_ACTOR_SPELLBOOK,

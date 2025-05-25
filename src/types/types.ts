@@ -13,7 +13,12 @@ import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
+import type {
+  Activity5e,
+  CharacterFavoriteType,
+  SkillData,
+  ToolData,
+} from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -1010,6 +1015,50 @@ export type ActorSkillsToolsContext<T> = {
   source: T;
 } & T;
 
+export type ItemFavoriteContextEntry = {
+  id: string;
+  type: 'item';
+  item: Item5e;
+  capacity?: ContainerCapacityContext;
+};
+
+export type EffectFavoriteContextEntry = {
+  id: string;
+  type: 'effect';
+  effect: ActiveEffect5e;
+};
+
+export type ActivityFavoriteContextEntry = {
+  id: string;
+  type: 'activity';
+  activity: Activity5e;
+};
+
+export type SlotsFavoriteContextEntry = {
+  type: 'slots';
+  id: string;
+  img?: string;
+  level?: number;
+  name: string;
+  uses: { value: number; max: number; field: string };
+};
+
+export type SkillToolFavoriteContextEntry = {
+  type: 'skill' | 'tool';
+  id: string;
+  img?: string;
+  key: string | null;
+  name: string;
+  reference?: string;
+};
+
+export type FavoriteContextEntry =
+  | ItemFavoriteContextEntry
+  | EffectFavoriteContextEntry
+  | ActivityFavoriteContextEntry
+  | SlotsFavoriteContextEntry
+  | SkillToolFavoriteContextEntry;
+
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   attributePins: AttributePinContext[];
@@ -1017,18 +1066,19 @@ export type CharacterSheetQuadroneContext = {
     description: string;
   };
   classes: CharacterClassEntryContext[];
-  orphanedSubclasses: Item5e[];
   conditions: Dnd5eActorCondition[];
   creatureType: CreatureTypeContext;
-  showDeathSaves: boolean;
   defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
+  favorites: FavoriteContextEntry[];
+  orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
+  showDeathSaves: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
-  tools: ActorSkillsToolsContext<ToolData>[];
   speeds: CharacterSpeedSenseContext;
+  tools: ActorSkillsToolsContext<ToolData>[];
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
 
 export type NpcSheetQuadroneContext = {

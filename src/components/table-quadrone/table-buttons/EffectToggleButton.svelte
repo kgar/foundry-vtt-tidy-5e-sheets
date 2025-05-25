@@ -21,8 +21,12 @@
   onclick={() => effect.update({ disabled: !effect.disabled })}
 >
   <i
-    class="fas"
-    class:fa-toggle-off={effect.disabled}
-    class:fa-toggle-large-on={!effect.disabled}
+    class={[
+      'fas',
+      {
+        ['fa-toggle-off']: effect.disabled,
+        ['fa-toggle-large-on']: !effect.disabled,
+      },
+    ]}
   ></i>
 </a>

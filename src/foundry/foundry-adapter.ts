@@ -1000,7 +1000,7 @@ export const FoundryAdapter = {
   lookupAbility(abbr: string) {
     return game.dnd5e.config.abilities[abbr];
   },
-  actorTryUseItem(item: Item5e, event: Event) {
+  async actorTryUseItem(item: Item5e, event: Event) {
     const config = { legacy: false, event };
 
     const suppressItemUse =
@@ -1010,7 +1010,7 @@ export const FoundryAdapter = {
       return;
     }
 
-    item.use(config);
+    return await item.use(config);
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
@@ -1392,7 +1392,7 @@ export const FoundryAdapter = {
 
     return documentWithUses.update({ [spentProp]: max - uses });
   },
-  handleActivityUsesChanged(
+  async handleActivityUsesChanged(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
@@ -1407,7 +1407,7 @@ export const FoundryAdapter = {
     const uses = clamp(0, value, activity.uses.max);
     event.currentTarget.value = uses.toString();
 
-    return activity.update({ 'system.uses.spent': activity.uses.max - uses });
+    return await activity.update({ 'uses.spent': activity.uses.max - uses });
   },
   // TEMP: Find better home
   groupSelectOptions(entries: [string, any][]) {

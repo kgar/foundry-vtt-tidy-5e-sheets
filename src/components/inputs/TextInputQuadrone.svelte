@@ -60,7 +60,8 @@
 
     stopChangePropagation && event.stopPropagation();
 
-    const targetValue = event.currentTarget.value;
+    const currentTarget = event.currentTarget;
+    const targetValue = currentTarget.value;
 
     let valueToSave =
       saveEmptyAsNull && targetValue === ''
@@ -69,7 +70,7 @@
           ? processInputChangeDelta(targetValue, document, field)
           : targetValue;
 
-    await document.update({
+    const result = await document.update({
       ...additionalDataToSave,
       [field]: valueToSave,
     });
@@ -83,6 +84,14 @@
         }
       });
     }
+
+    await tick();
+
+    if (currentTarget.value !== value.toString()) {
+      currentTarget.value = value.toString();
+    }
+
+    return result;
   }
 
   let value = $derived(
