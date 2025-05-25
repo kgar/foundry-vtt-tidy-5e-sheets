@@ -1626,4 +1626,23 @@
       container-name: tab-right-column;
     }
   }
+
+  // 👋 hightouch - I am once again putting prototypal CSS in weird places. ~ kgar
+  :where(.favorites) {
+    :where(.favorite) {
+      display: flex;
+      align-items: center;
+
+      .item-image {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      .name {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+    }
+  }
 }

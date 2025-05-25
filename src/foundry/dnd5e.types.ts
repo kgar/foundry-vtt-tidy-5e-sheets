@@ -48,8 +48,16 @@ export type SkillData = {
   value: number;
 } & RollConfigField;
 
+export type CharacterFavoriteType =
+  | 'activity'
+  | 'effect'
+  | 'item'
+  | 'skill'
+  | 'slots'
+  | 'tool';
+
 export type CharacterFavorite = {
-  type: 'item' | 'effect' | 'activity';
+  type: CharacterFavoriteType;
   sort: number;
   id: string;
 };

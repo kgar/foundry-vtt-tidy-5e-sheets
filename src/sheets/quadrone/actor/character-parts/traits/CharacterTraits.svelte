@@ -90,6 +90,7 @@
       entries={context.traits.dr}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
       icon="fa-solid fa-shield-halved"
+      pillClass="positive"
     />
 
     <!-- Damage Immunities -->
@@ -98,6 +99,7 @@
       entries={context.traits.di}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
       icon="fa-solid fa-shield"
+      pillClass="positive"
     />
 
     <!-- Condition Immunities -->
@@ -106,6 +108,7 @@
       entries={context.traits.ci}
       onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
       icon="fa-solid fa-shield-virus"
+      pillClass="positive"
     />
 
     <!-- Vulnerabilities -->
@@ -114,6 +117,7 @@
       entries={context.traits.dv}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
       icon="fa-solid fa-heart-crack"
+      pillClass="negative"
     />
 
     <!-- Damage Modification -->

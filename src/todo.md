@@ -1,6 +1,7 @@
 ## To Do
 
 - [ ] Character Sheet 
+  - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
   - [x] Start dev in Foundry V12
   - [x] Establish components for the tabs
   - [x] Set up Quadrone runtime content, including the default tabs
