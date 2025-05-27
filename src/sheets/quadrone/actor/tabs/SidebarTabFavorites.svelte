@@ -13,12 +13,12 @@
 
 {#if context.favorites.length}
   <div class="favorites list">
-    <div class={['list-label']}>
+    <!-- <div class={['list-label']}>
       <h4 class="font-weight-label">
         <i class="fa-solid fa-star"></i>
         Favorites
       </h4>
-    </div>
+    </div> -->
     {#each context.favorites as favorite}
       {#if favorite.type === 'item'}
         <FavoriteItem {favorite} />
