@@ -20,22 +20,27 @@
   ]);
 </script>
 
-<li class="favorite">
+<div 
+  class="list-entry favorite" 
+  data-favorite-type="slot"
+>
   <FavoriteItemRollButton {favorite} img={favorite.img} title={favorite.name} />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.name}
-    </span>
-    <span class="subtitle">
-      {#each subtitle as segment, i}
-        {segment}
-        {#if i + 1 < subtitle.length}
-          <span class="divider-dot"></span>
-        {/if}
-      {/each}
-    </span>
+  <div class="tidy-table-cell primary">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.name}
+      </span> 
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+        {#each subtitle as segment, i}
+          {segment}
+          {#if i + 1 < subtitle.length}
+            <div class="divider-dot"></div>
+          {/if}
+        {/each}
+      </span>
+    </div>
   </div>
-  <div class="info">
+  <div class="">
     <span class="uses">
       {#if context.owner}
         <TextInputQuadrone
@@ -47,14 +52,14 @@
           selectOnFocus={true}
         />
       {:else}
-        <span class="value">
+        <span class="value font-data-medium color-text-default">
           {favorite.uses.value}
         </span>
       {/if}
-      <span class="divider">/</span>
-      <span class="max">
+      <span class="divider font-default-medium color-text-lighter">/</span>
+      <span class="max font-label-medium color-text-lighter">
         {favorite.uses.max}
       </span>
     </span>
   </div>
-</li>
+</div>

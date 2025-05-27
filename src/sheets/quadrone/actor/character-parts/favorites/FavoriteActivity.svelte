@@ -23,7 +23,7 @@
     [
       favorite.activity.labels.activation,
       favorite.activity.labels.recovery,
-    ].filterJoin(` <span class="divider-dot"></span> `),
+    ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
   let range = $derived(favorite.activity.range);
@@ -35,8 +35,9 @@
   let save = $derived(favorite.activity.save);
 </script>
 
-<li
-  class="favorite"
+<div
+  class="list-entry favorite"
+  data-favorite-type="activity"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.activity.item?.id}
   data-activity-id={favorite.activity.id}
@@ -48,15 +49,17 @@
     title={favorite.activity.name}
     onUse={async (event) => await favorite.activity.use({ event })}
   />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.activity.name}
-    </span>
-    <span class="subtitle">
-      {@html subtitle}
-    </span>
+  <div class="tidy-table-cell primary">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.activity.name}
+      </span>
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+        {@html subtitle}
+      </span>
+    </div>
   </div>
-  <div class="info">
+  <div class="">
     <div class="primary">
       {#if uses.max}
         <span class="uses">
@@ -85,27 +88,27 @@
               {uses.value}
             </span>
           {/if}
-          <span class="divider">/</span>
-          <span class="max">
+          <span class="divider color-text-gold">/</span>
+          <span class="max color-text-lighter">
             {uses.max}
           </span>
         </span>
       {:else if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}
         <span class="modifier">
-          <span class="sign">
+          <span class="sign font-label-medium color-text-lighter">
             {mod.sign}
           </span>
-          <span>
+          <span class="value font-data-medium color-text-default">
             {mod.value}
           </span>
         </span>
       {:else if save?.dc?.value}
         <span class="save">
-          <span class="value">
+          <span class="value font-data-medium color-text-default">
             {save.dc.value}
           </span>
-          <span class="ability">
+          <span class="ability font-label-medium color-text-gold">
             {save.ability}
           </span>
         </span>
@@ -114,16 +117,24 @@
     <div class="secondary">
       {#if range?.value}
         <span class="range">
-          {range.value}
+          <span class="value font-data-medium color-text-default">
+            {range.value}
+          </span>
           {#if range.long}&sol; {range.long}{/if}
-          {range.units}
+          <span class="units font-default-medium color-text-lighter">
+            {range.units}
+          </span>
         </span>
       {:else if range?.reach}
         <span class="range">
-          {range.reach}
-          {range.units}
+          <span class="value font-data-medium color-text-default">
+            {range.reach}
+          </span>
+          <span class="units font-default-medium color-text-lighter">
+            {range.units}
+          </span>
         </span>
       {/if}
     </div>
   </div>
-</li>
+</div>

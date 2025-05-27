@@ -16,45 +16,48 @@
   let subtitle = 'todo';
 
   let uses = $derived(
-    favorite.item.system.hasLimitedUses
-      ? favorite.item.system.getUsesData()
+    favorite.item?.system?.hasLimitedUses
+      ? favorite.item?.system?.getUsesData?.()
       : null,
   );
 
-  let modifier = $derived(favorite.item.labels?.modifier);
+  let modifier = $derived(favorite.item?.labels?.modifier);
 
   let save = $derived(
-    favorite.item.system.activities.getByType('save')[0]?.save,
+    favorite.item?.system?.activities?.getByType?.('save')?.[0]?.save,
   );
 
-  let quantity = $derived(favorite.item.system.quantity);
+  let quantity = $derived(favorite.item?.system?.quantity);
 
-  let range = $derived(favorite.item.system.range);
+  let range = $derived(favorite.item?.system?.range);
 </script>
 
-<li
-  class="favorite"
+<div
+  class="list-entry favorite"
+  data-favorite-type="generic"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
-  data-item-id={favorite.item.id}
+  data-item-id={favorite.item?.id}
 >
   <FavoriteItemRollButton
     {favorite}
-    img={favorite.item.img}
-    title={favorite.item.name}
+    img={favorite.item?.img}
+    title={favorite.item?.name}
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.item.name}
-    </span>
-    <span class="subtitle">
-      {subtitle}
-    </span>
+  <div class="">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.item?.name || ''}
+      </span>
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+        {@html subtitle}
+      </span>
+    </div>
   </div>
-  <div class="info">
+  <div class="">
     <span class="primary">
-      {#if uses.max}
+      {#if uses?.max}
         <FavoriteItemUses {favorite} {uses} />
       {:else if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}
@@ -97,4 +100,4 @@
       {/if}
     </span>
   </div>
-</li>
+</div>

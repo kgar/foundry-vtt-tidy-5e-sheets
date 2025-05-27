@@ -16,7 +16,7 @@
     [
       favorite.item.labels.components.vsm,
       favorite.item.labels.activation,
-    ].filterJoin(` <span class="divider-dot"></span> `),
+    ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
   let modifier = $derived(favorite.item.labels.modifier);
@@ -44,7 +44,8 @@
 </script>
 
 <li
-  class="favorite"
+  class="list-entry favorite"
+  data-favorite-type="spell"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.item.item?.id}
 >
@@ -55,31 +56,29 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.item.name}
-    </span>
-    <span class="subtitle">
+  <div class="">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.item.name}
+      </span>
+    <span class="subtitle flexrow color-text-lighter font-default-small">
       {@html subtitle}
     </span>
+    </div>
   </div>
-  <div class="info">
+  {#if !isNil(modifier) || !isNil(save?.dc?.value) || !isNil(range?.value)}
+  <div class="">
     <span class="primary">
       {#if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}
         <span class="modifier">
-          <span class="sign">
-            {mod.sign}
-          </span>
-          <span>
-            {mod.value}
-          </span>
+          <span class="sign font-default-medium color-text-lighter">{mod.sign}</span><span class="value font-data-medium">{mod.value}</span>
         </span>
       {:else if save?.dc?.value}
-        <span class="ability">
+        <span class="ability font-label-medium color-text-gold">
           {save.ability}
         </span>
-        <span class="value">
+        <span class="value font-data-medium">
           {save.dc.value}
         </span>
       {/if}
@@ -89,14 +88,19 @@
         <span class="range">
           {range.value}
           {#if range.long}&sol; {range.long}{/if}
+        </span>
+        <span class="units font-default-medium color-text-lighter">
           {range.units}
         </span>
       {:else if range?.reach}
         <span class="range">
           {range.reach}
+        </span>
+        <span class="units font-default-medium color-text-lighter">
           {range.units}
         </span>
-      {/if}
-    </span>
-  </div>
+        {/if}
+      </span>
+    </div>
+  {/if}
 </li>

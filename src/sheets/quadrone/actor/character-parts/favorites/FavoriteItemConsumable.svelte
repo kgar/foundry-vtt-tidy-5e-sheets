@@ -14,11 +14,14 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
+  let quantity = $derived(favorite.item.system.quantity);
+  
   let subtitle = $derived(
     [
       favorite.item.system.type.label,
       favorite.item.labels.activation,
-    ].filterJoin(` <span class="divider-dot"></span> `),
+      quantity > 1 ? `&times;${quantity}` : null,
+    ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
   let uses = $derived(
@@ -27,12 +30,12 @@
       : null,
   );
 
-  let quantity = $derived(favorite.item.system.quantity);
 </script>
 
-<li
-  class="favorite"
-  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+<div
+  class="list-entry favorite"
+  data-favorite-type="consumable"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item.item?.id}
 >
   <FavoriteItemRollButton
@@ -42,29 +45,28 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.item.name}
-    </span>
-    {#if subtitle}
-      <span class="subtitle">
-        {subtitle}
+  <div class="">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.item.name}
       </span>
-    {/if}
+    {#if subtitle}
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+        {@html subtitle}
+      </span>
+      {/if}
+    </div>
   </div>
-  <div class="info">
+  {#if uses?.max || quantity}
+  <div class="">
     <span class="primary">
       {#if uses?.max}
         <FavoriteItemUses {favorite} {uses} />
       {:else}
-        <span class="sign">&times;</span>
-        <span class="value">{quantity}</span>
-      {/if}
-    </span>
-    <span class="secondary">
-      {#if uses?.max && quantity}
-        <span class="quantity">&times; {quantity}</span>
+        <span class="sign font-default-medium color-text-lighter">&times;</span>
+        <span class="value font-data-medium color-text-default">{quantity}</span>
       {/if}
     </span>
   </div>
-</li>
+  {/if}
+</div>

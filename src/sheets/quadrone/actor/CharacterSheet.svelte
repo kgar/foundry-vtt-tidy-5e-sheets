@@ -492,7 +492,7 @@
 </header>
 <div class="sheet-body">
   <div class="main-content">
-    <div class={['sidebar', { expanded: sidebarExpanded }]}>
+    <div class={['sidebar flexcol', { expanded: sidebarExpanded }]}>
       <ActorSidebar />
     </div>
     <TabContents tabs={context.tabs} {selectedTabId} />

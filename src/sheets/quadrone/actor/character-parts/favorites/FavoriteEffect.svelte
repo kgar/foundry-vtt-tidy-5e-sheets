@@ -32,7 +32,7 @@
   );
 </script>
 
-<li
+<div
   class={['favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}
@@ -46,22 +46,25 @@
 
   <button
     type="button"
-    class="button button-borderless button-secondary"
+    class="list-entry button button-borderless"
     disabled={!toggleable}
     onclick={() =>
       toggleable &&
       favorite.effect.update({ disabled: !favorite.effect.disabled })}
+    data-favorite-type="effect"
   >
-    <div class="name stacked">
-      <span class="title">
-        {favorite.effect.name}
+    <div class="">
+      <div class="item-name stacked">
+        <span class="title">
+          {favorite.effect.name}
       </span>
-      <span class="subtitle">
-        {subtitle}
-      </span>
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+          {@html subtitle}
+        </span>
+      </div>
     </div>
 
-    <div class="info">
+    <div class="">
       <i
         class={[
           'fas',
@@ -73,4 +76,4 @@
       ></i>
     </div>
   </button>
-</li>
+</div>

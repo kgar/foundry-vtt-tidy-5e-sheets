@@ -22,24 +22,24 @@
   let context = $derived(getCharacterSheetQuadroneContext());
 </script>
 
-{#if favorite.item.type === CONSTANTS.ITEM_TYPE_CLASS}
+{#if favorite.item?.type === CONSTANTS.ITEM_TYPE_CLASS}
   <FavoriteItemClass {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_CONSUMABLE}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_CONSUMABLE}
   <FavoriteItemConsumable {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_CONTAINER}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_CONTAINER}
   <FavoriteItemContainer {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_EQUIPMENT}
   <FavoriteItemEquipment {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_FACILITY}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_FACILITY}
   <FavoriteItemFacility {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_FEAT}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_FEAT}
   <FavoriteItemFeat {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_SPELL}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_SPELL}
   <FavoriteItemSpell {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_TOOL}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_TOOL}
   <FavoriteItemTool {favorite} />
-{:else if favorite.item.type === CONSTANTS.ITEM_TYPE_WEAPON}
+{:else if favorite.item?.type === CONSTANTS.ITEM_TYPE_WEAPON}
   <FavoriteItemWeapon {favorite} />
-{:else}
+{:else if favorite.item}
   <FavoriteItemGeneric {favorite} />
 {/if}
