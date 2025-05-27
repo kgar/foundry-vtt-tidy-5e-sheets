@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { getActorActionSections } from 'src/features/actions/actions.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import type { SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -21,6 +22,7 @@ import type {
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorTraitContext,
   SpecialTraitSectionField,
+  SpellbookSectionLegacy,
 } from 'src/types/types';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
@@ -177,6 +179,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       let context: ActorSheetQuadroneContext = {
         abilities: [],
+        actions: await getActorActionSections(this.actor),
         actor: this.actor,
         appId: this.appId,
         config: CONFIG.DND5E,

@@ -7,10 +7,13 @@ import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
 import type {
   ActiveEffect5e,
+  ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  ActorTraitContext,
   AttributePinContext,
   CharacterClassEntryContext,
+  CharacterFeatureSection,
+  CharacterItemContext,
+  CharacterItemPartitions,
   CharacterSheetQuadroneContext,
   CharacterSpeedSenseContext,
   CharacterSpeedSenseEntryContext,
@@ -45,6 +48,12 @@ import type {
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from 'src/utils/data';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import { Inventory } from 'src/features/sections/Inventory';
+import { Activities } from 'src/features/activities/activities';
+import { ItemContext } from 'src/features/item/ItemContext';
+import { Container } from 'src/features/containers/Container';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -152,7 +161,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     actorContext.effects = enhancedEffectSections;
 
     const context: CharacterSheetQuadroneContext = {
-      attributePins: await this._prepareAttributePins(actorContext),
       bastion: {
         description: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.bastion.description,
@@ -164,6 +172,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         ),
       },
       conditions: conditions,
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        actorContext.items
+      ),
       creatureType: this._getCreatureType(),
       defenders: [],
       epicBoonsEarned: undefined,
@@ -172,6 +183,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         special: { chosen: [], available: [], value: 0, max: 0 },
       },
       favorites: await this._prepareFavorites(),
+      features: [],
+      inventory: [],
       senses: this._getSenses(),
       size: {
         key: this.actor.system.traits.size,
@@ -186,7 +199,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: [],
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
+      spellbook: [],
       tools: [],
+      type: CONSTANTS.SHEET_TYPE_CHARACTER,
       ...this._getClassesAndOrphanedSubclasses(),
       ...actorContext,
     };
@@ -211,6 +226,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
+
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container
+      );
+    }
 
     context.customContent = await CharacterSheetQuadroneRuntime.getContent(
       context
@@ -403,6 +425,197 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     return entries;
+  }
+
+  _prepareItems(context: CharacterSheetQuadroneContext) {
+    // Categorize items as inventory, spellbook, features, and classes
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections();
+
+    // Partition items by category
+    let { backgrounds, classes, feats, items, species, spells, subclasses } =
+      Array.from(this.actor.items).reduce(
+        (obj: CharacterItemPartitions, item: Item5e) => {
+          const { quantity } = item.system;
+
+          // Item details
+          const ctx = (context.itemContext[item.id] ??= {});
+          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+          ctx.attunement = FoundryAdapter.getAttunementContext(item);
+
+          // Item usage
+          ctx.hasUses = item.hasLimitedUses;
+          ctx.hasRecharge = item.hasRecharge;
+
+          // Unidentified items
+          ctx.concealDetails =
+            !game.user.isGM && item.system.identified === false;
+
+          // Item grouping
+          const [originId] =
+            item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+          const group = this.actor.items.get(originId);
+          switch (group?.type) {
+            case 'race':
+              ctx.group = 'species';
+              break;
+            case 'background':
+              ctx.group = 'background';
+              break;
+            case 'class':
+              ctx.group = group.identifier;
+              break;
+            case 'subclass':
+              ctx.group = group.class?.identifier ?? 'other';
+              break;
+            default:
+              ctx.group = 'other';
+          }
+
+          // Individual item preparation
+          this._prepareItem(item, ctx);
+
+          const isWithinContainer = this.actor.items.has(item.system.container);
+
+          // Classify items into types
+          if (!isWithinContainer) {
+            CharacterSheetSections.partitionItem(item, obj, inventory);
+          }
+
+          return obj;
+        },
+        {
+          items: [] as Item5e[],
+          spells: [] as Item5e[],
+          facilities: [] as Item5e[],
+          feats: [] as Item5e[],
+          species: [] as Item5e[],
+          backgrounds: [] as Item5e[],
+          classes: [] as Item5e[],
+          subclasses: [] as Item5e[],
+        }
+      );
+
+    const inventoryTypes = Inventory.getInventoryTypes();
+    // Organize items
+    // Section the items by type
+    for (let item of items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+        canCreate: true,
+      });
+    }
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+        canCreate: true,
+      });
+    });
+
+    // Section spells
+    // TODO: Take over `_prepareSpellbook` and
+    // - have custom sectioning built right into the process
+    // - set up `key` in the spellbook prep code, just like `prop`
+    const spellbook = SheetSections.prepareTidySpellbook(
+      context,
+      CONSTANTS.TAB_ACTOR_SPELLBOOK,
+      spells,
+      {
+        canCreate: true,
+      }
+    );
+
+    // Process Special Feature Item Context
+    classes = SheetSections.prepareClassItems(
+      context,
+      classes,
+      subclasses,
+      this.actor
+    );
+
+    // Put unmatched subclasses into features so they don't disappear
+    for (const subclass of subclasses) {
+      feats.push(subclass);
+      const message = game.i18n.format('DND5E.SubclassMismatchWarn', {
+        name: subclass.name,
+        class: subclass.system.classIdentifier,
+      });
+      context.warnings.push({ message, type: 'warning' });
+    }
+
+    // Section Features
+    const features: Record<string, CharacterFeatureSection> =
+      CharacterSheetSections.buildFeaturesSections(
+        this.actor,
+        CONSTANTS.TAB_CHARACTER_FEATURES,
+        species,
+        backgrounds,
+        classes,
+        feats,
+        {
+          canCreate: true,
+        }
+      );
+
+    // Apply sections to their section lists
+
+    context.inventory = Object.values(inventory);
+
+    context.spellbook = spellbook;
+
+    context.features = Object.values(features);
+  }
+
+  /**
+   * A helper method to establish the displayed preparation state for an item.
+   * @param {Item5e} item     Item being prepared for display.
+   * @param {object} context  Context data for display.
+   * @protected
+   */
+  protected _prepareItem(item: Item5e, context: CharacterItemContext) {
+    if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      const prep = item.system.preparation || {};
+      const isAlways = prep.mode === 'always';
+      const isPrepared = !!prep.prepared;
+      context.toggleClass = isPrepared ? 'active' : '';
+      if (isAlways) {
+        context.toggleClass = 'fixed';
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
+      } else if (isPrepared) {
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
+      } else {
+        context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+      }
+
+      if (this._concentration.items.has(item)) {
+        context.concentration = true;
+      }
+    } else {
+      const isActive = !!item.system.equipped;
+      context.toggleClass = isActive ? 'active' : '';
+      context.toggleTitle = game.i18n.localize(
+        isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
+      );
+      context.canToggle = 'equipped' in item.system;
+    }
+
+    // Save
+    context.save = ItemContext.getItemSaveContext(item);
+
+    // To Hit
+    context.toHit = ItemContext.getToHit(item);
+
+    // Activities
+    context.activities = Activities.getVisibleActivities(
+      item,
+      item.system.activities
+    )?.map(Activities.getActivityItemContext);
+
+    Activities.applyLinkedUses(item, this.actor, context);
   }
 
   /* -------------------------------------------- */
