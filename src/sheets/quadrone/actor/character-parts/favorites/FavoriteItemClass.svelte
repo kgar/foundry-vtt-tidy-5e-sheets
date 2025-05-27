@@ -4,7 +4,7 @@
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
-  import FavoriteItemTemplate from './FavoriteItemTemplate.svelte';
+
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
@@ -24,25 +24,32 @@
   let value = $derived(favorite.item.system.levels);
 </script>
 
-
-<FavoriteItemTemplate
-  {favorite}
-  img={favorite.item.img}
-  name={favorite.item.name}
-  onUse={async (ev) =>
-    await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
-  subtitle={subtitle}
-  dataAttributes={{
-    'item-id': favorite.item.item?.id,
-    'context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
-  }}
+<li
+  class="favorite"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+  data-item-id={favorite.item.item?.id}
 >
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.item.img}
+    title={favorite.item.name}
+    onUse={async (ev) =>
+      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+  />
+  <div class="name stacked">
+    <span class="title">
+      {favorite.item.name}
+    </span>
+    <span class="subtitle">
+      {subtitle}
+    </span>
+  </div>
   <div class="info">
     <span class="primary">
       <span class="value">
         {value}
       </span>
     </span>
-    <span class="secondary"></span>
+    <span class="secondary"> </span>
   </div>
-</FavoriteItemTemplate>
+</li>

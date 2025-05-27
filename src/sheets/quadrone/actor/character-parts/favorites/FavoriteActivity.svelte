@@ -7,7 +7,7 @@
   import type { ActivityFavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
-  import FavoriteItemTemplate from './FavoriteItemTemplate.svelte';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
 
   interface Props {
     favorite: ActivityFavoriteContextEntry;
@@ -35,85 +35,95 @@
   let save = $derived(favorite.activity.save);
 </script>
 
-<FavoriteItemTemplate
-  {favorite}
-  img={favorite.activity.img}
-  name={favorite.activity.name}
-  onUse={async (event) => await favorite.activity.use({ event })}
-  subtitle={subtitle}
-  dataAttributes={{
-    'item-id': favorite.activity.item?.id,
-    'activity-id': favorite.activity.id,
-    'context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
-    'configurable': configurable,
-  }}
+<li
+  class="favorite"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+  data-item-id={favorite.activity.item?.id}
+  data-activity-id={favorite.activity.id}
+  data-configurable={configurable}
 >
-  <div class="primary">
-    {#if uses.max}
-      <span class="uses">
-        {#if context.owner}
-          <TextInputQuadrone
-            document={favorite.activity}
-            field={uses.field}
-            enableDeltaChanges={true}
-            class="value"
-            value={uses.value}
-            selectOnFocus={true}
-            onSaveChange={(event) => {
-              const el = event.currentTarget;
-              FoundryAdapter.handleActivityUsesChanged(
-                event,
-                favorite.activity,
-              ).then(() => {
-                el?.select();
-              });
+  <FavoriteRollButton
+    {favorite}
+    img={favorite.activity.img}
+    title={favorite.activity.name}
+    onUse={async (event) => await favorite.activity.use({ event })}
+  />
+  <div class="name stacked">
+    <span class="title">
+      {favorite.activity.name}
+    </span>
+    <span class="subtitle">
+      {@html subtitle}
+    </span>
+  </div>
+  <div class="info">
+    <div class="primary">
+      {#if uses.max}
+        <span class="uses">
+          {#if context.owner}
+            <TextInputQuadrone
+              document={favorite.activity}
+              field={uses.field}
+              enableDeltaChanges={true}
+              class="value"
+              value={uses.value}
+              selectOnFocus={true}
+              onSaveChange={(event) => {
+                const el = event.currentTarget;
+                FoundryAdapter.handleActivityUsesChanged(
+                  event,
+                  favorite.activity,
+                ).then(() => {
+                  el?.select();
+                });
 
-              return false;
-            }}
-          />
-        {:else}
-          <span class="value">
-            {uses.value}
+                return false;
+              }}
+            />
+          {:else}
+            <span class="value">
+              {uses.value}
+            </span>
+          {/if}
+          <span class="divider">/</span>
+          <span class="max">
+            {uses.max}
           </span>
-        {/if}
-        <span class="divider">/</span>
-        <span class="max">
-          {uses.max}
         </span>
-      </span>
-    {:else if !isNil(modifier)}
-      {@const mod = getModifierData(modifier)}
-      <span class="modifier">
-        <span class="sign">
-          {mod.sign}
+      {:else if !isNil(modifier)}
+        {@const mod = getModifierData(modifier)}
+        <span class="modifier">
+          <span class="sign">
+            {mod.sign}
+          </span>
+          <span>
+            {mod.value}
+          </span>
         </span>
-        <span>
-          {mod.value}
+      {:else if save?.dc?.value}
+        <span class="save">
+          <span class="value">
+            {save.dc.value}
+          </span>
+          <span class="ability">
+            {save.ability}
+          </span>
         </span>
-      </span>
-    {:else if save?.dc?.value}
-      <span class="save">
-        <span class="value">
-          {save.dc.value}
+      {/if}
+    </div>
+    <div class="secondary">
+      {#if range?.value}
+        <span class="range">
+          {range.value}
+          {#if range.long}&sol; {range.long}{/if}
+          {range.units}
         </span>
-        <span class="ability">
-          {save.ability}
+      {:else if range?.reach}
+        <span class="range">
+          {range.reach}
+          {range.units}
         </span>
-      </span>
-    {/if}
+      {/if}
+    </div>
   </div>
-  <div class="secondary">
-    {#if range?.value}
-      <span class="range">
-        {range.value}
-        {#if range.long}&sol; {range.long}{/if}
-        {range.units}
-      </span>
-    {:else if range?.reach}
-      <span class="range">
-        {range.reach}
-        {range.units}
-      </span>
-    {/if}
-  </div>
-</FavoriteItemTemplate>
+</li>

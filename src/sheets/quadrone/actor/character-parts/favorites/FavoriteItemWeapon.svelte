@@ -1,10 +1,11 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemTemplate from './FavoriteItemTemplate.svelte';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
   interface Props {
     favorite: ItemFavoriteContextEntry;
   }
@@ -22,43 +23,53 @@
   let range = $derived(favorite.item.system.range);
 </script>
 
-<FavoriteItemTemplate
-  {favorite}
-  img={favorite.item.img}
-  name={favorite.item.name}
-  onUse={async (ev) =>
-    await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
-  subtitle={subtitle}
-  dataAttributes={{
-    'context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
-    'item-id': favorite.item.item?.id,
-  }}
+<li
+  class="favorite"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+  data-item-id={favorite.item.item?.id}
 >
-  <span class="primary">
-    {#if !isNil(modifier)}
-      {@const mod = getModifierData(modifier)}
-      <span class="modifier">
-        <span class="sign">
-          {mod.sign}
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.item.img}
+    title={favorite.item.name}
+    onUse={async (ev) =>
+      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+  />
+  <div class="name stacked">
+    <span class="title">
+      {favorite.item.name}
+    </span>
+    <span class="subtitle">
+      {subtitle}
+    </span>
+  </div>
+  <div class="info">
+    <span class="primary">
+      {#if !isNil(modifier)}
+        {@const mod = getModifierData(modifier)}
+        <span class="modifier">
+          <span class="sign">
+            {mod.sign}
+          </span>
+          <span>
+            {mod.value}
+          </span>
         </span>
-        <span>
-          {mod.value}
+      {/if}
+    </span>
+    <span class="secondary">
+      {#if range?.value}
+        <span class="range">
+          {range.value}
+          {#if range.long}&sol; {range.long}{/if}
+          {range.units}
         </span>
-      </span>
-    {/if}
-  </span>
-  <span class="secondary">
-    {#if range?.value}
-      <span class="range">
-        {range.value}
-        {#if range.long}&sol; {range.long}{/if}
-        {range.units}
-      </span>
-    {:else if range?.reach}
-      <span class="range">
-        {range.reach}
-        {range.units}
-      </span>
-    {/if}
-  </span>
-</FavoriteItemTemplate>
+      {:else if range?.reach}
+        <span class="range">
+          {range.reach}
+          {range.units}
+        </span>
+      {/if}
+    </span>
+  </div>
+</li>

@@ -183,7 +183,7 @@
         >
           {#snippet children()}
             {@const isSvg = advancement.icon?.endsWith('.svg')}
-            <span class="tidy-table-row-use-button disabled">
+            <span class="tidy-table-button tidy-table-row-use-button disabled">
               <img
                 class="item-image"
                 src={advancement.icon}

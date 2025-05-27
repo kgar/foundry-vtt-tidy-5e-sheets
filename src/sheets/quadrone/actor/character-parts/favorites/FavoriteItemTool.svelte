@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemTemplate from './FavoriteItemTemplate.svelte';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -22,30 +22,40 @@
   );
 </script>
 
-<FavoriteItemTemplate
-  {favorite}
-  img={favorite.item.img}
-  name={favorite.item.name}
-  onUse={async (ev) =>
-    await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
-  subtitle={subtitle}
-  dataAttributes={{
-    'context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
-    'item-id': favorite.item.item?.id,
-  }}
+<li
+  class="favorite"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+  data-item-id={favorite.item.item?.id}
 >
-  <span class="primary">
-    {#if !isNil(modifier)}
-      {@const mod = getModifierData(modifier)}
-      <span class="modifier">
-        <span class="sign">
-          {mod.sign}
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.item.img}
+    title={favorite.item.name}
+    onUse={async (ev) =>
+      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+  />
+  <div class="name stacked">
+    <span class="title">
+      {favorite.item.name}
+    </span>
+    <span class="subtitle">
+      {subtitle}
+    </span>
+  </div>
+  <div class="info">
+    <span class="primary">
+      {#if !isNil(modifier)}
+        {@const mod = getModifierData(modifier)}
+        <span class="modifier">
+          <span class="sign">
+            {mod.sign}
+          </span>
+          <span>
+            {mod.value}
+          </span>
         </span>
-        <span>
-          {mod.value}
-        </span>
-      </span>
-    {/if}
-  </span>
-  <span class="secondary"> </span>
-</FavoriteItemTemplate>
+      {/if}
+    </span>
+    <span class="secondary"> </span>
+  </div>
+</li>

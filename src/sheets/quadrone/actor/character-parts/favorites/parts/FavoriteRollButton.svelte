@@ -32,7 +32,7 @@
 </script>
 
 <a
-  class={['tidy-table-row-use-button item-use-button', { disabled: !context.editable }]}
+  class={['item-use-button', { disabled: !context.editable }]}
   onclick={handleClick}
 >
   <img src={img} alt={title} class="item-image" />

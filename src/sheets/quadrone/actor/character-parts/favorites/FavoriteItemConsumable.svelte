@@ -2,9 +2,9 @@
   import { CONSTANTS } from 'src/constants';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import FavoriteItemTemplate from './FavoriteItemTemplate.svelte';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
@@ -30,29 +30,41 @@
   let quantity = $derived(favorite.item.system.quantity);
 </script>
 
-<FavoriteItemTemplate
-  {favorite}
-  img={favorite.item.img}
-  name={favorite.item.name}
-  onUse={async (ev) =>
-    await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
-  subtitle={subtitle}
-  dataAttributes={{
-    'context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
-    'item-id': favorite.item.item?.id,
-  }}
+<li
+  class="favorite"
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+  data-item-id={favorite.item.item?.id}
 >
-  <span class="primary">
-    {#if uses?.max}
-      <FavoriteItemUses {favorite} {uses} />
-    {:else}
-      <span class="sign">&times;</span>
-      <span class="value">{quantity}</span>
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.item.img}
+    title={favorite.item.name}
+    onUse={async (ev) =>
+      await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+  />
+  <div class="name stacked">
+    <span class="title">
+      {favorite.item.name}
+    </span>
+    {#if subtitle}
+      <span class="subtitle">
+        {subtitle}
+      </span>
     {/if}
-  </span>
-  <span class="secondary">
-    {#if uses?.max && quantity}
-      <span class="quantity">&times; {quantity}</span>
-    {/if}
-  </span>
-</FavoriteItemTemplate>
+  </div>
+  <div class="info">
+    <span class="primary">
+      {#if uses?.max}
+        <FavoriteItemUses {favorite} {uses} />
+      {:else}
+        <span class="sign">&times;</span>
+        <span class="value">{quantity}</span>
+      {/if}
+    </span>
+    <span class="secondary">
+      {#if uses?.max && quantity}
+        <span class="quantity">&times; {quantity}</span>
+      {/if}
+    </span>
+  </div>
+</li>

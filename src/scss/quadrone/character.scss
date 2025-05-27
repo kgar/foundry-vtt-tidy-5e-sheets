@@ -1641,40 +1641,19 @@
 
   // 👋 hightouch - I am once again putting prototypal CSS in weird places. ~ kgar
   :where(.favorites) {
-    .favorite {
+    :where(.favorite) {
       display: flex;
       align-items: center;
 
-      .primary .item-name {
-        margin-inline-start: var(--t5e-size-2x);
-        margin-inline-end: var(--t5e-size-2x);
-        align-items: flex-start;
-
-        .subtitle {
-          font-size: var(--font-size-12);
-          color: var(--t5e-color-text-lighter);
-        }
+      .item-image {
+        width: 1.5rem;
+        height: 1.5rem;
       }
 
-      .stacked .inline-uses {
-        align-items: center;
-
-        .divider {
-          flex: 0 0 auto;
-        }
-      }
-
-      .stacked {
+      .name {
+        display: flex;
         flex-direction: column;
-        flex-wrap: nowrap;
-
-        span {
-          display: flex;
-          flex: 1;
-          text-wrap: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
-        }
+        flex: 1;
       }
     }
   }

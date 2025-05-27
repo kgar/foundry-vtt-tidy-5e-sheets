@@ -2,7 +2,7 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SlotsFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemTemplate from './FavoriteItemTemplate.svelte';
+  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
 
   interface Props {
     favorite: SlotsFavoriteContextEntry;
@@ -12,45 +12,49 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
-  async function handleOnUse(event: MouseEvent) {
-    // Add slot usage logic here if needed
-  }
-
-  let subtitle = $derived(
-    [
-      game.i18n.localize(`DND5E.SpellLevel${favorite.level}`),
-      game.i18n.localize(
-        `DND5E.Abbreviation${CONFIG.DND5E.spellcastingTypes[favorite.id]?.shortRest ? 'SR' : 'LR'}`,
-      ),
-    ].join('<span class="divider-dot"></span>')
-  );
+  let subtitle = $derived([
+    game.i18n.localize(`DND5E.SpellLevel${favorite.level}`),
+    game.i18n.localize(
+      `DND5E.Abbreviation${CONFIG.DND5E.spellcastingTypes[favorite.id]?.shortRest ? 'SR' : 'LR'}`,
+    ),
+  ]);
 </script>
 
-<FavoriteItemTemplate
-  {favorite}
-  img={favorite.img || ''}
-  name={favorite.name}
-  onUse={handleOnUse}
-  subtitle={subtitle}
->
-  <span class="uses">
-    {#if context.owner}
-      <TextInputQuadrone
-        document={context.actor}
-        field={favorite.uses.field}
-        enableDeltaChanges={true}
-        class="value"
-        value={favorite.uses.value}
-        selectOnFocus={true}
-      />
-    {:else}
-      <span class="value">
-        {favorite.uses.value}
-      </span>
-    {/if}
-    <span class="divider">/</span>
-    <span class="max">
-      {favorite.uses.max}
+<li class="favorite">
+  <FavoriteItemRollButton {favorite} img={favorite.img} title={favorite.name} />
+  <div class="name stacked">
+    <span class="title">
+      {favorite.name}
     </span>
-  </span>
-</FavoriteItemTemplate>
+    <span class="subtitle">
+      {#each subtitle as segment, i}
+        {segment}
+        {#if i + 1 < subtitle.length}
+          <span class="divider-dot"></span>
+        {/if}
+      {/each}
+    </span>
+  </div>
+  <div class="info">
+    <span class="uses">
+      {#if context.owner}
+        <TextInputQuadrone
+          document={context.actor}
+          field={favorite.uses.field}
+          enableDeltaChanges={true}
+          class="value"
+          value={favorite.uses.value}
+          selectOnFocus={true}
+        />
+      {:else}
+        <span class="value">
+          {favorite.uses.value}
+        </span>
+      {/if}
+      <span class="divider">/</span>
+      <span class="max">
+        {favorite.uses.max}
+      </span>
+    </span>
+  </div>
+</li>
