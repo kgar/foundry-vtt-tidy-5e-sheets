@@ -14,13 +14,13 @@
   let context = $derived(getCharacterSheetQuadroneContext());
 </script>
 
-<span class="uses">
+<span class="inline-uses">
   {#if context.owner}
     <TextInputQuadrone
       document={favorite.item}
       field="system.uses.value"
       enableDeltaChanges={true}
-      class="value"
+      class="uninput uses-value"
       value={uses.value}
       selectOnFocus={true}
       onSaveChange={(event) => {
@@ -33,12 +33,12 @@
       }}
     />
   {:else}
-    <span class="value">
+    <span class="uses-value color-text-default">
       {uses.value}
     </span>
   {/if}
-  <span class="divider">/</span>
-  <span class="max">
+  <span class="divider color-text-gold">/</span>
+  <span class="uses-max color-text-lighter">
     {uses.max}
   </span>
 </span>

@@ -37,23 +37,29 @@
   }
 </script>
 
-<li class="favorite" data-reference-tooltip={favorite.reference}>
+<div 
+  class="list-entry favorite" 
+  data-favorite-type="tool"
+  data-reference-tooltip={favorite.reference}
+>
   <FavoriteItemRollButton
     {favorite}
     img={favorite.img}
     title={favorite.name}
     onUse={handleOnUse}
   />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.name}
-    </span>
-    <span class="subtitle">
-      {subtitle}
-    </span>
+  <div class="">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.name}
+      </span>
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+        {@html subtitle}
+      </span>
+    </div>
   </div>
 
-  <div class="info">
+  <div class="">
     <span class="modifier">
       <span class="sign">
         {modifier.sign}
@@ -66,4 +72,4 @@
       <span class="passive">({data.passive})</span>
     {/if}
   </div>
-</li>
+</div>

@@ -15,8 +15,9 @@
   let subtitle = $derived(localize(CONFIG.Item.typeLabels[favorite.item.type]));
 </script>
 
-<li
-  class="favorite"
+<div
+  class="list-entry favorite"
+  data-favorite-type="facility"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.item.item?.id}
 >
@@ -27,19 +28,21 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.item.name}
+  <div class="">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.item.name}
+      </span>
+    <span class="subtitle flexrow color-text-lighter font-default-small">
+      {@html subtitle}
     </span>
-    <span class="subtitle">
-      {subtitle}
-    </span>
+    </div>
   </div>
-  <div class="info">
+  <div class="">
     <span class="primary">
       <!-- TODO: Hireling / Defender Trackers?  -->
       <!-- TODO: Or perhaps Job Progress? -->
     </span>
-    <span class="secondary"> </span>
+    <!-- <span class="secondary"> </span> -->
   </div>
-</li>
+</div>

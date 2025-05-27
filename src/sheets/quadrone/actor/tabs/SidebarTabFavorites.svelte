@@ -12,7 +12,13 @@
 <!-- 👋 hightouch - we'll need to visualize a convenient / obvious way to delete favorites -->
 
 {#if context.favorites.length}
-  <ul class="favorites unlist">
+  <div class="favorites list">
+    <div class={['list-label']}>
+      <h4 class="font-weight-label">
+        <i class="fa-solid fa-star"></i>
+        Favorites
+      </h4>
+    </div>
     {#each context.favorites as favorite}
       {#if favorite.type === 'item'}
         <FavoriteItem {favorite} />
@@ -26,5 +32,5 @@
         <FavoriteSkillTool {favorite} />
       {/if}
     {/each}
-  </ul>
+  </div>
 {/if}
