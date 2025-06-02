@@ -28,11 +28,10 @@
 
   interface Props {
     contents: InventorySection[];
-    container: Item5e;
+    container?: Item5e;
     editable: boolean;
     itemContext: Record<string, ContainerItemContext>;
     inlineToggleService: InlineToggleService;
-    lockItemQuantity: boolean;
     /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
     unlocked?: boolean;
@@ -46,7 +45,6 @@
     editable,
     itemContext,
     inlineToggleService,
-    lockItemQuantity,
     sheetDocument,
     unlocked = true,
     root,
@@ -54,12 +52,14 @@
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
+  let containingDocument = $derived(container ?? sheetDocument);
+
   let configuredContents = $derived(
     SheetSections.configureInventory(
       contents.filter((i) => i.items.length),
       tabId,
       SheetPreferencesService.getByType(sheetDocument.type),
-      TidyFlags.sectionConfig.get(container)?.[
+      TidyFlags.sectionConfig.get(containingDocument)?.[
         CONSTANTS.TAB_CONTAINER_CONTENTS
       ],
     ),
@@ -110,7 +110,7 @@
 {#each configuredContents as section (section.key)}
   {#if section.show}
     {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
-      container,
+      containingDocument,
       tabId,
       section,
     )}
@@ -259,7 +259,6 @@
               containerContents={ctx.containerContents}
               {editable}
               {inlineToggleService}
-              {lockItemQuantity}
               {sheetDocument}
               {unlocked}
             />
