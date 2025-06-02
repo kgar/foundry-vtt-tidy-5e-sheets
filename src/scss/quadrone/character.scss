@@ -125,15 +125,27 @@
 
       >.sidebar {
         flex-basis: var(--sidebar-expanded-width);
-        transition: margin var(--t5e-transition-default);
+        gap: var(--t5e-size-3x);
         margin-inline-end: var(--t5e-size-4x);
         margin-inline-start: calc((var(--sidebar-expanded-width) + var(--t5e-size-4x)) * -1);
-        overflow-x: clip;
+        //overflow-x: clip; // TODO: Confirm that we need this. removed for hover state.
+        transition: margin var(--t5e-transition-default);
 
         &.expanded {
           margin-inline-start: 0;
           margin-inline-end: var(--t5e-size-6x);
           max-width: var(--sidebar-expanded-width);
+        }
+      }
+
+      .sidebar-tab-contents {
+        gap: var(--t5e-size-4x);
+        padding-bottom: var(--t5e-size-6x);
+      }
+
+      .sidebar-tab-strip {
+        .tab-option {
+          flex: 1;
         }
       }
 
@@ -1629,19 +1641,93 @@
 
   // 👋 hightouch - I am once again putting prototypal CSS in weird places. ~ kgar
   :where(.favorites) {
-    :where(.favorite) {
-      display: flex;
-      align-items: center;
+    .list-label {
+      border-bottom: 1px solid var(--t5e-table-row-divider);
+      padding-block-end: var(--t5e-size-1x);
+    }
 
-      .item-image {
-        width: 1.5rem;
-        height: 1.5rem;
+    .favorite {
+      display: flex;
+      flex-direction: row;
+      padding-block-start: var(--t5e-size-1x);
+      padding-block-end: var(--t5e-size-1x);
+      border-bottom: 1px solid var(--t5e-table-row-divider);
+
+      &:hover,
+      &:focus {
+        .item-use-button {
+          box-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+        }
       }
 
-      .name {
+      >div {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--t5e-field-size-default);
+        overflow-x: hidden;
+
+        &:first-of-type {
+          align-items: flex-start;
+          margin-inline-start: var(--t5e-size-2x);
+          margin-inline-end: var(--t5e-size-2x);
+          flex: 5;
+        }
+
+        &:last-of-type {
+          flex: 3;
+        }
+      }
+
+      .primary .item-name {
+        display: flex;
         flex: 1;
+        margin-inline-start: var(--t5e-size-2x);
+        margin-inline-end: var(--t5e-size-2x);
+        align-items: flex-start;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+
+        .subtitle {
+          font-size: var(--font-size-12);
+          color: var(--t5e-color-text-lighter);
+        }
+      }
+
+      .ability {
+        text-transform: uppercase;
+      }
+
+      .inline-uses {
+        display: flex;
+        align-items: center;
+
+        .divider {
+          flex: 0 0 auto;
+        }
+
+        .uses-value {
+          flex: 1;
+          text-align: right;
+        }
+
+        .uses-max {
+          flex: 1;
+        }
+      }
+
+      .stacked {
+        flex-direction: column;
+        flex-wrap: nowrap;
+
+        span {
+          display: flex;
+          flex: 1;
+          text-wrap: nowrap;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+        }
       }
     }
   }

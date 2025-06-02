@@ -35,16 +35,19 @@
     .list {
       .trait-item {
         gap: var(--t5e-size-1x);
+        margin-right: var(--t5e-size-2x);
       }
 
       .list-label {
         flex: 1;
+        margin-right: var(--t5e-size-4x);
 
         i {
           color: var(--t5e-color-icon-diminished);
         }
       }
 
+      // TODO: Fix responsive behavior to handle small screens in edit mode.
       .list-content {
         flex: 2;
       }
@@ -192,6 +195,7 @@
       }
     }
   }
+
 
   // 👋 hightouch - I'm not sure the best location for our Skills Card CSS; it's here temporarily
   .use-ability-list {

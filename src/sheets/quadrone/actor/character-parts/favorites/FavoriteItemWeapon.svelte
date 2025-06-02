@@ -14,17 +14,18 @@
 
   let subtitle = $derived(
     CONFIG.DND5E.itemActionTypes[
-      favorite.item.system.activities.contents[0]?.actionType
+      favorite.item?.system?.activities?.contents?.[0]?.actionType
     ],
   );
 
-  let modifier = $derived(favorite.item.labels.modifier);
+  let modifier = $derived(favorite.item?.labels?.modifier);
 
-  let range = $derived(favorite.item.system.range);
+  let range = $derived(favorite.item?.system?.range);
 </script>
 
-<li
-  class="favorite"
+<div
+  class="list-entry favorite"
+  data-favorite-type="weapon"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.item.item?.id}
 >
@@ -35,15 +36,17 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="name stacked">
-    <span class="title">
-      {favorite.item.name}
-    </span>
-    <span class="subtitle">
-      {subtitle}
-    </span>
+  <div class="">
+    <div class="item-name stacked">
+      <span class="title">
+        {favorite.item?.name || ''}
+      </span>
+    <span class="subtitle flexrow color-text-lighter font-default-small">
+      {subtitle || ''}
+      </span>
+    </div>
   </div>
-  <div class="info">
+  <div class="">
     <span class="primary">
       {#if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}
@@ -62,14 +65,14 @@
         <span class="range">
           {range.value}
           {#if range.long}&sol; {range.long}{/if}
-          {range.units}
+          {range.units || ''}
         </span>
       {:else if range?.reach}
         <span class="range">
           {range.reach}
-          {range.units}
+          {range.units || ''}
         </span>
       {/if}
     </span>
   </div>
-</li>
+</div>
