@@ -1664,7 +1664,7 @@
       &:focus {
 
         .item-use-button,
-        .effect-use-icon {
+        &:not(.suppressed) .effect-use-icon {
           box-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
         }
 

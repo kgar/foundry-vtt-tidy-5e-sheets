@@ -34,6 +34,12 @@
       ? favorite.effect.parent.id
       : null,
   );
+
+  const handleChange = !favorite.effect.isSuppressed 
+    ? () => favorite.effect.update({ disabled: !favorite.effect.disabled })
+    : undefined;
+
+  console.log(favorite.effect);
 </script>
 
 <div
@@ -45,10 +51,8 @@
   <button
     type="button"
     class="button button-borderless favorite-effect favorite-button"
-    disabled={!toggleable}
-    onclick={() =>
-      toggleable &&
-      favorite.effect.update({ disabled: !favorite.effect.disabled })}
+    class:disabled={favorite.effect.isSuppressed}
+    onclick={handleChange}
     data-favorite-type="effect"
   >
     <i class="effect-use-icon">
@@ -70,8 +74,8 @@
       <span class="primary">
         <FieldToggle
           checked={!favorite.effect.disabled}
-          onchange={() =>
-            favorite.effect.update({ disabled: !favorite.effect.disabled })}
+          disabled={favorite.effect.isSuppressed}
+          onchange={handleChange}
         />
       </span>
     </div>
