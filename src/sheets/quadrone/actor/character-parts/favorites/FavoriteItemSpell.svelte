@@ -47,7 +47,7 @@
 <li
   class="list-entry favorite"
   data-favorite-type="spell"
-  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
 >
   <FavoriteItemRollButton
@@ -56,17 +56,9 @@
     title={favorite.item.name}
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+    name={favorite.item.name}
+    subtitle={subtitle}
   />
-  <div class="item-name-container">
-    <div class="item-name stacked">
-      <span class="title">
-        {favorite.item.name}
-      </span>
-      <span class="subtitle flexrow color-text-lighter font-default-small">
-        {@html subtitle}
-      </span>
-    </div>
-  </div>
   {#if !isNil(modifier) || !isNil(save?.dc?.value) || !isNil(range?.value)}
   <div class="">
     <span class="primary">

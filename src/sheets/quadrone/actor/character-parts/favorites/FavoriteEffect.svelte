@@ -17,11 +17,14 @@
   let localize = FoundryAdapter.localize;
 
   let subtitle = $derived(
-    favorite.effect.isSuppressed
-      ? localize('DND5E.Suppressed')
-      : favorite.effect.duration.remaining
-        ? favorite.effect.duration.label
-        : '',
+    [
+      localize('DND5E.Effect'),
+      favorite.effect.isSuppressed
+        ? localize('DND5E.Suppressed')
+        : favorite.effect.duration.remaining
+          ? favorite.effect.duration.label
+          : '',
+    ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
   let toggleable = $derived(context.owner && !favorite.effect.supppresed);
@@ -39,31 +42,31 @@
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
 >
-  <a class="effect-use-icon">
-    <img src={favorite.effect.img} alt={favorite.effect.name} class="item-image" />
-  </a>
-
   <button
     type="button"
-    class="button button-borderless favorite-effect"
+    class="button button-borderless favorite-effect favorite-button"
     disabled={!toggleable}
     onclick={() =>
       toggleable &&
       favorite.effect.update({ disabled: !favorite.effect.disabled })}
     data-favorite-type="effect"
   >
+    <i class="effect-use-icon">
+      <img src={favorite.effect.img} alt={favorite.effect.name} class="item-image" />
+    </i>
+
     <div class="item-name-container">
       <div class="item-name stacked">
         <span class="title">
           {favorite.effect.name}
-      </span>
-      <span class="subtitle flexrow color-text-lighter font-default-small">
+        </span>
+        <span class="subtitle flexrow color-text-lighter font-default-small">
           {@html subtitle}
         </span>
       </div>
     </div>
 
-    <div class="">
+    <div class="effect-toggle">
       <span class="primary">
         <FieldToggle
           checked={!favorite.effect.disabled}
