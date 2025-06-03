@@ -38,8 +38,6 @@
   const handleChange = !favorite.effect.isSuppressed 
     ? () => favorite.effect.update({ disabled: !favorite.effect.disabled })
     : undefined;
-
-  console.log(favorite.effect);
 </script>
 
 <div
