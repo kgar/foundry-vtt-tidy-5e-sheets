@@ -38,6 +38,21 @@ export class ItemColumnRuntime {
         ],
       },
     },
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+        [CONSTANTS.ITEM_TYPE_CONTAINER]: [
+          defaultItemColumns.inventoryContainerCapacityTracker,
+          defaultItemColumns.inventoryContainerCapacityBar,
+        ],
+        [CONSTANTS.COLUMN_SPEC_SECTION_KEY_FALLBACK]: [
+          defaultItemColumns.inventoryCharges,
+          defaultItemColumns.time,
+          defaultItemColumns.inventoryPrice,
+          defaultItemColumns.inventoryQuantity,
+          defaultItemColumns.inventoryWeight,
+        ],
+      },
+    },
   };
 
   static getSheetTabSectionColumnsQuadrone(

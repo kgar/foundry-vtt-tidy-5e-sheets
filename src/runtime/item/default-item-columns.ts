@@ -6,8 +6,31 @@ import ItemChargesColumn from 'src/sheets/quadrone/item/columns/ItemChargesColum
 import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/InlineCapacityTrackerColumn.svelte';
+import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svelte';
 
 export const defaultItemColumns = {
+  // Inline Container Capacity Bar
+  inventoryContainerCapacityBar: {
+    key: 'inventoryContainerCapacityBar',
+    cellContent: {
+      type: 'component',
+      component: InlineCapacityBarColumn,
+    },
+    width: '7rem',
+    cellClasses: 'text-cell',
+    hideUnder: 400,
+  },
+  // Inline Container Capacity Tracker
+  inventoryContainerCapacityTracker: {
+    key: 'inventoryContainerCapacityTracker',
+    cellContent: {
+      type: 'component',
+      component: InlineCapacityTrackerColumn,
+    },
+    width: '7rem',
+    cellClasses: 'text-cell',
+    hideUnder: 450,
+  },
   // Charges
   inventoryCharges: {
     key: 'inventoryCharges',
@@ -64,26 +87,16 @@ export const defaultItemColumns = {
     hideUnder: 500,
     width: '5rem',
   },
-  // Inline Container Capacity Tracker
-  inventoryContainerCapacityTracker: {
-    key: 'inventoryContainerCapacityTracker',
+  time: {
+    key: 'time',
+    headerContent: {
+      type: 'callback',
+      callback: () => FoundryAdapter.localize('DND5E.SpellHeader.Time'),
+    },
     cellContent: {
       type: 'component',
-      component: InlineCapacityTrackerColumn,
+      component: ItemTimeColumn,
     },
-    width: '7rem',
-    cellClasses: 'text-cell',
-    hideUnder: 450,
-  },
-  // Inline Container Capacity Bar
-  inventoryContainerCapacityBar: {
-    key: 'inventoryContainerCapacityBar',
-    cellContent: {
-      type: 'component',
-      component: InlineCapacityBarColumn,
-    },
-    width: '7rem',
-    cellClasses: 'text-cell',
-    hideUnder: 400,
+    width: '5rem',
   },
 } satisfies Record<string, ColumnSpecification>;

@@ -56,12 +56,14 @@
 
 <p>TODO: Search, Filter, Controls bar</p>
 
-<ContainerContentsSections
-  contents={inventory}
-  editable={context.editable}
-  itemContext={context.itemContext}
-  {inlineToggleService}
-  sheetDocument={context.actor}
-  unlocked={context.unlocked}
-  root={true}
-/>
+<div class="tidy-table-container">
+  <ContainerContentsSections
+    contents={inventory}
+    editable={context.editable}
+    itemContext={context.itemContext}
+    {inlineToggleService}
+    sheetDocument={context.actor}
+    unlocked={context.unlocked}
+    root={true}
+  />
+</div>
