@@ -49,15 +49,15 @@
     title={favorite.activity.name}
     onUse={async (event) => await favorite.activity.use({ event })}
   />
-  <div class="tidy-table-cell primary">
-    <div class="item-name stacked">
+  <div class="item-name-container">
+    <label for={`favorite-activity-${favorite.activity.id}`} class="item-name stacked">
       <span class="title">
         {favorite.activity.name}
       </span>
       <span class="subtitle flexrow color-text-lighter font-default-small">
         {@html subtitle}
       </span>
-    </div>
+    </label>
   </div>
   <div class="">
     <div class="primary">
@@ -66,6 +66,7 @@
           {#if context.owner}
             <TextInputQuadrone
               document={favorite.activity}
+              id={`favorite-activity-${favorite.activity.id}`}
               field={uses.field}
               enableDeltaChanges={true}
               class="value"

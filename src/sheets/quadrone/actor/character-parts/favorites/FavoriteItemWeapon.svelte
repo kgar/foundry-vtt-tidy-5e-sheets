@@ -30,19 +30,19 @@
   data-item-id={favorite.item.item?.id}
 >
   <FavoriteItemRollButton
-    {favorite}
+    {favorite}  
     img={favorite.item.img}
     title={favorite.item.name}
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="">
+  <div class="item-name-container">
     <div class="item-name stacked">
       <span class="title">
         {favorite.item?.name || ''}
       </span>
-    <span class="subtitle flexrow color-text-lighter font-default-small">
-      {subtitle || ''}
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+        {subtitle || ''}
       </span>
     </div>
   </div>

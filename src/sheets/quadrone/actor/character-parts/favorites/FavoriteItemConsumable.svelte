@@ -45,8 +45,8 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="">
-    <div class="item-name stacked">
+  <div class="item-name-container">
+    <label for={`favorite-item-${favorite.item.item?.id}`} class="item-name stacked">
       <span class="title">
         {favorite.item.name}
       </span>
@@ -55,7 +55,7 @@
         {@html subtitle}
       </span>
       {/if}
-    </div>
+    </label>
   </div>
   {#if uses?.max || quantity}
   <div class="">

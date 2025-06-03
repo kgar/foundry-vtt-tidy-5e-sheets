@@ -4,6 +4,7 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { EffectFavoriteContextEntry } from 'src/types/types';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
+  import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
 
   interface Props {
     favorite: EffectFavoriteContextEntry;
@@ -33,27 +34,25 @@
 </script>
 
 <div
-  class={['favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
+  class={['list-entry favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
 >
-  <FavoriteRollButton
-    {favorite}
-    img={favorite.effect.img}
-    title={favorite.effect.name}
-  />
+  <a class="effect-use-icon">
+    <img src={favorite.effect.img} alt={favorite.effect.name} class="item-image" />
+  </a>
 
   <button
     type="button"
-    class="list-entry button button-borderless"
+    class="button button-borderless favorite-effect"
     disabled={!toggleable}
     onclick={() =>
       toggleable &&
       favorite.effect.update({ disabled: !favorite.effect.disabled })}
     data-favorite-type="effect"
   >
-    <div class="">
+    <div class="item-name-container">
       <div class="item-name stacked">
         <span class="title">
           {favorite.effect.name}
@@ -65,15 +64,13 @@
     </div>
 
     <div class="">
-      <i
-        class={[
-          'fas',
-          {
-            ['fa-toggle-off']: favorite.effect.disabled,
-            ['fa-toggle-large-on']: !favorite.effect.disabled,
-          },
-        ]}
-      ></i>
+      <span class="primary">
+        <FieldToggle
+          checked={!favorite.effect.disabled}
+          onchange={() =>
+            favorite.effect.update({ disabled: !favorite.effect.disabled })}
+        />
+      </span>
     </div>
   </button>
 </div>

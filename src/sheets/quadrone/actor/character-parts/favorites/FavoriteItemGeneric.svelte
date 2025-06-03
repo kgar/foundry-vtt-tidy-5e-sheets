@@ -45,7 +45,7 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="">
+  <div class="item-name-container">
     <div class="item-name stacked">
       <span class="title">
         {favorite.item?.name || ''}

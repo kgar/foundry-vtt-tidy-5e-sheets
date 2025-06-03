@@ -41,13 +41,14 @@
 
     return save;
   }
+  console.log(favorite.item);
 </script>
 
 <li
   class="list-entry favorite"
   data-favorite-type="spell"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
-  data-item-id={favorite.item.item?.id}
+  data-item-id={favorite.item?.id}
 >
   <FavoriteItemRollButton
     {favorite}
@@ -56,14 +57,14 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
   />
-  <div class="">
+  <div class="item-name-container">
     <div class="item-name stacked">
       <span class="title">
         {favorite.item.name}
       </span>
-    <span class="subtitle flexrow color-text-lighter font-default-small">
-      {@html subtitle}
-    </span>
+      <span class="subtitle flexrow color-text-lighter font-default-small">
+        {@html subtitle}
+      </span>
     </div>
   </div>
   {#if !isNil(modifier) || !isNil(save?.dc?.value) || !isNil(range?.value)}

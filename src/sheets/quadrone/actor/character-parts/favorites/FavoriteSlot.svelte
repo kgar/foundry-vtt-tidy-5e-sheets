@@ -25,7 +25,7 @@
   data-favorite-type="slot"
 >
   <FavoriteItemRollButton {favorite} img={favorite.img} title={favorite.name} />
-  <div class="tidy-table-cell primary">
+  <div class="item-name-container">
     <div class="item-name stacked">
       <span class="title">
         {favorite.name}
