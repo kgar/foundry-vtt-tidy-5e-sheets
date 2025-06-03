@@ -41,7 +41,6 @@
 
     return save;
   }
-  console.log(favorite.item);
 </script>
 
 <li
