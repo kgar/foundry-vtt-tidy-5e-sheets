@@ -147,18 +147,16 @@
 </section>
 
 <!-- Tables -->
-<div class="tidy-table-container">
-  <ContainerContentsSections
-    contents={context.containerContents.contents}
-    container={context.item}
-    editable={context.editable}
-    itemContext={context.containerContents.itemContext}
-    {inlineToggleService}
-    sheetDocument={context.item}
-    unlocked={context.unlocked}
-    root={true}
-  />
-</div>
+<ContainerContentsSections
+  contents={context.containerContents.contents}
+  container={context.item}
+  editable={context.editable}
+  itemContext={context.containerContents.itemContext}
+  {inlineToggleService}
+  sheetDocument={context.item}
+  unlocked={context.unlocked}
+  root={true}
+/>
 
 <hr class="golden-fade" />
 

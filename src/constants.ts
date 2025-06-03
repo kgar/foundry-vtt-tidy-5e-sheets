@@ -7,7 +7,7 @@ export const CONSTANTS = {
   SYSTEM_SETTING_LEVELING_MODE_XP: 'xp',
   SYSTEM_SETTING_LEVELING_MODE_XP_BOONS: 'xpBoons',
   SYSTEM_SETTING_DEFAULT_SKILLS: 'defaultSkills',
-  COLUMN_SPEC_SECTION_KEY_FALLBACK: Symbol('default fallback for column specs'),
+  COLUMN_SPEC_SECTION_KEY_DEFAULT: 'default fallback for column specs',
   DOCUMENT_NAME_ACTOR: 'Actor',
   DOCUMENT_NAME_ITEM: 'Item',
   DOCUMENT_NAME_ACTIVITY: 'Activity',
