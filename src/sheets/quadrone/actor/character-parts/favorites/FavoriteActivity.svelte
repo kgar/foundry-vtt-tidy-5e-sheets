@@ -54,14 +54,14 @@
   <div class="">
     <div class="primary">
       {#if uses.max}
-        <span class="uses">
+        <span class="inline-uses">
           {#if context.owner}
             <TextInputQuadrone
               document={favorite.activity}
               id={`favorite-activity-${favorite.activity.id}`}
               field={uses.field}
               enableDeltaChanges={true}
-              class="value"
+              class="uninput uses-value"
               value={uses.value}
               selectOnFocus={true}
               onSaveChange={(event) => {
@@ -77,12 +77,12 @@
               }}
             />
           {:else}
-            <span class="value">
+            <span class="uses-value color-text-default">
               {uses.value}
             </span>
           {/if}
           <span class="divider color-text-gold">/</span>
-          <span class="max color-text-lighter">
+          <span class="uses-max color-text-lighter">
             {uses.max}
           </span>
         </span>

@@ -12,7 +12,7 @@ import { Tidy5eVehicleSheet } from './sheets/classic/Tidy5eKgarVehicleSheet.svel
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
-import { initRuntime } from './runtime/runtime-init';
+import { initRuntimeOnReady, initRuntime } from './runtime/runtime-init';
 import { MigrationTally } from 'src/migrations/MigrationTally';
 import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
@@ -173,6 +173,8 @@ Hooks.once('ready', async () => {
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
   const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;
+
+  initRuntimeOnReady();
 
   TidyHooks.tidy5eSheetsReady(api);
 

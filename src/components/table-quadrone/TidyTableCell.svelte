@@ -1,6 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Snippet } from 'svelte';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     primary?: boolean;
@@ -8,6 +9,7 @@
     columnWidth?: string | null;
     hideUnder?: number;
     children?: Snippet<[any]>;
+    class?: ClassValue;
     [key: string]: any;
   }
 
@@ -16,6 +18,7 @@
     title = undefined,
     columnWidth = null,
     hideUnder,
+    class: cssClass,
     children,
     ...rest
   }: Props = $props();
@@ -34,7 +37,7 @@
 </script>
 
 <div
-  class="tidy-table-cell {rest.class ?? ''} {hideUnderClass}"
+  class={['tidy-table-cell', hideUnderClass, cssClass]}
   class:primary
   {title}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}

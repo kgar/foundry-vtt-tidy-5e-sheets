@@ -1506,4 +1506,18 @@ export const FoundryAdapter = {
       return obj;
     }, {} satisfies Record<string, SenseInfo>);
   },
+  getActivationAbbreviation(type: string) {
+    return (
+      {
+        action: 'DND5E.ActionAbbr',
+        bonus: 'DND5E.BonusActionAbbr',
+        reaction: 'DND5E.ReactionAbbr',
+        minute: 'DND5E.TimeMinuteAbbr',
+        hour: 'DND5E.TimeHourAbbr',
+        day: 'DND5E.TimeDayAbbr',
+      }[type || ''] ??
+      CONFIG.DND5E.activityActivationTypes[type]?.label ??
+      ''
+    );
+  },
 };

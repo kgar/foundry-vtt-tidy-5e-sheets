@@ -23,7 +23,6 @@
 <div 
   class="list-entry favorite" 
   data-favorite-type="slot"
-  data-item-id={favorite.id}
 >
   <FavoriteItemRollButton {favorite} 
     img={favorite.img} 
@@ -32,24 +31,26 @@
     subtitle={subtitle}
   />
   <div class="">
-    <span class="uses">
-      {#if context.owner}
-        <TextInputQuadrone
-          document={context.actor}
-          field={favorite.uses.field}
-          enableDeltaChanges={true}
-          class="value"
-          value={favorite.uses.value}
-          selectOnFocus={true}
-        />
-      {:else}
-        <span class="value font-data-medium color-text-default">
-          {favorite.uses.value}
+    <span class="primary">
+      <span class="inline-uses">
+        {#if context.owner}
+          <TextInputQuadrone
+            document={context.actor}
+            field={favorite.uses.field}
+            enableDeltaChanges={true}
+            class="uninput uses-value"
+            value={favorite.uses.value}
+            selectOnFocus={true}
+          />
+        {:else}
+          <span class="uses-value color-text-default">
+            {favorite.uses.value}
+          </span>
+        {/if}
+        <span class="divider color-text-gold">/</span>
+        <span class="uses-max color-text-lighter">
+          {favorite.uses.max}
         </span>
-      {/if}
-      <span class="divider font-default-medium color-text-lighter">/</span>
-      <span class="max font-label-medium color-text-lighter">
-        {favorite.uses.max}
       </span>
     </span>
   </div>

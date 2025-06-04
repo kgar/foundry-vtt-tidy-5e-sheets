@@ -1037,8 +1037,7 @@ export class Tidy5eNpcSheet
       spells,
       {
         canCreate: true,
-      },
-      this
+      }
     );
 
     context.features = Object.values(features);

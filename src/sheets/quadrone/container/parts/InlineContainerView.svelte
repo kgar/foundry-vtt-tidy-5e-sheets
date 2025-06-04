@@ -15,7 +15,6 @@
     containerContents: ContainerContents;
     editable: boolean;
     inlineToggleService: InlineToggleService;
-    lockItemQuantity: boolean;
     sheetDocument: any;
     unlocked?: boolean;
   }
@@ -25,7 +24,6 @@
     containerContents,
     editable,
     inlineToggleService,
-    lockItemQuantity,
     sheetDocument,
     unlocked = true,
   }: Props = $props();
@@ -80,7 +78,6 @@
         {container}
         {editable}
         itemContext={containerContents.itemContext}
-        {lockItemQuantity}
         {inlineToggleService}
         {sheetDocument}
         {unlocked}

@@ -1,19 +1,21 @@
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import type { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet.svelte';
-import type { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet.svelte';
 import type { Item5e } from 'src/types/item.types';
 import type {
   ActionSection,
   Actor5e,
+  ActorSheetContextV1,
+  ActorSheetQuadroneContext,
   CharacterFeatureSection,
   CharacterSheetContext,
+  CharacterSheetQuadroneContext,
   CustomSectionOptions,
   FavoriteSection,
   FeatureSection,
   InventorySection,
   NpcAbilitySection,
   NpcSheetContext,
+  NpcSheetQuadroneContext,
   SpellbookSection,
   SpellbookSectionLegacy,
   TidySectionBase,
@@ -130,27 +132,32 @@ export class SheetSections {
 
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
-    context: CharacterSheetContext | NpcSheetContext,
+    context:
+      | CharacterSheetContext
+      | NpcSheetContext
+      | CharacterSheetQuadroneContext
+      | NpcSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
-    options: Partial<SpellbookSection> = {},
-    app: Tidy5eCharacterSheet | Tidy5eNpcSheet
+    options: Partial<SpellbookSection> = {}
   ): SpellbookSection[] {
     const customSectionSpells = spells.filter((s) => TidyFlags.section.get(s));
     spells = spells.filter((s) => !TidyFlags.section.get(s));
 
-    const spellbook: SpellbookSection[] = app
-      ._prepareSpellbook(context, spells)
-      .map(
-        (s: SpellbookSectionLegacy) =>
-          ({
-            ...s,
-            uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
-            slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
-            key: s.prop,
-            show: true,
-          } satisfies SpellbookSection)
-      );
+    // TODO: Absorb _prepareSpellbookLegacy
+    const spellbook: SpellbookSection[] = this._prepareSpellbookLegacy(
+      context,
+      spells
+    ).map(
+      (s: SpellbookSectionLegacy) =>
+        ({
+          ...s,
+          uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
+          slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
+          key: s.prop,
+          show: true,
+        } satisfies SpellbookSection)
+    );
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
@@ -196,8 +203,191 @@ export class SheetSections {
     return Object.values(spellbookMap);
   }
 
+  /**
+   * Insert a spell into the spellbook object when rendering the character sheet.
+   * @param {object} context    Sheet rendering context data being prepared for render.
+   * @param {object[]} spells   Spells to be included in the spellbook.
+   * @returns {object[]}        Spellbook sections in the proper order.
+   * @protected
+   */
+  static _prepareSpellbookLegacy(
+    context: ActorSheetContextV1 | ActorSheetQuadroneContext,
+    spells: Item5e
+  ) {
+    const owner = context.actor.isOwner;
+    const levels = context.actor.system.spells;
+    const spellbook: Record<string, SpellbookSectionLegacy> = {};
+
+    // Define section and label mappings
+    const sections = Object.entries(CONFIG.DND5E.spellPreparationModes).reduce<
+      Record<string, any>
+    >((acc, [k, spell]) => {
+      if ('order' in spell && Number.isNumeric(spell.order)) {
+        acc[k] = Number(spell.order);
+      }
+      return acc;
+    }, {});
+    const useLabels: Record<string, string | number> = {
+      '-30': '-',
+      '-20': '-',
+      '-10': '-',
+      0: '&infin;',
+    };
+
+    type SpellSectionPrepArgs = {
+      prepMode?: string;
+      value?: number;
+      max?: number;
+      override?: number;
+      config?: (typeof CONFIG.DND5E.spellPreparationModes)[0];
+      levels?: any;
+    };
+
+    // Format a spellbook entry for a certain indexed level
+    const registerSection = (
+      sl: string,
+      i: number,
+      label: string,
+      {
+        prepMode = 'prepared',
+        value,
+        max,
+        override,
+        config,
+      }: SpellSectionPrepArgs = {}
+    ) => {
+      const aeOverride = foundry.utils.hasProperty(
+        context.actor.overrides,
+        `system.spells.spell${i}.override`
+      );
+      spellbook[i] = {
+        order: i,
+        label: label,
+        usesSlots: i > 0,
+        canCreate: owner,
+        canPrepare:
+          (context.actor.type === 'character' && i >= 1) || !!config?.prepares,
+        spells: [],
+        uses: useLabels[i] || value || 0,
+        slots: useLabels[i] || max || 0,
+        override: override || 0,
+        dataset: {
+          type: 'spell',
+          level: prepMode in sections ? 1 : i,
+          preparationMode: prepMode,
+        },
+        prop: sl,
+        editable: context.editable && !aeOverride,
+      };
+    };
+
+    // Determine the maximum spell level which has a slot
+    const maxLevel = Array.fromRange(
+      Object.keys(CONFIG.DND5E.spellLevels).length - 1,
+      1
+    ).reduce((max, i) => {
+      const level = levels[`spell${i}`];
+      if (level && (level.max || level.override) && i > max) max = i;
+      return max;
+    }, 0);
+
+    // Level-based spellcasters have cantrips and leveled slots
+    if (maxLevel > 0) {
+      registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
+      for (let lvl = 1; lvl <= maxLevel; lvl++) {
+        const sl = `spell${lvl}`;
+        registerSection(sl, lvl, CONFIG.DND5E.spellLevels[lvl], levels[sl]);
+      }
+    }
+
+    // Create spellbook sections for all alternative spell preparation modes that have spell slots.
+    for (const [k, v] of Object.entries(CONFIG.DND5E.spellPreparationModes)) {
+      let upcast = 'upcast' in v && v.upcast;
+
+      if (!(k in levels) || !upcast || !levels[k].max) {
+        continue;
+      }
+
+      let cantrips = 'cantrips' in v && v.cantrips;
+      if (!spellbook['0'] && cantrips) {
+        registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
+      }
+
+      const l = levels[k];
+
+      const level = game.i18n.localize(`DND5E.SpellLevel${l.level}`);
+
+      const label = `${v.label} — ${level}`;
+
+      registerSection(k, sections[k], label, {
+        prepMode: k,
+        value: l.value,
+        max: l.max,
+        override: l.override,
+        config: v,
+      });
+    }
+
+    // Iterate over every spell item, adding spells to the spellbook by section
+    spells.forEach((spell: Item5e) => {
+      const mode = spell.system.preparation.mode || 'prepared';
+      let s = spell.system.level || 0;
+      const sl = `spell${s}`;
+
+      // Spells from items
+      if (spell.getFlag('dnd5e', 'cachedFor')) {
+        s = 'item';
+        if (!spell.system.linkedActivity?.displayInSpellbook) return;
+        if (!spellbook[s]) {
+          registerSection(
+            'dnd5e-cast-activity-additional-spells',
+            s,
+            game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook')
+          );
+          spellbook[s].order = 1000;
+        }
+      }
+
+      // Specialized spellcasting modes (if they exist)
+      else if (mode in sections) {
+        s = sections[mode];
+        if (!spellbook[s]) {
+          const l = levels[mode] || {};
+          const config = CONFIG.DND5E.spellPreparationModes[mode];
+          registerSection(mode, s, config.label, {
+            prepMode: mode,
+            value: l.value,
+            max: l.max,
+            override: l.override,
+            config: config,
+          });
+        }
+      }
+
+      // Sections for higher-level spells which the caster "should not" have, but spell items exist for
+      else if (!spellbook[s]) {
+        registerSection(sl, s, CONFIG.DND5E.spellLevels[s], {
+          // TODO: Investigate this. It seems unused.
+          levels: levels[sl],
+        });
+      }
+
+      // Add the spell to the relevant heading
+      spellbook[s].spells.push(spell);
+    });
+
+    // Sort the spellbook by section level
+    const sorted = Object.values(spellbook);
+    sorted.sort((a, b) => a.order - b.order);
+    return sorted;
+  }
+
   static prepareClassItems(
-    context: CharacterSheetContext | NpcSheetContext,
+    context:
+      | CharacterSheetContext
+      | NpcSheetContext
+      | CharacterSheetQuadroneContext
+      | NpcSheetQuadroneContext,
     classes: Item5e[],
     subclasses: Item5e[],
     actor: Actor5e

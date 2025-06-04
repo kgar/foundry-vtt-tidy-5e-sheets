@@ -55,7 +55,6 @@ export type DocumentTypesToSortGroupTabs = Record<
 
 // Columns
 export type ColumnSpecification = {
-  key: string;
   headerContent?:
     | {
         type: 'component';
@@ -78,14 +77,37 @@ export type ColumnSpecification = {
         type: 'callback';
         callback: (rowDocument: any, rowContext: any) => string;
       };
-  width: string; // default: "5rem"
-  hideUnder?: number;
+  width: number; // default: "80" (px)
+  priority: number;
+  order: number;
   headerClasses?: string;
   cellClasses?: string;
   condition?: <TSection extends TidySectionBase>(
     data: ColumnSpecificationConditionArgs<any, TSection>
   ) => boolean;
 };
+
+export type KeyedColumnSpecification = ColumnSpecification & { key: string };
+
+export type ColumnSpecificationSchematics = {
+  ordered: KeyedColumnSpecification[];
+  prioritized: KeyedColumnSpecification[];
+};
+
+export type SectionColumnSpecificationSchematics = Record<
+  string,
+  ColumnSpecificationSchematics
+>;
+
+export type TabColumnSpecificationSchematics = Record<
+  string,
+  SectionColumnSpecificationSchematics
+>;
+
+export type SheetColumnSpecificationSchematics = Record<
+  string,
+  TabColumnSpecificationSchematics
+>;
 
 export type ColumnHeaderProps<TDocument = any, TContext = any> = {
   sheetDocument: TDocument;
@@ -107,7 +129,7 @@ export type ColumnSpecificationConditionArgs<
 
 export type ColumnSpecSectionKeysToColumns = Record<
   string | symbol,
-  ColumnSpecification[]
+  Record<string, ColumnSpecification>
 >;
 
 export type ColumnSpecTabIdsToSectionKeys = Record<

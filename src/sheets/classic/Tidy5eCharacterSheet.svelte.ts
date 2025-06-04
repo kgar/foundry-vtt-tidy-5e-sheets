@@ -1114,8 +1114,7 @@ export class Tidy5eCharacterSheet
       spells,
       {
         canCreate: true,
-      },
-      this
+      }
     );
 
     // Section Favorite Spells
@@ -1125,8 +1124,7 @@ export class Tidy5eCharacterSheet
       favorites.spells,
       {
         canCreate: false,
-      },
-      this
+      }
     );
 
     // Process Special Feature Item Context

@@ -932,6 +932,7 @@ export type ActorTraitContext = {
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
   abilities: ActorAbilityContextEntry[];
+  actions: ActionSection[];
   actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
@@ -957,7 +958,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   tabs: Tab[];
   token: TokenDocument | null;
   traits: Record<string, ActorTraitContext[]>;
-  warnings: DocumentPreparationWarning;
+  warnings: DocumentPreparationWarning[];
 } & DocumentSheetQuadroneContext<Actor5e>;
 
 export type ActorAbilityContextEntry = Ability & {
@@ -1061,38 +1062,50 @@ export type FavoriteContextEntry =
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-  attributePins: AttributePinContext[];
   bastion: {
     description: string;
   };
   classes: CharacterClassEntryContext[];
   conditions: Dnd5eActorCondition[];
+  containerPanelItems: ContainerPanelItemContext[];
   creatureType: CreatureTypeContext;
   defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
+  features: FeatureSection[];
+  inventory: InventorySection[];
+  itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
   showDeathSaves: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   speeds: CharacterSpeedSenseContext;
+  spellbook: SpellbookSection[];
   tools: ActorSkillsToolsContext<ToolData>[];
+  type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  containerPanelItems: ContainerPanelItemContext[];
+  features: NpcAbilitySection[];
+  inventory: InventorySection[];
   skills: ActorSkillsToolsContext<SkillData>[];
+  spellbook: SpellbookSection[];
   tools: ActorSkillsToolsContext<ToolData>[];
+  type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & ActorSheetQuadroneContext<unknown>;
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & ActorSheetQuadroneContext<unknown>;
 
 export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
 } & ActorSheetQuadroneContext<unknown>;
 
 /* Misc - Svelte */
