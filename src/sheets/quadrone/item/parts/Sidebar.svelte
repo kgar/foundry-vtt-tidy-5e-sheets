@@ -145,7 +145,7 @@
   });
 
   let sidebarActivations = $derived(
-    Object.values(context.item.labels.activations[0] ?? []).filter((x) => x),
+    Object.values(context.item.labels.activations?.[0] ?? []).filter((x) => x),
   );
 
   let proficiencyPill = $derived(
