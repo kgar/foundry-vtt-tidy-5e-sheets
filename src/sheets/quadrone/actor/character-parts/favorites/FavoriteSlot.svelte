@@ -17,26 +17,19 @@
     game.i18n.localize(
       `DND5E.Abbreviation${CONFIG.DND5E.spellcastingTypes[favorite.id]?.shortRest ? 'SR' : 'LR'}`,
     ),
-  ]);
+  ].filterJoin(` <div class="divider-dot"></div> `));
 </script>
 
-<div class="list-entry favorite" data-favorite-type="slot">
-  <FavoriteItemRollButton {favorite} img={favorite.img} title={favorite.name} />
-  <div class="tidy-table-cell primary">
-    <div class="item-name stacked">
-      <span class="title">
-        {favorite.name}
-      </span>
-      <span class="subtitle flexrow color-text-lighter font-default-small">
-        {#each subtitle as segment, i}
-          {segment}
-          {#if i + 1 < subtitle.length}
-            <div class="divider-dot"></div>
-          {/if}
-        {/each}
-      </span>
-    </div>
-  </div>
+<div 
+  class="list-entry favorite" 
+  data-favorite-type="slot"
+>
+  <FavoriteItemRollButton {favorite} 
+    img={favorite.img} 
+    title={favorite.name} 
+    name={favorite.name} 
+    subtitle={subtitle}
+  />
   <div class="">
     <span class="primary">
       <span class="inline-uses">
