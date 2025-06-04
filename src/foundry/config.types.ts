@@ -42,7 +42,7 @@ interface CommunicationTypeConfig {
   label: string;
 }
 
-type SpellSchool = {
+export type SpellSchool = {
   label: string;
   icon: string;
   fullKey: string;

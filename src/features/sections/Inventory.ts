@@ -51,6 +51,7 @@ export class Inventory {
         show: true,
         custom: undefined,
         isExternal: false,
+        rowActions: [], // TODO: add rowActions here
         ...options,
       };
     }
@@ -97,6 +98,7 @@ export class Inventory {
         creationItemTypes: [...defaultInventoryTypes],
       },
       show: true,
+      rowActions: [], // TODO: add rowActions here
       ...customSectionOptions,
     };
   }

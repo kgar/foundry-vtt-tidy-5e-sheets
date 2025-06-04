@@ -179,7 +179,6 @@
 
 <!-- Tables -->
 <ItemTables
-  {rowActions}
   sections={context.containerContents.contents}
   container={context.item}
   editable={context.editable}

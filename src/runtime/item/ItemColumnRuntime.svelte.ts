@@ -18,6 +18,7 @@ import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/Inline
 import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svelte';
 import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svelte';
 import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
+import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 
 const ENTRY_NAME_MIN_WIDTH_PX = 200;
 
@@ -33,6 +34,23 @@ class ItemColumnRuntime {
   #minWidth = $derived(this.#uiScale * ENTRY_NAME_MIN_WIDTH_PX);
 
   initOnReady() {
+    // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
+    const standardActionsColumn: ColumnSpecification = {
+      headerClasses: 'header-cell-actions',
+      cellClasses: 'tidy-table-actions',
+      cellContent: {
+        type: 'component',
+        component: DocumentActionsColumn,
+      },
+      width: (section: TidySectionBase) => {
+        let paddingX = 2;
+        let buttonWidth = 24;
+        return buttonWidth * section.rowActions.length + paddingX;
+      },
+      order: 1000,
+      priority: 1000,
+    };
+
     const standardContainerColumns = {
       capacityTracker: {
         cellContent: {
@@ -54,6 +72,7 @@ class ItemColumnRuntime {
         order: 200,
         priority: 200,
       },
+      actions: standardActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardInventoryColumns = {
@@ -123,6 +142,7 @@ class ItemColumnRuntime {
         order: 500,
         priority: 200,
       },
+      actions: standardActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardWeaponColumns = {
@@ -177,6 +197,7 @@ class ItemColumnRuntime {
         order: 700,
         priority: 200,
       },
+      actions: standardInventoryColumns.actions,
     } satisfies Record<string, ColumnSpecification>;
 
     this._registeredItemColumns = {
@@ -265,7 +286,8 @@ class ItemColumnRuntime {
 
   determineHiddenColumns(
     inlineSize: number,
-    schematics: ColumnSpecificationSchematics
+    schematics: ColumnSpecificationSchematics,
+    section: TidySectionBase
   ): Set<string> {
     console.log('determining hidden columns');
 
@@ -273,13 +295,15 @@ class ItemColumnRuntime {
 
     let toHide = new Set<string>();
 
-    for (const f of schematics.prioritized) {
-      const scaledWidth = f.width * this.#uiScale;
+    for (const col of schematics.prioritized) {
+      let width =
+        typeof col.width === 'number' ? col.width : col.width(section);
+      const scaledWidth = width * this.#uiScale;
 
       available -= scaledWidth;
 
       if (available < this.#minWidth) {
-        toHide.add(f.key);
+        toHide.add(col.key);
       }
     }
 

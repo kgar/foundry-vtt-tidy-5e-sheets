@@ -109,7 +109,6 @@
 <p>TODO: Search, Filter, Controls bar</p>
 
 <ItemTables
-  {rowActions}
   sections={inventory}
   editable={context.editable}
   itemContext={context.itemContext}

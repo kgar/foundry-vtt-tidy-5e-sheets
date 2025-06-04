@@ -1023,21 +1023,17 @@ export const FoundryAdapter = {
    * @returns `true` to indicate proceeding with tab change; `false` to halt tab change
    */
   onTabSelecting(
-    app: { currentTabId: string; element: HTMLElementOrGettable },
+    app: { currentTabId: string; element: HTMLElement },
     newTabId: string
   ) {
     if (!app.element) {
       return false;
     }
 
-    const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
-      app,
-      FoundryAdapter.getElementFromAppV1OrV2(app.element),
-      {
-        currentTab: app.currentTabId,
-        newTab: newTabId,
-      }
-    );
+    const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(app, app.element, {
+      currentTab: app.currentTabId,
+      newTab: newTabId,
+    });
 
     if (!canProceed) {
       return false;
@@ -1048,17 +1044,10 @@ export const FoundryAdapter = {
         return;
       }
 
-      TidyHooks.tidy5eSheetsSelectTab(
-        app,
-        FoundryAdapter.getElementFromAppV1OrV2(app.element),
-        newTabId
-      );
+      TidyHooks.tidy5eSheetsSelectTab(app, app.element, newTabId);
     });
 
     return true;
-  },
-  getElementFromAppV1OrV2(element: HTMLElementOrGettable) {
-    return 'get' in element ? element.get(0) : element;
   },
   getAbilitiesAsDropdownOptions(abilities: any): DropdownListOption[] {
     try {

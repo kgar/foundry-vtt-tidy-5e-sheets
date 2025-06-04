@@ -4,28 +4,21 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    ContainerItemContext,
-    ContainerSection,
-    Item5e,
-  } from 'src/types/item.types';
+  import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { Actor5e, InventorySection } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { getContext, type Component, type ComponentProps } from 'svelte';
+  import { getContext } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import InlineContainerView from '../container/parts/InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
-  import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
   interface Props {
-    rowActions: TidyTableAction<any, any, any>[];
     sections: InventorySection[];
     container?: Item5e;
     editable: boolean;
@@ -39,7 +32,6 @@
   }
 
   let {
-    rowActions = [],
     sections,
     container,
     editable,
@@ -64,10 +56,6 @@
   );
 
   const searchResults = getSearchResultsContext();
-
-  let actionColumnWidth = $derived(
-    `calc((var(--t5e-table-button-width) * ${1 + rowActions.length}) + var(--t5e-size-halfx))`,
-  );
 
   let containerToggleMap = $derived(inlineToggleService.map);
 
@@ -103,6 +91,7 @@
       {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
         sectionsInlineWidth,
         columns,
+        section,
       )}
       <TidyTable
         key={section.key}
@@ -118,12 +107,16 @@
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
+              {@const width =
+                typeof column.width === 'number'
+                  ? column.width
+                  : column.width(section)}
               <TidyTableHeaderCell
                 class={[
                   column.headerClasses,
                   { hidden: (!expanded && !root) || hidden },
                 ]}
-                columnWidth="{column.width}px"
+                columnWidth="{width}px"
               >
                 {#if !!column.headerContent}
                   {#if column.headerContent.type === 'callback'}
@@ -142,12 +135,6 @@
                 {/if}
               </TidyTableHeaderCell>
             {/each}
-            <TidyTableHeaderCell
-              class="header-cell-actions"
-              columnWidth={actionColumnWidth}
-            >
-              <!-- Actions -->
-            </TidyTableHeaderCell>
           </TidyTableHeaderRow>
         {/snippet}
 
@@ -235,18 +222,6 @@
                     {/if}
                   </TidyTableCell>
                 {/each}
-                <TidyTableCell
-                  class="tidy-table-actions"
-                  columnWidth={actionColumnWidth}
-                >
-                  {#each rowActions as action}
-                    {#if action.condition?.({ data: item, section }) ?? true}
-                      {@const props = action.props(item)}
-                      <action.component {...props} />
-                    {/if}
-                  {/each}
-                  <MenuButton targetSelector="[data-context-menu]" />
-                </TidyTableCell>
               {/snippet}
             </TidyItemTableRow>
 

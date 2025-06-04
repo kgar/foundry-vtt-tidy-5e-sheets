@@ -328,9 +328,7 @@
             trait.openConfiguration?.({
               app: context.actor.sheet,
               data: context,
-              element: FoundryAdapter.getElementFromAppV1OrV2(
-                context.actor.sheet.element,
-              ),
+              element: context.actor.sheet.element,
               event: ev,
             });
           } catch (e) {

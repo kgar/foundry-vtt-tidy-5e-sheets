@@ -108,7 +108,6 @@
       ondrop={onDrop}
     >
       <ItemTables
-        {rowActions}
         sections={containerContents.contents}
         {container}
         {editable}

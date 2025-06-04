@@ -73,7 +73,7 @@ export function getInfoCardFloatingPosition(params: FloatingPositionParams) {
   const { clientX: x, clientY: y } = params.event;
   const { rootFontSize, cardWidthAbsolute, cardHeightAbsolute } =
     params.dimensions;
-  const sheetEl = FoundryAdapter.getElementFromAppV1OrV2(params.sheet.element);
+  const sheetEl = params.sheet.element;
 
   const cardHalfHeightPx = cardHeightAbsolute / 2;
   const mouseCursorCardGapPx = rootFontSize * mouseCursorCardGapRem;

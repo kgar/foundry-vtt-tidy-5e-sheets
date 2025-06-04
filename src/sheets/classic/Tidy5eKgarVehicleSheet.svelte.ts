@@ -346,6 +346,7 @@ export class Tidy5eVehicleSheet
           },
         ],
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
       equipment: {
         label: game.i18n.localize(CONFIG.Item.typeLabels.equipment),
@@ -355,6 +356,7 @@ export class Tidy5eVehicleSheet
         columns: equipmentColumns,
         key: 'equipment',
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
       passive: {
         label: game.i18n.localize('DND5E.Features'),
@@ -362,6 +364,7 @@ export class Tidy5eVehicleSheet
         dataset: { type: 'feat' },
         key: 'passive',
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
       reactions: {
         label: game.i18n.localize('DND5E.ReactionPl'),
@@ -369,6 +372,7 @@ export class Tidy5eVehicleSheet
         dataset: { type: 'feat' },
         key: 'reactions',
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
       weapons: {
         label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
@@ -378,6 +382,7 @@ export class Tidy5eVehicleSheet
         columns: equipmentColumns,
         key: 'weapons',
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
     };
 
@@ -395,6 +400,7 @@ export class Tidy5eVehicleSheet
         columns: cargoColumns,
         key: 'crew',
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
       passengers: {
         label: game.i18n.localize('DND5E.VehiclePassengers'),
@@ -405,6 +411,7 @@ export class Tidy5eVehicleSheet
         columns: cargoColumns,
         key: 'passengers',
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
       cargo: {
         label: game.i18n.localize('DND5E.VehicleCargo'),
@@ -432,6 +439,7 @@ export class Tidy5eVehicleSheet
         ],
         key: 'cargo',
         show: true,
+        rowActions: [] // for the UI Overhaul
       },
     };
 

@@ -10,6 +10,7 @@ export const CONSTANTS = {
   COLUMN_SPEC_SECTION_KEY_DEFAULT: 'default fallback for column specs',
   DOCUMENT_NAME_ACTOR: 'Actor',
   DOCUMENT_NAME_ITEM: 'Item',
+  DOCUMENT_NAME_ACTIVE_EFFECT: 'ActiveEffect',
   DOCUMENT_NAME_ACTIVITY: 'Activity',
   ACTIVITY_TYPE_CAST: 'cast',
   ACTIVITY_TYPE_SAVE: 'save',

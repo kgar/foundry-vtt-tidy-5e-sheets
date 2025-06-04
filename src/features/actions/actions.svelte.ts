@@ -89,6 +89,7 @@ function buildActionSections(
       label: FoundryAdapter.getActivationTypeLabel(activationType),
       key: activationType,
       show: true,
+      rowActions: [], // TODO: add rowActions here
     };
   });
 
@@ -106,6 +107,7 @@ function buildActionSections(
           creationItemTypes: [],
           section: customSectionName,
         },
+        rowActions: [], // TODO: add rowActions here
       });
       customSection.actions.push(actionItem);
     } else {
@@ -119,6 +121,7 @@ function buildActionSections(
         key: activationType,
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
+        rowActions: [], // TODO: add rowActions here
       });
       section.actions.push(actionItem);
     }

@@ -66,7 +66,7 @@ export class TidyCustomSectionsInDefaultItemSheetIntegration
             </div>
           </fieldset>`;
 
-      const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
+      const element = app.element as HTMLElement;
 
       element
         .querySelector('.tab.details')

@@ -32,7 +32,7 @@ export class CustomContentRenderer {
       customContent,
     } = params;
 
-    const htmlElement = FoundryAdapter.getElementFromAppV1OrV2(element);
+    const htmlElement = element as HTMLElement;
     if (!htmlElement) {
       debug('Element not available when it normally should be', params);
       return;
@@ -238,7 +238,7 @@ export class CustomContentRenderer {
   }
 }
 
-/*----------------------------------------------*/ 
+/*----------------------------------------------*/
 /* Ported from App V2 Svelte Mixin as a stopgap */
 /*----------------------------------------------*/
 async function _submitEmbeddedDocumentChange(

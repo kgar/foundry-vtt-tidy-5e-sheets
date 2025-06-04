@@ -164,7 +164,7 @@ export type TidySectionBase = {
   show: boolean; // default: true
   isExternal?: boolean;
   // columns: ColumnSpecificationSchematics[];
-  // rowActions: TidyTableAction<any, any, any>[];
+  rowActions: TidyTableAction<any, any, any>[];
 };
 
 export type FeatureSection = {

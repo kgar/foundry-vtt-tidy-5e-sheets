@@ -77,7 +77,7 @@ export type ColumnSpecification = {
         type: 'callback';
         callback: (rowDocument: any, rowContext: any) => string;
       };
-  width: number; // default: "80" (px)
+  width: number | ((section: TidySectionBase) => number); // default: "80" (px)
   priority: number;
   order: number;
   headerClasses?: string;

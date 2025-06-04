@@ -122,8 +122,10 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Character sheet
    */
   isTidy5eCharacterSheet(app: any) {
-    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return !!element?.matches(`.tidy5e-sheet.sheet.character`);
+    return this.#maybeElementMatchesSelector(
+      app.element,
+      `.tidy5e-sheet.sheet.character`
+    );
   }
 
   /**
@@ -132,8 +134,10 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Container sheet
    */
   isTidy5eContainerSheet(app: any) {
-    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return !!element?.matches(`.tidy5e-sheet.sheet.container`);
+    return this.#maybeElementMatchesSelector(
+      app.element,
+      `.tidy5e-sheet.sheet.container`
+    );
   }
 
   /**
@@ -142,8 +146,10 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Group sheet
    */
   isTidy5eGroupSheet(app: any) {
-    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return !!element?.matches(`.tidy5e-sheet.sheet.group`);
+    return this.#maybeElementMatchesSelector(
+      app.element,
+      `.tidy5e-sheet.sheet.group`
+    );
   }
 
   /**
@@ -152,8 +158,10 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
    */
   isTidy5eItemSheet(app: any) {
-    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return !!element?.matches(`.tidy5e-sheet.sheet.item`);
+    return this.#maybeElementMatchesSelector(
+      app.element,
+      `.tidy5e-sheet.sheet.item`
+    );
   }
 
   /**
@@ -162,8 +170,10 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e NPC sheet
    */
   isTidy5eNpcSheet(app: any) {
-    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return !!element?.matches(`.tidy5e-sheet.sheet.npc`);
+    return this.#maybeElementMatchesSelector(
+      app.element,
+      `.tidy5e-sheet.sheet.npc`
+    );
   }
 
   /**
@@ -172,8 +182,10 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is any Tidy 5e sheet
    */
   isTidy5eSheet(app: any) {
-    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return !!element?.matches(`.tidy5e-sheet.sheet`);
+    return this.#maybeElementMatchesSelector(
+      app.element,
+      `.tidy5e-sheet.sheet`
+    );
   }
 
   /**
@@ -182,8 +194,16 @@ export class Tidy5eSheetsApi {
    * @returns boolean indicating if the sheet is a Tidy 5e Vehicle sheet
    */
   isTidy5eVehicleSheet(app: any) {
-    const element = FoundryAdapter.getElementFromAppV1OrV2(app.element);
-    return !!element?.matches(`.tidy5e-sheet.sheet.vehicle`);
+    return this.#maybeElementMatchesSelector(
+      app.element,
+      `.tidy5e-sheet.sheet.vehicle`
+    );
+  }
+
+  #maybeElementMatchesSelector(element: any, selector: string) {
+    return (
+      element && element instanceof HTMLElement && !!element?.matches(selector)
+    );
   }
 
   /**{@inheritDoc ItemSummaryApi} */

@@ -876,6 +876,7 @@ export class Tidy5eCharacterSheet
       key: 'tidy-favorite-effects',
       label: 'DND5E.Effects',
       show: true,
+      rowActions: [], // for the UI Overhaul
     };
     const favoriteEffects = (
       this.actor.system.favorites as CharacterFavorite[]
@@ -916,6 +917,7 @@ export class Tidy5eCharacterSheet
       label: 'DND5E.ACTIVITY.Title.other',
       show: true,
       type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
+      rowActions: [], // for the UI Overhaul
     };
 
     const favoriteActivities = (
@@ -1195,6 +1197,7 @@ export class Tidy5eCharacterSheet
         key: 'tidy-favorite-bastion-facilities',
         label: bastionFacilitiesLabel,
         show: true,
+        rowActions: [], // for the UI Overhaul
       },
     ];
 
