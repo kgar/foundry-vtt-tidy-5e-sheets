@@ -36,7 +36,7 @@
   class="list-entry favorite"
   data-favorite-type="consumable"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-  data-item-id={favorite.item.item?.id}
+  data-item-id={favorite.item?.id}
 >
   <FavoriteItemRollButton
     {favorite}
@@ -44,19 +44,9 @@
     title={favorite.item.name}
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
+    name={favorite.item.name}
+    subtitle={subtitle}
   />
-  <div class="">
-    <div class="item-name stacked">
-      <span class="title">
-        {favorite.item.name}
-      </span>
-    {#if subtitle}
-      <span class="subtitle flexrow color-text-lighter font-default-small">
-        {@html subtitle}
-      </span>
-      {/if}
-    </div>
-  </div>
   {#if uses?.max || quantity}
   <div class="">
     <span class="primary">

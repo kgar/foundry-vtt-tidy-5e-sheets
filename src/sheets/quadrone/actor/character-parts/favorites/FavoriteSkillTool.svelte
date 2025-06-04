@@ -26,7 +26,8 @@
   );
 
   async function handleOnUse(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+    event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
+    _favorite: SkillToolFavoriteContextEntry,
   ) {
     if (favorite.type === 'skill') {
       await context.actor.rollSkill({ skill: favorite.key, event });
@@ -41,24 +42,16 @@
   class="list-entry favorite" 
   data-favorite-type="tool"
   data-reference-tooltip={favorite.reference}
+  data-item-id={favorite.id}
 >
   <FavoriteItemRollButton
     {favorite}
     img={favorite.img}
     title={favorite.name}
     onUse={handleOnUse}
+    name={favorite.name}
+    subtitle={subtitle}
   />
-  <div class="">
-    <div class="item-name stacked">
-      <span class="title">
-        {favorite.name}
-      </span>
-      <span class="subtitle flexrow color-text-lighter font-default-small">
-        {@html subtitle}
-      </span>
-    </div>
-  </div>
-
   <div class="">
     <span class="modifier">
       <span class="sign">

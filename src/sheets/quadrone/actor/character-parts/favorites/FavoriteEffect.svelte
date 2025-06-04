@@ -4,6 +4,7 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { EffectFavoriteContextEntry } from 'src/types/types';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
+  import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
 
   interface Props {
     favorite: EffectFavoriteContextEntry;
@@ -16,11 +17,14 @@
   let localize = FoundryAdapter.localize;
 
   let subtitle = $derived(
-    favorite.effect.isSuppressed
-      ? localize('DND5E.Suppressed')
-      : favorite.effect.duration.remaining
-        ? favorite.effect.duration.label
-        : '',
+    [
+      localize('DND5E.Effect'),
+      favorite.effect.isSuppressed
+        ? localize('DND5E.Suppressed')
+        : favorite.effect.duration.remaining
+          ? favorite.effect.duration.label
+          : '',
+    ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
   let toggleable = $derived(context.owner && !favorite.effect.supppresed);
@@ -30,50 +34,48 @@
       ? favorite.effect.parent.id
       : null,
   );
+
+  const handleChange = !favorite.effect.isSuppressed 
+    ? () => favorite.effect.update({ disabled: !favorite.effect.disabled })
+    : undefined;
 </script>
 
 <div
-  class={['favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
+  class={['list-entry favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
 >
-  <FavoriteRollButton
-    {favorite}
-    img={favorite.effect.img}
-    title={favorite.effect.name}
-  />
-
   <button
     type="button"
-    class="list-entry button button-borderless"
-    disabled={!toggleable}
-    onclick={() =>
-      toggleable &&
-      favorite.effect.update({ disabled: !favorite.effect.disabled })}
+    class="button button-borderless favorite-effect favorite-button"
+    class:disabled={favorite.effect.isSuppressed}
+    onclick={handleChange}
     data-favorite-type="effect"
   >
-    <div class="">
+    <i class="effect-use-icon">
+      <img src={favorite.effect.img} alt={favorite.effect.name} class="item-image" />
+    </i>
+
+    <div class="item-name-container">
       <div class="item-name stacked">
         <span class="title">
           {favorite.effect.name}
-      </span>
-      <span class="subtitle flexrow color-text-lighter font-default-small">
+        </span>
+        <span class="subtitle flexrow color-text-lighter font-default-small">
           {@html subtitle}
         </span>
       </div>
     </div>
 
-    <div class="">
-      <i
-        class={[
-          'fas',
-          {
-            ['fa-toggle-off']: favorite.effect.disabled,
-            ['fa-toggle-large-on']: !favorite.effect.disabled,
-          },
-        ]}
-      ></i>
+    <div class="effect-toggle">
+      <span class="primary">
+        <FieldToggle
+          checked={!favorite.effect.disabled}
+          disabled={favorite.effect.isSuppressed}
+          onchange={handleChange}
+        />
+      </span>
     </div>
   </button>
 </div>

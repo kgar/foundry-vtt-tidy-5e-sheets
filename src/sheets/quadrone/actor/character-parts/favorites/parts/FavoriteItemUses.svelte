@@ -18,6 +18,7 @@
   {#if context.owner}
     <TextInputQuadrone
       document={favorite.item}
+      id={`favorite-item-${favorite.item.item?.id}`}
       field="system.uses.value"
       enableDeltaChanges={true}
       class="uninput uses-value"

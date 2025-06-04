@@ -48,17 +48,9 @@
     img={favorite.activity.img}
     title={favorite.activity.name}
     onUse={async (event) => await favorite.activity.use({ event })}
+    name={favorite.activity.name}
+    subtitle={subtitle}
   />
-  <div class="tidy-table-cell primary">
-    <div class="item-name stacked">
-      <span class="title">
-        {favorite.activity.name}
-      </span>
-      <span class="subtitle flexrow color-text-lighter font-default-small">
-        {@html subtitle}
-      </span>
-    </div>
-  </div>
   <div class="">
     <div class="primary">
       {#if uses.max}
@@ -66,6 +58,7 @@
           {#if context.owner}
             <TextInputQuadrone
               document={favorite.activity}
+              id={`favorite-activity-${favorite.activity.id}`}
               field={uses.field}
               enableDeltaChanges={true}
               class="value"
