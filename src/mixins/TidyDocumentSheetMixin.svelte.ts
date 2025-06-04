@@ -434,8 +434,10 @@ export function TidyExtensibleDocumentSheetMixin<
       // Some integrations will insert HTML even beyond this point,
       // so breaking off the current task gives another chance to restore state.
       setTimeout(() => {
-        this.#restoreScrollPositions(this.element);
-        this.#restoreInputFocus(this.element);
+        if (this.element) {
+          this.#restoreScrollPositions(this.element);
+          this.#restoreInputFocus(this.element);
+        }
       });
     }
 
