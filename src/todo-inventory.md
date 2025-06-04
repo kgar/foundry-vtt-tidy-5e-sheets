@@ -6,9 +6,23 @@ Refactor:
 - [x] Have each use of a column provide a priority
 - [x] Propagate to Containers as well
 - [X] Test inventory and container contents
-- [ ] Rename ContainerContentsSections to ItemLists
+- [x] Rename ContainerContentsSections to ItemLists
+- [x] Parameterize row actions
+- [ ] Solve Problem: Column Visibility algorithm has no awareness of action column width, so it minimize visibility of the item name without hiding columns
+  - [ ] Pull row actions back into TidySectionBase
+  - [ ] Add an actions column at highest priority and set its width to the calculated width in pixels instead of rems
+  - [ ] Increase the column props to include the TidyBaseSection from whence this column comes
 - [ ] Implement action bar
 - [ ] Implement container panel
+- [ ] Evolve ItemLists further
+  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
+  - Make the `sections` prop a TidySectionBase
+  - Move the section configuration / prep outside of the ItemLists component, so the component always receives content that is ready to use
+  - Move columns to TidySectionBase and include in prep
+  - Generalize the controls column so that different callers can have different controls (spellbook versus inventory, for example); 
+    - the most caveman way is simply to provide a controls component for each scenario
+    - perhaps the appropriate way is to make these controls data-driven and all based on one component which can broker all the different behaviors and states based on props.
+  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 - [ ] Review and task further
 
 ## Formula Column notes

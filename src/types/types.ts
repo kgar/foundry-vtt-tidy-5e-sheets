@@ -9,21 +9,20 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
-import type { DocumentFilters } from 'src/runtime/item/item.types';
+import type {
+  ColumnSpecificationSchematics,
+  DocumentFilters,
+} from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type {
-  Activity5e,
-  CharacterFavoriteType,
-  SkillData,
-  ToolData,
-} from 'src/foundry/dnd5e.types';
+import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -164,6 +163,8 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
+  // columns: ColumnSpecificationSchematics[];
+  // rowActions: TidyTableAction<any, any, any>[];
 };
 
 export type FeatureSection = {

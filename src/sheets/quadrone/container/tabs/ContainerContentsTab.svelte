@@ -1,9 +1,9 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
+  import { getContext, type Component } from 'svelte';
   import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
-  import ContainerContentsSections from 'src/sheets/quadrone/container/parts/ContainerContentsSections.svelte';
+  import ItemTables from 'src/sheets/quadrone/shared/ItemTables.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import Search from '../../shared/Search.svelte';
@@ -24,6 +24,10 @@
   import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+  import type { ContainerSection, Item5e } from 'src/types/item.types';
+  import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
+  import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -72,6 +76,33 @@
       ],
     ),
   );
+
+  type TableAction<TComponent extends Component<any>> = TidyTableAction<
+    TComponent,
+    Item5e,
+    ContainerSection
+  >;
+
+  let rowActions: TableAction<any>[] = $derived.by(() => {
+    let result: TableAction<any>[] = [];
+
+    if (context.unlocked) {
+      result.push({
+        component: EditButton,
+        props: (doc: any) => ({ doc }),
+      } satisfies TableAction<typeof EditButton>);
+
+      result.push({
+        component: DeleteButton,
+        props: (doc: any) => ({
+          doc,
+          deleteFn: () => doc.deleteDialog(),
+        }),
+      } satisfies TableAction<typeof DeleteButton>);
+    }
+
+    return result;
+  });
 </script>
 
 {#if !!markerEl && !!footerEl}
@@ -147,8 +178,9 @@
 </section>
 
 <!-- Tables -->
-<ContainerContentsSections
-  contents={context.containerContents.contents}
+<ItemTables
+  {rowActions}
+  sections={context.containerContents.contents}
   container={context.item}
   editable={context.editable}
   itemContext={context.containerContents.itemContext}

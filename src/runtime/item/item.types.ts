@@ -117,6 +117,7 @@ export type ColumnHeaderProps<TDocument = any, TContext = any> = {
 export type ColumnCellProps<TDocument = any, TContext = any> = {
   rowDocument: TDocument;
   rowContext: TContext;
+  section: TidySectionBase;
 };
 
 export type ColumnSpecificationConditionArgs<

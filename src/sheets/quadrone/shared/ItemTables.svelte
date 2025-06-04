@@ -16,10 +16,8 @@
   import { getContext, type Component, type ComponentProps } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import InlineContainerView from './InlineContainerView.svelte';
+  import InlineContainerView from '../container/parts/InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
-  import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -27,7 +25,8 @@
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
   interface Props {
-    contents: InventorySection[];
+    rowActions: TidyTableAction<any, any, any>[];
+    sections: InventorySection[];
     container?: Item5e;
     editable: boolean;
     itemContext: Record<string, ContainerItemContext>;
@@ -40,7 +39,8 @@
   }
 
   let {
-    contents,
+    rowActions = [],
+    sections,
     container,
     editable,
     itemContext,
@@ -54,51 +54,20 @@
 
   let containingDocument = $derived(container ?? sheetDocument);
 
-  let configuredContents = $derived(
+  let configuredSections = $derived(
     SheetSections.configureInventory(
-      contents.filter((i) => i.items.length),
+      sections.filter((i) => i.items.length),
       tabId,
       SheetPreferencesService.getByType(sheetDocument.type),
-      TidyFlags.sectionConfig.get(containingDocument)?.[
-        CONSTANTS.TAB_CONTAINER_CONTENTS
-      ],
+      TidyFlags.sectionConfig.get(containingDocument)?.[tabId],
     ),
   );
 
   const searchResults = getSearchResultsContext();
 
-  type TableAction<TComponent extends Component<any>> = TidyTableAction<
-    TComponent,
-    Item5e,
-    ContainerSection
-  >;
-
-  let tableActions: TableAction<any>[] = $derived.by(() => {
-    let result: TableAction<any>[] = [];
-
-    if (unlocked) {
-      result.push({
-        component: EditButton,
-        props: (doc: any) => ({ doc }),
-      } satisfies TableAction<typeof EditButton>);
-
-      result.push({
-        component: DeleteButton,
-        props: (doc: any) => ({
-          doc,
-          deleteFn: () => doc.deleteDialog(),
-        }),
-      } satisfies TableAction<typeof DeleteButton>);
-    }
-
-    return result;
-  });
-
-  let columnSpecs = $derived({
-    actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-size-halfx))`,
-    },
-  });
+  let actionColumnWidth = $derived(
+    `calc((var(--t5e-table-button-width) * ${1 + rowActions.length}) + var(--t5e-size-halfx))`,
+  );
 
   let containerToggleMap = $derived(inlineToggleService.map);
 
@@ -124,7 +93,7 @@
 </script>
 
 <div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
-  {#each configuredContents as section (section.key)}
+  {#each configuredSections as section (section.key)}
     {#if section.show}
       {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
         containingDocument,
@@ -175,7 +144,7 @@
             {/each}
             <TidyTableHeaderCell
               class="header-cell-actions"
-              {...columnSpecs.actions}
+              columnWidth={actionColumnWidth}
             >
               <!-- Actions -->
             </TidyTableHeaderCell>
@@ -261,20 +230,21 @@
                       <column.cellContent.component
                         rowContext={ctx}
                         rowDocument={item}
+                        {section}
                       />
                     {/if}
                   </TidyTableCell>
                 {/each}
                 <TidyTableCell
                   class="tidy-table-actions"
-                  {...columnSpecs.actions}
+                  columnWidth={actionColumnWidth}
                 >
-                  {#if unlocked}
-                    {#each tableActions as action}
+                  {#each rowActions as action}
+                    {#if action.condition?.({ data: item, section }) ?? true}
                       {@const props = action.props(item)}
                       <action.component {...props} />
-                    {/each}
-                  {/if}
+                    {/if}
+                  {/each}
                   <MenuButton targetSelector="[data-context-menu]" />
                 </TidyTableCell>
               {/snippet}
