@@ -42,7 +42,9 @@
       .join(', '),
   );
 
-  let icon = $derived(context.config.spellSchools[context.system.school]);
+  let spellSchool = $derived<(typeof CONFIG.DND5E.spellSchools)[0] | undefined>(
+    context.config.spellSchools[context.system.school],
+  );
 
   let linkedItem = $derived(context.item.system.linkedActivity?.item);
 
@@ -137,9 +139,11 @@
     </div>
     {#if !context.unlocked}
       <div class="common-fields">
-        <div class="school" aria-label={context.labels.school}>
-          <Dnd5eIcon src={icon.icon} />
-        </div>
+        {#if spellSchool}
+          <div class="school" aria-label={context.labels.school}>
+            <Dnd5eIcon src={spellSchool.icon} />
+          </div>
+        {/if}
       </div>
     {/if}
 
