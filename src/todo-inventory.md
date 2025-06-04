@@ -2,11 +2,11 @@
 
 Refactor:
 
-- [ ] Switch from hideUnder to priority show/hide scheme
-- [ ] Have each use of a column provide a priority
-- [ ] Propagate to Containers as well
-- [ ] Test inventory and container contents
-- [ ] Rename ContainerContentsSections to InventoryLists
+- [x] Switch from hideUnder to priority show/hide scheme
+- [x] Have each use of a column provide a priority
+- [x] Propagate to Containers as well
+- [X] Test inventory and container contents
+- [ ] Rename ContainerContentsSections to ItemLists
 - [ ] Implement action bar
 - [ ] Implement container panel
 - [ ] Review and task further
