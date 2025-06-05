@@ -404,6 +404,7 @@
     width: var(--t5e-table-button-width);
     transition: opacity var(--t5e-transition-default);
     transition-property: opacity, max-width;
+    align-content: center;
 
     i {
       color: var(--t5e-color-icon-disabled);

@@ -46,9 +46,15 @@
 
   let containingDocument = $derived(container ?? sheetDocument);
 
+  let sectionsToConfigure = $derived(
+    unlocked && !container
+      ? sections
+      : sections.filter((i) => i.items.length),
+  );
+
   let configuredSections = $derived(
     SheetSections.configureInventory(
-      sections.filter((i) => i.items.length),
+      sectionsToConfigure,
       tabId,
       SheetPreferencesService.getByType(sheetDocument.type),
       TidyFlags.sectionConfig.get(containingDocument)?.[tabId],
