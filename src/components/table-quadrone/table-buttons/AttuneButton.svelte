@@ -29,7 +29,7 @@
 </script>
 
 {#if canAttune}
-  <a {title} onclick={toggleAttuned}>
+  <a {title} onclick={toggleAttuned} class="tidy-table-button">
     {#if attuned}
       <i class="fa-solid fa-sun"></i>
     {:else}

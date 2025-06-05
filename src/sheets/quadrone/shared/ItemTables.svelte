@@ -203,9 +203,13 @@
                 </TidyTableCell>
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
+                  {@const width =
+                    typeof column.width === 'number'
+                      ? column.width
+                      : column.width(section)}
 
                   <TidyTableCell
-                    columnWidth="{column.width}px"
+                    columnWidth="{width}px"
                     class={[column.cellClasses, { hidden }]}
                   >
                     {#if column.cellContent.type === 'callback'}

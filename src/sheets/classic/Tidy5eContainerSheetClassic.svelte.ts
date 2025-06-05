@@ -264,7 +264,10 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
       config: CONFIG.DND5E,
-      containerContents: await Container.getContainerContents(this.item),
+      containerContents: await Container.getContainerContents(this.item, {
+        hasActor: !!this.item.actor,
+        unlocked: documentSheetContext.unlocked,
+      }),
       customContent: [],
       enriched: enriched,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
@@ -275,7 +278,10 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       isIdentified: this.document.system.identified !== false,
       isPhysical: this.document.system.hasOwnProperty('quantity'),
       item: this.item,
-      itemContext: await Container.getContainerItemContext(this.item),
+      itemContext: await Container.getContainerItemContext(this.item, {
+        hasActor: !!this.item.actor,
+        unlocked: documentSheetContext.unlocked,
+      }),
       itemDescriptions: itemDescriptions,
       itemOverrides: new Set<string>(this._getItemOverrides()),
       items: Array.from(await this.item.system.contents),

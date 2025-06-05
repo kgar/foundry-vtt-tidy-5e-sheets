@@ -43,8 +43,9 @@ class ItemColumnRuntime {
         component: DocumentActionsColumn,
       },
       width: (section: TidySectionBase) => {
-        let paddingX = 2;
-        let buttonWidth = 24;
+        // TODO: There has to be a better way...
+        let paddingX = 3;
+        let buttonWidth = 27;
         return buttonWidth * section.rowActions.length + paddingX;
       },
       order: 1000,
@@ -88,7 +89,7 @@ class ItemColumnRuntime {
         width: 80,
         cellClasses: 'inline-uses',
         order: 100,
-        priority: 300,
+        priority: 400,
       },
       time: {
         headerContent: {
@@ -127,7 +128,7 @@ class ItemColumnRuntime {
         },
         width: 80,
         order: 400,
-        priority: 400,
+        priority: 300,
       },
       weight: {
         headerContent: {
@@ -149,7 +150,7 @@ class ItemColumnRuntime {
       charges: {
         ...standardInventoryColumns.charges,
         order: 100,
-        priority: 300,
+        priority: 400,
       },
       time: {
         ...standardInventoryColumns.time,
@@ -166,7 +167,7 @@ class ItemColumnRuntime {
           component: ItemRollColumn,
         },
         order: 300,
-        width: 40,
+        width: 50,
         priority: 700,
       },
       formula: {
@@ -190,7 +191,7 @@ class ItemColumnRuntime {
       quantity: {
         ...standardInventoryColumns.quantity,
         order: 600,
-        priority: 400,
+        priority: 300,
       },
       weight: {
         ...standardInventoryColumns.weight,

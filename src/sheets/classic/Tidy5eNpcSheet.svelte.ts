@@ -764,7 +764,11 @@ export class Tidy5eNpcSheet
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
-        panelItem.container
+        panelItem.container,
+        {
+          hasActor: true,
+          unlocked: context.unlocked,
+        }
       );
     }
 
@@ -856,7 +860,7 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'weapons',
         show: true,
-        rowActions: [] // for the UI Overhaul
+        rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_ACTIONS]: {
         label: game.i18n.localize('DND5E.ActionPl'),
@@ -869,7 +873,7 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'actions',
         show: true,
-        rowActions: [] // for the UI Overhaul
+        rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_PASSIVE]: {
         label: game.i18n.localize('DND5E.Features'),
@@ -879,7 +883,7 @@ export class Tidy5eNpcSheet
         key: 'passive',
         show: true,
         hasUses: true,
-        rowActions: [] // for the UI Overhaul
+        rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT]: {
         label: game.i18n.localize('DND5E.Inventory'),
@@ -888,7 +892,7 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'equipment',
         show: true,
-        rowActions: [] // for the UI Overhaul
+        rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_CLASSES]: {
         label: `${CONFIG.Item.typeLabels.class}Pl`,
@@ -898,7 +902,7 @@ export class Tidy5eNpcSheet
         key: 'classes',
         show: true,
         isClass: true,
-        rowActions: [] // for the UI Overhaul
+        rowActions: [], // for the UI Overhaul
       },
     };
 

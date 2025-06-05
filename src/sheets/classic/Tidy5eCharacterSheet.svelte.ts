@@ -837,7 +837,11 @@ export class Tidy5eCharacterSheet
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
-        panelItem.container
+        panelItem.container,
+        {
+          hasActor: true,
+          unlocked: context.unlocked,
+        }
       );
     }
 

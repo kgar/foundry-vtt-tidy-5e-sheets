@@ -54,6 +54,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -230,7 +231,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
-        panelItem.container
+        panelItem.container,
+        {
+          hasActor: true,
+          unlocked: actorContext.unlocked,
+        }
       );
     }
 
@@ -428,9 +433,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
+    const inventoryRowActions =
+      TableRowActionsRuntime.getInventoryRowActions(context);
     // Categorize items as inventory, spellbook, features, and classes
+
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections();
+      Inventory.getDefaultInventorySections({
+        rowActions: inventoryRowActions,
+      });
 
     // Partition items by category
     let { backgrounds, classes, feats, items, species, spells, subclasses } =
@@ -504,6 +514,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
         canCreate: true,
+        rowActions: inventoryRowActions,
       });
     }
 
@@ -513,6 +524,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
         canCreate: true,
+        rowActions: inventoryRowActions,
       });
     });
 

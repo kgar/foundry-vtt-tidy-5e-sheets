@@ -259,7 +259,10 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
 
     let containerContents: ContainerContents | undefined = undefined;
     if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-      containerContents = await Container.getContainerContents(item);
+      containerContents = await Container.getContainerContents(item, {
+        hasActor: false,
+        unlocked: item.actor.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
+      });
     }
 
     return {
