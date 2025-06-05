@@ -43,9 +43,9 @@ class ItemColumnRuntime {
         component: DocumentActionsColumn,
       },
       width: (section: TidySectionBase) => {
-        // TODO: There has to be a better way...
+        // TODO: Use REMs and a REM conversion from the computed body fontSize
         let paddingX = 3;
-        let buttonWidth = 27;
+        let buttonWidth = 24;
         return buttonWidth * section.rowActions.length + paddingX;
       },
       order: 1000,
