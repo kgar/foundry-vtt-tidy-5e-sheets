@@ -13,9 +13,14 @@ Refactor:
   - [x] Add an actions column at highest priority and set its width to the calculated width in pixels instead of rems
   - [x] Increase the column props to include the TidyBaseSection from whence this column comes
 - [x] Supply Table Row Actions to inline and standlone container contents
-- [ ] Ensure all empty inventory sections are shown.
+- [ ] Ensure all empty inventory sections are shown on unlock
 - [ ] Add an Add Button to all sections. Have it open the item creation dialog with the item type pre-selected, if dealing with a default section.
 - [ ] Change attune button to Display-Only and put to the right of the item name button as an indicator
+- [ ] Implement Actor Inventory Footer
+  - [ ] Attunement Tracker
+  - [ ] Currency
+  - [ ] Currency Exchange button
+  - [ ] Universal Add Button
 - [ ] Implement action bar
   - [ ] While there, implement generic width / priority observer feature that can control pinned filter visibility generically
   - [ ] Propagate this to the container action bar
@@ -36,6 +41,13 @@ Refactor:
 ## Questions
 
 - How does UI Scale actually factor into the styles of things? Is it independent of Font Size, or does it scale everything, including font size?
+
+## Add Button Notes
+
+**Option C** - Proposed designs but me, a dummy, apparently never wrote down the behavior 😅
+* Hide empty sections in Play Mode
+* Add Item buttons appear in table headers. Creating an item this way prefills a custom section if from custom section header. Uses system create item dialog with type preselected (if non-custom).
+* Global Add Item button appears in the footer. Creating an item this way does not prefill the section. Uses system create item dialog with no type preselected.
 
 ## Write-up about rem column / row action widths
 
