@@ -47,9 +47,7 @@
   let containingDocument = $derived(container ?? sheetDocument);
 
   let sectionsToConfigure = $derived(
-    unlocked && !container
-      ? sections
-      : sections.filter((i) => i.items.length),
+    unlocked && !container ? sections : sections.filter((i) => i.items.length),
   );
 
   let configuredSections = $derived(
@@ -134,6 +132,7 @@
                     <column.headerContent.component
                       sheetContext={context}
                       sheetDocument={context.document}
+                      {section}
                     />
                   {:else if column.headerContent.type === 'html'}
                     {@html column.headerContent.html}

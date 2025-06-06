@@ -68,7 +68,7 @@
     },
   });
 
-  function onAddClicked(section: any) {
+  function onAddClicked(section: EffectCategory<ActiveEffectContext>) {
     const owner = context.item;
     return FoundryAdapter.addEffect(section.type, owner);
   }

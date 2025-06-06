@@ -13,8 +13,9 @@ Refactor:
   - [x] Add an actions column at highest priority and set its width to the calculated width in pixels instead of rems
   - [x] Increase the column props to include the TidyBaseSection from whence this column comes
 - [x] Supply Table Row Actions to inline and standlone container contents
-- [ ] Ensure all empty inventory sections are shown on unlock
-- [ ] Add an Add Button to all sections. Have it open the item creation dialog with the item type pre-selected, if dealing with a default section.
+- [x] Ensure all empty inventory sections are shown on unlock
+- [x] Add an Add Button to all sections. Have it open the item creation dialog with the item type pre-selected, if dealing with a default section.
+- [ ] Remove trashcan and behavior from favorites tab. Some people live in Edit mode.
 - [ ] Change attune button to Display-Only and put to the right of the item name button as an indicator
 - [ ] Implement Actor Inventory Footer
   - [ ] Attunement Tracker

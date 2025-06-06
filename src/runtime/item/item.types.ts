@@ -112,6 +112,7 @@ export type SheetColumnSpecificationSchematics = Record<
 export type ColumnHeaderProps<TDocument = any, TContext = any> = {
   sheetDocument: TDocument;
   sheetContext: TContext;
+  section: TidySectionBase;
 };
 
 export type ColumnCellProps<TDocument = any, TContext = any> = {

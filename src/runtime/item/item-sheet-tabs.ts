@@ -152,7 +152,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Active Effects create/read/update/delete interface.
    */
   effects: {
-    id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
+    id: CONSTANTS.TAB_EFFECTS,
     title: 'DND5E.Effects',
     content: {
       component: ItemActiveEffectsTab,
@@ -469,7 +469,7 @@ const itemSheetTabs: Record<string, Tab> = {
     },
   },
   quadroneEffects: {
-    id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
+    id: CONSTANTS.TAB_EFFECTS,
     title: (tabContext) => {
       let title = FoundryAdapter.localize('DND5E.Effects');
 

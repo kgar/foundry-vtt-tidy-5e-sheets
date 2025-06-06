@@ -19,6 +19,7 @@ import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svel
 import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svelte';
 import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
 import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+import ItemActionsColumnHeader from 'src/sheets/quadrone/item/columns/ItemActionsColumnHeader.svelte';
 
 const ENTRY_NAME_MIN_WIDTH_PX = 200;
 
@@ -35,8 +36,12 @@ class ItemColumnRuntime {
 
   initOnReady() {
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
-    const standardActionsColumn: ColumnSpecification = {
+    const standardItemActionsColumn: ColumnSpecification = {
       headerClasses: 'header-cell-actions',
+      headerContent: {
+        type: 'component',
+        component: ItemActionsColumnHeader,
+      },
       cellClasses: 'tidy-table-actions',
       cellContent: {
         type: 'component',
@@ -73,7 +78,7 @@ class ItemColumnRuntime {
         order: 200,
         priority: 200,
       },
-      actions: standardActionsColumn,
+      actions: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardInventoryColumns = {
@@ -143,7 +148,7 @@ class ItemColumnRuntime {
         order: 500,
         priority: 200,
       },
-      actions: standardActionsColumn,
+      actions: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardWeaponColumns = {
