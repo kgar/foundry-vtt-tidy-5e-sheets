@@ -206,6 +206,16 @@
                     </span>
                   </a>
                 </TidyTableCell>
+                {#if ctx.attunement}
+                  {@const iconClass = item.system.attuned
+                    ? 'fa-solid fa-sun'
+                    : 'fa-light fa-sun'}
+
+                  {@const title = ctx.attunement?.title}
+
+                  <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
+                  <i class={[iconClass, 'item-state-indicator']} {title}></i>
+                {/if}
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
                   {@const width =

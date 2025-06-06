@@ -16,7 +16,7 @@ Refactor:
 - [x] Ensure all empty inventory sections are shown on unlock
 - [x] Add an Add Button to all sections. Have it open the item creation dialog with the item type pre-selected, if dealing with a default section.
 - [x] Remove trashcan and behavior from favorites tab. Some people live in Edit mode.
-- [ ] Change attune button to Display-Only and put to the right of the item name button as an indicator
+- [x] Change attune button to Display-Only and put to the right of the item name button as an indicator
 - [ ] Implement Actor Inventory Footer
   - [ ] Attunement Tracker
   - [ ] Currency

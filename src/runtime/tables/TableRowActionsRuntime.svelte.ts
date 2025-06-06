@@ -1,16 +1,10 @@
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-import type {
-  ContainerSection,
-  ContainerSheetQuadroneContext,
-  Item5e,
-  ItemSheetQuadroneContext,
-} from 'src/types/item.types';
+import type { ContainerSection, Item5e } from 'src/types/item.types';
 import type {
   ActorSheetQuadroneContext,
   InventorySection,
 } from 'src/types/types';
 import type { Component } from 'svelte';
-import AttuneButton from 'src/components/table-quadrone/table-buttons/AttuneButton.svelte';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
 import BookmarkButton from 'src/components/table-quadrone/table-buttons/BookmarkButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
@@ -46,11 +40,6 @@ class TableRowActionsRuntime {
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
-          result.push({
-            component: AttuneButton,
-            props: (doc: any) => ({ doc }),
-          } satisfies TableAction<typeof AttuneButton>);
-
           result.push({
             component: EquipButton,
             props: (doc: any) => ({ doc }),
