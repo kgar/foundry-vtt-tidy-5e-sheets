@@ -1,5 +1,10 @@
 import type { Component } from 'svelte';
-import type { ContainerContents, Item5e, ItemChatData } from './item.types';
+import type {
+  ContainerContents,
+  CurrencyContext,
+  Item5e,
+  ItemChatData,
+} from './item.types';
 import type {
   OnContentReadyParams,
   OnRenderParams,
@@ -1070,6 +1075,7 @@ export type CharacterSheetQuadroneContext = {
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   creatureType: CreatureTypeContext;
+  currencies: CurrencyContext[];
   defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
@@ -1091,13 +1097,14 @@ export type CharacterSheetQuadroneContext = {
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   containerPanelItems: ContainerPanelItemContext[];
+  currencies: CurrencyContext[];
   features: NpcAbilitySection[];
   inventory: InventorySection[];
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
-} & ActorSheetQuadroneContext<unknown>;
+} & ActorSheetQuadroneContext<any>;
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed

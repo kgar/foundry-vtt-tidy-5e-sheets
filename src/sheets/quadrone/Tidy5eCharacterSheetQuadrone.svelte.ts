@@ -26,7 +26,7 @@ import type {
   LocationToSearchTextMap,
   MessageBus,
 } from 'src/types/types';
-import type { Item5e, ItemChatData } from 'src/types/item.types';
+import type { CurrencyContext, Item5e, ItemChatData } from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -161,6 +161,18 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     actorContext.effects = enhancedEffectSections;
 
+    const currencies: CurrencyContext[] = [];
+
+    Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
+      currencies.push({
+        key: key,
+        value: this.actor.system.currency[key] as number,
+        abbr:
+          CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
+            ?.abbreviation ?? key,
+      })
+    );
+
     const context: CharacterSheetQuadroneContext = {
       bastion: {
         description: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -177,6 +189,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         actorContext.items
       ),
       creatureType: this._getCreatureType(),
+      currencies,
       defenders: [],
       epicBoonsEarned: undefined,
       facilities: {
