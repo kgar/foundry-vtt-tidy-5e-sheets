@@ -15,7 +15,7 @@ Refactor:
 - [x] Supply Table Row Actions to inline and standlone container contents
 - [x] Ensure all empty inventory sections are shown on unlock
 - [x] Add an Add Button to all sections. Have it open the item creation dialog with the item type pre-selected, if dealing with a default section.
-- [ ] Remove trashcan and behavior from favorites tab. Some people live in Edit mode.
+- [x] Remove trashcan and behavior from favorites tab. Some people live in Edit mode.
 - [ ] Change attune button to Display-Only and put to the right of the item name button as an indicator
 - [ ] Implement Actor Inventory Footer
   - [ ] Attunement Tracker
@@ -26,10 +26,6 @@ Refactor:
   - [ ] While there, implement generic width / priority observer feature that can control pinned filter visibility generically
   - [ ] Propagate this to the container action bar
 - [ ] Implement container panel
-- [ ] Propagate Table Row Actions to Activities tables
-- [ ] Propagate Table Row Actions to Effects tables
-- [ ] Propagate Data-Driven Columns to Activities tables
-- [ ] Propagate Data-Driven Columns to Effects tables
 - [ ] `ItemColumnRuntime.determineHiddenColumns` - use this to pre-calculate column widths and to return a column scheme type that excludes width functions.
 - [ ] Expand column width calculations to include support for other measurements like REMs. Calculate the root rem on Foundry ready `parseFloat(getComputedStyle(document.body).fontSize)` and anytime settings change.
   - Bonus: promote the UI Scale watcher and its hook to a centralized location where Tidy pulls its core setting info as a reactive store.
@@ -38,6 +34,14 @@ Refactor:
   - Move columns to TidySectionBase and include in prep
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 - [ ] Review and task further
+
+## Unrelated to this feature, unsorted, add to main list when done here
+
+- [ ] Add drag-and-drop to sort for Favorites
+- [ ] Propagate Table Row Actions to Activities tables
+- [ ] Propagate Table Row Actions to Effects tables
+- [ ] Propagate Data-Driven Columns to Activities tables
+- [ ] Propagate Data-Driven Columns to Effects tables
 
 ## Questions
 
