@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import { getActorActionSections } from 'src/features/actions/actions.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
+import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import type { SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -11,6 +12,7 @@ import {
   TidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type { Ability } from 'src/types/dnd5e.actor5e.types';
@@ -194,6 +196,9 @@ export function Tidy5eActorSheetQuadroneBase<
           this.actor.allApplicableEffects()
         ),
         elements: this.options.elements,
+        filterData: this.itemFilterService.getDocumentItemFilterData(),
+        filterPins:
+          ItemFilterRuntime.defaultFilterPinsQuadrone[this.actor.type],
         flags: {
           classes: [],
           data: {},
@@ -214,6 +219,7 @@ export function Tidy5eActorSheetQuadroneBase<
         tabs: [],
         token: this.token,
         traits: this._prepareTraits(),
+        userPreferences: UserPreferencesService.get(),
         warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
         ...documentSheetContext,
       };

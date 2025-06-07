@@ -23,6 +23,18 @@ Refactor:
   - [x] Currency Exchange button
   - [x] Universal Add Button
 - [ ] Implement action bar
+  - [ ] Action Bar Row
+    - [x] Section Expand/Collapse toggle
+    - [ ] Search
+    - [ ] Pinned Filters
+    - [ ] Filters
+    - [ ] Sort
+    - [ ] Tab Config
+  - [ ] Encumbrance Row
+    - [ ] Strength Pill
+    - [ ] Size Pill
+    - [ ] Multiplier Pill
+    - [ ] Encumbrance bar with threshold ticks
   - [ ] While there, implement generic width / priority observer feature that can control pinned filter visibility generically
   - [ ] Propagate this to the container action bar
 - [ ] Implement container panel

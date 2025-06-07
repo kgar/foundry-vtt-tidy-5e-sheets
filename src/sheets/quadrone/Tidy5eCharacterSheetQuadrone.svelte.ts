@@ -76,7 +76,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     this.itemFilterService = new ItemFilterService(
       {},
-      this.item,
+      this.actor,
       ItemFilterRuntime.getDocumentFiltersQuadrone
     );
 

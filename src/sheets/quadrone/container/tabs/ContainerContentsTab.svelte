@@ -82,27 +82,6 @@
     Item5e,
     ContainerSection
   >;
-
-  let rowActions: TableAction<any>[] = $derived.by(() => {
-    let result: TableAction<any>[] = [];
-
-    if (context.unlocked) {
-      result.push({
-        component: EditButton,
-        props: (doc: any) => ({ doc }),
-      } satisfies TableAction<typeof EditButton>);
-
-      result.push({
-        component: DeleteButton,
-        props: (doc: any) => ({
-          doc,
-          deleteFn: () => doc.deleteDialog(),
-        }),
-      } satisfies TableAction<typeof DeleteButton>);
-    }
-
-    return result;
-  });
 </script>
 
 {#if !!markerEl && !!footerEl}

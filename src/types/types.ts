@@ -28,6 +28,7 @@ import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -948,6 +949,8 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   elements: unknown;
   enableXp: boolean;
   fields: DataSchema;
+  filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
   flags: SpecialTraits;
   isConcentrating: boolean;
   itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
@@ -964,6 +967,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   tabs: Tab[];
   token: TokenDocument | null;
   traits: Record<string, ActorTraitContext[]>;
+  userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
 } & DocumentSheetQuadroneContext<Actor5e>;
 
