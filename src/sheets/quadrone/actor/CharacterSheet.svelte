@@ -500,10 +500,12 @@
     </div>
     <TabContents tabs={context.tabs} {selectedTabId} />
 
-    {#if selectedTabId === CONSTANTS.TAB_ACTOR_INVENTORY}
-      <CharacterInventoryFooter />
-    {:else if selectedTabId === CONSTANTS.TAB_ACTOR_SPELLBOOK}
-      <CharacterSpellbookFooter />
-    {/if}
+    <!-- Footers -->
+    <CharacterInventoryFooter
+      class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
+    />
+    <CharacterSpellbookFooter
+      class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
+    />
   </div>
 </div>

@@ -12,6 +12,13 @@
   import type { Item5e } from 'src/types/item.types';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
+  import type { ClassValue } from 'svelte/elements';
+
+  interface Props {
+    class?: ClassValue;
+  }
+
+  let { class: classValue }: Props = $props();
 
   let context =
     $derived(
@@ -65,8 +72,8 @@
   />
 </div>
 
-<!-- should we use `<footer>`? We'd need to designate an ancestral `<section>` -->
-<div class="sheet-footer fixed">
+<!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
+<div class={['sheet-footer', 'fixed', classValue]}>
   <div
     class={['attunement-tracker', 'uses', { overattuned }]}
     data-tooltip-direction="UP"
