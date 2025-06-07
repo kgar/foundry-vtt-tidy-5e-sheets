@@ -9,7 +9,7 @@
   import ItemPriceSummary from '../item/parts/header/ItemPriceSummary.svelte';
   import ItemWeightSummary from '../item/parts/header/ItemWeightSummary.svelte';
   import ItemName from '../item/parts/header/ItemName.svelte';
-    import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -60,7 +60,7 @@
               new dnd5e.applications.CurrencyManager({
                 document: context.document,
               }).render(true)}
-            title={localize('DND5E.CurrencyManager.Title')}
+            data-tooltip="DND5E.CurrencyManager.Title"
           >
             <i class="fas fa-database"></i>
           </a>

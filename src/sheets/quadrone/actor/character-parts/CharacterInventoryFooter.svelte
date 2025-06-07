@@ -132,14 +132,14 @@
         new dnd5e.applications.CurrencyManager({
           document: context.document,
         }).render(true)}
-      title={localize('DND5E.CurrencyManager.Title')}
+      data-tooltip="DND5E.CurrencyManager.Title"
     >
       <i class="fas fa-database"></i>
     </a>
   {/if}
 
   <a
-    title={localize('DND5E.ItemCreate')}
+    data-tooltip="DND5E.ItemCreate"
     class="button button-icon-only button-primary item-create"
     class:disabled={!context.editable}
     onclick={onAddClicked}

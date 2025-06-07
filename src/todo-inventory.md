@@ -25,9 +25,9 @@ Refactor:
 - [ ] Implement action bar
   - [ ] Action Bar Row
     - [x] Section Expand/Collapse toggle
-    - [ ] Search
-    - [ ] Pinned Filters
-    - [ ] Filters
+    - [x] Search
+    - [x] Pinned Filters
+    - [x] Filters
     - [ ] Sort
     - [ ] Tab Config
   - [ ] Encumbrance Row
