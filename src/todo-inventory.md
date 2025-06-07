@@ -17,11 +17,11 @@ Refactor:
 - [x] Add an Add Button to all sections. Have it open the item creation dialog with the item type pre-selected, if dealing with a default section.
 - [x] Remove trashcan and behavior from favorites tab. Some people live in Edit mode.
 - [x] Change attune button to Display-Only and put to the right of the item name button as an indicator
-- [ ] Implement Actor Inventory Footer
-  - [ ] Attunement Tracker
-  - [ ] Currency
-  - [ ] Currency Exchange button
-  - [ ] Universal Add Button
+- [x] Implement Actor Inventory Footer
+  - [x] Attunement Tracker
+  - [x] Currency
+  - [x] Currency Exchange button
+  - [x] Universal Add Button
 - [ ] Implement action bar
   - [ ] While there, implement generic width / priority observer feature that can control pinned filter visibility generically
   - [ ] Propagate this to the container action bar
