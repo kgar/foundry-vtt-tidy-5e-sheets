@@ -258,18 +258,6 @@ export class Tidy5eContainerSheetQuadrone
         hasActor: !!this.item.actor,
         unlocked: documentSheetContext.unlocked,
       }),
-      contentsSort: {
-        group: ItemSortRuntime.getGroupFromMethod(contentsSortMethod)?.key,
-        groups:
-          ItemSortRuntime.getDocumentSortGroupsQuadrone(this.document)[
-            CONSTANTS.TAB_CONTAINER_CONTENTS
-          ] ?? [],
-        method: contentsSortMethod,
-        methods:
-          ItemSortRuntime.getDocumentSortMethodsQuadrone(this.document)[
-            CONSTANTS.TAB_CONTAINER_CONTENTS
-          ] ?? [],
-      },
       customContent: [],
       currencies,
       enriched: enriched,

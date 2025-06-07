@@ -135,7 +135,6 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.equipped.name,
-        defaultItemFilters.canUse.name,
       ]),
     },
   };
@@ -314,10 +313,7 @@ export class ItemFilterRuntime {
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
         'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
-          {
-            ...defaultItemFilters.equipped,
-            pinnedFilterClass: 'hide-under-400',
-          },
+          defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
       },

@@ -22,14 +22,14 @@ Refactor:
   - [x] Currency
   - [x] Currency Exchange button
   - [x] Universal Add Button
-- [ ] Implement action bar
-  - [ ] Action Bar Row
+- [x] Implement action bar
+  - [x] Action Bar Row
     - [x] Section Expand/Collapse toggle
     - [x] Search
     - [x] Pinned Filters
     - [x] Filters
-    - [ ] Sort
-    - [ ] Tab Config
+    - [x] Sort
+    - [x] Tab Config
   - [ ] Encumbrance Row
     - [ ] Strength Pill
     - [ ] Size Pill

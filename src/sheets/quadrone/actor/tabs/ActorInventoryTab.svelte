@@ -16,7 +16,7 @@
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
   } from 'src/types/types';
-  import { getContext, type Component } from 'svelte';
+  import { getContext } from 'svelte';
   import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
@@ -24,8 +24,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
-  import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
-  import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
   import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 
   let context =
@@ -74,12 +72,6 @@
     });
   });
 
-  let sortMethod = $derived(
-    SheetPreferencesService.getByType(context.actor.type).tabs?.[
-      CONSTANTS.TAB_CONTAINER_CONTENTS
-    ]?.sort ?? 'm',
-  );
-
   let tabName = $derived(
     context.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
       ? CharacterSheetQuadroneRuntime.getTabTitle(tabId)
@@ -116,17 +108,7 @@
 
   <FilterMenuQuadrone filterData={context.filterData} {tabId} />
 
-  <SortButtonWithMenuQuadrone
-    doc={context.actor}
-    group={ItemSortRuntime.getGroupFromMethod(sortMethod)?.key}
-    groups={ItemSortRuntime.getDocumentSortGroupsQuadrone(context.document)[
-      CONSTANTS.TAB_CONTAINER_CONTENTS
-    ] ?? []}
-    method={sortMethod}
-    methods={ItemSortRuntime.getDocumentSortMethodsQuadrone(context.document)[
-      CONSTANTS.TAB_CONTAINER_CONTENTS
-    ] ?? []}
-  />
+  <SortButtonWithMenuQuadrone doc={context.actor} {tabId} />
 
   <a
     class="button button-icon-only"

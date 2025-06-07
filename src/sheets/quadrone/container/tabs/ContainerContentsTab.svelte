@@ -116,7 +116,7 @@
 
   <FilterMenuQuadrone filterData={context.filterData} {tabId} />
 
-  <SortButtonWithMenuQuadrone doc={context.item} {...context.contentsSort} />
+  <SortButtonWithMenuQuadrone doc={context.item} {tabId} />
 
   <a
     class="button button-icon-only"
