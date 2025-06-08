@@ -10,7 +10,7 @@ function camelToLowerDashCase(str: string) {
   return str;
 }
 
-export function buildDataset(obj: Record<string, unknown> | null) {
+export function buildDataset(obj: Record<string, unknown> | null | undefined) {
   if (!obj) {
     return {};
   }

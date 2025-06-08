@@ -223,8 +223,8 @@ export type SpellbookSectionLegacy = {
   override: number;
   dataset: {
     type: string;
-    level: number;
-    preparationMode: string;
+    ['system.level']: number;
+    ['system.preparation.mode']: string;
   };
   prop: string;
   editable: boolean;
@@ -234,6 +234,7 @@ export type SpellbookSection = {
   order?: number | string;
   usesSlots: boolean;
   canCreate: boolean;
+  /* deprecated: item row actions runtime evaluates for each item  */
   canPrepare: boolean;
   spells: Item5e[];
   uses?: number;
@@ -1094,6 +1095,7 @@ export type CharacterSheetQuadroneContext = {
   skills: ActorSkillsToolsContext<SkillData>[];
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
+  spellComponentLabels: Record<string, string>;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
@@ -1106,6 +1108,7 @@ export type NpcSheetQuadroneContext = {
   inventory: InventorySection[];
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
+  spellComponentLabels: Record<string, string>;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & ActorSheetQuadroneContext<any>;

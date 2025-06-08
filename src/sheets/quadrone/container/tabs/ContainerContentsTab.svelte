@@ -76,12 +76,6 @@
       ],
     ),
   );
-
-  type TableAction<TComponent extends Component<any>> = TidyTableAction<
-    TComponent,
-    Item5e,
-    ContainerSection
-  >;
 </script>
 
 {#if !!markerEl && !!footerEl}

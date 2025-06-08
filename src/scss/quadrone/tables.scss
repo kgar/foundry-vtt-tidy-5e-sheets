@@ -242,6 +242,7 @@
   /* Cell styles */
   :is(.tidy-table-cell, .tidy-table-header-cell) {
     align-items: center;
+    text-align: center;
     display: flex;
     justify-content: center;
     // padding: 0 0.0625rem;

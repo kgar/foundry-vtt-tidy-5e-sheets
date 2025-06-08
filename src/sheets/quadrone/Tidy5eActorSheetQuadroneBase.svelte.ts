@@ -601,17 +601,19 @@ export function Tidy5eActorSheetQuadroneBase<
 
     async _addDocument(args: {
       tabId: string;
-      typeToPreselect?: string;
       customSection?: string;
       creationItemTypes?: string[];
       data?: Record<string, any>;
     }) {
+      let { type: datasetType, ...restDataSet } = args.data ?? {};
+
       if (args.tabId === CONSTANTS.TAB_EFFECTS)
         return await ActiveEffect.implementation.create(
           {
             name: game.i18n.localize('DND5E.EffectNew'),
             icon: 'icons/svg/aura.svg',
-            ...args.data,
+            type: datasetType,
+            ...restDataSet,
           },
           { parent: this.actor, renderSheet: true }
         );
@@ -625,20 +627,17 @@ export function Tidy5eActorSheetQuadroneBase<
       if (types.length > 1) {
         let dialogV1HookId: number | null = null;
 
-        if (
-          !isNil(args.typeToPreselect, '') &&
-          types.includes(args.typeToPreselect)
-        ) {
+        if (!isNil(datasetType, '') && types.includes(datasetType)) {
           dialogV1HookId = Hooks.once('renderDialog', (app: any) => {
             const typeToPreselect = app.element
               .get(0)
-              .querySelector(`[value="${args.typeToPreselect}"]`);
+              .querySelector(`[value="${datasetType}"]`);
             typeToPreselect && (typeToPreselect.checked = true);
           });
         }
 
         let result = await Item.implementation.createDialog(
-          { type: args.typeToPreselect, ...args.data },
+          { type: datasetType, ...restDataSet },
           {
             parent: this.actor,
             pack: this.actor.pack,
@@ -658,6 +657,7 @@ export function Tidy5eActorSheetQuadroneBase<
           name: game.i18n.format('DOCUMENT.New', {
             type: game.i18n.format(CONFIG.Item.typeLabels[type]),
           }),
+          ...restDataSet,
         },
         { parent: this.actor, renderSheet: true }
       );
@@ -1118,17 +1118,10 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       // Determine the section it is dropped on, if any.
-      let header = dropTarget.closest<HTMLElement>('.items-header'); // Dropped directly on the header.
-      if (header === null) {
-        const list = dropTarget.closest<HTMLElement>('.item-list'); // Dropped inside an existing list.
-        header =
-          list?.previousElementSibling instanceof HTMLElement
-            ? list.previousElementSibling
-            : null;
-      }
-
-      const { level, preparationMode } =
-        header?.closest<HTMLElement>('[data-level]')?.dataset ?? {};
+      const dataset =
+        dropTarget?.closest<HTMLElement>('[data-type="spell"]')?.dataset ?? {};
+      const level = dataset['system.level'];
+      const preparationMode = dataset['system.preparation.mode'];
 
       // Determine the actor's spell slot progressions, if any.
       const spellcastKeys = Object.keys(CONFIG.DND5E.spellcastingTypes);

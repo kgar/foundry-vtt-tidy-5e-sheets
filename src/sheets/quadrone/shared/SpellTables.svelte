@@ -4,58 +4,44 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerItemContext, Item5e } from 'src/types/item.types';
+  import type { Item5e } from 'src/types/item.types';
   import type {
     Actor5e,
     CharacterItemContext,
     NpcItemContext,
-    TidySectionBase,
+    SpellbookSection,
   } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
-  import InlineContainerView from '../container/parts/InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
 
-  type ItemTableSection = TidySectionBase & { items: Item5e[] };
-
   interface Props {
-    sections: ItemTableSection[];
-    container?: Item5e;
+    sections: SpellbookSection[];
     editable: boolean;
-    itemContext: Record<
-      string,
-      ContainerItemContext | CharacterItemContext | NpcItemContext
-    >;
+    itemContext: Record<string, CharacterItemContext | NpcItemContext>;
     inlineToggleService: InlineToggleService;
-    /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
     unlocked?: boolean;
-    /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
-    root?: boolean;
   }
 
   let {
     sections,
-    container,
     editable,
     itemContext,
     inlineToggleService,
     sheetDocument,
     unlocked = true,
-    root,
   }: Props = $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let containingDocument = $derived(container ?? sheetDocument);
-
   const searchResults = getSearchResultsContext();
 
-  let containerToggleMap = $derived(inlineToggleService.map);
+  let itemToggleMap = $derived(inlineToggleService.map);
 
   let context = $derived(getSheetContext());
 
@@ -78,12 +64,12 @@
   });
 </script>
 
-<div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
+<div class="tidy-table-container" bind:this={sectionsContainer}>
   {#each sections as section (section.key)}
     {#if section.show}
       {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
-        containingDocument,
-        !container ? tabId : CONSTANTS.TAB_CONTAINER_CONTENTS,
+        sheetDocument,
+        tabId,
         section,
       )}
       {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
@@ -94,14 +80,15 @@
       <TidyTable
         key={section.key}
         data-custom-section={section.custom ? true : null}
+        dataset={section.dataset}
       >
         {#snippet header(expanded)}
-          <TidyTableHeaderRow class={{ 'theme-dark': root }}>
+          <TidyTableHeaderRow class="theme-dark">
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>
                 {localize(section.label)}
               </h3>
-              <span class="table-header-count">{section.items.length}</span>
+              <span class="table-header-count">{section.spells.length}</span>
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
@@ -110,10 +97,7 @@
                   ? column.width
                   : column.width(section)}
               <TidyTableHeaderCell
-                class={[
-                  column.headerClasses,
-                  { hidden: (!expanded && !root) || hidden },
-                ]}
+                class={[column.headerClasses, { hidden }]}
                 columnWidth="{width}px"
               >
                 {#if !!column.headerContent}
@@ -138,18 +122,17 @@
         {/snippet}
 
         {#snippet body()}
-          {@const itemEntries = section.items.map((item) => ({
+          {@const itemEntries = section.spells.map((item) => ({
             item,
             ctx: itemContext[item.id],
           }))}
           {#each itemEntries as { item, ctx }, i (item.id)}
-            {@const expanded = !!containerToggleMap.get(tabId)?.has(item.id)}
-            {@const unidentified = item.system.identified === false}
+            {@const expanded = !!itemToggleMap.get(tabId)?.has(item.id)}
 
             <TidyItemTableRow
               {item}
               hidden={!searchResults.show(item.uuid)}
-              rowClass={[{ expanded, unidentified }]}
+              rowClass={[{ expanded }]}
               contextMenu={{
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: item.uuid,
@@ -165,20 +148,6 @@
                     <i class="fa fa-dice-d20"></i>
                   </span>
                 </a>
-                {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <a
-                    class="container-expander"
-                    onclick={() => inlineToggleService.toggle(tabId, item.id)}
-                  >
-                    <i
-                      class="fa-solid fa-angle-right expand-indicator"
-                      class:expanded={containerToggleMap
-                        .get(tabId)
-                        ?.has(item.id)}
-                    >
-                    </i>
-                  </a>
-                {/if}
 
                 <TidyTableCell primary={true} class="item-label text-cell">
                   <a class="item-name" onclick={(ev) => toggleSummary()}>
@@ -231,17 +200,6 @@
                 {/each}
               {/snippet}
             </TidyItemTableRow>
-
-            {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <InlineContainerView
-                container={item}
-                containerContents={ctx.containerContents}
-                {editable}
-                {inlineToggleService}
-                {sheetDocument}
-                {unlocked}
-              />
-            {/if}
           {/each}
         {/snippet}
       </TidyTable>

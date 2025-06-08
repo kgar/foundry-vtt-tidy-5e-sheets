@@ -648,7 +648,6 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     async _addDocument(args: {
       tabId: string;
-      typeToPreselect?: string;
       customSection?: string;
       creationItemTypes?: string[];
       data?: Record<string, any>;

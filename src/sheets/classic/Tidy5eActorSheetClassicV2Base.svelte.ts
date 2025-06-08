@@ -1293,8 +1293,10 @@ export function Tidy5eActorSheetClassicV2Base<
             : null;
       }
 
-      const { level, preparationMode } =
-        header?.closest<HTMLElement>('[data-level]')?.dataset ?? {};
+      const dataset =
+        header?.closest<HTMLElement>('[data-system.level]')?.dataset ?? {};
+      const level = dataset['system.level'];
+      const preparationMode = dataset['system.preparation.mode'];
 
       // Determine the actor's spell slot progressions, if any.
       const spellcastKeys = Object.keys(CONFIG.DND5E.spellcastingTypes);

@@ -20,10 +20,9 @@
   function onAddClicked() {
     sheetDocument.sheet._addDocument({
       tabId,
-      typeToPreselect: section.key,
       customSection: section.custom?.section,
       creationItemTypes: section.custom?.creationItemTypes,
-      data: { ...section.dataset },
+      data: { type: section.key, ...section.dataset },
     });
   }
 </script>

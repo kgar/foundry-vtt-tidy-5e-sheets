@@ -214,6 +214,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
       spellbook: [],
+      spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       tools: [],
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       ...this._getClassesAndOrphanedSubclasses(),
@@ -551,6 +552,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spells,
       {
         canCreate: true,
+        rowActions: TableRowActionsRuntime.getSpellRowActions(context)
       }
     );
 

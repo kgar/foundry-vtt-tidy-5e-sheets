@@ -3,8 +3,10 @@ import type { ContainerSection, Item5e } from 'src/types/item.types';
 import type {
   ActorSheetQuadroneContext,
   InventorySection,
+  SpellbookSection,
 } from 'src/types/types';
 import type { Component } from 'svelte';
+import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
 import BookmarkButton from 'src/components/table-quadrone/table-buttons/BookmarkButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
@@ -43,6 +45,7 @@ class TableRowActionsRuntime {
           result.push({
             component: EquipButton,
             props: (doc: any) => ({ doc }),
+            condition: (args) => 'equipped' in args.data.system,
           } satisfies TableAction<typeof EquipButton>);
 
           result.push({
@@ -67,7 +70,55 @@ class TableRowActionsRuntime {
 
   getFeatureRowActions() {}
 
-  getSpellRowActions() {}
+  getSpellRowActions(context: ActorSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Item5e,
+      SpellbookSection
+    >;
+
+    let rowActions: TableAction<any>[] = $derived.by(() => {
+      let result: TableAction<any>[] = [];
+
+      if (context.owner) {
+        if (context.unlocked) {
+          result.push({
+            component: EditButton,
+            props: (doc: any) => ({ doc }),
+          } satisfies TableAction<typeof EditButton>);
+
+          result.push({
+            component: DeleteButton,
+            props: (doc: any) => ({
+              doc,
+              deleteFn: () => doc.deleteDialog(),
+            }),
+          } satisfies TableAction<typeof DeleteButton>);
+        } else {
+          result.push({
+            component: SpellButton,
+            props: (doc: any) => ({ doc }),
+          } satisfies TableAction<typeof SpellButton>);
+
+          result.push({
+            component: BookmarkButton,
+            props: (doc: any) => ({ doc }),
+          } satisfies TableAction<typeof BookmarkButton>);
+        }
+      }
+
+      result.push({
+        component: MenuButton,
+        props: () => ({
+          targetSelector: '[data-context-menu]',
+        }),
+      } satisfies TableAction<typeof MenuButton>);
+
+      return result;
+    });
+
+    return rowActions;
+  }
 
   getContainerContentsRowActions(context: ContainerContentsRowActionsContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<

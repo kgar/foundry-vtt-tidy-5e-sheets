@@ -20,6 +20,10 @@ import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svel
 import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
 import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 import ItemActionsColumnHeader from 'src/sheets/quadrone/item/columns/ItemActionsColumnHeader.svelte';
+import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpellComponentsColumn.svelte';
+import ItemSpellSchoolColumn from 'src/sheets/quadrone/item/columns/ItemSpellSchoolColumn.svelte';
+import ItemTargetColumn from 'src/sheets/quadrone/item/columns/ItemTargetColumn.svelte';
+import ItemRangeColumn from 'src/sheets/quadrone/item/columns/ItemRangeColumn.svelte';
 
 const ENTRY_NAME_MIN_WIDTH_PX = 200;
 
@@ -206,6 +210,98 @@ class ItemColumnRuntime {
       actions: standardInventoryColumns.actions,
     } satisfies Record<string, ColumnSpecification>;
 
+    const standardLootColumns = {
+      price: {
+        ...standardInventoryColumns.price,
+        order: 100,
+        priority: 200,
+      },
+      quantity: {
+        ...standardInventoryColumns.quantity,
+        order: 200,
+        priority: 300,
+      },
+      weight: {
+        ...standardInventoryColumns.weight,
+        order: 300,
+        priority: 100,
+      },
+      actions: standardInventoryColumns.actions,
+    } satisfies Record<string, ColumnSpecification>;
+
+    const standardSpellColumns = {
+      components: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.Components'),
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemSpellComponentsColumn,
+        },
+        width: 90,
+        order: 100,
+        priority: 300,
+      },
+      school: {
+        headerContent: {
+          type: 'html',
+          html: `<i class="fa-solid fa-cauldron" data-tooltip="DND5E.SpellSchool"></i>`,
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemSpellSchoolColumn,
+        },
+        width: 40,
+        order: 200,
+        priority: 100,
+      },
+      time: {
+        ...standardInventoryColumns.time,
+        order: 300,
+        priority: 400,
+      },
+      target: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Target'),
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemTargetColumn,
+        },
+        width: 80,
+        order: 400,
+        priority: 200,
+      },
+      range: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Range'),
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemRangeColumn,
+        },
+        width: 80,
+        order: 500,
+        priority: 500,
+      },
+      roll: {
+        ...standardWeaponColumns.roll,
+        order: 600,
+        priority: 600,
+      },
+      actions: standardItemActionsColumn,
+    } satisfies Record<string, ColumnSpecification>;
+
+    const creatureInventorySections = {
+      [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
+      [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
+      [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
+      [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+    };
+
     this._registeredItemColumns = {
       [CONSTANTS.SHEET_TYPE_CONTAINER]: {
         [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
@@ -214,10 +310,15 @@ class ItemColumnRuntime {
         },
       },
       [CONSTANTS.SHEET_TYPE_CHARACTER]: {
-        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
-          [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
-          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
+        [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
+        },
+      },
+      [CONSTANTS.SHEET_TYPE_NPC]: {
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
+        [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
         },
       },
     };

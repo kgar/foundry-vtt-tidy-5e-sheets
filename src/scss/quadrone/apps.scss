@@ -740,28 +740,33 @@
   :where(.spell-preparation) {
     --t5e-item-color: var(--t5e-color-gold);
 
-    &:where(.prepared) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-prepared);
-    }
-
-    &:where(.atwill) {
+    &:where(.mode-atwill) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-atwill);
     }
-
-    &:where(.always) {
+    
+    &:where(.mode-always) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-always);
     }
-
-    &:where(.pact) {
+    
+    &:where(.mode-pact) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-pact);
     }
-
-    &:where(.innate) {
+    
+    &:where(.mode-innate) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-innate);
     }
-
-    &:where(.ritual) {
+    
+    &:where(.mode-ritual) {
       --t5e-item-color: var(--t5e-color-icon-spellcasting-ritual);
+    }
+
+    &:where(.mode-prepared) {
+      // 👋 hightouch, are there any special classes for a spell of prep mode "Prepared", or `.mode-prepared`?
+      // This is to contrast to prepareable spells that are actually prepared (`.prepared`).
+    }
+
+    &:where(.prepared) {
+      --t5e-item-color: var(--t5e-color-icon-spellcasting-prepared);
     }
   }
 
