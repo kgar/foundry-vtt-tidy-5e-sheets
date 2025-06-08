@@ -18,6 +18,8 @@ import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/Inline
 import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svelte';
 import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svelte';
 import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
+import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+import ItemActionsColumnHeader from 'src/sheets/quadrone/item/columns/ItemActionsColumnHeader.svelte';
 
 const ENTRY_NAME_MIN_WIDTH_PX = 200;
 
@@ -33,6 +35,28 @@ class ItemColumnRuntime {
   #minWidth = $derived(this.#uiScale * ENTRY_NAME_MIN_WIDTH_PX);
 
   initOnReady() {
+    // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
+    const standardItemActionsColumn: ColumnSpecification = {
+      headerClasses: 'header-cell-actions',
+      headerContent: {
+        type: 'component',
+        component: ItemActionsColumnHeader,
+      },
+      cellClasses: 'tidy-table-actions',
+      cellContent: {
+        type: 'component',
+        component: DocumentActionsColumn,
+      },
+      width: (section: TidySectionBase) => {
+        // TODO: Use REMs and a REM conversion from the computed body fontSize
+        let paddingX = 3;
+        let buttonWidth = 24;
+        return buttonWidth * section.rowActions.length + paddingX;
+      },
+      order: 1000,
+      priority: 1000,
+    };
+
     const standardContainerColumns = {
       capacityTracker: {
         cellContent: {
@@ -54,6 +78,7 @@ class ItemColumnRuntime {
         order: 200,
         priority: 200,
       },
+      actions: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardInventoryColumns = {
@@ -69,7 +94,7 @@ class ItemColumnRuntime {
         width: 80,
         cellClasses: 'inline-uses',
         order: 100,
-        priority: 300,
+        priority: 400,
       },
       time: {
         headerContent: {
@@ -108,7 +133,7 @@ class ItemColumnRuntime {
         },
         width: 80,
         order: 400,
-        priority: 400,
+        priority: 300,
       },
       weight: {
         headerContent: {
@@ -123,13 +148,14 @@ class ItemColumnRuntime {
         order: 500,
         priority: 200,
       },
+      actions: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardWeaponColumns = {
       charges: {
         ...standardInventoryColumns.charges,
         order: 100,
-        priority: 300,
+        priority: 400,
       },
       time: {
         ...standardInventoryColumns.time,
@@ -146,7 +172,7 @@ class ItemColumnRuntime {
           component: ItemRollColumn,
         },
         order: 300,
-        width: 40,
+        width: 50,
         priority: 700,
       },
       formula: {
@@ -170,13 +196,14 @@ class ItemColumnRuntime {
       quantity: {
         ...standardInventoryColumns.quantity,
         order: 600,
-        priority: 400,
+        priority: 300,
       },
       weight: {
         ...standardInventoryColumns.weight,
         order: 700,
         priority: 200,
       },
+      actions: standardInventoryColumns.actions,
     } satisfies Record<string, ColumnSpecification>;
 
     this._registeredItemColumns = {
@@ -265,7 +292,8 @@ class ItemColumnRuntime {
 
   determineHiddenColumns(
     inlineSize: number,
-    schematics: ColumnSpecificationSchematics
+    schematics: ColumnSpecificationSchematics,
+    section: TidySectionBase
   ): Set<string> {
     console.log('determining hidden columns');
 
@@ -273,13 +301,15 @@ class ItemColumnRuntime {
 
     let toHide = new Set<string>();
 
-    for (const f of schematics.prioritized) {
-      const scaledWidth = f.width * this.#uiScale;
+    for (const col of schematics.prioritized) {
+      let width =
+        typeof col.width === 'number' ? col.width : col.width(section);
+      const scaledWidth = width * this.#uiScale;
 
       available -= scaledWidth;
 
       if (available < this.#minWidth) {
-        toHide.add(f.key);
+        toHide.add(col.key);
       }
     }
 

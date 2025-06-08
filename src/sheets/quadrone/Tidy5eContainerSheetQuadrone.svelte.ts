@@ -254,19 +254,10 @@ export class Tidy5eContainerSheetQuadrone
       concealDetails:
         !game.user.isGM && this.document.system.identified === false,
       config: CONFIG.DND5E,
-      containerContents: await Container.getContainerContents(this.item),
-      contentsSort: {
-        group: ItemSortRuntime.getGroupFromMethod(contentsSortMethod)?.key,
-        groups:
-          ItemSortRuntime.getDocumentSortGroupsQuadrone(this.document)[
-            CONSTANTS.TAB_CONTAINER_CONTENTS
-          ] ?? [],
-        method: contentsSortMethod,
-        methods:
-          ItemSortRuntime.getDocumentSortMethodsQuadrone(this.document)[
-            CONSTANTS.TAB_CONTAINER_CONTENTS
-          ] ?? [],
-      },
+      containerContents: await Container.getContainerContents(this.item, {
+        hasActor: !!this.item.actor,
+        unlocked: documentSheetContext.unlocked,
+      }),
       customContent: [],
       currencies,
       enriched: enriched,
@@ -278,7 +269,10 @@ export class Tidy5eContainerSheetQuadrone
       isIdentified: this.document.system.identified !== false,
       isPhysical: this.document.system.hasOwnProperty('quantity'),
       item: this.item,
-      itemContext: await Container.getContainerItemContext(this.item),
+      itemContext: await Container.getContainerItemContext(this.item, {
+        hasActor: !!this.item.actor,
+        unlocked: documentSheetContext.unlocked,
+      }),
       itemDescriptions: itemDescriptions,
       items: Array.from(await this.item.system.contents),
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),

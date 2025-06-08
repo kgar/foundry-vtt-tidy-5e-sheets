@@ -26,7 +26,7 @@ import type {
   LocationToSearchTextMap,
   MessageBus,
 } from 'src/types/types';
-import type { Item5e, ItemChatData } from 'src/types/item.types';
+import type { CurrencyContext, Item5e, ItemChatData } from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -54,6 +54,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -75,7 +76,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     this.itemFilterService = new ItemFilterService(
       {},
-      this.item,
+      this.actor,
       ItemFilterRuntime.getDocumentFiltersQuadrone
     );
 
@@ -160,6 +161,18 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     actorContext.effects = enhancedEffectSections;
 
+    const currencies: CurrencyContext[] = [];
+
+    Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
+      currencies.push({
+        key: key,
+        value: this.actor.system.currency[key] as number,
+        abbr:
+          CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
+            ?.abbreviation ?? key,
+      })
+    );
+
     const context: CharacterSheetQuadroneContext = {
       bastion: {
         description: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -176,6 +189,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         actorContext.items
       ),
       creatureType: this._getCreatureType(),
+      currencies,
       defenders: [],
       epicBoonsEarned: undefined,
       facilities: {
@@ -230,7 +244,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
-        panelItem.container
+        panelItem.container,
+        {
+          hasActor: true,
+          unlocked: actorContext.unlocked,
+        }
       );
     }
 
@@ -428,9 +446,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
+    const inventoryRowActions =
+      TableRowActionsRuntime.getInventoryRowActions(context);
     // Categorize items as inventory, spellbook, features, and classes
+
     const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections();
+      Inventory.getDefaultInventorySections({
+        rowActions: inventoryRowActions,
+      });
 
     // Partition items by category
     let { backgrounds, classes, feats, items, species, spells, subclasses } =
@@ -504,6 +527,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
         canCreate: true,
+        rowActions: inventoryRowActions,
       });
     }
 
@@ -513,6 +537,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     ).forEach((s) => {
       inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
         canCreate: true,
+        rowActions: inventoryRowActions,
       });
     });
 

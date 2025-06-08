@@ -1,6 +1,8 @@
 import { CONSTANTS } from 'src/constants';
 import { getActorActionSections } from 'src/features/actions/actions.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import { Inventory } from 'src/features/sections/Inventory';
+import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import type { SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -10,6 +12,7 @@ import {
   TidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type { Ability } from 'src/types/dnd5e.actor5e.types';
@@ -193,6 +196,9 @@ export function Tidy5eActorSheetQuadroneBase<
           this.actor.allApplicableEffects()
         ),
         elements: this.options.elements,
+        filterData: this.itemFilterService.getDocumentItemFilterData(),
+        filterPins:
+          ItemFilterRuntime.defaultFilterPinsQuadrone[this.actor.type],
         flags: {
           classes: [],
           data: {},
@@ -213,6 +219,7 @@ export function Tidy5eActorSheetQuadroneBase<
         tabs: [],
         token: this.token,
         traits: this._prepareTraits(),
+        userPreferences: UserPreferencesService.get(),
         warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
         ...documentSheetContext,
       };
@@ -586,6 +593,94 @@ export function Tidy5eActorSheetQuadroneBase<
         `;
       if (element.dataset.attribution)
         element.dataset.tooltipClass = 'property-attribution';
+    }
+
+    /* -------------------------------------------- */
+    /*  Event Listeners and Handlers                */
+    /* -------------------------------------------- */
+
+    async _addDocument(args: {
+      tabId: string;
+      typeToPreselect?: string;
+      customSection?: string;
+      creationItemTypes?: string[];
+      data?: Record<string, any>;
+    }) {
+      if (args.tabId === CONSTANTS.TAB_EFFECTS)
+        return await ActiveEffect.implementation.create(
+          {
+            name: game.i18n.localize('DND5E.EffectNew'),
+            icon: 'icons/svg/aura.svg',
+            ...args.data,
+          },
+          { parent: this.actor, renderSheet: true }
+        );
+
+      const types = this._addDocumentItemTypes(args.tabId).filter(
+        (type) =>
+          !CONFIG.Item.dataModels[type].metadata?.singleton ||
+          !this.actor.itemTypes[type].length
+      );
+
+      if (types.length > 1) {
+        let dialogV1HookId: number | null = null;
+
+        if (
+          !isNil(args.typeToPreselect, '') &&
+          types.includes(args.typeToPreselect)
+        ) {
+          dialogV1HookId = Hooks.once('renderDialog', (app: any) => {
+            const typeToPreselect = app.element
+              .get(0)
+              .querySelector(`[value="${args.typeToPreselect}"]`);
+            typeToPreselect && (typeToPreselect.checked = true);
+          });
+        }
+
+        let result = await Item.implementation.createDialog(
+          { type: args.typeToPreselect, ...args.data },
+          {
+            parent: this.actor,
+            pack: this.actor.pack,
+            types,
+          }
+        );
+
+        Hooks.off('renderDialog', dialogV1HookId);
+
+        return result;
+      }
+
+      const type = types[0];
+      return await Item.implementation.create(
+        {
+          type,
+          name: game.i18n.format('DOCUMENT.New', {
+            type: game.i18n.format(CONFIG.Item.typeLabels[type]),
+          }),
+        },
+        { parent: this.actor, renderSheet: true }
+      );
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Determine the types of items that can be added depending on the current tab.
+     * @param {string} tab  Currently viewed tab.
+     * @returns {string[]}  Types of items to allow to create.
+     */
+    _addDocumentItemTypes(tab: string): string[] {
+      switch (tab) {
+        case CONSTANTS.TAB_CHARACTER_FEATURES:
+          return ['feat'];
+        case CONSTANTS.TAB_ACTOR_INVENTORY:
+          return Inventory.getInventoryTypes();
+        case CONSTANTS.TAB_ACTOR_SPELLBOOK:
+          return ['spell'];
+        default:
+          return [];
+      }
     }
 
     /* -------------------------------------------- */

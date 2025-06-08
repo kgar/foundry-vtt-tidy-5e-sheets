@@ -125,3 +125,8 @@ export type RegisteredTraitOpenConfigurationParams = {
   data: any;
   event: Event;
 };
+
+export type ContainerContentsRowActionsContext = {
+  unlocked: boolean;
+  hasActor: boolean;
+};

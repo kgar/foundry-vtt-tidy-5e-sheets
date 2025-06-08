@@ -1,12 +1,11 @@
 <script lang="ts">
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import ContainerContentsSections from './ContainerContentsSections.svelte';
+  import ItemTables from '../../shared/ItemTables.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, type Component } from 'svelte';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import VerticalFiligreeGuideline from '../../shared/VerticalFiligreeGuideline.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import type { MessageBus } from 'src/types/types';
 
@@ -73,8 +72,8 @@
       data-tidy-container-id={container.id}
       ondrop={onDrop}
     >
-      <ContainerContentsSections
-        contents={containerContents.contents}
+      <ItemTables
+        sections={containerContents.contents}
         {container}
         {editable}
         itemContext={containerContents.itemContext}

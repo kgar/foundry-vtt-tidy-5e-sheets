@@ -639,6 +639,22 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     /* -------------------------------------------- */
+    /*  Event Listeners and Handlers                */
+    /* -------------------------------------------- */
+
+    /**
+     * Adds a document when only one creation type is available. Presents the item creation dialog when multiple are available.
+     * @param args The tab where this Add operation is occurring, and other optional parameters.
+     */
+    async _addDocument(args: {
+      tabId: string;
+      typeToPreselect?: string;
+      customSection?: string;
+      creationItemTypes?: string[];
+      data?: Record<string, any>;
+    }): Promise<any> {}
+
+    /* -------------------------------------------- */
     /*  Drag and Drop                               */
     /* -------------------------------------------- */
 

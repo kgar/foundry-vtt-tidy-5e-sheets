@@ -2,24 +2,38 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ButtonWithOptionPanel from '../buttons/ButtonWithOptionPanel.svelte';
   import type { SortGroup, SortMethodOption } from 'src/types/sort.types';
-  import { getContext, tick } from 'svelte';
+  import { tick } from 'svelte';
   import { CONSTANTS } from 'src/constants';
+  import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   interface Props {
-    method: string;
-    group?: string;
-    methods: SortMethodOption[];
-    groups: SortGroup[];
     doc: any;
+    tabId: string;
   }
 
-  let { method, group, methods, groups, doc }: Props = $props();
+  let { doc, tabId }: Props = $props();
+
+  let method = $derived(
+    SheetPreferencesService.getByType(doc.type).tabs?.[tabId]?.sort ?? 'm',
+  );
+
+  let group = $derived(ItemSortRuntime.getGroupFromMethod(method)?.key);
+
+  let groups = $derived(
+    ItemSortRuntime.getDocumentSortGroupQuadrone(
+      doc,
+      CONSTANTS.TAB_ACTOR_INVENTORY,
+    ),
+  );
+
+  let methods = $derived(
+    ItemSortRuntime.getDocumentSortMethodsQuadrone(doc, tabId) ?? [],
+  );
 
   let expanded = $state(false);
 
   let componentId = foundry.utils.randomID();
-
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
   let selected = $derived(methods.find((m) => m.key === method));
 

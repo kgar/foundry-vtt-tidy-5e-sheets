@@ -10,24 +10,31 @@ import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { Activities } from '../activities/activities';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { ContainerCapacityContext } from 'src/types/types';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import type { ContainerContentsRowActionsContext } from 'src/runtime/types';
 
 export class Container {
   static async getContainerContents(
-    container: Item5e
+    container: Item5e,
+    context: ContainerContentsRowActionsContext
   ): Promise<ContainerContents> {
     const containerContentsInventory =
-      await Inventory.getContainerContentsInventory(container);
+      await Inventory.getContainerContentsInventory(container, {
+        rowActions:
+          TableRowActionsRuntime.getContainerContentsRowActions(context),
+      });
 
     return {
       capacity: await container.system.computeCapacity(),
       currency: container.system.currency,
       contents: containerContentsInventory,
-      itemContext: await Container.getContainerItemContext(container),
+      itemContext: await Container.getContainerItemContext(container, context),
     };
   }
 
   static async getContainerItemContext(
-    container: Item5e
+    container: Item5e,
+    context: ContainerContentsRowActionsContext
   ): Promise<Record<string, ContainerItemContext>> {
     const itemContext: Record<string, ContainerItemContext> = {};
 
@@ -51,7 +58,10 @@ export class Container {
       }
 
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-        ctx.containerContents = await Container.getContainerContents(item);
+        ctx.containerContents = await Container.getContainerContents(
+          item,
+          context
+        );
       }
 
       ctx.activities = Activities.getVisibleActivities(

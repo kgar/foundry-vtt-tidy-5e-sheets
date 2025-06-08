@@ -21,7 +21,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
         component: ActorEffectsTab,
         type: 'svelte',
       },
-      id: CONSTANTS.TAB_CHARACTER_EFFECTS,
+      id: CONSTANTS.TAB_EFFECTS,
       layout: 'quadrone',
     },
     {
@@ -117,7 +117,7 @@ export const TempDefaultCharacterQuadroneTabs = [
   CONSTANTS.TAB_ACTOR_INVENTORY,
   CONSTANTS.TAB_ACTOR_SPELLBOOK,
   CONSTANTS.TAB_CHARACTER_FEATURES,
-  CONSTANTS.TAB_CHARACTER_EFFECTS,
+  CONSTANTS.TAB_EFFECTS,
   CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
   CONSTANTS.TAB_CHARACTER_BASTION,
 ];

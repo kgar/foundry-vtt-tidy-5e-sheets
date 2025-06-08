@@ -67,7 +67,7 @@ const defaultClassicCharacterTabs: RegisteredTab<CharacterSheetContext>[] =
       layout: 'classic',
     },
     {
-      id: CONSTANTS.TAB_CHARACTER_EFFECTS,
+      id: CONSTANTS.TAB_EFFECTS,
       title: 'DND5E.Effects',
       content: {
         component: CharacterEffectsTab,

@@ -6,10 +6,78 @@ Refactor:
 - [x] Have each use of a column provide a priority
 - [x] Propagate to Containers as well
 - [X] Test inventory and container contents
-- [ ] Rename ContainerContentsSections to ItemLists
-- [ ] Implement action bar
+- [x] Rename ContainerContentsSections to ItemLists
+- [x] Parameterize row actions
+- [x] Solve Problem: Column Visibility algorithm has no awareness of action column width, so it minimize visibility of the item name without hiding columns
+  - [x] Pull row actions back into TidySectionBase
+  - [x] Add an actions column at highest priority and set its width to the calculated width in pixels instead of rems
+  - [x] Increase the column props to include the TidyBaseSection from whence this column comes
+- [x] Supply Table Row Actions to inline and standlone container contents
+- [x] Ensure all empty inventory sections are shown on unlock
+- [x] Add an Add Button to all sections. Have it open the item creation dialog with the item type pre-selected, if dealing with a default section.
+- [x] Remove trashcan and behavior from favorites tab. Some people live in Edit mode.
+- [x] Change attune button to Display-Only and put to the right of the item name button as an indicator
+- [x] Implement Actor Inventory Footer
+  - [x] Attunement Tracker
+  - [x] Currency
+  - [x] Currency Exchange button
+  - [x] Universal Add Button
+- [x] Implement action bar
+  - [x] Action Bar Row
+    - [x] Section Expand/Collapse toggle
+    - [x] Search
+    - [x] Pinned Filters
+    - [x] Filters
+    - [x] Sort
+    - [x] Tab Config
+  - [ ] Encumbrance Row
+    - [ ] Strength Pill
+    - [ ] Size Pill
+    - [ ] Multiplier Pill
+    - [ ] Encumbrance bar with threshold ticks
+  - [ ] While there, implement generic width / priority observer feature that can control pinned filter visibility generically
+  - [ ] Propagate this to the container action bar
 - [ ] Implement container panel
+- [ ] `ItemColumnRuntime.determineHiddenColumns` - use this to pre-calculate column widths and to return a column scheme type that excludes width functions.
+- [ ] Expand column width calculations to include support for other measurements like REMs. Calculate the root rem on Foundry ready `parseFloat(getComputedStyle(document.body).fontSize)` and anytime settings change.
+  - Bonus: promote the UI Scale watcher and its hook to a centralized location where Tidy pulls its core setting info as a reactive store.
+- [ ] Evolve ItemLists further
+  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
+  - Move columns to TidySectionBase and include in prep
+  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 - [ ] Review and task further
+
+## Unrelated to this feature, unsorted, add to main list when done here
+
+- [ ] Add drag-and-drop to sort for Favorites
+- [ ] Propagate Table Row Actions to Activities tables
+- [ ] Propagate Table Row Actions to Effects tables
+- [ ] Propagate Data-Driven Columns to Activities tables
+- [ ] Propagate Data-Driven Columns to Effects tables
+
+## Questions
+
+- How does UI Scale actually factor into the styles of things? Is it independent of Font Size, or does it scale everything, including font size?
+
+## Add Button Notes
+
+**Option C** - Proposed designs but me, a dummy, apparently never wrote down the behavior 😅
+* Hide empty sections in Play Mode
+* Add Item buttons appear in table headers. Creating an item this way prefills a custom section if from custom section header. Uses system create item dialog with type preselected (if non-custom).
+* Global Add Item button appears in the footer. Creating an item this way does not prefill the section. Uses system create item dialog with no type preselected.
+
+## Write-up about rem column / row action widths
+
+Right now, I'm doing column widths and row action widths as pixels, because I need to be able to do width calculations.
+After a little tinkering, I see I can do rems instead, which I greatly prefer. You can tell me otherwise.
+
+The way I would do REMs: 
+I have a cache of the Foundry UI settings of interest - UI Scale, Font Size,
+On Foundry Ready event, and whenever settings are changed, I refresh my cached settings,
+When doing column widths, I can include the measurement as a string prop to the side of my width number prop--I'll support px and rem. Some/most users may prefer px when doing their custom columns in the future.,
+When calculating column hiding, I'll convert rem widths to pixels for precision measuring,
+
+This will allow for us to support font-size and UI scaling options. I'll also feel much better about hardcoded widths if we're using rems.
 
 ## Formula Column notes
 

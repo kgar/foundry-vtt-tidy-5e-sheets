@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
@@ -10,6 +9,7 @@
   import ItemPriceSummary from '../item/parts/header/ItemPriceSummary.svelte';
   import ItemWeightSummary from '../item/parts/header/ItemWeightSummary.svelte';
   import ItemName from '../item/parts/header/ItemName.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -60,7 +60,7 @@
               new dnd5e.applications.CurrencyManager({
                 document: context.document,
               }).render(true)}
-            title={localize('DND5E.CurrencyManager.Title')}
+            data-tooltip="DND5E.CurrencyManager.Title"
           >
             <i class="fas fa-database"></i>
           </a>
@@ -70,12 +70,12 @@
         {#each context.currencies as currency (currency.key)}
           <label class="input-group">
             <i class="currency {currency.key}" aria-label={currency.key}></i>
-            <TextInput
+            <TextInputQuadrone
               document={context.document}
               field="system.currency.{currency.key}"
               id="{context.document.id}-system.currency.{currency.key}"
               value={currency.value}
-              allowDeltaChanges={true}
+              enableDeltaChanges={true}
               selectOnFocus={true}
               disabled={!context.editable || context.lockMoneyChanges}
               class="currency-item currency-{currency.key}"

@@ -36,6 +36,7 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
         show: true,
+        rowActions: [], // for the UI Overhaul
         ...options,
       },
       background: {
@@ -47,6 +48,7 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
         show: true,
+        rowActions: [], // for the UI Overhaul
         ...options,
       },
       classes: {
@@ -59,6 +61,7 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
         show: true,
+        rowActions: [], // for the UI Overhaul
         ...options,
       },
       active: {
@@ -75,6 +78,7 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
         show: true,
+        rowActions: [], // for the UI Overhaul
         ...options,
       },
       passive: {
@@ -88,6 +92,7 @@ export class CharacterSheetSections {
         canCreate: true,
         key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
         show: true,
+        rowActions: [], // for the UI Overhaul
         ...options,
       },
     };
@@ -157,6 +162,7 @@ export class CharacterSheetSections {
         creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
       },
       show: true,
+      rowActions: [], // for the UI Overhaul
       ...customSectionOptions,
     };
   }
@@ -259,6 +265,7 @@ export class CharacterSheetSections {
       isExternal: false,
       show: true,
       type: 'generic',
+      rowActions: [], // for the UI Overhaul
     };
   }
 }

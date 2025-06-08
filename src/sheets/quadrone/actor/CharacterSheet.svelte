@@ -11,6 +11,9 @@
   import InspirationBadge from './character-parts/InspirationBadge.svelte';
   import ActorSidebar from './character-parts/ActorSidebar.svelte';
   import { getModifierData } from 'src/utils/formatting';
+  import { CONSTANTS } from 'src/constants';
+  import CharacterSpellbookFooter from './character-parts/CharacterSpellbookFooter.svelte';
+  import CharacterInventoryFooter from './character-parts/CharacterInventoryFooter.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -496,5 +499,13 @@
       <ActorSidebar />
     </div>
     <TabContents tabs={context.tabs} {selectedTabId} />
+
+    <!-- Footers -->
+    <CharacterInventoryFooter
+      class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
+    />
+    <CharacterSpellbookFooter
+      class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
+    />
   </div>
 </div>

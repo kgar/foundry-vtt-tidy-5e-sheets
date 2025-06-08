@@ -129,6 +129,14 @@ export class ItemFilterRuntime {
         defaultItemFilters.magical.name,
       ]),
     },
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
+    },
   };
 
   static _documentTabFilters: DocumentTypesToFilterTabs = {
@@ -276,6 +284,31 @@ export class ItemFilterRuntime {
             pinnedFilterClass: 'hide-under-600',
           },
           { ...defaultItemFilters.canUse, pinnedFilterClass: 'hide-under-400' },
+          defaultItemFilters.magical,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
+      },
+    },
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+        'DND5E.ItemActivationCost': [
+          {
+            ...defaultItemFilters.activationCostAction,
+            pinnedFilterClass: 'hide-under-450',
+          },
+          {
+            ...defaultItemFilters.activationCostBonus,
+            pinnedFilterClass: 'hide-under-550',
+          },
+          {
+            ...defaultItemFilters.activationCostReaction,
+            pinnedFilterClass: 'hide-under-600',
+          },
+          defaultItemFilters.canUse,
           defaultItemFilters.magical,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),

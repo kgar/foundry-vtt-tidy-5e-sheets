@@ -30,10 +30,3 @@ export type SortMethodScheme = SortMethodOption & {
   comparator: ItemSortComparator;
   group: string;
 };
-
-export type SortParametersQuadrone = {
-  method: string;
-  group?: string;
-  methods: SortMethodOption[];
-  groups: SortGroup[];
-};

@@ -14,6 +14,7 @@
   import ItemLinkedItemSummary from './parts/header/ItemLinkedItemSummary.svelte';
   import ItemName from './parts/header/ItemName.svelte';
   import type { Snippet } from 'svelte';
+  import type { SpellSchool } from 'src/foundry/config.types';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -42,7 +43,9 @@
       .join(', '),
   );
 
-  let icon = $derived(context.config.spellSchools[context.system.school]);
+  let spellSchoolConfig = $derived<SpellSchool | undefined>(
+    context.config.spellSchools[context.system.school],
+  );
 
   let linkedItem = $derived(context.item.system.linkedActivity?.item);
 
@@ -137,9 +140,11 @@
     </div>
     {#if !context.unlocked}
       <div class="common-fields">
-        <div class="school" aria-label={context.labels.school}>
-          <Dnd5eIcon src={icon.icon} />
-        </div>
+        {#if spellSchoolConfig}
+          <div class="school" aria-label={context.labels.school}>
+            <Dnd5eIcon src={spellSchoolConfig.icon} />
+          </div>
+        {/if}
       </div>
     {/if}
 

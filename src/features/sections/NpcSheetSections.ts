@@ -53,6 +53,7 @@ export class NpcSheetSections {
         creationItemTypes: NpcSheetSections.abilitiesItemTypes,
       },
       show: true,
+      rowActions: [], // for the UI Overhaul
       ...customSectionOptions,
     };
   }

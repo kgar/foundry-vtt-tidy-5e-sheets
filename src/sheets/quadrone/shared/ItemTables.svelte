@@ -4,30 +4,22 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    ContainerItemContext,
-    ContainerSection,
-    Item5e,
-  } from 'src/types/item.types';
+  import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { Actor5e, InventorySection } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { getContext, type Component, type ComponentProps } from 'svelte';
+  import { getContext } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import InlineContainerView from './InlineContainerView.svelte';
+  import InlineContainerView from '../container/parts/InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
-  import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
-  import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
-  import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
   interface Props {
-    contents: InventorySection[];
+    sections: InventorySection[];
     container?: Item5e;
     editable: boolean;
     itemContext: Record<string, ContainerItemContext>;
@@ -40,7 +32,7 @@
   }
 
   let {
-    contents,
+    sections,
     container,
     editable,
     itemContext,
@@ -54,51 +46,20 @@
 
   let containingDocument = $derived(container ?? sheetDocument);
 
-  let configuredContents = $derived(
+  let sectionsToConfigure = $derived(
+    unlocked && !container ? sections : sections.filter((i) => i.items.length),
+  );
+
+  let configuredSections = $derived(
     SheetSections.configureInventory(
-      contents.filter((i) => i.items.length),
+      sectionsToConfigure,
       tabId,
       SheetPreferencesService.getByType(sheetDocument.type),
-      TidyFlags.sectionConfig.get(containingDocument)?.[
-        CONSTANTS.TAB_CONTAINER_CONTENTS
-      ],
+      TidyFlags.sectionConfig.get(containingDocument)?.[tabId],
     ),
   );
 
   const searchResults = getSearchResultsContext();
-
-  type TableAction<TComponent extends Component<any>> = TidyTableAction<
-    TComponent,
-    Item5e,
-    ContainerSection
-  >;
-
-  let tableActions: TableAction<any>[] = $derived.by(() => {
-    let result: TableAction<any>[] = [];
-
-    if (unlocked) {
-      result.push({
-        component: EditButton,
-        props: (doc: any) => ({ doc }),
-      } satisfies TableAction<typeof EditButton>);
-
-      result.push({
-        component: DeleteButton,
-        props: (doc: any) => ({
-          doc,
-          deleteFn: () => doc.deleteDialog(),
-        }),
-      } satisfies TableAction<typeof DeleteButton>);
-    }
-
-    return result;
-  });
-
-  let columnSpecs = $derived({
-    actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-size-halfx))`,
-    },
-  });
 
   let containerToggleMap = $derived(inlineToggleService.map);
 
@@ -124,7 +85,7 @@
 </script>
 
 <div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
-  {#each configuredContents as section (section.key)}
+  {#each configuredSections as section (section.key)}
     {#if section.show}
       {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
         containingDocument,
@@ -134,6 +95,7 @@
       {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
         sectionsInlineWidth,
         columns,
+        section,
       )}
       <TidyTable
         key={section.key}
@@ -149,12 +111,16 @@
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
+              {@const width =
+                typeof column.width === 'number'
+                  ? column.width
+                  : column.width(section)}
               <TidyTableHeaderCell
                 class={[
                   column.headerClasses,
                   { hidden: (!expanded && !root) || hidden },
                 ]}
-                columnWidth="{column.width}px"
+                columnWidth="{width}px"
               >
                 {#if !!column.headerContent}
                   {#if column.headerContent.type === 'callback'}
@@ -166,6 +132,7 @@
                     <column.headerContent.component
                       sheetContext={context}
                       sheetDocument={context.document}
+                      {section}
                     />
                   {:else if column.headerContent.type === 'html'}
                     {@html column.headerContent.html}
@@ -173,12 +140,6 @@
                 {/if}
               </TidyTableHeaderCell>
             {/each}
-            <TidyTableHeaderCell
-              class="header-cell-actions"
-              {...columnSpecs.actions}
-            >
-              <!-- Actions -->
-            </TidyTableHeaderCell>
           </TidyTableHeaderRow>
         {/snippet}
 
@@ -245,11 +206,25 @@
                     </span>
                   </a>
                 </TidyTableCell>
+                {#if ctx.attunement}
+                  {@const iconClass = item.system.attuned
+                    ? 'fa-solid fa-sun'
+                    : 'fa-light fa-sun'}
+
+                  {@const title = ctx.attunement?.title}
+
+                  <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
+                  <i class={[iconClass, 'item-state-indicator']} {title}></i>
+                {/if}
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
+                  {@const width =
+                    typeof column.width === 'number'
+                      ? column.width
+                      : column.width(section)}
 
                   <TidyTableCell
-                    columnWidth="{column.width}px"
+                    columnWidth="{width}px"
                     class={[column.cellClasses, { hidden }]}
                   >
                     {#if column.cellContent.type === 'callback'}
@@ -261,22 +236,11 @@
                       <column.cellContent.component
                         rowContext={ctx}
                         rowDocument={item}
+                        {section}
                       />
                     {/if}
                   </TidyTableCell>
                 {/each}
-                <TidyTableCell
-                  class="tidy-table-actions"
-                  {...columnSpecs.actions}
-                >
-                  {#if unlocked}
-                    {#each tableActions as action}
-                      {@const props = action.props(item)}
-                      <action.component {...props} />
-                    {/each}
-                  {/if}
-                  <MenuButton targetSelector="[data-context-menu]" />
-                </TidyTableCell>
               {/snippet}
             </TidyItemTableRow>
 

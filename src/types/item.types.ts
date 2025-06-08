@@ -17,7 +17,6 @@ import type {
   DocumentFilters,
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
-import type { SortParametersQuadrone } from './sort.types';
 
 export type PropertyContext = {
   active: string[];
@@ -338,7 +337,6 @@ export type ContainerSheetQuadroneContext = {
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
   containerContents: ContainerContents;
-  contentsSort: SortParametersQuadrone;
   currencies: CurrencyContext[];
   customContent: CustomContent[];
   document: Item5e;

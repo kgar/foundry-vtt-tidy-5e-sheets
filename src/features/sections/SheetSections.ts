@@ -83,6 +83,7 @@ export class SheetSections {
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
       },
       show: true,
+      rowActions: [], // for the UI Overhaul
       ...options,
     };
   }
@@ -156,6 +157,7 @@ export class SheetSections {
           slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
           key: s.prop,
           show: true,
+          rowActions: [], // for the UI Overhaul
         } satisfies SpellbookSection)
     );
 

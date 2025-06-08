@@ -588,6 +588,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         custom: undefined,
         isExternal: false,
         showCrColumn: false,
+        rowActions: [], // for the UI Overhaul
       },
       npc: {
         label: `${CONFIG.Actor.typeLabels.npc}Pl`,
@@ -598,6 +599,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         custom: undefined,
         isExternal: false,
         showCrColumn: true,
+        rowActions: [], // for the UI Overhaul
       },
       vehicle: {
         label: `${CONFIG.Actor.typeLabels.vehicle}Pl`,
@@ -608,6 +610,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         custom: undefined,
         isExternal: false,
         showCrColumn: false,
+        rowActions: [], // for the UI Overhaul
       },
     };
 
@@ -836,7 +839,11 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
-        panelItem.container
+        panelItem.container,
+        {
+          hasActor: false,
+          unlocked: context.unlocked,
+        }
       );
     }
   }

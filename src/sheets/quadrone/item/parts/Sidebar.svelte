@@ -145,7 +145,7 @@
   });
 
   let sidebarActivations = $derived(
-    Object.values(context.item.labels.activations[0] ?? []).filter((x) => x),
+    Object.values(context.item.labels.activations?.[0] ?? []).filter((x) => x),
   );
 
   let proficiencyPill = $derived(
@@ -512,7 +512,7 @@
       <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
       <div class="pills stacked">
         <a
-          title={localize('TIDY5E.Section.SectionSelectorChooseSectionTooltip')}
+          data-tooltip="TIDY5E.Section.SectionSelectorChooseSectionTooltip"
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
           onclick={() =>
@@ -532,9 +532,7 @@
         <a
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
-          title={localize(
-            'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
-          )}
+          data-tooltip="TIDY5E.Section.SectionSelectorChooseActionSectionTooltip"
           onclick={() =>
             new SectionSelectorApplication(
               TidyFlags.actionSection.prop,

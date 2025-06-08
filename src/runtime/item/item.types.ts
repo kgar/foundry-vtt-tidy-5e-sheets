@@ -77,7 +77,7 @@ export type ColumnSpecification = {
         type: 'callback';
         callback: (rowDocument: any, rowContext: any) => string;
       };
-  width: number; // default: "80" (px)
+  width: number | ((section: TidySectionBase) => number); // default: "80" (px)
   priority: number;
   order: number;
   headerClasses?: string;
@@ -112,11 +112,13 @@ export type SheetColumnSpecificationSchematics = Record<
 export type ColumnHeaderProps<TDocument = any, TContext = any> = {
   sheetDocument: TDocument;
   sheetContext: TContext;
+  section: TidySectionBase;
 };
 
 export type ColumnCellProps<TDocument = any, TContext = any> = {
   rowDocument: TDocument;
   rowContext: TContext;
+  section: TidySectionBase;
 };
 
 export type ColumnSpecificationConditionArgs<

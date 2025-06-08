@@ -1,5 +1,10 @@
 import type { Component } from 'svelte';
-import type { ContainerContents, Item5e, ItemChatData } from './item.types';
+import type {
+  ContainerContents,
+  CurrencyContext,
+  Item5e,
+  ItemChatData,
+} from './item.types';
 import type {
   OnContentReadyParams,
   OnRenderParams,
@@ -9,21 +14,21 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
-import type { DocumentFilters } from 'src/runtime/item/item.types';
+import type {
+  ColumnSpecificationSchematics,
+  DocumentFilters,
+} from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
-import type {
-  Activity5e,
-  CharacterFavoriteType,
-  SkillData,
-  ToolData,
-} from 'src/foundry/dnd5e.types';
+import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -164,6 +169,8 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
+  // columns: ColumnSpecificationSchematics[];
+  rowActions: TidyTableAction<any, any, any>[];
 };
 
 export type FeatureSection = {
@@ -942,6 +949,8 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   elements: unknown;
   enableXp: boolean;
   fields: DataSchema;
+  filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
   flags: SpecialTraits;
   isConcentrating: boolean;
   itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
@@ -958,6 +967,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   tabs: Tab[];
   token: TokenDocument | null;
   traits: Record<string, ActorTraitContext[]>;
+  userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
 } & DocumentSheetQuadroneContext<Actor5e>;
 
@@ -1069,6 +1079,7 @@ export type CharacterSheetQuadroneContext = {
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   creatureType: CreatureTypeContext;
+  currencies: CurrencyContext[];
   defenders: Actor5e[];
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
@@ -1090,13 +1101,14 @@ export type CharacterSheetQuadroneContext = {
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   containerPanelItems: ContainerPanelItemContext[];
+  currencies: CurrencyContext[];
   features: NpcAbilitySection[];
   inventory: InventorySection[];
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
-} & ActorSheetQuadroneContext<unknown>;
+} & ActorSheetQuadroneContext<any>;
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed

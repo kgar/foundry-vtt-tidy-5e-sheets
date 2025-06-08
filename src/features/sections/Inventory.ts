@@ -51,6 +51,7 @@ export class Inventory {
         show: true,
         custom: undefined,
         isExternal: false,
+        rowActions: [], // TODO: add rowActions here
         ...options,
       };
     }
@@ -97,6 +98,7 @@ export class Inventory {
         creationItemTypes: [...defaultInventoryTypes],
       },
       show: true,
+      rowActions: [], // TODO: add rowActions here
       ...customSectionOptions,
     };
   }
@@ -134,7 +136,7 @@ export class Inventory {
   ): Promise<InventorySection[]> {
     const containerItems = (await container.system.contents).values();
 
-    const inventory = Inventory.getDefaultInventorySections();
+    const inventory = Inventory.getDefaultInventorySections(options);
 
     const inventoryTypes = Inventory.getInventoryTypes();
 
