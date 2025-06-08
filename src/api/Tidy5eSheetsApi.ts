@@ -202,7 +202,7 @@ export class Tidy5eSheetsApi {
 
   #maybeElementMatchesSelector(element: any, selector: string) {
     return (
-      element && element instanceof HTMLElement && !!element?.matches(selector)
+      element && element instanceof HTMLElement && !!element.matches(selector)
     );
   }
 
