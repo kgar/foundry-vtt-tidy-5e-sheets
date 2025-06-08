@@ -46,7 +46,7 @@
   let attunementSummaryTooltip: AttunementSummaryTooltip;
 
   function showAttunementSummaryTooltip(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
+    event: Event & { currentTarget: EventTarget & HTMLElement },
   ): any {
     if (!attunedItems.length) {
       return;
@@ -63,6 +63,8 @@
     context.actor.system.attributes.attunement.value >
       context.actor.system.attributes.attunement.max,
   );
+
+  let attuned = $derived(context.system.attributes.attunement.value > 0);
 </script>
 
 <div class="hidden">
@@ -73,35 +75,40 @@
 </div>
 
 <!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
-<div class={['sheet-footer', 'fixed', classValue]}>
-  <div
-    class={['attunement-tracker', 'uses', { overattuned }]}
-    data-tooltip-direction="UP"
-    onmouseover={(ev) => showAttunementSummaryTooltip(ev)}
-  >
-    <span class="value">{context.system.attributes.attunement.value}</span>
-    <span class="separator">/</span>
-    {#if context.unlocked}
-      <NumberInputQuadrone
-        document={context.actor}
-        field="system.attributes.attunement.max"
-        value={context.system.attributes.attunement.max}
-        class="max"
-        step="1"
-        min="0"
-      />
-    {:else}
-      <span class="max">
-        {context.system.attributes.attunement.max}
+<div class={['sheet-footer', 'fixed', 'flexrow', 'inventory-footer', classValue]}>
+
+    <div
+      class={['pill pill-medium interactive attunement-tracker flex-fit', 
+              { 'overattuned': overattuned }, { 'attuned': attuned }
+      ]}
+      data-tooltip-direction="UP"
+      role="region"
+      onmouseover={(ev) => showAttunementSummaryTooltip(ev)}
+      onfocus={(ev) => showAttunementSummaryTooltip(ev)}
+    >
+      <i class={`fa-sun ${attuned ? 'fas color-text-gold-emphasis' : 'far color-text-lighter'}`}></i>
+      <span class="value font-data-medium">{context.system.attributes.attunement.value}</span>
+      <span class="separator">/</span>
+      {#if context.unlocked}
+        <NumberInputQuadrone
+          document={context.actor}
+          field="system.attributes.attunement.max"
+          value={context.system.attributes.attunement.max}
+          class="max"
+          step="1"
+          min="0"
+        />
+      {:else}
+        <span class="max font-label-medium">
+          {context.system.attributes.attunement.max}
+        </span>
+      {/if}
+      <span class="font-label-medium color-text-lighter">
+        {localize('DND5E.Attuned')}
       </span>
-    {/if}
+    </div>
 
-    <span>
-      {localize('DND5E.Attuned')}
-    </span>
-  </div>
-
-  <div class="currency">
+  <div class="currency flexrow">
     {#each context.currencies as currency (currency.key)}
       <label class="input-group">
         <i class="currency {currency.key}" aria-label={currency.key}></i>
@@ -125,7 +132,7 @@
 
   {#if context.editable}
     <a
-      class="button button-icon-only currency-conversion"
+      class="button button-icon-only currency-conversion flex-fit"
       class:disabled={!context.editable}
       onclick={() =>
         context.owner &&
@@ -140,7 +147,7 @@
 
   <a
     data-tooltip="DND5E.ItemCreate"
-    class="button button-icon-only button-primary item-create"
+    class="button button-icon-only button-primary item-create flex-fit"
     class:disabled={!context.editable}
     onclick={onAddClicked}
   >

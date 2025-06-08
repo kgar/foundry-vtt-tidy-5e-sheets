@@ -154,12 +154,17 @@
       background: var(--t5e-color-gold);
     }
 
+    >* {
+      z-index: 0;
+    }
+
     &.equipped {
-      --t5e-item-row-color: var(--t5e-color-gold);
+      --t5e-item-row-color: var(--t5e-color-palette-grey-100);
       background: var(--t5e-component-card-default);
 
-      &::before {
-        content: '';
+      &::before,
+      .highlight {
+        // content: '';
         position: absolute;
         top: 0;
         left: 0;
@@ -219,6 +224,7 @@
         height: 100%;
         background: linear-gradient(to right, oklch(from var(--t5e-item-row-color) l c h / 0.25) 10%, transparent 40%);
         pointer-events: none;
+        z-index: -1;
       }
 
       .tidy-table-row-use-button {
@@ -594,12 +600,12 @@
     }
 
     .tidy-table-row {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      align-items: stretch;
+      // display: flex;
+      // flex-direction: row;
+      // flex-wrap: wrap;
+      // align-items: stretch;
 
-      --t5e-item-table-row-background: transparent;
+      // --t5e-item-table-row-background: transparent;
 
       &:not(:has(.container-expander)) {
         .item-name {

@@ -38,7 +38,7 @@
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
 
-  let portraitShape = 'transparent';
+  let portraitShape = 'round';
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
 
   let ini = $derived(getModifierData(context.system.attributes.init.total));
@@ -49,7 +49,7 @@
 <header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
     <div class="flexcol">
-      <div class="character-context-row flexrow">
+      <div class="character-context-row flexrow {context.enableXp ? 'show-xp' : ''}">
         <div class="flexcol flex1">
           <div class="character-details-name-row">
             {#if context.unlocked}
@@ -501,9 +501,10 @@
     <TabContents tabs={context.tabs} {selectedTabId} />
 
     <!-- Footers -->
-    <CharacterInventoryFooter
+    <!-- TODO: Temporarily moved to the inventory tab directly -->
+    <!-- <CharacterInventoryFooter
       class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
-    />
+    /> -->
     <CharacterSpellbookFooter
       class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
     />
