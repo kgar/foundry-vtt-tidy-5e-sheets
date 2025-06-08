@@ -481,6 +481,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 100%;
+      padding-left: 0.5px;
       height: var(--t5e-size-6x);
       transition: background-color var(--t5e-transition-default);
       width: var(--t5e-size-6x);
@@ -503,10 +504,6 @@
     position: relative;
     transition: all var(--t5e-transition-default);
     width: var(--t5e-table-button-width);
-
-    &:has(i) {
-      padding-left: 0.5px;
-    }
 
     &.button-toggle {
       &.toggled {
