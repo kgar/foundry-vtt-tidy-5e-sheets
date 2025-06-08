@@ -822,5 +822,10 @@
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Ficha de PNJ Tidy 5e",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Ficha de Item Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Conjurado em {ordinal}",
-    "TIDY5E.AddSpecific": "Adicionar {name}"
+    "TIDY5E.AddSpecific": "Adicionar {name}",
+    "TIDY5E.CharacterTraits.Title": "Traços de Personagem",
+    "TIDY5E.Ability.EditScore.label": "Editar Valor",
+    "TIDY5E.HitDice.Abbreviation": "DV",
+    "TIDY5E.HitDice.Current.Label": "Dados de Vida Atual",
+    "TIDY5E.HitDice.Max.Label": "Dados de Vida Máximos"
 }
