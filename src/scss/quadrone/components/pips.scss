@@ -1,0 +1,19 @@
+// POC styles, 👋 hightouch plz halp
+.pips.spell-pips {
+  --pip-color: var(--t5e-color-gold);
+  display: flex;
+  gap: 0.125rem;
+  margin-inline-start: 0.375rem;
+
+  .pip {
+    border-radius: 50%;
+    width: 0.75rem;
+    height: 0.75rem;
+
+    border: 1.5px solid var(--pip-color);
+
+    &.active {
+      background: var(--pip-color);
+    }
+  }
+}

@@ -1067,8 +1067,7 @@ export type SkillToolFavoriteContextEntry = {
 };
 
 export type SpellcastingContext = {
-  className: string;
-  subclassName?: string;
+  name: string;
   ability: {
     key: string;
     mod: {
@@ -1123,6 +1122,7 @@ export type CharacterSheetQuadroneContext = {
   spellbook: SpellbookSection[];
   spellcasting: SpellcastingContext[];
   spellComponentLabels: Record<string, string>;
+  spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
@@ -1136,6 +1136,7 @@ export type NpcSheetQuadroneContext = {
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
   spellComponentLabels: Record<string, string>;
+  spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & ActorSheetQuadroneContext<any>;

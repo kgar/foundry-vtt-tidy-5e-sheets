@@ -6,7 +6,8 @@
     NpcSheetQuadroneContext,
     SpellcastingContext,
   } from 'src/types/types';
-  import { isNil } from 'src/utils/data';
+
+  // TODO: Further generalize this so it can be used by a classless NPC.
 
   interface Props {
     info: SpellcastingContext;
@@ -37,10 +38,7 @@
   data-ability={info.ability.key}
 >
   <div class="header">
-    <span class="class-name">{info.className}</span>
-    {#if !isNil(info.subclassName)}
-      <span class="subclass-name">{info.subclassName}</span>
-    {/if}
+    <span class="name">{info.name}</span>
 
     {#if info.primary}
       <i class="fa-solid fa-chess-queen"></i>

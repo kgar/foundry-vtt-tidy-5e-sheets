@@ -61,6 +61,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { getModifierData } from 'src/utils/formatting';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -169,6 +170,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const currencies: CurrencyContext[] = [];
 
+    const preferences = SheetPreferencesService.getByType(this.actor.type);
+
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
       currencies.push({
         key: key,
@@ -222,6 +225,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spellbook: [],
       spellcasting: this._prepareSpellcastingContext(),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
+      spellSlotTrackerMode:
+        preferences.spellSlotTrackerMode ??
+        CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
       tools: [],
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       ...this._getClassesAndOrphanedSubclasses(),
@@ -928,23 +934,24 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const spellcastingClasses = Object.values<Item5e>(
       this.actor.spellcastingClasses
     ).sort((lhs: Item5e, rhs: Item5e) => rhs.system.levels - lhs.system.levels);
-    
+
     for (const item of spellcastingClasses) {
       const sc = item.spellcasting;
       const ability = this.actor.system.abilities[sc.ability];
       const mod = ability?.mod ?? 0;
-      const className = item.name;
-      const subclassName = item.subclass?.name;
+      const name =
+        item.system.spellcasting.progression === sc.progression
+          ? item.name
+          : item.subclass?.name;
 
       spellcasting.push({
-        className,
-        subclassName, 
+        name,
         ability: {
           key: sc.ability,
           mod: getModifierData(mod),
         },
         attack: {
-          mod: getModifierData(sc.attack)
+          mod: getModifierData(sc.attack),
         },
         prepared: sc.preparation,
         primary: this.actor.system.attributes.spellcasting === sc.ability,

@@ -1,5 +1,9 @@
 <script lang="ts">
-  import type { ActorSheetClassicContextV2, SpellbookSection } from 'src/types/types';
+  import type {
+    ActorSheetClassicContextV2,
+    ActorSheetQuadroneContext,
+    SpellbookSection,
+  } from 'src/types/types';
   import SpellPip from './SpellPip.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
@@ -9,7 +13,10 @@
 
   let { section }: Props = $props();
 
-  let context = $derived(getSheetContext<ActorSheetClassicContextV2>());
+  let context =
+    $derived(
+      getSheetContext<ActorSheetClassicContextV2 | ActorSheetQuadroneContext>(),
+    );
 
   function onPipClick(index: number) {
     let isEmpty = index >= (section.uses ?? 0);
