@@ -136,6 +136,13 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.equipped.name,
       ]),
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.concentration.name,
+        defaultItemFilters.canCastSpell.name,
+      ]),
     },
   };
 
@@ -316,6 +323,24 @@ export class ItemFilterRuntime {
           defaultItemFilters.equipped,
           ...getAttunementFilters(),
         ],
+      },
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+        'DND5E.ItemActivationCost': [
+          {
+            ...defaultItemFilters.activationCostAction,
+            pinnedFilterClass: 'hide-under-450',
+          },
+          {
+            ...defaultItemFilters.activationCostBonus,
+            pinnedFilterClass: 'hide-under-550',
+          },
+          {
+            ...defaultItemFilters.activationCostReaction,
+            pinnedFilterClass: 'hide-under-600',
+          },
+          defaultItemFilters.activationCostOther,
+        ],
+        ...getStandardSpellSchoolFilterCategories(),
       },
     },
   };

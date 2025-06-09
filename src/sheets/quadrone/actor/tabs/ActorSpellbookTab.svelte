@@ -10,6 +10,11 @@
   import { getContext } from 'svelte';
   import ActorActionBar from '../parts/ActorActionBar.svelte';
   import SpellTables from '../../shared/SpellTables.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
 
   let context =
     $derived(
@@ -26,9 +31,21 @@
 
   let searchCriteria = $state('');
 
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
+
   let spellbook = $derived(
     SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
   );
+
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: context.itemContext,
+      sections: spellbook,
+      tabId: tabId,
+    });
+  });
 </script>
 
 <ActorActionBar bind:searchCriteria sections={spellbook} {tabId} />

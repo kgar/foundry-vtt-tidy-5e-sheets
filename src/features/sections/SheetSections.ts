@@ -540,8 +540,6 @@ export class SheetSections {
         // Sort Spellbook
         section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
 
-        // TODO: Collocate Spellbook Sub Items
-
         // Apply visibility from configuration
         section.show =
           sectionConfigs?.[CONSTANTS.TAB_ACTOR_SPELLBOOK]?.[section.key]
