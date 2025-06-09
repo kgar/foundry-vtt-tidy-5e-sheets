@@ -18,6 +18,7 @@
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import SpellSlotTracker from '../actor/parts/SpellSlotTracker.svelte';
 
   interface Props {
     sections: SpellbookSection[];
@@ -92,6 +93,9 @@
                 {localize(section.label)}
               </h3>
               <span class="table-header-count">{section.spells.length}</span>
+              {#if section.usesSlots}
+                <SpellSlotTracker {section} />
+              {/if}
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}

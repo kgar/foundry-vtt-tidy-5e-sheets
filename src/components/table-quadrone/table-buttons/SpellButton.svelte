@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { isNil } from 'src/utils/data';
   import type { ClassValue } from 'svelte/elements';
 
   interface Props {
