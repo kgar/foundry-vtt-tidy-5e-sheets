@@ -1066,6 +1066,30 @@ export type SkillToolFavoriteContextEntry = {
   reference?: string;
 };
 
+export type SpellcastingContext = {
+  className: string;
+  subclassName?: string;
+  ability: {
+    key: string;
+    mod: {
+      sign: string;
+      value: string;
+    };
+  };
+  attack: {
+    mod: {
+      sign: string;
+      value: string;
+    };
+  };
+  save: number;
+  primary: boolean;
+  prepared: {
+    value: string;
+    max?: string;
+  };
+};
+
 export type FavoriteContextEntry =
   | ItemFavoriteContextEntry
   | EffectFavoriteContextEntry
@@ -1097,6 +1121,7 @@ export type CharacterSheetQuadroneContext = {
   skills: ActorSkillsToolsContext<SkillData>[];
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
+  spellcasting: SpellcastingContext[];
   spellComponentLabels: Record<string, string>;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;

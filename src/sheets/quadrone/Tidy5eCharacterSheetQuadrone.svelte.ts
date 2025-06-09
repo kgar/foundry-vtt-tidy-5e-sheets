@@ -25,8 +25,13 @@ import type {
   FavoriteContextEntry,
   LocationToSearchTextMap,
   MessageBus,
+  SpellcastingContext,
 } from 'src/types/types';
-import type { CurrencyContext, Item5e, ItemChatData } from 'src/types/item.types';
+import type {
+  CurrencyContext,
+  Item5e,
+  ItemChatData,
+} from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -55,6 +60,7 @@ import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { getModifierData } from 'src/utils/formatting';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -214,6 +220,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
       spellbook: [],
+      spellcasting: this._prepareSpellcastingContext(),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       tools: [],
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -552,7 +559,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spells,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context)
+        rowActions: TableRowActionsRuntime.getSpellRowActions(context),
       }
     );
 
@@ -913,6 +920,39 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     return pins;
+  }
+
+  _prepareSpellcastingContext() {
+    let spellcasting: SpellcastingContext[] = [];
+
+    const spellcastingClasses = Object.values<Item5e>(
+      this.actor.spellcastingClasses
+    ).sort((lhs: Item5e, rhs: Item5e) => rhs.system.levels - lhs.system.levels);
+    
+    for (const item of spellcastingClasses) {
+      const sc = item.spellcasting;
+      const ability = this.actor.system.abilities[sc.ability];
+      const mod = ability?.mod ?? 0;
+      const className = item.name;
+      const subclassName = item.subclass?.name;
+
+      spellcasting.push({
+        className,
+        subclassName, 
+        ability: {
+          key: sc.ability,
+          mod: getModifierData(mod),
+        },
+        attack: {
+          mod: getModifierData(sc.attack)
+        },
+        prepared: sc.preparation,
+        primary: this.actor.system.attributes.spellcasting === sc.ability,
+        save: sc.save,
+      });
+    }
+
+    return spellcasting;
   }
 
   /* -------------------------------------------- */

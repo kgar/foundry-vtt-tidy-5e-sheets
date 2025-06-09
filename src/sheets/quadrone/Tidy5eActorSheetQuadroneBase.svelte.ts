@@ -25,7 +25,6 @@ import type {
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorTraitContext,
   SpecialTraitSectionField,
-  SpellbookSectionLegacy,
 } from 'src/types/types';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
