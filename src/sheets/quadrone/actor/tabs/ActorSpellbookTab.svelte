@@ -15,6 +15,9 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
+  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context =
     $derived(
@@ -38,6 +41,30 @@
     SheetSections.configureSpellbook(context.actor, tabId, context.spellbook),
   );
 
+  let tabOptionGroups: SectionOptionGroup[] = $derived([
+    {
+      title: 'TIDY5E.Utilities.SpellSlotTrackingModeTitle',
+      settings: [
+        {
+          type: 'radio',
+          options: [
+            {
+              label: 'TIDY5E.Utilities.SpellValueMax',
+              value: CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
+            },
+            {
+              label: 'TIDY5E.Utilities.SpellPips',
+              value: CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
+            },
+          ],
+          // TODO: make it so TidyFlags can provide this info.
+          prop: 'flags.tidy5e-sheet.sheetPreferences.character.spellSlotTrackerMode',
+          doc: game.user,
+        },
+      ],
+    },
+  ]);
+
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
@@ -48,7 +75,12 @@
   });
 </script>
 
-<ActorActionBar bind:searchCriteria sections={spellbook} {tabId} />
+<ActorActionBar
+  bind:searchCriteria
+  sections={spellbook}
+  {tabId}
+  {tabOptionGroups}
+/>
 
 <SpellTables
   sections={spellbook}

@@ -8,15 +8,31 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getThemeV2 } from 'src/theme/theme';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
+import { settings } from 'src/settings/settings.svelte';
 
 export type BooleanSetting = {
   type: 'boolean';
   label: string;
-  checked: boolean;
+  checked?: boolean;
   prop: string;
+  doc?: any;
 };
 
-export type SectionSetting = BooleanSetting;
+export type RadioSettingOption = {
+  label: string;
+  value: string;
+  checked?: boolean;
+};
+
+export type RadioSetting = {
+  type: 'radio';
+  options: RadioSettingOption[];
+  selected?: string;
+  prop: string;
+  doc?: any;
+};
+
+export type SectionSetting = BooleanSetting | RadioSetting;
 
 export type SectionOptionGroup = {
   title: string;
@@ -105,11 +121,12 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
 
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
+        let doc = setting.doc ?? this.document;
         if (setting.type === 'boolean') {
-          setting.checked = foundry.utils.getProperty(
-            this.document,
-            setting.prop
-          );
+          setting.checked = foundry.utils.getProperty(doc, setting.prop);
+        } else if (setting.type === 'radio') {
+          let selected = foundry.utils.getProperty(doc, setting.prop);
+          setting.selected = selected;
         }
       }
     }
@@ -146,12 +163,20 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
   /* -------------------------------------------- */
 
   async saveChanges() {
-    const toSave: Record<string, any> = {};
+    const thisDocumentData: Record<string, any> = {};
+    const documentsToSave: Map<any, Record<string, any>> = new Map([
+      [this.document, thisDocumentData],
+    ]);
 
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
+        let doc = setting.doc ?? this.document;
+        let toSave = documentsToSave.get(doc) ?? documentsToSave.set(doc, {}).get(doc)!;
+
         if (setting.type === 'boolean') {
           toSave[setting.prop] = setting.checked;
+        } else if (setting.type === 'radio') {
+          toSave[setting.prop] = setting.selected;
         }
       }
     }
@@ -169,9 +194,11 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
       return result;
     }, {});
 
-    toSave[TidyFlags.sectionConfig.prop] = sectionConfig;
+    thisDocumentData[TidyFlags.sectionConfig.prop] = sectionConfig;
 
-    await this.document.update(toSave);
+    for (let [doc, toSave] of documentsToSave.entries()) {
+      await doc.update(toSave);
+    }
 
     this.close();
   }
