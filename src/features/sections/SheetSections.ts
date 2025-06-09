@@ -271,6 +271,7 @@ export class SheetSections {
         },
         prop: sl,
         editable: context.editable && !aeOverride,
+        prepMode
       };
     };
 

@@ -83,7 +83,10 @@
         dataset={section.dataset}
       >
         {#snippet header(expanded)}
-          <TidyTableHeaderRow class="theme-dark">
+          {@const modeClass = `mode-${section.prepMode?.slugify()}`}
+          <TidyTableHeaderRow
+            class={['theme-dark', 'spell-preparation', modeClass]}
+          >
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>
                 {localize(section.label)}

@@ -228,6 +228,7 @@ export type SpellbookSectionLegacy = {
   };
   prop: string;
   editable: boolean;
+  prepMode?: string;
 };
 
 export type SpellbookSection = {
@@ -241,6 +242,7 @@ export type SpellbookSection = {
   slots?: number;
   override?: number;
   prop?: string;
+  prepMode?: string;
 } & TidySectionBase;
 
 export type AvailableLevel = {

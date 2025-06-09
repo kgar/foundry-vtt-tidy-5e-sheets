@@ -738,35 +738,29 @@
   }
 
   :where(.spell-preparation) {
-    --t5e-item-color: var(--t5e-color-gold);
-
     &:where(.mode-atwill) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-atwill);
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-atwill);
     }
     
     &:where(.mode-always) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-always);
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-always);
     }
     
     &:where(.mode-pact) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-pact);
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-pact);
     }
     
     &:where(.mode-innate) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-innate);
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-innate);
     }
     
     &:where(.mode-ritual) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-ritual);
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-ritual);
     }
 
     &:where(.mode-prepared) {
-      // 👋 hightouch, are there any special classes for a spell of prep mode "Prepared", or `.mode-prepared`?
-      // This is to contrast to prepareable spells that are actually prepared (`.prepared`).
-    }
-
-    &:where(.prepared) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-prepared);
+      // 👋 hightouch, I think we're probably good not to include a Prepared mode color. Should we purge the codebase of that?
+      // --t5e-mode-color: var(--t5e-color-icon-spellcasting-prepared);
     }
   }
 

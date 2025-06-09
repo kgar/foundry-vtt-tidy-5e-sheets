@@ -54,6 +54,7 @@ Refactor:
 - [ ] Propagate Table Row Actions to Effects tables
 - [ ] Propagate Data-Driven Columns to Activities tables
 - [ ] Propagate Data-Driven Columns to Effects tables
+- [ ] (Low priority) ButtonWithOptionPanel - use a Portal or something similar so that there's a singleton menu shell that can be shown/hidden by any sheet and can be given a component and/or snippet to render. This should allow for someone to have a compact sheet and view the full options panel without the sheet's overflow hiding the options.
 
 ## Questions
 

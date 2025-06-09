@@ -29,7 +29,16 @@
   .tidy-table-header-row {
     --t5e-table-header-background-left: var(--t5e-theme-color-darkest);
     --t5e-table-header-background-right: var(--t5e-theme-color-default);
-
+    
+    &.spell-preparation {
+      --t5e-table-header-background-left: oklch(
+        from var(--t5e-mode-color, var(--t5e-theme-color-darkest)) 
+        calc(l * 0.75) 
+        calc(c * 1.2) 
+        h);
+      --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-default));
+    }
+    
     background: linear-gradient(to right,
         var(--t5e-table-header-background-left),
         var(--t5e-table-header-background-right));
@@ -205,8 +214,7 @@
       }
     }
 
-    &.rarity,
-    &.spell-preparation {
+    &.rarity {
       --t5e-item-row-color: var(--t5e-item-color);
       --t5e-use-button-border-color: var(--t5e-item-color);
 
@@ -733,6 +741,10 @@
         background: var(--t5e-component-card-default);
       }
     }
+  }
+
+  .spell-row-icon {
+    color: var(--t5e-mode-color);
   }
 
   /* Effects */
