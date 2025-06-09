@@ -152,7 +152,7 @@
 
 <!-- Tables -->
 <ItemTables
-  sections={context.containerContents.contents}
+  sections={configuredContents}
   container={context.item}
   editable={context.editable}
   itemContext={context.containerContents.itemContext}
