@@ -97,6 +97,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
     predicate: (item) => item.system.properties?.has('concentration') === true,
     text: 'DND5E.Concentration',
     abbreviation: 'DND5E.AbbreviationConc',
+    pinnedFilterClass: 'hide-under-400',
   },
   verbal: {
     name: 'verbal',

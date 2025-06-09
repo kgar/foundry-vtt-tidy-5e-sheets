@@ -3,13 +3,14 @@
   import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
   import { isNil } from 'src/utils/data';
   import { getContext, type Snippet } from 'svelte';
+  import type { ClassValue, HTMLButtonAttributes } from 'svelte/elements';
 
-  interface Props {
+  interface Props extends HTMLButtonAttributes {
     filter: ConfiguredItemFilter;
     filterGroupName: string;
     disabled?: boolean;
     children?: Snippet;
-    class?: string;
+    class?: ClassValue;
   }
 
   let {
@@ -18,6 +19,7 @@
     disabled,
     children,
     class: cssClass,
+    ...attributes
   }: Props = $props();
 
   let filterStateClass = $derived(
@@ -57,10 +59,17 @@
 
 <button
   type="button"
-  class="button button-toggle button-secondary {filterStateClass} {cssClass ?? ''}"
+  class={[
+    'button',
+    'button-toggle',
+    'button-secondary',
+    filterStateClass,
+    cssClass,
+  ]}
   class:disabled
   onclick={onLeftClick}
   oncontextmenu={onRightClick}
+  {...attributes}
 >
   {@render children?.()}
 </button>

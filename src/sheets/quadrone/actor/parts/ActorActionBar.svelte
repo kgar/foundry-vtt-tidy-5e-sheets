@@ -17,6 +17,7 @@
   import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
   import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     searchCriteria: string;
@@ -65,8 +66,13 @@
         filter={pinnedFilter}
         filterGroupName={tabId}
         class={pinnedFilter.pinnedFilterClass}
+        data-tooltip={pinnedFilter.text}
       >
-        {localize(pinnedFilter.text)}
+        {#if !isNil(pinnedFilter.abbreviation, '')}
+          {localize(pinnedFilter.abbreviation)}
+        {:else}
+          {localize(pinnedFilter.text)}
+        {/if}
       </FilterToggle>
     {/each}
   </div>
