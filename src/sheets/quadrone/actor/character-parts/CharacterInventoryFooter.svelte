@@ -79,8 +79,8 @@
 
   <div class="footer-content-left flexrow flexshrink">
     <div
-      class={['pill pill-medium interactive attunement-tracker flexshrink', 
-              { 'overattuned': overattuned }, { 'attuned': attuned }
+      class={['attunement-tracker flexshrink', 
+              { 'overattuned': overattuned }, { 'attuned': attuned }, { 'pill pill-medium interactive': !context.unlocked }, { 'flexrow': context.unlocked }
       ]}
       data-tooltip-direction="UP"
       role="region"
@@ -122,7 +122,7 @@
           enableDeltaChanges={true}
           selectOnFocus={true}
           disabled={!context.editable}
-          class="currency-item currency-{currency.key}"
+          class="currency-item uninput currency-{currency.key}"
           placeholder="0"
         />
         <span class="denomination {currency.key}" data-denom={currency.key}>

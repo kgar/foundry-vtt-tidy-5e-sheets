@@ -1711,12 +1711,21 @@
 
   .inventory-footer {
     .attunement-tracker {
-      background: var(--t5e-component-card-default);
       height: var(--t5e-field-size-default);
-      box-shadow: var(--t5e-drop-shadow-field);
+      gap: var(--t5e-size-1x);
+
+      &.pill {
+        background: var(--t5e-component-card-default);
+        box-shadow: var(--t5e-drop-shadow-field);
+      }
 
       &.attuned i {
         color: var(--t5e-color-gold);
+      }
+
+      input {
+        flex: 0 1 fit-content;
+        max-width: 2rem;
       }
     }
 
