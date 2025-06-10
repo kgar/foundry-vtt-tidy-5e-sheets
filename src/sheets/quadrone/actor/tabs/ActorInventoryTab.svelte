@@ -17,6 +17,7 @@
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import ActorActionBar from '../parts/ActorActionBar.svelte';
+  import CharacterInventoryFooter from '../character-parts/CharacterInventoryFooter.svelte';
 
   let context =
     $derived(
@@ -65,4 +66,8 @@
   sheetDocument={context.actor}
   unlocked={context.unlocked}
   root={true}
+/>
+
+<CharacterInventoryFooter
+class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
 />

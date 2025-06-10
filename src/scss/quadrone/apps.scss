@@ -130,6 +130,10 @@
     }
   }
 
+  .flexshrink {
+    flex: 0 1 auto;
+  }
+
 
   &[data-tidy-lock-configure-sheet='true'] .window-header [data-action='configureSheet'] {
     display: none;
@@ -153,7 +157,6 @@
     }
   }
 
-  // TODO: for hightouch - should we make all window-content areas scrollable by default?
   &.scrollable-window-content .window-content {
     overflow-y: auto;
   }

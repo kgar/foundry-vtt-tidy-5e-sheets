@@ -156,6 +156,7 @@
     }
   }
 
+  .main-content {}
 
   .sheet-header {
     --header-padding: 1rem;
@@ -193,6 +194,7 @@
       &-name-row {
         display: flex;
         flex-direction: row;
+
       }
 
       &-subtitle-row {
@@ -867,7 +869,7 @@
 
     .xp-container {
       flex: 0 1 auto;
-      margin: -1rem 0.5rem 2px 0;
+      margin: 0 0.5rem 2px 0;
       gap: var(--t5e-size-1x);
       display: flex;
       flex-direction: column;
@@ -887,11 +889,6 @@
       align-items: center;
       gap: var(--t5e-size-2x);
 
-      &.show-xp {
-        align-items: flex-start;
-        padding-top: var(--t5e-size-1x);
-      }
-
       .button-gold {
         border: 2px solid var(--t5e-color-palette-gold-62);
         border-radius: 3px;
@@ -908,6 +905,26 @@
             color: var(--t5e-color-palette-gold-89);
           }
         }
+      }
+    }
+
+    .show-xp {
+      .character-details-name-row {
+        margin-top: var(--t5e-size-1x);
+        margin-bottom: 0;
+      }
+
+      .sheet-header-actions {
+        align-items: flex-start;
+        padding-top: var(--t5e-size-3x);
+      }
+
+      .character-details-subtitle-row {
+        align-items: center;
+      }
+
+      .level-container {
+        margin-top: var(--t5e-size-2x);
       }
     }
 
@@ -1106,6 +1123,7 @@
     .ac-container {
       text-align: center;
       align-items: center;
+      max-width: 80px;
 
       .shield {
         background: url(../../modules/tidy5e-sheet/images/badge_ac_dark.webp) top center / auto no-repeat;
@@ -1155,6 +1173,7 @@
 
     .ability {
       width: 64px;
+      max-width: 72px;
 
       display: flex;
       flex-direction: column;
@@ -1319,6 +1338,7 @@
 
     .initiative-container {
       width: 48px;
+      max-width: 64px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1636,6 +1656,81 @@
 
       container-type: inline-size;
       container-name: tab-right-column;
+    }
+  }
+
+  .tidy-tab.inventory {
+    display: flex;
+    flex-direction: column;
+    gap: var(--t5e-size-3x);
+  }
+
+
+  .sheet-footer {
+    gap: var(--t5e-size-2x);
+
+    >* {
+      gap: var(--t5e-size-2x);
+    }
+
+    &.fixed {
+      padding: var(--t5e-size-1x) 0 var(--t5e-size-3x) 0;
+    }
+
+    .footer-content-left {
+      justify-content: flex-start;
+    }
+
+    .footer-content-right {
+      justify-content: flex-end;
+    }
+  }
+
+  .inventory-footer {
+    container-type: inline-size;
+    container-name: inventory-footer;
+  }
+
+  @container inventory-footer (width < 35rem) {
+    .currency-container {
+      order: 1;
+      flex: 1;
+      min-width: fit-content;
+      flex-direction: row;
+    }
+
+    .footer-content-left {
+      order: 2;
+      flex: 1;
+    }
+
+    .footer-content-right {
+      order: 3;
+    }
+  }
+
+  .inventory-footer {
+    .attunement-tracker {
+      height: var(--t5e-field-size-default);
+      gap: var(--t5e-size-1x);
+
+      &.pill {
+        background: var(--t5e-component-card-default);
+        box-shadow: var(--t5e-drop-shadow-field);
+      }
+
+      &.attuned i {
+        color: var(--t5e-color-gold);
+      }
+
+      input {
+        flex: 0 1 fit-content;
+        max-width: 2rem;
+      }
+    }
+
+    .currency-container {
+      gap: var(--t5e-size-2x);
     }
   }
 

@@ -63,13 +63,13 @@
     {/each}
     {#if size}
       <span class="size">
-        <span class="color-text-gold">{size}</span>
+        <span class="font-label-medium color-text-gold">{size}</span>
       </span>
       <div class="divider-dot"></div>
     {/if}
     {#if context.creatureType?.title}
       <span class="creature-type">
-        <span class="color-text-gold">
+        <span class="font-label-medium color-text-gold">
           {context.creatureType.title}
           {#if context.creatureType.subtitle}
             ({context.creatureType.subtitle})
@@ -80,12 +80,12 @@
     {/if}
     {#if species}
       <span class="species hide-under-600">
-        <span class="color-text-gold">{species}</span>
+        <span class="font-label-medium color-text-gold">{species}</span>
       </span>
       <div class="divider-dot hide-under-600"></div>
     {/if}
     <span class="alignment {context.speeds.secondary.length > 0 ? 'hide-under-600' : 'hide-under-700'}">
-      <span class="color-text-gold">{alignment}</span>
+      <span class="font-label-medium color-text-gold">{alignment}</span>
     </span>
     <div class="divider-dot {context.speeds.secondary.length > 0 ? 'hide-under-600' : 'hide-under-700'}"></div>
     {#each context.classes as entry, i}
@@ -113,7 +113,18 @@
     {/each}
   </div>
   {#if context.enableXp}
-    <div class="xp-container">Literally have never used this.</div>
+    <div class="xp-container">    
+      <div class="xp-label">
+        <span class="label font-label-medium color-text-gold">XP</span>
+        <span class="label font-label-medium color-text-default">12,345</span>
+        <span class="separator">/</span>
+        <span class="label font-body-medium color-text-lighter">17,500</span>
+      </div>
+      <div class="xp-bar xp meter progress"
+        style="--bar-percentage: 50%;">
+        <span class="xp-bar-current" style="width: 50%"></span>
+      </div>
+    </div>
   {/if}
 </div>
 

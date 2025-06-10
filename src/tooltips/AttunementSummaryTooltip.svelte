@@ -18,7 +18,7 @@
 </script>
 
 <div bind:this={tooltip} class="document-list-summary-tooltip">
-  <h3>{localize('TIDY5E.AttunementItems')}</h3>
+  <h3 class="font-title-medium color-text-default">{localize('TIDY5E.AttunementItems')}</h3>
   <hr />
   <ul>
     {#each attunedItems as item}
