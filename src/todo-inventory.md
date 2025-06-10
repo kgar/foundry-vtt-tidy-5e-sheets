@@ -6,8 +6,6 @@
 
 ## Inventory To Do
 
-Refactor:
-
 - [x] Switch from hideUnder to priority show/hide scheme
 - [x] Have each use of a column provide a priority
 - [x] Propagate to Containers as well
