@@ -67,7 +67,7 @@
           <span class="sign font-default-medium color-text-lighter">{mod.sign}</span><span class="value font-data-medium">{mod.value}</span>
         </span>
       {:else if save?.dc?.value}
-        <span class="ability font-label-medium color-text-gold">
+        <span class="ability font-label-medium color-text-gold-emphasis">
           {save.ability}
         </span>
         <span class="value font-data-medium">

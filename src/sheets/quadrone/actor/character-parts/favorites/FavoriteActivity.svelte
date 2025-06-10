@@ -101,7 +101,7 @@
           <span class="value font-data-medium color-text-default">
             {save.dc.value}
           </span>
-          <span class="ability font-label-medium color-text-gold">
+          <span class="ability font-label-medium color-text-gold-emphasis">
             {save.ability}
           </span>
         </span>

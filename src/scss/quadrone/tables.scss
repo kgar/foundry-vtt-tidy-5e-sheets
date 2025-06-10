@@ -142,12 +142,13 @@
   }
 
   .tidy-table-row {
+    --t5e-item-row-background: transparent;
+
     border-radius: 0.125rem;
     border-width: 0 0 1px 0;
     border-style: solid;
     border-image: var(--t5e-table-row-border-image);
 
-    --t5e-item-row-color: transparent;
     position: relative;
 
     .item-image {
@@ -159,18 +160,18 @@
     }
 
     &.equipped {
-      --t5e-item-row-color: var(--t5e-color-palette-grey-100);
-      background: var(--t5e-component-card-default);
+      --t5e-item-row-background: var(--t5e-color-palette-grey-100);
+      background: linear-gradient(to right,
+          rgba(255, 255, 255, 0.24) 40%,
+          var(--t5e-color-palette-grey-100) 90%);
 
-      &::before,
       .highlight {
-        // content: '';
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to right, oklch(from var(--t5e-item-row-color) l c h / 0.25) 10%, transparent 40%);
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 40%);
         pointer-events: none;
       }
     }
@@ -212,19 +213,22 @@
 
     &.rarity,
     &.spell-preparation {
-      --t5e-item-row-color: var(--t5e-item-color);
+      // --t5e-item-row-background: var(--t5e-item-color);
       --t5e-use-button-border-color: var(--t5e-item-color);
 
-      &::before {
-        content: '';
+      .common {
+        --t5e-item-color: var(--t5e-color-palette-gold-56);
+      }
+
+      .highlight {
+        // content: '';
         position: absolute;
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 10%, transparent 48%);
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to right, oklch(from var(--t5e-item-row-color) l c h / 0.25) 10%, transparent 40%);
         pointer-events: none;
-        z-index: -1;
       }
 
       .tidy-table-row-use-button {
@@ -243,6 +247,13 @@
           rgba(255, 255, 255, 0.10) 100%),
         var(--t5e-component-card-default);
     }
+
+    span:has(dnd5e-icon) {
+      --icon-fill: var(--t5e-color-icon-diminished);
+      padding: 1px 0 0 2px;
+    }
+
+    .item-state-indicator {}
   }
 
   /* Cell styles */
@@ -535,6 +546,7 @@
     width: var(--t5e-icon-size-7x);
     justify-content: center;
     margin: 0.0625rem 0 0.0625rem 0.0625rem;
+    overflow: hidden;
     position: relative;
     transition: all var(--t5e-transition-default);
 
@@ -648,7 +660,10 @@
   /* Inline Containers */
   // TODO
   .tidy-table-row~.expandable.expanded {
-    background: linear-gradient(120deg, var(--t5e-component-card-darker) 10%, var(--t5e-component-card-default) 120%);
+    --t5e-item-row-background: rgba(255, 255, 255, 0.08);
+    background: linear-gradient(120deg,
+        var(--t5e-component-card-darker) 10%,
+        var(--t5e-component-card-default) 120%);
   }
 
   .empty-container {
@@ -692,23 +707,33 @@
 
   &:where(.theme-dark) {
     .tidy-table-row {
+      // --t5e-item-row-background: rgba(255, 255, 255, 0.08);
 
       .item-image {
         background-color: var(--t5e-color-palette-gold-56);
       }
 
-      &.equipped {
-        background: linear-gradient(to right,
-            rgba(159, 146, 117, .25) 0%,
-            rgba(159, 146, 117, 0) 30%),
-          var(--t5e-component-card-default);
+      &.expanded {
+        --t5e-item-row-background: rgba(255, 255, 255, 0.06);
+        background: var(--t5e-component-card-default);
       }
 
-      &.expanded {
-        background: linear-gradient(0deg,
-            rgba(255, 255, 255, 0.10) 0%,
-            rgba(255, 255, 255, 0.10) 100%),
-          var(--t5e-component-card-default);
+      &.equipped {
+        background: linear-gradient(to right,
+            transparent 50%,
+            var(--t5e-component-card-default) 95%);
+
+        &.expanded {
+          --t5e-item-row-background: rgba(255, 255, 255, 0.08);
+          background: var(--t5e-component-card-default);
+        }
+      }
+
+      &.rarity,
+      &.spell-preparation {
+        .highlight {
+          background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 40%);
+        }
       }
     }
 

@@ -429,9 +429,9 @@
     --t5e-color-icon-oninverse-disabled: rgba(0, 0, 0, 0.4);
 
     // TODO: Update card colors to dynamically invert in theme-dark
-    --t5e-component-card-default: rgba(37, 40, 48, 1);
-    --t5e-component-card-darker: rgba(22, 24, 29, 1);
-    --t5e-component-card-lighter: rgba(48, 50, 54, 1);
+    --t5e-component-card-default: rgb(40, 42, 48);
+    --t5e-component-card-darker: rgb(26, 27, 32);
+    --t5e-component-card-lighter: rgb(47, 50, 56);
     --t5e-component-card-oninverse-default: rgba(248, 244, 241, 1);
     --t5e-component-card-oninverse-darker: rgba(241, 235, 232, 1);
     --t5e-component-card-oninverse-lighter: rgba(253, 252, 252, 1);

@@ -28,7 +28,7 @@
 
 <a {title} onclick={toggleEquipped} class="tidy-table-button">
   {#if equipped}
-    <i class="fa-solid fa-hand-fist equip-icon"></i>
+    <i class="fa-solid fa-hand-fist equip-icon color-text-default"></i>
   {:else}
     <i class="fa-light fa-hand"></i>
   {/if}

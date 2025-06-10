@@ -11,10 +11,9 @@
 <div>
   {#each rowDocument.labels.damages as damage}
     {@const damageType = CONFIG.DND5E.damageTypes[damage.damageType]}
-    <div class="row">
-      <span class="formula">{damage.formula}</span>
-      <span data-tooltip aria-label={damage.label}>
-        <!-- 👋 hightouch - --icon-fill variable controls color -->
+    <div class="flexrow">
+      <span class="flexshrink formula">{damage.formula}</span>
+      <span class="flexshrink" data-tooltip aria-label={damage.label}>
         <Dnd5eIcon src={damageType.icon} />
       </span>
     </div>

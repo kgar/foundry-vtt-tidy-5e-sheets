@@ -194,7 +194,7 @@
                 {/if}
 
                 <TidyTableCell primary={true} class="item-label text-cell">
-                  <a class="item-name" onclick={(ev) => toggleSummary()}>
+                  <a class="item-name" role="button" tabindex="0" onclick={(ev) => toggleSummary()}>
                     <span class="cell-text">
                       <span class="cell-name">{item.name}</span>
                     </span>
@@ -209,8 +209,8 @@
                 </TidyTableCell>
                 {#if ctx.attunement}
                   {@const iconClass = item.system.attuned
-                    ? 'fa-solid fa-sun'
-                    : 'fa-light fa-sun'}
+                    ? 'fa-solid fa-sun color-text-gold-emphasis'
+                    : 'fa-light fa-sun color-text-lighter'}
 
                   {@const title = ctx.attunement?.title}
 
