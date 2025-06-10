@@ -609,6 +609,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
    */
   protected _prepareItem(item: Item5e, context: CharacterItemContext) {
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      const linked = item.system.linkedActivity?.item;
       const prep = item.system.preparation || {};
       const isAlways = prep.mode === 'always';
       const isPrepared = !!prep.prepared;
@@ -625,6 +626,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       if (this._concentration.items.has(item)) {
         context.concentration = true;
       }
+      
+      const vsmcr = game.i18n
+        .getListFormatter({ style: 'narrow' })
+        .format(item.labels.components.all.map((a: any) => a.abbr));
+
+      context.subtitle = [
+        linked
+          ? linked.name
+          : this.actor.classes[item.system.sourceClass]?.name,
+        vsmcr,
+      ].filterJoin(' &bull; ');
     } else {
       const isActive = !!item.system.equipped;
       context.toggleClass = isActive ? 'active' : '';

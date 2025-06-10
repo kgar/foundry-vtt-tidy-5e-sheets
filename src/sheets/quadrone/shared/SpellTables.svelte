@@ -163,6 +163,9 @@
                   <a class="item-name" onclick={(ev) => toggleSummary()}>
                     <span class="cell-text">
                       <span class="cell-name">{item.name}</span>
+                      {#if ctx.subtitle}
+                        <span class="cell-context">{@html ctx.subtitle}</span>
+                      {/if}
                     </span>
                     <span class="row-detail-expand-indicator">
                       <i

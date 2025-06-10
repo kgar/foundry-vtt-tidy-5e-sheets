@@ -286,6 +286,7 @@ export type CharacterItemContext = {
   totalWeight?: number;
   concentration?: boolean;
   parent?: Item5e;
+  subtitle?: string;
 };
 
 export type ActivityItemContext = {
@@ -483,6 +484,7 @@ export type NpcItemContext = {
   toHit?: number | null;
   toggleTitle?: string;
   totalWeight?: number;
+  subtitle?: string;
 };
 
 export type NpcHabitat = {

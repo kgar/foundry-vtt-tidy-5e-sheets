@@ -267,11 +267,13 @@
   /* Cell styles */
   :is(.tidy-table-cell, .tidy-table-header-cell) {
     align-items: center;
-    text-align: center;
     display: flex;
-    justify-content: center;
-    // padding: 0 0.0625rem;
     min-height: var(--t5e-field-size-default);
+
+    &:not(.primary) {
+      text-align: center;
+      justify-content: center;
+    }
 
     &:not(.tidy-table-actions):not(.header-cell-actions):not(.primary) {
       padding: var(--t5e-size-halfx) var(--t5e-size-1x) calc(var(--t5e-size-halfx) + var(--t5e-size-1));
