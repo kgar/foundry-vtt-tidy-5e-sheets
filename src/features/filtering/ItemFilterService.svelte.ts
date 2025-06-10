@@ -35,6 +35,22 @@ export class ItemFilterService {
   private _filterGroupChoices = $state<ItemFilterChoicesByGroup>({});
   private _filters = $state<FilterTabsToCategories>({});
   private _filterData = $derived.by(() => this.#createDocumentItemFilterData());
+  private _flattenedFilterData = $derived(
+    Object.entries(this._filterData).reduce<
+      Record<string, Record<string, ItemFilter>>
+    >((prev, [groupName, filterGroup]) => {
+      prev[groupName] = Object.values(filterGroup ?? {}).reduce<
+        Record<string, ItemFilter>
+      >((prev, curr) => {
+        curr.forEach((filter) => {
+          prev[filter.name] = filter;
+        });
+        return prev;
+      }, {});
+
+      return prev;
+    }, {})
+  );
   private _document: any;
   private _documentFilterProvider = ItemFilterRuntime.getDocumentFilters;
 
@@ -52,19 +68,9 @@ export class ItemFilterService {
     }
   }
 
-  // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update
   compose(filterGroup: ItemFilterGroupName) {
     const choices = this._getGroupChoices(filterGroup) ?? {};
-
-    // TODO: Make $derived for this
-    const filters = Object.values(this._filterData[filterGroup] ?? {}).reduce<
-      Record<string, ItemFilter>
-    >((prev, curr) => {
-      curr.forEach((f) => {
-        prev[f.name] = f;
-      });
-      return prev;
-    }, {});
+    const filters = this._flattenedFilterData[filterGroup] ?? {};
 
     const composition = Object.entries(choices)
       .map(([filterName, value]) => {
