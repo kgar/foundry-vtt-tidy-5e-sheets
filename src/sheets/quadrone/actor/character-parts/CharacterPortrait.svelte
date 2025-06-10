@@ -11,7 +11,7 @@
     portraitShape?: string; // e.g., 'transparent', 'round', 'square'
   };
 
-  let { imageUrl, imageAlt, portraitShape = 'transparent' }: Props = $props();
+  let { imageUrl, imageAlt, portraitShape = 'round' }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -75,21 +75,29 @@
 
 <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
 <!-- TODO: Add switch for size if needed -->
-<div
+
+  {#if settings.value.truesight}
+    <button
+      type="button"
+      class="button button-borderless button-icon-only button-config"
+      style="position: absolute; top: 0; right: 0; z-index: 10; border: none; font-size: 14px;"
+      onclick={cycleShape}
+      title="Cycle Portrait Shape (Debug)"
+    >
+     {#if currentPortraitShape === 'round'}
+      <i class="fas fa-square-user"></i>
+     {:else if currentPortraitShape === 'square'}
+      <i class="fas fa-circle-user"></i>
+     {:else}
+      <i class="fas fa-user"></i>
+     {/if}
+    </button>
+  {/if}
+  <div
   class={['character-image', currentPortraitShape]}
   class:dead={characterIsDead}
   style="position: relative;"
 >
-  {#if settings.value.truesight}
-    <button
-      type="button"
-      style="position: absolute; top: 2px; right: 2px; z-index: 10; background-color: red; color: white; border: none; padding: 2px 5px; cursor: pointer; border-radius: 3px; font-size: 10px;"
-      onclick={cycleShape}
-      title="Cycle Portrait Shape (Debug)"
-    >
-      Shape
-    </button>
-  {/if}
   <img
     src={imageUrl}
     alt={imageAlt}

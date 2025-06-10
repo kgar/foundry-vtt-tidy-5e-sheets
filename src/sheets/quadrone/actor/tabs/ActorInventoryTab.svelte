@@ -25,6 +25,7 @@
   import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
   import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
+  import CharacterInventoryFooter from '../character-parts/CharacterInventoryFooter.svelte';
 
   let context =
     $derived(
@@ -156,4 +157,8 @@
   sheetDocument={context.actor}
   unlocked={context.unlocked}
   root={true}
+/>
+
+<CharacterInventoryFooter
+class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
 />

@@ -324,7 +324,7 @@
       </li>
     {/if}
     {#if 'equipped' in context.system && context.editable}
-      {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw'}
+      {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw color-text-default'}
       {@const uncheckedIconClass = 'far fa-hand fa-fw'}
       {@const equipped = context.system.equipped}
       <li>
