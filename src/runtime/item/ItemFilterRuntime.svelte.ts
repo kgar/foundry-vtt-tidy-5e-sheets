@@ -13,6 +13,7 @@ import {
   getAttunementFiltersAsObject,
   getItemRarityFilters,
   getItemRarityFiltersAsObject,
+  getSpellcastingClassFilters,
   getSpellSchoolFiltersAsObject,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
@@ -341,6 +342,8 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostOther,
         ],
         ...getStandardSpellSchoolFilterCategories(),
+        'DND5E.SpellSourceClass': (document) =>
+          getSpellcastingClassFilters(document),
       },
     },
   };

@@ -71,7 +71,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
-  itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
@@ -80,12 +79,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
-
-    this.itemFilterService = new ItemFilterService(
-      {},
-      this.actor,
-      ItemFilterRuntime.getDocumentFiltersQuadrone
-    );
 
     this.currentTabId = CONSTANTS.TAB_CHARACTER_FAVORITES;
   }

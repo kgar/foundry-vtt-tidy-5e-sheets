@@ -18,7 +18,7 @@ type TabId = string;
 type DocumentType = string;
 export type FilterCategoriesToFilters = Record<
   Category,
-  ItemFilter[] | (() => ItemFilter[])
+  ItemFilter[] | ((document: any) => ItemFilter[])
 >;
 
 export type FilterTabsToCategories = Record<TabId, FilterCategoriesToFilters>;

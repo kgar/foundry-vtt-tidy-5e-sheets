@@ -3,6 +3,8 @@ import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { ItemUtils } from 'src/utils/ItemUtils';
+import type { Actor5e } from 'src/types/types';
+import type { Item5e } from 'src/types/item.types';
 
 export const defaultItemFilters: Record<string, ItemFilter> = {
   activationCostAction: {
@@ -162,6 +164,21 @@ export function getItemRarityFilters(): ItemFilter[] {
           !FoundryAdapter.concealDetails(item) && item.system.rarity === key,
         text: text,
       } satisfies ItemFilter)
+  );
+}
+
+export function getSpellcastingClassFilters(actor: Actor5e): ItemFilter[] {
+  return Object.entries<Item5e>(actor.spellcastingClasses).map(
+    ([key, item]) => {
+      return {
+        name: key,
+        predicate: (item) => item.system.sourceClass === key,
+        text:
+          item.system.spellcasting.progression === item.spellcasting.progression
+            ? item.name
+            : item.subclass?.name,
+      };
+    }
   );
 }
 

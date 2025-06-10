@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { getActorActionSections } from 'src/features/actions/actions.svelte';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
@@ -51,6 +52,7 @@ export function Tidy5eActorSheetQuadroneBase<
       foundry.applications.sheets.ActorSheetV2
     )
   ) {
+    itemFilterService: ItemFilterService;
     abstract currentTabId: string;
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
 
@@ -64,6 +66,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
     constructor(options?: Partial<ApplicationConfiguration> | undefined) {
       super(options);
+
+      this.itemFilterService = new ItemFilterService(
+        {},
+        this.actor,
+        ItemFilterRuntime.getDocumentFiltersQuadrone
+      );
     }
 
     /**

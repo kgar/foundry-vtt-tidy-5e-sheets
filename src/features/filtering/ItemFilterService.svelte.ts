@@ -24,7 +24,7 @@ import { debug, error } from 'src/utils/logging';
 
 type ItemFilterName = ItemFilter['name'];
 type ItemFilters = Record<ItemFilterName, boolean | undefined>;
-type ItemFilterGroupName = string;
+type ItemFilterGroupName = string; // usually a Tab ID
 type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
 
 export class ItemFilterService {
@@ -63,7 +63,7 @@ export class ItemFilterService {
           return (item: Item5e) =>
             prev(item) && curr.filter?.predicate?.(item) == curr.value;
         },
-        (item: Item5e) => true
+        (_item: Item5e) => true
       );
 
     return (item: Item5e) => {
@@ -129,7 +129,9 @@ export class ItemFilterService {
 
       for (let [category, filters] of Object.entries(categories)) {
         documentItemFilterData[tab][category] ??= [];
-        const effectiveFilters = Array.isArray(filters) ? filters : filters();
+        const effectiveFilters = Array.isArray(filters)
+          ? filters
+          : filters(this._document);
 
         for (let filter of effectiveFilters) {
           try {
