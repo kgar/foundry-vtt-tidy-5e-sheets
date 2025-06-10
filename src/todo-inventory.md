@@ -51,6 +51,7 @@ Refactor:
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.
   - Move columns to TidySectionBase and include in prep
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
+- [ ] Put weight unit in weight column
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
 - [ ] Review and task further
 
