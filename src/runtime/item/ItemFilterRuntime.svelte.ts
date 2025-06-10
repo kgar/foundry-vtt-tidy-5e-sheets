@@ -13,7 +13,7 @@ import {
   getAttunementFiltersAsObject,
   getItemRarityFilters,
   getItemRarityFiltersAsObject,
-  getSpellcastingClassFilters,
+  getSourceClassFilters,
   getSpellSchoolFiltersAsObject,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
