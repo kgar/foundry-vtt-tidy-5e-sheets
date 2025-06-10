@@ -39,7 +39,19 @@
     disabled={uses <= 0}
     onclick={() => updateSlots(uses - 1)}>-</button
   >
-  <span class={['value', { ['has-temp-slots']: hasTempSlots }]}>{uses}</span>
+  {#if context.unlocked}
+    <NumberInputQuadrone
+      document={context.actor}
+      field="system.spells.{section.prop}.value"
+      class={['spell-slot-uses', { ['has-temp-slots']: hasTempSlots }]}
+      value={uses}
+      placeholder="0"
+      min="0"
+      step="1"
+    />
+  {:else}
+    <span class={['value', { ['has-temp-slots']: hasTempSlots }]}>{uses}</span>
+  {/if}
   <span class="separator">/</span>
   <span class="max">{slots}</span>
   <button
