@@ -77,8 +77,9 @@
 <!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
 <div class={['sheet-footer', 'fixed', 'flexrow', 'inventory-footer', classValue]}>
 
+  <div class="footer-content-left flexrow flexshrink">
     <div
-      class={['pill pill-medium interactive attunement-tracker flex-fit', 
+      class={['pill pill-medium interactive attunement-tracker flexshrink', 
               { 'overattuned': overattuned }, { 'attuned': attuned }
       ]}
       data-tooltip-direction="UP"
@@ -107,8 +108,9 @@
         {localize('DND5E.Attuned')}
       </span>
     </div>
+  </div>
 
-  <div class="currency flexrow">
+  <div class="currency-container flexrow flex1">
     {#each context.currencies as currency (currency.key)}
       <label class="input-group">
         <i class="currency {currency.key}" aria-label={currency.key}></i>
@@ -130,27 +132,29 @@
     {/each}
   </div>
 
-  {#if context.editable}
-    <a
-      class="button button-icon-only currency-conversion flex-fit"
-      class:disabled={!context.editable}
-      onclick={() =>
-        context.owner &&
-        new dnd5e.applications.CurrencyManager({
-          document: context.document,
-        }).render(true)}
-      data-tooltip="DND5E.CurrencyManager.Title"
-    >
-      <i class="fas fa-database"></i>
-    </a>
-  {/if}
+  <div class="footer-content-right flexrow flexshrink">
+    {#if context.editable}
+      <a
+        class="button button-icon-only currency-conversion flexshrink"
+        class:disabled={!context.editable}
+        onclick={() =>
+          context.owner &&
+          new dnd5e.applications.CurrencyManager({
+            document: context.document,
+          }).render(true)}
+        data-tooltip="DND5E.CurrencyManager.Title"
+      >
+        <i class="fas fa-database"></i>
+      </a>
+    {/if}
 
-  <a
-    data-tooltip="DND5E.ItemCreate"
-    class="button button-icon-only button-primary item-create flex-fit"
-    class:disabled={!context.editable}
-    onclick={onAddClicked}
-  >
-    <i class="fas fa-plus"></i>
-  </a>
+    <a
+      data-tooltip="DND5E.ItemCreate"
+      class="button button-icon-only button-primary item-create flexshrink"
+      class:disabled={!context.editable}
+      onclick={onAddClicked}
+    >
+      <i class="fas fa-plus"></i>
+    </a>
+  </div>
 </div>

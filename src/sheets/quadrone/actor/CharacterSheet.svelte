@@ -498,7 +498,7 @@
     <div class={['sidebar flexcol', { expanded: sidebarExpanded }]}>
       <ActorSidebar />
     </div>
-    <TabContents tabs={context.tabs} {selectedTabId} />
+    <TabContents tabs={context.tabs} {selectedTabId} cssClass="tidy-tab-contents" />
 
     <!-- Footers -->
     <!-- TODO: Temporarily moved to the inventory tab directly -->
