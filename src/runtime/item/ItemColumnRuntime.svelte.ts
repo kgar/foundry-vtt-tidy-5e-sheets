@@ -396,8 +396,6 @@ class ItemColumnRuntime {
     schematics: ColumnSpecificationSchematics,
     section: TidySectionBase
   ): Set<string> {
-    console.log('determining hidden columns');
-
     let available = inlineSize;
 
     let toHide = new Set<string>();

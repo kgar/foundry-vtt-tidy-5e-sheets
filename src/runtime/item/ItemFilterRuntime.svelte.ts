@@ -342,8 +342,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostOther,
         ],
         ...getStandardSpellSchoolFilterCategories(),
-        'DND5E.SpellSourceClass': (document) =>
-          getSpellcastingClassFilters(document),
+        'DND5E.SpellSourceClass': (document) => getSourceClassFilters(document),
       },
     },
   };

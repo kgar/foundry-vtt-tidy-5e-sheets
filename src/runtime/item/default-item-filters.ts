@@ -167,11 +167,11 @@ export function getItemRarityFilters(): ItemFilter[] {
   );
 }
 
-export function getSpellcastingClassFilters(actor: Actor5e): ItemFilter[] {
+export function getSourceClassFilters(actor: Actor5e): ItemFilter[] {
   return Object.entries<Item5e>(actor.spellcastingClasses).map(
     ([key, item]) => {
       return {
-        name: key,
+        name: `source-class-${key}`,
         predicate: (item) => item.system.sourceClass === key,
         text:
           item.system.spellcasting.progression === item.spellcasting.progression
