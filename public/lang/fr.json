@@ -287,10 +287,6 @@
         "name": "Verrouiller le sélecteur de niveaux",
         "hint": "Empêche les non-MJ de modifier le niveau des joueurs à l'aide du sélecteur de niveau de classe."
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "name": "Verrouiller la sélection de feuille",
-        "hint": "Empêche les personnes non-MJ de sélectionner une autre présentation de feuille."
-    },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Verrouiller la quantité d'objets",
         "hint": "Empêche les non-MJ d'apporter des modifications à la quantité des objets."

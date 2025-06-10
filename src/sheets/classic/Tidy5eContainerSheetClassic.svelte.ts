@@ -134,6 +134,8 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ContainerSheetClassicContext> {
+    this.itemFilterService.refreshFilters();
+
     const documentSheetContext = await super._prepareContext(options);
 
     const rollData = this.item.getRollData();
@@ -270,7 +272,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       }),
       customContent: [],
       enriched: enriched,
-      filterData: this.itemFilterService.getDocumentItemFilterData(),
+      filterData: this.itemFilterService.getFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       isContainer: true,

@@ -134,11 +134,6 @@
     flex: 0 1 auto;
   }
 
-
-  &[data-tidy-lock-configure-sheet='true'] .window-header [data-action='configureSheet'] {
-    display: none;
-  }
-
   &.minimized .window-content {
     display: none;
     background: none;

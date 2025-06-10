@@ -25,12 +25,9 @@ import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { AsyncMutex } from 'src/utils/mutex';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { Container } from 'src/features/containers/Container';
 import { Activities } from 'src/features/activities/activities';
@@ -59,7 +56,6 @@ export class Tidy5eVehicleSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
-  itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
@@ -73,8 +69,6 @@ export class Tidy5eVehicleSheet
       userId: game.user.id,
       documentId: this.actor.id,
     });
-
-    this.itemFilterService = new ItemFilterService({}, this.actor);
 
     this.currentTabId = settings.value.initialVehicleSheetTab;
   }
@@ -246,7 +240,7 @@ export class Tidy5eVehicleSheet
       ...defaultDocumentContext,
     };
 
-    context.filterData = this.itemFilterService.getDocumentItemFilterData();
+    context.filterData = this.itemFilterService.getFilterData();
     context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
     context.useClassicControls = settings.value.useClassicControlsForVehicle;

@@ -245,12 +245,6 @@
     }
   }
 
-  &[data-tidy-lock-configure-sheet='true']
-    .window-header
-    [data-action='configureSheet'] {
-    display: none;
-  }
-
   &:not(.minimized) {
     background: var(--t5e-sheet-background, var(--t5e-parchment-background));
 

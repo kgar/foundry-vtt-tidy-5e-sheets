@@ -23,7 +23,6 @@ export type WorldSettingsContext = {
     useTotalSheetLock: CurrentSettings['useTotalSheetLock'];
     lockExpChanges: CurrentSettings['lockExpChanges'];
     lockHpMaxChanges: CurrentSettings['lockHpMaxChanges'];
-    lockConfigureSheet: CurrentSettings['lockConfigureSheet'];
     lockMoneyChanges: CurrentSettings['lockMoneyChanges'];
     lockLevelSelector: CurrentSettings['lockLevelSelector'];
     lockItemQuantity: CurrentSettings['lockItemQuantity'];

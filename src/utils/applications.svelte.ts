@@ -24,21 +24,7 @@ export function applyTitleToWindow(title: string, element: HTMLElement) {
   }
 }
 
-export function applySheetConfigLockAttributeToApplication(
-  currentSettings: CurrentSettings,
-  element: HTMLElement
-) {
-  if (currentSettings.lockConfigureSheet && !FoundryAdapter.userIsGm()) {
-    element.setAttribute('data-tidy-lock-configure-sheet', 'true');
-  } else {
-    element.removeAttribute('data-tidy-lock-configure-sheet');
-  }
-}
-
-export function applyThemeToApplication(
-  element?: HTMLElement,
-  doc?: any
-) {
+export function applyThemeToApplication(element?: HTMLElement, doc?: any) {
   if (!element) {
     return;
   }

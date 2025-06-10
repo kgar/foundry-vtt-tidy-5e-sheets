@@ -3,11 +3,13 @@
   import Listbox from './Listbox.svelte';
   import type { Snippet } from 'svelte';
   import { arrayMove } from 'src/utils/array';
+  import type { ClassValue } from 'svelte/elements';
 
   type TItem = $$Generic;
 
   interface Props {
     items: TItem[];
+    selectedItemClasses?: ClassValue;
     selectedItemIndex?: number | null;
     labelProp: keyof TItem;
     valueProp: keyof TItem;
@@ -19,6 +21,7 @@
 
   let {
     items = $bindable(),
+    selectedItemClasses,
     selectedItemIndex = $bindable(null),
     labelProp,
     valueProp,
@@ -171,6 +174,7 @@
     </button>
   </div>
   <Listbox
+    {selectedItemClasses}
     bind:items
     {labelProp}
     {valueProp}

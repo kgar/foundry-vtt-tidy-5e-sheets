@@ -33,8 +33,6 @@ import type {
   ItemChatData,
 } from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import CharacterSheetQuadroneRuntime, {

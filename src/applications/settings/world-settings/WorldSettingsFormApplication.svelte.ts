@@ -21,6 +21,7 @@ import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.sve
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
 export class WorldSettingsFormApplication extends SvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
@@ -78,7 +79,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         useTotalSheetLock: currentSettings.useTotalSheetLock,
         lockExpChanges: currentSettings.lockExpChanges,
         lockHpMaxChanges: currentSettings.lockHpMaxChanges,
-        lockConfigureSheet: currentSettings.lockConfigureSheet,
         lockMoneyChanges: currentSettings.lockMoneyChanges,
         lockLevelSelector: currentSettings.lockLevelSelector,
         lockItemQuantity: currentSettings.lockItemQuantity,
@@ -304,5 +304,12 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         );
         break;
     }
+  }
+
+  // Not going to refactor this because this application is living on borrowed time
+  _attachFrameListeners() {
+    super._attachFrameListeners();
+
+    applyThemeToApplication(this.element);
   }
 }

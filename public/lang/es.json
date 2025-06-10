@@ -299,10 +299,6 @@
         "name": "Bloquear selector de nivel",
         "hint": "Previene que los no-DMs cambien los niveles de jugador con el selector de nivel de clase."
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "name": "Bloquear selección de hoja",
-        "hint": "Impide que las personas que no son GM seleccionen otro diseño de hoja."
-    },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Bloquear cantidad de objetos",
         "hint": "Previene a los no-DMs hacer cambios en la cantidad de objetos."

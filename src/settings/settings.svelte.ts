@@ -1113,20 +1113,6 @@ export function createSettings() {
         },
       },
 
-      lockConfigureSheet: {
-        options: {
-          name: 'TIDY5E.Settings.LockConfigureSheet.name',
-          hint: 'TIDY5E.Settings.LockConfigureSheet.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('lockConfigureSheet');
-        },
-      },
-
       lockItemQuantity: {
         options: {
           name: 'TIDY5E.Settings.LockItemQuantity.name',

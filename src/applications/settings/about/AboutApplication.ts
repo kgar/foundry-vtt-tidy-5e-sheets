@@ -4,6 +4,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { CONSTANTS } from 'src/constants';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
 export class AboutApplication extends SvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
@@ -26,5 +27,12 @@ export class AboutApplication extends SvelteApplicationMixin<
     return mount(About, {
       target: node,
     });
+  }
+
+  // Not going to refactor this because this application is living on borrowed time
+  _attachFrameListeners() {
+    super._attachFrameListeners();
+
+    applyThemeToApplication(this.element);
   }
 }

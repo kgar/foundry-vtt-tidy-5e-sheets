@@ -36,7 +36,6 @@ import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { isNil } from 'src/utils/data';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -79,7 +78,6 @@ export class Tidy5eCharacterSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
-  itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
@@ -104,8 +102,6 @@ export class Tidy5eCharacterSheet
       userId: game.user.id,
       documentId: this.actor.id,
     });
-
-    this.itemFilterService = new ItemFilterService({}, this.actor);
 
     this.currentTabId = settings.value.initialCharacterSheetTab;
   }
@@ -801,7 +797,7 @@ export class Tidy5eCharacterSheet
       ...defaultDocumentContext,
     };
 
-    context.filterData = this.itemFilterService.getDocumentItemFilterData();
+    context.filterData = this.itemFilterService.getFilterData();
     context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
     context.allowEffectsManagement =

@@ -20,6 +20,7 @@
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
 
   let categories = $derived(filterData[tabId] ?? {});
+  
   let filterButtonActive = $derived(
     Object.entries(categories).some(([_, filters]) =>
       filters.some((f) => f.value !== null),

@@ -498,10 +498,6 @@
     "name": "Lock Level Selector",
     "hint": "Prevents non-GMs from changing player levels with the class level selector."
   },
-  "TIDY5E.Settings.LockConfigureSheet": {
-    "name": "Lock Sheet Selection",
-    "hint": "Prevents non-GMs from selecting another sheet layout."
-  },
   "TIDY5E.Settings.LockItemQuantity": {
     "name": "Lock Item Quantity",
     "hint": "Prevents non-GMs from making changes to item quantity."

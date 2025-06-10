@@ -40,13 +40,6 @@
     id="lockHpMaxChanges"
   />
 
-  <CheckboxSetting
-    bind:value={context.settings.lockConfigureSheet}
-    name={'TIDY5E.Settings.LockConfigureSheet.name'}
-    hint={'TIDY5E.Settings.LockConfigureSheet.hint'}
-    id="lockConfigureSheet"
-  />
-
   <h3>{localize('TIDY5E.WorldSettings.TabSheetLock.labelInventoryLocks')}</h3>
 
   <CheckboxSetting

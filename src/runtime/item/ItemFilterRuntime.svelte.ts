@@ -20,16 +20,8 @@ import {
 import { debug, error } from 'src/utils/logging';
 
 export class ItemFilterRuntime {
-  static _registeredItemFilters: Record<string, ItemFilter> = {};
-
-  static init() {
-    ItemFilterRuntime._registeredItemFilters = {
-      ...defaultItemFilters,
-      ...getAttunementFiltersAsObject(),
-      ...getItemRarityFiltersAsObject(),
-      ...getSpellSchoolFiltersAsObject(),
-    };
-  }
+  // TODO: Consider shifting to a singleton class instance rather than static class, to enable runes.
+  static init() {}
 
   static defaultFilterPins: Record<string, Record<string, Set<string>>> = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
@@ -346,10 +338,6 @@ export class ItemFilterRuntime {
       },
     },
   };
-
-  static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
-    return ItemFilterRuntime._registeredItemFilters[filterName];
-  }
 
   static getDocumentFilters(document: any): FilterTabsToCategories {
     return ItemFilterRuntime._documentTabFilters[document.type] ?? {};

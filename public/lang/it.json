@@ -287,10 +287,6 @@
         "name": "Selettore del livello di blocco",
         "hint": "Impedisce ai non-DM di cambiare i livelli dei giocatori con il selettore del livello di classe."
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "name": "Blocca la selezione del foglio",
-        "hint": "Impedisce ai non-DM di selezionare un altro layout del foglio."
-    },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Blocca la quantità degli oggetti",
         "hint": "Impedisce ai non-DM di apportare modifiche alla quantità degli oggetti."

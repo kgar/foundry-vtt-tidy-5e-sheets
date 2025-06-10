@@ -79,6 +79,7 @@
       labelProp="label"
       valueProp="key"
       listboxCssClass="scroll-container"
+      selectedItemClasses="theme-dark"
     >
       {#snippet itemTemplate({ item })}
         <span

@@ -710,10 +710,6 @@
         "hint": "Zapobiega zmianom w walucie przez graczy niebędących MG.",
         "name": "Zablokuj walutę"
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "hint": "Zapobiega wybieraniu innego układu karty przez graczy niebędących MG.",
-        "name": "Zablokuj wybór karty"
-    },
     "TIDY5E.ButtonConfirm.Text": "Potwierdź",
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Użyj przystępnego wsparcia dla klawiatury",

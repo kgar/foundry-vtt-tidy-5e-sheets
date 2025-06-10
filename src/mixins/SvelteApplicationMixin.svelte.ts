@@ -1,5 +1,3 @@
-import { settings } from 'src/settings/settings.svelte';
-import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { debug, error } from 'src/utils/logging';
 import { type RenderedSheetPart } from 'src/sheets/CustomContentRendererV2';
 import type {
@@ -73,11 +71,6 @@ export function SvelteApplicationMixin<
       return [];
     }
 
-    /**
-     * Allows for configuring any effects related to the sheet.
-     */
-    _configureEffects(): void {}
-
     /* -------------------------------------------- */
     /*  Rendering                                   */
     /* -------------------------------------------- */
@@ -131,8 +124,6 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
-      this._effectCleanup?.();
-
       await super.close(options);
     }
 
@@ -148,36 +139,20 @@ export function SvelteApplicationMixin<
         // TODO: remove these shallow copies when either Foundry or dnd5e releases the fix. Reference: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/997
         options = typeof options === 'object' ? { ...options } : options;
         _options = { ..._options };
-        return super.render(options, _options);
+        return await super.render(options, _options);
       } catch (e) {
         error('An error occurred while rendering a Tidy application', false, e);
-        return super.render(options, _options);
+        return await super.render(options, _options);
       }
     }
 
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
-    _effectCleanup?: () => void;
-
-    _runFrameListenerEffect() {
-      applyThemeToApplication(this.element);
-    }
-
     _attachFrameListeners() {
       super._attachFrameListeners();
 
       try {
-        // Manage application effects
-        this._effectCleanup?.();
-        this._effectCleanup = $effect.root(() => {
-          this._configureEffects();
-
-          $effect(() => {
-            this._runFrameListenerEffect();
-          });
-        });
-
         // If a controls dropdown button is clicked, close the controls dropdown.
         this.element.addEventListener('click', (ev: MouseEvent) => {
           const target = ev.target;

@@ -287,10 +287,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "name": "Charakterbogen Auswahl sperren",
-        "hint": ""
-    },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Gegenstandsmengen sperren",
         "hint": ""

@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
@@ -8,7 +7,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getThemeV2 } from 'src/theme/theme';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
-import { settings } from 'src/settings/settings.svelte';
+import { DocumentSheetDialog } from '../DocumentSheetDialog.svelte';
 
 export type BooleanSetting = {
   type: 'boolean';
@@ -54,9 +53,7 @@ export type SectionConfigItem = {
   show: boolean;
 };
 
-export class ConfigureSectionsApplication extends SvelteApplicationMixin(
-  foundry.applications.api.DocumentSheetV2
-) {
+export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   sections = $state<SectionConfigItem[]>([]);
   optionsGroups = $state<SectionOptionGroup[]>([]);
   tabId: string;
@@ -132,24 +129,6 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
     }
   }
 
-  _configureEffects(): void {
-    $effect(() => {
-      // remove all other theme-{name} classes
-      const element = this.element as HTMLElement;
-      // TODO: Use a fixed list of known themes, possibly from Foundry itself?
-      const toRemove = Array.from(element.classList).filter((value: string) =>
-        value.startsWith('theme-')
-      );
-      toRemove.forEach((classToRemove) =>
-        element.classList.remove(classToRemove)
-      );
-
-      // add my theme-{name} class to element
-      element.classList.toggle('themed', true);
-      element.classList.toggle(`theme-${this.theme}`, true);
-    });
-  }
-
   /* -------------------------------------------- */
 
   /** @override */
@@ -171,7 +150,8 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
         let doc = setting.doc ?? this.document;
-        let toSave = documentsToSave.get(doc) ?? documentsToSave.set(doc, {}).get(doc)!;
+        let toSave =
+          documentsToSave.get(doc) ?? documentsToSave.set(doc, {}).get(doc)!;
 
         if (setting.type === 'boolean') {
           toSave[setting.prop] = setting.checked;

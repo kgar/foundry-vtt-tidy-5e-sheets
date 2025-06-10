@@ -287,10 +287,6 @@
         "name": "Zámek nastavení úrovní",
         "hint": "Zabrání nePJům nastavovat úroveň postav pomocí výběru úrovní."
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "name": "Zámek výběru deníků",
-        "hint": "Zabrání nePJům nastavit jiné rozvržení deníku."
-    },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Zámek množství u položky",
         "hint": "Zabrání nePJům měnit množství u položky."

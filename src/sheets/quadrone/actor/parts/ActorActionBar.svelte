@@ -60,24 +60,28 @@
 
   <Search bind:searchCriteria />
 
-  <div class="button-group">
-    {#each pinnedFilters as pinnedFilter (pinnedFilter.name)}
-      <FilterToggle
-        filter={pinnedFilter}
-        filterGroupName={tabId}
-        class={pinnedFilter.pinnedFilterClass}
-        data-tooltip={pinnedFilter.text}
-      >
-        {#if !isNil(pinnedFilter.abbreviation, '')}
-          {localize(pinnedFilter.abbreviation)}
-        {:else}
-          {localize(pinnedFilter.text)}
-        {/if}
-      </FilterToggle>
-    {/each}
-  </div>
+  {#if pinnedFilters.length}
+    <div class="button-group">
+      {#each pinnedFilters as pinnedFilter (pinnedFilter.name)}
+        <FilterToggle
+          filter={pinnedFilter}
+          filterGroupName={tabId}
+          class={pinnedFilter.pinnedFilterClass}
+          data-tooltip={pinnedFilter.text}
+        >
+          {#if !isNil(pinnedFilter.abbreviation, '')}
+            {localize(pinnedFilter.abbreviation)}
+          {:else}
+            {localize(pinnedFilter.text)}
+          {/if}
+        </FilterToggle>
+      {/each}
+    </div>
+  {/if}
 
-  <FilterMenuQuadrone filterData={context.filterData} {tabId} />
+  {#if Object.keys(context.filterData).length}
+    <FilterMenuQuadrone filterData={context.filterData} {tabId} />
+  {/if}
 
   <SortButtonWithMenuQuadrone doc={context.actor} {tabId} />
 

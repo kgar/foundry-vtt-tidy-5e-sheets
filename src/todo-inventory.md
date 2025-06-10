@@ -1,8 +1,14 @@
 ## Side Quest to Complete Before Returning to Inventory
 
-- [ ] (Spellbook) Make the Source Class filters work. This will possibly amount to evolving the ItemFilterService into something more self-sufficient. It might also do to eliminate the reliance of `compose` on the flat registered filters object, because document-specific filters can't be registered there in good conscience. Instead, the service should maintain its own cache of filters and have a derived composition for each filter group (Tab) which updates itself whenever the filter data changes. Svelte 5 was made for this.
+- [x] (Spellbook) Make the Source Class filters work. This will possibly amount to evolving the ItemFilterService into something more self-sufficient. It might also do to eliminate the reliance of `compose` on the flat registered filters object, because document-specific filters can't be registered there in good conscience. Instead, the service should maintain its own cache of filters and have a derived composition for each filter group (Tab) which updates itself whenever the filter data changes. Svelte 5 was made for this.
+- [ ] (Spellbook) // TODO: Make $derived for this
+- [ ] (Spellbook) // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update
 - [ ] (Spellbook) Update filter to use pills like the latest design: https://discord.com/channels/@me/1243307347682529423/1381728068925653033
 - [ ] (Spellbook) Make the Prepared pill into a button down in the footer. When clicked, it turns on "Prepared" and "Source Class" (if available) filters, with Source Class relating to the particular spellcaster card.
+- [ ] (Spellbook) Implement spellbook subtitle
+  - [ ] Source Class (always show when available)
+  - [ ] Source Item (for Cast activities)
+  - [ ] Components (if able: show when components column not visible)
 
 ## Inventory To Do
 

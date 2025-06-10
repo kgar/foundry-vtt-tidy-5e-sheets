@@ -14,6 +14,7 @@ import type {
 } from './UserSettings.types';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
 export class UserSettingsFormApplication extends SvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
@@ -175,5 +176,12 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
     }
 
     this.close();
+  }
+
+  // Not going to refactor this because this application is living on borrowed time
+  _attachFrameListeners() {
+    super._attachFrameListeners();
+
+    applyThemeToApplication(this.element);
   }
 }

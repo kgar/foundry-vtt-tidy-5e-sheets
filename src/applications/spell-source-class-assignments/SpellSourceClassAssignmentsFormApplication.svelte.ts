@@ -9,7 +9,7 @@ import type {
   ApplicationConfiguration,
   DocumentSheetApplicationConfiguration,
 } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 
 export type SpellSourceClassAssignment = {
   /**
@@ -27,10 +27,10 @@ export type SpellSourceClassAssignmentsContext = {
   assignments: SpellSourceClassAssignment[];
 };
 
-export default class SpellSourceClassAssignmentsFormApplication extends SvelteApplicationMixin<
+export default class SpellSourceClassAssignmentsFormApplication extends DocumentSheetDialog<
   DocumentSheetApplicationConfiguration,
   SpellSourceClassAssignmentsContext
->(foundry.applications.api.DocumentSheetV2) {
+>() {
   context = new CoarseReactivityProvider<
     SpellSourceClassAssignmentsContext | undefined
   >(undefined);

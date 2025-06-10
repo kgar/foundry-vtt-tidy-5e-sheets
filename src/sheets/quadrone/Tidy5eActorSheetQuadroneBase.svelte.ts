@@ -27,7 +27,6 @@ import type {
   ActorTraitContext,
   SpecialTraitSectionField,
 } from 'src/types/types';
-import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
@@ -131,29 +130,9 @@ export function Tidy5eActorSheetQuadroneBase<
       }`;
     }
 
-    _configureEffects() {
-      let first = true;
-
-      $effect(() => {
-        // Document Apps Reactivity
-        game.user.apps[this.id] = this;
-
-        return () => {
-          delete game.user.apps[this.id];
-        };
-      });
-
-      $effect(() => {
-        if (first) return;
-
-        applyThemeToApplication(this.element, this.actor);
-        this.render();
-      });
-
-      first = false;
-    }
-
     async _prepareContext(options: any): Promise<ActorSheetQuadroneContext> {
+      this.itemFilterService.refreshFilters();
+
       const documentSheetContext = await super._prepareContext(options);
 
       documentSheetContext.source = documentSheetContext.editable
@@ -203,7 +182,7 @@ export function Tidy5eActorSheetQuadroneBase<
           this.actor.allApplicableEffects()
         ),
         elements: this.options.elements,
-        filterData: this.itemFilterService.getDocumentItemFilterData(),
+        filterData: this.itemFilterService.getFilterData(),
         filterPins:
           ItemFilterRuntime.defaultFilterPinsQuadrone[this.actor.type],
         flags: {

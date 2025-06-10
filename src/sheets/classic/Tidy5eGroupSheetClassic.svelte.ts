@@ -84,7 +84,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
     this._supportedItemTypes = new Set(Inventory.getInventoryTypes());
     this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);
-    this.#itemFilterService = new ItemFilterService({}, this.actor);
+    this.itemFilterService = new ItemFilterService({}, this.actor);
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -133,7 +133,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     submitOnClose: true,
   };
 
-  #itemFilterService: ItemFilterService;
+  itemFilterService: ItemFilterService;
   #inlineToggleService = new InlineToggleService();
   messageBus = $state<MessageBus>({ message: undefined });
 
@@ -146,18 +146,16 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
           this.#inlineToggleService,
         ],
-        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.#itemFilterService],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
-          this.#itemFilterService.onFilter.bind(this.#itemFilterService),
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
         ],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
-          this.#itemFilterService.onFilterClearAll.bind(
-            this.#itemFilterService
-          ),
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
         [
           CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
@@ -197,6 +195,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   async _prepareContext(
     options: TidyDocumentSheetRenderOptions
   ): Promise<GroupSheetClassicContext> {
+    this.itemFilterService.refreshFilters();
+
     const documentSheetContext = (await super._prepareContext(
       options
     )) as DocumentSheetV2Context;
@@ -472,7 +472,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
       ),
-      filterData: this.#itemFilterService.getDocumentItemFilterData(),
+      filterData: this.itemFilterService.getFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       groupLanguages: groupLanguages,
       groupSkills: groupSkills,
@@ -865,30 +865,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       toHit: ItemContext.getToHit(item),
       totalWeight: (await item.system.totalWeight)?.toNearest(0.1) ?? 0,
     };
-  }
-
-  _configureEffects() {
-    let first = true;
-
-    $effect(() => {
-      settings;
-
-      if (first) {
-        return;
-      }
-
-      this.render();
-    });
-
-    $effect(() => {
-      debug('Message bus message received', {
-        app: this,
-        actor: this.actor,
-        message: this.messageBus,
-      });
-    });
-
-    first = false;
   }
 
   async _renderHTML(
