@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
@@ -6,15 +8,21 @@
     NpcSheetQuadroneContext,
     SpellcastingContext,
   } from 'src/types/types';
+  import { getContext } from 'svelte';
 
   // TODO: Further generalize this so it can be used by a classless NPC.
 
   interface Props {
     info: SpellcastingContext;
     multiclass: boolean;
+    tabId: string;
   }
 
-  let { info, multiclass }: Props = $props();
+  let { info, multiclass, tabId }: Props = $props();
+
+  let itemFilterService = getContext<ItemFilterService>(
+    CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE,
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -24,6 +32,16 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
+
+  function onPreparedClicked(): any {
+    itemFilterService.onFilterClearAll(tabId);
+    itemFilterService.onFilter(tabId, 'prepared', true);
+    itemFilterService.onFilter(
+      tabId,
+      `source-class-${info.classIdentifier}`,
+      true,
+    );
+  }
 </script>
 
 <div
@@ -55,34 +73,37 @@
       </a>
     {/if}
   </div>
-  <div class="info">
-    <div class="ability">
+  <div class="info pills">
+    <div class="spellcasting-ability pill">
+      {info.ability.label}
+    </div>
+    <div class="ability pill">
       <span class="label">{localize('DND5E.Ability')}</span>
       <span class="value">
         <span class="sign">{info.ability.mod.sign}</span>
         <span>{info.ability.mod.value}</span>
       </span>
     </div>
-    <div class="attack">
+    <div class="attack pill">
       <span class="label">{localize('DND5E.Attack')}</span>
       <span class="value">
         <span class="sign">{info.attack.mod.sign}</span>
         <span>{info.attack.mod.value}</span>
       </span>
     </div>
-    <div class="save">
+    <div class="save pill">
       <span class="label">{localize('DND5E.SpellDC')}</span>
       <span class="value">
         {info.save}
       </span>
     </div>
-    <div class="prepared">
+    <a class="prepared pill interactive" onclick={() => onPreparedClicked()}>
       <span class="label">{localize('DND5E.Prepared')}</span>
       <span class="value preparations">
         <span class="count">{info.prepared.value}</span>
         <span class="separator">/</span>
         <span class="max">{info.prepared.max}</span>
       </span>
-    </div>
+    </a>
   </div>
 </div>

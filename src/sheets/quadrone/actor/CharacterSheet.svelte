@@ -49,7 +49,11 @@
 <header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
     <div class="flexcol">
-      <div class="character-context-row flexrow {context.enableXp ? 'show-xp' : ''}">
+      <div
+        class="character-context-row flexrow {context.enableXp
+          ? 'show-xp'
+          : ''}"
+      >
         <div class="flexcol flex1">
           <div class="character-details-name-row">
             {#if context.unlocked}
@@ -498,7 +502,12 @@
     <div class={['sidebar flexcol', { expanded: sidebarExpanded }]}>
       <ActorSidebar />
     </div>
-    <TabContents tabs={context.tabs} {selectedTabId} cssClass="tidy-tab-contents" />
+
+    <TabContents
+      tabs={context.tabs}
+      {selectedTabId}
+      cssClass="tidy-tab-contents"
+    />
 
     <!-- Footers -->
     <!-- TODO: Temporarily moved to the inventory tab directly -->
@@ -507,6 +516,7 @@
     /> -->
     <CharacterSpellbookFooter
       class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
+      tabId={selectedTabId}
     />
   </div>
 </div>

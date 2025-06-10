@@ -1,3 +1,4 @@
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import type {
   DocumentFilters,
@@ -53,6 +54,9 @@ export class ItemFilterService {
   );
   private _document: any;
   private _documentFilterProvider = ItemFilterRuntime.getDocumentFilters;
+  private debouncedRenderDocument = FoundryAdapter.debounce(() => {
+    this._document.render();
+  }, 50);
 
   // TODO: Have sheets send in what they have in session storage upon construction
   constructor(
@@ -118,7 +122,7 @@ export class ItemFilterService {
 
       group[filterName] = value;
     } finally {
-      this._document.render();
+      this.debouncedRenderDocument();
     }
   }
 
@@ -129,7 +133,7 @@ export class ItemFilterService {
       this._filterGroupChoices = {};
     }
 
-    this._document.render();
+    this.debouncedRenderDocument();
   }
 
   private _getGroupChoices(filterGroup: ItemFilterGroupName) {

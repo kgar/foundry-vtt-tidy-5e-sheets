@@ -1068,8 +1068,10 @@ export type SkillToolFavoriteContextEntry = {
 
 export type SpellcastingContext = {
   name: string;
+  classIdentifier: string;
   ability: {
     key: string;
+    label: string;
     mod: {
       sign: string;
       value: string;

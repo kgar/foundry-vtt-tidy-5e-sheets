@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { CharacterSheetQuadroneContext } from 'src/types/types';
   import type { ClassValue } from 'svelte/elements';
@@ -8,11 +7,10 @@
 
   interface Props {
     class?: ClassValue;
+    tabId: string;
   }
 
-  let { class: classValue }: Props = $props();
-
-  const localize = FoundryAdapter.localize;
+  let { class: classValue, tabId }: Props = $props();
 
   let context = $derived(getSheetContext<CharacterSheetQuadroneContext>());
 
@@ -27,7 +25,7 @@
 
 <div class={['sheet-footer', classValue]}>
   {#each context.spellcasting as info}
-    <SpellcastingClassSummaryCard {info} {multiclass} />
+    <SpellcastingClassSummaryCard {info} {multiclass} {tabId} />
   {/each}
 
   <a

@@ -3,8 +3,8 @@
 - [x] (Spellbook) Make the Source Class filters work. This will possibly amount to evolving the ItemFilterService into something more self-sufficient. It might also do to eliminate the reliance of `compose` on the flat registered filters object, because document-specific filters can't be registered there in good conscience. Instead, the service should maintain its own cache of filters and have a derived composition for each filter group (Tab) which updates itself whenever the filter data changes. Svelte 5 was made for this.
 - [x] (Spellbook) // TODO: Make $derived for this
 - [x] ~~(Spellbook) // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update~~ just skipped this. There's no real benefit.
-- [ ] (Spellbook) Update footer to use pills like the latest design: https://discord.com/channels/@me/1243307347682529423/1381728068925653033
-- [ ] (Spellbook) Make the Prepared pill into a button down in the footer. When clicked, it turns on "Prepared" and "Source Class" (if available) filters, with Source Class relating to the particular spellcaster card.
+- [x] (Spellbook) Update footer to use pills like the latest design: https://discord.com/channels/@me/1243307347682529423/1381728068925653033
+- [x] (Spellbook) Make the Prepared pill into a button down in the footer. When clicked, it turns on "Prepared" and "Source Class" (if available) filters, with Source Class relating to the particular spellcaster card.
 - [ ] (Spellbook) Implement spellbook subtitle
   - [ ] Source Class (always show when available)
   - [ ] Source Item (for Cast activities)
@@ -68,6 +68,7 @@
 - [ ] Propagate Data-Driven Columns to Effects tables
 - [ ] (Low priority) ButtonWithOptionPanel - use a Portal or something similar so that there's a singleton menu shell that can be shown/hidden by any sheet and can be given a component and/or snippet to render. This should allow for someone to have a compact sheet and view the full options panel without the sheet's overflow hiding the options.
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
+- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 
 ## Questions
 

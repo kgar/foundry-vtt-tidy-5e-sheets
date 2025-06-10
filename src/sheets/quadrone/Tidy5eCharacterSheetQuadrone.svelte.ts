@@ -937,9 +937,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
       spellcasting.push({
         name,
+        classIdentifier: item.system.identifier,
         ability: {
           key: sc.ability,
           mod: getModifierData(mod),
+          label: CONFIG.DND5E.abilities[sc.ability]?.label ?? sc.ability,
         },
         attack: {
           mod: getModifierData(sc.attack),
