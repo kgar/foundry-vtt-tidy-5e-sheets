@@ -1,5 +1,7 @@
 ## To Do
 
+> Finish [Inventory TODOs](todo-inventory.md) before returning here
+
 - [ ] Character Sheet 
   - [ ] Add drag-and-drop to sort for Favorites
   - [ ] Implement slots, skills, and tools drag

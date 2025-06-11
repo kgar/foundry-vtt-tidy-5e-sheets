@@ -44,10 +44,6 @@
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
 - [ ] (low priority) Implement container panel
 
-## Unrelated to this feature, unsorted, work or add to main list when done here
-
-
-
 ## Side Quest to Complete Before Returning to Inventory
 
 - [x] (Spellbook) Make the Source Class filters work. This will possibly amount to evolving the ItemFilterService into something more self-sufficient. It might also do to eliminate the reliance of `compose` on the flat registered filters object, because document-specific filters can't be registered there in good conscience. Instead, the service should maintain its own cache of filters and have a derived composition for each filter group (Tab) which updates itself whenever the filter data changes. Svelte 5 was made for this.
