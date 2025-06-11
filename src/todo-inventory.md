@@ -1,15 +1,3 @@
-## Side Quest to Complete Before Returning to Inventory
-
-- [x] (Spellbook) Make the Source Class filters work. This will possibly amount to evolving the ItemFilterService into something more self-sufficient. It might also do to eliminate the reliance of `compose` on the flat registered filters object, because document-specific filters can't be registered there in good conscience. Instead, the service should maintain its own cache of filters and have a derived composition for each filter group (Tab) which updates itself whenever the filter data changes. Svelte 5 was made for this.
-- [x] (Spellbook) // TODO: Make $derived for this
-- [x] ~~(Spellbook) // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update~~ just skipped this. There's no real benefit.
-- [x] (Spellbook) Update footer to use pills like the latest design: https://discord.com/channels/@me/1243307347682529423/1381728068925653033
-- [x] (Spellbook) Make the Prepared pill into a button down in the footer. When clicked, it turns on "Prepared" and "Source Class" (if available) filters, with Source Class relating to the particular spellcaster card.
-- [ ] (Spellbook) Implement spellbook subtitle
-  - [ ] Source Class (always show when available)
-  - [ ] Source Item (for Cast activities)
-  - [ ] Components (if able: show when components column not visible)
-
 ## Inventory To Do
 
 - [x] Switch from hideUnder to priority show/hide scheme
@@ -40,14 +28,11 @@
     - [x] Filters
     - [x] Sort
     - [x] Tab Config
-  - [ ] Encumbrance Row
-    - [ ] Strength Pill
-    - [ ] Size Pill
-  - [ ] Multiplier Pill
-    - [ ] Encumbrance bar with threshold ticks
-  - [ ] While there, implement generic width / priority observer feature that can control pinned filter visibility generically
-  - [ ] Propagate this to the container action bar
-- [ ] Implement container panel
+  - [x] Encumbrance Row
+    - [x] Strength Pill
+    - [x] Size Pill
+    - [x] Multiplier Pill
+    - [x] Encumbrance bar with threshold ticks
 - [ ] `ItemColumnRuntime.determineHiddenColumns` - use this to pre-calculate column widths and to return a column scheme type that excludes width functions.
 - [ ] Expand column width calculations to include support for other measurements like REMs. Calculate the root rem on Foundry ready `parseFloat(getComputedStyle(document.body).fontSize)` and anytime settings change.
   - Bonus: promote the UI Scale watcher and its hook to a centralized location where Tidy pulls its core setting info as a reactive store.
@@ -57,18 +42,23 @@
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 - [ ] Put weight unit in weight column
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
-- [ ] Review and task further
+- [ ] (low priority) Implement container panel
 
 ## Unrelated to this feature, unsorted, work or add to main list when done here
 
-- [ ] Add drag-and-drop to sort for Favorites
-- [ ] Propagate Table Row Actions to Activities tables
-- [ ] Propagate Table Row Actions to Effects tables
-- [ ] Propagate Data-Driven Columns to Activities tables
-- [ ] Propagate Data-Driven Columns to Effects tables
-- [ ] (Low priority) ButtonWithOptionPanel - use a Portal or something similar so that there's a singleton menu shell that can be shown/hidden by any sheet and can be given a component and/or snippet to render. This should allow for someone to have a compact sheet and view the full options panel without the sheet's overflow hiding the options.
-- [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
-- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
+
+
+## Side Quest to Complete Before Returning to Inventory
+
+- [x] (Spellbook) Make the Source Class filters work. This will possibly amount to evolving the ItemFilterService into something more self-sufficient. It might also do to eliminate the reliance of `compose` on the flat registered filters object, because document-specific filters can't be registered there in good conscience. Instead, the service should maintain its own cache of filters and have a derived composition for each filter group (Tab) which updates itself whenever the filter data changes. Svelte 5 was made for this.
+- [x] (Spellbook) // TODO: Make $derived for this
+- [x] ~~(Spellbook) // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update~~ just skipped this. There's no real benefit.
+- [x] (Spellbook) Update footer to use pills like the latest design: https://discord.com/channels/@me/1243307347682529423/1381728068925653033
+- [x] (Spellbook) Make the Prepared pill into a button down in the footer. When clicked, it turns on "Prepared" and "Source Class" (if available) filters, with Source Class relating to the particular spellcaster card.
+- [x] (Spellbook) Implement spellbook subtitle
+  - [x] Source Class (always show when available)
+  - [x] Source Item (for Cast activities)
+  - [x] Components (if able: show when components column not visible)
 
 ## Questions
 

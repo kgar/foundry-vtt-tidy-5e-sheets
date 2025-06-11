@@ -18,6 +18,7 @@
   import { getContext } from 'svelte';
   import ActorActionBar from '../parts/ActorActionBar.svelte';
   import CharacterInventoryFooter from '../character-parts/CharacterInventoryFooter.svelte';
+  import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
 
   let context =
     $derived(
@@ -58,6 +59,8 @@
 
 <ActorActionBar bind:searchCriteria sections={inventory} {tabId} />
 
+<CharacterEncumbranceRow />
+
 <ItemTables
   sections={inventory}
   editable={context.editable}
@@ -69,5 +72,5 @@
 />
 
 <CharacterInventoryFooter
-class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
+  class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
 />
