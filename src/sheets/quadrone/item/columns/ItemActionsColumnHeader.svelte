@@ -15,8 +15,6 @@
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  $inspect(section.dataset);
-
   function onAddClicked() {
     sheetDocument.sheet._addDocument({
       tabId,

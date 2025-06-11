@@ -14,10 +14,7 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
-import type {
-  ColumnSpecificationSchematics,
-  DocumentFilters,
-} from 'src/runtime/item/item.types';
+import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
@@ -169,7 +166,7 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
-  // columns: ColumnSpecificationSchematics[];
+  // columns: ColumnsLoadout[];
   rowActions: TidyTableAction<any, any, any>[];
 };
 

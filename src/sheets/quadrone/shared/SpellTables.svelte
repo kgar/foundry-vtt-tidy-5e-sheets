@@ -19,6 +19,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
   import SpellSlotManagementQuadrone from '../actor/parts/SpellSlotManagementQuadrone.svelte';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
 
   interface Props {
     sections: SpellbookSection[];
@@ -68,15 +69,19 @@
 <div class="tidy-table-container" bind:this={sectionsContainer}>
   {#each sections as section (section.key)}
     {#if section.show}
-      {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
-        sheetDocument,
-        tabId,
-        section,
+      {@const columns = new ColumnsLoadout(
+        ItemColumnRuntime.getConfiguredColumnSpecifications(
+          sheetDocument.type,
+          tabId,
+          section.key,
+          {
+            rowActions: section.rowActions,
+          },
+        ),
       )}
       {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
         sectionsInlineWidth,
         columns,
-        section,
       )}
       <TidyTable
         key={section.key}
@@ -102,13 +107,10 @@
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
-              {@const widthRems =
-                typeof column.widthRems === 'number'
-                  ? column.widthRems
-                  : column.widthRems(section)}
+
               <TidyTableHeaderCell
                 class={[column.headerClasses, { hidden }]}
-                columnWidth="{widthRems}rem"
+                columnWidth="{column.widthRems}rem"
               >
                 {#if !!column.headerContent}
                   {#if column.headerContent.type === 'callback'}
@@ -188,13 +190,9 @@
                 {/if}
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
-                  {@const width =
-                    typeof column.widthRems === 'number'
-                      ? column.widthRems
-                      : column.widthRems(section)}
 
                   <TidyTableCell
-                    columnWidth="{width}px"
+                    columnWidth="{column.widthRems}rem"
                     class={[column.cellClasses, { hidden }]}
                   >
                     {#if column.cellContent.type === 'callback'}

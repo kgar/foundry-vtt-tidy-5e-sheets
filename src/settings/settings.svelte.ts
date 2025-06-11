@@ -1867,8 +1867,10 @@ export function initSettings() {
     _settings = getCurrentSettings();
   });
 
-  refreshFoundryCoreSettings();
-  
+  Hooks.once('ready', () => {
+    refreshFoundryCoreSettings();
+  });
+
   Hooks.on('clientSettingChanged', () => {
     refreshFoundryCoreSettings();
   });

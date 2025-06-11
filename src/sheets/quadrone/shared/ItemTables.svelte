@@ -19,6 +19,7 @@
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
 
   type ItemTableSection = TidySectionBase & { items: Item5e[] };
 
@@ -81,15 +82,19 @@
 <div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
   {#each sections as section (section.key)}
     {#if section.show}
-      {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
-        containingDocument,
-        !container ? tabId : CONSTANTS.TAB_CONTAINER_CONTENTS,
-        section,
+      {@const columns = new ColumnsLoadout(
+        ItemColumnRuntime.getConfiguredColumnSpecifications(
+          sheetDocument.type,
+          tabId,
+          section.key,
+          {
+            rowActions: section.rowActions,
+          },
+        ),
       )}
       {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
         sectionsInlineWidth,
         columns,
-        section,
       )}
       <TidyTable
         key={section.key}
@@ -105,16 +110,13 @@
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
-              {@const widthRems =
-                typeof column.widthRems === 'number'
-                  ? column.widthRems
-                  : column.widthRems(section)}
+
               <TidyTableHeaderCell
                 class={[
                   column.headerClasses,
                   { hidden: (!expanded && !root) || hidden },
                 ]}
-                columnWidth="{widthRems}rem"
+                columnWidth="{column.widthRems}rem"
               >
                 {#if !!column.headerContent}
                   {#if column.headerContent.type === 'callback'}
@@ -156,7 +158,7 @@
               }}
             >
               {#snippet children({ toggleSummary, expanded })}
-              <div class="highlight"></div>
+                <div class="highlight"></div>
                 <a
                   class={['tidy-table-row-use-button']}
                   onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
@@ -182,7 +184,12 @@
                 {/if}
 
                 <TidyTableCell primary={true} class="item-label text-cell">
-                  <a class="item-name" role="button" tabindex="0" onclick={(ev) => toggleSummary()}>
+                  <a
+                    class="item-name"
+                    role="button"
+                    tabindex="0"
+                    onclick={(ev) => toggleSummary()}
+                  >
                     <span class="cell-text">
                       <span class="cell-name">{item.name}</span>
                     </span>
@@ -207,13 +214,9 @@
                 {/if}
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
-                  {@const widthRems =
-                    typeof column.widthRems === 'number'
-                      ? column.widthRems
-                      : column.widthRems(section)}
 
                   <TidyTableCell
-                    columnWidth="{widthRems}rem"
+                    columnWidth="{column.widthRems}rem"
                     class={[column.cellClasses, { hidden }]}
                   >
                     {#if column.cellContent.type === 'callback'}

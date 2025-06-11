@@ -1,11 +1,8 @@
-import type { TidySectionBase } from 'src/types/types';
 import type {
   ColumnSpecDocumentTypesToTabs,
   ColumnSpecification,
-  ColumnSpecificationSchematics,
-  SectionColumnSpecificationSchematics,
-  SheetColumnSpecificationSchematics,
-  TabColumnSpecificationSchematics,
+  ColumnSpecificationCalculatedWidthArgs,
+  ConfiguredColumnSpecification,
 } from './item.types';
 import { CONSTANTS } from 'src/constants';
 import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
@@ -25,6 +22,7 @@ import ItemSpellSchoolColumn from 'src/sheets/quadrone/item/columns/ItemSpellSch
 import ItemTargetColumn from 'src/sheets/quadrone/item/columns/ItemTargetColumn.svelte';
 import ItemRangeColumn from 'src/sheets/quadrone/item/columns/ItemRangeColumn.svelte';
 import { foundryCoreSettings, settings } from 'src/settings/settings.svelte';
+import type { ColumnsLoadout } from './ColumnsLoadout.svelte';
 
 const ENTRY_NAME_MIN_WIDTH_REMS = 12.5;
 
@@ -58,7 +56,7 @@ class ItemColumnRuntime {
         type: 'component',
         component: DocumentActionsColumn,
       },
-      widthRems: (section: TidySectionBase) => {
+      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
         let paddingX = 0.1875;
         let buttonWidth = 1.5;
         return buttonWidth * section.rowActions.length + paddingX;
@@ -330,74 +328,40 @@ class ItemColumnRuntime {
     };
   }
 
-  columnSchematics = $derived.by<SheetColumnSpecificationSchematics>(() => {
-    let sheetSchematics: SheetColumnSpecificationSchematics = {};
-
-    for (let [sheetType, tabSpecs] of Object.entries(
-      this._registeredItemColumns
-    )) {
-      const tabSchematics: TabColumnSpecificationSchematics = {};
-      sheetSchematics[sheetType] = tabSchematics;
-
-      for (let [tabId, sectionSpecs] of Object.entries(tabSpecs)) {
-        const sectionSchematics: SectionColumnSpecificationSchematics = {};
-        tabSchematics[tabId] = sectionSchematics;
-
-        for (let [sectionKey, entryTypeSpecs] of Object.entries(sectionSpecs)) {
-          sectionSchematics[sectionKey] = {
-            ordered: Object.entries(entryTypeSpecs)
-              .map((x) => ({
-                ...x[1],
-                key: x[0],
-              }))
-              .sort((a, b) => a.order - b.order),
-            prioritized: Object.entries(entryTypeSpecs)
-              .map((x) => ({
-                ...x[1],
-                key: x[0],
-              }))
-              .sort((a, b) => b.priority - a.priority),
-          };
-        }
-      }
-    }
-
-    return sheetSchematics;
-  });
-
-  getSheetTabSectionColumnsQuadrone(
-    document: any,
+  getConfiguredColumnSpecifications(
+    sheetType: string,
     tabId: string,
-    section: TidySectionBase
-  ): ColumnSpecificationSchematics {
-    const sections = this.columnSchematics[document.type]?.[tabId];
-    var specs = sections?.[section.key] ??
-      sections?.[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] ?? {
-        ordered: [],
-        prioritized: [],
-      };
-
-    return specs;
+    sectionKey: string,
+    args: ColumnSpecificationCalculatedWidthArgs
+  ): ConfiguredColumnSpecification[] {
+    const tab = this._registeredItemColumns[sheetType]?.[tabId];
+    let columnKeysToColumnSpecs =
+      tab?.[sectionKey] ??
+      tab?.[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] ??
+      [];
+    return Object.entries(columnKeysToColumnSpecs).map(([key, spec]) => ({
+      key,
+      ...spec,
+      widthRems:
+        typeof spec.widthRems === 'number'
+          ? spec.widthRems
+          : spec.widthRems(args),
+    }));
   }
 
   determineHiddenColumns(
-    inlineSize: number,
-    schematics: ColumnSpecificationSchematics,
-    section: TidySectionBase
+    inlineSizePx: number,
+    schematics: ColumnsLoadout
   ): Set<string> {
-    let available = inlineSize;
+
+    let availableRems = inlineSizePx / foundryCoreSettings.value.fontSizePx;
 
     let toHide = new Set<string>();
 
     for (const col of schematics.prioritized) {
-      let width =
-        typeof col.widthRems === 'number'
-          ? col.widthRems
-          : col.widthRems(section);
+      availableRems -= col.widthRems;
 
-      available -= width;
-
-      if (available < this.#minWidthRems) {
+      if (availableRems < this.#minWidthRems) {
         toHide.add(col.key);
       }
     }
