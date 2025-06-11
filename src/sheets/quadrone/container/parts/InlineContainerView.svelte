@@ -1,6 +1,6 @@
 <script lang="ts">
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import ItemTables from '../../shared/ItemTables.svelte';
+  import InventoryTables from '../../shared/InventoryTables.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext, type Component } from 'svelte';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
@@ -72,7 +72,7 @@
       data-tidy-container-id={container.id}
       ondrop={onDrop}
     >
-      <ItemTables
+      <InventoryTables
         sections={containerContents.contents}
         {container}
         {editable}

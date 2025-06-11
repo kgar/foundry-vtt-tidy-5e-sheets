@@ -9,15 +9,15 @@
     ActorSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
-  import ExpandCollapseButton from '../../shared/ExpandCollapseButton.svelte';
+  import ExpandCollapseButton from './ExpandCollapseButton.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
-  import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
   import { isNil } from 'src/utils/data';
+  import type { ContainerSheetQuadroneContext } from 'src/types/item.types';
 
   interface Props {
     searchCriteria: string;
@@ -35,7 +35,22 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
+  let context =
+    $derived(
+      getSheetContext<
+        ActorSheetQuadroneContext | ContainerSheetQuadroneContext
+      >(),
+    );
+
+  let tab = $derived(context.tabs.find((t) => t.id === tabId));
+
+  let tabName = $derived(
+    localize(
+      typeof tab?.title === 'string'
+        ? tab.title
+        : (tab?.title({ document: context.document }) ?? ''),
+    ),
+  );
 
   let pinnedFilters = $derived(
     ItemFilterRuntime.getPinnedFiltersForTab(
@@ -43,12 +58,6 @@
       context.filterData,
       tabId,
     ),
-  );
-
-  let tabName = $derived(
-    context.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
-      ? CharacterSheetQuadroneRuntime.getTabTitle(tabId)
-      : 'TODO',
   );
 </script>
 
@@ -83,7 +92,7 @@
     <FilterMenuQuadrone filterData={context.filterData} {tabId} />
   {/if}
 
-  <SortButtonWithMenuQuadrone doc={context.actor} {tabId} />
+  <SortButtonWithMenuQuadrone doc={context.document} {tabId} />
 
   <a
     class="button button-icon-only"
@@ -92,7 +101,7 @@
     onclick={() =>
       context.editable &&
       new ConfigureSectionsApplication({
-        document: context.actor,
+        document: context.document,
         settings: {
           tabId,
           sections: sections,

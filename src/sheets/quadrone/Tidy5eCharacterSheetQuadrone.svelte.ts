@@ -211,6 +211,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
+      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       speeds: this._getMovementSpeeds(),
       spellbook: [],
@@ -626,7 +627,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       if (this._concentration.items.has(item)) {
         context.concentration = true;
       }
-      
+
       const vsmcr = game.i18n
         .getListFormatter({ style: 'narrow' })
         .format(item.labels.components.all.map((a: any) => a.abbr));

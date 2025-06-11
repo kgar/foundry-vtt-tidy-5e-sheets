@@ -9,16 +9,17 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import ItemTables from 'src/sheets/quadrone/shared/ItemTables.svelte';
+  import InventoryTables from 'src/sheets/quadrone/shared/InventoryTables.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import ActorActionBar from '../parts/ActorActionBar.svelte';
   import CharacterInventoryFooter from '../character-parts/CharacterInventoryFooter.svelte';
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
+  import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
+  import ContainerPanel from 'src/sheets/classic/shared/ContainerPanel.svelte';
 
   let context =
     $derived(
@@ -57,11 +58,18 @@
   });
 </script>
 
-<ActorActionBar bind:searchCriteria sections={inventory} {tabId} />
+<InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
 <CharacterEncumbranceRow />
 
-<ItemTables
+{#if context.showContainerPanel}
+  <ContainerPanel
+    {searchCriteria}
+    containerPanelItems={context.containerPanelItems}
+  />
+{/if}
+
+<InventoryTables
   sections={inventory}
   editable={context.editable}
   itemContext={context.itemContext}

@@ -8,7 +8,7 @@
     NpcSheetQuadroneContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import ActorActionBar from '../parts/ActorActionBar.svelte';
+  import ActionBar from '../../shared/ActionBar.svelte';
   import SpellTables from '../../shared/SpellTables.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import {
@@ -16,8 +16,6 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
-  import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context =
     $derived(
@@ -75,7 +73,7 @@
   });
 </script>
 
-<ActorActionBar
+<ActionBar
   bind:searchCriteria
   sections={spellbook}
   {tabId}

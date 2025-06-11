@@ -59,7 +59,7 @@ export interface OnRenderTabParams extends OnRenderParams {
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab = {
-  title: string | ((tabContext: Record<string, any>) => string);
+  title: string | ((tabContext: { document: any } & Record<string, any>) => string);
   id: string;
   content: SvelteTabContent | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
@@ -1116,6 +1116,7 @@ export type CharacterSheetQuadroneContext = {
   itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
+  showContainerPanel: boolean;
   showDeathSaves: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
@@ -1134,6 +1135,7 @@ export type NpcSheetQuadroneContext = {
   currencies: CurrencyContext[];
   features: NpcAbilitySection[];
   inventory: InventorySection[];
+  showContainerPanel: boolean;
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
   spellComponentLabels: Record<string, string>;

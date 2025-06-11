@@ -1,19 +1,16 @@
 ## Inventory To Do
 
-- [x] Track Foundry core settings in a state store
-  - [x] Root Font Size (pulled from html inline style font-size, no computed styles needed; Foundry Core has a hardcoded mapping for font sizes. Rather than try to copy that and be surprised when it changes, simply use the universally-available inline style)
-- [x] Convert item columns to use REMs exclusively. Ensure font scaling properly scales column widths.
-- [ ] Move columns to TidySectionBase
-- [ ] Update KeyedColumnSpecification to include width measurements precalculated
-- [ ] 
-  - Bonus: promote the UI Scale watcher and its hook to a centralized location where Tidy pulls its core setting info as a reactive store.
-- [ ] Evolve ItemLists further
-  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
-  - Move columns to TidySectionBase and include in prep
-  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
+- [x] Make ActorActionBar simply ActionBar. This just requires getting tabName 🤣 
+- [ ] (low priority) Implement container panel
+  - [x] Set it up for all inventories
+  - [ ] Extract classic styles and put them in the classic space.
+  - [ ] Retrofit the styles in the quadrone space, in `sheet.scss`.
 - [ ] Put weight unit in weight column
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
-- [ ] (low priority) Implement container panel
+- [ ] Evolve ItemLists further
+  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
+  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
+- [ ] // TODO: Find a way to share this data between all callers who use the inventory action bar.
 
 ## Inventory To Done
 
@@ -50,6 +47,11 @@
     - [x] Size Pill
     - [x] Multiplier Pill
     - [x] Encumbrance bar with threshold ticks
+- [x] Track Foundry core settings in a state store
+  - [x] Root Font Size (pulled from html inline style font-size, no computed styles needed; Foundry Core has a hardcoded mapping for font sizes. Rather than try to copy that and be surprised when it changes, simply use the universally-available inline style)
+- [x] Convert item columns to use REMs exclusively. Ensure font scaling properly scales column widths.
+- [x] ~~Move columns to TidySectionBase~~ Deferred to some other time. Where I landed was good enough.
+- [x] Ensure column widths are precalculated before looping for headers and body in the tables components.
 
 ## Side Quest to Complete Before Returning to Inventory
 
