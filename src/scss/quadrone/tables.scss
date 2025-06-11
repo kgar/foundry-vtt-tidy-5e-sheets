@@ -270,7 +270,7 @@
     display: flex;
     min-height: var(--t5e-field-size-default);
 
-    &:not(.primary) {
+    &:not(:is(.primary, .tidy-table-actions, .header-cell-actions)) {
       text-align: center;
       justify-content: center;
     }

@@ -102,13 +102,13 @@
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
-              {@const width =
-                typeof column.width === 'number'
-                  ? column.width
-                  : column.width(section)}
+              {@const widthRems =
+                typeof column.widthRems === 'number'
+                  ? column.widthRems
+                  : column.widthRems(section)}
               <TidyTableHeaderCell
                 class={[column.headerClasses, { hidden }]}
-                columnWidth="{width}px"
+                columnWidth="{widthRems}rem"
               >
                 {#if !!column.headerContent}
                   {#if column.headerContent.type === 'callback'}
@@ -189,9 +189,9 @@
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
                   {@const width =
-                    typeof column.width === 'number'
-                      ? column.width
-                      : column.width(section)}
+                    typeof column.widthRems === 'number'
+                      ? column.widthRems
+                      : column.widthRems(section)}
 
                   <TidyTableCell
                     columnWidth="{width}px"

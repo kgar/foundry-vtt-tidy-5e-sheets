@@ -24,8 +24,9 @@ import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpel
 import ItemSpellSchoolColumn from 'src/sheets/quadrone/item/columns/ItemSpellSchoolColumn.svelte';
 import ItemTargetColumn from 'src/sheets/quadrone/item/columns/ItemTargetColumn.svelte';
 import ItemRangeColumn from 'src/sheets/quadrone/item/columns/ItemRangeColumn.svelte';
+import { foundryCoreSettings, settings } from 'src/settings/settings.svelte';
 
-const ENTRY_NAME_MIN_WIDTH_PX = 200;
+const ENTRY_NAME_MIN_WIDTH_REMS = 12.5;
 
 class ItemColumnRuntime {
   /**
@@ -35,8 +36,14 @@ class ItemColumnRuntime {
    * defaults for all eligible content would go here.
    */
   _registeredItemColumns: ColumnSpecDocumentTypesToTabs = $state({});
-  #uiScale = $state(1);
-  #minWidth = $derived(this.#uiScale * ENTRY_NAME_MIN_WIDTH_PX);
+
+  // TODO: Switch to rems
+  #minWidthRems = $derived(ENTRY_NAME_MIN_WIDTH_REMS);
+
+  // TODO: derive the PX measurement based on core font size
+  #minWidthPx = $derived(
+    foundryCoreSettings.value.fontSizePx * this.#minWidthRems
+  );
 
   initOnReady() {
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
@@ -51,10 +58,9 @@ class ItemColumnRuntime {
         type: 'component',
         component: DocumentActionsColumn,
       },
-      width: (section: TidySectionBase) => {
-        // TODO: Use REMs and a REM conversion from the computed body fontSize
-        let paddingX = 3;
-        let buttonWidth = 24;
+      widthRems: (section: TidySectionBase) => {
+        let paddingX = 0.1875;
+        let buttonWidth = 1.5;
         return buttonWidth * section.rowActions.length + paddingX;
       },
       order: 1000,
@@ -67,7 +73,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: InlineCapacityTrackerColumn,
         },
-        width: 112,
+        widthRems: 7,
         cellClasses: 'text-cell',
         order: 100,
         priority: 100,
@@ -77,7 +83,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: InlineCapacityBarColumn,
         },
-        width: 112,
+        widthRems: 7,
         cellClasses: 'text-cell',
         order: 200,
         priority: 200,
@@ -95,7 +101,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemChargesColumn,
         },
-        width: 80,
+        widthRems: 5,
         cellClasses: 'inline-uses',
         order: 100,
         priority: 400,
@@ -109,7 +115,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemTimeColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 200,
         priority: 500,
       },
@@ -122,7 +128,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemPriceColumn,
         },
-        width: 88,
+        widthRems: 5.5,
         order: 300,
         priority: 100,
       },
@@ -135,7 +141,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemQuantityColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 400,
         priority: 300,
       },
@@ -148,7 +154,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemWeightColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 500,
         priority: 200,
       },
@@ -176,7 +182,7 @@ class ItemColumnRuntime {
           component: ItemRollColumn,
         },
         order: 300,
-        width: 50,
+        widthRems: 3.125,
         priority: 700,
       },
       formula: {
@@ -189,7 +195,7 @@ class ItemColumnRuntime {
           component: ItemDamageFormulasColumn,
         },
         order: 400,
-        width: 80,
+        widthRems: 5,
         priority: 600,
       },
       price: {
@@ -239,7 +245,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemSpellComponentsColumn,
         },
-        width: 90,
+        widthRems: 5.625,
         order: 100,
         priority: 300,
       },
@@ -252,7 +258,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemSpellSchoolColumn,
         },
-        width: 40,
+        widthRems: 2.5,
         order: 200,
         priority: 100,
       },
@@ -270,7 +276,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemTargetColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 400,
         priority: 200,
       },
@@ -283,7 +289,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemRangeColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 500,
         priority: 500,
       },
@@ -322,23 +328,6 @@ class ItemColumnRuntime {
         },
       },
     };
-
-    this.refreshUiScale();
-
-    Hooks.on('clientSettingChanged', () => {
-      this.refreshUiScale();
-    });
-  }
-
-  refreshUiScale() {
-    const newScale = game.settings.get('core', 'uiConfig')?.uiScale ?? 1;
-    if (newScale !== this.#uiScale) {
-      this.#uiScale = newScale;
-    }
-  }
-
-  get minWidth() {
-    return this.#minWidth;
   }
 
   columnSchematics = $derived.by<SheetColumnSpecificationSchematics>(() => {
@@ -402,12 +391,13 @@ class ItemColumnRuntime {
 
     for (const col of schematics.prioritized) {
       let width =
-        typeof col.width === 'number' ? col.width : col.width(section);
-      const scaledWidth = width * this.#uiScale;
+        typeof col.widthRems === 'number'
+          ? col.widthRems
+          : col.widthRems(section);
 
-      available -= scaledWidth;
+      available -= width;
 
-      if (available < this.#minWidth) {
+      if (available < this.#minWidthRems) {
         toHide.add(col.key);
       }
     }

@@ -21,6 +21,11 @@ export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
 };
 
+/** Any Foundry Core Settings that are relevant to Tidy and need cached access. */
+export type FoundryCoreSettings = {
+  fontSizePx: number;
+};
+
 export type Tidy5eSettingKey = keyof (typeof SettingsProvider)['settings'];
 
 /**
@@ -103,10 +108,19 @@ export type Tidy5eSetting = {
  * The current Tidy 5e settings.
  */
 let _settings: CurrentSettings = $state()!; // For ergonomics, pretend like this is never undefined, because it is initialized in the hooks lifecycle.
+let _foundryCoreSettings: FoundryCoreSettings = $state({
+  fontSizePx: 16,
+});
 
 export const settings = {
   get value() {
     return _settings;
+  },
+};
+
+export const foundryCoreSettings = {
+  get value() {
+    return _foundryCoreSettings;
   },
 };
 
@@ -1814,6 +1828,12 @@ export function createSettings() {
   } as const;
 }
 
+function refreshFoundryCoreSettings() {
+  _foundryCoreSettings.fontSizePx = parseFloat(
+    document.documentElement.style.fontSize
+  );
+}
+
 export let SettingsProvider: ReturnType<typeof createSettings>;
 
 export function initSettings() {
@@ -1845,5 +1865,11 @@ export function initSettings() {
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();
+  });
+
+  refreshFoundryCoreSettings();
+  
+  Hooks.on('clientSettingChanged', () => {
+    refreshFoundryCoreSettings();
   });
 }

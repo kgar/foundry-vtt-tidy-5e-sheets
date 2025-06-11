@@ -1,5 +1,22 @@
 ## Inventory To Do
 
+- [x] Track Foundry core settings in a state store
+  - [x] Root Font Size (pulled from html inline style font-size, no computed styles needed; Foundry Core has a hardcoded mapping for font sizes. Rather than try to copy that and be surprised when it changes, simply use the universally-available inline style)
+- [x] Convert item columns to use REMs exclusively. Ensure font scaling properly scales column widths.
+- [ ] Move columns to TidySectionBase
+- [ ] Update KeyedColumnSpecification to include width measurements precalculated
+- [ ] 
+  - Bonus: promote the UI Scale watcher and its hook to a centralized location where Tidy pulls its core setting info as a reactive store.
+- [ ] Evolve ItemLists further
+  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
+  - Move columns to TidySectionBase and include in prep
+  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
+- [ ] Put weight unit in weight column
+- [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
+- [ ] (low priority) Implement container panel
+
+## Inventory To Done
+
 - [x] Switch from hideUnder to priority show/hide scheme
 - [x] Have each use of a column provide a priority
 - [x] Propagate to Containers as well
@@ -33,16 +50,6 @@
     - [x] Size Pill
     - [x] Multiplier Pill
     - [x] Encumbrance bar with threshold ticks
-- [ ] `ItemColumnRuntime.determineHiddenColumns` - use this to pre-calculate column widths and to return a column scheme type that excludes width functions.
-- [ ] Expand column width calculations to include support for other measurements like REMs. Calculate the root rem on Foundry ready `parseFloat(getComputedStyle(document.body).fontSize)` and anytime settings change.
-  - Bonus: promote the UI Scale watcher and its hook to a centralized location where Tidy pulls its core setting info as a reactive store.
-- [ ] Evolve ItemLists further
-  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
-  - Move columns to TidySectionBase and include in prep
-  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
-- [ ] Put weight unit in weight column
-- [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
-- [ ] (low priority) Implement container panel
 
 ## Side Quest to Complete Before Returning to Inventory
 
