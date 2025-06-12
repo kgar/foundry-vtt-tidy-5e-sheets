@@ -20,7 +20,6 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
-  
 </script>
 
 <!-- TODO: add tooltips to config buttons -->
@@ -31,14 +30,14 @@
       class="button button-borderless skill-expand-button"
       onclick={(ev) => FoundryAdapter.renderToolsConfig(context.actor)}
     >
-    <i class="fa-solid fa-hammer color-text-lightest"></i>
-    <h3 class="font-label-medium">
-      <span>{localize('TYPES.Item.toolPl')}</span>
-      <i class="fa-solid fa-cog"></i>
-    </h3>
-    <span class="modifier-label color-text-lightest font-default-medium">
-      {localize('DND5E.Modifier')}
-    </span>
+      <i class="fa-solid fa-hammer color-text-lightest"></i>
+      <h3 class="font-label-medium">
+        <span>{localize('TYPES.Item.toolPl')}</span>
+        <i class="fa-solid fa-cog"></i>
+      </h3>
+      <span class="modifier-label color-text-lightest font-default-medium">
+        {localize('DND5E.Modifier')}
+      </span>
     </button>
   </div>
   {#if context.tools.length}
@@ -69,7 +68,9 @@
               />
             </SelectQuadrone>
           {:else}
-            <span class="skill-ability font-label-medium color-text-gold-emphasis">
+            <span
+              class="skill-ability font-label-medium color-text-gold-emphasis"
+            >
               {tool.abbreviation}
             </span>
           {/if}
@@ -78,7 +79,9 @@
             class="button button-borderless use-ability-roll-button"
             onclick={(event) =>
               context.actor.rollToolCheck({ tool: tool.key, event })}
-            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
+            data-key={tool.key}
+            data-tidy-draggable
           >
             {tool.label}
           </button>

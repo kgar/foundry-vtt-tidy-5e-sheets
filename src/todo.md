@@ -1,13 +1,7 @@
 ## To Do
 
 - [ ] Character Sheet 
-  - [x] Wire up XP bar
-  - [x] Add drag-and-drop to sort for Favorites
-  - [x] Add drag-and-drop to add favorite
-  - [ ] Update favorite drop handling to also sort, if able
-  - [ ] Implement slots, skills, and tools drag
-    - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
-    - [ ] Verify they work with favorites
+  - [ ] Add Context Menu for favorite slots, skills, and tools. Currently, they cannot be removed.
   - [ ] Implement tabs
     - [ ] Actions
     - [x] Attributes (Character tab)
@@ -80,6 +74,8 @@
 - [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
 - [ ] (TBD) User Setting: Item Spells Organization ( ) Additional Spells Section ( ) Section Per Item
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+- [ ] Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
 
 ### Feature - Set as Inspiration Source
 
@@ -620,3 +616,13 @@ Limited:
         - [x] Bastion tab contents
         - [x] Biography tab contents
         - [x] Journal tab contents
+  - [x] Wire up XP bar
+  - [x] Add drag-and-drop to sort for Favorites
+  - [x] Add drag-and-drop to add favorite
+  - [x] Update favorite drop handling to also sort, if able
+  - [x] Implement slots, skills, and tools drag
+    - [x] slots
+    - [x] skills
+    - [x] tools
+    - [x] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
+    - [x] Verify they work with favorites

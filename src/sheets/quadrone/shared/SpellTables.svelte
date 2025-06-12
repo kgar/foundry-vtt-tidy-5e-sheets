@@ -104,10 +104,18 @@
               </h3>
               <span class="table-header-count">{section.spells.length}</span>
               {#if section.usesSlots}
-                <SpellSlotManagementQuadrone
-                  mode={context.spellSlotTrackerMode}
-                  {section}
-                />
+                <div
+                  data-tidy-draggable
+                  data-key={section.key}
+                  data-preparation-mode={section.prepMode}
+                  data-level={section.dataset['system.level']}
+                  data-slots
+                >
+                  <SpellSlotManagementQuadrone
+                    mode={context.spellSlotTrackerMode}
+                    {section}
+                  />
+                </div>
               {/if}
             </TidyTableHeaderCell>
             {#each columns.ordered as column}

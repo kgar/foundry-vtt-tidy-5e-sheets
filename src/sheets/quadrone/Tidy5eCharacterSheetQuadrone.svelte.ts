@@ -1062,20 +1062,23 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     const modes = CONFIG.DND5E.spellPreparationModes;
-    const { key } = event.target.closest('[data-key]')?.dataset ?? {};
+    const { key } =
+      event.target.closest<HTMLElement>('[data-key]')?.dataset ?? {};
     // TODO: Make a custom wrapper with specific fields related to spell slot drag
     const { level, preparationMode } =
-      event.target.closest('[data-level]')?.dataset ?? {};
-    const isSlots =
-      event.target.closest('[data-favorite-id]') ||
-      event.target.classList.contains('items-header');
+      event.target.closest<HTMLElement>('[data-level]')?.dataset ?? {};
+    const isSlots = !!event.target.closest('[data-slots]');
 
     let type;
-    if (key in CONFIG.DND5E.skills) {
+    if (!isNil(key) && key in CONFIG.DND5E.skills) {
       type = 'skill';
-    } else if (key in CONFIG.DND5E.tools) {
+    } else if (!isNil(key) && key in CONFIG.DND5E.tools) {
       type = 'tool';
-    } else if (modes[preparationMode]?.upcast && level !== '0' && isSlots) {
+    } else if (
+      modes[preparationMode ?? '']?.upcast &&
+      level !== '0' &&
+      isSlots
+    ) {
       type = 'slots';
     }
     if (!type) return super._onDragStart(event);
@@ -1088,12 +1091,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       dnd5e: { action: 'favorite', type },
     };
 
-    if (type === 'slots') {
-      dragData.dnd5e.id =
-        preparationMode === 'prepared' ? `spell${level}` : preparationMode;
-    } else {
-      dragData.dnd5e.id = key;
-    }
+    dragData.dnd5e.id = key;
 
     event.dataTransfer.setData('application/json', JSON.stringify(dragData));
     event.dataTransfer.effectAllowed = 'link';
