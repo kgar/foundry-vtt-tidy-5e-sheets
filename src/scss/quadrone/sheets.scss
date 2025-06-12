@@ -99,4 +99,47 @@
     }
   }
 
+  // Container Panel - hightouch 👋 - where do we want to put this? It could apply to any sheet with an inventory.
+  .container-panel {
+    --t5e-container-panel-item-size: 3.125rem;
+
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--t5e-container-panel-item-size), max-content)
+    );
+    gap: 0.375rem;
+    padding: 0;
+    margin: 0;
+
+    .container {
+      position: relative; // 👈 required for correct drag preview
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    .container-image-button {
+      display: block;
+    }
+
+    .container-image {
+      aspect-ratio: 1;
+      border: 0.0625rem solid var(--t5e-separator-color);
+      border-radius: 0.1875rem 0.1875rem 0 0;
+      background-color: var(--t5e-light-color);
+      background-size: cover;
+      background-position: 50% 0;
+      transition: filter 0.75s;
+
+      &.conceal {
+        filter: grayscale(100%);
+      }
+    }
+  }
 }

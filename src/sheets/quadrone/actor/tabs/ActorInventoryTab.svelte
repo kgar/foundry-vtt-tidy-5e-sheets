@@ -19,7 +19,7 @@
   import CharacterInventoryFooter from '../character-parts/CharacterInventoryFooter.svelte';
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
-  import ContainerPanel from 'src/sheets/classic/shared/ContainerPanel.svelte';
+  import ContainerPanel from 'src/sheets/quadrone/shared/ContainerPanel.svelte';
 
   let context =
     $derived(

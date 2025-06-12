@@ -1,10 +1,5 @@
 ## Inventory To Do
 
-- [x] Make ActorActionBar simply ActionBar. This just requires getting tabName 🤣 
-- [ ] (low priority) Implement container panel
-  - [x] Set it up for all inventories
-  - [ ] Extract classic styles and put them in the classic space.
-  - [ ] Retrofit the styles in the quadrone space, in `sheet.scss`.
 - [ ] Put weight unit in weight column
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
 - [ ] Evolve ItemLists further
@@ -52,6 +47,12 @@
 - [x] Convert item columns to use REMs exclusively. Ensure font scaling properly scales column widths.
 - [x] ~~Move columns to TidySectionBase~~ Deferred to some other time. Where I landed was good enough.
 - [x] Ensure column widths are precalculated before looping for headers and body in the tables components.
+- [x] Make ActorActionBar simply ActionBar. This just requires getting tabName 🤣 
+- [x] (low priority) Implement container panel
+  - [x] Set it up for all inventories
+  - [x] Extract classic styles and put them in the classic space.
+  - [x] Retrofit the styles in the quadrone space, in `sheet.scss`.
+
 
 ## Side Quest to Complete Before Returning to Inventory
 

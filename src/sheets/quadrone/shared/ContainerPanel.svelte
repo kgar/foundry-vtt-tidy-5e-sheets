@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ContainerPanelItemContext } from 'src/types/types';
-  import CapacityBar from '../container/CapacityBar.svelte';
+  import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Item5e } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -72,18 +72,10 @@
           class:conceal={container.system.identified === false}
           style="background-image: url('{container.img}')"
         >
-          <div
-            role="presentation"
-            aria-hidden="true"
-            class="unidentified-glyph"
-            class:conceal={container.system.identified === false}
-          >
-            <i class="fas fa-question"></i>
-          </div>
         </div>
       </a>
       <CapacityBar
-        showLabel={false}
+        showTracker={false}
         {container}
         {capacity}
         --capacity-bar-height="0.5rem"
