@@ -1,7 +1,6 @@
 ## To Do
 
-> Finish [Inventory TODOs](todo-inventory.md) before returning here
-
+- [ ] Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?
 - [ ] Character Sheet 
   - [ ] Add drag-and-drop to sort for Favorites
   - [ ] Implement slots, skills, and tools drag

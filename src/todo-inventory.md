@@ -1,7 +1,3 @@
-## Inventory To Do
-
--  [ ] Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?
-
 ## Inventory To Done
 
 - [x] Switch from hideUnder to priority show/hide scheme
