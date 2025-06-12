@@ -1,6 +1,8 @@
 ## Inventory To Do
 
-- [ ] Put weight unit in weight column
+- [ ] Inline / contained weapons do not have proper item save context?
+- [ ] Empty container sections should be hidden in inline containers
+- [ ] Inline container columns should match container column specs
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
 - [ ] Evolve ItemLists further
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.
@@ -52,6 +54,7 @@
   - [x] Set it up for all inventories
   - [x] Extract classic styles and put them in the classic space.
   - [x] Retrofit the styles in the quadrone space, in `sheet.scss`.
+- [x] Put weight unit in weight column
 
 
 ## Side Quest to Complete Before Returning to Inventory

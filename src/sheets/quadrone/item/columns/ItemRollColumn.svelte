@@ -19,7 +19,7 @@
       {mod.value}
     </span>
   </span>
-{:else if rowContext.save.ability}
+{:else if rowContext.save?.ability}
   <div class="stacked">
     <span class="ability">{rowContext.save.ability}</span>
     <span class="value">{rowContext.save.dc.value}</span>
