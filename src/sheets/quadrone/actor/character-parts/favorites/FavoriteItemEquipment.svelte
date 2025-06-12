@@ -33,6 +33,8 @@
   data-favorite-type="equipment"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
+  data-favorite-id={favorite.id}
+  data-tidy-draggable
 >
   <FavoriteItemRollButton
     {favorite}

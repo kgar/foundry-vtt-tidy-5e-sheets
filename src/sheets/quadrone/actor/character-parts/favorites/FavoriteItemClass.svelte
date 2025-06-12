@@ -29,6 +29,8 @@
   data-favorite-type="class"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
+  data-tidy-draggable
+  data-favorite-id={favorite.id}
 >
   <FavoriteItemRollButton
     {favorite}

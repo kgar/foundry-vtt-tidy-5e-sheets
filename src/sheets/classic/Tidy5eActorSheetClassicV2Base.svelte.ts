@@ -197,7 +197,8 @@ export function Tidy5eActorSheetClassicV2Base<
         customActorTraits: [],
         customContent: [],
         disableExperience:
-          systemSettings.value.levelingMode === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
+          systemSettings.value.levelingMode ===
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),
@@ -841,7 +842,10 @@ export function Tidy5eActorSheetClassicV2Base<
       return allowed;
     }
 
-    _defaultDropBehavior(event: DragEvent, data: any) {
+    _defaultDropBehavior(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      data: any
+    ): DropEffectValue {
       if (!data.uuid) {
         return 'copy';
       }
@@ -857,7 +861,9 @@ export function Tidy5eActorSheetClassicV2Base<
         : 'copy';
     }
 
-    _onDragOver(event: DragEvent & { currentTarget: HTMLElement }) {
+    _onDragOver(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    ) {
       const data =
         foundry.applications.ux.DragDrop.implementation.getPayload(event);
 
@@ -876,7 +882,10 @@ export function Tidy5eActorSheetClassicV2Base<
      * The behavior for the dropped data. When called during the drop event, ensure this is called before awaiting
      * anything or the drop behavior will be lost.
      */
-    _dropBehavior(event: DragEvent, data: unknown): DropEffectValue {
+    _dropBehavior(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      data: unknown
+    ): DropEffectValue {
       const allowed = this._allowedDropBehaviors(event, data);
 
       let behavior =
@@ -922,7 +931,7 @@ export function Tidy5eActorSheetClassicV2Base<
     }
 
     async _onDrop(
-      event: DragEvent & { currentTarget: HTMLElement }
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
     ): Promise<any> {
       this._currentDragEvent = event;
       const data = foundry.applications.ux.TextEditor.getDragEventData(event);
@@ -986,7 +995,7 @@ export function Tidy5eActorSheetClassicV2Base<
     }
 
     async _onDropItem(
-      event: DragEvent & { currentTarget: HTMLElement },
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
       data: unknown
     ): Promise<object | boolean | undefined> {
       const behavior = this._dropBehavior(event, data);

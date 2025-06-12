@@ -7,6 +7,7 @@ import CharacterSheet from './actor/CharacterSheet.svelte';
 import { mount } from 'svelte';
 import type {
   ActiveEffect5e,
+  Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
   AttributePinContext,
@@ -60,6 +61,7 @@ import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { getModifierData } from 'src/utils/formatting';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -1010,6 +1012,93 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 
+  /** @override */
+  _defaultDropBehavior(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: any
+  ): DropEffectValue {
+    if (
+      data.dnd5e?.action === 'favorite' ||
+      (['Activity', 'Item'].includes(data.type) &&
+        event.target.closest('.favorites'))
+    ) {
+      return 'link';
+    }
+
+    return super._defaultDropBehavior(event, data);
+  }
+
+  _onDragStart(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
+    if (!event.dataTransfer) {
+      return;
+    }
+
+    // Sorting Favorites
+    const favoriteEl = event.target.closest('[data-favorite-id]');
+    const favoriteId = favoriteEl?.getAttribute('data-favorite-id');
+    const favorite = this.actor.system.favorites.find(
+      (f: CharacterFavorite) => f.id === favoriteId
+    ) as CharacterFavorite | undefined;
+
+    if (favorite) {
+      const favoriteSortDragData = {
+        dnd5e: {
+          action: 'favorite',
+          type: favorite.type,
+          id: favorite.id,
+        },
+      };
+
+      event.dataTransfer.setData(
+        'application/json',
+        JSON.stringify(favoriteSortDragData)
+      );
+
+      event.dataTransfer.effectAllowed = 'link';
+
+      return;
+    }
+
+    const modes = CONFIG.DND5E.spellPreparationModes;
+    const { key } = event.target.closest('[data-key]')?.dataset ?? {};
+    // TODO: Make a custom wrapper with specific fields related to spell slot drag
+    const { level, preparationMode } =
+      event.target.closest('[data-level]')?.dataset ?? {};
+    const isSlots =
+      event.target.closest('[data-favorite-id]') ||
+      event.target.classList.contains('items-header');
+
+    let type;
+    if (key in CONFIG.DND5E.skills) {
+      type = 'skill';
+    } else if (key in CONFIG.DND5E.tools) {
+      type = 'tool';
+    } else if (modes[preparationMode]?.upcast && level !== '0' && isSlots) {
+      type = 'slots';
+    }
+    if (!type) return super._onDragStart(event);
+
+    // Add another deferred deactivation to catch the second pointerenter event that seems to be fired on Firefox.
+    requestAnimationFrame(() => game.tooltip.deactivate());
+    game.tooltip.deactivate();
+
+    const dragData: Record<string, any> = {
+      dnd5e: { action: 'favorite', type },
+    };
+
+    if (type === 'slots') {
+      dragData.dnd5e.id =
+        preparationMode === 'prepared' ? `spell${level}` : preparationMode;
+    } else {
+      dragData.dnd5e.id = key;
+    }
+
+    event.dataTransfer.setData('application/json', JSON.stringify(dragData));
+    event.dataTransfer.effectAllowed = 'link';
+  }
+
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ) {
@@ -1034,14 +1123,79 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return;
     }
     const { action, type, id } = data.dnd5e ?? {};
+
+    // Add to Favorites
     if (action === 'favorite') {
       return this._onDropFavorite(event, { type, id });
     }
+
+    // Hanle Activity drop
     if (data.type === 'Activity') {
       const activity = await fromUuid(data.uuid);
       if (activity) return this._onDropActivity(event, data);
     }
+
     return super._onDrop(event);
+  }
+
+  /**
+   * Handle an owned item or effect being dropped in the favorites area.
+   * @param {PointerEvent} event         The triggering event.
+   * @param {ActorFavorites5e} favorite  The favorite that was dropped.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  async _onDropFavorite(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    favorite: { type: string; id: string }
+  ): Promise<Actor5e> | Promise<any> {
+    if (this.actor.system.hasFavorite(favorite.id))
+      return await this._onSortFavorites(event, favorite.id);
+    // If we don't own the item, handle onDrop and then turn around and add it as a favorite?
+    return await this.actor.system.addFavorite(favorite);
+  }
+
+  /**
+   * Handle re-ordering the favorites list.
+   * @param {DragEvent} event  The drop event.
+   * @param {string} srcId     The identifier of the dropped favorite.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  async _onSortFavorites(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    srcId: string
+  ) {
+    const targetId = event.target
+      ?.closest('[data-favorite-id]')
+      ?.getAttribute('data-favorite-id');
+    if (!targetId) return;
+    let source;
+    let target;
+    if (srcId === targetId) return;
+    const siblings = this.actor.system.favorites.filter(
+      (f: CharacterFavorite) => {
+        if (f.id === targetId) target = f;
+        else if (f.id === srcId) source = f;
+        return f.id !== srcId;
+      }
+    );
+    const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+    const favorites = this.actor.system.favorites.reduce(
+      (map: Map<string, CharacterFavorite>, f: CharacterFavorite) =>
+        map.set(f.id, { ...f }),
+      new Map<string, CharacterFavorite>()
+    );
+    for (const { target, update } of updates) {
+      const favorite = favorites.get(target.id);
+      foundry.utils.mergeObject(favorite, update);
+    }
+    return await this.actor.update({
+      'system.favorites': Array.from(favorites.values()),
+    });
   }
 
   /** @inheritDoc */
@@ -1073,6 +1227,19 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       activity.id
     }`;
     return this._onDropFavorite(event, { type: 'activity', id: uuid });
+  }
+
+  async _onDropItem(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: Item5e
+  ) {
+    const item = await Item.implementation.fromDropData(data);
+
+    if (!event.target.closest('.favorites') || item.parent !== this.actor) {
+      return super._onDropItem(event, item);
+    }
+    const uuid = item.getRelativeUUID(this.actor);
+    return this._onDropFavorite(event, { type: 'item', id: uuid });
   }
 
   /* -------------------------------------------- */

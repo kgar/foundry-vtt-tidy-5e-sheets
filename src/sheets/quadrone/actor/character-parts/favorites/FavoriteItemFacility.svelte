@@ -20,6 +20,8 @@
   data-favorite-type="facility"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
+  data-favorite-id={favorite.id}
+  data-tidy-draggable
 >
   <FavoriteItemRollButton
     {favorite}
@@ -28,7 +30,7 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
     name={favorite.item.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   <div class="">
     <span class="primary">

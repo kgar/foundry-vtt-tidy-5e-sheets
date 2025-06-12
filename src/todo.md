@@ -2,7 +2,9 @@
 
 - [ ] Character Sheet 
   - [x] Wire up XP bar
-  - [ ] Add drag-and-drop to sort for Favorites
+  - [x] Add drag-and-drop to sort for Favorites
+  - [x] Add drag-and-drop to add favorite
+  - [ ] Update favorite drop handling to also sort, if able
   - [ ] Implement slots, skills, and tools drag
     - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
     - [ ] Verify they work with favorites
@@ -75,7 +77,7 @@
 - [ ] Evolve ItemLists further
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
-
+- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
 
 ### Feature - Set as Inspiration Source
 

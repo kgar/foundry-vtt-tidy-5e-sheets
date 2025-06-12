@@ -55,9 +55,13 @@ export function DragAndDropMixin(BaseApplication: any) {
       return this.isEditable;
     }
 
-    _onDragStart(event: DragEvent & { currentTarget: HTMLElement }) {}
+    _onDragStart(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    ) {}
 
-    _onDragOver(event: DragEvent & { currentTarget: HTMLElement }) {
+    _onDragOver(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+    ) {
       const data =
         foundry.applications.ux.DragDrop.implementation.getPayload(event);
 
@@ -73,7 +77,7 @@ export function DragAndDropMixin(BaseApplication: any) {
     }
 
     _onDrop(
-      event: DragEvent & { currentTarget: HTMLElement }
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
     ): Promise<any> | undefined {
       return undefined;
     }
@@ -95,7 +99,10 @@ export function DragAndDropMixin(BaseApplication: any) {
      * The behavior for the dropped data. When called during the drop event, ensure this is called before awaiting
      * anything or the drop behavior will be lost.
      */
-    _dropBehavior(event: DragEvent, data: unknown): DropEffectValue {
+    _dropBehavior(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      data: unknown
+    ): DropEffectValue {
       const allowed = this._allowedDropBehaviors(event, data);
 
       let behavior =
@@ -132,7 +139,10 @@ export function DragAndDropMixin(BaseApplication: any) {
     /**
      * Determine the default drop behavior for the provided operation.
      */
-    _defaultDropBehavior(event: DragEvent, data: unknown): DropEffectValue {
+    _defaultDropBehavior(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      data: any
+    ): DropEffectValue {
       return 'copy';
     }
   }
