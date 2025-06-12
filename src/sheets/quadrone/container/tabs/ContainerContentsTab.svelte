@@ -41,25 +41,13 @@
     });
   });
 
-  const localize = FoundryAdapter.localize;
-
   let markerEl: HTMLElement | undefined = $state();
   let footerEl: HTMLElement | undefined = $state();
-
-  let pinnedFilters = $derived(
-    ItemFilterRuntime.getPinnedFiltersForTab(
-      context.filterPins,
-      context.filterData,
-      tabId,
-    ),
-  );
-
-  let tabName = $derived(ItemSheetRuntime.getTabTitle(tabId, {}));
 
   // TODO: Make this a callback to send through to the component for preparing sections properly
   let configuredContents = $derived(
     SheetSections.configureInventory(
-      context.containerContents.contents.filter((i) => i.items.length),
+      context.containerContents.contents,
       tabId,
       SheetPreferencesService.getByType(context.item.type),
       TidyFlags.sectionConfig.get(context.item)?.[

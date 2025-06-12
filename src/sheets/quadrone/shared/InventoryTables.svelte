@@ -90,7 +90,7 @@
       section.items,
       searchResults.uuids,
     )}
-    {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+    {#if section.show && (hasViewableItems || (!container && context.unlocked && searchCriteria.trim() === ''))}
       {@const columns = new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications(
           containingDocument.type,

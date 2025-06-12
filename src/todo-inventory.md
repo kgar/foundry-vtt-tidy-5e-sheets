@@ -1,6 +1,6 @@
 ## Inventory To Do
 
-- [ ] Empty container sections should be hidden in inline containers, whether locked or unlocked
+- [x] Empty container sections should be hidden in inline containers, whether locked or unlocked
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
 - [ ] Evolve ItemLists further
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.
