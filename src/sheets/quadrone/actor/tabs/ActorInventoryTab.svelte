@@ -62,7 +62,7 @@
 
 <CharacterEncumbranceRow />
 
-{#if context.showContainerPanel}
+{#if context.showContainerPanel && !!context.containerPanelItems.length}
   <ContainerPanel
     {searchCriteria}
     containerPanelItems={context.containerPanelItems}
@@ -74,6 +74,7 @@
   editable={context.editable}
   itemContext={context.itemContext}
   {inlineToggleService}
+  {searchCriteria}
   sheetDocument={context.actor}
   unlocked={context.unlocked}
   root={true}

@@ -103,7 +103,6 @@
   .container-panel {
     --t5e-container-panel-item-size: 3.125rem;
 
-    flex: 1;
     display: grid;
     grid-template-columns: repeat(
       auto-fit,
@@ -140,6 +139,10 @@
       &.conceal {
         filter: grayscale(100%);
       }
+    }
+
+    .meter.capacity {
+      flex-basis: var(--capacity-bar-height);
     }
   }
 }

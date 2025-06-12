@@ -20,6 +20,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   type ItemTableSection = TidySectionBase & { items: Item5e[] };
 
@@ -32,6 +33,7 @@
       ContainerItemContext | CharacterItemContext | NpcItemContext
     >;
     inlineToggleService: InlineToggleService;
+    searchCriteria: string;
     /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
     unlocked?: boolean;
@@ -45,6 +47,7 @@
     editable,
     itemContext,
     inlineToggleService,
+    searchCriteria,
     sheetDocument,
     unlocked = true,
     root,
@@ -85,7 +88,11 @@
 
 <div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
   {#each sections as section (section.key)}
-    {#if section.show}
+    {@const visibleItemCount = ItemVisibility.countVisibleItems(
+      section.items,
+      searchResults.uuids,
+    )}
+    {#if section.show && (visibleItemCount > 0 || (context.unlocked && searchCriteria.trim() === ''))}
       {@const columns = new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications(
           containingDocument.type,
@@ -246,6 +253,7 @@
                 containerContents={ctx.containerContents}
                 {editable}
                 {inlineToggleService}
+                {searchCriteria}
                 {sheetDocument}
                 {unlocked}
               />

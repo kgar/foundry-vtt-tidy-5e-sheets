@@ -71,8 +71,7 @@
           class="container-image"
           class:conceal={container.system.identified === false}
           style="background-image: url('{container.img}')"
-        >
-        </div>
+        ></div>
       </a>
       <CapacityBar
         showTracker={false}

@@ -14,6 +14,7 @@
     containerContents: ContainerContents;
     editable: boolean;
     inlineToggleService: InlineToggleService;
+    searchCriteria: string;
     sheetDocument: any;
     unlocked?: boolean;
   }
@@ -23,6 +24,7 @@
     containerContents,
     editable,
     inlineToggleService,
+    searchCriteria,
     sheetDocument,
     unlocked = true,
   }: Props = $props();
@@ -78,6 +80,7 @@
         {editable}
         itemContext={containerContents.itemContext}
         {inlineToggleService}
+        {searchCriteria}
         {sheetDocument}
         {unlocked}
       />
