@@ -1,7 +1,7 @@
 ## To Do
 
 - [ ] Character Sheet 
-  - [ ] Wire up XP bar
+  - [x] Wire up XP bar
   - [ ] Add drag-and-drop to sort for Favorites
   - [ ] Implement slots, skills, and tools drag
     - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
