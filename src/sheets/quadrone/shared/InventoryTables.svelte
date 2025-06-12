@@ -52,6 +52,10 @@
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
+  const effectiveTabId = $derived(
+    container ? CONSTANTS.TAB_CONTAINER_CONTENTS : tabId,
+  );
+
   let containingDocument = $derived(container ?? sheetDocument);
 
   const searchResults = getSearchResultsContext();
@@ -84,8 +88,8 @@
     {#if section.show}
       {@const columns = new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications(
-          sheetDocument.type,
-          tabId,
+          containingDocument.type,
+          effectiveTabId,
           section.key,
           {
             rowActions: section.rowActions,

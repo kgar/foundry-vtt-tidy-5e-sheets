@@ -1,8 +1,8 @@
 ## Inventory To Do
 
-- [ ] Inline / contained weapons do not have proper item save context?
+- [x] Inline / contained weapons do not have proper item save context?
+- [x] Inline container columns should match container column specs
 - [ ] Empty container sections should be hidden in inline containers
-- [ ] Inline container columns should match container column specs
 - [ ] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
 - [ ] Evolve ItemLists further
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.

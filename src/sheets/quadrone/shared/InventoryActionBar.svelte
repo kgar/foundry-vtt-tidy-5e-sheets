@@ -35,7 +35,7 @@
 </script>
 
 <ActionBar
-  {searchCriteria}
+  bind:searchCriteria
   {tabId}
   {sections}
   tabOptionGroups={allTabOptionGroups}
