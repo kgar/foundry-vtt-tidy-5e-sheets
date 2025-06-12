@@ -2,9 +2,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { getThemeV2 } from 'src/theme/theme';
   import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
-  import { Tooltip } from 'src/tooltips/Tooltip';
   import type { Item5e } from 'src/types/item.types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
 
@@ -27,35 +25,20 @@
   );
 
   let attunementSummaryTooltip: AttunementSummaryTooltip;
-
-  function showAttunementSummaryTooltip(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-  ): any {
-    if (!attunedItems.length) {
-      return;
-    }
-
-    Tooltip.show(
-      event?.currentTarget,
-      attunementSummaryTooltip.getMarkup(),
-      getThemeV2(context.actor),
-    );
-  }
 </script>
 
-<div class="hidden">
-  <AttunementSummaryTooltip
-    bind:this={attunementSummaryTooltip}
-    {attunedItems}
-  />
-</div>
+<AttunementSummaryTooltip
+  bind:this={attunementSummaryTooltip}
+  sheetDocument={context.document}
+  {attunedItems}
+/>
 
 <div
   class="attunement-tracker {rest.class ?? ''}"
   class:overattuned={context.actor.system.attributes.attunement.value >
     context.actor.system.attributes.attunement.max}
   data-tooltip-direction="UP"
-  onmouseover={(ev) => showAttunementSummaryTooltip(ev)}
+  onmouseover={(ev) => attunementSummaryTooltip.tryShow(ev)}
 >
   <i class="attunement-icon fas fa-sun"></i>
   <span class="attuned-items-current" title={localize('TIDY5E.AttunementItems')}

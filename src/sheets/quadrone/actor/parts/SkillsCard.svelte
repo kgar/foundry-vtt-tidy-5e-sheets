@@ -83,7 +83,9 @@
               />
             </SelectQuadrone>
           {:else}
-            <span class="skill-ability font-label-medium color-text-gold-emphasis">
+            <span
+              class="skill-ability font-label-medium color-text-gold-emphasis"
+            >
               {skill.abbreviation}
             </span>
           {/if}
@@ -93,12 +95,15 @@
             onclick={(event) =>
               context.actor.rollSkill({ skill: skill.key, event })}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
+            data-key={skill.key}
+            data-tidy-draggable
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
           >
             {skill.label}
           </button>
           <span class="modifier">
             <span class="color-text-lightest font-label-medium">
-              {modifier.sign} 
+              {modifier.sign}
             </span>
             <span class="font-data-medium">
               {modifier.value}

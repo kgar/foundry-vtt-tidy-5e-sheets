@@ -97,16 +97,16 @@ export type ColumnSpecification = {
 /** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
 export type ConfiguredColumnSpecification = ColumnSpecification & { key: string, widthRems: number; };
 
-export type ColumnHeaderProps<TDocument = any, TContext = any> = {
+export type ColumnHeaderProps<TDocument = any, TContext = any, TSection = TidySectionBase> = {
   sheetDocument: TDocument;
   sheetContext: TContext;
-  section: TidySectionBase;
+  section: TSection;
 };
 
-export type ColumnCellProps<TDocument = any, TContext = any> = {
+export type ColumnCellProps<TDocument = any, TContext = any, TSection = TidySectionBase> = {
   rowDocument: TDocument;
   rowContext: TContext;
-  section: TidySectionBase;
+  section: TSection;
 };
 
 export type ColumnSpecificationConditionArgs<

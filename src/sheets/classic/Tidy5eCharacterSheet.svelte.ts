@@ -1585,7 +1585,10 @@ export class Tidy5eCharacterSheet
   }
 
   /** @inheritDoc */
-  async _onDropActor(event: DragEvent & { target: HTMLElement }, data: any) {
+  async _onDropActor(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: any
+  ) {
     if (!event.target.closest('.facility-occupants') || !data.uuid) {
       return super._onDropActor(event, data);
     }
@@ -1628,7 +1631,7 @@ export class Tidy5eCharacterSheet
   /* -------------------------------------------- */
 
   async _onDropPin(
-    event: DragEvent & { target: HTMLElement },
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     data: { id: string; doc: any }
   ) {
     // If not pinned, then pin it
@@ -1653,7 +1656,10 @@ export class Tidy5eCharacterSheet
     return await this._onSortPins(event, data.id);
   }
 
-  async _onSortPins(event: DragEvent & { target: HTMLElement }, srcId: string) {
+  async _onSortPins(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    srcId: string
+  ) {
     const targetId = event.target
       ?.closest('[data-pin-id]')
       ?.getAttribute('data-pin-id');
@@ -1711,7 +1717,7 @@ export class Tidy5eCharacterSheet
    * @protected
    */
   async _onDropFavorite(
-    event: DragEvent & { target: HTMLElement },
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     favorite: UnsortedCharacterFavorite
   ) {
     if (this.actor.system.hasFavorite(favorite.id))
@@ -1728,7 +1734,7 @@ export class Tidy5eCharacterSheet
    * @protected
    */
   async _onSortFavorites(
-    event: DragEvent & { target: HTMLElement },
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     srcId: string
   ) {
     const targetId = event.target

@@ -177,13 +177,11 @@ export function getItemContextOptions(
     // Add favorites to context menu
     let isFav = FoundryAdapter.isItemFavorited(item);
 
-    const favoriteIcon = 'fa-bookmark';
-
     options.push({
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: isFav
-        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
-        : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
+        ? `<i class='fas fa-bookmark fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
+        : `<i class='fas fa-bookmark fa-fw inactive'></i>`,
       callback: () => {
         if (!item) {
           warn(`tidy5e-context-menu | Item Not Found`);

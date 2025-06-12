@@ -1,39 +1,10 @@
 ## To Do
 
-- [ ] Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?
 - [ ] Character Sheet 
-  - [ ] Add drag-and-drop to sort for Favorites
-  - [ ] Implement slots, skills, and tools drag
-    - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
-    - [ ] Verify they work with favorites
-  - [x] Start dev in Foundry V12
-  - [x] Establish components for the tabs
-  - [x] Set up Quadrone runtime content, including the default tabs
-  - [x] Implement SkillsCard
-  - [x] Implement ToolsCard
-  - [x] Character Traits: Add icons to damage modification, damage resistances, and damage vulnerabilities
-  - [x] Structure the sheet - 
-    - [x] Tab Content area
-      - [x] Sidebar
-        - [x] Button tabs
-        - [x] Skills area (when Skills tab selected)
-        - [x] Traits area (when Traits tab selected)
-        - [x] Pinned area (when Pinned tab selected)
-      - [x] Main Tab Strip Active Content Area
-        - [x] Sheet tab contents
-        - [x] Character tab contents
-        - [x] Inventory tab contents
-        - [x] Features tab contents
-        - [x] Spellbook tab contents
-        - [x] Effects tab contents
-        - [x] Action tab contents
-        - [x] Bastion tab contents
-        - [x] Biography tab contents
-        - [x] Journal tab contents
   - [ ] Implement tabs
     - [ ] Actions
     - [x] Attributes (Character tab)
-    - [ ] Inventory
+    - [x] Inventory
     - [ ] Features
     - [x] Spellbook
     - [ ] Effects
@@ -41,7 +12,6 @@
     - [ ] Journal
   - [x] Implement Expandable/collapsible sidebar
   - [x] Implement Favorites
-  - [ ] Implement Responsive Tab Strip
   - [ ] Implement Theme Settings
     - [ ] World Default (?) - discuss with community
     - [ ] User Default (we have User Scope now!)
@@ -53,6 +23,7 @@
     - [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
     - [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
+- [ ] Implement Responsive Tab Strip
 - [ ] Implement quadrone default tab settings (no UI)
   - [ ] Character
   - [ ] NPC
@@ -99,7 +70,12 @@
 - [ ] Evolve ItemLists further
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
-
+- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
+- [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
+- [ ] (TBD) User Setting: Item Spells Organization ( ) Additional Spells Section ( ) Section Per Item
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+- [ ] Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
+- [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 
 ### Feature - Set as Inspiration Source
 
@@ -615,3 +591,39 @@ Limited:
       - [x] Name / Summary row / buttons / Badge
       - [x] AC / Abilities / Init
       - [x] Sidebar Toggle / Tab strip
+- [x] ~~Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?~~ No. A better component API that requires less of the caller was the answer.
+- [x] Start dev in Foundry V12
+  - [x] Establish components for the tabs
+  - [x] Set up Quadrone runtime content, including the default tabs
+  - [x] Implement SkillsCard
+  - [x] Implement ToolsCard
+  - [x] Character Traits: Add icons to damage modification, damage resistances, and damage vulnerabilities
+  - [x] Structure the sheet - 
+    - [x] Tab Content area
+      - [x] Sidebar
+        - [x] Button tabs
+        - [x] Skills area (when Skills tab selected)
+        - [x] Traits area (when Traits tab selected)
+        - [x] Pinned area (when Pinned tab selected)
+      - [x] Main Tab Strip Active Content Area
+        - [x] Sheet tab contents
+        - [x] Character tab contents
+        - [x] Inventory tab contents
+        - [x] Features tab contents
+        - [x] Spellbook tab contents
+        - [x] Effects tab contents
+        - [x] Action tab contents
+        - [x] Bastion tab contents
+        - [x] Biography tab contents
+        - [x] Journal tab contents
+  - [x] Wire up XP bar
+  - [x] Add drag-and-drop to sort for Favorites
+  - [x] Add drag-and-drop to add favorite
+  - [x] Update favorite drop handling to also sort, if able
+  - [x] Implement slots, skills, and tools drag
+    - [x] slots
+    - [x] skills
+    - [x] tools
+    - [x] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
+    - [x] Verify they work with favorites
+  - [x] Add Context Menu for favorite slots, skills, and tools. Currently, they cannot be removed.

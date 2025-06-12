@@ -15,7 +15,7 @@
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let quantity = $derived(favorite.item.system.quantity);
-  
+
   let subtitle = $derived(
     [
       favorite.item.system.type.label,
@@ -29,7 +29,6 @@
       ? favorite.item.system.getUsesData()
       : null,
   );
-
 </script>
 
 <div
@@ -37,6 +36,8 @@
   data-favorite-type="consumable"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
+  data-favorite-id={favorite.id}
+  data-tidy-draggable
 >
   <FavoriteItemRollButton
     {favorite}
@@ -45,18 +46,22 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
     name={favorite.item.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   {#if uses?.max || quantity}
-  <div class="">
-    <span class="primary">
-      {#if uses?.max}
-        <FavoriteItemUses {favorite} {uses} />
-      {:else}
-        <span class="sign font-default-medium color-text-lighter">&times;</span>
-        <span class="value font-data-medium color-text-default">{quantity}</span>
-      {/if}
-    </span>
-  </div>
+    <div class="">
+      <span class="primary">
+        {#if uses?.max}
+          <FavoriteItemUses {favorite} {uses} />
+        {:else}
+          <span class="sign font-default-medium color-text-lighter"
+            >&times;</span
+          >
+          <span class="value font-data-medium color-text-default"
+            >{quantity}</span
+          >
+        {/if}
+      </span>
+    </div>
   {/if}
 </div>

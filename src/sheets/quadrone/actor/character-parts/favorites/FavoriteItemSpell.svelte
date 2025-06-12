@@ -48,6 +48,8 @@
   data-favorite-type="spell"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
+  data-favorite-id={favorite.id}
+  data-tidy-draggable
 >
   <FavoriteItemRollButton
     {favorite}
@@ -59,38 +61,40 @@
     {subtitle}
   />
   {#if !isNil(modifier) || !isNil(save?.dc?.value) || !isNil(range?.value)}
-  <div class="">
-    <span class="primary">
-      {#if !isNil(modifier)}
-        {@const mod = getModifierData(modifier)}
-        <span class="modifier">
-          <span class="sign font-default-medium color-text-lighter">{mod.sign}</span><span class="value font-data-medium">{mod.value}</span>
-        </span>
-      {:else if save?.dc?.value}
-        <span class="ability font-label-medium color-text-gold-emphasis">
-          {save.ability}
-        </span>
-        <span class="value font-data-medium">
-          {save.dc.value}
-        </span>
-      {/if}
-    </span>
-    <span class="secondary">
-      {#if range?.value}
-        <span class="range">
-          {range.value}
-          {#if range.long}&sol; {range.long}{/if}
-        </span>
-        <span class="units font-default-medium color-text-lighter">
-          {range.units}
-        </span>
-      {:else if range?.reach}
-        <span class="range">
-          {range.reach}
-        </span>
-        <span class="units font-default-medium color-text-lighter">
-          {range.units}
-        </span>
+    <div class="">
+      <span class="primary">
+        {#if !isNil(modifier)}
+          {@const mod = getModifierData(modifier)}
+          <span class="modifier">
+            <span class="sign font-default-medium color-text-lighter"
+              >{mod.sign}</span
+            ><span class="value font-data-medium">{mod.value}</span>
+          </span>
+        {:else if save?.dc?.value}
+          <span class="ability font-label-medium color-text-gold-emphasis">
+            {save.ability}
+          </span>
+          <span class="value font-data-medium">
+            {save.dc.value}
+          </span>
+        {/if}
+      </span>
+      <span class="secondary">
+        {#if range?.value}
+          <span class="range">
+            {range.value}
+            {#if range.long}&sol; {range.long}{/if}
+          </span>
+          <span class="units font-default-medium color-text-lighter">
+            {range.units}
+          </span>
+        {:else if range?.reach}
+          <span class="range">
+            {range.reach}
+          </span>
+          <span class="units font-default-medium color-text-lighter">
+            {range.units}
+          </span>
         {/if}
       </span>
     </div>

@@ -699,7 +699,10 @@ export function TidyExtensibleDocumentSheetMixin<
       return allowed;
     }
 
-    _defaultDropBehavior(event: DragEvent, data: any) {
+    _defaultDropBehavior(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      data: any
+    ): DropEffectValue {
       if (!data.uuid) {
         return 'copy';
       }

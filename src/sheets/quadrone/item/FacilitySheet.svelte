@@ -16,12 +16,8 @@
   } from 'src/utils/component';
   import { getTidyFacilityIcon } from 'src/features/facility/facility';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
-  import { tick, type Snippet } from 'svelte';
-  import type { Actor5e } from 'src/types/types';
+  import { type Snippet } from 'svelte';
   import OccupantSummaryTooltip from 'src/tooltips/OccupantSummaryTooltip.svelte';
-  import { Tooltip } from 'src/tooltips/Tooltip';
-  import { settings } from 'src/settings/settings.svelte';
-  import { getThemeV2 } from 'src/theme/theme';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -77,47 +73,13 @@
 
   let facilityIsDisabled = $derived(context.system.disabled === true);
 
-  let tooltipOccupants = $state<Actor5e[]>([]);
-  let tooltipTitle = $state('');
-
   let occupantSummaryTooltip: OccupantSummaryTooltip;
-
-  async function showOccupantSummaryTooltip(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-    uuids: string[],
-    title: string,
-  ) {
-    if (!uuids.length || !settings.value.truesight) {
-      return;
-    }
-
-    const currentTarget = event.currentTarget;
-
-    const occupants: Actor5e[] = [];
-    for (const uuid of uuids) {
-      occupants.push(await fromUuid(uuid));
-    }
-
-    tooltipOccupants = occupants;
-    tooltipTitle = title;
-
-    await tick();
-
-    Tooltip.show(
-      currentTarget,
-      occupantSummaryTooltip.getMarkup(),
-      getThemeV2(context.item),
-    );
-  }
 </script>
 
-<div class="hidden">
-  <OccupantSummaryTooltip
-    bind:this={occupantSummaryTooltip}
-    occupants={tooltipOccupants}
-    title={tooltipTitle}
-  />
-</div>
+<OccupantSummaryTooltip
+  bind:this={occupantSummaryTooltip}
+  sheetDocument={context.document}
+/>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
@@ -215,7 +177,7 @@
     <span
       class="pill centered"
       onmouseover={(ev) =>
-        showOccupantSummaryTooltip(
+        occupantSummaryTooltip.tryShow(
           ev,
           Array.from(context.item.system.hirelings.value ?? []),
           localize('TIDY5E.Facilities.Hirelings.Label'),
@@ -241,7 +203,7 @@
     <span
       class="pill centered"
       onmouseover={(ev) =>
-        showOccupantSummaryTooltip(
+        occupantSummaryTooltip.tryShow(
           ev,
           Array.from(context.item.system.defenders.value ?? []),
           localize('TIDY5E.Facilities.Defenders.Label'),

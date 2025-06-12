@@ -24,18 +24,11 @@
 
   let { section }: Props = $props();
 
-  let inlineToggleService = getContext<InlineToggleService>(
-    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
-  );
-
   let context = $derived(getCharacterSheetContext());
 
   let itemEntries = $derived(
     section.items.map((item) => ({ item, ctx: context.itemContext[item.id] })),
   );
-
-  let tooltipOccupants = $state<Actor5e[]>([]);
-  let tooltipTitle = $state('');
 
   const searchResults = getSearchResultsContext();
 
@@ -47,41 +40,12 @@
   const localize = FoundryAdapter.localize;
 
   let occupantSummaryTooltip: OccupantSummaryTooltip;
-
-  async function showOccupantSummaryTooltip(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
-    uuids: string[],
-    title: string,
-  ) {
-    if (!uuids.length) {
-      return;
-    }
-
-    const occupants: Actor5e[] = [];
-    for (const uuid of uuids) {
-      occupants.push(await fromUuid(uuid));
-    }
-
-    tooltipOccupants = occupants;
-    tooltipTitle = title;
-
-    await tick();
-
-    Tooltip.show(
-      (event?.target as HTMLElement | null) ?? event.currentTarget,
-      occupantSummaryTooltip.getMarkup(),
-      getThemeV2(context.actor),
-    );
-  }
 </script>
 
-<div class="hidden">
-  <OccupantSummaryTooltip
-    bind:this={occupantSummaryTooltip}
-    occupants={tooltipOccupants}
-    title={tooltipTitle}
-  />
-</div>
+<OccupantSummaryTooltip
+  sheetDocument={context.document}
+  bind:this={occupantSummaryTooltip}
+/>
 
 <section class="facility-list-section">
   <ItemTable key={section.key}>
@@ -167,7 +131,7 @@
             <ItemTableCell baseWidth={defendersWidth}>
               <div
                 onmouseover={(ev) =>
-                  showOccupantSummaryTooltip(
+                  occupantSummaryTooltip.tryShow(
                     ev,
                     item.system.defenders.value ?? [],
                     localize('TIDY5E.Facilities.Defenders.Label'),
@@ -186,7 +150,7 @@
             <ItemTableCell baseWidth={hirelingsWidth}>
               <div
                 onmouseover={(ev) =>
-                  showOccupantSummaryTooltip(
+                  occupantSummaryTooltip.tryShow(
                     ev,
                     item.system.hirelings.value ?? [],
                     localize('TIDY5E.Facilities.Hirelings.Label'),
@@ -205,7 +169,7 @@
             <ItemTableCell baseWidth={creaturesWidth}>
               <div
                 onmouseover={(ev) =>
-                  showOccupantSummaryTooltip(
+                  occupantSummaryTooltip.tryShow(
                     ev,
                     item.system.trade.creatures.value ?? [],
                     localize('TIDY5E.Facilities.Creatures.Label'),

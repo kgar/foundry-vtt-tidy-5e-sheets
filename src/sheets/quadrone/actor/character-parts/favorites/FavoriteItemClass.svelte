@@ -29,6 +29,8 @@
   data-favorite-type="class"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
+  data-tidy-draggable
+  data-favorite-id={favorite.id}
 >
   <FavoriteItemRollButton
     {favorite}
@@ -37,16 +39,16 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
     name={favorite.item.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   {#if value}
-  <div class="">
-    <span class="primary">
-      <span class="value font-data-medium color-text-default">
-        {value}
+    <div class="">
+      <span class="primary">
+        <span class="value font-data-medium color-text-default">
+          {value}
+        </span>
       </span>
-    </span>
-    <!-- <span class="secondary"> </span> -->
-  </div>
+      <!-- <span class="secondary"> </span> -->
+    </div>
   {/if}
 </div>

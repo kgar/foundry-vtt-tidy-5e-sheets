@@ -13,7 +13,6 @@
   import { getModifierData } from 'src/utils/formatting';
   import { CONSTANTS } from 'src/constants';
   import CharacterSpellbookFooter from './character-parts/CharacterSpellbookFooter.svelte';
-  import CharacterInventoryFooter from './character-parts/CharacterInventoryFooter.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 

@@ -670,7 +670,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
     /* -------------------------------------------- */
     /*  Drag and Drop
-        /* -------------------------------------------- */
+    /* -------------------------------------------- */
 
     _allowedDropBehaviors(event: DragEvent, data: any) {
       if (!data.uuid) {
@@ -695,7 +695,7 @@ export function Tidy5eActorSheetQuadroneBase<
       return allowed;
     }
 
-    _defaultDropBehavior(event: DragEvent, data: any) {
+    _defaultDropBehavior(event: DragEvent, data: any): DropEffectValue {
       if (!data.uuid) {
         return 'copy';
       }
@@ -776,7 +776,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     async _onDrop(
-      event: DragEvent & { currentTarget: HTMLElement }
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
     ): Promise<any> {
       this._currentDragEvent = event;
       const data = foundry.applications.ux.TextEditor.getDragEventData(event);

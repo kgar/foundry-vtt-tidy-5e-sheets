@@ -76,6 +76,7 @@ export const CONSTANTS = {
   CONTEXT_MENU_TYPE_EFFECTS: 'effects',
   CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS: 'facility-occupants',
   CONTEXT_MENU_TYPE_GROUP_MEMBER: 'group-member',
+  CONTEXT_MENU_TYPE_KEYED_FAVORITE: 'keyed-favorite',
   CONTEXT_MENU_TYPE_ITEMS: 'items',
   CONTEXT_MENU_TYPE_ITEM_ADVANCEMENT: 'item-advancement',
   DND5E_CLASSES: {
