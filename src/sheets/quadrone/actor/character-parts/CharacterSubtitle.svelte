@@ -1,4 +1,5 @@
 <script lang="ts">
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { CharacterSpeedSenseEntryContext } from 'src/types/types';
@@ -37,14 +38,14 @@
 {#snippet speedSenseSummary(
   speed: CharacterSpeedSenseEntryContext,
   clsx?: ClassValue,
-  hide?: ClassValue
+  hide?: ClassValue,
 )}
   <span class={[clsx, hide]}>
     <span class="color-text-gold font-label-medium">{speed.label}</span>
     <span class="color-text-default font-data-medium">{speed.value}</span>
     <span class="color-text-lighter font-label-medium">{speed.units}</span>
   </span>
-  <div class={[hide, "divider-dot"]}></div>
+  <div class={[hide, 'divider-dot']}></div>
 {/snippet}
 
 <div class="character-details-subtitle-row">
@@ -53,13 +54,25 @@
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
     {#each context.senses.main as sense}
-      {@render speedSenseSummary(sense, ['sense', 'main-sense'], ['hide-under-500'])}
+      {@render speedSenseSummary(
+        sense,
+        ['sense', 'main-sense'],
+        ['hide-under-500'],
+      )}
     {/each}
     {#each context.speeds.secondary as speed}
-      {@render speedSenseSummary(speed, ['speed', 'secondary-speed'], ['hide-under-600'])}
+      {@render speedSenseSummary(
+        speed,
+        ['speed', 'secondary-speed'],
+        ['hide-under-600'],
+      )}
     {/each}
     {#each context.senses.secondary as sense}
-      {@render speedSenseSummary(sense, ['sense', 'secondary-sense'], ['hide-under-600'])}
+      {@render speedSenseSummary(
+        sense,
+        ['sense', 'secondary-sense'],
+        ['hide-under-600'],
+      )}
     {/each}
     {#if size}
       <span class="size">
@@ -84,10 +97,18 @@
       </span>
       <div class="divider-dot hide-under-600"></div>
     {/if}
-    <span class="alignment {context.speeds.secondary.length > 0 ? 'hide-under-600' : 'hide-under-700'}">
+    <span
+      class="alignment {context.speeds.secondary.length > 0
+        ? 'hide-under-600'
+        : 'hide-under-700'}"
+    >
       <span class="font-label-medium color-text-gold">{alignment}</span>
     </span>
-    <div class="divider-dot {context.speeds.secondary.length > 0 ? 'hide-under-600' : 'hide-under-700'}"></div>
+    <div
+      class="divider-dot {context.speeds.secondary.length > 0
+        ? 'hide-under-600'
+        : 'hide-under-700'}"
+    ></div>
     {#each context.classes as entry, i}
       <span class="class" class:hide-under-600={i > 0}>
         <span class="color-text-gold font-label-medium">{entry.name}</span>
@@ -99,13 +120,13 @@
             onclick={(ev) => entry.spellcasting && onRollAbility?.(ev, entry.spellcasting.ability, entry.spellcasting.dc)}
             class="ability-roll-button label color-text-lighter font-label-medium dc"
             > -->
-            <span class="color-text-lighter font-label-medium dc"
-              >{entry.spellcasting.ability}
-              {localize('DND5E.AbbreviationDC')}</span
-            >
-            <span class="color-text-default font-data-medium"
-              >{entry.spellcasting.dc}</span
-            >
+          <span class="color-text-lighter font-label-medium dc"
+            >{entry.spellcasting.ability}
+            {localize('DND5E.AbbreviationDC')}</span
+          >
+          <span class="color-text-default font-data-medium"
+            >{entry.spellcasting.dc}</span
+          >
           <!-- </button> -->
         {/if}
       </span>
@@ -113,27 +134,39 @@
     {/each}
   </div>
   {#if context.enableXp}
-    <div class="xp-container">    
+    <div class="xp-container">
       <div class="xp-label">
-        <span class="label font-label-medium color-text-gold">XP</span>
-        <span class="label font-label-medium color-text-default">12,345</span>
+        <span class="label font-label-medium color-text-gold"
+          >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
+        >
+        {#if context.unlocked}
+          <TextInputQuadrone
+            document={context.document}
+            field="system.details.xp.value"
+            value={context.system.details.xp.value}
+            class="xp-value"
+            enableDeltaChanges={true}
+            selectOnFocus={true}
+          />
+        {:else}
+          <span class="label font-label-medium color-text-default">
+            {FoundryAdapter.formatNumber(context.system.details.xp.value)}
+          </span>
+        {/if}
         <span class="separator">/</span>
-        <span class="label font-body-medium color-text-lighter">17,500</span>
+        <span class="label font-body-medium color-text-lighter"
+          >{FoundryAdapter.formatNumber(context.system.details.xp.max)}</span
+        >
       </div>
-      <div class="xp-bar xp meter progress"
-        style="--bar-percentage: 50%;">
-        <span class="xp-bar-current" style="width: 50%"></span>
+      <div
+        class="xp-bar xp meter progress"
+        style="--bar-percentage: {context.system.details.xp.pct}%;"
+      >
+        <span
+          class="xp-bar-current"
+          style="width: {context.system.details.xp.pct}%"
+        ></span>
       </div>
     </div>
   {/if}
 </div>
-
-<style lang="scss">
-  .character-details-subtitle-row {
-    container-type: inline-size;
-
-    @container (width > 800px) {
-      // background-color: red;
-    }
-  }
-</style>
