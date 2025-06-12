@@ -1,12 +1,5 @@
 ## Inventory To Do
 
-- [x] Empty container sections should be hidden in inline containers, whether locked or unlocked
-- [x] `systemSettings` - set up like `foundryCoreSettings` in settings.svelte.ts
-- [x] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
-- [x] Replace all system-setting-related checks with the global store.
-- [ ] Evolve ItemLists further
-  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
-  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 -  [ ] Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?
 
 ## Inventory To Done
@@ -58,6 +51,11 @@
 - [x] Inline / contained weapons do not have proper item save context?
 - [x] Inline container columns should match container column specs
 - [x] // TODO: Find a way to share this data between all callers who use the inventory action bar.
+- [x] Empty container sections should be hidden in inline containers, whether locked or unlocked
+- [x] `systemSettings` - set up like `foundryCoreSettings` in settings.svelte.ts
+- [x] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
+- [x] Replace all system-setting-related checks with the global store.
+
 
 ## Side Quest to Complete Before Returning to Inventory
 

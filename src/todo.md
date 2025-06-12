@@ -97,6 +97,10 @@
 - [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] (stretch) Implement generic width / priority observer feature that can be used to control pinned filter visibility generically and then be used for other purposes later.
   - [ ] Propagate this to all action bars
+- [ ] Evolve ItemLists further
+  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
+  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
+
 
 ### Feature - Set as Inspiration Source
 
