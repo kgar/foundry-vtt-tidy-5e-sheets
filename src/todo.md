@@ -76,6 +76,7 @@
 - [ ] (TBD) User Setting: Item Spells Organization ( ) Additional Spells Section ( ) Section Per Item
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 - [ ] Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
+- [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 
 ### Feature - Set as Inspiration Source
 
