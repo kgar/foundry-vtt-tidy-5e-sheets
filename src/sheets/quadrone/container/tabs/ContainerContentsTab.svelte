@@ -88,6 +88,7 @@
   editable={context.editable}
   itemContext={context.containerContents.itemContext}
   {inlineToggleService}
+  {searchCriteria}
   sheetDocument={context.item}
   unlocked={context.unlocked}
   root={true}
