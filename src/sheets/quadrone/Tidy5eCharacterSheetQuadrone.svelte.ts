@@ -1149,10 +1149,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     favorite: { type: string; id: string }
   ): Promise<Actor5e> | Promise<any> {
-    if (this.actor.system.hasFavorite(favorite.id))
+    // Sort if it's already a favorite
+    if (this.actor.system.hasFavorite(favorite.id)) {
       return await this._onSortFavorites(event, favorite.id);
-    // If we don't own the item, handle onDrop and then turn around and add it as a favorite?
-    return await this.actor.system.addFavorite(favorite);
+    }
+
+    // Add and sort if it's a new favorite, so it drops right in the place where the user wanted it.
+    await this.actor.system.addFavorite(favorite);
+    return await this._onSortFavorites(event, favorite.id);
   }
 
   /**
