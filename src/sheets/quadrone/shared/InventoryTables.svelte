@@ -36,7 +36,6 @@
     searchCriteria: string;
     /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
-    unlocked?: boolean;
     /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
     root?: boolean;
   }
@@ -49,7 +48,6 @@
     inlineToggleService,
     searchCriteria,
     sheetDocument,
-    unlocked = true,
     root,
   }: Props = $props();
 
@@ -88,11 +86,11 @@
 
 <div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
   {#each sections as section (section.key)}
-    {@const visibleItemCount = ItemVisibility.countVisibleItems(
+    {@const hasViewableItems = ItemVisibility.hasViewableItems(
       section.items,
       searchResults.uuids,
     )}
-    {#if section.show && (visibleItemCount > 0 || (context.unlocked && searchCriteria.trim() === ''))}
+    {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
       {@const columns = new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications(
           containingDocument.type,
@@ -255,7 +253,6 @@
                 {inlineToggleService}
                 {searchCriteria}
                 {sheetDocument}
-                {unlocked}
               />
             {/if}
           {/each}

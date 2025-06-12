@@ -20,14 +20,15 @@
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
   import SpellSlotManagementQuadrone from '../actor/parts/SpellSlotManagementQuadrone.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   interface Props {
     sections: SpellbookSection[];
     editable: boolean;
     itemContext: Record<string, CharacterItemContext | NpcItemContext>;
     inlineToggleService: InlineToggleService;
+    searchCriteria: string;
     sheetDocument: Actor5e | Item5e;
-    unlocked?: boolean;
   }
 
   let {
@@ -35,8 +36,8 @@
     editable,
     itemContext,
     inlineToggleService,
+    searchCriteria,
     sheetDocument,
-    unlocked = true,
   }: Props = $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -68,7 +69,11 @@
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
   {#each sections as section (section.key)}
-    {#if section.show}
+    {@const hasViewableItems = ItemVisibility.hasViewableItems(
+      section.spells,
+      searchResults.uuids,
+    )}
+    {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
       {@const columns = new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications(
           sheetDocument.type,

@@ -16,7 +16,6 @@
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
     sheetDocument: any;
-    unlocked?: boolean;
   }
 
   let {
@@ -26,7 +25,6 @@
     inlineToggleService,
     searchCriteria,
     sheetDocument,
-    unlocked = true,
   }: Props = $props();
 
   let toggleServiceMap = $derived(inlineToggleService.map);
@@ -82,7 +80,6 @@
         {inlineToggleService}
         {searchCriteria}
         {sheetDocument}
-        {unlocked}
       />
       {#if !containerContents.contents.some((c) => c.items.length > 0)}
         <div class="empty-container">

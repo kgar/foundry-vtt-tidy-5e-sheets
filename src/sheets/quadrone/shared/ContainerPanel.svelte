@@ -7,6 +7,7 @@
   import { coalesce } from 'src/utils/formatting';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   interface Props {
     containerPanelItems?: ContainerPanelItemContext[];
@@ -37,9 +38,16 @@
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
+
+  let showSection = $derived(
+    ItemVisibility.countVisibleItems(
+      containerPanelItems.map((c) => c.container),
+      searchResults.uuids,
+    ) > 0,
+  );
 </script>
 
-<ul class="container-panel">
+<ul class={['container-panel', { hidden: !showSection }]}>
   {#each containerPanelItems as { container, ...capacity } (container.id)}
     <li
       data-tidy-draggable

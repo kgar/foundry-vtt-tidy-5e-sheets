@@ -6,7 +6,7 @@ import { debug } from 'src/utils/logging';
 import type { ActionItem } from 'src/types/types';
 
 export class ItemVisibility {
-  static countVisibleItems(items: Item5e[], uuids?: Set<string>) {
+  static countVisibleItems(items: Item5e[], uuids?: Set<string>): number {
     if (!uuids) {
       return items.length;
     }
@@ -15,6 +15,14 @@ export class ItemVisibility {
       (prev, curr) => prev + (uuids.has(curr.uuid) ? 1 : 0),
       0
     );
+  }
+
+  static hasViewableItems(items: Item5e[], uuids?: Set<string>): boolean {
+    if (!uuids) {
+      return items.length > 0;
+    }
+
+    return items.some((curr) => uuids.has(curr.uuid));
   }
 
   static getItemsToShowAtDepth(args: {

@@ -90,7 +90,6 @@
   {inlineToggleService}
   {searchCriteria}
   sheetDocument={context.item}
-  unlocked={context.unlocked}
   root={true}
 />
 

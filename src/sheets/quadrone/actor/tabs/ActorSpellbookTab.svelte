@@ -73,12 +73,7 @@
   });
 </script>
 
-<ActionBar
-  bind:searchCriteria
-  sections={spellbook}
-  {tabId}
-  {tabOptionGroups}
-/>
+<ActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
 
 <SpellTables
   sections={spellbook}
@@ -86,5 +81,5 @@
   itemContext={context.itemContext}
   {inlineToggleService}
   sheetDocument={context.actor}
-  unlocked={context.unlocked}
+  {searchCriteria}
 />

@@ -76,7 +76,6 @@
   {inlineToggleService}
   {searchCriteria}
   sheetDocument={context.actor}
-  unlocked={context.unlocked}
   root={true}
 />
 
