@@ -16,9 +16,6 @@
   } from 'src/types/types';
   import CapacityTracker from './CapacityTracker.svelte';
   import WeightDistributionTooltip from 'src/tooltips/WeightDistributionTooltip.svelte';
-  import { systemSettings } from 'src/settings/settings.svelte';
-  import { Tooltip } from 'src/tooltips/Tooltip';
-  import { getThemeV2 } from 'src/theme/theme';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
@@ -49,29 +46,14 @@
   );
 
   let weightDistributionTooltip: WeightDistributionTooltip;
-
-  function showWeightDistributionTooltip(
-    event: Event & { currentTarget: EventTarget & HTMLElement },
-  ): any {
-    if (!systemSettings.value.currencyWeight) {
-      return;
-    }
-
-    Tooltip.show(
-      event?.currentTarget,
-      weightDistributionTooltip.getMarkup(),
-      getThemeV2(context.document),
-    );
-  }
 </script>
 
-<div class="hidden">
-  <WeightDistributionTooltip
-    bind:this={weightDistributionTooltip}
-    fullWeight={container.system.contentsWeight}
-    currencyWeight={container.system.currencyWeight}
-  />
-</div>
+<WeightDistributionTooltip
+  bind:this={weightDistributionTooltip}
+  sheetDocument={context.document}
+  fullWeight={container.system.contentsWeight}
+  currencyWeight={container.system.currencyWeight}
+/>
 
 <div
   class={[
@@ -87,8 +69,8 @@
   aria-valuemax={capacity.max}
   style="--bar-percentage: {percentage}%;"
   data-tooltip-direction="UP"
-  onmouseover={(ev) => showWeightDistributionTooltip(ev)}
-  onfocus={(ev) => showWeightDistributionTooltip(ev)}
+  onmouseover={(ev) => weightDistributionTooltip.tryShow(ev)}
+  onfocus={(ev) => weightDistributionTooltip.tryShow(ev)}
 >
   {#if showTracker}
     {@render tracker()}

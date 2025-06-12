@@ -44,21 +44,6 @@
   );
 
   let attunementSummaryTooltip: AttunementSummaryTooltip;
-
-  function showAttunementSummaryTooltip(
-    event: Event & { currentTarget: EventTarget & HTMLElement },
-  ): any {
-    if (!attunedItems.length) {
-      return;
-    }
-
-    Tooltip.show(
-      event?.currentTarget,
-      attunementSummaryTooltip.getMarkup(),
-      getThemeV2(context.actor),
-    );
-  }
-
   let overattuned = $derived(
     context.actor.system.attributes.attunement.value >
       context.actor.system.attributes.attunement.max,
@@ -67,28 +52,36 @@
   let attuned = $derived(context.system.attributes.attunement.value > 0);
 </script>
 
-<div class="hidden">
-  <AttunementSummaryTooltip
-    bind:this={attunementSummaryTooltip}
-    {attunedItems}
-  />
-</div>
+<AttunementSummaryTooltip
+  bind:this={attunementSummaryTooltip}
+  sheetDocument={context.document}
+  {attunedItems}
+/>
 
 <!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
-<div class={['sheet-footer', 'fixed', 'flexrow', 'inventory-footer', classValue]}>
-
+<div
+  class={['sheet-footer', 'fixed', 'flexrow', 'inventory-footer', classValue]}
+>
   <div class="footer-content-left flexrow flexshrink">
     <div
-      class={['attunement-tracker flexshrink', 
-              { 'overattuned': overattuned }, { 'attuned': attuned }, { 'pill pill-medium interactive': !context.unlocked }, { 'flexrow': context.unlocked }
+      class={[
+        'attunement-tracker flexshrink',
+        { overattuned: overattuned },
+        { attuned: attuned },
+        { 'pill pill-medium interactive': !context.unlocked },
+        { flexrow: context.unlocked },
       ]}
       role="region"
       data-tooltip-direction="UP"
-      onmouseover={(ev) => showAttunementSummaryTooltip(ev)}
-      onfocus={(ev) => showAttunementSummaryTooltip(ev)}
+      onmouseover={(ev) => attunementSummaryTooltip.tryShow(ev)}
+      onfocus={(ev) => attunementSummaryTooltip.tryShow(ev)}
     >
-      <i class={`fa-sun ${attuned ? 'fas color-text-gold-emphasis' : 'far color-text-lighter'}`}></i>
-      <span class="value font-data-medium">{context.system.attributes.attunement.value}</span>
+      <i
+        class={`fa-sun ${attuned ? 'fas color-text-gold-emphasis' : 'far color-text-lighter'}`}
+      ></i>
+      <span class="value font-data-medium"
+        >{context.system.attributes.attunement.value}</span
+      >
       <span class="separator">/</span>
       {#if context.unlocked}
         <NumberInputQuadrone

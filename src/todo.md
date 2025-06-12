@@ -1,39 +1,15 @@
 ## To Do
 
-- [ ] Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?
 - [ ] Character Sheet 
+  - [ ] Wire up XP bar
   - [ ] Add drag-and-drop to sort for Favorites
   - [ ] Implement slots, skills, and tools drag
     - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
     - [ ] Verify they work with favorites
-  - [x] Start dev in Foundry V12
-  - [x] Establish components for the tabs
-  - [x] Set up Quadrone runtime content, including the default tabs
-  - [x] Implement SkillsCard
-  - [x] Implement ToolsCard
-  - [x] Character Traits: Add icons to damage modification, damage resistances, and damage vulnerabilities
-  - [x] Structure the sheet - 
-    - [x] Tab Content area
-      - [x] Sidebar
-        - [x] Button tabs
-        - [x] Skills area (when Skills tab selected)
-        - [x] Traits area (when Traits tab selected)
-        - [x] Pinned area (when Pinned tab selected)
-      - [x] Main Tab Strip Active Content Area
-        - [x] Sheet tab contents
-        - [x] Character tab contents
-        - [x] Inventory tab contents
-        - [x] Features tab contents
-        - [x] Spellbook tab contents
-        - [x] Effects tab contents
-        - [x] Action tab contents
-        - [x] Bastion tab contents
-        - [x] Biography tab contents
-        - [x] Journal tab contents
   - [ ] Implement tabs
     - [ ] Actions
     - [x] Attributes (Character tab)
-    - [ ] Inventory
+    - [x] Inventory
     - [ ] Features
     - [x] Spellbook
     - [ ] Effects
@@ -615,3 +591,28 @@ Limited:
       - [x] Name / Summary row / buttons / Badge
       - [x] AC / Abilities / Init
       - [x] Sidebar Toggle / Tab strip
+- [x] ~~Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?~~ No. A better component API that requires less of the caller was the answer.
+- [x] Start dev in Foundry V12
+  - [x] Establish components for the tabs
+  - [x] Set up Quadrone runtime content, including the default tabs
+  - [x] Implement SkillsCard
+  - [x] Implement ToolsCard
+  - [x] Character Traits: Add icons to damage modification, damage resistances, and damage vulnerabilities
+  - [x] Structure the sheet - 
+    - [x] Tab Content area
+      - [x] Sidebar
+        - [x] Button tabs
+        - [x] Skills area (when Skills tab selected)
+        - [x] Traits area (when Traits tab selected)
+        - [x] Pinned area (when Pinned tab selected)
+      - [x] Main Tab Strip Active Content Area
+        - [x] Sheet tab contents
+        - [x] Character tab contents
+        - [x] Inventory tab contents
+        - [x] Features tab contents
+        - [x] Spellbook tab contents
+        - [x] Effects tab contents
+        - [x] Action tab contents
+        - [x] Bastion tab contents
+        - [x] Biography tab contents
+        - [x] Journal tab contents
