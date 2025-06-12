@@ -82,8 +82,8 @@
       class={['attunement-tracker flexshrink', 
               { 'overattuned': overattuned }, { 'attuned': attuned }, { 'pill pill-medium interactive': !context.unlocked }, { 'flexrow': context.unlocked }
       ]}
-      data-tooltip-direction="UP"
       role="region"
+      data-tooltip-direction="UP"
       onmouseover={(ev) => showAttunementSummaryTooltip(ev)}
       onfocus={(ev) => showAttunementSummaryTooltip(ev)}
     >

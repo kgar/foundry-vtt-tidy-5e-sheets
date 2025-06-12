@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { ActorAttributeEncumbrance } from 'src/foundry/dnd5e.types';
+  import { systemSettings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getThemeV2 } from 'src/theme/theme';
+  import { Tooltip } from 'src/tooltips/Tooltip';
+  import WeightDistributionTooltip from 'src/tooltips/WeightDistributionTooltip.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
@@ -24,7 +28,31 @@
   let encumbranceMaxText = $derived(
     encumbrance.max === Infinity ? '∞' : encumbrance.max,
   );
+
+  let weightDistributionTooltip: WeightDistributionTooltip;
+
+  function showWeightDistributionTooltip(
+    event: Event & { currentTarget: EventTarget & HTMLElement },
+  ): any {
+    if (!systemSettings.value.currencyWeight) {
+      return;
+    }
+
+    Tooltip.show(
+      event?.currentTarget,
+      weightDistributionTooltip.getMarkup(),
+      getThemeV2(context.actor),
+    );
+  }
 </script>
+
+<div class="hidden">
+  <WeightDistributionTooltip
+    bind:this={weightDistributionTooltip}
+    fullWeight={context.system.attributes.encumbrance.value}
+    currencyWeight={context.system.currencyWeight}
+  />
+</div>
 
 <div
   class={[
@@ -39,6 +67,9 @@
   aria-valuemax={encumbrance.max}
   style="--bar-percentage: {percentage}%; --encumbrance-low: {encumbrance.stops
     .encumbered}%; --encumbrance-high: {encumbrance.stops.heavilyEncumbered}%;"
+  data-tooltip-direction="UP"
+  onmouseover={(ev) => showWeightDistributionTooltip(ev)}
+  onfocus={(ev) => showWeightDistributionTooltip(ev)}
 >
   <div class="label">
     <i class="fas fa-weight-hanging text-label-icon"></i>
