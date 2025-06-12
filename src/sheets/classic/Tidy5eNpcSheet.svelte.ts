@@ -19,14 +19,13 @@ import type {
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import { debug } from 'src/utils/logging';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { mount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
@@ -65,7 +64,6 @@ export class Tidy5eNpcSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
-  itemFilterService: ItemFilterService;
   messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
@@ -90,8 +88,6 @@ export class Tidy5eNpcSheet
       userId: game.user.id,
       documentId: this.actor.id,
     });
-
-    this.itemFilterService = new ItemFilterService({}, this.actor);
 
     this.currentTabId = settings.value.initialNpcSheetTab;
   }
@@ -640,7 +636,7 @@ export class Tidy5eNpcSheet
         defaultDocumentContext.items
       ),
       defaultSkills: new Set<string>(
-        FoundryAdapter.getSystemSetting(CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS)
+        systemSettings.value.defaultSkills
       ),
       features: [],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -734,7 +730,7 @@ export class Tidy5eNpcSheet
       ...defaultDocumentContext,
     };
 
-    context.filterData = this.itemFilterService.getDocumentItemFilterData();
+    context.filterData = this.itemFilterService.getFilterData();
     context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
     context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits(

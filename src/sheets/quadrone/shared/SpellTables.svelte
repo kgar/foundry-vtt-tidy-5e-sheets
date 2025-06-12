@@ -4,64 +4,47 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerItemContext, Item5e } from 'src/types/item.types';
-  import type { Actor5e, InventorySection } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
+  import type {
+    Actor5e,
+    CharacterItemContext,
+    NpcItemContext,
+    SpellbookSection,
+  } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
   import { getContext } from 'svelte';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import InlineContainerView from '../container/parts/InlineContainerView.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import SpellSlotManagementQuadrone from '../actor/parts/SpellSlotManagementQuadrone.svelte';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   interface Props {
-    sections: InventorySection[];
-    container?: Item5e;
+    sections: SpellbookSection[];
     editable: boolean;
-    itemContext: Record<string, ContainerItemContext>;
+    itemContext: Record<string, CharacterItemContext | NpcItemContext>;
     inlineToggleService: InlineToggleService;
-    /** The sheet which is rendering this recursive set of container contents. */
+    searchCriteria: string;
     sheetDocument: Actor5e | Item5e;
-    unlocked?: boolean;
-    /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
-    root?: boolean;
   }
 
   let {
     sections,
-    container,
     editable,
     itemContext,
     inlineToggleService,
+    searchCriteria,
     sheetDocument,
-    unlocked = true,
-    root,
   }: Props = $props();
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  let containingDocument = $derived(container ?? sheetDocument);
-
-  let sectionsToConfigure = $derived(
-    unlocked && !container ? sections : sections.filter((i) => i.items.length),
-  );
-
-  let configuredSections = $derived(
-    SheetSections.configureInventory(
-      sectionsToConfigure,
-      tabId,
-      SheetPreferencesService.getByType(sheetDocument.type),
-      TidyFlags.sectionConfig.get(containingDocument)?.[tabId],
-    ),
-  );
-
   const searchResults = getSearchResultsContext();
 
-  let containerToggleMap = $derived(inlineToggleService.map);
+  let itemToggleMap = $derived(inlineToggleService.map);
 
   let context = $derived(getSheetContext());
 
@@ -84,43 +67,55 @@
   });
 </script>
 
-<div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
-  {#each configuredSections as section (section.key)}
-    {#if section.show}
-      {@const columns = ItemColumnRuntime.getSheetTabSectionColumnsQuadrone(
-        containingDocument,
-        !container ? tabId : CONSTANTS.TAB_CONTAINER_CONTENTS,
-        section,
+<div class="tidy-table-container" bind:this={sectionsContainer}>
+  {#each sections as section (section.key)}
+    {@const hasViewableItems = ItemVisibility.hasViewableItems(
+      section.spells,
+      searchResults.uuids,
+    )}
+    {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+      {@const columns = new ColumnsLoadout(
+        ItemColumnRuntime.getConfiguredColumnSpecifications(
+          sheetDocument.type,
+          tabId,
+          section.key,
+          {
+            rowActions: section.rowActions,
+          },
+        ),
       )}
       {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
         sectionsInlineWidth,
         columns,
-        section,
       )}
       <TidyTable
         key={section.key}
         data-custom-section={section.custom ? true : null}
+        dataset={section.dataset}
       >
         {#snippet header(expanded)}
-          <TidyTableHeaderRow class={{ 'theme-dark': root }}>
+          {@const modeClass = `mode-${section.prepMode?.slugify()}`}
+          <TidyTableHeaderRow
+            class={['theme-dark', 'spell-preparation', modeClass]}
+          >
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>
                 {localize(section.label)}
               </h3>
-              <span class="table-header-count">{section.items.length}</span>
+              <span class="table-header-count">{section.spells.length}</span>
+              {#if section.usesSlots}
+                <SpellSlotManagementQuadrone
+                  mode={context.spellSlotTrackerMode}
+                  {section}
+                />
+              {/if}
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
-              {@const width =
-                typeof column.width === 'number'
-                  ? column.width
-                  : column.width(section)}
+
               <TidyTableHeaderCell
-                class={[
-                  column.headerClasses,
-                  { hidden: (!expanded && !root) || hidden },
-                ]}
-                columnWidth="{width}px"
+                class={[column.headerClasses, { hidden }]}
+                columnWidth="{column.widthRems}rem"
               >
                 {#if !!column.headerContent}
                   {#if column.headerContent.type === 'callback'}
@@ -144,31 +139,23 @@
         {/snippet}
 
         {#snippet body()}
-          {@const itemEntries = section.items.map((item) => ({
+          {@const itemEntries = section.spells.map((item) => ({
             item,
             ctx: itemContext[item.id],
           }))}
           {#each itemEntries as { item, ctx }, i (item.id)}
-            {@const expanded = !!containerToggleMap.get(tabId)?.has(item.id)}
-            {@const unidentified = item.system.identified === false}
+            {@const expanded = !!itemToggleMap.get(tabId)?.has(item.id)}
 
             <TidyItemTableRow
               {item}
               hidden={!searchResults.show(item.uuid)}
-              rowClass={[
-                FoundryAdapter.getInventoryRowClasses(
-                  item,
-                  itemContext[item.id]?.attunement,
-                ),
-                { expanded, unidentified },
-              ]}
+              rowClass={[{ expanded }]}
               contextMenu={{
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: item.uuid,
               }}
             >
               {#snippet children({ toggleSummary, expanded })}
-              <div class="highlight"></div>
                 <a
                   class={['tidy-table-row-use-button']}
                   onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
@@ -178,25 +165,14 @@
                     <i class="fa fa-dice-d20"></i>
                   </span>
                 </a>
-                {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <a
-                    class="container-expander"
-                    onclick={() => inlineToggleService.toggle(tabId, item.id)}
-                  >
-                    <i
-                      class="fa-solid fa-angle-right expand-indicator"
-                      class:expanded={containerToggleMap
-                        .get(tabId)
-                        ?.has(item.id)}
-                    >
-                    </i>
-                  </a>
-                {/if}
 
                 <TidyTableCell primary={true} class="item-label text-cell">
-                  <a class="item-name" role="button" tabindex="0" onclick={(ev) => toggleSummary()}>
+                  <a class="item-name" onclick={(ev) => toggleSummary()}>
                     <span class="cell-text">
                       <span class="cell-name">{item.name}</span>
+                      {#if ctx.subtitle}
+                        <span class="cell-context">{@html ctx.subtitle}</span>
+                      {/if}
                     </span>
                     <span class="row-detail-expand-indicator">
                       <i
@@ -209,8 +185,8 @@
                 </TidyTableCell>
                 {#if ctx.attunement}
                   {@const iconClass = item.system.attuned
-                    ? 'fa-solid fa-sun color-text-gold-emphasis'
-                    : 'fa-light fa-sun color-text-lighter'}
+                    ? 'fa-solid fa-sun'
+                    : 'fa-light fa-sun'}
 
                   {@const title = ctx.attunement?.title}
 
@@ -219,13 +195,9 @@
                 {/if}
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
-                  {@const width =
-                    typeof column.width === 'number'
-                      ? column.width
-                      : column.width(section)}
 
                   <TidyTableCell
-                    columnWidth="{width}px"
+                    columnWidth="{column.widthRems}rem"
                     class={[column.cellClasses, { hidden }]}
                   >
                     {#if column.cellContent.type === 'callback'}
@@ -244,17 +216,6 @@
                 {/each}
               {/snippet}
             </TidyItemTableRow>
-
-            {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <InlineContainerView
-                container={item}
-                containerContents={ctx.containerContents}
-                {editable}
-                {inlineToggleService}
-                {sheetDocument}
-                {unlocked}
-              />
-            {/if}
           {/each}
         {/snippet}
       </TidyTable>

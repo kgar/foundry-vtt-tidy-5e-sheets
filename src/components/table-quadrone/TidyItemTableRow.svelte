@@ -94,7 +94,8 @@
     !isNil(item.system.rarity, '') ? 'rarity' : undefined,
     item.system.rarity?.slugify(),
     !isNil(item.system.preparation?.mode) ? 'spell-preparation' : undefined,
-    item.system.preparation?.mode?.slugify(),
+    `mode-${item.system.preparation?.mode?.slugify()}`,
+    'equipped' in item.system && item.system.equipped ? 'equipped' : undefined,
   ]);
 
   let first = true;

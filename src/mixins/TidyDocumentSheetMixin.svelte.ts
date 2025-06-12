@@ -35,8 +35,6 @@ import {
   insertHeaderButton,
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
-import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
-import { settings } from 'src/settings/settings.svelte';
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 
@@ -56,11 +54,11 @@ export function TidyExtensibleDocumentSheetMixin<
   }>
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
+    _mode = $state<number | undefined>();
+
     constructor(options: TConstructorArgs) {
       super(options);
     }
-
-    _mode = $state<number | undefined>();
 
     get sheetMode() {
       return this._mode;
@@ -139,10 +137,6 @@ export function TidyExtensibleDocumentSheetMixin<
       this.#persistSheetPositionPreferences.bind(this),
       1000
     );
-
-    _runFrameListenerEffect() {
-      applyThemeToApplication(this.element, this.document);
-    }
 
     _onPosition(position: ApplicationPosition) {
       super._onPosition(position);
@@ -226,6 +220,8 @@ export function TidyExtensibleDocumentSheetMixin<
           this.document.type,
           element
         );
+
+        applyThemeToApplication(element, this.document);
 
         // Support injected named inputs
         element.addEventListener(
@@ -424,6 +420,17 @@ export function TidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
+    // settingsChangeHookId?: number;
+
+    /**
+     * Attach event listeners to the Application frame.
+     * @protected
+     */
+    _attachFrameListeners() {
+      game.user.apps[this.id] = this;
+
+      super._attachFrameListeners();
+    }
 
     async _onRender(
       context: TContext,
@@ -439,6 +446,18 @@ export function TidyExtensibleDocumentSheetMixin<
           this.#restoreInputFocus(this.element);
         }
       });
+    }
+
+    /**
+     * Actions performed after closing the Application.
+     * Post-close steps are not awaited by the close process.
+     * @param {RenderOptions} options Provided render options
+     * @protected
+     */
+    _onClose(options: TidyDocumentSheetRenderOptions) {
+      delete game.user.apps[this.id];
+
+      super._onClose(options);
     }
 
     /* -------------------------------------------- */
@@ -648,7 +667,6 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     async _addDocument(args: {
       tabId: string;
-      typeToPreselect?: string;
       customSection?: string;
       creationItemTypes?: string[];
       data?: Record<string, any>;

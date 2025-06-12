@@ -16,7 +16,7 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
@@ -29,10 +29,6 @@ import type {
   DamageModificationData,
   SpecialTraitSectionField,
 } from 'src/types/types';
-import {
-  applySheetConfigLockAttributeToApplication,
-  applyThemeToApplication,
-} from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
@@ -40,6 +36,7 @@ import { firstOfSet } from 'src/utils/set';
 import { mount } from 'svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 
 // TODO: Simplify mixins to mostly a class hierarchy
 export function Tidy5eActorSheetClassicV2Base<
@@ -53,9 +50,12 @@ export function Tidy5eActorSheetClassicV2Base<
   ) {
     abstract currentTabId: string;
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
+    itemFilterService: ItemFilterService;
 
     constructor(options?: Partial<ApplicationConfiguration> | undefined) {
       super(options);
+
+      this.itemFilterService = new ItemFilterService({}, this.actor);
     }
 
     /**
@@ -133,41 +133,9 @@ export function Tidy5eActorSheetClassicV2Base<
       }`;
     }
 
-    _configureEffects() {
-      let first = true;
-
-      $effect(() => {
-        // Document Apps Reactivity
-        game.user.apps[this.id] = this;
-
-        return () => {
-          delete game.user.apps[this.id];
-        };
-      });
-
-      $effect(() => {
-        if (first) return;
-
-        applySheetConfigLockAttributeToApplication(
-          settings.value,
-          this.element
-        );
-        applyThemeToApplication(this.element, this.actor);
-        this.render();
-      });
-
-      $effect(() => {
-        debug('Message bus message received', {
-          app: this,
-          actor: this.actor,
-          message: this.messageBus,
-        });
-      });
-
-      first = false;
-    }
-
     async _prepareContext(options: any): Promise<ActorSheetContextV1> {
+      this.itemFilterService.refreshFilters();
+
       const documentSheetContext = await super._prepareContext(options);
 
       // The Actor's data
@@ -229,9 +197,7 @@ export function Tidy5eActorSheetClassicV2Base<
         customActorTraits: [],
         customContent: [],
         disableExperience:
-          FoundryAdapter.getSystemSetting(
-            CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
-          ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
+          systemSettings.value.levelingMode === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),
@@ -770,7 +736,6 @@ export function Tidy5eActorSheetClassicV2Base<
     /* -------------------------------------------- */
     /*  Life-Cycle Handlers                         */
     /* -------------------------------------------- */
-
     /** @inheritDoc */
     async _onRender(
       context: TContext,
@@ -1293,8 +1258,10 @@ export function Tidy5eActorSheetClassicV2Base<
             : null;
       }
 
-      const { level, preparationMode } =
-        header?.closest<HTMLElement>('[data-level]')?.dataset ?? {};
+      const dataset =
+        header?.closest<HTMLElement>('[data-system.level]')?.dataset ?? {};
+      const level = dataset['system.level'];
+      const preparationMode = dataset['system.preparation.mode'];
 
       // Determine the actor's spell slot progressions, if any.
       const spellcastKeys = Object.keys(CONFIG.DND5E.spellcastingTypes);

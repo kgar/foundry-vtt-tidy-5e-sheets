@@ -3,12 +3,12 @@ import ActorOriginSummaryConfig from './ActorOriginSummaryConfig.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import { error } from 'src/utils/logging';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
+import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 
 export type ActorOriginSummaryContext = {
   isCharacter: boolean;
@@ -22,10 +22,10 @@ export type ActorOriginSummaryContext = {
   dimensions: string;
 };
 
-export default class ActorOriginSummaryConfigFormApplication extends SvelteApplicationMixin<
+export default class ActorOriginSummaryConfigFormApplication extends DocumentSheetDialog<
   Partial<ApplicationConfiguration> | undefined,
   ActorOriginSummaryContext
->(foundry.applications.api.DocumentSheetV2) {
+>() {
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,

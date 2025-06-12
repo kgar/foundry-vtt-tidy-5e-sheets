@@ -1,3 +1,4 @@
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { Item5e } from 'src/types/item.types';
 import type { SortGroup, SortMethodScheme } from 'src/types/sort.types';
 import type { TidySectionBase } from 'src/types/types';
@@ -18,7 +19,7 @@ type TabId = string;
 type DocumentType = string;
 export type FilterCategoriesToFilters = Record<
   Category,
-  ItemFilter[] | (() => ItemFilter[])
+  ItemFilter[] | ((document: any) => ItemFilter[])
 >;
 
 export type FilterTabsToCategories = Record<TabId, FilterCategoriesToFilters>;
@@ -53,6 +54,10 @@ export type DocumentTypesToSortGroupTabs = Record<
   SortTabsToSortGroups
 >;
 
+export type ColumnSpecificationCalculatedWidthArgs = {
+  rowActions: TidyTableAction<any, any, any>[];
+};
+
 // Columns
 export type ColumnSpecification = {
   headerContent?:
@@ -77,7 +82,9 @@ export type ColumnSpecification = {
         type: 'callback';
         callback: (rowDocument: any, rowContext: any) => string;
       };
-  width: number | ((section: TidySectionBase) => number); // default: "80" (px)
+  widthRems:
+    | number
+    | ((section: ColumnSpecificationCalculatedWidthArgs) => number); // default: 5 (rem)
   priority: number;
   order: number;
   headerClasses?: string;
@@ -87,27 +94,8 @@ export type ColumnSpecification = {
   ) => boolean;
 };
 
-export type KeyedColumnSpecification = ColumnSpecification & { key: string };
-
-export type ColumnSpecificationSchematics = {
-  ordered: KeyedColumnSpecification[];
-  prioritized: KeyedColumnSpecification[];
-};
-
-export type SectionColumnSpecificationSchematics = Record<
-  string,
-  ColumnSpecificationSchematics
->;
-
-export type TabColumnSpecificationSchematics = Record<
-  string,
-  SectionColumnSpecificationSchematics
->;
-
-export type SheetColumnSpecificationSchematics = Record<
-  string,
-  TabColumnSpecificationSchematics
->;
+/** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
+export type ConfiguredColumnSpecification = ColumnSpecification & { key: string, widthRems: number; };
 
 export type ColumnHeaderProps<TDocument = any, TContext = any> = {
   sheetDocument: TDocument;

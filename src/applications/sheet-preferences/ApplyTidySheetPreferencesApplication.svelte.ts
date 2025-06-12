@@ -11,6 +11,7 @@ import type { ApplicationConfiguration } from 'src/types/application.types';
 import { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import { CONSTANTS } from 'src/constants';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
 export type SheetPreferenceOption = {
   label: string;
@@ -209,5 +210,12 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
 
   private _getSheetClassesSetting() {
     return game.settings.get('core', 'sheetClasses');
+  }
+
+  // Not going to refactor this because this application is living on borrowed time
+  _attachFrameListeners() {
+    super._attachFrameListeners();
+
+    applyThemeToApplication(this.element);
   }
 }

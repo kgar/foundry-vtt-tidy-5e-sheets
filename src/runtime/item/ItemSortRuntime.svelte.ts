@@ -15,23 +15,6 @@ export class ItemSortRuntime {
   static _registeredItemSorts: Record<string, SortMethodScheme> = {};
   static _registeredItemSortGroups: Record<string, SortGroup> = {};
 
-  private static readonly standardSortGroups = [
-    defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL],
-    defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL],
-    defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED],
-  ];
-
-  private static readonly standardSortSchemes = [
-    defaultItemSortSchemes[
-      CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
-    ],
-    defaultItemSortSchemes[
-      CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
-    ],
-    defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL],
-    defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED],
-  ];
-
   static init() {
     ItemSortRuntime._registeredItemSorts = {
       ...defaultItemSortSchemes,
@@ -43,11 +26,66 @@ export class ItemSortRuntime {
     };
   }
 
-  // TODO: populate this on sort settings changed / sort admin API calls
-  static _documentTabSortSchemesQuadrone: DocumentTypesToSortMethodTabs = {};
+  static _documentTabSortSchemesQuadrone: DocumentTypesToSortMethodTabs = {
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: [
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
+        ],
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
+        ],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED],
+      ],
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: [
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
+        ],
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
+        ],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_PRIORITY],
+      ],
+    },
+    [CONSTANTS.SHEET_TYPE_CONTAINER]: {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: [
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
+        ],
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
+        ],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED],
+      ],
+    },
+  };
 
-  // TODO: populate this on sort settings changed / sort admin API calls
-  static _documentTabSortGroupsQuadrone: DocumentTypesToSortGroupTabs = {};
+  static _documentTabSortGroupsQuadrone: DocumentTypesToSortGroupTabs = {
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: [
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED],
+      ],
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: [
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_PREPARED],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_PRIORITY],
+      ],
+    },
+    [CONSTANTS.SHEET_TYPE_CONTAINER]: {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: [
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED],
+      ],
+    },
+  };
 
   static getDocumentSortGroupsQuadrone(document: any): SortTabsToSortGroups {
     return ItemSortRuntime._documentTabSortGroupsQuadrone[document.type] ?? {};
@@ -58,8 +96,12 @@ export class ItemSortRuntime {
     tabId: string
   ): SortGroup[] {
     return (
-      ItemSortRuntime._documentTabSortGroupsQuadrone[document.type]?.[tabId] ??
-      this.standardSortGroups
+      ItemSortRuntime._documentTabSortGroupsQuadrone[document.type]?.[
+        tabId
+      ] ?? [
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_ALPHABETICAL],
+        defaultItemSortGroups[CONSTANTS.ITEM_SORT_GROUP_KEY_MANUAL],
+      ]
     );
   }
 
@@ -68,8 +110,17 @@ export class ItemSortRuntime {
     tabId: string
   ): SortMethodScheme[] {
     return (
-      ItemSortRuntime._documentTabSortSchemesQuadrone[document.type]?.[tabId] ??
-      this.standardSortSchemes
+      ItemSortRuntime._documentTabSortSchemesQuadrone[document.type]?.[
+        tabId
+      ] ?? [
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
+        ],
+        defaultItemSortSchemes[
+          CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
+        ],
+        defaultItemSortSchemes[CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL],
+      ]
     );
   }
 

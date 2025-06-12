@@ -5,18 +5,18 @@ import type { Item5e } from 'src/types/item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
 import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { CONSTANTS } from 'src/constants';
+import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 
 export type MaxPreparedSpellsConfigContext = {
   maxPreparedSpells: string;
   formulas: MaxPreparedSpellFormula[];
 };
 
-export class MaxPreparedSpellsConfigFormApplication extends SvelteApplicationMixin<
+export class MaxPreparedSpellsConfigFormApplication extends DocumentSheetDialog<
   DocumentSheetApplicationConfiguration,
   MaxPreparedSpellsConfigContext
->(foundry.applications.api.DocumentSheetV2) {
+>() {
   classToUpdate: Item5e;
 
   static DEFAULT_OPTIONS = {

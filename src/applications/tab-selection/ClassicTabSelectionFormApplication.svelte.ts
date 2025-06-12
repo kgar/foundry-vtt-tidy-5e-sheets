@@ -14,6 +14,7 @@ import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRun
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
 export type TabSelectionItem = {
   id: string;
@@ -181,5 +182,12 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
       this.actor,
       context.selected.map((t) => t.id)
     );
+  }
+
+  // Not going to refactor this because this application is living on borrowed time
+  _attachFrameListeners() {
+    super._attachFrameListeners();
+
+    applyThemeToApplication(this.element, this.actor);
   }
 }

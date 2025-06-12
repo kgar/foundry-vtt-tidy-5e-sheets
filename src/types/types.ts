@@ -14,10 +14,7 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
-import type {
-  ColumnSpecificationSchematics,
-  DocumentFilters,
-} from 'src/runtime/item/item.types';
+import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
@@ -62,7 +59,9 @@ export interface OnRenderTabParams extends OnRenderParams {
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab = {
-  title: string | ((tabContext: Record<string, any>) => string);
+  title:
+    | string
+    | ((tabContext: { document: any } & Record<string, any>) => string);
   id: string;
   content: SvelteTabContent | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
@@ -169,7 +168,7 @@ export type TidySectionBase = {
   key: string;
   show: boolean; // default: true
   isExternal?: boolean;
-  // columns: ColumnSpecificationSchematics[];
+  // columns: ColumnsLoadout[];
   rowActions: TidyTableAction<any, any, any>[];
 };
 
@@ -223,23 +222,26 @@ export type SpellbookSectionLegacy = {
   override: number;
   dataset: {
     type: string;
-    level: number;
-    preparationMode: string;
+    ['system.level']: number;
+    ['system.preparation.mode']: string;
   };
   prop: string;
   editable: boolean;
+  prepMode?: string;
 };
 
 export type SpellbookSection = {
   order?: number | string;
   usesSlots: boolean;
   canCreate: boolean;
+  /* deprecated: item row actions runtime evaluates for each item  */
   canPrepare: boolean;
   spells: Item5e[];
   uses?: number;
   slots?: number;
   override?: number;
   prop?: string;
+  prepMode?: string;
 } & TidySectionBase;
 
 export type AvailableLevel = {
@@ -283,6 +285,7 @@ export type CharacterItemContext = {
   totalWeight?: number;
   concentration?: boolean;
   parent?: Item5e;
+  subtitle?: string;
 };
 
 export type ActivityItemContext = {
@@ -480,6 +483,7 @@ export type NpcItemContext = {
   toHit?: number | null;
   toggleTitle?: string;
   totalWeight?: number;
+  subtitle?: string;
 };
 
 export type NpcHabitat = {
@@ -1063,12 +1067,41 @@ export type SkillToolFavoriteContextEntry = {
   reference?: string;
 };
 
+export type SpellcastingContext = {
+  name: string;
+  classIdentifier: string;
+  ability: {
+    key: string;
+    label: string;
+    mod: {
+      sign: string;
+      value: string;
+    };
+  };
+  attack: {
+    mod: {
+      sign: string;
+      value: string;
+    };
+  };
+  save: number;
+  primary: boolean;
+  prepared: {
+    value: string;
+    max?: string;
+  };
+};
+
 export type FavoriteContextEntry =
   | ItemFavoriteContextEntry
   | EffectFavoriteContextEntry
   | ActivityFavoriteContextEntry
   | SlotsFavoriteContextEntry
   | SkillToolFavoriteContextEntry;
+
+export type SystemSettings = {
+  currencyWeight: boolean;
+};
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
@@ -1089,11 +1122,15 @@ export type CharacterSheetQuadroneContext = {
   itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
+  showContainerPanel: boolean;
   showDeathSaves: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
+  spellcasting: SpellcastingContext[];
+  spellComponentLabels: Record<string, string>;
+  spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
@@ -1104,8 +1141,11 @@ export type NpcSheetQuadroneContext = {
   currencies: CurrencyContext[];
   features: NpcAbilitySection[];
   inventory: InventorySection[];
+  showContainerPanel: boolean;
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
+  spellComponentLabels: Record<string, string>;
+  spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & ActorSheetQuadroneContext<any>;

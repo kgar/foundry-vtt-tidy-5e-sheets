@@ -588,18 +588,6 @@ export const FoundryAdapter = {
         return arr;
       }, []);
   },
-  removeConfigureSettingsButtonWhenLockedForNonGm(buttons: any[]) {
-    if (FoundryAdapter.shouldLockConfigureSheet()) {
-      const configureSheetButtonIndex = buttons.findIndex((b) =>
-        b.class.includes('configure-sheet')
-      );
-      if (configureSheetButtonIndex >= 0) {
-        buttons.splice(configureSheetButtonIndex, 1);
-      }
-    }
-
-    return buttons;
-  },
   getNewCargo() {
     return { name: '', quantity: 1 };
   },
@@ -736,9 +724,6 @@ export const FoundryAdapter = {
   },
   shouldLockLevelSelector() {
     return !FoundryAdapter.userIsGm() && settings.value.lockLevelSelector;
-  },
-  shouldLockConfigureSheet() {
-    return !FoundryAdapter.userIsGm() && settings.value.lockConfigureSheet;
   },
   shouldLockItemQuantity() {
     return !FoundryAdapter.userIsGm() && settings.value.lockItemQuantity;
@@ -1241,10 +1226,6 @@ export const FoundryAdapter = {
       app.document instanceof dnd5e.documents.Actor5e &&
       app._concentration?.effects.has(effect)
     );
-  },
-  async renderFromUuid(uuid: string, force: boolean = true) {
-    const doc = await fromUuid(uuid);
-    return doc?.sheet?.render(force);
   },
   /**
    * Stack identical consumables when a new one is dropped rather than creating a duplicate item.

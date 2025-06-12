@@ -13,22 +13,15 @@ import {
   getAttunementFiltersAsObject,
   getItemRarityFilters,
   getItemRarityFiltersAsObject,
+  getSourceClassFilters,
   getSpellSchoolFiltersAsObject,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
 import { debug, error } from 'src/utils/logging';
 
 export class ItemFilterRuntime {
-  static _registeredItemFilters: Record<string, ItemFilter> = {};
-
-  static init() {
-    ItemFilterRuntime._registeredItemFilters = {
-      ...defaultItemFilters,
-      ...getAttunementFiltersAsObject(),
-      ...getItemRarityFiltersAsObject(),
-      ...getSpellSchoolFiltersAsObject(),
-    };
-  }
+  // TODO: Consider shifting to a singleton class instance rather than static class, to enable runes.
+  static init() {}
 
   static defaultFilterPins: Record<string, Record<string, Set<string>>> = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
@@ -135,6 +128,13 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.equipped.name,
+      ]),
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.concentration.name,
+        defaultItemFilters.canCastSpell.name,
       ]),
     },
   };
@@ -317,12 +317,27 @@ export class ItemFilterRuntime {
           ...getAttunementFilters(),
         ],
       },
+      [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+        'DND5E.ItemActivationCost': [
+          {
+            ...defaultItemFilters.activationCostAction,
+            pinnedFilterClass: 'hide-under-450',
+          },
+          {
+            ...defaultItemFilters.activationCostBonus,
+            pinnedFilterClass: 'hide-under-550',
+          },
+          {
+            ...defaultItemFilters.activationCostReaction,
+            pinnedFilterClass: 'hide-under-600',
+          },
+          defaultItemFilters.activationCostOther,
+        ],
+        ...getStandardSpellSchoolFilterCategories(),
+        'DND5E.SpellSourceClass': (document) => getSourceClassFilters(document),
+      },
     },
   };
-
-  static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
-    return ItemFilterRuntime._registeredItemFilters[filterName];
-  }
 
   static getDocumentFilters(document: any): FilterTabsToCategories {
     return ItemFilterRuntime._documentTabFilters[document.type] ?? {};

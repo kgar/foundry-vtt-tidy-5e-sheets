@@ -6,7 +6,6 @@ import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import { DragAndDropMixin } from 'src/mixins/DragAndDropBaseMixin';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ContainerSheetQuadroneContext,
@@ -38,7 +37,6 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
@@ -162,6 +160,8 @@ export class Tidy5eContainerSheetQuadrone
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ContainerSheetQuadroneContext> {
+    this.itemFilterService.refreshFilters();
+
     const documentSheetContext = await super._prepareContext(options);
 
     const rollData = this.item.getRollData();
@@ -261,7 +261,7 @@ export class Tidy5eContainerSheetQuadrone
       customContent: [],
       currencies,
       enriched: enriched,
-      filterData: this.itemFilterService.getDocumentItemFilterData(),
+      filterData: this.itemFilterService.getFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPinsQuadrone[this.item.type],
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       isContainer: true,
@@ -356,7 +356,6 @@ export class Tidy5eContainerSheetQuadrone
   /* -------------------------------------------- */
   /*  Rendering Life-Cycle Methods                */
   /* -------------------------------------------- */
-
   async _renderHTML(
     context: ContainerSheetQuadroneContext,
     options: ApplicationRenderOptions

@@ -5,12 +5,9 @@ import type { TidySectionBase } from 'src/types/types';
 import type { DocumentTabSectionConfigItem } from './section-config.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
-import type {
-  ApplicationConfiguration,
-  DocumentSheetApplicationConfiguration,
-} from 'src/types/application.types';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';
 import { CONSTANTS } from 'src/constants';
+import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 
 type SectionConfigConstructorArgs = {
   sections: TidySectionBase[];
@@ -18,10 +15,10 @@ type SectionConfigConstructorArgs = {
   tabTitle: string;
 };
 
-export class DocumentTabSectionConfigApplication extends SvelteApplicationMixin<
+export class DocumentTabSectionConfigApplication extends DocumentSheetDialog<
   DocumentSheetApplicationConfiguration | undefined,
   {}
->(foundry.applications.api.DocumentSheetV2) {
+>() {
   sections = $state<DocumentTabSectionConfigItem[]>()!;
   tabId: string;
   tabTitle: string;

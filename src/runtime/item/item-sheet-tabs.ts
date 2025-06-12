@@ -289,9 +289,9 @@ const itemSheetTabs: Record<string, Tab> = {
     title: (tabContext) => {
       let title = FoundryAdapter.localize('DND5E.ACTIVITY.Title.other');
 
-      if (tabContext?.item) {
-        let count = Array.from(tabContext.item.system.activities).filter((x) =>
-          Activities.isConfigurable(x)
+      if (tabContext?.document) {
+        let count = Array.from(tabContext.document.system.activities).filter(
+          (x) => Activities.isConfigurable(x)
         ).length;
         if (count > 0) {
           title += getTabCountSpan(count);
@@ -313,8 +313,8 @@ const itemSheetTabs: Record<string, Tab> = {
     title: (tabContext) => {
       let title = FoundryAdapter.localize('DND5E.AdvancementTitle');
 
-      if (tabContext?.item) {
-        let count = Array.from(tabContext.item.system.advancement).length;
+      if (tabContext?.document) {
+        let count = Array.from(tabContext.document.system.advancement).length;
         if (count > 0) {
           title += getTabCountSpan(count);
         }
@@ -473,8 +473,8 @@ const itemSheetTabs: Record<string, Tab> = {
     title: (tabContext) => {
       let title = FoundryAdapter.localize('DND5E.Effects');
 
-      if (tabContext?.item) {
-        let count = Array.from(tabContext.item.effects).length;
+      if (tabContext?.document) {
+        let count = Array.from(tabContext.document.effects).length;
         if (count > 0) {
           title += getTabCountSpan(count);
         }

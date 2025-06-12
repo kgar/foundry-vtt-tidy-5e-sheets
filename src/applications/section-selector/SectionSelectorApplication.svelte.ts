@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,
@@ -11,7 +10,7 @@ import SectionSelector from './SectionSelector.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Tab } from 'src/types/types';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { settings } from 'src/settings/settings.svelte';
+import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 
 export type SectionSelectorContext = {
   sections: string[];
@@ -20,10 +19,10 @@ export type SectionSelectorContext = {
   tabs: Tab[];
 };
 
-export class SectionSelectorApplication extends SvelteApplicationMixin<
+export class SectionSelectorApplication extends DocumentSheetDialog<
   Partial<ApplicationConfiguration> | undefined,
   SectionSelectorContext
->(foundry.applications.api.DocumentSheetV2) {
+>() {
   _prop: string;
   _sectionType: string;
 
@@ -61,14 +60,6 @@ export class SectionSelectorApplication extends SvelteApplicationMixin<
     actions: {},
     submitOnClose: false,
   };
-
-  _configureEffects(): void {
-    $effect(() => {
-      settings.value;
-
-      this.render(true);
-    });
-  }
 
   _createComponent(node: HTMLElement): Record<string, any> {
     const component = mount(SectionSelector, {

@@ -9,6 +9,23 @@ export type RollConfigField = {
   };
 };
 
+export type ActorAttributeEncumbrance = {
+  value: number;
+  thresholds: {
+    encumbered: number;
+    heavilyEncumbered: number;
+    maximum: number;
+  };
+  max: number;
+  mod: number;
+  stops: {
+    encumbered: number;
+    heavilyEncumbered: number;
+  };
+  pct: number;
+  encumbered: boolean;
+};
+
 export type ActorProficiency = {
   deterministic: boolean;
   multiplier: number;

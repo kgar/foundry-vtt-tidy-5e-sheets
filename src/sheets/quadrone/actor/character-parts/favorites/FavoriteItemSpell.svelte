@@ -56,7 +56,7 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
     name={favorite.item.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   {#if !isNil(modifier) || !isNil(save?.dc?.value) || !isNil(range?.value)}
   <div class="">

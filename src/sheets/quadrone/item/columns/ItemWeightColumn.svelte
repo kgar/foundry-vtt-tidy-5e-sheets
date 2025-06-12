@@ -1,9 +1,16 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/item/item.types';
 
   let { rowDocument: item, rowContext }: ColumnCellProps = $props();
 
-  let weight = $derived(rowContext?.totalWeight ?? item.system.weight.value);
+  let weight = $derived(
+    FoundryAdapter.formatNumber(
+      rowContext?.totalWeight ?? item.system.weight.value,
+    ),
+  );
 </script>
 
-{weight}
+<span>
+  {weight} <span class="color-text-lighter">{item.system.weight.units}</span>
+</span>

@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
@@ -8,15 +7,31 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getThemeV2 } from 'src/theme/theme';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
+import { DocumentSheetDialog } from '../DocumentSheetDialog.svelte';
 
 export type BooleanSetting = {
   type: 'boolean';
   label: string;
-  checked: boolean;
+  checked?: boolean;
   prop: string;
+  doc?: any;
 };
 
-export type SectionSetting = BooleanSetting;
+export type RadioSettingOption = {
+  label: string;
+  value: string;
+  checked?: boolean;
+};
+
+export type RadioSetting = {
+  type: 'radio';
+  options: RadioSettingOption[];
+  selected?: string;
+  prop: string;
+  doc?: any;
+};
+
+export type SectionSetting = BooleanSetting | RadioSetting;
 
 export type SectionOptionGroup = {
   title: string;
@@ -38,9 +53,7 @@ export type SectionConfigItem = {
   show: boolean;
 };
 
-export class ConfigureSectionsApplication extends SvelteApplicationMixin(
-  foundry.applications.api.DocumentSheetV2
-) {
+export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   sections = $state<SectionConfigItem[]>([]);
   optionsGroups = $state<SectionOptionGroup[]>([]);
   tabId: string;
@@ -105,32 +118,15 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
 
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
+        let doc = setting.doc ?? this.document;
         if (setting.type === 'boolean') {
-          setting.checked = foundry.utils.getProperty(
-            this.document,
-            setting.prop
-          );
+          setting.checked = foundry.utils.getProperty(doc, setting.prop);
+        } else if (setting.type === 'radio') {
+          let selected = foundry.utils.getProperty(doc, setting.prop);
+          setting.selected = selected;
         }
       }
     }
-  }
-
-  _configureEffects(): void {
-    $effect(() => {
-      // remove all other theme-{name} classes
-      const element = this.element as HTMLElement;
-      // TODO: Use a fixed list of known themes, possibly from Foundry itself?
-      const toRemove = Array.from(element.classList).filter((value: string) =>
-        value.startsWith('theme-')
-      );
-      toRemove.forEach((classToRemove) =>
-        element.classList.remove(classToRemove)
-      );
-
-      // add my theme-{name} class to element
-      element.classList.toggle('themed', true);
-      element.classList.toggle(`theme-${this.theme}`, true);
-    });
   }
 
   /* -------------------------------------------- */
@@ -146,12 +142,21 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
   /* -------------------------------------------- */
 
   async saveChanges() {
-    const toSave: Record<string, any> = {};
+    const thisDocumentData: Record<string, any> = {};
+    const documentsToSave: Map<any, Record<string, any>> = new Map([
+      [this.document, thisDocumentData],
+    ]);
 
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
+        let doc = setting.doc ?? this.document;
+        let toSave =
+          documentsToSave.get(doc) ?? documentsToSave.set(doc, {}).get(doc)!;
+
         if (setting.type === 'boolean') {
           toSave[setting.prop] = setting.checked;
+        } else if (setting.type === 'radio') {
+          toSave[setting.prop] = setting.selected;
         }
       }
     }
@@ -169,9 +174,11 @@ export class ConfigureSectionsApplication extends SvelteApplicationMixin(
       return result;
     }, {});
 
-    toSave[TidyFlags.sectionConfig.prop] = sectionConfig;
+    thisDocumentData[TidyFlags.sectionConfig.prop] = sectionConfig;
 
-    await this.document.update(toSave);
+    for (let [doc, toSave] of documentsToSave.entries()) {
+      await doc.update(toSave);
+    }
 
     this.close();
   }

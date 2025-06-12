@@ -14,6 +14,7 @@ import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
 
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
@@ -111,5 +112,12 @@ export class ThemeSettingsFormApplication extends SvelteApplicationMixin<
       'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
       JSON.stringify(exportData, null, ' ')
     );
+  }
+
+  // Not going to refactor this because this application is living on borrowed time
+  _attachFrameListeners() {
+    super._attachFrameListeners();
+
+    applyThemeToApplication(this.element);
   }
 }

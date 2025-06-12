@@ -21,6 +21,23 @@ export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
 };
 
+/** Any Foundry Core Settings that are relevant to Tidy and need cached access. */
+export type FoundryCoreSettings = {
+  fontSizePx: number;
+};
+
+/** Any D&D 5E System Settings that are relevant to Tidy and need cached access. */
+export type Dnd5eSystemSettings = {
+  defaultSkills: string[];
+  levelingMode: string;
+  bastionConfiguration: {
+    button: boolean;
+    duration: number;
+    enabled: boolean;
+  };
+  currencyWeight: boolean;
+};
+
 export type Tidy5eSettingKey = keyof (typeof SettingsProvider)['settings'];
 
 /**
@@ -103,10 +120,35 @@ export type Tidy5eSetting = {
  * The current Tidy 5e settings.
  */
 let _settings: CurrentSettings = $state()!; // For ergonomics, pretend like this is never undefined, because it is initialized in the hooks lifecycle.
+let _foundryCoreSettings: FoundryCoreSettings = $state({
+  fontSizePx: 16,
+});
+let _systemSettings: Dnd5eSystemSettings = $state({
+  currencyWeight: false,
+  bastionConfiguration: {
+    button: false,
+    duration: 0,
+    enabled: false,
+  },
+  defaultSkills: [],
+  levelingMode: '',
+} satisfies Dnd5eSystemSettings);
 
 export const settings = {
   get value() {
     return _settings;
+  },
+};
+
+export const foundryCoreSettings = {
+  get value() {
+    return _foundryCoreSettings;
+  },
+};
+
+export const systemSettings = {
+  get value() {
+    return _systemSettings;
   },
 };
 
@@ -1113,20 +1155,6 @@ export function createSettings() {
         },
       },
 
-      lockConfigureSheet: {
-        options: {
-          name: 'TIDY5E.Settings.LockConfigureSheet.name',
-          hint: 'TIDY5E.Settings.LockConfigureSheet.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('lockConfigureSheet');
-        },
-      },
-
       lockItemQuantity: {
         options: {
           name: 'TIDY5E.Settings.LockItemQuantity.name',
@@ -1828,6 +1856,27 @@ export function createSettings() {
   } as const;
 }
 
+function refreshFoundryCoreSettings() {
+  _foundryCoreSettings.fontSizePx = parseFloat(
+    document.documentElement.style.fontSize
+  );
+}
+
+function refreshSystemSettings() {
+  _systemSettings.currencyWeight = FoundryAdapter.getSystemSetting(
+    CONSTANTS.SYSTEM_SETTING_CURRENCY_WEIGHT
+  );
+  _systemSettings.bastionConfiguration = FoundryAdapter.getSystemSetting(
+    CONSTANTS.SYSTEM_SETTING_BASTION_CONFIGURATION
+  );
+  _systemSettings.levelingMode = FoundryAdapter.getSystemSetting(
+    CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
+  );
+  _systemSettings.defaultSkills = FoundryAdapter.getSystemSetting(
+    CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS
+  );
+}
+
 export let SettingsProvider: ReturnType<typeof createSettings>;
 
 export function initSettings() {
@@ -1859,5 +1908,20 @@ export function initSettings() {
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();
+  });
+
+  Hooks.once('ready', () => {
+    refreshFoundryCoreSettings();
+    refreshSystemSettings();
+  });
+
+  Hooks.on('clientSettingChanged', () => {
+    refreshFoundryCoreSettings();
+    refreshSystemSettings();
+  });
+
+  Hooks.on('updateSetting', () => {
+    refreshFoundryCoreSettings();
+    refreshSystemSettings();
   });
 }

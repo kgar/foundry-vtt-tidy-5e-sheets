@@ -1,18 +1,19 @@
-<script lang="ts">
+<script lang="ts" generics="TItem">
   import type { Snippet } from 'svelte';
   import { flip } from 'svelte/animate';
+  import type { ClassValue } from 'svelte/elements';
   import { crossfade } from 'svelte/transition';
 
   const [send, receive] = crossfade({});
 
-  type TItem = $$Generic;
   interface Props {
+    selectedItemClasses?: ClassValue;
     items: TItem[];
     labelProp: keyof TItem;
     valueProp: keyof TItem;
     selectedItemIndex?: number | null;
     draggable?: boolean;
-    listItemClasses?: string;
+    listItemClasses?: ClassValue;
     itemTemplate?: Snippet<[any]>;
     onselect?: (selectedIndex: number) => void;
     onkeydown?: (event: KeyboardEvent & { currentTarget: HTMLElement }) => void;
@@ -47,6 +48,7 @@
   }
 
   let {
+    selectedItemClasses,
     items = $bindable([]),
     labelProp,
     valueProp,
@@ -120,13 +122,22 @@
   ondrop={(ev) => onlistboxDrop?.(ev)}
 >
   {#each items as item, i (item[valueProp])}
+    {@const isSelected = selectedItemIndex === i}
     <li
       id="listbox-item-{i}-{idRandomizer}"
       role="option"
       aria-selected={selectedItemIndex === i}
-      class:focused={selectedItemIndex === i}
-      class:theme-dark={selectedItemIndex === i}
-      class="flex-row small-gap align-items-center listbox-item {listItemClasses}"
+      class={[
+        'flex-row',
+        'small-gap',
+        'align-items-center',
+        'listbox-item',
+        listItemClasses,
+        {
+          focused: isSelected,
+        },
+        isSelected ? selectedItemClasses : undefined,
+      ]}
       onclick={() => selectItemAt(i)}
       onkeydown={(ev) => handleListboxKeyDown(ev)}
       {draggable}

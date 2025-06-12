@@ -1659,12 +1659,11 @@
     }
   }
 
-  .tidy-tab.inventory {
+  .tidy-tab.inventory.active {
     display: flex;
     flex-direction: column;
     gap: var(--t5e-size-3x);
   }
-
 
   .sheet-footer {
     gap: var(--t5e-size-2x);

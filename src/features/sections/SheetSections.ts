@@ -157,7 +157,7 @@ export class SheetSections {
           slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
           key: s.prop,
           show: true,
-          rowActions: [], // for the UI Overhaul
+          rowActions: options.rowActions ?? [], // for the UI Overhaul
         } satisfies SpellbookSection)
     );
 
@@ -172,15 +172,6 @@ export class SheetSections {
         }
 
         curr.key = key;
-
-        // Tidy passes the dataset directly to the item creation code, rather than planting it on the HTML.
-        // When Tidy fully takes over its own spellbook preparation, eliminate the need for this correcting patch.
-        curr.dataset['system'] = {
-          level: curr.dataset.level,
-          preparationMode: curr.dataset.preparationMode,
-        };
-        delete curr.dataset.level;
-        delete curr.dataset.preparationMode;
 
         prev[key] = curr;
         return prev;
@@ -275,11 +266,12 @@ export class SheetSections {
         override: override || 0,
         dataset: {
           type: 'spell',
-          level: prepMode in sections ? 1 : i,
-          preparationMode: prepMode,
+          ['system.level']: prepMode in sections ? 1 : i,
+          ['system.preparation.mode']: prepMode,
         },
         prop: sl,
         editable: context.editable && !aeOverride,
+        prepMode
       };
     };
 
@@ -548,8 +540,6 @@ export class SheetSections {
 
         // Sort Spellbook
         section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
-
-        // TODO: Collocate Spellbook Sub Items
 
         // Apply visibility from configuration
         section.show =

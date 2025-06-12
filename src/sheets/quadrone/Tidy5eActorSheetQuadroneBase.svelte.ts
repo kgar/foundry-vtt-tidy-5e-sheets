@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { getActorActionSections } from 'src/features/actions/actions.svelte';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
@@ -13,7 +14,7 @@ import {
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type { Ability } from 'src/types/dnd5e.actor5e.types';
 import type { Item5e } from 'src/types/item.types';
@@ -25,9 +26,7 @@ import type {
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorTraitContext,
   SpecialTraitSectionField,
-  SpellbookSectionLegacy,
 } from 'src/types/types';
-import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
@@ -52,6 +51,7 @@ export function Tidy5eActorSheetQuadroneBase<
       foundry.applications.sheets.ActorSheetV2
     )
   ) {
+    itemFilterService: ItemFilterService;
     abstract currentTabId: string;
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
 
@@ -65,6 +65,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
     constructor(options?: Partial<ApplicationConfiguration> | undefined) {
       super(options);
+
+      this.itemFilterService = new ItemFilterService(
+        {},
+        this.actor,
+        ItemFilterRuntime.getDocumentFiltersQuadrone
+      );
     }
 
     /**
@@ -124,29 +130,9 @@ export function Tidy5eActorSheetQuadroneBase<
       }`;
     }
 
-    _configureEffects() {
-      let first = true;
-
-      $effect(() => {
-        // Document Apps Reactivity
-        game.user.apps[this.id] = this;
-
-        return () => {
-          delete game.user.apps[this.id];
-        };
-      });
-
-      $effect(() => {
-        if (first) return;
-
-        applyThemeToApplication(this.element, this.actor);
-        this.render();
-      });
-
-      first = false;
-    }
-
     async _prepareContext(options: any): Promise<ActorSheetQuadroneContext> {
+      this.itemFilterService.refreshFilters();
+
       const documentSheetContext = await super._prepareContext(options);
 
       documentSheetContext.source = documentSheetContext.editable
@@ -189,14 +175,13 @@ export function Tidy5eActorSheetQuadroneBase<
         customActorTraits: [],
         customContent: [],
         enableXp:
-          FoundryAdapter.getSystemSetting(
-            CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
-          ) !== CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
+          systemSettings.value.levelingMode !==
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),
         elements: this.options.elements,
-        filterData: this.itemFilterService.getDocumentItemFilterData(),
+        filterData: this.itemFilterService.getFilterData(),
         filterPins:
           ItemFilterRuntime.defaultFilterPinsQuadrone[this.actor.type],
         flags: {
@@ -601,17 +586,19 @@ export function Tidy5eActorSheetQuadroneBase<
 
     async _addDocument(args: {
       tabId: string;
-      typeToPreselect?: string;
       customSection?: string;
       creationItemTypes?: string[];
       data?: Record<string, any>;
     }) {
+      let { type: datasetType, ...restDataSet } = args.data ?? {};
+
       if (args.tabId === CONSTANTS.TAB_EFFECTS)
         return await ActiveEffect.implementation.create(
           {
             name: game.i18n.localize('DND5E.EffectNew'),
             icon: 'icons/svg/aura.svg',
-            ...args.data,
+            type: datasetType,
+            ...restDataSet,
           },
           { parent: this.actor, renderSheet: true }
         );
@@ -625,20 +612,17 @@ export function Tidy5eActorSheetQuadroneBase<
       if (types.length > 1) {
         let dialogV1HookId: number | null = null;
 
-        if (
-          !isNil(args.typeToPreselect, '') &&
-          types.includes(args.typeToPreselect)
-        ) {
+        if (!isNil(datasetType, '') && types.includes(datasetType)) {
           dialogV1HookId = Hooks.once('renderDialog', (app: any) => {
             const typeToPreselect = app.element
               .get(0)
-              .querySelector(`[value="${args.typeToPreselect}"]`);
+              .querySelector(`[value="${datasetType}"]`);
             typeToPreselect && (typeToPreselect.checked = true);
           });
         }
 
         let result = await Item.implementation.createDialog(
-          { type: args.typeToPreselect, ...args.data },
+          { type: datasetType, ...restDataSet },
           {
             parent: this.actor,
             pack: this.actor.pack,
@@ -658,6 +642,7 @@ export function Tidy5eActorSheetQuadroneBase<
           name: game.i18n.format('DOCUMENT.New', {
             type: game.i18n.format(CONFIG.Item.typeLabels[type]),
           }),
+          ...restDataSet,
         },
         { parent: this.actor, renderSheet: true }
       );
@@ -1118,17 +1103,10 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       // Determine the section it is dropped on, if any.
-      let header = dropTarget.closest<HTMLElement>('.items-header'); // Dropped directly on the header.
-      if (header === null) {
-        const list = dropTarget.closest<HTMLElement>('.item-list'); // Dropped inside an existing list.
-        header =
-          list?.previousElementSibling instanceof HTMLElement
-            ? list.previousElementSibling
-            : null;
-      }
-
-      const { level, preparationMode } =
-        header?.closest<HTMLElement>('[data-level]')?.dataset ?? {};
+      const dataset =
+        dropTarget?.closest<HTMLElement>('[data-type="spell"]')?.dataset ?? {};
+      const level = dataset['system.level'];
+      const preparationMode = dataset['system.preparation.mode'];
 
       // Determine the actor's spell slot progressions, if any.
       const spellcastKeys = Object.keys(CONFIG.DND5E.spellcastingTypes);

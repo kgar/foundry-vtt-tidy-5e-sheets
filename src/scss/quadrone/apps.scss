@@ -134,11 +134,6 @@
     flex: 0 1 auto;
   }
 
-
-  &[data-tidy-lock-configure-sheet='true'] .window-header [data-action='configureSheet'] {
-    display: none;
-  }
-
   &.minimized .window-content {
     display: none;
     background: none;
@@ -741,30 +736,29 @@
   }
 
   :where(.spell-preparation) {
-    --t5e-item-color: var(--t5e-color-gold);
-
-    &:where(.prepared) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-prepared);
+    &:where(.mode-atwill) {
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-atwill);
+    }
+    
+    &:where(.mode-always) {
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-always);
+    }
+    
+    &:where(.mode-pact) {
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-pact);
+    }
+    
+    &:where(.mode-innate) {
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-innate);
+    }
+    
+    &:where(.mode-ritual) {
+      --t5e-mode-color: var(--t5e-color-icon-spellcasting-ritual);
     }
 
-    &:where(.atwill) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-atwill);
-    }
-
-    &:where(.always) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-always);
-    }
-
-    &:where(.pact) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-pact);
-    }
-
-    &:where(.innate) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-innate);
-    }
-
-    &:where(.ritual) {
-      --t5e-item-color: var(--t5e-color-icon-spellcasting-ritual);
+    &:where(.mode-prepared) {
+      // 👋 hightouch, I think we're probably good not to include a Prepared mode color. Should we purge the codebase of that?
+      // --t5e-mode-color: var(--t5e-color-icon-spellcasting-prepared);
     }
   }
 

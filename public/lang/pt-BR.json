@@ -415,10 +415,6 @@
         "name": "Bloquear Nível",
         "hint": "Impede que não-Mestres alterem os níveis dos jogadores com o seletor de nível de classe."
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "name": "Bloquear Seleção de Ficha",
-        "hint": "Impede que os não-Mestres selecionem outro layout de ficha."
-    },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Bloquear Quantidade de Item",
         "hint": "Impede que não-Mestres alterem a quantidade do item."

@@ -7,18 +7,29 @@
     ExpansionTracker,
     type ExpansionTrackerToggleProvider,
   } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
+  import { buildDataset } from 'src/utils/data';
 
-  interface Props {
+  interface Props extends HTMLAttributes<HTMLElement> {
     key: string;
     toggleable?: boolean;
+    dataset?: Record<string, string>;
     header?: Snippet<[boolean]>;
     body?: Snippet;
-    [key: string]: any;
   }
 
-  let { key, toggleable = true, header, body, ...rest }: Props = $props();
+  let {
+    key,
+    toggleable = true,
+    header,
+    body,
+    dataset,
+    ...rest
+  }: Props = $props();
 
   let { class: cssClass, ...attributes } = rest;
+
+  let datasetAttributes = $derived(buildDataset(dataset));
 
   declareLocation(CONSTANTS.LOCATION_SECTION, key);
 
@@ -57,6 +68,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
   data-tidy-section-key={key}
   {...attributes}
+  {...datasetAttributes}
 >
   {@render header?.(expanded)}
   <ExpandableContainer {expanded}>

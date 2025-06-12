@@ -74,8 +74,6 @@ export class ExpansionTracker {
     );
 
     expansionState.expanded = expanded;
-
-    debug('ExpansionTracker: Registered tracked entity with ID ' + entityId);
   }
 
   private getOrCreateExpansionState(
@@ -108,8 +106,6 @@ export class ExpansionTracker {
 
   unregister(entityId: string, tabId: string, location: string) {
     delete this.#tabs[tabId]?.[location]?.[entityId];
-
-    debug('ExpansionTracker: Unregistered tracked entity with ID ' + entityId);
   }
 
   isExpanded(entityId: string, tabId: string, location: string) {
@@ -198,8 +194,6 @@ export class ExpansionTracker {
         topLevelLocation: expansions[0]?.location,
       };
     }
-
-    debug('ExpansionTracker: Recalculated tab stats.');
 
     return tabStats;
   }

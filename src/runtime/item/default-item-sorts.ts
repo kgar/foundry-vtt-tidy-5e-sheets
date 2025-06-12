@@ -1,9 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import type {
-  SortGroup,
-  SortMethodScheme,
-} from 'src/types/sort.types';
+import type { SortGroup, SortMethodScheme } from 'src/types/sort.types';
 
 export const defaultItemSortSchemes = {
   [CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING]: {
@@ -80,8 +77,10 @@ export const defaultItemSortSchemes = {
     tooltip: 'DND5E.Prepared',
     comparator: (a, b) =>
       b.system.preparation?.prepared - a.system.preparation?.prepared ||
+      +(b.system.preparation.mode === 'always') -
+        +(a.system.preparation.mode === 'always') ||
       a.name.localeCompare(b.name, game.i18n.lang),
-    group: CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED,
+    group: CONSTANTS.ITEM_SORT_GROUP_KEY_PREPARED,
   },
 } satisfies Record<string, SortMethodScheme>;
 
@@ -125,10 +124,10 @@ export const defaultItemSortGroups = {
   [CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED]: {
     key: CONSTANTS.ITEM_SORT_GROUP_KEY_EQUIPPED,
     label: 'DND5E.Equipped',
-    onSelect: async (doc) => {
+    onSelect: async (doc, currentTabId) => {
       await SheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
-        CONSTANTS.TAB_CONTAINER_CONTENTS,
+        currentTabId,
         'sort',
         CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED
       );
@@ -137,10 +136,10 @@ export const defaultItemSortGroups = {
   [CONSTANTS.ITEM_SORT_GROUP_KEY_PREPARED]: {
     key: CONSTANTS.ITEM_SORT_GROUP_KEY_PREPARED,
     label: 'DND5E.Prepared',
-    onSelect: async (doc) => {
+    onSelect: async (doc, currentTabId) => {
       await SheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
-        CONSTANTS.TAB_CONTAINER_CONTENTS,
+        currentTabId,
         'sort',
         CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED
       );

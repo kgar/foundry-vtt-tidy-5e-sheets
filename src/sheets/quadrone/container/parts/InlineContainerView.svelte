@@ -1,6 +1,6 @@
 <script lang="ts">
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import ItemTables from '../../shared/ItemTables.svelte';
+  import InventoryTables from '../../shared/InventoryTables.svelte';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext, type Component } from 'svelte';
   import type { ContainerContents, Item5e } from 'src/types/item.types';
@@ -14,8 +14,8 @@
     containerContents: ContainerContents;
     editable: boolean;
     inlineToggleService: InlineToggleService;
+    searchCriteria: string;
     sheetDocument: any;
-    unlocked?: boolean;
   }
 
   let {
@@ -23,8 +23,8 @@
     containerContents,
     editable,
     inlineToggleService,
+    searchCriteria,
     sheetDocument,
-    unlocked = true,
   }: Props = $props();
 
   let toggleServiceMap = $derived(inlineToggleService.map);
@@ -72,14 +72,14 @@
       data-tidy-container-id={container.id}
       ondrop={onDrop}
     >
-      <ItemTables
+      <InventoryTables
         sections={containerContents.contents}
         {container}
         {editable}
         itemContext={containerContents.itemContext}
         {inlineToggleService}
+        {searchCriteria}
         {sheetDocument}
-        {unlocked}
       />
       {#if !containerContents.contents.some((c) => c.items.length > 0)}
         <div class="empty-container">

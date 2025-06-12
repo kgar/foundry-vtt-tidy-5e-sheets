@@ -21,10 +21,7 @@
   let group = $derived(ItemSortRuntime.getGroupFromMethod(method)?.key);
 
   let groups = $derived(
-    ItemSortRuntime.getDocumentSortGroupQuadrone(
-      doc,
-      CONSTANTS.TAB_ACTOR_INVENTORY,
-    ),
+    ItemSortRuntime.getDocumentSortGroupQuadrone(doc, tabId),
   );
 
   let methods = $derived(

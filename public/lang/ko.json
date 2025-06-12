@@ -421,10 +421,6 @@
         "name": "레벨 잠금",
         "hint": "GM이 아닌 사용자가 클래스 레벨 선택기로 플레이어 레벨을 변경하는 것을 방지합니다."
     },
-    "TIDY5E.Settings.LockConfigureSheet": {
-        "name": "시트 선택 잠금",
-        "hint": "GM이 아닌 사용자가 다른 시트 레이아웃을 선택하는 것을 방지합니다."
-    },
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "아이템 양 잠금",
         "hint": "GM이 아닌 사용자가 아이템의 양을 변경하는 것을 방지합니다."

@@ -1,45 +1,49 @@
 ## To Do
 
+- [ ] Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?
 - [ ] Character Sheet 
-  - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
+  - [ ] Add drag-and-drop to sort for Favorites
+  - [ ] Implement slots, skills, and tools drag
+    - [ ] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
+    - [ ] Verify they work with favorites
   - [x] Start dev in Foundry V12
   - [x] Establish components for the tabs
   - [x] Set up Quadrone runtime content, including the default tabs
   - [x] Implement SkillsCard
   - [x] Implement ToolsCard
-  - [ ] Character Traits: Add icons to damage modification, damage resistances, and damage vulnerabilities
-  - [ ] Structure the sheet - 
-    - [ ] Tab Content area
+  - [x] Character Traits: Add icons to damage modification, damage resistances, and damage vulnerabilities
+  - [x] Structure the sheet - 
+    - [x] Tab Content area
       - [x] Sidebar
         - [x] Button tabs
         - [x] Skills area (when Skills tab selected)
         - [x] Traits area (when Traits tab selected)
         - [x] Pinned area (when Pinned tab selected)
-      - [ ] Main Tab Strip Active Content Area
-        - [ ] Sheet tab contents
+      - [x] Main Tab Strip Active Content Area
+        - [x] Sheet tab contents
         - [x] Character tab contents
-        - [ ] Inventory tab contents
-        - [ ] Features tab contents
-        - [ ] Spellbook tab contents
-        - [ ] Effects tab contents
-        - [ ] Action tab contents
-        - [ ] Bastion tab contents
-        - [ ] Biography tab contents
-        - [ ] Journal tab contents
+        - [x] Inventory tab contents
+        - [x] Features tab contents
+        - [x] Spellbook tab contents
+        - [x] Effects tab contents
+        - [x] Action tab contents
+        - [x] Bastion tab contents
+        - [x] Biography tab contents
+        - [x] Journal tab contents
   - [ ] Implement tabs
     - [ ] Actions
     - [x] Attributes (Character tab)
     - [ ] Inventory
     - [ ] Features
-    - [ ] Spellbook
+    - [x] Spellbook
     - [ ] Effects
     - [ ] Background
     - [ ] Journal
   - [x] Implement Expandable/collapsible sidebar
-  - [ ] Implement Pins
-  - [ ] Implement Favorites
+  - [x] Implement Favorites
   - [ ] Implement Responsive Tab Strip
   - [ ] Implement Theme Settings
+    - [ ] World Default (?) - discuss with community
     - [ ] User Default (we have User Scope now!)
     - [ ] Actor Sheet Override
     - [ ] Item Sheet Override
@@ -75,14 +79,27 @@
     - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [ ] Context Menu items rework
 - [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
-- [ ] Add background circle hover style to section row buttons
+- [x] Add background circle hover style to section row buttons
 - [ ] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
 - [ ] Implement quadrone default tab settings (no UI)
   - [ ] Item
     - [ ] This has to explode out into unique tabs per item type.
 - [ ] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
-- [ ] hightouch - please review meter CSS / class setup to see if it is to your liking
+- [ ] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
+- [ ] Propagate Table Row Actions to Activities tables
+- [ ] Propagate Table Row Actions to Effects tables
+- [ ] Propagate Data-Driven Columns to Activities tables
+- [ ] Propagate Data-Driven Columns to Effects tables
+- [ ] (Low priority) ButtonWithOptionPanel - use a Portal or something similar so that there's a singleton menu shell that can be shown/hidden by any sheet and can be given a component and/or snippet to render. This should allow for someone to have a compact sheet and view the full options panel without the sheet's overflow hiding the options.
+- [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
+- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
+- [ ] (stretch) Implement generic width / priority observer feature that can be used to control pinned filter visibility generically and then be used for other purposes later.
+  - [ ] Propagate this to all action bars
+- [ ] Evolve ItemLists further
+  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
+  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
+
 
 ### Feature - Set as Inspiration Source
 

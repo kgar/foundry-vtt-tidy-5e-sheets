@@ -1,11 +1,8 @@
-import type { TidySectionBase } from 'src/types/types';
 import type {
   ColumnSpecDocumentTypesToTabs,
   ColumnSpecification,
-  ColumnSpecificationSchematics,
-  SectionColumnSpecificationSchematics,
-  SheetColumnSpecificationSchematics,
-  TabColumnSpecificationSchematics,
+  ColumnSpecificationCalculatedWidthArgs,
+  ConfiguredColumnSpecification,
 } from './item.types';
 import { CONSTANTS } from 'src/constants';
 import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
@@ -20,8 +17,14 @@ import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svel
 import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
 import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 import ItemActionsColumnHeader from 'src/sheets/quadrone/item/columns/ItemActionsColumnHeader.svelte';
+import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpellComponentsColumn.svelte';
+import ItemSpellSchoolColumn from 'src/sheets/quadrone/item/columns/ItemSpellSchoolColumn.svelte';
+import ItemTargetColumn from 'src/sheets/quadrone/item/columns/ItemTargetColumn.svelte';
+import ItemRangeColumn from 'src/sheets/quadrone/item/columns/ItemRangeColumn.svelte';
+import { foundryCoreSettings, settings } from 'src/settings/settings.svelte';
+import type { ColumnsLoadout } from './ColumnsLoadout.svelte';
 
-const ENTRY_NAME_MIN_WIDTH_PX = 200;
+const ENTRY_NAME_MIN_WIDTH_REMS = 12.5;
 
 class ItemColumnRuntime {
   /**
@@ -31,8 +34,14 @@ class ItemColumnRuntime {
    * defaults for all eligible content would go here.
    */
   _registeredItemColumns: ColumnSpecDocumentTypesToTabs = $state({});
-  #uiScale = $state(1);
-  #minWidth = $derived(this.#uiScale * ENTRY_NAME_MIN_WIDTH_PX);
+
+  // TODO: Switch to rems
+  #minWidthRems = $derived(ENTRY_NAME_MIN_WIDTH_REMS);
+
+  // TODO: derive the PX measurement based on core font size
+  #minWidthPx = $derived(
+    foundryCoreSettings.value.fontSizePx * this.#minWidthRems
+  );
 
   initOnReady() {
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
@@ -47,10 +56,9 @@ class ItemColumnRuntime {
         type: 'component',
         component: DocumentActionsColumn,
       },
-      width: (section: TidySectionBase) => {
-        // TODO: Use REMs and a REM conversion from the computed body fontSize
-        let paddingX = 3;
-        let buttonWidth = 24;
+      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
+        let paddingX = 0.1875;
+        let buttonWidth = 1.5;
         return buttonWidth * section.rowActions.length + paddingX;
       },
       order: 1000,
@@ -63,7 +71,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: InlineCapacityTrackerColumn,
         },
-        width: 112,
+        widthRems: 7,
         cellClasses: 'text-cell',
         order: 100,
         priority: 100,
@@ -73,7 +81,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: InlineCapacityBarColumn,
         },
-        width: 112,
+        widthRems: 7,
         cellClasses: 'text-cell',
         order: 200,
         priority: 200,
@@ -91,7 +99,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemChargesColumn,
         },
-        width: 80,
+        widthRems: 5,
         cellClasses: 'inline-uses',
         order: 100,
         priority: 400,
@@ -105,7 +113,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemTimeColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 200,
         priority: 500,
       },
@@ -118,7 +126,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemPriceColumn,
         },
-        width: 88,
+        widthRems: 5.5,
         order: 300,
         priority: 100,
       },
@@ -131,7 +139,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemQuantityColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 400,
         priority: 300,
       },
@@ -144,7 +152,7 @@ class ItemColumnRuntime {
           type: 'component',
           component: ItemWeightColumn,
         },
-        width: 80,
+        widthRems: 5,
         order: 500,
         priority: 200,
       },
@@ -172,7 +180,7 @@ class ItemColumnRuntime {
           component: ItemRollColumn,
         },
         order: 300,
-        width: 50,
+        widthRems: 3.125,
         priority: 700,
       },
       formula: {
@@ -185,7 +193,7 @@ class ItemColumnRuntime {
           component: ItemDamageFormulasColumn,
         },
         order: 400,
-        width: 80,
+        widthRems: 5,
         priority: 600,
       },
       price: {
@@ -206,6 +214,98 @@ class ItemColumnRuntime {
       actions: standardInventoryColumns.actions,
     } satisfies Record<string, ColumnSpecification>;
 
+    const standardLootColumns = {
+      price: {
+        ...standardInventoryColumns.price,
+        order: 100,
+        priority: 200,
+      },
+      quantity: {
+        ...standardInventoryColumns.quantity,
+        order: 200,
+        priority: 300,
+      },
+      weight: {
+        ...standardInventoryColumns.weight,
+        order: 300,
+        priority: 100,
+      },
+      actions: standardInventoryColumns.actions,
+    } satisfies Record<string, ColumnSpecification>;
+
+    const standardSpellColumns = {
+      components: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.Components'),
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemSpellComponentsColumn,
+        },
+        widthRems: 5.625,
+        order: 100,
+        priority: 300,
+      },
+      school: {
+        headerContent: {
+          type: 'html',
+          html: `<i class="fa-solid fa-cauldron" data-tooltip="DND5E.SpellSchool"></i>`,
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemSpellSchoolColumn,
+        },
+        widthRems: 2.5,
+        order: 200,
+        priority: 100,
+      },
+      time: {
+        ...standardInventoryColumns.time,
+        order: 300,
+        priority: 400,
+      },
+      target: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Target'),
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemTargetColumn,
+        },
+        widthRems: 5,
+        order: 400,
+        priority: 200,
+      },
+      range: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.SpellHeader.Range'),
+        },
+        cellContent: {
+          type: 'component',
+          component: ItemRangeColumn,
+        },
+        widthRems: 5,
+        order: 500,
+        priority: 500,
+      },
+      roll: {
+        ...standardWeaponColumns.roll,
+        order: 600,
+        priority: 600,
+      },
+      actions: standardItemActionsColumn,
+    } satisfies Record<string, ColumnSpecification>;
+
+    const creatureInventorySections = {
+      [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
+      [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
+      [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
+      [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+    };
+
     this._registeredItemColumns = {
       [CONSTANTS.SHEET_TYPE_CONTAINER]: {
         [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
@@ -214,101 +314,54 @@ class ItemColumnRuntime {
         },
       },
       [CONSTANTS.SHEET_TYPE_CHARACTER]: {
-        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
-          [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
-          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
+        [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
+        },
+      },
+      [CONSTANTS.SHEET_TYPE_NPC]: {
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
+        [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
         },
       },
     };
-
-    this.refreshUiScale();
-
-    Hooks.on('clientSettingChanged', () => {
-      this.refreshUiScale();
-    });
   }
 
-  refreshUiScale() {
-    const newScale = game.settings.get('core', 'uiConfig')?.uiScale ?? 1;
-    if (newScale !== this.#uiScale) {
-      this.#uiScale = newScale;
-    }
-  }
-
-  get minWidth() {
-    return this.#minWidth;
-  }
-
-  columnSchematics = $derived.by<SheetColumnSpecificationSchematics>(() => {
-    let sheetSchematics: SheetColumnSpecificationSchematics = {};
-
-    for (let [sheetType, tabSpecs] of Object.entries(
-      this._registeredItemColumns
-    )) {
-      const tabSchematics: TabColumnSpecificationSchematics = {};
-      sheetSchematics[sheetType] = tabSchematics;
-
-      for (let [tabId, sectionSpecs] of Object.entries(tabSpecs)) {
-        const sectionSchematics: SectionColumnSpecificationSchematics = {};
-        tabSchematics[tabId] = sectionSchematics;
-
-        for (let [sectionKey, entryTypeSpecs] of Object.entries(sectionSpecs)) {
-          sectionSchematics[sectionKey] = {
-            ordered: Object.entries(entryTypeSpecs)
-              .map((x) => ({
-                ...x[1],
-                key: x[0],
-              }))
-              .sort((a, b) => a.order - b.order),
-            prioritized: Object.entries(entryTypeSpecs)
-              .map((x) => ({
-                ...x[1],
-                key: x[0],
-              }))
-              .sort((a, b) => b.priority - a.priority),
-          };
-        }
-      }
-    }
-
-    return sheetSchematics;
-  });
-
-  getSheetTabSectionColumnsQuadrone(
-    document: any,
+  getConfiguredColumnSpecifications(
+    sheetType: string,
     tabId: string,
-    section: TidySectionBase
-  ): ColumnSpecificationSchematics {
-    const sections = this.columnSchematics[document.type]?.[tabId];
-    var specs = sections?.[section.key] ??
-      sections?.[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] ?? {
-        ordered: [],
-        prioritized: [],
-      };
-
-    return specs;
+    sectionKey: string,
+    args: ColumnSpecificationCalculatedWidthArgs
+  ): ConfiguredColumnSpecification[] {
+    const tab = this._registeredItemColumns[sheetType]?.[tabId];
+    let columnKeysToColumnSpecs =
+      tab?.[sectionKey] ??
+      tab?.[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] ??
+      [];
+    return Object.entries(columnKeysToColumnSpecs).map(([key, spec]) => ({
+      key,
+      ...spec,
+      widthRems:
+        typeof spec.widthRems === 'number'
+          ? spec.widthRems
+          : spec.widthRems(args),
+    }));
   }
 
   determineHiddenColumns(
-    inlineSize: number,
-    schematics: ColumnSpecificationSchematics,
-    section: TidySectionBase
+    inlineSizePx: number,
+    schematics: ColumnsLoadout
   ): Set<string> {
-    console.log('determining hidden columns');
 
-    let available = inlineSize;
+    let availableRems = inlineSizePx / foundryCoreSettings.value.fontSizePx;
 
     let toHide = new Set<string>();
 
     for (const col of schematics.prioritized) {
-      let width =
-        typeof col.width === 'number' ? col.width : col.width(section);
-      const scaledWidth = width * this.#uiScale;
+      availableRems -= col.widthRems;
 
-      available -= scaledWidth;
-
-      if (available < this.#minWidth) {
+      if (availableRems < this.#minWidthRems) {
         toHide.add(col.key);
       }
     }

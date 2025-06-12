@@ -1,6 +1,4 @@
-## Inventory To Do
-
-Refactor:
+## Inventory To Done
 
 - [x] Switch from hideUnder to priority show/hide scheme
 - [x] Have each use of a column provide a priority
@@ -30,30 +28,42 @@ Refactor:
     - [x] Filters
     - [x] Sort
     - [x] Tab Config
-  - [ ] Encumbrance Row
-    - [ ] Strength Pill
-    - [ ] Size Pill
-    - [ ] Multiplier Pill
-    - [ ] Encumbrance bar with threshold ticks
-  - [ ] While there, implement generic width / priority observer feature that can control pinned filter visibility generically
-  - [ ] Propagate this to the container action bar
-- [ ] Implement container panel
-- [ ] `ItemColumnRuntime.determineHiddenColumns` - use this to pre-calculate column widths and to return a column scheme type that excludes width functions.
-- [ ] Expand column width calculations to include support for other measurements like REMs. Calculate the root rem on Foundry ready `parseFloat(getComputedStyle(document.body).fontSize)` and anytime settings change.
-  - Bonus: promote the UI Scale watcher and its hook to a centralized location where Tidy pulls its core setting info as a reactive store.
-- [ ] Evolve ItemLists further
-  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
-  - Move columns to TidySectionBase and include in prep
-  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
-- [ ] Review and task further
+  - [x] Encumbrance Row
+    - [x] Strength Pill
+    - [x] Size Pill
+    - [x] Multiplier Pill
+    - [x] Encumbrance bar with threshold ticks
+- [x] Track Foundry core settings in a state store
+  - [x] Root Font Size (pulled from html inline style font-size, no computed styles needed; Foundry Core has a hardcoded mapping for font sizes. Rather than try to copy that and be surprised when it changes, simply use the universally-available inline style)
+- [x] Convert item columns to use REMs exclusively. Ensure font scaling properly scales column widths.
+- [x] ~~Move columns to TidySectionBase~~ Deferred to some other time. Where I landed was good enough.
+- [x] Ensure column widths are precalculated before looping for headers and body in the tables components.
+- [x] Make ActorActionBar simply ActionBar. This just requires getting tabName 🤣 
+- [x] (low priority) Implement container panel
+  - [x] Set it up for all inventories
+  - [x] Extract classic styles and put them in the classic space.
+  - [x] Retrofit the styles in the quadrone space, in `sheet.scss`.
+- [x] Put weight unit in weight column
+- [x] Inline / contained weapons do not have proper item save context?
+- [x] Inline container columns should match container column specs
+- [x] // TODO: Find a way to share this data between all callers who use the inventory action bar.
+- [x] Empty container sections should be hidden in inline containers, whether locked or unlocked
+- [x] `systemSettings` - set up like `foundryCoreSettings` in settings.svelte.ts
+- [x] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
+- [x] Replace all system-setting-related checks with the global store.
 
-## Unrelated to this feature, unsorted, add to main list when done here
 
-- [ ] Add drag-and-drop to sort for Favorites
-- [ ] Propagate Table Row Actions to Activities tables
-- [ ] Propagate Table Row Actions to Effects tables
-- [ ] Propagate Data-Driven Columns to Activities tables
-- [ ] Propagate Data-Driven Columns to Effects tables
+## Side Quest to Complete Before Returning to Inventory
+
+- [x] (Spellbook) Make the Source Class filters work. This will possibly amount to evolving the ItemFilterService into something more self-sufficient. It might also do to eliminate the reliance of `compose` on the flat registered filters object, because document-specific filters can't be registered there in good conscience. Instead, the service should maintain its own cache of filters and have a derived composition for each filter group (Tab) which updates itself whenever the filter data changes. Svelte 5 was made for this.
+- [x] (Spellbook) // TODO: Make $derived for this
+- [x] ~~(Spellbook) // TODO: Better yet, have composed store ready to use, and have it update whenever the filters update~~ just skipped this. There's no real benefit.
+- [x] (Spellbook) Update footer to use pills like the latest design: https://discord.com/channels/@me/1243307347682529423/1381728068925653033
+- [x] (Spellbook) Make the Prepared pill into a button down in the footer. When clicked, it turns on "Prepared" and "Source Class" (if available) filters, with Source Class relating to the particular spellcaster card.
+- [x] (Spellbook) Implement spellbook subtitle
+  - [x] Source Class (always show when available)
+  - [x] Source Item (for Cast activities)
+  - [x] Components (if able: show when components column not visible)
 
 ## Questions
 

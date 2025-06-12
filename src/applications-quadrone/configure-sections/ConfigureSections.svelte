@@ -25,99 +25,127 @@
 </script>
 
 <h1>{title}</h1>
-<div>
-  {#if optionGroups?.length}
-    <h2>
-      {localize('TIDY5E.Options.Title')}
-    </h2>
-    {#each optionGroups as group}
-      <h3>
-        {localize(group.title)}
-      </h3>
-      {#each group.settings as setting}
-        {#if setting.type === 'boolean'}
-          <label class="checkbox">
-            <input type="checkbox" bind:checked={setting.checked} />
-            {localize(setting.label)}
-          </label>
-        {/if}
-      {/each}
-    {/each}
-  {/if}
-</div>
-<h2>
-  {localize('TIDY5E.Section.LabelPl')}
-  <tidy-gold-header-underline></tidy-gold-header-underline>
-</h2>
-<SortingListbox
-  bind:items={sections}
-  labelProp="label"
-  valueProp="key"
-  listboxCssClass="scroll-container"
+<!-- TODO: make some formal styles for this -->
+<div
+  style="display: flex; flex-direction: column; flex: 1; overflow-y: hidden;"
 >
-  {#snippet itemTemplate({ item })}
-    <span
-      data-section-key={item['key']}
-      data-testid="section-config-item-label"
-      class="section-config-item-label"
-      class:marked-as-hidden={item.show === false}>{item.label}</span
+  {#if optionGroups?.length}
+    <fieldset>
+      <legend>
+        {localize('TIDY5E.Options.Title')}
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
+      {#each optionGroups as group}
+        <div class="form-group">
+          <label for="">
+            {localize(group.title)}
+          </label>
+          <div class="form-fields">
+            {#each group.settings as setting}
+              {#if setting.type === 'boolean'}
+                <label class="checkbox">
+                  <input type="checkbox" bind:checked={setting.checked} />
+                  {localize(setting.label)}
+                </label>
+              {:else if setting.type === 'radio'}
+                {#each setting.options as option}
+                  <label class="radio">
+                    <input
+                      type="radio"
+                      value={option.value}
+                      bind:group={setting.selected}
+                    />
+                    {localize(option.label)}
+                  </label>
+                {/each}
+              {/if}
+            {/each}
+          </div>
+        </div>
+      {/each}
+    </fieldset>
+  {/if}
+  <!-- TODO: make some formal styles for this -->
+  <fieldset
+    class="section-config-container"
+    style="overflow-y: hidden; flex: 1; min-height: 3rem;"
+  >
+    <legend>
+      {localize('TIDY5E.Section.LabelPl')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </legend>
+    <SortingListbox
+      bind:items={sections}
+      labelProp="label"
+      valueProp="key"
+      listboxCssClass="scroll-container"
+      selectedItemClasses="theme-dark"
     >
-    {#if item.show !== false}
-      <button
-        type="button"
-        class="button listbox-option-button option-show"
-        title={localize('TIDY5E.Section.ConfigDialog.showTooltip')}
-        data-testid="section-config-show"
-        onclick={() => {
-          item.show = false;
-          sections = sections;
-        }}
-      >
-        <i class="far fa-eye fa-fw"></i>
-        {localize('TIDY5E.Visible')}
-      </button>
-    {:else}
-      <button
-        type="button"
-        class="button listbox-option-button option-hide"
-        title={localize('TIDY5E.Section.ConfigDialog.hideTooltip')}
-        data-testid="section-config-hide"
-        onclick={() => {
-          item.show = true;
-          sections = sections;
-        }}
-      >
-        <i class="far fa-eye-slash fa-fw"></i>
-        {localize('TIDY5E.Hidden')}
-      </button>
-    {/if}
-  {/snippet}
-</SortingListbox>
+      {#snippet itemTemplate({ item })}
+        <span
+          data-section-key={item['key']}
+          data-testid="section-config-item-label"
+          class="section-config-item-label"
+          class:marked-as-hidden={item.show === false}>{item.label}</span
+        >
+        {#if item.show !== false}
+          <button
+            type="button"
+            class="button listbox-option-button option-show"
+            title={localize('TIDY5E.Section.ConfigDialog.showTooltip')}
+            data-testid="section-config-show"
+            onclick={() => {
+              item.show = false;
+              sections = sections;
+            }}
+          >
+            <i class="far fa-eye fa-fw"></i>
+            {localize('TIDY5E.Visible')}
+          </button>
+        {:else}
+          <button
+            type="button"
+            class="button listbox-option-button option-hide"
+            title={localize('TIDY5E.Section.ConfigDialog.hideTooltip')}
+            data-testid="section-config-hide"
+            onclick={() => {
+              item.show = true;
+              sections = sections;
+            }}
+          >
+            <i class="far fa-eye-slash fa-fw"></i>
+            {localize('TIDY5E.Hidden')}
+          </button>
+        {/if}
+      {/snippet}
+    </SortingListbox>
+  </fieldset>
 
-<div class="button-bar">
-  <button
-    type="button"
-    data-testid="section-config-save-changes"
-    onclick={(ev) => application.saveChanges()}
-    class="button button-primary save-changes-btn"
-  >
-    {localize('TIDY5E.SaveChanges')}
-  </button>
-  <button
-    type="button"
-    class="button button-secondary use-default-btn"
-    data-testid="section-config-use-default"
-    onclick={(ev) => application.useDefault()}
-  >
-    <i class="fas fa-rotate-left"></i>
-    {localize('TIDY5E.UseDefault')}
-  </button>
-  <button
-    type="button"
-    class="button button-secondary apply-changes-btn"
-    data-testid="section-config-apply-changes"
-    onclick={() => application.close()}
-  >
-    {localize('Cancel')}
-  </button>
+  <div class="button-bar">
+    <button
+      type="button"
+      data-testid="section-config-save-changes"
+      onclick={(ev) => application.saveChanges()}
+      class="button button-primary save-changes-btn"
+    >
+      {localize('TIDY5E.SaveChanges')}
+    </button>
+    <button
+      type="button"
+      class="button button-secondary use-default-btn"
+      data-testid="section-config-use-default"
+      onclick={(ev) => application.useDefault()}
+    >
+      <i class="fas fa-rotate-left"></i>
+      {localize('TIDY5E.UseDefault')}
+    </button>
+    <button
+      type="button"
+      class="button button-secondary apply-changes-btn"
+      data-testid="section-config-apply-changes"
+      onclick={() => application.close()}
+    >
+      {localize('Cancel')}
+    </button>
+  </div>
 </div>

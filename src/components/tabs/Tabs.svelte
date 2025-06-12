@@ -99,7 +99,7 @@
   function resolveTabTitle(tab: Tab) {
     try {
       if (typeof tab.title === 'function') {
-        return tab.title(tabContext);
+        return tab.title({ ...tabContext, document: sheet.document });
       }
       return localize(tab.title);
     } catch (e) {
