@@ -19,7 +19,7 @@ import type {
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import { debug } from 'src/utils/logging';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { mount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
@@ -636,7 +636,7 @@ export class Tidy5eNpcSheet
         defaultDocumentContext.items
       ),
       defaultSkills: new Set<string>(
-        FoundryAdapter.getSystemSetting(CONSTANTS.SYSTEM_SETTING_DEFAULT_SKILLS)
+        systemSettings.value.defaultSkills
       ),
       features: [],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(

@@ -3,7 +3,7 @@
 - [x] Empty container sections should be hidden in inline containers, whether locked or unlocked
 - [x] `systemSettings` - set up like `foundryCoreSettings` in settings.svelte.ts
 - [x] Add encumbrance / capacity summary tooltip, to account for weight by item type, leaving any remaining weight to currency
-- [ ] Replce all system-setting-related checks with the global store.
+- [x] Replace all system-setting-related checks with the global store.
 - [ ] Evolve ItemLists further
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.

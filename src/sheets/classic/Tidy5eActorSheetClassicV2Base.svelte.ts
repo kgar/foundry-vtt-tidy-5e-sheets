@@ -16,7 +16,7 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
@@ -197,9 +197,7 @@ export function Tidy5eActorSheetClassicV2Base<
         customActorTraits: [],
         customContent: [],
         disableExperience:
-          FoundryAdapter.getSystemSetting(
-            CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
-          ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
+          systemSettings.value.levelingMode === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),

@@ -14,7 +14,7 @@ import {
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type { Ability } from 'src/types/dnd5e.actor5e.types';
 import type { Item5e } from 'src/types/item.types';
@@ -175,9 +175,8 @@ export function Tidy5eActorSheetQuadroneBase<
         customActorTraits: [],
         customContent: [],
         enableXp:
-          FoundryAdapter.getSystemSetting(
-            CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
-          ) !== CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
+          systemSettings.value.levelingMode !==
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
         effects: dnd5e.applications.components.EffectsElement.prepareCategories(
           this.actor.allApplicableEffects()
         ),

@@ -10,8 +10,8 @@ import CharacterAttributesTab from 'src/sheets/quadrone/actor/tabs/CharacterAttr
 import CharacterBiographyTab from 'src/sheets/quadrone/actor/tabs/CharacterBiographyTab.svelte';
 import CharacterFeaturesTab from 'src/sheets/quadrone/actor/tabs/CharacterFeaturesTab.svelte';
 import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastionTab.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import CharacterActionsTab from 'src/sheets/quadrone/actor/tabs/CharacterActionsTab.svelte';
+import { systemSettings } from 'src/settings/settings.svelte';
 
 const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>[] =
   [
@@ -85,9 +85,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
         type: 'svelte',
       },
       enabled: (context) => {
-        const { enabled } = FoundryAdapter.getSystemSetting<{
-          enabled: boolean;
-        }>(CONSTANTS.SYSTEM_SETTING_BASTION_CONFIGURATION);
+        const { enabled } = systemSettings.value.bastionConfiguration;
         const { basic, special } = CONFIG.DND5E.facilities.advancement;
         const threshold = Math.min(
           ...Object.keys(basic).map(Number),

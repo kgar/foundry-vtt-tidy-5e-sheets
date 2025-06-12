@@ -27,7 +27,7 @@ import type {
   GroupSkill,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
@@ -203,9 +203,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
     let xp: Group5eXp | undefined = undefined;
     if (
-      FoundryAdapter.getSystemSetting(
-        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
-      ) !== CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP
+      systemSettings.value.levelingMode !==
+      CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP
     ) {
       xp = this.actor.system.details.xp;
     }
@@ -466,9 +465,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       currentHP: stats.currentHP,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
       disableExperience:
-        FoundryAdapter.getSystemSetting(
-          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE
-        ) === CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
+        systemSettings.value.levelingMode ===
+        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       effects: dnd5e.applications.components.EffectsElement.prepareCategories(
         this.actor.allApplicableEffects()
       ),
