@@ -42,6 +42,8 @@
   data-item-id={favorite.activity.item?.id}
   data-activity-id={favorite.activity.id}
   data-configurable={configurable}
+  data-tidy-draggable
+  data-favorite-id={favorite.id}
 >
   <FavoriteRollButton
     {favorite}
@@ -49,7 +51,7 @@
     title={favorite.activity.name}
     onUse={async (event) => await favorite.activity.use({ event })}
     name={favorite.activity.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   <div class="">
     <div class="primary">

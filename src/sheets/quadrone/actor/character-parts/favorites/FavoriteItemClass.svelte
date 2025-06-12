@@ -39,16 +39,16 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
     name={favorite.item.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   {#if value}
-  <div class="">
-    <span class="primary">
-      <span class="value font-data-medium color-text-default">
-        {value}
+    <div class="">
+      <span class="primary">
+        <span class="value font-data-medium color-text-default">
+          {value}
+        </span>
       </span>
-    </span>
-    <!-- <span class="secondary"> </span> -->
-  </div>
+      <!-- <span class="secondary"> </span> -->
+    </div>
   {/if}
 </div>

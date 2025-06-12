@@ -12,23 +12,28 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
-  let subtitle = $derived([
-    game.i18n.localize(`DND5E.SpellLevel${favorite.level}`),
-    game.i18n.localize(
-      `DND5E.Abbreviation${CONFIG.DND5E.spellcastingTypes[favorite.id]?.shortRest ? 'SR' : 'LR'}`,
-    ),
-  ].filterJoin(` <div class="divider-dot"></div> `));
+  let subtitle = $derived(
+    [
+      game.i18n.localize(`DND5E.SpellLevel${favorite.level}`),
+      game.i18n.localize(
+        `DND5E.Abbreviation${CONFIG.DND5E.spellcastingTypes[favorite.id]?.shortRest ? 'SR' : 'LR'}`,
+      ),
+    ].filterJoin(` <div class="divider-dot"></div> `),
+  );
 </script>
 
-<div 
-  class="list-entry favorite" 
+<div
+  class="list-entry favorite"
   data-favorite-type="slot"
+  data-tidy-draggable
+  data-favorite-id={favorite.id}
 >
-  <FavoriteItemRollButton {favorite} 
-    img={favorite.img} 
-    title={favorite.name} 
-    name={favorite.name} 
-    subtitle={subtitle}
+  <FavoriteItemRollButton
+    {favorite}
+    img={favorite.img}
+    title={favorite.name}
+    name={favorite.name}
+    {subtitle}
   />
   <div class="">
     <span class="primary">

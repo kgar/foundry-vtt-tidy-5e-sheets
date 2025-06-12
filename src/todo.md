@@ -78,6 +78,8 @@
   - 💡 It is still for Items only, which should keep things simple with itemContext usage.
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 - [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
+- [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
+- [ ] (TBD) User Setting: Item Spells Organization ( ) Additional Spells Section ( ) Section Per Item
 
 ### Feature - Set as Inspiration Source
 

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import FavoriteItemGeneric from './FavoriteItemGeneric.svelte';
   import FavoriteItemClass from './FavoriteItemClass.svelte';
@@ -18,8 +17,6 @@
   }
 
   let { favorite }: Props = $props();
-
-  let context = $derived(getCharacterSheetQuadroneContext());
 </script>
 
 {#if favorite.item?.type === CONSTANTS.ITEM_TYPE_CLASS}

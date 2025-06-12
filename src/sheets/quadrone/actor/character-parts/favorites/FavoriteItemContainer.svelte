@@ -30,7 +30,7 @@
     onUse={async (ev) =>
       await FoundryAdapter.actorTryUseItem(favorite.item, ev)}
     name={favorite.item.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   <div class="">
     <span class="primary">

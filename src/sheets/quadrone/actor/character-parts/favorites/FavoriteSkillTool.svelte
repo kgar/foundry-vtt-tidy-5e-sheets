@@ -38,11 +38,13 @@
   }
 </script>
 
-<div 
-  class="list-entry favorite" 
+<div
+  class="list-entry favorite"
   data-favorite-type="tool"
   data-reference-tooltip={favorite.reference}
   data-item-id={favorite.id}
+  data-tidy-draggable
+  data-favorite-id={favorite.id}
 >
   <FavoriteItemRollButton
     {favorite}
@@ -50,7 +52,7 @@
     title={favorite.name}
     onUse={handleOnUse}
     name={favorite.name}
-    subtitle={subtitle}
+    {subtitle}
   />
   <div class="">
     <span class="modifier">

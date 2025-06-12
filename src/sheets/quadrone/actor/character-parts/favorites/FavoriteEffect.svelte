@@ -3,7 +3,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { EffectFavoriteContextEntry } from 'src/types/types';
-  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
 
   interface Props {
@@ -35,16 +34,21 @@
       : null,
   );
 
-  const handleChange = !favorite.effect.isSuppressed 
+  const handleChange = !favorite.effect.isSuppressed
     ? () => favorite.effect.update({ disabled: !favorite.effect.disabled })
     : undefined;
 </script>
 
 <div
-  class={['list-entry favorite', { suppressed: favorite.effect.isSuppressed, toggleable }]}
+  class={[
+    'list-entry favorite',
+    { suppressed: favorite.effect.isSuppressed, toggleable },
+  ]}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
+  data-tidy-draggable
+  data-favorite-id={favorite.id}
 >
   <button
     type="button"
@@ -54,7 +58,11 @@
     data-favorite-type="effect"
   >
     <i class="effect-use-icon">
-      <img src={favorite.effect.img} alt={favorite.effect.name} class="item-image" />
+      <img
+        src={favorite.effect.img}
+        alt={favorite.effect.name}
+        class="item-image"
+      />
     </i>
 
     <div class="item-name-container">
