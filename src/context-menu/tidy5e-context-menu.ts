@@ -6,6 +6,7 @@ import { configureGroupContextMenu } from './tidy5e-group-context-menu';
 import { configureFacilityContextMenu } from './tidy5e-facility-context-menu';
 import { configureActivitiesContextMenu } from './tidy5e-activities-context-menu';
 import FloatingContextMenu from './FloatingContextMenu';
+import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-context-menu';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -48,6 +49,9 @@ function onDocumentContext(this: any, element: HTMLElement) {
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_ITEMS:
       configureItemContextMenu(element, app);
+      break;
+    case CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE:
+      configureKeyedFavoriteContextMenu(element, app);
       break;
     default:
       warn(

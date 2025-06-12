@@ -1,7 +1,6 @@
 ## To Do
 
 - [ ] Character Sheet 
-  - [ ] Add Context Menu for favorite slots, skills, and tools. Currently, they cannot be removed.
   - [ ] Implement tabs
     - [ ] Actions
     - [x] Attributes (Character tab)
@@ -13,7 +12,6 @@
     - [ ] Journal
   - [x] Implement Expandable/collapsible sidebar
   - [x] Implement Favorites
-  - [ ] Implement Responsive Tab Strip
   - [ ] Implement Theme Settings
     - [ ] World Default (?) - discuss with community
     - [ ] User Default (we have User Scope now!)
@@ -25,6 +23,7 @@
     - [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
     - [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
+- [ ] Implement Responsive Tab Strip
 - [ ] Implement quadrone default tab settings (no UI)
   - [ ] Character
   - [ ] NPC
@@ -627,3 +626,4 @@ Limited:
     - [x] tools
     - [x] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
     - [x] Verify they work with favorites
+  - [x] Add Context Menu for favorite slots, skills, and tools. Currently, they cannot be removed.

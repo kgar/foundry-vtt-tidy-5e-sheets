@@ -1074,11 +1074,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       type = 'skill';
     } else if (!isNil(key) && key in CONFIG.DND5E.tools) {
       type = 'tool';
-    } else if (
-      modes[preparationMode ?? '']?.upcast &&
-      level !== '0' &&
-      isSlots
-    ) {
+    } else if (isSlots) {
       type = 'slots';
     }
     if (!type) return super._onDragStart(event);

@@ -110,6 +110,7 @@
                   data-preparation-mode={section.prepMode}
                   data-level={section.dataset['system.level']}
                   data-slots
+                  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
                 >
                   <SpellSlotManagementQuadrone
                     mode={context.spellSlotTrackerMode}

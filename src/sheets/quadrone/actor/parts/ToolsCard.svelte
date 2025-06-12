@@ -82,6 +82,7 @@
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
             data-key={tool.key}
             data-tidy-draggable
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
           >
             {tool.label}
           </button>

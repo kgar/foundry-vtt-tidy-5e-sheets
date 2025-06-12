@@ -4,6 +4,7 @@
   import type { SkillToolFavoriteContextEntry } from 'src/types/types';
   import { getModifierData } from 'src/utils/formatting';
   import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   interface Props {
     favorite: SkillToolFavoriteContextEntry;
@@ -45,6 +46,8 @@
   data-item-id={favorite.id}
   data-tidy-draggable
   data-favorite-id={favorite.id}
+  data-key={favorite.id}
+  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
 >
   <FavoriteItemRollButton
     {favorite}
