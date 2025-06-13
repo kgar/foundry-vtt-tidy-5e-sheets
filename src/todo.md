@@ -98,6 +98,7 @@ const group = this.actor.items.get(originId);
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 - [ ] Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
 - [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
+- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 
 ### Feature - Set as Inspiration Source
 

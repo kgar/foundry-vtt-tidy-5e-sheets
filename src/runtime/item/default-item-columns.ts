@@ -11,7 +11,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
 import ItemPriceColumn from 'src/sheets/quadrone/item/columns/ItemPriceColumn.svelte';
 import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svelte';
-import ItemChargesColumn from 'src/sheets/quadrone/item/columns/ItemChargesColumn.svelte';
+import ItemUsesColumn from 'src/sheets/quadrone/item/columns/ItemUsesColumn.svelte';
 import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svelte';
 import ItemRangeColumn from 'src/sheets/quadrone/item/columns/ItemRangeColumn.svelte';
 import ItemTargetColumn from 'src/sheets/quadrone/item/columns/ItemTargetColumn.svelte';
@@ -59,11 +59,11 @@ export function getDefaultColumns() {
     charges: {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.Charges'),
+        html: FoundryAdapter.localize('DND5E.Uses'),
       },
       cellContent: {
         type: 'component',
-        component: ItemChargesColumn,
+        component: ItemUsesColumn,
       },
       widthRems: 5,
       cellClasses: 'inline-uses',

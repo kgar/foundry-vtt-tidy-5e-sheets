@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ColumnCellProps } from 'src/runtime/types';
-  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import { isNil } from 'src/utils/data';
 
-  let { rowDocument, rowContext }: ColumnCellProps = $props();
-
-  let context = $derived(getSheetContext());
+  let { rowDocument }: ColumnCellProps = $props();
 </script>
 
-src here
+{#if !isNil(rowDocument.system.requirements, '')}
+  {rowDocument.system.requirements}
+{:else}
+  <span class="color-text-disabled">—</span>
+{/if}

@@ -23,11 +23,6 @@ class ItemColumnRuntime {
   // TODO: Switch to rems
   #minWidthRems = $derived(ENTRY_NAME_MIN_WIDTH_REMS);
 
-  // TODO: derive the PX measurement based on core font size
-  #minWidthPx = $derived(
-    foundryCoreSettings.value.fontSizePx * this.#minWidthRems
-  );
-
   initOnReady() {
     const columns = getDefaultColumns();
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
@@ -191,7 +186,6 @@ class ItemColumnRuntime {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             charges: { ...columns.charges, order: 100, priority: 500 },
             time: { ...columns.time, order: 200, priority: 400 },
-            range: { ...columns.range, order: 300, priority: 300 },
             recovery: { ...columns.recovery, order: 400, priority: 200 },
             featureSource: {
               ...columns.featureSource,
