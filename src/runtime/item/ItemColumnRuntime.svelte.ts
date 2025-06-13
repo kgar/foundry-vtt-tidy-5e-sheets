@@ -3,25 +3,10 @@ import type {
   ColumnSpecification,
   ColumnSpecificationCalculatedWidthArgs,
   ConfiguredColumnSpecification,
-} from './item.types';
+} from '../types';
 import { CONSTANTS } from 'src/constants';
-import ItemQuantityColumn from 'src/sheets/quadrone/item/columns/ItemQuantityColumn.svelte';
-import InlineCapacityBarColumn from 'src/sheets/quadrone/item/columns/InlineCapacityBarColumn.svelte';
-import ItemPriceColumn from 'src/sheets/quadrone/item/columns/ItemPriceColumn.svelte';
-import ItemChargesColumn from 'src/sheets/quadrone/item/columns/ItemChargesColumn.svelte';
-import ItemWeightColumn from 'src/sheets/quadrone/item/columns/ItemWeightColumn.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import InlineCapacityTrackerColumn from 'src/sheets/quadrone/item/columns/InlineCapacityTrackerColumn.svelte';
-import ItemTimeColumn from 'src/sheets/quadrone/item/columns/ItemTimeColumn.svelte';
-import ItemRollColumn from 'src/sheets/quadrone/item/columns/ItemRollColumn.svelte';
-import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamageFormulasColumn.svelte';
-import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
-import ItemActionsColumnHeader from 'src/sheets/quadrone/item/columns/ItemActionsColumnHeader.svelte';
-import ItemSpellComponentsColumn from 'src/sheets/quadrone/item/columns/ItemSpellComponentsColumn.svelte';
-import ItemSpellSchoolColumn from 'src/sheets/quadrone/item/columns/ItemSpellSchoolColumn.svelte';
-import ItemTargetColumn from 'src/sheets/quadrone/item/columns/ItemTargetColumn.svelte';
-import ItemRangeColumn from 'src/sheets/quadrone/item/columns/ItemRangeColumn.svelte';
-import { foundryCoreSettings, settings } from 'src/settings/settings.svelte';
+import { getDefaultColumns } from './default-item-columns';
+import { foundryCoreSettings } from 'src/settings/settings.svelte';
 import type { ColumnsLoadout } from './ColumnsLoadout.svelte';
 
 const ENTRY_NAME_MIN_WIDTH_REMS = 12.5;
@@ -44,115 +29,47 @@ class ItemColumnRuntime {
   );
 
   initOnReady() {
+    const columns = getDefaultColumns();
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
     const standardItemActionsColumn: ColumnSpecification = {
-      headerClasses: 'header-cell-actions',
-      headerContent: {
-        type: 'component',
-        component: ItemActionsColumnHeader,
-      },
-      cellClasses: 'tidy-table-actions',
-      cellContent: {
-        type: 'component',
-        component: DocumentActionsColumn,
-      },
-      widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
-        let paddingX = 0.1875;
-        let buttonWidth = 1.5;
-        return buttonWidth * section.rowActions.length + paddingX;
-      },
+      ...columns.actions,
       order: 1000,
       priority: 1000,
     };
 
     const standardContainerColumns = {
       capacityTracker: {
-        cellContent: {
-          type: 'component',
-          component: InlineCapacityTrackerColumn,
-        },
-        widthRems: 7,
-        cellClasses: 'text-cell',
+        ...columns.capacityTracker,
         order: 100,
-        priority: 100,
-      },
-      capacityBar: {
-        cellContent: {
-          type: 'component',
-          component: InlineCapacityBarColumn,
-        },
-        widthRems: 7,
-        cellClasses: 'text-cell',
-        order: 200,
         priority: 200,
       },
+      capacityBar: { ...columns.capacityBar, order: 200, priority: 100 },
       actions: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
 
     const standardInventoryColumns = {
       charges: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.Charges'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemChargesColumn,
-        },
-        widthRems: 5,
-        cellClasses: 'inline-uses',
+        ...columns.charges,
         order: 100,
         priority: 400,
       },
       time: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.SpellHeader.Time'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemTimeColumn,
-        },
-        widthRems: 5,
+        ...columns.time,
         order: 200,
         priority: 500,
       },
       price: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.Price'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemPriceColumn,
-        },
-        widthRems: 5.5,
+        ...columns.price,
         order: 300,
         priority: 100,
       },
       quantity: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.Quantity'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemQuantityColumn,
-        },
-        widthRems: 5,
+        ...columns.quantity,
         order: 400,
         priority: 300,
       },
       weight: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.Weight'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemWeightColumn,
-        },
-        widthRems: 5,
+        ...columns.weight,
         order: 500,
         priority: 200,
       },
@@ -161,102 +78,51 @@ class ItemColumnRuntime {
 
     const standardWeaponColumns = {
       charges: {
-        ...standardInventoryColumns.charges,
+        ...columns.charges,
         order: 100,
         priority: 400,
       },
       time: {
-        ...standardInventoryColumns.time,
+        ...columns.time,
         order: 200,
         priority: 500,
       },
       roll: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.SpellHeader.Roll'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemRollColumn,
-        },
+        ...columns.roll,
         order: 300,
-        widthRems: 3.125,
         priority: 700,
       },
       formula: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.SpellHeader.Formula'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemDamageFormulasColumn,
-        },
+        ...columns.formula,
         order: 400,
-        widthRems: 5,
         priority: 600,
       },
       price: {
-        ...standardInventoryColumns.price,
+        ...columns.price,
         order: 500,
         priority: 100,
       },
       quantity: {
-        ...standardInventoryColumns.quantity,
+        ...columns.quantity,
         order: 600,
         priority: 300,
       },
       weight: {
-        ...standardInventoryColumns.weight,
+        ...columns.weight,
         order: 700,
         priority: 200,
       },
       actions: standardInventoryColumns.actions,
     } satisfies Record<string, ColumnSpecification>;
 
-    const standardLootColumns = {
-      price: {
-        ...standardInventoryColumns.price,
-        order: 100,
-        priority: 200,
-      },
-      quantity: {
-        ...standardInventoryColumns.quantity,
-        order: 200,
-        priority: 300,
-      },
-      weight: {
-        ...standardInventoryColumns.weight,
-        order: 300,
-        priority: 100,
-      },
-      actions: standardInventoryColumns.actions,
-    } satisfies Record<string, ColumnSpecification>;
-
     const standardSpellColumns = {
       components: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.Components'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemSpellComponentsColumn,
-        },
-        widthRems: 5.625,
+        ...columns.components,
         order: 100,
         priority: 300,
       },
       school: {
-        headerContent: {
-          type: 'html',
-          html: `<i class="fa-solid fa-cauldron" data-tooltip="DND5E.SpellSchool"></i>`,
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemSpellSchoolColumn,
-        },
-        widthRems: 2.5,
+        ...columns.school,
         order: 200,
         priority: 100,
       },
@@ -266,28 +132,12 @@ class ItemColumnRuntime {
         priority: 400,
       },
       target: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.SpellHeader.Target'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemTargetColumn,
-        },
-        widthRems: 5,
+        ...columns.target,
         order: 400,
         priority: 200,
       },
       range: {
-        headerContent: {
-          type: 'html',
-          html: FoundryAdapter.localize('DND5E.SpellHeader.Range'),
-        },
-        cellContent: {
-          type: 'component',
-          component: ItemRangeColumn,
-        },
-        widthRems: 5,
+        ...columns.range,
         order: 500,
         priority: 500,
       },
@@ -297,6 +147,25 @@ class ItemColumnRuntime {
         priority: 600,
       },
       actions: standardItemActionsColumn,
+    } satisfies Record<string, ColumnSpecification>;
+
+    const standardLootColumns = {
+      price: {
+        ...columns.price,
+        order: 100,
+        priority: 200,
+      },
+      quantity: {
+        ...columns.quantity,
+        order: 200,
+        priority: 300,
+      },
+      weight: {
+        ...columns.weight,
+        order: 300,
+        priority: 100,
+      },
+      actions: standardInventoryColumns.actions,
     } satisfies Record<string, ColumnSpecification>;
 
     const creatureInventorySections = {
@@ -317,6 +186,20 @@ class ItemColumnRuntime {
         [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
         [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
+        },
+        [CONSTANTS.TAB_CHARACTER_FEATURES]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            charges: { ...columns.charges, order: 100, priority: 500 },
+            time: { ...columns.time, order: 200, priority: 400 },
+            range: { ...columns.range, order: 300, priority: 300 },
+            recovery: { ...columns.recovery, order: 400, priority: 200 },
+            featureSource: {
+              ...columns.featureSource,
+              order: 500,
+              priority: 100,
+            },
+            actions: { ...columns.actions, order: 1000, priority: 1000 },
+          },
         },
       },
       [CONSTANTS.SHEET_TYPE_NPC]: {
@@ -353,7 +236,6 @@ class ItemColumnRuntime {
     inlineSizePx: number,
     schematics: ColumnsLoadout
   ): Set<string> {
-
     let availableRems = inlineSizePx / foundryCoreSettings.value.fontSizePx;
 
     let toHide = new Set<string>();

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ColumnCellProps } from 'src/runtime/item/item.types';
+  import type { ColumnCellProps } from 'src/runtime/types';
 
   let { rowDocument: item, rowContext }: ColumnCellProps = $props();
 

@@ -136,6 +136,12 @@ export class ItemFilterRuntime {
         defaultItemFilters.concentration.name,
         defaultItemFilters.canCastSpell.name,
       ]),
+      [CONSTANTS.TAB_CHARACTER_FEATURES]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.canUse.name,
+      ]),
     },
   };
 
@@ -335,6 +341,25 @@ export class ItemFilterRuntime {
         ],
         ...getStandardSpellSchoolFilterCategories(),
         'DND5E.SpellSourceClass': (document) => getSourceClassFilters(document),
+      },
+      [CONSTANTS.TAB_CHARACTER_FEATURES]: {
+        'DND5E.ItemActivationCost': [
+          {
+            ...defaultItemFilters.activationCostAction,
+            pinnedFilterClass: 'hide-under-450',
+          },
+          {
+            ...defaultItemFilters.activationCostBonus,
+            pinnedFilterClass: 'hide-under-550',
+          },
+          {
+            ...defaultItemFilters.activationCostReaction,
+            pinnedFilterClass: 'hide-under-600',
+          },
+        ],
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.canUse,
+        ],
       },
     },
   };
