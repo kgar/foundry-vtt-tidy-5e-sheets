@@ -158,13 +158,31 @@
             <TidyItemTableRow
               {item}
               hidden={!searchResults.show(item.uuid)}
-              rowClass={[{ expanded }]}
+              rowClass={[
+                {
+                  expanded,
+                  prepared:
+                    (item.system.preparation.mode ===
+                      CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
+                      item.system.preparation.prepared) ||
+                    item.system.preparation.mode ===
+                      CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
+                  unprepared:
+                    item.system.preparation.mode ===
+                      CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
+                    !item.system.preparation.prepared,
+                  ['mode-always']:
+                    item.system.preparation.mode ===
+                    CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
+                },
+              ]}
               contextMenu={{
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: item.uuid,
               }}
             >
               {#snippet children({ toggleSummary, expanded })}
+                <div class="highlight"></div>
                 <a
                   class={['tidy-table-row-use-button']}
                   onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}

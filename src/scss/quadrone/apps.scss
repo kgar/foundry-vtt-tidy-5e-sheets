@@ -739,19 +739,19 @@
     &:where(.mode-atwill) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-atwill);
     }
-    
+
     &:where(.mode-always) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-always);
     }
-    
+
     &:where(.mode-pact) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-pact);
     }
-    
+
     &:where(.mode-innate) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-innate);
     }
-    
+
     &:where(.mode-ritual) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-ritual);
     }

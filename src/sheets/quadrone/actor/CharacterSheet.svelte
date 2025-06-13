@@ -513,9 +513,9 @@
     <!-- <CharacterInventoryFooter
       class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
     /> -->
-    <CharacterSpellbookFooter
+    <!-- <CharacterSpellbookFooter
       class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
       tabId={selectedTabId}
-    />
+    /> -->
   </div>
 </div>

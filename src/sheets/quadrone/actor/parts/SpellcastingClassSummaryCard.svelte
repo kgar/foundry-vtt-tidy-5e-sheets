@@ -46,7 +46,7 @@
 
 <div
   class={[
-    'spellcasting card',
+    'spellcasting card flexrow',
     {
       primary: info.primary,
       ['has-max']: info.prepared.max,
@@ -56,10 +56,10 @@
   data-ability={info.ability.key}
 >
   <div class="header">
-    <span class="name">{info.name}</span>
+    <span class="name font-title-small">{info.name}</span>
 
     {#if info.primary}
-      <i class="fa-solid fa-chess-queen"></i>
+      <i class="fa-solid fa-crown primary-icon"></i>
     {:else if context.unlocked}
       <a
         data-tooltip="DND5E.SpellAbilitySet"
@@ -69,7 +69,7 @@
             'system.attributes.spellcasting': info.ability.key,
           })}
       >
-        <i class="fa-regular fa-chess-queen"></i>
+        <i class="fa-regular fa-crown primary-icon"></i>
       </a>
     {/if}
   </div>

@@ -1663,10 +1663,13 @@
     }
   }
 
-  .tidy-tab.inventory.active {
-    display: flex;
-    flex-direction: column;
-    gap: var(--t5e-size-3x);
+  .tidy-tab.inventory,
+  .tidy-tab.spellbook {
+    &.active {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-3x);
+    }
   }
 
   .sheet-footer {
@@ -1687,32 +1690,22 @@
     .footer-content-right {
       justify-content: flex-end;
     }
+
+    .spellcasting.card {
+      border-radius: var(--t5e-size-1x);
+      border: 1px solid var(--t5e-component-field-border);
+      background: var(--t5e-component-field-background);
+
+      .primary-icon {
+        color: var(--t5e-color-text-gold-emphasis);
+      }
+    }
   }
 
   .inventory-footer {
     container-type: inline-size;
     container-name: inventory-footer;
-  }
 
-  @container inventory-footer (width < 35rem) {
-    .currency-container {
-      order: 1;
-      flex: 1;
-      min-width: fit-content;
-      flex-direction: row;
-    }
-
-    .footer-content-left {
-      order: 2;
-      flex: 1;
-    }
-
-    .footer-content-right {
-      order: 3;
-    }
-  }
-
-  .inventory-footer {
     .attunement-tracker {
       height: var(--t5e-field-size-default);
       gap: var(--t5e-size-1x);
@@ -1734,6 +1727,24 @@
 
     .currency-container {
       gap: var(--t5e-size-2x);
+    }
+  }
+
+  @container inventory-footer (width < 35rem) {
+    .currency-container {
+      order: 1;
+      flex: 1;
+      min-width: fit-content;
+      flex-direction: row;
+    }
+
+    .footer-content-left {
+      order: 2;
+      flex: 1;
+    }
+
+    .footer-content-right {
+      order: 3;
     }
   }
 
