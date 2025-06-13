@@ -1,3 +1,25 @@
+## Features Tab To Do
+
+- [ ] Feature Tab Scaffolding
+  - [ ] Action Bar
+    - [ ] Filters
+      - [ ] Reuse: classic filters for features
+      - [ ] Add: Advancement Origin filters
+    - [ ] 
+  - [x] Tables
+
+### Notes
+
+Getting the advancement origin of an item:
+item.system.flags.dnd5e.advancementOrigin => `${itemWithAdvancements.id}.${bestowedItem.id}`
+
+Getting the target item that bestowed the advancement:
+
+```js
+const [originId] = item.getFlag("dnd5e", "advancementOrigin")?.split(".") ?? [];
+const group = this.actor.items.get(originId);
+```
+
 ## To Do
 
 - [ ] Character Sheet 

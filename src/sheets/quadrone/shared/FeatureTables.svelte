@@ -1,31 +1,30 @@
 <script lang="ts">
-  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
-  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
-  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type {
     Actor5e,
     CharacterItemContext,
     CharacterSheetQuadroneContext,
+    FeatureSection,
     NpcItemContext,
     NpcSheetQuadroneContext,
-    SpellbookSection,
   } from 'src/types/types';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
-  import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
-  import SpellSlotManagementQuadrone from '../actor/parts/SpellSlotManagementQuadrone.svelte';
-  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
+  import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
 
   interface Props {
-    sections: SpellbookSection[];
+    sections: FeatureSection[];
     itemContext: Record<string, CharacterItemContext | NpcItemContext>;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
@@ -75,7 +74,7 @@
 <div class="tidy-table-container" bind:this={sectionsContainer}>
   {#each sections as section (section.key)}
     {@const hasViewableItems = ItemVisibility.hasViewableItems(
-      section.spells,
+      section.items,
       searchResults.uuids,
     )}
     {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
@@ -99,30 +98,12 @@
         dataset={section.dataset}
       >
         {#snippet header(expanded)}
-          {@const modeClass = `mode-${section.prepMode?.slugify()}`}
-          <TidyTableHeaderRow
-            class={['theme-dark', 'spell-preparation', modeClass]}
-          >
+          <TidyTableHeaderRow class={['theme-dark']}>
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>
                 {localize(section.label)}
               </h3>
-              <span class="table-header-count">{section.spells.length}</span>
-              {#if section.usesSlots}
-                <div
-                  data-tidy-draggable
-                  data-key={section.key}
-                  data-preparation-mode={section.prepMode}
-                  data-level={section.dataset['system.level']}
-                  data-slots
-                  data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
-                >
-                  <SpellSlotManagementQuadrone
-                    mode={context.spellSlotTrackerMode}
-                    {section}
-                  />
-                </div>
-              {/if}
+              <span class="table-header-count">{section.items.length}</span>
             </TidyTableHeaderCell>
             {#each columns.ordered as column}
               {@const hidden = hiddenColumns.has(column.key)}
@@ -153,7 +134,7 @@
         {/snippet}
 
         {#snippet body()}
-          {@const itemEntries = section.spells.map((item) => ({
+          {@const itemEntries = section.items.map((item) => ({
             item,
             ctx: itemContext[item.id],
           }))}

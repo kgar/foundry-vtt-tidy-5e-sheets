@@ -1061,7 +1061,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return;
     }
 
-    const modes = CONFIG.DND5E.spellPreparationModes;
     const { key } =
       event.target.closest<HTMLElement>('[data-key]')?.dataset ?? {};
     // TODO: Make a custom wrapper with specific fields related to spell slot drag
