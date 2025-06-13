@@ -8,19 +8,21 @@
 
   let inferredActivation = $derived(
     item.system.activities
-      ? firstOfSet<any>(item.system.activities)?.activation?.type
+      ? firstOfSet<any>(item.system.activities)?.activation
       : '',
   );
 
   let abbrOrLabel = $derived(
-    FoundryAdapter.localize(
-      FoundryAdapter.getActivationAbbreviation(inferredActivation),
-    ),
+    FoundryAdapter.getActivationText(inferredActivation?.type),
   );
+
+  const localize = FoundryAdapter.localize;
 </script>
 
-{#if !isNil(abbrOrLabel, '')}
-  {abbrOrLabel}
+{#if !isNil(abbrOrLabel.abbreviation, '')}
+  {inferredActivation?.value ?? ''}{localize(abbrOrLabel.abbreviation)}
+{:else if !isNil(abbrOrLabel.label, '')}
+  {inferredActivation?.value ?? ''} {localize(abbrOrLabel.label)}
 {:else}
   <span class="color-text-disabled">—</span>
 {/if}
