@@ -7,7 +7,7 @@
   import TidyEffectSummary from './TidyEffectSummary.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
-    import { isUserInteractable } from 'src/utils/element';
+  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     effectContext: ActiveEffectContext;
