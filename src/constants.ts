@@ -1,6 +1,8 @@
 export const CONSTANTS = {
   MODULE_ID: 'tidy5e-sheet',
   DND5E_SYSTEM_ID: 'dnd5e',
+  SYSTEM_FLAG_ADVANCEMENT_ORIGIN: 'advancementOrigin',
+  SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN: 'flags.dnd5e.advancementOrigin',
   SYSTEM_SETTING_BASTION_CONFIGURATION: 'bastionConfiguration',
   SYSTEM_SETTING_CURRENCY_WEIGHT: 'currencyWeight',
   SYSTEM_SETTING_LEVELING_MODE: 'levelingMode',

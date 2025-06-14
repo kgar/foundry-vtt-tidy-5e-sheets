@@ -1007,7 +1007,9 @@ export class Tidy5eCharacterSheet
 
         // Item grouping
         const [originId] =
-          item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+          item
+            .getFlag('dnd5e', CONSTANTS.SYSTEM_FLAG_ADVANCEMENT_ORIGIN)
+            ?.split('.') ?? [];
         const group = this.actor.items.get(originId);
         switch (group?.type) {
           case 'race':

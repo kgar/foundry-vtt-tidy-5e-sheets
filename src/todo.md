@@ -1,6 +1,6 @@
 ## Features Tab To Do
 
-- [ ] Feature Tab Scaffolding
+- [x] Feature Tab Scaffolding
   - [x] Action Bar
     - [x] Filters
       - [x] Reuse: classic filters for features
@@ -18,7 +18,7 @@
   - [x] Show all sections on unlock. The user needs to be able to add features
   - [x] Show "Create Feature" button when locked and no sections
 - [x] Implement: clicking Add on requisite Origin table applies the Tidyified dnd5e origin flag to the created item.
-- [ ] Enable drag-and-drop to apply the advancement origin flag on drop to an origin section
+- [x] Enable drag-and-drop to apply the advancement origin flag on drop to an origin section
 
 ### Notes
 

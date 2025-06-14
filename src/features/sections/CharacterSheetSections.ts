@@ -198,7 +198,7 @@ export class CharacterSheetSections {
           ...options,
           dataset: {
             ...options.dataset,
-            ['flags.dnd5e.advancementOrigin']: `${item.id}.tidy-feature`,
+            [CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN]: `${item.id}.tidy-feature`,
           },
         },
       });
@@ -232,7 +232,9 @@ export class CharacterSheetSections {
 
       // partition origin feats
       const [originId] =
-        feat.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+        feat
+          .getFlag('dnd5e', CONSTANTS.SYSTEM_FLAG_ADVANCEMENT_ORIGIN)
+          ?.split('.') ?? [];
       // get adv origin
       let originItem = actor.items.get(originId);
 
