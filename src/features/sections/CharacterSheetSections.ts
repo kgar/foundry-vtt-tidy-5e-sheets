@@ -3,6 +3,7 @@ import type { Item5e } from 'src/types/item.types';
 import type {
   Actor5e,
   ActorInventoryTypes,
+  CharacterFeatureQuadroneSection,
   CharacterFeatureSection,
   CharacterItemPartitions,
   FavoriteSection,
@@ -172,11 +173,24 @@ export class CharacterSheetSections {
 
   static buildQuadroneFeatureSections(
     actor: Actor5e,
+    unlocked: boolean,
     tabId: string,
     feats: Item5e[],
     options: Partial<CharacterFeatureSection>
-  ): Record<string, CharacterFeatureSection> {
-    let featureSections: Record<string, CharacterFeatureSection> = {};
+  ): CharacterFeatureQuadroneSection[] {
+    let featuresMap: Record<string, CharacterFeatureQuadroneSection> = {};
+
+    function buildOriginKey(id: string) {
+      return `tidy-feature-section-origin-${id}`;
+    }
+
+    let otherFeaturesKey = 'tidy-feature-section-others';
+
+    const otherFeaturesSection = this.createQuadroneFeatureSection({
+      key: otherFeaturesKey,
+      title: FoundryAdapter.localize('DND5E.FeaturesOther'),
+      options,
+    });
 
     for (let feat of feats) {
       // custom section
@@ -184,12 +198,13 @@ export class CharacterSheetSections {
 
       if (!isNil(customSection)) {
         // Partition/Create Custom Section and add item
-        let section =
-          featureSections[customSection] ??
+        let section = (featuresMap[customSection] ??=
           this.createQuadroneFeatureSection({
             key: customSection,
+            title: FoundryAdapter.localize(customSection),
+            options,
             custom: true,
-          });
+          }));
 
         section.items.push(feat);
         continue;
@@ -202,45 +217,109 @@ export class CharacterSheetSections {
       let originItem = actor.items.get(originId);
 
       if (originItem) {
-        let key = `tidy-feature-section-origin-${originId}`;
-        let section: FeatureSection =
-          featureSections[key] ??
-          this.createQuadroneFeatureSection({ key, originItem });
+        let key = buildOriginKey(originId);
 
-        section.items.push(feat);
+        let section = featuresMap[key];
+
+        if (!section) {
+          section = featuresMap[key] = this.createQuadroneFeatureSection({
+            key,
+            title: FoundryAdapter.localize('DND5E.FeaturesClass', {
+              class: originItem.name,
+            }),
+            options,
+          });
+        }
+
+        featuresMap[key].items.push(feat);
 
         continue;
       }
 
-      // TODO CONSTANTS?
-      let otherFeaturesKey = 'tidy-feature-section-others';
-
-      let section =
-        featureSections[otherFeaturesKey] ??
-        this.createQuadroneFeatureSection({
-          key: otherFeaturesKey,
-          other: true,
-        });
-
+      let section = (featuresMap[otherFeaturesKey] ??= otherFeaturesSection);
       section.items.push(feat);
     }
 
-    return featureSections;
+    if (unlocked) {
+      featuresMap[otherFeaturesKey] ??= otherFeaturesSection;
+    }
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      actor,
+      tabId
+    ).forEach((s) => {
+      featuresMap[s] ??= CharacterSheetSections.createQuadroneFeatureSection({
+        key: s,
+        options,
+        title: FoundryAdapter.localize(s),
+        custom: true,
+      });
+    });
+
+    /*
+      Do a prioritized sort:
+      - Original Class / Subclass
+      - Other Classes / Subclasses
+      - Background
+      - Species
+      - Other
+      - Custom Sections
+    */
+
+    let i = 0;
+
+    let sectionSort: Record<string, number> = {};
+
+    Object.values(actor.classes).forEach((cls: Item5e) => {
+      let sortIndex = cls.system.isOriginalClass ? 0 : (i += 2);
+      sectionSort[buildOriginKey(cls.id)] = sortIndex;
+
+      if (cls.subclass) {
+        sectionSort[buildOriginKey(cls.subclass.id)] = sortIndex + 1;
+      }
+    });
+
+    actor.itemTypes.background.forEach((bg: Item5e) => {
+      i += 1;
+      sectionSort[buildOriginKey(bg.id)] = i;
+    });
+
+    actor.itemTypes.race.forEach((species: Item5e) => {
+      i += 1;
+      sectionSort[buildOriginKey(species.id)] = i;
+    });
+
+    const features = Object.values(featuresMap).toSorted(
+      (a, b) =>
+        (sectionSort[a.key] ?? Infinity) - (sectionSort[b.key] ?? Infinity)
+    );
+
+    return features;
   }
 
   static createQuadroneFeatureSection(args: {
     key: string;
+    title: string;
+    options: Partial<CharacterFeatureQuadroneSection>;
     custom?: boolean;
-    originItem?: Item5e;
-    other?: boolean;
-  }): FeatureSection {
-    // when originItem
-    // let title = FoundryAdapter.localize('DND5E.FeaturesClass', { class: originItem.name });
-    // when custom
-    // let title = localize(key);
-    // when other
-    // let title = localize("DND5E.FeaturesOther"
-    throw new Error();
+  }): CharacterFeatureQuadroneSection {
+    let custom = args.custom
+      ? {
+          creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
+          section: args.key,
+        }
+      : undefined;
+
+    return {
+      key: args.key,
+      rowActions: [],
+      items: [],
+      label: args.title,
+      show: true,
+      dataset: {},
+      custom,
+      ...args.options,
+    };
   }
 
   static partitionItem(

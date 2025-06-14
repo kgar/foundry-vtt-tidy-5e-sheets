@@ -7,17 +7,19 @@
     - [x] Pinned - Action Economy and Can Use
   - [x] Tables
 - [ ] Make new Feature section algorithm for Quadrone Character
-  - [ ] Based on items, generate Advancement Origin sections - Class, Subclass, Background, Species
-    - [ ] Base Order: (Class, Subclass), Background, Species
+  - [x] Based on items, generate Advancement Origin sections - Class, Subclass, Background, Species
+    - [x] Base Order: (Class, Subclass), Background, Species
       - Class / Subclass sections are colocated by default and start with the origin class
-    - [ ] Empty sections are never created in the first place; populated sections only.
+    - [x] Empty sections are never created in the first place; populated sections only.
     - Determine these by `flags.dnd5e.advancementOrigin` (see notes)
     - Format: `{OriginName} Features` - "DND5E.FeaturesClass"
-  - [ ] Else, Other Features section - "DND5E.FeaturesOther"
+  - [x] Else, Other Features section - "DND5E.FeaturesOther"
     - This includes all features without origin and those whose originating item couldn't be found
+  - [x] Show "Other Feature" on unlock. The user needs to be able to add features
+  - [ ] Show "Create Feature" button when locked and no sections
+- [ ] Implement: clicking Add on requisite Origin table applies the Tidyified dnd5e origin flag to the created item.
 - [ ] Enable drag-and-drop to apply the advancement origin flag on drop to an origin section
-- [ ] Ensure there is an Add button on the empty tab when there are no sections available
-
+- [ ] Implement alternate grouping by Active / Passive / Misc
 
 ### Notes
 

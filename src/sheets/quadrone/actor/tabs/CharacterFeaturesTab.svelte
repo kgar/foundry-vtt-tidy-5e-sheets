@@ -12,6 +12,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+    import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -35,6 +36,15 @@
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
+
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: context.itemContext,
+      sections: features,
+      tabId: tabId,
+    });
+  });
 </script>
 
 <ActionBar bind:searchCriteria sections={context.features} {tabId} />

@@ -12,6 +12,7 @@ import type {
   ActorSheetQuadroneContext,
   AttributePinContext,
   CharacterClassEntryContext,
+  CharacterFeatureQuadroneSection,
   CharacterFeatureSection,
   CharacterItemContext,
   CharacterItemPartitions,
@@ -582,13 +583,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     // Section Features
-    const features: Record<string, CharacterFeatureSection> =
+    const features: CharacterFeatureQuadroneSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
+        context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
-        species,
-        backgrounds,
-        classes,
         feats,
         {
           canCreate: true,

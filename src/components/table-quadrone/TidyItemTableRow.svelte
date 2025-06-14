@@ -15,6 +15,7 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { ClassValue } from 'svelte/elements';
   import { isNil } from 'src/utils/data';
+  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     item: Item5e;
@@ -130,7 +131,11 @@
     ['data-info-card-entity-uuid']: item?.uuid ?? null,
   }}
   rowClass={['tidy-table-row-v2', rowClass, itemColorClasses, { expanded }]}
-  ondblclick={(event) => item && FoundryAdapter.editOnMouseEvent(event, item)}
+  ondblclick={(event) =>
+    event.target instanceof HTMLElement &&
+    !isUserInteractable(event.target) &&
+    item &&
+    FoundryAdapter.editOnMouseEvent(event, item)}
   onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
   onmouseenter={onMouseEnter}
   onmouseleave={onMouseLeave}
