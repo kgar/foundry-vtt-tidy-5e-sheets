@@ -844,6 +844,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     context.defenders = allDefenders;
+    context.facilities = {
+      basic: { chosen: basic, available: [], value: 0, max: 0 },
+      special: { chosen: special, available: [], value: 0, max: 0 },
+    };
 
     [CONSTANTS.FACILITY_TYPE_BASIC, CONSTANTS.FACILITY_TYPE_SPECIAL].forEach(
       (type) => {
@@ -1129,6 +1133,48 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     return super._onDrop(event);
+  }
+
+  /** @inheritDoc */
+  async _onDropActor(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: any
+  ) {
+    if (!event.target.closest('.facility-occupants') || !data.uuid) {
+      return super._onDropActor(event, data);
+    }
+
+    const facilityId =
+      event.target.closest<HTMLElement>('[data-facility-id]')?.dataset?.[
+        'facilityId'
+      ];
+
+    const facility = this.actor.items.get(facilityId);
+
+    if (!facility) {
+      return;
+    }
+
+    const propDataset =
+      event.target.closest<HTMLElement>('[data-prop]')?.dataset;
+
+    const prop = propDataset?.['prop'];
+
+    if (!prop) {
+      return;
+    }
+
+    this._onDropActorAddToFacility(facility, prop, data.uuid);
+  }
+
+  _onDropActorAddToFacility(facility: Item5e, prop: string, actorUuid: string) {
+    const { max, value } = foundry.utils.getProperty(facility, prop);
+
+    if (value.length + 1 > max) {
+      return;
+    }
+
+    return facility.update({ [`${prop}.value`]: [...value, actorUuid] });
   }
 
   /**
