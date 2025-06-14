@@ -12,6 +12,7 @@ import type {
   ActorSheetQuadroneContext,
   AttributePinContext,
   CharacterClassEntryContext,
+  CharacterFeatureQuadroneSection,
   CharacterFeatureSection,
   CharacterItemContext,
   CharacterItemPartitions,
@@ -582,16 +583,15 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     // Section Features
-    const features: Record<string, CharacterFeatureSection> =
-      CharacterSheetSections.buildFeaturesSections(
+    const features: CharacterFeatureQuadroneSection[] =
+      CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
+        context.unlocked,
         CONSTANTS.TAB_CHARACTER_FEATURES,
-        species,
-        backgrounds,
-        classes,
         feats,
         {
           canCreate: true,
+          rowActions: TableRowActionsRuntime.getFeatureRowActions(context),
         }
       );
 
@@ -1061,7 +1061,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return;
     }
 
-    const modes = CONFIG.DND5E.spellPreparationModes;
     const { key } =
       event.target.closest<HTMLElement>('[data-key]')?.dataset ?? {};
     // TODO: Make a custom wrapper with specific fields related to spell slot drag
@@ -1229,15 +1228,36 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   async _onDropItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: Item5e
+    data: any
   ) {
     const item = await Item.implementation.fromDropData(data);
 
     if (!event.target.closest('.favorites') || item.parent !== this.actor) {
-      return super._onDropItem(event, item);
+      // Handle Feature Origin Transfer
+      let targetOrigin = event.target.closest<HTMLElement>(
+        '[data-tidy-section-key]'
+      )?.dataset?.[CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN];
+
+      let sourceItemOrigin = FoundryAdapter.getProperty(
+        item,
+        CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN
+      );
+
+      if (sourceItemOrigin !== targetOrigin && item.parent === this.actor) {
+        !isNil(targetOrigin)
+          ? await item.update({
+              [CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN]: targetOrigin,
+            })
+          : await item.unsetFlag(
+              'dnd5e',
+              CONSTANTS.SYSTEM_FLAG_ADVANCEMENT_ORIGIN
+            );
+      }
+
+      return await super._onDropItem(event, item);
     }
     const uuid = item.getRelativeUUID(this.actor);
-    return this._onDropFavorite(event, { type: 'item', id: uuid });
+    return await this._onDropFavorite(event, { type: 'item', id: uuid });
   }
 
   /* -------------------------------------------- */

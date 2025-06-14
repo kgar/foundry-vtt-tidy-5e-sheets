@@ -1,4 +1,4 @@
-import type { ConfiguredColumnSpecification as ConfiguredColumnSpecification } from './item.types';
+import type { ConfiguredColumnSpecification as ConfiguredColumnSpecification } from '../types';
 
 export class ColumnsLoadout {
   constructor(columns: ConfiguredColumnSpecification[]) {

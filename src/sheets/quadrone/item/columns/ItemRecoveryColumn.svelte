@@ -4,8 +4,8 @@
   let { rowDocument }: ColumnCellProps = $props();
 </script>
 
-{#if rowDocument.labels.target}
-  <span class="condensed">{rowDocument.labels.target}</span>
+{#if rowDocument.labels.recovery}
+  {rowDocument.labels.recovery}
 {:else}
   <span class="color-text-disabled">—</span>
 {/if}

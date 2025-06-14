@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ColumnCellProps } from 'src/runtime/item/item.types';
+  import type { ColumnCellProps } from 'src/runtime/types';
   import type { ContainerItemContext } from 'src/types/item.types';
   import CapacityTracker from '../../container/parts/CapacityTracker.svelte';
 

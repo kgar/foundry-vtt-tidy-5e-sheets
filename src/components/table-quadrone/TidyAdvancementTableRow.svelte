@@ -4,6 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
   import type { AdvancementItemContext, Item5e } from 'src/types/item.types';
+  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     advancement: AdvancementItemContext;
@@ -54,7 +55,11 @@
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ADVANCEMENT_TABLE_ROW,
   }}
   {hidden}
-  ondblclick={(event) => doc && FoundryAdapter.editOnMouseEvent(event, doc)}
+  ondblclick={(event) =>
+    event.target instanceof HTMLElement &&
+    !isUserInteractable(event.target) &&
+    doc &&
+    FoundryAdapter.editOnMouseEvent(event, doc)}
   onmousedown={(event) => doc && FoundryAdapter.editOnMiddleClick(event, doc)}
   ondragstart={handleDragStart}
   {...attributes}
