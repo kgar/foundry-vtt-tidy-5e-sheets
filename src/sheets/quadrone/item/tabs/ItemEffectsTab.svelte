@@ -33,7 +33,7 @@
     result.push({
       component: EffectToggleButton,
       props: (args) => ({ effect: args.data.effect, doc: context.document }),
-      condition: (args) => !args.section.isEnchantment,
+      condition: (args) => 'actor' in context || !args.section.isEnchantment,
     } satisfies TableAction<typeof EffectToggleButton>);
 
     if (context.unlocked) {

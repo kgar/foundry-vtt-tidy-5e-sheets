@@ -1,14 +1,23 @@
 <script lang="ts">
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActiveEffect5e } from 'src/types/types';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { ItemSheetQuadroneContext } from 'src/types/item.types';
+  import type {
+    ActiveEffect5e,
+    ActorSheetQuadroneContext,
+  } from 'src/types/types';
 
   interface Props {
     effect: ActiveEffect5e;
-    doc: any;
   }
 
-  let { effect, doc }: Props = $props();
+  let { effect }: Props = $props();
+
+  let context =
+    $derived(
+      getSheetContext<ActorSheetQuadroneContext | ItemSheetQuadroneContext>(),
+    );
 
   let title = $derived(
     FoundryAdapter.localize(
@@ -19,16 +28,17 @@
   const localize = FoundryAdapter.localize;
 
   let isConcentration = $derived(
-    doc.actor && FoundryAdapter.isConcentrationEffect(effect, doc.actor.sheet),
+    'actor' in context &&
+      FoundryAdapter.isConcentrationEffect(effect, context.actor.sheet),
   );
 
-  $inspect({
-    isConcentration,
-    doc,
-    effect,
-  });
+  $inspect(isConcentration);
 
-  function endConcentration() {}
+  function endConcentration() {
+    if ('actor' in context) {
+      return context.actor.endConcentration();
+    }
+  }
 </script>
 
 {#if isConcentration}

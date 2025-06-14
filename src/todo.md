@@ -2,9 +2,12 @@
 
 - [x] Effects sections
 - [x] Conditions section
-- [ ] Break Akra's Concentration on the Effects tab
+- [x] Break Akra's Concentration on the Effects tab
   - Current problem: there's some confusion about what type `effect` is in the `ToggleEffectButton` component
-- [ ] Ensure Item effects are not broken from sharing effects tables
+- [x] Ensure Item effects are not broken from sharing effects tables
+- [ ] Test and compare enchantments on items 
+- [ ] Test and compare enchantments on character
+
 
 ## To Do
 
