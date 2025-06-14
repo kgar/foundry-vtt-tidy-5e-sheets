@@ -1,10 +1,12 @@
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import type {
+  Actor5e,
   ActorInventoryTypes,
   CharacterFeatureSection,
   CharacterItemPartitions,
   FavoriteSection,
+  FeatureSection,
   GenericFavoriteSection,
   TypedActivityFavoriteSection,
   TypedEffectFavoriteSection,
@@ -12,9 +14,10 @@ import type {
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
+import { isNil } from 'src/utils/data';
 
 export class CharacterSheetSections {
-  static buildFeaturesSections(
+  static buildClassicFeaturesSections(
     actor: any,
     tabId: string,
     races: any[],
@@ -165,6 +168,79 @@ export class CharacterSheetSections {
       rowActions: [], // for the UI Overhaul
       ...customSectionOptions,
     };
+  }
+
+  static buildQuadroneFeatureSections(
+    actor: Actor5e,
+    tabId: string,
+    feats: Item5e[],
+    options: Partial<CharacterFeatureSection>
+  ): Record<string, CharacterFeatureSection> {
+    let featureSections: Record<string, CharacterFeatureSection> = {};
+
+    for (let feat of feats) {
+      // custom section
+      let customSection = TidyFlags.section.get(feat);
+
+      if (!isNil(customSection)) {
+        // Partition/Create Custom Section and add item
+        let section =
+          featureSections[customSection] ??
+          this.createQuadroneFeatureSection({
+            key: customSection,
+            custom: true,
+          });
+
+        section.items.push(feat);
+        continue;
+      }
+
+      // partition origin feats
+      const [originId] =
+        feat.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+      // get adv origin
+      let originItem = actor.items.get(originId);
+
+      if (originItem) {
+        let key = `tidy-feature-section-origin-${originId}`;
+        let section: FeatureSection =
+          featureSections[key] ??
+          this.createQuadroneFeatureSection({ key, originItem });
+
+        section.items.push(feat);
+
+        continue;
+      }
+
+      // TODO CONSTANTS?
+      let otherFeaturesKey = 'tidy-feature-section-others';
+
+      let section =
+        featureSections[otherFeaturesKey] ??
+        this.createQuadroneFeatureSection({
+          key: otherFeaturesKey,
+          other: true,
+        });
+
+      section.items.push(feat);
+    }
+
+    return featureSections;
+  }
+
+  static createQuadroneFeatureSection(args: {
+    key: string;
+    custom?: boolean;
+    originItem?: Item5e;
+    other?: boolean;
+  }): FeatureSection {
+    // when originItem
+    // let title = FoundryAdapter.localize('DND5E.FeaturesClass', { class: originItem.name });
+    // when custom
+    // let title = localize(key);
+    // when other
+    // let title = localize("DND5E.FeaturesOther"
+    throw new Error();
   }
 
   static partitionItem(

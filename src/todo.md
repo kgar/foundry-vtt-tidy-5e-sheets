@@ -1,17 +1,28 @@
 ## Features Tab To Do
 
 - [ ] Feature Tab Scaffolding
-  - [ ] Action Bar
-    - [ ] Filters
-      - [ ] Reuse: classic filters for features
-      - [ ] Add: Advancement Origin filters
-    - [ ] 
+  - [x] Action Bar
+    - [x] Filters
+      - [x] Reuse: classic filters for features
+    - [x] Pinned - Action Economy and Can Use
   - [x] Tables
+- [ ] Make new Feature section algorithm for Quadrone Character
+  - [ ] Based on items, generate Advancement Origin sections - Class, Subclass, Background, Species
+    - [ ] Base Order: (Class, Subclass), Background, Species
+      - Class / Subclass sections are colocated by default and start with the origin class
+    - [ ] Empty sections are never created in the first place; populated sections only.
+    - Determine these by `flags.dnd5e.advancementOrigin` (see notes)
+    - Format: `{OriginName} Features` - "DND5E.FeaturesClass"
+  - [ ] Else, Other Features section - "DND5E.FeaturesOther"
+    - This includes all features without origin and those whose originating item couldn't be found
+- [ ] Enable drag-and-drop to apply the advancement origin flag on drop to an origin section
+- [ ] Ensure there is an Add button on the empty tab when there are no sections available
+
 
 ### Notes
 
 Getting the advancement origin of an item:
-item.system.flags.dnd5e.advancementOrigin => `${itemWithAdvancements.id}.${bestowedItem.id}`
+item.system.flags.dnd5e.advancementOrigin => `${itemWithAdvancements.id}.${advancement.id}`
 
 Getting the target item that bestowed the advancement:
 

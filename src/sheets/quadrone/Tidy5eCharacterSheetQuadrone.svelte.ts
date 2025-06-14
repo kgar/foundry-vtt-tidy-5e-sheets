@@ -583,7 +583,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
-      CharacterSheetSections.buildFeaturesSections(
+      CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         species,

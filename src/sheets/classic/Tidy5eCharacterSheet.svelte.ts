@@ -1161,7 +1161,7 @@ export class Tidy5eCharacterSheet
 
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
-      CharacterSheetSections.buildFeaturesSections(
+      CharacterSheetSections.buildClassicFeaturesSections(
         this.actor,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         species,
@@ -1175,7 +1175,7 @@ export class Tidy5eCharacterSheet
 
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
-      CharacterSheetSections.buildFeaturesSections(
+      CharacterSheetSections.buildClassicFeaturesSections(
         this.actor,
         CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         favorites.species,
