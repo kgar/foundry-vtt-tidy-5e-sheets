@@ -17,7 +17,7 @@
     - This includes all features without origin and those whose originating item couldn't be found
   - [x] Show all sections on unlock. The user needs to be able to add features
   - [x] Show "Create Feature" button when locked and no sections
-- [ ] Implement: clicking Add on requisite Origin table applies the Tidyified dnd5e origin flag to the created item.
+- [x] Implement: clicking Add on requisite Origin table applies the Tidyified dnd5e origin flag to the created item.
 - [ ] Enable drag-and-drop to apply the advancement origin flag on drop to an origin section
 - [ ] Implement alternate grouping by Active / Passive / Misc
 

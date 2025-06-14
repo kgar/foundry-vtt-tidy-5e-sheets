@@ -184,13 +184,23 @@ export class CharacterSheetSections {
       return `tidy-feature-section-origin-${id}`;
     }
 
-    function buildOriginSection(key: string, item: Item5e) {
+    function buildOriginSection(
+      key: string,
+      item: Item5e,
+      options: Partial<CharacterFeatureSection>
+    ) {
       return CharacterSheetSections.createQuadroneFeatureSection({
         key,
         title: FoundryAdapter.localize('DND5E.FeaturesClass', {
           class: item.name,
         }),
-        options,
+        options: {
+          ...options,
+          dataset: {
+            ...options.dataset,
+            ['flags.dnd5e.advancementOrigin']: `${item.id}.tidy-feature`,
+          },
+        },
       });
     }
 
@@ -232,7 +242,11 @@ export class CharacterSheetSections {
         let section = featuresMap[key];
 
         if (!section) {
-          section = featuresMap[key] = buildOriginSection(key, originItem);
+          section = featuresMap[key] = buildOriginSection(
+            key,
+            originItem,
+            options
+          );
         }
 
         featuresMap[key].items.push(feat);
@@ -253,7 +267,7 @@ export class CharacterSheetSections {
         .concat(Object.values(actor.itemTypes.subclass))
         .forEach((originItem: Item5e) => {
           let key = buildOriginKey(originItem.id);
-          featuresMap[key] ??= buildOriginSection(key, originItem);
+          featuresMap[key] ??= buildOriginSection(key, originItem, options);
         });
     }
 
