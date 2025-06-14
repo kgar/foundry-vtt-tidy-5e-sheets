@@ -32,8 +32,6 @@
       FoundryAdapter.isConcentrationEffect(effect, context.actor.sheet),
   );
 
-  $inspect(isConcentration);
-
   function endConcentration() {
     if ('actor' in context) {
       return context.actor.endConcentration();

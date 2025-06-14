@@ -7,6 +7,8 @@
 - [x] Ensure Item effects are not broken from sharing effects tables
 - [ ] Test and compare enchantments on items 
 - [ ] Test and compare enchantments on character
+- [ ] Decide: will we continue to support "Allow Effects Management" option in the new sheets.
+- [ ] Decide: should we allow for section config on Effects tab.
 
 
 ## To Do
@@ -21,6 +23,7 @@
     - [ ] Effects
     - [ ] Background
     - [ ] Journal
+    - [ ] 
   - [x] Implement Expandable/collapsible sidebar
   - [x] Implement Favorites
   - [ ] Implement Theme Settings

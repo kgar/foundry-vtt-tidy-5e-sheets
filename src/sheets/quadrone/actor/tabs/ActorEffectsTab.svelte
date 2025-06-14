@@ -1,20 +1,24 @@
 <script lang="ts">
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ActorConditionsQuadrone from '../parts/ActorConditionsQuadrone.svelte';
   import EffectsTables from '../../shared/EffectsTables.svelte';
+  import type {
+    ActorSheetQuadroneContext,
+    CharacterSheetQuadroneContext,
+  } from 'src/types/types';
 
-  let context = $derived(getCharacterSheetQuadroneContext());
+  let context =
+    $derived(
+      getSheetContext<
+        ActorSheetQuadroneContext | CharacterSheetQuadroneContext
+      >(),
+    );
 </script>
 
 <div class="tidy-table-container">
-  <EffectsTables
-    doc={context.actor}
-    editable={context.editable}
-    effects={context.effects}
-    unlocked={context.unlocked}
-  />
+  <EffectsTables />
 
-  {#if context.conditions}
+  {#if 'conditions' in context}
     <ActorConditionsQuadrone conditions={context.conditions} />
   {/if}
 </div>

@@ -5,24 +5,34 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActiveEffectContext, EffectCategory } from 'src/types/types';
+  import type {
+    ActiveEffectContext,
+    ActorSheetQuadroneContext,
+    EffectCategory,
+  } from 'src/types/types';
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
   import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
   import type { Component } from 'svelte';
   import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { ItemSheetQuadroneContext } from 'src/types/item.types';
 
-  interface Props {
-    effects: Record<string, EffectCategory<ActiveEffectContext>>;
-    doc: any;
-    unlocked: boolean;
-    editable: boolean;
-  }
+  let context =
+    $derived(
+      getSheetContext<ActorSheetQuadroneContext | ItemSheetQuadroneContext>(),
+    );
 
-  let { effects, doc, unlocked, editable }: Props = $props();
+  let effects = $derived(context.effects);
 
-  let sections = $derived(Object.entries(effects));
+  let sections = $derived(
+    Object.entries(effects).map(([k, v]) => ({
+      key: k,
+      ...v,
+    })),
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -37,11 +47,13 @@
 
     result.push({
       component: EffectToggleButton,
-      props: (args) => ({ effect: args.data.effect, doc: doc }),
-      condition: (args) => !args.section.isEnchantment,
+      props: (args) => ({ effect: args.data.effect, doc: context.document }),
+      condition: (args) =>
+        context.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR ||
+        !args.section.isEnchantment,
     } satisfies TableAction<typeof EffectToggleButton>);
 
-    if (unlocked) {
+    if (context.unlocked) {
       result.push({
         component: EditButton,
         props: (args) => ({ doc: args.data.effect }),
@@ -74,13 +86,13 @@
   });
 
   function onAddClicked(section: EffectCategory<ActiveEffectContext>) {
-    return FoundryAdapter.addEffect(section.type, doc);
+    return FoundryAdapter.addEffect(section.type, context.document);
   }
 </script>
 
-{#each sections as [key, section] (key)}
+{#each sections as section (section.key)}
   {#if !section.hidden}
-    <TidyTable {key}>
+    <TidyTable key={section.key}>
       {#snippet header()}
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true} class="header-label-cell">
@@ -99,7 +111,7 @@
             class="header-cell-actions"
             {...columnSpecs.actions}
           >
-            {#if editable}
+            {#if context.editable && !section.isEnchantment}
               <a
                 class="tidy-table-button"
                 title={localize('DND5E.EffectCreate')}
@@ -118,22 +130,23 @@
           }),
         )}
 
-        {#each effectEntries as { effect } (effect.id)}
-          <TidyEffectTableRow effectContext={effect}>
+        {#each effectEntries as effectContext}
+          <TidyEffectTableRow effectContext={effectContext.effect}>
             {#snippet children({ toggleSummary, expanded })}
               <span
                 class="tidy-table-button tidy-table-row-use-button disabled"
               >
                 <img
                   class="item-image"
-                  src={effect.img ?? effect.effect.icon}
-                  alt={effect.name ?? ''}
+                  src={effectContext.effect.img ??
+                    effectContext.effect.effect.icon}
+                  alt={effectContext.effect.name ?? ''}
                 />
               </span>
               <TidyTableCell primary={true}>
                 <a class="item-name" onclick={(ev) => toggleSummary()}>
                   <span class="cell-text">
-                    <span class="cell-name">{effect.name}</span>
+                    <span class="cell-name">{effectContext.effect.name}</span>
                   </span>
                   <span class="row-detail-expand-indicator">
                     <i
@@ -145,29 +158,31 @@
                 </a>
               </TidyTableCell>
               <TidyTableCell {...columnSpecs.source}>
-                {#if effect.source}
+                {#if effectContext.effect.source}
                   <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
                   <a
                     onclick={async () =>
-                      (await fromUuid(effect.source.name))?.sheet.render({
+                      (
+                        await fromUuid(effectContext.effect.source.name)
+                      )?.sheet.render({
                         force: true,
                       })}
                   >
-                    {effect.source.name ?? ''}
+                    {effectContext.effect.source.name ?? ''}
                   </a>
                 {:else}
                   <span class="color-text-disabled"> &mdash; </span>
                 {/if}
               </TidyTableCell>
               <TidyTableCell {...columnSpecs.duration}>
-                {effect.effect.duration.label ?? ''}
+                {effectContext.effect.effect.duration.label ?? ''}
               </TidyTableCell>
               <TidyTableCell
                 {...columnSpecs.actions}
                 class="tidy-table-actions"
               >
                 {#each tableActions as action}
-                  {@const args = { data: effect, section }}
+                  {@const args = { data: effectContext.effect, section }}
 
                   {#if action.condition?.(args) ?? true}
                     {@const props = action.props(args)}
