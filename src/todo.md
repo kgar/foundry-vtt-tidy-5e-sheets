@@ -1,3 +1,8 @@
+## Character Effects Tab To Do
+
+- [ ] Effects sections
+- [x] Conditions section
+
 ## To Do
 
 - [ ] Character Sheet 

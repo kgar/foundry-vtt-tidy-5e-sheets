@@ -2,7 +2,6 @@
 .tidy5e-sheet:where(.quadrone) {
   font-smooth: always;
 
-
   /* ---------------------------------- */
   /*  Badges                            */
   /* ---------------------------------- */
@@ -29,7 +28,7 @@
     min-width: 4.25rem;
     text-align: center;
     line-height: 3.875rem;
-    background-image: url("../../systems/dnd5e/ui/ac-badge.webp");
+    background-image: url('../../systems/dnd5e/ui/ac-badge.webp');
     display: block;
     place-content: unset;
     font-size: var(--font-size-23);
@@ -42,14 +41,13 @@
     font-size: var(--font-size-32);
     width: 4.875rem;
     height: 4.875rem;
-    background-image: url("../../modules/tidy5e-sheet/images/badge_level_dark.webp");
+    background-image: url('../../modules/tidy5e-sheet/images/badge_level_dark.webp');
     text-align: center;
   }
-
 }
 
 .tidy5e-sheet:where(.quadrone:is(.item, .actor)) {
-  &>header {
+  & > header {
     /* Edit Mode Toggle */
   }
 
@@ -144,5 +142,12 @@
     .meter.capacity {
       flex-basis: var(--capacity-bar-height);
     }
+  }
+
+  // Conditions
+  .conditions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+    gap: 0.125rem;
   }
 }
