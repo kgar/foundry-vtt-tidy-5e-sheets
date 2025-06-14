@@ -4,7 +4,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
   import type { AdvancementItemContext, Item5e } from 'src/types/item.types';
-    import { isUserInteractable } from 'src/utils/element';
+  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     advancement: AdvancementItemContext;

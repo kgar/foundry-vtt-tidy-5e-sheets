@@ -1,37 +1,3 @@
-## Features Tab To Do
-
-- [x] Feature Tab Scaffolding
-  - [x] Action Bar
-    - [x] Filters
-      - [x] Reuse: classic filters for features
-    - [x] Pinned - Action Economy and Can Use
-  - [x] Tables
-- [ ] Make new Feature section algorithm for Quadrone Character
-  - [x] Based on items, generate Advancement Origin sections - Class, Subclass, Background, Species
-    - [x] Base Order: (Class, Subclass), Background, Species
-      - Class / Subclass sections are colocated by default and start with the origin class
-    - [x] Empty sections are never created in the first place; populated sections only.
-    - Determine these by `flags.dnd5e.advancementOrigin` (see notes)
-    - Format: `{OriginName} Features` - "DND5E.FeaturesClass"
-  - [x] Else, Other Features section - "DND5E.FeaturesOther"
-    - This includes all features without origin and those whose originating item couldn't be found
-  - [x] Show all sections on unlock. The user needs to be able to add features
-  - [x] Show "Create Feature" button when locked and no sections
-- [x] Implement: clicking Add on requisite Origin table applies the Tidyified dnd5e origin flag to the created item.
-- [x] Enable drag-and-drop to apply the advancement origin flag on drop to an origin section
-
-### Notes
-
-Getting the advancement origin of an item:
-item.system.flags.dnd5e.advancementOrigin => `${itemWithAdvancements.id}.${advancement.id}`
-
-Getting the target item that bestowed the advancement:
-
-```js
-const [originId] = item.getFlag("dnd5e", "advancementOrigin")?.split(".") ?? [];
-const group = this.actor.items.get(originId);
-```
-
 ## To Do
 
 - [ ] Character Sheet 
@@ -39,7 +5,7 @@ const group = this.actor.items.get(originId);
     - [ ] Actions
     - [x] Attributes (Character tab)
     - [x] Inventory
-    - [ ] Features
+    - [x] Features
     - [x] Spellbook
     - [ ] Effects
     - [ ] Background
