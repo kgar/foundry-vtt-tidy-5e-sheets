@@ -184,6 +184,16 @@ export class CharacterSheetSections {
       return `tidy-feature-section-origin-${id}`;
     }
 
+    function buildOriginSection(key: string, item: Item5e) {
+      return CharacterSheetSections.createQuadroneFeatureSection({
+        key,
+        title: FoundryAdapter.localize('DND5E.FeaturesClass', {
+          class: item.name,
+        }),
+        options,
+      });
+    }
+
     let otherFeaturesKey = 'tidy-feature-section-others';
 
     const otherFeaturesSection = this.createQuadroneFeatureSection({
@@ -222,13 +232,7 @@ export class CharacterSheetSections {
         let section = featuresMap[key];
 
         if (!section) {
-          section = featuresMap[key] = this.createQuadroneFeatureSection({
-            key,
-            title: FoundryAdapter.localize('DND5E.FeaturesClass', {
-              class: originItem.name,
-            }),
-            options,
-          });
+          section = featuresMap[key] = buildOriginSection(key, originItem);
         }
 
         featuresMap[key].items.push(feat);
@@ -242,6 +246,15 @@ export class CharacterSheetSections {
 
     if (unlocked) {
       featuresMap[otherFeaturesKey] ??= otherFeaturesSection;
+
+      Object.values(actor.classes)
+        .concat(Object.values(actor.itemTypes.background))
+        .concat(Object.values(actor.itemTypes.race))
+        .concat(Object.values(actor.itemTypes.subclass))
+        .forEach((originItem: Item5e) => {
+          let key = buildOriginKey(originItem.id);
+          featuresMap[key] ??= buildOriginSection(key, originItem);
+        });
     }
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
@@ -272,10 +285,12 @@ export class CharacterSheetSections {
 
     Object.values(actor.classes).forEach((cls: Item5e) => {
       let sortIndex = cls.system.isOriginalClass ? 0 : (i += 2);
-      sectionSort[buildOriginKey(cls.id)] = sortIndex;
+      const clsKey = buildOriginKey(cls.id);
+      sectionSort[clsKey] = sortIndex;
 
       if (cls.subclass) {
-        sectionSort[buildOriginKey(cls.subclass.id)] = sortIndex + 1;
+        const subKey = buildOriginKey(cls.subclass.id);
+        sectionSort[subKey] = sortIndex + 1;
       }
     });
 

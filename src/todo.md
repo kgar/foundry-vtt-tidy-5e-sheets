@@ -15,8 +15,8 @@
     - Format: `{OriginName} Features` - "DND5E.FeaturesClass"
   - [x] Else, Other Features section - "DND5E.FeaturesOther"
     - This includes all features without origin and those whose originating item couldn't be found
-  - [x] Show "Other Feature" on unlock. The user needs to be able to add features
-  - [ ] Show "Create Feature" button when locked and no sections
+  - [x] Show all sections on unlock. The user needs to be able to add features
+  - [x] Show "Create Feature" button when locked and no sections
 - [ ] Implement: clicking Add on requisite Origin table applies the Tidyified dnd5e origin flag to the created item.
 - [ ] Enable drag-and-drop to apply the advancement origin flag on drop to an origin section
 - [ ] Implement alternate grouping by Active / Passive / Misc
@@ -112,6 +112,7 @@ const group = this.actor.items.get(originId);
 - [ ] Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
 - [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
+- [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 
 ### Feature - Set as Inspiration Source
 
