@@ -1,29 +1,24 @@
-## Character Effects Tab To Do
+## Bastion To Do
 
-- [x] Effects sections
-- [x] Conditions section
-- [x] Break Akra's Concentration on the Effects tab
-  - Current problem: there's some confusion about what type `effect` is in the `ToggleEffectButton` component
-- [x] Ensure Item effects are not broken from sharing effects tables
-- [ ] Test and compare enchantments on items 
-- [ ] Test and compare enchantments on character
-- [ ] Decide: will we continue to support "Allow Effects Management" option in the new sheets.
-- [ ] Decide: should we allow for section config on Effects tab.
-
+- [ ] Retrofit the classic sheet structure
+- [ ] Make it functional
+- [ ] Provide a first draft of styles
+- [ ] (Confirm) Show available activities to right of the three-dots menu for special facilities
+- [ ] 
 
 ## To Do
 
 - [ ] Character Sheet 
   - [ ] Implement tabs
-    - [ ] Actions
+    - [ ] Sheet (Actions)
     - [x] Attributes (Character tab)
     - [x] Inventory
     - [x] Features
     - [x] Spellbook
-    - [ ] Effects
+    - [x] Effects
+    - [ ] Bastions
     - [ ] Background
     - [ ] Journal
-    - [ ] 
   - [x] Implement Expandable/collapsible sidebar
   - [x] Implement Favorites
   - [ ] Implement Theme Settings
@@ -93,6 +88,8 @@
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [ ] (PC: Feature tab) Implement alternate section groupings - https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355 | include toggle option as sheet flag in tab settings
+- [ ] Decide: will we continue to support "Allow Effects Management" option in the new sheets.
+- [ ] Decide: should we allow for section config on Effects tabs.
 
 
 ### Feature - Set as Inspiration Source
