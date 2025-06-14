@@ -1,7 +1,10 @@
 ## Character Effects Tab To Do
 
-- [ ] Effects sections
+- [x] Effects sections
 - [x] Conditions section
+- [ ] Break Akra's Concentration on the Effects tab
+  - Current problem: there's some confusion about what type `effect` is in the `ToggleEffectButton` component
+- [ ] Ensure Item effects are not broken from sharing effects tables
 
 ## To Do
 

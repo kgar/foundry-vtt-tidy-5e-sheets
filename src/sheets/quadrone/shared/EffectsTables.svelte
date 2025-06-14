@@ -5,8 +5,6 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ItemSheetQuadroneContext } from 'src/types/item.types';
   import type { ActiveEffectContext, EffectCategory } from 'src/types/types';
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
   import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
@@ -15,9 +13,16 @@
   import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
   import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 
-  let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
+  interface Props {
+    effects: Record<string, EffectCategory<ActiveEffectContext>>;
+    doc: any;
+    unlocked: boolean;
+    editable: boolean;
+  }
 
-  let effects = $derived(Object.entries(context.effects));
+  let { effects, doc, unlocked, editable }: Props = $props();
+
+  let sections = $derived(Object.entries(effects));
 
   const localize = FoundryAdapter.localize;
 
@@ -32,11 +37,11 @@
 
     result.push({
       component: EffectToggleButton,
-      props: (args) => ({ effect: args.data.effect, doc: context.document }),
+      props: (args) => ({ effect: args.data.effect, doc: doc }),
       condition: (args) => !args.section.isEnchantment,
     } satisfies TableAction<typeof EffectToggleButton>);
 
-    if (context.unlocked) {
+    if (unlocked) {
       result.push({
         component: EditButton,
         props: (args) => ({ doc: args.data.effect }),
@@ -69,12 +74,11 @@
   });
 
   function onAddClicked(section: EffectCategory<ActiveEffectContext>) {
-    const owner = context.item;
-    return FoundryAdapter.addEffect(section.type, owner);
+    return FoundryAdapter.addEffect(section.type, doc);
   }
 </script>
 
-{#each effects as [key, section] (key)}
+{#each sections as [key, section] (key)}
   {#if !section.hidden}
     <TidyTable {key}>
       {#snippet header()}
@@ -95,7 +99,7 @@
             class="header-cell-actions"
             {...columnSpecs.actions}
           >
-            {#if context.editable}
+            {#if editable}
               <a
                 class="tidy-table-button"
                 title={localize('DND5E.EffectCreate')}
