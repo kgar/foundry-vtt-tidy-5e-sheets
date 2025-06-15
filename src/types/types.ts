@@ -953,7 +953,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
-  effects: Record<string, EffectCategory<ActiveEffect5e>>;
+  effects: Record<string, EffectCategory<ActiveEffectContext>>;
   elements: unknown;
   enableXp: boolean;
   fields: DataSchema;

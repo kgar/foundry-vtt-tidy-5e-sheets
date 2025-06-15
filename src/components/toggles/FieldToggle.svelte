@@ -1,7 +1,10 @@
 <script lang="ts">
-  import type { ChangeEventHandler } from 'svelte/elements';
+  import type {
+    ChangeEventHandler,
+    HTMLInputAttributes,
+  } from 'svelte/elements';
 
-  interface Props {
+  interface Props extends HTMLInputAttributes {
     checked?: boolean;
     disabled?: boolean | undefined;
     onchange?: ChangeEventHandler<HTMLInputElement>;
@@ -11,6 +14,7 @@
     checked = false,
     onchange = undefined,
     disabled = false,
+    ...rest
   }: Props = $props();
 </script>
 
@@ -45,5 +49,6 @@
     {checked}
     {disabled}
     class="toggle hidden"
+    {...rest}
   />
 </label>
