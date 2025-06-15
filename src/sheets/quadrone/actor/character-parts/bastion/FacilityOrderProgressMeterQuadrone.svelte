@@ -23,7 +23,7 @@
 </script>
 
 <div
-  class="facility-progress-meter {rest.class ?? ''}"
+  class="meter progress facility-progress {rest.class ?? ''}"
   role="meter"
   aria-valuemin="0"
   aria-valuenow={chosen.progress.pct}
@@ -51,8 +51,12 @@
         </span>
       </span>
       <span class="counter">
-        <span class="value">{chosen.progress.value}</span> &sol;
-        <span class="max">{chosen.progress.max}</span>
+        <span class="value font-data-medium">{chosen.progress.value}</span>
+        <span class="separator">&sol;</span>
+        <span class="max font-data-medium color-text-lighter"
+          >{chosen.progress.max}</span
+        >
+        <span class="units font-label-medium color-text-lighter lowercase">{localize('DND5E.TimeDay')}</span>
       </span>
     {:else}
       <span class="order">

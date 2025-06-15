@@ -1760,32 +1760,32 @@
     h3 {
       height: 1.1875rem;
       padding-bottom: 0.25rem;
-      border-bottom: 0.0625rem solid var(--t5e-separator-color, fuchsia);
+      border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
       display: flex;
       gap: 0.25rem;
       font-size: 0.875rem;
       font-style: normal;
       font-weight: 500;
       line-height: 0.875rem;
-      color: var(--t5e-secondary-color, fuchsia);
+      color: var(--t5e-color-text-lighter);
       margin-block-end: 0.75rem;
 
       .counter {
         padding-left: 0.25rem;
 
-        color: var(--t5e-tertiary-color, fuchsia);
+        color: var(--t5e-color-text-lightest);
 
         .value,
         .max {
-          color: var(--t5e-secondary-color, fuchsia);
+          color: var(--t5e-color-text-lighter);
         }
       }
     }
 
     .highlight {
-      background: var(--t5e-faintest-color, fuchsia);
-      outline: var(--occupant-hightlight-width, fuchsia) solid
-        var(--t5e-primary-accent-color, fuchsia);
+      background: var(--t5e-component-field-background);
+      outline: var(--occupant-hightlight-width) solid
+        var(--t5e-theme-color-lighter);
     }
 
     /* Facilities */
@@ -1805,9 +1805,9 @@
         }
 
         .occupant-dropzone {
-          background: var(--t5e-faint-color, fuchsia);
+          background: var(--t5e-component-field-background);
           border-radius: 0.125rem;
-          outline: 0.125rem solid var(--t5e-faint-color, fuchsia);
+          outline: 0.125rem solid var(--t5e-color-gold);
           > * {
             pointer-events: none;
           }
@@ -1840,7 +1840,7 @@
       }
 
       .sub-header {
-        color: var(--t5e-secondary-color, fuchsia);
+        color: var(--t5e-color-text-lightest);
         margin-block-end: 0.25rem;
         font-weight: 500;
       }
@@ -1864,6 +1864,12 @@
       align-items: center;
 
       transition: all 0.3s ease;
+
+      &:hover {
+        border-style: solid;
+        background: var(--t5e-component-field-background);
+        border-color: var(--t5e-color-gold);
+      }
     }
 
     .facility-menu {
@@ -1900,7 +1906,7 @@
 
       .broken-link-icon {
         font-size: calc(var(--roster-member-size, 3rem) * 0.5);
-        color: var(--t5e-warning-accent-color, fuchsia);
+        // color: var(--t5e-warning-accent-color);
         display: inline-flex;
         align-self: center;
         justify-content: center;
@@ -1915,7 +1921,7 @@
       .facility-image,
       .facility-image svg {
         --img-size: 2rem;
-        --icon-fill: var(--t5e-tertiary-color, fuchsia);
+        --icon-fill: var(--t5e-color-text-lightest);
         width: var(--img-size);
         height: var(--img-size);
         margin-inline-end: 0.25rem;
@@ -1928,7 +1934,7 @@
         flex: 1;
 
         &:hover .title {
-          color: var(--t5e-primary-accent-color, fuchsia);
+          color: fuchsia;
         }
       }
 
@@ -1946,7 +1952,7 @@
       }
       .subtitle {
         font-size: 0.8125rem;
-        color: var(--t5e-secondary-color, fuchsia);
+        color: var(--t5e-color-text-lightest);
       }
     }
 
@@ -1996,8 +2002,8 @@
         width: var(--img-size);
         height: var(--img-size);
         border-radius: 0.125rem;
-        border: 0.0625rem dashed var(--t5e-tertiary-color, fuchsia);
-        color: var(--t5e-tertiary-color, fuchsia);
+        border: 0.0625rem dashed var(--t5e-color-text-lightest);
+        color: var(--t5e-color-text-lightest);
         font-size: 0.6875rem;
 
         &:hover {
@@ -2025,7 +2031,8 @@
       }
 
       &.unlocked:not(.empty):hover {
-        background-color: var(--t5e-light-color, fuchsia);
+        background-color: var(--t5e-component-field-background);
+        border-color: var(--t5e-theme-color-lighter);
 
         img {
           display: none;
@@ -2043,7 +2050,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      color: var(--t5e-primary-font-color);
+      color: var(--t5e-color-gold);
       text-shadow: 0px 0px 0.5rem black;
       font-size: 1rem;
     }
@@ -2065,9 +2072,19 @@
     .craft-and-meter {
       display: flex;
       gap: 0.125rem;
-
-      .facility-progress-meter {
+            
+      .facility-progress {
+        --meter-height: 2rem;
         flex: 1;
+        border-color: var(--t5e-color-gold);
+
+        .label {
+          justify-content: space-between;
+
+          .order, i {
+            font-size: var(--font-size-14);
+          }
+        }
       }
     }
 
@@ -2098,9 +2115,9 @@
           box-shadow: none;
         }
 
-        &:focus-visible {
-          box-shadow: var(--t5e-focus-visible-box-shadow, fuchsia);
-        }
+        // &:focus-visible {
+        //   box-shadow: var(--t5e-focus-visible-box-shadow);
+        // }
       }
 
       .editor-container {
@@ -2115,23 +2132,26 @@
   }
 
   &.theme-dark {
-    .tidy-tab.bastion .facility:not(.empty) {
-      background: linear-gradient(
-          145deg,
-          rgba(27, 29, 35, 0.95) 10%,
-          rgba(27, 29, 35, 0.1) 170%
-        ),
-        var(--underlay) 40%, #2c3e50;
-      background-blend-mode: normal, normal;
-      background-size: cover, cover;
-      border-color: var(--t5e-color-palette-gold-45);
-  
-      &.basic {
-        background-blend-mode: normal, luminosity;
-      }
-  
-      .facility-header :is(.facility-image, .facility-image svg) {
-        --icon-fill: var(--t5e-secondary-color, fuchsia);
+    --t5e-color-gold: var(--t5e-color-palette-gold-45);
+
+    .tidy-tab.bastion {
+      .facility:not(.empty) {
+        background: linear-gradient(
+            145deg,
+            rgba(27, 29, 35, 0.95) 10%,
+            rgba(27, 29, 35, 0.1) 170%
+          ),
+          var(--underlay) 40%, #2c3e50;
+        background-blend-mode: normal, normal;
+        background-size: cover, cover;
+        
+        &.basic {
+          background-blend-mode: normal, luminosity;
+        }
+    
+        .facility-header :is(.facility-image, .facility-image svg) {
+          --icon-fill: var(--t5e-component-field-background);
+        }
       }
     }
   }
