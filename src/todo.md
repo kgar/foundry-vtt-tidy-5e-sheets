@@ -1,13 +1,3 @@
-## Bastion To Do
-
-- [x] Retrofit the classic sheet structure
-- [x] Make it functional
-- [x] Provide a first draft of styles
-- [ ] Get bars working with the chosen accent color
-- [ ] Test and verify broken facilities
-- [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
-- [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
-
 ## To Do
 
 - [ ] Character Sheet 
@@ -18,7 +8,7 @@
     - [x] Features
     - [x] Spellbook
     - [x] Effects
-    - [ ] Bastions
+    - [x] Bastions
     - [ ] Background
     - [ ] Journal
   - [x] Implement Expandable/collapsible sidebar
@@ -90,8 +80,8 @@
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [ ] (PC: Feature tab) Implement alternate section groupings - https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355 | include toggle option as sheet flag in tab settings
-- [x] Decide: will we continue to support "Allow Effects Management" option in the new sheets. Not right now. We will assume we're leaving it behind for now.
-- [x] Decide: should we allow for section config on Effects tabs. Not currently.
+- [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
+- [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 
 
 ### Feature - Set as Inspiration Source
@@ -644,3 +634,10 @@ Limited:
     - [x] When dragging slots, skills, and tools, be sure to load up this transfer data: `"{"dnd5e":{"action":"favorite","type":"tool","id":"dice"}}"`
     - [x] Verify they work with favorites
   - [x] Add Context Menu for favorite slots, skills, and tools. Currently, they cannot be removed.
+- [x] Bastion: Retrofit the classic sheet structure
+- [x] Bastion: Make it functional
+- [x] Bastion: Provide a first draft of styles
+- [x] Bastion: Get bars working with the chosen accent color
+- [x] Bastion: Test and verify broken facilities
+- [x] Decide: will we continue to support "Allow Effects Management" option in the new sheets. Not right now. We will assume we're leaving it behind for now.
+- [x] Decide: should we allow for section config on Effects tabs. Not currently.
