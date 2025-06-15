@@ -16,6 +16,7 @@
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import type { Item5e } from 'src/types/item.types';
   import { EventHelper } from 'src/utils/events';
+  import FacilityRosterOccupantQuadrone from '../character-parts/bastion/FacilityRosterOccupantQuadrone.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -106,7 +107,10 @@
       placeholder={localize('DND5E.Bastion.Label')}
     />
   {:else if !isNil(context.system.bastion.name, '')}
-    {context.system.bastion.name}
+    <div class="bastion-name">
+      {context.system.bastion.name}
+    </div>
+    <tidy-gold-header-underline></tidy-gold-header-underline>
   {/if}
 </section>
 
@@ -122,7 +126,7 @@
         <span class="max">{context.facilities.special.max}</span>
       </span>
     </h3>
-    <ul class="facility-list">
+    <ul class="facility-list unlist">
       {#each context.facilities.special.chosen as chosen}
         {@const bgImg = chosen.img.includes(
           'systems/dnd5e/icons/svg/items/facility.svg',
@@ -188,7 +192,7 @@
               <div class="sub-header">
                 {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
               </div>
-              <ul class="slots hirelings">
+              <ul class="slots hirelings unlist">
                 {#each chosen.hirelings as { actor, uuid }, index}
                   <FacilityOccupantQuadrone
                     occupant={actor}
@@ -276,21 +280,168 @@
 
   <!-- Basic Facilities -->
 
-  <section class="facilities basic"></section>
+  <section class="facilities basic">
+    <h3>
+      <i class="fas fa-house-turret"></i>
+      {localize('DND5E.FACILITY.Types.Basic.Label.other')}
+    </h3>
+    <ul class="facility-list unlist">
+      {#each context.facilities.basic.chosen as chosen}
+        {@const bgImg = chosen.img.includes(
+          'systems/dnd5e/icons/svg/items/facility.svg',
+        )
+          ? '../../modules/tidy5e-sheet/images/facility-default-background.webp'
+          : chosen.img}
+
+        {@const img = !chosen.disabled
+          ? chosen.img
+          : context.config.facilities.orders.repair.icon}
+
+        <li
+          class="facility basic"
+          data-item-id={chosen.id}
+          data-facility-id={chosen.id}
+          class:disabled={chosen.disabled}
+          class:no-events={chosen.disabled && !FoundryAdapter.userIsGm()}
+          class:building={chosen.building}
+          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+          style="--underlay: url('{bgImg}')"
+          data-info-card={'item'}
+          data-info-card-entity-uuid={chosen.facility.uuid}
+        >
+          <div class="facility-header">
+            <a
+              class="facility-header-details"
+              onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
+              onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+              onmousedown={(ev) =>
+                FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
+              onclick={(ev) => context.editable && useFacility(ev, chosen)}
+            >
+              {#if isSvg(img)}
+                <InlineSvg class="facility-image" svgUrl={img} />
+              {:else}
+                <img class="facility-image" src={img} alt={chosen.name} />
+              {/if}
+
+              <div class="title-and-subtitle">
+                <span class="title">{chosen.name}</span>
+                <span class="subtitle">
+                  {@html chosen.subtitle}
+                </span>
+              </div>
+            </a>
+            <a
+              class="facility-menu highlight-on-hover"
+              onclick={(ev) =>
+                EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+            >
+              <i class="fas fa-ellipsis-vertical"></i>
+            </a>
+          </div>
+
+          <FacilityOrderProgressTrackerQuadrone {chosen} />
+        </li>
+      {/each}
+      {#each context.facilities.basic.available as available}
+        <div class="facility empty">
+          <a
+            class="highlight-on-hover"
+            onclick={(ev) =>
+              context.editable &&
+              addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
+          >
+            {#if available.label.includes('build')}
+              <i class="fa-solid fa-trowel"></i>
+            {:else}
+              <i class="fas fa-chess-rook"></i>
+            {/if}
+            {localize(available.label)}
+          </a>
+        </div>
+      {/each}
+    </ul>
+  </section>
 </section>
 
 <!-- Defender Roster -->
 
 {#if hasDefenders}
-  <section class="roster defenders"></section>
+  <section class="roster defenders">
+    <h3>
+      <i class="fa-solid fa-shield"></i>
+      {localize('TIDY5E.Facilities.Defenders.Label')}
+    </h3>
+    <ul class="roster-list unlist">
+      {#each context.facilities.special.chosen as chosen}
+        {#each chosen.defenders as { actor, uuid }, index}
+          {#if uuid}
+            <FacilityRosterOccupantQuadrone
+              occupant={actor}
+              type="defender"
+              {index}
+              prop="system.defenders"
+              facilityId={chosen.id}
+              facilityName={chosen.name}
+              {uuid}
+            />
+          {/if}
+        {/each}
+      {/each}
+    </ul>
+  </section>
 {/if}
 
 {#if hasHirelings}
-  <section class="roster hirelings"></section>
+  <section class="roster hirelings">
+    <h3>
+      <i class="fa-solid fa-users"></i>
+      {localize('TIDY5E.Facilities.Hirelings.Label')}
+    </h3>
+    <ul class="roster-list unlist">
+      {#each context.facilities.special.chosen as chosen}
+        {#each chosen.hirelings as { actor, uuid }, index}
+          {#if uuid}
+            <FacilityRosterOccupantQuadrone
+              occupant={actor}
+              type="hireling"
+              {index}
+              prop="system.hirelings"
+              facilityId={chosen.id}
+              facilityName={chosen.name}
+              {uuid}
+            />
+          {/if}
+        {/each}
+      {/each}
+    </ul>
+  </section>
 {/if}
 
 {#if hasCreatures}
-  <section class="roster creatures"></section>
+  <section class="roster creatures">
+    <h3>
+      <i class="fa-solid fa-horse-head"></i>
+      {localize('TIDY5E.Facilities.Creatures.Label')}
+    </h3>
+    <ul class="roster-list unlist">
+      {#each context.facilities.special.chosen as chosen}
+        {#each chosen.creatures as { actor, uuid }, index}
+          {#if uuid}
+            <FacilityRosterOccupantQuadrone
+              occupant={actor}
+              type="creature"
+              {index}
+              prop="system.trade.creatures"
+              facilityId={chosen.id}
+              facilityName={chosen.name}
+              {uuid}
+            />
+          {/if}
+        {/each}
+      {/each}
+    </ul>
+  </section>
 {/if}
 
 <section class="description">

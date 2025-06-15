@@ -1737,6 +1737,405 @@
     }
   }
 
+  .tidy-tab.bastion {
+    &.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .name {
+      margin-block-end: 0.75rem;
+
+      input,
+      .bastion-name {
+        text-align: center;
+        font-size: 1.25rem;
+      }
+    }
+
+    > *:not(:first-child):not(:last-child) {
+      margin-block-end: 1.25rem;
+    }
+    
+    h3 {
+      height: 1.1875rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 0.0625rem solid var(--t5e-separator-color, fuchsia);
+      display: flex;
+      gap: 0.25rem;
+      font-size: 0.875rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 0.875rem;
+      color: var(--t5e-secondary-color, fuchsia);
+      margin-block-end: 0.75rem;
+
+      .counter {
+        padding-left: 0.25rem;
+
+        color: var(--t5e-tertiary-color, fuchsia);
+
+        .value,
+        .max {
+          color: var(--t5e-secondary-color, fuchsia);
+        }
+      }
+    }
+
+    .highlight {
+      background: var(--t5e-faintest-color, fuchsia);
+      outline: var(--occupant-hightlight-width, fuchsia) solid
+        var(--t5e-primary-accent-color, fuchsia);
+    }
+
+    /* Facilities */
+
+    .facility-panels {
+      display: grid;
+      grid-template-areas: 'special basic';
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2rem;
+
+      .facilities {
+        &.special {
+          grid-area: special;
+        }
+        &.basic {
+          grid-area: basic;
+        }
+
+        .occupant-dropzone {
+          background: var(--t5e-faint-color, fuchsia);
+          border-radius: 0.125rem;
+          outline: 0.125rem solid var(--t5e-faint-color, fuchsia);
+          > * {
+            pointer-events: none;
+          }
+        }
+      }
+    }
+
+    .facilities .facility-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .facility:not(.empty) {
+      border: 0.0625rem solid var(--t5e-color-gold);
+      border-radius: 0.1875rem;
+      padding: 0.75rem 0.5rem;
+      background: linear-gradient(
+          145deg,
+          rgba(248, 244, 241, 0.85) 10%,
+          rgba(248, 244, 241, 0.1) 160%
+        ),
+        var(--underlay) 40%, #f8f4f1;
+      background-blend-mode: normal, multiply;
+      background-size: cover, cover;
+      box-shadow: var(--t5e-drop-shadow-card);
+
+      &.basic {
+        background-blend-mode: normal, luminosity;
+      }
+
+      .sub-header {
+        color: var(--t5e-secondary-color, fuchsia);
+        margin-block-end: 0.25rem;
+        font-weight: 500;
+      }
+
+      &.no-events {
+        pointer-events: none;
+      }
+    }
+
+    .facility.disabled {
+      filter: grayscale(1);
+    }
+
+    .facility.empty a {
+      border-radius: var(--t5e-component-card-radius);
+      border: 0.0625rem dashed var(--t5e-component-field-border);
+      height: 3rem;
+      gap: 0.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      transition: all 0.3s ease;
+    }
+
+    .facility-menu {
+      transition: all 0.3s ease;
+      padding: 0.5rem 0.75rem;
+    }    
+
+    /* Rosters */
+
+    .roster {
+      ul {
+        display: flex;
+        gap: 0.5rem;
+        margin-inline: var(--occupant-hightlight-width);
+
+        li {
+          border-radius: 0.25rem;
+          width: var(--roster-member-size, 3rem);
+          height: var(--roster-member-size, 3rem);
+          a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
+
+      img {
+        width: var(--roster-member-size, 3rem);
+        height: var(--roster-member-size, 3rem);
+        border-radius: 0.25rem;
+        object-fit: cover;
+      }
+
+      .broken-link-icon {
+        font-size: calc(var(--roster-member-size, 3rem) * 0.5);
+        color: var(--t5e-warning-accent-color, fuchsia);
+        display: inline-flex;
+        align-self: center;
+        justify-content: center;
+      }
+    }
+
+    .facility-header {
+      display: flex;
+      gap: 0.125rem;
+      margin-block-end: 1rem;
+
+      .facility-image,
+      .facility-image svg {
+        --img-size: 2rem;
+        --icon-fill: var(--t5e-tertiary-color, fuchsia);
+        width: var(--img-size);
+        height: var(--img-size);
+        margin-inline-end: 0.25rem;
+        border-radius: 0.1875rem;
+      }
+
+      .facility-header-details {
+        display: flex;
+        gap: 0.125rem;
+        flex: 1;
+
+        &:hover .title {
+          color: var(--t5e-primary-accent-color, fuchsia);
+        }
+      }
+
+      .title-and-subtitle {
+        display: flex;
+        flex-direction: column;
+
+        flex: 1;
+      }
+
+      .title {
+        font-size: 0.9375rem;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+      .subtitle {
+        font-size: 0.8125rem;
+        color: var(--t5e-secondary-color, fuchsia);
+      }
+    }
+
+    /* Facility Occupant Slots */
+
+    .slots {
+      display: flex;
+      flex-direction: row;
+      gap: 0.25rem;
+      flex-wrap: wrap;
+      margin-block-end: 0.75rem;
+    }
+
+    .slot.occupant-slot {
+      --img-size: 1.5rem;
+      width: var(--img-size);
+      height: var(--img-size);
+      border-radius: 0.125rem;
+      display: inline-flex;
+      position: relative;
+
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      img {
+        object-fit: cover;
+        width: var(--img-size);
+        height: var(--img-size);
+      }
+
+      .broken-link-icon {
+        font-size: calc(var(--img-size) * 0.75);
+        color: var(--t5e-warning-accent-color);
+        display: inline-flex;
+        align-self: center;
+        justify-content: center;
+      }
+
+      li {
+        border-radius: 0.125rem;
+      }
+
+      &.empty {
+        width: var(--img-size);
+        height: var(--img-size);
+        border-radius: 0.125rem;
+        border: 0.0625rem dashed var(--t5e-tertiary-color, fuchsia);
+        color: var(--t5e-tertiary-color, fuchsia);
+        font-size: 0.6875rem;
+
+        &:hover {
+          border-style: solid;
+        }
+
+        a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: var(--img-size);
+          height: var(--img-size);
+        }
+      }
+    }
+
+    /* Occupant Menu */
+
+    .occupant-with-menu {
+      position: relative;
+
+      a {
+        position: absolute;
+        inset: 0;
+      }
+
+      &.unlocked:not(.empty):hover {
+        background-color: var(--t5e-light-color, fuchsia);
+
+        img {
+          display: none;
+        }
+
+        .occupant-menu-icon {
+          opacity: 1;
+        }
+      }
+    }
+
+    .occupant-menu-icon {
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--t5e-primary-font-color);
+      text-shadow: 0px 0px 0.5rem black;
+      font-size: 1rem;
+    }
+
+    .roster .occupant-menu-icon {
+      font-size: 1.125rem;
+    }
+
+    /* Order Progress Meter */
+
+    .crafting-item {
+      --img-size: 1.5rem;
+      width: var(--img-size);
+      height: var(--img-size);
+      margin-inline-end: 0.125rem;
+      border-radius: 0.1875rem;
+    }
+
+    .craft-and-meter {
+      display: flex;
+      gap: 0.125rem;
+
+      .facility-progress-meter {
+        flex: 1;
+      }
+    }
+
+    /* Description */
+
+    .description {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      &:hover .editor .editor-edit {
+        display: block;
+        padding: 0;
+        border: none;
+      }
+
+      .editor {
+        flex: 1;
+
+        .editor-content {
+          overflow-y: visible;
+        }
+      }
+
+      .editor .editor-edit {
+        &:not(:focus-visible) {
+          box-shadow: none;
+        }
+
+        &:focus-visible {
+          box-shadow: var(--t5e-focus-visible-box-shadow, fuchsia);
+        }
+      }
+
+      .editor-container {
+        min-height: 31.25rem;
+        overflow-y: hidden;
+
+        .ProseMirror {
+          overflow-y: auto;
+        }
+      }
+    }
+  }
+
+  &.theme-dark {
+    .tidy-tab.bastion .facility:not(.empty) {
+      background: linear-gradient(
+          145deg,
+          rgba(27, 29, 35, 0.95) 10%,
+          rgba(27, 29, 35, 0.1) 170%
+        ),
+        var(--underlay) 40%, #2c3e50;
+      background-blend-mode: normal, normal;
+      background-size: cover, cover;
+      border-color: var(--t5e-color-palette-gold-45);
+  
+      &.basic {
+        background-blend-mode: normal, luminosity;
+      }
+  
+      .facility-header :is(.facility-image, .facility-image svg) {
+        --icon-fill: var(--t5e-secondary-color, fuchsia);
+      }
+    }
+  }
+
   // 👋 hightouch - I am once again putting prototypal CSS in weird places. ~ kgar
   :where(.favorites) {
     .list-label {

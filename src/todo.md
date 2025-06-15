@@ -1,10 +1,12 @@
 ## Bastion To Do
 
-- [ ] Retrofit the classic sheet structure
-- [ ] Make it functional
-- [ ] Provide a first draft of styles
-- [ ] (Confirm) Show available activities to right of the three-dots menu for special facilities
-- [ ] 
+- [x] Retrofit the classic sheet structure
+- [x] Make it functional
+- [x] Provide a first draft of styles
+- [ ] Get bars working with the chosen accent color
+- [ ] Test and verify broken facilities
+- [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
+- [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 
 ## To Do
 
@@ -88,8 +90,8 @@
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [ ] (PC: Feature tab) Implement alternate section groupings - https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355 | include toggle option as sheet flag in tab settings
-- [ ] Decide: will we continue to support "Allow Effects Management" option in the new sheets.
-- [ ] Decide: should we allow for section config on Effects tabs.
+- [x] Decide: will we continue to support "Allow Effects Management" option in the new sheets. Not right now. We will assume we're leaving it behind for now.
+- [x] Decide: should we allow for section config on Effects tabs. Not currently.
 
 
 ### Feature - Set as Inspiration Source
