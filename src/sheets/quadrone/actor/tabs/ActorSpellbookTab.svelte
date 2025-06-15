@@ -78,7 +78,6 @@
 
 <SpellTables
   sections={spellbook}
-  editable={context.editable}
   itemContext={context.itemContext}
   {inlineToggleService}
   sheetDocument={context.actor}

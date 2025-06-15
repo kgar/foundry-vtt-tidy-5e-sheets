@@ -1007,7 +1007,9 @@ export class Tidy5eCharacterSheet
 
         // Item grouping
         const [originId] =
-          item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+          item
+            .getFlag('dnd5e', CONSTANTS.SYSTEM_FLAG_ADVANCEMENT_ORIGIN)
+            ?.split('.') ?? [];
         const group = this.actor.items.get(originId);
         switch (group?.type) {
           case 'race':
@@ -1161,7 +1163,7 @@ export class Tidy5eCharacterSheet
 
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
-      CharacterSheetSections.buildFeaturesSections(
+      CharacterSheetSections.buildClassicFeaturesSections(
         this.actor,
         CONSTANTS.TAB_CHARACTER_FEATURES,
         species,
@@ -1175,7 +1177,7 @@ export class Tidy5eCharacterSheet
 
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
-      CharacterSheetSections.buildFeaturesSections(
+      CharacterSheetSections.buildClassicFeaturesSections(
         this.actor,
         CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         favorites.species,

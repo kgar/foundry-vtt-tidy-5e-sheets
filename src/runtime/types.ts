@@ -16,7 +16,10 @@ import type {
   SvelteTabContent,
   ActorSheetContextV1,
   ActorSheetClassicContextV2,
+  TidySectionBase,
 } from 'src/types/types';
+import type { Component } from 'svelte';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export type RegisteredContent<TContext> = {
   activateDefaultSheetListeners?: boolean;
@@ -130,3 +133,109 @@ export type ContainerContentsRowActionsContext = {
   unlocked: boolean;
   hasActor: boolean;
 };
+
+export type ColumnSpecificationCalculatedWidthArgs = {
+  rowActions: TidyTableAction<any, any, any>[];
+};
+
+// Columns
+export type ColumnSpecification = {
+  headerContent?:
+    | {
+        type: 'component';
+        component: Component<ColumnHeaderProps>;
+      }
+    | {
+        type: 'callback';
+        callback: (sheetDocument: any, sheetContext: any) => string;
+      }
+    | {
+        type: 'html';
+        html: string;
+      };
+  cellContent:
+    | {
+        type: 'component';
+        component: Component<ColumnCellProps>;
+      }
+    | {
+        type: 'callback';
+        callback: (rowDocument: any, rowContext: any) => string;
+      };
+  widthRems:
+    | number
+    | ((section: ColumnSpecificationCalculatedWidthArgs) => number); // default: 5 (rem)
+  priority: number;
+  order: number;
+  headerClasses?: string;
+  cellClasses?: string;
+  condition?: <TSection extends TidySectionBase>(
+    data: ColumnSpecificationConditionArgs<any, TSection>
+  ) => boolean;
+};
+
+/** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
+export type ConfiguredColumnSpecification = ColumnSpecification & {
+  key: string;
+  widthRems: number;
+};
+
+export type ColumnHeaderProps<
+  TDocument = any,
+  TContext = any,
+  TSection = TidySectionBase
+> = {
+  sheetDocument: TDocument;
+  sheetContext: TContext;
+  section: TSection;
+};
+
+export type ColumnCellProps<
+  TDocument = any,
+  TContext = any,
+  TSection = TidySectionBase
+> = {
+  rowDocument: TDocument;
+  rowContext: TContext;
+  section: TSection;
+};
+
+export type ColumnSpecificationConditionArgs<
+  TDocument = any,
+  TSection = TidySectionBase
+> = {
+  sheetDocument: TDocument;
+  section: TSection;
+};
+
+export type ColumnSpecSectionKeysToColumns = Record<
+  string | symbol,
+  Record<string, ColumnSpecification>
+>;
+
+export type ColumnSpecTabIdsToSectionKeys = Record<
+  string,
+  ColumnSpecSectionKeysToColumns
+>;
+
+export type ColumnSpecDocumentTypesToTabs = Record<
+  string,
+  ColumnSpecTabIdsToSectionKeys
+>;
+
+export type DefaultColumnSpecTabsToColumns = Record<
+  string,
+  ColumnSpecification[]
+>;
+
+export type DefeaultColumnSpecDocumentTypesToTabs = Record<
+  string,
+  DefaultColumnSpecTabsToColumns
+>;
+
+export type DefaultTableColumn = Omit<ColumnSpecification, 'order' | 'priority'>;
+
+export type DefaultTableColumns = Record<
+  string,
+  DefaultTableColumn
+>;

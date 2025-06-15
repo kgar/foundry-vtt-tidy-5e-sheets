@@ -271,7 +271,7 @@ export class SheetSections {
         },
         prop: sl,
         editable: context.editable && !aeOverride,
-        prepMode
+        prepMode,
       };
     };
 
@@ -418,7 +418,10 @@ export class SheetSections {
   }
 
   static collocateSubItems(
-    context: CharacterSheetContext | NpcSheetContext,
+    context:
+      | CharacterSheetContext
+      | NpcSheetContext
+      | CharacterSheetQuadroneContext,
     items: Item5e[]
   ): Item5e[] {
     const itemContext = context.itemContext;
@@ -662,7 +665,10 @@ export class SheetSections {
       | NpcAbilitySection
   >(
     features: TSection[],
-    context: CharacterSheetContext | NpcSheetContext,
+    context:
+      | CharacterSheetContext
+      | NpcSheetContext
+      | CharacterSheetQuadroneContext,
     tabId: string,
     sheetPreferences: SheetPreference,
     sectionConfig?: Record<string, SectionConfig>

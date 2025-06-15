@@ -88,6 +88,10 @@ export type ClassSummary = {
   level?: string;
 };
 
+export type CharacterFeatureQuadroneSection = {
+  items: Item5e[];
+} & TidySectionBase;
+
 export type CharacterFeatureSection = {
   isClass?: boolean;
   showUsesColumn?: boolean;
@@ -1117,7 +1121,7 @@ export type CharacterSheetQuadroneContext = {
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
-  features: FeatureSection[];
+  features: CharacterFeatureQuadroneSection[];
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];

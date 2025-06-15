@@ -1,7 +1,7 @@
 <script lang="ts">
   import InlineItemQuantityTracker from 'src/components/trackers/InlineItemQuantityTracker.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ColumnCellProps } from 'src/runtime/item/item.types';
+  import type { ColumnCellProps } from 'src/runtime/types';
 
   let { rowDocument }: ColumnCellProps = $props();
 

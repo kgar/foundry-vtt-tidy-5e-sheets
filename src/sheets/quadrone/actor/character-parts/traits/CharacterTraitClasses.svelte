@@ -114,7 +114,7 @@
           <img src={cls.img} alt={cls.name} class="item-image flex0" />
         </a>
         <span class="trait-name font-label-medium">
-          {localize(cls.name)}
+          {cls.name}
         </span>
         {#if !context.unlocked}
           <div class="divider-dot"></div>
@@ -260,7 +260,7 @@
         <button
           aria-label="Add Subclass"
           type="button"
-          class="button button-borderless"
+          class="button button-secondary"
           onclick={() =>
             FoundryAdapter.createItem(
               {

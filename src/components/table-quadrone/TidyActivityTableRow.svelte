@@ -8,6 +8,7 @@
   import TidyActivitySummary from './TidyActivitySummary.svelte';
   import type { ActivityQuadroneContext } from 'src/types/item.types';
   import { Activities } from 'src/features/activities/activities';
+  import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
     activity: ActivityQuadroneContext;
@@ -43,7 +44,7 @@
       // Allow for draggables within this containing element to be handled elsewhere.
       return;
     }
-    
+
     const dragData = activity.doc.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
@@ -70,7 +71,10 @@
   }}
   {hidden}
   ondblclick={(event) =>
-    activity && FoundryAdapter.editOnMouseEvent(event, activity.doc)}
+    event.target instanceof HTMLElement &&
+    !isUserInteractable(event.target) &&
+    activity &&
+    FoundryAdapter.editOnMouseEvent(event, activity.doc)}
   onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, activity.doc)}
   ondragstart={handleDragStart}
   {...attributes}
