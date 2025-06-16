@@ -5,11 +5,12 @@
   import { getAllContexts, mount, onMount, setContext, unmount } from 'svelte';
   import { error } from 'src/utils/logging';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     tab: Tab;
     active: boolean;
-    cssClass?: string;
+    cssClass?: ClassValue;
   }
 
   let { tab, active, cssClass = '' }: Props = $props();
@@ -53,9 +54,14 @@
 </script>
 
 <div
-  class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ??
-    ''} {useCoreListenersClass}"
-  class:active
+  class={[
+    'tidy-tab',
+    tab.id,
+    tab.content.cssClass,
+    useCoreListenersClass,
+    cssClass,
+    { active },
+  ]}
   data-tab-contents-for={tab.id}
   role="tabpanel"
   bind:this={tidyTab}

@@ -13,6 +13,7 @@
   import { getModifierData } from 'src/utils/formatting';
   import { CONSTANTS } from 'src/constants';
   import CharacterSpellbookFooter from './character-parts/CharacterSpellbookFooter.svelte';
+  import { SvelteSet } from 'svelte/reactivity';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -43,6 +44,8 @@
   let ini = $derived(getModifierData(context.system.attributes.init.total));
 
   let pb = $derived(getModifierData(context.system.attributes.prof ?? 0));
+
+  let extraTabs = new SvelteSet<string>();
 </script>
 
 <header class="sheet-header flexcol theme-dark">
@@ -489,6 +492,7 @@
     </a>
     <Tabs
       bind:selectedTabId
+      {extraTabs}
       tabs={context.tabs}
       sheet={context.actor.sheet}
       cssClass="character-tabs"
@@ -505,6 +509,7 @@
     <TabContents
       tabs={context.tabs}
       {selectedTabId}
+      {extraTabs}
       cssClass="tidy-tab-contents"
     />
 

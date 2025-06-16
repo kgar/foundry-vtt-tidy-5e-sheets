@@ -2,14 +2,17 @@
   import type { Tab } from 'src/types/types';
   import TabContent from './TabContent.svelte';
   import { error } from 'src/utils/logging';
+  import type { SvelteSet } from 'svelte/reactivity';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     tabs: Tab[];
     selectedTabId: string;
-    cssClass?: string;
+    extraTabs?: SvelteSet<string>;
+    cssClass?: ClassValue;
   }
 
-  let { tabs, selectedTabId, cssClass = '' }: Props = $props();
+  let { tabs, selectedTabId, cssClass = '', extraTabs }: Props = $props();
 </script>
 
 {#each tabs as tab (tab.id)}
@@ -20,6 +23,10 @@
         error: e,
       })}
   >
-    <TabContent active={selectedTabId === tab.id} {tab} {cssClass} />
+    <TabContent
+      active={selectedTabId === tab.id || !!extraTabs?.has(tab.id)}
+      {tab}
+      {cssClass}
+    />
   </svelte:boundary>
 {/each}
