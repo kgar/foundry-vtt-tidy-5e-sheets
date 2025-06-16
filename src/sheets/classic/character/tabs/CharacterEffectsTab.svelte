@@ -198,6 +198,6 @@
     {/each}
   {/if}
   {#if context.conditions}
-    <ActorConditions />
+    <ActorConditions conditions={context.conditions} />
   {/if}
 </div>

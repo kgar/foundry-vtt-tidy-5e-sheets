@@ -1016,4 +1016,10 @@
       font-size: calc(var(--t5e-container-panel-item-size) / 2);
     }
   }
+
+  .conditions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+    gap: 0.125rem;
+  }
 }
