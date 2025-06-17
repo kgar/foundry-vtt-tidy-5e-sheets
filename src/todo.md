@@ -1,10 +1,35 @@
-### Notes
+## Journal Tab To Do
 
-#### Actions-tab-specific Subtitles?
+- [x] Implement tab selection
+- [x] Implement Create Journal Entry
+- [x] Implement Delete Journal Entry
+- [ ] Add code to Journal to make it resilient to bad data, preferring to show blanks where data is missing
+- [ ] Implement setting a title (cannot use prop-path-based update, because it trashes all other data; is there another way to selectively update one prop form an array of data in Foundry documents?)
+- [ ] Implement viewing rendered HTML (exclude secrets for now)
+- [ ] Implement opening the editor and saving
+- [ ] Add context menu for deleting journal entry
+- [ ] Add context menu for editing journal entry
+- [ ] Add context menu for duplicating journal entry
+- [ ] Implement drag-and-drop to sort
+- [ ] (Decide) Is it worth it to support secrets management?
 
-Actions tab items could use some context to distinguish them from one another. Examples:
-- Inventory items in containers: Container Name in subtitle
-- Spells from items: Item source in subtitle
+### Journal scratch
+
+loc keys:
+"PackageDeleteTitle": 
+  "Delete {type}: {title}",
+"PackageDeleteConfirm": 
+  "Are you sure you want to delete the {type} \"{title}\"?",
+
+
+"JOURNAL.AddPage": "Add Page",
+"JOURNAL.EditPage": "Edit Page",
+"JOURNAL.NextPage": "Next Page",
+"JOURNAL.PrevPage": "Previous Page",
+
+"AreYouSure"
+"SIDEBAR.DeleteWarning": "This {type} will be permanently deleted and cannot be recovered.",
+
 
 ## To Do
 

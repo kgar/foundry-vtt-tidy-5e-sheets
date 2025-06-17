@@ -1,43 +1,124 @@
 <script lang="ts">
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import { TidyFlags, type ActorJournalEntry } from 'src/api';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
+  import { coalesce } from 'src/utils/formatting';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
-  let enrichmentArgs = $derived({
-    secrets: context.owner,
-    rollData: context.rollData,
-    relativeTo: context.actor,
-  });
+  let entries = $derived(TidyFlags.actorJournal.get(context.actor));
 
-  let selected = $state<{ index: number; entry: ActorJournalEntry }>();
+  let selectedIndex = $state(0);
+
+  let selected = $derived<ActorJournalEntry | undefined>(
+    entries[selectedIndex],
+  );
   let editing = $state<boolean>(false);
   let enrichedPromise = $derived(
-    !isNil(selected?.entry.value)
-      ? foundry.applications.ux.TextEditor.enrichHTML(selected.entry.value)
+    !isNil(selected?.value)
+      ? foundry.applications.ux.TextEditor.enrichHTML(selected.value, {
+          secrets: context.owner,
+          rollData: context.rollData,
+          relativeTo: context.actor,
+        })
       : Promise.resolve(''),
   );
+
+  $effect(() => {
+    if (selectedIndex >= entries.length) {
+      selectedIndex -= Math.min(0, selectedIndex - 1);
+    }
+  });
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 {#if editing}{/if}
 
 <div>
-  <div class={['journal-entry-selector', { hidden: editing }]}></div>
-  <div class={['journal-entry-viewer', { hidden: editing }]}>
-    {#await enrichedPromise then enriched}
-      <div class="editor" use:manageSecrets={{ document: context.document }}>
-        <div
-          data-field={selected
-            ? `${TidyFlags.actorJournal.prop}.${selected?.index}.value`
-            : ''}
-          class="user-select-text"
+  <div class={['journal-entry-selector', { hidden: editing }]}>
+    <p>selected index {selectedIndex}</p>
+    {#each entries as entry, i (entry.id)}
+      {#if i !== selectedIndex}
+        <button
+          type="button"
+          class="journal-tab"
+          onclick={() => (selectedIndex = i)}
         >
-          {@html enriched}
+          {coalesce(entry.title, `(localize) Journal Entry ${i}`)}
+        </button>
+      {:else}
+        <div class="journal-tab selected">
+          {coalesce(entry.title, `(localize) Journal Entry ${i}`)}
         </div>
-      </div>
-    {/await}
+      {/if}
+      <button
+        type="button"
+        onclick={() => TidyFlags.actorJournal.removeAt(context.actor, i)}
+        data-tooltip="Temp delete button, to be replaced by context menu"
+      >
+        <i style="color: fuchsia" class="fa-solid fa-trash"></i>
+      </button>
+    {/each}
+    <div class="journal-buttons">
+      <button
+        type="button"
+        class="button"
+        data-tooltip="JOURNAL.PrevPage"
+        disabled={!selected || selectedIndex <= 0}
+        onclick={() => (selectedIndex -= 1)}
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button
+        type="button"
+        class="button"
+        disabled={!context.owner}
+        onclick={async () => {
+          await TidyFlags.actorJournal.add(context.actor);
+        }}
+      >
+        <i class="fa-solid fa-file-circle-plus"></i>
+        {localize('JOURNAL.AddPage')}
+      </button>
+      <button
+        type="button"
+        class="button"
+        data-tooltip="JOURNAL.NextPage"
+        disabled={!selected || selectedIndex >= entries.length - 1}
+        onclick={() => (selectedIndex += 1)}
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+  <div class={['journal-entry-viewer', { hidden: editing }]}>
+    {#if selected}
+      {#if context.unlocked}
+        <TextInputQuadrone
+          document={context.actor}
+          field={`${TidyFlags.actorJournal.prop}.${selectedIndex}.title`}
+          
+        />
+      {:else}
+        <h3>{selected.title}</h3>
+      {/if}
+      {#await enrichedPromise then enriched}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div
+            data-field={selected
+              ? `${TidyFlags.actorJournal.prop}.${selectedIndex}.value`
+              : ''}
+            class="user-select-text"
+          >
+            {@html enriched}
+          </div>
+        </div>
+      {/await}
+    {/if}
   </div>
 </div>

@@ -33,4 +33,4 @@ export type ActorJournalEntry = {
   value: string;
 }
 
-export type ActorJournalEntries = ActorJournalEntries[];
+export type ActorJournalEntries = ActorJournalEntry[];

@@ -118,6 +118,8 @@ export const TempDefaultCharacterQuadroneTabs = [
   CONSTANTS.TAB_EFFECTS,
   CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
   CONSTANTS.TAB_CHARACTER_BASTION,
+  // TODO: REMOVE BEFORE MERGING TO MAIN
+  CONSTANTS.TAB_CHARACTER_JOURNAL,
 ];
 
 const singleton = new ActorSheetRuntime<CharacterSheetQuadroneContext>(

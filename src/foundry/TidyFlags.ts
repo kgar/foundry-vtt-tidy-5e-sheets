@@ -78,7 +78,7 @@ export class TidyFlags {
   };
 
   /**
-   * An array of journal entries with an optional title 
+   * An array of journal entries with an optional title
    * and an HTML-based journal.
    */
   static actorJournal = {
@@ -93,13 +93,29 @@ export class TidyFlags {
       );
     },
     add(actor: Actor5e) {
-      // todo: implement
-    },
-    removeAt(index: number) {
-      // todo: implement
+      let entries = TidyFlags.actorJournal.get(actor);
+      return TidyFlags.actorJournal.set(actor, [
+        ...entries,
+        {
+          id: foundry.utils.randomID(),
+          title: '',
+          value: '',
+        },
+      ]);
     },
     clear() {
       // todo: implement
+    },
+    removeAt(actor: Actor5e, index: number) {
+      let entries = TidyFlags.actorJournal.get(actor);
+
+      return TidyFlags.actorJournal.set(
+        actor,
+        entries.filter((_, i) => i !== index)
+      );
+    },
+    set(actor: Actor5e, journal: ActorJournalEntries) {
+      return TidyFlags.setFlag(actor, TidyFlags.actorJournal.key, journal);
     },
   };
 
