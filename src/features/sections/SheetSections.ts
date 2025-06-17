@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import type {
-  ActionSection,
+  ActionSectionClassic,
   Actor5e,
   ActorSheetContextV1,
   ActorSheetQuadroneContext,
@@ -18,6 +18,7 @@ import type {
   NpcSheetQuadroneContext,
   SpellbookSection,
   SpellbookSectionLegacy,
+  TidyItemSectionBase,
   TidySectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -27,7 +28,7 @@ import { SheetPreferencesService } from '../user-preferences/SheetPreferencesSer
 import type { SheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import { getSortedActions } from '../actions/actions.svelte';
+import { getSortedActions, getSortedActionsQuadrone } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -698,7 +699,7 @@ export class SheetSections {
   }
 
   static configureActions(
-    sections: ActionSection[],
+    sections: ActionSectionClassic[],
     tabId: string,
     sheetPreferences: SheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
@@ -710,6 +711,31 @@ export class SheetSections {
 
       return sections.map(({ ...section }) => {
         section.actions = getSortedActions(section, sortMode);
+
+        section.show = sectionConfigs?.[section.key]?.show !== false;
+
+        return section;
+      });
+    } catch (e) {
+      error('An error occurred while configuring actions', false, e);
+    }
+
+    return sections;
+  }
+  
+  static configureActionsQuadrone(
+    sections: TidyItemSectionBase[],
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfigs: Record<string, SectionConfig> | undefined
+  ) {
+    try {
+      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      return sections.map(({ ...section }) => {
+        section.items = getSortedActionsQuadrone(section, sortMode);
 
         section.show = sectionConfigs?.[section.key]?.show !== false;
 

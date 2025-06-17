@@ -3677,7 +3677,14 @@ export type CONFIG = {
         icon: string;
         color: string;
       };
-    };
+    } & Record<
+      string,
+      {
+        label: string;
+        icon: string;
+        color: string;
+      }
+    >;
     movementTypes: {
       burrow: string;
       climb: string;

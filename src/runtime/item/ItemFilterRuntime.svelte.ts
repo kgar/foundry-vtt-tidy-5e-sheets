@@ -142,6 +142,11 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.canUse.name,
       ]),
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
     },
   };
 
@@ -361,6 +366,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.canUse,
         ],
       },
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
     },
   };
 

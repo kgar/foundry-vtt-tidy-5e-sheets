@@ -3,7 +3,7 @@ import type { Item5e } from 'src/types/item.types';
 import type {
   Actor5e,
   ActorInventoryTypes,
-  CharacterFeatureQuadroneSection,
+  TidyItemSectionBase,
   CharacterFeatureSection,
   CharacterItemPartitions,
   FavoriteSection,
@@ -177,8 +177,8 @@ export class CharacterSheetSections {
     tabId: string,
     feats: Item5e[],
     options: Partial<CharacterFeatureSection>
-  ): CharacterFeatureQuadroneSection[] {
-    let featuresMap: Record<string, CharacterFeatureQuadroneSection> = {};
+  ): TidyItemSectionBase[] {
+    let featuresMap: Record<string, TidyItemSectionBase> = {};
 
     function buildOriginKey(id: string) {
       return `tidy-feature-section-origin-${id}`;
@@ -331,9 +331,9 @@ export class CharacterSheetSections {
   static createQuadroneFeatureSection(args: {
     key: string;
     title: string;
-    options: Partial<CharacterFeatureQuadroneSection>;
+    options: Partial<TidyItemSectionBase>;
     custom?: boolean;
-  }): CharacterFeatureQuadroneSection {
+  }): TidyItemSectionBase {
     let custom = args.custom
       ? {
           creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
