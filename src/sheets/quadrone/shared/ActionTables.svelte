@@ -8,8 +8,8 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
   import type {
-    Actor5e,
     TidyItemSectionBase,
+    Actor5e,
     CharacterItemContext,
     CharacterSheetQuadroneContext,
     NpcItemContext,
@@ -205,20 +205,5 @@
         {/snippet}
       </TidyTable>
     {/if}
-  {:else}
-    <button
-      type="button"
-      class="button button-primary"
-      title={localize('DND5E.FeatureAdd')}
-      aria-label={localize('DND5E.FeatureAdd')}
-      onclick={() =>
-        sheetDocument.sheet._addDocument({
-          tabId,
-          creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
-        })}
-    >
-      <i class="fas fa-plus"></i>
-      {localize('DND5E.FeatureAdd')}
-    </button>
   {/each}
 </div>

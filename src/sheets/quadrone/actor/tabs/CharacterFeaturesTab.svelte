@@ -47,7 +47,7 @@
   });
 </script>
 
-<ActionBar bind:searchCriteria sections={context.features} {tabId} />
+<ActionBar bind:searchCriteria sections={features} {tabId} />
 
 <FeatureTables
   sections={features}

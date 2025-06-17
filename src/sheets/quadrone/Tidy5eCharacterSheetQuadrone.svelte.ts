@@ -12,7 +12,7 @@ import type {
   ActorSheetQuadroneContext,
   AttributePinContext,
   CharacterClassEntryContext,
-  CharacterFeatureQuadroneSection,
+  TidyItemSectionBase,
   CharacterFeatureSection,
   CharacterItemContext,
   CharacterItemPartitions,
@@ -583,7 +583,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     // Section Features
-    const features: CharacterFeatureQuadroneSection[] =
+    const features: TidyItemSectionBase[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
         context.unlocked,
@@ -648,6 +648,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       );
       context.canToggle = 'equipped' in item.system;
     }
+
+    // TODO: Provide subtitles for other item types
+    // Can we distinguish between Action Tab subtitles and others? Should we?
 
     // Save
     context.save = ItemContext.getItemSaveContext(item);

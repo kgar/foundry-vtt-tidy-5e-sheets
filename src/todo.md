@@ -1,3 +1,29 @@
+## Sheet Tab To Do
+
+- [x] Provide Filters
+- [x] Provide Pinned Filters
+- [x] Provide Sorts - nothing beyond the default
+- [x] Ensure tab config works
+- [x] Implement Bookmark row action
+  - Initial state 
+    - when NULL and included in actions tab, consider it bookmarked
+    - when NULL and not included in actions tab, consider it not bookmarked
+    - if included via flag, bookmarked
+    - if excluded via flag, not bookmarked
+- [x] Change Sheet bookmark to pin
+- [ ] Ensure Sheet pin options are available in context menu for Quadrone sheets
+  - [ ] Add to Sheet Tab
+  - [ ] Remove from Sheet Tab
+- [ ] Surface activity spells and subtitle them accordingly
+
+### Notes
+
+#### Actions-tab-specific Subtitles?
+
+Actions tab items could use some context to distinguish them from one another. Examples:
+- Inventory items in containers: Container Name in subtitle
+- Spells from items: Item source in subtitle
+
 ## To Do
 
 - [ ] Character Sheet 

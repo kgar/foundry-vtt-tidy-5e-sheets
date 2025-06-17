@@ -88,7 +88,7 @@ export type ClassSummary = {
   level?: string;
 };
 
-export type CharacterFeatureQuadroneSection = {
+export type TidyItemSectionBase = {
   items: Item5e[];
 } & TidySectionBase;
 
@@ -567,7 +567,7 @@ export type ActionItem = {
   containerContents?: ContainerContents;
 };
 
-export type ActionSection = {
+export type ActionSectionClassic = {
   actions: ActionItem[];
 } & TidySectionBase;
 
@@ -666,7 +666,7 @@ export type DocumentSheetV2Context = {
 
 export type ActorSheetContextV1 = {
   abilities: any;
-  actions: ActionSection[];
+  actions: ActionSectionClassic[];
   actor: Actor5e;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
@@ -947,7 +947,7 @@ export type ActorTraitContext = {
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
   abilities: ActorAbilityContextEntry[];
-  actions: ActionSection[];
+  actions: TidyItemSectionBase[];
   actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
@@ -1121,7 +1121,7 @@ export type CharacterSheetQuadroneContext = {
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
-  features: CharacterFeatureQuadroneSection[];
+  features: TidyItemSectionBase[];
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];
