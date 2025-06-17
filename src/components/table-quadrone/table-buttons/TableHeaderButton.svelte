@@ -16,7 +16,7 @@
 
 <a
   class="tidy-table-button"
-  title={localize(title)}
+  data-tooltip={title}
   aria-label={localize(title)}
   onclick={(ev) => onControlClick?.(ev, controlContext)}
 >
