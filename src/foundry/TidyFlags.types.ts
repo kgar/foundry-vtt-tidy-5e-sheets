@@ -26,3 +26,11 @@ export type AttributeActivityPinFlag = AttributePinBase & {
 };
 
 export type AttributePinFlag = AttributeItemPinFlag | AttributeActivityPinFlag;
+
+export type ActorJournalEntry = {
+  id: string;
+  title: string;
+  value: string;
+}
+
+export type ActorJournalEntries = ActorJournalEntries[];

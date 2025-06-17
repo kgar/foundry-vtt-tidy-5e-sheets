@@ -203,6 +203,7 @@ export function Tidy5eActorSheetQuadroneBase<
         items: Array.from(this.actor.items)
           .filter((i: Item5e) => !this.actor.items.has(i.system.container))
           .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
+        journal: TidyFlags.actorJournal.get(this.actor),
         labels: this._getLabels(),
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),

@@ -4,6 +4,7 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
+  ActorJournalEntries,
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
@@ -73,6 +74,32 @@ export class TidyFlags {
      */
     unset(item: Item5e) {
       return TidyFlags.unsetFlag(item, TidyFlags.actionSection.key);
+    },
+  };
+
+  /**
+   * An array of journal entries with an optional title 
+   * and an HTML-based journal.
+   */
+  static actorJournal = {
+    key: 'actor-journal',
+    prop: TidyFlags.getFlagPropertyPath('actor-journal'),
+    get(actor: Actor5e): ActorJournalEntries {
+      return (
+        TidyFlags.tryGetFlag<ActorJournalEntries>(
+          actor,
+          TidyFlags.actorJournal.key
+        ) ?? []
+      );
+    },
+    add(actor: Actor5e) {
+      // todo: implement
+    },
+    removeAt(index: number) {
+      // todo: implement
+    },
+    clear() {
+      // todo: implement
     },
   };
 
