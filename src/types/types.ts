@@ -1118,6 +1118,14 @@ export type CharacterSheetQuadroneContext = {
   creatureType: CreatureTypeContext;
   currencies: CurrencyContext[];
   defenders: Actor5e[];
+  enriched: {
+    trait: string;
+    ideal: string;
+    bond: string;
+    flaw: string;
+    appearance: string;
+    biography: string;
+  };
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
