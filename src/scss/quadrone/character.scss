@@ -1710,6 +1710,10 @@
       height: var(--t5e-field-size-default);
       gap: var(--t5e-size-1x);
 
+      span {
+        padding-block-end: var(--t5e-size-1);
+      }
+
       &.pill {
         background: var(--t5e-component-card-default);
         box-shadow: var(--t5e-drop-shadow-field);
@@ -1727,6 +1731,10 @@
 
     .currency-container {
       gap: var(--t5e-size-2x);
+
+      .denomination {
+        text-transform: uppercase;
+      }
     }
   }
 
