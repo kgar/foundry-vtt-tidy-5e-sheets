@@ -11,9 +11,9 @@
     - if included via flag, bookmarked
     - if excluded via flag, not bookmarked
 - [x] Change Sheet bookmark to pin
-- [ ] Ensure Sheet pin options are available in context menu for Quadrone sheets
-  - [ ] Add to Sheet Tab
-  - [ ] Remove from Sheet Tab
+- [x] Ensure Sheet pin options are available in context menu for Quadrone sheets
+  - [x] Add to Sheet Tab
+  - [x] Remove from Sheet Tab
 - [ ] Surface activity spells and subtitle them accordingly
 
 ### Notes

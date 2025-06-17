@@ -49,6 +49,8 @@ export function getItemContextOptions(
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
 
+  const isQuadroneSheet = element.closest('.quadrone');
+
   let options: ContextMenuEntry[] = [];
 
   let toggleTitle = '';
@@ -201,6 +203,7 @@ export function getItemContextOptions(
       callback: () => AttributePins.pin(item, 'item'),
       condition: () =>
         item.isOwner &&
+        !isQuadroneSheet &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         AttributePins.isPinnable(item, 'item') &&
         !AttributePins.isPinned(item),
@@ -213,6 +216,7 @@ export function getItemContextOptions(
       callback: () => AttributePins.unpin(item),
       condition: () =>
         item.isOwner &&
+        !isQuadroneSheet &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         AttributePins.isPinnable(item, 'item') &&
         AttributePins.isPinned(item),
@@ -228,6 +232,7 @@ export function getItemContextOptions(
         callback: () => AttributePins.setItemResourceType(item, 'limited-uses'),
         condition: () =>
           item.isOwner &&
+          !isQuadroneSheet &&
           !FoundryAdapter.isLockedInCompendium(item) &&
           !isNil(item.system.quantity) &&
           AttributePins.getResourceType(item) !== 'limited-uses',
@@ -239,6 +244,7 @@ export function getItemContextOptions(
         callback: () => AttributePins.setItemResourceType(item, 'quantity'),
         condition: () =>
           item.isOwner &&
+          !isQuadroneSheet &&
           !FoundryAdapter.isLockedInCompendium(item) &&
           !isNil(item.system.quantity) &&
           AttributePins.getResourceType(item) !== 'quantity',
@@ -344,6 +350,21 @@ export function getItemContextOptions(
   const active = isItemInActionList(item);
   options.push({
     name: active
+      ? '(LOCALIZE) Remove from Sheet Tab'
+      : '(LOCALIZE) Add to Sheet tab',
+    icon: '<i class="fa-solid fa-thumbtack"></i>',
+    callback: () => {
+      TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
+    },
+    condition: () =>
+      item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
+      isQuadroneSheet &&
+      itemParentIsActor &&
+      isCharacter,
+  });
+
+  options.push({
+    name: active
       ? 'TIDY5E.Actions.SetOverrideFalse'
       : 'TIDY5E.Actions.SetOverrideTrue',
     icon: active
@@ -354,11 +375,10 @@ export function getItemContextOptions(
     },
     condition: () =>
       item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
+      !isQuadroneSheet &&
       itemParentIsActor &&
       actorUsesActionFeature(itemParent),
   });
-
-  const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
 
   options.push({
     name: 'TIDY5E.Actions.ResetActionDefault',
@@ -367,7 +387,10 @@ export function getItemContextOptions(
       TidyFlags.actionFilterOverride.unset(item);
     },
     condition: () =>
-      overridden && itemParentIsActor && actorUsesActionFeature(itemParent),
+      !isQuadroneSheet &&
+      TidyFlags.actionFilterOverride.get(item) !== undefined &&
+      itemParentIsActor &&
+      actorUsesActionFeature(itemParent),
   });
 
   options.push({
