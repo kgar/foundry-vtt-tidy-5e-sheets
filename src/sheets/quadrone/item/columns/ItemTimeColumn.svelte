@@ -20,7 +20,9 @@
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
-  {inferredActivation?.value ?? ''}{localize(abbrOrLabel.abbreviation)}
+  {inferredActivation?.value ?? ''}<span data-tooltip={abbrOrLabel.label}
+    >{localize(abbrOrLabel.abbreviation)}</span
+  >
 {:else if !isNil(abbrOrLabel.label, '')}
   {inferredActivation?.value ?? ''} {localize(abbrOrLabel.label)}
 {:else}

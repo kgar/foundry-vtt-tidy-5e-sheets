@@ -1436,29 +1436,9 @@ export class Tidy5eCharacterSheet
    */
   protected _prepareItem(item: Item5e, context: CharacterItemContext) {
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
-      const prep = item.system.preparation || {};
-      const isAlways = prep.mode === 'always';
-      const isPrepared = !!prep.prepared;
-      context.toggleClass = isPrepared ? 'active' : '';
-      if (isAlways) {
-        context.toggleClass = 'fixed';
-        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
-      } else if (isPrepared) {
-        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
-      } else {
-        context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
-      }
-
       if (this._concentration.items.has(item)) {
         context.concentration = true;
       }
-    } else {
-      const isActive = !!item.system.equipped;
-      context.toggleClass = isActive ? 'active' : '';
-      context.toggleTitle = game.i18n.localize(
-        isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
-      );
-      context.canToggle = 'equipped' in item.system;
     }
 
     // Save

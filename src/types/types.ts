@@ -268,10 +268,10 @@ export type ItemSaveContext = {
 };
 
 export type CharacterItemContext = {
+  actionSubtitle?: string; // Quadrone only
   activities?: ActivityItemContext[];
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
-  canToggle?: boolean;
   chosen?: ChosenFacilityContext;
   concealDetails?: boolean;
   containerContents?: ContainerContents;
@@ -284,8 +284,6 @@ export type CharacterItemContext = {
   needsSubclass?: boolean;
   save?: ItemSaveContext;
   toHit?: number | null;
-  toggleClass?: string;
-  toggleTitle?: string;
   totalWeight?: number;
   concentration?: boolean;
   parent?: Item5e;
@@ -471,6 +469,7 @@ export type NpcAbilitySection = {
 } & FeatureSection;
 
 export type NpcItemContext = {
+  actionSubtitle?: string; // Quadrone only
   activities?: ActivityItemContext[];
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];
@@ -532,6 +531,7 @@ export type NpcSheetContext = {
 } & ActorSheetContextV1;
 
 export type VehicleItemContext = {
+  actionSubtitle?: string;
   activities?: ActivityItemContext[];
   canToggle?: boolean;
   containerContents?: ContainerContents;

@@ -14,6 +14,7 @@
     CharacterSheetQuadroneContext,
     NpcItemContext,
     NpcSheetQuadroneContext,
+    VehicleItemContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
@@ -25,7 +26,10 @@
 
   interface Props {
     sections: TidyItemSectionBase[];
-    itemContext: Record<string, CharacterItemContext | NpcItemContext>;
+    itemContext: Record<
+      string,
+      CharacterItemContext | NpcItemContext | VehicleItemContext
+    >;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
     sheetDocument: Actor5e | Item5e;
@@ -165,8 +169,10 @@
                   <a class="item-name" onclick={(ev) => toggleSummary()}>
                     <span class="cell-text">
                       <span class="cell-name">{item.name}</span>
-                      {#if ctx.subtitle}
-                        <span class="cell-context">{@html ctx.subtitle}</span>
+                      {#if ctx.actionSubtitle}
+                        <span class="cell-context"
+                          >{@html ctx.actionSubtitle}</span
+                        >
                       {/if}
                     </span>
                     <span class="row-detail-expand-indicator">

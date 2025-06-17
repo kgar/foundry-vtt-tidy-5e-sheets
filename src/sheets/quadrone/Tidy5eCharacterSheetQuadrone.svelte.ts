@@ -614,17 +614,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       const linked = item.system.linkedActivity?.item;
       const prep = item.system.preparation || {};
-      const isAlways = prep.mode === 'always';
-      const isPrepared = !!prep.prepared;
-      context.toggleClass = isPrepared ? 'active' : '';
-      if (isAlways) {
-        context.toggleClass = 'fixed';
-        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
-      } else if (isPrepared) {
-        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
-      } else {
-        context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
-      }
 
       if (this._concentration.items.has(item)) {
         context.concentration = true;
@@ -634,19 +623,16 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         .getListFormatter({ style: 'narrow' })
         .format(item.labels.components.all.map((a: any) => a.abbr));
 
-      context.subtitle = [
+      context.subtitle = context.actionSubtitle = [
         linked
           ? linked.name
           : this.actor.classes[item.system.sourceClass]?.name,
         vsmcr,
       ].filterJoin(' &bull; ');
-    } else {
-      const isActive = !!item.system.equipped;
-      context.toggleClass = isActive ? 'active' : '';
-      context.toggleTitle = game.i18n.localize(
-        isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
-      );
-      context.canToggle = 'equipped' in item.system;
+    } else if (Inventory.isItemInventoryType(item)) {
+      const containerName = this.actor.items.get(item.system.container)?.name;
+
+      context.actionSubtitle = [containerName].filterJoin(' &bull; ');
     }
 
     // TODO: Provide subtitles for other item types

@@ -206,8 +206,10 @@ class ItemColumnRuntime {
         [CONSTANTS.TAB_ACTOR_ACTIONS]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             charges: { ...columns.uses, order: 100, priority: 500 },
-            time: { ...columns.time, order: 200, priority: 400 },
-            recovery: { ...columns.recovery, order: 400, priority: 200 },
+            roll: { ...columns.roll, order: 200, priority: 400 },
+            formula: { ...columns.formula, order: 300, priority: 600 },
+            range: {...columns.range, order: 400, priority: 300},
+            target: { ...columns.target, order: 500, priority: 200},
             actions: { ...columns.actions, order: 1000, priority: 1000 },
           },
         },

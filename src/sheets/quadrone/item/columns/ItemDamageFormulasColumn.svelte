@@ -1,21 +1,23 @@
 <script lang="ts">
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ColumnCellProps } from 'src/runtime/types';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import { Actions } from 'src/features/actions/actions.svelte';
 
   let { rowDocument, rowContext }: ColumnCellProps = $props();
 
-  let context = $derived(getSheetContext());
+  const damageHealingTypeIcons = Actions.damageAndHealingTypesIconSrcMap;
 </script>
 
 <div>
   {#each rowDocument.labels.damages as damage}
-    {@const damageType = CONFIG.DND5E.damageTypes[damage.damageType]}
+    {@const damageHealingIcon = damageHealingTypeIcons[damage.damageType]}
     <div class="flexrow">
       <span class="flexshrink formula">{damage.formula}</span>
-      <span class="flexshrink" data-tooltip aria-label={damage.label}>
-        <Dnd5eIcon src={damageType.icon} />
-      </span>
+      {#if damageHealingIcon}
+        <span class="flexshrink" data-tooltip aria-label={damage.label}>
+          <Dnd5eIcon src={damageHealingIcon} />
+        </span>
+      {/if}
     </div>
   {:else}
     <span class="color-text-disabled">&mdash;</span>

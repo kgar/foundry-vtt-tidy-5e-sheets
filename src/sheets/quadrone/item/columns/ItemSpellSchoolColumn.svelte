@@ -14,10 +14,9 @@
 </script>
 
 {#if spellSchoolConfig?.icon}
-  <Dnd5eIcon
-    src={spellSchoolConfig.icon}
-    data-tooltip={spellSchoolConfig.label}
-  />
+  <span data-tooltip={spellSchoolConfig.label}>
+    <Dnd5eIcon src={spellSchoolConfig.icon} />
+  </span>
 {:else}
   <span class="color-text-disabled">—</span>
 {/if}
