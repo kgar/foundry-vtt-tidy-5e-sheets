@@ -635,9 +635,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       context.actionSubtitle = [containerName].filterJoin(' &bull; ');
     }
 
-    // TODO: Provide subtitles for other item types
-    // Can we distinguish between Action Tab subtitles and others? Should we?
-
     // Save
     context.save = ItemContext.getItemSaveContext(item);
 
