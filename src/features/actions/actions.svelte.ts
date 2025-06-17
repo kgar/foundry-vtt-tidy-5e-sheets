@@ -270,12 +270,31 @@ export function isItemInActionList(item: Item5e): boolean {
       const limitToCantrips = settings.value.actionListLimitActionsToCantrips;
 
       // only exclude spells which need to be prepared but aren't
-      if (
-        !SpellUtils.isCantrip(item) &&
-        (limitToCantrips || SpellUtils.isUnprepared(item))
-      ) {
+      const activitySpellItem = item.system.linkedActivity?.item;
+
+      const isEligibleActivitySpell =
+        !!activitySpellItem &&
+        (activitySpellItem.system.attunement !==
+          CONSTANTS.ATTUNEMENT_REQUIRED ||
+          activitySpellItem.system.attuned);
+
+      const levelledSpellIsEligible =
+        SpellUtils.isCastableSpell(item) || isEligibleActivitySpell;
+
+      const isCantrip = SpellUtils.isCantrip(item);
+
+      // Non-cantrip spells must be permitted via settings and castable by either
+      // preparation mode rules or by Cast Activity item rules.
+      if (!isCantrip && (limitToCantrips || !levelledSpellIsEligible)) {
         return false;
       }
+
+      // Cantrips fron Cast Activity item rules
+      // must respect attunement settings.
+      if (!!activitySpellItem && isCantrip && !isEligibleActivitySpell) {
+        return false;
+      }
+
       const isReaction =
         item.system.activities?.contents[0]?.activation.type ===
         CONSTANTS.ACTIVATION_COST_REACTION;

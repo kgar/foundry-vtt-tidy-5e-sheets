@@ -16,8 +16,8 @@
   let tooltip = $derived(
     localize(
       included
-        ? 'TIDY5E.Actions.OverriddenSetOverrideFalse'
-        : 'TIDY5E.Actions.OverriddenSetOverrideTrue',
+        ? '(LOCALIZE) Remove from Sheet Tab'
+        : '(LOCALIZE) Add to Sheet tab',
     ),
   );
 
