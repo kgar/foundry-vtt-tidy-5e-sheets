@@ -1,5 +1,8 @@
 import { CONSTANTS } from 'src/constants';
-import { getActorActionSections } from 'src/features/actions/actions.svelte';
+import {
+  getActorActionSections,
+  getActorActionSectionsQuadrone,
+} from 'src/features/actions/actions.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -31,6 +34,7 @@ import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
 import { firstOfSet } from 'src/utils/set';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 /*
   TODO: Some things to remember to implement:
@@ -168,7 +172,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
       let context: ActorSheetQuadroneContext = {
         abilities: [],
-        actions: await getActorActionSections(this.actor),
+        actions: await getActorActionSectionsQuadrone(this.actor, {
+          rowActions: TableRowActionsRuntime.getActionsRowActions(
+            this.actor.isOwner,
+            documentSheetContext.unlocked
+          ),
+        }),
         actor: this.actor,
         appId: this.appId,
         config: CONFIG.DND5E,

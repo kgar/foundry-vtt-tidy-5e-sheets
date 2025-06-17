@@ -12,13 +12,11 @@
     disabled,
     deleteFn = () => FoundryAdapter.onActorItemDelete(doc.actor, doc),
   }: Props = $props();
-
-  const localize = FoundryAdapter.localize;
 </script>
 
 <a
   class="tidy-table-button"
-  title={localize('DND5E.ItemDelete')}
+  data-tooltip={'DND5E.ItemDelete'}
   onclick={() => !disabled && deleteFn()}
 >
   <i class="fa-solid fa-trash fa-fw"></i>

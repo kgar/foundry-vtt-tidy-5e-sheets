@@ -43,8 +43,8 @@ class ItemColumnRuntime {
     } satisfies Record<string, ColumnSpecification>;
 
     const standardInventoryColumns = {
-      charges: {
-        ...columns.charges,
+      uses: {
+        ...columns.uses,
         order: 100,
         priority: 400,
       },
@@ -73,7 +73,7 @@ class ItemColumnRuntime {
 
     const standardWeaponColumns = {
       charges: {
-        ...columns.charges,
+        ...columns.uses,
         order: 100,
         priority: 400,
       },
@@ -184,7 +184,7 @@ class ItemColumnRuntime {
         },
         [CONSTANTS.TAB_CHARACTER_FEATURES]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
-            charges: { ...columns.charges, order: 100, priority: 500 },
+            uses: { ...columns.uses, order: 100, priority: 500 },
             time: { ...columns.time, order: 200, priority: 400 },
             recovery: { ...columns.recovery, order: 400, priority: 200 },
             featureSource: {
@@ -202,6 +202,18 @@ class ItemColumnRuntime {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
         },
       },
+      [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.TAB_ACTOR_ACTIONS]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            charges: { ...columns.uses, order: 100, priority: 500 },
+            roll: { ...columns.roll, order: 200, priority: 400 },
+            formula: { ...columns.formula, order: 300, priority: 600 },
+            range: {...columns.range, order: 400, priority: 300},
+            target: { ...columns.target, order: 500, priority: 200},
+            actions: { ...columns.actions, order: 1000, priority: 1000 },
+          },
+        },
+      },
     };
   }
 
@@ -211,12 +223,24 @@ class ItemColumnRuntime {
     sectionKey: string,
     args: ColumnSpecificationCalculatedWidthArgs
   ): ConfiguredColumnSpecification[] {
-    const tab = this._registeredItemColumns[sheetType]?.[tabId];
-    let columnKeysToColumnSpecs =
-      tab?.[sectionKey] ??
-      tab?.[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] ??
+    const specs =
+      // Section-specific specs for the target sheet type
+      this._registeredItemColumns[sheetType]?.[tabId]?.[sectionKey] ??
+      // Default specs for tab for the target sheet type
+      this._registeredItemColumns[sheetType]?.[tabId]?.[
+        CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT
+      ] ??
+      // Section-specific specs for any sheet type
+      this._registeredItemColumns[CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]?.[
+        tabId
+      ]?.[sectionKey] ??
+      // Default specs for tab for any sheet type
+      this._registeredItemColumns[CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]?.[
+        tabId
+      ]?.[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] ??
       [];
-    return Object.entries(columnKeysToColumnSpecs).map(([key, spec]) => ({
+
+    return Object.entries(specs).map(([key, spec]) => ({
       key,
       ...spec,
       widthRems:

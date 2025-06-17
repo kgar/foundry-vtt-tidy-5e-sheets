@@ -9,9 +9,9 @@
   import type { Item5e } from 'src/types/item.types';
   import type {
     Actor5e,
+    TidyItemSectionBase,
     CharacterItemContext,
     CharacterSheetQuadroneContext,
-    FeatureSection,
     NpcItemContext,
     NpcSheetQuadroneContext,
   } from 'src/types/types';
@@ -24,7 +24,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
 
   interface Props {
-    sections: FeatureSection[];
+    sections: TidyItemSectionBase[];
     itemContext: Record<string, CharacterItemContext | NpcItemContext>;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;

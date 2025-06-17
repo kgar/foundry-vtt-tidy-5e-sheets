@@ -3,7 +3,12 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
-import type { ActionItem, ActionSection, Actor5e } from 'src/types/types';
+import type {
+  ActionItem,
+  ActionSectionClassic,
+  Actor5e,
+  TidyItemSectionBase,
+} from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
@@ -37,7 +42,7 @@ const activationTypeSortValues: Record<string, number> = {
 
 export async function getActorActionSections(
   actor: Actor5e
-): Promise<ActionSection[]> {
+): Promise<ActionSectionClassic[]> {
   try {
     let eligibleItems: ActionItem[] = [];
 
@@ -56,7 +61,10 @@ export async function getActorActionSections(
   }
 }
 
-export function getSortedActions(section: ActionSection, sortMode: string) {
+export function getSortedActions(
+  section: ActionSectionClassic,
+  sortMode: string
+) {
   return section.actions.toSorted(({ item: a }, { item: b }) => {
     if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
       return a.name.localeCompare(b.name, game.i18n.lang);
@@ -76,10 +84,10 @@ export function getSortedActions(section: ActionSection, sortMode: string) {
 function buildActionSections(
   actor: Actor5e,
   actionItems: ActionItem[]
-): ActionSection[] {
+): ActionSectionClassic[] {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
 
-  let actionSections: Record<string, ActionSection> = {};
+  let actionSections: Record<string, ActionSectionClassic> = {};
 
   // Initialize the default sections in their default order.
   Object.keys(activationTypeSortValues).forEach((activationType) => {
@@ -89,7 +97,7 @@ function buildActionSections(
       label: FoundryAdapter.getActivationTypeLabel(activationType),
       key: activationType,
       show: true,
-      rowActions: [], // TODO: add rowActions here
+      rowActions: [],
     };
   });
 
@@ -107,7 +115,7 @@ function buildActionSections(
           creationItemTypes: [],
           section: customSectionName,
         },
-        rowActions: [], // TODO: add rowActions here
+        rowActions: [],
       });
       customSection.actions.push(actionItem);
     } else {
@@ -121,9 +129,112 @@ function buildActionSections(
         key: activationType,
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
-        rowActions: [], // TODO: add rowActions here
+        rowActions: [],
       });
       section.actions.push(actionItem);
+    }
+  }
+
+  return Object.values(actionSections);
+}
+
+export async function getActorActionSectionsQuadrone(
+  actor: Actor5e,
+  options?: Partial<TidyItemSectionBase>
+): Promise<TidyItemSectionBase[]> {
+  try {
+    let eligibleItems: Item5e[] = [];
+
+    for (let item of actor.items) {
+      if (!isItemInActionList(item)) {
+        continue;
+      }
+
+      eligibleItems.push(item);
+    }
+
+    return buildActionSectionsQuadrone(eligibleItems, options);
+  } catch (e) {
+    error('An error occurred while getting actions', false, e);
+    return [];
+  }
+}
+
+export function getSortedActionsQuadrone(
+  section: TidyItemSectionBase,
+  sortMode: string
+) {
+  return section.items.toSorted((a, b) => {
+    if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
+      return a.name.localeCompare(b.name, game.i18n.lang);
+    }
+
+    // Sort by Arbitrary Action List Rules
+    if (a.type !== b.type) {
+      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+    }
+    if (a.type === 'spell' && b.type === 'spell') {
+      return a.system.level - b.system.level;
+    }
+    return (a.sort || 0) - (b.sort || 0);
+  });
+}
+
+function buildActionSectionsQuadrone(
+  items: Item5e[],
+  options?: Partial<TidyItemSectionBase>
+): TidyItemSectionBase[] {
+  const customMappings = ActionListRuntime.getActivationTypeMappings();
+
+  let actionSections: Record<string, TidyItemSectionBase> = {};
+
+  // Initialize the default sections in their default order.
+  Object.keys(activationTypeSortValues).forEach((activationType) => {
+    actionSections[activationType] = {
+      items: [],
+      dataset: {},
+      label: FoundryAdapter.getActivationTypeLabel(activationType),
+      key: activationType,
+      show: true,
+      rowActions: [],
+      ...options,
+    };
+  });
+
+  // partition items into sections
+  for (let item of items) {
+    const customSectionName = TidyFlags.actionSection.get(item);
+    if (customSectionName) {
+      const customSection = (actionSections[customSectionName] ??= {
+        items: [],
+        dataset: {},
+        key: customSectionName,
+        label: FoundryAdapter.localize(customSectionName),
+        show: true,
+        custom: {
+          creationItemTypes: [],
+          section: customSectionName,
+        },
+        rowActions: [],
+        ...options,
+      });
+      customSection.items.push(item);
+    } else {
+      const activationType = getActivationType(
+        item.system.activities?.contents[0]?.activation.type,
+        customMappings
+      );
+
+      const section = (actionSections[activationType] ??= {
+        items: [],
+        dataset: {},
+        key: activationType,
+        label: FoundryAdapter.getActivationTypeLabel(activationType),
+        show: true,
+        rowActions: [],
+        ...options,
+      });
+      section.items.push(item);
     }
   }
 
@@ -159,12 +270,31 @@ export function isItemInActionList(item: Item5e): boolean {
       const limitToCantrips = settings.value.actionListLimitActionsToCantrips;
 
       // only exclude spells which need to be prepared but aren't
-      if (
-        !SpellUtils.isCantrip(item) &&
-        (limitToCantrips || SpellUtils.isUnprepared(item))
-      ) {
+      const activitySpellItem = item.system.linkedActivity?.item;
+
+      const isEligibleActivitySpell =
+        !!activitySpellItem &&
+        (activitySpellItem.system.attunement !==
+          CONSTANTS.ATTUNEMENT_REQUIRED ||
+          activitySpellItem.system.attuned);
+
+      const levelledSpellIsEligible =
+        SpellUtils.isCastableSpell(item) || isEligibleActivitySpell;
+
+      const isCantrip = SpellUtils.isCantrip(item);
+
+      // Non-cantrip spells must be permitted via settings and castable by either
+      // preparation mode rules or by Cast Activity item rules.
+      if (!isCantrip && (limitToCantrips || !levelledSpellIsEligible)) {
         return false;
       }
+
+      // Cantrips fron Cast Activity item rules
+      // must respect attunement settings.
+      if (!!activitySpellItem && isCantrip && !isEligibleActivitySpell) {
+        return false;
+      }
+
       const isReaction =
         item.system.activities?.contents[0]?.activation.type ===
         CONSTANTS.ACTIVATION_COST_REACTION;

@@ -9,7 +9,7 @@ import type {
 import type { Component } from 'svelte';
 import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
-import BookmarkButton from 'src/components/table-quadrone/table-buttons/BookmarkButton.svelte';
+import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/ActionsTabToggleButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
 import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
@@ -50,9 +50,9 @@ class TableRowActionsRuntime {
           } satisfies TableAction<typeof EquipButton>);
 
           result.push({
-            component: BookmarkButton,
+            component: ActionsTabToggleButton,
             props: (doc: any) => ({ doc }),
-          } satisfies TableAction<typeof BookmarkButton>);
+          } satisfies TableAction<typeof ActionsTabToggleButton>);
         }
       }
 
@@ -95,9 +95,9 @@ class TableRowActionsRuntime {
           } satisfies TableAction<typeof DeleteButton>);
         } else {
           result.push({
-            component: BookmarkButton,
+            component: ActionsTabToggleButton,
             props: (doc: any) => ({ doc }),
-          } satisfies TableAction<typeof BookmarkButton>);
+          } satisfies TableAction<typeof ActionsTabToggleButton>);
         }
       }
 
@@ -145,9 +145,9 @@ class TableRowActionsRuntime {
           } satisfies TableAction<typeof SpellButton>);
 
           result.push({
-            component: BookmarkButton,
+            component: ActionsTabToggleButton,
             props: (doc: any) => ({ doc }),
-          } satisfies TableAction<typeof BookmarkButton>);
+          } satisfies TableAction<typeof ActionsTabToggleButton>);
         }
       }
 
@@ -189,9 +189,9 @@ class TableRowActionsRuntime {
         } satisfies TableAction<typeof DeleteButton>);
       } else if (context.hasActor) {
         result.push({
-          component: BookmarkButton,
+          component: ActionsTabToggleButton,
           props: (doc: any) => ({ doc }),
-        } satisfies TableAction<typeof BookmarkButton>);
+        } satisfies TableAction<typeof ActionsTabToggleButton>);
       }
 
       result.push({
@@ -207,7 +207,45 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getActionsRowActions() {}
+  getActionsRowActions(owner: boolean, unlocked: boolean) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Item5e,
+      SpellbookSection
+    >;
+
+    let rowActions: TableAction<any>[] = $derived.by(() => {
+      let result: TableAction<any>[] = [];
+
+      if (owner) {
+        if (unlocked) {
+          result.push({
+            component: EditButton,
+            props: (doc: any) => ({ doc }),
+          } satisfies TableAction<typeof EditButton>);
+
+          result.push({
+            component: DeleteButton,
+            props: (doc: any) => ({
+              doc,
+              deleteFn: () => doc.deleteDialog(),
+            }),
+          } satisfies TableAction<typeof DeleteButton>);
+        }
+      }
+
+      result.push({
+        component: MenuButton,
+        props: () => ({
+          targetSelector: '[data-context-menu]',
+        }),
+      } satisfies TableAction<typeof MenuButton>);
+
+      return result;
+    });
+
+    return rowActions;
+  }
 
   getEffectsRowActions() {}
 }

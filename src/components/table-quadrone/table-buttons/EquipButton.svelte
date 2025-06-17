@@ -7,16 +7,12 @@
 
   let { doc }: Props = $props();
 
-  const localize = FoundryAdapter.localize;
-
   let equipped = $derived(doc.system.equipped);
 
   let title = $derived(
-    localize(
-      equipped
-        ? 'DND5E.ContextMenuActionUnequip'
-        : 'DND5E.ContextMenuActionEquip',
-    ),
+    equipped
+      ? 'DND5E.ContextMenuActionUnequip'
+      : 'DND5E.ContextMenuActionEquip',
   );
 
   function toggleEquipped() {
@@ -26,7 +22,7 @@
   }
 </script>
 
-<a {title} onclick={toggleEquipped} class="tidy-table-button">
+<a data-tooltip={title} onclick={toggleEquipped} class="tidy-table-button">
   {#if equipped}
     <i class="fa-solid fa-hand-fist equip-icon color-text-default"></i>
   {:else}

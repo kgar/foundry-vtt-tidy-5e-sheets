@@ -25,8 +25,6 @@
     ),
   );
 
-  const localize = FoundryAdapter.localize;
-
   let isConcentration = $derived(
     'actor' in context &&
       FoundryAdapter.isConcentrationEffect(effect, context.actor.sheet),
@@ -43,14 +41,14 @@
   <a
     class="tidy-table-button"
     onclick={() => endConcentration()}
-    title={localize('DND5E.ConcentrationBreak')}
+    data-tooltip={'DND5E.ConcentrationBreak'}
   >
     <Dnd5eIcon src={`systems/dnd5e/icons/svg/break-concentration.svg`} />
   </a>
 {:else}
   <a
     class="tidy-table-button"
-    {title}
+    data-tooltip={title}
     onclick={() => effect.update({ disabled: !effect.disabled })}
   >
     <i

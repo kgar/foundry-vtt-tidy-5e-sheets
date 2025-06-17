@@ -1,14 +1,17 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settings } from 'src/settings/settings.svelte';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
   import { error } from 'src/utils/logging';
   import { getContext, onMount, type Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
+  import { SvelteSet } from 'svelte/reactivity';
 
   interface Props {
     tabs: Tab[];
     selectedTabId?: string | undefined;
+    extraTabs?: SvelteSet<string>;
     cssClass?: ClassValue;
     tabCssClass?: ClassValue;
     orientation?: 'horizontal' | 'vertical';
@@ -20,7 +23,8 @@
 
   let {
     tabs,
-    selectedTabId = $bindable(undefined),
+    selectedTabId = $bindable(),
+    extraTabs,
     cssClass,
     tabCssClass,
     orientation = 'horizontal',
@@ -36,10 +40,27 @@
 
   let nav: HTMLElement;
 
+  function onTabClicked(
+    event: MouseEvent & { currentTarget: HTMLElement },
+    tab: Tab,
+  ) {
+    if (settings.value.truesight) {
+      if (extraTabs && event.ctrlKey && selectedTabId !== tab.id) {
+        extraTabs.add(tab.id);
+        return;
+      }
+    }
+
+    selectTab(tab);
+  }
+
   function selectTab(tab: Tab) {
     if (sheet?.element && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
       return;
     }
+
+    extraTabs?.clear();
+
     selectedTabId = tab.id;
     onTabSelectedContextFn?.(tab.id);
     onTabSelected?.(tab);
@@ -130,7 +151,8 @@
         }}
       >
         {@const tabTitle = resolveTabTitle(tab)}
-        {@const tabIsSelected = tab.id === selectedTabId}
+        {@const tabIsSelected =
+          tab.id === selectedTabId || extraTabs?.has(tab.id)}
         {@const tabindex = tabIsSelected ? 0 : -1}
         <a
           class={[
@@ -145,7 +167,7 @@
           data-tab-id={tab.id}
           role="tab"
           aria-selected={tabIsSelected}
-          onclick={() => selectTab(tab)}
+          onclick={(ev) => onTabClicked(ev, tab)}
           onkeydown={(ev) => onKeyDown(ev, i)}
           {tabindex}
           title={tabTitle}

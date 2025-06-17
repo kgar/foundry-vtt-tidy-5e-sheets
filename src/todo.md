@@ -1,3 +1,30 @@
+## Sheet Tab To Do
+
+- [x] Provide Filters
+- [x] Provide Pinned Filters
+- [x] Provide Sorts - nothing beyond the default
+- [x] Ensure tab config works
+- [x] Implement Bookmark row action
+  - Initial state 
+    - when NULL and included in actions tab, consider it bookmarked
+    - when NULL and not included in actions tab, consider it not bookmarked
+    - if included via flag, bookmarked
+    - if excluded via flag, not bookmarked
+- [x] Change Sheet bookmark to pin
+- [x] Ensure Sheet pin options are available in context menu for Quadrone sheets
+  - [x] Add to Sheet Tab
+  - [x] Remove from Sheet Tab
+- [x] Surface activity spells and subtitle them accordingly
+- [x] Provide dedicated context for action subtitles, and decide on appropriate subtitles later.
+
+### Notes
+
+#### Actions-tab-specific Subtitles?
+
+Actions tab items could use some context to distinguish them from one another. Examples:
+- Inventory items in containers: Container Name in subtitle
+- Spells from items: Item source in subtitle
+
 ## To Do
 
 - [ ] Character Sheet 
@@ -82,6 +109,7 @@
 - [ ] (PC: Feature tab) Implement alternate section groupings - https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355 | include toggle option as sheet flag in tab settings
 - [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
+- [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
 
 
 ### Feature - Set as Inspiration Source

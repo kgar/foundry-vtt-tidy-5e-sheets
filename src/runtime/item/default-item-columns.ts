@@ -56,26 +56,36 @@ export function getDefaultColumns() {
       widthRems: 7,
       cellClasses: 'text-cell',
     },
-    charges: {
+    components: {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.Uses'),
+        html: FoundryAdapter.localize('DND5E.Components'),
       },
       cellContent: {
         type: 'component',
-        component: ItemUsesColumn,
+        component: ItemSpellComponentsColumn,
       },
-      widthRems: 5,
-      cellClasses: 'inline-uses',
+      widthRems: 5.625,
     },
-    time: {
+    featureSource: {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.SpellHeader.Time'),
+        html: FoundryAdapter.localize('DND5E.SOURCE.FIELDS.source.label'),
       },
       cellContent: {
         type: 'component',
-        component: ItemTimeColumn,
+        component: ItemFeatureSourceColumn,
+      },
+      widthRems: 6.25,
+    },
+    formula: {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.SpellHeader.Formula'),
+      },
+      cellContent: {
+        type: 'component',
+        component: ItemDamageFormulasColumn,
       },
       widthRems: 5,
     },
@@ -101,16 +111,27 @@ export function getDefaultColumns() {
       },
       widthRems: 5,
     },
-    weight: {
+    range: {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.Weight'),
+        html: FoundryAdapter.localize('DND5E.SpellHeader.Range'),
       },
       cellContent: {
         type: 'component',
-        component: ItemWeightColumn,
+        component: ItemRangeColumn,
       },
       widthRems: 5,
+    },
+    recovery: {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.Recovery'),
+      },
+      cellContent: {
+        type: 'component',
+        component: ItemRecoveryColumn,
+      },
+      widthRems: 6.25,
     },
     roll: {
       headerContent: {
@@ -122,17 +143,6 @@ export function getDefaultColumns() {
         component: ItemRollColumn,
       },
       widthRems: 3.125,
-    },
-    components: {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.Components'),
-      },
-      cellContent: {
-        type: 'component',
-        component: ItemSpellComponentsColumn,
-      },
-      widthRems: 5.625,
     },
     school: {
       headerContent: {
@@ -156,49 +166,39 @@ export function getDefaultColumns() {
       },
       widthRems: 5,
     },
-    range: {
+    time: {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.SpellHeader.Range'),
+        html: FoundryAdapter.localize('DND5E.SpellHeader.Time'),
       },
       cellContent: {
         type: 'component',
-        component: ItemRangeColumn,
+        component: ItemTimeColumn,
       },
       widthRems: 5,
     },
-    formula: {
+    uses: {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.SpellHeader.Formula'),
+        html: FoundryAdapter.localize('DND5E.Uses'),
       },
       cellContent: {
         type: 'component',
-        component: ItemDamageFormulasColumn,
+        component: ItemUsesColumn,
       },
       widthRems: 5,
+      cellClasses: 'inline-uses',
     },
-    recovery: {
+    weight: {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.Recovery'),
+        html: FoundryAdapter.localize('DND5E.Weight'),
       },
       cellContent: {
         type: 'component',
-        component: ItemRecoveryColumn,
+        component: ItemWeightColumn,
       },
-      widthRems: 6.25,
-    },
-    featureSource: {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.SOURCE.FIELDS.source.label'),
-      },
-      cellContent: {
-        type: 'component',
-        component: ItemFeatureSourceColumn,
-      },
-      widthRems: 6.25,
+      widthRems: 5,
     },
   } satisfies DefaultTableColumns;
 }
