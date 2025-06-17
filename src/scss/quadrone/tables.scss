@@ -167,6 +167,8 @@
 
     .item-image {
       background: var(--t5e-color-gold);
+      width: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
+      height: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
     }
 
     >* {
@@ -253,11 +255,18 @@
       padding: 1px 0 0 2px;
     }
 
-    .item-state-indicator {}
+    .item-state-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: var(--t5e-icon-size-7x);
+      min-width: var(--t5e-icon-size-6x);
+    }
 
     &[data-tidy-item-type="spell"] {
 
-      dnd5e-icon {
+      .spell-school-icon dnd5e-icon {
         --icon-size: calc(1.375rem);
         --icon-fill: var(--t5e-color-text-gold-emphasis);
       }
@@ -707,6 +716,9 @@
     background: linear-gradient(120deg,
         var(--t5e-component-card-darker) 10%,
         var(--t5e-component-card-default) 120%);
+
+
+    [data-tidy-sheet-part="item-property-list"] .value {}
   }
 
   .empty-container {

@@ -86,7 +86,11 @@
       {#if chatData.properties && (gmEditMode || identified)}
         {#each chatData.properties as prop}<span class="tag">
             <span class="value">
-              {prop}
+              {#if typeof prop === 'string'}
+                {prop.charAt(0).toUpperCase() + prop.slice(1)}
+              {:else}
+                {prop}
+              {/if}
             </span>
           </span>
         {/each}
