@@ -399,10 +399,30 @@
   .tidy-tab.journal {
     gap: 0.75rem;
 
-    .journal-entry-selector {
-      flex-basis: 24rem;
+    .journal-editor {
+      flex: 1;
       display: flex;
       flex-direction: column;
+      
+      .editor {
+        flex: 1;
+      }
+    }
+
+    .journal-entry-selector {
+      flex: 0;
+      flex-basis: 12rem;
+      display: flex;
+      flex-direction: column;
+
+      .pages-list {
+        flex: 1;
+        overflow-y: auto;
+
+        .page.selected {
+          background: fuchsia;
+        }
+      }
 
       .journal-entry-selector {
         display: flex;
@@ -410,11 +430,24 @@
         flex: 1;
         overflow-y: auto;
       }
+
+      .action-buttons {
+        display: flex;
+
+        .add {
+          flex: 1;
+        }
+      }
+    }
+
+    .journal-entry-viewer {
+      flex: 1;
     }
 
     .title-container {
       display: flex;
       align-items: center;
+      gap: 0.5rem;
 
       .title {
         flex: 1;

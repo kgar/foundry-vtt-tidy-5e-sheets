@@ -76,6 +76,7 @@ export const CONSTANTS = {
    */
   MOUSE_BUTTON_SECONDARY: 2,
   CONTEXT_MENU_TYPE_ACTIVITIES: 'activities',
+  CONTEXT_MENU_TYPE_ACTOR_JOURNAL: 'actor-journal',
   CONTEXT_MENU_TYPE_EFFECTS: 'effects',
   CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS: 'facility-occupants',
   CONTEXT_MENU_TYPE_GROUP_MEMBER: 'group-member',

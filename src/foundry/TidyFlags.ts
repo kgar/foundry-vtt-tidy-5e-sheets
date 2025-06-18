@@ -96,10 +96,7 @@ export class TidyFlags {
     add(actor: Actor5e) {
       const newId = foundry.utils.randomID();
 
-      const newSort =
-        Object.values(TidyFlags.actorJournal.get(actor)).reduce((prev, acc) => {
-          return Math.max(prev, acc.sort ?? 0);
-        }, 0) + 10;
+      const newSort = TidyFlags.actorJournal.getMaxSort(actor) + 10;
 
       const updateProp = `${TidyFlags.getFlagPropertyPath(
         TidyFlags.actorJournal.key
@@ -116,6 +113,39 @@ export class TidyFlags {
     },
     clear(actor: Actor5e) {
       TidyFlags.unsetFlag(actor, TidyFlags.actorJournal.key);
+    },
+    duplicate(actor: Actor5e, id: string) {
+      const original = TidyFlags.actorJournal.get(actor)[id];
+
+      if (!original) {
+        return;
+      }
+
+      const newId = foundry.utils.randomID();
+
+      const newSort = TidyFlags.actorJournal.getMaxSort(actor) + 10;
+
+      const newEntry = {
+        ...original,
+        id: newId,
+        sort: newSort,
+      } satisfies ActorJournalEntry;
+
+      const updateProp = `${TidyFlags.getFlagPropertyPath(
+        TidyFlags.actorJournal.key
+      )}.${newId}`;
+
+      actor.update({
+        [updateProp]: newEntry,
+      });
+    },
+    getMaxSort(actor: Actor5e) {
+      return Object.values(TidyFlags.actorJournal.get(actor)).reduce(
+        (prev, acc) => {
+          return Math.max(prev, acc.sort ?? 0);
+        },
+        0
+      );
     },
     remove(actor: Actor5e, id: string) {
       let updateProp = `${TidyFlags.getFlagPropertyPath(

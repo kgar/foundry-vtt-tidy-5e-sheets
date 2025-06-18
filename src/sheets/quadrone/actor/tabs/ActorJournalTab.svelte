@@ -3,6 +3,7 @@
   import { TidyFlags, type ActorJournalEntry } from 'src/api';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
@@ -42,20 +43,27 @@
     }
   });
 
+  // TODO: Eliminate this, if possible
+  function getFallbackTitle(index: number) {
+    return `(localize) Journal Entry ${index + 1}`;
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
 {#if editing && selected}
   {#await enrichedPromise then enriched}
-    <SheetEditorV2
-      documentUuid={context.document.uuid}
-      content={selected.value}
-      editorOptions={{ toggled: false }}
-      manageSecrets={true}
-      field="{journalProp}.value"
-      {enriched}
-      onSave={() => (editing = false)}
-    ></SheetEditorV2>
+    <div class="journal-editor">
+      <SheetEditorV2
+        documentUuid={context.document.uuid}
+        content={selected.value}
+        editorOptions={{ toggled: false }}
+        manageSecrets={true}
+        field="{journalProp}.value"
+        {enriched}
+        onSave={() => (editing = false)}
+      />
+    </div>
   {/await}
 {/if}
 
@@ -63,11 +71,14 @@
   <nav class="pages-list">
     <ol class="">
       {#each entries as entry, i (entry.id)}
-        {#if i !== selectedIndex}
-          <li class="page" onclick={() => (selectedIndex = i)}>
-            {coalesce(entry.title, `(localize) Journal Entry ${i}`)}
-          </li>
-        {/if}
+        <li
+          class={['page', { selected: i === selectedIndex }]}
+          onclick={() => i !== selectedIndex && (selectedIndex = i)}
+          data-journal-id={entry.id}
+          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL}
+        >
+          {coalesce(entry.title, getFallbackTitle(i))}
+        </li>
       {/each}
     </ol>
   </nav>
@@ -83,7 +94,7 @@
     </button>
     <button
       type="button"
-      class="button"
+      class="button add"
       disabled={!context.owner}
       onclick={async () => {
         await TidyFlags.actorJournal.add(context.actor);
@@ -105,18 +116,23 @@
 </div>
 <div class={['journal-entry-viewer', { hidden: editing }]}>
   {#if selected}
+    {@const title = coalesce(selected.title, getFallbackTitle(selectedIndex))}
+
     <div class="title-container">
       {#if context.unlocked}
         <TextInputQuadrone
           document={context.actor}
           field={`${journalProp}.title`}
           value={selected.title}
+          placeholder={title}
           class="title"
         />
       {:else}
-        <h3 class="title">{selected.title}</h3>
+        <h3 class="title">{title}</h3>
       {/if}
-      <a onclick={() => (editing = true)}><i class="fa-solid fa-feather"></i></a
+      <a
+        class="button button-borderless button-icon-only edit"
+        onclick={() => (editing = true)}><i class="fa-solid fa-feather"></i></a
       >
     </div>
     {#await enrichedPromise then enriched}

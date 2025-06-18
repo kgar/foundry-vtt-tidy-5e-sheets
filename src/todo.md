@@ -3,15 +3,24 @@
 - [x] Implement tab selection
 - [x] Implement Create Journal Entry
 - [x] Implement Delete Journal Entry
-- [ ] Add code to Journal to make it resilient to bad data, preferring to show blanks where data is missing
-- [ ] Implement setting a title (cannot use prop-path-based update, because it trashes all other data; is there another way to selectively update one prop form an array of data in Foundry documents?)
-- [ ] Implement viewing rendered HTML (exclude secrets for now)
-- [ ] Implement opening the editor and saving
-- [ ] Add context menu for deleting journal entry
-- [ ] Add context menu for editing journal entry
-- [ ] Add context menu for duplicating journal entry
+- [x] ~~Add code to Journal to make it resilient to bad data, preferring to show blanks where data is missing~~ You can only do so much
+- [x] Implement setting a title
+- [x] Implement viewing rendered HTML
+- [x] Implement opening the editor and saving
+- [x] Add context menu for deleting journal entry
+- [x] Add context menu for duplicating journal entry
 - [ ] Implement drag-and-drop to sort
-- [ ] (Decide) Is it worth it to support secrets management?
+- [ ] Decide: Use a dedicated edit dialog for editing an entry? Close on save button clicked, and save on close.
+- [ ] Creating a new journal entry
+  - Add the journal entry
+  - Give it a name ("New Journal Entry")
+  - Select it
+  - Open edit for new journal entry
+- [ ] On duplicate
+  - Take the name of the previous one and tack on " (Copy)"
+- [ ] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
+- [ ] (Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.
+- [ ] Tidy up the CSS a little
 
 ### Journal scratch
 
