@@ -9,6 +9,7 @@
   import type { ActorSheetQuadroneContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { coalesce } from 'src/utils/formatting';
+  import { untrack } from 'svelte';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -18,7 +19,7 @@
     ),
   );
 
-  let selectedIndex = $state(0);
+  let selectedIndex = $state(-1);
 
   let selected = $derived<ActorJournalEntry | undefined>(
     entries[selectedIndex],
@@ -39,7 +40,15 @@
 
   $effect(() => {
     if (selectedIndex >= entries.length) {
-      selectedIndex = Math.min(0, selectedIndex - 1);
+      selectedIndex = selectedIndex - 1;
+    }
+  });
+
+  $effect(() => {
+    if (entries.length > 0) {
+      untrack(() => {
+        selectedIndex = selectedIndex < 0 ? 0 : entries.length - 1;
+      });
     }
   });
 
@@ -69,12 +78,13 @@
 
 <div class={['journal-entry-selector', { hidden: editing }]}>
   <nav class="pages-list">
-    <ol class="">
+    <ol class="pages">
       {#each entries as entry, i (entry.id)}
         <li
           class={['page', { selected: i === selectedIndex }]}
           onclick={() => i !== selectedIndex && (selectedIndex = i)}
-          data-journal-id={entry.id}
+          data-tidy-draggable
+          data-tidy-journal-id={entry.id}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL}
         >
           {coalesce(entry.title, getFallbackTitle(i))}

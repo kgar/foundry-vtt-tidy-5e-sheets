@@ -9,15 +9,18 @@
 - [x] Implement opening the editor and saving
 - [x] Add context menu for deleting journal entry
 - [x] Add context menu for duplicating journal entry
-- [ ] Implement drag-and-drop to sort
-- [ ] Decide: Use a dedicated edit dialog for editing an entry? Close on save button clicked, and save on close.
+- [x] Implement drag-and-drop to sort
+- [x] (stretch) drag-and-drop to move/copy between sheets
+- [ ] Include "getting started" text when no entries.
+- [ ] Use a dedicated edit dialog for editing an entry. Close on save button clicked, and save on close.
 - [ ] Creating a new journal entry
-  - Add the journal entry
-  - Give it a name ("New Journal Entry")
-  - Select it
-  - Open edit for new journal entry
+  - [x] Add the journal entry
+  - [ ] Give it a name ("New Journal Entry")
+  - [x] Select it
+  - [ ] Open edit for new journal entry
 - [ ] On duplicate
   - Take the name of the previous one and tack on " (Copy)"
+- When index changes, scroll the selected into view
 - [ ] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
 - [ ] (Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.
 - [ ] Tidy up the CSS a little
@@ -126,6 +129,7 @@ loc keys:
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 - [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
 - [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
+- [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
 
 
 ### Feature - Set as Inspiration Source

@@ -10,7 +10,8 @@ export const CONSTANTS = {
   SYSTEM_SETTING_LEVELING_MODE_XP: 'xp',
   SYSTEM_SETTING_LEVELING_MODE_XP_BOONS: 'xpBoons',
   SYSTEM_SETTING_DEFAULT_SKILLS: 'defaultSkills',
-  COLUMN_SPEC_SECTION_KEY_DEFAULT: 'default section key fallback for column specs',
+  COLUMN_SPEC_SECTION_KEY_DEFAULT:
+    'default section key fallback for column specs',
   COLUMN_SPEC_TYPE_KEY_DEFAULT: 'default sheet type fallback for column specs',
   DOCUMENT_NAME_ACTOR: 'Actor',
   DOCUMENT_NAME_ITEM: 'Item',
@@ -33,6 +34,7 @@ export const CONSTANTS = {
   FAVORITES_SECTION_TYPE_GENERIC: 'generic',
   FAVORITES_SECTION_TYPE_INVENTORY: 'inventory',
   FAVORITES_SECTION_TYPE_SPELLBOOK: 'spellbook',
+  FLAG_TYPE_TIDY_JOURNAL: 'Tidy5eJournal',
   HABITAT_TYPE_ANY: 'any',
   ITEM_CAPACITY_TYPE_ITEMS: 'items',
   ITEM_CAPACITY_TYPE_WEIGHT: 'weight',

@@ -93,7 +93,7 @@ export class TidyFlags {
         ) ?? {}
       );
     },
-    add(actor: Actor5e) {
+    add(actor: Actor5e, data?: Partial<ActorJournalEntry>) {
       const newId = foundry.utils.randomID();
 
       const newSort = TidyFlags.actorJournal.getMaxSort(actor) + 10;
@@ -104,9 +104,10 @@ export class TidyFlags {
 
       return actor.update({
         [updateProp]: {
-          id: newId,
           title: '',
           value: '',
+          ...data,
+          id: newId,
           sort: newSort,
         } satisfies ActorJournalEntry,
       });
@@ -123,21 +124,12 @@ export class TidyFlags {
 
       const newId = foundry.utils.randomID();
 
-      const newSort = TidyFlags.actorJournal.getMaxSort(actor) + 10;
-
       const newEntry = {
         ...original,
         id: newId,
-        sort: newSort,
       } satisfies ActorJournalEntry;
 
-      const updateProp = `${TidyFlags.getFlagPropertyPath(
-        TidyFlags.actorJournal.key
-      )}.${newId}`;
-
-      actor.update({
-        [updateProp]: newEntry,
-      });
+      return TidyFlags.actorJournal.add(actor, newEntry);
     },
     getMaxSort(actor: Actor5e) {
       return Object.values(TidyFlags.actorJournal.get(actor)).reduce(
@@ -155,6 +147,41 @@ export class TidyFlags {
     },
     set(actor: Actor5e, journal: ActorJournalEntries) {
       return TidyFlags.setFlag(actor, TidyFlags.actorJournal.key, journal);
+    },
+    sort(actor: Actor5e, sourceId: string, targetId: string) {
+      if (sourceId === targetId) return;
+
+      const journal = TidyFlags.actorJournal.get(actor);
+
+      let source;
+      let target;
+      let siblings = Object.values(journal).filter((e) => {
+        if (e.id === targetId) target = e;
+        else if (e.id === sourceId) source = e;
+        return e.id !== sourceId;
+      });
+
+      if (!source || !target) {
+        return;
+      }
+
+      const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+        target,
+        siblings,
+      });
+
+      let actorUpdates: Record<string, { sort: number }> = {};
+
+      for (const { target, update } of updates) {
+        actorUpdates[
+          `${TidyFlags.getFlagPropertyPath(TidyFlags.actorJournal.key)}.${
+            target.id
+          }`
+        ] = { sort: update.sort };
+      }
+
+      console.warn('Actor updates', actorUpdates);
+      return actor.update(actorUpdates);
     },
   };
 

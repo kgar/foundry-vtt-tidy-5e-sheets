@@ -6,8 +6,8 @@ export function configureActorJournalContextMenu(
   app: any
 ) {
   const id = element
-    .closest('[data-journal-id]')
-    ?.getAttribute('data-journal-id');
+    .closest('[data-tidy-journal-id]')
+    ?.getAttribute('data-tidy-journal-id');
 
   if (!id) {
     return;
