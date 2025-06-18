@@ -26,7 +26,7 @@
     margin: 0 0.03125rem;
     border-radius: 0.09375rem;
     background: var(--t5e-color-text-gold-emphasis);
-    color: var(--t5e-color-text-default);
+    color: var(--t5e-color-text-oninverse-default);
   }
 }
 
@@ -67,21 +67,4 @@
 }
 
 &.theme-dark,
-.theme-dark {
-  .spell-component {
-    color: var(--t5e-color-text-lighter);
-  }
-
-  .spell-component-special {
-    color: var(--t5e-color-text-default);
-    background-color: var(--t5e-color-text-gold);
-  }
-
-  .text-secondary {
-    color: var(--t5e-color-text-lighter);
-  }
-
-  .time .subtitle {
-    color: var(--t5e-color-text-lightest);
-  }
-}
+.theme-dark {}

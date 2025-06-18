@@ -20,7 +20,7 @@
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
-  {inferredActivation?.value ?? ''}<span data-tooltip={abbrOrLabel.label}
+  {inferredActivation?.value ?? ''}<span data-tooltip={abbrOrLabel.label} class="uppercase"
     >{localize(abbrOrLabel.abbreviation)}</span
   >
 {:else if !isNil(abbrOrLabel.label, '')}

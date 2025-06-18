@@ -69,9 +69,9 @@
           onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
         >
           {#if ctx.activity.img?.endsWith('.svg')}
-            <Dnd5eIcon class="item-image" src={ctx.activity.img} />
+            <img class="item-image" src={ctx.activity.img} alt={ctx.activity.name} />
           {:else}
-            <img class="item-image" alt="" src={ctx.activity.img} />
+            <img class="item-image" alt={ctx.activity.name} src={ctx.activity.img} />
           {/if}
           <span class="roll-prompt">
             <i class="fa fa-dice-d20"></i>

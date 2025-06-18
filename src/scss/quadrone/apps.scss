@@ -543,36 +543,36 @@
     }
 
 
-    button.item-summary-command {
-      width: auto;
-      line-height: 1rem;
-      padding: 0.25rem 0;
-      background: none; //var(--t5e-component-field-background);
-      color: var(--t5e-color-text-lighter);
-      border: none; // 0.0625rem solid var(--t5e-component-field-border);
-      font-size: 0.75rem;
-      margin: 0;
+    // button.item-summary-command {
+    //   width: auto;
+    //   line-height: 1rem;
+    //   padding: 0.25rem 0;
+    //   background: none; //var(--t5e-component-field-background);
+    //   color: var(--t5e-color-text-lighter);
+    //   border: none; // 0.0625rem solid var(--t5e-component-field-border);
+    //   font-size: 0.75rem;
+    //   margin: 0;
 
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      height: var(--t5e-tag-size-default);
-      min-height: var(--t5e-tag-size-default);
+    //   display: inline-flex;
+    //   align-items: center;
+    //   gap: 0.25rem;
+    //   height: var(--t5e-tag-size-default);
+    //   min-height: var(--t5e-tag-size-default);
 
-      i {
-        color: var(--t5e-color-icon-diminished);
-      }
+    //   i {
+    //     color: var(--t5e-color-icon-diminished);
+    //   }
 
-      &:hover {
-        color: var(--t5e-color-text-default);
-        background: var(--t5e-component-field-background-hover);
-        border-color: var(--t5e-component-field-border-hover);
+    //   &:hover {
+    //     color: var(--t5e-color-text-default);
+    //     background: var(--t5e-component-field-background-hover);
+    //     border-color: var(--t5e-component-field-border-hover);
 
-        i {
-          color: var(--t5e-color-icon-default);
-        }
-      }
-    }
+    //     i {
+    //       color: var(--t5e-color-icon-default);
+    //     }
+    //   }
+    // }
   }
 
   sup,
@@ -739,19 +739,19 @@
     &:where(.mode-atwill) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-atwill);
     }
-    
+
     &:where(.mode-always) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-always);
     }
-    
+
     &:where(.mode-pact) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-pact);
     }
-    
+
     &:where(.mode-innate) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-innate);
     }
-    
+
     &:where(.mode-ritual) {
       --t5e-mode-color: var(--t5e-color-icon-spellcasting-ritual);
     }

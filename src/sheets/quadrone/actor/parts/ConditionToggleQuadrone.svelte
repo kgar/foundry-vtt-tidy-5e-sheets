@@ -37,9 +37,8 @@
   class="condition-toggle-label effect-toggle"
 >
   <Dnd5eIcon src={condition.icon} />
-  <span class="flex-1 truncate">{condition.name}</span>
+  <span class="flex1 truncate">{condition.name}</span>
   <FieldToggle
-    class="condition-toggle"
     checked={!condition.disabled}
     onchange={(ev) => handleChange(ev.currentTarget.checked)}
     disabled={!context.editable}

@@ -61,6 +61,12 @@
           width: 1.75rem;
           height: 1.75rem;
           margin-right: var(--t5e-size-1x);
+          overflow: hidden;
+          background-color: var(--t5e-color-palette-gold-56);
+          color: var(--t5e-color-text-oninverse-default);
+          align-items: center;
+          justify-content: center;
+          display: flex;
         }
 
         &.empty {
@@ -373,20 +379,25 @@
       block-size: 0;
       inline-size: 0;
       border-inline: 3px solid transparent;
+
       &.encumbrance-low {
         inset-inline-start: var(--encumbrance-low);
       }
+
       &.encumbrance-high {
         inset-inline-start: var(--encumbrance-high);
       }
+
       &.arrow-up {
         inset-block-end: 0;
         border-block-end: 3px solid var(--t5e-color-gold);
       }
+
       &.arrow-down {
         inset-block-start: 0;
         border-top: 3px solid var(--t5e-color-gold);
       }
+
       transform: translateX(-50%);
       z-index: 1;
     }
