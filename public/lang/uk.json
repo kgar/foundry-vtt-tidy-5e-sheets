@@ -851,5 +851,6 @@
     "TIDY5E.HitDice.Abbreviation": "HD",
     "TIDY5E.HitDice.Current.Label": "Поточні кубики хітів",
     "TIDY5E.CharacterTraits.Title": "Риси характеру",
-    "TIDY5E.SidebarPinnedTab.Title": "Закріплено"
+    "TIDY5E.SidebarPinnedTab.Title": "Закріплено",
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Відстеження слотів заклинань"
 }
