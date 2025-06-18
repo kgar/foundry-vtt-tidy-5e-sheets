@@ -444,6 +444,7 @@
       flex-direction: row;
       flex-wrap: wrap;
       gap: 0.25rem;
+      align-items: center;
     }
 
     .right-aligned-elements {
@@ -455,36 +456,36 @@
     }
 
 
-    button.item-summary-command {
-      width: auto;
-      line-height: 1rem;
-      padding: var(--t5e-size-1x);
-      background: none; //var(--t5e-component-field-background);
-      color: var(--t5e-color-text-lighter);
-      border: none; // 0.0625rem solid var(--t5e-component-field-border);
-      font-size: var(--font-size-12);
-      margin: -0.25rem 0;
+    // button.item-summary-command {
+    //   width: auto;
+    //   line-height: 1rem;
+    //   padding: var(--t5e-size-1x);
+    //   background: none; //var(--t5e-component-field-background);
+    //   color: var(--t5e-color-text-lighter);
+    //   border: none; // 0.0625rem solid var(--t5e-component-field-border);
+    //   font-size: var(--font-size-12);
+    //   margin: -0.25rem 0;
 
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      height: var(--t5e-tag-size-default);
-      min-height: var(--t5e-tag-size-default);
+    //   display: inline-flex;
+    //   align-items: center;
+    //   gap: 0.25rem;
+    //   height: var(--t5e-tag-size-default);
+    //   min-height: var(--t5e-tag-size-default);
 
-      i {
-        color: var(--t5e-color-icon-diminished);
-      }
+    //   i {
+    //     color: var(--t5e-color-icon-diminished);
+    //   }
 
-      &:hover {
-        color: var(--t5e-color-text-default);
-        background: var(--t5e-component-field-background-hover);
-        border-color: var(--t5e-component-field-border-hover);
+    //   &:hover {
+    //     color: var(--t5e-color-text-default);
+    //     background: var(--t5e-component-field-background-hover);
+    //     border-color: var(--t5e-component-field-border-hover);
 
-        i {
-          color: var(--t5e-color-icon-default);
-        }
-      }
-    }
+    //     i {
+    //       color: var(--t5e-color-icon-default);
+    //     }
+    //   }
+    // }
   }
 
 
@@ -673,17 +674,17 @@
     border: none;
   }
 
-  &.theme-light {
-    button.item-summary-command {
-      box-shadow: none;
-      text-shadow: var(--t5e-drop-shadow-field);
+  // &.theme-light {
+  //   button.item-summary-command {
+  //     box-shadow: none;
+  //     text-shadow: var(--t5e-drop-shadow-field);
 
-      &:hover {
-        background: none;
-        border-color: var(--t5e-component-field-border-hover);
-      }
-    }
-  }
+  //     &:hover {
+  //       background: none;
+  //       border-color: var(--t5e-component-field-border-hover);
+  //     }
+  //   }
+  // }
 
 
   &.theme-dark {

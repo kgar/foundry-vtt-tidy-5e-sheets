@@ -74,35 +74,31 @@
     {/if}
   </div>
   <div class="info pills flex1">
-    <div class="spellcasting-ability pill">
+    <div class="spellcasting-ability pill pill-medium">
       {info.ability.label}
     </div>
-    <div class="ability pill">
-      <span class="label font-label-medium text-color-lighter">{localize('DND5E.Ability')}</span>
+    <div class="ability pill pill-medium">
+      <span class="label font-label-medium color-text-lighter">{localize('DND5E.Ability')}</span>
       <span class="value">
-        <span class="sign font-label-medium text-color-lightest">{info.ability.mod.sign}</span>
-        <span class="font-data-medium">{info.ability.mod.value}</span>
+        <span class="sign font-label-medium color-text-lightest">{info.ability.mod.sign}</span><span class="font-data-medium">{info.ability.mod.value}</span>
       </span>
     </div>
-    <div class="attack pill">
-      <span class="label font-label-medium text-color-lighter">{localize('DND5E.Attack')}</span>
+    <div class="attack pill pill-medium">
+      <span class="label font-label-medium color-text-lighter">{localize('DND5E.Attack')}</span>
       <span class="value">
-        <span class="sign font-label-medium text-color-lightest">{info.attack.mod.sign}</span>
-        <span class="font-data-medium">{info.attack.mod.value}</span>
+        <span class="sign font-label-medium color-text-lightest">{info.attack.mod.sign}</span><span class="font-data-medium">{info.attack.mod.value}</span>
       </span>
     </div>
-    <div class="save pill">
-      <span class="label font-label-medium text-color-lighter">{localize('DND5E.SpellDC')}</span>
+    <div class="save pill pill-medium">
+      <span class="label font-label-medium color-text-lighter">{localize('DND5E.SpellDC')}</span>
       <span class="value">
         <span class="font-data-medium">{info.save}</span>
       </span>
     </div>
-    <a class="prepared pill interactive" onclick={() => onPreparedClicked()}>
-      <span class="label font-label-medium text-color-lighter">{localize('DND5E.Prepared')}</span>
+    <a class="prepared pill pill-medium interactive" onclick={() => onPreparedClicked()}>
+      <span class="label font-label-medium color-text-lighter">{localize('DND5E.Prepared')}</span>
       <span class="value preparations">
-        <span class="count">{info.prepared.value}</span>
-        <span class="separator">/</span>
-        <span class="max">{info.prepared.max}</span>
+        <span class="count font-data-medium">{info.prepared.value}</span><span class="separator font-default-medium color-text-gold">/</span><span class="max font-label-medium color-text-lighter">{info.prepared.max}</span>
       </span>
     </a>
   </div>

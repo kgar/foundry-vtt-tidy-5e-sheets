@@ -12,6 +12,10 @@
     flex-direction: column;
     flex-grow: 1;
     gap: 0.75rem;
+
+    &:not(:has(~ .sheet-footer)) {
+      padding-block-end: var(--t5e-size-3x);
+    }
   }
 
   .tidy-table {
@@ -166,7 +170,7 @@
     }
 
     .item-image {
-      background: var(--t5e-color-gold);
+      background: var(--t5e-color-text-gold-emphasis);
       width: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
       height: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
     }
