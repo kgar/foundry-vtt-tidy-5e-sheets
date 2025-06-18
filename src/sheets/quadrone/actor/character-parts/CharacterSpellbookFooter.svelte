@@ -23,17 +23,21 @@
   let multiclass = $derived(context.spellcasting.length > 1);
 </script>
 
-<div class={['sheet-footer', classValue]}>
-  {#each context.spellcasting as info}
-    <SpellcastingClassSummaryCard {info} {multiclass} {tabId} />
-  {/each}
+<div class={['sheet-footer spellbook-footer flexrow', classValue]}>
+  <div class="sheet-footer-left flexcol">
+    {#each context.spellcasting as info}
+      <SpellcastingClassSummaryCard {info} {multiclass} {tabId} />
+    {/each}
+  </div>
 
-  <a
-    data-tooltip="DND5E.ItemCreate"
-    class="button button-icon-only button-primary item-create"
-    class:disabled={!context.editable}
-    onclick={onAddClicked}
-  >
-    <i class="fas fa-plus"></i>
-  </a>
+  <div class="sheet-footer-right flexshrink">
+    <a
+      data-tooltip="DND5E.ItemCreate"
+      class="button button-icon-only button-primary item-create"
+      class:disabled={!context.editable}
+      onclick={onAddClicked}
+    >
+      <i class="fas fa-plus"></i>
+    </a>
+  </div>
 </div>

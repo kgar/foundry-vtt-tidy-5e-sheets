@@ -7,7 +7,7 @@
 </script>
 
 {#if range?.value}
-  <span class="range">
+  <span class="range font-label-medium">
     {range.value}
     {#if range.long}&sol; {range.long}{/if}
   </span>
@@ -15,7 +15,7 @@
     {range.units}
   </span>
 {:else if range?.reach}
-  <span class="range">
+  <span class="range font-label-medium">
     {range.reach}
   </span>
   <span class="units font-default-medium color-text-lighter">

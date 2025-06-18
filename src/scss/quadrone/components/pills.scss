@@ -51,6 +51,7 @@
 
 
   &.interactive {
+    border-color: var(--t5e-component-pill-border-interactive);
     box-shadow: var(--t5e-drop-shadow-pill);
 
     &:hover {

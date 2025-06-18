@@ -301,7 +301,7 @@
       opacity: 0.32;
       background: linear-gradient(to right,
           transparent 60%,
-          var(--t5e-color-green) 125%);
+          var(--t5e-spellcasting-always) 125%);
     }
   }
 
@@ -381,7 +381,7 @@
     // }
 
     .cell-name {
-      margin: var(--t5e-size-1x) 0;
+      margin-block-end: var(--t5e-size-halfx);
     }
 
     .advancement-cell-context {
@@ -806,7 +806,7 @@
         opacity: 1;
         background: linear-gradient(to right,
             transparent 60%,
-            var(--t5e-color-palette-green-21) 125%);
+            var(--t5e-item-color) 125%);
       }
     }
 

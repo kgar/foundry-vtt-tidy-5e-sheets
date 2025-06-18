@@ -46,7 +46,7 @@
 
 <div
   class={[
-    'spellcasting card flexrow',
+    'spellcasting-class-card flexrow',
     {
       primary: info.primary,
       ['has-max']: info.prepared.max,
@@ -55,7 +55,7 @@
   ]}
   data-ability={info.ability.key}
 >
-  <div class="header">
+  <div class="header flexshrink">
     <span class="name font-title-small">{info.name}</span>
 
     {#if info.primary}
@@ -73,32 +73,32 @@
       </a>
     {/if}
   </div>
-  <div class="info pills">
+  <div class="info pills flex1">
     <div class="spellcasting-ability pill">
       {info.ability.label}
     </div>
     <div class="ability pill">
-      <span class="label">{localize('DND5E.Ability')}</span>
+      <span class="label font-label-medium text-color-lighter">{localize('DND5E.Ability')}</span>
       <span class="value">
-        <span class="sign">{info.ability.mod.sign}</span>
-        <span>{info.ability.mod.value}</span>
+        <span class="sign font-label-medium text-color-lightest">{info.ability.mod.sign}</span>
+        <span class="font-data-medium">{info.ability.mod.value}</span>
       </span>
     </div>
     <div class="attack pill">
-      <span class="label">{localize('DND5E.Attack')}</span>
+      <span class="label font-label-medium text-color-lighter">{localize('DND5E.Attack')}</span>
       <span class="value">
-        <span class="sign">{info.attack.mod.sign}</span>
-        <span>{info.attack.mod.value}</span>
+        <span class="sign font-label-medium text-color-lightest">{info.attack.mod.sign}</span>
+        <span class="font-data-medium">{info.attack.mod.value}</span>
       </span>
     </div>
     <div class="save pill">
-      <span class="label">{localize('DND5E.SpellDC')}</span>
+      <span class="label font-label-medium text-color-lighter">{localize('DND5E.SpellDC')}</span>
       <span class="value">
-        {info.save}
+        <span class="font-data-medium">{info.save}</span>
       </span>
     </div>
     <a class="prepared pill interactive" onclick={() => onPreparedClicked()}>
-      <span class="label">{localize('DND5E.Prepared')}</span>
+      <span class="label font-label-medium text-color-lighter">{localize('DND5E.Prepared')}</span>
       <span class="value preparations">
         <span class="count">{info.prepared.value}</span>
         <span class="separator">/</span>

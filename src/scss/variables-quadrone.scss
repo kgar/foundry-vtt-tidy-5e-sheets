@@ -66,6 +66,7 @@
   --t5e-color-palette-grey-40: rgba(102, 102, 102, 1);
   --t5e-color-palette-grey-48: rgba(122, 122, 122, 1);
   --t5e-color-palette-grey-60: rgba(153, 153, 153, 1);
+  --t5e-color-palette-grey-70: rgba(178, 178, 178, 1);
   --t5e-color-palette-grey-85: rgba(207, 210, 218, 1);
   --t5e-color-palette-grey-92: rgba(223, 226, 235, 1);
   --t5e-color-palette-grey-100: rgba(255, 255, 255, 1);
@@ -248,7 +249,7 @@
   --t5e-component-pill-oninverse-border: var(--t5e-color-palette-grey-0);
   --t5e-component-pill-oninverse-border-interactive: var(--t5e-component-field-oninverse-border);
   --t5e-component-pill-background: var(--t5e-component-card-light-default);
-  --t5e-component-pill-border: var(--t5e-color-palette-grey-60);
+  --t5e-component-pill-border: var(--t5e-color-palette-grey-70);
   --t5e-component-pill-border-interactive: var(--t5e-component-field-border);
 
   /* Enrichers */
@@ -327,7 +328,7 @@
   --t5e-spellcasting-default-darker: oklch(from var(--t5e-theme-color-default) calc(l * 0.70) calc(c * 1.2) h);
   --t5e-spellcasting-atwill: var(--t5e-color-palette-red-45);
   --t5e-spellcasting-atwill-darker: oklch(from var(--t5e-color-palette-red-45) calc(l * 0.70) calc(c * 1.2) h);
-  --t5e-spellcasting-always: var(--t5e-color-palette-green-43);
+  --t5e-spellcasting-always: var(--t5e-theme-color-default);
   --t5e-spellcasting-always-darker: oklch(from var(--t5e-color-palette-green-43) calc(l * 0.70) calc(c * 1.2) h);
   --t5e-spellcasting-pact: var(--t5e-color-palette-pink-55);
   --t5e-spellcasting-pact-darker: oklch(from var(--t5e-color-palette-pink-55) calc(l * 0.70) calc(c * 1.2) h);

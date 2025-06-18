@@ -12,17 +12,12 @@
 {#if !isNil(rowContext.toHit)}
   {@const mod = getModifierData(rowContext.toHit)}
   <span class="modifier">
-    <span class="sign">
-      {mod.sign}
-    </span>
-    <span class="value">
-      {mod.value}
-    </span>
+    <span class="sign font-default-medium color-text-lightest">{mod.sign}</span><span class="value font-label-medium">{mod.value}</span>
   </span>
 {:else if rowContext.save?.ability}
   <div class="stacked">
-    <span class="ability">{rowContext.save.ability}</span>
-    <span class="value">{rowContext.save.dc.value}</span>
+    <span class="ability uppercase color-text-gold-emphasis font-label-medium">{rowContext.save.ability}</span>
+    <span class="value font-label-medium">{rowContext.save.dc.value}</span>
   </div>
 {:else}
   <span class="color-text-disabled">&mdash;</span>
