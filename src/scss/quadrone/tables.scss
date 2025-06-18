@@ -12,6 +12,10 @@
     flex-direction: column;
     flex-grow: 1;
     gap: 0.75rem;
+
+    &:not(:has(~ .sheet-footer)) {
+      padding-block-end: var(--t5e-size-3x);
+    }
   }
 
   .tidy-table {
@@ -29,19 +33,15 @@
   .tidy-table-header-row {
     --t5e-table-header-background-left: var(--t5e-theme-color-darkest);
     --t5e-table-header-background-right: var(--t5e-theme-color-default);
-    
+
     &.spell-preparation {
-      --t5e-table-header-background-left: oklch(
-        from var(--t5e-mode-color, var(--t5e-theme-color-darkest)) 
-        calc(l * 0.75) 
-        calc(c * 1.2) 
-        h);
+      --t5e-table-header-background-left: oklch(from var(--t5e-mode-color, var(--t5e-theme-color-darkest)) calc(l * 0.75) calc(c * 1.2) h);
       --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-default));
     }
-    
+
     background: linear-gradient(to right,
-        var(--t5e-table-header-background-left),
-        var(--t5e-table-header-background-right));
+      var(--t5e-table-header-background-left),
+      var(--t5e-table-header-background-right));
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: var(--t5e-size-halfx);
     color: var(--t5e-color-text-default);
@@ -160,8 +160,19 @@
 
     position: relative;
 
+    .highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
     .item-image {
-      background: var(--t5e-color-gold);
+      background: var(--t5e-color-text-gold-emphasis);
+      width: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
+      height: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
     }
 
     >* {
@@ -175,13 +186,7 @@
           var(--t5e-color-palette-grey-100) 90%);
 
       .highlight {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
         background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 40%);
-        pointer-events: none;
       }
     }
 
@@ -229,14 +234,7 @@
       }
 
       .highlight {
-        // content: '';
-        position: absolute;
         background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 10%, transparent 48%);
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
       }
 
       .tidy-table-row-use-button {
@@ -261,7 +259,54 @@
       padding: 1px 0 0 2px;
     }
 
-    .item-state-indicator {}
+    .item-state-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: var(--t5e-icon-size-7x);
+      min-width: var(--t5e-icon-size-6x);
+    }
+
+    &[data-tidy-item-type="spell"] {
+
+      .spell-school-icon dnd5e-icon {
+        --icon-size: calc(1.375rem);
+        --icon-fill: var(--t5e-color-text-gold-emphasis);
+      }
+
+      &.unprepared {
+        font-style: italic;
+        color: var(--t5e-color-text-lighter);
+
+        dnd5e-icon {
+          --icon-fill: var(--t5e-color-gold);
+        }
+      }
+
+      // &.prepared {
+      //   --t5e-item-row-background: var(--t5e-color-palette-grey-100);
+      //   background: linear-gradient(to right,
+      //       rgba(255, 255, 255, 0.24) 40%,
+      //       var(--t5e-color-palette-grey-100) 90%);
+      // }
+    }
+
+    &.prepared {
+      --t5e-item-row-background: var(--t5e-color-palette-grey-100);
+      background: linear-gradient(to right,
+          var(--t5e-color-palette-grey-100) 10%,
+          rgba(255, 255, 255, 0.24) 60%);
+
+      &.expanded {}
+    }
+
+    &.mode-always .highlight {
+      opacity: 0.32;
+      background: linear-gradient(to right,
+          transparent 60%,
+          var(--t5e-spellcasting-always) 125%);
+    }
   }
 
   /* Cell styles */
@@ -340,7 +385,7 @@
     // }
 
     .cell-name {
-      margin: var(--t5e-size-1x) 0;
+      margin-block-end: var(--t5e-size-halfx);
     }
 
     .advancement-cell-context {
@@ -675,6 +720,9 @@
     background: linear-gradient(120deg,
         var(--t5e-component-card-darker) 10%,
         var(--t5e-component-card-default) 120%);
+
+
+    [data-tidy-sheet-part="item-property-list"] .value {}
   }
 
   .empty-container {
@@ -745,6 +793,24 @@
         .highlight {
           background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 40%);
         }
+      }
+
+      &.prepared {
+        background: linear-gradient(to right,
+            var(--t5e-component-card-default) 5%,
+            transparent 50%);
+      }
+
+      &.prepared.expanded {
+        --t5e-item-row-background: rgba(255, 255, 255, 0.08);
+        background: var(--t5e-component-card-default);
+      }
+
+      &.mode-always .highlight {
+        opacity: 1;
+        background: linear-gradient(to right,
+            transparent 60%,
+            var(--t5e-item-color) 125%);
       }
     }
 

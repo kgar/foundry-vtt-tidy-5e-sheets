@@ -16,6 +16,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import CharacterSpellbookFooter from "../character-parts/CharacterSpellbookFooter.svelte";
 
   let context =
     $derived(
@@ -81,4 +82,9 @@
   {inlineToggleService}
   sheetDocument={context.actor}
   {searchCriteria}
+/>
+
+<CharacterSpellbookFooter
+class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
+tabId={tabId}
 />

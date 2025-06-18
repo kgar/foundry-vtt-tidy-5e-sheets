@@ -1641,32 +1641,31 @@
     flex: initial;
   }
 
-  .tidy-tab.attributes {
+  .tidy-tab-contents {
     &.active {
       display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-3x);
     }
 
-    flex-direction: row;
-    gap: var(--t5e-size-6x);
+    &.attributes {
 
-    .left {
-      flex: 0 0 12.5rem;
-      gap: var(--t5e-size-4x);
+      flex-direction: row;
+      gap: var(--t5e-size-6x);
+
+      .left {
+        flex: 0 0 12.5rem;
+        gap: var(--t5e-size-4x);
+      }
+
+      .right {
+        flex: 1;
+        gap: var(--t5e-size-4x);
+
+        container-type: inline-size;
+        container-name: tab-right-column;
+      }
     }
-
-    .right {
-      flex: 1;
-      gap: var(--t5e-size-4x);
-
-      container-type: inline-size;
-      container-name: tab-right-column;
-    }
-  }
-
-  .tidy-tab.inventory.active {
-    display: flex;
-    flex-direction: column;
-    gap: var(--t5e-size-3x);
   }
 
   .sheet-footer {
@@ -1680,6 +1679,14 @@
       padding: var(--t5e-size-1x) 0 var(--t5e-size-3x) 0;
     }
 
+    .sheet-footer-left {
+      gap: var(--t5e-size-2x);
+    }
+
+    .sheet-footer-right {
+      gap: var(--t5e-size-2x);
+    }
+
     .footer-content-left {
       justify-content: flex-start;
     }
@@ -1687,11 +1694,78 @@
     .footer-content-right {
       justify-content: flex-end;
     }
+
+    .spellcasting-class-card {
+      border-radius: var(--t5e-size-1x);
+      border: 1px solid var(--t5e-component-field-border);
+      background: var(--t5e-component-field-background);
+      padding: var(--t5e-size-2x) var(--t5e-size-3x);
+
+      .primary-icon {
+        padding-inline-start: var(--t5e-size-halfx);
+      }
+
+      &.primary .primary-icon {
+        color: var(--t5e-color-text-gold-emphasis);
+      }
+
+      &:not(.primary) .primary-icon {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      .info {
+        justify-content: flex-end;
+      }
+    }
   }
 
   .inventory-footer {
     container-type: inline-size;
     container-name: inventory-footer;
+
+    .attunement-tracker {
+      height: var(--t5e-field-size-default);
+      gap: var(--t5e-size-1x);
+
+      span {
+        padding-block-end: var(--t5e-size-1);
+      }
+
+      &.pill {
+        background: var(--t5e-component-card-default);
+        box-shadow: var(--t5e-drop-shadow-field);
+      }
+
+      &.attuned i {
+        color: var(--t5e-color-gold);
+      }
+
+      input {
+        flex: 0 1 fit-content;
+        max-width: 2rem;
+      }
+    }
+
+    .currency-container {
+      gap: var(--t5e-size-2x);
+
+      .denomination {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .spellbook-footer {
+    margin-bottom: var(--t5e-size-3x);
+    align-items: flex-start;
+
+    .sheet-footer-left {
+      padding-block-end: var(--t5e-size-3x);
+    }
+
+    .sheet-footer-right {
+      padding-block-start: 0.375rem;
+    }
   }
 
   @container inventory-footer (width < 35rem) {
@@ -1712,31 +1786,6 @@
     }
   }
 
-  .inventory-footer {
-    .attunement-tracker {
-      height: var(--t5e-field-size-default);
-      gap: var(--t5e-size-1x);
-
-      &.pill {
-        background: var(--t5e-component-card-default);
-        box-shadow: var(--t5e-drop-shadow-field);
-      }
-
-      &.attuned i {
-        color: var(--t5e-color-gold);
-      }
-
-      input {
-        flex: 0 1 fit-content;
-        max-width: 2rem;
-      }
-    }
-
-    .currency-container {
-      gap: var(--t5e-size-2x);
-    }
-  }
-
   .tidy-tab.bastion {
     &.active {
       display: flex;
@@ -1753,10 +1802,10 @@
       }
     }
 
-    > *:not(:first-child):not(:last-child) {
+    >*:not(:first-child):not(:last-child) {
       margin-block-end: 1.25rem;
     }
-    
+
     h3 {
       height: 1.1875rem;
       padding-bottom: 0.25rem;
@@ -1784,8 +1833,7 @@
 
     .highlight {
       background: var(--t5e-component-field-background);
-      outline: var(--occupant-hightlight-width) solid
-        var(--t5e-theme-color-lighter);
+      outline: var(--occupant-hightlight-width) solid var(--t5e-theme-color-lighter);
     }
 
     /* Facilities */
@@ -1800,6 +1848,7 @@
         &.special {
           grid-area: special;
         }
+
         &.basic {
           grid-area: basic;
         }
@@ -1808,7 +1857,8 @@
           background: var(--t5e-component-field-background);
           border-radius: 0.125rem;
           outline: 0.125rem solid var(--t5e-color-gold);
-          > * {
+
+          >* {
             pointer-events: none;
           }
         }
@@ -1825,11 +1875,9 @@
       border: 0.0625rem solid var(--t5e-color-gold);
       border-radius: 0.1875rem;
       padding: 0.75rem 0.5rem;
-      background: linear-gradient(
-          145deg,
+      background: linear-gradient(145deg,
           rgba(248, 244, 241, 0.85) 10%,
-          rgba(248, 244, 241, 0.1) 160%
-        ),
+          rgba(248, 244, 241, 0.1) 160%),
         var(--underlay) 40%, #f8f4f1;
       background-blend-mode: normal, multiply;
       background-size: cover, cover;
@@ -1875,7 +1923,7 @@
     .facility-menu {
       transition: all 0.3s ease;
       padding: 0.5rem 0.75rem;
-    }    
+    }
 
     /* Rosters */
 
@@ -1889,6 +1937,7 @@
           border-radius: 0.25rem;
           width: var(--roster-member-size, 3rem);
           height: var(--roster-member-size, 3rem);
+
           a {
             display: flex;
             align-items: center;
@@ -1950,6 +1999,7 @@
         transition: all 0.3s ease;
         font-weight: 500;
       }
+
       .subtitle {
         font-size: 0.8125rem;
         color: var(--t5e-color-text-lightest);
@@ -2072,7 +2122,7 @@
     .craft-and-meter {
       display: flex;
       gap: 0.125rem;
-            
+
       .facility-progress {
         --meter-height: 2rem;
         flex: 1;
@@ -2081,7 +2131,8 @@
         .label {
           justify-content: space-between;
 
-          .order, i {
+          .order,
+          i {
             font-size: var(--font-size-14);
           }
         }
@@ -2136,19 +2187,17 @@
 
     .tidy-tab.bastion {
       .facility:not(.empty) {
-        background: linear-gradient(
-            145deg,
+        background: linear-gradient(145deg,
             rgba(27, 29, 35, 0.95) 10%,
-            rgba(27, 29, 35, 0.1) 170%
-          ),
+            rgba(27, 29, 35, 0.1) 170%),
           var(--underlay) 40%, #2c3e50;
         background-blend-mode: normal, normal;
         background-size: cover, cover;
-        
+
         &.basic {
           background-blend-mode: normal, luminosity;
         }
-    
+
         .facility-header :is(.facility-image, .facility-image svg) {
           --icon-fill: var(--t5e-component-field-background);
         }
