@@ -23,6 +23,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_EFFECTS,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-bolt',
     },
     {
       title: 'DND5E.Inventory',
@@ -32,6 +33,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_ACTOR_INVENTORY,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-treasure-chest',
     },
     {
       title: 'TIDY5E.JournalTabName',
@@ -41,6 +43,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_CHARACTER_JOURNAL,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-notebook',
     },
     {
       title: 'DND5E.Spellbook',
@@ -50,6 +53,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_ACTOR_SPELLBOOK,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-book-sparkles',
     },
     {
       title: 'TIDY5E.WorldSettings.TabCharacter.tabLabel',
@@ -59,6 +63,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-wreath-laurel',
     },
     {
       title: 'DND5E.Biography',
@@ -68,6 +73,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-feather',
     },
     {
       title: 'DND5E.Features',
@@ -77,6 +83,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_CHARACTER_FEATURES,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-cards-blank',
     },
     {
       title: 'DND5E.Bastion.Label',
@@ -96,6 +103,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_CHARACTER_BASTION,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-house-turret',
     },
     {
       title: 'Sheet',
@@ -105,6 +113,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       },
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
       layout: 'quadrone',
+      iconClass: 'fa-solid fa-chess-knight-piece',
     },
   ];
 
