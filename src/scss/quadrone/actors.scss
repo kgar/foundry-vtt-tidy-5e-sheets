@@ -391,7 +391,37 @@
       z-index: 1;
     }
   }
-  
+
+  .tidy-tab.journal.active {
+    display: flex;
+  }
+
+  .tidy-tab.journal {
+    gap: 0.75rem;
+
+    .journal-entry-selector {
+      flex-basis: 24rem;
+      display: flex;
+      flex-direction: column;
+
+      .journal-entry-selector {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        overflow-y: auto;
+      }
+    }
+
+    .title-container {
+      display: flex;
+      align-items: center;
+
+      .title {
+        flex: 1;
+      }
+    }
+  }
+
   &.theme-dark,
   .theme-dark {
     .use-ability-list {

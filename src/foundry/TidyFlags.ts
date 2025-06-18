@@ -5,6 +5,7 @@ import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
   ActorJournalEntries,
+  ActorJournalEntry,
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
@@ -89,30 +90,38 @@ export class TidyFlags {
         TidyFlags.tryGetFlag<ActorJournalEntries>(
           actor,
           TidyFlags.actorJournal.key
-        ) ?? []
+        ) ?? {}
       );
     },
     add(actor: Actor5e) {
-      let entries = TidyFlags.actorJournal.get(actor);
-      return TidyFlags.actorJournal.set(actor, [
-        ...entries,
-        {
-          id: foundry.utils.randomID(),
+      const newId = foundry.utils.randomID();
+
+      const newSort =
+        Object.values(TidyFlags.actorJournal.get(actor)).reduce((prev, acc) => {
+          return Math.max(prev, acc.sort ?? 0);
+        }, 0) + 10;
+
+      const updateProp = `${TidyFlags.getFlagPropertyPath(
+        TidyFlags.actorJournal.key
+      )}.${newId}`;
+
+      return actor.update({
+        [updateProp]: {
+          id: newId,
           title: '',
           value: '',
-        },
-      ]);
+          sort: newSort,
+        } satisfies ActorJournalEntry,
+      });
     },
-    clear() {
-      // todo: implement
+    clear(actor: Actor5e) {
+      TidyFlags.unsetFlag(actor, TidyFlags.actorJournal.key);
     },
-    removeAt(actor: Actor5e, index: number) {
-      let entries = TidyFlags.actorJournal.get(actor);
-
-      return TidyFlags.actorJournal.set(
-        actor,
-        entries.filter((_, i) => i !== index)
-      );
+    remove(actor: Actor5e, id: string) {
+      let updateProp = `${TidyFlags.getFlagPropertyPath(
+        TidyFlags.actorJournal.key
+      )}.-=${id}`;
+      return actor.update({ [updateProp]: null });
     },
     set(actor: Actor5e, journal: ActorJournalEntries) {
       return TidyFlags.setFlag(actor, TidyFlags.actorJournal.key, journal);

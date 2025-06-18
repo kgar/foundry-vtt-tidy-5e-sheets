@@ -31,6 +31,7 @@ export type ActorJournalEntry = {
   id: string;
   title: string;
   value: string;
-}
+  sort: number;
+};
 
-export type ActorJournalEntries = ActorJournalEntry[];
+export type ActorJournalEntries = Record<string, ActorJournalEntry>;
