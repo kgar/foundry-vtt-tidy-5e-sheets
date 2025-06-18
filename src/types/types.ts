@@ -19,7 +19,7 @@ import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/typ
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
-import type { ActorJournalEntries, AttributePinFlag } from 'src/foundry/TidyFlags.types';
+import type { DocumentJournalEntries, AttributePinFlag } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue } from 'svelte/elements';
@@ -964,7 +964,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
   /** All items without a container. */
   items: Item5e[];
-  journal: ActorJournalEntries;
+  journal: DocumentJournalEntries;
   labels: Record<string, any>;
   limited: boolean;
   modernRules: boolean;

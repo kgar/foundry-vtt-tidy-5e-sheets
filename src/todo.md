@@ -11,18 +11,18 @@
 - [x] Add context menu for duplicating journal entry
 - [x] Implement drag-and-drop to sort
 - [x] (stretch) drag-and-drop to move/copy between sheets
-- [ ] Include "getting started" text when no entries.
-- [ ] Use a dedicated edit dialog for editing an entry. Close on save button clicked, and save on close.
+- [x] Use a dedicated edit dialog for editing an entry. Close on save button clicked, and save on close.
 - [ ] Creating a new journal entry
   - [x] Add the journal entry
   - [ ] Give it a name ("New Journal Entry")
   - [x] Select it
-  - [ ] Open edit for new journal entry
+  - [x] Open edit for new journal entry
+- [x] Placeholder on title input: "Entry Title"
 - [ ] On duplicate
   - Take the name of the previous one and tack on " (Copy)"
 - When index changes, scroll the selected into view
-- [ ] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
-- [ ] (Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.
+- [x] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
+- [x] ~~(Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.~~ "View" with an Eye. Done.
 - [ ] Tidy up the CSS a little
 
 ### Journal scratch

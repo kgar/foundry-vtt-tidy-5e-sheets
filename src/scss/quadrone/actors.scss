@@ -405,20 +405,11 @@
 
   .tidy-tab.journal.active {
     display: flex;
+    flex-direction: row;
   }
 
   .tidy-tab.journal {
     gap: 0.75rem;
-
-    .journal-editor {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      
-      .editor {
-        flex: 1;
-      }
-    }
 
     .journal-entry-selector {
       flex: 0;

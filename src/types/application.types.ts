@@ -87,6 +87,7 @@ export interface ApplicationWindowRenderOptions {
 export interface ApplicationClosingOptions {
   animate?: boolean;
   closeKey?: boolean;
+  bypassSubmitOnClose?: boolean;
 }
 
 export type ApplicationClickAction = (

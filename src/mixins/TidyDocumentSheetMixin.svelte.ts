@@ -161,7 +161,7 @@ export function TidyExtensibleDocumentSheetMixin<
       options: Partial<TidyDocumentSheetRenderOptions>
     ): Promise<DocumentSheetV2Context> {
       const context = await super._prepareContext(options);
-
+      
       return {
         ...context,
         unlocked:

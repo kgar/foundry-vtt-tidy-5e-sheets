@@ -203,7 +203,7 @@ export function Tidy5eActorSheetQuadroneBase<
         items: Array.from(this.actor.items)
           .filter((i: Item5e) => !this.actor.items.has(i.system.container))
           .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
-        journal: TidyFlags.actorJournal.get(this.actor),
+        journal: TidyFlags.documentJournal.get(this.actor),
         labels: this._getLabels(),
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
@@ -833,7 +833,7 @@ export function Tidy5eActorSheetQuadroneBase<
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
       data: any
     ) {
-      const journal = TidyFlags.actorJournal.get(this.actor);
+      const journal = TidyFlags.documentJournal.get(this.actor);
       const actorOwnsJournal = journal[data.tidyJournalId];
       const targetEntryId = event.target.closest<HTMLElement>(
         '[data-tidy-journal-id]'
@@ -843,7 +843,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       const sourceDocument = await fromUuid(data.uuid);
       const sourceEntry =
-        TidyFlags.actorJournal.get(sourceDocument)[data.tidyJournalId];
+        TidyFlags.documentJournal.get(sourceDocument)[data.tidyJournalId];
 
       if (behavior === 'move' && actorOwnsJournal && !!targetEntryId) {
         // Sort
@@ -852,14 +852,14 @@ export function Tidy5eActorSheetQuadroneBase<
           return;
         }
 
-        TidyFlags.actorJournal.sort(this.actor, sourceEntry.id, targetEntryId);
+        TidyFlags.documentJournal.sort(this.actor, sourceEntry.id, targetEntryId);
       } else {
         if (!sourceDocument) {
           return;
         }
 
         // Copy
-        const sourceJournal = TidyFlags.actorJournal.get(sourceDocument);
+        const sourceJournal = TidyFlags.documentJournal.get(sourceDocument);
         const sourceEntry = sourceJournal[data.tidyJournalId];
 
         if (!sourceEntry) {
@@ -869,14 +869,14 @@ export function Tidy5eActorSheetQuadroneBase<
         const behavior = this._dropBehavior(event, data);
 
         const newId = foundry.utils.randomID();
-        TidyFlags.actorJournal.add(this.actor, {
+        TidyFlags.documentJournal.add(this.actor, {
           ...sourceEntry,
           id: newId,
         });
 
         // Remove from source actor if this is a move
         if (behavior === 'move') {
-          TidyFlags.actorJournal.remove(sourceDocument, data.tidyJournalId);
+          TidyFlags.documentJournal.remove(sourceDocument, data.tidyJournalId);
         }
       }
     }

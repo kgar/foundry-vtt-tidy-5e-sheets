@@ -27,11 +27,11 @@ export type AttributeActivityPinFlag = AttributePinBase & {
 
 export type AttributePinFlag = AttributeItemPinFlag | AttributeActivityPinFlag;
 
-export type ActorJournalEntry = {
+export type DocumentJournalEntry = {
   id: string;
   title: string;
   value: string;
   sort: number;
 };
 
-export type ActorJournalEntries = Record<string, ActorJournalEntry>;
+export type DocumentJournalEntries = Record<string, DocumentJournalEntry>;

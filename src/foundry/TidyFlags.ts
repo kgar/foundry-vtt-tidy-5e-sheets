@@ -4,8 +4,8 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
-  ActorJournalEntries,
-  ActorJournalEntry,
+  DocumentJournalEntries,
+  DocumentJournalEntry,
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
@@ -82,41 +82,43 @@ export class TidyFlags {
    * An array of journal entries with an optional title
    * and an HTML-based journal.
    */
-  static actorJournal = {
-    key: 'actor-journal',
-    prop: TidyFlags.getFlagPropertyPath('actor-journal'),
-    get(actor: Actor5e): ActorJournalEntries {
+  static documentJournal = {
+    key: 'document-journal',
+    prop: TidyFlags.getFlagPropertyPath('document-journal'),
+    get(doc: any): DocumentJournalEntries {
       return (
-        TidyFlags.tryGetFlag<ActorJournalEntries>(
-          actor,
-          TidyFlags.actorJournal.key
+        TidyFlags.tryGetFlag<DocumentJournalEntries>(
+          doc,
+          TidyFlags.documentJournal.key
         ) ?? {}
       );
     },
-    add(actor: Actor5e, data?: Partial<ActorJournalEntry>) {
+    async add(doc: any, data?: Partial<DocumentJournalEntry>) {
       const newId = foundry.utils.randomID();
 
-      const newSort = TidyFlags.actorJournal.getMaxSort(actor) + 10;
+      const newSort = TidyFlags.documentJournal.getMaxSort(doc) + 10;
 
       const updateProp = `${TidyFlags.getFlagPropertyPath(
-        TidyFlags.actorJournal.key
+        TidyFlags.documentJournal.key
       )}.${newId}`;
 
-      return actor.update({
+      await doc.update({
         [updateProp]: {
           title: '',
           value: '',
           ...data,
           id: newId,
           sort: newSort,
-        } satisfies ActorJournalEntry,
+        } satisfies DocumentJournalEntry,
       });
+
+      return newId;
     },
-    clear(actor: Actor5e) {
-      TidyFlags.unsetFlag(actor, TidyFlags.actorJournal.key);
+    clear(doc: any) {
+      TidyFlags.unsetFlag(doc, TidyFlags.documentJournal.key);
     },
-    duplicate(actor: Actor5e, id: string) {
-      const original = TidyFlags.actorJournal.get(actor)[id];
+    duplicate(doc: any, id: string) {
+      const original = TidyFlags.documentJournal.get(doc)[id];
 
       if (!original) {
         return;
@@ -127,31 +129,42 @@ export class TidyFlags {
       const newEntry = {
         ...original,
         id: newId,
-      } satisfies ActorJournalEntry;
+      } satisfies DocumentJournalEntry;
 
-      return TidyFlags.actorJournal.add(actor, newEntry);
+      return TidyFlags.documentJournal.add(doc, newEntry);
     },
-    getMaxSort(actor: Actor5e) {
-      return Object.values(TidyFlags.actorJournal.get(actor)).reduce(
+    getMaxSort(doc: any) {
+      return Object.values(TidyFlags.documentJournal.get(doc)).reduce(
         (prev, acc) => {
           return Math.max(prev, acc.sort ?? 0);
         },
         0
       );
     },
-    remove(actor: Actor5e, id: string) {
-      let updateProp = `${TidyFlags.getFlagPropertyPath(
-        TidyFlags.actorJournal.key
-      )}.-=${id}`;
-      return actor.update({ [updateProp]: null });
+    remove(doc: any, id: string) {
+      // Delete any entry whose key or value.id matches the ID param.
+      const journal = TidyFlags.documentJournal.get(doc);
+      const deletions = Object.entries(journal)
+        .filter(([key, entry]) => key === id || entry.id === id)
+        .map(([key]) => {
+          return `${TidyFlags.getFlagPropertyPath(
+            TidyFlags.documentJournal.key
+          )}.-=${key}`;
+        })
+        .reduce<Record<string, null>>((prev, curr) => {
+          prev[curr] = null;
+          return prev;
+        }, {});
+
+      return doc.update(deletions);
     },
-    set(actor: Actor5e, journal: ActorJournalEntries) {
-      return TidyFlags.setFlag(actor, TidyFlags.actorJournal.key, journal);
+    set(doc: any, journal: DocumentJournalEntries) {
+      return TidyFlags.setFlag(doc, TidyFlags.documentJournal.key, journal);
     },
-    sort(actor: Actor5e, sourceId: string, targetId: string) {
+    sort(doc: any, sourceId: string, targetId: string) {
       if (sourceId === targetId) return;
 
-      const journal = TidyFlags.actorJournal.get(actor);
+      const journal = TidyFlags.documentJournal.get(doc);
 
       let source;
       let target;
@@ -170,18 +183,17 @@ export class TidyFlags {
         siblings,
       });
 
-      let actorUpdates: Record<string, { sort: number }> = {};
+      let docUpdates: Record<string, { sort: number }> = {};
 
       for (const { target, update } of updates) {
-        actorUpdates[
-          `${TidyFlags.getFlagPropertyPath(TidyFlags.actorJournal.key)}.${
+        docUpdates[
+          `${TidyFlags.getFlagPropertyPath(TidyFlags.documentJournal.key)}.${
             target.id
           }`
         ] = { sort: update.sort };
       }
 
-      console.warn('Actor updates', actorUpdates);
-      return actor.update(actorUpdates);
+      return doc.update(docUpdates);
     },
   };
 
