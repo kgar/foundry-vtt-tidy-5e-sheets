@@ -71,7 +71,7 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
         component: CharacterBiographyTab,
         type: 'svelte',
       },
-      id: CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
+      id: CONSTANTS.TAB_ACTOR_BIOGRAPHY,
       layout: 'quadrone',
       iconClass: 'fa-solid fa-feather',
     },
@@ -125,7 +125,7 @@ export const TempDefaultCharacterQuadroneTabs = [
   CONSTANTS.TAB_ACTOR_SPELLBOOK,
   CONSTANTS.TAB_CHARACTER_FEATURES,
   CONSTANTS.TAB_EFFECTS,
-  CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
+  CONSTANTS.TAB_ACTOR_BIOGRAPHY,
   CONSTANTS.TAB_CHARACTER_BASTION,
   // TODO: REMOVE BEFORE MERGING TO MAIN
   CONSTANTS.TAB_CHARACTER_JOURNAL,

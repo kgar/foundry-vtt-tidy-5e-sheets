@@ -918,40 +918,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     );
   }
 
-  async _prepareAttributePins(context: ActorSheetQuadroneContext) {
-    let flagPins = TidyFlags.attributePins
-      .get(this.actor)
-      .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
-
-    let pins: AttributePinContext[] = [];
-
-    for (let pin of flagPins) {
-      let document = await fromUuid(pin.id, { relative: this.actor });
-
-      if (document) {
-        if (pin.type === 'item') {
-          pins.push({
-            ...pin,
-            linkedUses: context.itemContext[document.id]?.linkedUses,
-            document,
-          });
-        } else if (pin.type === 'activity') {
-          pins.push({
-            ...pin,
-            document,
-          });
-        }
-      } else {
-        // Orphaned pins may exist until the next pin/unpin action, when the pins will be reset to valid pins only.
-        debug(
-          `Attribute pin item with ID ${pin.id} not found. Excluding from final render.`
-        );
-      }
-    }
-
-    return pins;
-  }
-
   _prepareSpellcastingContext() {
     let spellcasting: SpellcastingContext[] = [];
 
@@ -1140,7 +1106,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return this._onDropFavorite(event, { type, id });
     }
 
-    // Hanle Activity drop
+    // Handle Activity drop
     if (data.type === 'Activity') {
       const activity = await fromUuid(data.uuid);
       if (activity) return this._onDropActivity(event, data);

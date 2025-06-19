@@ -19,7 +19,10 @@ import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/typ
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
-import type { DocumentJournalEntries, AttributePinFlag } from 'src/foundry/TidyFlags.types';
+import type {
+  DocumentJournalEntries,
+  AttributePinFlag,
+} from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue } from 'svelte/elements';
@@ -1150,11 +1153,14 @@ export type CharacterSheetQuadroneContext = {
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
   features: NpcAbilitySection[];
   inventory: InventorySection[];
   showContainerPanel: boolean;
+  showDeathSaves: boolean;
+  size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
   spellComponentLabels: Record<string, string>;

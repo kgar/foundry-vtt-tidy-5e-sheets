@@ -27,6 +27,7 @@ import '@melloware/coloris/dist/coloris.css';
 import { debug } from './utils/logging';
 import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
+import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
@@ -154,6 +155,16 @@ Hooks.once('init', () => {
       {
         types: [CONSTANTS.SHEET_TYPE_CHARACTER],
         label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
+      }
+    );
+    
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eNpcSheetQuadrone,
+      {
+        types: [CONSTANTS.SHEET_TYPE_NPC],
+        label: 'TIDY5E.Tidy5eNpcSheetQuadrone',
       }
     );
 
