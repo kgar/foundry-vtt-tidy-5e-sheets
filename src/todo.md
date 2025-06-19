@@ -23,6 +23,7 @@
 - When index changes, scroll the selected into view
 - [x] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
 - [x] ~~(Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.~~ "View" with an Eye. Done.
+- [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data
 - [ ] Tidy up the CSS a little
 
 ### Journal scratch
