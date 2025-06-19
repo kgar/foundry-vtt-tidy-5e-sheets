@@ -10,6 +10,7 @@ import type {
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
 } from './TidyFlags.types';
+import { FoundryAdapter } from './foundry-adapter';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -104,7 +105,9 @@ export class TidyFlags {
 
       await doc.update({
         [updateProp]: {
-          title: '',
+          title: FoundryAdapter.localize('DOCUMENT.New', {
+            type: FoundryAdapter.localize('DOCUMENT.JournalEntry'),
+          }),
           value: '',
           ...data,
           id: newId,
@@ -128,6 +131,7 @@ export class TidyFlags {
 
       const newEntry = {
         ...original,
+        title: FoundryAdapter.localize('DOCUMENT.CopyOf', { name: original.title }),
         id: newId,
       } satisfies DocumentJournalEntry;
 

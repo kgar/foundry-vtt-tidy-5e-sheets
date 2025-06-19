@@ -12,13 +12,13 @@
 - [x] Implement drag-and-drop to sort
 - [x] (stretch) drag-and-drop to move/copy between sheets
 - [x] Use a dedicated edit dialog for editing an entry. Close on save button clicked, and save on close.
-- [ ] Creating a new journal entry
+- [x] Creating a new journal entry
   - [x] Add the journal entry
-  - [ ] Give it a name ("New Journal Entry")
+  - [x] Give it a name ("New Journal Entry")
   - [x] Select it
   - [x] Open edit for new journal entry
 - [x] Placeholder on title input: "Entry Title"
-- [ ] On duplicate
+- [x] On duplicate
   - Take the name of the previous one and tack on " (Copy)"
 - When index changes, scroll the selected into view
 - [x] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
