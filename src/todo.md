@@ -1,3 +1,23 @@
+## Theme Settings To Do
+
+- [x] Set up ThemeSetting types
+- [x] Add Tidy Flag
+- [x] Add World Setting
+- [x] Set up sheets to apply theme colors when applying overall dark/light classes
+- [ ] Set up ThemeSettings application, designed to save either to a sheet flag or to World settings (probably the presence of a document will decide it)
+  - [ ] Colors
+    - [ ] Accent Color
+    - [ ] Rarity Colors
+    - [ ] DDBeyond Rarity Color Saturation (for SagaTympana)
+    - [ ] Spell Preparation Mode Colors
+- [ ] (Stretch) Live update while the dialog is open
+  - [ ] Sheet
+  - [ ] World
+- [ ] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
+- [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly
+- [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
+
+
 ## Journal Tab To Do
 
 - [x] Implement tab selection
@@ -23,8 +43,8 @@
 - When index changes, scroll the selected into view
 - [x] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
 - [x] ~~(Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.~~ "View" with an Eye. Done.
-- [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data
-- [ ] Tidy up the CSS a little
+- [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data; and what about new user settings?
+
 
 ### Journal scratch
 
@@ -47,7 +67,7 @@ loc keys:
 ## To Do
 
 - [ ] Character Sheet 
-  - [ ] Implement tabs
+  - [x] Implement tabs
     - [x] Sheet (Actions)
     - [x] Attributes (Character tab)
     - [x] Inventory
@@ -56,14 +76,13 @@ loc keys:
     - [x] Effects
     - [x] Bastions
     - [x] ~~Background~~ Biography
-    - [ ] Journal
+    - [x] Journal
   - [x] Implement Expandable/collapsible sidebar
   - [x] Implement Favorites
   - [ ] Implement Theme Settings
-    - [ ] World Default (?) - discuss with community
-    - [ ] User Default (we have User Scope now!)
-    - [ ] Actor Sheet Override
-    - [ ] Item Sheet Override
+    - [ ] World Default discuss with community
+    - [ ] Actor Sheet
+    - [ ] Item Sheet
   - [ ] Implement Limited View, which branches just within the top-level sheet component.
   - [ ] Misc Features
     - [ ] Set as Inspiration Source (see below)

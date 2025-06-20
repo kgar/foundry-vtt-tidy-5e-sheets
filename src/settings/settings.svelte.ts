@@ -16,6 +16,7 @@ import type { GlobalCustomSectionsetting } from './settings.types';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1361,6 +1362,27 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'includeFlagsInSpellScrollCreation'
+          );
+        },
+      },
+
+      worldThemeSettings: {
+        options: {
+          name: '(Localize) Theme Settings',
+          hint: '(Localize) Customize your sheet to create an immersive experience that complements your game.',
+          scope: 'world',
+          type: Object,
+          default: undefined,
+          config: false,
+        },
+        get() {
+          return (
+            FoundryAdapter.getTidySetting<ThemeSettings>(
+              'worldThemeSettings'
+            ) ??
+            ({
+              colors: [],
+            } satisfies ThemeSettings)
           );
         },
       },

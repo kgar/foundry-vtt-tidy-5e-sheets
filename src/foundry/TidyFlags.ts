@@ -11,6 +11,7 @@ import type {
   TidyFlagUnnamedNotes,
 } from './TidyFlags.types';
 import { FoundryAdapter } from './foundry-adapter';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -131,7 +132,9 @@ export class TidyFlags {
 
       const newEntry = {
         ...original,
-        title: FoundryAdapter.localize('DOCUMENT.CopyOf', { name: original.title }),
+        title: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+          name: original.title,
+        }),
         id: newId,
       } satisfies DocumentJournalEntry;
 
@@ -1157,6 +1160,24 @@ export class TidyFlags {
     unset(document: any) {
       return TidyFlags.unsetFlag(document, TidyFlags.spellbookGrid.key);
     },
+  };
+
+  static sheetThemeSettings = {
+    key: 'sheet-theme-settings',
+    prop: TidyFlags.getFlagPropertyPath('sheet-theme-settings'),
+    get(doc: any): ThemeSettings {
+      return (
+        TidyFlags.tryGetFlag<ThemeSettings>(
+          doc,
+          TidyFlags.sheetThemeSettings.key
+        ) ?? {
+          colors: [],
+        }
+      );
+    },
+    set(doc: any, settings: ThemeSettings) {
+      TidyFlags.setFlag(doc, TidyFlags.sheetThemeSettings.key, settings);
+    }
   };
 
   /**

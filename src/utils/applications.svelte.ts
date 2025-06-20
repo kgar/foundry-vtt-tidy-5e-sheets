@@ -1,5 +1,7 @@
+import { TidyFlags } from 'src/api';
 import { debug } from './logging';
 import { getThemeV2 } from 'src/theme/theme';
+import { settings } from 'src/settings/settings.svelte';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
   if (!element) {
@@ -36,6 +38,20 @@ export function applyThemeToApplication(element?: HTMLElement, doc?: any) {
     element.classList.remove('theme-light', 'theme-dark');
     element.classList.add(`themed`);
     element.classList.add(`theme-${theme}`);
+  }
+
+  // TODO: start with world setting variables, then overwrite with sheet colors
+  const worldThemeColors = settings.value.worldThemeSettings.colors;
+
+  for (let color of worldThemeColors) {
+    element.style.setProperty(color.key, color.value);
+  }
+
+  // Sheet-specific settings
+  const themeSettings = TidyFlags.sheetThemeSettings.get(doc);
+
+  for (let color of themeSettings.colors) {
+    element.style.setProperty(color.key, color.value);
   }
 }
 
