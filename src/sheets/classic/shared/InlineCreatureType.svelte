@@ -9,7 +9,7 @@
 
   const localize = FoundryAdapter.localize;
   let text = $derived(
-    coalesce(context.labels.type, localize('DND5E.CreatureType')),
+    coalesce(context.system.details.type.label, localize('DND5E.CreatureType')),
   );
 </script>
 
