@@ -15,7 +15,7 @@
   - [ ] World
 - [ ] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
 - [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly
-- [ ] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that.
+- [ ] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
 - [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
 
 
