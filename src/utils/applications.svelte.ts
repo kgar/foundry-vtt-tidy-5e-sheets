@@ -41,10 +41,22 @@ export function applyThemeToApplication(element?: HTMLElement, doc?: any) {
   }
 
   // TODO: start with world setting variables, then overwrite with sheet colors
-  const worldThemeColors = settings.value.worldThemeSettings.colors;
+  const worldThemeColors = settings.value.worldThemeSettings.colors ?? [];
 
   for (let color of worldThemeColors) {
     element.style.setProperty(color.key, color.value);
+  }
+
+  // Parent Sheet settings
+  // Assumption: we are always merging parent settings with current document settings.
+  const parentSettings = doc.parent
+    ? TidyFlags.sheetThemeSettings.get(doc)
+    : undefined;
+
+  if (parentSettings) {
+    for (let color of parentSettings.colors) {
+      element.style.setProperty(color.key, color.value);
+    }
   }
 
   // Sheet-specific settings

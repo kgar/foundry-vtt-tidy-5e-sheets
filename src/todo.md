@@ -1,3 +1,6 @@
+- [ ] Remove empty sections in Sheet tab.
+- [ ] Add `mode-${sheetMode}` class to sheet on update cycles; ditto with theming
+
 ## Theme Settings To Do
 
 - [x] Set up ThemeSetting types
@@ -5,15 +8,18 @@
 - [x] Add World Setting
 - [x] Set up sheets to apply theme colors when applying overall dark/light classes
 - [ ] Set up ThemeSettings application, designed to save either to a sheet flag or to World settings (probably the presence of a document will decide it)
-  - [ ] Colors
-    - [ ] Accent Color
-    - [ ] Rarity Colors
-    - [ ] DDBeyond Rarity Color Saturation (for SagaTympana)
-    - [ ] Spell Preparation Mode Colors
-- [ ] (Stretch) Live update while the dialog is open
+  - [x] Colors
+    - [X] Accent Color
+    - [x] Rarity Colors
+    - [x] DDBeyond Rarity Color Saturation (for SagaTympana)
+    - [x] Spell Preparation Mode Colors
+- [ ] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
+- [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - [ ] Sheet
   - [ ] World
+- [ ] Implement the 
 - [ ] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
+- [ ] (Discuss) Should we completely ignore parent document theme settings when there are *any* color overrides? Or should we "merge down"? Or should we just provide a radio button / checkbox for "Merge Settings with Parent", "Inherit from Parent", "Independently themed"?
 - [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly
 - [ ] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
 - [ ] (Research) How do I leverage data models to validate / sanitize / migrate?

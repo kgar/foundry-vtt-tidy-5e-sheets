@@ -1176,8 +1176,11 @@ export class TidyFlags {
       );
     },
     set(doc: any, settings: ThemeSettings) {
-      TidyFlags.setFlag(doc, TidyFlags.sheetThemeSettings.key, settings);
-    }
+      return TidyFlags.setFlag(doc, TidyFlags.sheetThemeSettings.key, settings);
+    },
+    unset(doc: any) {
+      return TidyFlags.unsetFlag(doc, TidyFlags.sheetThemeSettings.key);
+    },
   };
 
   /**

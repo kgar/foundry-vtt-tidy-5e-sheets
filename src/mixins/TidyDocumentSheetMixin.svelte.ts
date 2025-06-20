@@ -37,6 +37,7 @@ import {
 } from 'src/features/sheet-header-controls/header-controls';
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -59,6 +60,28 @@ export function TidyExtensibleDocumentSheetMixin<
     constructor(options: TConstructorArgs) {
       super(options);
     }
+
+    static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+      window: {
+        controls: [
+          {
+            icon: 'fa-solid fa-palette',
+            label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+            action: 'themeSettings',
+            ownership: 'OWNER',
+          },
+        ],
+      },
+      actions: {
+        themeSettings: async function (this: TidyDocumentSheet) {
+          await new ThemeSettingsQuadroneApplication({
+            document: this.document,
+          }).render({
+            force: true,
+          });
+        },
+      },
+    };
 
     get sheetMode() {
       return this._mode;
@@ -161,7 +184,7 @@ export function TidyExtensibleDocumentSheetMixin<
       options: Partial<TidyDocumentSheetRenderOptions>
     ): Promise<DocumentSheetV2Context> {
       const context = await super._prepareContext(options);
-      
+
       return {
         ...context,
         unlocked:
