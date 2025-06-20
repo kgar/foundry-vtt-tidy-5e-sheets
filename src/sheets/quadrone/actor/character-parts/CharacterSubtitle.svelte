@@ -135,8 +135,8 @@
   </div>
   {#if context.enableXp}
     <div class="xp-container">
-      <div class="xp-label">
-        <span class="label font-label-medium color-text-gold"
+      <div class="xp-label flexrow">
+        <span class="label font-label-medium color-text-gold flexshrink"
           >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
         >
         {#if context.unlocked}
@@ -149,15 +149,16 @@
             selectOnFocus={true}
           />
         {:else}
-          <span class="label font-label-medium color-text-default">
+          <span class="label font-label-medium color-text-default flexshrink">
             {FoundryAdapter.formatNumber(context.system.details.xp.value)}
           </span>
         {/if}
-        <span class="separator">/</span>
-        <span class="label font-body-medium color-text-lighter"
+        <span class="separator flexshrink">/</span>
+        <span class="label font-body-medium color-text-lighter flexshrink"
           >{FoundryAdapter.formatNumber(context.system.details.xp.max)}</span
         >
       </div>
+      {#if !context.unlocked}
       <div
         class="xp-bar xp meter progress"
         style="--bar-percentage: {context.system.details.xp.pct}%;"
@@ -167,6 +168,7 @@
           style="width: {context.system.details.xp.pct}%"
         ></span>
       </div>
+      {/if}
     </div>
   {/if}
 </div>
