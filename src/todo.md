@@ -13,11 +13,10 @@
     - [x] Rarity Colors
     - [x] DDBeyond Rarity Color Saturation (for SagaTympana)
     - [x] Spell Preparation Mode Colors
-- [ ] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
+- [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - [ ] Sheet
   - [ ] World
-- [ ] Implement the 
 - [ ] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
 - [ ] (Discuss) Should we completely ignore parent document theme settings when there are *any* color overrides? Or should we "merge down"? Or should we just provide a radio button / checkbox for "Merge Settings with Parent", "Inherit from Parent", "Independently themed"?
 - [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly

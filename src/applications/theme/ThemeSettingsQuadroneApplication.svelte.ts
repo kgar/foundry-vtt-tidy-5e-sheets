@@ -10,7 +10,7 @@ import type {
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
-import { TidyFlags } from 'src/api';
+import { TidyFlags, TidyHooks } from 'src/api';
 import { settings, type CurrentSettings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
@@ -208,6 +208,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     } else {
       await FoundryAdapter.setTidySetting('worldThemeSettings', themeSettings);
     }
+
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
   }
 
   async reset() {
@@ -226,5 +228,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         )
         ?.delete();
     }
+
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
   }
 }
