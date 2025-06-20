@@ -444,7 +444,7 @@
     /* Spellcasting */
     --t5e-color-icon-spellcasting-prepared: var(--t5e-theme-color-lightest);
     --t5e-color-icon-spellcasting-atwill: oklch(from var(--t5e-color-palette-red-45) calc(l + 0.125) c h);
-    --t5e-color-icon-spellcasting-always: oklch(from var(--t5e-color-palette-green-43) calc(l + 0.125) c h);
+    --t5e-color-icon-spellcasting-always: var(--t5e-theme-color-lightest);
     --t5e-color-icon-spellcasting-pact: oklch(from var(--t5e-color-palette-pink-55) calc(l + 0.125) c h);
     --t5e-color-icon-spellcasting-innate: oklch(from var(--t5e-color-palette-purple-59) calc(l + 0.125) c h);
     --t5e-color-icon-spellcasting-ritual: oklch(from var(--t5e-color-palette-blue-green-50) calc(l + 0.125) c h);

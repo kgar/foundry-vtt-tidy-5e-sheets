@@ -1641,6 +1641,14 @@
     flex: initial;
   }
 
+  i.highlighted {
+    color: var(--t5e-theme-color-highlight);
+
+    &:hover {
+      text-shadow: 0 0 4px oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
+    }
+  }
+
   .tidy-tab-contents {
     &.active {
       display: flex;
@@ -1705,10 +1713,6 @@
         padding-inline-start: var(--t5e-size-halfx);
       }
 
-      &.primary .primary-icon {
-        color: var(--t5e-color-text-gold-emphasis);
-      }
-
       &:not(.primary) .primary-icon {
         color: var(--t5e-color-text-lighter);
       }
@@ -1736,8 +1740,8 @@
         box-shadow: var(--t5e-drop-shadow-field);
       }
 
-      &.attuned i {
-        color: var(--t5e-color-gold);
+      &.attuned i:hover {
+        text-shadow: 0 0 4px oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
       }
 
       input {

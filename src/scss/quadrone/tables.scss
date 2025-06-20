@@ -144,7 +144,7 @@
       }
 
       &:hover i {
-        background: var(--t5e-theme-color-darkest);
+        background: rgba(0, 0, 0, 0.48);
       }
     }
 
@@ -301,11 +301,24 @@
       &.expanded {}
     }
 
-    &.mode-always .highlight {
-      opacity: 0.32;
-      background: linear-gradient(to right,
-          transparent 60%,
-          var(--t5e-spellcasting-always) 125%);
+    &.mode-always {
+      --t5e-use-button-border-color: var(--t5e-spellcasting-always);
+
+      .tidy-table-row-use-button {
+        outline: 1px solid var(--t5e-use-button-border-color);
+        border: 1px solid var(--t5e-use-button-border-color);
+      }
+
+      .highlight {
+        opacity: 0.32;
+        background: linear-gradient(to right,
+            var(--t5e-spellcasting-always) -10%,
+            transparent 25%);
+      }
+
+      i.mode-always:hover {
+        text-shadow: 0 0 4px oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
+      }
     }
   }
 
@@ -791,7 +804,7 @@
       &.rarity,
       &.spell-preparation {
         .highlight {
-          background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 40%);
+          background: linear-gradient(to right, oklch(from var(--t5e-mode-color) l c h / 0.25) 10%, transparent 40%);
         }
       }
 
@@ -809,8 +822,8 @@
       &.mode-always .highlight {
         opacity: 1;
         background: linear-gradient(to right,
-            transparent 60%,
-            var(--t5e-item-color) 125%);
+            var(--t5e-theme-color-darkest) -25%,
+            transparent 25%);
       }
     }
 
@@ -841,6 +854,58 @@
 
   .spell-row-icon {
     color: var(--t5e-mode-color);
+  }
+
+  .spell-slot-tracker {
+    margin-left: var(--t5e-size-1x);
+    transform: translateY(var(--t5e-size-1));
+  }
+
+  .pips.spell-pips {
+    padding-block-start: var(--t5e-size-1);
+
+    .pip {
+      --pip-color: var(--t5e-color-text-gold-emphasis);
+      transition: all var(--t5e-transition-default);
+
+      &:hover,
+      &:active,
+      &:focus-within {
+        background-color: var(--t5e-theme-color-lighter);
+        filter: drop-shadow(0 0 3px oklch(from var(--t5e-theme-color-highlight) l c h));
+      }
+
+      &.active {
+
+        &:hover,
+        &:active,
+        &:focus-within {
+          background-color: var(--t5e-color-text-oninverse-gold-light);
+        }
+      }
+    }
+  }
+
+  :is(button, .button).button.button-icon-only.button-borderless.spell-slot-tracker-button {
+    width: 1.375rem;
+    height: 1.375rem;
+    min-height: unset;
+    min-width: unset;
+
+    &:hover,
+    &:active,
+    &:focus-within {
+      background: rgba(0, 0, 0, 0.48);
+    }
+
+    &:disabled {
+      cursor: default;
+      pointer-events: none;
+
+      i {
+        color: var(--t5e-color-icon-disabled);
+      }
+    }
   }
 
   /* Effects */
