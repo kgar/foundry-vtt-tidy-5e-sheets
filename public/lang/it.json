@@ -862,5 +862,6 @@
     "TIDY5E.HitDice.Max.Label": "Dadi Vita Massimi",
     "TIDY5E.CharacterTraits.Title": "Tratti Personaggio",
     "TIDY5E.HitDice.Current.Label": "Dadi Vita Attuali",
-    "TIDY5E.SidebarPinnedTab.Title": "Fissato"
+    "TIDY5E.SidebarPinnedTab.Title": "Fissato",
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Controllo Slot Incantesimi"
 }
