@@ -59,7 +59,10 @@
     <span class="name font-title-small">{info.name}</span>
 
     {#if info.primary}
-      <i class="fa-solid fa-crown primary-icon"></i>
+      <i
+        data-tooltip="DND5E.SpellAbility" 
+        class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis">
+      </i>
     {:else if context.unlocked}
       <a
         data-tooltip="DND5E.SpellAbilitySet"
@@ -69,7 +72,7 @@
             'system.attributes.spellcasting': info.ability.key,
           })}
       >
-        <i class="fa-regular fa-crown primary-icon"></i>
+        <i class="fa-regular fa-chess-queen primary-icon color-text-gold-emphasis"></i>
       </a>
     {/if}
   </div>

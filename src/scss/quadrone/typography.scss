@@ -83,6 +83,10 @@
     &-disabled {
       color: var(--t5e-color-text-disabled);
     }
+
+    &-highlight {
+      color: var(--t5e-theme-color-highlight);
+    }
   }
 
   .color-icon {

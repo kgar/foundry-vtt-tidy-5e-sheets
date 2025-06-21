@@ -14,6 +14,7 @@
         type: 'svelte',
         component: SidebarTabSkills,
       },
+      iconClass: 'fa-solid fa-briefcase',
     } satisfies Tab,
     {
       id: 'sidebar-favorites',
@@ -23,11 +24,16 @@
         component: SidebarTabFavorites,
         cssClass: 'favorites',
       },
+      iconClass: 'fa-solid fa-star',
     } satisfies Tab,
   ]);
 </script>
 
 <div class="sidebar-header">
-  <Tabs bind:selectedTabId {tabs} cssClass="sidebar-tab-strip button-group" tabCssClass="button button-secondary button-toggle" />
+  <Tabs 
+    bind:selectedTabId {tabs} 
+    cssClass="sidebar-tab-strip button-group" 
+    tabCssClass="button button-secondary button-toggle" 
+  />
 </div>
 <TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents flexcol" />

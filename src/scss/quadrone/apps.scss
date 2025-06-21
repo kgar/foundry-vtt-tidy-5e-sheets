@@ -541,38 +541,6 @@
       flex-wrap: wrap;
       gap: 0.25rem;
     }
-
-
-    // button.item-summary-command {
-    //   width: auto;
-    //   line-height: 1rem;
-    //   padding: 0.25rem 0;
-    //   background: none; //var(--t5e-component-field-background);
-    //   color: var(--t5e-color-text-lighter);
-    //   border: none; // 0.0625rem solid var(--t5e-component-field-border);
-    //   font-size: 0.75rem;
-    //   margin: 0;
-
-    //   display: inline-flex;
-    //   align-items: center;
-    //   gap: 0.25rem;
-    //   height: var(--t5e-tag-size-default);
-    //   min-height: var(--t5e-tag-size-default);
-
-    //   i {
-    //     color: var(--t5e-color-icon-diminished);
-    //   }
-
-    //   &:hover {
-    //     color: var(--t5e-color-text-default);
-    //     background: var(--t5e-component-field-background-hover);
-    //     border-color: var(--t5e-component-field-border-hover);
-
-    //     i {
-    //       color: var(--t5e-color-icon-default);
-    //     }
-    //   }
-    // }
   }
 
   sup,
@@ -735,32 +703,38 @@
     }
   }
 
-  :where(.spell-preparation) {
-    &:where(.mode-atwill) {
-      --t5e-mode-color: var(--t5e-color-icon-spellcasting-atwill);
-    }
-
-    &:where(.mode-always) {
-      --t5e-mode-color: var(--t5e-color-icon-spellcasting-always);
-    }
-
-    &:where(.mode-pact) {
-      --t5e-mode-color: var(--t5e-color-icon-spellcasting-pact);
-    }
-
-    &:where(.mode-innate) {
-      --t5e-mode-color: var(--t5e-color-icon-spellcasting-innate);
-    }
-
-    &:where(.mode-ritual) {
-      --t5e-mode-color: var(--t5e-color-icon-spellcasting-ritual);
-    }
-
-    &:where(.mode-prepared) {
-      // 👋 hightouch, I think we're probably good not to include a Prepared mode color. Should we purge the codebase of that?
-      // --t5e-mode-color: var(--t5e-color-icon-spellcasting-prepared);
-    }
+  // .spell-preparation {
+  :where(.mode-atwill) {
+    --t5e-mode-color: var(--t5e-color-spellcasting-atwill);
+    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
   }
+
+  :where(.mode-always) {
+    --t5e-mode-color: var(--t5e-color-spellcasting-always);
+    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  }
+
+  :where(.mode-pact) {
+    --t5e-mode-color: var(--t5e-color-spellcasting-pact);
+    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  }
+
+  :where(.mode-innate) {
+    --t5e-mode-color: var(--t5e-color-spellcasting-innate);
+    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  }
+
+  :where(.mode-ritual) {
+    --t5e-mode-color: var(--t5e-color-spellcasting-ritual);
+    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  }
+
+  :where(.mode-prepared) {
+    --t5e-mode-color: var(--t5e-color-spellcasting-prepared);
+    --t5e-icon-color: var(--t5e-color-white);
+  }
+
+  // }
 
   :where(.unidentified) {
     --t5e-item-color: var(--t5e-color-palette-grey-40);
