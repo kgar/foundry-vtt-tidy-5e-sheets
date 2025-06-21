@@ -1821,41 +1821,28 @@
     }
 
     .name {
-      margin-block-end: 0.75rem;
-
-      input,
-      .bastion-name {
-        text-align: center;
-        font-size: 1.25rem;
-      }
+      margin-block-end: 0;
     }
 
     >*:not(:first-child):not(:last-child) {
       margin-block-end: 1.25rem;
     }
 
+    .bastion-header {
+      margin-block-end: var(--t5e-size-1x);
+    }
+
     h3 {
-      height: 1.1875rem;
-      padding-bottom: 0.25rem;
-      border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
       display: flex;
-      gap: 0.25rem;
-      font-size: 0.875rem;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 0.875rem;
-      color: var(--t5e-color-text-lighter);
-      margin-block-end: 0.75rem;
+      align-items: center;
+
+      i {
+        font-size: var(--font-size-14);
+        margin-inline-end: var(--t5e-size-1x);
+      }
 
       .counter {
         padding-left: 0.25rem;
-
-        color: var(--t5e-color-text-lightest);
-
-        .value,
-        .max {
-          color: var(--t5e-color-text-lighter);
-        }
       }
     }
 

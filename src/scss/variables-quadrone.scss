@@ -318,24 +318,22 @@
   --t5e-color-inventory-max-over: rgba(88, 49, 69, 1);
 
   /* Spellbook */
-  --t5e-color-icon-spellcasting-prepared: var(--t5e-theme-color-default);
-  --t5e-color-icon-spellcasting-atwill: var(--t5e-color-palette-red-45);
-  --t5e-color-icon-spellcasting-always: var(--t5e-theme-color-default);
-  --t5e-color-icon-spellcasting-pact: var(--t5e-color-palette-pink-55);
-  --t5e-color-icon-spellcasting-innate: var(--t5e-color-palette-purple-59);
-  --t5e-color-icon-spellcasting-ritual: var(--t5e-color-palette-blue-green-50);
-  --t5e-spellcasting-default: var(--t5e-theme-color-default);
-  --t5e-spellcasting-default-darker: oklch(from var(--t5e-theme-color-default) calc(l * 0.70) calc(c * 1.2) h);
-  --t5e-spellcasting-atwill: var(--t5e-color-palette-red-45);
-  --t5e-spellcasting-atwill-darker: oklch(from var(--t5e-color-palette-red-45) calc(l * 0.70) calc(c * 1.2) h);
-  --t5e-spellcasting-always: var(--t5e-theme-color-default);
-  --t5e-spellcasting-always-darker: oklch(from var(--t5e-color-palette-green-43) calc(l * 0.70) calc(c * 1.2) h);
-  --t5e-spellcasting-pact: var(--t5e-color-palette-pink-55);
-  --t5e-spellcasting-pact-darker: oklch(from var(--t5e-color-palette-pink-55) calc(l * 0.70) calc(c * 1.2) h);
-  --t5e-spellcasting-innate: var(--t5e-color-palette-purple-59);
-  --t5e-spellcasting-innate-darker: oklch(from var(--t5e-color-palette-purple-59) calc(l * 0.70) calc(c * 1.2) h);
-  --t5e-spellcasting-ritual: var(--t5e-color-palette-blue-green-50);
-  --t5e-spellcasting-ritual-darker: oklch(from var(--t5e-color-palette-blue-green-50) calc(l * 0.70) calc(c * 1.2) h);
+  /* Base spellcasting colors - these can be overridden globally */
+  --t5e-color-spellcasting-prepared: var(--t5e-theme-color-default);
+  --t5e-color-spellcasting-atwill: var(--t5e-color-palette-red-45);
+  --t5e-color-spellcasting-always: var(--t5e-theme-color-default);
+  --t5e-color-spellcasting-pact: var(--t5e-color-palette-pink-55);
+  --t5e-color-spellcasting-innate: var(--t5e-color-palette-purple-59);
+  --t5e-color-spellcasting-ritual: var(--t5e-color-palette-blue-green-50);
+
+  /* Override variables - set these to customize spellcasting colors */
+  /* These are intentionally undefined here to allow for proper cascade inheritance */
+  /* --t5e-color-spellcasting-prepared-override: ; */
+  /* --t5e-color-spellcasting-atwill-override: ; */
+  /* --t5e-color-spellcasting-always-override: ; */
+  /* --t5e-color-spellcasting-pact-override: ; */
+  /* --t5e-color-spellcasting-innate-override: ; */
+  /* --t5e-color-spellcasting-ritual-override: ; */
 
 
   /* Spacing ------------ */
@@ -441,13 +439,13 @@
     /* Filigree */
     --t5e-color-filigree: var(--t5e-color-palette-grey-34);
 
-    /* Spellcasting */
-    --t5e-color-icon-spellcasting-prepared: var(--t5e-theme-color-lightest);
-    --t5e-color-icon-spellcasting-atwill: oklch(from var(--t5e-color-palette-red-45) calc(l + 0.125) c h);
-    --t5e-color-icon-spellcasting-always: var(--t5e-theme-color-lightest);
-    --t5e-color-icon-spellcasting-pact: oklch(from var(--t5e-color-palette-pink-55) calc(l + 0.125) c h);
-    --t5e-color-icon-spellcasting-innate: oklch(from var(--t5e-color-palette-purple-59) calc(l + 0.125) c h);
-    --t5e-color-icon-spellcasting-ritual: oklch(from var(--t5e-color-palette-blue-green-50) calc(l + 0.125) c h);
+    // /* Spellcasting */
+    // --t5e-color-spellcasting-prepared: var(--t5e-theme-color-default);
+    // --t5e-color-spellcasting-atwill: oklch(from var(--t5e-color-palette-red-45) calc(l + 0.125) c h);
+    // --t5e-color-spellcasting-always: var(--t5e-theme-color-default);
+    // --t5e-color-spellcasting-pact: oklch(from var(--t5e-color-palette-pink-55) calc(l + 0.125) c h);
+    // --t5e-color-spellcasting-innate: oklch(from var(--t5e-color-palette-purple-59) calc(l + 0.125) c h);
+    // --t5e-color-spellcasting-ritual: oklch(from var(--t5e-color-palette-blue-green-50) calc(l + 0.125) c h);
 
     /* Drop shadows */
     --t5e-drop-shadow-card: 0px 0px 9px 0px #000;
