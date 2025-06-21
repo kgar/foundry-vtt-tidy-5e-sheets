@@ -117,7 +117,7 @@
               title: ctx?.toggleTitle,
               equipped: item.system.equipped,
             }) satisfies ComponentProps<typeof EquipControl>,
-          visible: ({ ctx }) => ctx?.canToggle === true,
+          visible: ({ item, ctx }) => 'equipped' in item.system,
         });
       }
 
