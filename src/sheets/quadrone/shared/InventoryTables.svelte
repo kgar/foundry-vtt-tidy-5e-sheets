@@ -213,7 +213,7 @@
                 </TidyTableCell>
                 {#if ctx.attunement}
                   {@const iconClass = item.system.attuned
-                    ? 'fa-solid fa-sun color-text-gold-emphasis'
+                    ? 'fa-solid fa-sun color-text-highlight highlighted'
                     : 'fa-light fa-sun color-text-lighter'}
 
                   {@const title = localize(ctx.attunement.title)}

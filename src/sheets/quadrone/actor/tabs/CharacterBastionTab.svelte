@@ -95,37 +95,49 @@
   }
 
   let localize = FoundryAdapter.localize;
+
+  function onKeydown(event: KeyboardEvent) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      (event.currentTarget as HTMLElement).click();
+    }
+  }
 </script>
 
-<section class="name">
-  {#if context.unlocked}
+{#if context.unlocked}
+  <section class="name">
     <TextInputQuadrone
       document={context.actor}
+      class="font-title-medium"
       field="system.bastion.name"
       value={context.system.bastion.name}
       selectOnFocus={true}
       placeholder={localize('DND5E.Bastion.Label')}
     />
-  {:else if !isNil(context.system.bastion.name, '')}
-    <div class="bastion-name">
+  </section>
+{:else if !isNil(context.system.bastion.name, '')}
+  <section class="name">
+    <h2 class="bastion-name font-title-medium">
       {context.system.bastion.name}
-    </div>
-    <tidy-gold-header-underline></tidy-gold-header-underline>
-  {/if}
-</section>
+    </h2>
+  </section>
+{/if}
 
 <section class="facility-panels">
   <!-- Special Facilities -->
 
   <section class="facilities special">
-    <h3>
-      <i class="fas fa-building-columns"></i>
-      {localize('DND5E.FACILITY.Types.Special.Label.other')}
-      <span class="counter">
-        <span class="value">{context.facilities.special.value}</span> /
-        <span class="max">{context.facilities.special.max}</span>
-      </span>
-    </h3>
+    <div class="bastion-header">
+      <h3 class="font-title-small">
+        <i class="fa-solid fa-building-columns"></i>
+        {localize('DND5E.FACILITY.Types.Special.Label.other')}
+        <span class="counter">
+          <span class="value {context.facilities.special.value > 0 ? 'color-text-default' : 'color-text-lightest'} font-label-medium">{context.facilities.special.value}</span>
+          <span class="divider color-text-gold font-default-medium">/</span>
+          <span class="max color-text-default font-label-medium">{context.facilities.special.max}</span>
+        </span>
+      </h3>
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </div>
     <ul class="facility-list unlist">
       {#each context.facilities.special.chosen as chosen}
         {@const bgImg = chosen.img.includes(
@@ -151,6 +163,7 @@
           data-info-card-entity-uuid={chosen.facility.uuid}
         >
           <div class="facility-header">
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="facility-header-details"
               onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
@@ -158,6 +171,9 @@
               onmousedown={(ev) =>
                 FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
               onclick={(ev) => context.editable && useFacility(ev, chosen)}
+              onkeydown={onKeydown}
+              role="button"
+              tabindex="0"
             >
               <!-- <img class="facility-image" src={img} alt={chosen.name} /> -->
 
@@ -174,10 +190,15 @@
                 </span>
               </div>
             </a>
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="facility-menu highlight-on-hover"
+              aria-label="TODO: Add label"
               onclick={(ev) =>
                 EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+              onkeydown={onKeydown}
+              role="button"
+              tabindex="0"
             >
               <i class="fas fa-ellipsis-vertical"></i>
             </a>
@@ -264,11 +285,15 @@
       {/each}
       {#each context.facilities.special.available as available}
         <li class="facility empty">
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
-            class="highlight-on-hover"
+            class="button button-tertiary"
             onclick={(ev) =>
               context.editable &&
               addFacility(ev, CONSTANTS.FACILITY_TYPE_SPECIAL)}
+            onkeydown={onKeydown}
+            role="button"
+            tabindex="0"
           >
             <i class="fas fa-building-columns"></i>
             {localize(available.label)}
@@ -279,12 +304,20 @@
   </section>
 
   <!-- Basic Facilities -->
-
   <section class="facilities basic">
-    <h3>
-      <i class="fas fa-house-turret"></i>
-      {localize('DND5E.FACILITY.Types.Basic.Label.other')}
-    </h3>
+    <div class="bastion-header">
+      <h3 class="font-title-small">
+        <i class="fa-solid fa-house-turret"></i>
+        {localize('DND5E.FACILITY.Types.Basic.Label.other')}
+        <span class="counter">
+          <span class="value {context.facilities.basic.value > 0 ? 'color-text-default' : 'color-text-lightest'} font-label-medium">{context.facilities.basic.value}</span>
+          <span class="divider color-text-gold font-default-medium">/</span>
+          <span class="max color-text-default font-label-medium">{context.facilities.basic.max}</span>
+        </span>
+      </h3>
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </div>
+
     <ul class="facility-list unlist">
       {#each context.facilities.basic.chosen as chosen}
         {@const bgImg = chosen.img.includes(
@@ -310,6 +343,7 @@
           data-info-card-entity-uuid={chosen.facility.uuid}
         >
           <div class="facility-header">
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="facility-header-details"
               onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
@@ -317,6 +351,9 @@
               onmousedown={(ev) =>
                 FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
               onclick={(ev) => context.editable && useFacility(ev, chosen)}
+              onkeydown={onKeydown}
+              role="button"
+              tabindex="0"
             >
               {#if isSvg(img)}
                 <InlineSvg class="facility-image" svgUrl={img} />
@@ -331,10 +368,15 @@
                 </span>
               </div>
             </a>
+            <!-- svelte-ignore a11y_missing_attribute -->
             <a
               class="facility-menu highlight-on-hover"
+              aria-label="TODO: Add label"
               onclick={(ev) =>
                 EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+              onkeydown={onKeydown}
+              role="button"
+              tabindex="0"
             >
               <i class="fas fa-ellipsis-vertical"></i>
             </a>
@@ -345,11 +387,15 @@
       {/each}
       {#each context.facilities.basic.available as available}
         <div class="facility empty">
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
-            class="highlight-on-hover"
+            class="button button-tertiary"
             onclick={(ev) =>
               context.editable &&
               addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
+            onkeydown={onKeydown}
+            role="button"
+            tabindex="0"
           >
             {#if available.label.includes('build')}
               <i class="fa-solid fa-trowel"></i>
@@ -368,10 +414,14 @@
 
 {#if hasDefenders}
   <section class="roster defenders">
-    <h3>
-      <i class="fa-solid fa-shield"></i>
-      {localize('TIDY5E.Facilities.Defenders.Label')}
-    </h3>
+    
+    <div class="bastion-header">
+      <h3 class="font-title-small">
+        <i class="fa-solid fa-shield"></i>
+        {localize('TIDY5E.Facilities.Defenders.Label')}
+      </h3>
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </div>
     <ul class="roster-list unlist">
       {#each context.facilities.special.chosen as chosen}
         {#each chosen.defenders as { actor, uuid }, index}
@@ -394,10 +444,14 @@
 
 {#if hasHirelings}
   <section class="roster hirelings">
-    <h3>
-      <i class="fa-solid fa-users"></i>
-      {localize('TIDY5E.Facilities.Hirelings.Label')}
-    </h3>
+    <div class="bastion-header">
+      <h3 class="font-title-small">
+        <i class="fa-solid fa-users"></i>
+        {localize('TIDY5E.Facilities.Hirelings.Label')}
+      </h3>
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </div>
+
     <ul class="roster-list unlist">
       {#each context.facilities.special.chosen as chosen}
         {#each chosen.hirelings as { actor, uuid }, index}
@@ -445,7 +499,14 @@
 {/if}
 
 <section class="description">
-  <h3><i class="fa-solid fa-books"></i> Description</h3>
+  
+  <div class="bastion-header">
+    <h3 class="font-title-small">
+      <i class="fa-solid fa-books"></i>
+      {localize('DND5E.ACTIVITY.FIELDS.description.label')}
+    </h3>
+    <tidy-gold-header-underline></tidy-gold-header-underline>
+  </div>
 
   {#key context.bastion.description}
     {#if context.unlocked}

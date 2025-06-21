@@ -65,7 +65,7 @@
           <i class="fa-solid fa-arrow-turn-right flip-y"></i>
         </span>
         <a
-          class="tidy-table-button tidy-table-row-use-button"
+          class="tidy-table-row-use-button"
           onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
         >
           {#if ctx.activity.img?.endsWith('.svg')}

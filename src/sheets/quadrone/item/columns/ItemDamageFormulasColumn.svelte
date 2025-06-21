@@ -12,9 +12,9 @@
   {#each rowDocument.labels.damages as damage}
     {@const damageHealingIcon = damageHealingTypeIcons[damage.damageType]}
     <div class="flexrow">
-      <span class="flexshrink formula">{damage.formula}</span>
+      <span class="flexshrink damage-formula">{damage.formula}</span>
       {#if damageHealingIcon}
-        <span class="flexshrink" data-tooltip aria-label={damage.label}>
+        <span class="flexshrink damage-icon" data-tooltip aria-label={damage.label}>
           <Dnd5eIcon src={damageHealingIcon} />
         </span>
       {/if}

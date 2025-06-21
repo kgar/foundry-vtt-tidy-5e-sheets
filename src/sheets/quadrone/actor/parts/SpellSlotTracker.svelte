@@ -35,10 +35,11 @@
 <div class={['spell-slot-tracker']}>
   <button
     type="button"
-    class="spell-slot-tracker-button"
+    class="spell-slot-tracker-button button button-borderless button-icon-only"
     disabled={uses <= 0}
-    onclick={() => updateSlots(uses - 1)}>-</button
-  >
+    onclick={() => updateSlots(uses - 1)}>
+    <i class="fa-solid fa-minus"></i>
+  </button>
   {#if context.unlocked}
     <NumberInputQuadrone
       document={context.actor}
@@ -50,13 +51,14 @@
       step="1"
     />
   {:else}
-    <span class={['value', { ['has-temp-slots']: hasTempSlots }]}>{uses}</span>
+    <span class={['value', { ['has-temp-slots']: hasTempSlots }, { ['color-text-lightest']: uses <= 0 }]}>{uses}</span>
   {/if}
   <span class="separator">/</span>
   <span class="max">{slots}</span>
   <button
     type="button"
-    class="spell-slot-tracker-button"
-    onclick={() => updateSlots(uses + 1)}>+</button
-  >
+    class="spell-slot-tracker-button button button-borderless button-icon-only"
+    onclick={() => updateSlots(uses + 1)}>
+    <i class="fa-solid fa-plus"></i>
+  </button>
 </div>

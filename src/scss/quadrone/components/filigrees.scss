@@ -152,13 +152,13 @@
   }
 
   .filigree.block {
-    inline-size: calc(100% - 50px);
-    inset-inline: 25px;
+    inline-size: calc(100% - 48px);
+    inset-inline: 24px;
   }
 
   .filigree.inline {
-    block-size: calc(100% - 60px);
-    inset-block: 30px;
+    block-size: calc(100% - 56px);
+    inset-block: 28px;
   }
 
 }
