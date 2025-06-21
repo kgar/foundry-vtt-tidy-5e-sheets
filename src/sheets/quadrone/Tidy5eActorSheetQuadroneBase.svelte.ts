@@ -203,6 +203,7 @@ export function Tidy5eActorSheetQuadroneBase<
         items: Array.from(this.actor.items)
           .filter((i: Item5e) => !this.actor.items.has(i.system.container))
           .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
+        journal: TidyFlags.documentJournal.get(this.actor),
         labels: this._getLabels(),
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
@@ -709,6 +710,10 @@ export function Tidy5eActorSheetQuadroneBase<
         return 'copy';
       }
 
+      if (data.type === CONSTANTS.FLAG_TYPE_TIDY_JOURNAL) {
+        return this.actor.uuid === data.uuid ? 'move' : 'copy';
+      }
+
       const d = foundry.utils.parseUuid(data.uuid);
       const t = foundry.utils.parseUuid(this.document.uuid);
       const base = d.embedded?.length ? 'document' : 'primary';
@@ -766,18 +771,33 @@ export function Tidy5eActorSheetQuadroneBase<
     _onDragStart(
       event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
     ) {
-      const li = event.currentTarget;
+      const el = event.currentTarget;
       if (event.target.classList.contains('content-link')) return;
 
-      if (li.dataset.effectId && li.dataset.parentId) {
+      if (el.dataset.effectId && el.dataset.parentId) {
         const effect = this.actor.items
-          .get(li.dataset.parentId)
-          ?.effects.get(li.dataset.effectId);
+          .get(el.dataset.parentId)
+          ?.effects.get(el.dataset.effectId);
         if (effect)
           event.dataTransfer?.setData(
             'text/plain',
             JSON.stringify(effect.toDragData())
           );
+        return;
+      }
+
+      if (el.dataset.tidyJournalId) {
+        const journalSortDragData = {
+          tidyJournalId: el.dataset.tidyJournalId,
+          uuid: event.target.closest<HTMLElement>('[data-document-uuid]')
+            ?.dataset.documentUuid,
+          type: CONSTANTS.FLAG_TYPE_TIDY_JOURNAL,
+        };
+
+        event.dataTransfer?.setData(
+          'text/plain',
+          JSON.stringify(journalSortDragData)
+        );
         return;
       }
 
@@ -796,15 +816,69 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Handle different data types
       switch (data.type) {
-        case 'Actor':
+        case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
+          return this._onDropJournal(event, data);
+        case CONSTANTS.DOCUMENT_NAME_ACTOR:
           return this._onDropActor(event, data);
-        case 'Item':
+        case CONSTANTS.DOCUMENT_NAME_ITEM:
           return this._onDropItem(event, data);
-        case 'Folder':
+        case 'Folder': // TODO: figure out how to extract this as a constant. Is it a Document Name? Or what?
           return this._onDropFolder(event, data);
       }
 
       return super._onDrop(event);
+    }
+
+    async _onDropJournal(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      data: any
+    ) {
+      const journal = TidyFlags.documentJournal.get(this.actor);
+      const actorOwnsJournal = journal[data.tidyJournalId];
+      const targetEntryId = event.target.closest<HTMLElement>(
+        '[data-tidy-journal-id]'
+      )?.dataset.tidyJournalId;
+
+      const behavior = this._dropBehavior(event, data);
+
+      const sourceDocument = await fromUuid(data.uuid);
+      const sourceEntry =
+        TidyFlags.documentJournal.get(sourceDocument)[data.tidyJournalId];
+
+      if (behavior === 'move' && actorOwnsJournal && !!targetEntryId) {
+        // Sort
+
+        if (!sourceEntry) {
+          return;
+        }
+
+        TidyFlags.documentJournal.sort(this.actor, sourceEntry.id, targetEntryId);
+      } else {
+        if (!sourceDocument) {
+          return;
+        }
+
+        // Copy
+        const sourceJournal = TidyFlags.documentJournal.get(sourceDocument);
+        const sourceEntry = sourceJournal[data.tidyJournalId];
+
+        if (!sourceEntry) {
+          return;
+        }
+
+        const behavior = this._dropBehavior(event, data);
+
+        const newId = foundry.utils.randomID();
+        TidyFlags.documentJournal.add(this.actor, {
+          ...sourceEntry,
+          id: newId,
+        });
+
+        // Remove from source actor if this is a move
+        if (behavior === 'move') {
+          TidyFlags.documentJournal.remove(sourceDocument, data.tidyJournalId);
+        }
+      }
     }
 
     /** @override */

@@ -1,50 +1,97 @@
-## Sheet Tab To Do
+- [ ] Remove empty sections in Sheet tab.
+- [ ] Add `mode-${sheetMode}` class to sheet on update cycles; ditto with theming
 
-- [x] Provide Filters
-- [x] Provide Pinned Filters
-- [x] Provide Sorts - nothing beyond the default
-- [x] Ensure tab config works
-- [x] Implement Bookmark row action
-  - Initial state 
-    - when NULL and included in actions tab, consider it bookmarked
-    - when NULL and not included in actions tab, consider it not bookmarked
-    - if included via flag, bookmarked
-    - if excluded via flag, not bookmarked
-- [x] Change Sheet bookmark to pin
-- [x] Ensure Sheet pin options are available in context menu for Quadrone sheets
-  - [x] Add to Sheet Tab
-  - [x] Remove from Sheet Tab
-- [x] Surface activity spells and subtitle them accordingly
-- [x] Provide dedicated context for action subtitles, and decide on appropriate subtitles later.
+## Theme Settings To Do
 
-### Notes
+- [x] Set up ThemeSetting types
+- [x] Add Tidy Flag
+- [x] Add World Setting
+- [x] Set up sheets to apply theme colors when applying overall dark/light classes
+- [ ] Set up ThemeSettings application, designed to save either to a sheet flag or to World settings (probably the presence of a document will decide it)
+  - [x] Colors
+    - [X] Accent Color
+    - [x] Rarity Colors
+    - [x] DDBeyond Rarity Color Saturation (for SagaTympana)
+    - [x] Spell Preparation Mode Colors
+- [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
+- [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
+  - [ ] Sheet
+  - [ ] World
+- [ ] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
+- [ ] (Discuss) Should we completely ignore parent document theme settings when there are *any* color overrides? Or should we "merge down"? Or should we just provide a radio button / checkbox for "Merge Settings with Parent", "Inherit from Parent", "Independently themed"?
+- [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly
+- [ ] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
+- [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
 
-#### Actions-tab-specific Subtitles?
 
-Actions tab items could use some context to distinguish them from one another. Examples:
-- Inventory items in containers: Container Name in subtitle
-- Spells from items: Item source in subtitle
+## Journal Tab To Do
+
+- [x] Implement tab selection
+- [x] Implement Create Journal Entry
+- [x] Implement Delete Journal Entry
+- [x] ~~Add code to Journal to make it resilient to bad data, preferring to show blanks where data is missing~~ You can only do so much
+- [x] Implement setting a title
+- [x] Implement viewing rendered HTML
+- [x] Implement opening the editor and saving
+- [x] Add context menu for deleting journal entry
+- [x] Add context menu for duplicating journal entry
+- [x] Implement drag-and-drop to sort
+- [x] (stretch) drag-and-drop to move/copy between sheets
+- [x] Use a dedicated edit dialog for editing an entry. Close on save button clicked, and save on close.
+- [x] Creating a new journal entry
+  - [x] Add the journal entry
+  - [x] Give it a name ("New Journal Entry")
+  - [x] Select it
+  - [x] Open edit for new journal entry
+- [x] Placeholder on title input: "Entry Title"
+- [x] On duplicate
+  - Take the name of the previous one and tack on " (Copy)"
+- When index changes, scroll the selected into view
+- [x] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
+- [x] ~~(Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.~~ "View" with an Eye. Done.
+- [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data; and what about new user settings?
+
+
+### Journal scratch
+
+loc keys:
+"PackageDeleteTitle": 
+  "Delete {type}: {title}",
+"PackageDeleteConfirm": 
+  "Are you sure you want to delete the {type} \"{title}\"?",
+
+
+"JOURNAL.AddPage": "Add Page",
+"JOURNAL.EditPage": "Edit Page",
+"JOURNAL.NextPage": "Next Page",
+"JOURNAL.PrevPage": "Previous Page",
+
+"AreYouSure"
+"SIDEBAR.DeleteWarning": "This {type} will be permanently deleted and cannot be recovered.",
+
 
 ## To Do
 
+- [ ] Memoize current tab ID for duration of object instance lifetime
+- [ ] Memoize sidebar state as user preference for each tab for each sheet type
+- [ ] Memoize sidebar tab selection for duration of object instance lifetime
 - [ ] Character Sheet 
-  - [ ] Implement tabs
-    - [ ] Sheet (Actions)
+  - [x] Implement tabs
+    - [x] Sheet (Actions)
     - [x] Attributes (Character tab)
     - [x] Inventory
     - [x] Features
     - [x] Spellbook
     - [x] Effects
     - [x] Bastions
-    - [ ] Background
-    - [ ] Journal
+    - [x] ~~Background~~ Biography
+    - [x] Journal
   - [x] Implement Expandable/collapsible sidebar
   - [x] Implement Favorites
   - [ ] Implement Theme Settings
-    - [ ] World Default (?) - discuss with community
-    - [ ] User Default (we have User Scope now!)
-    - [ ] Actor Sheet Override
-    - [ ] Item Sheet Override
+    - [ ] World Default discuss with community
+    - [ ] Actor Sheet
+    - [ ] Item Sheet
   - [ ] Implement Limited View, which branches just within the top-level sheet component.
   - [ ] Misc Features
     - [ ] Set as Inspiration Source (see below)
@@ -110,6 +157,8 @@ Actions tab items could use some context to distinguish them from one another. E
 - [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 - [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
+- [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
+- [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
 
 
 ### Feature - Set as Inspiration Source

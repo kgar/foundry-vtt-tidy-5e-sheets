@@ -61,13 +61,19 @@ export function SvelteApplicationMixin<
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
 
     /** Creates the component which represents the window content area. */
-    _createComponent(node: HTMLElement): Record<string, any> {
+    _createComponent(
+      node: HTMLElement,
+      context: TContext
+    ): Record<string, any> {
       const errorMessage =
         'Unable to render Svelte application. To implement a Svelte application, override _createComponent and provide context data matching the specified sheet context type.';
       throw new Error(errorMessage);
     }
 
-    _createAdditionalComponents(content: HTMLElement): Record<string, any>[] {
+    _createAdditionalComponents(
+      content: HTMLElement,
+      context: TContext
+    ): Record<string, any>[] {
       return [];
     }
 
@@ -101,8 +107,10 @@ export function SvelteApplicationMixin<
 
       if (options.isFirstRender) {
         const content = this.windowContent;
-        this.#components.push(this._createComponent(content));
-        this.#components.push(...this._createAdditionalComponents(content));
+        this.#components.push(this._createComponent(content, context));
+        this.#components.push(
+          ...this._createAdditionalComponents(content, context)
+        );
       }
 
       return {

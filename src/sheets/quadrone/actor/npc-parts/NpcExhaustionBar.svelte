@@ -1,0 +1,1 @@
+NPC Exhaustion Bar

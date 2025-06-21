@@ -75,7 +75,7 @@ const defaultClassicCharacterTabs: RegisteredTab<CharacterSheetContext>[] = [
     layout: 'classic',
   },
   {
-    id: CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
+    id: CONSTANTS.TAB_ACTOR_BIOGRAPHY,
     title: 'DND5E.Biography',
     content: {
       component: CharacterBiographyTab,

@@ -1722,10 +1722,13 @@ export class Tidy5eCharacterSheet
     const targetId = event.target
       ?.closest('[data-favorite-id]')
       ?.getAttribute('data-favorite-id');
+
     if (!targetId) return;
+
+    if (srcId === targetId) return;
+
     let source;
     let target;
-    if (srcId === targetId) return;
     const siblings = this.actor.system.favorites.filter(
       (f: CharacterFavorite) => {
         if (f.id === targetId) target = f;

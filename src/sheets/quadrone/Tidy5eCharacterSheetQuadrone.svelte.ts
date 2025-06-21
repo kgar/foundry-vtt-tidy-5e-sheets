@@ -13,7 +13,6 @@ import type {
   AttributePinContext,
   CharacterClassEntryContext,
   TidyItemSectionBase,
-  CharacterFeatureSection,
   CharacterItemContext,
   CharacterItemPartitions,
   CharacterSheetQuadroneContext,
@@ -176,15 +175,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       })
     );
 
+    const enrichmentArgs = {
+      secrets: this.actor.isOwner,
+      rollData: actorContext.rollData,
+      relativeTo: this.actor,
+    };
+
     const context: CharacterSheetQuadroneContext = {
       bastion: {
         description: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.bastion.description,
-          {
-            secrets: this.actor.isOwner,
-            rollData: actorContext.rollData,
-            relativeTo: this.actor,
-          }
+          enrichmentArgs
         ),
       },
       conditions: conditions,
@@ -194,6 +195,33 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       creatureType: this._getCreatureType(),
       currencies,
       defenders: [],
+      // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
+      enriched: {
+        appearance: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.appearance,
+          enrichmentArgs
+        ),
+        bond: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.bond,
+          enrichmentArgs
+        ),
+        flaw: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.flaw,
+          enrichmentArgs
+        ),
+        ideal: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.ideal,
+          enrichmentArgs
+        ),
+        trait: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.trait,
+          enrichmentArgs
+        ),
+        biography: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.biography.value,
+          enrichmentArgs
+        ),
+      },
       epicBoonsEarned: undefined,
       facilities: {
         basic: { chosen: [], available: [], value: 0, max: 0 },
@@ -890,40 +918,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     );
   }
 
-  async _prepareAttributePins(context: ActorSheetQuadroneContext) {
-    let flagPins = TidyFlags.attributePins
-      .get(this.actor)
-      .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
-
-    let pins: AttributePinContext[] = [];
-
-    for (let pin of flagPins) {
-      let document = await fromUuid(pin.id, { relative: this.actor });
-
-      if (document) {
-        if (pin.type === 'item') {
-          pins.push({
-            ...pin,
-            linkedUses: context.itemContext[document.id]?.linkedUses,
-            document,
-          });
-        } else if (pin.type === 'activity') {
-          pins.push({
-            ...pin,
-            document,
-          });
-        }
-      } else {
-        // Orphaned pins may exist until the next pin/unpin action, when the pins will be reset to valid pins only.
-        debug(
-          `Attribute pin item with ID ${pin.id} not found. Excluding from final render.`
-        );
-      }
-    }
-
-    return pins;
-  }
-
   _prepareSpellcastingContext() {
     let spellcasting: SpellcastingContext[] = [];
 
@@ -1112,7 +1106,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return this._onDropFavorite(event, { type, id });
     }
 
-    // Hanle Activity drop
+    // Handle Activity drop
     if (data.type === 'Activity') {
       const activity = await fromUuid(data.uuid);
       if (activity) return this._onDropActivity(event, data);
