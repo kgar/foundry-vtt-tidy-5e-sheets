@@ -288,17 +288,6 @@
       }
     }
 
-    &.equipped {
-      --t5e-item-row-background: var(--t5e-color-palette-grey-100);
-      background: linear-gradient(to right,
-          rgba(255, 255, 255, 0.24) 40%,
-          var(--t5e-color-palette-grey-100) 90%);
-
-      .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 40%);
-      }
-    }
-
     &.rarity {
 
       .common {
@@ -306,7 +295,7 @@
       }
 
       .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 10%, transparent 48%);
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 0%, transparent 32%);
       }
 
       .tidy-table-row-use-button {
@@ -320,11 +309,21 @@
       }
     }
 
+    &.equipped {
+      --t5e-item-row-background: var(--t5e-color-palette-grey-100);
+      background: linear-gradient(to right,
+          var(--t5e-color-palette-grey-100) 10%,
+          rgba(255, 255, 255, 0.24) 50%);
+
+      .highlight {
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 48%);
+      }
+    }
+
     &.expanded {
-      background: linear-gradient(0deg,
-          rgba(255, 255, 255, 0.10) 0%,
-          rgba(255, 255, 255, 0.10) 100%),
-        var(--t5e-component-card-default);
+      background: linear-gradient(to right,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0.48) 80%);
     }
 
     .item-state-indicator {
@@ -879,8 +878,8 @@
 
       &.equipped {
         background: linear-gradient(to right,
-            transparent 50%,
-            var(--t5e-component-card-default) 95%);
+            var(--t5e-component-card-default) 10%,
+            transparent 60%);
 
         &.expanded {
           --t5e-item-row-background: rgba(255, 255, 255, 0.08);
