@@ -212,7 +212,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
   }
 
-  async reset() {
+  async useDefault() {
     // TODO: Pop a confirmation before committing to this.
 
     if (this._document) {
@@ -230,5 +230,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     }
 
     TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
+
+    await this.close();
   }
 }

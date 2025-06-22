@@ -45,6 +45,11 @@ export function applyThemeToApplication(
     element.classList.add(`theme-${theme}`);
   }
 
+  // Remove all --t5e styles
+  Array.from(element.style)
+    .filter((s) => s.startsWith('--t5e'))
+    .forEach((p) => element.style.removeProperty(p));
+
   // TODO: start with world setting variables, then overwrite with sheet colors
   const worldThemeColors = settings.value.worldThemeSettings.colors ?? [];
 

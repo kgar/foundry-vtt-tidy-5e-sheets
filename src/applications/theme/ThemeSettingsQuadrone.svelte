@@ -79,7 +79,7 @@
   <button
     type="button"
     class="button button-secondary use-default-btn"
-    onclick={() => app.reset()}
+    onclick={() => app.useDefault()}
   >
     {localize('TIDY5E.UseDefault')}
   </button>

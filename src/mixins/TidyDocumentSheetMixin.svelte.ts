@@ -472,7 +472,7 @@ export function TidyExtensibleDocumentSheetMixin<
       game.user.apps[this.id] = this;
 
       // TODO: Keep these details in TidyHooks.ts
-      Hooks.on(
+      this.themeSettingsChangeHookId = Hooks.on(
         'tidy5e-sheet.themeSettingsChanged',
         (document?: any, themeSettings?: ThemeSettings) => {
           if (
