@@ -1239,11 +1239,10 @@ export class TidyFlags {
    * This function is generic, but it is not performing parsing of the flag's value.
    * It is simply doing an optimistic cast to the target type.
    */
-  static tryGetFlag<T>(flagged: any, flagName: string) {
-    return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
-      | T
-      | null
-      | undefined;
+  static tryGetFlag<T>(flagged: any | undefined, flagName: string) {
+    return (
+      flagged ? flagged.getFlag(CONSTANTS.MODULE_ID, flagName) : undefined
+    ) as T | null | undefined;
   }
 
   /**

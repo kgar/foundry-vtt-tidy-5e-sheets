@@ -1,5 +1,3 @@
-- [ ] Check on Bastion Tab hireling hover functionality. Fix if broke.
-
 ## Theme Settings To Do
 
 - [x] Set up ThemeSetting types
@@ -13,7 +11,7 @@
     - [x] DDBeyond Rarity Color Saturation (for SagaTympana)
     - [x] Spell Preparation Mode Colors
   - [ ] Refine
-    - [ ] Be able to specify a CSS-valid color (hsl, rgb, hex, color name) or use a color picker
+    - [ ] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. Possibly stack the form group as well, since hsla and similar values are lengthy.
 - [ ] Implement Rarity Color saturation`
 - [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.

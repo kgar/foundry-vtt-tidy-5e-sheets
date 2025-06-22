@@ -59,7 +59,7 @@ export function applyThemeToApplication(
 
   // Parent Sheet settings
   // Assumption: we are always merging parent settings with current document settings.
-  const parentSettings = doc.parent
+  const parentSettings = doc?.parent
     ? TidyFlags.sheetThemeSettings.get(doc)
     : undefined;
 
