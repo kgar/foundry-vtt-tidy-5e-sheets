@@ -1,6 +1,3 @@
-- [ ] Remove empty sections in Sheet tab.
-- [ ] Add `mode-${sheetMode}` class to sheet on update cycles; ditto with theming
-
 ## Theme Settings To Do
 
 - [x] Set up ThemeSetting types
@@ -718,3 +715,5 @@ Limited:
 - [x] Bastion: Test and verify broken facilities
 - [x] Decide: will we continue to support "Allow Effects Management" option in the new sheets. Not right now. We will assume we're leaving it behind for now.
 - [x] Decide: should we allow for section config on Effects tabs. Not currently.
+- [x] Remove empty sections in Sheet tab.
+- [x] Add `mode-${sheetMode}` to sheet element

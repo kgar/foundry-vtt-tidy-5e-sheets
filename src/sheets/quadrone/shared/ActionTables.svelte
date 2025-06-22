@@ -81,7 +81,7 @@
       section.items,
       searchResults.uuids,
     )}
-    {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+    {#if section.show && hasViewableItems}
       {@const columns = new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications(
           sheetDocument.type,

@@ -247,6 +247,8 @@ export function TidyExtensibleDocumentSheetMixin<
 
         applyThemeToApplication(element, this.document);
 
+        this._applySheetModeClass(element);
+
         // Support injected named inputs
         element.addEventListener(
           'change',
@@ -399,13 +401,27 @@ export function TidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
 
     /**
+     * Applies the current sheet mode as a class to the sheet element.
+     */
+    _applySheetModeClass(element: HTMLElement) {
+      if (!element) {
+        return;
+      }
+
+      element.className = element.className.replace(/sheet-mode-\w+/g, '');
+      let mode = this.sheetMode === CONSTANTS.SHEET_MODE_EDIT ? 'edit' : 'play';
+      element.classList.add(`sheet-mode-${mode}`);
+    }
+
+    /**
      * Changes the user toggling the sheet mode.
      * @protected
      */
     async changeSheetMode(mode: number) {
       this._mode = mode;
       await this.submit();
-      this.render();
+      this._applySheetModeClass(this.element);
+      await this.render();
     }
 
     /**
