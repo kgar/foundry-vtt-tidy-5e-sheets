@@ -1,11 +1,11 @@
 <script lang="ts">
   import type {
+    ThemeColorSettingConfigEntry,
     ThemeSettingsContext,
     ThemeSettingsQuadroneApplication,
   } from './ThemeSettingsQuadroneApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ThemeColorSetting } from 'src/theme/theme-quadrone.types';
-  import { isNil } from 'src/utils/data';
+  import ThemeSettingColorFormGroupQuadrone from './ThemeSettingColorFormGroupQuadrone.svelte';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
@@ -28,7 +28,11 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {@render colorFormGroup(data.accentColor)}
+    <ThemeSettingColorFormGroupQuadrone
+      key={data.accentColor.key}
+      bind:value={data.accentColor.value}
+      label={data.accentColor.label}
+    />
   </fieldset>
 
   <fieldset>
@@ -49,7 +53,11 @@
       </p>
     </div>
     {#each data.rarityColors as color}
-      {@render colorFormGroup(color)}
+      <ThemeSettingColorFormGroupQuadrone
+        key={color.key}
+        bind:value={color.value}
+        label={color.label.titleCase()}
+      />
     {/each}
   </fieldset>
 
@@ -60,7 +68,11 @@
     </legend>
 
     {#each data.spellPreparationColors as color}
-      {@render colorFormGroup(color)}
+      <ThemeSettingColorFormGroupQuadrone
+        key={color.key}
+        bind:value={color.value}
+        label={color.label}
+      />
     {/each}
   </fieldset>
 </div>
@@ -92,33 +104,3 @@
     {localize('Cancel')}
   </button>
 </div>
-
-{#snippet colorFormGroup(color: ThemeColorSetting & { label: string })}
-  <div class="form-group">
-    <label for="">{color.label}</label>
-    <div class="form-fields">
-      <input
-        type="text"
-        bind:value={color.value}
-        onchange={(ev) => {
-          color.value = ev.currentTarget.value;
-        }}
-      />
-      <!-- <input
-        type="color"
-        value={color.value}
-        onchange={(ev) => {
-          color.value = ev.currentTarget.value;
-        }}
-      /> -->
-      <button
-        type="button"
-        class="button"
-        disabled={isNil(color.value, '')}
-        onclick={() => (color.value = '')}
-      >
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-  </div>
-{/snippet}

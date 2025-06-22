@@ -21,7 +21,7 @@ const rarityVariablePrefix = '--t5e-color-rarity';
 const spellPrepVariablePrefix = '--t5e-color-icon-spellcasting';
 const accentColorCssVariable = '--t5e-theme-color-default';
 
-type ThemeColorSettingConfigEntry = ThemeColorSetting & { label: string };
+export type ThemeColorSettingConfigEntry = ThemeColorSetting & { label: string };
 
 export type ThemeSettingsContext = {
   accentColor: ThemeColorSettingConfigEntry;

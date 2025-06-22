@@ -24,6 +24,89 @@
 - [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
 
 
+### Restyler Module Notes
+
+The TGCE Restyler module takes this approach:
+
+- Manage CSS Rules directly in dnd5e.css
+  - Insert any rules on sheet render when missing
+  - Insert/Update any rules for a target sheet while making changes to the customizer app
+- Data model: 
+  - `actor.flags['tgce-restyler-5e3'].cssText`
+  - `actor.flags['tgce-restyler-5e3'].elements`
+  - It can loop over cssText entries and simply insert-when-not-present on the dnd5e.css file
+    - This seems like an optimization to reduce processing when rendering the actor sheet. This can be trivially mitigated by using First Render and then responding to themeSettingChanged hooks on the Tidy side. Storing this seems like a mistake, at least for Tidy.
+  - It then uses the `elements` object to present the relevant form data in the customizer.
+    - For dynamically expandable fields like Rarity Colors and Spell Prep Modes, I can't enjoy this directness.
+    - For all other colors, sure.
+    - Maybe a good update for Tidy would be to use regular values like `accentColor` on the theme settings flag, instead of dumping it into the colors array. Likewise, perhaps Rarity and Spell Prep modes should store as separate color arrays instead of going into the same bucket. We can simply combine all the colors and styles in the most appropriate way for theme color style management at the time they are needed, which will reduce some complexity of the code. With that said, we should continue to keep a bucket of advanced variable assignments / direct selector and rule assignments so that users can make extremely customized approaches.
+
+Sample JSON of flag data:
+```json
+{
+    "cssText": {
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &stats &top &ac": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-badge2.png\") center center / contain no-repeat transparent; width: 60.5px; height: 60.5px; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-header > &right &level": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-badge2.png\") center center / contain no-repeat transparent; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2 &window-content": "{ background: rgb(13, 13, 13); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-header": "{ background-image: url(\"../../../modules/tgce-restyler-5e3/assets/sheet-banner-onegod.png\"); filter: hue-rotate(130deg); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body": "{ background-image: url(\"../../../modules/tgce-restyler-5e3/assets/transparent.png\"); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &meter&hit-dice&progress::before": "{ background: linear-gradient(to right, rgb(64, 31, 37), rgb(255, 0, 47)); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &meter&hit-points &progress::before": "{ background: linear-gradient(to right, rgb(27, 75, 41), rgb(15, 41, 23)); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &stats &lozenges &lozenge": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-lozenge.png\") center top / contain no-repeat transparent; transform: scale(1.05); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character": "{ transform: scale(0.97); filter: hue-rotate(77deg); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &tab&biography&active &bottom &icon > dnd5e-icon": "{ --icon-fill: #e1c019; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &content-link > i": "{ color: rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &tab&biography &characteristics label &value": "{ border-bottom: 1px solid rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &tab&biography&active": "{ color: rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &content-link": "{ background: rgb(153, 56, 56); border: 1px solid rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2 &card &header": "{ background: linear-gradient(to right, rgb(0, 0, 0), rgb(37, 27, 116)); color: rgb(255, 234, 0); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &sign": "{ color: rgb(255, 0, 0); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &score": "{ height: 23px; font-size: 0.8125rem; background: rgb(93, 14, 14); color: rgb(251, 174, 9); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &label": "{ font-size: 0.6875rem; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &mod": "{ font-size: 0.8125rem; color: rgb(255, 0, 0); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-header > &right &inspiration": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-badge1.png\") center center / contain no-repeat transparent; }"
+    },
+    "elements": {
+        "char-ac-badge": "modules/tgce-restyler-5e3/assets/alt-badge2.png",
+        "sheet-bgimage": "modules/tgce-restyler-5e3/assets/transparent.png",
+        "text-sheet-bgcolor": "#0d0d0d",
+        "sheet-bgcolor": "#0d0d0d",
+        "header-bgimage": "modules/tgce-restyler-5e3/assets/sheet-banner-onegod.png",
+        "sheet-header-hue-rotate": "130",
+        "char-lvl-image": "modules/tgce-restyler-5e3/assets/alt-badge2.png",
+        "char-ac-badge-scale": "60.5",
+        "char-trait-badge": "modules/tgce-restyler-5e3/assets/alt-lozenge.png",
+        "text-hp-bar-right": "#0f2917",
+        "hp-bar-right": "#0f2917",
+        "text-hd-bar-right": "#ff002f",
+        "hd-bar-right": "#ff002f",
+        "sheet-scale": "0.97",
+        "sheet-hue-rotate": "77",
+        "char-insp-image": "modules/tgce-restyler-5e3/assets/alt-badge1.png",
+        "text-abi-mod-txt-color": "#ff0000",
+        "abi-mod-txt-color": "#ff0000",
+        "text-abi-mod-sign-color": "#ff0000",
+        "abi-mod-sign-color": "#ff0000",
+        "text-abiscorecolor": "#fbae09",
+        "abiscorecolor": "#fbae09",
+        "text-abiboxcolor": "#5d0e0e",
+        "abiboxcolor": "#5d0e0e",
+        "char-trait-badge-scale": "1.05",
+        "banner-left": "#000000",
+        "text-banner-left": "#000000",
+        "text-banner-right": "#251b74",
+        "banner-right": "#251b74",
+        "text-banner-text": "#ffea00",
+        "banner-text": "#ffea00",
+        "text-bio-txt-color": "#e1c019",
+        "bio-txt-color": "#e1c019",
+        "text-content-link-bg-color": "#993838",
+        "content-link-bg-color": "#993838"
+    }
+}
+```
+
+
 ## Journal Tab To Do
 
 - [x] Implement tab selection
