@@ -1902,12 +1902,6 @@
         background-blend-mode: normal, luminosity;
       }
 
-      .sub-header {
-        color: var(--t5e-color-text-lightest);
-        margin-block-end: 0.25rem;
-        font-weight: 500;
-      }
-
       &.no-events {
         pointer-events: none;
       }
@@ -1982,10 +1976,85 @@
       gap: 0.125rem;
       margin-block-end: 1rem;
 
+      .tidy-table-row-use-button {
+        --t5e-use-button-border-color: var(--t5e-color-gold);
+        align-items: center;
+        align-self: center;
+        border-radius: 0.125rem;
+        border: 1px solid var(--t5e-use-button-border-color);
+        box-sizing: content-box;
+        cursor: pointer;
+        display: grid;
+        grid-template-columns: 1fr;
+        height: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
+        width: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
+        justify-content: center;
+        margin: 0.0625rem 0 0.0625rem 0.0625rem;
+        overflow: hidden;
+        position: relative;
+        transition: all var(--t5e-transition-default);
+
+        img {
+          border: 0;
+        }
+
+        i {
+          grid-column: 1;
+          font-size: 1.125rem;
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0.0625rem;
+          left: 0;
+          display: flex;
+          /* Fix for font awesome ::before icon alignment */
+          align-items: center;
+          justify-content: center;
+          color: var(--t5e-color-text-gold-emphasis);
+          opacity: 0;
+          transition: all var(--t5e-transition-default);
+        }
+
+        .roll-prompt i {
+          bottom: 0;
+        }
+
+        // TODO: hightouch, please review this. kgar put this here to support svg images
+        dnd5e-icon {
+          --icon-size: calc(1.75rem - 0.125rem);
+          --icon-fill: var(--t5e-color-text-lighter);
+        }
+
+        img {
+          border-radius: 0.0625rem;
+          grid-column: 1;
+          transition: all var(--t5e-transition-default);
+        }
+
+        &:hover {
+          img {
+            opacity: 0;
+          }
+
+          // TODO: hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
+          dnd5e-icon {
+            --icon-fill: transparent;
+          }
+
+          i {
+            display: flex;
+            opacity: 1;
+          }
+
+          background: transparent;
+        }
+      }
+
       .facility-image,
       .facility-image svg {
-        --img-size: 2rem;
+        --img-size: var(--t5e-icon-size-8x);
         --icon-fill: var(--t5e-color-text-lightest);
+        border: 0.0625rem solid var(--t5e-color-gold);
         width: var(--img-size);
         height: var(--img-size);
         margin-inline-end: 0.25rem;
@@ -1997,8 +2066,12 @@
         gap: 0.125rem;
         flex: 1;
 
-        &:hover .title {
-          color: fuchsia;
+        &:hover {
+          text-shadow: var(--t5e-drop-shadow-field);
+
+          .facility-image {
+            box-shadow: 0 0 4px var(--t5e-color-text-gold-emphasis);
+          }
         }
       }
 
@@ -2017,7 +2090,7 @@
 
       .subtitle {
         font-size: 0.8125rem;
-        color: var(--t5e-color-text-lightest);
+        color: var(--t5e-color-text-lighter);
       }
     }
 
@@ -2028,7 +2101,7 @@
       flex-direction: row;
       gap: 0.25rem;
       flex-wrap: wrap;
-      margin-block-end: 0.75rem;
+      margin-block-start: 0.75rem;
     }
 
     .slot.occupant-slot {
