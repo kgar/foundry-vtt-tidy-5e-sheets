@@ -172,7 +172,7 @@
           <div class="facility-header">
             <!-- svelte-ignore a11y_missing_attribute -->
             <a
-              class="facility-header-detail"
+              class="facility-header-details"
               onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
               onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
               onmousedown={(ev) =>
@@ -217,7 +217,7 @@
               data-prop="system.hirelings"
               use:applyDropzoneClass={'occupant-dropzone'}
             >
-              <div class="sub-header text-label-medium color-text-lighter">
+              <div class="sub-header font-label-medium color-text-lighter">
                 {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
               </div>
               <ul class="slots hirelings unlist">
@@ -242,7 +242,7 @@
               data-prop="system.defenders"
               use:applyDropzoneClass={'occupant-dropzone'}
             >
-              <div class="sub-header">
+              <div class="sub-header font-label-medium color-text-lighter">
                 {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
               </div>
               <ul class="slots facility-occupants defenders">
@@ -267,7 +267,7 @@
               data-prop="system.trade.creatures"
               use:applyDropzoneClass={'occupant-dropzone'}
             >
-              <div class="sub-header">
+              <div class="sub-header font-label-medium color-text-lighter">
                 {localize('TIDY5E.Facilities.Creatures.Label')}
               </div>
               <ul class="slots creatures">

@@ -115,7 +115,8 @@
   </li>
 {:else}
   <li class="slot occupant-slot {type} empty" data-index={index}>
-    <a onclick={(ev) => context.editable && onSlotClick(ev)}>
+    <a onclick={(ev) => context.editable && onSlotClick(ev)}
+      class="button button-tertiary button-icon-only">
       <i class={iconClass}></i>
     </a>
   </li>
