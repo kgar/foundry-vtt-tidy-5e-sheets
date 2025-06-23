@@ -16,8 +16,8 @@
     - [x] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. ~~Possibly stack the form group as well~~, since hsla and similar values are lengthy.
 - [x] Implement Rarity Color saturation`
 - [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
-- [x] Add style for form group label swatch
-- [ ] Change the approach from setting CSS variable properties on the form tag to instead managing sheet styles in a dedicated style tag.
+- [x] Add style for form group label swatch.
+- [x] Change the approach from setting CSS variable properties on the form tag to instead managing sheet styles in a dedicated style tag.
   - [x] Implement function that turns settings into CSS rules
     - Create delcarations with rule sets; bucket as many rules as possible by theme setting key.
     - Uniquely tag declarations via their requisite setting in an empty CSS variable, a la
@@ -27,9 +27,15 @@
   - [x] World
     - [x] init: when establishing the style tag, generate these settings and add them to the style tag
     - [x] refresh: on change, purge-restore styles; this should use the on change handler in settings
-  - [ ] Sheet
-    - [ ] init: on first render, during pre-render, establish own styles
-    - [ ] refresh: on theme settings change hook, determine if relevant to self, and if so, purge-restore styles
+  - [x] Sheet
+    - [x] init: on first render, during pre-render, establish own styles
+    - [x] refresh: on theme settings change hook, determine if relevant to self, and if so, purge-restore styles
+- [ ] // TODO: Convert Rarity Colors and Spell Prep Mode Colors to objects so they save smaller and merge easier.
+  - [ ] Change types
+  - [ ] Change save/load functions in Theme Quad
+  - [ ] Change up theme settings form
+  - [ ] Change up functions for preparing styles
+  - [ ] Change up parent style inheritance feature now that it's easy; just merge.
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet

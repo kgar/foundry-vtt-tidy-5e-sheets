@@ -38,7 +38,8 @@ import {
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone';
+import { TidyHooks } from 'src/api';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -248,6 +249,11 @@ export function TidyExtensibleDocumentSheetMixin<
         applyThemeToApplication(element, this.document);
 
         this._applySheetModeClass(element);
+
+        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+          doc: this.document,
+          mergeParentDocumentSettings: true,
+        });
 
         // Support injected named inputs
         element.addEventListener(
@@ -460,7 +466,6 @@ export function TidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
-    // settingsChangeHookId?: number;
 
     themeSettingsChangeHookId?: number;
 
@@ -471,20 +476,20 @@ export function TidyExtensibleDocumentSheetMixin<
     _attachFrameListeners() {
       game.user.apps[this.id] = this;
 
-      // TODO: Keep these details in TidyHooks.ts
-      this.themeSettingsChangeHookId = Hooks.on(
-        'tidy5e-sheet.themeSettingsChanged',
-        (document?: any, themeSettings?: ThemeSettings) => {
+      this.themeSettingsChangeHookId =
+        TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
           const appliesToThisSheet =
-            !!document &&
-            (document.uuid === this.document.uuid ||
-              document.uuid === this.document.parent?.uuid);
-              
+            !!doc &&
+            (doc.uuid === this.document.uuid ||
+              doc.uuid === this.document.parent?.uuid);
+
           if (appliesToThisSheet) {
-            applyThemeToApplication(this.element, document, themeSettings);
+            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+              doc,
+              mergeParentDocumentSettings: true,
+            });
           }
-        }
-      );
+        });
 
       super._attachFrameListeners();
     }
@@ -514,8 +519,7 @@ export function TidyExtensibleDocumentSheetMixin<
     _onClose(options: TidyDocumentSheetRenderOptions) {
       delete game.user.apps[this.id];
 
-      Hooks.off(
-        'tidy5e-sheet.themeSettingsChanged',
+      TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(
         this.themeSettingsChangeHookId
       );
 

@@ -485,7 +485,7 @@ export class TidyHooks {
     );
   }
 
-  static tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId: number): number {
+  static tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId?: number): number {
     return Hooks.off(this.tidy5eSheetsThemeSettingsChangedHook, hookId);
   }
 }

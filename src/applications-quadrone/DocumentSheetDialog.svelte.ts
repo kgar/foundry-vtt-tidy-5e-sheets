@@ -1,4 +1,6 @@
+import { TidyHooks } from 'src/api';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone';
 import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,
@@ -47,11 +49,29 @@ export function DocumentSheetDialog<
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
+
+    themeSettingsChangeHookId?: number;
+
     _attachFrameListeners() {
       super._attachFrameListeners();
 
       // Tidy 5e relies on `themed theme-{theme}` to be on every one of its applications.
       applyThemeToApplication(this.element, this.document);
+
+      this.themeSettingsChangeHookId =
+        TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
+          const appliesToThisSheet =
+            !!doc &&
+            (doc.uuid === this.document.uuid ||
+              doc.uuid === this.document.parent?.uuid);
+
+          if (appliesToThisSheet) {
+            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+              doc,
+              mergeParentDocumentSettings: true,
+            });
+          }
+        });
     }
 
     /* -------------------------------------------- */
@@ -59,9 +79,16 @@ export function DocumentSheetDialog<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
+      TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(
+        this.themeSettingsChangeHookId
+      );
+
       // Trigger saving of the form if configured and allowed
       const submit =
-        !options.bypassSubmitOnClose && this.options.submitOnClose && this.document.isOwner && this.isEditable;
+        !options.bypassSubmitOnClose &&
+        this.options.submitOnClose &&
+        this.document.isOwner &&
+        this.isEditable;
 
       if (submit) {
         try {

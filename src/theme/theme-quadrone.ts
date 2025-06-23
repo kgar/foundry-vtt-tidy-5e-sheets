@@ -51,13 +51,17 @@ export class ThemeQuadrone {
     return FoundryAdapter.setTidySetting('worldThemeSettings', toSave);
   }
 
-  static getSheetThemeSettings(doc: any): ThemeSettings {
+  static getSheetThemeSettings(
+    doc: any,
+    mergeParentDocumentSettings?: boolean
+  ): ThemeSettings {
+    // TODO: Convert Rarity Colors and Spell Prep Mode Colors to objects so they save smaller and merge easier.
+    // Then, merge parent document settings here.
+
     const preferences = foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       TidyFlags.sheetThemeSettings.get(doc)
     ) as ThemeSettings;
-
-    // TODO: Clean up and backfill as needed. It could even just be a Foundry merge
 
     return preferences;
   }
@@ -78,10 +82,14 @@ export class ThemeQuadrone {
     let selectorPrefix = ThemeQuadrone.getSelectorPrefix(doc);
 
     let result: ThemeQuadroneStyleDeclaration[] = [
-      ...this.getAccentColorDeclarations(selectorPrefix, settings),
-      ...this.getHeaderBackgroundDeclarations(selectorPrefix, settings),
-      ...this.getRarityColorsDeclarations(selectorPrefix, settings),
-      ...this.getSpellPreparationModesDeclarations(selectorPrefix, settings),
+      ...this.getAccentColorDeclarations(selectorPrefix, settings, doc),
+      ...this.getHeaderBackgroundDeclarations(selectorPrefix, settings, doc),
+      ...this.getRarityColorsDeclarations(selectorPrefix, settings, doc),
+      ...this.getSpellPreparationModesDeclarations(
+        selectorPrefix,
+        settings,
+        doc
+      ),
       // etc.
     ];
 
@@ -89,15 +97,13 @@ export class ThemeQuadrone {
   }
 
   private static getSelectorPrefix(doc: any) {
-    return doc
-      ? `#${doc.sheet.uniqueId}`
-      : '.tidy5e-sheet.application.quadrone';
+    return doc ? `#${doc.sheet.id}` : '.tidy5e-sheet.application.quadrone';
   }
 
   static readonly worldSettingIdentifierKey = '--tidy5e-sheet-world-setting';
 
   static sheetSettingIdentifierKey(doc: any) {
-    return `--tidy5e-sheet-sheet-setting-${doc.uuid}`;
+    return `--tidy5e-sheet-sheet-setting-${doc.uuid.replaceAll('.', '-')}`;
   }
 
   static themeSettingIdentifierValue(settingName: string) {
@@ -118,16 +124,17 @@ export class ThemeQuadrone {
 
   static getAccentColorDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettings
+    settings: ThemeSettings,
+    doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
     if (isNil(settings.accentColor, '')) {
       return [];
     }
 
-    const identifierRule = this.getDeclarationKeyRule('accentColor');
+    const identifierRule = this.getDeclarationKeyRule('accentColor', doc);
     return [
       {
-        identifier: `${identifierRule.property}: ${identifierRule.value}`,
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
         selector: selectorPrefix,
         ruleset: [
           identifierRule,
@@ -142,16 +149,17 @@ export class ThemeQuadrone {
 
   static getHeaderBackgroundDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettings
+    settings: ThemeSettings,
+    doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
     if (isNil(settings.headerBackground, '')) {
       return [];
     }
 
-    const identifierRule = this.getDeclarationKeyRule('headerBackground');
+    const identifierRule = this.getDeclarationKeyRule('headerBackground', doc);
     return [
       {
-        identifier: `${identifierRule.property}: ${identifierRule.value}`,
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
         selector: selectorPrefix,
         ruleset: [
           identifierRule,
@@ -166,7 +174,8 @@ export class ThemeQuadrone {
 
   static getRarityColorsDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettings
+    settings: ThemeSettings,
+    doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
     const rarityColors = settings.rarityColors.filter(
       (c) => !isNil(c.value?.trim(), '')
@@ -174,20 +183,28 @@ export class ThemeQuadrone {
 
     return rarityColors.map((c) => {
       const identifierRule = this.getDeclarationKeyRule(
-        `rarityColors-${c.key}`
+        `rarityColors-${c.key}`,
+        doc
       );
       const cssVariable = `--t5e-color-rarity-${c.key.toLowerCase()}`;
       return {
-        identifier: `${identifierRule.property}: ${identifierRule.value}`,
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
         selector: selectorPrefix,
-        ruleset: [{ property: cssVariable, value: c.value }],
+        ruleset: [
+          identifierRule,
+          {
+            property: cssVariable,
+            value: c.value,
+          },
+        ],
       };
     });
   }
 
   static getSpellPreparationModesDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettings
+    settings: ThemeSettings,
+    doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
     const spellPrepModes = settings.spellPreparationModeColors.filter(
       (c) => !isNil(c.value?.trim(), '')
@@ -195,19 +212,26 @@ export class ThemeQuadrone {
 
     return spellPrepModes.flatMap((c) => {
       const identifierRule = this.getDeclarationKeyRule(
-        `spellPreparationModeColors-${c.key}`
+        `spellPreparationModeColors-${c.key}`,
+        doc
       );
       const cssVariable = `--t5e-color-spellcasting-${c.key.toLowerCase()}`;
       return [
         {
-          identifier: `${identifierRule.property}: ${identifierRule.value}`,
+          identifier: `${identifierRule.property}: "${identifierRule.value}"`,
           selector: selectorPrefix,
-          ruleset: [{ property: cssVariable, value: c.value }],
+          ruleset: [
+            identifierRule,
+            {
+              property: cssVariable,
+              value: c.value,
+            },
+          ],
         },
         {
-          identifier: `${identifierRule.property}: ${identifierRule.value}`,
+          identifier: `${identifierRule.property}: "${identifierRule.value}"`,
           selector: `${selectorPrefix} .tidy-table-header-row.spell-preparation`,
-          ruleset: [{ property: cssVariable, value: c.value }],
+          ruleset: [identifierRule, { property: cssVariable, value: c.value }],
         },
       ];
     });
@@ -267,6 +291,7 @@ export class ThemeQuadrone {
   static applyCurrentThemeSettingsToStylesheet(
     args: {
       doc?: any;
+      mergeParentDocumentSettings?: boolean;
       settingsOverride?: ThemeSettings;
     } = {}
   ) {
