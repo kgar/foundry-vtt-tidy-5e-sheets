@@ -11,10 +11,15 @@
     - [x] DDBeyond Rarity Color Saturation (for SagaTympana)
     - [x] Spell Preparation Mode Colors
   - [ ] Refine
-    - [ ] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. Possibly stack the form group as well, since hsla and similar values are lengthy.
-- [ ] Implement Rarity Color saturation`
+    - [x] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. ~~Possibly stack the form group as well~~, since hsla and similar values are lengthy.
+- [x] Implement Rarity Color saturation`
 - [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
+- [ ] Change the approach from setting CSS variable properties on the form tag to instead managing sheet styles in a dedicated style tag.
+  - Psst: you're currently trying to get the form to save/load correctly. Finish that, then do the cool style tag thing.
+  - [ ] Sheet
+  - [ ] World
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
+  - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet
   - [ ] World
 - [ ] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
@@ -40,6 +45,60 @@ The TGCE Restyler module takes this approach:
     - For dynamically expandable fields like Rarity Colors and Spell Prep Modes, I can't enjoy this directness.
     - For all other colors, sure.
     - Maybe a good update for Tidy would be to use regular values like `accentColor` on the theme settings flag, instead of dumping it into the colors array. Likewise, perhaps Rarity and Spell Prep modes should store as separate color arrays instead of going into the same bucket. We can simply combine all the colors and styles in the most appropriate way for theme color style management at the time they are needed, which will reduce some complexity of the code. With that said, we should continue to keep a bucket of advanced variable assignments / direct selector and rule assignments so that users can make extremely customized approaches.
+
+Note the approaches to inserting styles when they don't exist yet, creating or updating CSS Rules, and **removing properties or rules**.
+
+```js
+Hooks.on("renderActorSheet5eCharacter2", function(object) {   
+    debugLog('green', `Inside Hook:renderActorSheet5eCharacter2 >> Actor: ${object.actor._id}`);    
+    const myStyleSheet = Array.from(document.styleSheets).find((e) => e?.href?.includes(CSS_HREF));
+    if (game.actors.get(object.actor._id).flags['tgce-restyler-5e3']?.cssText !== undefined){
+        debugLog('cyan', `- CSS Rules found in flags for actor ${object.actor._id}`);    
+        debugLog('cyan', `- Checking ${myStyleSheet.href} for rules needing added... `);    
+        Object.entries(game.actors.get(object.actor._id).flags['tgce-restyler-5e3'].cssText).forEach((e) => {
+            if(!Array.from(myStyleSheet.cssRules).find((s) => s.selectorText == e[0].replaceAll('&','.'))){
+                myStyleSheet.insertRule(e[0].replaceAll('&','.')+" "+e[1]);
+                debugLog('cyan', `- CSS rule created: ${e[0].replaceAll('&','.')+" "+e[1]}`);
+            }             
+        });
+    } else {
+        debugLog('yellow', `- CSS Rules NOT found in flags for actor ${object.actor._id}`);    
+    }
+});
+
+//* CSS Rule Creator/Updater(add/modify property)
+function createOrUpdateCssRule(selector, property, value) {
+    debugLog('green', `Inside Function: createOrUpdateCssRule()`)
+    const myStyleSheet = Array.from(document.styleSheets).find((e) => e?.href?.includes(CSS_HREF));    
+    const currentCssRule = Array.from(myStyleSheet.cssRules).find((e) => e?.selectorText === selector);
+    if (currentCssRule){
+        debugLog('cyan', `- CSS Rule Found! Updating CSS Rule...`);
+        if (property.includes('--')) {
+            currentCssRule.style.setProperty(property, value);
+        } else {
+            currentCssRule.style[property] = value;
+        }
+    } else {
+        debugLog('cyan', `- CSS Rule Not found! Creating CSS Rule...`);
+        myStyleSheet.insertRule(`${selector} { ${property}: ${value}}`);
+    }
+}
+
+function removePropertyOrRule(selector, property, value) {
+    debugLog('green', `Inside Function: removePropertyOrRule()`)
+    const myStyleSheet = Array.from(document.styleSheets).find((e) => e?.href?.includes(CSS_HREF));    
+    let currentCssRule = Array.from(myStyleSheet.cssRules).find((e) => e?.selectorText === selector);
+    if (currentCssRule) {
+        if (currentCssRule.style.length <= 1) {
+            debugLog('cyan', `- Last rule property, removing rule>> ${selector}`);
+            myStyleSheet.deleteRule(Array.from(myStyleSheet.cssRules).findIndex((e) => e?.selectorText == selector));
+        } else {
+            debugLog('cyan', `- Removing Property>> ${property}: ${value}`);
+            currentCssRule.style.removeProperty(property);
+        }
+    }
+}
+```
 
 Sample JSON of flag data:
 ```json

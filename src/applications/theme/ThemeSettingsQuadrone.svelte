@@ -29,9 +29,9 @@
     </legend>
 
     <ThemeSettingColorFormGroupQuadrone
-      key={data.accentColor.key}
-      bind:value={data.accentColor.value}
-      label={data.accentColor.label}
+      key="accent-color"
+      bind:value={data.accentColor}
+      label="(Localize) Accent Color"
     />
   </fieldset>
 

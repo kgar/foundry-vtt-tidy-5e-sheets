@@ -12,6 +12,7 @@ import type {
 } from './TidyFlags.types';
 import { FoundryAdapter } from './foundry-adapter';
 import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -1170,9 +1171,7 @@ export class TidyFlags {
         TidyFlags.tryGetFlag<ThemeSettings>(
           doc,
           TidyFlags.sheetThemeSettings.key
-        ) ?? {
-          colors: [],
-        }
+        ) ?? ThemeQuadrone.getDefaultThemeSettings()
       );
     },
     set(doc: any, settings: ThemeSettings) {

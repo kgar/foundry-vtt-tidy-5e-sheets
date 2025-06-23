@@ -462,16 +462,30 @@ export class TidyHooks {
     Hooks.callAll('tidy5e-sheet.selectTab', app, element, newTabId);
   }
 
+  static tidy5eSheetsThemeSettingsChangedHook =
+    'tidy5e-sheet.themeSettingsChanged';
+
   /**
    * Theme settings, whether at world or sheet scope, have changed.
    * Alternatively, themes are being previewed, and relevant subscribers need to refresh their settings.
    * @param doc when dealing with a specific sheet's theme changes, this is the affected document
-   * @param liveThemeSettings when performing live previewing of a theme, these are the previewed settings
    */
-  static tidy5eSheetsThemeSettingsChanged(
-    doc?: any,
-    liveThemeSettings?: ThemeSettings
-  ) {
-    Hooks.callAll('tidy5e-sheet.themeSettingsChanged', doc, liveThemeSettings);
+  static tidy5eSheetsThemeSettingsChanged(doc?: any) {
+    Hooks.callAll(this.tidy5eSheetsThemeSettingsChangedHook, doc);
+  }
+
+  static tidy5eSheetsThemeSettingsChangedSubscribe(
+    callback: (doc?: any) => void
+  ): number {
+    return Hooks.on(
+      this.tidy5eSheetsThemeSettingsChangedHook,
+      (...params: any[]) => {
+        callback(...params);
+      }
+    );
+  }
+
+  static tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId: number): number {
+    return Hooks.off(this.tidy5eSheetsThemeSettingsChangedHook, hookId);
   }
 }

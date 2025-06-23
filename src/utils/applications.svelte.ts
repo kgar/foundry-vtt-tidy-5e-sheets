@@ -44,37 +44,6 @@ export function applyThemeToApplication(
     element.classList.add(`themed`);
     element.classList.add(`theme-${theme}`);
   }
-
-  // Remove all --t5e styles
-  Array.from(element.style)
-    .filter((s) => s.startsWith('--t5e'))
-    .forEach((p) => element.style.removeProperty(p));
-
-  // TODO: start with world setting variables, then overwrite with sheet colors
-  const worldThemeColors = settings.value.worldThemeSettings.colors ?? [];
-
-  for (let color of worldThemeColors) {
-    element.style.setProperty(color.key, color.value);
-  }
-
-  // Parent Sheet settings
-  // Assumption: we are always merging parent settings with current document settings.
-  const parentSettings = doc?.parent
-    ? TidyFlags.sheetThemeSettings.get(doc)
-    : undefined;
-
-  if (parentSettings) {
-    for (let color of parentSettings.colors) {
-      element.style.setProperty(color.key, color.value);
-    }
-  }
-
-  // Sheet-specific settings
-  const themeSettings = TidyFlags.sheetThemeSettings.get(doc);
-
-  for (let color of themeSettings.colors) {
-    element.style.setProperty(color.key, color.value);
-  }
 }
 
 export function applySheetAttributesToWindow(

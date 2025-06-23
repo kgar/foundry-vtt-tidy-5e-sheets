@@ -18,13 +18,16 @@ import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 
 const rarityVariablePrefix = '--t5e-color-rarity';
-const spellPrepVariablePrefix = '--t5e-color-icon-spellcasting';
-const accentColorCssVariable = '--t5e-theme-color-default';
+// const spellPrepVariablePrefix = '--t5e-color-icon-spellcasting';
+// const accentColorCssVariable = '--t5e-theme-color-default';
 
-export type ThemeColorSettingConfigEntry = ThemeColorSetting & { label: string };
+export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
+  label: string;
+};
 
 export type ThemeSettingsContext = {
-  accentColor: ThemeColorSettingConfigEntry;
+  accentColor: string;
+  headerBackground: string;
   useSaturatedRarityColors: boolean;
   rarityColors: ThemeColorSettingConfigEntry[];
   spellPreparationColors: ThemeColorSettingConfigEntry[];
@@ -37,7 +40,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 ) {
   _document?: any;
   _settings: ThemeSettingsContext = $state({
-    accentColor: { key: '', label: '', value: '' },
+    accentColor: '',
+    headerBackground: '',
     rarityColors: [],
     spellPreparationColors: [],
     useSaturatedRarityColors: false,
@@ -104,52 +108,40 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         : settings.value.worldThemeSettings
     );
 
-    let configuredRarities: Record<string, ThemeColorSetting> = {};
-    let configuredPrepModes: Record<string, ThemeColorSetting> = {};
-    let unsortedVariables: Record<string, ThemeColorSetting> = {};
+    let configuredRarities = themeSettings.rarityColors.reduce<
+      Record<string, ThemeColorSetting>
+    >((prev, curr) => {
+      prev[curr.key] = curr;
+      return prev;
+    }, {});
 
-    for (let color of themeSettings.colors) {
-      if (color.key.startsWith(rarityVariablePrefix)) {
-        configuredRarities[color.key] = color;
-      } else if (color.key.startsWith(spellPrepVariablePrefix)) {
-        configuredPrepModes[color.key] = color;
-      } else {
-        // "Advanced" section; expand these groupings as needed
-        unsortedVariables[color.key] = color;
-      }
-    }
+    let configuredPrepModes: Record<string, ThemeColorSetting> =
+      themeSettings.spellPreparationModeColors.reduce<
+        Record<string, ThemeColorSetting>
+      >((prev, curr) => {
+        prev[curr.key] = curr;
+        return prev;
+      }, {});
 
     let context: ThemeSettingsContext = {
-      accentColor: {
-        key: accentColorCssVariable,
-        label: '(Localize) Accent Color',
-        value:
-          themeSettings.colors.find(
-            (c: ThemeColorSetting) => c.key === accentColorCssVariable
-          )?.value ?? '',
-      },
+      accentColor: themeSettings.accentColor,
+      headerBackground: '', // TODO: Implement
       rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
         ([key, label]) => {
-          const cssVariable = `${rarityVariablePrefix}-${key
-            .slugify()
-            .toLowerCase()}`;
           return {
             label,
-            key: cssVariable,
-            value: configuredRarities[cssVariable]?.value ?? '',
+            key: key,
+            value: configuredRarities[key]?.value ?? '',
           };
         }
       ),
       spellPreparationColors: Object.entries(
         CONFIG.DND5E.spellPreparationModes
       ).map(([key, config]) => {
-        const cssVariable = `${spellPrepVariablePrefix}-${key
-          .slugify()
-          .toLowerCase()}`;
         return {
           label: config.label,
-          key: cssVariable,
-          value: configuredPrepModes[cssVariable]?.value ?? '',
+          key: key,
+          value: configuredPrepModes[key]?.value ?? '',
         };
       }),
       useSaturatedRarityColors: themeSettings.useSaturatedRarityColors ?? false,
@@ -187,20 +179,20 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     // turn context back into themesettings
     let themeSettings: ThemeSettings = {
       useSaturatedRarityColors: data.useSaturatedRarityColors,
-      colors: [
-        {
-          key: data.accentColor.key,
-          value: data.accentColor.value ?? '',
-        },
-        ...data.rarityColors.map((c) => ({
+      headerBackground: '',
+      accentColor: data.accentColor ?? '',
+      rarityColors: data.rarityColors
+        .map((c) => ({
           key: c.key,
           value: c.value,
-        })),
-        ...data.spellPreparationColors.map((c) => ({
+        }))
+        .filter((t) => !isNil(t.value.trim(), '')),
+      spellPreparationModeColors: data.spellPreparationColors
+        .map((c) => ({
           key: c.key,
           value: c.value,
-        })),
-      ].filter((t) => !isNil(t.value.trim(), '')),
+        }))
+        .filter((t) => !isNil(t.value.trim(), '')),
     };
 
     if (this._document) {

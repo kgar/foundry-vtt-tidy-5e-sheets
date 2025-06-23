@@ -475,15 +475,13 @@ export function TidyExtensibleDocumentSheetMixin<
       this.themeSettingsChangeHookId = Hooks.on(
         'tidy5e-sheet.themeSettingsChanged',
         (document?: any, themeSettings?: ThemeSettings) => {
-          if (
+          const appliesToThisSheet =
             !!document &&
             (document.uuid === this.document.uuid ||
-              document.uuid === this.document.parent?.uuid)
-          ) {
+              document.uuid === this.document.parent?.uuid);
+              
+          if (appliesToThisSheet) {
             applyThemeToApplication(this.element, document, themeSettings);
-            return;
-          } else if (!document) {
-            applyThemeToApplication(this.element, undefined, themeSettings);
           }
         }
       );

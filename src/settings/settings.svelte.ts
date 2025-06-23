@@ -17,6 +17,7 @@ import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.sve
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
 import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1379,10 +1380,7 @@ export function createSettings() {
           return (
             FoundryAdapter.getTidySetting<ThemeSettings>(
               'worldThemeSettings'
-            ) ??
-            ({
-              colors: [],
-            } satisfies ThemeSettings)
+            ) ?? ThemeQuadrone.getDefaultThemeSettings()
           );
         },
       },
