@@ -5,6 +5,8 @@ import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemShee
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { ThemeSettings } from './theme-quadrone.types';
 import { TidyFlags } from 'src/api';
+import { settings } from 'src/settings/settings.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type ThemeableSheetType =
   | Tidy5eCharacterSheetQuadrone
@@ -28,12 +30,40 @@ export class ThemeQuadrone {
     // get or create style tag
   }
 
-  static getSheetThemeSettings(sheet: ThemeableSheetType) {
-    const preferences = TidyFlags.sheetThemeSettings.get(sheet.document);
+  static getWorldThemeSettings(): ThemeSettings {
+    return foundry.utils.mergeObject(
+      this.getDefaultThemeSettings(),
+      settings.value.worldThemeSettings
+    );
+  }
+
+  static saveWorldThemeSettings(settings: ThemeSettings) {
+    const toSave = foundry.utils.mergeObject(
+      this.getDefaultThemeSettings(),
+      settings
+    );
+
+    return FoundryAdapter.setTidySetting('worldThemeSettings', toSave);
+  }
+
+  static getSheetThemeSettings(doc: any): ThemeSettings {
+    const preferences = foundry.utils.mergeObject(
+      this.getDefaultThemeSettings(),
+      TidyFlags.sheetThemeSettings.get(doc)
+    ) as ThemeSettings;
 
     // TODO: Clean up and backfill as needed. It could even just be a Foundry merge
 
     return preferences;
+  }
+
+  static saveSheetThemeSettings(doc: any, settings: ThemeSettings) {
+    const toSave = foundry.utils.mergeObject(
+      this.getDefaultThemeSettings(),
+      settings
+    );
+
+    return TidyFlags.sheetThemeSettings.set(doc, toSave);
   }
 
   // Apply Styles functions

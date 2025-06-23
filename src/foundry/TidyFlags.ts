@@ -12,7 +12,6 @@ import type {
 } from './TidyFlags.types';
 import { FoundryAdapter } from './foundry-adapter';
 import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -1166,12 +1165,10 @@ export class TidyFlags {
   static sheetThemeSettings = {
     key: 'sheet-theme-settings',
     prop: TidyFlags.getFlagPropertyPath('sheet-theme-settings'),
-    get(doc: any): ThemeSettings {
-      return (
-        TidyFlags.tryGetFlag<ThemeSettings>(
-          doc,
-          TidyFlags.sheetThemeSettings.key
-        ) ?? ThemeQuadrone.getDefaultThemeSettings()
+    get(doc: any): ThemeSettings | null | undefined {
+      return TidyFlags.tryGetFlag<ThemeSettings>(
+        doc,
+        TidyFlags.sheetThemeSettings.key
       );
     },
     set(doc: any, settings: ThemeSettings) {

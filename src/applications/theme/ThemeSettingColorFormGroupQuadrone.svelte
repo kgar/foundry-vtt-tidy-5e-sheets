@@ -45,7 +45,7 @@
   <div class="form-fields">
     <label
       for={inputId}
-      class="color-picker-preview flex0"
+      class="color-picker-preview"
       style="--bg-color: {value};"
     ></label>
 

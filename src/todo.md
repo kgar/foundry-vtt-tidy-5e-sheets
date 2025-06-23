@@ -10,10 +10,13 @@
     - [x] Rarity Colors
     - [x] DDBeyond Rarity Color Saturation (for SagaTympana)
     - [x] Spell Preparation Mode Colors
+  - [x] Other things
+    - [x] Header Background
   - [ ] Refine
     - [x] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. ~~Possibly stack the form group as well~~, since hsla and similar values are lengthy.
 - [x] Implement Rarity Color saturation`
 - [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
+- [ ] Add style for form group label swatch
 - [ ] Change the approach from setting CSS variable properties on the form tag to instead managing sheet styles in a dedicated style tag.
   - Psst: you're currently trying to get the form to save/load correctly. Finish that, then do the cool style tag thing.
   - [ ] Sheet
@@ -27,6 +30,8 @@
 - [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly
 - [ ] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
 - [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
+- [ ] // TODO: Pop a confirmation before committing to this.
+- [ ] (Stretch) Make coloris input select on focus
 
 
 ### Restyler Module Notes

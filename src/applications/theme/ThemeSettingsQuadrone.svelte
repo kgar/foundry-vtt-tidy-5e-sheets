@@ -15,6 +15,22 @@
   let { app, settings: data }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  function pickHeaderBackground(
+    event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
+  ) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const fp = new foundry.applications.apps.FilePicker({
+      type: 'image',
+      current: data.headerBackground,
+      callback: (path: string) => {
+        data.headerBackground = path;
+      },
+      top: rect.top + 40,
+      left: rect.left + 10,
+    });
+    return fp.browse();
+  }
 </script>
 
 <div class="scrollable flex1">
@@ -33,7 +49,16 @@
       bind:value={data.accentColor}
       label="(Localize) Accent Color"
     />
-  </fieldset>
+
+    <div class="form-group">
+      <label for="">(Localize) Header Background</label>
+      <div class="form-fields">
+        <input type="text" bind:value={data.headerBackground} />
+        <button type="button" class="button" onclick={pickHeaderBackground}>
+          <i class="fa-solid fa-search"></i>
+        </button>
+      </div>
+    </div>
 
   <fieldset>
     <legend>
@@ -67,7 +92,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {#each data.spellPreparationColors as color}
+    {#each data.spellPreparationModeColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}
         bind:value={color.value}

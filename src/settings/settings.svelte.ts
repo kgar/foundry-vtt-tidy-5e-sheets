@@ -18,6 +18,7 @@ import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRun
 import { applyCurrentThemeClassic } from 'src/theme/theme';
 import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -185,6 +186,17 @@ export function createSettings() {
           icon: 'fa-solid fa-palette',
           type: ThemeSettingsFormApplication,
           restricted: false,
+        },
+      },
+      worldThemeSettings: {
+        options: {
+          name: `(Localize) World Theme Settings`,
+          label: '(Localize) World Theme Settings',
+          hint: `(Localize) Establish the default theme settings for your game world. These apply to all sheet types.`,
+          icon: 'fa-solid fa-palette',
+          type: ThemeSettingsQuadroneApplication,
+          restricted: false,
+          truesight: true,
         },
       },
       resetAllSettings: {
@@ -1902,10 +1914,6 @@ export let SettingsProvider: ReturnType<typeof createSettings>;
 export function initSettings() {
   SettingsProvider = createSettings();
 
-  for (let menu of Object.entries(SettingsProvider.menus)) {
-    FoundryAdapter.registerTidyMenu(menu[0], menu[1].options);
-  }
-
   const debouncedSettingStoreRefresh = FoundryAdapter.debounce(() => {
     _settings = getCurrentSettings();
   }, 100);
@@ -1920,6 +1928,16 @@ export function initSettings() {
       },
     };
     FoundryAdapter.registerTidySetting(setting[0], options);
+  }
+
+  const truesight = SettingsProvider.settings.truesight.get();
+
+  for (let menu of Object.entries(SettingsProvider.menus)) {
+    if ('truesight' in menu[1] && !truesight) {
+      continue;
+    }
+
+    FoundryAdapter.registerTidyMenu(menu[0], menu[1].options);
   }
 
   _settings = getCurrentSettings();

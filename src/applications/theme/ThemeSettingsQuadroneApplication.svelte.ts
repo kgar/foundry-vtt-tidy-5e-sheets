@@ -11,11 +11,11 @@ import type {
 import { mount } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
 import { TidyFlags, TidyHooks } from 'src/api';
-import { settings, type CurrentSettings } from 'src/settings/settings.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { type CurrentSettings } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone';
 
 const rarityVariablePrefix = '--t5e-color-rarity';
 // const spellPrepVariablePrefix = '--t5e-color-icon-spellcasting';
@@ -30,7 +30,7 @@ export type ThemeSettingsContext = {
   headerBackground: string;
   useSaturatedRarityColors: boolean;
   rarityColors: ThemeColorSettingConfigEntry[];
-  spellPreparationColors: ThemeColorSettingConfigEntry[];
+  spellPreparationModeColors: ThemeColorSettingConfigEntry[];
 };
 
 type ConstructorArgs = Partial<ApplicationConfiguration & { document?: any }>;
@@ -43,7 +43,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     accentColor: '',
     headerBackground: '',
     rarityColors: [],
-    spellPreparationColors: [],
+    spellPreparationModeColors: [],
     useSaturatedRarityColors: false,
   });
 
@@ -65,7 +65,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       positioned: true,
       resizable: true,
       controls: [],
-      //   contentClasses: ['flexcol', 'flex1'],
     },
     position: {
       width: 600,
@@ -104,8 +103,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   _getSettings() {
     let themeSettings = structuredClone(
       this._document
-        ? TidyFlags.sheetThemeSettings.get(this._document)
-        : settings.value.worldThemeSettings
+        ? ThemeQuadrone.getSheetThemeSettings(this._document)
+        : ThemeQuadrone.getWorldThemeSettings()
     );
 
     let configuredRarities = themeSettings.rarityColors.reduce<
@@ -125,7 +124,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
     let context: ThemeSettingsContext = {
       accentColor: themeSettings.accentColor,
-      headerBackground: '', // TODO: Implement
+      headerBackground: themeSettings.headerBackground,
       rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
         ([key, label]) => {
           return {
@@ -135,7 +134,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
           };
         }
       ),
-      spellPreparationColors: Object.entries(
+      spellPreparationModeColors: Object.entries(
         CONFIG.DND5E.spellPreparationModes
       ).map(([key, config]) => {
         return {
@@ -176,18 +175,17 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   async apply() {
     const data = this._settings;
 
-    // turn context back into themesettings
     let themeSettings: ThemeSettings = {
-      useSaturatedRarityColors: data.useSaturatedRarityColors,
-      headerBackground: '',
       accentColor: data.accentColor ?? '',
+      headerBackground: data.headerBackground,
+      useSaturatedRarityColors: data.useSaturatedRarityColors,
       rarityColors: data.rarityColors
         .map((c) => ({
           key: c.key,
           value: c.value,
         }))
         .filter((t) => !isNil(t.value.trim(), '')),
-      spellPreparationModeColors: data.spellPreparationColors
+      spellPreparationModeColors: data.spellPreparationModeColors
         .map((c) => ({
           key: c.key,
           value: c.value,
@@ -196,9 +194,9 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     };
 
     if (this._document) {
-      await TidyFlags.sheetThemeSettings.set(this._document, themeSettings);
+      await ThemeQuadrone.saveSheetThemeSettings(this._document, themeSettings);
     } else {
-      await FoundryAdapter.setTidySetting('worldThemeSettings', themeSettings);
+      await ThemeQuadrone.saveWorldThemeSettings(themeSettings);
     }
 
     TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
@@ -212,7 +210,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     } else {
       let settingKey: keyof CurrentSettings = 'worldThemeSettings';
 
-      const setting = game.settings.storage
+      game.settings.storage
         .get('world')
         .filter(
           (setting: any) =>

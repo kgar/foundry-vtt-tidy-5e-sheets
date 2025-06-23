@@ -752,4 +752,18 @@
     right: 0;
     bottom: 0;
   }
+
+  // Theme Settings
+  &.tidy-theme-settings {
+
+    .color-picker-preview {
+      --size: 1.5rem;
+      flex: 0 0 var(--size);
+      width: var(--size);
+      height: var(--size);
+      background-color: var(--bg-color);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
 }
