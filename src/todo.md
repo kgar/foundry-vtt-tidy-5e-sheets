@@ -30,12 +30,13 @@
   - [x] Sheet
     - [x] init: on first render, during pre-render, establish own styles
     - [x] refresh: on theme settings change hook, determine if relevant to self, and if so, purge-restore styles
-- [ ] // TODO: Convert Rarity Colors and Spell Prep Mode Colors to objects so they save smaller and merge easier.
-  - [ ] Change types
-  - [ ] Change save/load functions in Theme Quad
-  - [ ] Change up theme settings form
-  - [ ] Change up functions for preparing styles
-  - [ ] Change up parent style inheritance feature now that it's easy; just merge.
+- [x] // TODO: Convert Rarity Colors and Spell Prep Mode Colors to objects so they save smaller and merge easier.
+  - [x] Change types
+  - [x] Change save/load functions in Theme Quad
+  - [x] Change up theme settings form
+  - [x] Change up functions for preparing styles
+  - [x] Change up parent style inheritance feature now that it's easy; just merge.
+- [ ] Set up parent style inheritance for doc sheets and doc sheet dialogs.
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet

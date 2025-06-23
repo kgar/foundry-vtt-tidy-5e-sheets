@@ -293,7 +293,7 @@ export class ThemeQuadrone {
     const settings =
       args.settingsOverride ??
       (args.doc
-        ? this.getSheetThemeSettings(args.doc)
+        ? this.getSheetThemeSettings(args.doc, args.mergeParentDocumentSettings)
         : this.getWorldThemeSettings());
     const declarations = this.getDeclarations(settings, args.doc);
     this.applyStyleDeclarations(declarations, args.doc);
