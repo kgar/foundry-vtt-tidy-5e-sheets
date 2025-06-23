@@ -55,7 +55,7 @@
       id={inputId}
       {value}
       class="theme-color-textbox coloris"
-      onchange={(ev) => onColorSelected(ev.currentTarget.value)}
+      oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />
 
     <button
