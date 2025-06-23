@@ -17,7 +17,7 @@ import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.sve
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
 import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 export type Tidy5eSettings = {

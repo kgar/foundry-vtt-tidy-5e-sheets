@@ -14,12 +14,8 @@ import { TidyFlags, TidyHooks } from 'src/api';
 import { error } from 'src/utils/logging';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
-const rarityVariablePrefix = '--t5e-color-rarity';
-// const spellPrepVariablePrefix = '--t5e-color-icon-spellcasting';
-// const accentColorCssVariable = '--t5e-theme-color-default';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
   label: string;
@@ -107,21 +103,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         : ThemeQuadrone.getWorldThemeSettings()
     );
 
-    let configuredRarities = themeSettings.rarityColors.reduce<
-      Record<string, ThemeColorSetting>
-    >((prev, curr) => {
-      prev[curr.key] = curr;
-      return prev;
-    }, {});
-
-    let configuredPrepModes: Record<string, ThemeColorSetting> =
-      themeSettings.spellPreparationModeColors.reduce<
-        Record<string, ThemeColorSetting>
-      >((prev, curr) => {
-        prev[curr.key] = curr;
-        return prev;
-      }, {});
-
     let context: ThemeSettingsContext = {
       accentColor: themeSettings.accentColor,
       headerBackground: themeSettings.headerBackground,
@@ -130,7 +111,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
           return {
             label,
             key: key,
-            value: configuredRarities[key]?.value ?? '',
+            value: themeSettings.rarityColors[key] ?? '',
           };
         }
       ),
@@ -140,7 +121,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         return {
           label: config.label,
           key: key,
-          value: configuredPrepModes[key]?.value ?? '',
+          value: themeSettings.spellPreparationModeColors[key] ?? '',
         };
       }),
       useSaturatedRarityColors: themeSettings.useSaturatedRarityColors ?? false,
@@ -180,17 +161,17 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       headerBackground: data.headerBackground,
       useSaturatedRarityColors: data.useSaturatedRarityColors,
       rarityColors: data.rarityColors
-        .map((c) => ({
-          key: c.key,
-          value: c.value,
-        }))
-        .filter((t) => !isNil(t.value.trim(), '')),
+        .filter((t) => !isNil(t.value.trim(), ''))
+        .reduce<Record<string, string>>((prev, curr) => {
+          prev[curr.key] = curr.value;
+          return prev;
+        }, {}),
       spellPreparationModeColors: data.spellPreparationModeColors
-        .map((c) => ({
-          key: c.key,
-          value: c.value,
-        }))
-        .filter((t) => !isNil(t.value.trim(), '')),
+        .filter((t) => !isNil(t.value.trim(), ''))
+        .reduce<Record<string, string>>((prev, curr) => {
+          prev[curr.key] = curr.value;
+          return prev;
+        }, {}),
     };
 
     if (this._document) {

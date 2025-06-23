@@ -8,8 +8,8 @@ export type ThemeColorSetting = {
 export type ThemeSettings = {
   accentColor: string;
   headerBackground: string;
-  rarityColors: ThemeColorSetting[];
-  spellPreparationModeColors: ThemeColorSetting[];
+  rarityColors: Record<string, string>;
+  spellPreparationModeColors: Record<string, string>;
   useSaturatedRarityColors: boolean;
   // etc. settings here ;)
 };

@@ -24,15 +24,10 @@ export class ThemeQuadrone {
     return {
       accentColor: '',
       headerBackground: '',
-      rarityColors: [],
-      spellPreparationModeColors: [],
+      rarityColors: {},
+      spellPreparationModeColors: {},
       useSaturatedRarityColors: false,
     };
-  }
-
-  static applySheetTheme(sheet: ThemeableSheetType) {
-    // get sheet settings
-    // get or create style tag
   }
 
   static getWorldThemeSettings(): ThemeSettings {
@@ -177,16 +172,16 @@ export class ThemeQuadrone {
     settings: ThemeSettings,
     doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
-    const rarityColors = settings.rarityColors.filter(
-      (c) => !isNil(c.value?.trim(), '')
+    const rarityColors = Object.entries(settings.rarityColors).filter(
+      ([_, value]) => !isNil(value?.trim(), '')
     );
 
-    return rarityColors.map((c) => {
+    return rarityColors.map(([key, value]) => {
       const identifierRule = this.getDeclarationKeyRule(
-        `rarityColors-${c.key}`,
+        `rarityColors-${key}`,
         doc
       );
-      const cssVariable = `--t5e-color-rarity-${c.key.toLowerCase()}`;
+      const cssVariable = `--t5e-color-rarity-${key.toLowerCase()}`;
       return {
         identifier: `${identifierRule.property}: "${identifierRule.value}"`,
         selector: selectorPrefix,
@@ -194,7 +189,7 @@ export class ThemeQuadrone {
           identifierRule,
           {
             property: cssVariable,
-            value: c.value,
+            value: value,
           },
         ],
       };
@@ -206,16 +201,16 @@ export class ThemeQuadrone {
     settings: ThemeSettings,
     doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
-    const spellPrepModes = settings.spellPreparationModeColors.filter(
-      (c) => !isNil(c.value?.trim(), '')
-    );
+    const spellPrepModes = Object.entries(
+      settings.spellPreparationModeColors
+    ).filter(([_, value]) => !isNil(value?.trim(), ''));
 
-    return spellPrepModes.flatMap((c) => {
+    return spellPrepModes.flatMap(([key, value]) => {
       const identifierRule = this.getDeclarationKeyRule(
-        `spellPreparationModeColors-${c.key}`,
+        `spellPreparationModeColors-${key}`,
         doc
       );
-      const cssVariable = `--t5e-color-spellcasting-${c.key.toLowerCase()}`;
+      const cssVariable = `--t5e-color-spellcasting-${key.toLowerCase()}`;
       return [
         {
           identifier: `${identifierRule.property}: "${identifierRule.value}"`,
@@ -224,14 +219,14 @@ export class ThemeQuadrone {
             identifierRule,
             {
               property: cssVariable,
-              value: c.value,
+              value: value,
             },
           ],
         },
         {
           identifier: `${identifierRule.property}: "${identifierRule.value}"`,
           selector: `${selectorPrefix} .tidy-table-header-row.spell-preparation`,
-          ruleset: [identifierRule, { property: cssVariable, value: c.value }],
+          ruleset: [identifierRule, { property: cssVariable, value: value }],
         },
       ];
     });

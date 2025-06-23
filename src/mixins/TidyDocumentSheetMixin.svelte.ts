@@ -38,7 +38,7 @@ import {
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TidyHooks } from 'src/api';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {

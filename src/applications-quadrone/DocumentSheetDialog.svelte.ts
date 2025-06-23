@@ -1,6 +1,6 @@
 import { TidyHooks } from 'src/api';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,
