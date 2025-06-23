@@ -37,6 +37,7 @@
   - [x] Change up functions for preparing styles
   - [x] Change up parent style inheritance feature now that it's easy; just merge.
 - [ ] Set up parent style inheritance for doc sheets and doc sheet dialogs.
+- [ ] Test and fix errors related to missing theme setting data.
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet
@@ -48,6 +49,7 @@
 - [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
 - [ ] // TODO: Pop a confirmation before committing to this.
 - [ ] (Stretch) Make coloris input select on focus
+- [ ] Establish dynamic styles for custom rarity colors and spell prep modes.
 
 
 ### Restyler Module Notes

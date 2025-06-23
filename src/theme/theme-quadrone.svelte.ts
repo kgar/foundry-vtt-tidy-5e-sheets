@@ -223,11 +223,11 @@ export class ThemeQuadrone {
             },
           ],
         },
-        {
-          identifier: `${identifierRule.property}: "${identifierRule.value}"`,
-          selector: `${selectorPrefix} .tidy-table-header-row.spell-preparation`,
-          ruleset: [identifierRule, { property: cssVariable, value: value }],
-        },
+        // {
+        //   identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        //   selector: `${selectorPrefix} .tidy-table-header-row.spell-preparation`,
+        //   ruleset: [identifierRule, { property: cssVariable, value: value }],
+        // },
       ];
     });
   }
