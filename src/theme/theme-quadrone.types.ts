@@ -13,3 +13,14 @@ export type ThemeSettings = {
   useSaturatedRarityColors: boolean;
   // etc. settings here ;)
 };
+
+export type ThemeQuadroneStyleRule = {
+  property: string;
+  value: string;
+};
+
+export type ThemeQuadroneStyleDeclaration = {
+  selector: string;
+  ruleset: ThemeQuadroneStyleRule[];
+  identifier: string;
+};

@@ -16,11 +16,20 @@
     - [x] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. ~~Possibly stack the form group as well~~, since hsla and similar values are lengthy.
 - [x] Implement Rarity Color saturation`
 - [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
-- [ ] Add style for form group label swatch
+- [x] Add style for form group label swatch
 - [ ] Change the approach from setting CSS variable properties on the form tag to instead managing sheet styles in a dedicated style tag.
-  - Psst: you're currently trying to get the form to save/load correctly. Finish that, then do the cool style tag thing.
+  - [x] Implement function that turns settings into CSS rules
+    - Create delcarations with rule sets; bucket as many rules as possible by theme setting key.
+    - Uniquely tag declarations via their requisite setting in an empty CSS variable, a la
+      - `.tidy5e-sheet.application.quadrone { --tidy5e-world-theme-setting-accentColor: ; /* other styles here */ }`
+        - This tells me I'm dealing with a world theme setting, accentColor. As many styles as I need can be included in this declaration. If additional selectors are needed for other purposes (saturation, table headers, for example), then additional declarations are added, tagged the same, so they all can be refreshed together.
+  - [x] Setup - on settings init, establish style tag and set up with world styles
+  - [x] World
+    - [x] init: when establishing the style tag, generate these settings and add them to the style tag
+    - [x] refresh: on change, purge-restore styles; this should use the on change handler in settings
   - [ ] Sheet
-  - [ ] World
+    - [ ] init: on first render, during pre-render, establish own styles
+    - [ ] refresh: on theme settings change hook, determine if relevant to self, and if so, purge-restore styles
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet

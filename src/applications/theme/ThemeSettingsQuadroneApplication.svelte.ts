@@ -11,11 +11,11 @@ import type {
 import { mount } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
 import { TidyFlags, TidyHooks } from 'src/api';
-import { type CurrentSettings } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 const rarityVariablePrefix = '--t5e-color-rarity';
 // const spellPrepVariablePrefix = '--t5e-color-icon-spellcasting';
@@ -208,15 +208,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     if (this._document) {
       await TidyFlags.sheetThemeSettings.unset(this._document);
     } else {
-      let settingKey: keyof CurrentSettings = 'worldThemeSettings';
-
-      game.settings.storage
-        .get('world')
-        .filter(
-          (setting: any) =>
-            setting.key === `${CONSTANTS.MODULE_ID}.${settingKey}`
-        )
-        ?.delete();
+      FoundryAdapter.setTidySetting('worldThemeSettings', {});
     }
 
     TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);

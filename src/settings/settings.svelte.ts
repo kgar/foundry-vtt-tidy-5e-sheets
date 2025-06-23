@@ -188,7 +188,7 @@ export function createSettings() {
           restricted: false,
         },
       },
-      worldThemeSettings: {
+      worldThemeSettingsMenu: {
         options: {
           name: `(Localize) World Theme Settings`,
           label: '(Localize) World Theme Settings',
@@ -1387,6 +1387,11 @@ export function createSettings() {
           type: Object,
           default: undefined,
           config: false,
+          onChange: (settings: ThemeSettings) => {
+            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+              settingsOverride: settings,
+            });
+          },
         },
         get() {
           return (
@@ -1943,6 +1948,9 @@ export function initSettings() {
   _settings = getCurrentSettings();
 
   applyCurrentThemeClassic();
+
+  ThemeQuadrone.insertTidyThemeStyleTag();
+  ThemeQuadrone.applyCurrentThemeSettingsToStylesheet();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();

@@ -155,6 +155,7 @@
               }}
             >
               {#snippet children({ toggleSummary, expanded })}
+                <div class="highlight"></div>
                 <a
                   class={['tidy-table-row-use-button']}
                   onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
