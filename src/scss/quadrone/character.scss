@@ -52,6 +52,8 @@
     margin-top: -0.5rem;
 
     .tabs-row {
+      container-name: sheet-tabs;
+      container-type: inline-size;
       position: relative;
       display: flex;
       align-items: center;
@@ -151,7 +153,7 @@
 
       >.tidy-tab {
         flex: 1;
-        container-type: inline-size;
+        // container-type: inline-size;
       }
     }
   }
@@ -1682,8 +1684,14 @@
 
     &.attributes {
 
-      flex-direction: row;
-      gap: var(--t5e-size-6x);
+      container-name: character-tab;
+      container-type: inline-size;
+
+      .columns {
+        display: flex;
+        flex-direction: row;
+        gap: var(--t5e-size-6x);
+      }
 
       .left {
         flex: 0 0 12.5rem;
@@ -1696,6 +1704,19 @@
 
         container-type: inline-size;
         container-name: tab-right-column;
+      }
+
+      .use-ability-list li {
+        width: auto;
+      }
+    }
+  }
+
+  @container character-tab (width < 40rem) {
+    .tidy-tab-contents.attributes {
+      .columns {
+        flex-direction: column;
+        gap: var(--t5e-size-4x);
       }
     }
   }

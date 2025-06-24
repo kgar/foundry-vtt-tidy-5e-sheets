@@ -5,11 +5,13 @@
   import ToolsCard from '../parts/ToolsCard.svelte';
 </script>
 
-<div class="left flexcol">
-  <SkillsCard />
-  <ToolsCard />
-</div>
-<div class="right flexcol">
-  <SavingThrowsCard />
-  <CharacterTraits />
+<div class="columns">
+  <div class="left flexcol">
+    <SkillsCard />
+    <ToolsCard />
+  </div>
+  <div class="right flexcol">
+    <SavingThrowsCard />
+    <CharacterTraits />
+  </div>
 </div>
