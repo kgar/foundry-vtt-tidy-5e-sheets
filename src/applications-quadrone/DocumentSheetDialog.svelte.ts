@@ -58,6 +58,11 @@ export function DocumentSheetDialog<
       // Tidy 5e relies on `themed theme-{theme}` to be on every one of its applications.
       applyThemeToApplication(this.element, this.document);
 
+      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+        doc: this.document,
+        mergeParentDocumentSettings: true,
+      });
+
       this.themeSettingsChangeHookId =
         TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
           const appliesToThisSheet =

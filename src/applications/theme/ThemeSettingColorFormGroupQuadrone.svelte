@@ -44,34 +44,30 @@
   <label for={inputId}>{label}</label>
   <div class="form-fields">
     <label
-      for={inputId}
+      for="{inputId}-picker"
       class="color-picker-preview"
       style="--bg-color: {value};"
     ></label>
+
+    <!-- This input is driving the Coloris color picker. -->
+    <input
+      type="text"
+      id="{inputId}-picker"
+      {value}
+      class="coloris"
+      style="width: 0; flex: 0; padding: 0; border: 0"
+      oninput={(ev) => onColorSelected(ev.currentTarget.value)}
+    />
 
     <input
       bind:this={colorInput}
       type="text"
       id={inputId}
       {value}
-      class="theme-color-textbox coloris"
+      class="theme-color-textbox"
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />
 
-    <button
-      type="button"
-      title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
-      class="button clear-color"
-      onclick={() => {
-        if (!colorInput) {
-          return;
-        }
-        colorInput.value = '';
-        colorInput.dispatchEvent(new Event('change', { bubbles: true }));
-      }}
-    >
-      <i class="fa-solid fa-eraser"></i>
-    </button>
     {#if eyeDropperEnabled}
       <button
         type="button"
@@ -81,5 +77,17 @@
         <i class="fa-solid fa-eye-dropper"></i>
       </button>
     {/if}
+
+    <button
+      type="button"
+      title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
+      class="button clear-color"
+      onclick={() => {
+        value = '';
+      }}
+      disabled={isNil(value, '')}
+    >
+      <i class="fa-solid fa-xmark"></i>
+    </button>
   </div>
 </div>

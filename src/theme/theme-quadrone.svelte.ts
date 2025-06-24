@@ -50,11 +50,19 @@ export class ThemeQuadrone {
     doc: any,
     mergeParentDocumentSettings?: boolean
   ): ThemeSettings {
-    // TODO: Convert Rarity Colors and Spell Prep Mode Colors to objects so they save smaller and merge easier.
-    // Then, merge parent document settings here.
+    let defaultSettings = this.getDefaultThemeSettings();
+
+    if (mergeParentDocumentSettings && doc.parent) {
+      let parentSettings = this.getSheetThemeSettings(doc.parent, true);
+
+      defaultSettings = foundry.utils.mergeObject(
+        defaultSettings,
+        parentSettings
+      );
+    }
 
     const preferences = foundry.utils.mergeObject(
-      this.getDefaultThemeSettings(),
+      defaultSettings,
       TidyFlags.sheetThemeSettings.get(doc)
     ) as ThemeSettings;
 
@@ -172,7 +180,7 @@ export class ThemeQuadrone {
     settings: ThemeSettings,
     doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
-    const rarityColors = Object.entries(settings.rarityColors).filter(
+    const rarityColors = Object.entries(settings.rarityColors ?? {}).filter(
       ([_, value]) => !isNil(value?.trim(), '')
     );
 
@@ -202,7 +210,7 @@ export class ThemeQuadrone {
     doc: any | undefined
   ): ThemeQuadroneStyleDeclaration[] {
     const spellPrepModes = Object.entries(
-      settings.spellPreparationModeColors
+      settings.spellPreparationModeColors ?? {}
     ).filter(([_, value]) => !isNil(value?.trim(), ''));
 
     return spellPrepModes.flatMap(([key, value]) => {

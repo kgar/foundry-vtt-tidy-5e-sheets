@@ -4,7 +4,7 @@
 - [x] Add Tidy Flag
 - [x] Add World Setting
 - [x] Set up sheets to apply theme colors when applying overall dark/light classes
-- [ ] Set up ThemeSettings application, designed to save either to a sheet flag or to World settings (probably the presence of a document will decide it)
+- [x] Set up ThemeSettings application, designed to save either to a sheet flag or to World settings (probably the presence of a document will decide it)
   - [x] Colors
     - [X] Accent Color
     - [x] Rarity Colors
@@ -12,7 +12,7 @@
     - [x] Spell Preparation Mode Colors
   - [x] Other things
     - [x] Header Background
-  - [ ] Refine
+  - [x] Refine
     - [x] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. ~~Possibly stack the form group as well~~, since hsla and similar values are lengthy.
 - [x] Implement Rarity Color saturation`
 - [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
@@ -36,20 +36,22 @@
   - [x] Change up theme settings form
   - [x] Change up functions for preparing styles
   - [x] Change up parent style inheritance feature now that it's easy; just merge.
-- [ ] Set up parent style inheritance for doc sheets and doc sheet dialogs.
-- [ ] Test and fix errors related to missing theme setting data.
+- [x] Set up parent style inheritance for child sheets (Item sheets).
+- [ ] Support theming for related document dialogs and config applications that may have a document property.
+- [x] Test and fix errors related to missing theme setting data.
 - [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet
   - [ ] World
-- [ ] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
+- [x] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
 - [ ] (Discuss) Should we completely ignore parent document theme settings when there are *any* color overrides? Or should we "merge down"? Or should we just provide a radio button / checkbox for "Merge Settings with Parent", "Inherit from Parent", "Independently themed"?
 - [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly
-- [ ] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
+- [x] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
 - [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
 - [ ] // TODO: Pop a confirmation before committing to this.
-- [ ] (Stretch) Make coloris input select on focus
+- [x] ~~(Stretch) Make coloris input select on focus~~ Side-stepping this by separating the main color input from the hidden Coloris input was a better alternative.
 - [ ] Establish dynamic styles for custom rarity colors and spell prep modes.
+- [ ] Refactor: Break up `theme-quadrone.svelte.ts` - the style generation code could live in its file, etc.
 
 
 ### Restyler Module Notes
@@ -324,7 +326,7 @@ loc keys:
 - [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
 - [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
 - [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
-
+- [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
 
 ### Feature - Set as Inspiration Source
 

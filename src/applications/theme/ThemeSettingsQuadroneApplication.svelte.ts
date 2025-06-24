@@ -5,6 +5,7 @@ import type {
   ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
 import type {
+  ApplicationClosingOptions,
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
@@ -130,12 +131,38 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return context;
   }
 
+  /* -------------------------------------------- */
+  /*  Event Listeners and Handlers                */
+  /* -------------------------------------------- */
+
+  themeSettingsChangeHookId?: number;
+
   async _renderFrame(options: ApplicationRenderOptions) {
     const element = await super._renderFrame(options);
 
     if (this._document) {
       try {
         applyThemeToApplication(element, this._document);
+
+        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+          doc: this._document,
+          mergeParentDocumentSettings: true,
+        });
+
+        this.themeSettingsChangeHookId =
+          TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
+            const appliesToThisSheet =
+              !!doc &&
+              (doc.uuid === this.document.uuid ||
+                doc.uuid === this.document.parent?.uuid);
+
+            if (appliesToThisSheet) {
+              ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+                doc,
+                mergeParentDocumentSettings: true,
+              });
+            }
+          });
       } catch (e) {
         error(
           'An error occurred while applying theme to application',
@@ -195,5 +222,17 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
 
     await this.close();
+  }
+
+  /* -------------------------------------------- */
+  /*  Closing                                     */
+  /* -------------------------------------------- */
+
+  async close(options: ApplicationClosingOptions = {}) {
+    TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(
+      this.themeSettingsChangeHookId
+    );
+
+    await super.close(options);
   }
 }
