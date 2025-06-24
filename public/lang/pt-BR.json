@@ -823,5 +823,6 @@
     "TIDY5E.Ability.EditScore.label": "Editar Valor",
     "TIDY5E.HitDice.Abbreviation": "DV",
     "TIDY5E.HitDice.Current.Label": "Dados de Vida Atual",
-    "TIDY5E.HitDice.Max.Label": "Dados de Vida Máximos"
+    "TIDY5E.HitDice.Max.Label": "Dados de Vida Máximos",
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Rastreamento de Espaço de Magia"
 }
