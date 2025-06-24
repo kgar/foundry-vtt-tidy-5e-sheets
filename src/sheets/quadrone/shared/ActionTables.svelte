@@ -81,7 +81,7 @@
       section.items,
       searchResults.uuids,
     )}
-    {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+    {#if section.show && hasViewableItems}
       {@const columns = new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications(
           sheetDocument.type,
@@ -155,6 +155,7 @@
               }}
             >
               {#snippet children({ toggleSummary, expanded })}
+                <div class="highlight"></div>
                 <a
                   class={['tidy-table-row-use-button']}
                   onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}

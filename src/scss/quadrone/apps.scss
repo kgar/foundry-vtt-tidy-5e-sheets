@@ -691,7 +691,7 @@
     }
 
     &:where(.veryrare) {
-      --t5e-item-color: var(--t5e-color-rarity-very-rare);
+      --t5e-item-color: var(--t5e-color-rarity-veryrare);
     }
 
     &:where(.legendary) {
@@ -751,5 +751,20 @@
   .window-resize-handle {
     right: 0;
     bottom: 0;
+  }
+
+  // Theme Settings
+  &.tidy-theme-settings {
+
+    .color-picker-preview {
+      --size: 1.5rem;
+      flex: 0 0 var(--size);
+      width: var(--size);
+      height: var(--size);
+      background-color: var(--bg-color);
+      border-radius: 50%;
+      cursor: pointer;
+      border: 1px solid var(--t5e-component-field-border);
+    }
   }
 }

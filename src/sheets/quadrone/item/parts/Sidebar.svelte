@@ -17,6 +17,7 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { settings } from 'src/settings/settings.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -115,6 +116,12 @@
     });
   }
 
+  let useSaturatedColors = $derived(
+    settings.value.worldThemeSettings.useSaturatedRarityColors === true ||
+      ThemeQuadrone.getSheetThemeSettings(context.document, true)
+        ?.useSaturatedRarityColors === true,
+  );
+
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>([
     context.system.identified === false ? 'disabled' : undefined,
@@ -122,6 +129,7 @@
     coalesce(rarity?.slugify(), 'none'),
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
     context.system.preparation?.mode?.slugify(),
+    { saturate: useSaturatedColors },
   ]);
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
@@ -324,7 +332,8 @@
       </li>
     {/if}
     {#if 'equipped' in context.system && context.editable}
-      {@const checkedIconClass = 'fas fa-hand-fist equip-icon fa-fw color-text-default'}
+      {@const checkedIconClass =
+        'fas fa-hand-fist equip-icon fa-fw color-text-default'}
       {@const uncheckedIconClass = 'far fa-hand fa-fw'}
       {@const equipped = context.system.equipped}
       <li>

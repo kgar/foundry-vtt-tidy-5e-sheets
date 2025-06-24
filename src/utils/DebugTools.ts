@@ -37,6 +37,25 @@ export class DebugTools {
             icon: 'fas fa-broom',
             label: 'Tidy Debug Button',
           },
+          {
+            async onClickAction(this: any, event: PointerEvent) {
+              ui.notifications.info(`Custom Theme CSS written to the console.`);
+              const stylesheet = Array.from(document.styleSheets).find(
+                (s) =>
+                  // @ts-expect-error
+                  s.ownerNode.id === 'tidy5e-sheets-quadrone-theme-settings'
+              )!;
+
+              console.log(stylesheet);
+              console.log(
+                Array.from(stylesheet.cssRules)
+                  .map((r) => r.cssText)
+                  .join('\n')
+              );
+            },
+            icon: 'fas fa-broom',
+            label: 'Print Tidy Theme Overrides to Console',
+          },
         ],
       };
       api.registerItemHeaderControls(controlRegistrationParams);
