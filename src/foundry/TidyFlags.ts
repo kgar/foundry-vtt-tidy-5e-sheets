@@ -4,10 +4,14 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
+  DocumentJournalEntries,
+  DocumentJournalEntry,
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
 } from './TidyFlags.types';
+import { FoundryAdapter } from './foundry-adapter';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -73,6 +77,130 @@ export class TidyFlags {
      */
     unset(item: Item5e) {
       return TidyFlags.unsetFlag(item, TidyFlags.actionSection.key);
+    },
+  };
+
+  /**
+   * An array of journal entries with an optional title
+   * and an HTML-based journal.
+   */
+  static documentJournal = {
+    key: 'document-journal',
+    prop: TidyFlags.getFlagPropertyPath('document-journal'),
+    get(doc: any): DocumentJournalEntries {
+      return (
+        TidyFlags.tryGetFlag<DocumentJournalEntries>(
+          doc,
+          TidyFlags.documentJournal.key
+        ) ?? {}
+      );
+    },
+    async add(doc: any, data?: Partial<DocumentJournalEntry>) {
+      const newId = foundry.utils.randomID();
+
+      const newSort = TidyFlags.documentJournal.getMaxSort(doc) + 10;
+
+      const updateProp = `${TidyFlags.getFlagPropertyPath(
+        TidyFlags.documentJournal.key
+      )}.${newId}`;
+
+      await doc.update({
+        [updateProp]: {
+          title: FoundryAdapter.localize('DOCUMENT.New', {
+            type: FoundryAdapter.localize('DOCUMENT.JournalEntry'),
+          }),
+          value: '',
+          ...data,
+          id: newId,
+          sort: newSort,
+        } satisfies DocumentJournalEntry,
+      });
+
+      return newId;
+    },
+    clear(doc: any) {
+      TidyFlags.unsetFlag(doc, TidyFlags.documentJournal.key);
+    },
+    duplicate(doc: any, id: string) {
+      const original = TidyFlags.documentJournal.get(doc)[id];
+
+      if (!original) {
+        return;
+      }
+
+      const newId = foundry.utils.randomID();
+
+      const newEntry = {
+        ...original,
+        title: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+          name: original.title,
+        }),
+        id: newId,
+      } satisfies DocumentJournalEntry;
+
+      return TidyFlags.documentJournal.add(doc, newEntry);
+    },
+    getMaxSort(doc: any) {
+      return Object.values(TidyFlags.documentJournal.get(doc)).reduce(
+        (prev, acc) => {
+          return Math.max(prev, acc.sort ?? 0);
+        },
+        0
+      );
+    },
+    remove(doc: any, id: string) {
+      // Delete any entry whose key or value.id matches the ID param.
+      const journal = TidyFlags.documentJournal.get(doc);
+      const deletions = Object.entries(journal)
+        .filter(([key, entry]) => key === id || entry.id === id)
+        .map(([key]) => {
+          return `${TidyFlags.getFlagPropertyPath(
+            TidyFlags.documentJournal.key
+          )}.-=${key}`;
+        })
+        .reduce<Record<string, null>>((prev, curr) => {
+          prev[curr] = null;
+          return prev;
+        }, {});
+
+      return doc.update(deletions);
+    },
+    set(doc: any, journal: DocumentJournalEntries) {
+      return TidyFlags.setFlag(doc, TidyFlags.documentJournal.key, journal);
+    },
+    sort(doc: any, sourceId: string, targetId: string) {
+      if (sourceId === targetId) return;
+
+      const journal = TidyFlags.documentJournal.get(doc);
+
+      let source;
+      let target;
+      let siblings = Object.values(journal).filter((e) => {
+        if (e.id === targetId) target = e;
+        else if (e.id === sourceId) source = e;
+        return e.id !== sourceId;
+      });
+
+      if (!source || !target) {
+        return;
+      }
+
+      const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+        target,
+        siblings,
+      });
+
+      let docUpdates: Record<string, { sort: number }> = {};
+
+      for (const { target, update } of updates) {
+        docUpdates[
+          `${TidyFlags.getFlagPropertyPath(TidyFlags.documentJournal.key)}.${
+            target.id
+          }`
+        ] = { sort: update.sort };
+      }
+
+      return doc.update(docUpdates);
     },
   };
 
@@ -1034,6 +1162,23 @@ export class TidyFlags {
     },
   };
 
+  static sheetThemeSettings = {
+    key: 'sheet-theme-settings',
+    prop: TidyFlags.getFlagPropertyPath('sheet-theme-settings'),
+    get(doc: any): ThemeSettings | null | undefined {
+      return TidyFlags.tryGetFlag<ThemeSettings>(
+        doc,
+        TidyFlags.sheetThemeSettings.key
+      );
+    },
+    set(doc: any, settings: ThemeSettings) {
+      return TidyFlags.setFlag(doc, TidyFlags.sheetThemeSettings.key, settings);
+    },
+    unset(doc: any) {
+      return TidyFlags.unsetFlag(doc, TidyFlags.sheetThemeSettings.key);
+    },
+  };
+
   /**
    * The trait of an actor.
    * This is informational and not used for game logic.
@@ -1090,11 +1235,10 @@ export class TidyFlags {
    * This function is generic, but it is not performing parsing of the flag's value.
    * It is simply doing an optimistic cast to the target type.
    */
-  static tryGetFlag<T>(flagged: any, flagName: string) {
-    return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
-      | T
-      | null
-      | undefined;
+  static tryGetFlag<T>(flagged: any | undefined, flagName: string) {
+    return (
+      flagged ? flagged.getFlag(CONSTANTS.MODULE_ID, flagName) : undefined
+    ) as T | null | undefined;
   }
 
   /**

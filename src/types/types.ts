@@ -19,7 +19,10 @@ import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/typ
 import type { CONSTANTS } from 'src/constants';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
-import type { AttributePinFlag } from 'src/foundry/TidyFlags.types';
+import type {
+  DocumentJournalEntries,
+  AttributePinFlag,
+} from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue } from 'svelte/elements';
@@ -964,6 +967,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
   /** All items without a container. */
   items: Item5e[];
+  journal: DocumentJournalEntries;
   labels: Record<string, any>;
   limited: boolean;
   modernRules: boolean;
@@ -1118,6 +1122,14 @@ export type CharacterSheetQuadroneContext = {
   creatureType: CreatureTypeContext;
   currencies: CurrencyContext[];
   defenders: Actor5e[];
+  enriched: {
+    trait: string;
+    ideal: string;
+    bond: string;
+    flaw: string;
+    appearance: string;
+    biography: string;
+  };
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
@@ -1141,11 +1153,14 @@ export type CharacterSheetQuadroneContext = {
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
   features: NpcAbilitySection[];
   inventory: InventorySection[];
   showContainerPanel: boolean;
+  showDeathSaves: boolean;
+  size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   spellbook: SpellbookSection[];
   spellComponentLabels: Record<string, string>;

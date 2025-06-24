@@ -666,6 +666,14 @@
     }
   }
 
+  .flexible-editor-container {
+    display: flex;
+    flex-direction: column;
+
+    prose-mirror {
+      flex: 1;
+    }
+  }
 
   fieldset .editor-rendered-content {
     flex: auto;

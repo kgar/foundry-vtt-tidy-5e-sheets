@@ -11,6 +11,7 @@ import type {
   CharacterSheetContext,
   CharacterSheetQuadroneContext,
   NpcSheetContext,
+  NpcSheetQuadroneContext,
   VehicleSheetContext,
 } from 'src/types/types';
 import { getContext } from 'svelte';
@@ -27,6 +28,10 @@ export function getCharacterSheetContext(): CharacterSheetContext {
 
 export function getCharacterSheetQuadroneContext(): CharacterSheetQuadroneContext {
   return getSheetContext<CharacterSheetQuadroneContext>();
+}
+
+export function getNpcSheetQuadroneContext(): NpcSheetQuadroneContext {
+  return getSheetContext<NpcSheetQuadroneContext>();
 }
 
 export function getNpcSheetContext(): NpcSheetContext {

@@ -1,5 +1,5 @@
 /* tidy5e - onlight */
-.tidy5e-sheet:is(.quadrone, .dnd5e2) {
+.tidy5e-sheet:is(.quadrone) {
   /* Default theme color is var(--t5e-theme-color-default) */
 
   /* Typography ------------ */
@@ -187,7 +187,7 @@
   --t5e-color-rarity-common: var(--t5e-color-palette-gold-56);
   --t5e-color-rarity-uncommon: var(--t5e-color-palette-green-68);
   --t5e-color-rarity-rare: var(--t5e-color-palette-blue-70);
-  --t5e-color-rarity-very-rare: var(--t5e-color-palette-purple-92);
+  --t5e-color-rarity-veryrare: var(--t5e-color-palette-purple-92);
   --t5e-color-rarity-legendary: var(--t5e-color-palette-yellow-100);
   --t5e-color-rarity-artifact: var(--t5e-color-palette-orange-97);
 

@@ -421,6 +421,10 @@
 
     >* {
       flex: 1;
+
+      &.flex0 {
+        flex: 0;
+      }
     }
 
     >button,

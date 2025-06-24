@@ -16,6 +16,9 @@ import type { GlobalCustomSectionsetting } from './settings.types';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -185,6 +188,17 @@ export function createSettings() {
           restricted: false,
         },
       },
+      worldThemeSettingsMenu: {
+        options: {
+          name: `(Localize) World Theme Settings`,
+          label: '(Localize) World Theme Settings',
+          hint: `(Localize) Establish the default theme settings for your game world. These apply to all sheet types.`,
+          icon: 'fa-solid fa-palette',
+          type: ThemeSettingsQuadroneApplication,
+          restricted: false,
+          truesight: true,
+        },
+      },
       resetAllSettings: {
         options: {
           name: `TIDY5E.Settings.Reset.name`,
@@ -292,7 +306,7 @@ export function createSettings() {
             CONSTANTS.TAB_ACTOR_SPELLBOOK,
             CONSTANTS.TAB_CHARACTER_FEATURES,
             CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
+            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
             CONSTANTS.TAB_CHARACTER_JOURNAL,
             CONSTANTS.TAB_CHARACTER_BASTION,
             CONSTANTS.TAB_ACTOR_SPECIAL_TRAITS,
@@ -633,7 +647,7 @@ export function createSettings() {
             CONSTANTS.TAB_ACTOR_INVENTORY,
             CONSTANTS.TAB_ACTOR_SPELLBOOK,
             CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_NPC_BIOGRAPHY,
+            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
             CONSTANTS.TAB_ACTOR_SPECIAL_TRAITS,
           ],
         },
@@ -1365,6 +1379,29 @@ export function createSettings() {
         },
       },
 
+      worldThemeSettings: {
+        options: {
+          name: '(Localize) Theme Settings',
+          hint: '(Localize) Customize your sheet to create an immersive experience that complements your game.',
+          scope: 'world',
+          type: Object,
+          default: undefined,
+          config: false,
+          onChange: (settings: ThemeSettings) => {
+            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+              settingsOverride: settings,
+            });
+          },
+        },
+        get() {
+          return (
+            FoundryAdapter.getTidySetting<ThemeSettings>(
+              'worldThemeSettings'
+            ) ?? ThemeQuadrone.getDefaultThemeSettings()
+          );
+        },
+      },
+
       colorPickerEnabled: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerEnabled.name',
@@ -1882,10 +1919,6 @@ export let SettingsProvider: ReturnType<typeof createSettings>;
 export function initSettings() {
   SettingsProvider = createSettings();
 
-  for (let menu of Object.entries(SettingsProvider.menus)) {
-    FoundryAdapter.registerTidyMenu(menu[0], menu[1].options);
-  }
-
   const debouncedSettingStoreRefresh = FoundryAdapter.debounce(() => {
     _settings = getCurrentSettings();
   }, 100);
@@ -1902,9 +1935,22 @@ export function initSettings() {
     FoundryAdapter.registerTidySetting(setting[0], options);
   }
 
+  const truesight = SettingsProvider.settings.truesight.get();
+
+  for (let menu of Object.entries(SettingsProvider.menus)) {
+    if ('truesight' in menu[1].options && !truesight) {
+      continue;
+    }
+
+    FoundryAdapter.registerTidyMenu(menu[0], menu[1].options);
+  }
+
   _settings = getCurrentSettings();
 
   applyCurrentThemeClassic();
+
+  ThemeQuadrone.insertTidyThemeStyleTag();
+  ThemeQuadrone.applyCurrentThemeSettingsToStylesheet();
 
   Hooks.on('closeSettingsConfig', () => {
     _settings = getCurrentSettings();
