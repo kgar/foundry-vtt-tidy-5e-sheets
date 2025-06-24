@@ -95,7 +95,12 @@
     !isNil(item.system.rarity, '') ? 'rarity' : undefined,
     item.system.rarity?.slugify(),
     !isNil(item.system.preparation?.mode) ? 'spell-preparation' : undefined,
-    `mode-${item.system.preparation?.mode?.slugify()}`,
+    {
+      [`mode-${item.system.preparation?.mode?.slugify()}`]: !isNil(
+        item.system.preparation?.mode,
+        '',
+      ),
+    },
     'equipped' in item.system && item.system.equipped ? 'equipped' : undefined,
   ]);
 

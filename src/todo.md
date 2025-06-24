@@ -1,50 +1,213 @@
-## Sheet Tab To Do
+## Theme Settings To Do
 
-- [x] Provide Filters
-- [x] Provide Pinned Filters
-- [x] Provide Sorts - nothing beyond the default
-- [x] Ensure tab config works
-- [x] Implement Bookmark row action
-  - Initial state 
-    - when NULL and included in actions tab, consider it bookmarked
-    - when NULL and not included in actions tab, consider it not bookmarked
-    - if included via flag, bookmarked
-    - if excluded via flag, not bookmarked
-- [x] Change Sheet bookmark to pin
-- [x] Ensure Sheet pin options are available in context menu for Quadrone sheets
-  - [x] Add to Sheet Tab
-  - [x] Remove from Sheet Tab
-- [x] Surface activity spells and subtitle them accordingly
-- [x] Provide dedicated context for action subtitles, and decide on appropriate subtitles later.
+- [x] Set up ThemeSetting types
+- [x] Add Tidy Flag
+- [x] Add World Setting
+- [x] Set up sheets to apply theme colors when applying overall dark/light classes
+- [x] Set up ThemeSettings application, designed to save either to a sheet flag or to World settings (probably the presence of a document will decide it)
+  - [x] Colors
+    - [X] Accent Color
+    - [x] Rarity Colors
+    - [x] DDBeyond Rarity Color Saturation (for SagaTympana)
+    - [x] Spell Preparation Mode Colors
+  - [x] Other things
+    - [x] Header Background
+  - [x] Refine
+    - [x] Use Coloris setup and recreate the ThemeSettingColorArticle as ThemeSettingColorFormGroup, with a configured clear button. ~~Possibly stack the form group as well~~, since hsla and similar values are lengthy.
+- [x] Implement Rarity Color saturation`
+- [x] Update all Tidy sheets when theme changes. Use a custom hook. Pass in document UUID; when present, subscribers will only deal with their own document or an updated parent.
+- [x] Add style for form group label swatch.
+- [x] Change the approach from setting CSS variable properties on the form tag to instead managing sheet styles in a dedicated style tag.
+  - [x] Implement function that turns settings into CSS rules
+    - Create delcarations with rule sets; bucket as many rules as possible by theme setting key.
+    - Uniquely tag declarations via their requisite setting in an empty CSS variable, a la
+      - `.tidy5e-sheet.application.quadrone { --tidy5e-world-theme-setting-accentColor: ; /* other styles here */ }`
+        - This tells me I'm dealing with a world theme setting, accentColor. As many styles as I need can be included in this declaration. If additional selectors are needed for other purposes (saturation, table headers, for example), then additional declarations are added, tagged the same, so they all can be refreshed together.
+  - [x] Setup - on settings init, establish style tag and set up with world styles
+  - [x] World
+    - [x] init: when establishing the style tag, generate these settings and add them to the style tag
+    - [x] refresh: on change, purge-restore styles; this should use the on change handler in settings
+  - [x] Sheet
+    - [x] init: on first render, during pre-render, establish own styles
+    - [x] refresh: on theme settings change hook, determine if relevant to self, and if so, purge-restore styles
+- [x] // TODO: Convert Rarity Colors and Spell Prep Mode Colors to objects so they save smaller and merge easier.
+  - [x] Change types
+  - [x] Change save/load functions in Theme Quad
+  - [x] Change up theme settings form
+  - [x] Change up functions for preparing styles
+  - [x] Change up parent style inheritance feature now that it's easy; just merge.
+- [x] Set up parent style inheritance for child sheets (Item sheets).
+- [x] Support theming for related document dialogs and config applications that may have a document property.
+- [x] Test and fix errors related to missing theme setting data.
+- [x] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
+- [x] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
+- [x] ~~(Stretch) Make coloris input select on focus~~ Side-stepping this by separating the main color input from the hidden Coloris input was a better alternative.
+- [x] // TODO: Pop a confirmation before committing to this.
+- [x] Establish dynamic styles for custom rarity colors and spell prep modes.
+- [ ] Refactor: upgrade the params for `ThemeQuadrone.applyCurrentThemeSettingsToStylesheet` to be an options object that is universal to all operations in the tree of functions used for applying themes. 
+- [ ] Refactor: Break up `theme-quadrone.svelte.ts` - the style generation code could live in its file, etc.
+- [ ] Refactor: The hook subscription to respond to document-related theme changes is duplicated across multiple locations. Extract and share from the theme-quadrone file or related files.
+- [ ] 
 
-### Notes
+### Restyler Module Notes
 
-#### Actions-tab-specific Subtitles?
+The TGCE Restyler module takes this approach:
 
-Actions tab items could use some context to distinguish them from one another. Examples:
-- Inventory items in containers: Container Name in subtitle
-- Spells from items: Item source in subtitle
+- Manage CSS Rules directly in dnd5e.css
+  - Insert any rules on sheet render when missing
+  - Insert/Update any rules for a target sheet while making changes to the customizer app
+- Data model: 
+  - `actor.flags['tgce-restyler-5e3'].cssText`
+  - `actor.flags['tgce-restyler-5e3'].elements`
+  - It can loop over cssText entries and simply insert-when-not-present on the dnd5e.css file
+    - This seems like an optimization to reduce processing when rendering the actor sheet. This can be trivially mitigated by using First Render and then responding to themeSettingChanged hooks on the Tidy side. Storing this seems like a mistake, at least for Tidy.
+  - It then uses the `elements` object to present the relevant form data in the customizer.
+    - For dynamically expandable fields like Rarity Colors and Spell Prep Modes, I can't enjoy this directness.
+    - For all other colors, sure.
+    - Maybe a good update for Tidy would be to use regular values like `accentColor` on the theme settings flag, instead of dumping it into the colors array. Likewise, perhaps Rarity and Spell Prep modes should store as separate color arrays instead of going into the same bucket. We can simply combine all the colors and styles in the most appropriate way for theme color style management at the time they are needed, which will reduce some complexity of the code. With that said, we should continue to keep a bucket of advanced variable assignments / direct selector and rule assignments so that users can make extremely customized approaches.
+
+Note the approaches to inserting styles when they don't exist yet, creating or updating CSS Rules, and **removing properties or rules**.
+
+```js
+Hooks.on("renderActorSheet5eCharacter2", function(object) {   
+    debugLog('green', `Inside Hook:renderActorSheet5eCharacter2 >> Actor: ${object.actor._id}`);    
+    const myStyleSheet = Array.from(document.styleSheets).find((e) => e?.href?.includes(CSS_HREF));
+    if (game.actors.get(object.actor._id).flags['tgce-restyler-5e3']?.cssText !== undefined){
+        debugLog('cyan', `- CSS Rules found in flags for actor ${object.actor._id}`);    
+        debugLog('cyan', `- Checking ${myStyleSheet.href} for rules needing added... `);    
+        Object.entries(game.actors.get(object.actor._id).flags['tgce-restyler-5e3'].cssText).forEach((e) => {
+            if(!Array.from(myStyleSheet.cssRules).find((s) => s.selectorText == e[0].replaceAll('&','.'))){
+                myStyleSheet.insertRule(e[0].replaceAll('&','.')+" "+e[1]);
+                debugLog('cyan', `- CSS rule created: ${e[0].replaceAll('&','.')+" "+e[1]}`);
+            }             
+        });
+    } else {
+        debugLog('yellow', `- CSS Rules NOT found in flags for actor ${object.actor._id}`);    
+    }
+});
+
+//* CSS Rule Creator/Updater(add/modify property)
+function createOrUpdateCssRule(selector, property, value) {
+    debugLog('green', `Inside Function: createOrUpdateCssRule()`)
+    const myStyleSheet = Array.from(document.styleSheets).find((e) => e?.href?.includes(CSS_HREF));    
+    const currentCssRule = Array.from(myStyleSheet.cssRules).find((e) => e?.selectorText === selector);
+    if (currentCssRule){
+        debugLog('cyan', `- CSS Rule Found! Updating CSS Rule...`);
+        if (property.includes('--')) {
+            currentCssRule.style.setProperty(property, value);
+        } else {
+            currentCssRule.style[property] = value;
+        }
+    } else {
+        debugLog('cyan', `- CSS Rule Not found! Creating CSS Rule...`);
+        myStyleSheet.insertRule(`${selector} { ${property}: ${value}}`);
+    }
+}
+
+function removePropertyOrRule(selector, property, value) {
+    debugLog('green', `Inside Function: removePropertyOrRule()`)
+    const myStyleSheet = Array.from(document.styleSheets).find((e) => e?.href?.includes(CSS_HREF));    
+    let currentCssRule = Array.from(myStyleSheet.cssRules).find((e) => e?.selectorText === selector);
+    if (currentCssRule) {
+        if (currentCssRule.style.length <= 1) {
+            debugLog('cyan', `- Last rule property, removing rule>> ${selector}`);
+            myStyleSheet.deleteRule(Array.from(myStyleSheet.cssRules).findIndex((e) => e?.selectorText == selector));
+        } else {
+            debugLog('cyan', `- Removing Property>> ${property}: ${value}`);
+            currentCssRule.style.removeProperty(property);
+        }
+    }
+}
+```
+
+Sample JSON of flag data:
+```json
+{
+    "cssText": {
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &stats &top &ac": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-badge2.png\") center center / contain no-repeat transparent; width: 60.5px; height: 60.5px; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-header > &right &level": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-badge2.png\") center center / contain no-repeat transparent; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2 &window-content": "{ background: rgb(13, 13, 13); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-header": "{ background-image: url(\"../../../modules/tgce-restyler-5e3/assets/sheet-banner-onegod.png\"); filter: hue-rotate(130deg); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body": "{ background-image: url(\"../../../modules/tgce-restyler-5e3/assets/transparent.png\"); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &meter&hit-dice&progress::before": "{ background: linear-gradient(to right, rgb(64, 31, 37), rgb(255, 0, 47)); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &meter&hit-points &progress::before": "{ background: linear-gradient(to right, rgb(27, 75, 41), rgb(15, 41, 23)); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-body &sidebar &card &stats &lozenges &lozenge": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-lozenge.png\") center top / contain no-repeat transparent; transform: scale(1.05); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character": "{ transform: scale(0.97); filter: hue-rotate(77deg); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &tab&biography&active &bottom &icon > dnd5e-icon": "{ --icon-fill: #e1c019; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &content-link > i": "{ color: rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &tab&biography &characteristics label &value": "{ border-bottom: 1px solid rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &tab&biography&active": "{ color: rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &content-link": "{ background: rgb(153, 56, 56); border: 1px solid rgb(225, 192, 25); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2 &card &header": "{ background: linear-gradient(to right, rgb(0, 0, 0), rgb(37, 27, 116)); color: rgb(255, 234, 0); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &sign": "{ color: rgb(255, 0, 0); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &score": "{ height: 23px; font-size: 0.8125rem; background: rgb(93, 14, 14); color: rgb(251, 174, 9); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &label": "{ font-size: 0.6875rem; }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &ability-scores &ability-score &mod": "{ font-size: 0.8125rem; color: rgb(255, 0, 0); }",
+        "#ActorSheet5eCharacter2-Actor-wCUDNMVTWWqk8jJy&dnd5e2&sheet&actor&character &sheet-header > &right &inspiration": "{ background: url(\"../../../modules/tgce-restyler-5e3/assets/alt-badge1.png\") center center / contain no-repeat transparent; }"
+    },
+    "elements": {
+        "char-ac-badge": "modules/tgce-restyler-5e3/assets/alt-badge2.png",
+        "sheet-bgimage": "modules/tgce-restyler-5e3/assets/transparent.png",
+        "text-sheet-bgcolor": "#0d0d0d",
+        "sheet-bgcolor": "#0d0d0d",
+        "header-bgimage": "modules/tgce-restyler-5e3/assets/sheet-banner-onegod.png",
+        "sheet-header-hue-rotate": "130",
+        "char-lvl-image": "modules/tgce-restyler-5e3/assets/alt-badge2.png",
+        "char-ac-badge-scale": "60.5",
+        "char-trait-badge": "modules/tgce-restyler-5e3/assets/alt-lozenge.png",
+        "text-hp-bar-right": "#0f2917",
+        "hp-bar-right": "#0f2917",
+        "text-hd-bar-right": "#ff002f",
+        "hd-bar-right": "#ff002f",
+        "sheet-scale": "0.97",
+        "sheet-hue-rotate": "77",
+        "char-insp-image": "modules/tgce-restyler-5e3/assets/alt-badge1.png",
+        "text-abi-mod-txt-color": "#ff0000",
+        "abi-mod-txt-color": "#ff0000",
+        "text-abi-mod-sign-color": "#ff0000",
+        "abi-mod-sign-color": "#ff0000",
+        "text-abiscorecolor": "#fbae09",
+        "abiscorecolor": "#fbae09",
+        "text-abiboxcolor": "#5d0e0e",
+        "abiboxcolor": "#5d0e0e",
+        "char-trait-badge-scale": "1.05",
+        "banner-left": "#000000",
+        "text-banner-left": "#000000",
+        "text-banner-right": "#251b74",
+        "banner-right": "#251b74",
+        "text-banner-text": "#ffea00",
+        "banner-text": "#ffea00",
+        "text-bio-txt-color": "#e1c019",
+        "bio-txt-color": "#e1c019",
+        "text-content-link-bg-color": "#993838",
+        "content-link-bg-color": "#993838"
+    }
+}
+```
+
 
 ## To Do
 
+- [ ] Memoize current tab ID for duration of object instance lifetime
+- [ ] Memoize sidebar state as user preference for each tab for each sheet type
+- [ ] Memoize sidebar tab selection for duration of object instance lifetime
 - [ ] Character Sheet 
-  - [ ] Implement tabs
-    - [ ] Sheet (Actions)
+  - [x] Implement tabs
+    - [x] Sheet (Actions)
     - [x] Attributes (Character tab)
     - [x] Inventory
     - [x] Features
     - [x] Spellbook
     - [x] Effects
     - [x] Bastions
-    - [ ] Background
-    - [ ] Journal
+    - [x] ~~Background~~ Biography
+    - [x] Journal
   - [x] Implement Expandable/collapsible sidebar
   - [x] Implement Favorites
   - [ ] Implement Theme Settings
-    - [ ] World Default (?) - discuss with community
-    - [ ] User Default (we have User Scope now!)
-    - [ ] Actor Sheet Override
-    - [ ] Item Sheet Override
+    - [ ] World Default discuss with community
+    - [ ] Actor Sheet
+    - [ ] Item Sheet
   - [ ] Implement Limited View, which branches just within the top-level sheet component.
   - [ ] Misc Features
     - [ ] Set as Inspiration Source (see below)
@@ -110,7 +273,22 @@ Actions tab items could use some context to distinguish them from one another. E
 - [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 - [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
-
+- [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
+- [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
+- [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
+- [ ] Sheet tab: need Inventory filters in advanced filter section
+- [ ] Refactor: Simplify DEFAULT_OPTIONS management now that option inheritance works and `visible()` callback is officially supported.
+- [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data; and what about new user settings?
+- [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
+  - This is easy with the stylesheet / CSS Rules API, I would think.
+  - [ ] Sheet
+  - [ ] World
+- [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
+- [ ] (Stretch) Advanced Settings Section - do you know what specific CSS variable alterations you want to make to Tidy? Put 'em here. An array of 0 to many direct variable overrides. If someone goes real deep into Tidy and wants to submit some community theme JSON, they may do so.
+- [ ] (Stretch) **Theming**: Community Theme submissions - they'll go in a dedicated folder in github and, with an active internet connection, can be pulled directly from within Foundry
+- [ ] (Stretch) **Theme Settings**: Saved Themes in campaign world - be able to create multiple themes and save them to the game world for all to enjoy
+- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
+- [ ] 
 
 ### Feature - Set as Inspiration Source
 
@@ -669,3 +847,5 @@ Limited:
 - [x] Bastion: Test and verify broken facilities
 - [x] Decide: will we continue to support "Allow Effects Management" option in the new sheets. Not right now. We will assume we're leaving it behind for now.
 - [x] Decide: should we allow for section config on Effects tabs. Not currently.
+- [x] Remove empty sections in Sheet tab.
+- [x] Add `mode-${sheetMode}` to sheet element

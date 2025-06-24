@@ -17,6 +17,7 @@ import type {
 } from 'src/types/item.types';
 import type { Group5e } from 'src/types/group.types';
 import type { Activity5e } from './dnd5e.types';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -459,5 +460,32 @@ export class TidyHooks {
     newTabId: string
   ) {
     Hooks.callAll('tidy5e-sheet.selectTab', app, element, newTabId);
+  }
+
+  static tidy5eSheetsThemeSettingsChangedHook =
+    'tidy5e-sheet.themeSettingsChanged';
+
+  /**
+   * Theme settings, whether at world or sheet scope, have changed.
+   * Alternatively, themes are being previewed, and relevant subscribers need to refresh their settings.
+   * @param doc when dealing with a specific sheet's theme changes, this is the affected document
+   */
+  static tidy5eSheetsThemeSettingsChanged(doc?: any) {
+    Hooks.callAll(this.tidy5eSheetsThemeSettingsChangedHook, doc);
+  }
+
+  static tidy5eSheetsThemeSettingsChangedSubscribe(
+    callback: (doc?: any) => void
+  ): number {
+    return Hooks.on(
+      this.tidy5eSheetsThemeSettingsChangedHook,
+      (...params: any[]) => {
+        callback(...params);
+      }
+    );
+  }
+
+  static tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId?: number): number {
+    return Hooks.off(this.tidy5eSheetsThemeSettingsChangedHook, hookId);
   }
 }

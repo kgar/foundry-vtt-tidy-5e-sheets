@@ -37,6 +37,10 @@ import {
 } from 'src/features/sheet-header-controls/header-controls';
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { TidyHooks } from 'src/api';
+import { settings } from 'src/settings/settings.svelte';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -59,6 +63,29 @@ export function TidyExtensibleDocumentSheetMixin<
     constructor(options: TConstructorArgs) {
       super(options);
     }
+
+    static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+      window: {
+        controls: [
+          {
+            icon: 'fa-solid fa-palette',
+            label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+            action: 'themeSettings',
+            ownership: 'OWNER',
+            visible: () => settings.value.truesight,
+          },
+        ],
+      },
+      actions: {
+        themeSettings: async function (this: TidyDocumentSheet) {
+          await new ThemeSettingsQuadroneApplication({
+            document: this.document,
+          }).render({
+            force: true,
+          });
+        },
+      },
+    };
 
     get sheetMode() {
       return this._mode;
@@ -223,6 +250,13 @@ export function TidyExtensibleDocumentSheetMixin<
 
         applyThemeToApplication(element, this.document);
 
+        this._applySheetModeClass(element);
+
+        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+          doc: this.document,
+          mergeParentDocumentSettings: true,
+        });
+
         // Support injected named inputs
         element.addEventListener(
           'change',
@@ -375,13 +409,27 @@ export function TidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
 
     /**
+     * Applies the current sheet mode as a class to the sheet element.
+     */
+    _applySheetModeClass(element: HTMLElement) {
+      if (!element) {
+        return;
+      }
+
+      element.className = element.className.replace(/sheet-mode-\w+/g, '');
+      let mode = this.sheetMode === CONSTANTS.SHEET_MODE_EDIT ? 'edit' : 'play';
+      element.classList.add(`sheet-mode-${mode}`);
+    }
+
+    /**
      * Changes the user toggling the sheet mode.
      * @protected
      */
     async changeSheetMode(mode: number) {
       this._mode = mode;
       await this.submit();
-      this.render();
+      this._applySheetModeClass(this.element);
+      await this.render();
     }
 
     /**
@@ -420,7 +468,8 @@ export function TidyExtensibleDocumentSheetMixin<
     /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
-    // settingsChangeHookId?: number;
+
+    themeSettingsChangeHookId?: number;
 
     /**
      * Attach event listeners to the Application frame.
@@ -428,6 +477,21 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     _attachFrameListeners() {
       game.user.apps[this.id] = this;
+
+      this.themeSettingsChangeHookId =
+        TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
+          const appliesToThisSheet =
+            !!doc &&
+            (doc.uuid === this.document?.uuid ||
+              doc.uuid === this.document.parent?.uuid);
+
+          if (appliesToThisSheet) {
+            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+              doc: this.document,
+              mergeParentDocumentSettings: true,
+            });
+          }
+        });
 
       super._attachFrameListeners();
     }
@@ -456,6 +520,10 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     _onClose(options: TidyDocumentSheetRenderOptions) {
       delete game.user.apps[this.id];
+
+      TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(
+        this.themeSettingsChangeHookId
+      );
 
       super._onClose(options);
     }

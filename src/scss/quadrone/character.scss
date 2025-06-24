@@ -16,7 +16,11 @@
   }
 
   &::before {
-    background: url(../../modules/tidy5e-sheet/images/banner-character.webp) top center / auto no-repeat;
+    background-image: var(--t5e-sheet-header-bg, url(../../modules/tidy5e-sheet/images/banner-character.webp));
+    background-position: top center;
+    background-size: auto;
+    background-repeat: no-repeat;
+
     filter: grayscale(100%);
     mix-blend-mode: overlay;
     background-size: cover;

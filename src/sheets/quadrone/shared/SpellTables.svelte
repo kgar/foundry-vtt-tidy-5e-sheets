@@ -23,6 +23,7 @@
   import SpellSlotManagementQuadrone from '../actor/parts/SpellSlotManagementQuadrone.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+    import { isNil } from 'src/utils/data';
 
   interface Props {
     sections: SpellbookSection[];
@@ -99,9 +100,13 @@
         dataset={section.dataset}
       >
         {#snippet header(expanded)}
-          {@const modeClass = `mode-${section.prepMode?.slugify()}`}
+          {@const mode = section.prepMode?.slugify()}
           <TidyTableHeaderRow
-            class={['theme-dark', 'spell-preparation', modeClass]}
+            class={[
+              'theme-dark',
+              'spell-preparation',
+              { [`mode-${mode}`]: !isNil(mode, '') },
+            ]}
           >
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>

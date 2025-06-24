@@ -1,7 +1,8 @@
+import { TidyFlags } from 'src/api';
 import { debug } from './logging';
-import { type CurrentSettings } from 'src/settings/settings.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { getThemeV2 } from 'src/theme/theme';
+import { settings } from 'src/settings/settings.svelte';
+import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
   if (!element) {
@@ -24,7 +25,11 @@ export function applyTitleToWindow(title: string, element: HTMLElement) {
   }
 }
 
-export function applyThemeToApplication(element?: HTMLElement, doc?: any) {
+export function applyThemeToApplication(
+  element?: HTMLElement,
+  doc?: any,
+  themeSettingPreview?: ThemeSettings
+) {
   if (!element) {
     return;
   }
