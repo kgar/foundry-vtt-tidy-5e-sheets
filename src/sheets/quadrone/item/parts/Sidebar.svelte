@@ -17,6 +17,7 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { settings } from 'src/settings/settings.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -117,7 +118,7 @@
 
   let useSaturatedColors = $derived(
     settings.value.worldThemeSettings.useSaturatedRarityColors === true ||
-      TidyFlags.sheetThemeSettings.get(context.document)
+      ThemeQuadrone.getSheetThemeSettings(context.document, true)
         ?.useSaturatedRarityColors === true,
   );
 
