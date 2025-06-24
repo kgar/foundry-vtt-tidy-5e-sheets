@@ -8,11 +8,12 @@ import type {
   ThemeSettings,
   ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
-import { TidyFlags } from 'src/api';
+import { TidyFlags, TidyHooks } from 'src/api';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
+import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 
 export type ThemeableSheetType =
   | Tidy5eCharacterSheetQuadrone
@@ -368,5 +369,29 @@ export class ThemeQuadrone {
         : this.getWorldThemeSettings());
     const declarations = this.getDeclarations(themeSettings, options);
     this.applyStyleDeclarations(declarations, options.doc, options.idOverride);
+  }
+
+  static subscribeAndReactToThemeSettingsChanges(
+    options: ThemeSettingsConfigurationOptions
+  ): Unsubscribable {
+    const hookId = TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe(
+      (doc?: any) => {
+        const appliesToThisSheet =
+          !!doc &&
+          options.doc &&
+          (doc.uuid === options.doc.uuid ||
+            doc.uuid === options.doc.parent?.uuid);
+
+        if (appliesToThisSheet) {
+          ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(options);
+        }
+      }
+    );
+
+    return {
+      unsubscribe() {
+        TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId);
+      },
+    };
   }
 }

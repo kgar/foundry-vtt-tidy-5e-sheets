@@ -1,4 +1,4 @@
-import { TidyHooks } from 'src/api';
+import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
@@ -50,7 +50,15 @@ export function DocumentSheetDialog<
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
 
-    themeSettingsChangeHookId?: number;
+    themeSettingsSubscription?: Unsubscribable;
+
+    private get themeConfigOptions() {
+      return {
+        doc: this.document,
+        mergeParentDocumentSettings: true,
+        idOverride: this.id,
+      };
+    }
 
     _attachFrameListeners() {
       super._attachFrameListeners();
@@ -58,27 +66,14 @@ export function DocumentSheetDialog<
       // Tidy 5e relies on `themed theme-{theme}` to be on every one of its applications.
       applyThemeToApplication(this.element, this.document);
 
-      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-        doc: this.document,
-        mergeParentDocumentSettings: true,
-        idOverride: this.id,
-      });
+      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
+        this.themeConfigOptions
+      );
 
-      this.themeSettingsChangeHookId =
-        TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
-          const appliesToThisSheet =
-            !!doc &&
-            (doc.uuid === this.document.uuid ||
-              doc.uuid === this.document.parent?.uuid);
-
-          if (appliesToThisSheet) {
-            ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-              doc: this.document,
-              mergeParentDocumentSettings: true,
-              idOverride: this.id,
-            });
-          }
-        });
+      this.themeSettingsSubscription =
+        ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
+          this.themeConfigOptions
+        );
     }
 
     /* -------------------------------------------- */
@@ -86,9 +81,7 @@ export function DocumentSheetDialog<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
-      TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(
-        this.themeSettingsChangeHookId
-      );
+      this.themeSettingsSubscription?.unsubscribe();
 
       // Trigger saving of the form if configured and allowed
       const submit =

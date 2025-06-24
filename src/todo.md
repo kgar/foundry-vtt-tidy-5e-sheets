@@ -45,8 +45,8 @@
 - [x] // TODO: Pop a confirmation before committing to this.
 - [x] Establish dynamic styles for custom rarity colors and spell prep modes.
 - [x] Refactor: upgrade the params for `ThemeQuadrone.applyCurrentThemeSettingsToStylesheet` to be an options object that is universal to all operations in the tree of functions used for applying themes. 
+- [x] Refactor: The hook subscription to respond to document-related theme changes is duplicated across multiple locations. Extract and share from the theme-quadrone file or related files.
 - [ ] Refactor: Break up `theme-quadrone.svelte.ts` - the style generation code could live in its file, etc.
-- [ ] Refactor: The hook subscription to respond to document-related theme changes is duplicated across multiple locations. Extract and share from the theme-quadrone file or related files.
 
 
 ### Restyler Module Notes
