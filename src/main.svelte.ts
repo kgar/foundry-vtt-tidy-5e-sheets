@@ -28,6 +28,7 @@ import { debug } from './utils/logging';
 import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
@@ -157,7 +158,7 @@ Hooks.once('init', () => {
         label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
       }
     );
-    
+
     documentSheetConfig.registerSheet(
       Actor,
       CONSTANTS.DND5E_SYSTEM_ID,
@@ -196,6 +197,8 @@ Hooks.once('ready', async () => {
   initReadyHooks();
 
   DebugTools.onReady(api);
+
+  ThemeQuadrone.onReady();
 });
 
 function handleMigrationNotification() {

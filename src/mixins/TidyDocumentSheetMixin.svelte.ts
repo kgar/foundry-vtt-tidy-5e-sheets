@@ -40,6 +40,7 @@ import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TidyHooks } from 'src/api';
+import { settings } from 'src/settings/settings.svelte';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -71,6 +72,7 @@ export function TidyExtensibleDocumentSheetMixin<
             label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
             action: 'themeSettings',
             ownership: 'OWNER',
+            visible: () => settings.value.truesight,
           },
         ],
       },
@@ -480,12 +482,12 @@ export function TidyExtensibleDocumentSheetMixin<
         TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
           const appliesToThisSheet =
             !!doc &&
-            (doc.uuid === this.document.uuid ||
+            (doc.uuid === this.document?.uuid ||
               doc.uuid === this.document.parent?.uuid);
 
           if (appliesToThisSheet) {
             ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-              doc,
+              doc: this.document,
               mergeParentDocumentSettings: true,
             });
           }

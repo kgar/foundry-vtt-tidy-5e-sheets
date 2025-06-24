@@ -35,7 +35,7 @@ type ConstructorArgs = Partial<ApplicationConfiguration & { document?: any }>;
 export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<ConstructorArgs>(
   foundry.applications.api.ApplicationV2
 ) {
-  _document?: any;
+  document?: any;
   _settings: ThemeSettingsContext = $state({
     accentColor: '',
     headerBackground: '',
@@ -46,11 +46,11 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   constructor(options: ConstructorArgs = {}) {
     options.id = options?.document
-      ? `tidy-theme-settings-${options.document.uuid}`
+      ? `tidy-theme-settings-${options.document.uuid.replaceAll('.', '-')}`
       : 'tidy-theme-settings';
     super(options);
 
-    this._document = options.document;
+    this.document = options.document;
   }
 
   static DEFAULT_OPTIONS: Partial<ConstructorArgs> = {
@@ -72,8 +72,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   };
 
   get title() {
-    return this._document
-      ? `(Localize) ${this._document.name}: Theme Settings`
+    return this.document
+      ? `(Localize) ${this.document.name}: Theme Settings`
       : '(Localize) World Theme Settings';
   }
 
@@ -99,8 +99,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   _getSettings() {
     let themeSettings = structuredClone(
-      this._document
-        ? ThemeQuadrone.getSheetThemeSettings(this._document)
+      this.document
+        ? ThemeQuadrone.getSheetThemeSettings(this.document)
         : ThemeQuadrone.getWorldThemeSettings()
     );
 
@@ -140,13 +140,14 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   async _renderFrame(options: ApplicationRenderOptions) {
     const element = await super._renderFrame(options);
 
-    if (this._document) {
+    if (this.document) {
       try {
-        applyThemeToApplication(element, this._document);
+        applyThemeToApplication(element, this.document);
 
         ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-          doc: this._document,
+          doc: this.document,
           mergeParentDocumentSettings: true,
+          idOverride: this.id,
         });
 
         this.themeSettingsChangeHookId =
@@ -158,8 +159,9 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
             if (appliesToThisSheet) {
               ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-                doc,
+                doc: this.document,
                 mergeParentDocumentSettings: true,
+                idOverride: this.id,
               });
             }
           });
@@ -201,25 +203,36 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         }, {}),
     };
 
-    if (this._document) {
-      await ThemeQuadrone.saveSheetThemeSettings(this._document, themeSettings);
+    if (this.document) {
+      await ThemeQuadrone.saveSheetThemeSettings(this.document, themeSettings);
     } else {
       await ThemeQuadrone.saveWorldThemeSettings(themeSettings);
     }
 
-    TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
   }
 
   async useDefault() {
-    // TODO: Pop a confirmation before committing to this.
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      },
+      content: `<p>${FoundryAdapter.localize(
+        'TIDY5E.UseDefaultDialog.text'
+      )}</p>`,
+    });
 
-    if (this._document) {
-      await TidyFlags.sheetThemeSettings.unset(this._document);
+    if (!proceed) {
+      return;
+    }
+
+    if (this.document) {
+      await TidyFlags.sheetThemeSettings.unset(this.document);
     } else {
       FoundryAdapter.setTidySetting('worldThemeSettings', {});
     }
 
-    TidyHooks.tidy5eSheetsThemeSettingsChanged(this._document);
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
 
     await this.close();
   }

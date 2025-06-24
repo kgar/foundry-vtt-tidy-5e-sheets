@@ -37,20 +37,14 @@
   - [x] Change up functions for preparing styles
   - [x] Change up parent style inheritance feature now that it's easy; just merge.
 - [x] Set up parent style inheritance for child sheets (Item sheets).
-- [ ] Support theming for related document dialogs and config applications that may have a document property.
+- [x] Support theming for related document dialogs and config applications that may have a document property.
 - [x] Test and fix errors related to missing theme setting data.
-- [ ] (Stretch) Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
-  - This is easy with the stylesheet / CSS Rules API, I would think.
-  - [ ] Sheet
-  - [ ] World
 - [x] (Refactor) Have the world theming placed in a style tag in the head, rather than reapplied over and over to every sheet before sheet-specific upgrades
-- [ ] (Discuss) Should we completely ignore parent document theme settings when there are *any* color overrides? Or should we "merge down"? Or should we just provide a radio button / checkbox for "Merge Settings with Parent", "Inherit from Parent", "Independently themed"?
-- [ ] (Stretch) Supply a theme data model that validates, cleans, and defaults theme settings accordingly
 - [x] (Research) TGCE Restyler has a ton of customization potential. What things can be reuse responsibly? Being able to customize every single thing would be a second module unto itself. I don't have the bandwidth for that. https://github.com/Carpathias/tgce-restyler-5e3?tab=readme-ov-file
-- [ ] (Research) How do I leverage data models to validate / sanitize / migrate?
-- [ ] // TODO: Pop a confirmation before committing to this.
 - [x] ~~(Stretch) Make coloris input select on focus~~ Side-stepping this by separating the main color input from the hidden Coloris input was a better alternative.
-- [ ] Establish dynamic styles for custom rarity colors and spell prep modes.
+- [x] // TODO: Pop a confirmation before committing to this.
+- [x] Establish dynamic styles for custom rarity colors and spell prep modes.
+- [ ] Refactor: upgrade the params for `ThemeQuadrone.applyCurrentThemeSettingsToStylesheet` to be an options object that is universal to all operations in the tree of functions used for applying themes. 
 - [ ] Refactor: Break up `theme-quadrone.svelte.ts` - the style generation code could live in its file, etc.
 
 
@@ -191,52 +185,6 @@ Sample JSON of flag data:
 ```
 
 
-## Journal Tab To Do
-
-- [x] Implement tab selection
-- [x] Implement Create Journal Entry
-- [x] Implement Delete Journal Entry
-- [x] ~~Add code to Journal to make it resilient to bad data, preferring to show blanks where data is missing~~ You can only do so much
-- [x] Implement setting a title
-- [x] Implement viewing rendered HTML
-- [x] Implement opening the editor and saving
-- [x] Add context menu for deleting journal entry
-- [x] Add context menu for duplicating journal entry
-- [x] Implement drag-and-drop to sort
-- [x] (stretch) drag-and-drop to move/copy between sheets
-- [x] Use a dedicated edit dialog for editing an entry. Close on save button clicked, and save on close.
-- [x] Creating a new journal entry
-  - [x] Add the journal entry
-  - [x] Give it a name ("New Journal Entry")
-  - [x] Select it
-  - [x] Open edit for new journal entry
-- [x] Placeholder on title input: "Entry Title"
-- [x] On duplicate
-  - Take the name of the previous one and tack on " (Copy)"
-- When index changes, scroll the selected into view
-- [x] (Stretch) Add context menu for editing journal entry (if using a dialog: easy; else, message bus)
-- [x] ~~(Stretch) Add "Pop Out" context menu option ("TooltipPopout") which opens a readonly dialog for reading a journal entry.~~ "View" with an Eye. Done.
-- [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data; and what about new user settings?
-
-
-### Journal scratch
-
-loc keys:
-"PackageDeleteTitle": 
-  "Delete {type}: {title}",
-"PackageDeleteConfirm": 
-  "Are you sure you want to delete the {type} \"{title}\"?",
-
-
-"JOURNAL.AddPage": "Add Page",
-"JOURNAL.EditPage": "Edit Page",
-"JOURNAL.NextPage": "Next Page",
-"JOURNAL.PrevPage": "Previous Page",
-
-"AreYouSure"
-"SIDEBAR.DeleteWarning": "This {type} will be permanently deleted and cannot be recovered.",
-
-
 ## To Do
 
 - [ ] Memoize current tab ID for duration of object instance lifetime
@@ -327,6 +275,17 @@ loc keys:
 - [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
 - [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
 - [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
+- [ ] Sheet tab: need Inventory filters in advanced filter section
+- [ ] Refactor: Simplify DEFAULT_OPTIONS management now that option inheritance works and `visible()` callback is officially supported.
+- [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data; and what about new user settings?
+- [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
+  - This is easy with the stylesheet / CSS Rules API, I would think.
+  - [ ] Sheet
+  - [ ] World
+- [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
+- [ ] (Stretch) Advanced Settings Section - do you know what specific CSS variable alterations you want to make to Tidy? Put 'em here. An array of 0 to many direct variable overrides. If someone goes real deep into Tidy and wants to submit some community theme JSON, they may do so.
+- [ ] (Stretch) **Theming**: Community Theme submissions - they'll go in a dedicated folder in github and, with an active internet connection, can be pulled directly from within Foundry
+- [ ] (Stretch) **Theme Settings**: Saved Themes in campaign world - be able to create multiple themes and save them to the game world for all to enjoy
 
 ### Feature - Set as Inspiration Source
 

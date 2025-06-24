@@ -3,17 +3,17 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   ApplicationClosingOptions,
-  ApplicationConfiguration,
+  DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { error } from 'src/utils/logging';
 
 export function DocumentSheetDialog<
-  TConstructorArgs extends Partial<ApplicationConfiguration> | undefined,
+  TConstructorArgs extends Partial<DocumentSheetConfiguration> | undefined,
   TContext extends any = {}
 >() {
   return class DocumentSheetDialog extends SvelteApplicationMixin<
-    TConstructorArgs,
+    Partial<DocumentSheetConfiguration>,
     TContext
   >(foundry.applications.api.DocumentSheetV2) {
     constructor(options: TConstructorArgs) {
@@ -61,6 +61,7 @@ export function DocumentSheetDialog<
       ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
         doc: this.document,
         mergeParentDocumentSettings: true,
+        idOverride: this.id,
       });
 
       this.themeSettingsChangeHookId =
@@ -72,8 +73,9 @@ export function DocumentSheetDialog<
 
           if (appliesToThisSheet) {
             ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-              doc,
+              doc: this.document,
               mergeParentDocumentSettings: true,
+              idOverride: this.id,
             });
           }
         });

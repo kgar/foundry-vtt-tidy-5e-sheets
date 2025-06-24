@@ -20,6 +20,29 @@ export type ThemeableSheetType =
   | Tidy5eContainerSheetQuadrone;
 
 export class ThemeQuadrone {
+  static onReady() {
+    setTimeout(() => {
+      // Establish color mappings for Item Rarity and Spell Prep Mode
+      const stylesheet = this.getTidyStyleSheet();
+
+      Object.keys(CONFIG.DND5E.itemRarity).forEach((key) => {
+        let rarityIdentifier = key.toLowerCase().slugify();
+
+        stylesheet.insertRule(
+          `.tidy5e-sheet.quadrone .rarity.${rarityIdentifier} { --t5e-item-color: var(--t5e-color-rarity-${rarityIdentifier}) }`
+        );
+      });
+
+      Object.keys(CONFIG.DND5E.spellPreparationModes).forEach((key) => {
+        let modeIdentifier = key.toLowerCase().slugify();
+
+        stylesheet.insertRule(
+          `.tidy5e-sheet.quadrone .mode-${modeIdentifier} { --t5e-mode-color: var(--t5e-color-spellcasting-${modeIdentifier}) }`
+        );
+      });
+    });
+  }
+
   static getDefaultThemeSettings(): ThemeSettings {
     return {
       accentColor: '',
@@ -80,18 +103,35 @@ export class ThemeQuadrone {
 
   static getDeclarations(
     settings: ThemeSettings,
-    doc?: any
+    doc?: any,
+    idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
-    let selectorPrefix = ThemeQuadrone.getSelectorPrefix(doc);
+    let selectorPrefix = ThemeQuadrone.getSelectorPrefix(doc, idOverride);
 
     let result: ThemeQuadroneStyleDeclaration[] = [
-      ...this.getAccentColorDeclarations(selectorPrefix, settings, doc),
-      ...this.getHeaderBackgroundDeclarations(selectorPrefix, settings, doc),
-      ...this.getRarityColorsDeclarations(selectorPrefix, settings, doc),
+      ...this.getAccentColorDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
+      ...this.getHeaderBackgroundDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
+      ...this.getRarityColorsDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
       ...this.getSpellPreparationModesDeclarations(
         selectorPrefix,
         settings,
-        doc
+        doc,
+        idOverride
       ),
       // etc.
     ];
@@ -99,14 +139,19 @@ export class ThemeQuadrone {
     return result;
   }
 
-  private static getSelectorPrefix(doc: any) {
-    return doc ? `#${doc.sheet.id}` : '.tidy5e-sheet.application.quadrone';
+  private static getSelectorPrefix(doc: any, idOverride?: string) {
+    return idOverride
+      ? `#${idOverride}`
+      : doc
+      ? `#${doc.sheet.id}`
+      : '.tidy5e-sheet.application.quadrone';
   }
 
   static readonly worldSettingIdentifierKey = '--tidy5e-sheet-world-setting';
 
-  static sheetSettingIdentifierKey(doc: any) {
-    return `--tidy5e-sheet-sheet-setting-${doc.uuid.replaceAll('.', '-')}`;
+  static sheetSettingIdentifierKey(doc: any, idOverride?: string) {
+    const id = idOverride ?? doc.uuid;
+    return `--tidy5e-sheet-sheet-setting-${id.replaceAll('.', '-')}`;
   }
 
   static themeSettingIdentifierValue(settingName: string) {
@@ -115,11 +160,12 @@ export class ThemeQuadrone {
 
   static getDeclarationKeyRule(
     settingName: string,
-    doc?: any
+    doc?: any,
+    idOverride?: string
   ): ThemeQuadroneStyleRule {
     return {
       property: doc
-        ? this.sheetSettingIdentifierKey(doc)
+        ? this.sheetSettingIdentifierKey(doc, idOverride)
         : this.worldSettingIdentifierKey,
       value: this.themeSettingIdentifierValue(settingName),
     };
@@ -128,13 +174,18 @@ export class ThemeQuadrone {
   static getAccentColorDeclarations(
     selectorPrefix: string,
     settings: ThemeSettings,
-    doc: any | undefined
+    doc: any | undefined,
+    idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
     if (isNil(settings.accentColor, '')) {
       return [];
     }
 
-    const identifierRule = this.getDeclarationKeyRule('accentColor', doc);
+    const identifierRule = this.getDeclarationKeyRule(
+      'accentColor',
+      doc,
+      idOverride
+    );
     return [
       {
         identifier: `${identifierRule.property}: "${identifierRule.value}"`,
@@ -153,13 +204,18 @@ export class ThemeQuadrone {
   static getHeaderBackgroundDeclarations(
     selectorPrefix: string,
     settings: ThemeSettings,
-    doc: any | undefined
+    doc: any | undefined,
+    idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
     if (isNil(settings.headerBackground, '')) {
       return [];
     }
 
-    const identifierRule = this.getDeclarationKeyRule('headerBackground', doc);
+    const identifierRule = this.getDeclarationKeyRule(
+      'headerBackground',
+      doc,
+      idOverride
+    );
     return [
       {
         identifier: `${identifierRule.property}: "${identifierRule.value}"`,
@@ -178,7 +234,8 @@ export class ThemeQuadrone {
   static getRarityColorsDeclarations(
     selectorPrefix: string,
     settings: ThemeSettings,
-    doc: any | undefined
+    doc: any | undefined,
+    idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
     const rarityColors = Object.entries(settings.rarityColors ?? {}).filter(
       ([_, value]) => !isNil(value?.trim(), '')
@@ -187,7 +244,8 @@ export class ThemeQuadrone {
     return rarityColors.map(([key, value]) => {
       const identifierRule = this.getDeclarationKeyRule(
         `rarityColors-${key}`,
-        doc
+        doc,
+        idOverride
       );
       const cssVariable = `--t5e-color-rarity-${key.toLowerCase()}`;
       return {
@@ -207,7 +265,8 @@ export class ThemeQuadrone {
   static getSpellPreparationModesDeclarations(
     selectorPrefix: string,
     settings: ThemeSettings,
-    doc: any | undefined
+    doc: any | undefined,
+    idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
     const spellPrepModes = Object.entries(
       settings.spellPreparationModeColors ?? {}
@@ -216,7 +275,8 @@ export class ThemeQuadrone {
     return spellPrepModes.flatMap(([key, value]) => {
       const identifierRule = this.getDeclarationKeyRule(
         `spellPreparationModeColors-${key}`,
-        doc
+        doc,
+        idOverride
       );
       const cssVariable = `--t5e-color-spellcasting-${key.toLowerCase()}`;
       return [
@@ -240,33 +300,33 @@ export class ThemeQuadrone {
     });
   }
 
-  static applyStyleDeclarations(
-    declarations: ThemeQuadroneStyleDeclaration[],
-    doc?: any
-  ) {
-    let stylesheet = Array.from(document.styleSheets).find(
+  static getTidyStyleSheet() {
+    return Array.from(document.styleSheets).find(
       // @ts-expect-error
       (s) => coalesce(s?.ownerNode?.id, s?.id) === this.tagId
-    );
+    )!;
+  }
 
-    if (!stylesheet) {
-      alert('remove this before shipping, but oh no!');
-      return;
-    }
+  static applyStyleDeclarations(
+    declarations: ThemeQuadroneStyleDeclaration[],
+    doc?: any,
+    idOverride?: string
+  ) {
+    let stylesheet = this.getTidyStyleSheet();
 
     // identify all relevant styles
     let identifierKey = doc
-      ? this.sheetSettingIdentifierKey(doc)
+      ? this.sheetSettingIdentifierKey(doc, idOverride)
       : this.worldSettingIdentifierKey;
 
     // remove previous related styles
-    let numberToRemove = Array.from(stylesheet.cssRules).filter((r) =>
-      r.cssText.includes(identifierKey)
+    let numberToRemove = Array.from(stylesheet.cssRules).filter(
+      filterToExactIdentifier
     ).length;
 
     Array.fromRange(numberToRemove).forEach(() => {
-      let index = Array.from(stylesheet.cssRules).findIndex((r2) =>
-        r2.cssText.includes(identifierKey)
+      let index = Array.from(stylesheet.cssRules).findIndex(
+        filterToExactIdentifier
       );
       stylesheet.deleteRule(index);
     });
@@ -274,6 +334,10 @@ export class ThemeQuadrone {
     // insert styles
     for (let declaration of declarations) {
       stylesheet.insertRule(this.toRuleString(declaration));
+    }
+
+    function filterToExactIdentifier(value: CSSRule): boolean {
+      return value.cssText.includes(`${identifierKey}:`);
     }
   }
 
@@ -296,14 +360,19 @@ export class ThemeQuadrone {
       doc?: any;
       mergeParentDocumentSettings?: boolean;
       settingsOverride?: ThemeSettings;
+      idOverride?: string;
     } = {}
   ) {
-    const settings =
+    const themeSettings =
       args.settingsOverride ??
       (args.doc
         ? this.getSheetThemeSettings(args.doc, args.mergeParentDocumentSettings)
         : this.getWorldThemeSettings());
-    const declarations = this.getDeclarations(settings, args.doc);
-    this.applyStyleDeclarations(declarations, args.doc);
+    const declarations = this.getDeclarations(
+      themeSettings,
+      args.doc,
+      args.idOverride
+    );
+    this.applyStyleDeclarations(declarations, args.doc, args.idOverride);
   }
 }

@@ -10,7 +10,7 @@ export type DocumentSheetConfiguration = {
   editPermission: number;
   canCreate: boolean;
   sheetConfig: boolean;
-};
+} & ApplicationConfiguration;
 
 export type ApplicationConfiguration = {
   id: string;
@@ -58,7 +58,7 @@ export interface ApplicationHeaderControlsEntry {
   icon: string;
   label: string;
   action: string;
-  visible?: boolean;
+  visible?: boolean | ((this: any) => boolean);
   ownership?: string | number;
 }
 

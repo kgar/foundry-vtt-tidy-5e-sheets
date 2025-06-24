@@ -1938,7 +1938,7 @@ export function initSettings() {
   const truesight = SettingsProvider.settings.truesight.get();
 
   for (let menu of Object.entries(SettingsProvider.menus)) {
-    if ('truesight' in menu[1] && !truesight) {
+    if ('truesight' in menu[1].options && !truesight) {
       continue;
     }
 
