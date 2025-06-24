@@ -6,6 +6,7 @@ import type {
   ThemeQuadroneStyleDeclaration,
   ThemeQuadroneStyleRule,
   ThemeSettings,
+  ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
 import { TidyFlags } from 'src/api';
 import { settings } from 'src/settings/settings.svelte';
@@ -70,13 +71,15 @@ export class ThemeQuadrone {
   }
 
   static getSheetThemeSettings(
-    doc: any,
-    mergeParentDocumentSettings?: boolean
+    options: ThemeSettingsConfigurationOptions
   ): ThemeSettings {
     let defaultSettings = this.getDefaultThemeSettings();
 
-    if (mergeParentDocumentSettings && doc.parent) {
-      let parentSettings = this.getSheetThemeSettings(doc.parent, true);
+    if (options.mergeParentDocumentSettings && options.doc?.parent) {
+      let parentSettings = this.getSheetThemeSettings({
+        ...options,
+        doc: options.doc?.parent,
+      });
 
       defaultSettings = foundry.utils.mergeObject(
         defaultSettings,
@@ -86,7 +89,7 @@ export class ThemeQuadrone {
 
     const preferences = foundry.utils.mergeObject(
       defaultSettings,
-      TidyFlags.sheetThemeSettings.get(doc)
+      TidyFlags.sheetThemeSettings.get(options.doc)
     ) as ThemeSettings;
 
     return preferences;
@@ -103,9 +106,9 @@ export class ThemeQuadrone {
 
   static getDeclarations(
     settings: ThemeSettings,
-    doc?: any,
-    idOverride?: string
+    options: ThemeSettingsConfigurationOptions
   ): ThemeQuadroneStyleDeclaration[] {
+    let { doc, idOverride } = options;
     let selectorPrefix = ThemeQuadrone.getSelectorPrefix(doc, idOverride);
 
     let result: ThemeQuadroneStyleDeclaration[] = [
@@ -356,23 +359,14 @@ export class ThemeQuadrone {
   }
 
   static applyCurrentThemeSettingsToStylesheet(
-    args: {
-      doc?: any;
-      mergeParentDocumentSettings?: boolean;
-      settingsOverride?: ThemeSettings;
-      idOverride?: string;
-    } = {}
+    options: ThemeSettingsConfigurationOptions = {}
   ) {
     const themeSettings =
-      args.settingsOverride ??
-      (args.doc
-        ? this.getSheetThemeSettings(args.doc, args.mergeParentDocumentSettings)
+      options.settingsOverride ??
+      (options.doc
+        ? this.getSheetThemeSettings(options)
         : this.getWorldThemeSettings());
-    const declarations = this.getDeclarations(
-      themeSettings,
-      args.doc,
-      args.idOverride
-    );
-    this.applyStyleDeclarations(declarations, args.doc, args.idOverride);
+    const declarations = this.getDeclarations(themeSettings, options);
+    this.applyStyleDeclarations(declarations, options.doc, options.idOverride);
   }
 }
