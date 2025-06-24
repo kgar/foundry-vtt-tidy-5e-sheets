@@ -1,4 +1,4 @@
-## To Do
+## kgar To Do
 
 - [ ] Memoize current tab ID for duration of object instance lifetime
 - [ ] Memoize sidebar state as user preference for each tab for each sheet type
@@ -20,7 +20,17 @@
     - [x] World Default discuss with community
     - [x] Actor Sheet
     - [x] Item Sheet
-  - [ ] Implement Limited View, which branches just within the top-level sheet component.
+  - [x] Implement Limited View, which branches just within the top-level sheet component.
+    - [x] Basic HTML in place
+    - Header
+      - Portrait
+      - Name
+    - Body
+      - Biography header
+      - Biography text
+    - *notes*:
+      - when toggling user permissions on the default sheets, the transition is really rough from Limited to Owner. The sheet freaks out. I think we can similarly not worry about it.
+      - Characters, NPCs, and Vehicles are subject to this same exact Limited Template, meaning they all need to support enriched biography HTML.
   - [ ] Sheet Warnings in Header when relevant
   - [ ] Misc Features
     - [ ] Set as Inspiration Source (see below)
@@ -79,7 +89,6 @@
 - [ ] (TBD) User Setting: Item Spells Organization ( ) Additional Spells Section ( ) Section Per Item
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 - [ ] Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
-- [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [ ] (PC: Feature tab) Implement alternate section groupings - https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355 | include toggle option as sheet flag in tab settings
@@ -87,7 +96,6 @@
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 - [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
 - [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
-- [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
 - [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
 - [ ] Sheet tab: need Inventory filters in advanced filter section
 - [ ] Refactor: Simplify DEFAULT_OPTIONS management now that option inheritance works and `visible()` callback is officially supported.
@@ -104,6 +112,13 @@
 - [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] **Theme Settings**: Add support for Item Sidebar Width?
 - [ ] 
+
+## hightouch To Do
+- [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
+- [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
+- [ ] (hightouch) Review Character Sheet Limited View
+- [ ] (not ready yet) (hightouch) Review Item Sheet Limited View
+- [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
 
 ### Feature - Set as Inspiration Source
 

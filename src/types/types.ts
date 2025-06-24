@@ -1156,6 +1156,9 @@ export type NpcSheetQuadroneContext = {
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
+  enriched: {
+    biography: string;
+  };
   features: NpcAbilitySection[];
   inventory: InventorySection[];
   showContainerPanel: boolean;
@@ -1176,6 +1179,9 @@ export type GroupSheetQuadroneContext = {
 
 export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  enriched: {
+    biography: string;
+  };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
 } & ActorSheetQuadroneContext<unknown>;
 

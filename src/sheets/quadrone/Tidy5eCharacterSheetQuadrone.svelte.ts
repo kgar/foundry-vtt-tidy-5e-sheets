@@ -42,7 +42,6 @@ import CharacterSheetQuadroneRuntime, {
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
-import { debug } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type {
   Activity5e,
@@ -93,6 +92,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
+    if (this.actor.limited) {
+      return this._createLimitedViewComponent(node);
+    }
+
     const component = mount(CharacterSheet, {
       target: node,
       context: new Map<any, any>([
@@ -127,6 +130,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _createAdditionalComponents(node: HTMLElement) {
+    if (this.actor.limited) {
+      return [];
+    }
+
     const windowHeader = this.element.querySelector('.window-header');
 
     const headerStart = mount(ActorHeaderStart, {

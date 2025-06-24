@@ -69,6 +69,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
+    if (this.actor.limited) {
+      return this._createLimitedViewComponent(node);
+    }
+
     const component = mount(NpcSheet, {
       target: node,
       context: new Map<any, any>([
@@ -103,6 +107,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _createAdditionalComponents(node: HTMLElement) {
+    if (this.actor.limited) {
+      return [];
+    }
+
     const windowHeader = this.element.querySelector('.window-header');
 
     const headerStart = mount(ActorHeaderStart, {
@@ -151,12 +159,24 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       })
     );
 
+    const enrichmentArgs = {
+      secrets: this.actor.isOwner,
+      rollData: actorContext.rollData,
+      relativeTo: this.actor,
+    };
+
     const context: NpcSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
       ),
       conditions: conditions,
       currencies,
+      enriched: {
+        biography: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.biography.value,
+          enrichmentArgs
+        ),
+      },
       features: [],
       inventory: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,

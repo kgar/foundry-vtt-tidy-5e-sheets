@@ -35,6 +35,8 @@ import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
 import { firstOfSet } from 'src/utils/set';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { mount } from 'svelte';
+import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 
 /*
   TODO: Some things to remember to implement:
@@ -561,6 +563,22 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /* -------------------------------------------- */
+    /*  Limited View Management                     */
+    /* -------------------------------------------- */
+    _createLimitedViewComponent(
+      node: HTMLElement
+    ): Record<string, any> {
+      const component = mount(ActorLimitedSheet, {
+        target: node,
+        context: new Map<any, any>([
+          [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        ]),
+      });
+
+      return component;
+    }
+
+    /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
     async _onRender(
@@ -852,7 +870,11 @@ export function Tidy5eActorSheetQuadroneBase<
           return;
         }
 
-        TidyFlags.documentJournal.sort(this.actor, sourceEntry.id, targetEntryId);
+        TidyFlags.documentJournal.sort(
+          this.actor,
+          sourceEntry.id,
+          targetEntryId
+        );
       } else {
         if (!sourceDocument) {
           return;
