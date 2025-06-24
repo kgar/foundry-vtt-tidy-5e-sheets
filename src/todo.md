@@ -46,7 +46,8 @@
 - [x] Establish dynamic styles for custom rarity colors and spell prep modes.
 - [ ] Refactor: upgrade the params for `ThemeQuadrone.applyCurrentThemeSettingsToStylesheet` to be an options object that is universal to all operations in the tree of functions used for applying themes. 
 - [ ] Refactor: Break up `theme-quadrone.svelte.ts` - the style generation code could live in its file, etc.
-
+- [ ] Refactor: The hook subscription to respond to document-related theme changes is duplicated across multiple locations. Extract and share from the theme-quadrone file or related files.
+- [ ] 
 
 ### Restyler Module Notes
 
@@ -286,6 +287,8 @@ Sample JSON of flag data:
 - [ ] (Stretch) Advanced Settings Section - do you know what specific CSS variable alterations you want to make to Tidy? Put 'em here. An array of 0 to many direct variable overrides. If someone goes real deep into Tidy and wants to submit some community theme JSON, they may do so.
 - [ ] (Stretch) **Theming**: Community Theme submissions - they'll go in a dedicated folder in github and, with an active internet connection, can be pulled directly from within Foundry
 - [ ] (Stretch) **Theme Settings**: Saved Themes in campaign world - be able to create multiple themes and save them to the game world for all to enjoy
+- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
+- [ ] 
 
 ### Feature - Set as Inspiration Source
 
