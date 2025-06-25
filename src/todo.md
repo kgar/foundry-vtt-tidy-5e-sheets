@@ -1,47 +1,68 @@
 ## kgar To Do
 
-- [ ] **Character**: Set as Inspiration Source (see below)
+### The Short List
+
+- [ ] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
-- [ ] Implement Responsive Tab Strip
-- [ ] Implement quadrone default tab settings (no UI)
-  - [ ] Character
-  - [ ] NPC
-  - [ ] Vehicle
-  - [ ] Group
-  - [ ] Container
 - [ ] Set up new tab selection for quadrone sheets
-- [ ] Scaffold the NPC Sheet
-- [ ] Scaffold the Group Sheet
-- [ ] Scaffold the Vehicle Sheet
+  - [ ] Character
+  - [ ] Items
+    - [ ] Background
+    - [ ] Class
+    - [ ] Consumable
+    - [ ] Equipment
+    - [ ] Facility
+    - [ ] Feat
+    - [ ] Loot
+    - [ ] Species
+    - [ ] Spell
+    - [ ] Subclass
+    - [ ] Tattoo
+    - [ ] Tool
+    - [ ] Weapon
+  - [ ] Container
+- [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
-- [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
-- [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
-- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
-- [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
-- [ ] Item cards
-  - [ ] ~~Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.~~ Can item cards leverage a shared dialog component so they can ignore overflow?
-  - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
-  - [ ] Test spell info on item summary and cards
-  - [x] ~~For fun, test with PopOut!~~
-- [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
-- [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
-- [ ] Ensure all item sheets enforce this Unidentified UI feature:
-    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+- [ ] Implement Responsive Tab Strip
 - [ ] Context Menu items rework
 - [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
-- [x] Add background circle hover style to section row buttons
-- [ ] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
-- [ ] Implement quadrone default tab settings (no UI)
-  - [ ] Item
-    - [ ] This has to explode out into unique tabs per item type.
-- [ ] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
-- [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
-- [ ] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
+- [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
+- [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
+- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
+- [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
+- [ ] Sheet tab: need Inventory filters in advanced filter section
+- [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
+- [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
+- [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
+  - This is easy with the stylesheet / CSS Rules API, I would think.
+  - [ ] Sheet
+  - [ ] World
+- [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
+
+### Everything after the short list
+
+- [ ] Scaffold the NPC Sheet
+- [ ] Set up NPC Sheet Tab Selection
+- [ ] Scaffold the Group Sheet
+- [ ] Set up Group Sheet Tab Selection
+- [ ] Scaffold the Vehicle Sheet
+- [ ] Set up Vehicle Sheet Tab Selection
 - [ ] Propagate Table Row Actions to Activities tables
 - [ ] Propagate Table Row Actions to Effects tables
 - [ ] Propagate Data-Driven Columns to Activities tables
 - [ ] Propagate Data-Driven Columns to Effects tables
-- [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
+- [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
+- [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
+- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
+- [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
+- [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
+- [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
+- [ ] Ensure all item sheets enforce this Unidentified UI feature:
+    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+- [x] Add background circle hover style to section row buttons
+- [x] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
+- [x] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
+- [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 - [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] (stretch) Implement generic width / priority observer feature that can be used to control pinned filter visibility generically and then be used for other purposes later.
   - [ ] Propagate this to all action bars
@@ -50,34 +71,30 @@
   - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 - [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
-- [ ] (TBD) User Setting: Item Spells Organization ( ) Additional Spells Section ( ) Section Per Item
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
-- [ ] Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
-- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
-- [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
+- [ ] (lowest priority: the system should probably work this out first) Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
 - [ ] (PC: Feature tab) Implement alternate section groupings - https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355 | include toggle option as sheet flag in tab settings
 - [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 - [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
 - [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
-- [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
-- [ ] Sheet tab: need Inventory filters in advanced filter section
 - [ ] Refactor: Simplify DEFAULT_OPTIONS management now that option inheritance works and `visible()` callback is officially supported.
 - [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data; and what about new user settings?
-- [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
-  - This is easy with the stylesheet / CSS Rules API, I would think.
-  - [ ] Sheet
-  - [ ] World
-- [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
 - [ ] (Stretch) Advanced Settings Section - do you know what specific CSS variable alterations you want to make to Tidy? Put 'em here. An array of 0 to many direct variable overrides. If someone goes real deep into Tidy and wants to submit some community theme JSON, they may do so.
 - [ ] (Stretch) **Theming**: Community Theme submissions - they'll go in a dedicated folder in github and, with an active internet connection, can be pulled directly from within Foundry
 - [ ] (Stretch) **Theme Settings**: Saved Themes in campaign world - be able to create multiple themes and save them to the game world for all to enjoy
 - [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
-- [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] **Theme Settings**: Add support for Item Sidebar Width?
+- [ ] Item cards
+  - [ ] ~~Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.~~ Can item cards leverage a shared dialog component so they can ignore overflow?
+  - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
+  - [ ] Test spell info on item summary and cards
+  - [x] ~~For fun, test with PopOut!~~
+- [ ] Drakkenheim Corruption tab: support it in Quadrone
 
 
 ## hightouch To Do
+
 - [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
 - [ ] (hightouch) Review Character Sheet Limited View
