@@ -1874,7 +1874,8 @@
 
     .highlight {
       background: var(--t5e-component-field-background);
-      outline: var(--occupant-hightlight-width) solid var(--t5e-theme-color-lighter);
+      outline: 0.0625rem solid var(--t5e-theme-color-highlight);
+      box-shadow: inset 0 0 0 0.0625rem var(--t5e-theme-color-highlight), 0 0 6px var(--t5e-theme-color-highlight);
     }
 
     /* Facilities */
@@ -2265,6 +2266,7 @@
       .editor {
         flex: 1;
         min-height: var(--t5e-size-12x);
+        padding-bottom: var(--t5e-size-4x);
 
         .editor-content {
           overflow-y: visible;
