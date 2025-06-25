@@ -65,6 +65,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
 ) {
   currentTabId: string;
+  currentSidebarTabId: string;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
@@ -77,7 +78,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_CHARACTER_FAVORITES;
+    this.currentTabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+    this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_SKILLS;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -97,8 +99,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const component = mount(CharacterSheet, {
       target: node,
       context: new Map<any, any>([
-        
-        
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
           this.inlineToggleService,
@@ -233,6 +233,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       },
       favorites: await this._prepareFavorites(),
       features: [],
+      initialSidebarTabId: this.currentSidebarTabId,
       inventory: [],
       senses: this._getSenses(),
       size: {

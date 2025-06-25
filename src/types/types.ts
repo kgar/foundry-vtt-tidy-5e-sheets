@@ -1135,6 +1135,7 @@ export type CharacterSheetQuadroneContext = {
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
   features: TidyItemSectionBase[];
+  initialSidebarTabId: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];
