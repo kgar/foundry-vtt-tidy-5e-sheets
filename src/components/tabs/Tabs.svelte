@@ -98,21 +98,9 @@
   }
 
   const localize = FoundryAdapter.localize;
-  const currentTabId = getContext<string | undefined>(
-    CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,
-  );
-
-  let mounted = $state(false);
-  onMount(() => {
-    const initialTab = tabs.find((t) => t.id === currentTabId);
-    if (initialTab) {
-      selectTab(initialTab);
-    }
-    mounted = true;
-  });
 
   $effect(() => {
-    if (mounted && !tabs.some((tab) => tab.id === selectedTabId)) {
+    if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectTab(tabs[0]);
     }
   });

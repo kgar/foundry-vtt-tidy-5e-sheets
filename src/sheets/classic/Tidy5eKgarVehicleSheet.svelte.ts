@@ -106,7 +106,6 @@ export class Tidy5eVehicleSheet
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
-        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
           this.onTabSelected.bind(this),

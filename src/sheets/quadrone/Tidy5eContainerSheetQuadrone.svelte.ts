@@ -108,7 +108,6 @@ export class Tidy5eContainerSheetQuadrone
   _createComponent(node: HTMLElement): Record<string, any> {
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
       [
         CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
         this.inlineToggleService,

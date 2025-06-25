@@ -95,7 +95,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
       [
         CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
         this.sectionExpansionTracker,

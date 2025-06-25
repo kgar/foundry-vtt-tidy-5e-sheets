@@ -118,7 +118,6 @@ export class Tidy5eCharacterSheet
         [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
-        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
           this.onTabSelected.bind(this),

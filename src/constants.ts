@@ -449,7 +449,6 @@ export const CONSTANTS = {
     BUTTON_MENU_CONTEXT: 'buttonMenuContext',
     CONFIRM: 'confirm',
     CONTEXT: 'context',
-    CURRENT_TAB_ID: 'currentTabId',
     EXPANDED_ITEM_DATA: 'expandedItemData',
     EXPANDED_ITEMS: 'expandedItems',
     FUNCTIONS: 'functions',
