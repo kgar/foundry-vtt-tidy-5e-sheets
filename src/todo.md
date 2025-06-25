@@ -108,7 +108,7 @@
 - [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
 - [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] **Theme Settings**: Add support for Item Sidebar Width?
-- [ ] 
+
 
 ## hightouch To Do
 - [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
