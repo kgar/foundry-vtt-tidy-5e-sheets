@@ -200,7 +200,8 @@
   --t5e-drop-shadow-field: 0px 0px 3px 0px rgba(0, 0, 0, 0.1);
   --t5e-drop-shadow-field-hover: 0px 0px 6px 0px rgba(0, 0, 0, 0.20);
   --t5e-drop-shadow-field-focus: 0 0 0 2px var(--t5e-theme-color-default);
-  --t5e-outline-field-focus: 2px solid var(--t5e-theme-color-default);
+  --t5e-outline-default: 0.0625rem solid var(--t5e-color-gold);
+  --t5e-outline-field-focus: 0.125px solid var(--t5e-theme-color-default);
   --t5e-enricher-background: rgba(0, 0, 0, 0.05);
 
   /* Transitions */

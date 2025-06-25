@@ -1624,7 +1624,6 @@
     }
   }
 
-
   @container character-sheet (width > 800px) {
     --header-padding: 1.5rem;
   }
@@ -1641,6 +1640,23 @@
 
   }
 
+  @container sheet-tabs (max-width: 860px) {
+
+    /* Hide icons when there are more than 7 tabs */
+    .tidy-tabs.character-tabs:has(> :nth-child(8)) {
+      >.tab-option i {
+        display: none;
+      }
+    }
+  }
+
+  @container sheet-tabs (max-width: 700px) {
+    .tidy-tabs.character-tabs:has(> :nth-child(7)) {
+      >.tab-option i {
+        display: none;
+      }
+    }
+  }
 
 
   div.divider-dot {
@@ -1790,10 +1806,13 @@
         var(--underlay) 40%, #f8f4f1;
       background-blend-mode: normal, multiply;
       background-size: cover, cover;
-      box-shadow: inset 0 0 0 0.0625rem var(--t5e-color-gold), var(--t5e-drop-shadow-card);
+      box-shadow: var(--t5e-drop-shadow-pill);
       display: flex;
       flex-direction: column;
       gap: var(--t5e-size-2x);
+      outline: var(--t5e-outline-default);
+      outline-offset: -0.0625rem;
+      transition: box-shadow var(--t5e-transition-default);
 
       &.basic {
         background-blend-mode: normal, luminosity;
@@ -1801,6 +1820,11 @@
 
       &.no-events {
         pointer-events: none;
+      }
+
+      &:hover,
+      &:focus {
+        box-shadow: var(--t5e-drop-shadow-card);
       }
     }
 
