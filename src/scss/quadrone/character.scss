@@ -1641,25 +1641,7 @@
 
   }
 
-  &.theme-dark,
-  .theme-dark {
 
-    .sheet-body {
-      background: url(../../modules/tidy5e-sheet/images/denim065.png) top center / auto repeat,
-        var(--t5e-component-card-dark-darker);
-      background-size: auto;
-
-      &::before {
-        content: none;
-      }
-    }
-
-    .window-content {
-      .sheet-header {
-        border-bottom: 1px solid var(--t5e-color-palette-gold-45);
-      }
-    }
-  }
 
   div.divider-dot {
     width: 3px;
@@ -1725,117 +1707,18 @@
     }
   }
 
-  .sheet-footer {
-    gap: var(--t5e-size-2x);
+  h3.font-title-small {
+    display: flex;
+    align-items: center;
 
-    >* {
-      gap: var(--t5e-size-2x);
+    >i {
+      font-size: var(--font-size-14);
+      margin-inline-end: var(--t5e-size-1x);
+      color: var(--t5e-color-text-lightest);
     }
 
-    &.fixed {
-      padding: var(--t5e-size-1x) 0 var(--t5e-size-3x) 0;
-    }
-
-    .sheet-footer-left {
-      gap: var(--t5e-size-2x);
-    }
-
-    .sheet-footer-right {
-      gap: var(--t5e-size-2x);
-    }
-
-    .footer-content-left {
-      justify-content: flex-start;
-    }
-
-    .footer-content-right {
-      justify-content: flex-end;
-    }
-
-    .spellcasting-class-card {
-      border-radius: var(--t5e-size-1x);
-      border: 1px solid var(--t5e-component-field-border);
-      background: var(--t5e-component-field-background);
-      padding: var(--t5e-size-2x) var(--t5e-size-3x);
-
-      .primary-icon {
-        padding-inline-start: var(--t5e-size-halfx);
-      }
-
-      &:not(.primary) .primary-icon {
-        color: var(--t5e-color-text-lighter);
-      }
-
-      .info {
-        justify-content: flex-end;
-      }
-    }
-  }
-
-  .inventory-footer {
-    container-type: inline-size;
-    container-name: inventory-footer;
-
-    .attunement-tracker {
-      height: var(--t5e-field-size-default);
-      gap: var(--t5e-size-1x);
-
-      span {
-        padding-block-end: var(--t5e-size-1);
-      }
-
-      &.pill {
-        background: var(--t5e-component-card-default);
-        box-shadow: var(--t5e-drop-shadow-field);
-      }
-
-      &.attuned i:hover {
-        text-shadow: 0 0 4px oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
-      }
-
-      input {
-        flex: 0 1 fit-content;
-        max-width: 2rem;
-      }
-    }
-
-    .currency-container {
-      gap: var(--t5e-size-2x);
-
-      .denomination {
-        text-transform: uppercase;
-      }
-    }
-  }
-
-  .spellbook-footer {
-    margin-bottom: var(--t5e-size-3x);
-    align-items: flex-start;
-
-    .sheet-footer-left {
-      padding-block-end: var(--t5e-size-3x);
-    }
-
-    .sheet-footer-right {
-      padding-block-start: 0.375rem;
-    }
-  }
-
-  @container inventory-footer (width < 35rem) {
-    .currency-container {
-      order: 1;
-      flex: 1;
-      min-width: fit-content;
-      flex-direction: row;
-    }
-
-    .footer-content-left {
-      order: 2;
-      flex: 1;
-    }
-
-    .footer-content-right {
-      order: 3;
+    .counter {
+      padding-left: 0.25rem;
     }
   }
 
@@ -1855,21 +1738,6 @@
 
     .bastion-header {
       margin-block-end: var(--t5e-size-1x);
-    }
-
-    h3 {
-      display: flex;
-      align-items: center;
-
-      i {
-        font-size: var(--font-size-14);
-        margin-inline-end: var(--t5e-size-1x);
-        color: var(--t5e-color-text-lightest);
-      }
-
-      .counter {
-        padding-left: 0.25rem;
-      }
     }
 
     .highlight {
@@ -2298,8 +2166,216 @@
     }
   }
 
-  &.theme-dark {
+  .tidy-tab.biography {
+    container-type: inline-size;
+    container-name: biography-tab;
+
+    .biography-grid {
+      display: grid;
+      grid-template-areas:
+        "top  top  "
+        "left right";
+      grid-template-columns: 21.5rem 1fr;
+      grid-template-rows: auto 1fr;
+      min-height: 31.25rem;
+      gap: var(--t5e-size-3x) var(--t5e-size-8x);
+      padding-bottom: var(--t5e-size-4x);
+    }
+
+    .biography-entries {
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--t5e-size-2x) var(--t5e-size-8x);
+      padding-left: 0;
+
+      li {
+        flex: 1 1 calc(50% - var(--t5e-size-4x));
+        min-width: 0;
+      }
+    }
+
+    .biography-editor-container {
+      margin-bottom: var(--t5e-size-4x);
+
+      .editor {
+        max-height: 12.5rem;
+        overflow-y: auto;
+        background: var(--t5e-component-field-background-disabled);
+        padding: 0 var(--t5e-size-2x);
+        border-radius: var(--t5e-size-1x);
+      }
+    }
+
+    .biography-left {
+      grid-area: left;
+      padding-bottom: var(--t5e-size-6x);
+    }
+
+    .biography-right {
+      grid-area: right;
+      padding-bottom: var(--t5e-size-6x);
+    }
+  }
+
+  @container biography-tab (width < 47rem) {
+    .tidy-tab.biography {
+      transition: all var(--t5e-transition-default);
+
+      .biography-grid {
+        gap: var(--t5e-size-4x) var(--t5e-size-6x);
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .biography-entries {
+        transition: all var(--t5e-transition-default);
+        gap: var(--t5e-size-1x) var(--t5e-size-6x);
+      }
+    }
+  }
+
+  .sheet-footer {
+    gap: var(--t5e-size-2x);
+
+    >* {
+      gap: var(--t5e-size-2x);
+    }
+
+    &.fixed {
+      padding: var(--t5e-size-1x) 0 var(--t5e-size-3x) 0;
+    }
+
+    .sheet-footer-left {
+      gap: var(--t5e-size-2x);
+    }
+
+    .sheet-footer-right {
+      gap: var(--t5e-size-2x);
+    }
+
+    .footer-content-left {
+      justify-content: flex-start;
+    }
+
+    .footer-content-right {
+      justify-content: flex-end;
+    }
+
+    .spellcasting-class-card {
+      border-radius: var(--t5e-size-1x);
+      border: 1px solid var(--t5e-component-field-border);
+      background: var(--t5e-component-field-background);
+      padding: var(--t5e-size-2x) var(--t5e-size-3x);
+
+      .primary-icon {
+        padding-inline-start: var(--t5e-size-halfx);
+      }
+
+      &:not(.primary) .primary-icon {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      .info {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .inventory-footer {
+    container-type: inline-size;
+    container-name: inventory-footer;
+
+    .attunement-tracker {
+      height: var(--t5e-field-size-default);
+      gap: var(--t5e-size-1x);
+
+      span {
+        padding-block-end: var(--t5e-size-1);
+      }
+
+      &.pill {
+        background: var(--t5e-component-card-default);
+        box-shadow: var(--t5e-drop-shadow-field);
+      }
+
+      &.attuned i:hover {
+        text-shadow: 0 0 4px oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
+      }
+
+      input {
+        flex: 0 1 fit-content;
+        max-width: 2rem;
+      }
+    }
+
+    .currency-container {
+      gap: var(--t5e-size-2x);
+
+      .denomination {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .spellbook-footer {
+    margin-bottom: var(--t5e-size-3x);
+    align-items: flex-start;
+
+    .sheet-footer-left {
+      padding-block-end: var(--t5e-size-3x);
+    }
+
+    .sheet-footer-right {
+      padding-block-start: 0.375rem;
+    }
+  }
+
+  @container inventory-footer (width < 35rem) {
+    .currency-container {
+      order: 1;
+      flex: 1;
+      min-width: fit-content;
+      flex-direction: row;
+    }
+
+    .footer-content-left {
+      order: 2;
+      flex: 1;
+    }
+
+    .footer-content-right {
+      order: 3;
+    }
+  }
+
+  &.theme-dark,
+  .theme-dark {
     --t5e-color-gold: var(--t5e-color-palette-gold-45);
+
+    .sheet-body {
+      background: url(../../modules/tidy5e-sheet/images/denim065.png) top center / auto repeat,
+        var(--t5e-component-card-dark-darker);
+      background-size: auto;
+
+      &::before {
+        content: none;
+      }
+    }
+
+    .window-content {
+      .sheet-header {
+        border-bottom: 1px solid var(--t5e-color-palette-gold-45);
+      }
+    }
+
+    .tidy-tab.biography {
+      .biography-editor-container {
+        .editor {
+          background: rgba(0, 0, 0, 0.24);
+        }
+      }
+    }
+
 
     .tidy-tab.bastion {
       .facility:not(.empty) {
