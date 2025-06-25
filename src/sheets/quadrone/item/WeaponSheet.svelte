@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
@@ -14,7 +13,11 @@
 
   let context = $derived(getItemSheetContextQuadrone());
 
-  let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
+  let selectedTabId: string = $state('');
+
+  $effect(() => {
+    selectedTabId = context.currentTabId;
+  });
 
   let itemNameEl: HTMLElement | undefined = $state();
 </script>

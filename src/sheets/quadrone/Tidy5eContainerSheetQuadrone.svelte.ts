@@ -47,7 +47,7 @@ export class Tidy5eContainerSheetQuadrone
   )
   implements SheetTabCacheable
 {
-  currentTabId: string | undefined = undefined;
+  currentTabId: string = '';
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
@@ -104,6 +104,11 @@ export class Tidy5eContainerSheetQuadrone
     ],
     submitOnClose: true,
   };
+
+  selectTab(tabId: string) {
+    this.onTabSelected(tabId);
+    this.render();
+  }
 
   _createComponent(node: HTMLElement): Record<string, any> {
     const context = new Map<any, any>([
@@ -256,6 +261,7 @@ export class Tidy5eContainerSheetQuadrone
       }),
       customContent: [],
       currencies,
+      currentTabId: this.currentTabId,
       enriched: enriched,
       filterData: this.itemFilterService.getFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPinsQuadrone[this.item.type],

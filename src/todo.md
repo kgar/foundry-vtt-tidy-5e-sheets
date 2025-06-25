@@ -1,8 +1,5 @@
 ## kgar To Do
 
-- [ ] Add selectTab() to item and container sheets
-- [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
-- [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
 - [ ] Implement Responsive Tab Strip
@@ -681,3 +678,7 @@ Limited:
       - Characters, NPCs, and Vehicles are subject to this same exact Limited Template, meaning they all need to support enriched biography HTML.
   - [x] Sheet Warnings in Header when relevant
 - [x] Research: selectTab() public sheet function. Instead of taking initial value, take tab ID as derived. selectTab() rerenders the sheet after changing current tab ID and calling onTabSelected.
+- [x] Add selectTab() to item and container sheets
+- [x] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
+  - Determined: going forward, everyone should use the sheet header menu ✅
+- [x] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.

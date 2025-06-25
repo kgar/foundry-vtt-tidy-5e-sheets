@@ -165,6 +165,7 @@ export type ItemSheetQuadroneContext = {
     name: string;
     contentLink: string;
   };
+  currentTabId: string;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   data: any;
@@ -339,6 +340,7 @@ export type ContainerSheetQuadroneContext = {
   containerContents: ContainerContents;
   currencies: CurrencyContext[];
   customContent: CustomContent[];
+  currentTabId: string;
   document: Item5e;
   editable: boolean;
   enriched: {
