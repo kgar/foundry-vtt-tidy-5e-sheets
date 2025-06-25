@@ -14,6 +14,12 @@
   import { getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
 
+  interface Props {
+    allowToggle?: boolean;
+  }
+
+  let { allowToggle = false }: Props = $props();
+
   const localize = FoundryAdapter.localize;
 
   let context =
@@ -26,7 +32,7 @@
   let expanded = $derived(TidyFlags.skillsExpanded.get(context.actor) ?? true);
 
   let skills = $derived(
-    expanded
+    expanded || !allowToggle
       ? context.skills
       : context.skills.filter((s) => s.proficient !== 0),
   );
@@ -34,27 +40,41 @@
 
 <FiligreeCard class="skills card">
   <div class="use-ability-header flexrow">
-    <button
-      type="button"
-      class={['button button-borderless skill-expand-button']}
-      onclick={async () => {
-        const newValue = !expanded;
-        expanded = newValue;
-        await tick();
+    {#if allowToggle}
+      <button
+        type="button"
+        disabled={!allowToggle}
+        class={['button button-borderless skill-expand-button']}
+        onclick={async () => {
+          const newValue = !expanded;
+          expanded = newValue;
+          await tick();
 
-        await TidyFlags.skillsExpanded.set(context.actor, newValue);
-      }}
-    >
+          await TidyFlags.skillsExpanded.set(context.actor, newValue);
+        }}
+      >
+        {@render skillsCardHeaderText()}
+      </button>
+    {:else}
+      <!-- 👋 hightouch, haaaalp, this looks like a button, but it only lays out correctly with the button classes. -->
+      <div class="button button-borderless skill-expand-button">
+        {@render skillsCardHeaderText()}
+      </div>
+    {/if}
+
+    {#snippet skillsCardHeaderText()}
       <i class="fa-solid fa-briefcase color-text-lightest"></i>
       <h3 class="font-label-medium">
         {localize('DND5E.Skills')}
-        <i class={['fa-solid', 'fa-angle-right', { expanded }]}></i>
+        {#if allowToggle}
+          <i class={['fa-solid', 'fa-angle-right', { expanded }]}></i>
+        {/if}
       </h3>
       <span class="modifier-label color-text-lightest font-default-medium">
         {localize('DND5E.Modifier')} /
         {localize('DND5E.Passive')}
       </span>
-    </button>
+    {/snippet}
   </div>
   {#if skills.length}
     <ul class="skill-list unlist use-ability-list">

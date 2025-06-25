@@ -3,8 +3,7 @@
 - [x] Memoize current tab ID for duration of object instance lifetime
 - [x] Memoize sidebar state as sheet preference for each tab for each sheet type
 - [x] Memoize sidebar tab selection for duration of object instance lifetime
-- [ ] Create a separate flag for sidebar skill expand/collapse that differs from main skill expand/collapse.
-  - OR, just turn off the expand/collapse feature for the Character tab lists, because that tab is meant to be longform.
+- [x] Turn off the expand/collapse feature for the Character tab skills, because that tab is meant to be longform.
 - [ ] Character Sheet 
   - [x] Implement tabs
     - [x] Sheet (Actions)
