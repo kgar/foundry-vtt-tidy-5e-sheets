@@ -977,7 +977,7 @@ export class TidyFlags {
   };
 
   /**
-   * The tabs that are currently selected for a given actor.
+   * The tabs that are currently selected for a given document.
    * This is used to determine which tabs are visible
    * in the actor's sheet.
    * When this field is empty, the actor uses the default tabs.
