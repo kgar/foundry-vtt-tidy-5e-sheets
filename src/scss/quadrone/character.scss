@@ -2131,17 +2131,24 @@
         border: none;
       }
 
+      &:not(:has(.editor)) {
+        padding-bottom: var(--t5e-size-8x);
+      }
+
       .editor {
         flex: 1;
         min-height: var(--t5e-size-12x);
-        padding-bottom: var(--t5e-size-4x);
+        background: var(--t5e-component-field-background-disabled);
+        border-radius: var(--t5e-size-1x);
+
+        &.prosemirror {
+          .editor-content {
+            padding: 0 var(--t5e-size-3x) var(--t5e-size-4x);
+          }
+        }
 
         .editor-content {
           overflow-y: visible;
-
-          &:hover {
-            background-color: var(--t5e-component-field-background-disabled);
-          }
         }
       }
 
@@ -2202,7 +2209,7 @@
         max-height: 12.5rem;
         overflow-y: auto;
         background: var(--t5e-component-field-background-disabled);
-        padding: 0 var(--t5e-size-2x);
+        padding: 0 var(--t5e-size-3x);
         border-radius: var(--t5e-size-1x);
       }
     }

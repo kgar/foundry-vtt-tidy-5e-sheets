@@ -530,7 +530,7 @@
         field="system.bastion.description"
         enriched={context.bastion.description}
       ></SheetEditorV2>
-    {:else}
+    {:else if context.bastion.description}
       <div class="editor" use:manageSecrets={{ document: context.document }}>
         <div data-field="system.bastion.description" class="user-select-text">
           {@html context.bastion.description}

@@ -163,7 +163,7 @@
     )}
 
     {@render bioEditorEntry(
-      'fa-journal',
+      'fa-book-user',
       'DND5E.Biography',
       context.system.details.biography.value,
       context.enriched.biography,
