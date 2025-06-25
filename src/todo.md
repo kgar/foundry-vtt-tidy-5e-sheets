@@ -1,40 +1,9 @@
 ## kgar To Do
 
-- [ ] Research: Can the dialog element provide a portal-like experience wherein the Advanced filter panel is not hidden by the application overflow hiding?
 - [ ] Research: selectTab() public sheet function. Instead of taking initial value, take tab ID as derived. selectTab() rerenders the sheet after changing current tab ID and calling onTabSelected.
-- [ ] Character Sheet 
-  - [x] Implement tabs
-    - [x] Sheet (Actions)
-    - [x] Attributes (Character tab)
-    - [x] Inventory
-    - [x] Features
-    - [x] Spellbook
-    - [x] Effects
-    - [x] Bastions
-    - [x] ~~Background~~ Biography
-    - [x] Journal
-  - [x] Implement Expandable/collapsible sidebar
-  - [x] Implement Favorites
-  - [x] Implement Theme Settings
-    - [x] World Default discuss with community
-    - [x] Actor Sheet
-    - [x] Item Sheet
-  - [x] Implement Limited View, which branches just within the top-level sheet component.
-    - [x] Basic HTML in place
-    - Header
-      - Portrait
-      - Name
-    - Body
-      - Biography header
-      - Biography text
-    - *notes*:
-      - when toggling user permissions on the default sheets, the transition is really rough from Limited to Owner. The sheet freaks out. I think we can similarly not worry about it.
-      - Characters, NPCs, and Vehicles are subject to this same exact Limited Template, meaning they all need to support enriched biography HTML.
-  - [x] Sheet Warnings in Header when relevant
-  - [ ] Misc Features
-    - [ ] Set as Inspiration Source (see below)
-    - [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
-    - [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
+- [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
+- [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
+- [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
 - [ ] Implement Responsive Tab Strip
 - [ ] Implement quadrone default tab settings (no UI)
@@ -681,3 +650,33 @@ Limited:
 - [x] Memoize sidebar tab selection for duration of object instance lifetime
 - [x] Turn off the expand/collapse feature for the Character tab skills, because that tab is meant to be longform.
 - [x] (Low priority) ButtonWithOptionPanel - ~~use a Portal or something similar so that there's a singleton menu shell that can be shown/hidden by any sheet and can be given a component and/or snippet to render. This should allow for someone to have a compact sheet and view the full options panel without the sheet's overflow hiding the options.~~ ~~Try a dialog element for the option panel.~~ Implement positioned popover option panel menus via the popover API.
+- [x] Research: Can the dialog element provide a portal-like experience wherein the Advanced filter panel is not hidden by the application overflow hiding? Answer: a popover is better for light dismissal. Modal dialogs require an extra click to get to things in the background.
+- [x] Character Sheet 
+  - [x] Implement tabs
+    - [x] Sheet (Actions)
+    - [x] Attributes (Character tab)
+    - [x] Inventory
+    - [x] Features
+    - [x] Spellbook
+    - [x] Effects
+    - [x] Bastions
+    - [x] ~~Background~~ Biography
+    - [x] Journal
+  - [x] Implement Expandable/collapsible sidebar
+  - [x] Implement Favorites
+  - [x] Implement Theme Settings
+    - [x] World Default discuss with community
+    - [x] Actor Sheet
+    - [x] Item Sheet
+  - [x] Implement Limited View, which branches just within the top-level sheet component.
+    - [x] Basic HTML in place
+    - Header
+      - Portrait
+      - Name
+    - Body
+      - Biography header
+      - Biography text
+    - *notes*:
+      - when toggling user permissions on the default sheets, the transition is really rough from Limited to Owner. The sheet freaks out. I think we can similarly not worry about it.
+      - Characters, NPCs, and Vehicles are subject to this same exact Limited Template, meaning they all need to support enriched biography HTML.
+  - [x] Sheet Warnings in Header when relevant
