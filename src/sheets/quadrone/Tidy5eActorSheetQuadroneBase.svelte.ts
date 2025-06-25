@@ -133,6 +133,11 @@ export function Tidy5eActorSheetQuadroneBase<
       }`;
     }
 
+    selectTab(tabId: string) {
+      this.onTabSelected(tabId);
+      this.render();
+    }
+
     _getActorSvelteContext(): [key: string, value: any][] {
       return [
         [
@@ -143,6 +148,10 @@ export function Tidy5eActorSheetQuadroneBase<
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
       ];
     }
+
+    /* -------------------------------------------- */
+    /*  Context Data Preparation                    */
+    /* -------------------------------------------- */
 
     async _prepareContext(options: any): Promise<ActorSheetQuadroneContext> {
       this.itemFilterService.refreshFilters();
@@ -208,7 +217,7 @@ export function Tidy5eActorSheetQuadroneBase<
           data: {},
           sections: [],
         },
-        initialTabId: this.currentTabId,
+        currentTabId: this.currentTabId,
         isConcentrating,
         itemContext: {},
         items: Array.from(this.actor.items)

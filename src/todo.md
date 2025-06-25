@@ -1,6 +1,6 @@
 ## kgar To Do
 
-- [ ] Research: selectTab() public sheet function. Instead of taking initial value, take tab ID as derived. selectTab() rerenders the sheet after changing current tab ID and calling onTabSelected.
+- [ ] Add selectTab() to item and container sheets
 - [ ] <!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
 - [ ] // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
 - [ ] **Character**: Set as Inspiration Source (see below)
@@ -680,3 +680,4 @@ Limited:
       - when toggling user permissions on the default sheets, the transition is really rough from Limited to Owner. The sheet freaks out. I think we can similarly not worry about it.
       - Characters, NPCs, and Vehicles are subject to this same exact Limited Template, meaning they all need to support enriched biography HTML.
   - [x] Sheet Warnings in Header when relevant
+- [x] Research: selectTab() public sheet function. Instead of taking initial value, take tab ID as derived. selectTab() rerenders the sheet after changing current tab ID and calling onTabSelected.

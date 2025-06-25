@@ -24,9 +24,7 @@
   let selectedTabId: string = $state('');
 
   $effect(() => {
-    untrack(() => {
-      selectedTabId = context.initialTabId;
-    });
+    selectedTabId = context.currentTabId;
   });
 
   let sidebarExpanded = $state(false);
