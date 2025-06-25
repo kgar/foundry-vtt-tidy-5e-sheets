@@ -75,7 +75,6 @@
 - [ ] Propagate Table Row Actions to Effects tables
 - [ ] Propagate Data-Driven Columns to Activities tables
 - [ ] Propagate Data-Driven Columns to Effects tables
-- [ ] (Low priority) ButtonWithOptionPanel - ~~use a Portal or something similar so that there's a singleton menu shell that can be shown/hidden by any sheet and can be given a component and/or snippet to render. This should allow for someone to have a compact sheet and view the full options panel without the sheet's overflow hiding the options.~~ Try a dialog element for the option panel.
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] (stretch) Implement generic width / priority observer feature that can be used to control pinned filter visibility generically and then be used for other purposes later.
@@ -681,3 +680,4 @@ Limited:
 - [x] Memoize sidebar state as sheet preference for each tab for each sheet type
 - [x] Memoize sidebar tab selection for duration of object instance lifetime
 - [x] Turn off the expand/collapse feature for the Character tab skills, because that tab is meant to be longform.
+- [x] (Low priority) ButtonWithOptionPanel - ~~use a Portal or something similar so that there's a singleton menu shell that can be shown/hidden by any sheet and can be given a component and/or snippet to render. This should allow for someone to have a compact sheet and view the full options panel without the sheet's overflow hiding the options.~~ ~~Try a dialog element for the option panel.~~ Implement positioned popover option panel menus via the popover API.
