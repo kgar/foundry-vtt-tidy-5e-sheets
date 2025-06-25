@@ -963,6 +963,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
   flags: SpecialTraits;
+  initialTabId: string;
   isConcentrating: boolean;
   itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
   /** All items without a container. */

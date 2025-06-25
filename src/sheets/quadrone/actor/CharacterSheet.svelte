@@ -12,6 +12,7 @@
   import CharacterSidebar from './character-parts/CharacterSidebar.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { SvelteSet } from 'svelte/reactivity';
+  import { untrack } from 'svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -20,6 +21,12 @@
   let localize = FoundryAdapter.localize;
 
   let selectedTabId: string = $state('');
+
+  $effect(() => {
+    untrack(() => {
+      selectedTabId = context.initialTabId;
+    });
+  });
 
   let sidebarExpanded = $state(false);
 

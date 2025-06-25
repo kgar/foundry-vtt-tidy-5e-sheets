@@ -14,7 +14,6 @@ import {
   type LocationToSearchTextMap,
   type ExpandedItemIdToLocationsMap,
   type ExpandedItemData,
-  type MessageBus,
   type Utilities,
   type ActiveEffect5e,
   type ActorInventoryTypes,
@@ -78,7 +77,6 @@ export class Tidy5eCharacterSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
-  messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
     CONSTANTS.LOCATION_SECTION
@@ -119,7 +117,6 @@ export class Tidy5eCharacterSheet
       context: new Map<any, any>([
         [CONSTANTS.SVELTE_CONTEXT.APP_ID, this.appId],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.STATS, this.stats],
         [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
         [

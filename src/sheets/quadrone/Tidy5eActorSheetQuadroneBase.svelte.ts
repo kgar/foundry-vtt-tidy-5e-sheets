@@ -28,6 +28,7 @@ import type {
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorTraitContext,
+  MessageBus,
   SpecialTraitSectionField,
 } from 'src/types/types';
 import { splitSemicolons } from 'src/utils/array';
@@ -38,16 +39,6 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 
-/*
-  TODO: Some things to remember to implement:
-    - Theme Settings
-    - Sheet Warnings UI / inspect warning
-    - Tab Selection / etc. whatever else goes with that
-    - Limited Sheet View
-    - (decide) Allow Effects Management feature
-    
-*/
-
 export function Tidy5eActorSheetQuadroneBase<
   TContext extends ActorSheetQuadroneContext
 >(sheetType: string) {
@@ -57,8 +48,10 @@ export function Tidy5eActorSheetQuadroneBase<
       foundry.applications.sheets.ActorSheetV2
     )
   ) {
-    itemFilterService: ItemFilterService;
     abstract currentTabId: string;
+    itemFilterService: ItemFilterService;
+    messageBus = $state<MessageBus>({ message: undefined });
+
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
 
     /**
@@ -136,6 +129,17 @@ export function Tidy5eActorSheetQuadroneBase<
       }`;
     }
 
+    _getActorSvelteContext(): [key: string, value: any][] {
+      return [
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+      ];
+    }
+
     async _prepareContext(options: any): Promise<ActorSheetQuadroneContext> {
       this.itemFilterService.refreshFilters();
 
@@ -200,6 +204,7 @@ export function Tidy5eActorSheetQuadroneBase<
           data: {},
           sections: [],
         },
+        initialTabId: this.currentTabId,
         isConcentrating,
         itemContext: {},
         items: Array.from(this.actor.items)
@@ -565,9 +570,8 @@ export function Tidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
     /*  Limited View Management                     */
     /* -------------------------------------------- */
-    _createLimitedViewComponent(
-      node: HTMLElement
-    ): Record<string, any> {
+
+    _createLimitedViewComponent(node: HTMLElement): Record<string, any> {
       const component = mount(ActorLimitedSheet, {
         target: node,
         context: new Map<any, any>([
@@ -581,6 +585,7 @@ export function Tidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
+
     async _onRender(
       context: ActorSheetQuadroneContext,
       options: TidyDocumentSheetRenderOptions
@@ -1290,6 +1295,14 @@ export function Tidy5eActorSheetQuadroneBase<
       );
 
       return this._onDropItemCreate(droppedItemData, event);
+    }
+
+    /* -------------------------------------------- */
+    /* SheetTabCacheable
+    /* -------------------------------------------- */
+
+    onTabSelected(tabId: string) {
+      this.currentTabId = tabId;
     }
   }
 

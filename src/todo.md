@@ -1,6 +1,6 @@
 ## kgar To Do
 
-- [ ] Memoize current tab ID for duration of object instance lifetime
+- [x] Memoize current tab ID for duration of object instance lifetime
 - [ ] Memoize sidebar state as user preference for each tab for each sheet type
 - [ ] Memoize sidebar tab selection for duration of object instance lifetime
 - [ ] Character Sheet 

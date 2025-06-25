@@ -98,7 +98,7 @@
   }
 
   const localize = FoundryAdapter.localize;
-  const currentTabId = getContext<string>(
+  const currentTabId = getContext<string | undefined>(
     CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,
   );
 

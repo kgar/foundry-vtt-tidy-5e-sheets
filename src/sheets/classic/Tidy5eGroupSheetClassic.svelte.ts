@@ -10,7 +10,6 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   DocumentSheetV2Context,
-  MessageBus,
   Utilities,
 } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -135,7 +134,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   itemFilterService: ItemFilterService;
   #inlineToggleService = new InlineToggleService();
-  messageBus = $state<MessageBus>({ message: undefined });
 
   _createComponent(node: HTMLElement): Record<string, any> {
     const component = mount(GroupSheet, {
@@ -148,7 +146,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.itemFilterService.onFilter.bind(this.itemFilterService),
