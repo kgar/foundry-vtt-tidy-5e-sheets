@@ -100,24 +100,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return component;
   }
 
-  _createAdditionalComponents(node: HTMLElement) {
-    if (this.actor.limited) {
-      return [];
-    }
-
-    const windowHeader = this.element.querySelector('.window-header');
-
-    const headerStart = mount(ActorHeaderStart, {
-      target: windowHeader,
-      anchor: windowHeader.querySelector('.window-title'),
-      context: new Map<string, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-      ]),
-    });
-
-    return [headerStart];
-  }
-
   _showDeathSaves: boolean = false;
 
   async _prepareContext(

@@ -768,8 +768,7 @@ export function Tidy5eActorSheetClassicV2Base<
     async _renderFrame(options: ApplicationRenderOptions = {}) {
       const html = await super._renderFrame(options);
       if (!game.user.isGM && this.actor.limited) return html;
-      const header = html.querySelector('.window-header');
-
+      
       // Preparation warnings.
       const warnings = document.createElement('button');
       warnings.classList.add('preparation-warnings', 'header-control', 'icon');
@@ -777,6 +776,8 @@ export function Tidy5eActorSheetClassicV2Base<
       warnings.setAttribute('aria-label', game.i18n.localize('Warnings'));
       warnings.innerHTML = '<i class="fas fa-triangle-exclamation"></i>';
       warnings.addEventListener('click', this._onOpenWarnings.bind(this));
+      
+      const header = html.querySelector('.window-header');
       header
         .querySelector('.window-title')
         .insertAdjacentElement('afterend', warnings);

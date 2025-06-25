@@ -483,4 +483,65 @@
       }
     }
   }
+
+  .actor-warnings-control {
+    &::before {
+      color: var(--t5e-color-yellow);
+    }
+  }
+
+  dialog.warnings {
+    position: fixed;
+    width: 18.75rem;
+    max-width: unset;
+    max-height: unset;
+    margin: 0;
+    outline: none;
+    padding: 0.25rem 0.5rem;
+    color: var(--t5e-primary-font-color);
+    background: var(--t5e-component-field-background);
+    border: 0.0625rem solid var(--t5e-component-field-border);
+    border-radius: 0.25rem;
+    box-shadow: var(--t5e-drop-shadow-card);
+
+    &::backdrop {
+      background: none;
+    }
+
+    ol {
+      display: flex;
+      flex-direction: column;
+
+      li {
+        padding: 0.375rem 0.5rem;
+        border-bottom: 1.5px dotted var(--t5e-component-card-lighter);
+        &:last-child {
+          border: none;
+        }
+
+        a {
+          &:hover {
+            text-shadow: none;
+            text-decoration: underline dotted;
+          }
+        }
+
+        &.warning::before,
+        &.error::before {
+          font-family: var(--font-awesome);
+          font-weight: bold;
+          color: var(--t5e-color-yellow);
+          margin-right: 8px;
+        }
+
+        &.warning::before {
+          content: '\f071';
+        }
+        &.error::before {
+          content: '\f06a';
+          color: var(--t5e-color-text-lighter);
+        }
+      }
+    }
+  }
 }

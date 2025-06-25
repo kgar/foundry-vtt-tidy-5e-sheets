@@ -38,6 +38,10 @@ import { firstOfSet } from 'src/utils/set';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
+import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
+import ActorWarnings from './shared/ActorWarnings.svelte';
+
+const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
 export function Tidy5eActorSheetQuadroneBase<
   TContext extends ActorSheetQuadroneContext
@@ -222,7 +226,10 @@ export function Tidy5eActorSheetQuadroneBase<
         token: this.token,
         traits: this._prepareTraits(),
         userPreferences: UserPreferencesService.get(),
-        warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
+        warnings:
+          foundry.utils
+            .deepClone(this.actor._preparationWarnings)
+            .filter((w: any) => !isNil(w.message?.trim(), '')) ?? [],
         ...documentSheetContext,
       };
 
@@ -568,8 +575,36 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /* -------------------------------------------- */
-    /*  Limited View Management                     */
+    /*  Component Management                        */
     /* -------------------------------------------- */
+
+    _createAdditionalComponents(node: HTMLElement) {
+      if (this.actor.limited) {
+        return [];
+      }
+
+      const windowHeader = this.element.querySelector('.window-header');
+
+      const headerStart = mount(ActorHeaderStart, {
+        target: windowHeader,
+        anchor: windowHeader.querySelector('.window-title'),
+        context: new Map<string, any>([
+          [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        ]),
+      });
+
+      const warningHeaderControl = mount(ActorWarnings, {
+        target: windowHeader,
+        anchor: this.element.querySelector(
+          `.${POST_WINDOW_TITLE_ANCHOR_CLASS_NAME}`
+        ),
+        context: new Map<string, any>([
+          [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        ]),
+      });
+
+      return [headerStart, warningHeaderControl];
+    }
 
     _createLimitedViewComponent(node: HTMLElement): Record<string, any> {
       const component = mount(ActorLimitedSheet, {
@@ -585,6 +620,26 @@ export function Tidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
+
+    async _renderFrame(options: TidyDocumentSheetRenderOptions = {}) {
+      const html = await super._renderFrame(options);
+      if (!game.user.isGM && this.actor.limited) return html;
+
+      // Preparation warnings.
+      const postWindowTitleComponentAnchor = document.createElement('div');
+      postWindowTitleComponentAnchor.classList.add(
+        'hidden',
+        POST_WINDOW_TITLE_ANCHOR_CLASS_NAME
+      );
+      postWindowTitleComponentAnchor.role = 'presentation';
+
+      const header = html.querySelector('.window-header');
+      header
+        .querySelector('.window-title')
+        .insertAdjacentElement('afterend', postWindowTitleComponentAnchor);
+
+      return html;
+    }
 
     async _onRender(
       context: ActorSheetQuadroneContext,
