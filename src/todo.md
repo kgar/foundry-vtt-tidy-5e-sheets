@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
+- [x] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
 - [ ] Explore what it takes to implement item sheet tab settings per item type.
 - [ ] Set up new tab selection for quadrone sheets
   - [ ] Character
