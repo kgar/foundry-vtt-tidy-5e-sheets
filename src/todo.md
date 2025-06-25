@@ -1,9 +1,5 @@
 ## kgar To Do
 
-- [x] Memoize current tab ID for duration of object instance lifetime
-- [x] Memoize sidebar state as sheet preference for each tab for each sheet type
-- [x] Memoize sidebar tab selection for duration of object instance lifetime
-- [x] Turn off the expand/collapse feature for the Character tab skills, because that tab is meant to be longform.
 - [ ] Character Sheet 
   - [x] Implement tabs
     - [x] Sheet (Actions)
@@ -46,9 +42,9 @@
   - [ ] Group
   - [ ] Container
 - [ ] Set up new tab selection for quadrone sheets
-- [ ] Scaffold the NPC Sheet in Foundry V12
-- [ ] Scaffold the Group Sheet in Foundry V12
-- [ ] Scaffold the Vehicle Sheet in Foundry V12
+- [ ] Scaffold the NPC Sheet
+- [ ] Scaffold the Group Sheet
+- [ ] Scaffold the Vehicle Sheet
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
@@ -636,7 +632,7 @@ Limited:
       - [x] AC / Abilities / Init
       - [x] Sidebar Toggle / Tab strip
 - [x] ~~Refactor: can Svelte Attachments handle tooltip concerns like weight distribution?~~ No. A better component API that requires less of the caller was the answer.
-- [x] Start dev in Foundry V12
+- [x] Start dev
   - [x] Establish components for the tabs
   - [x] Set up Quadrone runtime content, including the default tabs
   - [x] Implement SkillsCard
@@ -680,3 +676,7 @@ Limited:
 - [x] Decide: should we allow for section config on Effects tabs. Not currently.
 - [x] Remove empty sections in Sheet tab.
 - [x] Add `mode-${sheetMode}` to sheet element
+- [x] Memoize current tab ID for duration of object instance lifetime
+- [x] Memoize sidebar state as sheet preference for each tab for each sheet type
+- [x] Memoize sidebar tab selection for duration of object instance lifetime
+- [x] Turn off the expand/collapse feature for the Character tab skills, because that tab is meant to be longform.
