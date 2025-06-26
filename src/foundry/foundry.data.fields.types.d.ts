@@ -374,6 +374,12 @@ declare module 'foundry.data.fields' {
   declare class ObjectField extends DataField {}
   declare class TypedObjectField extends ObjectField {
     element: DataField;
+
+    constructor(
+      element: DataField,
+      options: DataFieldOptions = {},
+      context: DataFieldContext = {}
+    ): DataField;
   }
   declare class ArrayField extends DataField {
     constructor(

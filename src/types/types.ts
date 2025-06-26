@@ -60,11 +60,13 @@ export interface OnRenderTabParams extends OnRenderParams {
   tabContentsElement: HTMLElement;
 }
 
+export type DynamicTabTitle =
+  | string
+  | ((tabContext: { document: any } & Record<string, any>) => string);
+
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab = {
-  title:
-    | string
-    | ((tabContext: { document: any } & Record<string, any>) => string);
+  title: DynamicTabTitle;
   id: string;
   content: SvelteTabContent | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;

@@ -70,6 +70,15 @@ const singleton = new ActorSheetRuntime<NpcSheetQuadroneContext>(
       layout: 'quadrone',
       iconClass: 'fa-solid fa-notebook',
     },
+  ],
+  [
+    CONSTANTS.TAB_NPC_STATBLOCK,
+    CONSTANTS.TAB_ACTOR_INVENTORY,
+    CONSTANTS.TAB_ACTOR_SPELLBOOK,
+    CONSTANTS.TAB_EFFECTS,
+    CONSTANTS.TAB_ACTOR_BIOGRAPHY,
+    // TODO: REMOVE AFTER WORLD TAB SELECTION IS READY
+    CONSTANTS.TAB_CHARACTER_JOURNAL,
   ]
 );
 

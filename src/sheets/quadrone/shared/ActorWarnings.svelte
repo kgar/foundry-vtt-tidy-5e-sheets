@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
 
@@ -6,18 +7,8 @@
 
   let warnings = $derived(context.warnings);
 
-  function onCloseWarnings(
-    event: MouseEvent & {
-      currentTarget: EventTarget & HTMLDialogElement;
-    },
-  ) {
-    if (event.target instanceof HTMLDialogElement) {
-      event.target.close();
-    }
-
-    if (event.target instanceof HTMLAnchorElement) {
-      event.target.closest('dialog')?.close();
-    }
+  function closeDialog() {
+    dialog.close();
   }
 
   let dialog: HTMLDialogElement;
@@ -36,6 +27,22 @@
     });
 
     dialog.showModal();
+  }
+
+  async function onWarningLink(
+    warning: Partial<{
+      message: string;
+      link: string;
+      type: string;
+    }>,
+  ) {
+    if (warning.link === 'armor') {
+      FoundryAdapter.renderArmorConfig(context.actor);
+      return;
+    }
+
+    const doc = await fromUuid(warning.link);
+    doc?.sheet.render(true);
   }
 </script>
 
@@ -56,15 +63,15 @@
 <dialog
   class="warnings active"
   bind:this={dialog}
-  onclick={(event) => onCloseWarnings(event)}
+  onclick={(event) => closeDialog()}
 >
   <ol class="unlist">
     {#each warnings as warning, index}
-      <li class={warning.type}>
+      <li class={warning.type} onclick={() => closeDialog()}>
         {#if warning.link}
           <a
             class="inline-transparent-button"
-            onclick={(ev) => context.actor.sheet._onWarningLink(ev)}
+            onclick={() => onWarningLink(warning)}
             data-target={warning.link}
           >
             {warning.message}

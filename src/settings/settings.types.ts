@@ -16,3 +16,12 @@ export interface GlobalCustomSectionsetting {
    */
   showWhenEmptyFilters: GlobalCustomSectionSheetFilters;
 }
+
+export type TabConfiguration = {
+  [documentName: string]: {
+    [documentType: string]: {
+      selected: string[];
+    }
+  }
+}
+

@@ -278,7 +278,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     );
 
     let tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
-    
+
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
@@ -288,7 +288,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs = settings.value.defaultCharacterSheetQuadroneTabs;
+      let defaultTabs =
+        settings.value.tabConfiguration[context.document.documentName]?.[
+          context.document.type
+        ]?.selected ?? [];
+
+      if (!defaultTabs.length) {
+        defaultTabs = CharacterSheetQuadroneRuntime.getDefaultTabIds();
+      }
 
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))

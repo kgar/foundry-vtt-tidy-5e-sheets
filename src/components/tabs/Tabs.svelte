@@ -2,20 +2,22 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
-  import type { Tab, OnTabSelectedFn } from 'src/types/types';
+  import type { Tab, OnTabSelectedFn, DynamicTabTitle } from 'src/types/types';
   import { error } from 'src/utils/logging';
   import { getContext, onMount, type Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import { SvelteSet } from 'svelte/reactivity';
 
+  export type TabStripInfo = Pick<Tab, 'id' | 'title' | 'iconClass'>;
+
   interface Props {
-    tabs: Tab[];
+    tabs: TabStripInfo[];
     selectedTabId?: string | undefined;
     extraTabs?: SvelteSet<string>;
     cssClass?: ClassValue;
     tabCssClass?: ClassValue;
     orientation?: 'horizontal' | 'vertical';
-    onTabSelected?: (selectedTab: Tab) => void;
+    onTabSelected?: (selectedTab: TabStripInfo) => void;
     tabEnd?: Snippet;
     sheet?: any;
     tabContext?: Record<string, any>;
@@ -42,7 +44,7 @@
 
   function onTabClicked(
     event: MouseEvent & { currentTarget: HTMLElement },
-    tab: Tab,
+    tab: TabStripInfo,
   ) {
     if (settings.value.truesight) {
       if (extraTabs && event.ctrlKey && selectedTabId !== tab.id) {
@@ -54,8 +56,11 @@
     selectTab(tab);
   }
 
-  function selectTab(tab: Tab) {
-    if (sheet?.element && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
+  function selectTab(tab: TabStripInfo) {
+    if (
+      !tab ||
+      (sheet?.element && !FoundryAdapter.onTabSelecting(sheet, tab.id))
+    ) {
       return;
     }
 
@@ -105,7 +110,7 @@
     }
   });
 
-  function resolveTabTitle(tab: Tab) {
+  function resolveTabTitle(tab: TabStripInfo) {
     try {
       if (typeof tab.title === 'function') {
         return tab.title({ ...tabContext, document: sheet.document });

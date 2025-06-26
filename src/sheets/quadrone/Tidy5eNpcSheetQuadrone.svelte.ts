@@ -203,7 +203,14 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs = settings.value.defaultNpcSheetQuadroneTabs;
+      let defaultTabs =
+        settings.value.tabConfiguration[context.document.documentName]?.[
+          context.document.type
+        ]?.selected ?? [];
+
+      if (!defaultTabs.length) {
+        defaultTabs = NpcSheetQuadroneRuntime.getDefaultTabIds();
+      }
 
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))

@@ -64,7 +64,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   static DEFAULT_OPTIONS: Partial<ConstructorArgs> = {
     classes: [CONSTANTS.MODULE_ID, 'sheet', 'quadrone', 'tidy-theme-settings'],
-    tag: 'form',
+    tag: 'div',
     sheetConfig: false,
     window: {
       frame: true,

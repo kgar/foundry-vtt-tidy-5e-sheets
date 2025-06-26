@@ -3,7 +3,27 @@
 ### The Short List
 
 - [x] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
-- [ ] Explore what it takes to implement item sheet tab settings per item type.
+- [x] Explore what it takes to implement item sheet tab settings per item type.
+- [ ] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
+  - [ ] Application layout
+    - [ ] vertical tab strip
+      - [ ] Character
+      - [ ] NPC
+      - [ ] Vehicle
+      - [ ] Group
+      - [ ] All Registered Items
+    - [ ] Viewing Area
+      - [ ] Selection Listbox with tabs for appropriate sheet type
+      - [ ] Reset to Default button (does not save, just resets the included excluded in memory)
+    - [ ] Button bar
+      - [ ] Save
+      - [ ] Use Default (with confirmation)
+  - [ ] Save logic
+    - [ ] Map the form context to save data
+    - [ ] Get the original data
+    - [ ] Merge Object to the save data
+  - [ ] Use Default logic
+    - [ ] Save `{}` to the setting
 - [ ] Set up new tab selection for quadrone sheets
   - [ ] Character
   - [ ] Items
@@ -100,6 +120,7 @@
 - [ ] (hightouch) Review Character Sheet Limited View
 - [ ] (not ready yet) (hightouch) Review Item Sheet Limited View
 - [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
+- [ ] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
 
 ### Feature - Set as Inspiration Source
 

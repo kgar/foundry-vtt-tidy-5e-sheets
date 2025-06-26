@@ -12,13 +12,17 @@ import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplicat
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
-import type { GlobalCustomSectionsetting } from './settings.types';
+import type {
+  GlobalCustomSectionsetting,
+  TabConfiguration,
+} from './settings.types';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
 import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -195,9 +199,20 @@ export function createSettings() {
           hint: `(Localize) Establish the default theme settings for your game world. These apply to all sheet types.`,
           icon: 'fa-solid fa-palette',
           type: ThemeSettingsQuadroneApplication,
-          restricted: false,
+          restricted: true,
           truesight: true,
         },
+      },
+      tabConfigurationMenu: {
+        options: {
+          name: `(Localize) Sheet Tab Configuration`,
+          label: '(Localize) Sheet Tab Configuration (New Tidy Sheets)',
+          hint: `(Localize) Configure which tabs are visible for all actor and item sheets.`,
+          icon: 'fa-solid fa-columns-3',
+          type: WorldTabConfigurationQuadroneApplication,
+          restricted: true,
+          truesight: true,
+        }
       },
       resetAllSettings: {
         options: {
@@ -319,29 +334,40 @@ export function createSettings() {
         },
       },
 
-      defaultCharacterSheetQuadroneTabs: {
+      tabConfiguration: {
         options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          name: '(Localize) Tab Configuration',
+          hint: '(Localize) Configure which tabs to include in each supported Tidy sheet type.',
           scope: 'world',
           config: false,
-          type: Array,
-          default: [
-            CONSTANTS.TAB_ACTOR_ACTIONS,
-            CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-            CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_ACTOR_SPELLBOOK,
-            CONSTANTS.TAB_CHARACTER_FEATURES,
-            CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
-            CONSTANTS.TAB_CHARACTER_BASTION,
-            // TODO: REMOVE BEFORE GOING BETA
-            CONSTANTS.TAB_CHARACTER_JOURNAL,
-          ],
+          type: new foundry.data.fields.TypedObjectField(
+            new foundry.data.fields.TypedObjectField(
+              new foundry.data.fields.SchemaField(
+                {
+                  selected: new foundry.data.fields.ArrayField(
+                    new foundry.data.fields.StringField({
+                      required: true,
+                      nullable: false,
+                      blank: false,
+                    })
+                  ),
+                },
+                { initial: [] },
+                { name: 'Tab Configuration' }
+              ),
+              { initial: {} },
+              {
+                name: 'Document Type to Tab Configuration Object',
+              }
+            ),
+            { initial: {} },
+            { name: 'Document Names to Document Type Tab Configuration Object' }
+          ),
+          default: {},
         },
         get() {
-          return FoundryAdapter.getTidySetting<string[]>(
-            'defaultCharacterSheetQuadroneTabs'
+          return FoundryAdapter.getTidySetting<TabConfiguration>(
+            'tabConfiguration'
           );
         },
       },
@@ -683,29 +709,29 @@ export function createSettings() {
         },
       },
 
-      defaultNpcSheetQuadroneTabs: {
-        options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
-          scope: 'world',
-          config: false,
-          type: Array,
-          default: [
-            CONSTANTS.TAB_NPC_STATBLOCK,
-            CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_ACTOR_SPELLBOOK,
-            CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
-            // TODO: REMOVE AFTER TAB SELECTION IS READY
-            CONSTANTS.TAB_CHARACTER_JOURNAL,
-          ],
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string[]>(
-            'defaultNpcSheetQuadroneTabs'
-          );
-        },
-      },
+      // defaultNpcSheetQuadroneTabs: {
+      //   options: {
+      //     name: 'TIDY5E.Settings.DefaultSheetTabs.name',
+      //     hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+      //     scope: 'world',
+      //     config: false,
+      //     type: Array,
+      //     default: [
+      //       CONSTANTS.TAB_NPC_STATBLOCK,
+      //       CONSTANTS.TAB_ACTOR_INVENTORY,
+      //       CONSTANTS.TAB_ACTOR_SPELLBOOK,
+      //       CONSTANTS.TAB_EFFECTS,
+      //       CONSTANTS.TAB_ACTOR_BIOGRAPHY,
+      //       // TODO: REMOVE AFTER TAB SELECTION IS READY
+      //       CONSTANTS.TAB_CHARACTER_JOURNAL,
+      //     ],
+      //   },
+      //   get() {
+      //     return FoundryAdapter.getTidySetting<string[]>(
+      //       'defaultNpcSheetQuadroneTabs'
+      //     );
+      //   },
+      // },
 
       useClassicControlsForNpc: {
         options: {
