@@ -105,3 +105,23 @@
     }
   }
 }
+
+.selection-listbox {
+  display: flex;
+
+  .focused {
+    background-color: fuchsia;
+    color: white;
+  }
+
+  .listbox {
+    flex: 1;
+  }
+
+  .selection-listbox-toolbar {
+    flex: 0;
+
+    display: flex;
+    flex-direction: column;
+  }
+}

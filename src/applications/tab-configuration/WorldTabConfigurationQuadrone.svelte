@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Tab } from 'src/types/types';
+  import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
   import type {
     WorldTabConfigContext,
     WorldTabConfigurationQuadroneApplication,
@@ -31,38 +31,45 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="flexcol">
-  <div class="flexrow">
-    <Tabs bind:selectedTabId {tabs} />
+<div class="flexrow flex1">
+  <Tabs bind:selectedTabId {tabs} orientation="vertical" cssClass="noflex" />
 
-    {#each config as entry}
-      {@const tabId = getTabId(entry.documentName, entry.documentType)}
-      <div
-        class={['tidy-tab', { active: tabId === selectedTabId }]}
-        data-tab-contents-for={tabId}
-        role="tabpanel"
-      >
-        Hello {JSON.stringify(entry)}
-      </div>
-    {/each}
-  </div>
-  <div class="flexrow flex0">
-    <button
-      type="button"
-      class="button button-primary save-changes-btn"
-      onclick={() => app.save()}
+  {#each config as entry}
+    {@const tabId = getTabId(entry.documentName, entry.documentType)}
+    <div
+      class={[
+        'tidy-tab',
+        { active: tabId === selectedTabId },
+        'flexcol',
+        'flex1',
+      ]}
+      data-tab-contents-for={tabId}
+      role="tabpanel"
     >
-      {localize('TIDY5E.SaveChanges')}
-    </button>
-    <!-- <button type="button" class="button" onclick={() => app.apply()}
-      >{localize('TIDY5E.ApplyChanges')}</button
-      > -->
-    <button
-      type="button"
-      class="button button-secondary use-default-btn"
-      onclick={() => app.useDefault()}
-    >
-      {localize('TIDY5E.UseDefault')}
-    </button>
-  </div>
+      <h2>{localize(`TYPES.${entry.documentName}.${entry.documentType}`)}</h2>
+      <SelectionListbox
+        labelProp="title"
+        valueProp="id"
+        bind:leftItems={entry.unselected}
+        bind:rightItems={entry.selected}
+        listboxCssClass="scroll-container"
+      ></SelectionListbox>
+    </div>
+  {/each}
+</div>
+<div class="flexrow flex0">
+  <button
+    type="button"
+    class="button button-primary save-changes-btn"
+    onclick={() => app.save()}
+  >
+    {localize('TIDY5E.SaveChanges')}
+  </button>
+  <button
+    type="button"
+    class="button button-secondary use-default-btn"
+    onclick={() => app.useDefault()}
+  >
+    {localize('TIDY5E.UseDefault')}
+  </button>
 </div>

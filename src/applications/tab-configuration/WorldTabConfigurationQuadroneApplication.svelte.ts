@@ -5,6 +5,9 @@ import { mount } from 'svelte';
 import WorldTabConfigurationQuadrone from './WorldTabConfigurationQuadrone.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
+import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+import VehicleSheetQuadroneRuntime from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
+import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import type { ActorSheetRuntime } from 'src/runtime/ActorSheetRuntime.svelte';
 import type { TabConfiguration } from 'src/settings/settings.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -18,11 +21,11 @@ type WorldTabConfigContextEntry = {
   documentName: string;
   documentType: string;
   title: string;
-  allTabs: Tab[];
-  defaultSelected: string[];
-  defaultUnselected: string[];
-  selected: string[];
-  unselected: string[];
+  allTabs: Record<string, Tab>;
+  defaultSelected: Tab[];
+  defaultUnselected: Tab[];
+  selected: Tab[];
+  unselected: Tab[];
 };
 
 export type WorldTabConfigContext = WorldTabConfigContextEntry[];
@@ -47,6 +50,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       resizable: true,
       controls: [],
       title: '(Localize) Sheet Tab Configuration (New Tidy Sheets)',
+      contentClasses: ['flexcol'],
     },
     position: {
       width: 600,
@@ -77,7 +81,6 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
     config.push(
       getActorTabContext(
-        'Character',
         CharacterSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_CHARACTER,
         setting
@@ -86,9 +89,24 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
     config.push(
       getActorTabContext(
-        'DND5E.NPC.Label',
-        CharacterSheetQuadroneRuntime,
+        NpcSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_NPC,
+        setting
+      )
+    );
+
+    config.push(
+      getActorTabContext(
+        VehicleSheetQuadroneRuntime,
+        CONSTANTS.SHEET_TYPE_VEHICLE,
+        setting
+      )
+    );
+
+    config.push(
+      getActorTabContext(
+        GroupSheetQuadroneRuntime,
+        CONSTANTS.SHEET_TYPE_GROUP,
         setting
       )
     );
@@ -113,7 +131,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
           : curr.selected;
 
       docType[curr.documentType] = {
-        selected,
+        selected: selected.map((s) => s.id),
       };
 
       return prev;
@@ -127,25 +145,51 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
   }
 }
 
-function getUnselectedTabIds(all: Tab[], selected: string[]) {
-  return all.filter((t) => !selected.includes(t.id)).map((t) => t.id);
+function getUnselectedTabs(all: Record<string, Tab>, selected: Tab[]) {
+  return Object.values(all)
+    .filter((tab) => !selected.some((selectedTab) => selectedTab.id == tab.id))
+    .map<Tab>((t) => ({
+      id: t.id,
+      title: all[t.id]?.title ?? t.id,
+    }));
+}
+
+function mapTabIdsToOptions(all: Record<string, Tab>, tabIds: string[]) {
+  return tabIds.map<Tab>((tabId) => ({
+    id: tabId,
+    title: all[tabId]?.title ?? tabId,
+  }));
 }
 
 function getActorTabContext(
-  title: string,
   runtime: ActorSheetRuntime<any>,
   type: string,
   settings: TabConfiguration
 ): WorldTabConfigContextEntry {
-  let selected =
-    settings[CONSTANTS.DOCUMENT_NAME_ACTOR]?.[type]?.selected ?? [];
+  let configSectionTitle = FoundryAdapter.localize(
+    `TYPES.${CONSTANTS.DOCUMENT_NAME_ACTOR}.${type}`
+  );
 
-  let allTabs: Tab[] = runtime.getAllRegisteredTabs().map((t) => ({
-    id: t.id,
-    title: typeof t.title === 'function' ? t.title() : t.title,
-  }));
+  let allTabs = runtime
+    .getAllRegisteredTabs()
+    .reduce<Record<string, Tab>>((prev, tab) => {
+      prev[tab.id] = {
+        id: tab.id,
+        title: FoundryAdapter.localize(
+          typeof tab.title === 'function' ? tab.title() : tab.title
+        ).titleCase(),
+      };
+      return prev;
+    }, {});
 
-  let defaultSelected = runtime.getDefaultTabIds();
+  let selected = mapTabIdsToOptions(
+    allTabs,
+    settings[CONSTANTS.DOCUMENT_NAME_ACTOR]?.[type]?.selected ?? []
+  );
+
+  let defaultSelectedIds = runtime.getDefaultTabIds();
+
+  let defaultSelected = mapTabIdsToOptions(allTabs, defaultSelectedIds);
 
   if (!selected.length) {
     selected = [...defaultSelected];
@@ -154,11 +198,11 @@ function getActorTabContext(
   return {
     documentName: CONSTANTS.DOCUMENT_NAME_ACTOR,
     documentType: type,
-    title: FoundryAdapter.localize(title),
+    title: configSectionTitle,
     allTabs,
     defaultSelected,
-    defaultUnselected: getUnselectedTabIds(allTabs, defaultSelected),
+    defaultUnselected: getUnselectedTabs(allTabs, defaultSelected),
     selected: selected,
-    unselected: getUnselectedTabIds(allTabs, selected),
+    unselected: getUnselectedTabs(allTabs, selected),
   };
 }
