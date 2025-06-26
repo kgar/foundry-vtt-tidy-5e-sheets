@@ -10,7 +10,6 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  AttributePinContext,
   CharacterClassEntryContext,
   TidyItemSectionBase,
   CharacterItemContext,
@@ -35,10 +34,7 @@ import type {
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import CharacterSheetQuadroneRuntime, {
-  TempDefaultCharacterQuadroneTabs,
-} from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
-import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
+import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -60,6 +56,7 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { getModifierData } from 'src/utils/formatting';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -280,10 +277,23 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       context
     );
 
-    const defaultTabs: string[] = TempDefaultCharacterQuadroneTabs;
-    let tabs = (await CharacterSheetQuadroneRuntime.getTabs(context))
-      .filter((t) => defaultTabs?.includes(t.id))
-      .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+    let tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
+    
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
+
+    if (selectedTabs?.length) {
+      tabs = tabs
+        .filter((t) => selectedTabs?.includes(t.id))
+        .sort(
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+        );
+    } else {
+      const defaultTabs = settings.value.defaultCharacterSheetQuadroneTabs;
+
+      tabs = tabs
+        .filter((t) => defaultTabs?.includes(t.id))
+        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+    }
 
     context.tabs = tabs;
 

@@ -2,12 +2,7 @@
 
 import type { GroupSheetQuadroneContext } from 'src/types/types';
 import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
-import type { RegisteredTab } from '../types';
 
-const defaultGroupQuadroneTabs: RegisteredTab<GroupSheetQuadroneContext>[] = [];
-
-const singleton = new ActorSheetRuntime<GroupSheetQuadroneContext>(
-  defaultGroupQuadroneTabs
-);
+const singleton = new ActorSheetRuntime<GroupSheetQuadroneContext>([]);
 
 export default singleton;

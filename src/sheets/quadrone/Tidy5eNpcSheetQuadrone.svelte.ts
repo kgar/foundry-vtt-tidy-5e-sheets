@@ -3,7 +3,6 @@ import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.sve
 import type {
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  CharacterItemPartitions,
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   LocationToSearchTextMap,
@@ -24,18 +23,17 @@ import type {
 import { mount } from 'svelte';
 import NpcSheet from './actor/NpcSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Container } from 'src/features/containers/Container';
-import { TempDefaultNpcQuadroneTabs } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -194,10 +192,23 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     context.customContent = await NpcSheetQuadroneRuntime.getContent(context);
 
-    const defaultTabs: string[] = TempDefaultNpcQuadroneTabs;
-    let tabs = (await NpcSheetQuadroneRuntime.getTabs(context))
-      .filter((t) => defaultTabs?.includes(t.id))
-      .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+    let tabs = await NpcSheetQuadroneRuntime.getTabs(context);
+
+    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
+
+    if (selectedTabs?.length) {
+      tabs = tabs
+        .filter((t) => selectedTabs?.includes(t.id))
+        .sort(
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+        );
+    } else {
+      const defaultTabs = settings.value.defaultNpcSheetQuadroneTabs;
+
+      tabs = tabs
+        .filter((t) => defaultTabs?.includes(t.id))
+        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+    }
 
     context.tabs = tabs;
 

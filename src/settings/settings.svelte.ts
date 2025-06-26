@@ -319,6 +319,33 @@ export function createSettings() {
         },
       },
 
+      defaultCharacterSheetQuadroneTabs: {
+        options: {
+          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
+          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          scope: 'world',
+          config: false,
+          type: Array,
+          default: [
+            CONSTANTS.TAB_ACTOR_ACTIONS,
+            CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+            CONSTANTS.TAB_ACTOR_INVENTORY,
+            CONSTANTS.TAB_ACTOR_SPELLBOOK,
+            CONSTANTS.TAB_CHARACTER_FEATURES,
+            CONSTANTS.TAB_EFFECTS,
+            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
+            CONSTANTS.TAB_CHARACTER_BASTION,
+            // TODO: REMOVE BEFORE GOING BETA
+            CONSTANTS.TAB_CHARACTER_JOURNAL,
+          ],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string[]>(
+            'defaultCharacterSheetQuadroneTabs'
+          );
+        },
+      },
+
       useClassicControlsForCharacter: {
         options: {
           name: 'TIDY5E.Settings.UseClassicControls.name',
@@ -653,6 +680,30 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<string[]>('defaultNpcSheetTabs');
+        },
+      },
+
+      defaultNpcSheetQuadroneTabs: {
+        options: {
+          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
+          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
+          scope: 'world',
+          config: false,
+          type: Array,
+          default: [
+            CONSTANTS.TAB_NPC_STATBLOCK,
+            CONSTANTS.TAB_ACTOR_INVENTORY,
+            CONSTANTS.TAB_ACTOR_SPELLBOOK,
+            CONSTANTS.TAB_EFFECTS,
+            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
+            // TODO: REMOVE AFTER TAB SELECTION IS READY
+            CONSTANTS.TAB_CHARACTER_JOURNAL,
+          ],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string[]>(
+            'defaultNpcSheetQuadroneTabs'
+          );
         },
       },
 

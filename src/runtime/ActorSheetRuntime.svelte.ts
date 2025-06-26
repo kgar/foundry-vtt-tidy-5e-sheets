@@ -10,8 +10,8 @@ export class ActorSheetRuntime<TSheetContext> {
   private _content = $state<RegisteredContent<TSheetContext>[]>([]);
   private _tabs = $state<RegisteredTab<TSheetContext>[]>([]);
 
-  constructor(defaultTabs: RegisteredTab<TSheetContext>[]) {
-    this._tabs = [...defaultTabs];
+  constructor(nativeTabs: RegisteredTab<TSheetContext>[]) {
+    this._tabs = [...nativeTabs];
   }
 
   async getContent(context: TSheetContext): Promise<CustomContent[]> {
