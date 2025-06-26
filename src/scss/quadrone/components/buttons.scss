@@ -42,11 +42,6 @@
   min-height: var(--t5e-field-size-default);
   transition: all var(--t5e-transition-default);
 
-  // TODO: Find a way to shrink left padding by 2px if icon is presen t
-  // :has(i) {
-  //   padding-inline-start: calc(var(--button-padding-inline-start) - 0.125rem);
-  // }  
-
   :where(i) {
     color: var(--icon-fill);
     transition: color var(--t5e-transition-default);
@@ -66,7 +61,7 @@
   }
 
   &.active,
-  &:active {
+  &:active:not(:disabled) {
     --icon-fill: var(--button-icon);
 
     color: var(--button-text);
@@ -105,7 +100,7 @@
     color: var(--button-text);
     --icon-color: var(--button-icon);
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: var(--button-background-hover);
       border: 1px solid var(--button-border-hover);
 

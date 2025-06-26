@@ -87,7 +87,8 @@
   <div class="action-buttons">
     <button
       type="button"
-      class="button"
+      aria-label="{localize('JOURNAL.PrevPage')}"
+      class="button button-icon-only"
       data-tooltip="JOURNAL.PrevPage"
       disabled={!selected || selectedIndex <= 0}
       onclick={() => (selectedIndex -= 1)}
@@ -96,6 +97,7 @@
     </button>
     <button
       type="button"
+      aria-label="{localize('JOURNAL.AddPage')}"
       class="button add"
       disabled={!context.owner}
       onclick={async () => {
@@ -108,7 +110,8 @@
     </button>
     <button
       type="button"
-      class="button"
+      aria-label="{localize('JOURNAL.NextPage')}"
+      class="button button-icon-only"
       data-tooltip="JOURNAL.NextPage"
       disabled={!selected || selectedIndex >= entries.length - 1}
       onclick={() => (selectedIndex += 1)}

@@ -502,6 +502,10 @@
         }
       }
 
+      .pages {
+        margin: var(--t5e-size-2x) 0;
+      }
+
       .journal-entry-selector {
         display: flex;
         flex-direction: column;
@@ -511,6 +515,7 @@
 
       .action-buttons {
         display: flex;
+        gap: 0.5rem;
 
         .add {
           flex: 1;
