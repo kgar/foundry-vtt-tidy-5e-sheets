@@ -1,11 +1,10 @@
 import type { GroupSheetClassicContext } from 'src/types/group.types';
 import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
-import { CONSTANTS } from "src/constants";
-import type { RegisteredTab } from "../types";
+import { CONSTANTS } from 'src/constants';
+import type { RegisteredTab } from '../types';
 import GroupMembersTab from 'src/sheets/classic/group/tabs/GroupMembersTab.svelte';
 import GroupInventoryTab from 'src/sheets/classic/group/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/classic/group/tabs/GroupDescriptionTab.svelte';
-
 
 const defaultGroupClassicTabs: RegisteredTab<GroupSheetClassicContext>[] = [
   {
@@ -38,7 +37,8 @@ const defaultGroupClassicTabs: RegisteredTab<GroupSheetClassicContext>[] = [
 ];
 
 const singleton = new ActorSheetRuntime<GroupSheetClassicContext>(
-  defaultGroupClassicTabs
+  defaultGroupClassicTabs,
+  []
 );
 
 export default singleton;

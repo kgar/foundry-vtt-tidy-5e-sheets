@@ -57,7 +57,8 @@ const defaultVehicleClassicTabs: RegisteredTab<VehicleSheetContext>[] = [
 ];
 
 const singleton = new ActorSheetRuntime<VehicleSheetContext>(
-  defaultVehicleClassicTabs
+  defaultVehicleClassicTabs,
+  []
 );
 
 export default singleton;
