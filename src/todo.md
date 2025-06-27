@@ -46,6 +46,7 @@
     - [ ] Tool
     - [ ] Weapon
   - [ ] Container
+- [ ] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Implement Responsive Tab Strip
@@ -126,6 +127,85 @@
 - [ ] (not ready yet) (hightouch) Review Item Sheet Limited View
 - [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
 - [ ] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
+
+
+### Feature Origin dropdown notes
+
+From `BrutalityScript.js`
+
+```js
+  Hooks.on("renderItemSheet5e", (app, [html]) => {
+    const actor = app.object.parent;
+    if (!actor) return;
+    if (app.object.type !== "feat") return;
+    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
+    const choices = actor.items.reduce((acc, i) => {
+      if (!i.system.advancement) return acc;
+      acc.push({ value: i.id,
+        label: app.object.parent.items.get(i.id).name,
+        group: game.i18n.localize(`TYPES.Item.${i.type}`)
+      });
+      return acc;
+    }, []);
+    const origins = HandlebarsHelpers.selectOptions(choices, {hash: {selected: current, sort: true}});
+    const origin = `
+      <div class="form-group">
+        <label>Feature Origin</label>
+        <select name="flags.dnd5e.advancementOrigin">
+          <option></option>
+          ${origins}
+        </select>
+      </div>
+    `
+    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
+                 html.querySelector('.form-group:has(select[name="system.type.value"])');
+    type.insertAdjacentHTML("afterend", origin);
+  });
+```
+
+From Alakshana's Feature Origin module:
+
+```js
+class FeatureOrigin {
+
+  static init() {
+    Hooks.on("renderItemSheet5e", FeatureOrigin._advancementOrigin);
+  }
+
+  static _advancementOrigin(app, [html]) {
+    const actor = app.actor;
+    if (!actor) return;
+    if (app.object.type !== "feat" || app.object?.getFlag("dnd5e", "advancementOrigin")?.includes(".")) return;
+    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
+    const choices = actor.items.reduce((acc, i) => {
+      if (!i.system.advancement) return acc;
+      acc.push({
+        value: i.id,
+        label: app.object.parent.items.get(i.id).name,
+        group: game.i18n.localize(`TYPES.Item.${i.type}`)
+      });
+      return acc;
+    }, []).sort((a, b) => a.group.localeCompare(b.group));
+    const origins = HandlebarsHelpers.selectOptions(choices, { hash: { selected: current, sort: true } });
+    const origin = `
+      <div class="form-group">
+        <label>${game.i18n.localize("FEATUREORIGIN.Label")}</label>
+        <div class="form-fields">
+          <select name="flags.dnd5e.advancementOrigin">
+            <option></option>
+            ${origins}
+          </select>
+        </div>
+      </div>
+    `;
+    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
+      html.querySelector('.form-group:has(select[name="system.type.value"])');
+    type.insertAdjacentHTML("afterend", origin);
+  }
+}
+
+Hooks.once("init", FeatureOrigin.init);
+```
 
 ### Feature - Set as Inspiration Source
 
