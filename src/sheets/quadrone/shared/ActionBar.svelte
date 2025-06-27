@@ -44,13 +44,7 @@
 
   let tab = $derived(context.tabs.find((t) => t.id === tabId));
 
-  let tabName = $derived(
-    localize(
-      typeof tab?.title === 'string'
-        ? tab.title
-        : (tab?.title({ document: context.document }) ?? ''),
-    ),
-  );
+  let tabName = $derived(localize(tab?.title ?? ''));
 
   let pinnedFilters = $derived(
     ItemFilterRuntime.getPinnedFiltersForTab(

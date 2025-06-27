@@ -308,12 +308,12 @@ export class ItemSheetRuntime {
     return [...this._customItemEquipmentTypeGroups];
   }
 
-  static getTabTitle(tabId: string, tabContext: any) {
+  static getTabTitle(tabId: string) {
     try {
       let tabs = [...this._customTabs, ...Object.values(itemSheetTabs)];
       let tabTitle = tabs.find((t) => t.id === tabId)?.title;
       if (typeof tabTitle === 'function') {
-        tabTitle = tabTitle(tabContext);
+        tabTitle = tabTitle();
       }
       return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
     } catch (e) {
@@ -322,7 +322,6 @@ export class ItemSheetRuntime {
         error: e,
         errorId,
         tabId,
-        tabContext,
       });
     }
   }

@@ -2,13 +2,16 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
-  import type { Tab, OnTabSelectedFn, DynamicTabTitle } from 'src/types/types';
+  import type { Tab, OnTabSelectedFn } from 'src/types/types';
   import { error } from 'src/utils/logging';
   import { getContext, onMount, type Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import { SvelteSet } from 'svelte/reactivity';
 
-  export type TabStripInfo = Pick<Tab, 'id' | 'title' | 'iconClass'>;
+  export type TabStripInfo = Pick<
+    Tab,
+    'id' | 'title' | 'iconClass' | 'itemCount'
+  >;
 
   interface Props {
     tabs: TabStripInfo[];
@@ -110,22 +113,7 @@
     }
   });
 
-  function resolveTabTitle(tab: TabStripInfo) {
-    try {
-      if (typeof tab.title === 'function') {
-        return tab.title({ ...tabContext, document: sheet.document });
-      }
-      return localize(tab.title);
-    } catch (e) {
-      let errorId = foundry.utils.randomID();
-      error('An error occurred while determining tab title', false, {
-        error: e,
-        tab,
-        errorId,
-      });
-      return `⚠ error ${errorId}`;
-    }
-  }
+  let itemCountContext = $derived({ ...tabContext, document: sheet.document });
 </script>
 
 <div
@@ -135,6 +123,7 @@
 >
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
+      {@const title = localize(tab.title)}
       <svelte:boundary
         onerror={(e) => {
           error('An error occurred while rendering a tab', false, {
@@ -143,10 +132,10 @@
           });
         }}
       >
-        {@const tabTitle = resolveTabTitle(tab)}
         {@const tabIsSelected =
           tab.id === selectedTabId || extraTabs?.has(tab.id)}
         {@const tabindex = tabIsSelected ? 0 : -1}
+        {@const itemCount = tab.itemCount?.(itemCountContext) ?? 0}
         <a
           class={[
             CONSTANTS.TAB_OPTION_CLASS,
@@ -163,13 +152,17 @@
           onclick={(ev) => onTabClicked(ev, tab)}
           onkeydown={(ev) => onKeyDown(ev, i)}
           {tabindex}
-          title={tabTitle}
+          {title}
         >
           {#if tab.iconClass}
             <i class={['tab-icon', tab.iconClass]}></i>
           {/if}
 
-          <span class="tab-title">{@html localize(tabTitle)}</span>
+          <span class="tab-title">{title}</span>
+
+          {#if itemCount > 0}
+            <span class="tab-title-count">{itemCount}</span>
+          {/if}
         </a>
       </svelte:boundary>
     {/each}

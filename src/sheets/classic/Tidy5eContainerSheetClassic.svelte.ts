@@ -241,8 +241,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
                   sections: sections,
                   tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
                   tabTitle: ItemSheetRuntime.getTabTitle(
-                    CONSTANTS.TAB_CONTAINER_CONTENTS,
-                    {}
+                    CONSTANTS.TAB_CONTAINER_CONTENTS
                   ),
                 },
                 {

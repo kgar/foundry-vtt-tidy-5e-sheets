@@ -286,20 +286,11 @@ const itemSheetTabs: Record<string, Tab> = {
 
   quadroneActivities: {
     id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
-    title: (tabContext) => {
-      let title = FoundryAdapter.localize('DND5E.ACTIVITY.Title.other');
-
-      if (tabContext?.document) {
-        let count = Array.from(tabContext.document.system.activities).filter(
-          (x) => Activities.isConfigurable(x)
-        ).length;
-        if (count > 0) {
-          title += getTabCountSpan(count);
-        }
-      }
-
-      return title;
-    },
+    itemCount: (context) =>
+      Array.from(context.document.system.activities).filter((x) =>
+        Activities.isConfigurable(x)
+      ).length,
+    title: 'DND5E.ACTIVITY.Title.other',
     content: {
       component: ItemActivitiesQuadroneTab,
       type: 'svelte',
@@ -310,18 +301,9 @@ const itemSheetTabs: Record<string, Tab> = {
   },
   quadroneAdvancement: {
     id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
-    title: (tabContext) => {
-      let title = FoundryAdapter.localize('DND5E.AdvancementTitle');
-
-      if (tabContext?.document) {
-        let count = Array.from(tabContext.document.system.advancement).length;
-        if (count > 0) {
-          title += getTabCountSpan(count);
-        }
-      }
-
-      return title;
-    },
+    itemCount: (context) =>
+      Array.from(context.document.system.advancement).length,
+    title: 'DND5E.AdvancementTitle',
     content: {
       component: ItemAdvancementQuadroneTab,
       type: 'svelte',
@@ -470,18 +452,8 @@ const itemSheetTabs: Record<string, Tab> = {
   },
   quadroneEffects: {
     id: CONSTANTS.TAB_EFFECTS,
-    title: (tabContext) => {
-      let title = FoundryAdapter.localize('DND5E.Effects');
-
-      if (tabContext?.document) {
-        let count = Array.from(tabContext.document.effects).length;
-        if (count > 0) {
-          title += getTabCountSpan(count);
-        }
-      }
-
-      return title;
-    },
+    itemCount: (context) => Array.from(context.document?.effects).length,
+    title: 'DND5E.Effects',
     content: {
       component: ItemEffectsQuadroneTab,
       type: 'svelte',
@@ -493,7 +465,3 @@ const itemSheetTabs: Record<string, Tab> = {
 } satisfies Record<string, Tab>;
 
 export default itemSheetTabs;
-
-function getTabCountSpan(count: number) {
-  return ` <span class="tab-title-count">${count}</span>`;
-}
