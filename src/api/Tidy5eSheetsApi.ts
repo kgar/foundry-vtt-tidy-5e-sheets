@@ -14,6 +14,7 @@ import type {
   SupportedContent,
   ItemTabRegistrationOptions,
   HeaderControlRegistrationParams,
+  SupportedItemTab,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { HtmlContent } from './content/HtmlContent';
@@ -830,7 +831,7 @@ export class Tidy5eSheetsApi {
    * A tab ID is always required (see {@link TabId}).
    */
   registerItemTab(
-    tab: SupportedTab,
+    tab: SupportedItemTab,
     options?: ItemTabRegistrationOptions
   ): void {
     if (!TabManager.validateTab(tab)) {

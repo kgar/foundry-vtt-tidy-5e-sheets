@@ -7,23 +7,23 @@
 - [ ] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
   - [ ] Application layout
     - [ ] vertical tab strip
-      - [ ] Character
-      - [ ] NPC
-      - [ ] Vehicle
-      - [ ] Group
+      - [x] Character
+      - [x] NPC
+      - [x] Vehicle
+      - [x] Group
       - [ ] All Registered Items
-    - [ ] Viewing Area
-      - [ ] Selection Listbox with tabs for appropriate sheet type
-      - [ ] Reset to Default button (does not save, just resets the included excluded in memory)
-    - [ ] Button bar
-      - [ ] Save
-      - [ ] Use Default (with confirmation)
-  - [ ] Save logic
-    - [ ] Map the form context to save data
-    - [ ] Get the original data
-    - [ ] Merge Object to the save data
-  - [ ] Use Default logic
-    - [ ] Save `{}` to the setting
+    - [x] Viewing Area
+      - [x] Selection Listbox with tabs for appropriate sheet type
+      - [x] Reset to Default button (does not save, just resets the included excluded in memory)
+    - [x] Button bar
+      - [x] Save
+      - [x] Use Default (with confirmation)
+  - [x] Save logic
+    - [x] Map the form context to save data
+    - [x] Get the original data
+    - [x] Merge Object to the save data
+  - [x] Use Default logic
+    - [x] Save `{}` to the setting
 - [ ] Set up new tab selection for quadrone sheets
   - [ ] Character
   - [ ] Items
