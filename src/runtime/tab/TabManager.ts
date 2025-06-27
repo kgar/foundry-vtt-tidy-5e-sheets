@@ -7,7 +7,7 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { RegisteredTab, SheetLayout } from '../types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
-import type { SupportedTab } from 'src/api/api.types';
+import type { SupportedItemTab, SupportedTab } from 'src/api/api.types';
 import { SvelteTab } from 'src/api/tab/SvelteTab';
 
 export class TabManager {
@@ -63,7 +63,7 @@ export class TabManager {
   }
 
   static mapCustomTabToRegisteredTabs(
-    tab: SupportedTab,
+    tab: SupportedTab | SupportedItemTab,
     layoutPreference?: SheetLayout | SheetLayout[]
   ): RegisteredTab<any>[] {
     layoutPreference ??= [CONSTANTS.SHEET_LAYOUT_ALL];
@@ -75,6 +75,13 @@ export class TabManager {
     let registeredTabs: RegisteredTab<any>[] = [];
 
     for (let layout of layoutPreference) {
+      let types: Set<string> | undefined;
+      if ('type' in tab && !isNil(tab.type, '')) {
+        types = new Set<string>(
+          typeof tab.type === 'string' ? [tab.type] : tab.type
+        );
+      }
+
       if (tab instanceof HandlebarsTab) {
         registeredTabs.push({
           content: new HandlebarsTemplateRenderer({ path: tab.path }),
@@ -88,6 +95,7 @@ export class TabManager {
           tabContentsClasses: tab.tabContentsClasses,
           getData: tab.getData,
           activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+          types,
         });
       } else if (tab instanceof HtmlTab) {
         registeredTabs.push({
@@ -106,6 +114,7 @@ export class TabManager {
           renderScheme: tab.renderScheme,
           tabContentsClasses: tab.tabContentsClasses,
           activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+          types,
         });
       } else if (tab instanceof SvelteTab) {
         // An external svelte tab should be instantiated
@@ -127,6 +136,7 @@ export class TabManager {
             renderScheme: 'force',
             tabContentsClasses: tab.tabContentsClasses,
             activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+            types,
           });
         }
       }

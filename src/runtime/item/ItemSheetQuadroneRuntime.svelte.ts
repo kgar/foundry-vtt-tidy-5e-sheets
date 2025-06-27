@@ -85,6 +85,15 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context: ItemSheetQuadroneContext) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([
+      CONSTANTS.ITEM_TYPE_CONSUMABLE,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_FACILITY,
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_SPELL,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_WEAPON,
+    ]),
   },
   {
     id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
@@ -96,6 +105,13 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemAdvancementQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([
+      CONSTANTS.ITEM_TYPE_BACKGROUND,
+      CONSTANTS.ITEM_TYPE_CLASS,
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_SUBCLASS,
+      CONSTANTS.ITEM_TYPE_RACE,
+    ]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -105,6 +121,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemClassDetailsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_CLASS]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -117,6 +134,7 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_CONSUMABLE]),
   },
   {
     id: CONSTANTS.TAB_CONTAINER_CONTENTS,
@@ -126,6 +144,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemContainerContentsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -135,6 +154,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemBackgroundDetailsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_BACKGROUND]),
   },
   /**
    * Details form for containers.
@@ -150,6 +170,7 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -162,6 +183,7 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_EQUIPMENT]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -171,6 +193,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemFacilityDetailsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_FACILITY]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -180,6 +203,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemFeatDetailsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_FEAT]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -192,6 +216,7 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_LOOT]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -201,6 +226,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemSpellDetailsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_SPELL]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -210,6 +236,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemSubclassDetailsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_SUBCLASS]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -222,6 +249,7 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_TOOL]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -234,6 +262,7 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_WEAPON]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
@@ -243,6 +272,7 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemSpeciesDetailsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([CONSTANTS.ITEM_TYPE_RACE]),
   },
   {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
@@ -252,6 +282,21 @@ const singleton = new ItemSheetQuadroneRuntime([
       component: ItemDescriptionsQuadroneTab,
       type: 'svelte',
     },
+    types: new Set<string>([
+      CONSTANTS.ITEM_TYPE_BACKGROUND,
+      CONSTANTS.ITEM_TYPE_CLASS,
+      CONSTANTS.ITEM_TYPE_CONSUMABLE,
+      CONSTANTS.ITEM_TYPE_CONTAINER,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_FACILITY,
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_LOOT,
+      CONSTANTS.ITEM_TYPE_RACE,
+      CONSTANTS.ITEM_TYPE_SPELL,
+      CONSTANTS.ITEM_TYPE_SUBCLASS,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_WEAPON,
+    ]),
   },
   {
     id: CONSTANTS.TAB_EFFECTS,
@@ -265,6 +310,14 @@ const singleton = new ItemSheetQuadroneRuntime([
     enabled: (context) =>
       context.document.system.identified !== false ||
       FoundryAdapter.isInGmEditMode(context.document),
+    types: new Set<string>([
+      CONSTANTS.ITEM_TYPE_CONSUMABLE,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_SPELL,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_WEAPON,
+    ]),
   },
 ]);
 

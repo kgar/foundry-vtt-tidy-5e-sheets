@@ -47,7 +47,7 @@ export type RegisteredTab<TContext> = {
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
   itemCount?: (context: any) => number;
-  type?: string | string[];
+  types?: Set<string>;
 };
 
 /**
