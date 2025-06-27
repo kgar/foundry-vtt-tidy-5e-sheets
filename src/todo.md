@@ -5,8 +5,8 @@
 - [x] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
 - [x] Explore what it takes to implement item sheet tab settings per item type.
 - [x] Refactor: Add formal itemCount function that receives context and expects a number in return. It will then put a count on the tab strip when greater than 0.
-- [ ] Update all tabs
-- [ ] Create ItemSheetRuntimeV2 and replace the original.
+- [ ] Create ItemSheetQuadroneRuntime
+- [ ] Add API documentation for limiting tabs by type for items.
 - [ ] Svelte derived data in the runtime classes could take away a lot of arbitrary work elsewhere.
   - [ ] Actor runtime
 - [ ] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"

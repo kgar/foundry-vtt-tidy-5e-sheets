@@ -47,6 +47,7 @@ export type RegisteredTab<TContext> = {
   activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
   itemCount?: (context: any) => number;
+  type?: string | string[];
 };
 
 /**
@@ -234,9 +235,9 @@ export type DefeaultColumnSpecDocumentTypesToTabs = Record<
   DefaultColumnSpecTabsToColumns
 >;
 
-export type DefaultTableColumn = Omit<ColumnSpecification, 'order' | 'priority'>;
-
-export type DefaultTableColumns = Record<
-  string,
-  DefaultTableColumn
+export type DefaultTableColumn = Omit<
+  ColumnSpecification,
+  'order' | 'priority'
 >;
+
+export type DefaultTableColumns = Record<string, DefaultTableColumn>;
