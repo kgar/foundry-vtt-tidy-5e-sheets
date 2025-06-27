@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type {
   AdvancementItemContext,
@@ -34,6 +34,7 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -96,7 +97,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    const sheetComponent = ItemSheetRuntime.quadroneSheets[this.item.type];
+    const sheetComponent = ItemSheetQuadroneRuntime.getSheet(this.item.type);
 
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
@@ -108,7 +109,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     ]);
 
     const component = sheetComponent
-      ? mount(sheetComponent.Sheet, {
+      ? mount(sheetComponent, {
           target: node,
           context: context,
         })
@@ -506,25 +507,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       }
     }
 
-    // Tabs
-    const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(context);
-
-    const customTabs: Tab[] = await TabManager.prepareTabsForRender(
-      context,
-      eligibleCustomTabs
-    );
-
-    let tabs =
-      ItemSheetRuntime.quadroneSheets[this.item.type]?.defaultTabs() ?? [];
-
-    tabs.push(...customTabs);
-
-    tabs = tabs.filter((t) => !t.condition || t.condition(this.document));
-
-    context.tabs = tabs;
+    context.tabs = await ItemSheetQuadroneRuntime.getTabs(context);
 
     // Custom Content
-    context.customContent = await ItemSheetRuntime.getContent(context);
+    context.customContent = await ItemSheetQuadroneRuntime.getContent(context);
 
     // Handle item subtypes.
     if (['feat', 'loot', 'consumable'].includes(this.document.type)) {
@@ -540,6 +526,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     }
 
     await this.item.system.getSheetData?.(context);
+
+    TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
     return context;
   }

@@ -14,10 +14,10 @@ import type {
   ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
   Item5e,
+  ItemSheetQuadroneContext,
 } from 'src/types/item.types';
 import type { Group5e } from 'src/types/group.types';
 import type { Activity5e } from './dnd5e.types';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -297,6 +297,7 @@ export class TidyHooks {
       | NpcSheetContext
       | ContainerSheetClassicContext
       | ContainerSheetQuadroneContext
+      | ItemSheetQuadroneContext
   ) {
     Hooks.callAll('tidy5e-sheet.preConfigureSections', app, element, data);
   }

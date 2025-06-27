@@ -979,26 +979,26 @@ export class TidyFlags {
   /**
    * The tabs that are currently selected for a given document.
    * This is used to determine which tabs are visible
-   * in the actor's sheet.
-   * When this field is empty, the actor uses the default tabs.
+   * in the document's sheet.
+   * When this field is empty, the document uses the default tabs.
    */
   static selectedTabs = {
     key: 'selected-tabs' as const,
     prop: TidyFlags.getFlagPropertyPath('selected-tabs'),
-    /** Gets the selected tabs for an actor. */
-    get(actor: Actor5e): string[] | undefined {
+    /** Gets the selected tabs for a document. */
+    get(doc: Actor5e | Item5e): string[] | undefined {
       return (
-        TidyFlags.tryGetFlag<string[]>(actor, TidyFlags.selectedTabs.key) ??
+        TidyFlags.tryGetFlag<string[]>(doc, TidyFlags.selectedTabs.key) ??
         undefined
       );
     },
-    /** Sets the selected tabs for an actor. */
-    set(actor: Actor5e, value: string[]): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.selectedTabs.key, value);
+    /** Sets the selected tabs for a document. */
+    set(doc: Actor5e | Item5e, value: string[]): Promise<void> {
+      return TidyFlags.setFlag(doc, TidyFlags.selectedTabs.key, value);
     },
-    /** Clears the selected tabs for an actor. */
-    unset(actor: Actor5e) {
-      return TidyFlags.unsetFlag(actor, TidyFlags.selectedTabs.key);
+    /** Clears the selected tabs for a document. */
+    unset(doc: Actor5e | Item5e) {
+      return TidyFlags.unsetFlag(doc, TidyFlags.selectedTabs.key);
     },
   };
 

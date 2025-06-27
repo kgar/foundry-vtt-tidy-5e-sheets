@@ -1,6 +1,8 @@
-import type { ItemSheetQuadroneContext } from 'src/types/item.types';
+import type {
+  ContainerSheetQuadroneContext,
+  ItemSheetQuadroneContext,
+} from 'src/types/item.types';
 import type { RegisteredContent, RegisteredTab } from '../types';
-import type { RegisteredEquipmentTypeGroup } from './item.types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { CustomContent, Tab } from 'src/types/types';
@@ -24,17 +26,64 @@ import ItemSubclassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemSu
 import ItemToolDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemToolDetailsTab.svelte';
 import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
 import { CustomContentManager } from '../content/CustomContentManager';
+import { TabManager } from '../tab/TabManager';
+import { SvelteMap } from 'svelte/reactivity';
+import type { Component } from 'svelte';
+import BackgroundSheet from 'src/sheets/quadrone/item/BackgroundSheet.svelte';
+import ClassSheet from 'src/sheets/quadrone/item/ClassSheet.svelte';
+import ConsumableSheet from 'src/sheets/quadrone/item/ConsumableSheet.svelte';
+import ContainerSheet from 'src/sheets/quadrone/container/ContainerSheet.svelte';
+import EquipmentSheet from 'src/sheets/quadrone/item/EquipmentSheet.svelte';
+import FacilitySheet from 'src/sheets/quadrone/item/FacilitySheet.svelte';
+import FeatSheet from 'src/sheets/quadrone/item/FeatSheet.svelte';
+import LootSheet from 'src/sheets/quadrone/item/LootSheet.svelte';
+import SpeciesSheet from 'src/sheets/quadrone/item/SpeciesSheet.svelte';
+import SpellSheet from 'src/sheets/quadrone/item/SpellSheet.svelte';
+import SubclassSheet from 'src/sheets/quadrone/item/SubclassSheet.svelte';
+import ToolSheet from 'src/sheets/quadrone/item/ToolSheet.svelte';
+import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
+import { error } from 'src/utils/logging';
+import { TidyFlags } from 'src/api';
+import { settings } from 'src/settings/settings.svelte';
+
+export type ItemSheetInfo = {
+  component: Component;
+  defaultTabs: string[];
+};
 
 class ItemSheetQuadroneRuntime {
   private _content: RegisteredContent<ItemSheetQuadroneContext>[] = $state([]);
   private _tabs: RegisteredTab<ItemSheetQuadroneContext>[] = $state([]);
+  private _sheetMap: SvelteMap<string, ItemSheetInfo>;
 
-  constructor(nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[]) {
+  constructor(
+    nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
+    nativeSheets: [string, ItemSheetInfo][]
+  ) {
     this._tabs = nativeTabs;
+    this._sheetMap = new SvelteMap(nativeSheets);
+  }
+
+  async registerItemSheet(
+    type: string,
+    info: ItemSheetInfo,
+    existingTabIds?: string[]
+  ) {
+    this._sheetMap.set(type, info);
+
+    // There is surely a more efficient way to do this, but it's just not worth it.
+    existingTabIds?.forEach((tabId) => {
+      for (let tab of this._tabs) {
+        if (tab.id === tabId) {
+          tab.types ??= new Set<string>();
+          tab.types.add(type);
+        }
+      }
+    });
   }
 
   async getContent(
-    context: ItemSheetQuadroneContext | ItemSheetQuadroneContext
+    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
   ): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
       context,
@@ -42,16 +91,60 @@ class ItemSheetQuadroneRuntime {
     );
   }
 
-  async getTabs(context: ItemSheetQuadroneContext, type: string) {
-    // TODO;
+  async getTabs(
+    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
+  ) {
+    debugger;
+    const type = context.item.type;
+    const itemTabs = this._tabs.filter((x) => !x.types || x.types.has(type));
+    let tabs = await TabManager.prepareTabsForRender(context, itemTabs);
+
+    const selectedTabs = TidyFlags.selectedTabs.get(context.item);
+
+    if (selectedTabs?.length) {
+      tabs = tabs
+        .filter((t) => selectedTabs?.includes(t.id))
+        .sort(
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+        );
+    }
+
+    if (!selectedTabs?.length) {
+      let defaultTabs =
+        settings.value.tabConfiguration[context.document.documentName]?.[
+          context.document.type
+        ]?.selected ?? [];
+
+      if (!defaultTabs.length) {
+        defaultTabs = this.getDefaultTabIds(context.document.type);
+      }
+
+      tabs = tabs
+        .filter((t) => defaultTabs?.includes(t.id))
+        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+    }
+
+    return tabs.filter((t) => !t.condition || t.condition(context.document));
   }
 
   getAllRegisteredTabs(): RegisteredTab<ItemSheetQuadroneContext>[] {
     return [...this._tabs];
   }
 
+  getSheet(type: string) {
+    const component = this._sheetMap.get(type)?.component;
+
+    if (!component) {
+      error(
+        'Sheet not found in Item Sheet Quadrone Runtime sheet map. Native sheets must be passed to the runtime constructor, and new sheets must be registered via the sheet registration function.'
+      );
+    }
+
+    return component;
+  }
+
   getDefaultTabIds(type: string): string[] {
-    // TODO:
+    return [...(this._sheetMap.get(type)?.defaultTabs ?? [])];
   }
 
   registerContent(
@@ -69,256 +162,410 @@ class ItemSheetQuadroneRuntime {
   }
 }
 
-const singleton = new ItemSheetQuadroneRuntime([
-  {
-    id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
-    itemCount: (context) =>
-      Array.from(context.document.system.activities).filter((x) =>
-        Activities.isConfigurable(x)
-      ).length,
-    layout: 'quadrone',
-    title: 'DND5E.ACTIVITY.Title.other',
-    content: {
-      component: ItemActivitiesQuadroneTab,
-      type: 'svelte',
+const singleton = new ItemSheetQuadroneRuntime(
+  [
+    {
+      id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+      itemCount: (context) =>
+        Array.from(context.document.system.activities).filter((x) =>
+          Activities.isConfigurable(x)
+        ).length,
+      layout: 'quadrone',
+      title: 'DND5E.ACTIVITY.Title.other',
+      content: {
+        component: ItemActivitiesQuadroneTab,
+        type: 'svelte',
+      },
+      enabled: (context: ItemSheetQuadroneContext) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([
+        CONSTANTS.ITEM_TYPE_CONSUMABLE,
+        CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        CONSTANTS.ITEM_TYPE_FACILITY,
+        CONSTANTS.ITEM_TYPE_FEAT,
+        CONSTANTS.ITEM_TYPE_SPELL,
+        CONSTANTS.ITEM_TYPE_TOOL,
+        CONSTANTS.ITEM_TYPE_WEAPON,
+      ]),
     },
-    enabled: (context: ItemSheetQuadroneContext) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([
-      CONSTANTS.ITEM_TYPE_CONSUMABLE,
-      CONSTANTS.ITEM_TYPE_EQUIPMENT,
-      CONSTANTS.ITEM_TYPE_FACILITY,
-      CONSTANTS.ITEM_TYPE_FEAT,
-      CONSTANTS.ITEM_TYPE_SPELL,
-      CONSTANTS.ITEM_TYPE_TOOL,
-      CONSTANTS.ITEM_TYPE_WEAPON,
-    ]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
-    itemCount: (context) =>
-      Array.from(context.document.system.advancement).length,
-    layout: 'quadrone',
-    title: 'DND5E.AdvancementTitle',
-    content: {
-      component: ItemAdvancementQuadroneTab,
-      type: 'svelte',
+    {
+      id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+      itemCount: (context) =>
+        Array.from(context.document.system.advancement).length,
+      layout: 'quadrone',
+      title: 'DND5E.AdvancementTitle',
+      content: {
+        component: ItemAdvancementQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([
+        CONSTANTS.ITEM_TYPE_BACKGROUND,
+        CONSTANTS.ITEM_TYPE_CLASS,
+        CONSTANTS.ITEM_TYPE_FEAT,
+        CONSTANTS.ITEM_TYPE_SUBCLASS,
+        CONSTANTS.ITEM_TYPE_RACE,
+      ]),
     },
-    types: new Set<string>([
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemClassDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_CLASS]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemConsumableDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      enabled: (context) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_CONSUMABLE]),
+    },
+    {
+      id: CONSTANTS.TAB_CONTAINER_CONTENTS,
+      layout: 'quadrone',
+      title: 'DND5E.Contents',
+      content: {
+        component: ItemContainerContentsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemBackgroundDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_BACKGROUND]),
+    },
+    /**
+     * Details form for containers.
+     */
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemContainerDetailsQuadronTab,
+        type: 'svelte',
+      },
+      enabled: (context) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemEquipmentDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      enabled: (context) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_EQUIPMENT]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemFacilityDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_FACILITY]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemFeatDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_FEAT]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemLootDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      enabled: (context) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_LOOT]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemSpellDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_SPELL]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemSubclassDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_SUBCLASS]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemToolDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      enabled: (context) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_TOOL]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemWeaponDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      enabled: (context) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_WEAPON]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Details',
+      content: {
+        component: ItemSpeciesDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([CONSTANTS.ITEM_TYPE_RACE]),
+    },
+    {
+      id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+      layout: 'quadrone',
+      title: 'DND5E.Description',
+      content: {
+        component: ItemDescriptionsQuadroneTab,
+        type: 'svelte',
+      },
+      types: new Set<string>([
+        CONSTANTS.ITEM_TYPE_BACKGROUND,
+        CONSTANTS.ITEM_TYPE_CLASS,
+        CONSTANTS.ITEM_TYPE_CONSUMABLE,
+        CONSTANTS.ITEM_TYPE_CONTAINER,
+        CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        CONSTANTS.ITEM_TYPE_FACILITY,
+        CONSTANTS.ITEM_TYPE_FEAT,
+        CONSTANTS.ITEM_TYPE_LOOT,
+        CONSTANTS.ITEM_TYPE_RACE,
+        CONSTANTS.ITEM_TYPE_SPELL,
+        CONSTANTS.ITEM_TYPE_SUBCLASS,
+        CONSTANTS.ITEM_TYPE_TOOL,
+        CONSTANTS.ITEM_TYPE_WEAPON,
+      ]),
+    },
+    {
+      id: CONSTANTS.TAB_EFFECTS,
+      itemCount: (context) => Array.from(context.document?.effects).length,
+      layout: 'quadrone',
+      title: 'DND5E.Effects',
+      content: {
+        component: ItemEffectsQuadroneTab,
+        type: 'svelte',
+      },
+      enabled: (context) =>
+        context.document.system.identified !== false ||
+        FoundryAdapter.isInGmEditMode(context.document),
+      types: new Set<string>([
+        CONSTANTS.ITEM_TYPE_CONSUMABLE,
+        CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        CONSTANTS.ITEM_TYPE_FEAT,
+        CONSTANTS.ITEM_TYPE_SPELL,
+        CONSTANTS.ITEM_TYPE_TOOL,
+        CONSTANTS.ITEM_TYPE_WEAPON,
+      ]),
+    },
+  ],
+  // Default Tab IDs for each Item Type
+  [
+    [
       CONSTANTS.ITEM_TYPE_BACKGROUND,
+      {
+        component: BackgroundSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_CLASS,
-      CONSTANTS.ITEM_TYPE_FEAT,
-      CONSTANTS.ITEM_TYPE_SUBCLASS,
-      CONSTANTS.ITEM_TYPE_RACE,
-    ]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemClassDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_CLASS]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemConsumableDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    enabled: (context) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_CONSUMABLE]),
-  },
-  {
-    id: CONSTANTS.TAB_CONTAINER_CONTENTS,
-    layout: 'quadrone',
-    title: 'DND5E.Contents',
-    content: {
-      component: ItemContainerContentsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemBackgroundDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_BACKGROUND]),
-  },
-  /**
-   * Details form for containers.
-   */
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemContainerDetailsQuadronTab,
-      type: 'svelte',
-    },
-    enabled: (context) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemEquipmentDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    enabled: (context) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_EQUIPMENT]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemFacilityDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_FACILITY]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemFeatDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_FEAT]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemLootDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    enabled: (context) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_LOOT]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemSpellDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_SPELL]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemSubclassDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_SUBCLASS]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemToolDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    enabled: (context) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_TOOL]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemWeaponDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    enabled: (context) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_WEAPON]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Details',
-    content: {
-      component: ItemSpeciesDetailsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([CONSTANTS.ITEM_TYPE_RACE]),
-  },
-  {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    layout: 'quadrone',
-    title: 'DND5E.Description',
-    content: {
-      component: ItemDescriptionsQuadroneTab,
-      type: 'svelte',
-    },
-    types: new Set<string>([
-      CONSTANTS.ITEM_TYPE_BACKGROUND,
-      CONSTANTS.ITEM_TYPE_CLASS,
+      {
+        component: ClassSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_CONSUMABLE,
+      {
+        component: ConsumableSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_EFFECTS,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_CONTAINER,
+      {
+        component: ContainerSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_CONTAINER_CONTENTS,
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      {
+        component: EquipmentSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_EFFECTS,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_FACILITY,
+      {
+        component: FacilitySheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_FEAT,
+      {
+        component: FeatSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_EFFECTS,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_LOOT,
+      {
+        component: LootSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_RACE,
+      {
+        component: SpeciesSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_SPELL,
+      {
+        component: SpellSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_EFFECTS,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_SUBCLASS,
+      {
+        component: SubclassSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_TOOL,
+      {
+        component: ToolSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_EFFECTS,
+        ],
+      },
+    ],
+    [
       CONSTANTS.ITEM_TYPE_WEAPON,
-    ]),
-  },
-  {
-    id: CONSTANTS.TAB_EFFECTS,
-    itemCount: (context) => Array.from(context.document?.effects).length,
-    layout: 'quadrone',
-    title: 'DND5E.Effects',
-    content: {
-      component: ItemEffectsQuadroneTab,
-      type: 'svelte',
-    },
-    enabled: (context) =>
-      context.document.system.identified !== false ||
-      FoundryAdapter.isInGmEditMode(context.document),
-    types: new Set<string>([
-      CONSTANTS.ITEM_TYPE_CONSUMABLE,
-      CONSTANTS.ITEM_TYPE_EQUIPMENT,
-      CONSTANTS.ITEM_TYPE_FEAT,
-      CONSTANTS.ITEM_TYPE_SPELL,
-      CONSTANTS.ITEM_TYPE_TOOL,
-      CONSTANTS.ITEM_TYPE_WEAPON,
-    ]),
-  },
-]);
+      {
+        component: WeaponSheet,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_EFFECTS,
+        ],
+      },
+    ],
+  ]
+);
 
 export default singleton;

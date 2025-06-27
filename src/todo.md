@@ -5,10 +5,12 @@
 - [x] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
 - [x] Explore what it takes to implement item sheet tab settings per item type.
 - [x] Refactor: Add formal itemCount function that receives context and expects a number in return. It will then put a count on the tab strip when greater than 0.
-- [ ] Create ItemSheetQuadroneRuntime
+- [x] Create ItemSheetQuadroneRuntime
+- [ ] Refactor: consolidate getTabs() in actor sheet runtime. It's the same code over and over. Remove from actor quadrone sheets.
 - [ ] Add API documentation for limiting tabs by type for items.
 - [ ] Svelte derived data in the runtime classes could take away a lot of arbitrary work elsewhere.
   - [ ] Actor runtime
+- [ ] Refactor: delineate all detail tab IDs so that the runtime has a unique list of them.
 - [ ] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
   - [ ] Application layout
     - [ ] vertical tab strip
@@ -46,6 +48,8 @@
     - [ ] Tool
     - [ ] Weapon
   - [ ] Container
+- [ ] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
+  - [ ] Item, Character, NPC, Vehicle, Group
 - [ ] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
@@ -64,6 +68,7 @@
   - [ ] Sheet
   - [ ] World
 - [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
+- [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
 
 ### Everything after the short list
 

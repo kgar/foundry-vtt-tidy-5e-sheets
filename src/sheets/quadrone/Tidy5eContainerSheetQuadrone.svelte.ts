@@ -26,10 +26,9 @@ import type {
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
@@ -332,23 +331,9 @@ export class Tidy5eContainerSheetQuadrone
     };
 
     // Tabs
-    context.customContent = await ItemSheetRuntime.getContent(context);
+    context.customContent = await ItemSheetQuadroneRuntime.getContent(context);
 
-    const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(context);
-
-    const customTabs: Tab[] = await TabManager.prepareTabsForRender(
-      context,
-      eligibleCustomTabs
-    );
-
-    context.tabs =
-      // TODO: Eliminate null forgiving operator and temp field when items are fully converted.
-      ItemSheetRuntime.quadroneSheets[this.item.type]?.defaultTabs() ?? [];
-    context.tabs.push(...customTabs);
-
-    context.tabs = context.tabs.filter(
-      (t) => !t.condition || t.condition(this.document)
-    );
+    context.tabs = await ItemSheetQuadroneRuntime.getTabs(context);
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 

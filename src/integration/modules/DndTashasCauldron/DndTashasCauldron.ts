@@ -1,11 +1,9 @@
 import type { Tidy5eSheetsApi } from 'src/api';
 import { CONSTANTS } from 'src/constants';
 import type { ModuleIntegrationBase } from 'src/integration/integration-classes';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { settings } from 'src/settings/settings.svelte';
+import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import TattooSheetQuadrone from './TattooSheetQuadrone.svelte';
-import itemSheetTabs from 'src/runtime/item/item-sheet-tabs';
 import ItemTattooDetailsQuadroneTab from './ItemTattooDetailsQuadroneTab.svelte';
 import type { CONFIG as OriginalConfig } from 'src/foundry/config.types';
 
@@ -61,24 +59,35 @@ export class DndTashasCauldronModuleIntegration
       }
     );
 
-    // Establish tattoo sheet tabs
-    ItemSheetRuntime.quadroneSheets[
-      DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO
-    ] = {
-      Sheet: TattooSheetQuadrone,
-      defaultTabs: () => [
-        itemSheetTabs.quadroneDescriptions,
-        {
-          id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-          title: 'DND5E.Details',
-          content: {
-            component: ItemTattooDetailsQuadroneTab,
-            type: 'svelte',
-          },
-        },
-        itemSheetTabs.quadroneActivities,
-        itemSheetTabs.quadroneEffects,
-      ],
-    };
+    // Establish tattoo sheet and custom detail tab
+
+    ItemSheetQuadroneRuntime.registerItemSheet(
+      DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO,
+      {
+        component: TattooSheetQuadrone,
+        defaultTabs: [
+          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_EFFECTS,
+        ],
+      },
+      [
+        CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+        CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+        CONSTANTS.TAB_EFFECTS,
+      ]
+    );
+
+    ItemSheetQuadroneRuntime.registerTab({
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      title: 'DND5E.Details',
+      content: {
+        component: ItemTattooDetailsQuadroneTab,
+        type: 'svelte',
+      },
+      layout: 'quadrone',
+      types: new Set([DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO]),
+    });
   }
 }

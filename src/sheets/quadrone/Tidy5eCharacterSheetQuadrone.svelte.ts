@@ -287,7 +287,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         .sort(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
-    } else {
+    }
+
+    if (!selectedTabs?.length) {
       let defaultTabs =
         settings.value.tabConfiguration[context.document.documentName]?.[
           context.document.type
