@@ -36,6 +36,11 @@
 
   {#each config as entry}
     {@const tabId = getTabId(entry.documentName, entry.documentType)}
+    {@const title = localize('TIDY5E.TabSelection.Title', {
+      documentName: localize(
+        `TYPES.${entry.documentName}.${entry.documentType}`,
+      ),
+    })}
     <div
       class={[
         'tidy-tab',
@@ -46,14 +51,22 @@
       data-tab-contents-for={tabId}
       role="tabpanel"
     >
-      <h2>{localize(`TYPES.${entry.documentName}.${entry.documentType}`)}</h2>
+      <h2>
+        {title}
+      </h2>
       <SelectionListbox
         labelProp="title"
         valueProp="id"
         bind:leftItems={entry.unselected}
         bind:rightItems={entry.selected}
-        listboxCssClass="scroll-container"
-      ></SelectionListbox>
+      >
+        {#snippet leftHeader()}
+          <b>{localize('TIDY5E.TabSelection.AvailableHeader')}</b>
+        {/snippet}
+        {#snippet rightHeader()}
+          <b>{localize('TIDY5E.TabSelection.SelectedHeader')}</b>
+        {/snippet}
+      </SelectionListbox>
     </div>
   {/each}
 </div>
