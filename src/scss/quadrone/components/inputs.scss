@@ -452,6 +452,7 @@ select {
 
 &.theme-dark,
 .theme-dark {
+
   select,
   .input-group,
   input[type='text'],
@@ -467,6 +468,7 @@ select {
     }
 
     &:not(:disabled):not(.uninput) {
+
       &:hover,
       &:focus {
         background-color: var(--t5e-component-field-background-hover);

@@ -82,7 +82,7 @@
     background: var(--button-background);
     color: var(--button-text);
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: var(--button-background-hover);
       color: var(--button-text);
       border: 1px solid var(--button-border-hover);
@@ -116,7 +116,7 @@
     border-radius: 3px;
     box-shadow: none;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: var(--t5e-component-field-background-hover);
     }
   }
@@ -178,7 +178,7 @@
       // color: var(--icon-fill);
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: var(--button-background-hover);
 
       :where(i) {
@@ -200,7 +200,7 @@
     &.button-borderless {
       border-radius: 100%;
 
-      &:hover {
+      &:hover:not(:disabled) {
         background: rgba(0, 0, 0, 0.12);
       }
     }
@@ -216,11 +216,13 @@
     &:focus,
     &:active,
     &:focus-within {
-      background: transparent;
-      border-color: transparent;
-      box-shadow: none;
-      // text-shadow: var(--t5e-drop-shadow-field);
-      text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+      &:not(:disabled) {
+        background: transparent;
+        border-color: transparent;
+        box-shadow: none;
+        // text-shadow: var(--t5e-drop-shadow-field);
+        text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+      }
     }
   }
 
@@ -257,7 +259,7 @@
   gap: 0;
   height: var(--t5e-field-size-default);
 
-  &:hover {
+  &:hover:not(:disabled) {
     box-shadow: var(--t5e-drop-shadow-field-hover);
   }
 
@@ -268,7 +270,7 @@
     box-shadow: none;
     min-height: calc(var(--t5e-field-size-default) - 0.125rem);
 
-    &:hover {
+    &:hover:not(:disabled) {
       border-width: 0 0.0625rem 0 0;
     }
   }
