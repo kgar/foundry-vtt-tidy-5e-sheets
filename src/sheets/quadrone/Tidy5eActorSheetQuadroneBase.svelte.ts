@@ -100,6 +100,15 @@ export function Tidy5eActorSheetQuadroneBase<
               return this.isEditable && this.actor.isPolymorphed;
             },
           },
+          {
+            action: 'openTabConfiguration',
+            icon: 'fas fa-file-invoice',
+            label: 'TIDY5E.TabSelection.MenuOptionText',
+            ownership: 'OWNER',
+            visible: function (this: Tidy5eActorSheetQuadroneBase) {
+              return this.isEditable;
+            },
+          },
         ],
         resizable: true,
         positioned: true,
@@ -110,6 +119,11 @@ export function Tidy5eActorSheetQuadroneBase<
           this: Tidy5eActorSheetQuadroneBase
         ) {
           this.actor.revertOriginalForm();
+        },
+        openTabConfiguration: async function (
+          this: Tidy5eActorSheetQuadroneBase
+        ) {
+          // TODO: Open tab config!
         },
       },
       dragDrop: [
