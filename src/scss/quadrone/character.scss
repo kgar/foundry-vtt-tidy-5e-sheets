@@ -1513,6 +1513,25 @@
     }
   }
 
+  .limited-sheet {
+    &.sheet-header {
+      .character-vitals-container {
+        padding-bottom: 1.5rem;
+        max-width: 10rem;
+      }
+
+      .character-name {
+        margin-bottom: 1.5rem;
+      }
+    }
+
+    .editor-rendered-content {
+      border: none;
+      margin: var(--t5e-size-4x) 0;
+      padding: 0 var(--t5e-size-4x);
+    }
+  }
+
   @container subtitle (width < 600) {
     .hide-under-600 {
       display: none;
