@@ -70,7 +70,7 @@
 
 <div class={['journal-entry-selector']}>
   <nav class="pages-list">
-    <ol class="pages">
+    <ol class="pages flexcol">
       {#each entries as entry, i (entry.id)}
         <li
           class={['page', { selected: i === selectedIndex }]}
@@ -125,11 +125,14 @@
     {@const title = coalesce(selected.title, getFallbackTitle(selectedIndex))}
 
     <div class="title-container">
-      <h2 class="title">{title}</h2>
-      <a
-        class="button button-borderless button-icon-only edit"
-        onclick={() => edit(selected.id)}><i class="fa-solid fa-feather"></i></a
-      >
+      <h2 class="title flexrow">
+        <span class="flex1">{title}</span>
+        <a
+          class="button button-borderless button-icon-only edit flexshrink"
+          onclick={() => edit(selected.id)}><i class="fa-solid fa-feather"></i></a
+        >
+      </h2>
+      <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
     {#await enrichedPromise then enriched}
       <div class="editor" use:manageSecrets={{ document: context.document }}>
