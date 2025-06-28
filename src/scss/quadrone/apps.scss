@@ -134,6 +134,10 @@
     flex: 0 1 auto;
   }
 
+  .flexgap-1 {
+    gap: var(--t5e-size-1x);
+  }
+
   &.minimized .window-content {
     display: none;
     background: none;
@@ -753,8 +757,21 @@
     bottom: 0;
   }
 
+  .button-bar {
+    flex: 0;
+    display: flex;
+    gap: 0.25rem;
+
+    button {
+      flex: 1;
+    }
+  }
+
   // Theme Settings
   &.tidy-theme-settings {
+    .scrollable {
+      padding-bottom: var(--t5e-size-6x);
+    }
 
     .color-picker-preview {
       --size: 1.5rem;
@@ -765,6 +782,37 @@
       border-radius: 50%;
       cursor: pointer;
       border: 1px solid var(--t5e-component-field-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--t5e-transition-default);
+
+      i {
+        color: var(--t5e-color-text-disabled);
+      }
+
+      &:hover {
+        box-shadow: var(--t5e-drop-shadow-field-hover);
+
+        i {
+          color: var(--t5e-color-text-default);
+        }
+      }
+
+      &[style*="#"],
+      &[style*="rgb"],
+      &[style*="hsl"] {
+        i {
+          color: transparent;
+        }
+
+        &:hover {
+          i {
+            color: var(--t5e-color-text-oninverse-lighter);
+          }
+
+        }
+      }
     }
   }
 }

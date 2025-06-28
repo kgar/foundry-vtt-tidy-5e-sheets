@@ -61,7 +61,7 @@
                 field="name"
                 document={context.actor}
                 value={context.actor.name}
-                class="character-name flex1 h2"
+                class="character-name flex1 h1"
               />
             {:else}
               <h1 class="character-name flex1">{context.actor.name}</h1>

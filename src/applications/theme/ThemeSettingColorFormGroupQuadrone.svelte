@@ -41,13 +41,16 @@
 </script>
 
 <div class="form-group">
+  <!-- TODO: hightouch to backtrack on eyedropper  -->
   <label for={inputId}>{label}</label>
   <div class="form-fields">
     <label
       for="{inputId}-picker"
       class="color-picker-preview"
       style="--bg-color: {value};"
-    ></label>
+    >
+      <i class="fa-solid fa-eye-dropper"></i>
+    </label>
 
     <!-- This input is driving the Coloris color picker. -->
     <input
@@ -65,13 +68,14 @@
       id={inputId}
       {value}
       class="theme-color-textbox"
+      placeholder="#FFFFFF"
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />
 
     {#if eyeDropperEnabled}
       <button
         type="button"
-        class="button eye-dropper"
+        class="button button-borderless button-icon-only eye-dropper"
         onclick={() => activateEyeDropper()}
       >
         <i class="fa-solid fa-eye-dropper"></i>
@@ -81,7 +85,7 @@
     <button
       type="button"
       title={FoundryAdapter.localize('TIDY5E.ContextMenuActionDelete')}
-      class="button clear-color"
+      class="button button-borderless button-icon-only"
       onclick={() => {
         value = '';
       }}
