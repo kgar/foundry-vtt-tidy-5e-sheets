@@ -20,7 +20,7 @@ export type SectionSelectorContext = {
 };
 
 export class SectionSelectorApplication extends DocumentSheetDialog<
-  Partial<ApplicationConfiguration> | undefined,
+  DocumentSheetApplicationConfiguration,
   SectionSelectorContext
 >() {
   _prop: string;

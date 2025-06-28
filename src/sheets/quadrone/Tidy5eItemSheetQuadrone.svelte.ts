@@ -35,6 +35,7 @@ import {
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -67,7 +68,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [],
+      controls: [
+        {
+          action: 'openTabConfiguration',
+          icon: 'fas fa-file-invoice',
+          label: 'TIDY5E.TabSelection.MenuOptionText',
+          ownership: 'OWNER',
+          visible: function (this: Tidy5eItemSheetQuadrone) {
+            return this.isEditable;
+          },
+        },
+      ],
     },
     position: {
       width: 580,
@@ -76,6 +87,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     actions: {
       [ImportSheetControl.actionName]: async function (this: any) {
         await ImportSheetControl.importFromCompendium(this, this.document);
+      },
+      openTabConfiguration: async function (
+        this: Tidy5eItemSheetQuadrone
+      ) {
+        new SheetTabConfigurationQuadroneApplication({
+          document: this.document,
+        }).render({ force: true });
       },
     },
     dragDrop: [

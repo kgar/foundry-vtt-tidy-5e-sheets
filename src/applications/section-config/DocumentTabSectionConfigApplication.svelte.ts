@@ -16,7 +16,7 @@ type SectionConfigConstructorArgs = {
 };
 
 export class DocumentTabSectionConfigApplication extends DocumentSheetDialog<
-  DocumentSheetApplicationConfiguration | undefined,
+  DocumentSheetApplicationConfiguration,
   {}
 >() {
   sections = $state<DocumentTabSectionConfigItem[]>()!;

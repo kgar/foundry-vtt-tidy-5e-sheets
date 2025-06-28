@@ -1,5 +1,9 @@
 import { CONSTANTS } from 'src/constants';
-import type { ApplicationConfiguration, DocumentSheetConfiguration } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  DocumentSheetApplicationConfiguration,
+  DocumentSheetConfiguration,
+} from 'src/types/application.types';
 import { mount } from 'svelte';
 import ConfigureSections from './ConfigureSections.svelte';
 import type { TidySectionBase } from 'src/types/types';
@@ -45,7 +49,7 @@ export type ConfigureSectionsApplicationConstructorArgs = {
     tabId: string;
     formTitle: string;
   };
-} & Partial<DocumentSheetConfiguration>;
+} & DocumentSheetApplicationConfiguration;
 
 export type SectionConfigItem = {
   key: string;

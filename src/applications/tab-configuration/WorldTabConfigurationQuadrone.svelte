@@ -1,5 +1,4 @@
 <script lang="ts">
-  import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
   import type {
     WorldTabConfigContext,
     WorldTabConfigurationQuadroneApplication,
@@ -7,6 +6,7 @@
   import type { TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import TabConfigurationEntry from './parts/TabConfigurationEntry.svelte';
 
   interface Props {
     app: WorldTabConfigurationQuadroneApplication;
@@ -54,19 +54,7 @@
       <h2>
         {title}
       </h2>
-      <SelectionListbox
-        labelProp="title"
-        valueProp="id"
-        bind:leftItems={entry.unselected}
-        bind:rightItems={entry.selected}
-      >
-        {#snippet leftHeader()}
-          <b>{localize('TIDY5E.TabSelection.AvailableHeader')}</b>
-        {/snippet}
-        {#snippet rightHeader()}
-          <b>{localize('TIDY5E.TabSelection.SelectedHeader')}</b>
-        {/snippet}
-      </SelectionListbox>
+      <TabConfigurationEntry {entry} />
     </div>
   {/each}
 </div>

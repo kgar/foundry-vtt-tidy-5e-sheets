@@ -6,6 +6,7 @@ import { error } from 'src/utils/logging';
 import type {
   ApplicationClosingOptions,
   ApplicationRenderOptions,
+  DocumentSheetApplicationConfiguration,
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
@@ -23,10 +24,10 @@ export type ActorOriginSummaryContext = {
 };
 
 export default class ActorOriginSummaryConfigFormApplication extends DocumentSheetDialog<
-  Partial<DocumentSheetConfiguration> | undefined,
+  DocumentSheetApplicationConfiguration,
   ActorOriginSummaryContext
 >() {
-  static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
+  static DEFAULT_OPTIONS: Partial<DocumentSheetApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
       'sheet',

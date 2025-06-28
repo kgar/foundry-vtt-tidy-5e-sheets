@@ -3,17 +3,18 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type {
   ApplicationClosingOptions,
+  DocumentSheetApplicationConfiguration,
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { error } from 'src/utils/logging';
 
 export function DocumentSheetDialog<
-  TConstructorArgs extends Partial<DocumentSheetConfiguration> | undefined,
+  TConstructorArgs extends DocumentSheetApplicationConfiguration = DocumentSheetApplicationConfiguration,
   TContext extends any = {}
 >() {
   return class DocumentSheetDialog extends SvelteApplicationMixin<
-    Partial<DocumentSheetConfiguration>,
+    Partial<DocumentSheetConfiguration> & { document: any },
     TContext
   >(foundry.applications.api.DocumentSheetV2) {
     constructor(options: TConstructorArgs) {

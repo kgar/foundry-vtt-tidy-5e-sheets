@@ -36,7 +36,7 @@ export class ActorSheetQuadroneRuntime<
   async getTabs(context: TSheetContext): Promise<Tab[]> {
     let tabIds = this._tabs.map((x) => x.id);
 
-    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
+    const selectedTabs = TidyFlags.tabConfiguration.get(context.actor)?.selected ?? [];
 
     if (selectedTabs?.length) {
       tabIds = tabIds

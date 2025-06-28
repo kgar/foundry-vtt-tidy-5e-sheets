@@ -2,26 +2,10 @@
 
 ### The Short List
 
-- [ ] Set up new tab selection for quadrone sheets
-  - [ ] Character
-  - [ ] Items
-    - [ ] Background
-    - [ ] Class
-    - [ ] Consumable
-    - [ ] Equipment
-    - [ ] Facility
-    - [ ] Feat
-    - [ ] Loot
-    - [ ] Species
-    - [ ] Spell
-    - [ ] Subclass
-    - [ ] Tattoo
-    - [ ] Tool
-    - [ ] Weapon
-  - [ ] Container
 - [ ] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
   - [ ] Item, Character, NPC, Vehicle, Group
 - [ ] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
+- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Add API documentation for limiting tabs by type for items.
 - [ ] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
 - [ ] "Theme Settings" menu, change to "Tidy Theme Settings".
@@ -322,3 +306,20 @@ Limited:
     - [x] Merge Object to the save data
   - [x] Use Default logic
     - [x] Save `{}` to the setting
+- [x] Set up new tab selection for quadrone sheets
+  - [x] Character
+  - [x] Items
+    - [x] Background
+    - [x] Class
+    - [x] Consumable
+    - [x] Equipment
+    - [x] Facility
+    - [x] Feat
+    - [x] Loot
+    - [x] Species
+    - [x] Spell
+    - [x] Subclass
+    - [x] Tattoo
+    - [x] Tool
+    - [x] Weapon
+  - [x] Container

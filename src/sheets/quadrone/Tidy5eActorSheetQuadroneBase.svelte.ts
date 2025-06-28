@@ -40,6 +40,7 @@ import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
+import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -123,7 +124,9 @@ export function Tidy5eActorSheetQuadroneBase<
         openTabConfiguration: async function (
           this: Tidy5eActorSheetQuadroneBase
         ) {
-          // TODO: Open tab config!
+          new SheetTabConfigurationQuadroneApplication({
+            document: this.document,
+          }).render({ force: true });
         },
       },
       dragDrop: [

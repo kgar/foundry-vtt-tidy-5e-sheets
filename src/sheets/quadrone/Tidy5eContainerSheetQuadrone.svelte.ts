@@ -35,6 +35,7 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
@@ -84,13 +85,31 @@ export class Tidy5eContainerSheetQuadrone
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [],
+      controls: [
+        {
+          action: 'openTabConfiguration',
+          icon: 'fas fa-file-invoice',
+          label: 'TIDY5E.TabSelection.MenuOptionText',
+          ownership: 'OWNER',
+          visible: function (this: Tidy5eContainerSheetQuadrone) {
+            return this.isEditable;
+          },
+        },
+      ],
     },
     position: {
       width: 620,
       height: 580,
     },
-    actions: {},
+    actions: {
+      openTabConfiguration: async function (
+        this: Tidy5eContainerSheetQuadrone
+      ) {
+        new SheetTabConfigurationQuadroneApplication({
+          document: this.document,
+        }).render({ force: true });
+      },
+    },
     dragDrop: [
       {
         dragSelector: `[data-tidy-always-draggable]`,
