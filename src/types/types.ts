@@ -41,19 +41,19 @@ export type SvelteTabContent = {
   getContext?: (context: Map<any, any>) => Map<any, any>;
 };
 
-export type HtmlTabContent = {
+export interface RenderedHtml {
   type: 'html';
   html: string;
   cssClass?: string;
   renderScheme: RenderScheme;
-};
+}
 
-// TODO: Give better name; this is the prepared HTML that is ready to render
-export interface HtmlRuntimeContent {
+export interface RenderableHtml {
   type: 'html';
   html: string | ((data: any) => string);
   cssClass?: string;
   renderScheme: RenderScheme;
+  getData?: (context: any) => any | Promise<any>;
 }
 
 export interface OnRenderTabParams extends OnRenderParams {
@@ -64,9 +64,8 @@ export interface OnRenderTabParams extends OnRenderParams {
 export type Tab = {
   title: string;
   id: string;
-  content: SvelteTabContent | HtmlTabContent;
+  content: SvelteTabContent | RenderedHtml;
   onRender?: (params: OnRenderTabParams) => void;
-  activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
   condition?: (document: any) => boolean;
   iconClass?: string;
@@ -76,10 +75,9 @@ export type Tab = {
 export type CustomContent = {
   selector?: string;
   position?: string;
-  content: HtmlRuntimeContent;
+  content: RenderableHtml;
   onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (params: OnRenderParams) => void;
-  activateDefaultSheetListeners?: boolean;
 };
 
 export type RenderableCustomActorTrait = RegisteredCustomActorTrait;

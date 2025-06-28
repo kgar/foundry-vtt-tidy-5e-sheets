@@ -2,12 +2,6 @@
 
 ### The Short List
 
-- [x] Refactor: consolidate getTabs() in actor sheet runtime. It's the same code over and over. Remove from actor quadrone sheets.
-- [x] ~~Refactor: delineate all detail tab IDs so that the runtime has a unique list of them.~~ Nah
-- [ ] API: Upgrade HTML tab
-  - [ ] add optional `getData(context: any)` function
-  - [ ] upgrade `html` prop to allow `string | (context: any) => string`
-  - [ ] update documentation to show new examples
 - [ ] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
   - [ ] Application layout
     - [ ] vertical tab strip
@@ -48,6 +42,9 @@
 - [ ] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
   - [ ] Item, Character, NPC, Vehicle, Group
 - [ ] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
+- [ ] Add API documentation for limiting tabs by type for items.
+- [ ] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
+- [ ] "Theme Settings" menu, change to "Tidy Theme Settings".
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Implement Responsive Tab Strip
@@ -66,6 +63,7 @@
   - [ ] World
 - [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
+- [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 
 ### Everything after the short list
 
@@ -317,3 +315,10 @@ Limited:
 - [x] Explore what it takes to implement item sheet tab settings per item type.
 - [x] Refactor: Add formal itemCount function that receives context and expects a number in return. It will then put a count on the tab strip when greater than 0.
 - [x] Create ItemSheetQuadroneRuntime
+- [x] Refactor: consolidate getTabs() in actor sheet runtime. It's the same code over and over. Remove from actor quadrone sheets.
+- [x] ~~Refactor: delineate all detail tab IDs so that the runtime has a unique list of them.~~ Nah
+- [x] API: Upgrade HTML tab
+  - [x] add optional `getData(context: any)` function
+  - [x] upgrade `html` prop to allow `string | (data: any) => string`
+  - [x] upgrade TabManager (and everything else) to handle this appropriately
+  - [x] update documentation to show new examples

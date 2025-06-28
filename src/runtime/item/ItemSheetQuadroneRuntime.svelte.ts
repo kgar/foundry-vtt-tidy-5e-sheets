@@ -94,19 +94,18 @@ class ItemSheetQuadroneRuntime {
   async getTabs(
     context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
   ) {
-    debugger;
     const type = context.item.type;
-    const itemTabs = this._tabs.filter((x) => !x.types || x.types.has(type));
-    let tabs = await TabManager.prepareTabsForRender(context, itemTabs);
+
+    let tabsForType = this._tabs.filter((x) => !x.types || x.types.has(type));
+
+    let tabIds = tabsForType.map((t) => t.id);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.item);
 
     if (selectedTabs?.length) {
-      tabs = tabs
-        .filter((t) => selectedTabs?.includes(t.id))
-        .sort(
-          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
-        );
+      tabIds = tabIds
+        .filter((t) => selectedTabs?.includes(t))
+        .sort((a, b) => selectedTabs.indexOf(a) - selectedTabs.indexOf(b));
     }
 
     if (!selectedTabs?.length) {
@@ -119,10 +118,16 @@ class ItemSheetQuadroneRuntime {
         defaultTabs = this.getDefaultTabIds(context.document.type);
       }
 
-      tabs = tabs
-        .filter((t) => defaultTabs?.includes(t.id))
-        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+      tabIds = tabIds
+        .filter((t) => defaultTabs?.includes(t))
+        .sort((a, b) => defaultTabs.indexOf(a) - defaultTabs.indexOf(b));
     }
+
+    let tabsToPrepare = tabIds
+      .map((tabId) => tabsForType.find((tab) => tab.id === tabId))
+      .filter((t) => !!t);
+
+    let tabs = await TabManager.prepareTabsForRender(context, tabsToPrepare);
 
     return tabs.filter((t) => !t.condition || t.condition(context.document));
   }

@@ -202,8 +202,6 @@ export const CONSTANTS = {
   SPELL_SLOT_TRACKER_MODE_PREFERENCE: 'spellSlotTrackerMode',
   SPELL_SLOT_TRACKER_MODE_PIPS: 'pips',
   SPELL_SLOT_TRACKER_MODE_VALUE_MAX: 'value-max',
-  CLASS_TIDY_USE_CORE_LISTENERS: 'tidy-use-core-listeners',
-  CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS: '.tidy-use-core-listeners',
   CLASS_ACTOR_SHEET_5E: 'ActorSheet5e',
   HTML_DYNAMIC_RENDERING_ATTRIBUTE: 'data-tidy-render-scheme="handlebars"',
   HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR:

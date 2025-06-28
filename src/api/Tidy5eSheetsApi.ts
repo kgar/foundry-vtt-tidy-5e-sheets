@@ -304,7 +304,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -395,7 +395,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -838,7 +838,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -907,7 +907,7 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -972,7 +972,7 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );

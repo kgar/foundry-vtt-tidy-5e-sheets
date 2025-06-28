@@ -34,16 +34,14 @@ export class ActorSheetQuadroneRuntime<
   }
 
   async getTabs(context: TSheetContext): Promise<Tab[]> {
-    let tabs = await TabManager.prepareTabsForRender(context, [...this._tabs]);
+    let tabIds = this._tabs.map((x) => x.id);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
     if (selectedTabs?.length) {
-      tabs = tabs
-        .filter((t) => selectedTabs?.includes(t.id))
-        .sort(
-          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
-        );
+      tabIds = tabIds
+        .filter((t) => selectedTabs?.includes(t))
+        .sort((a, b) => selectedTabs.indexOf(a) - selectedTabs.indexOf(b));
     } else {
       let defaultTabs =
         settings.value.tabConfiguration[context.document.documentName]?.[
@@ -54,12 +52,23 @@ export class ActorSheetQuadroneRuntime<
         defaultTabs = this.getDefaultTabIds();
       }
 
-      tabs = tabs
-        .filter((t) => defaultTabs?.includes(t.id))
-        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
+      tabIds = tabIds
+        .filter((t) => defaultTabs?.includes(t))
+        .sort((a, b) => defaultTabs.indexOf(a) - defaultTabs.indexOf(b));
     }
 
-    return tabs.filter((t) => !t.condition || t.condition(context.document));
+    let tabsToPrepare = tabIds
+      .map((tabId) => this._tabs.find((tab) => tab.id === tabId))
+      .filter((t) => !!t);
+
+    let renderableTabs = await TabManager.prepareTabsForRender(
+      context,
+      tabsToPrepare
+    );
+
+    return renderableTabs.filter(
+      (t) => !t.condition || t.condition(context.document)
+    );
   }
 
   getAllRegisteredTabs(): RegisteredTab<TSheetContext>[] {

@@ -9,9 +9,8 @@ import type { CONSTANTS } from 'src/constants';
 import type { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item.types';
 import type {
-  HtmlRuntimeContent,
   Actor5e,
-  HtmlTabContent,
+  RenderableHtml,
   OnRenderTabParams,
   SvelteTabContent,
   ActorSheetContextV1,
@@ -22,8 +21,7 @@ import type { Component } from 'svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export type RegisteredContent<TContext> = {
-  activateDefaultSheetListeners?: boolean;
-  content: SvelteTabContent | HtmlRuntimeContent | HandlebarsTemplateRenderer;
+  content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
   enabled?: (context: TContext) => boolean;
   getData?: (data: any) => any | Promise<any>;
   injectParams?: CustomContentInjectParams;
@@ -39,12 +37,11 @@ export type RegisteredTab<TContext> = {
   title: CustomTabTitle;
   iconClass?: string;
   id: string;
-  content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateRenderer;
+  content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
   onRender?: (args: OnRenderTabParams) => void;
   renderScheme?: RenderScheme;
   tabContentsClasses?: string[];
   getData?: (data: any) => any | Promise<any>;
-  activateDefaultSheetListeners?: boolean;
   autoHeight?: boolean;
   itemCount?: (context: any) => number;
   types?: Set<string>;

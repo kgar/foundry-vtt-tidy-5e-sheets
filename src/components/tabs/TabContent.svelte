@@ -21,12 +21,6 @@
   declareLocation('tab', tab.id);
   setContext(CONSTANTS.SVELTE_CONTEXT.TAB_ID, tab.id);
 
-  let useCoreListenersClass = $derived(
-    tab.activateDefaultSheetListeners
-      ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS
-      : '',
-  );
-
   let tidyTab: HTMLElement;
 
   onMount(() => {
@@ -58,7 +52,6 @@
     'tidy-tab',
     tab.id,
     tab.content.cssClass,
-    useCoreListenersClass,
     cssClass,
     { active },
   ]}
