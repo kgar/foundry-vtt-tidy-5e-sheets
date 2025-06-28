@@ -245,7 +245,6 @@
         img {
           width: 100%;
           height: 100%;
-          object-fit: cover;
           border: none;
           display: block;
 
@@ -1902,7 +1901,6 @@
         width: var(--roster-member-size, 3rem);
         height: var(--roster-member-size, 3rem);
         border-radius: 0.25rem;
-        object-fit: cover;
       }
 
       .broken-link-icon {
@@ -2072,7 +2070,6 @@
       }
 
       img {
-        object-fit: cover;
         width: var(--img-size);
         height: var(--img-size);
       }
