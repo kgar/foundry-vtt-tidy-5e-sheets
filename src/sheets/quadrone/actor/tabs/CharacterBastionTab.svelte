@@ -107,7 +107,7 @@
   <section class="name">
     <TextInputQuadrone
       document={context.actor}
-      class="font-title-medium"
+      class="font-title-medium h2"
       field="system.bastion.name"
       value={context.system.bastion.name}
       selectOnFocus={true}

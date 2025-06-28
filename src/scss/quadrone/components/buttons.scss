@@ -204,6 +204,10 @@
         background: rgba(0, 0, 0, 0.12);
       }
     }
+
+    &:disabled {
+      box-shadow: none;
+    }
   }
 
   /* Borderless button */

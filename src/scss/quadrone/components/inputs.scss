@@ -452,7 +452,7 @@ select {
 
 
 input[type='text']:not(:disabled):not(.uninput) {
-  --t5e-title-input-background: rgba(0, 0, 0, 0.4);
+  --t5e-title-input-background: var(--t5e-component-field-background-disabled);
 
   &.h1 {
     font: var(--t5e-font-title-large);
@@ -575,6 +575,14 @@ input[type='text']:not(:disabled):not(.uninput) {
   input[type='checkbox'] {
     &:not(:checked):disabled::before {
       color: var(--t5e-color-palette-grey-21);
+    }
+  }
+
+  input[type='text']:not(:disabled):not(.uninput) {
+
+    &.h1,
+    &.h2 {
+      --t5e-title-input-background: rgba(0, 0, 0, 0.4);
     }
   }
 }
