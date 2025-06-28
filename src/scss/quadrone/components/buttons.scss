@@ -85,7 +85,7 @@
     &:hover:not(:disabled) {
       background: var(--button-background-hover);
       color: var(--button-text);
-      border: 1px solid var(--button-border-hover);
+      border-color: var(--button-border-hover);
       box-shadow: var(--button-shadow-hover);
     }
   }
@@ -102,7 +102,7 @@
 
     &:hover:not(:disabled) {
       background: var(--button-background-hover);
-      border: 1px solid var(--button-border-hover);
+      border-color: var(--button-border-hover);
 
       :where(i) {
         color: var(--button-icon-hover);
@@ -275,7 +275,11 @@
     min-height: calc(var(--t5e-field-size-default) - 0.125rem);
 
     &:hover:not(:disabled) {
-      border-width: 0 0.0625rem 0 0;
+      outline: 1px solid var(--t5e-component-field-border-hover);
+
+      &:not(:last-child) {
+        border-width: 0 0.0625rem 0 0;
+      }
     }
   }
 
