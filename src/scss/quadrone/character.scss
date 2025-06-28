@@ -815,10 +815,8 @@
       background-color: transparent;
 
       &.character-name {
-        font: var(--t5e-font-title-large);
         flex: 1;
         margin: 0 var(--t5e-size-2x) var(--t5e-size-halfx) .5rem;
-        padding: 9px 7px 7px;
         height: 2.75rem;
       }
 
