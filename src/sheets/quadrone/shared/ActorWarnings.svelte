@@ -57,7 +57,6 @@
     { hidden: !warnings.length },
   ]}
 >
-  <!-- <i class="fas fa-triangle-exclamation"></i> -->
 </button>
 
 <dialog
