@@ -212,7 +212,7 @@ export function createSettings() {
           type: WorldTabConfigurationQuadroneApplication,
           restricted: true,
           truesight: true,
-        }
+        },
       },
       resetAllSettings: {
         options: {
@@ -708,30 +708,6 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<string[]>('defaultNpcSheetTabs');
         },
       },
-
-      // defaultNpcSheetQuadroneTabs: {
-      //   options: {
-      //     name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-      //     hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
-      //     scope: 'world',
-      //     config: false,
-      //     type: Array,
-      //     default: [
-      //       CONSTANTS.TAB_NPC_STATBLOCK,
-      //       CONSTANTS.TAB_ACTOR_INVENTORY,
-      //       CONSTANTS.TAB_ACTOR_SPELLBOOK,
-      //       CONSTANTS.TAB_EFFECTS,
-      //       CONSTANTS.TAB_ACTOR_BIOGRAPHY,
-      //       // TODO: REMOVE AFTER TAB SELECTION IS READY
-      //       CONSTANTS.TAB_CHARACTER_JOURNAL,
-      //     ],
-      //   },
-      //   get() {
-      //     return FoundryAdapter.getTidySetting<string[]>(
-      //       'defaultNpcSheetQuadroneTabs'
-      //     );
-      //   },
-      // },
 
       useClassicControlsForNpc: {
         options: {
