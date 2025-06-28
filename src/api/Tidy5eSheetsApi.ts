@@ -23,13 +23,13 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
-import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
+import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
-import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
+import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
-import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
-import VehicleSheetQuadroneRuntime from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
+import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 
 /**
@@ -304,10 +304,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapToRegisteredTabs(
-      tab,
-      options?.layout
-    );
+    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
 
     if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
@@ -395,10 +392,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapToRegisteredTabs(
-      tab,
-      options?.layout
-    );
+    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
 
     if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
@@ -838,10 +832,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapToRegisteredTabs(
-      tab,
-      options?.layout
-    );
+    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
 
     if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
@@ -907,10 +898,7 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTabs = TabManager.mapToRegisteredTabs(
-      tab,
-      options?.layout
-    );
+    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
 
     if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
@@ -972,10 +960,7 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTabs = TabManager.mapToRegisteredTabs(
-      tab,
-      options?.layout
-    );
+    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
 
     if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');

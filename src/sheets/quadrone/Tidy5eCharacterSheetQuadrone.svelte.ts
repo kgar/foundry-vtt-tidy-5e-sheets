@@ -34,7 +34,7 @@ import type {
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
+import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { TidyFlags } from 'src/foundry/TidyFlags';

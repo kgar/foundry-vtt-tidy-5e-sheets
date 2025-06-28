@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type {
   AdvancementItemContext,

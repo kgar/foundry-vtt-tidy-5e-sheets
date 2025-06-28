@@ -1,7 +1,7 @@
 import type { Tidy5eSheetsApi } from 'src/api';
 import { CONSTANTS } from 'src/constants';
 import type { ModuleIntegrationBase } from 'src/integration/integration-classes';
-import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import TattooSheetQuadrone from './TattooSheetQuadrone.svelte';
 import ItemTattooDetailsQuadroneTab from './ItemTattooDetailsQuadroneTab.svelte';

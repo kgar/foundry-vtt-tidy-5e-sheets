@@ -51,7 +51,7 @@ export type ItemSheetInfo = {
   defaultTabs: string[];
 };
 
-class ItemSheetQuadroneRuntime {
+class ItemSheetQuadroneRuntimeImpl {
   private _content: RegisteredContent<ItemSheetQuadroneContext>[] = $state([]);
   private _tabs: RegisteredTab<ItemSheetQuadroneContext>[] = $state([]);
   private _sheetMap: SvelteMap<string, ItemSheetInfo>;
@@ -174,7 +174,7 @@ class ItemSheetQuadroneRuntime {
   }
 }
 
-const singleton = new ItemSheetQuadroneRuntime(
+export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
   [
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
@@ -579,5 +579,3 @@ const singleton = new ItemSheetQuadroneRuntime(
     ],
   ]
 );
-
-export default singleton;

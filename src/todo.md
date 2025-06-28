@@ -2,8 +2,8 @@
 
 ### The Short List
 
-- [ ] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
-  - [ ] Item, Character, NPC, Vehicle, Group
+- [x] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
+  - [x] Item, Character, NPC, Vehicle, Group
 - [ ] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Add API documentation for limiting tabs by type for items.
