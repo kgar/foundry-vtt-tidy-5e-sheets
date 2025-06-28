@@ -1,5 +1,5 @@
 import type { NpcSheetQuadroneContext } from 'src/types/types';
-import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
+import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
 import NpcStatblockTab from 'src/sheets/quadrone/actor/tabs/NpcStatblockTab.svelte';
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
@@ -8,7 +8,7 @@ import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svel
 import CharacterBiographyTab from 'src/sheets/quadrone/actor/tabs/CharacterBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 
-const singleton = new ActorSheetRuntime<NpcSheetQuadroneContext>(
+const singleton = new ActorSheetQuadroneRuntime<NpcSheetQuadroneContext>(
   [
     {
       title: 'TIDY5E.StatblockTabName',

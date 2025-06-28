@@ -1,5 +1,5 @@
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
-import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
+import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
@@ -12,7 +12,7 @@ import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastion
 import CharacterActionsTab from 'src/sheets/quadrone/actor/tabs/CharacterActionsTab.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
 
-const singleton = new ActorSheetRuntime<CharacterSheetQuadroneContext>(
+const singleton = new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(
   [
     {
       title: 'DND5E.Effects',

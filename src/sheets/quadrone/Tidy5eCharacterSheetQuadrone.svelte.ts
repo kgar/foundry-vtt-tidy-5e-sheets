@@ -277,34 +277,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       context
     );
 
-    let tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
-
-    const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
-
-    if (selectedTabs?.length) {
-      tabs = tabs
-        .filter((t) => selectedTabs?.includes(t.id))
-        .sort(
-          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
-        );
-    }
-
-    if (!selectedTabs?.length) {
-      let defaultTabs =
-        settings.value.tabConfiguration[context.document.documentName]?.[
-          context.document.type
-        ]?.selected ?? [];
-
-      if (!defaultTabs.length) {
-        defaultTabs = CharacterSheetQuadroneRuntime.getDefaultTabIds();
-      }
-
-      tabs = tabs
-        .filter((t) => defaultTabs?.includes(t.id))
-        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
-    }
-
-    context.tabs = tabs;
+    context.tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
     return context;
   }

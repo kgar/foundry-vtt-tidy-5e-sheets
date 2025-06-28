@@ -1,8 +1,8 @@
 // TODO: Make the magic! ✨
 
 import type { GroupSheetQuadroneContext } from 'src/types/types';
-import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
+import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 
-const singleton = new ActorSheetRuntime<GroupSheetQuadroneContext>([], []);
+const singleton = new ActorSheetQuadroneRuntime<GroupSheetQuadroneContext>([], []);
 
 export default singleton;

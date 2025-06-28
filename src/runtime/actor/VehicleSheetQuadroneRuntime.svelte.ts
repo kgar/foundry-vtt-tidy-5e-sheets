@@ -1,7 +1,7 @@
 import type { VehicleSheetQuadroneContext } from 'src/types/types';
-import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
+import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 
 // TODO: Make the magic! ✨
-const singleton = new ActorSheetRuntime<VehicleSheetQuadroneContext>([], []);
+const singleton = new ActorSheetQuadroneRuntime<VehicleSheetQuadroneContext>([], []);
 
 export default singleton;
