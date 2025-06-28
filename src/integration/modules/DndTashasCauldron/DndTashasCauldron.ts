@@ -66,21 +66,21 @@ export class DndTashasCauldronModuleIntegration
       {
         component: TattooSheetQuadrone,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
         ],
       },
       [
-        CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-        CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+        CONSTANTS.TAB_ITEM_DESCRIPTION,
+        CONSTANTS.TAB_ITEM_ACTIVITIES,
         CONSTANTS.TAB_EFFECTS,
       ]
     );
 
     ItemSheetQuadroneRuntime.registerTab({
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       title: 'DND5E.Details',
       content: {
         component: ItemTattooDetailsQuadroneTab,

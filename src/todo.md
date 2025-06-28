@@ -3,10 +3,7 @@
 ### The Short List
 
 - [x] Refactor: consolidate getTabs() in actor sheet runtime. It's the same code over and over. Remove from actor quadrone sheets.
-- [ ] Add API documentation for limiting tabs by type for items.
-- [ ] Svelte derived data in the runtime classes could take away a lot of arbitrary work elsewhere.
-  - [ ] Actor runtime
-- [ ] Refactor: delineate all detail tab IDs so that the runtime has a unique list of them.
+- [x] ~~Refactor: delineate all detail tab IDs so that the runtime has a unique list of them.~~ Nah
 - [ ] API: Upgrade HTML tab
   - [ ] add optional `getData(context: any)` function
   - [ ] upgrade `html` prop to allow `string | (context: any) => string`

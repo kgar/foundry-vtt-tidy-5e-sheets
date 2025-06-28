@@ -55,7 +55,7 @@
   });
 </script>
 
-<TidyTable key={CONSTANTS.TAB_ITEM_ACTIVITIES_ID}>
+<TidyTable key={CONSTANTS.TAB_ITEM_ACTIVITIES}>
   {#snippet header()}
     <TidyTableHeaderRow class="theme-dark">
       <TidyTableHeaderCell primary={true} class="header-label-cell">

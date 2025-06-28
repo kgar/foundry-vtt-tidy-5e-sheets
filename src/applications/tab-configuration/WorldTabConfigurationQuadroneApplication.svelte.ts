@@ -8,9 +8,9 @@ import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadr
 import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import VehicleSheetQuadroneRuntime from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
-import type { ActorSheetRuntime } from 'src/runtime/ActorSheetRuntime.svelte';
 import type { TabConfiguration } from 'src/settings/settings.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
 
 type Tab = {
   id: string;
@@ -162,7 +162,7 @@ function mapTabIdsToOptions(all: Record<string, Tab>, tabIds: string[]) {
 }
 
 function getActorTabContext(
-  runtime: ActorSheetRuntime<any>,
+  runtime: ActorSheetQuadroneRuntime<any>,
   type: string,
   settings: TabConfiguration
 ): WorldTabConfigContextEntry {

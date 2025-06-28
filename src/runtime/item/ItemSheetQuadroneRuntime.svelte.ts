@@ -165,7 +165,7 @@ class ItemSheetQuadroneRuntime {
 const singleton = new ItemSheetQuadroneRuntime(
   [
     {
-      id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+      id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
         Array.from(context.document.system.activities).filter((x) =>
           Activities.isConfigurable(x)
@@ -190,7 +190,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       ]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+      id: CONSTANTS.TAB_ITEM_ADVANCEMENT,
       itemCount: (context) =>
         Array.from(context.document.system.advancement).length,
       layout: 'quadrone',
@@ -208,7 +208,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       ]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -218,7 +218,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CLASS]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -241,7 +241,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -254,7 +254,7 @@ const singleton = new ItemSheetQuadroneRuntime(
      * Details form for containers.
      */
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -267,7 +267,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_CONTAINER]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -280,7 +280,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_EQUIPMENT]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -290,7 +290,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_FACILITY]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -300,7 +300,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_FEAT]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -313,7 +313,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_LOOT]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -323,7 +323,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_SPELL]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -333,7 +333,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_SUBCLASS]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -346,7 +346,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_TOOL]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -359,7 +359,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_WEAPON]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+      id: CONSTANTS.TAB_ITEM_DETAILS,
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
@@ -369,7 +369,7 @@ const singleton = new ItemSheetQuadroneRuntime(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_RACE]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+      id: CONSTANTS.TAB_ITEM_DESCRIPTION,
       layout: 'quadrone',
       title: 'DND5E.Description',
       content: {
@@ -421,9 +421,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: BackgroundSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
       },
     ],
@@ -432,9 +432,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: ClassSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
       },
     ],
@@ -443,9 +443,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: ConsumableSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
         ],
       },
@@ -456,8 +456,8 @@ const singleton = new ItemSheetQuadroneRuntime(
         component: ContainerSheet,
         defaultTabs: [
           CONSTANTS.TAB_CONTAINER_CONTENTS,
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
         ],
       },
     ],
@@ -466,9 +466,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: EquipmentSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
         ],
       },
@@ -478,9 +478,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: FacilitySheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
         ],
       },
     ],
@@ -489,11 +489,11 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: FeatSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
-          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
       },
     ],
@@ -502,8 +502,8 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: LootSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
         ],
       },
     ],
@@ -512,9 +512,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: SpeciesSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
       },
     ],
@@ -523,9 +523,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: SpellSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
         ],
       },
@@ -535,9 +535,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: SubclassSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
       },
     ],
@@ -546,9 +546,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: ToolSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
         ],
       },
@@ -558,9 +558,9 @@ const singleton = new ItemSheetQuadroneRuntime(
       {
         component: WeaponSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-          CONSTANTS.TAB_ITEM_DETAILS_ID,
-          CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
         ],
       },

@@ -28,7 +28,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Interface for managing activities for an item.
    */
   activities: {
-    id: CONSTANTS.TAB_ITEM_ACTIVITIES_ID,
+    id: CONSTANTS.TAB_ITEM_ACTIVITIES,
     title: 'DND5E.ACTIVITY.Title.other',
     content: {
       component: ItemActivitiesTab,
@@ -40,7 +40,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Advancement create/read/update/delete interface.
    */
   advancement: {
-    id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+    id: CONSTANTS.TAB_ITEM_ADVANCEMENT,
     title: 'DND5E.AdvancementTitle',
     content: {
       component: ItemAdvancementTab,
@@ -52,7 +52,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for background items.
    */
   backgroundDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemBackgroundDetailsTab,
@@ -65,7 +65,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for class items.
    */
   classDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemClassDetailsTab,
@@ -78,7 +78,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for consumable items.
    */
   consumableDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemConsumableDetailsTab,
@@ -97,7 +97,7 @@ const itemSheetTabs: Record<string, Tab> = {
     },
   },
   containerDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemContainerDetailsTab,
@@ -110,7 +110,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Description editor and a header for mechanics/flavor.
    */
   description: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION,
     title: 'DND5E.Description',
     content: {
       component: ItemDescriptionTab,
@@ -122,7 +122,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * A sidebar with item inputs and properties, and a description editor.
    */
   descriptionWithSidebar: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION,
     title: 'DND5E.Description',
     content: {
       component: ItemDescriptionWithSidebarTab,
@@ -146,7 +146,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for equipment items.
    */
   equipmentDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemEquipmentDetailsTab,
@@ -156,7 +156,7 @@ const itemSheetTabs: Record<string, Tab> = {
     autoHeight: true,
   },
   facilityDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemFacilityDetailsTab,
@@ -167,7 +167,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for feat items.
    */
   featDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemFeatDetailsTab,
@@ -180,7 +180,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for loot.
    */
   lootDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemLootDetailsTab,
@@ -193,7 +193,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * A sidebar with species properties and configuration buttons, and a description editor.
    */
   speciesDescription: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION,
     title: 'DND5E.Description',
     content: {
       component: ItemSpeciesDescriptionTab,
@@ -205,7 +205,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for species items.
    */
   speciesDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemSpeciesDetailsTab,
@@ -217,7 +217,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for spell items.
    */
   spellDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemSpellDetailsTab,
@@ -230,7 +230,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for subclass items.
    */
   subclassDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemSubclassDetailsTab,
@@ -243,7 +243,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for tool items.
    */
   toolDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemToolDetailsTab,
@@ -256,7 +256,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Details form for weapon items.
    */
   weaponDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    id: CONSTANTS.TAB_ITEM_DETAILS,
     title: 'DND5E.Details',
     content: {
       component: ItemWeaponDetailsTab,
