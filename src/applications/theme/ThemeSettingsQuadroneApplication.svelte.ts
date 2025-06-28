@@ -17,6 +17,7 @@ import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
   label: string;
@@ -44,6 +45,14 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     useSaturatedRarityColors: false,
   });
 
+  private get themeConfigOptions() {
+    return {
+      doc: this.document,
+      mergeParentDocumentSettings: true,
+      idOverride: this.id,
+    };
+  }
+
   constructor(options: ConstructorArgs = {}) {
     options.id = options?.document
       ? `tidy-theme-settings-${options.document.uuid.replaceAll('.', '-')}`
@@ -55,7 +64,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   static DEFAULT_OPTIONS: Partial<ConstructorArgs> = {
     classes: [CONSTANTS.MODULE_ID, 'sheet', 'quadrone', 'tidy-theme-settings'],
-    tag: 'form',
+    tag: 'div',
     sheetConfig: false,
     window: {
       frame: true,
@@ -100,7 +109,9 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   _getSettings() {
     let themeSettings = structuredClone(
       this.document
-        ? ThemeQuadrone.getSheetThemeSettings(this.document)
+        ? ThemeQuadrone.getSheetThemeSettings({
+            doc: this.document,
+          })
         : ThemeQuadrone.getWorldThemeSettings()
     );
 
@@ -135,7 +146,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
 
-  themeSettingsChangeHookId?: number;
+  themeSettingsSubscription?: Unsubscribable;
 
   async _renderFrame(options: ApplicationRenderOptions) {
     const element = await super._renderFrame(options);
@@ -144,27 +155,14 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       try {
         applyThemeToApplication(element, this.document);
 
-        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-          doc: this.document,
-          mergeParentDocumentSettings: true,
-          idOverride: this.id,
-        });
+        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
+          this.themeConfigOptions
+        );
 
-        this.themeSettingsChangeHookId =
-          TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe((doc?: any) => {
-            const appliesToThisSheet =
-              !!doc &&
-              (doc.uuid === this.document.uuid ||
-                doc.uuid === this.document.parent?.uuid);
-
-            if (appliesToThisSheet) {
-              ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-                doc: this.document,
-                mergeParentDocumentSettings: true,
-                idOverride: this.id,
-              });
-            }
-          });
+        this.themeSettingsSubscription =
+          ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
+            this.themeConfigOptions
+          );
       } catch (e) {
         error(
           'An error occurred while applying theme to application',
@@ -242,9 +240,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   /* -------------------------------------------- */
 
   async close(options: ApplicationClosingOptions = {}) {
-    TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(
-      this.themeSettingsChangeHookId
-    );
+    this.themeSettingsSubscription?.unsubscribe();
 
     await super.close(options);
   }

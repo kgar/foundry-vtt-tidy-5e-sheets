@@ -16,7 +16,6 @@ import type {
   LocationToSearchTextMap,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
-  MessageBus,
   Utilities,
   Tab,
 } from 'src/types/types';
@@ -48,7 +47,6 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
-  messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
     CONSTANTS.LOCATION_SECTION
@@ -99,8 +97,6 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
   _createComponent(node: HTMLElement): Record<string, any> {
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
-      [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
       [
         CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
         this.inlineToggleService,
@@ -245,8 +241,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
                   sections: sections,
                   tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
                   tabTitle: ItemSheetRuntime.getTabTitle(
-                    CONSTANTS.TAB_CONTAINER_CONTENTS,
-                    {}
+                    CONSTANTS.TAB_CONTAINER_CONTENTS
                   ),
                 },
                 {

@@ -2,6 +2,7 @@ import type { CONSTANTS } from 'src/constants';
 
 export type SheetTypeTabPreferences = {
   sort?: string;
+  sidebarExpanded?: boolean;
 };
 
 export type SheetPreference = {

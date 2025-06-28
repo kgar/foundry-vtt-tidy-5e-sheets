@@ -3,6 +3,6 @@
   import ToolsCard from '../parts/ToolsCard.svelte';
 </script>
 
-<SkillsCard />
+<SkillsCard allowToggle={true} />
 
 <ToolsCard />

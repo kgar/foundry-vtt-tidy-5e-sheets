@@ -14,6 +14,7 @@ import type {
   SupportedContent,
   ItemTabRegistrationOptions,
   HeaderControlRegistrationParams,
+  SupportedItemTab,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { HtmlContent } from './content/HtmlContent';
@@ -22,7 +23,7 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ConfigApi } from './config/ConfigApi';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
@@ -303,7 +304,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -394,7 +395,7 @@ export class Tidy5eSheetsApi {
       return;
     }
 
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -830,14 +831,14 @@ export class Tidy5eSheetsApi {
    * A tab ID is always required (see {@link TabId}).
    */
   registerItemTab(
-    tab: SupportedTab,
+    tab: SupportedItemTab,
     options?: ItemTabRegistrationOptions
   ): void {
     if (!TabManager.validateTab(tab)) {
       return;
     }
 
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -852,7 +853,19 @@ export class Tidy5eSheetsApi {
         registeredTab.autoHeight = options.autoHeight;
       }
 
-      ItemSheetRuntime.registerTab(registeredTab);
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        ItemSheetRuntime.registerTab(registeredTab);
+      }
+
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        ItemSheetQuadroneRuntime.registerTab(registeredTab);
+      }
     }
   }
 
@@ -894,7 +907,7 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );
@@ -959,7 +972,7 @@ export class Tidy5eSheetsApi {
     if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTabs = TabManager.mapCustomTabToRegisteredTabs(
+    const registeredTabs = TabManager.mapToRegisteredTabs(
       tab,
       options?.layout
     );

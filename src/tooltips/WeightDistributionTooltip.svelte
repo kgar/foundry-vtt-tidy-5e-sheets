@@ -12,7 +12,7 @@
 
   let { sheetDocument, fullWeight, currencyWeight }: Props = $props();
 
-  let itemsWeight = $derived(fullWeight - currencyWeight);
+  let itemsWeight = $derived((fullWeight - currencyWeight).toNearest(0.1));
 
   let tooltip: HTMLElement;
 

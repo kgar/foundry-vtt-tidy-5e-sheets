@@ -7,9 +7,12 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 700px;
   container-name: character-sheet;
   container-type: inline-size;
+
+  &.maximized {
+    min-width: 43.75rem;
+  }
 
   ::selection {
     background-color: var(--t5e-theme-color-default);

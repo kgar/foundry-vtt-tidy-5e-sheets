@@ -4,18 +4,14 @@ import { CONSTANTS } from 'src/constants';
 export function wrapCustomHtmlForRendering(
   html: string,
   renderScheme: RenderScheme,
-  id: string,
-  activateDefaultSheetListeners?: boolean
+  id: string
 ) {
   const renderingAttribute =
     renderScheme === 'handlebars'
       ? ` ${CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE}`
       : '';
-  const coreListenersTag = activateDefaultSheetListeners
-    ? ` class="${CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS}"`
-    : '';
   const groupId = getCustomContentGroupIdAttributeAndValue(id);
-  return `<div style="display: contents;"${renderingAttribute}${coreListenersTag} ${groupId}>${html}</div>`;
+  return `<div style="display: contents;"${renderingAttribute} ${groupId}>${html}</div>`;
 }
 
 function getCustomContentGroupIdAttributeAndValue(id: string) {

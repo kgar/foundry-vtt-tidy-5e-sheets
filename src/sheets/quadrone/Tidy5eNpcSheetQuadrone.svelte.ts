@@ -3,11 +3,9 @@ import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.sve
 import type {
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  CharacterItemPartitions,
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   LocationToSearchTextMap,
-  MessageBus,
   NpcItemContext,
   NpcSheetQuadroneContext,
 } from 'src/types/types';
@@ -25,19 +23,17 @@ import type {
 import { mount } from 'svelte';
 import NpcSheet from './actor/NpcSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Container } from 'src/features/containers/Container';
-import { TempDefaultNpcQuadroneTabs } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -47,7 +43,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
-  messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
     CONSTANTS.LOCATION_SECTION
@@ -69,19 +64,19 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
+    if (this.actor.limited) {
+      return this._createLimitedViewComponent(node);
+    }
+
     const component = mount(NpcSheet, {
       target: node,
       context: new Map<any, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
           this.inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -94,26 +89,13 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
           this.sectionExpansionTracker,
         ],
+        ...this._getActorSvelteContext(),
       ]),
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
-  }
-
-  _createAdditionalComponents(node: HTMLElement) {
-    const windowHeader = this.element.querySelector('.window-header');
-
-    const headerStart = mount(ActorHeaderStart, {
-      target: windowHeader,
-      anchor: windowHeader.querySelector('.window-title'),
-      context: new Map<string, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-      ]),
-    });
-
-    return [headerStart];
   }
 
   _showDeathSaves: boolean = false;
@@ -151,12 +133,24 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       })
     );
 
+    const enrichmentArgs = {
+      secrets: this.actor.isOwner,
+      rollData: actorContext.rollData,
+      relativeTo: this.actor,
+    };
+
     const context: NpcSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
       ),
       conditions: conditions,
       currencies,
+      enriched: {
+        biography: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.biography.value,
+          enrichmentArgs
+        ),
+      },
       features: [],
       inventory: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
@@ -198,12 +192,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     context.customContent = await NpcSheetQuadroneRuntime.getContent(context);
 
-    const defaultTabs: string[] = TempDefaultNpcQuadroneTabs;
-    let tabs = (await NpcSheetQuadroneRuntime.getTabs(context))
-      .filter((t) => defaultTabs?.includes(t.id))
-      .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
-
-    context.tabs = tabs;
+    context.tabs = await NpcSheetQuadroneRuntime.getTabs(context);
 
     return context;
   }

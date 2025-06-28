@@ -99,6 +99,11 @@
   display: none;
 }
 
+.tidy-tabs.vertical {
+  display: flex;
+  flex-direction: column;
+}
+
 &.dark,
 &.theme-dark,
 .dark,

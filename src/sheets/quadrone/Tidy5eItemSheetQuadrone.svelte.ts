@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type {
   AdvancementItemContext,
@@ -34,6 +34,7 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -42,7 +43,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     ItemSheetQuadroneContext
   >(foundry.applications.sheets.ItemSheetV2)
 ) {
-  currentTabId: string | undefined = undefined;
+  currentTabId: string = '';
   sectionExpansionTracker = new ExpansionTracker(
     true,
     CONSTANTS.LOCATION_SECTION
@@ -90,20 +91,25 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     submitOnClose: true,
   };
 
+  selectTab(tabId: string) {
+    this.onTabSelected(tabId);
+    this.render();
+  }
+
   _createComponent(node: HTMLElement): Record<string, any> {
-    const sheetComponent = ItemSheetRuntime.quadroneSheets[this.item.type];
+    const sheetComponent = ItemSheetQuadroneRuntime.getSheet(this.item.type);
 
     const context = new Map<any, any>([
       [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-      [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
       [
         CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
         this.sectionExpansionTracker,
       ],
+      [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
     ]);
 
     const component = sheetComponent
-      ? mount(sheetComponent.Sheet, {
+      ? mount(sheetComponent, {
           target: node,
           context: context,
         })
@@ -257,6 +263,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       coverOptions: Object.entries(CONFIG.DND5E.cover).map(
         ([value, label]) => ({ value, label })
       ),
+      currentTabId: this.currentTabId,
       customContent: [],
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
@@ -500,25 +507,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       }
     }
 
-    // Tabs
-    const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(context);
-
-    const customTabs: Tab[] = await TabManager.prepareTabsForRender(
-      context,
-      eligibleCustomTabs
-    );
-
-    let tabs =
-      ItemSheetRuntime.quadroneSheets[this.item.type]?.defaultTabs() ?? [];
-
-    tabs.push(...customTabs);
-
-    tabs = tabs.filter((t) => !t.condition || t.condition(this.document));
-
-    context.tabs = tabs;
+    context.tabs = await ItemSheetQuadroneRuntime.getTabs(context);
 
     // Custom Content
-    context.customContent = await ItemSheetRuntime.getContent(context);
+    context.customContent = await ItemSheetQuadroneRuntime.getContent(context);
 
     // Handle item subtypes.
     if (['feat', 'loot', 'consumable'].includes(this.document.type)) {
@@ -534,6 +526,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     }
 
     await this.item.system.getSheetData?.(context);
+
+    TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
     return context;
   }
@@ -1053,5 +1047,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     const recovery = this.item.system.toObject().uses.recovery;
     recovery[index][prop] = value;
     return this.submit({ updateData: { 'system.uses.recovery': recovery } });
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
   }
 }

@@ -24,3 +24,10 @@ export type ThemeQuadroneStyleDeclaration = {
   ruleset: ThemeQuadroneStyleRule[];
   identifier: string;
 };
+
+export type ThemeSettingsConfigurationOptions = {
+  doc?: any;
+  mergeParentDocumentSettings?: boolean;
+  settingsOverride?: ThemeSettings;
+  idOverride?: string;
+};

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { settings } from 'src/settings/settings.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
@@ -31,7 +32,10 @@
 </script>
 
 <div class="death-saves-overlay">
-  <div class="failures flexcol">
+  <div
+    class="failures flexcol"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
+  >
     {#each Array(halfSaves) as _, i}
       {@const filled = failures >= i + 1}
       {@const path = 'system.attributes.death.failure'}
@@ -68,10 +72,14 @@
       )}
     class="death-save-roll-button button button-borderless button-icon-only"
     data-tooltip="DND5E.DeathSave"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_ROLLER}
   >
     <i class="fas fa-dice-d20"></i>
   </button>
-  <div class="successes flexcol">
+  <div
+    class="successes flexcol"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES}
+  >
     {#each Array(halfSaves) as _, i}
       {@const filled = successes >= i + 1}
       {@const path = 'system.attributes.death.success'}

@@ -10,7 +10,6 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  AttributePinContext,
   CharacterClassEntryContext,
   TidyItemSectionBase,
   CharacterItemContext,
@@ -25,7 +24,6 @@ import type {
   FacilityOccupantContext,
   FavoriteContextEntry,
   LocationToSearchTextMap,
-  MessageBus,
   SpellcastingContext,
 } from 'src/types/types';
 import type {
@@ -36,13 +34,9 @@ import type {
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import CharacterSheetQuadroneRuntime, {
-  TempDefaultCharacterQuadroneTabs,
-} from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
-import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
+import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
-import { debug } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type {
   Activity5e,
@@ -62,16 +56,17 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { getModifierData } from 'src/utils/formatting';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
 ) {
   currentTabId: string;
+  currentSidebarTabId: string;
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
-  messageBus = $state<MessageBus>({ message: undefined });
   sectionExpansionTracker = new ExpansionTracker(
     true,
     CONSTANTS.LOCATION_SECTION
@@ -80,7 +75,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_CHARACTER_FAVORITES;
+    this.currentTabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+    this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_SKILLS;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -93,19 +89,19 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
+    if (this.actor.limited) {
+      return this._createLimitedViewComponent(node);
+    }
+
     const component = mount(CharacterSheet, {
       target: node,
       context: new Map<any, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-        [CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID, this.currentTabId],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
           this.inlineToggleService,
         ],
         [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
         [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
           this.itemFilterService.onFilter.bind(this.itemFilterService),
@@ -118,26 +114,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
           this.sectionExpansionTracker,
         ],
+        ...this._getActorSvelteContext(),
       ]),
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
-  }
-
-  _createAdditionalComponents(node: HTMLElement) {
-    const windowHeader = this.element.querySelector('.window-header');
-
-    const headerStart = mount(ActorHeaderStart, {
-      target: windowHeader,
-      anchor: windowHeader.querySelector('.window-title'),
-      context: new Map<string, any>([
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-      ]),
-    });
-
-    return [headerStart];
   }
 
   _showDeathSaves: boolean = false;
@@ -229,6 +212,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       },
       favorites: await this._prepareFavorites(),
       features: [],
+      initialSidebarTabId: this.currentSidebarTabId,
       inventory: [],
       senses: this._getSenses(),
       size: {
@@ -293,12 +277,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       context
     );
 
-    const defaultTabs: string[] = TempDefaultCharacterQuadroneTabs;
-    let tabs = (await CharacterSheetQuadroneRuntime.getTabs(context))
-      .filter((t) => defaultTabs?.includes(t.id))
-      .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
-
-    context.tabs = tabs;
+    context.tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
     return context;
   }

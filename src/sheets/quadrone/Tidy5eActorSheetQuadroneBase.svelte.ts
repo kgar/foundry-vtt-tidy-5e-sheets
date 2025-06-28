@@ -28,6 +28,7 @@ import type {
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorTraitContext,
+  MessageBus,
   SpecialTraitSectionField,
 } from 'src/types/types';
 import { splitSemicolons } from 'src/utils/array';
@@ -35,16 +36,12 @@ import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
 import { firstOfSet } from 'src/utils/set';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { mount } from 'svelte';
+import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
+import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
+import ActorWarnings from './shared/ActorWarnings.svelte';
 
-/*
-  TODO: Some things to remember to implement:
-    - Theme Settings
-    - Sheet Warnings UI / inspect warning
-    - Tab Selection / etc. whatever else goes with that
-    - Limited Sheet View
-    - (decide) Allow Effects Management feature
-    
-*/
+const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
 export function Tidy5eActorSheetQuadroneBase<
   TContext extends ActorSheetQuadroneContext
@@ -55,8 +52,10 @@ export function Tidy5eActorSheetQuadroneBase<
       foundry.applications.sheets.ActorSheetV2
     )
   ) {
-    itemFilterService: ItemFilterService;
     abstract currentTabId: string;
+    itemFilterService: ItemFilterService;
+    messageBus = $state<MessageBus>({ message: undefined });
+
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
 
     /**
@@ -134,6 +133,26 @@ export function Tidy5eActorSheetQuadroneBase<
       }`;
     }
 
+    selectTab(tabId: string) {
+      this.onTabSelected(tabId);
+      this.render();
+    }
+
+    _getActorSvelteContext(): [key: string, value: any][] {
+      return [
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
+          this.onTabSelected.bind(this),
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+      ];
+    }
+
+    /* -------------------------------------------- */
+    /*  Context Data Preparation                    */
+    /* -------------------------------------------- */
+
     async _prepareContext(options: any): Promise<ActorSheetQuadroneContext> {
       this.itemFilterService.refreshFilters();
 
@@ -198,6 +217,7 @@ export function Tidy5eActorSheetQuadroneBase<
           data: {},
           sections: [],
         },
+        currentTabId: this.currentTabId,
         isConcentrating,
         itemContext: {},
         items: Array.from(this.actor.items)
@@ -215,7 +235,10 @@ export function Tidy5eActorSheetQuadroneBase<
         token: this.token,
         traits: this._prepareTraits(),
         userPreferences: UserPreferencesService.get(),
-        warnings: foundry.utils.deepClone(this.actor._preparationWarnings),
+        warnings:
+          foundry.utils
+            .deepClone(this.actor._preparationWarnings)
+            .filter((w: any) => !isNil(w.message?.trim(), '')) ?? [],
         ...documentSheetContext,
       };
 
@@ -561,8 +584,72 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /* -------------------------------------------- */
+    /*  Component Management                        */
+    /* -------------------------------------------- */
+
+    _createAdditionalComponents(node: HTMLElement) {
+      if (this.actor.limited) {
+        return [];
+      }
+
+      const windowHeader = this.element.querySelector('.window-header');
+
+      const headerStart = mount(ActorHeaderStart, {
+        target: windowHeader,
+        anchor: windowHeader.querySelector('.window-title'),
+        context: new Map<string, any>([
+          [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        ]),
+      });
+
+      const warningHeaderControl = mount(ActorWarnings, {
+        target: windowHeader,
+        anchor: this.element.querySelector(
+          `.${POST_WINDOW_TITLE_ANCHOR_CLASS_NAME}`
+        ),
+        context: new Map<string, any>([
+          [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        ]),
+      });
+
+      return [headerStart, warningHeaderControl];
+    }
+
+    _createLimitedViewComponent(node: HTMLElement): Record<string, any> {
+      const component = mount(ActorLimitedSheet, {
+        target: node,
+        context: new Map<any, any>([
+          [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
+        ]),
+      });
+
+      return component;
+    }
+
+    /* -------------------------------------------- */
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
+
+    async _renderFrame(options: TidyDocumentSheetRenderOptions = {}) {
+      const html = await super._renderFrame(options);
+      if (!game.user.isGM && this.actor.limited) return html;
+
+      // Preparation warnings.
+      const postWindowTitleComponentAnchor = document.createElement('div');
+      postWindowTitleComponentAnchor.classList.add(
+        'hidden',
+        POST_WINDOW_TITLE_ANCHOR_CLASS_NAME
+      );
+      postWindowTitleComponentAnchor.role = 'presentation';
+
+      const header = html.querySelector('.window-header');
+      header
+        .querySelector('.window-title')
+        .insertAdjacentElement('afterend', postWindowTitleComponentAnchor);
+
+      return html;
+    }
+
     async _onRender(
       context: ActorSheetQuadroneContext,
       options: TidyDocumentSheetRenderOptions
@@ -852,7 +939,11 @@ export function Tidy5eActorSheetQuadroneBase<
           return;
         }
 
-        TidyFlags.documentJournal.sort(this.actor, sourceEntry.id, targetEntryId);
+        TidyFlags.documentJournal.sort(
+          this.actor,
+          sourceEntry.id,
+          targetEntryId
+        );
       } else {
         if (!sourceDocument) {
           return;
@@ -1268,6 +1359,14 @@ export function Tidy5eActorSheetQuadroneBase<
       );
 
       return this._onDropItemCreate(droppedItemData, event);
+    }
+
+    /* -------------------------------------------- */
+    /* SheetTabCacheable
+    /* -------------------------------------------- */
+
+    onTabSelected(tabId: string) {
+      this.currentTabId = tabId;
     }
   }
 

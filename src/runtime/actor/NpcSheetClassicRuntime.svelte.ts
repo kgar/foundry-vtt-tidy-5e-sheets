@@ -96,6 +96,9 @@ const defaultNpcClassicTabs: RegisteredTab<NpcSheetContext>[] = [
   },
 ];
 
-const singleton = new ActorSheetRuntime<NpcSheetContext>(defaultNpcClassicTabs);
+const singleton = new ActorSheetRuntime<NpcSheetContext>(
+  defaultNpcClassicTabs,
+  []
+);
 
 export default singleton;

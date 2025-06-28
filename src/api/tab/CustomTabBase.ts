@@ -68,12 +68,4 @@ export abstract class CustomTabBase {
    * An optional array of CSS classes to apply to the tab contents container.
    */
   abstract tabContentsClasses?: string[];
-
-  /**
-   * An optional override to whether the target tab should use default sheet event listeners.
-   * Defaults to `false`.
-   *
-   * @deprecated Tidy is moving to Application V2, and there will no longer be any default sheet listeners. Be sure to provide your own event handling for the content that is injected.
-   */
-  abstract activateDefaultSheetListeners?: boolean;
 }

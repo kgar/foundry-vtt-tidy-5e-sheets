@@ -56,7 +56,7 @@
 
 <ButtonWithOptionPanel
   buttonClasses="button-secondary button-icon-only button-toggle"
-  anchor="right"
+  side="right"
   onclick={(ev) => selected && onSortClicked(ev, selected)}
   buttonAttributes={{
     title: selected ? localize(selected.tooltip) : '',

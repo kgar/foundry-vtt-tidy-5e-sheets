@@ -38,12 +38,4 @@ export abstract class CustomContentBase {
    * Optional function which is called each time a change detection cycle occurs on the sheet. This is any time a Foundry Application would normally call `render()`.
    */
   abstract onRender?: (params: OnRenderParams) => void;
-
-  /**
-   * An optional override to whether the target content should use default sheet event listeners.
-   * Defaults to `false`.
-   *
-   * @deprecated Tidy is moving to Application V2, and there will no longer be any default sheet listeners. Be sure to provide your own event handling for the content that is injected.
-   */
-  abstract activateDefaultSheetListeners?: boolean;
 }

@@ -105,3 +105,41 @@
     }
   }
 }
+
+.selection-listbox {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+  max-height: inherit;
+  height: 100%;
+  gap: 0.5rem;
+
+  :where(.column-1) {
+    grid-column: 1;
+  }
+
+  :where(.column-2) {
+    grid-column: 2;
+  }
+
+  :where(.column-3) {
+    grid-column: 3;
+  }
+
+  .focused {
+    background-color: fuchsia;
+    color: white;
+  }
+
+  .selection-listbox-toolbar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+
+    :where(.selection-listbox-toolbar button) {
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}

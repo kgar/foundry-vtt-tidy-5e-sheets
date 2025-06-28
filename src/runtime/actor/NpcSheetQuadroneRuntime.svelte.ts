@@ -1,6 +1,5 @@
 import type { NpcSheetQuadroneContext } from 'src/types/types';
-import type { RegisteredTab } from '../types';
-import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
+import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
 import NpcStatblockTab from 'src/sheets/quadrone/actor/tabs/NpcStatblockTab.svelte';
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
@@ -9,18 +8,19 @@ import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svel
 import CharacterBiographyTab from 'src/sheets/quadrone/actor/tabs/CharacterBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 
-const defaultNpcQuadroneTabs: RegisteredTab<NpcSheetQuadroneContext>[] = [
-  {
-    title: 'TIDY5E.StatblockTabName',
-    content: {
-      component: NpcStatblockTab,
-      type: 'svelte',
+const singleton = new ActorSheetQuadroneRuntime<NpcSheetQuadroneContext>(
+  [
+    {
+      title: 'TIDY5E.StatblockTabName',
+      content: {
+        component: NpcStatblockTab,
+        type: 'svelte',
+      },
+      id: CONSTANTS.TAB_NPC_STATBLOCK,
+      layout: 'quadrone',
+      iconClass: 'fa-solid fa-wreath-laurel',
     },
-    id: CONSTANTS.TAB_NPC_STATBLOCK,
-    layout: 'quadrone',
-    iconClass: 'fa-solid fa-wreath-laurel',
-  },
-  {
+    {
       title: 'DND5E.Inventory',
       content: {
         component: ActorInventoryTab,
@@ -70,22 +70,16 @@ const defaultNpcQuadroneTabs: RegisteredTab<NpcSheetQuadroneContext>[] = [
       layout: 'quadrone',
       iconClass: 'fa-solid fa-notebook',
     },
-];
-
-/** Here today so I can worry about tab selection later */
-export const TempDefaultNpcQuadroneTabs = [
-  CONSTANTS.TAB_NPC_STATBLOCK,
-  CONSTANTS.TAB_ACTOR_INVENTORY,
-  CONSTANTS.TAB_ACTOR_SPELLBOOK,
-  CONSTANTS.TAB_EFFECTS,
-  CONSTANTS.TAB_ACTOR_BIOGRAPHY,
-  // TODO: REMOVE AFTER TAB SELECTION IS READY
-  CONSTANTS.TAB_CHARACTER_JOURNAL,
-];
-
-// TODO: Make the magic! ✨
-const singleton = new ActorSheetRuntime<NpcSheetQuadroneContext>(
-  defaultNpcQuadroneTabs
+  ],
+  [
+    CONSTANTS.TAB_NPC_STATBLOCK,
+    CONSTANTS.TAB_ACTOR_INVENTORY,
+    CONSTANTS.TAB_ACTOR_SPELLBOOK,
+    CONSTANTS.TAB_EFFECTS,
+    CONSTANTS.TAB_ACTOR_BIOGRAPHY,
+    // TODO: REMOVE AFTER WORLD TAB SELECTION IS READY
+    CONSTANTS.TAB_CHARACTER_JOURNAL,
+  ]
 );
 
 export default singleton;

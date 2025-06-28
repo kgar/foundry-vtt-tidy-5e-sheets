@@ -1,4 +1,8 @@
-import type { CustomContent, HtmlRuntimeContent } from 'src/types/types';
+import type {
+  CustomContent,
+  RenderedHtml,
+  RenderableHtml,
+} from 'src/types/types';
 import type { RegisteredContent, SheetLayout } from '../types';
 import { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import { error } from 'src/utils/logging';
@@ -20,7 +24,6 @@ export class CustomContentManager {
         content: await mapRenderableContent(context, content),
         position: content.injectParams?.position,
         selector: content.injectParams?.selector,
-        activateDefaultSheetListeners: content.activateDefaultSheetListeners,
         onContentReady: content.onContentReady,
         onRender: content.onRender,
       };
@@ -43,7 +46,7 @@ export class CustomContentManager {
     let registeredContent: RegisteredContent<any>[] = [];
 
     for (let layout of layoutPreference) {
-      let mappedContent: HtmlRuntimeContent | HandlebarsTemplateRenderer =
+      let mappedContent: RenderableHtml | HandlebarsTemplateRenderer =
         content instanceof HandlebarsContent
           ? new HandlebarsTemplateRenderer({
               path: content.path,
@@ -52,11 +55,10 @@ export class CustomContentManager {
               html: content.html,
               renderScheme: content.renderScheme,
               type: 'html',
-            } satisfies HtmlRuntimeContent);
+            } satisfies RenderableHtml);
 
       registeredContent.push({
         content: mappedContent,
-        activateDefaultSheetListeners: content.activateDefaultSheetListeners,
         enabled: content.enabled,
         injectParams: content.injectParams,
         layout: layout,
@@ -111,7 +113,7 @@ async function mapRenderableContent(
       html: await registeredContent.content.render(handlebarsData),
       renderScheme: registeredContent.renderScheme ?? 'handlebars',
       type: 'html',
-    } satisfies HtmlRuntimeContent;
+    } satisfies RenderedHtml;
   }
 
   error(
@@ -124,5 +126,5 @@ async function mapRenderableContent(
     html: '',
     renderScheme: 'force',
     type: 'html',
-  } satisfies HtmlRuntimeContent;
+  } satisfies RenderedHtml;
 }

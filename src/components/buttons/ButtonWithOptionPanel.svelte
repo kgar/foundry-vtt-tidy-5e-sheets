@@ -1,5 +1,6 @@
 <script lang="ts">
   import { longpress } from 'src/actions/longpress.svelte';
+  import { getPositioningStyles } from 'src/utils/positioning';
   import { tick, type Snippet } from 'svelte';
   import type { HTMLAttributes, MouseEventHandler } from 'svelte/elements';
 
@@ -7,7 +8,8 @@
     expanded?: boolean;
     active?: boolean;
     disabled?: boolean;
-    anchor?: 'left' | 'right';
+    direction?: 'up' | 'down';
+    side?: 'left' | 'right';
     children?: Snippet;
     menu?: Snippet;
     onclick?: MouseEventHandler<HTMLElement>;
@@ -21,7 +23,8 @@
     expanded = $bindable(false),
     active = false,
     disabled = false,
-    anchor = 'left',
+    side = 'left',
+    direction = 'down',
     children,
     menu: options,
     onclick,
@@ -32,9 +35,35 @@
     ...rest
   }: Props = $props();
 
-  let menuEl: HTMLElement;
+  let menuEl = $state<HTMLElement>();
+  let menuElId = `button-panel-menu-${foundry.utils.randomID()}`;
   let menuOpenerEl: HTMLElement;
   let longpressed = $state(false);
+
+  $effect(() => {
+    if (expanded) {
+      positionAndShowPopover();
+    } else {
+      menuEl?.hidePopover();
+    }
+  });
+
+  function positionAndShowPopover() {
+    if (!menuEl) {
+      return;
+    }
+
+    let styles = getPositioningStyles({
+      anchor: menuOpenerEl,
+      positioned: menuEl,
+      direction,
+      side,
+    });
+
+    Object.assign(menuEl.style, styles);
+
+    menuEl?.showPopover();
+  }
 
   function handleFocusOut(
     event: FocusEvent & { currentTarget: EventTarget & HTMLElement },
@@ -52,7 +81,7 @@
       return;
     }
 
-    menuEl.blur();
+    menuEl?.blur();
     expanded = false;
     longpressed = false;
   }
@@ -104,8 +133,10 @@
   </button>
 
   <menu
+    id={menuElId}
+    popover
     class:expanded
-    class="anchor-{anchor}"
+    class="anchor-{side}"
     onfocusout={handleFocusOut}
     tabindex={expanded ? 0 : null}
     bind:this={menuEl}

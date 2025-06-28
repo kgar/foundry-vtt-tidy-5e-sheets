@@ -20,7 +20,11 @@
 
   const localize = FoundryAdapter.localize;
 
-  let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
+  let selectedTabId: string = $state('');
+
+  $effect(() => {
+    selectedTabId = context.currentTabId;
+  });
 
   let itemNameEl: HTMLElement | undefined = $state();
 

@@ -1,6 +1,5 @@
 import type { CharacterSheetQuadroneContext } from 'src/types/types';
-import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
-import type { RegisteredTab } from '../types';
+import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
@@ -13,7 +12,7 @@ import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastion
 import CharacterActionsTab from 'src/sheets/quadrone/actor/tabs/CharacterActionsTab.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
 
-const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>[] =
+const singleton = new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(
   [
     {
       title: 'DND5E.Effects',
@@ -115,24 +114,19 @@ const defaultCharacterQuadroneTabs: RegisteredTab<CharacterSheetQuadroneContext>
       layout: 'quadrone',
       iconClass: 'fa-solid fa-chess-knight-piece',
     },
-  ];
-
-/** Here today so I can worry about tab selection later */
-export const TempDefaultCharacterQuadroneTabs = [
-  CONSTANTS.TAB_ACTOR_ACTIONS,
-  CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-  CONSTANTS.TAB_ACTOR_INVENTORY,
-  CONSTANTS.TAB_ACTOR_SPELLBOOK,
-  CONSTANTS.TAB_CHARACTER_FEATURES,
-  CONSTANTS.TAB_EFFECTS,
-  CONSTANTS.TAB_ACTOR_BIOGRAPHY,
-  CONSTANTS.TAB_CHARACTER_BASTION,
-  // TODO: REMOVE BEFORE GOING BETA
-  CONSTANTS.TAB_CHARACTER_JOURNAL,
-];
-
-const singleton = new ActorSheetRuntime<CharacterSheetQuadroneContext>(
-  defaultCharacterQuadroneTabs
+  ],
+  [
+    CONSTANTS.TAB_ACTOR_ACTIONS,
+    CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+    CONSTANTS.TAB_ACTOR_INVENTORY,
+    CONSTANTS.TAB_ACTOR_SPELLBOOK,
+    CONSTANTS.TAB_CHARACTER_FEATURES,
+    CONSTANTS.TAB_EFFECTS,
+    CONSTANTS.TAB_ACTOR_BIOGRAPHY,
+    CONSTANTS.TAB_CHARACTER_BASTION,
+    // TODO: REMOVE AFTER FINISHING DEFAULT WORLD TAB SETUP
+    CONSTANTS.TAB_CHARACTER_JOURNAL,
+  ]
 );
 
 export default singleton;

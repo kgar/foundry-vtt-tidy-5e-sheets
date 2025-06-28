@@ -1,13 +1,13 @@
 import { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import { HandlebarsTab } from 'src/api/tab/HandlebarsTab';
 import { HtmlTab } from 'src/api/tab/HtmlTab';
-import type { HtmlTabContent, Tab } from 'src/types/types';
+import type { RenderedHtml, SvelteTabContent, Tab } from 'src/types/types';
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { RegisteredTab, SheetLayout } from '../types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
-import type { SupportedTab } from 'src/api/api.types';
+import type { SupportedItemTab, SupportedTab } from 'src/api/api.types';
 import { SvelteTab } from 'src/api/tab/SvelteTab';
 
 export class TabManager {
@@ -27,7 +27,6 @@ export class TabManager {
           iconClass: sheetTab.iconClass,
           onRender: sheetTab.onRender,
           content: await getTabContent(context, sheetTab),
-          activateDefaultSheetListeners: sheetTab.activateDefaultSheetListeners,
           autoHeight: sheetTab.autoHeight,
         };
 
@@ -62,8 +61,8 @@ export class TabManager {
     return true;
   }
 
-  static mapCustomTabToRegisteredTabs(
-    tab: SupportedTab,
+  static mapToRegisteredTabs(
+    tab: SupportedTab | SupportedItemTab,
     layoutPreference?: SheetLayout | SheetLayout[]
   ): RegisteredTab<any>[] {
     layoutPreference ??= [CONSTANTS.SHEET_LAYOUT_ALL];
@@ -75,6 +74,13 @@ export class TabManager {
     let registeredTabs: RegisteredTab<any>[] = [];
 
     for (let layout of layoutPreference) {
+      let types: Set<string> | undefined;
+      if ('type' in tab && !isNil(tab.type, '')) {
+        types = new Set<string>(
+          typeof tab.type === 'string' ? [tab.type] : tab.type
+        );
+      }
+
       if (tab instanceof HandlebarsTab) {
         registeredTabs.push({
           content: new HandlebarsTemplateRenderer({ path: tab.path }),
@@ -87,7 +93,7 @@ export class TabManager {
           renderScheme: tab.renderScheme,
           tabContentsClasses: tab.tabContentsClasses,
           getData: tab.getData,
-          activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+          types,
         });
       } else if (tab instanceof HtmlTab) {
         registeredTabs.push({
@@ -96,6 +102,7 @@ export class TabManager {
             type: 'html',
             renderScheme: tab.renderScheme,
             cssClass: tab.tabContentsClasses.join(' '),
+            getData: tab.getData,
           },
           id: tab.tabId,
           title: tab.title,
@@ -105,7 +112,7 @@ export class TabManager {
           onRender: tab.onRender,
           renderScheme: tab.renderScheme,
           tabContentsClasses: tab.tabContentsClasses,
-          activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+          types,
         });
       } else if (tab instanceof SvelteTab) {
         // An external svelte tab should be instantiated
@@ -126,7 +133,7 @@ export class TabManager {
             onRender: tab.onRender,
             renderScheme: 'force',
             tabContentsClasses: tab.tabContentsClasses,
-            activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+            types,
           });
         }
       }
@@ -168,13 +175,26 @@ function getOrderedEnabledSheetTabs<TContext>(
   });
 }
 
-async function getTabContent(data: any, tab: RegisteredTab<any>) {
+async function getTabContent(
+  data: any,
+  tab: RegisteredTab<
+    SvelteTabContent | RenderedHtml | HandlebarsTemplateRenderer
+  >
+) {
   if ('type' in tab.content && tab.content.type === 'svelte') {
     return tab.content;
   }
 
   if ('type' in tab.content && tab.content.type === 'html') {
-    return tab.content;
+    let renderData = (await tab.content.getData?.(data)) ?? data;
+    let html = tab.content.html;
+
+    return {
+      html: typeof html === 'function' ? html(renderData) : html,
+      renderScheme: tab.content.renderScheme,
+      type: tab.content.type,
+      cssClass: tab.content.cssClass,
+    } satisfies RenderedHtml;
   }
 
   if (tab.content instanceof HandlebarsTemplateRenderer) {
@@ -186,7 +206,7 @@ async function getTabContent(data: any, tab: RegisteredTab<any>) {
       renderScheme: tab.renderScheme ?? 'handlebars',
       type: 'html',
       cssClass: tab.tabContentsClasses?.join(' '),
-    } satisfies HtmlTabContent;
+    } satisfies RenderedHtml;
   }
 
   error(
@@ -199,5 +219,5 @@ async function getTabContent(data: any, tab: RegisteredTab<any>) {
     html: '',
     renderScheme: 'force',
     type: 'html',
-  } satisfies HtmlTabContent;
+  } satisfies RenderedHtml;
 }

@@ -116,10 +116,13 @@
     });
   }
 
+  // TODO: Either move this to context prep or eliminate in favor of a pure CSS solution.
   let useSaturatedColors = $derived(
     settings.value.worldThemeSettings.useSaturatedRarityColors === true ||
-      ThemeQuadrone.getSheetThemeSettings(context.document, true)
-        ?.useSaturatedRarityColors === true,
+      ThemeQuadrone.getSheetThemeSettings({
+        doc: context.document,
+        mergeParentDocumentSettings: true,
+      })?.useSaturatedRarityColors === true,
   );
 
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.

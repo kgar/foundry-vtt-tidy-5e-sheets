@@ -31,7 +31,7 @@
 
 <ButtonWithOptionPanel
   active={filterButtonActive}
-  anchor="right"
+  side="right"
   bind:expanded={filterMenuExpanded}
   onclick={() => (filterMenuExpanded = !filterMenuExpanded)}
   buttonClasses="button-icon-only button-toggle"

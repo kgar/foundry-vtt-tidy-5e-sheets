@@ -12,6 +12,8 @@
   import CharacterSidebar from './character-parts/CharacterSidebar.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { SvelteSet } from 'svelte/reactivity';
+  import { untrack } from 'svelte';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -21,7 +23,30 @@
 
   let selectedTabId: string = $state('');
 
+  $effect(() => {
+    selectedTabId = context.currentTabId;
+  });
+
   let sidebarExpanded = $state(false);
+
+  // When the user changes tabs, check their preference on the new tab and apply expanded state.
+  $effect(() => {
+    const type = untrack(() => context.actor.type);
+
+    sidebarExpanded =
+      SheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
+        ?.sidebarExpanded == true;
+  });
+
+  // When the user expands or collapses the sidebar, remember their preference for this tab.
+  $effect(() => {
+    SheetPreferencesService.setDocumentTypeTabPreference(
+      untrack(() => context.actor.type),
+      untrack(() => selectedTabId),
+      'sidebarExpanded',
+      sidebarExpanded,
+    );
+  });
 
   let hpValueInputFocused = $state(false);
   let hpTempInputFocused = $state(false);

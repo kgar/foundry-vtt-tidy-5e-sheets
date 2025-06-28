@@ -8,14 +8,19 @@
   import type { ClassValue } from 'svelte/elements';
   import { SvelteSet } from 'svelte/reactivity';
 
+  export type TabStripInfo = Pick<
+    Tab,
+    'id' | 'title' | 'iconClass' | 'itemCount'
+  >;
+
   interface Props {
-    tabs: Tab[];
+    tabs: TabStripInfo[];
     selectedTabId?: string | undefined;
     extraTabs?: SvelteSet<string>;
     cssClass?: ClassValue;
     tabCssClass?: ClassValue;
     orientation?: 'horizontal' | 'vertical';
-    onTabSelected?: (selectedTab: Tab) => void;
+    onTabSelected?: (selectedTab: TabStripInfo) => void;
     tabEnd?: Snippet;
     sheet?: any;
     tabContext?: Record<string, any>;
@@ -42,7 +47,7 @@
 
   function onTabClicked(
     event: MouseEvent & { currentTarget: HTMLElement },
-    tab: Tab,
+    tab: TabStripInfo,
   ) {
     if (settings.value.truesight) {
       if (extraTabs && event.ctrlKey && selectedTabId !== tab.id) {
@@ -54,8 +59,11 @@
     selectTab(tab);
   }
 
-  function selectTab(tab: Tab) {
-    if (sheet?.element && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
+  function selectTab(tab: TabStripInfo) {
+    if (
+      !tab ||
+      (sheet?.element && !FoundryAdapter.onTabSelecting(sheet, tab.id))
+    ) {
       return;
     }
 
@@ -98,41 +106,14 @@
   }
 
   const localize = FoundryAdapter.localize;
-  const currentTabId = getContext<string>(
-    CONSTANTS.SVELTE_CONTEXT.CURRENT_TAB_ID,
-  );
-
-  let mounted = $state(false);
-  onMount(() => {
-    const initialTab = tabs.find((t) => t.id === currentTabId);
-    if (initialTab) {
-      selectTab(initialTab);
-    }
-    mounted = true;
-  });
 
   $effect(() => {
-    if (mounted && !tabs.some((tab) => tab.id === selectedTabId)) {
+    if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectTab(tabs[0]);
     }
   });
 
-  function resolveTabTitle(tab: Tab) {
-    try {
-      if (typeof tab.title === 'function') {
-        return tab.title({ ...tabContext, document: sheet.document });
-      }
-      return localize(tab.title);
-    } catch (e) {
-      let errorId = foundry.utils.randomID();
-      error('An error occurred while determining tab title', false, {
-        error: e,
-        tab,
-        errorId,
-      });
-      return `⚠ error ${errorId}`;
-    }
-  }
+  let itemCountContext = $derived({ ...tabContext, document: sheet.document });
 </script>
 
 <div
@@ -142,6 +123,7 @@
 >
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
+      {@const title = localize(tab.title)}
       <svelte:boundary
         onerror={(e) => {
           error('An error occurred while rendering a tab', false, {
@@ -150,10 +132,10 @@
           });
         }}
       >
-        {@const tabTitle = resolveTabTitle(tab)}
         {@const tabIsSelected =
           tab.id === selectedTabId || extraTabs?.has(tab.id)}
         {@const tabindex = tabIsSelected ? 0 : -1}
+        {@const itemCount = tab.itemCount?.(itemCountContext) ?? 0}
         <a
           class={[
             CONSTANTS.TAB_OPTION_CLASS,
@@ -170,13 +152,17 @@
           onclick={(ev) => onTabClicked(ev, tab)}
           onkeydown={(ev) => onKeyDown(ev, i)}
           {tabindex}
-          title={tabTitle}
+          {title}
         >
           {#if tab.iconClass}
             <i class={['tab-icon', tab.iconClass]}></i>
           {/if}
 
-          <span class="tab-title">{@html localize(tabTitle)}</span>
+          <span class="tab-title">{title}</span>
+
+          {#if itemCount > 0}
+            <span class="tab-title-count">{itemCount}</span>
+          {/if}
         </a>
       </svelte:boundary>
     {/each}

@@ -187,15 +187,6 @@ export class ItemSheetRuntime {
   };
 
   static quadroneSheets: Record<string, ItemSheetInfo> = {
-    [CONSTANTS.ITEM_TYPE_CONTAINER]: {
-      Sheet: ContainerSheetQuadrone,
-      defaultTabs: () => [
-        itemSheetTabs.quadroneContainerContents,
-        itemSheetTabs.quadroneDescriptions,
-        // TODO: Only show to GMs and users when identified
-        itemSheetTabs.quadroneContainerDetails,
-      ],
-    },
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheetQuadrone,
       defaultTabs: () => [
@@ -219,6 +210,15 @@ export class ItemSheetRuntime {
         itemSheetTabs.quadroneConsumableDetails,
         itemSheetTabs.quadroneActivities,
         itemSheetTabs.quadroneEffects,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_CONTAINER]: {
+      Sheet: ContainerSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneContainerContents,
+        itemSheetTabs.quadroneDescriptions,
+        // TODO: Only show to GMs and users when identified
+        itemSheetTabs.quadroneContainerDetails,
       ],
     },
     [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
@@ -253,6 +253,14 @@ export class ItemSheetRuntime {
       defaultTabs: () => [
         itemSheetTabs.quadroneDescriptions,
         itemSheetTabs.quadroneLootDetails,
+      ],
+    },
+    [CONSTANTS.ITEM_TYPE_RACE]: {
+      Sheet: SpeciesSheetQuadrone,
+      defaultTabs: () => [
+        itemSheetTabs.quadroneDescriptions,
+        itemSheetTabs.quadroneSpeciesDetails,
+        itemSheetTabs.quadroneAdvancement,
       ],
     },
     [CONSTANTS.ITEM_TYPE_SPELL]: {
@@ -290,30 +298,23 @@ export class ItemSheetRuntime {
         itemSheetTabs.quadroneEffects,
       ],
     },
-    [CONSTANTS.ITEM_TYPE_RACE]: {
-      Sheet: SpeciesSheetQuadrone,
-      defaultTabs: () => [
-        itemSheetTabs.quadroneDescriptions,
-        itemSheetTabs.quadroneSpeciesDetails,
-        itemSheetTabs.quadroneAdvancement,
-      ],
-    },
   };
 
   static registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
     this._customItemEquipmentTypeGroups.push(group);
   }
 
+  // TODO: Move to the Quadrone Runtime when the Classic Sheets are no more.
   static getCustomEquipmentTypeGroups() {
     return [...this._customItemEquipmentTypeGroups];
   }
 
-  static getTabTitle(tabId: string, tabContext: any) {
+  static getTabTitle(tabId: string) {
     try {
       let tabs = [...this._customTabs, ...Object.values(itemSheetTabs)];
       let tabTitle = tabs.find((t) => t.id === tabId)?.title;
       if (typeof tabTitle === 'function') {
-        tabTitle = tabTitle(tabContext);
+        tabTitle = tabTitle();
       }
       return tabTitle ? FoundryAdapter.localize(tabTitle) : tabId;
     } catch (e) {
@@ -322,7 +323,6 @@ export class ItemSheetRuntime {
         error: e,
         errorId,
         tabId,
-        tabContext,
       });
     }
   }

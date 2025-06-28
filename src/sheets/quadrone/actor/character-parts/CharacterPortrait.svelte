@@ -73,7 +73,6 @@
   }
 </script>
 
-<!-- TODO: Determine if we keep context menu here; some modules rely on it, like Tokenizer. -->
 <!-- TODO: Add switch for size if needed -->
 
   {#if settings.value.truesight}

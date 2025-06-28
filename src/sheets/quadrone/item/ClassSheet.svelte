@@ -14,7 +14,11 @@
 
   const localize = FoundryAdapter.localize;
 
-  let selectedTabId: string = $state(CONSTANTS.TAB_CONTAINER_CONTENTS);
+  let selectedTabId: string = $state('');
+
+  $effect(() => {
+    selectedTabId = context.currentTabId;
+  });
 
   let itemNameEl: HTMLElement | undefined = $state();
 
@@ -108,9 +112,10 @@
         <ItemName />
       </div>
       {#if subtitle}
-        <div class="subtitle">{subtitle}
+        <div class="subtitle">
+          {subtitle}
           {#if context.item.isOriginalClass}
-              <i class="fas fa-chess-queen advancement-class-indicator"></i>
+            <i class="fas fa-chess-queen advancement-class-indicator"></i>
           {/if}
         </div>
       {/if}

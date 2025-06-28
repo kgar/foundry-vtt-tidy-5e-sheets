@@ -7,7 +7,7 @@
   import VehicleSettingsTab from './tabs/VehicleSettingsTab.svelte';
   import ActionsListSettingsTab from './tabs/ActionsListSettingsTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
+  import { getContext, untrack } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import type {
     UserSettingsContext,
@@ -15,15 +15,15 @@
   } from './UserSettings.types';
   import ActivitiesSettingsTab from './tabs/ActivitiesSettingsTabs.svelte';
 
-  let selectedTabId = $state(
-    getContext<string>(CONSTANTS.SVELTE_CONTEXT.INITIAL_TAB_ID),
-  );
   let context = getContext<UserSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
+  
   let functions = getContext<UserSettingsFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );
+
+  let selectedTabId = $state('');
 
   let tabs: Tab[] = $derived.by(() => {
     const result: Tab[] = [

@@ -125,7 +125,8 @@ const defaultClassicCharacterTabs: RegisteredTab<CharacterSheetContext>[] = [
 ];
 
 const singleton = new ActorSheetRuntime<CharacterSheetContext>(
-  defaultClassicCharacterTabs
+  defaultClassicCharacterTabs,
+  []
 );
 
 export default singleton;

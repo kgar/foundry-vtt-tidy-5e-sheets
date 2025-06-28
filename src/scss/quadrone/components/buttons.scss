@@ -355,13 +355,10 @@
   }
 
   menu {
-    position: absolute;
     margin: 0;
     padding: 0.5rem 0.75rem;
-    top: 100%;
-    width: auto;
+    width: fit-content;
     padding: 0.5rem 0.75rem;
-    display: none;
     flex-direction: column;
     gap: 0.5rem;
     background: var(--t5e-component-card-darker);
@@ -370,14 +367,6 @@
     z-index: 2;
     white-space: nowrap;
     box-shadow: var(--t5e-drop-shadow-card);
-
-    &.anchor-left {
-      left: 0;
-    }
-
-    &.anchor-right {
-      right: 0;
-    }
 
     &.expanded {
       display: flex;
@@ -419,7 +408,7 @@
   }
 
   menu.expanded {
-    width: 20rem;
+    width: fit-content;
     border: 1px solid var(--t5e-component-field-border);
     display: flex;
     flex-direction: column;
