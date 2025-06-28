@@ -1,4 +1,5 @@
 .tidy5e-sheet.application:where(.quadrone.actor) {
+
   .window-header {
     .window-title {
       visibility: hidden;
@@ -403,13 +404,13 @@
     }
   }
 
-  .tidy-tab.journal.active {
-    display: flex;
-    flex-direction: row;
-  }
-
   .tidy-tab.journal {
     gap: 0.75rem;
+
+    &.active {
+      display: flex;
+      flex-direction: row;
+    }
 
     .journal-entry-selector {
       flex: 0;
@@ -420,9 +421,63 @@
       .pages-list {
         flex: 1;
         overflow-y: auto;
+      }
 
-        .page.selected {
-          background: fuchsia;
+      .pages {
+        margin: 0;
+        padding: 0;
+        list-style-position: inside;
+        gap: var(--t5e-size-halfx);
+      }
+
+      .page {
+        position: relative;
+        align-content: center;
+        border-radius: 0.125rem;
+        margin: 0;
+        padding: var(--t5e-size-1x) var(--t5e-size-2x);
+        min-height: var(--t5e-field-size-default);
+        cursor: pointer;
+        overflow: hidden;
+        transition: color var(--t5e-transition-default);
+
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(to right, var(--t5e-component-field-background), transparent);
+          opacity: 0;
+          transition: opacity var(--t5e-transition-default);
+          pointer-events: none;
+          z-index: -1;
+        }
+
+        &.selected {
+          font-weight: 500;
+
+          &::before {
+            opacity: 1;
+          }
+
+          &::marker {
+            color: var(--t5e-color-palette-gold-45);
+          }
+
+          &:hover::before {
+            background: linear-gradient(to right, var(--t5e-component-field-background-hover), transparent);
+          }
+        }
+
+        &:hover:not(.selected)::before {
+          background: linear-gradient(to right, var(--t5e-component-field-background-hover), transparent);
+          opacity: 1;
+        }
+
+        &::marker {
+          color: var(--t5e-color-text-gold-emphasis);
         }
       }
 
@@ -435,6 +490,7 @@
 
       .action-buttons {
         display: flex;
+        gap: 0.5rem;
 
         .add {
           flex: 1;
@@ -448,9 +504,6 @@
     }
 
     .title-container {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
 
       .title {
         flex: 1;

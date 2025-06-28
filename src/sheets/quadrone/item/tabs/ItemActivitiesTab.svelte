@@ -78,7 +78,7 @@
       <TidyActivityTableRow {activity}>
         {#snippet children()}
           <a
-            class={['tidy-table-button', 'tidy-table-row-use-button']}
+            class={['tidy-table-row-use-button']}
             onclick={(ev) => activity.doc.use({ ev })}
           >
             <img class="item-image" alt="" src={activity.img.src} />

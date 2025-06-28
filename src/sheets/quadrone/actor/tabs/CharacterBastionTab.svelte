@@ -107,7 +107,7 @@
   <section class="name">
     <TextInputQuadrone
       document={context.actor}
-      class="font-title-medium"
+      class="font-title-medium h2"
       field="system.bastion.name"
       value={context.system.bastion.name}
       selectOnFocus={true}
@@ -131,9 +131,16 @@
         <i class="fa-solid fa-building-columns"></i>
         {localize('DND5E.FACILITY.Types.Special.Label.other')}
         <span class="counter">
-          <span class="value {context.facilities.special.value > 0 ? 'color-text-default' : 'color-text-lightest'} font-label-medium">{context.facilities.special.value}</span>
+          <span
+            class="value {context.facilities.special.value > 0
+              ? 'color-text-default'
+              : 'color-text-lightest'} font-label-medium"
+            >{context.facilities.special.value}</span
+          >
           <span class="divider color-text-gold font-default-medium">/</span>
-          <span class="max color-text-default font-label-medium">{context.facilities.special.max}</span>
+          <span class="max color-text-default font-label-medium"
+            >{context.facilities.special.max}</span
+          >
         </span>
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -210,7 +217,7 @@
               data-prop="system.hirelings"
               use:applyDropzoneClass={'occupant-dropzone'}
             >
-              <div class="sub-header">
+              <div class="sub-header font-label-medium color-text-lighter">
                 {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
               </div>
               <ul class="slots hirelings unlist">
@@ -235,7 +242,7 @@
               data-prop="system.defenders"
               use:applyDropzoneClass={'occupant-dropzone'}
             >
-              <div class="sub-header">
+              <div class="sub-header font-label-medium color-text-lighter">
                 {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
               </div>
               <ul class="slots facility-occupants defenders">
@@ -260,7 +267,7 @@
               data-prop="system.trade.creatures"
               use:applyDropzoneClass={'occupant-dropzone'}
             >
-              <div class="sub-header">
+              <div class="sub-header font-label-medium color-text-lighter">
                 {localize('TIDY5E.Facilities.Creatures.Label')}
               </div>
               <ul class="slots creatures">
@@ -310,9 +317,16 @@
         <i class="fa-solid fa-house-turret"></i>
         {localize('DND5E.FACILITY.Types.Basic.Label.other')}
         <span class="counter">
-          <span class="value {context.facilities.basic.value > 0 ? 'color-text-default' : 'color-text-lightest'} font-label-medium">{context.facilities.basic.value}</span>
+          <span
+            class="value {context.facilities.basic.value > 0
+              ? 'color-text-default'
+              : 'color-text-lightest'} font-label-medium"
+            >{context.facilities.basic.value}</span
+          >
           <span class="divider color-text-gold font-default-medium">/</span>
-          <span class="max color-text-default font-label-medium">{context.facilities.basic.max}</span>
+          <span class="max color-text-default font-label-medium"
+            >{context.facilities.basic.max}</span
+          >
         </span>
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -414,7 +428,6 @@
 
 {#if hasDefenders}
   <section class="roster defenders">
-    
     <div class="bastion-header">
       <h3 class="font-title-small">
         <i class="fa-solid fa-shield"></i>
@@ -499,7 +512,6 @@
 {/if}
 
 <section class="description">
-  
   <div class="bastion-header">
     <h3 class="font-title-small">
       <i class="fa-solid fa-books"></i>
@@ -518,7 +530,7 @@
         field="system.bastion.description"
         enriched={context.bastion.description}
       ></SheetEditorV2>
-    {:else}
+    {:else if context.bastion.description}
       <div class="editor" use:manageSecrets={{ document: context.document }}>
         <div data-field="system.bastion.description" class="user-select-text">
           {@html context.bastion.description}

@@ -39,7 +39,7 @@
 
   <fieldset>
     <legend>
-      (Not Sure how to title this section)
+      (Localize) Sheet Theme
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
@@ -48,12 +48,15 @@
       bind:value={data.accentColor}
       label="(Localize) Accent Color"
     />
+    <p class="hint">
+      (Localize) For best results, choose a color near the center of the color palette.
+    </p>
 
     <div class="form-group">
       <label for="">(Localize) Header Background</label>
       <div class="form-fields">
         <input type="text" bind:value={data.headerBackground} />
-        <button type="button" class="button" onclick={pickHeaderBackground}>
+        <button type="button" class="button button-icon-only" onclick={pickHeaderBackground}>
           <i class="fa-solid fa-search"></i>
         </button>
       </div>
@@ -102,7 +105,7 @@
   </fieldset>
 </div>
 
-<div class="flexrow flex0">
+<div class="flexrow flexgap-1">
   <button
     type="button"
     class="button button-primary save-changes-btn"

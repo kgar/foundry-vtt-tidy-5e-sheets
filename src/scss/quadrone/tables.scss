@@ -150,80 +150,6 @@
 
   }
 
-  .tidy-table-row-use-button {
-    --t5e-use-button-border-color: var(--t5e-color-gold);
-    align-items: center;
-    align-self: center;
-    border-radius: 0.125rem;
-    border: 1px solid var(--t5e-use-button-border-color);
-    box-sizing: content-box;
-    cursor: pointer;
-    display: grid;
-    grid-template-columns: 1fr;
-    height: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
-    width: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
-    justify-content: center;
-    margin: 0.0625rem 0 0.0625rem 0.0625rem;
-    overflow: hidden;
-    position: relative;
-    transition: all var(--t5e-transition-default);
-
-    img {
-      border: 0;
-    }
-
-    i {
-      grid-column: 1;
-      font-size: 1.125rem;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0.0625rem;
-      left: 0;
-      display: flex;
-      /* Fix for font awesome ::before icon alignment */
-      align-items: center;
-      justify-content: center;
-      color: var(--t5e-color-text-gold-emphasis);
-      opacity: 0;
-      transition: all var(--t5e-transition-default);
-    }
-
-    .roll-prompt i {
-      bottom: 0;
-    }
-
-    // TODO: hightouch, please review this. kgar put this here to support svg images
-    dnd5e-icon {
-      --icon-size: calc(1.75rem - 0.125rem);
-      --icon-fill: var(--t5e-color-text-lighter);
-    }
-
-    img {
-      border-radius: 0.0625rem;
-      grid-column: 1;
-      transition: all var(--t5e-transition-default);
-    }
-
-    &:hover {
-      img {
-        opacity: 0;
-      }
-
-      // TODO: hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
-      dnd5e-icon {
-        --icon-fill: transparent;
-      }
-
-      i {
-        display: flex;
-        opacity: 1;
-      }
-
-      background: transparent;
-    }
-  }
-
   .tidy-table-row {
     --t5e-item-row-background: transparent;
 
@@ -245,8 +171,8 @@
 
     .item-image {
       background: var(--t5e-color-text-gold-emphasis);
-      width: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
-      height: calc(var(--t5e-icon-size-7x) - var(--t5e-size-halfx));
+      width: var(--t5e-icon-size-7x);
+      height: var(--t5e-icon-size-7x);
     }
 
     >* {
@@ -259,7 +185,7 @@
       background: transparent;
 
       .tidy-table-row-use-button {
-        border: 1px solid var(--t5e-color-palette-grey-40);
+        outline-color: var(--t5e-color-palette-grey-40);
       }
 
       .item-image {
@@ -288,17 +214,6 @@
       }
     }
 
-    &.equipped {
-      --t5e-item-row-background: var(--t5e-color-palette-grey-100);
-      background: linear-gradient(to right,
-          rgba(255, 255, 255, 0.24) 40%,
-          var(--t5e-color-palette-grey-100) 90%);
-
-      .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 40%);
-      }
-    }
-
     &.rarity {
 
       .common {
@@ -306,13 +221,12 @@
       }
 
       .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 10%, transparent 48%);
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 0%, transparent 32%);
       }
 
       .tidy-table-row-use-button {
         --t5e-use-button-border-color: var(--t5e-item-color);
-        outline: 1px solid var(--t5e-use-button-border-color);
-        border: 1px solid var(--t5e-use-button-border-color);
+        outline: 2px solid var(--t5e-use-button-border-color);
 
         i {
           color: oklch(from var(--t5e-item-color) calc(l * 0.85) calc(c * 1.2) h);
@@ -320,11 +234,21 @@
       }
     }
 
+    &.equipped {
+      --t5e-item-row-background: var(--t5e-color-palette-grey-100);
+      background: linear-gradient(to right,
+          var(--t5e-color-palette-grey-100) 10%,
+          rgba(255, 255, 255, 0.24) 50%);
+
+      .highlight {
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 48%);
+      }
+    }
+
     &.expanded {
-      background: linear-gradient(0deg,
-          rgba(255, 255, 255, 0.10) 0%,
-          rgba(255, 255, 255, 0.10) 100%),
-        var(--t5e-component-card-default);
+      background: linear-gradient(to right,
+          rgba(255, 255, 255, 1) 0%,
+          rgba(255, 255, 255, 0.48) 80%);
     }
 
     .item-state-indicator {
@@ -623,6 +547,83 @@
     }
   }
 
+
+  .tidy-table-row-use-button {
+    --t5e-use-button-border-color: var(--t5e-color-gold);
+    align-items: center;
+    align-self: center;
+    border-radius: 0.125rem;
+    outline: 1px solid var(--t5e-use-button-border-color);
+    outline-offset: -1px;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 1fr;
+    height: var(--t5e-icon-size-7x);
+    width: var(--t5e-icon-size-7x);
+    justify-content: center;
+    margin: 0.0625rem 0 0.0625rem 0.0625rem;
+    overflow: hidden;
+    position: relative;
+    transition: all var(--t5e-transition-default);
+
+    img {
+      border: 0;
+      position: relative;
+      z-index: -1;
+    }
+
+    i {
+      grid-column: 1;
+      font-size: 1.125rem;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0.0625rem;
+      left: 0;
+      display: flex;
+      /* Fix for font awesome ::before icon alignment */
+      align-items: center;
+      justify-content: center;
+      color: var(--t5e-color-text-gold-emphasis);
+      opacity: 0;
+      transition: all var(--t5e-transition-default);
+    }
+
+    .roll-prompt i {
+      bottom: 0;
+    }
+
+    // TODO: hightouch, please review this. kgar put this here to support svg images
+    dnd5e-icon {
+      --icon-size: calc(1.75rem - 0.125rem);
+      --icon-fill: var(--t5e-color-text-lighter);
+    }
+
+    img {
+      border-radius: 0.0625rem;
+      grid-column: 1;
+      transition: all var(--t5e-transition-default);
+    }
+
+    &:hover {
+      img {
+        opacity: 0;
+      }
+
+      // TODO: hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
+      dnd5e-icon {
+        --icon-fill: transparent;
+      }
+
+      i {
+        display: flex;
+        opacity: 1;
+      }
+
+      background: transparent;
+    }
+  }
+
   .tidy-table-row-container {
     &.context {
       box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent-color) inset;
@@ -767,7 +768,7 @@
     &.mode-always {
 
       .tidy-table-row-use-button {
-        outline: 1px solid var(--t5e-use-button-border-color);
+        outline: 2px solid var(--t5e-use-button-border-color);
       }
 
       .highlight {
@@ -879,8 +880,8 @@
 
       &.equipped {
         background: linear-gradient(to right,
-            transparent 50%,
-            var(--t5e-component-card-default) 95%);
+            var(--t5e-component-card-default) 10%,
+            transparent 60%);
 
         &.expanded {
           --t5e-item-row-background: rgba(255, 255, 255, 0.08);

@@ -155,7 +155,7 @@
       padding: var(--t5e-size-1x);
       margin: 0;
       background: var(--t5e-component-card-darker);
-      transition: background var(--t5e-transition-default);
+      transition: background var(--t5e-transition-default), color var(--t5e-transition-default);
       border-radius: var(--t5e-size-halfx);
       border: 1px solid var(--t5e-component-card-default);
       box-sizing: border-box;
@@ -183,6 +183,10 @@
 
       .flex1 {
         flex: 1;
+      }
+
+      &:hover span {
+        color: var(--t5e-color-text-default);
       }
 
       &:hover,

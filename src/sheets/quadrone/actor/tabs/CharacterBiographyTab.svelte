@@ -91,74 +91,89 @@
   {/key}
 {/if}
 
-<div class={{ hidden: editing }}>
-  <article>
+<div class="biography-grid" class:hidden={editing}>
+  <article style="grid-area: top;">
     <ul class="biography-entries">
       {#each bioFields as bioField (bioField.field)}
-        <li>
-          <span class="biography-entry-label">{localize(bioField.text)}:</span>
-          {#if context.unlocked}
+        <li class="form-group">
+          <label class="biography-entry-label" for={bioField.field}>{localize(bioField.text)}</label>
+          <!-- {#if context.unlocked} -->
+          <div class="form-fields">
             <TextInputQuadrone
+              id={bioField.field}
               document={context.actor}
               field={bioField.field}
               value={bioField.value}
               selectOnFocus={true}
               class="biography-entry-value"
+              disabled={!context.unlocked}
             />
-          {:else}
+          </div>
+          <!-- {:else}
             <span class="biography-entry-value">
               {bioField.value}
             </span>
-          {/if}
+          {/if} -->
         </li>
       {/each}
     </ul>
   </article>
 
-  {@render bioEditorEntry(
-    'DND5E.PersonalityTraits',
-    context.system.details.trait,
-    context.enriched.trait,
-    'system.details.trait',
-  )}
+  <div class="biography-left">
+    {@render bioEditorEntry(
+      'fa-puzzle-piece',
+      'DND5E.PersonalityTraits',
+      context.system.details.trait,
+      context.enriched.trait,
+      'system.details.trait',
+    )}
 
-  {@render bioEditorEntry(
-    'DND5E.Ideals',
-    context.system.details.ideal,
-    context.enriched.ideal,
-    'system.details.ideal',
-  )}
+    {@render bioEditorEntry(
+      'fa-seedling',
+      'DND5E.Ideals',
+      context.system.details.ideal,
+      context.enriched.ideal,
+      'system.details.ideal',
+    )}
 
-  {@render bioEditorEntry(
-    'DND5E.Bonds',
-    context.system.details.bond,
-    context.enriched.bond,
-    'system.details.bond',
-  )}
+    {@render bioEditorEntry(
+      'fa-link',
+      'DND5E.Bonds',
+      context.system.details.bond,
+      context.enriched.bond,
+      'system.details.bond',
+    )}
 
-  {@render bioEditorEntry(
-    'DND5E.Flaws',
-    context.system.details.flaw,
-    context.enriched.flaw,
-    'system.details.flaw',
-  )}
+    {@render bioEditorEntry(
+      'fa-heart-crack',
+      'DND5E.Flaws',
+      context.system.details.flaw,
+      context.enriched.flaw,
+      'system.details.flaw',
+    )}
+  </div>
 
-  {@render bioEditorEntry(
-    'DND5E.Appearance',
-    context.system.details.appearance,
-    context.enriched.appearance,
-    'system.details.appearance',
-  )}
+  <div class="biography-right">
+    {@render bioEditorEntry(
+      'fa-image-portrait',
+      'DND5E.Appearance',
+      context.system.details.appearance,
+      context.enriched.appearance,
+      'system.details.appearance',
+    )}
 
-  {@render bioEditorEntry(
-    'DND5E.Biography',
-    context.system.details.biography.value,
-    context.enriched.biography,
-    'system.details.biography.value',
-  )}
+    {@render bioEditorEntry(
+      'fa-book-user',
+      'DND5E.Biography',
+      context.system.details.biography.value,
+      context.enriched.biography,
+      'system.details.biography.value',
+    )}
+  </div>
 </div>
 
 {#snippet bioEditorEntry(
+  icon: string,
   label: string,
   value: string,
   enriched: string,
@@ -166,13 +181,17 @@
 )}
   <article class="biography-editor-container">
     <div class="biography-editor-title">
-      <span>{localize(label)}</span>
-      <a
-        class="icon-button"
-        onclick={(ev) => context.editable && edit(value, enriched, field)}
-      >
-        <i class="fa-solid fa-feather"></i>
-      </a>
+      <h3 class="font-title-small flexrow">
+        <i class="fa-solid {icon} flexshrink"></i>
+        <span class="flex1">{localize(label)}</span>
+        <a
+          class="button button-borderless button-icon-only flexshrink"
+          onclick={(ev) => context.editable && edit(value, enriched, field)}
+        >
+          <i class="fa-solid fa-feather"></i>
+        </a>
+      </h3> 
+      <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
     {#key enriched}
       <div class="editor" use:manageSecrets={{ document }}>

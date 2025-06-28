@@ -52,7 +52,7 @@
       document={app.document}
       field="{baseField}.title"
       value={title}
-      class="journal-page-title-input"
+      class="journal-page-title-input h2"
       placeholder={localize('JOURNAL.EntryTitle')}
     />
 

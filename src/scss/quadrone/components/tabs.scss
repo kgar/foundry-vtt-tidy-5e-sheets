@@ -1,10 +1,12 @@
 .tidy-tabs.character-tabs {
+
   display: flex;
   justify-content: center;
   align-items: stretch;
   gap: var(--t5e-size-6x);
+  overflow-x: auto;
 
-  > .tab-option {
+  >.tab-option {
     font: var(--t5e-font-label-medium);
     padding: 0.375rem 0rem;
     min-height: var(--t5e-field-size-default);
@@ -17,6 +19,7 @@
     box-shadow: none;
     transition: color, box-shadow, background-image, background-size,
       text-shadow var(--t5e-transition-default);
+    text-wrap: nowrap;
 
     &.active,
     &:hover {
@@ -27,19 +30,13 @@
     }
 
     &.active {
-      background: linear-gradient(
-          var(--t5e-theme-color-lightest),
-          var(--t5e-theme-color-default)
-        )
-        bottom no-repeat;
+      background: linear-gradient(var(--t5e-theme-color-lightest),
+          var(--t5e-theme-color-default)) bottom no-repeat;
       background-size: 100% 3px;
 
       &:hover {
-        background: linear-gradient(
-            var(--t5e-theme-color-default),
-            var(--t5e-theme-color-darkest)
-          )
-          bottom no-repeat;
+        background: linear-gradient(var(--t5e-theme-color-default),
+            var(--t5e-theme-color-darkest)) bottom no-repeat;
         background-size: 100% 3px;
       }
     }
@@ -75,29 +72,20 @@
     }
 
     &.active {
-      background: linear-gradient(
-          var(--t5e-theme-color-lightest),
-          var(--t5e-theme-color-default)
-        )
-        bottom no-repeat;
+      background: linear-gradient(var(--t5e-theme-color-lightest),
+          var(--t5e-theme-color-default)) bottom no-repeat;
       background-size: 100% 3px;
 
       &:hover {
-        background: linear-gradient(
-            var(--t5e-theme-color-default),
-            var(--t5e-theme-color-darkest)
-          )
-          bottom no-repeat;
+        background: linear-gradient(var(--t5e-theme-color-default),
+            var(--t5e-theme-color-darkest)) bottom no-repeat;
         background-size: 100% 3px;
       }
     }
 
     &:hover {
-      background: linear-gradient(
-          oklch(from var(--t5e-theme-color-default) l c h / 0.4),
-          oklch(from var(--t5e-theme-color-darker) l c h / 0.4)
-        )
-        bottom no-repeat;
+      background: linear-gradient(oklch(from var(--t5e-theme-color-default) l c h / 0.4),
+          oklch(from var(--t5e-theme-color-darker) l c h / 0.4)) bottom no-repeat;
       background-size: 100% 2px;
     }
 
@@ -121,6 +109,7 @@
 .dark,
 .theme-dark {
   .tidy-tabs.item-tabs {
+
     &:active,
     &:focus {
       text-shadow: 0 0 0.375rem rgba(192, 173, 129, 0.75);
