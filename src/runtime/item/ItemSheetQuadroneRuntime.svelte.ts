@@ -82,6 +82,10 @@ class ItemSheetQuadroneRuntime {
     });
   }
 
+  getSheetTypes() {
+    return Array.from(this._sheetMap).map(x =>x[0]);
+  }
+
   async getContent(
     context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
   ): Promise<CustomContent[]> {
@@ -132,8 +136,8 @@ class ItemSheetQuadroneRuntime {
     return tabs.filter((t) => !t.condition || t.condition(context.document));
   }
 
-  getAllRegisteredTabs(): RegisteredTab<ItemSheetQuadroneContext>[] {
-    return [...this._tabs];
+  getAllRegisteredTabs(type: string): RegisteredTab<ItemSheetQuadroneContext>[] {
+    return this._tabs.filter(t => t.types?.has(type) ?? true);
   }
 
   getSheet(type: string) {

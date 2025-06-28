@@ -2,26 +2,6 @@
 
 ### The Short List
 
-- [ ] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
-  - [ ] Application layout
-    - [ ] vertical tab strip
-      - [x] Character
-      - [x] NPC
-      - [x] Vehicle
-      - [x] Group
-      - [ ] All Registered Items
-    - [x] Viewing Area
-      - [x] Selection Listbox with tabs for appropriate sheet type
-      - [x] Reset to Default button (does not save, just resets the included excluded in memory)
-    - [x] Button bar
-      - [x] Save
-      - [x] Use Default (with confirmation)
-  - [x] Save logic
-    - [x] Map the form context to save data
-    - [x] Get the original data
-    - [x] Merge Object to the save data
-  - [x] Use Default logic
-    - [x] Save `{}` to the setting
 - [ ] Set up new tab selection for quadrone sheets
   - [ ] Character
   - [ ] Items
@@ -322,3 +302,23 @@ Limited:
   - [x] upgrade `html` prop to allow `string | (data: any) => string`
   - [x] upgrade TabManager (and everything else) to handle this appropriately
   - [x] update documentation to show new examples
+- [x] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
+  - [x] Application layout
+    - [x] vertical tab strip
+      - [x] Character
+      - [x] NPC
+      - [x] Vehicle
+      - [x] Group
+      - [x] All Registered Items
+    - [x] Viewing Area
+      - [x] Selection Listbox with tabs for appropriate sheet type
+      - [x] Reset to Default button (does not save, just resets the included excluded in memory)
+    - [x] Button bar
+      - [x] Save
+      - [x] Use Default (with confirmation)
+  - [x] Save logic
+    - [x] Map the form context to save data
+    - [x] Get the original data
+    - [x] Merge Object to the save data
+  - [x] Use Default logic
+    - [x] Save `{}` to the setting

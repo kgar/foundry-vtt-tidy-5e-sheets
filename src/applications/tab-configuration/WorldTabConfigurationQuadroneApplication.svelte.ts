@@ -11,6 +11,8 @@ import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRunti
 import type { TabConfiguration } from 'src/settings/settings.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
+import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import type { RegisteredTab } from 'src/runtime/types';
 
 type Tab = {
   id: string;
@@ -111,6 +113,11 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       )
     );
 
+    let allItemTypes = ItemSheetQuadroneRuntime.getSheetTypes();
+    for (let type of allItemTypes) {
+      config.push(getItemTabContext(type, setting));
+    }
+
     return config;
   }
 
@@ -126,7 +133,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       // When selected tabs exactly match default selections, save an empty array, which represents taking the default tabs.
       let selected =
         curr.defaultSelected.length === curr.selected.length &&
-        curr.defaultSelected.every((d, i) => d === curr.selected[i])
+        curr.defaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
           ? []
           : curr.selected;
 
@@ -141,7 +148,22 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
   }
 
   async useDefault() {
-    return await FoundryAdapter.setTidySetting('tabConfiguration', {});
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      },
+      content: `<p>${FoundryAdapter.localize(
+        'TIDY5E.UseDefaultDialog.text'
+      )}</p>`,
+    });
+
+    if (!proceed) {
+      return;
+    }
+
+    await FoundryAdapter.setTidySetting('tabConfiguration', {});
+
+    await this.close();
   }
 }
 
@@ -161,33 +183,64 @@ function mapTabIdsToOptions(all: Record<string, Tab>, tabIds: string[]) {
   }));
 }
 
+function getItemTabContext(type: string, settings: TabConfiguration) {
+  const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
+
+  let defaultSelectedIds = ItemSheetQuadroneRuntime.getDefaultTabIds(type);
+  let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
+
+  return buildContext(
+    documentName,
+    type,
+    allRegisteredTabs,
+    settings,
+    defaultSelectedIds
+  );
+}
+
 function getActorTabContext(
   runtime: ActorSheetQuadroneRuntime<any>,
   type: string,
   settings: TabConfiguration
 ): WorldTabConfigContextEntry {
+  let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
+  const allRegisteredTabs = runtime.getAllRegisteredTabs();
+  let defaultSelectedIds = runtime.getDefaultTabIds();
+
+  return buildContext(
+    documentName,
+    type,
+    allRegisteredTabs,
+    settings,
+    defaultSelectedIds
+  );
+}
+
+function buildContext(
+  documentName: string,
+  type: string,
+  allRegisteredTabs: RegisteredTab<any>[],
+  settings: TabConfiguration,
+  defaultSelectedIds: string[]
+) {
   let configSectionTitle = FoundryAdapter.localize(
-    `TYPES.${CONSTANTS.DOCUMENT_NAME_ACTOR}.${type}`
+    `TYPES.${documentName}.${type}`
   );
 
-  let allTabs = runtime
-    .getAllRegisteredTabs()
-    .reduce<Record<string, Tab>>((prev, tab) => {
-      prev[tab.id] = {
-        id: tab.id,
-        title: FoundryAdapter.localize(
-          typeof tab.title === 'function' ? tab.title() : tab.title
-        ).titleCase(),
-      };
-      return prev;
-    }, {});
+  let allTabs = allRegisteredTabs.reduce<Record<string, Tab>>((prev, tab) => {
+    prev[tab.id] = {
+      id: tab.id,
+      title: FoundryAdapter.localize(
+        typeof tab.title === 'function' ? tab.title() : tab.title
+      ).titleCase(),
+    };
+    return prev;
+  }, {});
 
   let selected = mapTabIdsToOptions(
     allTabs,
-    settings[CONSTANTS.DOCUMENT_NAME_ACTOR]?.[type]?.selected ?? []
+    settings[documentName]?.[type]?.selected ?? []
   );
-
-  let defaultSelectedIds = runtime.getDefaultTabIds();
 
   let defaultSelected = mapTabIdsToOptions(allTabs, defaultSelectedIds);
 
@@ -196,7 +249,7 @@ function getActorTabContext(
   }
 
   return {
-    documentName: CONSTANTS.DOCUMENT_NAME_ACTOR,
+    documentName: documentName,
     documentType: type,
     title: configSectionTitle,
     allTabs,
