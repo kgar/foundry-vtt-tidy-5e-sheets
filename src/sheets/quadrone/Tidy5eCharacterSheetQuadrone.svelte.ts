@@ -58,6 +58,7 @@ import { getModifierData } from 'src/utils/formatting';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
+import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -166,7 +167,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
 
     let inspirationSource: InspirationSource | undefined =
-      this.tryGetInspirationSource();
+      await this.tryGetInspirationSource();
 
     const context: CharacterSheetQuadroneContext = {
       conditions: conditions,
@@ -285,7 +286,22 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return context;
   }
 
-  private tryGetInspirationSource() {
+  private async tryGetInspirationSource(): Promise<
+    InspirationSource | undefined
+  > {
+    let apiConfig = ActorInspirationRuntime.bankedInspirationConfig;
+
+    if (!!apiConfig?.change && !!apiConfig?.getData) {
+      let data = await apiConfig.getData(this, this.actor);
+
+      return {
+        change: async (delta) =>
+          await apiConfig.change!(this, this.actor, delta),
+        value: data.value ?? 0,
+        max: data.max ?? 0,
+      };
+    }
+
     let inspirationSourceId = TidyFlags.inspirationSource.get(this.actor);
     let inspirationSourceItem = this.actor.items.get(inspirationSourceId);
 
@@ -309,6 +325,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         value: inspirationSourceItem.system.uses.value,
       };
     }
+
     return inspirationSource;
   }
 

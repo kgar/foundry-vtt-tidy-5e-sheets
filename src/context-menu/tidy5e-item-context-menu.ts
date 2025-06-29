@@ -14,6 +14,7 @@ import { isNil } from 'src/utils/data';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 
 export function configureItemContextMenu(element: HTMLElement, app: any) {
   const id = element.closest('[data-item-id]')?.getAttribute('data-item-id');
@@ -397,6 +398,10 @@ export function getItemContextOptions(
     TidyFlags.inspirationSource.get(itemParent)
   );
 
+  const itemInspirationSourceAvailable =
+    !ActorInspirationRuntime.bankedInspirationConfig?.change &&
+    !ActorInspirationRuntime.bankedInspirationConfig?.getData;
+
   options.push({
     name: 'TIDY5E.ContextMenuActionSetAsInspirationSource',
     icon: '<i class="fas fa-sparkles"></i>',
@@ -404,6 +409,7 @@ export function getItemContextOptions(
     condition: () =>
       item.isOwner &&
       isQuadroneSheet &&
+      itemInspirationSourceAvailable &&
       item.type === CONSTANTS.ITEM_TYPE_FEAT &&
       item.system.uses?.max > 0 &&
       inspirationSourceItem?.id !== item.id,
@@ -414,7 +420,10 @@ export function getItemContextOptions(
     icon: '<i class="fas fa-sparkles"></i>',
     callback: () => TidyFlags.inspirationSource.unset(itemParent),
     condition: () =>
-      item.isOwner && isQuadroneSheet && inspirationSourceItem?.id === item.id,
+      item.isOwner &&
+      itemInspirationSourceAvailable &&
+      isQuadroneSheet &&
+      inspirationSourceItem?.id === item.id,
   });
 
   options.push({

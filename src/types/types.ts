@@ -1110,7 +1110,7 @@ export type SystemSettings = {
 };
 
 export type InspirationSource = {
-  change: (delta: number) => Promise<any>;
+  change: (delta: number) => Promise<void>;
   value: number;
   max: number;
   itemId?: string;

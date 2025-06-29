@@ -238,3 +238,40 @@ export type DefaultTableColumn = Omit<
 >;
 
 export type DefaultTableColumns = Record<string, DefaultTableColumn>;
+
+/**
+ * The current and maximum possible number of inspiration points.
+ */
+export type BankedInspirationCount = {
+  value: number;
+  max: number;
+};
+
+/**
+ * The necessary configuration to allow for externally-controlled
+ * banked inspiration on actors, utilizing any source of data.
+ * This configuration applies to all actors, so care is required
+ */
+export type BankedInspirationConfiguration = {
+  /**
+   * The actor sheet would like for you to adjust the inspiration value by the delta amount.
+   * Apply your changes, or ignore change requests per your own validation rules, as part of this callback.
+   * @param app the actor sheet instance
+   * @param actor the actor
+   * @param delta the proposed change in value. This delta is added to the current value. It will generally be 1 or -1.
+   * @returns
+   */
+  change: (app: any, actor: any, delta: number) => Promise<void>;
+  /**
+   * Required callback function which provides inspiration value/max information.
+   * This callback will be invoked on every render cycle when preparing actor context data.
+   *
+   * @param app the actor sheet instance
+   * @param actor the actor
+   * @returns the current inspiration value and max
+   */
+  getData: (
+    app: any,
+    actor: any
+  ) => BankedInspirationCount | Promise<BankedInspirationCount>;
+};

@@ -7,9 +7,9 @@
   - [x] Update inspiration badge with functionality
   - [x] Set up flag-based owned-item inspiration source in character sheet context prep
   - [x] Add context menu options, Feats with max uses only, "Set as Inspiration Source", "Remove as Inspiration Source"
-  - [ ] Add Tidy API space for setting external inspiration source
-  - [ ] Update context prep to favor an API-provided source over an owned item source.
-  - [ ] If API override in place, don't show context menu options for inspiration source.
+  - [x] Add Tidy API space for setting external inspiration source
+  - [x] Update context prep to favor an API-provided source over an owned item source.
+  - [x] If API override in place, don't show context menu options for inspiration source.
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Context Menu items rework
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
