@@ -44,6 +44,7 @@
 - [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
+- [ ] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
 
 ### Everything after the short list
 
@@ -97,6 +98,8 @@
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
+- [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
+- [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 
 
 ## hightouch To Do

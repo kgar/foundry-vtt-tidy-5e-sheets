@@ -54,7 +54,6 @@
     ),
   );
 
-  // TODO: Fix responsive behavior in Sheet/Features/Inventory to collapse action names in the button group.
 </script>
 
 <section
