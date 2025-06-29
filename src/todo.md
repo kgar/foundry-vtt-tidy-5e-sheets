@@ -2,14 +2,6 @@
 
 ### The Short List
 
-- [ ] **Character**: Set as Inspiration Source (see below)
-  - [x] Add context prop for information source
-  - [x] Update inspiration badge with functionality
-  - [x] Set up flag-based owned-item inspiration source in character sheet context prep
-  - [x] Add context menu options, Feats with max uses only, "Set as Inspiration Source", "Remove as Inspiration Source"
-  - [x] Add Tidy API space for setting external inspiration source
-  - [x] Update context prep to favor an API-provided source over an owned item source.
-  - [x] If API override in place, don't show context menu options for inspiration source.
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Context Menu items rework
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
@@ -208,3 +200,11 @@ Limited:
 ### To Do Graveyard
 
 - [x] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
+- [X] **Character**: Set as Inspiration Source (see below)
+  - [x] Add context prop for information source
+  - [x] Update inspiration badge with functionality
+  - [x] Set up flag-based owned-item inspiration source in character sheet context prep
+  - [x] Add context menu options, Feats with max uses only, "Set as Inspiration Source", "Remove as Inspiration Source"
+  - [x] Add Tidy API space for setting external inspiration source
+  - [x] Update context prep to favor an API-provided source over an owned item source.
+  - [x] If API override in place, don't show context menu options for inspiration source.
