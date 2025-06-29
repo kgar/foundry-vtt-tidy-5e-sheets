@@ -1885,6 +1885,12 @@
     }
   }
 
+  .tidy-tab.effects {
+    i.enabled {
+      color: var(--t5e-theme-color-darker);
+    }
+  }
+
   .tidy-tab.bastion {
     --bastion-row-gap: var(--t5e-size-6x);
     container-name: bastion-tab;
@@ -2579,6 +2585,16 @@
     .window-content {
       .sheet-header {
         border-bottom: 1px solid var(--t5e-color-palette-gold-45);
+      }
+    }
+
+    .tidy-tab.effects {
+      i.enabled {
+        color: var(--t5e-theme-color-highlight);
+      }
+
+      i:not(.enabled) {
+        color: var(--t5e-color-text-lighter);
       }
     }
 
