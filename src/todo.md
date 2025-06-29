@@ -77,16 +77,19 @@
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
+- [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
+- [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 
 
 ## hightouch To Do
 
-- [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
+- [x] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
-- [ ] (hightouch) Review Character Sheet Limited View
+- [x] (hightouch) Review Character Sheet Limited View
 - [ ] (not ready yet) (hightouch) Review Item Sheet Limited View
 - [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
-- [ ] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
+- [x] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
+- [ ] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
 
 
 ### Feature Origin dropdown notes

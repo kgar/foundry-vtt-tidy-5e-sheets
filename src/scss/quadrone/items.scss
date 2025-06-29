@@ -273,7 +273,6 @@
       display: inline-block;
       width: calc(100% - var(--t5e-size-1x));
       border-radius: 0.75rem;
-      object-fit: cover;
       border: 0;
     }
 
@@ -299,8 +298,9 @@
       option:not(.none) {
         color: oklch(from var(--t5e-item-color) calc(l + 0.125) c h);
       }
-      
+
       &.saturate {
+
         &:not(.none),
         option:not(.none) {
           color: var(--t5e-item-color);
@@ -331,7 +331,7 @@
     color: oklch(from var(--t5e-item-color) calc(l + 0.25) calc(c - 0.05) h);
     font: var(--t5e-font-title-small);
     text-align: center;
-    
+
     &.saturate {
       color: var(--t5e-item-color);
     }
@@ -530,8 +530,11 @@
     display: flex;
     flex-direction: column;
     gap: var(--t5e-size-2x);
-    padding-bottom: var(--t5e-size-8x);
     padding-top: var(--t5e-size-3x);
+
+    &:not(:has(.editor)) {
+      padding-bottom: var(--t5e-size-8x);
+    }
 
     &.contents {
       padding-bottom: 0;
