@@ -18,22 +18,7 @@
   class:single={!inspirationSource}
   class:stacked={!!inspirationSource}
 >
-  {#if !inspirationSource}
-    <button
-      type="button"
-      class={[
-        'inspiration button button-borderless button-icon-only single',
-        { inspired: inspired },
-      ]}
-      aria-label={localize('DND5E.Inspiration')}
-      data-tooltip="DND5E.Inspiration"
-      onclick={(ev) =>
-        context.actor.update({
-          ['system.attributes.inspiration']: !inspired,
-        })}
-    >
-    </button>
-  {:else}
+  {#if inspirationSource}
     <button
       aria-label="Inspiration"
       type="button"
@@ -66,6 +51,21 @@
         <i class="fas fa-hexagon-plus"></i>
       </button>
     </div>
+  {:else}
+    <button
+      type="button"
+      class={[
+        'inspiration button button-borderless button-icon-only single',
+        { inspired: inspired },
+      ]}
+      aria-label={localize('DND5E.Inspiration')}
+      data-tooltip="DND5E.Inspiration"
+      onclick={(ev) =>
+        context.actor.update({
+          ['system.attributes.inspiration']: !inspired,
+        })}
+    >
+    </button>
   {/if}
 </div>
 

@@ -59,6 +59,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -300,6 +301,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         value: data.value ?? 0,
         max: data.max ?? 0,
       };
+    }
+
+    if (!SettingsProvider.settings.enableBankedInspiration.get()) {
+      return;
     }
 
     let inspirationSourceId = TidyFlags.inspirationSource.get(this.actor);

@@ -2,8 +2,6 @@
 
 ### The Short List
 
-- [ ] Add homebrew settings menu with localization keys.
-- [ ] Add World settings for banked inspiration and show in homebrew dialog.
 - [ ] Context Menu items rework
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
@@ -43,8 +41,8 @@ I'm guessing they go here:
 Edit
 Equip
 Add / Remove favorite
-Identify
 Display in chat
+Identify
 Duplicate
 ---
 Add To / Remove From Sheet Tab
@@ -249,3 +247,5 @@ Limited:
   - [x] Add Tidy API space for setting external inspiration source
   - [x] Update context prep to favor an API-provided source over an owned item source.
   - [x] If API override in place, don't show context menu options for inspiration source.
+- [x] Add homebrew settings menu with localization keys.
+- [x] Add World settings for banked inspiration and show in homebrew dialog.

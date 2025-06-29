@@ -267,6 +267,35 @@
     "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
   },
 
+  "TIDY5E.SettingsMenu.WorldThemeSettings": {
+    "name": "Theme Settings",
+    "label": "Configure Theme Settings",
+    "hint": "New Tidy Sheets Only: Establish the default theme settings for your game world. These apply to all sheet types."
+  },
+
+  "TIDY5E.SettingsMenu.Homebrew": {
+    "name": "Homebrew",
+    "label": "Configure Homebrew",
+    "hint": "Enable and configure homebrew options provided by this module."
+  },
+
+  "TIDY5E.SettingsMenu.TabConfiguration": {
+    "name": "World Sheet Tab Configuration",
+    "label": "Configure Sheet Tabs",
+    "hint": "Configure which tabs are visible for all actor and item sheets."
+  },
+
+
+  "TIDY5E.Settings.BankedInspiration.title": "Banked Inspiration",
+  "TIDY5E.Settings.EnableBankedInspiration": {
+    "name": "Enable Banked Inspiration",
+    "hint": "Enable this option to allow the user to set a feature item as an inspiration source. Look for the option as a Context Menu item on feature items with uses."
+  },
+  "TIDY5E.Settings.BankedInspirationGmOnly": {
+    "name": "Banked Inspiration Management - GM Only",
+    "hint": "Enable this option to limit banked inspiration management to the GM."
+  },
+
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
   "TIDY5E.WorldSettings.Menu": {
@@ -710,7 +739,7 @@
     "SheetMenu": {
       "name": "Tidy Theme Settings",
       "buttonLabel": "Theme Settings",
-      "hint": "Customize the colors of Tidy 5e Sheets."
+      "hint": "Classic Tidy Sheets Only: Customize the colors of Tidy 5e Sheets."
     },
     "Sheet": {
       "title": "Theme Settings: {userName}",

@@ -4,7 +4,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -402,11 +402,17 @@ export function getItemContextOptions(
     !ActorInspirationRuntime.bankedInspirationConfig?.change &&
     !ActorInspirationRuntime.bankedInspirationConfig?.getData;
 
+  const bankedInspirationIsEnabled =
+    SettingsProvider.settings.enableBankedInspiration.get() &&
+    (!SettingsProvider.settings.bankedInspirationGmOnly.get() ||
+      FoundryAdapter.userIsGm());
+
   options.push({
     name: 'TIDY5E.ContextMenuActionSetAsInspirationSource',
     icon: '<i class="fas fa-sparkles"></i>',
     callback: () => TidyFlags.inspirationSource.set(itemParent, item.id),
     condition: () =>
+      bankedInspirationIsEnabled &&
       item.isOwner &&
       isQuadroneSheet &&
       itemInspirationSourceAvailable &&
@@ -420,6 +426,7 @@ export function getItemContextOptions(
     icon: '<i class="fas fa-sparkles"></i>',
     callback: () => TidyFlags.inspirationSource.unset(itemParent),
     condition: () =>
+      bankedInspirationIsEnabled &&
       item.isOwner &&
       itemInspirationSourceAvailable &&
       isQuadroneSheet &&
