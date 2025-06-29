@@ -4,9 +4,7 @@
 
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
-- [ ] Implement Responsive Tab Strip
 - [ ] Context Menu items rework
-- [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
@@ -23,6 +21,7 @@
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 - [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
+- [ ] Implement Responsive Tab Strip
 
 ### Everything after the short list
 
@@ -79,7 +78,7 @@
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 
 
-## hightouch To Do
+### hightouch To Do
 
 - [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
@@ -88,84 +87,6 @@
 - [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
 - [ ] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
 
-
-### Feature Origin dropdown notes
-
-From `BrutalityScript.js`
-
-```js
-  Hooks.on("renderItemSheet5e", (app, [html]) => {
-    const actor = app.object.parent;
-    if (!actor) return;
-    if (app.object.type !== "feat") return;
-    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
-    const choices = actor.items.reduce((acc, i) => {
-      if (!i.system.advancement) return acc;
-      acc.push({ value: i.id,
-        label: app.object.parent.items.get(i.id).name,
-        group: game.i18n.localize(`TYPES.Item.${i.type}`)
-      });
-      return acc;
-    }, []);
-    const origins = HandlebarsHelpers.selectOptions(choices, {hash: {selected: current, sort: true}});
-    const origin = `
-      <div class="form-group">
-        <label>Feature Origin</label>
-        <select name="flags.dnd5e.advancementOrigin">
-          <option></option>
-          ${origins}
-        </select>
-      </div>
-    `
-    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
-                 html.querySelector('.form-group:has(select[name="system.type.value"])');
-    type.insertAdjacentHTML("afterend", origin);
-  });
-```
-
-From Alakshana's Feature Origin module:
-
-```js
-class FeatureOrigin {
-
-  static init() {
-    Hooks.on("renderItemSheet5e", FeatureOrigin._advancementOrigin);
-  }
-
-  static _advancementOrigin(app, [html]) {
-    const actor = app.actor;
-    if (!actor) return;
-    if (app.object.type !== "feat" || app.object?.getFlag("dnd5e", "advancementOrigin")?.includes(".")) return;
-    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
-    const choices = actor.items.reduce((acc, i) => {
-      if (!i.system.advancement) return acc;
-      acc.push({
-        value: i.id,
-        label: app.object.parent.items.get(i.id).name,
-        group: game.i18n.localize(`TYPES.Item.${i.type}`)
-      });
-      return acc;
-    }, []).sort((a, b) => a.group.localeCompare(b.group));
-    const origins = HandlebarsHelpers.selectOptions(choices, { hash: { selected: current, sort: true } });
-    const origin = `
-      <div class="form-group">
-        <label>${game.i18n.localize("FEATUREORIGIN.Label")}</label>
-        <div class="form-fields">
-          <select name="flags.dnd5e.advancementOrigin">
-            <option></option>
-            ${origins}
-          </select>
-        </div>
-      </div>
-    `;
-    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
-      html.querySelector('.form-group:has(select[name="system.type.value"])');
-    type.insertAdjacentHTML("afterend", origin);
-  }
-}
-
-Hooks.once("init", FeatureOrigin.init);
-```
 
 ### Feature - Set as Inspiration Source
 
@@ -271,58 +192,4 @@ Limited:
 
 ### To Do Graveyard
 
-- [x] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
-- [x] Explore what it takes to implement item sheet tab settings per item type.
-- [x] Refactor: Add formal itemCount function that receives context and expects a number in return. It will then put a count on the tab strip when greater than 0.
-- [x] Create ItemSheetQuadroneRuntime
-- [x] Refactor: consolidate getTabs() in actor sheet runtime. It's the same code over and over. Remove from actor quadrone sheets.
-- [x] ~~Refactor: delineate all detail tab IDs so that the runtime has a unique list of them.~~ Nah
-- [x] API: Upgrade HTML tab
-  - [x] add optional `getData(context: any)` function
-  - [x] upgrade `html` prop to allow `string | (data: any) => string`
-  - [x] upgrade TabManager (and everything else) to handle this appropriately
-  - [x] update documentation to show new examples
-- [x] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
-  - [x] Application layout
-    - [x] vertical tab strip
-      - [x] Character
-      - [x] NPC
-      - [x] Vehicle
-      - [x] Group
-      - [x] All Registered Items
-    - [x] Viewing Area
-      - [x] Selection Listbox with tabs for appropriate sheet type
-      - [x] Reset to Default button (does not save, just resets the included excluded in memory)
-    - [x] Button bar
-      - [x] Save
-      - [x] Use Default (with confirmation)
-  - [x] Save logic
-    - [x] Map the form context to save data
-    - [x] Get the original data
-    - [x] Merge Object to the save data
-  - [x] Use Default logic
-    - [x] Save `{}` to the setting
-- [x] Set up new tab selection for quadrone sheets
-  - [x] Character
-  - [x] Items
-    - [x] Background
-    - [x] Class
-    - [x] Consumable
-    - [x] Equipment
-    - [x] Facility
-    - [x] Feat
-    - [x] Loot
-    - [x] Species
-    - [x] Spell
-    - [x] Subclass
-    - [x] Tattoo
-    - [x] Tool
-    - [x] Weapon
-  - [x] Container
-- [x] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
-  - [x] Item, Character, NPC, Vehicle, Group
-- [x] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
-- [x] Add API documentation for limiting tabs by type for items.
-- [x] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
-- [x] Bastion enriched context data: move to `enriched` section
-- [x] "Theme Settings" menu, change to "Tidy Theme Settings".
+- [x] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890

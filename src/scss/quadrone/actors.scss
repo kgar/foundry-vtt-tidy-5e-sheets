@@ -6,12 +6,11 @@
     }
   }
 
-  &:is(.minimized, .minimizing) {
+  &:is(.minimized) {
     .window-title {
       visibility: visible;
     }
   }
-
 
   // TODO: Move this to a more specific component file
   .attributes {
