@@ -4,33 +4,20 @@ import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import WorldTabConfigurationQuadrone from './WorldTabConfigurationQuadrone.svelte';
 import { settings } from 'src/settings/settings.svelte';
-import CharacterSheetQuadroneRuntime from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
-import NpcSheetQuadroneRuntime from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
-import VehicleSheetQuadroneRuntime from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
-import GroupSheetQuadroneRuntime from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
+import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
+import { NpcSheetQuadroneRuntime} from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
+import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import type { TabConfiguration } from 'src/settings/settings.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
-import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import type { RegisteredTab } from 'src/runtime/types';
+import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import type { TabConfigContextEntry } from './tab-configuration.types';
+import {
+  getActorTabContext,
+  getItemTabContext,
+} from './tab-configuration-functions';
 
-type Tab = {
-  id: string;
-  title: string;
-};
-
-type WorldTabConfigContextEntry = {
-  documentName: string;
-  documentType: string;
-  title: string;
-  allTabs: Record<string, Tab>;
-  defaultSelected: Tab[];
-  defaultUnselected: Tab[];
-  selected: Tab[];
-  unselected: Tab[];
-};
-
-export type WorldTabConfigContext = WorldTabConfigContextEntry[];
+export type WorldTabConfigContext = TabConfigContextEntry[];
 
 export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationMixin<
   Partial<ApplicationConfiguration>
@@ -51,7 +38,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       positioned: true,
       resizable: true,
       controls: [],
-      title: '(Localize) Sheet Tab Configuration (New Tidy Sheets)',
+      title: '(Localize) World Sheet Tab Configuration',
       contentClasses: ['flexcol'],
     },
     position: {
@@ -81,41 +68,47 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
     let config: WorldTabConfigContext = [];
 
-    config.push(
-      getActorTabContext(
-        CharacterSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_CHARACTER,
-        setting
-      )
-    );
+    let actorConfigs = setting?.[CONSTANTS.DOCUMENT_NAME_ACTOR];
 
-    config.push(
-      getActorTabContext(
-        NpcSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_NPC,
-        setting
-      )
-    );
+    if (settings.value.truesight) {
+      config.push(
+        getActorTabContext(
+          CharacterSheetQuadroneRuntime,
+          CONSTANTS.SHEET_TYPE_CHARACTER,
+          actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER]
+        )
+      );
 
-    config.push(
-      getActorTabContext(
-        VehicleSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_VEHICLE,
-        setting
-      )
-    );
+      config.push(
+        getActorTabContext(
+          NpcSheetQuadroneRuntime,
+          CONSTANTS.SHEET_TYPE_NPC,
+          actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC]
+        )
+      );
 
-    config.push(
-      getActorTabContext(
-        GroupSheetQuadroneRuntime,
-        CONSTANTS.SHEET_TYPE_GROUP,
-        setting
-      )
-    );
+      config.push(
+        getActorTabContext(
+          VehicleSheetQuadroneRuntime,
+          CONSTANTS.SHEET_TYPE_VEHICLE,
+          actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE]
+        )
+      );
+
+      config.push(
+        getActorTabContext(
+          GroupSheetQuadroneRuntime,
+          CONSTANTS.SHEET_TYPE_GROUP,
+          actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
+        )
+      );
+    }
+
+    let itemConfigs = setting?.[CONSTANTS.DOCUMENT_NAME_ITEM];
 
     let allItemTypes = ItemSheetQuadroneRuntime.getSheetTypes();
     for (let type of allItemTypes) {
-      config.push(getItemTabContext(type, setting));
+      config.push(getItemTabContext(type, itemConfigs?.[type]));
     }
 
     return config;
@@ -165,97 +158,4 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
     await this.close();
   }
-}
-
-function getUnselectedTabs(all: Record<string, Tab>, selected: Tab[]) {
-  return Object.values(all)
-    .filter((tab) => !selected.some((selectedTab) => selectedTab.id == tab.id))
-    .map<Tab>((t) => ({
-      id: t.id,
-      title: all[t.id]?.title ?? t.id,
-    }));
-}
-
-function mapTabIdsToOptions(all: Record<string, Tab>, tabIds: string[]) {
-  return tabIds.map<Tab>((tabId) => ({
-    id: tabId,
-    title: all[tabId]?.title ?? tabId,
-  }));
-}
-
-function getItemTabContext(type: string, settings: TabConfiguration) {
-  const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
-
-  let defaultSelectedIds = ItemSheetQuadroneRuntime.getDefaultTabIds(type);
-  let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
-
-  return buildContext(
-    documentName,
-    type,
-    allRegisteredTabs,
-    settings,
-    defaultSelectedIds
-  );
-}
-
-function getActorTabContext(
-  runtime: ActorSheetQuadroneRuntime<any>,
-  type: string,
-  settings: TabConfiguration
-): WorldTabConfigContextEntry {
-  let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
-  const allRegisteredTabs = runtime.getAllRegisteredTabs();
-  let defaultSelectedIds = runtime.getDefaultTabIds();
-
-  return buildContext(
-    documentName,
-    type,
-    allRegisteredTabs,
-    settings,
-    defaultSelectedIds
-  );
-}
-
-function buildContext(
-  documentName: string,
-  type: string,
-  allRegisteredTabs: RegisteredTab<any>[],
-  settings: TabConfiguration,
-  defaultSelectedIds: string[]
-) {
-  let configSectionTitle = FoundryAdapter.localize(
-    `TYPES.${documentName}.${type}`
-  );
-
-  let allTabs = allRegisteredTabs.reduce<Record<string, Tab>>((prev, tab) => {
-    prev[tab.id] = {
-      id: tab.id,
-      title: FoundryAdapter.localize(
-        typeof tab.title === 'function' ? tab.title() : tab.title
-      ).titleCase(),
-    };
-    return prev;
-  }, {});
-
-  let selected = mapTabIdsToOptions(
-    allTabs,
-    settings[documentName]?.[type]?.selected ?? []
-  );
-
-  let defaultSelected = mapTabIdsToOptions(allTabs, defaultSelectedIds);
-
-  if (!selected.length) {
-    selected = [...defaultSelected];
-  }
-
-  return {
-    documentName: documentName,
-    documentType: type,
-    title: configSectionTitle,
-    allTabs,
-    defaultSelected,
-    defaultUnselected: getUnselectedTabs(allTabs, defaultSelected),
-    selected: selected,
-    unselected: getUnselectedTabs(allTabs, selected),
-  };
 }

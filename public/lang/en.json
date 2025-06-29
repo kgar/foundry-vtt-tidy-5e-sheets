@@ -820,6 +820,7 @@
   "TIDY5E.DisplayOptions.Title": "Display Options",
   "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Show container row",
   "TIDY5E.ItemSheet.PactLevelCastLabel": "Cast at {ordinal}",
+  "TIDY5E.ItemSheet.FeatureOriginLabel": "Feature Origin",
   "TIDY5E.HitDice.Abbreviation": "HD",
   "TIDY5E.HitDice.Current.Label": "Current Hit Dice",
   "TIDY5E.HitDice.Max.Label": "Max Hit Dice",

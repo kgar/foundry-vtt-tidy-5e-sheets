@@ -19,7 +19,7 @@ export class MaxPreparedSpellsConfigFormApplication extends DocumentSheetDialog<
 >() {
   classToUpdate: Item5e;
 
-  static DEFAULT_OPTIONS = {
+  static DEFAULT_OPTIONS: Partial<DocumentSheetApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
       'application-shell',
