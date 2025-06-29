@@ -82,7 +82,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         },
         {
           icon: 'fa-solid fa-palette',
-          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+          label: 'TIDY5E.ThemeSettings.SheetMenu.name',
           action: 'themeSettings',
           ownership: 'OWNER',
           visible: () => settings.value.truesight,

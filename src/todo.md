@@ -2,10 +2,6 @@
 
 ### The Short List
 
-- [x] Add API documentation for limiting tabs by type for items.
-- [x] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
-- [x] Bastion enriched context data: move to `enriched` section
-- [ ] "Theme Settings" menu, change to "Tidy Theme Settings".
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Implement Responsive Tab Strip
@@ -324,3 +320,7 @@ Limited:
 - [x] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
   - [x] Item, Character, NPC, Vehicle, Group
 - [x] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
+- [x] Add API documentation for limiting tabs by type for items.
+- [x] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
+- [x] Bastion enriched context data: move to `enriched` section
+- [x] "Theme Settings" menu, change to "Tidy Theme Settings".
