@@ -94,7 +94,8 @@
 
 **Tidy API Ready**. Provide API support for someone to specify their own banked inspiration. They must provide callbacks for value, max, and onChange. When an API inspiration bank is registered, it overrides all other options. onChange should make it easy to understand whether the value increased or decreased.
 
-**Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and new value. If we're working with a registered inspiration item, then decrementing triggers item use.
+**Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and object with old and new values. If we're working with a registered inspiration item, then decrementing triggers item use.
+Likewise, fire a hook to see if we're permitted to change inspo, like "tidy5e-sheet.inspirationChanging" with same args, which will cancel the inspiration change event if so deemed by return value on Hook call.
 
 
 ### Deferred tasks from last item batch review
@@ -131,9 +132,6 @@ colorScheme.applications // 'light' | 'dark' | '' | ????
   - all: activation, duration, range, reach, target
   - item is weapon with no overrides: attack: range, reach
 
-### Electron Client Issues
-
-- [ ] The button panel menu is appearing behind tables in the Container Sheet.
 
 ### Context Menu items rework
 
