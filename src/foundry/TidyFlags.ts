@@ -1184,8 +1184,8 @@ export class TidyFlags {
   };
 
   static tabConfiguration = {
-    key: 'sheet-tab-configuration',
-    prop: TidyFlags.getFlagPropertyPath('sheet-tab-configuration'),
+    key: 'tab-configuration',
+    prop: TidyFlags.getFlagPropertyPath('tab-configuration'),
     get(doc: any): SheetTabConfiguration | null | undefined {
       return TidyFlags.tryGetFlag<SheetTabConfiguration>(
         doc,
