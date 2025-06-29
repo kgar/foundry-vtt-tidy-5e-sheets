@@ -69,6 +69,8 @@
   let pb = $derived(getModifierData(context.system.attributes.prof ?? 0));
 
   let extraTabs = new SvelteSet<string>();
+
+  // TODO: Figure out how to fix drop shadows due to the header overflow being hidden.
 </script>
 
 <header class="sheet-header flexcol theme-dark">
