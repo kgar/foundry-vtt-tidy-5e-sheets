@@ -1,5 +1,5 @@
 .tidy5e-sheet.application:where(.quadrone.character) {
-  --sidebar-expanded-width: 15.75rem; // I just picked a value for now while prototyping.
+  --sidebar-expanded-width: 17.25rem; // I just picked a value for now while prototyping.
   // --header-image: url(../../modules/tidy5e-sheet/images/background-character.webp);
   --header-shadow: 0 0 8px rgba(0, 0, 0, 0.64);
 
@@ -116,9 +116,7 @@
       display: flex;
       flex: 1;
       flex-direction: row;
-      overflow-x: hidden;
-      overflow-y: auto;
-      padding: var(--t5e-size-3x) var(--t5e-size-4x);
+      overflow: hidden;
 
 
       &::after {
@@ -138,11 +136,13 @@
         margin-inline-end: var(--t5e-size-4x);
         margin-inline-start: calc((var(--sidebar-expanded-width) + var(--t5e-size-4x)) * -1);
         //overflow-x: clip; // TODO: Confirm that we need this. removed for hover state.
+        overflow-y: auto;
         transition: margin var(--t5e-transition-default);
 
         &.expanded {
           margin-inline-start: 0;
-          margin-inline-end: var(--t5e-size-6x);
+          margin-inline-end: 0;
+          padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-4x);
           max-width: var(--sidebar-expanded-width);
         }
       }
@@ -160,12 +160,12 @@
 
       >.tidy-tab {
         flex: 1;
+        overflow-y: auto;
+        padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x) var(--t5e-size-4x);
         // container-type: inline-size;
       }
     }
   }
-
-  .main-content {}
 
   .sheet-header {
     --header-padding: 1rem;
@@ -1886,6 +1886,11 @@
   }
 
   .tidy-tab.bastion {
+    --bastion-row-gap: var(--t5e-size-6x);
+    container-name: bastion-tab;
+    container-type: inline-size;
+    gap: var(--bastion-row-gap);
+
     &.active {
       display: flex;
       flex-direction: column;
@@ -1894,10 +1899,6 @@
     .name {
       margin: -0.125rem -0.3125rem;
       margin-block-end: 0;
-    }
-
-    >*:not(:first-child):not(:last-child) {
-      margin-block-end: 1.25rem;
     }
 
     .bastion-header {
@@ -1916,6 +1917,7 @@
       display: grid;
       grid-template-areas: 'special basic';
       grid-template-columns: 1fr 1fr;
+      row-gap: var(--bastion-row-gap);
       column-gap: 2rem;
 
       .facilities {
@@ -2343,6 +2345,17 @@
     }
   }
 
+  @container bastion-tab (width < 32rem) {
+    .tidy-tab.bastion {
+      .facility-panels {
+        grid-template-areas:
+          'special'
+          'basic';
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
   .tidy-tab.biography {
     container-type: inline-size;
     container-name: biography-tab;
@@ -2407,6 +2420,30 @@
       .biography-entries {
         transition: all var(--t5e-transition-default);
         gap: var(--t5e-size-1x) var(--t5e-size-6x);
+      }
+    }
+  }
+
+  @container biography-tab (width < 32rem) {
+    .tidy-tab.biography {
+      .biography-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+        grid-template-areas:
+          "top"
+          "left"
+          "right";
+      }
+
+      // If you need to control the order of left/right sections
+      .biography-left {
+        order: 1; // or 2 if you want it second
+        margin-top: var(--t5e-size-4x);
+        padding-bottom: 0;
+      }
+
+      .biography-right {
+        order: 2; // or 1 if you want it first
       }
     }
   }

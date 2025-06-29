@@ -70,6 +70,7 @@
 
     :where(i) {
       --icon-fill: var(--t5e-color-icon-light);
+      color: var(--icon-fill);
     }
 
     &:hover {
@@ -150,6 +151,7 @@
 
         :where(i) {
           --icon-fill: var(--t5e-color-icon-light);
+          color: var(--icon-fill);
         }
       }
     }

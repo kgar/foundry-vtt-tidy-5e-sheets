@@ -539,7 +539,7 @@
   <section class="description">
     <div class="bastion-header">
       <h3 class="font-title-small flexrow">
-        <i class="fa-solid fa-books"></i>
+        <i class="fa-solid fa-books flexshrink"></i>
         <span class="flex1">
           {localize('DND5E.ACTIVITY.FIELDS.description.label')}
         </span>
