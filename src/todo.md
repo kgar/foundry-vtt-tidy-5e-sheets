@@ -121,16 +121,19 @@ Each "group" needs a group identifier. I'm thinking:
 - [ ] DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
 - [ ] So Inspired! - add API for globally overriding inspiration tracking. Require 
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
+- [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
+- [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 
 
 ### hightouch To Do
 
-- [ ] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
+- [x] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
-- [ ] (hightouch) Review Character Sheet Limited View
+- [x] (hightouch) Review Character Sheet Limited View
 - [ ] (not ready yet) (hightouch) Review Item Sheet Limited View
 - [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
-- [ ] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
+- [x] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
+- [ ] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
 - [ ] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
 
 ### Post-Beta Stretch Goals
@@ -138,6 +141,84 @@ Each "group" needs a group identifier. I'm thinking:
 - [ ] Compact Sheet - take the current sheet and apply compacting styles to it and offer as a User setting.
 - [ ] High Contrast support - add theming changes to support Foundry's high contrast settings.
 - [ ] Increased Mobile/Tablet support.
+
+### Feature Origin dropdown notes
+
+From `BrutalityScript.js`
+
+```js
+  Hooks.on("renderItemSheet5e", (app, [html]) => {
+    const actor = app.object.parent;
+    if (!actor) return;
+    if (app.object.type !== "feat") return;
+    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
+    const choices = actor.items.reduce((acc, i) => {
+      if (!i.system.advancement) return acc;
+      acc.push({ value: i.id,
+        label: app.object.parent.items.get(i.id).name,
+        group: game.i18n.localize(`TYPES.Item.${i.type}`)
+      });
+      return acc;
+    }, []);
+    const origins = HandlebarsHelpers.selectOptions(choices, {hash: {selected: current, sort: true}});
+    const origin = `
+      <div class="form-group">
+        <label>Feature Origin</label>
+        <select name="flags.dnd5e.advancementOrigin">
+          <option></option>
+          ${origins}
+        </select>
+      </div>
+    `
+    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
+                 html.querySelector('.form-group:has(select[name="system.type.value"])');
+    type.insertAdjacentHTML("afterend", origin);
+  });
+```
+
+From Alakshana's Feature Origin module:
+
+```js
+class FeatureOrigin {
+
+  static init() {
+    Hooks.on("renderItemSheet5e", FeatureOrigin._advancementOrigin);
+  }
+
+  static _advancementOrigin(app, [html]) {
+    const actor = app.actor;
+    if (!actor) return;
+    if (app.object.type !== "feat" || app.object?.getFlag("dnd5e", "advancementOrigin")?.includes(".")) return;
+    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
+    const choices = actor.items.reduce((acc, i) => {
+      if (!i.system.advancement) return acc;
+      acc.push({
+        value: i.id,
+        label: app.object.parent.items.get(i.id).name,
+        group: game.i18n.localize(`TYPES.Item.${i.type}`)
+      });
+      return acc;
+    }, []).sort((a, b) => a.group.localeCompare(b.group));
+    const origins = HandlebarsHelpers.selectOptions(choices, { hash: { selected: current, sort: true } });
+    const origin = `
+      <div class="form-group">
+        <label>${game.i18n.localize("FEATUREORIGIN.Label")}</label>
+        <div class="form-fields">
+          <select name="flags.dnd5e.advancementOrigin">
+            <option></option>
+            ${origins}
+          </select>
+        </div>
+      </div>
+    `;
+    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
+      html.querySelector('.form-group:has(select[name="system.type.value"])');
+    type.insertAdjacentHTML("afterend", origin);
+  }
+}
+
+Hooks.once("init", FeatureOrigin.init);
+```
 
 ### Feature - Set as Inspiration Source
 

@@ -47,9 +47,9 @@
     <label
       for="{inputId}-picker"
       class="color-picker-preview"
-      style="--bg-color: {value};"
+      style:--bg-color={value}
     >
-      <i class="fa-solid fa-eye-dropper"></i>
+      <i class="fa-solid fa-palette"></i>
     </label>
 
     <!-- This input is driving the Coloris color picker. -->
