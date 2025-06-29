@@ -10,7 +10,7 @@
   container-name: character-sheet;
   container-type: inline-size;
 
-  &.maximized {
+  &:not(.minimized) {
     min-width: 43.75rem;
   }
 
@@ -1113,27 +1113,10 @@
     }
 
     .abilities-container {
-      display: flex;
-      flex-direction: row;
-      position: relative;
-      min-height: 106px;
-      gap: var(--t5e-size-1x);
-      padding: var(--t5e-size-2x) var(--t5e-size-3x) var(--t5e-size-halfx) 0;
-      margin-left: var(--header-padding);
-      align-items: flex-start;
       container-name: abilities;
       container-type: inline-size;
-
-
-      &.abilities-overflow {
-        gap: 0;
-        max-width: 100%;
-
-        .initiative {
-          width: 52px;
-          flex-grow: 0;
-        }
-      }
+      display: flex;
+      flex-direction: row;
 
       >* {
         flex: 1 1 auto;
@@ -1154,6 +1137,28 @@
       }
     }
 
+
+    .abilities-container-inner {
+      position: relative;
+      min-height: 106px;
+      gap: var(--t5e-size-1x);
+      padding: var(--t5e-size-2x) var(--t5e-size-3x) var(--t5e-size-halfx) 0;
+      margin-left: var(--header-padding);
+      align-items: flex-start;
+      flex-wrap: nowrap;
+    }
+
+
+    &.abilities-overflow .abilities-container-inner {
+      gap: 0;
+      max-width: 100%;
+
+      .initiative {
+        width: 52px;
+        flex-grow: 0;
+      }
+    }
+
     .ac-container {
       text-align: center;
       align-items: center;
@@ -1168,6 +1173,7 @@
         font-size: 1.25rem;
         position: relative;
         width: 64px;
+        transition: height var(--t5e-transition-default), width var(--t5e-transition-default);
 
         display: flex;
         flex-direction: column;
@@ -1178,6 +1184,10 @@
         font-size: var(--font-size-28);
         letter-spacing: var(--t5e-font-letter-spacing-xlarge);
         margin: 6px 1px 0.75rem 0;
+      }
+
+      .ac-label {
+        display: none;
       }
 
       .ability-labels {
@@ -1206,7 +1216,7 @@
     }
 
     .ability {
-      width: 64px;
+      // width: 64px;
       max-width: 72px;
 
       display: flex;
@@ -1221,13 +1231,15 @@
       }
 
       .bonus-container {
+        aspect-ratio: 1/1.125;
         background: url(../../modules/tidy5e-sheet/images/badge_ability_dark.webp) top center / auto no-repeat;
         background-size: contain;
-        height: 72px;
         padding-top: var(--t5e-size-halfx);
         position: relative;
         text-align: center;
-        width: 64px;
+        width: 100%;
+        min-width: 58px;
+        max-width: 64px;
 
         display: flex;
         flex-direction: column;
@@ -1235,7 +1247,8 @@
         justify-content: center;
 
         &.proficient {
-          background-image: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp);
+          background: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp) top center / auto no-repeat;
+          background-size: contain;
         }
 
         // 👋 hightouch - POC styles for toggling visibility on mod/value and the score input
@@ -1531,6 +1544,12 @@
     }
   }
 
+  @container character-sheet (width < 700px) {
+    .sheet-header .character-vitals-container {
+      max-width: 10rem;
+    }
+  }
+
   @container subtitle (width < 600) {
     .hide-under-600 {
       display: none;
@@ -1549,97 +1568,205 @@
     }
   }
 
-  @container abilities (width < 600px) {}
+  @mixin ability-smaller {
+    --collapse-font-medium: 1.4375rem;
 
-  @container abilities (width < 540px) {
-    .sheet-header {
+    .ac-container,
+    .ability:has(.proficient),
+    .initiative-container {
+      height: 100%;
+      width: auto;
+      flex: 1;
+    }
 
-      .abilities-container {
+    .ability .bonus-container,
+    .ability .bonus-container.proficient,
+    .ac-container .shield,
+    .initiative-container .initiative.score {
+      width: 100%;
+      height: auto;
+      min-height: 52px;
+      min-width: auto;
+    }
 
-        .ac-container {
-          .shield {
-            height: 56px;
-            width: 52px;
+    .bonus-container,
+    .initiative-bonus {
 
-            .ac-value {
-              font-size: 1.5rem;
-              margin-top: var(--t5e-size-2x);
-            }
-          }
+      .modifier,
+      .bonus {
+        font-size: var(--collapse-font-medium);
+        margin-left: 0;
+      }
+    }
 
-          .ability-labels {
-            width: auto;
-          }
+
+    .ac-container .shield,
+    .initiative-container .initiative.score {
+      min-height: 60px;
+    }
+
+    .ac-container {
+      padding-top: 0.25rem;
+
+
+      .ac-value {
+        font-size: var(--collapse-font-medium);
+      }
+    }
+
+    .initiative-container {
+      max-width: 56px;
+    }
+  }
+
+  @mixin collapse-abilities {
+    --collapse-bg-light: rgba(0, 0, 0, 0.20);
+    --collapse-bg-dark: rgba(0, 0, 0, 0.4);
+    --collapse-outline: 1px solid rgba(0, 0, 0, 0.16);
+    --collapse-font-medium: 1.25rem;
+    --collapse-font-large: 1.5rem;
+
+    gap: var(--t5e-size-halfx);
+
+    >* {
+      background: var(--collapse-bg-light);
+      outline: var(--collapse-outline);
+      outline-offset: -1px;
+      border-radius: var(--t5e-size-1x);
+      max-width: auto;
+      width: auto;
+      min-width: 40px;
+    }
+
+    @include ability-smaller;
+
+    .ac-container,
+    .ability:has(.proficient),
+    .initiative-container {
+      background: var(--collapse-bg-dark);
+    }
+
+    .ability .bonus-container,
+    .ability .bonus-container.proficient,
+    .ac-container .shield,
+    .initiative-container .initiative.score {
+      background: none;
+    }
+
+    .ac-container {
+      .shield {
+        .ac-value {
+          font-size: var(--collapse-font-medium);
+          margin-top: 0;
+          margin-bottom: 0;
         }
+      }
 
-        .ability .bonus-container {
-          width: 52px;
-          height: 62px;
+      .ability-labels {
+        width: auto;
+        margin-top: 0.375rem;
 
-          .ability-roll-button {
-            margin-bottom: -2.25rem;
-          }
-
-          .font-label-xlarge {
-            font-size: 1.5rem;
-          }
-
-          .font-data-xlarge {
-            font-size: 1.5rem;
-          }
+        .divider {
+          margin: 0.375rem 0;
         }
+      }
 
-        .initiative-container {
-          gap: 0;
+      .ac-label {
+        display: initial;
+        margin-top: -0.125rem;
+      }
+    }
 
-          .initiative.score {
-            width: 48px;
-            padding-top: 0;
-            margin-top: 0;
+    .ability {
+      .ability-score {
+        margin-top: -0.25rem;
+      }
 
-            .font-label-xlarge {
-              font-size: 1.5rem;
-            }
+      .ability-roll-button {
+        margin-bottom: -2.125rem;
+      }
+    }
 
-            .font-data-xlarge {
-              font-size: 1.5rem;
-            }
-          }
+    .initiative-container {
+      gap: 0;
 
-          .concentration-roll-button {
-            margin-bottom: -1rem;
-            padding-bottom: 1rem;
-          }
-        }
+      .initiative.score {
+        padding-top: 0.25rem;
+        margin-top: 0;
+      }
+
+      .concentration-roll-button {
+        margin-bottom: -1rem;
+        padding-bottom: 1rem;
+      }
+    }
+
+    .save {
+      margin-right: var(--t5e-size-halfx);
+    }
+
+    .bonus-container,
+    .initiative-bonus {
+
+      .modifier,
+      .bonus {
+        font-size: var(--collapse-font-medium);
+        margin-left: 0;
+      }
+    }
+
+
+    .concentration {
+      max-width: 48px;
+      padding: 0 0.25rem;
+
+      .concentration-roll-button {
+        margin-top: 0.5rem;
+        margin-left: 0;
+        margin-right: 0;
       }
     }
   }
 
-  @container abilities (width < 500px) {
-    .sheet-header {
-      .abilities-container.abilities-overflow {
-        gap: 0.25rem;
+  @container abilities (width < 760px) {
+    .sheet-header .abilities-container .abilities-container-inner {
+      &:has(:nth-child(12)) {
+        @include ability-smaller;
+      }
+    }
+  }
 
-        .ability .bonus-container,
-        .ability .bonus-container.proficient,
-        .ac-container .shield,
-        .initiative-container .initiative.score {
-          background: none;
-          width: auto;
-        }
+  @container abilities (width < 720px) {
+    .sheet-header .abilities-container .abilities-container-inner {
 
-        .ac-container,
-        .ability,
-        .initiative-container {
-          width: auto;
-          flex: 1;
-          background: rgba(0, 0, 0, 0.25);
-        }
+      &:has(:nth-child(12)) {
+        @include collapse-abilities;
+        overflow-x: auto;
+      }
+    }
+  }
 
-        .concentration {
-          max-width: 48px;
-          padding: 0 0.25rem;
-        }
+  @container abilities (width < 640px) {
+    .sheet-header .abilities-container .abilities-container-inner {
+      margin-left: var(--t5e-size-3x);
+      padding-right: var(--t5e-size-3x);
+    }
+
+    .sheet-header .abilities-container .abilities-container-inner {
+      &:has(:nth-child(9)) {
+        @include ability-smaller;
+      }
+    }
+  }
+
+  @container abilities (width < 540px) {
+    .sheet-header .abilities-container .abilities-container-inner {
+      &:has(:nth-child(8)):not(:has(:nth-child(9))) {
+        @include ability-smaller;
+      }
+
+      &:has(:nth-child(9)) {
+        @include collapse-abilities;
       }
     }
   }

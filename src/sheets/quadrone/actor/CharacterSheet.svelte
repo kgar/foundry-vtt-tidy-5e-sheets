@@ -156,134 +156,137 @@
           { ['abilities-overflow']: context.abilities.length > 6 },
         ]}
       >
-        <div class="ac-container flexcol">
-          <div
-            class="shield"
-            data-attribution="attributes.ac"
-            data-attribution-caption="DND5E.ArmorClass"
-            data-tooltip-direction="DOWN"
-          >
-            <span class="ac-value color-text-default">
-              {context.system.attributes.ac.value}
-            </span>
-            {#if context.unlocked}
-              <button
-                aria-label={localize('DND5E.ArmorConfig')}
-                data-tooltip="DND5E.ArmorConfig"
-                type="button"
-                class="button button-borderless button-icon-only button-config"
-                onclick={(ev) =>
-                  FoundryAdapter.renderArmorConfig(context.actor)}
-              >
-                <i class="fas fa-cog"></i>
-              </button>
-            {/if}
-          </div>
-          <div class="ability-labels flexcol">
-            <span class="label font-label-medium color-text-gold">Score</span>
-            <span class="divider"></span>
-            <span class="label font-label-medium color-text-gold">Save</span>
-          </div>
-        </div>
-        {#each context.abilities as ability}
-          <AbilityScore
-            {ability}
-            unlocked={context.unlocked}
-            onScoreChanged={(score) =>
-              context.actor.update({
-                [`system.abilities.${ability.key}.value`]: score,
-              })}
-            onConfigClicked={(id) =>
-              FoundryAdapter.renderAbilityConfig(context.actor, id)}
-            onRollAbility={(event, key) =>
-              context.actor.rollAbilityCheck({ ability: key, event })}
-            onRollSave={(event, key) =>
-              context.actor.rollSavingThrow({ ability: key, event })}
-          />
-        {/each}
-        <div class="initiative-container flexcol">
-          <div class="initiative score" data-tooltip="DND5E.Initiative">
-            <button
-              type="button"
-              class="initiative-roll-button"
-              onclick={(event) =>
-                context.actor.rollInitiativeDialog({ event: event })}
+        <div class="abilities-container-inner flexrow">
+          <div class="ac-container flexcol">
+            <div
+              class="shield"
+              data-attribution="attributes.ac"
+              data-attribution-caption="DND5E.ArmorClass"
+              data-tooltip-direction="DOWN"
             >
-              {localize('DND5E.InitiativeAbbr')}
-            </button>
-            {#if context.unlocked}
-              <button
-                aria-label={localize('DND5E.InitiativeConfig')}
-                data-tooltip="DND5E.InitiativeConfig"
-                type="button"
-                class="button button-borderless button-icon-only button-config"
-                onclick={() =>
-                  FoundryAdapter.renderInitiativeConfig(context.actor)}
-              >
-                <i class="fas fa-cog"></i>
-              </button>
-            {/if}
-            <div class="initiative-bonus flexrow">
-              <span class="modifier color-text-lightest font-label-xlarge">
-                {ini.sign}
+              <span class="ac-value color-text-default">
+                {context.system.attributes.ac.value}
               </span>
-              <span class="bonus color-text-default font-data-xlarge">
-                {ini.value}
-              </span>
+              <span class="ac-label font-label-medium color-text-gold">AC</span>
+              {#if context.unlocked}
+                <button
+                  aria-label={localize('DND5E.ArmorConfig')}
+                  data-tooltip="DND5E.ArmorConfig"
+                  type="button"
+                  class="button button-borderless button-icon-only button-config"
+                  onclick={(ev) =>
+                    FoundryAdapter.renderArmorConfig(context.actor)}
+                >
+                  <i class="fas fa-cog"></i>
+                </button>
+              {/if}
+            </div>
+            <div class="ability-labels flexcol">
+              <span class="label font-label-medium color-text-gold">Score</span>
+              <span class="divider"></span>
+              <span class="label font-label-medium color-text-gold">Save</span>
             </div>
           </div>
-          <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
-          {#if context.saves.concentration}
-            {@const save = context.saves.concentration}
-            <div class="concentration flexcol">
-              <div class="flexrow concentration-bonus">
-                {#if context.isConcentrating}
-                  <i
-                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
-                    aria-label={localize('DND5E.Concentration')}
-                  ></i>
-                {:else}
-                  <i class="fas fa-head-side-brain color-text-gold"></i>
-                {/if}
-                <span class="modifier font-label-medium color-text-lightest">
-                  {save.sign}
-                </span>
-                <span class="value font-data-medium color-text-default">
-                  {save.mod}
-                </span>
-                {#if context.unlocked}
-                  {@const tooltip = localize('DND5E.AbilityConfigure', {
-                    ability: context.saves.concentration.label,
-                  })}
-                  <div class="config-container">
-                    <button
-                      aria-label={tooltip}
-                      data-tooltip={tooltip}
-                      type="button"
-                      class="button button-borderless button-icon-only button-config"
-                      onclick={() =>
-                        FoundryAdapter.openConcentrationConfig(context.actor)}
-                    >
-                      <i class="fas fa-cog"></i>
-                    </button>
-                  </div>
-                {/if}
-              </div>
+          {#each context.abilities as ability}
+            <AbilityScore
+              {ability}
+              unlocked={context.unlocked}
+              onScoreChanged={(score) =>
+                context.actor.update({
+                  [`system.abilities.${ability.key}.value`]: score,
+                })}
+              onConfigClicked={(id) =>
+                FoundryAdapter.renderAbilityConfig(context.actor, id)}
+              onRollAbility={(event, key) =>
+                context.actor.rollAbilityCheck({ ability: key, event })}
+              onRollSave={(event, key) =>
+                context.actor.rollSavingThrow({ ability: key, event })}
+            />
+          {/each}
+          <div class="initiative-container flexcol">
+            <div class="initiative score" data-tooltip="DND5E.Initiative">
               <button
                 type="button"
+                class="initiative-roll-button"
                 onclick={(event) =>
-                  context.actor.rollConcentration({
-                    event,
-                    legacy: false,
-                  })}
-                class="unbutton concentration-roll-button"
+                  context.actor.rollInitiativeDialog({ event: event })}
               >
-                <span class="label font-label-medium color-text-gold"
-                  >{localize(save.label)}</span
-                >
+                {localize('DND5E.InitiativeAbbr')}
               </button>
+              {#if context.unlocked}
+                <button
+                  aria-label={localize('DND5E.InitiativeConfig')}
+                  data-tooltip="DND5E.InitiativeConfig"
+                  type="button"
+                  class="button button-borderless button-icon-only button-config"
+                  onclick={() =>
+                    FoundryAdapter.renderInitiativeConfig(context.actor)}
+                >
+                  <i class="fas fa-cog"></i>
+                </button>
+              {/if}
+              <div class="initiative-bonus flexrow">
+                <span class="modifier color-text-lightest">
+                  {ini.sign}
+                </span>
+                <span class="bonus color-text-default">
+                  {ini.value}
+                </span>
+              </div>
             </div>
-          {/if}
+            <!-- TODO: Set concentration bonus here, but then move the concentration indicator up to subtitle, below the action buttons. -->
+            {#if context.saves.concentration}
+              {@const save = context.saves.concentration}
+              <div class="concentration flexcol">
+                <div class="flexrow concentration-bonus">
+                  {#if context.isConcentrating}
+                    <i
+                      class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                      aria-label={localize('DND5E.Concentration')}
+                    ></i>
+                  {:else}
+                    <i class="fas fa-head-side-brain color-text-gold"></i>
+                  {/if}
+                  <span class="modifier font-label-medium color-text-lightest">
+                    {save.sign}
+                  </span>
+                  <span class="value font-data-medium color-text-default">
+                    {save.mod}
+                  </span>
+                  {#if context.unlocked}
+                    {@const tooltip = localize('DND5E.AbilityConfigure', {
+                      ability: context.saves.concentration.label,
+                    })}
+                    <div class="config-container">
+                      <button
+                        aria-label={tooltip}
+                        data-tooltip={tooltip}
+                        type="button"
+                        class="button button-borderless button-icon-only button-config"
+                        onclick={() =>
+                          FoundryAdapter.openConcentrationConfig(context.actor)}
+                      >
+                        <i class="fas fa-cog"></i>
+                      </button>
+                    </div>
+                  {/if}
+                </div>
+                <button
+                  type="button"
+                  onclick={(event) =>
+                    context.actor.rollConcentration({
+                      event,
+                      legacy: false,
+                    })}
+                  class="unbutton concentration-roll-button"
+                >
+                  <span class="label font-label-medium color-text-gold"
+                    >{localize(save.label)}</span
+                  >
+                </button>
+              </div>
+            {/if}
+          </div>
         </div>
       </div>
     </div>
