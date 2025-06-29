@@ -114,7 +114,7 @@
   {#key context.actor.system.bastion.description}
     <article class="flexible-editor-container singleton">
       <SheetEditorV2
-        enriched={context.bastion.description}
+        enriched={context.enriched.bastion}
         content={context.actor.system.bastion.description}
         field="system.bastion.description"
         editorOptions={{
@@ -553,10 +553,10 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
 
-    {#if context.bastion.description}
+    {#if context.enriched.bastion}
       <div class="editor" use:manageSecrets={{ document: context.document }}>
         <div data-field="system.bastion.description" class="user-select-text">
-          {@html context.bastion.description}
+          {@html context.enriched.bastion}
         </div>
       </div>
     {/if}

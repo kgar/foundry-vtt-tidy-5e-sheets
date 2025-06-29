@@ -165,12 +165,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
 
     const context: CharacterSheetQuadroneContext = {
-      bastion: {
-        description: await foundry.applications.ux.TextEditor.enrichHTML(
-          this.actor.system.bastion.description,
-          enrichmentArgs
-        ),
-      },
       conditions: conditions,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -182,6 +176,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       enriched: {
         appearance: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.appearance,
+          enrichmentArgs
+        ),
+        bastion: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.bastion.description,
           enrichmentArgs
         ),
         bond: await foundry.applications.ux.TextEditor.enrichHTML(
