@@ -775,20 +775,23 @@
 
     .color-picker-preview {
       --size: 1.5rem;
+      --bg-color: var(--t5e-component-field-background);
       flex: 0 0 var(--size);
       width: var(--size);
       height: var(--size);
       background-color: var(--bg-color);
       border-radius: 50%;
       cursor: pointer;
-      border: 1px solid var(--t5e-component-field-border);
+      border: var(--t5e-size-1) solid var(--t5e-component-field-border);
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all var(--t5e-transition-default);
 
       i {
+        font-size: var(--font-size-12);
         color: var(--t5e-color-text-disabled);
+        transition: color var(--t5e-transition-default);
       }
 
       &:hover {
@@ -799,16 +802,14 @@
         }
       }
 
-      &[style*="#"],
-      &[style*="rgb"],
-      &[style*="hsl"] {
+      &[style^="--bg-color"] {
         i {
           color: transparent;
         }
 
         &:hover {
           i {
-            color: var(--t5e-color-text-oninverse-lighter);
+            color: var(--t5e-color-palette-white);
           }
 
         }
