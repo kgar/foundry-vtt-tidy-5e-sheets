@@ -3,6 +3,13 @@
 ### The Short List
 
 - [ ] **Character**: Set as Inspiration Source (see below)
+  - [x] Add context prop for information source
+  - [x] Update inspiration badge with functionality
+  - [x] Set up flag-based owned-item inspiration source in character sheet context prep
+  - [x] Add context menu options, Feats with max uses only, "Set as Inspiration Source", "Remove as Inspiration Source"
+  - [ ] Add Tidy API space for setting external inspiration source
+  - [ ] Update context prep to favor an API-provided source over an owned item source.
+  - [ ] If API override in place, don't show context menu options for inspiration source.
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Context Menu items rework
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
@@ -23,7 +30,7 @@
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Implement Responsive Tab Strip
 
-### Everything after the short list
+### (Almost) Everything after the short list
 
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Scaffold the NPC Sheet
@@ -75,6 +82,11 @@
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
+
+### Module Compatibility
+
+- [ ] DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
+- [ ] So Inspired! - add API for globally overriding inspiration tracking. Require 
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 
 
@@ -87,6 +99,11 @@
 - [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
 - [ ] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
 
+### Post-Beta Stretch Goals
+
+- [ ] Compact Sheet - take the current sheet and apply compacting styles to it and offer as a User setting.
+- [ ] High Contrast support - add theming changes to support Foundry's high contrast settings.
+- [ ] Increased Mobile/Tablet support.
 
 ### Feature - Set as Inspiration Source
 

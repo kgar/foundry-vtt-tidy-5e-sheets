@@ -2,18 +2,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
-  /*
-    The Inspiration data type is boolean, so assigning a number is impossible.
-    Instead, this will have to be a flag-based, custom thing. Should Tidy do it? We certainly can, and we can provide settings for it.
-    If we support banked inspiration points, we should also consider how we might allow integration of a module like "So Inspired!" 
-    It could be as providing the Banked Inspiration Badge as an injectable component from the Tidy API.
-  */
-  let levels = 1;
-  let currentLevel = $state(1);
-
   let localize = FoundryAdapter.localize;
 
   let context = $derived(getCharacterSheetQuadroneContext());
+
+  let inspirationSource = $derived(context.inspirationSource);
 
   let inspired = $derived(context.actor.system.attributes.inspiration);
 
@@ -22,10 +15,10 @@
 
 <div
   class="inspiration-badge"
-  class:single={levels === 1}
-  class:stacked={levels > 1}
+  class:single={!inspirationSource}
+  class:stacked={!!inspirationSource}
 >
-  {#if levels === 1}
+  {#if !inspirationSource}
     <button
       type="button"
       class={[
@@ -45,11 +38,11 @@
       aria-label="Inspiration"
       type="button"
       class="inspiration button button-borderless button-icon-only stacked"
-      class:inspired={currentLevel > 0}
+      class:inspired={inspirationSource.value > 0}
     >
       <span class="level-container">
         <span class="level font-data-medium color-text-inverse">
-          {currentLevel}
+          {inspirationSource.value}
         </span>
       </span>
     </button>
@@ -58,8 +51,8 @@
         type="button"
         class="button button-borderless button-icon-only"
         aria-label="Remove Inspiration"
-        disabled={currentLevel === 0}
-        onclick={() => (currentLevel = Math.max(0, currentLevel - 1))}
+        disabled={inspirationSource.value === 0}
+        onclick={() => inspirationSource.change(-1)}
       >
         <i class="fas fa-hexagon-minus"></i>
       </button>
@@ -67,8 +60,8 @@
         type="button"
         class="button button-borderless button-icon-only"
         aria-label="Add Inspiration"
-        disabled={currentLevel === levels}
-        onclick={() => (currentLevel = Math.min(levels, currentLevel + 1))}
+        disabled={inspirationSource.value === inspirationSource.max}
+        onclick={() => inspirationSource.change(1)}
       >
         <i class="fas fa-hexagon-plus"></i>
       </button>

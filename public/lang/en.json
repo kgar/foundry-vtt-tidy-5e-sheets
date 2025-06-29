@@ -90,6 +90,10 @@
   "TIDY5E.ContextMenuActionUnpinFromAttributes": "Unpin from Attributes",
   "TIDY5E.ContextMenuActionShowLimitedUses": "Show Limited Uses",
   "TIDY5E.ContextMenuActionShowQuantity": "Show Quantity",
+  "TIDY5E.ContextMenuActionSetAsInspirationSource": "Set as Inspiration Source",
+  "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remove as Inspiration Source",
+
+  "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",

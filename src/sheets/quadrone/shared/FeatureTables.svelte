@@ -178,6 +178,17 @@
                     </span>
                   </a>
                 </TidyTableCell>
+                {#if 'inspirationSource' in context && context.inspirationSource?.itemId === item.id}
+                  <i
+                    class={[
+                      'fa-solid',
+                      'fa-sparkles',
+                      'item-state-indicator',
+                      'color-text-gold-emphasis',
+                    ]}
+                    data-tooltip="TIDY5E.InspirationSource.ItemIsSourceTooltip"
+                  ></i>
+                {/if}
                 {#each columns.ordered as column}
                   {@const hidden = hiddenColumns.has(column.key)}
 

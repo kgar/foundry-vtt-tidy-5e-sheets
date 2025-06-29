@@ -1109,6 +1109,13 @@ export type SystemSettings = {
   currencyWeight: boolean;
 };
 
+export type InspirationSource = {
+  change: (delta: number) => Promise<any>;
+  value: number;
+  max: number;
+  itemId?: string;
+}
+
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   classes: CharacterClassEntryContext[];
@@ -1130,6 +1137,7 @@ export type CharacterSheetQuadroneContext = {
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
   features: TidyItemSectionBase[];
+  inspirationSource?: InspirationSource;
   initialSidebarTabId: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;

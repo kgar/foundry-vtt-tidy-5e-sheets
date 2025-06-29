@@ -393,6 +393,30 @@ export function getItemContextOptions(
       actorUsesActionFeature(itemParent),
   });
 
+  const inspirationSourceItem = itemParent.items.get(
+    TidyFlags.inspirationSource.get(itemParent)
+  );
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionSetAsInspirationSource',
+    icon: '<i class="fas fa-sparkles"></i>',
+    callback: () => TidyFlags.inspirationSource.set(itemParent, item.id),
+    condition: () =>
+      item.isOwner &&
+      isQuadroneSheet &&
+      item.type === CONSTANTS.ITEM_TYPE_FEAT &&
+      item.system.uses?.max > 0 &&
+      inspirationSourceItem?.id !== item.id,
+  });
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionRemoveAsInspirationSource',
+    icon: '<i class="fas fa-sparkles"></i>',
+    callback: () => TidyFlags.inspirationSource.unset(itemParent),
+    condition: () =>
+      item.isOwner && isQuadroneSheet && inspirationSourceItem?.id === item.id,
+  });
+
   options.push({
     name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
     icon: '<i class="fas fa-diagram-cells"></i>',
