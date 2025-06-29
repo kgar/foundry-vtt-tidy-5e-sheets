@@ -214,7 +214,7 @@
                 {#if ctx.attunement}
                   {@const iconClass = item.system.attuned
                     ? 'fa-solid fa-sun color-text-highlight highlighted'
-                    : 'fa-light fa-sun color-text-lighter'}
+                    : 'fa-regular fa-sun color-text-lighter'}
 
                   {@const title = localize(ctx.attunement.title)}
 

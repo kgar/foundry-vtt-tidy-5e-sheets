@@ -26,6 +26,6 @@
   {#if equipped}
     <i class="fa-solid fa-hand-fist equip-icon color-text-default"></i>
   {:else}
-    <i class="fa-light fa-hand"></i>
+    <i class="fa-regular fa-hand"></i>
   {/if}
 </a>

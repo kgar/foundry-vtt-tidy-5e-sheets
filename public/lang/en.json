@@ -92,6 +92,9 @@
   "TIDY5E.ContextMenuActionShowQuantity": "Show Quantity",
   "TIDY5E.ContextMenuActionSetAsInspirationSource": "Set as Inspiration Source",
   "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remove as Inspiration Source",
+  "TIDY5E.ContextMenuActionAddToSheetTab": "Add to Sheet tab",
+  "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
+
 
   "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
 

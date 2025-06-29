@@ -20,7 +20,7 @@
         let prepared = doc.system.preparation.prepared;
         return prepared
           ? 'fa-solid fa-book prepared'
-          : 'fa-light fa-book unprepared';
+          : 'fa-regular fa-book unprepared';
       case CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS:
         return 'fa-solid fa-book';
       case CONSTANTS.SPELL_PREPARATION_MODE_ATWILL:
