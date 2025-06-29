@@ -2,7 +2,8 @@
 
 ### The Short List
 
-- [ ] add a class to section headers when there are no search results `.search-no-results`
+- [ ] Add homebrew settings menu with localization keys.
+- [ ] Add World settings for banked inspiration and show in homebrew dialog.
 - [ ] Context Menu items rework
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
@@ -21,6 +22,45 @@
 - [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Implement Responsive Tab Strip
+
+### Banked Inspiration settings notes
+
+https://discord.com/channels/@me/1243307347682529423/1388967002705625179
+
+That sounds like a World Setting to me.
+- checkbox "Allow Banked Inspiration" - "Enable this option to allow the user to set a feature item as an inspiration source. Look for the option as a Context Menu item on feature items with uses."
+- checkbox "Banked Inspiration Management - GM Only" - "Enable this option to limit banked inspiration management to the GM."
+
+### Context menu overhaul notes
+
+We have 2 new menu items:
+"Add To / Remove From Sheet Tab"
+"Set / Remove as Inspiration Source"
+
+I'm guessing they go here:
+
+```
+Edit
+Equip
+Add / Remove favorite
+Identify
+Display in chat
+Duplicate
+---
+Add To / Remove From Sheet Tab
+Set / Remove as Inspiration Source
+Choose a section
+---
+Give to character
+Delete
+```
+
+Each "group" needs a group identifier. I'm thinking:
+
+- "common": Edit, Equip, etc.
+- "customize": Sheet tab, inspiration source, section selection
+- "be-careful": things that make you lose the item
+
 
 ### (Almost) Everything after the short list
 
@@ -74,6 +114,7 @@
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
+- [ ] add a class to section headers when there are no search results `.search-no-results`
 
 ### Module Compatibility
 
