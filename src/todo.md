@@ -2,11 +2,7 @@
 
 ### The Short List
 
-- [x] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
-  - [x] Item, Character, NPC, Vehicle, Group
-- [x] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
-- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
-- [ ] Add API documentation for limiting tabs by type for items.
+- [x] Add API documentation for limiting tabs by type for items.
 - [ ] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
 - [ ] "Theme Settings" menu, change to "Tidy Theme Settings".
 - [ ] **Character**: Set as Inspiration Source (see below)
@@ -31,6 +27,7 @@
 
 ### Everything after the short list
 
+- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Scaffold the NPC Sheet
 - [ ] Set up NPC Sheet Tab Selection
 - [ ] Scaffold the Group Sheet
@@ -323,3 +320,6 @@ Limited:
     - [x] Tool
     - [x] Weapon
   - [x] Container
+- [x] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
+  - [x] Item, Character, NPC, Vehicle, Group
+- [x] Add "Feature Origin" option to embedded Feats' details tab (See notes below)

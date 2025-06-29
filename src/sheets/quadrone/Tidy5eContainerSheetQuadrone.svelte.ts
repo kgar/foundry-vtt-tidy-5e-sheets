@@ -36,6 +36,7 @@ import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
@@ -95,6 +96,13 @@ export class Tidy5eContainerSheetQuadrone
             return this.isEditable;
           },
         },
+        {
+          icon: 'fa-solid fa-palette',
+          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+          action: 'themeSettings',
+          ownership: 'OWNER',
+          visible: () => settings.value.truesight,
+        },
       ],
     },
     position: {
@@ -108,6 +116,13 @@ export class Tidy5eContainerSheetQuadrone
         new SheetTabConfigurationQuadroneApplication({
           document: this.document,
         }).render({ force: true });
+      },
+      themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
+        await new ThemeSettingsQuadroneApplication({
+          document: this.document,
+        }).render({
+          force: true,
+        });
       },
     },
     dragDrop: [

@@ -7,7 +7,7 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { RegisteredTab, SheetLayout } from '../types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
-import type { SupportedItemTab, SupportedTab } from 'src/api/api.types';
+import type { SupportedTab } from 'src/api/api.types';
 import { SvelteTab } from 'src/api/tab/SvelteTab';
 
 export class TabManager {
@@ -62,8 +62,9 @@ export class TabManager {
   }
 
   static mapToRegisteredTabs(
-    tab: SupportedTab | SupportedItemTab,
-    layoutPreference?: SheetLayout | SheetLayout[]
+    tab: SupportedTab,
+    layoutPreference?: SheetLayout | SheetLayout[],
+    allowedTypes?: string | string[]
   ): RegisteredTab<any>[] {
     layoutPreference ??= [CONSTANTS.SHEET_LAYOUT_ALL];
 
@@ -73,14 +74,14 @@ export class TabManager {
 
     let registeredTabs: RegisteredTab<any>[] = [];
 
-    for (let layout of layoutPreference) {
-      let types: Set<string> | undefined;
-      if ('type' in tab && !isNil(tab.type, '')) {
-        types = new Set<string>(
-          typeof tab.type === 'string' ? [tab.type] : tab.type
-        );
-      }
+    let types: Set<string> | undefined;
+    if (!isNil(allowedTypes, '')) {
+      types = new Set<string>(
+        typeof allowedTypes === 'string' ? [allowedTypes] : allowedTypes
+      );
+    }
 
+    for (let layout of layoutPreference) {
       if (tab instanceof HandlebarsTab) {
         registeredTabs.push({
           content: new HandlebarsTemplateRenderer({ path: tab.path }),

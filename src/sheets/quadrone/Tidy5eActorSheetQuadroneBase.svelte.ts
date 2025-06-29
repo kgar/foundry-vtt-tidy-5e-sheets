@@ -41,6 +41,7 @@ import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -110,6 +111,13 @@ export function Tidy5eActorSheetQuadroneBase<
               return this.isEditable;
             },
           },
+          {
+            icon: 'fa-solid fa-palette',
+            label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+            action: 'themeSettings',
+            ownership: 'OWNER',
+            visible: () => settings.value.truesight,
+          },
         ],
         resizable: true,
         positioned: true,
@@ -127,6 +135,13 @@ export function Tidy5eActorSheetQuadroneBase<
           new SheetTabConfigurationQuadroneApplication({
             document: this.document,
           }).render({ force: true });
+        },
+        themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
+          await new ThemeSettingsQuadroneApplication({
+            document: this.document,
+          }).render({
+            force: true,
+          });
         },
       },
       dragDrop: [

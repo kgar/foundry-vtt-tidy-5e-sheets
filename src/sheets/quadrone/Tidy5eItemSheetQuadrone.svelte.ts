@@ -36,6 +36,8 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -78,6 +80,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
             return this.isEditable;
           },
         },
+        {
+          icon: 'fa-solid fa-palette',
+          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+          action: 'themeSettings',
+          ownership: 'OWNER',
+          visible: () => settings.value.truesight,
+        },
       ],
     },
     position: {
@@ -88,12 +97,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       [ImportSheetControl.actionName]: async function (this: any) {
         await ImportSheetControl.importFromCompendium(this, this.document);
       },
-      openTabConfiguration: async function (
-        this: Tidy5eItemSheetQuadrone
-      ) {
+      openTabConfiguration: async function (this: Tidy5eItemSheetQuadrone) {
         new SheetTabConfigurationQuadroneApplication({
           document: this.document,
         }).render({ force: true });
+      },
+      themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
+        await new ThemeSettingsQuadroneApplication({
+          document: this.document,
+        }).render({
+          force: true,
+        });
       },
     },
     dragDrop: [

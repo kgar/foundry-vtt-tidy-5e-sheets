@@ -55,18 +55,6 @@ export type RenderScheme = 'handlebars' | 'force';
 export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;
 
 /**
- * The currently supported tab types for Item sheets.
- */
-/** @category Tabs */
-export type SupportedItemTab = SupportedTab & {
-  /**
-   * The item type or types (e.g., "container", "feat", "weapon") where this tab should appear.
-   * Omitting this field means the tab should show in all item sheets, if `enabled` is also true or omitted.
-   */
-  type?: string | string[];
-};
-
-/**
  * Options for registering an item tab.
  */
 export interface ItemTabRegistrationOptions {
@@ -76,6 +64,11 @@ export interface ItemTabRegistrationOptions {
    * An optional sheet layout or layouts (default: 'all')
    */
   layout?: SheetLayout;
+  /**
+   * The item type or types (e.g., "container", "feat", "weapon") where this tab should appear.
+   * Omitting this field means the tab should show in all item sheets, if `enabled` is also true or omitted.
+   */
+  types?: string | string[];
 }
 
 /**

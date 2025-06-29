@@ -14,7 +14,6 @@ import type {
   SupportedContent,
   ItemTabRegistrationOptions,
   HeaderControlRegistrationParams,
-  SupportedItemTab,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { HtmlContent } from './content/HtmlContent';
@@ -821,18 +820,51 @@ export class Tidy5eSheetsApi {
    * });
    * ```
    *
+   * @example Register an item tab that can only be used on consumable and weapon sheets.
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api: Tidy5eSheetsApi) => {
+   *   api.registerItemTab(
+   *     new api.models.HtmlTab({
+   *       title: 'My Item Tab',
+   *       tabId: 'my-module-id-my-item-tab',
+   *       html: '<h1>LO! AND BEHOLD!</h1>',
+   *     }),
+   *     {
+   *       types: ['consumable', 'weapon'],
+   *     }
+   *   );
+   * });
+   * ```
+   *
+   * @example Register an item tab that can only be used on the subclass sheet.
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api: Tidy5eSheetsApi) => {
+   *  api.registerItemTab(
+   *    new api.models.HtmlTab({
+   *      title: 'My Item Tab',
+   *      tabId: 'my-module-id-my-item-tab',
+   *      html: '<h1>BEHOLD THIS SUBLIME TAB</h1>',
+   *    }),
+   *    { types: 'subclass' }
+   *  );
+   * });
+   * ```
    * @remarks
    * A tab ID is always required (see {@link TabId}).
    */
   registerItemTab(
-    tab: SupportedItemTab,
+    tab: SupportedTab,
     options?: ItemTabRegistrationOptions
   ): void {
     if (!TabManager.validateTab(tab)) {
       return;
     }
 
-    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
+    const registeredTabs = TabManager.mapToRegisteredTabs(
+      tab,
+      options?.layout,
+      options?.types
+    );
 
     if (!registeredTabs) {
       warn('Unable to register tab. Tab type not supported');
