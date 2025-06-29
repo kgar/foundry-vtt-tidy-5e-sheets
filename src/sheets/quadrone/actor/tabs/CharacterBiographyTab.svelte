@@ -74,7 +74,7 @@
 
 {#if editing}
   {#key contentToEdit}
-    <article class="editor-container singleton">
+    <article class="flexible-editor-container singleton">
       <SheetEditorV2
         enriched={enrichedText}
         content={contentToEdit}

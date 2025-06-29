@@ -3,7 +3,8 @@
 ### The Short List
 
 - [x] Add API documentation for limiting tabs by type for items.
-- [ ] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
+- [x] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
+- [ ] Bastion enriched context data: move to `enriched` section
 - [ ] "Theme Settings" menu, change to "Tidy Theme Settings".
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
