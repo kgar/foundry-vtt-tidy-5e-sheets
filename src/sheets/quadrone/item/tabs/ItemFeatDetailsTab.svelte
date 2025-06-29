@@ -10,6 +10,7 @@
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
+  import FeatureOriginFormGroup from '../parts/FeatureOriginFormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -25,11 +26,7 @@
   </legend>
 
   <div class="form-group">
-    <label for="{appId}-requirements"
-      >{localize(
-        'DND5E.Requirements',
-      )}</label
-    >
+    <label for="{appId}-requirements">{localize('DND5E.Requirements')}</label>
     <div class="form-fields">
       <TextInputQuadrone
         id="{appId}-requirements"
@@ -59,6 +56,10 @@
       </SelectQuadrone>
     </div>
   </div>
+
+  {#if context.item.actor?.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+    <FeatureOriginFormGroup />
+  {/if}
 
   {#if context.itemSubtypes}
     {@const category =

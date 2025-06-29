@@ -51,7 +51,7 @@ export type ItemSheetInfo = {
   defaultTabs: string[];
 };
 
-class ItemSheetQuadroneRuntime {
+class ItemSheetQuadroneRuntimeImpl {
   private _content: RegisteredContent<ItemSheetQuadroneContext>[] = $state([]);
   private _tabs: RegisteredTab<ItemSheetQuadroneContext>[] = $state([]);
   private _sheetMap: SvelteMap<string, ItemSheetInfo>;
@@ -83,7 +83,7 @@ class ItemSheetQuadroneRuntime {
   }
 
   getSheetTypes() {
-    return Array.from(this._sheetMap).map(x =>x[0]);
+    return Array.from(this._sheetMap).map(([documentType]) => documentType);
   }
 
   async getContent(
@@ -104,7 +104,8 @@ class ItemSheetQuadroneRuntime {
 
     let tabIds = tabsForType.map((t) => t.id);
 
-    const selectedTabs = TidyFlags.selectedTabs.get(context.item);
+    const selectedTabs =
+      TidyFlags.tabConfiguration.get(context.item)?.selected ?? [];
 
     if (selectedTabs?.length) {
       tabIds = tabIds
@@ -136,8 +137,10 @@ class ItemSheetQuadroneRuntime {
     return tabs.filter((t) => !t.condition || t.condition(context.document));
   }
 
-  getAllRegisteredTabs(type: string): RegisteredTab<ItemSheetQuadroneContext>[] {
-    return this._tabs.filter(t => t.types?.has(type) ?? true);
+  getAllRegisteredTabs(
+    type: string
+  ): RegisteredTab<ItemSheetQuadroneContext>[] {
+    return this._tabs.filter((t) => t.types?.has(type) ?? true);
   }
 
   getSheet(type: string) {
@@ -171,7 +174,7 @@ class ItemSheetQuadroneRuntime {
   }
 }
 
-const singleton = new ItemSheetQuadroneRuntime(
+export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
   [
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
@@ -576,5 +579,3 @@ const singleton = new ItemSheetQuadroneRuntime(
     ],
   ]
 );
-
-export default singleton;

@@ -12,6 +12,10 @@ import type {
 } from './TidyFlags.types';
 import { FoundryAdapter } from './foundry-adapter';
 import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import type {
+  SheetTabConfiguration,
+  TabConfiguration,
+} from 'src/settings/settings.types';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -1176,6 +1180,23 @@ export class TidyFlags {
     },
     unset(doc: any) {
       return TidyFlags.unsetFlag(doc, TidyFlags.sheetThemeSettings.key);
+    },
+  };
+
+  static tabConfiguration = {
+    key: 'tab-configuration',
+    prop: TidyFlags.getFlagPropertyPath('tab-configuration'),
+    get(doc: any): SheetTabConfiguration | null | undefined {
+      return TidyFlags.tryGetFlag<SheetTabConfiguration>(
+        doc,
+        TidyFlags.tabConfiguration.key
+      );
+    },
+    set(doc: any, config: SheetTabConfiguration) {
+      return TidyFlags.setFlag(doc, TidyFlags.tabConfiguration.key, config);
+    },
+    unset(doc: any) {
+      return TidyFlags.unsetFlag(doc, TidyFlags.tabConfiguration.key);
     },
   };
 

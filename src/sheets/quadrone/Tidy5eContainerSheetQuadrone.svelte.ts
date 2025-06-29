@@ -26,7 +26,7 @@ import type {
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import ItemSheetQuadroneRuntime from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -35,6 +35,8 @@ import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
@@ -84,13 +86,45 @@ export class Tidy5eContainerSheetQuadrone
       frame: true,
       positioned: true,
       resizable: true,
-      controls: [],
+      controls: [
+        {
+          action: 'openTabConfiguration',
+          icon: 'fas fa-file-invoice',
+          label: 'TIDY5E.TabSelection.MenuOptionText',
+          ownership: 'OWNER',
+          visible: function (this: Tidy5eContainerSheetQuadrone) {
+            return this.isEditable;
+          },
+        },
+        {
+          icon: 'fa-solid fa-palette',
+          label: 'TIDY5E.ThemeSettings.SheetMenu.name',
+          action: 'themeSettings',
+          ownership: 'OWNER',
+          visible: () => settings.value.truesight,
+        },
+      ],
     },
     position: {
       width: 620,
       height: 580,
     },
-    actions: {},
+    actions: {
+      openTabConfiguration: async function (
+        this: Tidy5eContainerSheetQuadrone
+      ) {
+        new SheetTabConfigurationQuadroneApplication({
+          document: this.document,
+        }).render({ force: true });
+      },
+      themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
+        await new ThemeSettingsQuadroneApplication({
+          document: this.document,
+        }).render({
+          force: true,
+        });
+      },
+    },
     dragDrop: [
       {
         dragSelector: `[data-tidy-always-draggable]`,

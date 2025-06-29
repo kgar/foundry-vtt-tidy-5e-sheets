@@ -2,29 +2,6 @@
 
 ### The Short List
 
-- [ ] Set up new tab selection for quadrone sheets
-  - [ ] Character
-  - [ ] Items
-    - [ ] Background
-    - [ ] Class
-    - [ ] Consumable
-    - [ ] Equipment
-    - [ ] Facility
-    - [ ] Feat
-    - [ ] Loot
-    - [ ] Species
-    - [ ] Spell
-    - [ ] Subclass
-    - [ ] Tattoo
-    - [ ] Tool
-    - [ ] Weapon
-  - [ ] Container
-- [ ] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
-  - [ ] Item, Character, NPC, Vehicle, Group
-- [ ] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
-- [ ] Add API documentation for limiting tabs by type for items.
-- [ ] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
-- [ ] "Theme Settings" menu, change to "Tidy Theme Settings".
 - [ ] **Character**: Set as Inspiration Source (see below)
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Implement Responsive Tab Strip
@@ -44,9 +21,12 @@
 - [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
+- [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
+- [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 
 ### Everything after the short list
 
+- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Scaffold the NPC Sheet
 - [ ] Set up NPC Sheet Tab Selection
 - [ ] Scaffold the Group Sheet
@@ -322,3 +302,27 @@ Limited:
     - [x] Merge Object to the save data
   - [x] Use Default logic
     - [x] Save `{}` to the setting
+- [x] Set up new tab selection for quadrone sheets
+  - [x] Character
+  - [x] Items
+    - [x] Background
+    - [x] Class
+    - [x] Consumable
+    - [x] Equipment
+    - [x] Facility
+    - [x] Feat
+    - [x] Loot
+    - [x] Species
+    - [x] Spell
+    - [x] Subclass
+    - [x] Tattoo
+    - [x] Tool
+    - [x] Weapon
+  - [x] Container
+- [x] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
+  - [x] Item, Character, NPC, Vehicle, Group
+- [x] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
+- [x] Add API documentation for limiting tabs by type for items.
+- [x] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
+- [x] Bastion enriched context data: move to `enriched` section
+- [x] "Theme Settings" menu, change to "Tidy Theme Settings".

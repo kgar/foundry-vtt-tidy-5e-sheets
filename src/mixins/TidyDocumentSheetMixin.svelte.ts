@@ -74,23 +74,11 @@ export function TidyExtensibleDocumentSheetMixin<
     static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
       window: {
         controls: [
-          {
-            icon: 'fa-solid fa-palette',
-            label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
-            action: 'themeSettings',
-            ownership: 'OWNER',
-            visible: () => settings.value.truesight,
-          },
+          
         ],
       },
       actions: {
-        themeSettings: async function (this: TidyDocumentSheet) {
-          await new ThemeSettingsQuadroneApplication({
-            document: this.document,
-          }).render({
-            force: true,
-          });
-        },
+        
       },
     };
 

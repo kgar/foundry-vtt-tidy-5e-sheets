@@ -1111,9 +1111,6 @@ export type SystemSettings = {
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-  bastion: {
-    description: string;
-  };
   classes: CharacterClassEntryContext[];
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
@@ -1121,12 +1118,13 @@ export type CharacterSheetQuadroneContext = {
   currencies: CurrencyContext[];
   defenders: Actor5e[];
   enriched: {
-    trait: string;
-    ideal: string;
+    appearance: string;
+    bastion: string;
+    biography: string;
     bond: string;
     flaw: string;
-    appearance: string;
-    biography: string;
+    ideal: string;
+    trait: string;
   };
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;

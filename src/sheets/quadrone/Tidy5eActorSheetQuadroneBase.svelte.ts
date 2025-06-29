@@ -40,6 +40,8 @@ import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
+import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -100,6 +102,22 @@ export function Tidy5eActorSheetQuadroneBase<
               return this.isEditable && this.actor.isPolymorphed;
             },
           },
+          {
+            action: 'openTabConfiguration',
+            icon: 'fas fa-file-invoice',
+            label: 'TIDY5E.TabSelection.MenuOptionText',
+            ownership: 'OWNER',
+            visible: function (this: Tidy5eActorSheetQuadroneBase) {
+              return this.isEditable;
+            },
+          },
+          {
+            icon: 'fa-solid fa-palette',
+            label: 'TIDY5E.ThemeSettings.SheetMenu.name',
+            action: 'themeSettings',
+            ownership: 'OWNER',
+            visible: () => settings.value.truesight,
+          },
         ],
         resizable: true,
         positioned: true,
@@ -110,6 +128,20 @@ export function Tidy5eActorSheetQuadroneBase<
           this: Tidy5eActorSheetQuadroneBase
         ) {
           this.actor.revertOriginalForm();
+        },
+        openTabConfiguration: async function (
+          this: Tidy5eActorSheetQuadroneBase
+        ) {
+          new SheetTabConfigurationQuadroneApplication({
+            document: this.document,
+          }).render({ force: true });
+        },
+        themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
+          await new ThemeSettingsQuadroneApplication({
+            document: this.document,
+          }).render({
+            force: true,
+          });
         },
       },
       dragDrop: [
