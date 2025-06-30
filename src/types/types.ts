@@ -1116,7 +1116,14 @@ export type InspirationSource = {
   itemId?: string;
 };
 
+export type ActorTraitItemContext = {
+  id: string;
+  name: string;
+  img: string;
+};
+
 export type CharacterSheetQuadroneContext = {
+  background?: ActorTraitItemContext;
   // TODO: Populate with context data as needed
   classes: CharacterClassEntryContext[];
   conditions: Dnd5eActorCondition[];
@@ -1147,6 +1154,7 @@ export type CharacterSheetQuadroneContext = {
   showDeathSaves: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
   spellcasting: SpellcastingContext[];

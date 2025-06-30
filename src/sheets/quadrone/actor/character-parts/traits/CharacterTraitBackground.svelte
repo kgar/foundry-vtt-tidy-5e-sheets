@@ -5,16 +5,25 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
-  let background = $derived(context.actor.system.details.background);
+  let background = $derived(context.background);
 
   const localize = FoundryAdapter.localize;
+
+  function openSheet(mode: number) {
+    if (background) {
+      context.actor.items.get(background.id).sheet.render({
+        force: true,
+        mode: mode,
+      });
+    }
+  }
 </script>
 
-{#if context.unlocked || context.actor.system.details.background}
+{#if context.unlocked || background}
   <div
     class="list-entry"
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-    data-item-id={context.system.details.background?.id}
+    data-item-id={background?.id}
   >
     <div class="list-label">
       <h4 class="font-weight-label">
@@ -28,17 +37,10 @@
             aria-label="View {localize('TYPES.Item.subclass')}"
             class="item-image-link"
             role="button"
-            onclick={() =>
-              background.sheet.render({
-                force: true,
-                mode: CONSTANTS.SHEET_MODE_PLAY,
-              })}
+            tabindex="0"
+            onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
             onkeydown={(e) =>
-              e.key === 'Enter' &&
-              background.sheet.render({
-                force: true,
-                mode: CONSTANTS.SHEET_MODE_PLAY,
-              })}
+              e.key === 'Enter' && openSheet(CONSTANTS.SHEET_MODE_PLAY)}
           >
             <img
               src={background.img}
@@ -75,20 +77,14 @@
           </button>
         {/if}
       </div>
-      {#if context.unlocked && context.actor.system.details.background}
+      {#if context.unlocked && background}
         <div class="list-controls">
           <button
-            aria-label="Edit {localize('DND5E.CreatureType')}"
+            aria-label="Edit {localize('TYPES.Item.background')}"
             type="button"
             class="button button-borderless button-icon-only"
             data-tooltip="DND5E.ItemEdit"
-            onclick={() =>
-              context.actor.sheet.render({
-                force: true,
-                mode: context.unlocked
-                  ? CONSTANTS.SHEET_MODE_EDIT
-                  : CONSTANTS.SHEET_MODE_PLAY,
-              })}
+            onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
           >
             <i class="fa-solid fa-edit"></i>
           </button>

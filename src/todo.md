@@ -2,9 +2,6 @@
 
 ### The Short List
 
-- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
-- [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
-- [ ] Sheet tab: need Inventory filters in advanced filter section
 - [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
 - [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
@@ -18,6 +15,7 @@
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Uses - Dragon's Fire Breath, should show recharge roller when empty.
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait. 
+- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] Implement Responsive Tab Strip
 
 
@@ -313,3 +311,5 @@ Limited:
 - [x]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [x] User Preference: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [x] Slice up character.scss into smaller stylesheets
+- [x] PC Sheet, Character tab, Species and Background do not refresh when their items change.
+- [x] Sheet tab: need Inventory filters in advanced filter section

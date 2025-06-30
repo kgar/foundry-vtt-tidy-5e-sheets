@@ -170,7 +170,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     let inspirationSource: InspirationSource | undefined =
       await this.tryGetInspirationSource();
 
+    let background = this.actor.system.details.background;
+    let species = this.actor.system.details.race;
+
     const context: CharacterSheetQuadroneContext = {
+      background: background
+        ? {
+            id: background.id,
+            img: background.img,
+            name: background.name,
+          }
+        : undefined,
       conditions: conditions,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -233,6 +243,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
+      species: species
+        ? {
+            id: species.id,
+            img: species.img,
+            name: species.name,
+          }
+        : undefined,
       speeds: this._getMovementSpeeds(),
       spellbook: [],
       spellcasting: this._prepareSpellcastingContext(),
