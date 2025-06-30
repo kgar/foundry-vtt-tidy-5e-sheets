@@ -4,12 +4,16 @@
   .inline-uses {
     display: flex;
 
+    input[type="text"]:disabled {
+      background: none;
+    }
+
     >.uses-value {
       color: var(--t5e-color-text-default);
       text-align: right;
       flex: 1;
     }
-    
+
     >.uses-max {
       color: var(--t5e-color-text-lighter);
       text-align: left;

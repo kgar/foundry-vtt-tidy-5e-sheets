@@ -56,7 +56,6 @@
         {@render skillsCardHeaderText()}
       </button>
     {:else}
-      <!-- 👋 hightouch, haaaalp, this looks like a button, but it only lays out correctly with the button classes. -->
       <div class="button button-borderless skill-expand-button">
         {@render skillsCardHeaderText()}
       </div>

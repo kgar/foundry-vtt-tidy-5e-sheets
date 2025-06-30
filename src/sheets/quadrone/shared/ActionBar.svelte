@@ -71,13 +71,11 @@
           filter={pinnedFilter}
           filterGroupName={tabId}
           class={pinnedFilter.pinnedFilterClass}
-          data-tooltip={pinnedFilter.text}
+          data-tooltip={localize(pinnedFilter.text)}
+          data-filter-text={localize(pinnedFilter.text)}
+          data-filter-abbr={pinnedFilter.abbreviation ? localize(pinnedFilter.abbreviation) : ''}
         >
-          {#if !isNil(pinnedFilter.abbreviation, '')}
-            {localize(pinnedFilter.abbreviation)}
-          {:else}
-            {localize(pinnedFilter.text)}
-          {/if}
+          {localize(pinnedFilter.text)}
         </FilterToggle>
       {/each}
     </div>

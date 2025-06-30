@@ -79,17 +79,19 @@
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
+- [ ] Swap left and right areas in tab selection (left = selected, right = hidden)
 
 
 ## hightouch To Do
 
-- [x] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
-- [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
-- [x] (hightouch) Review Character Sheet Limited View
-- [ ] (not ready yet) (hightouch) Review Item Sheet Limited View
-- [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
+- [x] Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
+- [x] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
+- [x] Review Character Sheet Limited View
+- [ ] (not ready yet) Review Item Sheet Limited View. Only needs hide activity icon, everything else seems to match default sheets.
+- [x] Review Container Sheet Limited View. I think this is good and already 1:1 with default sheets.
 - [x] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
-- [ ] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
+- [x] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
+- [ ] Reorganize responsive view of Character tab when sidebar is open (Skills top left, Tools/abilities top right, Features below)
 
 
 ### Feature Origin dropdown notes

@@ -19,9 +19,9 @@
   bind:rightItems={entry.selected}
 >
   {#snippet leftHeader()}
-    <b>{localize('TIDY5E.TabSelection.AvailableHeader')}</b>
+    <h3>{localize('TIDY5E.TabSelection.AvailableHeader')}</h3>
   {/snippet}
   {#snippet rightHeader()}
-    <b>{localize('TIDY5E.TabSelection.SelectedHeader')}</b>
+    <h3>{localize('TIDY5E.TabSelection.SelectedHeader')}</h3>
   {/snippet}
 </SelectionListbox>

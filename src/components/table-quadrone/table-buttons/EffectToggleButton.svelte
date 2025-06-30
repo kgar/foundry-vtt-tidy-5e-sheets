@@ -53,10 +53,10 @@
   >
     <i
       class={[
-        'fas',
+        'fa-solid',
         {
           ['fa-toggle-off']: effect.disabled,
-          ['fa-toggle-large-on']: !effect.disabled,
+          ['fa-toggle-large-on enabled']: !effect.disabled,
         },
       ]}
     ></i>

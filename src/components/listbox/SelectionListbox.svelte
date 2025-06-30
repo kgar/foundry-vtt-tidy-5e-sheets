@@ -192,32 +192,30 @@
   }
 </script>
 
-<div class="selection-listbox {rest.class ?? ''}">
-  {#if leftHeader || rightHeader}
-    <div class="column-1">
+<div class="selection-listbox flexrow {rest.class ?? ''}">
+  <div class="flexcol">
+    {#if leftHeader}
       {@render leftHeader?.()}
-    </div>
-    <div class="column-3">
-      {@render rightHeader?.()}
-    </div>
-  {/if}
-  <Listbox
-    bind:items={leftItems}
-    {labelProp}
-    {valueProp}
-    bind:selectedItemIndex={selectedLeftItemIndex}
-    onselect={() => {
-      selectedRightItemIndex = null;
-    }}
-    onkeydown={handleLeftListboxKeydown}
-    class="column-1 {listboxCssClass}"
-  >
-    {#snippet itemTemplate({ item })}
-      {#if leftItemTemplate}{@render leftItemTemplate({ item })}{:else}
-        {item[labelProp]}
-      {/if}
-    {/snippet}
-  </Listbox>
+    {/if}
+    <Listbox
+      bind:items={leftItems}
+      {labelProp}
+      {valueProp}
+      bind:selectedItemIndex={selectedLeftItemIndex}
+      onselect={() => {
+        selectedRightItemIndex = null;
+      }}
+      onkeydown={handleLeftListboxKeydown}
+      class="{listboxCssClass}"
+    >
+      {#snippet itemTemplate({ item })}
+        {#if leftItemTemplate}{@render leftItemTemplate({ item })}{:else}
+          <i class="fa-regular fa-square"></i>
+          {item[labelProp]}
+        {/if}
+      {/snippet}
+    </Listbox>
+  </div>
   <SelectionListboxToolbar
     moveUpDisabled={selectedItemIndex === null || selectedItemIndex === 0}
     onMoveUp={moveUp}
@@ -235,23 +233,29 @@
     onMoveAllToTheLeft={moveAllToTheLeft}
     moveAllToTheRightDisabled={leftItems.length === 0}
     onMoveAllToTheRight={moveAllToTheRight}
-    class="column-2"
+    class="flexshrink"
   />
-  <Listbox
-    bind:items={rightItems}
-    {labelProp}
-    {valueProp}
-    bind:selectedItemIndex={selectedRightItemIndex}
-    onselect={() => {
-      selectedLeftItemIndex = null;
-    }}
-    onkeydown={handleRightListboxKeydown}
-    class="column-3 {listboxCssClass}"
-  >
-    {#snippet itemTemplate({ item })}
-      {#if rightItemTemplate}{@render rightItemTemplate({ item })}{:else}
-        {item[labelProp]}
-      {/if}
-    {/snippet}
-  </Listbox>
+  <div class="flexcol">
+    {#if rightHeader}
+      {@render rightHeader?.()}
+    {/if}
+    <Listbox
+      bind:items={rightItems}
+      {labelProp}
+      {valueProp}
+      bind:selectedItemIndex={selectedRightItemIndex}
+      onselect={() => {
+        selectedLeftItemIndex = null;
+      }}
+      onkeydown={handleRightListboxKeydown}
+      class="listbox-selected {listboxCssClass}"
+    >
+      {#snippet itemTemplate({ item })}
+        {#if rightItemTemplate}{@render rightItemTemplate({ item })}{:else}
+          <i class="fa-solid fa-square-check"></i>
+          {item[labelProp]}
+        {/if}
+      {/snippet}
+    </Listbox>
+  </div>
 </div>

@@ -34,6 +34,7 @@
   <button
     title={localize('TIDY5E.Listbox.MoveUp')}
     type="button"
+    class="button button-secondary button-icon-only"
     disabled={props.moveUpDisabled}
     onclick={() => onMoveUp?.()}
   >
@@ -42,6 +43,7 @@
   <button
     title={localize('TIDY5E.Listbox.MoveDown')}
     type="button"
+    class="button button-secondary button-icon-only"
     disabled={props.moveDownDisabled}
     onclick={() => onMoveDown?.()}
   >
@@ -50,6 +52,7 @@
   <button
     title={localize('TIDY5E.Listbox.MoveLeft')}
     type="button"
+    class="button button-secondary button-icon-only"
     disabled={props.moveLeftDisabled}
     onclick={() => onMoveLeft?.()}
   >
@@ -58,6 +61,7 @@
   <button
     title={localize('TIDY5E.Listbox.MoveRight')}
     type="button"
+    class="button button-secondary button-icon-only"
     disabled={props.moveRightDisabled}
     onclick={() => onMoveRight?.()}
   >
@@ -66,6 +70,7 @@
   <button
     title={localize('TIDY5E.Listbox.MoveAllLeft')}
     type="button"
+    class="button button-secondary button-icon-only"
     disabled={props.moveAllToTheLeftDisabled}
     onclick={() => onMoveAllToTheLeft?.()}
   >
@@ -74,6 +79,7 @@
   <button
     title={localize('TIDY5E.Listbox.MoveAllRight')}
     type="button"
+    class="button button-secondary button-icon-only"
     disabled={props.moveAllToTheRightDisabled}
     onclick={() => onMoveAllToTheRight?.()}
   >

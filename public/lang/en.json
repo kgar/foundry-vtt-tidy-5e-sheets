@@ -173,8 +173,8 @@
   "TIDY5E.TabSelection": {
     "Title": "Tab Selection: {documentName}",
     "MenuOptionText": "Tab Selection",
-    "AvailableHeader": "Available Tabs",
-    "SelectedHeader": "Selected Tabs",
+    "AvailableHeader": "Hidden Tabs",
+    "SelectedHeader": "Visible Tabs",
     "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."

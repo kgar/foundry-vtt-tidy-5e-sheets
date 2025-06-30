@@ -39,10 +39,10 @@
     <div class="flex-column small-gap">
       <SelectionListbox bind:leftItems bind:rightItems {labelProp} {valueProp}>
         {#snippet leftHeader()}
-          <b>{localize(leftHeaderText)}</b>
+          <h3>{localize(leftHeaderText)}</h3>
         {/snippet}
         {#snippet rightHeader()}
-          <b>{localize(rightHeaderText)}</b>
+          <h3>{localize(rightHeaderText)}</h3>
         {/snippet}
       </SelectionListbox>
       {@render belowListbox?.()}
