@@ -1,8 +1,5 @@
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { Item5e } from 'src/types/item.types';
-import type { SortGroup, SortMethodScheme } from 'src/types/sort.types';
-import type { TidySectionBase } from 'src/types/types';
-import type { Component } from 'svelte';
+import type { SortMethodScheme } from 'src/types/sort.types';
 
 // Filtering
 export type ItemFilter = {
@@ -46,10 +43,4 @@ export type SortTabsToSortSchemes = Record<TabId, SortMethodScheme[]>;
 export type DocumentTypesToSortMethodTabs = Record<
   DocumentType,
   SortTabsToSortSchemes
->;
-
-export type SortTabsToSortGroups = Record<TabId, SortGroup[]>;
-export type DocumentTypesToSortGroupTabs = Record<
-  DocumentType,
-  SortTabsToSortGroups
 >;
