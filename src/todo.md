@@ -22,44 +22,6 @@
 - [ ] Uses - Dragon's Fire Breath, should show recharge roller when empty.
 - [ ] Implement Responsive Tab Strip
 
-### Banked Inspiration settings notes
-
-https://discord.com/channels/@me/1243307347682529423/1388967002705625179
-
-That sounds like a World Setting to me.
-- checkbox "Allow Banked Inspiration" - "Enable this option to allow the user to set a feature item as an inspiration source. Look for the option as a Context Menu item on feature items with uses."
-- checkbox "Banked Inspiration Management - GM Only" - "Enable this option to limit banked inspiration management to the GM."
-
-### Context menu overhaul notes
-
-We have 2 new menu items:
-"Add To / Remove From Sheet Tab"
-"Set / Remove as Inspiration Source"
-
-I'm guessing they go here:
-
-```
-Edit
-Equip
-Add / Remove favorite
-Display in chat
-Identify
-Duplicate
----
-Add To / Remove From Sheet Tab
-Set / Remove as Inspiration Source
-Choose a section
----
-Give to character
-Delete
-```
-
-Each "group" needs a group identifier. I'm thinking:
-
-- "common": Edit, Equip, etc.
-- "customize": Sheet tab, inspiration source, section selection
-- "be-careful": things that make you lose the item
-
 
 ### (Almost) Everything after the short list
 
