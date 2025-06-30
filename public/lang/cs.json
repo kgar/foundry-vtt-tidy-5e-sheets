@@ -55,7 +55,7 @@
     "TIDY5E.Environment": "Prostředí",
     "TIDY5E.Search": "Vyhledat",
     "TIDY5E.SearchClear": "Vyčistit hledání",
-    "TIDY5E.SearchHint": "Začni psát název toho, co hledáš.",
+    "TIDY5E.SearchHint": "Začni psát název toho, co hledáš...",
     "TIDY5E.ItemCardsMouseHint": "Střední tlačítko myši pro zobrazení/editaci položky",
     "TIDY5E.AbbrMod": "Oprava",
     "TIDY5E.AbbrSavingThrow": "Záchrana",
@@ -139,7 +139,7 @@
         "hint": "Zobrazí seznam povolání pod jménem postavy."
     },
     "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Animovat ukazatel inspirace?",
+        "name": "Animovat ukazatel Inspirace?",
         "hint": "Zaškrtnutím deaktivuješ zářící animaci ukazatele inspirace."
     },
     "TIDY5E.Settings.HideIfZero": {
@@ -292,7 +292,7 @@
         "hint": "Zabrání nePJům měnit množství u položky."
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Používat volitelný barevný motiv",
+        "name": "Používat volitelný barevný motiv?",
         "hint": "Zobrazit barvy volitelného motivu"
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
@@ -585,7 +585,7 @@
     },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "hint": "Ve výchozím nastavení zahrne jednorázové položky, které mají aktivační náklady (akce, bonusová akce atd.), do akcí.",
-        "name": "Zahrnutí jednorázových položek do akcí"
+        "name": "Zahrnout jednorázové položky do akcí?"
     },
     "TIDY5E.Commands.ShowContainerPanel": "Zobrazit panel kontejnerů",
     "TIDY5E.UseDefaultDialog": {
@@ -639,12 +639,12 @@
         "tabLabel": "Seznam akcí"
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
-        "name": "Zahrnout minutová kouzla do akcí?",
+        "name": "Zahrnout kouzla do minuty do akcí?",
         "hint": "Ve výchozím nastavení zahrne karty/panely akcí kouzla s dobou trvání do jedné minuty (např. 1 kolo) a dobou aktivace 1 akce či 1 bonusová akce (např. Požehnání, Uřknutí, Rozkaz) do akcí."
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "hint": "Ve výchozím nastavení zahrne kouzla s připojenými aktivními efekty (např. Kůrokůže) do karty/panelu akcí.",
-        "name": "Zahrnout kouzla s aktivními efekty do akcí"
+        "name": "Zahrnout kouzla s aktivními efekty do akcí?"
     },
     "TIDY5E.Settings.About": {
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
