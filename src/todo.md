@@ -135,6 +135,7 @@ Each "group" needs a group identifier. I'm thinking:
 - [ ] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
 - [ ] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
+- [ ] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
 
 ### Post-Beta Stretch Goals
 
