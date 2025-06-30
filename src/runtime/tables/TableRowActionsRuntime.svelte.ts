@@ -14,6 +14,8 @@ import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.s
 import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import type { ContainerContentsRowActionsContext } from '../types';
+import ChooseAButton from 'src/components/table-quadrone/table-buttons/ChooseAButton.svelte';
+import OpenActivityButton from 'src/components/table-quadrone/table-buttons/OpenActivityButton.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -132,12 +134,28 @@ class TableRowActionsRuntime {
           } satisfies TableAction<typeof EditButton>);
 
           result.push({
-            component: DeleteButton,
+            component: ChooseAButton,
             props: (doc: any) => ({
               doc,
-              deleteFn: () => doc.deleteDialog(),
+              buttons: [
+                {
+                  component: DeleteButton,
+                  props: {
+                    doc,
+                    deleteFn: () => doc.deleteDialog(),
+                  },
+                  condition: (doc) => !doc.system.linkedActivity,
+                },
+                {
+                  component: OpenActivityButton,
+                  props: {
+                    doc,
+                  },
+                  condition: (doc) => !!doc.system.linkedActivity,
+                },
+              ],
             }),
-          } satisfies TableAction<typeof DeleteButton>);
+          } satisfies TableAction<typeof ChooseAButton>);
         } else {
           result.push({
             component: SpellButton,
