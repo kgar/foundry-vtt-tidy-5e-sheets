@@ -844,16 +844,22 @@
   }
 
   /* Effects */
-  .effect-summary-changes-table {
-    table-layout: fixed;
+  .editor-rendered-content {
+    .effect-summary-changes-table {
+      table-layout: fixed;
 
-    th {
-      text-align: left;
-    }
+      &:is(:last-child) {
+        margin-bottom: var(--t5e-size-2x);
+      }
 
-    th,
-    td {
-      padding: 0.25rem;
+      th {
+        text-align: left;
+      }
+
+      th,
+      td {
+        padding: 0.25rem;
+      }
     }
   }
 

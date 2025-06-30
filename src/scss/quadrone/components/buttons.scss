@@ -348,7 +348,7 @@
       color: var(--t5e-color-icon-default);
     }
 
-    .expand-indicator {
+    i.expand-indicator {
       font-size: 0.5rem;
       position: absolute;
       right: 0.125rem;
@@ -447,9 +447,24 @@
 
 
 &.theme-dark {
-  .button-with-options-wrapper menu {
-    background: var(--t5e-component-card-darker);
+  .button-with-options-wrapper {
+    .with-options {
+      i.expand-indicator {
+        color: var(--t5e-color-text-gold-emphasis);
+      }
+
+      &:hover {
+        i.expand-indicator {
+          color: var(--t5e-color-icon-default);
+        }
+      }
+    }
+
+    menu {
+      background: var(--t5e-component-card-darker);
+    }
   }
+
 
   :is(button, .button) {
     i {
