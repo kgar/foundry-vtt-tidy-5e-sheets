@@ -827,5 +827,7 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Deník dopravního prostředku Tidy 5e",
     "TIDY5E.ConfigureTab.Title": "Nastavit {tabName}",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Deník položky Tidy 5e",
-    "TIDY5E.Tidy5eGroupSheetQuadrone": "Deník skupiny Tidy 5e"
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Deník skupiny Tidy 5e",
+    "TIDY5E.StatblockTabName": "Blok statistik",
+    "TIDY5E.Ability.EditScore.label": "Upravit skóre"
 }
