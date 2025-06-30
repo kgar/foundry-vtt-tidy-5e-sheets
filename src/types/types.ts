@@ -1114,7 +1114,7 @@ export type InspirationSource = {
   value: number;
   max: number;
   itemId?: string;
-}
+};
 
 export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed

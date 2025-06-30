@@ -16,7 +16,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
-  import CharacterSpellbookFooter from "../character-parts/CharacterSpellbookFooter.svelte";
+  import CharacterSpellbookFooter from '../character-parts/CharacterSpellbookFooter.svelte';
 
   let context =
     $derived(
@@ -62,6 +62,27 @@
         },
       ],
     },
+    {
+      title: '(Localize) Cast Activity Spell Grouping',
+      settings: [
+        {
+          type: 'radio',
+          options: [
+            {
+              label: '(Localize) Additional Spells section',
+              value: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL,
+            },
+            {
+              label: '(Localize) Section Per Item',
+              value: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_PER_ITEM,
+            },
+          ],
+          prop: 'flags.tidy5e-sheet.userPreferences.castActivitySpellGrouping',
+          doc: game.user,
+          default: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL,
+        },
+      ],
+    },
   ]);
 
   $effect(() => {
@@ -85,6 +106,6 @@
 />
 
 <CharacterSpellbookFooter
-class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
-tabId={tabId}
+  class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
+  {tabId}
 />

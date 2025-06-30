@@ -19,6 +19,7 @@ export type BooleanSetting = {
   checked?: boolean;
   prop: string;
   doc?: any;
+  default?: boolean;
 };
 
 export type RadioSettingOption = {
@@ -33,6 +34,7 @@ export type RadioSetting = {
   selected?: string;
   prop: string;
   doc?: any;
+  default?: string;
 };
 
 export type SectionSetting = BooleanSetting | RadioSetting;
@@ -124,9 +126,11 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
       for (let setting of group.settings) {
         let doc = setting.doc ?? this.document;
         if (setting.type === 'boolean') {
-          setting.checked = foundry.utils.getProperty(doc, setting.prop);
+          setting.checked =
+            foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
         } else if (setting.type === 'radio') {
-          let selected = foundry.utils.getProperty(doc, setting.prop);
+          let selected =
+            foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
           setting.selected = selected;
         }
       }

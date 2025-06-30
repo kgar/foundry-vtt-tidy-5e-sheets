@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [ ] Slice up character.scss into smaller stylesheets
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
@@ -310,3 +309,4 @@ Limited:
   - [x] Only show for "Actor" documents, "character" and "npc"
   - [x] Wire up portrait switcher button to the sheet-specific version of the setting
 - [x]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
+- [x] User Preference: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item

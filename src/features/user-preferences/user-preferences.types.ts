@@ -24,4 +24,7 @@ export type ExpandCollapseBehavior = 'top-level' | 'all';
 
 export type UserPreferences = {
   expandCollapseBehavior: ExpandCollapseBehavior;
+  [CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_PREFERENCE]?:
+    | typeof CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL
+    | typeof CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_PER_ITEM;
 };
