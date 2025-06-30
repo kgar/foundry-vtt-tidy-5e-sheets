@@ -2,6 +2,8 @@
 
 ### The Short List
 
+- [ ] Make Special Traits app
+- [x] bug: on sheet reopen, your last tab successfully is shown, but the currentTabId is reset to the first tab, "actions". So if you make a change or toggle the play mode, it'll throw you to the first tab.
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
@@ -133,6 +135,7 @@ Each "group" needs a group identifier. I'm thinking:
 - [x] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
 - [ ] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
 - [ ] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
+- [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
 
 ### Post-Beta Stretch Goals
 
