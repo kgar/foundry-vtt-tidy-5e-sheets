@@ -1049,13 +1049,13 @@
           width: 2.75rem;
           height: 2.75rem;
 
-          .level {
-            margin-bottom: 1px;
-          }
+          // .level {
+          //   margin-bottom: 1px;
+          // }
 
-          .level-container {
-            width: 19px;
-            height: 19px;
+          .inspiration-level {
+            width: var(--t5e-size-5x);
+            height: var(--t5e-size-5x);
             border-radius: 100%;
             border: 1px solid transparent;
             transition: all var(--t5e-transition-default);
@@ -1066,15 +1066,17 @@
             text-align: center;
           }
 
-          &.inspired .level-container {
+          .level {
+            text-align: center;
+            font-size: var(--font-size-16);
+          }
+
+          &.inspired .inspiration-level {
             box-shadow: 0 0 8px 3px var(--t5e-theme-color-highlight);
             content: '';
             background-color: var(--t5e-color-palette-white);
             border-color: var(--t5e-theme-color-highlight);
 
-            .level {
-              font-size: var(--font-size-16);
-            }
           }
 
           &:hover,

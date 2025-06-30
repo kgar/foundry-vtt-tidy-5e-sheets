@@ -79,6 +79,7 @@
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
+- [ ] Swap left and right areas in tab selection (left = selected, right = hidden)
 
 
 ## hightouch To Do

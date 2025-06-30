@@ -8,7 +8,7 @@
     If we support banked inspiration points, we should also consider how we might allow integration of a module like "So Inspired!" 
     It could be as providing the Banked Inspiration Badge as an injectable component from the Tidy API.
   */
-  let levels = 1;
+  let levels = 1 ;
   let currentLevel = $state(1);
 
   let localize = FoundryAdapter.localize;
@@ -47,8 +47,8 @@
       class="inspiration button button-borderless button-icon-only stacked"
       class:inspired={currentLevel > 0}
     >
-      <span class="level-container">
-        <span class="level font-data-medium color-text-inverse">
+      <span class="inspiration-level">
+        <span class="level font-data-large color-text-inverse">
           {currentLevel}
         </span>
       </span>
