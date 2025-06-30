@@ -2,8 +2,8 @@
 
 ### The Short List
 
-- [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
-- [ ] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
+
+- [ ] Uses - Dragon's Fire Breath, should show recharge roller when empty.
 - [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet
@@ -13,7 +13,6 @@
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 - [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
-- [ ] Uses - Dragon's Fire Breath, should show recharge roller when empty.
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait. 
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] Implement Responsive Tab Strip
@@ -74,6 +73,7 @@
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306
 - [x] Swap left and right areas in tab selection (left = selected, right = hidden)
+- [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 
 ### Module Compatibility
 
@@ -313,3 +313,4 @@ Limited:
 - [x] Slice up character.scss into smaller stylesheets
 - [x] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [x] Sheet tab: need Inventory filters in advanced filter section
+- [x] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
