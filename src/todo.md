@@ -114,6 +114,7 @@ Each "group" needs a group identifier. I'm thinking:
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
 - [ ] add a class to section headers when there are no search results `.search-no-results`
+- [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306
 
 ### Module Compatibility
 
