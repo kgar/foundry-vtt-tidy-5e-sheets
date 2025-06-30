@@ -2,16 +2,14 @@
 
 ### The Short List
 
-
 - [ ] Uses - Dragon's Fire Breath, should show recharge roller when empty.
+- [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
+- [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 - [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet
   - [ ] World
 - [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
-- [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
-- [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
-- [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait. 
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
@@ -74,6 +72,8 @@
 - [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306
 - [x] Swap left and right areas in tab selection (left = selected, right = hidden)
 - [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
+- [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
+
 
 ### Module Compatibility
 
