@@ -303,11 +303,11 @@ export class ItemFilterRuntime {
           },
           {
             ...defaultItemFilters.activationCostBonus,
-            pinnedFilterClass: 'hide-under-550',
+            pinnedFilterClass: 'hide-under-450',
           },
           {
             ...defaultItemFilters.activationCostReaction,
-            pinnedFilterClass: 'hide-under-600',
+            pinnedFilterClass: 'hide-under-450',
           },
           { ...defaultItemFilters.canUse, pinnedFilterClass: 'hide-under-400' },
           defaultItemFilters.magical,
@@ -324,15 +324,15 @@ export class ItemFilterRuntime {
         'DND5E.ItemActivationCost': [
           {
             ...defaultItemFilters.activationCostAction,
-            pinnedFilterClass: 'hide-under-450',
+            pinnedFilterClass: 'hide-under-400',
           },
           {
             ...defaultItemFilters.activationCostBonus,
-            pinnedFilterClass: 'hide-under-550',
+            pinnedFilterClass: 'hide-under-400',
           },
           {
             ...defaultItemFilters.activationCostReaction,
-            pinnedFilterClass: 'hide-under-600',
+            pinnedFilterClass: 'hide-under-400',
           },
           defaultItemFilters.canUse,
           defaultItemFilters.magical,
@@ -351,11 +351,11 @@ export class ItemFilterRuntime {
           },
           {
             ...defaultItemFilters.activationCostBonus,
-            pinnedFilterClass: 'hide-under-550',
+            pinnedFilterClass: 'hide-under-450',
           },
           {
             ...defaultItemFilters.activationCostReaction,
-            pinnedFilterClass: 'hide-under-600',
+            pinnedFilterClass: 'hide-under-450',
           },
           defaultItemFilters.activationCostOther,
         ],
@@ -366,22 +366,34 @@ export class ItemFilterRuntime {
         'DND5E.ItemActivationCost': [
           {
             ...defaultItemFilters.activationCostAction,
-            pinnedFilterClass: 'hide-under-450',
+            pinnedFilterClass: 'hide-under-400',
           },
           {
             ...defaultItemFilters.activationCostBonus,
-            pinnedFilterClass: 'hide-under-550',
+            pinnedFilterClass: 'hide-under-400',
           },
           {
             ...defaultItemFilters.activationCostReaction,
-            pinnedFilterClass: 'hide-under-600',
+            pinnedFilterClass: 'hide-under-400',
           },
         ],
         'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
           defaultItemFilters.canUse,
         ],
       },
-      [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: { 
+        'DND5E.ItemActivationCost': [
+          {
+            ...defaultItemFilters.activationCostAction,
+          },
+          {
+            ...defaultItemFilters.activationCostBonus,
+          },
+          {
+            ...defaultItemFilters.activationCostReaction,
+          },
+        ],
+      },
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
       [CONSTANTS.TAB_ACTOR_INVENTORY]: {
@@ -392,11 +404,11 @@ export class ItemFilterRuntime {
           },
           {
             ...defaultItemFilters.activationCostBonus,
-            pinnedFilterClass: 'hide-under-550',
+            pinnedFilterClass: 'hide-under-450',
           },
           {
             ...defaultItemFilters.activationCostReaction,
-            pinnedFilterClass: 'hide-under-600',
+            pinnedFilterClass: 'hide-under-450',
           },
           defaultItemFilters.canUse,
           defaultItemFilters.magical,
@@ -415,11 +427,11 @@ export class ItemFilterRuntime {
           },
           {
             ...defaultItemFilters.activationCostBonus,
-            pinnedFilterClass: 'hide-under-550',
+            pinnedFilterClass: 'hide-under-450',
           },
           {
             ...defaultItemFilters.activationCostReaction,
-            pinnedFilterClass: 'hide-under-600',
+            pinnedFilterClass: 'hide-under-450',
           },
           defaultItemFilters.activationCostOther,
         ],

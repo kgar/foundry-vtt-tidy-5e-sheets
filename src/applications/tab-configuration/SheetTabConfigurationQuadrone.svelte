@@ -24,13 +24,13 @@
   );
 </script>
 
-<div class="flex1">
+<div class="configuration-tab flexcol">
   <h2>
     {title}
   </h2>
   <TabConfigurationEntry entry={config.entry} />
 </div>
-<div class="flexrow flex0">
+<div class="flexrow flexgap-1">
   <button
     type="button"
     class="button button-primary save-changes-btn"

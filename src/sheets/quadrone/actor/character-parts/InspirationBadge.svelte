@@ -25,8 +25,8 @@
       class="inspiration button button-borderless button-icon-only stacked"
       class:inspired={inspirationSource.value > 0}
     >
-      <span class="level-container">
-        <span class="level font-data-medium color-text-inverse">
+      <span class="inspiration-level">
+        <span class="level font-data-large color-text-inverse">
           {inspirationSource.value}
         </span>
       </span>

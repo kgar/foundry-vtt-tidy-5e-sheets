@@ -206,8 +206,8 @@
     }
 
     h3 {
-      font-size: var(--font-size-14);
-      line-height: var(--font-size-14);
+      font-size: var(--font-size-16);
+      line-height: var(--font-size-16);
       font-weight: 400;
       letter-spacing: 0.00875rem;
     }
@@ -814,6 +814,18 @@
 
         }
       }
+    }
+  }
+
+  &.sheet-tab-configuration {
+
+    .window-content {
+      gap: var(--t5e-size-4x);
+    }
+
+    .configuration-tab {
+      flex: 1;
+      gap: var(--t5e-size-4x);
     }
   }
 }
