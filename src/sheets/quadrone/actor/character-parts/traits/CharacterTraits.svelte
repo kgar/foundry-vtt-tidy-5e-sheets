@@ -7,6 +7,7 @@
   import CharacterTraitSpecies from './CharacterTraitSpecies.svelte';
   import CharacterTraitBackground from './CharacterTraitBackground.svelte';
   import CharacterTraitConfigurableListEntry from './CharacterTraitConfigurableListEntry.svelte';
+  import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -21,14 +22,19 @@
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
-    <button
-      type="button"
-      class="button"
-      onclick={() => alert('TODO: Make Special Traits App')}
-    >
-      <i class="fa-solid fa-star"></i>
-      {localize('DND5E.SpecialTraits')}
-    </button>
+    {#if context.editable}
+      <button
+        type="button"
+        class="button"
+        onclick={() =>
+          new SpecialTraitsApplication({ document: context.actor }).render({
+            force: true,
+          })}
+      >
+        <i class="fa-solid fa-star"></i>
+        {localize('DND5E.SpecialTraits')}
+      </button>
+    {/if}
   </div>
 
   <div class="list">
@@ -53,7 +59,10 @@
               field="system.traits.size"
               value={context.system.traits.size}
             >
-              <SelectOptions data={context.config.actorSizes} labelProp="label" />
+              <SelectOptions
+                data={context.config.actorSizes}
+                labelProp="label"
+              />
             </SelectQuadrone>
           {:else}
             <ul class="pills">

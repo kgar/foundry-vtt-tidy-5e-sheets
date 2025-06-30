@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Make Special Traits app
+- [x] Make Special Traits app
 - [ ] Add more theme settings - Actor Portrait Shape
   - [ ] Include in World Settings and Sheet-specific Settings
   - [ ] Only show for "Actor" documents, "character" and "npc"
@@ -25,6 +25,7 @@
 - [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Uses - Dragon's Fire Breath, should show recharge roller when empty.
+- [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait. 
 - [ ] Implement Responsive Tab Strip
 
 
@@ -91,6 +92,7 @@
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
+- [ ] Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
 
 
 ## hightouch To Do
@@ -106,6 +108,7 @@
 - [ ] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
 - [ ] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
+- [ ] Favorites - there are scrollbars on title and subtitle
 
 ### Post-Beta Stretch Goals
 

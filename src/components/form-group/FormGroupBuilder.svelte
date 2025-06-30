@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ComponentWithProps } from 'src/utils/component';
+    import type { ClassValue } from 'svelte/elements';
 
   const localize = FoundryAdapter.localize;
 
@@ -9,7 +10,7 @@
     units?: string;
     hint?: string;
     rootId?: string;
-    groupClasses?: string[];
+    groupClasses?: ClassValue;
     stacked?: boolean;
     hidden?: boolean | 'until-found';
     // widget?: ComponentWithProps<any>[];
