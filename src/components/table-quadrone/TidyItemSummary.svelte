@@ -86,7 +86,7 @@
       {#if chatData.properties && (gmEditMode || identified)}
         {#each chatData.properties as prop}<span class="tag">
             <span class="value">
-              {prop}
+              {prop.capitalize()}
             </span>
           </span>
         {/each}
