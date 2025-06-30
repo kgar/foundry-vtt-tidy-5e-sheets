@@ -33,10 +33,10 @@
   <ListboxSetting
     name={SettingsProvider.settings.defaultCharacterSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultCharacterSheetTabs.options.hint}
-    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:leftItems={context.defaultCharacterTabs.available}
-    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:rightItems={context.defaultCharacterTabs.selected}
+    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
+    bind:leftItems={context.defaultCharacterTabs.selected}
+    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
+    bind:rightItems={context.defaultCharacterTabs.available}
     labelProp="label"
     valueProp="id"
   >

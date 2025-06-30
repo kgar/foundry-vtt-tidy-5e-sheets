@@ -206,11 +206,11 @@
         selectedRightItemIndex = null;
       }}
       onkeydown={handleLeftListboxKeydown}
-      class="{listboxCssClass}"
+      class={[listboxCssClass, 'listbox-selected']}
     >
       {#snippet itemTemplate({ item })}
         {#if leftItemTemplate}{@render leftItemTemplate({ item })}{:else}
-          <i class="fa-regular fa-square"></i>
+          <i class="fa-solid fa-square-check"></i>
           {item[labelProp]}
         {/if}
       {/snippet}
@@ -248,11 +248,11 @@
         selectedLeftItemIndex = null;
       }}
       onkeydown={handleRightListboxKeydown}
-      class="listbox-selected {listboxCssClass}"
+      class={listboxCssClass}
     >
       {#snippet itemTemplate({ item })}
         {#if rightItemTemplate}{@render rightItemTemplate({ item })}{:else}
-          <i class="fa-solid fa-square-check"></i>
+          <i class="fa-regular fa-square"></i>
           {item[labelProp]}
         {/if}
       {/snippet}

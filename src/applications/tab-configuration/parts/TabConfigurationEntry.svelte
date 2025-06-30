@@ -15,13 +15,13 @@
 <SelectionListbox
   labelProp="title"
   valueProp="id"
-  bind:leftItems={entry.unselected}
-  bind:rightItems={entry.selected}
+  bind:leftItems={entry.selected}
+  bind:rightItems={entry.unselected}
 >
   {#snippet leftHeader()}
-    <h3>{localize('TIDY5E.TabSelection.AvailableHeader')}</h3>
+    <h3>{localize('TIDY5E.TabSelection.SelectedHeader')}</h3>
   {/snippet}
   {#snippet rightHeader()}
-    <h3>{localize('TIDY5E.TabSelection.SelectedHeader')}</h3>
+    <h3>{localize('TIDY5E.TabSelection.AvailableHeader')}</h3>
   {/snippet}
 </SelectionListbox>

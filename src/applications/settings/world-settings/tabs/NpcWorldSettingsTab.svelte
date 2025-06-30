@@ -33,10 +33,10 @@
   <ListboxSetting
     name={SettingsProvider.settings.defaultNpcSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultNpcSheetTabs.options.hint}
-    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:leftItems={context.defaultNpcTabs.available}
-    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:rightItems={context.defaultNpcTabs.selected}
+    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
+    bind:leftItems={context.defaultNpcTabs.selected}
+    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
+    bind:rightItems={context.defaultNpcTabs.available}
     labelProp="label"
     valueProp="id"
   >

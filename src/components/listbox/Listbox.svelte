@@ -113,7 +113,7 @@
 <ul
   bind:this={listbox}
   role="listbox"
-  class="listbox {rest.class ?? ''}"
+  class={['listbox', rest.class]}
   aria-activedescendant={selectedItemIndex !== null
     ? `listbox-item-${selectedItemIndex}-${idRandomizer}`
     : null}

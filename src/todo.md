@@ -3,8 +3,13 @@
 ### The Short List
 
 - [ ] Make Special Traits app
+- [ ] Add more theme settings - Actor Portrait Shape
+  - [ ] Include in World Settings and Sheet-specific Settings
+  - [ ] Only show for "Actor" documents, "character" and "npc"
+  - [ ] Wire up portrait switcher button to the sheet-specific version of the setting
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
+- [ ] Slice up character.scss into smaller stylesheets
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
 - [ ] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [ ] Sheet tab: need Inventory filters in advanced filter section
@@ -77,6 +82,7 @@
   - [x] ~~For fun, test with PopOut!~~
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306
+- [x] Swap left and right areas in tab selection (left = selected, right = hidden)
 
 ### Module Compatibility
 
@@ -85,7 +91,6 @@
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
-- [ ] Swap left and right areas in tab selection (left = selected, right = hidden)
 
 
 ## hightouch To Do

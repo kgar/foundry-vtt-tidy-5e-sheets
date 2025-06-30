@@ -33,10 +33,10 @@
   <ListboxSetting
     name={SettingsProvider.settings.defaultVehicleSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultVehicleSheetTabs.options.hint}
-    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:leftItems={context.defaultVehicleTabs.available}
-    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:rightItems={context.defaultVehicleTabs.selected}
+    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
+    bind:leftItems={context.defaultVehicleTabs.selected}
+    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
+    bind:rightItems={context.defaultVehicleTabs.available}
     labelProp="label"
     valueProp="id"
   >
