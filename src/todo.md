@@ -91,6 +91,7 @@
 - [x] Review Container Sheet Limited View. I think this is good and already 1:1 with default sheets.
 - [x] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
 - [x] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
+- [ ] Reorganize responsive view of Character tab when sidebar is open (Skills top left, Tools/abilities top right, Features below)
 
 
 ### Feature Origin dropdown notes
