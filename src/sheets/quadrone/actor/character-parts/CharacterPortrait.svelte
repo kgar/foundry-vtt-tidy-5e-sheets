@@ -1,17 +1,16 @@
 <script lang="ts">
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import DeathSavesOverlay from './DeathSavesOverlay.svelte'; // Assuming relative path
-  import { settings } from 'src/settings/settings.svelte';
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   type Props = {
     imageUrl: string;
     imageAlt: string;
-    portraitShape?: string; // e.g., 'transparent', 'round', 'square'
   };
 
-  let { imageUrl, imageAlt, portraitShape = 'round' }: Props = $props();
+  let { imageUrl, imageAlt }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -23,14 +22,18 @@
   );
 
   // Make portraitShape mutable for the debug button
-  let currentPortraitShape = $state(portraitShape);
+  let currentPortraitShape = $derived(
+    ThemeQuadrone.getActorPortraitShape(context.document),
+  );
 
-  const availableShapes = ['transparent', 'round', 'square'];
+  const availableShapes = ThemeQuadrone.getActorPortraitShapes();
 
   function cycleShape() {
     const currentIndex = availableShapes.indexOf(currentPortraitShape);
     const nextIndex = (currentIndex + 1) % availableShapes.length;
-    currentPortraitShape = availableShapes[nextIndex];
+    let newShape = availableShapes[nextIndex];
+
+    ThemeQuadrone.updatePortraitShape(context.actor, newShape);
   }
 
   function handlePortraitClick(
@@ -71,28 +74,36 @@
     });
     return fp.browse();
   }
+
+  const localize = FoundryAdapter.localize;
+
+  let cyclerTooltip = $derived(
+    localize('TIDY5E.ThemeSettings.PortraitShape.title', {
+      type: localize(
+        `TIDY5E.ThemeSettings.PortraitShape.option.${currentPortraitShape}`,
+      ),
+    }),
+  );
 </script>
 
-<!-- TODO: Add switch for size if needed -->
-
-  {#if settings.value.truesight}
-    <button
-      type="button"
-      class="button button-borderless button-icon-only button-config"
-      style="position: absolute; top: 0; right: 0; z-index: 10; border: none; font-size: 14px;"
-      onclick={cycleShape}
-      title="Cycle Portrait Shape (Debug)"
-    >
-     {#if currentPortraitShape === 'round'}
-      <i class="fas fa-square-user"></i>
-     {:else if currentPortraitShape === 'square'}
+{#if context.unlocked}
+  <button
+    type="button"
+    class="button button-borderless button-icon-only button-config"
+    style="position: absolute; top: 0; right: 0; z-index: 10; border: none; font-size: 14px;"
+    onclick={cycleShape}
+    data-tooltip={cyclerTooltip}
+  >
+    {#if currentPortraitShape === 'round'}
       <i class="fas fa-circle-user"></i>
-     {:else}
+    {:else if currentPortraitShape === 'square'}
+      <i class="fas fa-square-user"></i>
+    {:else}
       <i class="fas fa-user"></i>
-     {/if}
-    </button>
-  {/if}
-  <div
+    {/if}
+  </button>
+{/if}
+<div
   class={['character-image', currentPortraitShape]}
   class:dead={characterIsDead}
   style="position: relative;"

@@ -3,6 +3,7 @@ import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCon
 import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type {
+  PortraitShape,
   ThemeQuadroneStyleDeclaration,
   ThemeSettings,
   ThemeSettingsConfigurationOptions,
@@ -48,6 +49,7 @@ export class ThemeQuadrone {
     return {
       accentColor: '',
       headerBackground: '',
+      portraitShape: undefined,
       rarityColors: {},
       spellPreparationModeColors: {},
       useSaturatedRarityColors: false,
@@ -193,5 +195,27 @@ export class ThemeQuadrone {
         TidyHooks.tidy5eSheetsThemeSettingsChangedUnsubscribe(hookId);
       },
     };
+  }
+
+  /* -------------------------------------------- */
+  /*  Portrait Shapes                             */
+  /* -------------------------------------------- */
+
+  static getActorPortraitShapes(): PortraitShape[] {
+    return ['round', 'transparent', 'square'];
+  }
+
+  static getActorPortraitShape(doc: any): PortraitShape {
+    return coalesce(
+      TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
+      settings.value.worldThemeSettings?.portraitShape,
+      'round'
+    ) as PortraitShape;
+  }
+
+  static updatePortraitShape(doc: any, newShape: PortraitShape) {
+    const settings = this.getSheetThemeSettings({ doc: doc });
+    settings.portraitShape = newShape;
+    this.saveSheetThemeSettings(doc, settings);
   }
 }

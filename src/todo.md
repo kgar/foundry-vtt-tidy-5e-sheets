@@ -2,11 +2,6 @@
 
 ### The Short List
 
-- [x] Make Special Traits app
-- [ ] Add more theme settings - Actor Portrait Shape
-  - [ ] Include in World Settings and Sheet-specific Settings
-  - [ ] Only show for "Actor" documents, "character" and "npc"
-  - [ ] Wire up portrait switcher button to the sheet-specific version of the setting
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [ ] Slice up character.scss into smaller stylesheets
@@ -310,3 +305,8 @@ Limited:
 - [x] Context Menu items rework
 - [x] Additional Spells - make Prepare button instead be Activity cog.
 - [x] bug: on sheet reopen, your last tab successfully is shown, but the currentTabId is reset to the first tab, "actions". So if you make a change or toggle the play mode, it'll throw you to the first tab.
+- [x] Make Special Traits app
+- [x] Add more theme settings - Actor Portrait Shape
+  - [x] Include in World Settings and Sheet-specific Settings
+  - [x] Only show for "Actor" documents, "character" and "npc"
+  - [x] Wire up portrait switcher button to the sheet-specific version of the setting

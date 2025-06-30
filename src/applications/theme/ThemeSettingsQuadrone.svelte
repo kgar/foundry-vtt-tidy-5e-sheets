@@ -5,6 +5,9 @@
   } from './ThemeSettingsQuadroneApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSettingColorFormGroupQuadrone from './ThemeSettingColorFormGroupQuadrone.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
@@ -14,6 +17,8 @@
   let { app, settings: data }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
 
   function pickHeaderBackground(
     event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
@@ -30,6 +35,8 @@
     });
     return fp.browse();
   }
+
+  let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
 </script>
 
 <div class="scrollable flex1">
@@ -39,44 +46,87 @@
 
   <fieldset>
     <legend>
-      (Localize) Sheet Theme
+      {localize('TIDY5E.ThemeSettings.SheetTheme.title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <ThemeSettingColorFormGroupQuadrone
       key="accent-color"
       bind:value={data.accentColor}
-      label="(Localize) Accent Color"
+      label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
     />
     <p class="hint">
-      (Localize) For best results, choose a color near the center of the color palette.
+      {localize('TIDY5E.ThemeSettings.SheetTheme.hint')}
     </p>
 
     <div class="form-group">
-      <label for="">(Localize) Header Background</label>
+      <label for="{idPrefix}-header-background">
+        {localize('TIDY5E.ThemeSettings.HeaderBackground.title')}
+      </label>
       <div class="form-fields">
-        <input type="text" bind:value={data.headerBackground} />
-        <button type="button" class="button button-icon-only" onclick={pickHeaderBackground}>
+        <input
+          id="{idPrefix}-header-background"
+          type="text"
+          bind:value={data.headerBackground}
+        />
+        <button
+          type="button"
+          class="button button-icon-only"
+          onclick={pickHeaderBackground}
+        >
           <i class="fa-solid fa-search"></i>
         </button>
       </div>
     </div>
 
+    {#if isNil(app.document?.documentName, CONSTANTS.DOCUMENT_NAME_ACTOR)}
+      <div class="form-group">
+        <label for="{idPrefix}-actor-portrait-shape">
+          {localize('TIDY5E.ThemeSettings.PortraitShape.title', {
+            type: localize(CONSTANTS.DOCUMENT_NAME_ACTOR),
+          })}
+        </label>
+        <div class="form-fields">
+          <select
+            id="{idPrefix}-actor-portrait-shape"
+            bind:value={data.portraitShape}
+          >
+            <option></option>
+            {#each portraitShapes as shape}
+              <option value={shape}
+                >{localize(
+                  `TIDY5E.ThemeSettings.PortraitShape.option.${shape}`,
+                )}</option
+              >
+            {/each}
+          </select>
+        </div>
+      </div>
+    {/if}
+
     <fieldset>
       <legend>
-        (Localize) Rarity Colors
+        {localize('TIDY5E.ThemeSettings.RarityColors.title')}
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
 
       <div class="form-group">
-        <label for="">(Localize) Use Saturated Rarity Colors</label>
+        <label for="{idPrefix}-use-saturated-rarity-colors"
+          >{localize(
+            'TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.name',
+          )}</label
+        >
         <div class="form-fields">
-          <input type="checkbox" bind:checked={data.useSaturatedRarityColors} />
+          <input
+            id="{idPrefix}-use-saturated-rarity-colors"
+            type="checkbox"
+            bind:checked={data.useSaturatedRarityColors}
+          />
         </div>
         <p class="hint">
-          (Localize) In some cases, Tidy 5e will desaturate rarity colors to
-          reduce eye strain, particularly with text. Select this option to use
-          the fully saturated rarity color.
+          {localize(
+            'TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.hint',
+          )}
         </p>
       </div>
       {#each data.rarityColors as color}
@@ -90,7 +140,7 @@
 
     <fieldset>
       <legend>
-        (Localize) Spell Preparation Mode Colors
+        {localize('TIDY5E.ThemeSettings.SpellPreparationModeColors.title')}
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
 
@@ -113,9 +163,6 @@
   >
     {localize('TIDY5E.SaveChanges')}
   </button>
-  <!-- <button type="button" class="button" onclick={() => app.apply()}
-      >{localize('TIDY5E.ApplyChanges')}</button
-      > -->
   <button
     type="button"
     class="button button-secondary use-default-btn"

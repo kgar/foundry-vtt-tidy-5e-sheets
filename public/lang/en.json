@@ -95,7 +95,6 @@
   "TIDY5E.ContextMenuActionAddToSheetTab": "Add to Sheet tab",
   "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
 
-
   "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
@@ -287,7 +286,6 @@
     "label": "Configure Sheet Tabs",
     "hint": "Configure which tabs are visible for all actor and item sheets."
   },
-
 
   "TIDY5E.Settings.BankedInspiration.title": "Banked Inspiration",
   "TIDY5E.Settings.EnableBankedInspiration": {
@@ -756,7 +754,21 @@
       "importSuccess": "Theme imported successfully!",
       "menuLabel": "Menu",
       "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
-    }
+    },
+    "AccentColor.title": "Accent Color",
+    "HeaderBackground.title": "Header Background",
+    "PortraitShape": {
+      "title": "{type} Portrait Shape",
+      "option.round": "Round",
+      "option.transparent": "Transparent",
+      "option.square": "Square"
+    },
+    "RarityColors.title": "Rarity Colors",
+    "RarityColors.UseSaturatedColors.name": "Use Saturated Rarity Colors",
+    "RarityColors.UseSaturatedColors.hint": "In some cases, Tidy 5e will desaturate rarity colors to reduce eye strain, particularly with text. Select this option to use the fully saturated rarity color.",
+    "SheetTheme.title": "Sheet Theme",
+    "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
+    "SpellPreparationModeColors.title": "Spell Preparation Mode Colors"
   },
   "TIDY5E.FavoriteSpellLevelLabel": "Spell Level {number}",
   "TIDY5E.ApplyChanges": "Apply Changes",
