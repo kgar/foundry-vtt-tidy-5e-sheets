@@ -2,8 +2,6 @@
 
 ### The Short List
 
-- [x] Context Menu items rework
-- [x] Additional Spells - make Prepare button instead be Activity cog.
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
@@ -333,3 +331,5 @@ Limited:
   - [x] If API override in place, don't show context menu options for inspiration source.
 - [x] Add homebrew settings menu with localization keys.
 - [x] Add World settings for banked inspiration and show in homebrew dialog.
+- [x] Context Menu items rework
+- [x] Additional Spells - make Prepare button instead be Activity cog.
