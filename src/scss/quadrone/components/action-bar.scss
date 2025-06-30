@@ -7,4 +7,46 @@
   search {
     flex: 1;
   }
+
+  .button-toggle {
+    gap: 0;
+    width: fit-content;
+    min-width: var(--t5e-field-size-default);
+
+    &[data-filter-text][data-filter-abbr]:not([data-filter-abbr=""]) {
+      font-size: 0;
+
+      &::before {
+        text-align: center;
+        content: attr(data-filter-text);
+        font-size: var(--font-size-13);
+        color: var(--button-text, var(--t5e-color-text-default));
+      }
+    }
+  }
+
+  @container (width < 480px) {
+    .button-toggle {
+      &[data-filter-text][data-filter-abbr]:not([data-filter-abbr=""]) {
+        &::before {
+          content: attr(data-filter-abbr);
+        }
+      }
+    }
+  }
+}
+
+@container action-bar (width < 640px) {
+
+  .spellbook,
+  .contents {
+    .action-bar .button-group .button-toggle {
+
+      &[data-filter-text][data-filter-abbr]:not([data-filter-abbr=""]) {
+        &::before {
+          content: attr(data-filter-abbr);
+        }
+      }
+    }
+  }
 }

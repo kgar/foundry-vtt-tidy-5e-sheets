@@ -276,11 +276,16 @@
     box-shadow: none;
     min-height: calc(var(--t5e-field-size-default) - 0.125rem);
 
-    &:hover:not(:disabled) {
-      outline: 1px solid var(--t5e-component-field-border-hover);
+    &:hover,
+    &.active,
+    &:active,
+    &:focus {
+      &:not(:disabled) {
+        outline: 1px solid var(--t5e-component-field-border-hover);
 
-      &:not(:last-child) {
-        border-width: 0 0.0625rem 0 0;
+        &:not(:last-child) {
+          border-width: 0 0.0625rem 0 0;
+        }
       }
     }
   }

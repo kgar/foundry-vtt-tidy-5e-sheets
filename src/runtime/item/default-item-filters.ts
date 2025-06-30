@@ -14,6 +14,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION
       ),
     text: 'DND5E.Action',
+    abbreviation: 'DND5E.ActionAbbr',
   },
   activationCostBonus: {
     name: 'activationCostBonus',
@@ -22,6 +23,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS
       ),
     text: 'DND5E.BonusAction',
+    abbreviation: 'DND5E.BonusActionAbbr',
   },
   activationCostReaction: {
     name: 'activationCostReaction',
@@ -30,6 +32,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION
       ),
     text: 'DND5E.Reaction',
+    abbreviation: 'DND5E.ReactionAbbr',
   },
   activationCostLegendary: {
     name: 'activationCostLegendary',
