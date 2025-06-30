@@ -1,0 +1,167 @@
+  :where(.favorites) {
+    .list-label {
+      border-bottom: 1px solid var(--t5e-table-row-divider);
+      padding-block-end: var(--t5e-size-1x);
+    }
+
+    .favorite {
+      display: flex;
+      flex-direction: row;
+      padding-block-start: var(--t5e-size-1x);
+      padding-block-end: var(--t5e-size-1x);
+      border-bottom: 1px solid var(--t5e-table-row-divider);
+
+      .effect-use-icon {
+        border-radius: 0.125rem;
+        border: 1px solid var(--t5e-color-gold);
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+
+      &:hover,
+      &:focus {
+
+        .item-use-button,
+        &:not(.suppressed) .effect-use-icon {
+          box-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+        }
+
+        input.uses-value {
+          border-color: transparent; //var(--t5e-component-field-border);
+          background-color: var(--t5e-component-field-background-hover-emphasis);
+          box-shadow: 4px 0 0 0 var(--t5e-component-field-background-hover-emphasis);
+        }
+      }
+
+      >div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: var(--t5e-field-size-default);
+        overflow-x: hidden;
+
+        &.item-name-container {
+          align-items: flex-start;
+          margin-inline-start: var(--t5e-size-2x);
+          margin-inline-end: var(--t5e-size-2x);
+          flex: 4;
+        }
+
+        &:last-of-type {
+          flex: 2;
+        }
+      }
+
+      .ability {
+        text-transform: uppercase;
+      }
+
+      .inline-uses {
+        display: flex;
+        align-items: center;
+
+        .divider {
+          flex: 0 0 auto;
+        }
+
+        .uses-value {
+          flex: 1;
+          text-align: right;
+        }
+
+        .uses-max {
+          flex: 1;
+        }
+      }
+
+      .stacked {
+        flex-direction: column;
+        flex-wrap: nowrap;
+
+        span {
+          display: flex;
+          flex: 1;
+          text-wrap: nowrap;
+          text-overflow: ellipsis;
+          overflow-x: hidden;
+        }
+      }
+
+      .favorite-button {
+        display: flex;
+        flex: 5;
+        padding-inline-start: 0;
+        padding-inline-end: 0;
+        gap: var(--t5e-size-2x);
+        min-width: 0;
+        height: var(--t5e-field-size-default);
+
+        .item-use-button {
+          margin: 1px 0 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            width: 1.625rem;
+            height: 1.625rem;
+            overflow: hidden;
+          }
+
+          img,
+          i {
+            transition: all var(--t5e-transition-default);
+          }
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+          text-shadow: none;
+
+          .item-use-button {
+            img {
+              opacity: 0;
+            }
+
+            // TODO: hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
+            dnd5e-icon {
+              --icon-fill: transparent;
+            }
+
+            i {
+              display: flex;
+              opacity: 1;
+              color: var(--t5e-color-text-gold-emphasis);
+            }
+
+            background: transparent;
+          }
+        }
+
+        .item-name-container {
+          display: flex;
+          flex: 4;
+          overflow-x: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin-inline-end: 0;
+        }
+
+        .effect-toggle {
+          flex: 2;
+        }
+      }
+
+      &:has(input[type="checkbox"]:not(:checked)) {
+        .favorite-effect .item-name-container {
+          color: var(--t5e-color-text-lighter);
+        }
+
+        .effect-use-icon img {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
