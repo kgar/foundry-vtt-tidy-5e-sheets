@@ -101,6 +101,9 @@
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
 - [ ] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
 - [ ] Favorites - there are scrollbars on title and subtitle
+- [ ] Character Sheet - Light Mode - Bastion tab - progress text is very dark against a dark bar.
+- [ ] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
+
 
 ### Post-Beta Stretch Goals
 
