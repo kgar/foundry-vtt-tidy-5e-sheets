@@ -4,7 +4,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -14,6 +14,7 @@ import { isNil } from 'src/utils/data';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { getItemContextOptionsQuadrone } from './tidy5e-item-context-menu-quadrone';
 
 export function configureItemContextMenu(element: HTMLElement, app: any) {
   const id = element.closest('[data-item-id]')?.getAttribute('data-item-id');
@@ -26,7 +27,12 @@ export function configureItemContextMenu(element: HTMLElement, app: any) {
   // Parts of ContextMenu doesn't play well with promises, so don't show menus for containers in packs
   if (!item || item instanceof Promise) return;
 
-  ui.context.menuItems = getItemContextOptions(app, item, element);
+  const isQuadroneSheet = element.closest('.quadrone');
+
+  ui.context.menuItems = isQuadroneSheet
+    ? getItemContextOptionsQuadrone(app, item, element)
+    : getItemContextOptions(app, item, element);
+
   TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
 }
 
@@ -48,8 +54,6 @@ export function getItemContextOptions(
   const itemParent = item.actor ? item.actor : item.parent;
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
-
-  const isQuadroneSheet = element.closest('.quadrone');
 
   let options: ContextMenuEntry[] = [];
 
@@ -108,7 +112,9 @@ export function getItemContextOptions(
     name: !item.isOnCooldown
       ? 'DND5E.ContextMenuActionExpendCharge'
       : 'DND5E.ContextMenuActionCharge',
-    icon: '<i class="fa-solid fa-bolt"></i>',
+    icon: !item.isOnCooldown
+      ? '<i class="fa-regular fa-bolt"></i>'
+      : '<i class="fa-solid fa-bolt"></i>',
     callback: () =>
       item.update({
         'system.uses.spent': !item.isOnCooldown ? item.system.uses.max : 0,
@@ -203,7 +209,6 @@ export function getItemContextOptions(
       callback: () => AttributePins.pin(item, 'item'),
       condition: () =>
         item.isOwner &&
-        !isQuadroneSheet &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         AttributePins.isPinnable(item, 'item') &&
         !AttributePins.isPinned(item),
@@ -216,7 +221,6 @@ export function getItemContextOptions(
       callback: () => AttributePins.unpin(item),
       condition: () =>
         item.isOwner &&
-        !isQuadroneSheet &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         AttributePins.isPinnable(item, 'item') &&
         AttributePins.isPinned(item),
@@ -232,7 +236,6 @@ export function getItemContextOptions(
         callback: () => AttributePins.setItemResourceType(item, 'limited-uses'),
         condition: () =>
           item.isOwner &&
-          !isQuadroneSheet &&
           !FoundryAdapter.isLockedInCompendium(item) &&
           !isNil(item.system.quantity) &&
           AttributePins.getResourceType(item) !== 'limited-uses',
@@ -244,7 +247,6 @@ export function getItemContextOptions(
         callback: () => AttributePins.setItemResourceType(item, 'quantity'),
         condition: () =>
           item.isOwner &&
-          !isQuadroneSheet &&
           !FoundryAdapter.isLockedInCompendium(item) &&
           !isNil(item.system.quantity) &&
           AttributePins.getResourceType(item) !== 'quantity',
@@ -254,18 +256,18 @@ export function getItemContextOptions(
   }
 
   options.push({
+    name: 'TIDY5E.ContextMenuActionView',
+    icon: '<i class="fas fa-eye fa-fw"></i>',
+    callback: () =>
+      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_PLAY }),
+  });
+
+  options.push({
     name: 'TIDY5E.ContextMenuActionEdit',
     icon: '<i class="fas fa-pencil-alt fa-fw"></i>',
     callback: () =>
       item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_EDIT }),
     condition: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
-  });
-
-  options.push({
-    name: 'TIDY5E.ContextMenuActionView',
-    icon: '<i class="fas fa-eye fa-fw"></i>',
-    callback: () =>
-      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_PLAY }),
   });
 
   options.push({
@@ -348,20 +350,6 @@ export function getItemContextOptions(
   });
 
   const active = isItemInActionList(item);
-  options.push({
-    name: active
-      ? '(LOCALIZE) Remove from Sheet Tab'
-      : '(LOCALIZE) Add to Sheet tab',
-    icon: '<i class="fa-solid fa-thumbtack"></i>',
-    callback: () => {
-      TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
-    },
-    condition: () =>
-      item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
-      isQuadroneSheet &&
-      itemParentIsActor &&
-      isCharacter,
-  });
 
   options.push({
     name: active
@@ -375,7 +363,6 @@ export function getItemContextOptions(
     },
     condition: () =>
       item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
-      !isQuadroneSheet &&
       itemParentIsActor &&
       actorUsesActionFeature(itemParent),
   });
@@ -387,7 +374,6 @@ export function getItemContextOptions(
       TidyFlags.actionFilterOverride.unset(item);
     },
     condition: () =>
-      !isQuadroneSheet &&
       TidyFlags.actionFilterOverride.get(item) !== undefined &&
       itemParentIsActor &&
       actorUsesActionFeature(itemParent),

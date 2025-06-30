@@ -21,11 +21,7 @@
 
   let localize = FoundryAdapter.localize;
 
-  let selectedTabId: string = $state('');
-
-  $effect(() => {
-    selectedTabId = context.currentTabId;
-  });
+  let selectedTabId: string = $derived(context.currentTabId);
 
   let sidebarExpanded = $state(false);
 

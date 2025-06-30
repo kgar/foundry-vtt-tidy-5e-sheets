@@ -97,7 +97,7 @@ export class Tidy5eContainerSheetQuadrone
           },
         },
         {
-          icon: 'fa-solid fa-palette',
+          icon: 'fa-solid fa-swatchbook',
           label: 'TIDY5E.ThemeSettings.SheetMenu.name',
           action: 'themeSettings',
           ownership: 'OWNER',

@@ -6,6 +6,7 @@ import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
 import { ExhaustionApi } from './exhaustion/ExhaustionApi.svelte';
 import { ActorTraitsApi } from './actor-traits/ActorTraitsApi';
 import { ItemConfigApi } from './item/ItemConfigApi';
+import { ActorInspirationApi } from './actor-inspiration/ActorInspirationApi';
 
 /**
  * Provides extensibility APIs for customizing various aspects of Tidy 5e Sheets.
@@ -15,6 +16,9 @@ import { ItemConfigApi } from './item/ItemConfigApi';
 export class ConfigApi {
   /** {@inheritDoc ActionListApi} */
   actionList = new ActionListApi();
+  
+  /** {@inheritDoc ActorInspirationApi} */
+  actorInspiration = new ActorInspirationApi();
 
   /** {@inheritDoc ActorItemApi} */
   actorItem = new ActorItemApi();

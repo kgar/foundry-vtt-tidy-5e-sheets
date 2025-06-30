@@ -2,11 +2,7 @@
 
 ### The Short List
 
-- [ ] **Character**: Set as Inspiration Source (see below)
-- [ ] add a class to section headers when there are no search results `.search-no-results`
-- [ ] Implement Responsive Tab Strip
-- [ ] Context Menu items rework
-- [ ] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
+- [ ] Make Special Traits app
 - [ ]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
 - [ ] (TBD) User Setting: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
@@ -23,8 +19,11 @@
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 - [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
+- [ ] Uses - Dragon's Fire Breath, should show recharge roller when empty.
+- [ ] Implement Responsive Tab Strip
 
-### Everything after the short list
+
+### (Almost) Everything after the short list
 
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Scaffold the NPC Sheet
@@ -76,12 +75,19 @@
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
+- [ ] add a class to section headers when there are no search results `.search-no-results`
+- [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306
+
+### Module Compatibility
+
+- [ ] DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
+- [ ] So Inspired! - add API for globally overriding inspiration tracking. Require 
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 
 
-## hightouch To Do
+### hightouch To Do
 
 - [x] (hightouch) Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [ ] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
@@ -90,7 +96,15 @@
 - [ ] (not ready yet) (hightouch) Review Container Sheet Limited View
 - [x] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
 - [ ] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
+- [ ] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
+- [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
+- [ ] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
 
+### Post-Beta Stretch Goals
+
+- [ ] Compact Sheet - take the current sheet and apply compacting styles to it and offer as a User setting.
+- [ ] High Contrast support - add theming changes to support Foundry's high contrast settings.
+- [ ] Increased Mobile/Tablet support.
 
 ### Feature Origin dropdown notes
 
@@ -176,7 +190,8 @@ Hooks.once("init", FeatureOrigin.init);
 
 **Tidy API Ready**. Provide API support for someone to specify their own banked inspiration. They must provide callbacks for value, max, and onChange. When an API inspiration bank is registered, it overrides all other options. onChange should make it easy to understand whether the value increased or decreased.
 
-**Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and new value. If we're working with a registered inspiration item, then decrementing triggers item use.
+**Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and object with old and new values. If we're working with a registered inspiration item, then decrementing triggers item use.
+Likewise, fire a hook to see if we're permitted to change inspo, like "tidy5e-sheet.inspirationChanging" with same args, which will cancel the inspiration change event if so deemed by return value on Hook call.
 
 
 ### Deferred tasks from last item batch review
@@ -213,9 +228,6 @@ colorScheme.applications // 'light' | 'dark' | '' | ????
   - all: activation, duration, range, reach, target
   - item is weapon with no overrides: attack: range, reach
 
-### Electron Client Issues
-
-- [ ] The button panel menu is appearing behind tables in the Container Sheet.
 
 ### Context Menu items rework
 
@@ -274,58 +286,17 @@ Limited:
 
 ### To Do Graveyard
 
-- [x] When minimized, windows have a forced min-width. The min-width should only be applied when the window is fully open (they call it maximized)
-- [x] Explore what it takes to implement item sheet tab settings per item type.
-- [x] Refactor: Add formal itemCount function that receives context and expects a number in return. It will then put a count on the tab strip when greater than 0.
-- [x] Create ItemSheetQuadroneRuntime
-- [x] Refactor: consolidate getTabs() in actor sheet runtime. It's the same code over and over. Remove from actor quadrone sheets.
-- [x] ~~Refactor: delineate all detail tab IDs so that the runtime has a unique list of them.~~ Nah
-- [x] API: Upgrade HTML tab
-  - [x] add optional `getData(context: any)` function
-  - [x] upgrade `html` prop to allow `string | (data: any) => string`
-  - [x] upgrade TabManager (and everything else) to handle this appropriately
-  - [x] update documentation to show new examples
-- [x] Create Setting Menu "Sheet Tab Configuration (For New Tidy Sheets)"
-  - [x] Application layout
-    - [x] vertical tab strip
-      - [x] Character
-      - [x] NPC
-      - [x] Vehicle
-      - [x] Group
-      - [x] All Registered Items
-    - [x] Viewing Area
-      - [x] Selection Listbox with tabs for appropriate sheet type
-      - [x] Reset to Default button (does not save, just resets the included excluded in memory)
-    - [x] Button bar
-      - [x] Save
-      - [x] Use Default (with confirmation)
-  - [x] Save logic
-    - [x] Map the form context to save data
-    - [x] Get the original data
-    - [x] Merge Object to the save data
-  - [x] Use Default logic
-    - [x] Save `{}` to the setting
-- [x] Set up new tab selection for quadrone sheets
-  - [x] Character
-  - [x] Items
-    - [x] Background
-    - [x] Class
-    - [x] Consumable
-    - [x] Equipment
-    - [x] Facility
-    - [x] Feat
-    - [x] Loot
-    - [x] Species
-    - [x] Spell
-    - [x] Subclass
-    - [x] Tattoo
-    - [x] Tool
-    - [x] Weapon
-  - [x] Container
-- [x] Refactor: Change runtimes to non-default export. They're too hard to import in VS Code otherwise.
-  - [x] Item, Character, NPC, Vehicle, Group
-- [x] Add "Feature Origin" option to embedded Feats' details tab (See notes below)
-- [x] Add API documentation for limiting tabs by type for items.
-- [x] Change Bastion editor to singleton editor like in Biography tab. Add feather icon button for it.
-- [x] Bastion enriched context data: move to `enriched` section
-- [x] "Theme Settings" menu, change to "Tidy Theme Settings".
+- [x] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
+- [X] **Character**: Set as Inspiration Source (see below)
+  - [x] Add context prop for information source
+  - [x] Update inspiration badge with functionality
+  - [x] Set up flag-based owned-item inspiration source in character sheet context prep
+  - [x] Add context menu options, Feats with max uses only, "Set as Inspiration Source", "Remove as Inspiration Source"
+  - [x] Add Tidy API space for setting external inspiration source
+  - [x] Update context prep to favor an API-provided source over an owned item source.
+  - [x] If API override in place, don't show context menu options for inspiration source.
+- [x] Add homebrew settings menu with localization keys.
+- [x] Add World settings for banked inspiration and show in homebrew dialog.
+- [x] Context Menu items rework
+- [x] Additional Spells - make Prepare button instead be Activity cog.
+- [x] bug: on sheet reopen, your last tab successfully is shown, but the currentTabId is reset to the first tab, "actions". So if you make a change or toggle the play mode, it'll throw you to the first tab.
