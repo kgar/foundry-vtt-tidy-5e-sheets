@@ -465,6 +465,19 @@
     }
   }
 
+  .button-group {
+    :is(button, .button) {
+
+      &.active:not(:hover),
+      &:active,
+      &:focus {
+        &:not(:disabled) {
+          outline: 1px solid var(--t5e-component-field-border);
+        }
+      }
+    }
+  }
+
 
   :is(button, .button) {
     i {

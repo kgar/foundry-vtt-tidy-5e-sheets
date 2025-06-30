@@ -25,7 +25,8 @@
     background-repeat: no-repeat;
 
     filter: grayscale(100%);
-    mix-blend-mode: overlay;
+    mix-blend-mode: luminosity;
+    opacity: 0.4;
     background-size: cover;
     content: '';
     position: absolute;
@@ -38,8 +39,8 @@
   }
 
   &::after {
-    background: linear-gradient(to bottom, rgba(159, 146, 117, 0.25), rgba(127, 110, 69, 0.5));
-    mix-blend-mode: overlay;
+    background: linear-gradient(to bottom, rgba(159, 146, 117, 0.5), rgb(91, 78, 49));
+    mix-blend-mode: color-burn;
     content: '';
     position: absolute;
     top: 0;
@@ -49,7 +50,6 @@
     z-index: -1;
     width: 100%;
     height: 100%;
-    max-height: 200px; // TODO: Delete and use a wrapper around the header bar and sheet header.
   }
 
   .window-content {
