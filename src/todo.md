@@ -3,7 +3,6 @@
 ### The Short List
 
 - [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
-- [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 - [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet
@@ -72,6 +71,7 @@
 - [x] Swap left and right areas in tab selection (left = selected, right = hidden)
 - [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
+- [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 
 
 ### Module Compatibility
