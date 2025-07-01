@@ -18,8 +18,6 @@ export class BulkMigrationsApplication
   >(foundry.applications.api.ApplicationV2)
   implements ConfirmsMigrations
 {
-  _selectedTabId?: string;
-
   static DEFAULT_OPTIONS = {
     classes: [
       CONSTANTS.MODULE_ID,
@@ -36,22 +34,14 @@ export class BulkMigrationsApplication
     },
   };
 
-  constructor(
-    selectedTabId?: string,
-    args?: Partial<ApplicationConfiguration>
-  ) {
+  constructor(args?: Partial<ApplicationConfiguration>) {
     super(args);
-
-    this._selectedTabId = selectedTabId;
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
     return mount(BulkMigrations, {
       target: node,
       context: new Map<any, any>([['confirm', this.confirm]]),
-      props: {
-        selectedTabId: this._selectedTabId,
-      },
     });
   }
 
