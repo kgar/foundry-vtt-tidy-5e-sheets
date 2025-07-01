@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import ItemRechargeSummary from '../parts/header/ItemRechargeSummary.svelte';
+  import { getItemRechargeDiceRange } from 'src/utils/formula';
 
   let { rowDocument: item }: ColumnCellProps = $props();
 
@@ -18,29 +18,13 @@
     }),
   );
 
-  let recovery = $derived(item.system.uses?.recovery[0]);
-
   function onRechargeClicked(ev: MouseEvent) {
     ev.shiftKey
       ? item.update({ ['system.uses.spent']: 0 })
       : item.system.uses?.rollRecharge({ apply: true, event: ev });
   }
 
-  // TODO: this is duplicated. Share it somewhere universal?
-  let faces: Record<string, string> = {
-    '1': 'fa-solid fa-dice-one',
-    '2': 'fa-solid fa-dice-two',
-    '3': 'fa-solid fa-dice-three',
-    '4': 'fa-solid fa-dice-four',
-    '5': 'fa-solid fa-dice-five',
-    '6': 'fa-solid fa-dice-six',
-  };
-
-  let unknownFace = 'fa-solid fa-dice';
-
-  let formula = $derived(recovery?.formula ?? '');
-  let recharge = $derived(formula === '6' ? formula : `${formula}-6`);
-  let diceIconClass = $derived(faces[formula] ?? unknownFace);
+  let { rechargeRange, diceIconClass } = getItemRechargeDiceRange(item);
 </script>
 
 {#if item.hasLimitedUses && !conceal}
@@ -52,7 +36,7 @@
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
       <span class="recharge-range-text text-data">
-        {recharge}
+        {rechargeRange}
       </span>
     </a>
   {:else if item.hasRecharge && !item.isOnCooldown}

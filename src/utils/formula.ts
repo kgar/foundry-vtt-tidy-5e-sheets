@@ -13,7 +13,6 @@ import type {
   BasicRollMessageConfiguration,
   BasicRollProcessConfiguration,
 } from 'src/foundry/foundry.types';
-import { TidyFlags } from 'src/foundry/TidyFlags';
 import { coalesce } from './formatting';
 import { CONSTANTS } from 'src/constants';
 
@@ -440,10 +439,14 @@ const faces: Record<string, string> = {
 
 const unknownFace = 'fa-solid fa-dice';
 
-export function getItemRecoveryInfo(item: Item5e) {
-  // TODO: return all the info that
-  // src\sheets\quadrone\item\parts\header\ItemRechargeSummary.svelte
-  // and
-  // src\sheets\quadrone\item\columns\ItemUsesColumn.svelte
-  // would need
+export function getItemRechargeDiceRange(item: Item5e) {
+  const recovery = item.system.uses?.recovery[0];
+  const formula = recovery?.formula ?? '';
+  const rechargeRange = formula === '6' ? formula : `${formula}-6`;
+  const diceIconClass = faces[formula] ?? unknownFace;
+
+  return {
+    rechargeRange,
+    diceIconClass,
+  };
 }
