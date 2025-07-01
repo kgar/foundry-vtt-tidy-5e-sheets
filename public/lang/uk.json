@@ -116,8 +116,8 @@
     "TIDY5E.TabSelection": {
         "Title": "Вибір вкладки: {documentName}",
         "MenuOptionText": "Вибір вкладки",
-        "AvailableHeader": "Доступні вкладки",
-        "SelectedHeader": "Вибрані вкладки",
+        "AvailableHeader": "Приховані вкладки",
+        "SelectedHeader": "Видимі вкладки",
         "UnsupportedDocumentErrorMessage": "Тип документа {documentType} наразі не налаштовано для вибору вкладки.",
         "AtLeastOneRequiredErrorMessage": "Необхідна принаймні одна вкладка.",
         "Explanation": "Будь-які вкладки, налаштовані так, що користувач або аркуш не можуть їх бачити (наприклад, вкладку «Журнал» вимкнено в налаштуваннях), не відображатимуться на аркуші, навіть якщо їх вибрано."
@@ -666,7 +666,7 @@
     },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
-            "hint": "Налаштувати кольори аркушів Tidy 5e.",
+            "hint": "Тільки класичні охайні аркуші: Налаштуйте кольори охайних аркушів.",
             "name": "Налаштування теми Tidy",
             "buttonLabel": "Налаштування теми"
         },
@@ -682,7 +682,22 @@
             "useDefaultDarkColors": "Усталена темна",
             "importSuccess": "Тему успішно імпортовано!",
             "explanation": "Виберіть колір, який ви хочете використовувати для кожної опції. Значення «#00000000» еквівалентне вимкненню кольору."
-        }
+        },
+        "hint": "Налаштуйте свій аркуш, щоб створити занурюючий досвід, який доповнює вашу гру.",
+        "AccentColor.title": "Акцентний колір",
+        "HeaderBackground.title": "Фон заголовка",
+        "PortraitShape": {
+            "title": "{type} Форма портрета",
+            "option.round": "Круглий",
+            "option.transparent": "Прозорий",
+            "option.square": "Квадратний"
+        },
+        "RarityColors.title": "Рідкісні кольори",
+        "RarityColors.UseSaturatedColors.name": "Використовуйте насичені кольори рідкості",
+        "RarityColors.UseSaturatedColors.hint": "У деяких випадках Tidy 5e буде десантувати рідкість кольорів для зменшення напруги очей, особливо з текстом. Виберіть цю опцію, щоб використовувати повністю насичений колір рідкості.",
+        "SheetTheme.title": "Тема аркуша",
+        "SheetTheme.hint": "Для найкращих результатів виберіть колір біля центру кольорової палітри.",
+        "SpellPreparationModeColors.title": "Spell Preparation Mode Colors"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Чари рівня {number}",
     "TIDY5E.TotalCrewCount": "Всього екіпажу",
@@ -853,5 +868,35 @@
     "TIDY5E.CharacterTraits.Title": "Риси характеру",
     "TIDY5E.SidebarPinnedTab.Title": "Закріплено",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Відстеження слотів заклинань",
-    "TIDY5E.StatblockTabName": "Статблок"
+    "TIDY5E.StatblockTabName": "Статблок",
+    "TIDY5E.JournalEntry.NewTitle": "Запис журналу {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Встановити як джерело натхнення",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Видалити як джерело натхнення",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Додайте на вкладку Лист",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Видаліть з вкладки Лист",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Джерело натхнення",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Налаштування теми",
+        "label": "Налаштування налаштувань теми",
+        "hint": "Тільки нові охайні аркуші: встановіть налаштування теми за замовчуванням для вашого ігрового світу. Вони стосуються всіх типів аркушів."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Домашня пива",
+        "label": "Налаштувати Homebrew",
+        "hint": "Увімкнути та налаштувати параметри домашнього пива, надані цим модулем."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Вкладки аркушів",
+        "label": "Налаштування вкладок аркушів",
+        "hint": "Тільки нові охайні аркуші: Налаштуйте, які вкладки видно для всіх аркушів актора та предметів."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "Банкуване натхнення",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Увімкнути банківське натхнення",
+        "hint": "Увімкніть цю опцію, щоб дозволити користувачеві встановити елемент функції як джерело натхнення. Шукайте опцію як пункт контекстного меню на елементах функцій із використанням."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Управління натхненням - лише GM",
+        "hint": "Увімкнути цю опцію обмежити банкітне управління натхненням для GM."
+    }
 }
