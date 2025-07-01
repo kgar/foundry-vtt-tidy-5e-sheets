@@ -697,7 +697,7 @@
         "RarityColors.UseSaturatedColors.hint": "У деяких випадках Tidy 5e буде десантувати рідкість кольорів для зменшення напруги очей, особливо з текстом. Виберіть цю опцію, щоб використовувати повністю насичений колір рідкості.",
         "SheetTheme.title": "Тема аркуша",
         "SheetTheme.hint": "Для найкращих результатів виберіть колір біля центру кольорової палітри.",
-        "SpellPreparationModeColors.title": "Spell Preparation Mode Colors"
+        "SpellPreparationModeColors.title": "Кольори режиму підготовки заклинань"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Чари рівня {number}",
     "TIDY5E.TotalCrewCount": "Всього екіпажу",
@@ -898,5 +898,11 @@
     "TIDY5E.Settings.BankedInspirationGmOnly": {
         "name": "Управління натхненням - лише GM",
         "hint": "Увімкнути цю опцію обмежити банкітне управління натхненням для GM."
-    }
+    },
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Угрупування заклинань з акторської діяльності",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Розділ додаткових заклинань",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Розділ на предмет",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Висхід",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Низхідний",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Особливості походження"
 }
