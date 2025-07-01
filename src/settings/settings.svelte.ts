@@ -1446,8 +1446,8 @@ export function createSettings() {
 
       worldThemeSettings: {
         options: {
-          name: '(Localize) Theme Settings',
-          hint: '(Localize) Customize your sheet to create an immersive experience that complements your game.',
+          name: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+          hint: 'TIDY5E.ThemeSettings.hint',
           scope: 'world',
           type: Object,
           default: undefined,

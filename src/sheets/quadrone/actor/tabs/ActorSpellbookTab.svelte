@@ -63,17 +63,18 @@
       ],
     },
     {
-      title: '(Localize) Cast Activity Spell Grouping',
+      title: 'TIDY5E.Utilities.CastActivitySpellGroupingTitle',
       settings: [
         {
           type: 'radio',
           options: [
             {
-              label: '(Localize) Additional Spells section',
+              label:
+                'TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional',
               value: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL,
             },
             {
-              label: '(Localize) Section Per Item',
+              label: 'TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem',
               value: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_PER_ITEM,
             },
           ],

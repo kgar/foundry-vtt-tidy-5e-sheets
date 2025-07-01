@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [x] Uses - Dragon's Fire Breath, should show recharge roller when empty.
 - [ ] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
 - [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
@@ -314,3 +313,4 @@ Limited:
 - [x] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [x] Sheet tab: need Inventory filters in advanced filter section
 - [x] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
+- [x] Uses - Dragon's Fire Breath, should show recharge roller when empty.

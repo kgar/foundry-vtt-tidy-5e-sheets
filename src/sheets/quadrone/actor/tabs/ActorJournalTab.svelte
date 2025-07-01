@@ -56,7 +56,7 @@
 
   // TODO: Eliminate this, if possible
   function getFallbackTitle(index: number) {
-    return `(localize) Journal Entry ${index + 1}`;
+    return localize('TIDY5E.JournalEntry.NewTitle', { number: index + 1 });
   }
 
   function edit(journalId: string) {
@@ -87,7 +87,7 @@
   <div class="action-buttons">
     <button
       type="button"
-      aria-label="{localize('JOURNAL.PrevPage')}"
+      aria-label={localize('JOURNAL.PrevPage')}
       class="button button-icon-only"
       data-tooltip="JOURNAL.PrevPage"
       disabled={!selected || selectedIndex <= 0}
@@ -97,7 +97,7 @@
     </button>
     <button
       type="button"
-      aria-label="{localize('JOURNAL.AddPage')}"
+      aria-label={localize('JOURNAL.AddPage')}
       class="button add"
       disabled={!context.owner}
       onclick={async () => {
@@ -110,7 +110,7 @@
     </button>
     <button
       type="button"
-      aria-label="{localize('JOURNAL.NextPage')}"
+      aria-label={localize('JOURNAL.NextPage')}
       class="button button-icon-only"
       data-tooltip="JOURNAL.NextPage"
       disabled={!selected || selectedIndex >= entries.length - 1}
@@ -129,7 +129,8 @@
         <span class="flex1">{title}</span>
         <a
           class="button button-borderless button-icon-only edit flexshrink"
-          onclick={() => edit(selected.id)}><i class="fa-solid fa-feather"></i></a
+          onclick={() => edit(selected.id)}
+          ><i class="fa-solid fa-feather"></i></a
         >
       </h2>
       <tidy-gold-header-underline></tidy-gold-header-underline>

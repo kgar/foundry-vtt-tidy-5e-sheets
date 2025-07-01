@@ -13,7 +13,7 @@ import {
   getItemTabContext,
 } from './tab-configuration-functions';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
-import { NpcSheetQuadroneRuntime} from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { error } from 'src/utils/logging';
@@ -58,7 +58,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       positioned: true,
       resizable: true,
       controls: [],
-      title: '(Localize) Sheet Tab Configuration (New Tidy Sheets)',
+      title: 'TIDY5E.SettingsMenu.TabConfiguration.label',
       contentClasses: ['flexcol'],
     },
     position: {

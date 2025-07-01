@@ -64,6 +64,7 @@
   "TIDY5E.JournalQuests": "Quests",
   "TIDY5E.JournalMisc": "Miscellaneous",
   "TIDY5E.JournalEntries": "Journal Entries",
+  "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
   "TIDY5E.TogglePersonalityInfo": "Toggle Personality Info",
 
   "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
@@ -282,9 +283,9 @@
   },
 
   "TIDY5E.SettingsMenu.TabConfiguration": {
-    "name": "World Sheet Tab Configuration",
+    "name": "Sheet Tabs",
     "label": "Configure Sheet Tabs",
-    "hint": "Configure which tabs are visible for all actor and item sheets."
+    "hint": "New Tidy Sheets Only: Configure which tabs are visible for all actor and item sheets."
   },
 
   "TIDY5E.Settings.BankedInspiration.title": "Banked Inspiration",
@@ -755,6 +756,7 @@
       "menuLabel": "Menu",
       "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
     },
+    "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor.title": "Accent Color",
     "HeaderBackground.title": "Header Background",
     "PortraitShape": {
@@ -810,6 +812,9 @@
   "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Spell Slot Tracking",
   "TIDY5E.Utilities.SpellPips": "Spell Pips",
   "TIDY5E.Utilities.SpellValueMax": "Spell Value/Max",
+  "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Cast Activity Spell Grouping",
+  "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
+  "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",
