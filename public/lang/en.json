@@ -64,6 +64,7 @@
   "TIDY5E.JournalQuests": "Quests",
   "TIDY5E.JournalMisc": "Miscellaneous",
   "TIDY5E.JournalEntries": "Journal Entries",
+  "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
   "TIDY5E.TogglePersonalityInfo": "Toggle Personality Info",
 
   "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
@@ -90,6 +91,12 @@
   "TIDY5E.ContextMenuActionUnpinFromAttributes": "Unpin from Attributes",
   "TIDY5E.ContextMenuActionShowLimitedUses": "Show Limited Uses",
   "TIDY5E.ContextMenuActionShowQuantity": "Show Quantity",
+  "TIDY5E.ContextMenuActionSetAsInspirationSource": "Set as Inspiration Source",
+  "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remove as Inspiration Source",
+  "TIDY5E.ContextMenuActionAddToSheetTab": "Add to Sheet tab",
+  "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
+
+  "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",
@@ -261,6 +268,34 @@
     "ShowWhenEmptyTooltip": "All tabs with item tables have a set of default sections which are always shown even when there are no items in the section. Always show this section, even when empty.",
     "LimitToSpecificSheetsLabel": "Limit Shown Section to Specific Sheets",
     "LimitToSpecificTabsLabel": "Limit Shown Section to Specific Tabs"
+  },
+
+  "TIDY5E.SettingsMenu.WorldThemeSettings": {
+    "name": "Theme Settings",
+    "label": "Configure Theme Settings",
+    "hint": "New Tidy Sheets Only: Establish the default theme settings for your game world. These apply to all sheet types."
+  },
+
+  "TIDY5E.SettingsMenu.Homebrew": {
+    "name": "Homebrew",
+    "label": "Configure Homebrew",
+    "hint": "Enable and configure homebrew options provided by this module."
+  },
+
+  "TIDY5E.SettingsMenu.TabConfiguration": {
+    "name": "Sheet Tabs",
+    "label": "Configure Sheet Tabs",
+    "hint": "New Tidy Sheets Only: Configure which tabs are visible for all actor and item sheets."
+  },
+
+  "TIDY5E.Settings.BankedInspiration.title": "Banked Inspiration",
+  "TIDY5E.Settings.EnableBankedInspiration": {
+    "name": "Enable Banked Inspiration",
+    "hint": "Enable this option to allow the user to set a feature item as an inspiration source. Look for the option as a Context Menu item on feature items with uses."
+  },
+  "TIDY5E.Settings.BankedInspirationGmOnly": {
+    "name": "Banked Inspiration Management - GM Only",
+    "hint": "Enable this option to limit banked inspiration management to the GM."
   },
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
@@ -706,7 +741,7 @@
     "SheetMenu": {
       "name": "Tidy Theme Settings",
       "buttonLabel": "Theme Settings",
-      "hint": "Customize the colors of Tidy 5e Sheets."
+      "hint": "Classic Tidy Sheets Only: Customize the colors of Tidy 5e Sheets."
     },
     "Sheet": {
       "title": "Theme Settings: {userName}",
@@ -720,7 +755,22 @@
       "importSuccess": "Theme imported successfully!",
       "menuLabel": "Menu",
       "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
-    }
+    },
+    "hint": "Customize your sheet to create an immersive experience that complements your game.",
+    "AccentColor.title": "Accent Color",
+    "HeaderBackground.title": "Header Background",
+    "PortraitShape": {
+      "title": "{type} Portrait Shape",
+      "option.round": "Round",
+      "option.transparent": "Transparent",
+      "option.square": "Square"
+    },
+    "RarityColors.title": "Rarity Colors",
+    "RarityColors.UseSaturatedColors.name": "Use Saturated Rarity Colors",
+    "RarityColors.UseSaturatedColors.hint": "In some cases, Tidy 5e will desaturate rarity colors to reduce eye strain, particularly with text. Select this option to use the fully saturated rarity color.",
+    "SheetTheme.title": "Sheet Theme",
+    "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
+    "SpellPreparationModeColors.title": "Spell Preparation Mode Colors"
   },
   "TIDY5E.FavoriteSpellLevelLabel": "Spell Level {number}",
   "TIDY5E.ApplyChanges": "Apply Changes",
@@ -762,6 +812,9 @@
   "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Spell Slot Tracking",
   "TIDY5E.Utilities.SpellPips": "Spell Pips",
   "TIDY5E.Utilities.SpellValueMax": "Spell Value/Max",
+  "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Cast Activity Spell Grouping",
+  "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
+  "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",
@@ -806,8 +859,10 @@
   "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
   "TIDY5E.ExpandCollapseMenu.OptionAllSections": "All Sections",
   "TIDY5E.SortMenu.OptionAlphabetical": "Alphabetical (A-Z)",
-  "TIDY5E.SortMethod.AlphabeticalAscending": "Sort Alphabetically Ascending",
-  "TIDY5E.SortMethod.AlphabeticalDescending": "Sort Alphabetically Descending",
+  "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ascending",
+  "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "Sort Alphabetically Ascending",
+  "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Descending",
+  "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "Sort Alphabetically Descending",
   "TIDY5E.SortMenu.OptionManual": "Manual",
   "TIDY5E.SortMenu.OptionPriority": "Priority",
   "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",

@@ -1109,7 +1109,21 @@ export type SystemSettings = {
   currencyWeight: boolean;
 };
 
+export type InspirationSource = {
+  change: (delta: number) => Promise<void>;
+  value: number;
+  max: number;
+  itemId?: string;
+};
+
+export type ActorTraitItemContext = {
+  id: string;
+  name: string;
+  img: string;
+};
+
 export type CharacterSheetQuadroneContext = {
+  background?: ActorTraitItemContext;
   // TODO: Populate with context data as needed
   classes: CharacterClassEntryContext[];
   conditions: Dnd5eActorCondition[];
@@ -1130,6 +1144,7 @@ export type CharacterSheetQuadroneContext = {
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
   features: TidyItemSectionBase[];
+  inspirationSource?: InspirationSource;
   initialSidebarTabId: string;
   inventory: InventorySection[];
   itemContext: Record<string, CharacterItemContext>;
@@ -1139,6 +1154,7 @@ export type CharacterSheetQuadroneContext = {
   showDeathSaves: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
   spellcasting: SpellcastingContext[];

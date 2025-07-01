@@ -23,6 +23,7 @@ import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
+import { HomebrewSettingsApplication } from 'src/applications/homebrew-settings/HomebrewSettingsApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -187,17 +188,17 @@ export function createSettings() {
           name: `TIDY5E.ThemeSettings.SheetMenu.name`,
           label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
           hint: `TIDY5E.ThemeSettings.SheetMenu.hint`,
-          icon: 'fa-solid fa-palette',
+          icon: 'fa-solid fa-swatchbook',
           type: ThemeSettingsFormApplication,
           restricted: false,
         },
       },
       worldThemeSettingsMenu: {
         options: {
-          name: `(Localize) World Theme Settings`,
-          label: '(Localize) World Theme Settings',
-          hint: `(Localize) Establish the default theme settings for your game world. These apply to all sheet types.`,
-          icon: 'fa-solid fa-palette',
+          name: `TIDY5E.SettingsMenu.WorldThemeSettings.name`,
+          label: 'TIDY5E.SettingsMenu.WorldThemeSettings.label',
+          hint: `TIDY5E.SettingsMenu.WorldThemeSettings.hint`,
+          icon: 'fa-solid fa-swatchbook',
           type: ThemeSettingsQuadroneApplication,
           restricted: true,
           truesight: true,
@@ -205,11 +206,22 @@ export function createSettings() {
       },
       tabConfigurationMenu: {
         options: {
-          name: `(Localize) Sheet Tab Configuration`,
-          label: '(Localize) Sheet Tab Configuration (New Tidy Sheets)',
-          hint: `(Localize) Configure which tabs are visible for all actor and item sheets.`,
-          icon: 'fa-solid fa-columns-3',
+          name: `TIDY5E.SettingsMenu.TabConfiguration.name`,
+          label: 'TIDY5E.SettingsMenu.TabConfiguration.label',
+          hint: `TIDY5E.SettingsMenu.TabConfiguration.hint`,
+          icon: 'fa-solid fa-table-columns',
           type: WorldTabConfigurationQuadroneApplication,
+          restricted: true,
+          truesight: true,
+        },
+      },
+      homebrew: {
+        options: {
+          name: `TIDY5E.SettingsMenu.Homebrew.name`,
+          label: `TIDY5E.SettingsMenu.Homebrew.label`,
+          hint: `TIDY5E.SettingsMenu.Homebrew.hint`,
+          icon: `fa-solid fa-beer-mug`,
+          type: HomebrewSettingsApplication,
           restricted: true,
           truesight: true,
         },
@@ -218,7 +230,7 @@ export function createSettings() {
         options: {
           name: `TIDY5E.Settings.Reset.name`,
           hint: `TIDY5E.Settings.Reset.hint`,
-          icon: 'fa-solid fa-database',
+          icon: 'fa-solid fa-broom-wide',
           type: ResetSettingsDialog,
           restricted: true,
         },
@@ -238,7 +250,7 @@ export function createSettings() {
           name: `TIDY5E.Settings.SheetPreferences.name`,
           label: 'TIDY5E.Settings.SheetPreferences.buttonLabel',
           hint: `TIDY5E.Settings.SheetPreferences.hint`,
-          icon: 'fa-solid fa-file-pen',
+          icon: 'fa-solid fa-file-circle-check',
           type: ApplyTidySheetPreferencesApplication,
           restricted: true,
         },
@@ -248,7 +260,7 @@ export function createSettings() {
           name: `TIDY5E.Settings.About.name`,
           label: 'TIDY5E.Settings.About.buttonLabel',
           hint: `TIDY5E.Settings.About.hint`,
-          icon: 'fa-solid fa-question',
+          icon: 'fa-solid fa-block-question',
           type: AboutApplication,
           restricted: false,
         },
@@ -336,8 +348,8 @@ export function createSettings() {
 
       tabConfiguration: {
         options: {
-          name: '(Localize) Tab Configuration',
-          hint: '(Localize) Configure which tabs to include in each supported Tidy sheet type.',
+          name: 'TIDY5E.SettingsMenu.TabConfiguration.name',
+          hint: 'TIDY5E.SettingsMenu.TabConfiguration.hint',
           scope: 'world',
           config: false,
           type: new foundry.data.fields.TypedObjectField(
@@ -1434,8 +1446,8 @@ export function createSettings() {
 
       worldThemeSettings: {
         options: {
-          name: '(Localize) Theme Settings',
-          hint: '(Localize) Customize your sheet to create an immersive experience that complements your game.',
+          name: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+          hint: 'TIDY5E.ThemeSettings.hint',
           scope: 'world',
           type: Object,
           default: undefined,
@@ -1908,6 +1920,38 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<string>(
             'inlineActivitiesPosition'
+          );
+        },
+      },
+
+      // Homebrew
+      enableBankedInspiration: {
+        options: {
+          name: 'TIDY5E.Settings.EnableBankedInspiration.name',
+          hint: 'TIDY5E.Settings.EnableBankedInspiration.hint',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'enableBankedInspiration'
+          );
+        },
+      },
+      bankedInspirationGmOnly: {
+        options: {
+          name: 'TIDY5E.Settings.BankedInspirationGmOnly.name',
+          hint: 'TIDY5E.Settings.BankedInspirationGmOnly.hint',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'bankedInspirationGmOnly'
           );
         },
       },

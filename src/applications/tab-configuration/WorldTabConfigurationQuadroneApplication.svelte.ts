@@ -38,7 +38,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       positioned: true,
       resizable: true,
       controls: [],
-      title: '(Localize) World Sheet Tab Configuration',
+      title: 'TIDY5E.SettingsMenu.TabConfiguration.label',
       contentClasses: ['flexcol'],
     },
     position: {

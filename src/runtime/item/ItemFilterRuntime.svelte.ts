@@ -381,17 +381,31 @@ export class ItemFilterRuntime {
           defaultItemFilters.canUse,
         ],
       },
-      [CONSTANTS.TAB_ACTOR_ACTIONS]: { 
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: {
         'DND5E.ItemActivationCost': [
-          {
-            ...defaultItemFilters.activationCostAction,
-          },
-          {
-            ...defaultItemFilters.activationCostBonus,
-          },
-          {
-            ...defaultItemFilters.activationCostReaction,
-          },
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+          defaultItemFilters.activationCostLegendary,
+          defaultItemFilters.activationCostMythic,
+          defaultItemFilters.activationCostLair,
+          defaultItemFilters.activationCostCrew,
+          defaultItemFilters.activationCostSpecial,
+        ],
+        'DND5E.SpellComponents': [
+          defaultItemFilters.verbal,
+          defaultItemFilters.somatic,
+          defaultItemFilters.material,
+          defaultItemFilters.concentration,
+          defaultItemFilters.ritual,
+        ],
+        'DND5E.SpellPreparation.Mode': [
+          defaultItemFilters.prepared,
+          defaultItemFilters.canCastSpell,
+        ],
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          defaultItemFilters.canUse,
         ],
       },
     },

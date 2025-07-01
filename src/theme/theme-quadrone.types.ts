@@ -8,6 +8,7 @@ export type ThemeColorSetting = {
 export type ThemeSettings = {
   accentColor: string;
   headerBackground: string;
+  portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;
   spellPreparationModeColors: Record<string, string>;
   useSaturatedRarityColors: boolean;
@@ -31,3 +32,5 @@ export type ThemeSettingsConfigurationOptions = {
   settingsOverride?: ThemeSettings;
   idOverride?: string;
 };
+
+export type PortraitShape = 'transparent' | 'round' | 'square';

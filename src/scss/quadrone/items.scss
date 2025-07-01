@@ -20,14 +20,16 @@
     }
   }
 
+  &:is(.minimized) {
+    .window-title {
+      visibility: visible;
+    }
+  }
+
   &:is(.minimized, .minimizing) {
     .window-header {
       height: var(--header-height);
       align-items: center;
-    }
-
-    .window-title {
-      visibility: visible;
     }
 
     .header-over-sidebar,

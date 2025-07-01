@@ -29,11 +29,10 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Container } from 'src/features/containers/Container';
-import { NpcSheetQuadroneRuntime} from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC

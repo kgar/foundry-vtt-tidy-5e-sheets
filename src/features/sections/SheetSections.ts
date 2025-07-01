@@ -28,10 +28,14 @@ import { SheetPreferencesService } from '../user-preferences/SheetPreferencesSer
 import type { SheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import { getSortedActions, getSortedActionsQuadrone } from '../actions/actions.svelte';
+import {
+  getSortedActions,
+  getSortedActionsQuadrone,
+} from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import UserPreferencesService from '../user-preferences/UserPreferencesService';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -165,15 +169,7 @@ export class SheetSections {
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
         let key = curr.prop ?? '';
-
-        // Handle "Additional Spells" section
-        if (curr.dataset.level === 'item') {
-          key = 'dnd5e-cast-activity-additional-spells';
-          curr.canCreate = false;
-        }
-
         curr.key = key;
-
         prev[key] = curr;
         return prev;
       },
@@ -211,6 +207,9 @@ export class SheetSections {
     const owner = context.actor.isOwner;
     const levels = context.actor.system.spells;
     const spellbook: Record<string, SpellbookSectionLegacy> = {};
+    const castActivitySpellGroupingPreference =
+      UserPreferencesService.get()?.castActivitySpellGrouping ??
+      CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL;
 
     // Define section and label mappings
     const sections = Object.entries(CONFIG.DND5E.spellPreparationModes).reduce<
@@ -326,30 +325,42 @@ export class SheetSections {
     // Iterate over every spell item, adding spells to the spellbook by section
     spells.forEach((spell: Item5e) => {
       const mode = spell.system.preparation.mode || 'prepared';
-      let s = spell.system.level || 0;
-      const sl = `spell${s}`;
+      let key = spell.system.level || 0;
+      const sl = `spell${key}`;
 
       // Spells from items
-      if (spell.getFlag('dnd5e', 'cachedFor')) {
-        s = 'item';
+      if (spell.system.linkedActivity) {
         if (!spell.system.linkedActivity?.displayInSpellbook) return;
-        if (!spellbook[s]) {
-          registerSection(
-            'dnd5e-cast-activity-additional-spells',
-            s,
-            game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook')
-          );
-          spellbook[s].order = 1000;
+
+        let label = '';
+
+        if (
+          castActivitySpellGroupingPreference ===
+          CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL
+        ) {
+          key = 'dnd5e-cast-activity-additional-spells';
+          label = game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook');
+        } else if (
+          castActivitySpellGroupingPreference ===
+          CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_PER_ITEM
+        ) {
+          key = spell.system.linkedActivity.item.uuid.slugify();
+          label = spell.system.linkedActivity.item.name;
+        }
+
+        if (!spellbook[key]) {
+          registerSection(key, key, label);
+          spellbook[key].order = 1000;
         }
       }
 
       // Specialized spellcasting modes (if they exist)
       else if (mode in sections) {
-        s = sections[mode];
-        if (!spellbook[s]) {
+        key = sections[mode];
+        if (!spellbook[key]) {
           const l = levels[mode] || {};
           const config = CONFIG.DND5E.spellPreparationModes[mode];
-          registerSection(mode, s, config.label, {
+          registerSection(mode, key, config.label, {
             prepMode: mode,
             value: l.value,
             max: l.max,
@@ -360,15 +371,15 @@ export class SheetSections {
       }
 
       // Sections for higher-level spells which the caster "should not" have, but spell items exist for
-      else if (!spellbook[s]) {
-        registerSection(sl, s, CONFIG.DND5E.spellLevels[s], {
+      else if (!spellbook[key]) {
+        registerSection(sl, key, CONFIG.DND5E.spellLevels[key], {
           // TODO: Investigate this. It seems unused.
           levels: levels[sl],
         });
       }
 
       // Add the spell to the relevant heading
-      spellbook[s].spells.push(spell);
+      spellbook[key].spells.push(spell);
     });
 
     // Sort the spellbook by section level
@@ -722,7 +733,7 @@ export class SheetSections {
 
     return sections;
   }
-  
+
   static configureActionsQuadrone(
     sections: TidyItemSectionBase[],
     tabId: string,

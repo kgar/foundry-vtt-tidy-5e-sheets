@@ -87,7 +87,7 @@
                   children: () => StringChoices(field),
                   disabled: !editable,
                 })
-              : layout === 'quadrone' && field.choices
+              : layout === 'quadrone' && !field.choices
                 ? componentWithProps(TextInputQuadrone, {
                     document: document,
                     field: name ?? field.fieldPath,
@@ -193,7 +193,7 @@
                   children: () => StringChoices(field),
                   disabled: !editable,
                 })
-              : layout === 'quadrone' && field.choices
+              : layout === 'quadrone' && !field.choices
                 ? componentWithProps(TextInputQuadrone, {
                     document: document,
                     field: name ?? field.fieldPath,

@@ -27,19 +27,19 @@
   <SelectionListbox
     labelProp="label"
     valueProp="id"
-    bind:leftItems={context.available}
-    bind:rightItems={context.selected}
+    bind:leftItems={context.selected}
+    bind:rightItems={context.available}
     listboxCssClass="scroll-container"
     class="flex-1"
   >
     {#snippet leftHeader()}
       <h2 class="minimal">
-        {localize('TIDY5E.TabSelection.AvailableHeader')}
+        {localize('TIDY5E.TabSelection.SelectedHeader')}
       </h2>
     {/snippet}
     {#snippet rightHeader()}
       <h2 class="minimal">
-        {localize('TIDY5E.TabSelection.SelectedHeader')}
+        {localize('TIDY5E.TabSelection.AvailableHeader')}
       </h2>
     {/snippet}
   </SelectionListbox>

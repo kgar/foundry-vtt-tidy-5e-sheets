@@ -449,6 +449,37 @@ export class TidyFlags {
   };
 
   /**
+   * An item ID which denotes an actor-owned item
+   * whose uses should be used for the banked
+   * inspiration tracker on the character sheet.
+   */
+  static inspirationSource = {
+    key: 'inspiration-source',
+    prop: TidyFlags.getFlagPropertyPath('inspiration-source'),
+    /** Gets an item ID or a blank string. */
+    get(document: any): string {
+      return (
+        TidyFlags.tryGetFlag<string>(
+          document,
+          TidyFlags.inspirationSource.key
+        ) ?? ''
+      );
+    },
+    /** Sets an item ID to represent an actor's source of inspiration value and max. */
+    set(document: any, itemId: string) {
+      return TidyFlags.setFlag(
+        document,
+        TidyFlags.inspirationSource.key,
+        itemId
+      );
+    },
+    /** Clears an actor's inspiration source, indicating to use the regular boolean tracker. */
+    unset(document: any) {
+      return TidyFlags.unsetFlag(document, TidyFlags.inspirationSource.key);
+    },
+  };
+
+  /**
    * Denotes whether to show a grid for a given inventory screen.
    */
   static inventoryGrid = {

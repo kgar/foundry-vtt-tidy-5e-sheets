@@ -1,0 +1,91 @@
+.tidy-tab.biography {
+  container-type: inline-size;
+  container-name: biography-tab;
+
+  .biography-grid {
+    display: grid;
+    grid-template-areas:
+      'top  top  '
+      'left right';
+    grid-template-columns: 21.5rem 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 31.25rem;
+    gap: var(--t5e-size-3x) var(--t5e-size-8x);
+    padding-bottom: var(--t5e-size-4x);
+  }
+
+  .biography-entries {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--t5e-size-2x) var(--t5e-size-8x);
+    padding-left: 0;
+
+    li {
+      flex: 1 1 calc(50% - var(--t5e-size-4x));
+      min-width: 0;
+    }
+  }
+
+  .biography-editor-container {
+    margin-bottom: var(--t5e-size-4x);
+
+    .editor {
+      max-height: 12.5rem;
+      overflow-y: auto;
+      background: var(--t5e-component-field-background-disabled);
+      padding: 0 var(--t5e-size-3x);
+      border-radius: var(--t5e-size-1x);
+    }
+  }
+
+  .biography-left {
+    grid-area: left;
+    padding-bottom: var(--t5e-size-6x);
+  }
+
+  .biography-right {
+    grid-area: right;
+    padding-bottom: var(--t5e-size-6x);
+  }
+}
+
+@container biography-tab (width < 47rem) {
+  .tidy-tab.biography {
+    transition: all var(--t5e-transition-default);
+
+    .biography-grid {
+      gap: var(--t5e-size-4x) var(--t5e-size-6x);
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .biography-entries {
+      transition: all var(--t5e-transition-default);
+      gap: var(--t5e-size-1x) var(--t5e-size-6x);
+    }
+  }
+}
+
+@container biography-tab (width < 32rem) {
+  .tidy-tab.biography {
+    .biography-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+      grid-template-areas:
+        'top'
+        'left'
+        'right';
+    }
+
+    // If you need to control the order of left/right sections
+    .biography-left {
+      order: 1; // or 2 if you want it second
+      margin-top: var(--t5e-size-4x);
+      padding-bottom: 0;
+    }
+
+    .biography-right {
+      order: 2; // or 1 if you want it first
+    }
+  }
+}

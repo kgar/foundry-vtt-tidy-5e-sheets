@@ -21,11 +21,7 @@
 
   let localize = FoundryAdapter.localize;
 
-  let selectedTabId: string = $state('');
-
-  $effect(() => {
-    selectedTabId = context.currentTabId;
-  });
+  let selectedTabId: string = $derived(context.currentTabId);
 
   let sidebarExpanded = $state(false);
 
@@ -61,7 +57,6 @@
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
 
-  let portraitShape = 'round';
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
 
   let ini = $derived(getModifierData(context.system.attributes.init.total));
@@ -295,7 +290,6 @@
       <CharacterPortrait
         imageUrl={context.actor.img}
         imageAlt={context.actor.name}
-        {portraitShape}
       />
       <div class="character-vitals">
         <div class="hp-row flexrow">

@@ -16,11 +16,7 @@
 
   let context = $derived(getItemSheetContextQuadrone());
 
-  let selectedTabId: string = $state('');
-
-  $effect(() => {
-    selectedTabId = context.currentTabId;
-  });
+  let selectedTabId: string = $derived(context.currentTabId);
 
   let itemNameEl: HTMLElement | undefined = $state();
 

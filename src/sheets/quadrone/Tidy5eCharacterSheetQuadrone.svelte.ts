@@ -25,6 +25,7 @@ import type {
   FavoriteContextEntry,
   LocationToSearchTextMap,
   SpellcastingContext,
+  InspirationSource,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -56,7 +57,9 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { getModifierData } from 'src/utils/formatting';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
-import { settings } from 'src/settings/settings.svelte';
+import { clamp } from 'src/utils/numbers';
+import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -164,7 +167,20 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       relativeTo: this.actor,
     };
 
+    let inspirationSource: InspirationSource | undefined =
+      await this.tryGetInspirationSource();
+
+    let background = this.actor.system.details.background;
+    let species = this.actor.system.details.race;
+
     const context: CharacterSheetQuadroneContext = {
+      background: background
+        ? {
+            id: background.id,
+            img: background.img,
+            name: background.name,
+          }
+        : undefined,
       conditions: conditions,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -211,6 +227,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       favorites: await this._prepareFavorites(),
       features: [],
       initialSidebarTabId: this.currentSidebarTabId,
+      inspirationSource,
       inventory: [],
       senses: this._getSenses(),
       size: {
@@ -226,6 +243,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
+      species: species
+        ? {
+            id: species.id,
+            img: species.img,
+            name: species.name,
+          }
+        : undefined,
       speeds: this._getMovementSpeeds(),
       spellbook: [],
       spellcasting: this._prepareSpellcastingContext(),
@@ -278,6 +302,52 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  private async tryGetInspirationSource(): Promise<
+    InspirationSource | undefined
+  > {
+    let apiConfig = ActorInspirationRuntime.bankedInspirationConfig;
+
+    if (!!apiConfig?.change && !!apiConfig?.getData) {
+      let data = await apiConfig.getData(this, this.actor);
+
+      return {
+        change: async (delta) =>
+          await apiConfig.change!(this, this.actor, delta),
+        value: data.value ?? 0,
+        max: data.max ?? 0,
+      };
+    }
+
+    if (!SettingsProvider.settings.enableBankedInspiration.get()) {
+      return;
+    }
+
+    let inspirationSourceId = TidyFlags.inspirationSource.get(this.actor);
+    let inspirationSourceItem = this.actor.items.get(inspirationSourceId);
+
+    let inspirationSource: InspirationSource | undefined;
+
+    if (inspirationSourceItem?.system?.uses.max) {
+      inspirationSource = {
+        change: async (delta: number) => {
+          let newValue = inspirationSourceItem.system.uses.value + delta;
+
+          const max = inspirationSourceItem.system.uses.max;
+          let uses = clamp(0, newValue, max);
+
+          return await inspirationSourceItem.update({
+            ['system.uses.spent']: max - uses,
+          });
+        },
+        itemId: inspirationSourceItem.id,
+        max: inspirationSourceItem.system.uses.max,
+        value: inspirationSourceItem.system.uses.value,
+      };
+    }
+
+    return inspirationSource;
   }
 
   _getClassesAndOrphanedSubclasses(): {

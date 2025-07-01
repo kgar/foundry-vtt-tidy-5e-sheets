@@ -106,7 +106,7 @@ export const CharacterSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-house-turret',
       },
       {
-        title: /* (Localize) */ 'Sheet',
+        title: 'Sheet',
         content: {
           component: CharacterActionsTab,
           type: 'svelte',

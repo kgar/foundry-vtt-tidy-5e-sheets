@@ -227,6 +227,10 @@
       flex: 2;
     }
 
+    .form-fields {
+      justify-content: flex-end;
+    }
+
     >input[type='checkbox'] {
       flex: none;
     }

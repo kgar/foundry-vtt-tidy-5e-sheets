@@ -87,7 +87,7 @@ export function Tidy5eActorSheetClassicV2Base<
           },
           {
             action: 'openThemeSettings',
-            icon: 'fas fa-palette',
+            icon: 'fas fa-swatchbook',
             label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
             ownership: 'OWNER',
           },

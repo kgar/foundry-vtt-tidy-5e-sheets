@@ -17,8 +17,6 @@
       >(),
     );
 
-  let portraitShape = 'round';
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -29,7 +27,6 @@
       <CharacterPortrait
         imageUrl={context.actor.img}
         imageAlt={context.actor.name}
-        {portraitShape}
       />
     </div>
   </div>

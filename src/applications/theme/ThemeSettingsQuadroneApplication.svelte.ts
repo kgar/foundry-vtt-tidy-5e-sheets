@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
+  PortraitShape,
   ThemeColorSetting,
   ThemeSettings,
 } from 'src/theme/theme-quadrone.types';
@@ -26,6 +27,7 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 export type ThemeSettingsContext = {
   accentColor: string;
   headerBackground: string;
+  portraitShape: PortraitShape | undefined;
   useSaturatedRarityColors: boolean;
   rarityColors: ThemeColorSettingConfigEntry[];
   spellPreparationModeColors: ThemeColorSettingConfigEntry[];
@@ -40,6 +42,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   _settings: ThemeSettingsContext = $state({
     accentColor: '',
     headerBackground: '',
+    portraitShape: undefined,
     rarityColors: [],
     spellPreparationModeColors: [],
     useSaturatedRarityColors: false,
@@ -82,8 +85,10 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   get title() {
     return this.document
-      ? `(Localize) ${this.document.name}: Theme Settings`
-      : '(Localize) World Theme Settings';
+      ? FoundryAdapter.localize(`TIDY5E.ThemeSettings.Sheet.title`, {
+          userName: this.document.name,
+        })
+      : FoundryAdapter.localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel');
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -118,6 +123,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     let context: ThemeSettingsContext = {
       accentColor: themeSettings.accentColor,
       headerBackground: themeSettings.headerBackground,
+      portraitShape: themeSettings.portraitShape,
       rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
         ([key, label]) => {
           return {
@@ -186,6 +192,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     let themeSettings: ThemeSettings = {
       accentColor: data.accentColor ?? '',
       headerBackground: data.headerBackground,
+      portraitShape: data.portraitShape,
       useSaturatedRarityColors: data.useSaturatedRarityColors,
       rarityColors: data.rarityColors
         .filter((t) => !isNil(t.value.trim(), ''))

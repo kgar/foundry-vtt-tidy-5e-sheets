@@ -20,7 +20,7 @@
         let prepared = doc.system.preparation.prepared;
         return prepared
           ? 'fa-solid fa-book prepared'
-          : 'fa-light fa-book unprepared';
+          : 'fa-regular fa-book unprepared';
       case CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS:
         return 'fa-solid fa-book';
       case CONSTANTS.SPELL_PREPARATION_MODE_ATWILL:
@@ -63,15 +63,17 @@
   });
 </script>
 
-{#if mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
-  <a
-    data-tooltip={tooltip}
-    class="tidy-table-button"
-    onclick={togglePreparation}
-  >
-    <i class={modeIconClasses}></i>
-  </a>
-{:else}
-  {@const iconClasses = getIconClasses()}
-  <i data-tooltip={tooltip} class={modeIconClasses}></i>
+{#if !doc.system.linkedActivity}
+  {#if mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+    <a
+      data-tooltip={tooltip}
+      class="tidy-table-button"
+      onclick={togglePreparation}
+    >
+      <i class={modeIconClasses}></i>
+    </a>
+  {:else}
+    {@const iconClasses = getIconClasses()}
+    <i data-tooltip={tooltip} class={modeIconClasses}></i>
+  {/if}
 {/if}

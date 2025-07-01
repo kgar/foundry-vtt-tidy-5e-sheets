@@ -16,8 +16,8 @@
   let tooltip = $derived(
     localize(
       included
-        ? '(LOCALIZE) Remove from Sheet Tab'
-        : '(LOCALIZE) Add to Sheet tab',
+        ? 'TIDY5E.ContextMenuActionRemoveFromSheetTab'
+        : 'TIDY5E.ContextMenuActionAddToSheetTab',
     ),
   );
 
@@ -28,8 +28,8 @@
 
 <a class="tidy-table-button" data-tooltip={tooltip} onclick={toggleBookmark}>
   {#if included}
-    <i class="fa-solid fa-thumbtack fa-fw"></i>
+    <i class="fa-solid fa-bookmark fa-fw"></i>
   {:else}
-    <i class="fa-light fa-thumbtack fa-fw"></i>
+    <i class="fa-regular fa-bookmark fa-fw"></i>
   {/if}
 </a>
