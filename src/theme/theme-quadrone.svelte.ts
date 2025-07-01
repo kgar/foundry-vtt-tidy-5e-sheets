@@ -5,7 +5,7 @@ import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQ
 import type {
   PortraitShape,
   ThemeQuadroneStyleDeclaration,
-  ThemeSettings,
+  ThemeSettingsV1,
   ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
 import { TidyFlags, TidyHooks } from 'src/api';
@@ -14,6 +14,9 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { coalesce } from 'src/utils/formatting';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { ThemeStylesProvider } from './theme-styles-provider';
+import { downloadTextFile, readFileAsText } from 'src/utils/file';
+import { error } from 'src/utils/logging';
+import { CONSTANTS } from 'src/constants';
 
 export type ThemeableSheetType =
   | Tidy5eCharacterSheetQuadrone
@@ -22,6 +25,8 @@ export type ThemeableSheetType =
   | Tidy5eContainerSheetQuadrone;
 
 export class ThemeQuadrone {
+  static readonly CURRENT_THEME_VERSION = 1;
+
   static onReady() {
     setTimeout(() => {
       // Establish color mappings for Item Rarity and Spell Prep Mode
@@ -45,7 +50,7 @@ export class ThemeQuadrone {
     });
   }
 
-  static getDefaultThemeSettings(): ThemeSettings {
+  static getDefaultThemeSettings(): ThemeSettingsV1 {
     return {
       accentColor: '',
       headerBackground: '',
@@ -56,14 +61,14 @@ export class ThemeQuadrone {
     };
   }
 
-  static getWorldThemeSettings(): ThemeSettings {
+  static getWorldThemeSettings(): ThemeSettingsV1 {
     return foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings.value.worldThemeSettings
     );
   }
 
-  static saveWorldThemeSettings(settings: ThemeSettings) {
+  static saveWorldThemeSettings(settings: ThemeSettingsV1) {
     const toSave = foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings
@@ -74,7 +79,7 @@ export class ThemeQuadrone {
 
   static getSheetThemeSettings(
     options: ThemeSettingsConfigurationOptions
-  ): ThemeSettings {
+  ): ThemeSettingsV1 {
     let defaultSettings = this.getDefaultThemeSettings();
 
     if (options.mergeParentDocumentSettings && options.doc?.parent) {
@@ -92,12 +97,12 @@ export class ThemeQuadrone {
     const preferences = foundry.utils.mergeObject(
       defaultSettings,
       TidyFlags.sheetThemeSettings.get(options.doc)
-    ) as ThemeSettings;
+    ) as ThemeSettingsV1;
 
     return preferences;
   }
 
-  static saveSheetThemeSettings(doc: any, settings: ThemeSettings) {
+  static saveSheetThemeSettings(doc: any, settings: ThemeSettingsV1) {
     const toSave = foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings
@@ -217,5 +222,63 @@ export class ThemeQuadrone {
     const settings = this.getSheetThemeSettings({ doc: doc });
     settings.portraitShape = newShape;
     this.saveSheetThemeSettings(doc, settings);
+  }
+
+  /* -------------------------------------------- */
+  /*  Theme Import/Export                         */
+  /* -------------------------------------------- */
+
+  static async import(file: File): Promise<ThemeSettingsV1 | undefined> {
+    try {
+      let result = await readFileAsText(file);
+
+      const toImport = JSON.parse(result) as ThemeSettingsV1 & {
+        version: number;
+      };
+
+      const isValid = this.validateImportFile(toImport);
+
+      if (!isValid) {
+        throw new Error(`Theme file ${file.name} is in an invalid format.`);
+      }
+
+      let { version, ...theme } = toImport;
+
+      const settings = foundry.utils.mergeObject(
+        this.getDefaultThemeSettings(),
+        theme
+      );
+
+      ui.notifications.info(
+        FoundryAdapter.localize('TIDY5E.ThemeSettings.Sheet.importSuccess')
+      );
+
+      return settings;
+    } catch (e) {
+      ui.notifications.error(
+        FoundryAdapter.localize('TIDY5E.ThemeSettings.Sheet.importError')
+      );
+      error(
+        'An error occurred while attempting to import a theme file. See the devtools console for more details.',
+        true,
+        e
+      );
+    }
+  }
+
+  static validateImportFile(theme: ThemeSettingsV1 & { version: number }) {
+    return theme.version === this.CURRENT_THEME_VERSION;
+  }
+
+  static async export(data: ThemeSettingsV1) {
+    const toExport: Record<string, any> = {
+      version: ThemeQuadrone.CURRENT_THEME_VERSION,
+      ...data,
+    };
+
+    downloadTextFile(
+      'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
+      JSON.stringify(toExport, null, ' ')
+    );
   }
 }

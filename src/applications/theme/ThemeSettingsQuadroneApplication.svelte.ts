@@ -3,7 +3,7 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import type {
   PortraitShape,
   ThemeColorSetting,
-  ThemeSettings,
+  ThemeSettingsV1 as ThemeSettingsV1,
 } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
@@ -57,9 +57,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   }
 
   constructor(options: ConstructorArgs = {}) {
-    options.id = options?.document
-      ? `tidy-theme-settings-${options.document.uuid.replaceAll('.', '-')}`
-      : 'tidy-theme-settings';
     super(options);
 
     this.document = options.document;
@@ -68,6 +65,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   static DEFAULT_OPTIONS: Partial<ConstructorArgs> = {
     classes: [CONSTANTS.MODULE_ID, 'sheet', 'quadrone', 'tidy-theme-settings'],
     tag: 'div',
+    id: 'tidy-theme-settings',
     sheetConfig: false,
     window: {
       frame: true,
@@ -111,14 +109,16 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {};
   }
 
-  _getSettings() {
-    let themeSettings = structuredClone(
-      this.document
-        ? ThemeQuadrone.getSheetThemeSettings({
-            doc: this.document,
-          })
-        : ThemeQuadrone.getWorldThemeSettings()
-    );
+  _getSettings(settingsOverride?: ThemeSettingsV1) {
+    let themeSettings =
+      settingsOverride ??
+      structuredClone(
+        this.document
+          ? ThemeQuadrone.getSheetThemeSettings({
+              doc: this.document,
+            })
+          : ThemeQuadrone.getWorldThemeSettings()
+      );
 
     let context: ThemeSettingsContext = {
       accentColor: themeSettings.accentColor,
@@ -189,7 +189,17 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   async apply() {
     const data = this._settings;
 
-    let themeSettings: ThemeSettings = {
+    let themeSettings: ThemeSettingsV1 = this.mapContextToSettings(data);
+
+    if (this.document) {
+      await ThemeQuadrone.saveSheetThemeSettings(this.document, themeSettings);
+    } else {
+      await ThemeQuadrone.saveWorldThemeSettings(themeSettings);
+    }
+  }
+
+  mapContextToSettings(data: ThemeSettingsContext): ThemeSettingsV1 {
+    return {
       accentColor: data.accentColor ?? '',
       headerBackground: data.headerBackground,
       portraitShape: data.portraitShape,
@@ -207,14 +217,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
           return prev;
         }, {}),
     };
-
-    if (this.document) {
-      await ThemeQuadrone.saveSheetThemeSettings(this.document, themeSettings);
-    } else {
-      await ThemeQuadrone.saveWorldThemeSettings(themeSettings);
-    }
-
-    TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
   }
 
   async useDefault() {
@@ -237,8 +239,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       FoundryAdapter.setTidySetting('worldThemeSettings', {});
     }
 
-    TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
-
     await this.close();
   }
 
@@ -248,6 +248,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   async close(options: ApplicationClosingOptions = {}) {
     this.themeSettingsSubscription?.unsubscribe();
+
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
 
     await super.close(options);
   }
