@@ -15,7 +15,7 @@ select,
   box-shadow: var(--t5e-drop-shadow-field);
   background: var(--t5e-component-field-background);
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-border);
+  border: 0.0625rem solid var(--t5e-component-field-border);
   outline: 0 solid var(--t5e-theme-color-default);
 
   &:hover,
@@ -78,7 +78,7 @@ textarea {
 }
 
 input.uninput:hover {
-  border: 1px solid var(--t5e-component-field-border-hover);
+  border: 0.0625rem solid var(--t5e-component-field-border-hover);
 }
 
 .input-group {
@@ -306,7 +306,7 @@ input[type='radio'],
 input[type='checkbox'] {
   box-sizing: content-box;
   background: var(--t5e-component-field-background);
-  border: 1px solid var(--t5e-component-field-border);
+  border: 0.0625rem solid var(--t5e-component-field-border);
   box-shadow: var(--t5e-drop-shadow-field);
   transition: all var(--t5e-transition-default);
 
@@ -349,6 +349,15 @@ input[type='radio'] {
   border-radius: 50%;
   display: inline-flex;
   transform: translateY(-0.125rem);
+
+  &::before {
+    content: '';
+    border: 0;
+  }
+
+  &::after {
+    content: '';
+  }
 
   &:checked::before {
     content: '';
@@ -402,13 +411,13 @@ input[type='checkbox'] {
   }
 }
 
-/* TODO: If this is still used, then fix text alignment when no label present (1px too low without) */
+/* TODO: If this is still used, then fix text alignment when no label present (0.0625rem too low without) */
 select {
   --bg-image-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='fill: %23666' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath d='M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z'/%3E%3C/svg%3E");
   --bg-image-backdrop: none;
 
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-field-border);
+  border: 0.0625rem solid var(--t5e-component-field-border);
   box-shadow: var(--t5e-drop-shadow-field);
   height: var(--t5e-field-size-default);
   padding: 0 1.75rem 0 var(--t5e-size-2x);

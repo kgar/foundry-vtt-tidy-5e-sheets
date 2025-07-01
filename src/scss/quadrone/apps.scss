@@ -817,7 +817,8 @@
     }
   }
 
-  &.sheet-tab-configuration {
+  &.sheet-tab-configuration,
+  &.world-tab-configuration {
 
     .window-content {
       gap: var(--t5e-size-4x);
@@ -826,6 +827,31 @@
     .configuration-tab {
       flex: 1;
       gap: var(--t5e-size-4x);
+    }
+  }
+
+  &.world-tab-configuration {
+
+    .tidy-tabs,
+    .tidy-tab {
+      height: 100%;
+    }
+
+    .configuration-tabs {
+      gap: var(--t5e-size-6x);
+    }
+
+    .tab-option {
+      height: var(--t5e-field-size-default);
+      display: flex;
+      align-items: center;
+      padding-inline-start: var(--t5e-size-2x);
+      gap: var(--t5e-size-1x);
+      border-radius: var(--t5e-size-half);
+
+      &.active {
+        background: var(--t5e-component-field-background-active);
+      }
     }
   }
 }
