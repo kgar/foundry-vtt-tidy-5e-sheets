@@ -108,93 +108,6 @@
 - [ ] High Contrast support - add theming changes to support Foundry's high contrast settings.
 - [ ] Increased Mobile/Tablet support.
 
-### Feature Origin dropdown notes
-
-From `BrutalityScript.js`
-
-```js
-  Hooks.on("renderItemSheet5e", (app, [html]) => {
-    const actor = app.object.parent;
-    if (!actor) return;
-    if (app.object.type !== "feat") return;
-    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
-    const choices = actor.items.reduce((acc, i) => {
-      if (!i.system.advancement) return acc;
-      acc.push({ value: i.id,
-        label: app.object.parent.items.get(i.id).name,
-        group: game.i18n.localize(`TYPES.Item.${i.type}`)
-      });
-      return acc;
-    }, []);
-    const origins = HandlebarsHelpers.selectOptions(choices, {hash: {selected: current, sort: true}});
-    const origin = `
-      <div class="form-group">
-        <label>Feature Origin</label>
-        <select name="flags.dnd5e.advancementOrigin">
-          <option></option>
-          ${origins}
-        </select>
-      </div>
-    `
-    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
-                 html.querySelector('.form-group:has(select[name="system.type.value"])');
-    type.insertAdjacentHTML("afterend", origin);
-  });
-```
-
-From Alakshana's Feature Origin module:
-
-```js
-class FeatureOrigin {
-
-  static init() {
-    Hooks.on("renderItemSheet5e", FeatureOrigin._advancementOrigin);
-  }
-
-  static _advancementOrigin(app, [html]) {
-    const actor = app.actor;
-    if (!actor) return;
-    if (app.object.type !== "feat" || app.object?.getFlag("dnd5e", "advancementOrigin")?.includes(".")) return;
-    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
-    const choices = actor.items.reduce((acc, i) => {
-      if (!i.system.advancement) return acc;
-      acc.push({
-        value: i.id,
-        label: app.object.parent.items.get(i.id).name,
-        group: game.i18n.localize(`TYPES.Item.${i.type}`)
-      });
-      return acc;
-    }, []).sort((a, b) => a.group.localeCompare(b.group));
-    const origins = HandlebarsHelpers.selectOptions(choices, { hash: { selected: current, sort: true } });
-    const origin = `
-      <div class="form-group">
-        <label>${game.i18n.localize("FEATUREORIGIN.Label")}</label>
-        <div class="form-fields">
-          <select name="flags.dnd5e.advancementOrigin">
-            <option></option>
-            ${origins}
-          </select>
-        </div>
-      </div>
-    `;
-    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
-      html.querySelector('.form-group:has(select[name="system.type.value"])');
-    type.insertAdjacentHTML("afterend", origin);
-  }
-}
-
-Hooks.once("init", FeatureOrigin.init);
-```
-
-### Feature - Set as Inspiration Source
-
-**Inspired by items**. New Context Menu option "Set as Inspiration Source" available on character sheet for any item with limited uses. When selected, the actor is flagged with the item uuid. When preparing the inspo tracker, if there's a valid, owned item in the flag setting which has limited uses, then switch from the boolean inspiration tracker to the banked inspiration tracker. This is a glorified pin.
-
-**Tidy API Ready**. Provide API support for someone to specify their own banked inspiration. They must provide callbacks for value, max, and onChange. When an API inspiration bank is registered, it overrides all other options. onChange should make it easy to understand whether the value increased or decreased.
-
-**Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and object with old and new values. If we're working with a registered inspiration item, then decrementing triggers item use.
-Likewise, fire a hook to see if we're permitted to change inspo, like "tidy5e-sheet.inspirationChanging" with same args, which will cancel the inspiration change event if so deemed by return value on Hook call.
-
 
 ### Deferred tasks from last item batch review
 
@@ -314,3 +227,92 @@ Limited:
 - [x] Sheet tab: need Inventory filters in advanced filter section
 - [x] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
 - [x] Uses - Dragon's Fire Breath, should show recharge roller when empty.
+
+
+### Feature Origin dropdown notes
+
+From `BrutalityScript.js`
+
+```js
+  Hooks.on("renderItemSheet5e", (app, [html]) => {
+    const actor = app.object.parent;
+    if (!actor) return;
+    if (app.object.type !== "feat") return;
+    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
+    const choices = actor.items.reduce((acc, i) => {
+      if (!i.system.advancement) return acc;
+      acc.push({ value: i.id,
+        label: app.object.parent.items.get(i.id).name,
+        group: game.i18n.localize(`TYPES.Item.${i.type}`)
+      });
+      return acc;
+    }, []);
+    const origins = HandlebarsHelpers.selectOptions(choices, {hash: {selected: current, sort: true}});
+    const origin = `
+      <div class="form-group">
+        <label>Feature Origin</label>
+        <select name="flags.dnd5e.advancementOrigin">
+          <option></option>
+          ${origins}
+        </select>
+      </div>
+    `
+    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
+                 html.querySelector('.form-group:has(select[name="system.type.value"])');
+    type.insertAdjacentHTML("afterend", origin);
+  });
+```
+
+From Alakshana's Feature Origin module:
+
+```js
+class FeatureOrigin {
+
+  static init() {
+    Hooks.on("renderItemSheet5e", FeatureOrigin._advancementOrigin);
+  }
+
+  static _advancementOrigin(app, [html]) {
+    const actor = app.actor;
+    if (!actor) return;
+    if (app.object.type !== "feat" || app.object?.getFlag("dnd5e", "advancementOrigin")?.includes(".")) return;
+    const current = app.object?.getFlag("dnd5e", "advancementOrigin");
+    const choices = actor.items.reduce((acc, i) => {
+      if (!i.system.advancement) return acc;
+      acc.push({
+        value: i.id,
+        label: app.object.parent.items.get(i.id).name,
+        group: game.i18n.localize(`TYPES.Item.${i.type}`)
+      });
+      return acc;
+    }, []).sort((a, b) => a.group.localeCompare(b.group));
+    const origins = HandlebarsHelpers.selectOptions(choices, { hash: { selected: current, sort: true } });
+    const origin = `
+      <div class="form-group">
+        <label>${game.i18n.localize("FEATUREORIGIN.Label")}</label>
+        <div class="form-fields">
+          <select name="flags.dnd5e.advancementOrigin">
+            <option></option>
+            ${origins}
+          </select>
+        </div>
+      </div>
+    `;
+    const type = html.querySelector('.form-group:has(select[name="system.type.subtype"])') ??
+      html.querySelector('.form-group:has(select[name="system.type.value"])');
+    type.insertAdjacentHTML("afterend", origin);
+  }
+}
+
+Hooks.once("init", FeatureOrigin.init);
+```
+
+### Feature - Set as Inspiration Source
+
+**Inspired by items**. New Context Menu option "Set as Inspiration Source" available on character sheet for any item with limited uses. When selected, the actor is flagged with the item uuid. When preparing the inspo tracker, if there's a valid, owned item in the flag setting which has limited uses, then switch from the boolean inspiration tracker to the banked inspiration tracker. This is a glorified pin.
+
+**Tidy API Ready**. Provide API support for someone to specify their own banked inspiration. They must provide callbacks for value, max, and onChange. When an API inspiration bank is registered, it overrides all other options. onChange should make it easy to understand whether the value increased or decreased.
+
+**Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and object with old and new values. If we're working with a registered inspiration item, then decrementing triggers item use.
+Likewise, fire a hook to see if we're permitted to change inspo, like "tidy5e-sheet.inspirationChanging" with same args, which will cancel the inspiration change event if so deemed by return value on Hook call.
+
