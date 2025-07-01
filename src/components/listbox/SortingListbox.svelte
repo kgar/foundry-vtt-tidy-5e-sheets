@@ -38,6 +38,8 @@
   function handleListboxKeydown(
     e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
+    e.stopPropagation();
+
     if (e.key === 'ArrowUp' && e.altKey) {
       moveUp();
     } else if (e.key === 'ArrowDown' && e.altKey) {

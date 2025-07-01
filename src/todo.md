@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Extract and share Journal tabs as `VerticalTabs` component. Make it super flexible so it can work like the regular `Tabs` component. It doesn't have to have tab components or anything, just selected tab ID and an array of tab infos. It should, however, be extensible enough to accommodate as much as the original `Tabs` component.
 - [ ] (Stretch) **Theme Settings**: Live update while the dialog is open - depending on performance, this could use the theme-changed hook and pass in a temp themesettings object. When this theme setting is provided, use it to apply theming rather than looking up theming, selectively overriding world, parent, or current document's theme settings.
   - This is easy with the stylesheet / CSS Rules API, I would think.
   - [ ] Sheet
@@ -228,6 +227,7 @@ Limited:
 - [x] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
 - [x] Uses - Dragon's Fire Breath, should show recharge roller when empty.
 - [x] Journal Migration - Allow for migrating classic Tidy journal entries into the Quadrone flag space. No replacement option. Just additive. Delete option should be there, and it's on the user if they decide to delete their old journal entries.
+- [x] Extract and share Journal tabs as `VerticalTabs` component. Make it super flexible so it can work like the regular `Tabs` component. It doesn't have to have tab components or anything, just selected tab ID and an array of tab infos. It should, however, be extensible enough to accommodate as much as the original `Tabs` component.
 
 
 ### Feature Origin dropdown notes

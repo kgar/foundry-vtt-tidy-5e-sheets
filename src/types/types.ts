@@ -25,7 +25,7 @@ import type {
 } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
-import type { ClassValue } from 'svelte/elements';
+import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
@@ -70,6 +70,7 @@ export type Tab = {
   condition?: (document: any) => boolean;
   iconClass?: string;
   itemCount?: (context: any) => number;
+  attributes?: HTMLAttributes<HTMLElement>
 };
 
 export type CustomContent = {

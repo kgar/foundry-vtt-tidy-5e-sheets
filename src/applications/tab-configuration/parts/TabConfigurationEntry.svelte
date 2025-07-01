@@ -7,7 +7,7 @@
     entry: TabConfigContextEntry;
   }
 
-  let { entry }: Props = $props();
+  let { entry = $bindable() }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
