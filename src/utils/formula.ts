@@ -428,3 +428,22 @@ function getSpellAttackRoll(
     subject: actor,
   };
 }
+
+const faces: Record<string, string> = {
+  '1': 'fa-solid fa-dice-one',
+  '2': 'fa-solid fa-dice-two',
+  '3': 'fa-solid fa-dice-three',
+  '4': 'fa-solid fa-dice-four',
+  '5': 'fa-solid fa-dice-five',
+  '6': 'fa-solid fa-dice-six',
+};
+
+const unknownFace = 'fa-solid fa-dice';
+
+export function getItemRecoveryInfo(item: Item5e) {
+  // TODO: return all the info that
+  // src\sheets\quadrone\item\parts\header\ItemRechargeSummary.svelte
+  // and
+  // src\sheets\quadrone\item\columns\ItemUsesColumn.svelte
+  // would need
+}
