@@ -37,7 +37,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="flexrow flex1">
+<div class="configuration-tabs flexrow flex1">
   <div class="flexcol noflex">
     <VerticalTabs bind:selectedTabId {tabs} class="flex1" />
   </div>
@@ -54,7 +54,7 @@
         'tidy-tab',
         { active: tabId === selectedTabId },
         'flexcol',
-        'flex1',
+        'configuration-tab',
       ]}
       data-tab-contents-for={tabId}
       role="tabpanel"
@@ -66,7 +66,7 @@
     </div>
   {/each}
 </div>
-<div class="flexrow flex0">
+<div class="flexrow flexgap-1">
   <button
     type="button"
     class="button button-primary save-changes-btn"

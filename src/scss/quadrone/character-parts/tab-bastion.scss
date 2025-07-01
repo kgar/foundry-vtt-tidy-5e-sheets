@@ -48,7 +48,7 @@
         border-radius: 0.125rem;
         outline: 0.125rem solid var(--t5e-color-gold);
 
-        > * {
+        >* {
           pointer-events: none;
         }
       }
@@ -64,11 +64,9 @@
   .facility:not(.empty) {
     border-radius: var(--t5e-component-card-radius);
     padding: 0.75rem 0.5rem;
-    background: linear-gradient(
-        145deg,
+    background: linear-gradient(145deg,
         rgba(248, 244, 241, 0.85) 10%,
-        rgba(248, 244, 241, 0.1) 160%
-      ),
+        rgba(248, 244, 241, 0.1) 160%),
       var(--underlay) 40%, #f8f4f1;
     background-blend-mode: normal, multiply;
     background-size: cover, cover;
@@ -388,6 +386,7 @@
   .craft-and-meter {
     display: flex;
     gap: 0.125rem;
+    margin-top: var(--t5e-size-1x);
 
     .facility-progress {
       --meter-height: 2rem;

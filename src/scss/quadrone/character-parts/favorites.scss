@@ -82,6 +82,7 @@
         span {
           display: flex;
           flex: 1;
+          flex-wrap: nowrap;
           text-wrap: nowrap;
           text-overflow: ellipsis;
           overflow-x: hidden;
