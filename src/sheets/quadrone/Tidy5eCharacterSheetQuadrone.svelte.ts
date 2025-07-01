@@ -329,7 +329,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     let inspirationSource: InspirationSource | undefined;
 
-    // TODO: Update this to look to the Tidy API for "inspiration" 🚀
     if (inspirationSourceItem?.system?.uses.max) {
       inspirationSource = {
         change: async (delta: number) => {
