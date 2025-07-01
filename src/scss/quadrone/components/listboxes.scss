@@ -136,7 +136,7 @@
 
   .listbox-selected {
     .listbox-item i {
-      color: var(--t5e-theme-color-highlight);
+      color: var(--t5e-color-text-default);
     }
   }
 
@@ -159,12 +159,21 @@
     &:focus-within,
     &:active {
       background-color: var(--t5e-theme-color-darker);
+      color: var(--t5e-color-palette-white);
       outline: 1px solid var(--t5e-component-field-border-hover);
+
+      i {
+        color: var(--t5e-color-palette-white);
+      }
     }
 
     &.focused {
       background-color: var(--t5e-theme-color-darkest);
       outline: 1px solid var(--t5e-component-field-border-hover);
+
+      i {
+        color: var(--t5e-color-palette-white);
+      }
     }
   }
 

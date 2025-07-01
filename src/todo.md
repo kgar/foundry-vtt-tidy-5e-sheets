@@ -9,10 +9,9 @@
   - [ ] World
 - [ ] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
-- [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait. 
-- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882
+- [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait.
+- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. <https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882>
 - [ ] Implement Responsive Tab Strip
-
 
 ### (Almost) Everything after the short list
 
@@ -34,10 +33,10 @@
 - [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
 - [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
-    - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
+  - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
 - [x] Add background circle hover style to section row buttons
 - [x] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
-- [x] Editor style needs CSS help: https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869
+- [x] Editor style needs CSS help: <https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869>
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 - [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] (stretch) Implement generic width / priority observer feature that can be used to control pinned filter visibility generically and then be used for other purposes later.
@@ -49,10 +48,10 @@
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 - [ ] (lowest priority: the system should probably work this out first) Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
-- [ ] (PC: Feature tab) Implement alternate section groupings - https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355 | include toggle option as sheet flag in tab settings
+- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings
 - [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
-- [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255
+- [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | <https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255>
 - [ ] // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
 - [ ] Refactor: Simplify DEFAULT_OPTIONS management now that option inheritance works and `visible()` callback is officially supported.
 - [ ] Research: Leveraging Foundry data models to validate, clean up, and control my flag data; and what about new user settings?
@@ -67,22 +66,20 @@
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
 - [ ] add a class to section headers when there are no search results `.search-no-results`
-- [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306
+- [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>
 - [x] Swap left and right areas in tab selection (left = selected, right = hidden)
 - [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
-- [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. https://discord.com/channels/@me/1243307347682529423/1388371150291210290
-
+- [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. <https://discord.com/channels/@me/1243307347682529423/1388371150291210290>
 
 ### Module Compatibility
 
 - [ ] DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
-- [ ] So Inspired! - add API for globally overriding inspiration tracking. Require 
+- [ ] So Inspired! - add API for globally overriding inspiration tracking. Require
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 - [ ] Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
-
 
 ## hightouch To Do
 
@@ -91,16 +88,15 @@
 - [x] Review Character Sheet Limited View
 - [ ] (not ready yet) Review Item Sheet Limited View. Only needs hide activity icon, everything else seems to match default sheets.
 - [x] Review Container Sheet Limited View. I think this is good and already 1:1 with default sheets.
-- [x] Quadrone Item Images are somehow more pixellated than others: https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806
+- [x] Quadrone Item Images are somehow more pixellated than others: <https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806>
 - [x] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
 - [ ] Reorganize responsive view of Character tab when sidebar is open (Skills top left, Tools/abilities top right, Features below)
 - [ ] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
 - [ ] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
-- [ ] Favorites - there are scrollbars on title and subtitle
-- [ ] Character Sheet - Light Mode - Bastion tab - progress text is very dark against a dark bar.
-- [ ] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
-
+- [x] Favorites - there are scrollbars on title and subtitle
+- [x] Character Sheet - Light Mode - Bastion tab - progress text is very dark against a dark bar.
+- [x] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
 
 ### Post-Beta Stretch Goals
 
@@ -108,15 +104,14 @@
 - [ ] High Contrast support - add theming changes to support Foundry's high contrast settings.
 - [ ] Increased Mobile/Tablet support.
 
-
 ### Deferred tasks from last item batch review
 
 OK I think I found one thing on features. Recharge recovery only shows if it's the first recovery option
-https://discord.com/channels/@me/1243307347682529423/1362996587584028683
+<https://discord.com/channels/@me/1243307347682529423/1362996587584028683>
 > This one is hard to reason about. The standard UI doesn't provide recharge info for non-first recharge recoveries. I'd like to think this over some more.
 
 OK then tattoos the one thing I see is that some of the tattoos like the Absorbing tattoos have Reaction-based abilities. But the sidebar is looking for a defined value
-https://discord.com/channels/@me/1243307347682529423/1363003038482038836
+<https://discord.com/channels/@me/1243307347682529423/1363003038482038836>
 > The issue was that there's a Damages label that is empty with the absorbing tattoo. It is possibly just a weird setup. The fix I did for now was to filter out damage labels that are null/undefined/empty.
 
 ### Scratch - Finding the effective theme for a sheet
@@ -136,19 +131,18 @@ colorScheme.applications // 'light' | 'dark' | '' | ????
     else if ( matchMedia("(prefers-color-scheme: light)").matches ) browserDefault = "theme-light";
 ```
 
-
 ### Bonus
 
 - [ ] Activity card / summary: Activities can be summarized via activity.activationLabels
   - all: activation, duration, range, reach, target
   - item is weapon with no overrides: attack: range, reach
 
-
 ### Context Menu items rework
 
-https://discord.com/channels/@me/1243307347682529423/1353196795378929754
+<https://discord.com/channels/@me/1243307347682529423/1353196795378929754>
 
 Here's my recommendation for action order following menu order best practices:
+
 - Most commonly used on the top
 - Destructive actions sunk to the bottom
 - Related content grouped
@@ -171,7 +165,7 @@ Delete
 ### To Include on Actor Phase
 
 - [ ] Effects tab
-  - [ ] Info / Suppression UI https://discord.com/channels/@me/1243307347682529423/1351751313515479131
+  - [ ] Info / Suppression UI <https://discord.com/channels/@me/1243307347682529423/1351751313515479131>
   - Repro: Put on a ring of protection but don't equip/attune to it.
 
 ### Stretch
@@ -181,6 +175,7 @@ Delete
 ### Observer and Limited permissions for container sheets
 
 Observer:
+
 - Cannot
   - Change item quantities
   - Use item
@@ -197,11 +192,12 @@ Observer:
 - Can only see main description
 
 Limited:
+
 - Identical to Observer
 
 ### To Do Graveyard
 
-- [x] Fix weird minimize/maximize header text behavior. reference: https://discord.com/channels/@me/1243307347682529423/1357922036454002890
+- [x] Fix weird minimize/maximize header text behavior. reference: <https://discord.com/channels/@me/1243307347682529423/1357922036454002890>
 - [X] **Character**: Set as Inspiration Source (see below)
   - [x] Add context prop for information source
   - [x] Update inspiration badge with functionality
@@ -220,14 +216,13 @@ Limited:
   - [x] Include in World Settings and Sheet-specific Settings
   - [x] Only show for "Actor" documents, "character" and "npc"
   - [x] Wire up portrait switcher button to the sheet-specific version of the setting
-- [x]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts; 
+- [x]  simplify sorting so that longpress/right-click opens a list of sort options, and simply clicking on the button cycles forward through the various sorts;
 - [x] User Preference: Item Spells Organization - ( ) Additional Spells Section ( ) Section Per Item
 - [x] Slice up character.scss into smaller stylesheets
 - [x] PC Sheet, Character tab, Species and Background do not refresh when their items change.
 - [x] Sheet tab: need Inventory filters in advanced filter section
 - [x] `window-title` shows the character name while the sheet is closing. It's noticeable enough to look like a mistake.
 - [x] Uses - Dragon's Fire Breath, should show recharge roller when empty.
-
 
 ### Feature Origin dropdown notes
 
@@ -315,4 +310,3 @@ Hooks.once("init", FeatureOrigin.init);
 
 **Hooked up**. Whenever we increment or decrement banked inspiration, fire off a hook "tidy5e-sheet.inspirationChanged" with sheet, actor, and object with old and new values. If we're working with a registered inspiration item, then decrementing triggers item use.
 Likewise, fire a hook to see if we're permitted to change inspo, like "tidy5e-sheet.inspirationChanging" with same args, which will cancel the inspiration change event if so deemed by return value on Hook call.
-

@@ -15,9 +15,9 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h1 class="h2">
+<h2>
   {localize('DND5E.SpecialTraits')}
-</h1>
+</h2>
 
 <div class="special-traits-container scroll-container tidy-form">
   <fieldset>
