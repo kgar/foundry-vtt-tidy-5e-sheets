@@ -85,10 +85,10 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   get title() {
     return this.document
-      ? FoundryAdapter.localize(`TIDY5E.ThemeSettings.title`, {
+      ? FoundryAdapter.localize(`TIDY5E.ThemeSettings.Sheet.title`, {
           userName: this.document.name,
         })
-      : 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel';
+      : FoundryAdapter.localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel');
   }
 
   _createComponent(node: HTMLElement): Record<string, any> {
