@@ -166,9 +166,17 @@
     }
   }
 
+  function onLeftListboxDblClick(
+    e: MouseEvent & { currentTarget: HTMLElement },
+  ) {
+    moveRight();
+  }
+
   function handleLeftListboxKeydown(
     e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
+    e.stopPropagation();
+
     if (e.code === 'Space') {
       moveRight();
       e.preventDefault();
@@ -178,9 +186,18 @@
       moveDown();
     }
   }
+
+  function onRightListboxDblClick(
+    e: MouseEvent & { currentTarget: HTMLElement },
+  ) {
+    moveLeft();
+  }
+
   function handleRightListboxKeydown(
     e: KeyboardEvent & { currentTarget: HTMLElement },
   ): void {
+    e.stopPropagation();
+
     if (e.code === 'Space') {
       moveLeft();
       e.preventDefault();
@@ -205,6 +222,7 @@
       onselect={() => {
         selectedRightItemIndex = null;
       }}
+      ondblclick={(detail) => onLeftListboxDblClick(detail.event)}
       onkeydown={handleLeftListboxKeydown}
       class={[listboxCssClass, 'listbox-selected']}
     >
@@ -248,6 +266,7 @@
         selectedLeftItemIndex = null;
       }}
       onkeydown={handleRightListboxKeydown}
+      ondblclick={(detail) => onRightListboxDblClick(detail.event)}
       class={listboxCssClass}
     >
       {#snippet itemTemplate({ item })}

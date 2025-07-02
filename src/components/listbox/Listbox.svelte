@@ -44,6 +44,11 @@
       index: number;
       event: DragEvent;
     }) => void;
+    ondblclick?: (detail: {
+      item: TItem;
+      index: number;
+      event: MouseEvent & { currentTarget: HTMLElement };
+    }) => void;
     [key: string]: any;
   }
 
@@ -65,6 +70,7 @@
     ondragover,
     ondragenter,
     ondragleave,
+    ondblclick,
     ...rest
   }: Props = $props();
 
@@ -79,6 +85,8 @@
   function handleListboxKeyDown(
     ev: KeyboardEvent & { currentTarget: HTMLElement },
   ) {
+    ev.stopPropagation();
+
     if (items.length) {
       const currentIndex = selectedItemIndex ?? -1;
 
@@ -147,6 +155,7 @@
       ondragover={(ev) => ondragover?.({ event: ev, item, index: i })}
       ondragenter={(ev) => ondragenter?.({ event: ev, item, index: i })}
       ondragleave={(ev) => ondragleave?.({ event: ev, item, index: i })}
+      ondblclick={(ev) => ondblclick?.({ event: ev, item, index: i })}
       animate:flip={{ duration: 150 }}
       in:receive={{ key: item[valueProp] }}
       out:send={{ key: item[valueProp] }}

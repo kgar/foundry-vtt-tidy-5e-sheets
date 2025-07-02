@@ -2,6 +2,8 @@
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import { TidyFlags, type DocumentJournalEntry } from 'src/api';
   import { JournalEntryApplication } from 'src/applications/journal/JournalEntryApplication.svelte';
+  import type { TabStripInfo } from 'src/components/tabs/Tabs.svelte';
+  import VerticalTabs from 'src/components/tabs/VerticalTabs.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -18,10 +20,20 @@
     ),
   );
 
-  let selectedIndex = $state(0);
+  let selectedTabId = $state('');
+
+  $effect(() => {
+    if (selectedTabId === '' && entries.length) {
+      selectedTabId = entries[0].id;
+    }
+  });
 
   let selected = $derived<DocumentJournalEntry | undefined>(
-    entries[selectedIndex],
+    entries.find((e) => e.id === selectedTabId) ?? entries[0],
+  );
+
+  const selectedIndex = $derived<number>(
+    entries.findIndex((e) => e.id === selectedTabId) ?? 0,
   );
 
   let enrichedPromise = $derived(
@@ -43,13 +55,15 @@
         return;
       }
 
-      // Handle index out of bounds
-      if (selectedIndex >= entries.length) {
-        selectedIndex = selectedIndex - 1;
-      }
-      // Handle adding new entry
-      else if (entriesLength > prev) {
-        selectedIndex = entries.length - 1;
+      const selectedIndex = entries.findIndex((e) => e.id === selectedTabId);
+
+      // Handle index out of bounds, or new entry was created
+      if (
+        selectedIndex >= entries.length ||
+        entriesLength > prev ||
+        selectedIndex === -1
+      ) {
+        selectedTabId = entries[entries.length - 1]?.id;
       }
     },
   );
@@ -66,24 +80,22 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  let tabs = $derived(
+    entries.map<TabStripInfo>((entry, i) => ({
+      id: entry.id,
+      title: coalesce(entry.title, getFallbackTitle(i)),
+      attributes: {
+        ['data-tidy-draggable']: '',
+        ['data-tidy-journal-id']: entry.id,
+        ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL,
+      },
+    })),
+  );
 </script>
 
 <div class={['journal-entry-selector']}>
-  <nav class="pages-list">
-    <ol class="pages flexcol">
-      {#each entries as entry, i (entry.id)}
-        <li
-          class={['page', { selected: i === selectedIndex }]}
-          onclick={() => i !== selectedIndex && (selectedIndex = i)}
-          data-tidy-draggable
-          data-tidy-journal-id={entry.id}
-          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL}
-        >
-          {coalesce(entry.title, getFallbackTitle(i))}
-        </li>
-      {/each}
-    </ol>
-  </nav>
+  <VerticalTabs {tabs} bind:selectedTabId includeTabNumber />
   <div class="action-buttons">
     <button
       type="button"
@@ -91,7 +103,7 @@
       class="button button-icon-only"
       data-tooltip="JOURNAL.PrevPage"
       disabled={!selected || selectedIndex <= 0}
-      onclick={() => (selectedIndex -= 1)}
+      onclick={() => (selectedTabId = entries[selectedIndex - 1]?.id)}
     >
       <i class="fa-solid fa-chevron-left"></i>
     </button>
@@ -114,7 +126,7 @@
       class="button button-icon-only"
       data-tooltip="JOURNAL.NextPage"
       disabled={!selected || selectedIndex >= entries.length - 1}
-      onclick={() => (selectedIndex += 1)}
+      onclick={() => (selectedTabId = entries[selectedIndex + 1]?.id)}
     >
       <i class="fa-solid fa-chevron-right"></i>
     </button>

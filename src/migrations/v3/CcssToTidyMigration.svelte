@@ -132,7 +132,7 @@
         {
           width: 960,
         },
-      ).render(true);
+      ).render({ force: true });
     } catch (e) {
       error('An error occurred while preparing a bulk migration', false, e);
     }

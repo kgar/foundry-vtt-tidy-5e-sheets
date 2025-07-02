@@ -10,7 +10,7 @@
 
   export type TabStripInfo = Pick<
     Tab,
-    'id' | 'title' | 'iconClass' | 'itemCount'
+    'id' | 'title' | 'iconClass' | 'itemCount' | 'attributes'
   >;
 
   interface Props {

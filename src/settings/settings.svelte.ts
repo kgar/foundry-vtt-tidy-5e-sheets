@@ -19,7 +19,7 @@ import type {
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
-import type { ThemeSettings } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettingsV1 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
@@ -1452,7 +1452,7 @@ export function createSettings() {
           type: Object,
           default: undefined,
           config: false,
-          onChange: (settings: ThemeSettings) => {
+          onChange: (settings: ThemeSettingsV1) => {
             ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
               settingsOverride: settings,
             });
@@ -1460,7 +1460,7 @@ export function createSettings() {
         },
         get() {
           return (
-            FoundryAdapter.getTidySetting<ThemeSettings>(
+            FoundryAdapter.getTidySetting<ThemeSettingsV1>(
               'worldThemeSettings'
             ) ?? ThemeQuadrone.getDefaultThemeSettings()
           );
