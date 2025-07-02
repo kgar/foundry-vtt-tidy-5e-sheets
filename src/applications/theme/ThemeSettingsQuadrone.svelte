@@ -83,11 +83,12 @@
 </script>
 
 <div class="scrollable flex1" ondrop={onDrop}>
-  <h2>
-    {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
-  </h2>
+
 
   <div class="flexrow flexgap-1">
+    <h2>
+      {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
+    </h2>
     <button
       type="button"
       class="button flexshrink"
