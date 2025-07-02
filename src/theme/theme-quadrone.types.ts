@@ -11,7 +11,6 @@ export type ThemeSettingsV2 = {
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;
   spellPreparationModeColors: Record<string, string>;
-  useSaturatedRarityColors: boolean;
   // etc. settings here ;)
 };
 

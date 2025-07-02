@@ -769,8 +769,6 @@
       "option.square": "Square"
     },
     "RarityColors.title": "Rarity Colors",
-    "RarityColors.UseSaturatedColors.name": "Use Saturated Rarity Colors",
-    "RarityColors.UseSaturatedColors.hint": "In some cases, Tidy 5e will desaturate rarity colors to reduce eye strain, particularly with text. Select this option to use the fully saturated rarity color.",
     "SheetTheme.title": "Sheet Theme",
     "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
     "SpellPreparationModeColors.title": "Spell Preparation Mode Colors"

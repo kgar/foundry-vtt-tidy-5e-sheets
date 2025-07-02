@@ -28,7 +28,6 @@ export type ThemeSettingsContext = {
   accentColor: string;
   headerBackground: string;
   portraitShape: PortraitShape | undefined;
-  useSaturatedRarityColors: boolean;
   rarityColors: ThemeColorSettingConfigEntry[];
   spellPreparationModeColors: ThemeColorSettingConfigEntry[];
 };
@@ -45,7 +44,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     portraitShape: undefined,
     rarityColors: [],
     spellPreparationModeColors: [],
-    useSaturatedRarityColors: false,
   });
 
   private get themeConfigOptions() {
@@ -142,7 +140,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
           value: themeSettings.spellPreparationModeColors[key] ?? '',
         };
       }),
-      useSaturatedRarityColors: themeSettings.useSaturatedRarityColors ?? false,
     };
 
     return context;
@@ -203,7 +200,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       accentColor: data.accentColor ?? '',
       headerBackground: data.headerBackground,
       portraitShape: data.portraitShape,
-      useSaturatedRarityColors: data.useSaturatedRarityColors,
       rarityColors: data.rarityColors
         .filter((t) => !isNil(t.value.trim(), ''))
         .reduce<Record<string, string>>((prev, curr) => {

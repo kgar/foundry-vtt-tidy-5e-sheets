@@ -180,23 +180,6 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    <div class="form-group">
-      <label for="{idPrefix}-use-saturated-rarity-colors"
-        >{localize(
-          'TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.name',
-        )}</label
-      >
-      <div class="form-fields">
-        <input
-          id="{idPrefix}-use-saturated-rarity-colors"
-          type="checkbox"
-          bind:checked={data.useSaturatedRarityColors}
-        />
-      </div>
-      <p class="hint">
-        {localize('TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.hint')}
-      </p>
-    </div>
     {#each data.rarityColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}

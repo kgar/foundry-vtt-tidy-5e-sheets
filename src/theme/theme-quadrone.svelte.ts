@@ -57,7 +57,6 @@ export class ThemeQuadrone {
       portraitShape: undefined,
       rarityColors: {},
       spellPreparationModeColors: {},
-      useSaturatedRarityColors: false,
     };
   }
 

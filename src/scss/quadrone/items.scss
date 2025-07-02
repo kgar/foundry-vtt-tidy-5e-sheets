@@ -301,14 +301,6 @@
         color: oklch(from var(--t5e-item-color) calc(l + 0.125) c h);
       }
 
-      &.saturate {
-
-        &:not(.none),
-        option:not(.none) {
-          color: var(--t5e-item-color);
-        }
-      }
-
       option.none {
         color: var(--t5e-color-text-default);
       }
@@ -322,10 +314,6 @@
       color: oklch(from var(--t5e-item-color) calc(l + 0.2) calc(c - 0.08) h);
       font: var(--t5e-font-title-small);
       text-align: center;
-
-      &.saturate {
-        color: var(--t5e-item-color);
-      }
     }
   }
 
@@ -333,10 +321,6 @@
     color: oklch(from var(--t5e-item-color) calc(l + 0.25) calc(c - 0.05) h);
     font: var(--t5e-font-title-small);
     text-align: center;
-
-    &.saturate {
-      color: var(--t5e-item-color);
-    }
   }
 
   .image-subtitle {
