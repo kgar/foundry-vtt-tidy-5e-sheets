@@ -8,10 +8,10 @@
   .guideline-header,
   .guideline-footer {
     position: relative;
-    height: 5.5px;
+    height: 0.34375rem;
 
     svg path {
-      stroke-width: 1px;
+      stroke-width: 0.0625rem;
       stroke: var(--t5e-color-text-gold);
     }
   }
@@ -92,14 +92,14 @@
 
 .filigree-card {
   background: var(--t5e-component-card-default);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   position: relative;
   isolation: isolate;
-  min-height: 56px;
-  filter: var(--filigree-drop-shadow, drop-shadow(0 0 12px var(--dnd5e-shadow-15)));
+  min-height: 3.5rem;
+  filter: var(--filigree-drop-shadow, drop-shadow(0 0 0.75rem var(--dnd5e-shadow-15)));
 
   .backdrop {
-    --chamfer: 12px;
+    --chamfer: 0.75rem;
     position: absolute;
     inset: 0;
     z-index: -2;
@@ -121,7 +121,7 @@
 
   .filigree.top,
   .filigree.bottom {
-    height: 30px;
+    height: 1.875rem;
   }
 
   .filigree.top {
@@ -135,7 +135,7 @@
 
   .filigree.left,
   .filigree.right {
-    width: 25px;
+    width: 1.5625rem;
   }
 
   .filigree.left {
@@ -152,13 +152,13 @@
   }
 
   .filigree.block {
-    inline-size: calc(100% - 48px);
-    inset-inline: 24px;
+    inline-size: calc(100% - 3rem);
+    inset-inline: 1.5rem;
   }
 
   .filigree.inline {
-    block-size: calc(100% - 56px);
-    inset-block: 28px;
+    block-size: calc(100% - 3.5rem);
+    inset-block: 1.75rem;
   }
 
 }

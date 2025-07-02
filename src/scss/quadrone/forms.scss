@@ -31,7 +31,7 @@
       width: 100%;
 
       &:not(:has(tidy-gold-header-underline)) {
-        border-bottom: 1px solid var(--t5e-color-gold);
+        border-bottom: 0.0625rem solid var(--t5e-color-gold);
       }
 
       >label.checkbox {
@@ -111,13 +111,13 @@
       position: relative;
 
       multi-select .tags.input-element-tags {
-        min-height: 10px;
+        min-height: 0.625rem;
         padding-left: 40%;
       }
 
       > label {
         position: absolute;
-        inset: auto auto calc(var(--form-field-height) + 2px) 0;
+        inset: auto auto calc(var(--form-field-height) + 0.125rem) 0;
       }
     } 
       */
@@ -160,7 +160,7 @@
         /*
 
           &:hover {
-            text-shadow: 0 0 6px var(--color-shadow-primary);
+            text-shadow: 0 0 0.375rem var(--color-shadow-primary);
           }
 
           &::before {
@@ -189,13 +189,13 @@
     position: relative;
 
     multi-select .tags.input-element-tags {
-      min-height: 10px;
+      min-height: 0.625rem;
       padding-left: 40%;
     }
 
     > label {
       position: absolute;
-      inset: auto auto calc(var(--form-field-height) + 2px) 0;
+      inset: auto auto calc(var(--form-field-height) + 0.125rem) 0;
     }
   } 
     */
@@ -485,7 +485,7 @@
     a.button {
       flex: 1;
       height: calc(1.25 * var(--input-height));
-      min-width: 180px;
+      min-width: 11.25rem;
     }
   }
 

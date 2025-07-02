@@ -24,7 +24,7 @@
   align-items: center;
   background: var(--t5e-component-pill-background);
   border-radius: var(--radius-card, 0.1875rem);
-  border: 1px solid var(--t5e-component-pill-border);
+  border: 0.0625rem solid var(--t5e-component-pill-border);
   display: flex;
   font-size: var(--font-size-12);
   font-style: normal;
@@ -162,7 +162,7 @@
 
 .tag {
   border-radius: 0.125rem;
-  border: 1px solid var(--t5e-component-pill-border);
+  border: 0.0625rem solid var(--t5e-component-pill-border);
   background: var(--t5e-component-pill-background);
 
   display: flex;

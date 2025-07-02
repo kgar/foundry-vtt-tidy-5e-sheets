@@ -1,6 +1,6 @@
   :where(.favorites) {
     .list-label {
-      border-bottom: 1px solid var(--t5e-table-row-divider);
+      border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
       padding-block-end: var(--t5e-size-1x);
     }
 
@@ -9,11 +9,11 @@
       flex-direction: row;
       padding-block-start: var(--t5e-size-1x);
       padding-block-end: var(--t5e-size-1x);
-      border-bottom: 1px solid var(--t5e-table-row-divider);
+      border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
 
       .effect-use-icon {
         border-radius: 0.125rem;
-        border: 1px solid var(--t5e-color-gold);
+        border: 0.0625rem solid var(--t5e-color-gold);
         width: 1.75rem;
         height: 1.75rem;
       }
@@ -23,13 +23,13 @@
 
         .item-use-button,
         &:not(.suppressed) .effect-use-icon {
-          box-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+          box-shadow: 0 0 0.375rem var(--t5e-color-text-gold-emphasis);
         }
 
         input.uses-value {
           border-color: transparent; //var(--t5e-component-field-border);
           background-color: var(--t5e-component-field-background-hover-emphasis);
-          box-shadow: 4px 0 0 0 var(--t5e-component-field-background-hover-emphasis);
+          box-shadow: 0.25rem 0 0 0 var(--t5e-component-field-background-hover-emphasis);
         }
       }
 
@@ -99,7 +99,7 @@
         height: var(--t5e-field-size-default);
 
         .item-use-button {
-          margin: 1px 0 0;
+          margin: 0.0625rem 0 0;
           display: flex;
           align-items: center;
           justify-content: center;

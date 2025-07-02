@@ -157,7 +157,7 @@
     --t5e-item-row-background: transparent;
 
     border-radius: 0.125rem;
-    border-width: 0 0 1px 0;
+    border-width: 0 0 0.0625rem 0;
     border-style: solid;
     border-image: var(--t5e-table-row-border-image);
 
@@ -229,7 +229,7 @@
 
       .tidy-table-row-use-button {
         --t5e-use-button-border-color: var(--t5e-item-color);
-        outline: 2px solid var(--t5e-use-button-border-color);
+        outline: 0.125rem solid var(--t5e-use-button-border-color);
 
         i {
           color: oklch(from var(--t5e-item-color) calc(l * 0.85) calc(c * 1.2) h);
@@ -280,7 +280,7 @@
     }
 
     &:not(:last-child) {
-      border-right: 1px solid var(--t5e-table-row-divider);
+      border-right: 0.0625rem solid var(--t5e-table-row-divider);
       border-image: linear-gradient(to bottom,
           transparent 10%,
           var(--t5e-table-row-divider) 10%,
@@ -416,7 +416,7 @@
 
     .damage-icon {
       --icon-fill: var(--t5e-color-icon-diminished);
-      padding: 1px 0 0 2px;
+      padding: 0.0625rem 0 0 0.125rem;
     }
   }
 
@@ -514,7 +514,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 100%;
-      padding-left: 0.5px;
+      padding-left: 0.03125rem;
       height: var(--t5e-size-6x);
       transition: background-color var(--t5e-transition-default);
       width: var(--t5e-size-6x);
@@ -556,8 +556,8 @@
     align-items: center;
     align-self: center;
     border-radius: 0.125rem;
-    outline: 1px solid var(--t5e-use-button-border-color);
-    outline-offset: -1px;
+    outline: 0.0625rem solid var(--t5e-use-button-border-color);
+    outline-offset: -0.0625rem;
     cursor: pointer;
     display: grid;
     grid-template-columns: 1fr;
@@ -696,7 +696,7 @@
         var(--t5e-color-palette-white) 0.59%,
         var(--t5e-component-card-default) 44%);
     padding: var(--t5e-size-1x) 0 var(--t5e-size-2x) var(--t5e-size-4x);
-    border-width: 0 0 1px 0;
+    border-width: 0 0 0.0625rem 0;
     border-style: solid;
     border-image: var(--t5e-table-row-border-image);
 
@@ -771,7 +771,7 @@
     &.mode-always {
 
       .tidy-table-row-use-button {
-        outline: 2px solid var(--t5e-use-button-border-color);
+        outline: 0.125rem solid var(--t5e-use-button-border-color);
       }
 
       .highlight {
@@ -782,7 +782,7 @@
       }
 
       i.mode-always:hover {
-        text-shadow: 0 0 4px oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
+        text-shadow: 0 0 0.25rem oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
       }
     }
   }
@@ -821,7 +821,7 @@
       &:active,
       &:focus-within {
         background-color: var(--t5e-theme-color-lighter);
-        filter: drop-shadow(0 0 3px oklch(from var(--t5e-theme-color-highlight) l c h));
+        filter: drop-shadow(0 0 0.1875rem oklch(from var(--t5e-theme-color-highlight) l c h));
       }
 
       &.active {

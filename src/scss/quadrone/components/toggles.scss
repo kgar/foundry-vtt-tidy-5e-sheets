@@ -14,7 +14,7 @@
     border: none;
     transition: background-color 0.5s ease, border-color 0.5s ease;
     border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
-    border: 1px solid var(--t5e-component-field-border);
+    border: 0.0625rem solid var(--t5e-component-field-border);
 
     i {
       margin: 0;

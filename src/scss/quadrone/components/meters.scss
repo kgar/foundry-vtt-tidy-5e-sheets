@@ -12,11 +12,11 @@
   align-self: stretch;
 
   border-radius: var(--radius-card, 0.1875rem);
-  border: 1px solid var(--t5e-component-field-border);
+  border: 0.0625rem solid var(--t5e-component-field-border);
   background: var(--t5e-color-palette-grey-34);
 
   /* pill-shadow */
-  box-shadow: 0px 0px 12px 0px var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
+  box-shadow: 0 0 0.75rem 0 var(--dnd5e-shadow-15, rgba(0, 0, 0, 0.15));
 
   /* Pill Integration - todo, show to hightouch and get opinion on where to place this */
   &.pill {
@@ -104,7 +104,7 @@
         var(--t5e-theme-color-darkest) 0%,
         var(--t5e-theme-color-lighter) 100%);
     --bar-border-color: var(--t5e-theme-color-default);
-    
+
     &.disabled {
       --bar-background: linear-gradient(to right,
           var(--t5e-color-palette-grey-29) 0%,

@@ -55,7 +55,7 @@
 
       .list-entry {
         padding: var(--t5e-size-1x) 0;
-        border-bottom: 1px solid var(--t5e-table-row-divider);
+        border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
 
         .item-image-link {
           width: 1.75rem;
@@ -101,12 +101,12 @@
       }
 
       .item-image-link {
-        border: 1px solid var(--t5e-color-gold);
+        border: 0.0625rem solid var(--t5e-color-gold);
         border-radius: 0.125rem;
         transition: box-shadow var(--t5e-transition-default);
 
         &:hover {
-          box-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+          box-shadow: 0 0 0.375rem var(--t5e-color-text-gold-emphasis);
         }
       }
 
@@ -116,7 +116,7 @@
 
       .icon-class-original {
         margin-left: var(--t5e-size-1x);
-        padding-bottom: 1px;
+        padding-bottom: 0.0625rem;
       }
 
       .list-controls {
@@ -146,7 +146,7 @@
 
   .card {
     background-color: var(--t5e-component-card-default);
-    padding: 5px 14px 8px;
+    padding: 0.3125rem 0.875rem 0.5rem;
 
   }
 
@@ -154,7 +154,7 @@
 
   .use-ability-header {
     display: flex;
-    border-bottom: 1px solid var(--t5e-color-gold);
+    border-bottom: 0.0625rem solid var(--t5e-color-gold);
     height: var(--t5e-field-size-default);
 
     .button {
@@ -178,7 +178,7 @@
 
     .skill-expand-button i {
       transition: var(--t5e-transition-default);
-      margin-top: 1px;
+      margin-top: 0.0625rem;
 
       &.expanded {
         transform: rotate(90deg);
@@ -220,7 +220,7 @@
       i {
         font-size: var(--font-size-11);
         color: var(--_fill);
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.24);
+        text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.24);
       }
 
       &.button-icon-only:hover {
@@ -268,7 +268,7 @@
         &:active,
         &:focus {
           background-color: transparent;
-          text-shadow: 0 0 6px var(--t5e-color-text-gold-emphasis);
+          text-shadow: 0 0 0.375rem var(--t5e-color-text-gold-emphasis);
           outline: none;
 
           option {
@@ -320,7 +320,7 @@
       }
 
       &:not(:last-child) {
-        border-bottom: 1px solid var(--t5e-table-row-divider);
+        border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
       }
     }
 
@@ -329,7 +329,7 @@
       flex-direction: row;
       flex-wrap: wrap;
       column-gap: var(--t5e-size-2x);
-      border-bottom: 1px solid var(--t5e-component-card-default);
+      border-bottom: 0.0625rem solid var(--t5e-component-card-default);
       box-sizing: content-box;
       position: relative;
 
@@ -338,7 +338,7 @@
         flex: 1;
         flex-basis: calc(50% - var(--t5e-size-1x));
         max-width: calc(50% - var(--t5e-size-1x));
-        border-bottom: 1px solid var(--t5e-table-row-divider);
+        border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
       }
 
       /* Apply 100% width only if last child is odd-numbered */
@@ -353,12 +353,12 @@
         left: 0;
         right: 0;
         position: absolute;
-        height: 1px;
+        height: 0.0625rem;
         background-color: var(--t5e-component-card-default);
       }
 
 
-      @container tab-right-column (inline-size < 440px) {
+      @container tab-right-column (inline-size < 27.5rem) {
         li {
           flex-basis: 100%;
           max-width: 100%;
@@ -378,7 +378,7 @@
       position: absolute;
       block-size: 0;
       inline-size: 0;
-      border-inline: 3px solid transparent;
+      border-inline: 0.1875rem solid transparent;
 
       &.encumbrance-low {
         inset-inline-start: var(--encumbrance-low);
@@ -390,12 +390,12 @@
 
       &.arrow-up {
         inset-block-end: 0;
-        border-block-end: 3px solid var(--t5e-color-gold);
+        border-block-end: 0.1875rem solid var(--t5e-color-gold);
       }
 
       &.arrow-down {
         inset-block-start: 0;
-        border-top: 3px solid var(--t5e-color-gold);
+        border-top: 0.1875rem solid var(--t5e-color-gold);
       }
 
       transform: translateX(-50%);
@@ -577,7 +577,7 @@
 
       li {
         padding: 0.375rem 0.5rem;
-        border-bottom: 1.5px dotted var(--t5e-component-card-lighter);
+        border-bottom: 0.09375rem dotted var(--t5e-component-card-lighter);
 
         &:last-child {
           border: none;
@@ -595,7 +595,7 @@
           font-family: var(--font-awesome);
           font-weight: bold;
           color: var(--t5e-color-yellow);
-          margin-right: 8px;
+          margin-right: 0.5rem;
         }
 
         &.warning::before {

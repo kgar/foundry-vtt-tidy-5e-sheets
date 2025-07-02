@@ -384,7 +384,7 @@
           }
 
           &:hover {
-            box-shadow: 0 0 5px var(--t5e-color-gold);
+            box-shadow: 0 0 0.3125rem var(--t5e-color-gold);
           }
         }
 
@@ -1002,8 +1002,8 @@
             // TODO: Fix weird hover behavior.
             box-shadow: 0 0 0.5rem 0.1875rem var(--t5e-theme-color-highlight);
             display: block;
-            width: 0.6875rem;
-            height: 0.6875rem;
+            width: 0.75rem;
+            height: 0.75rem;
             background-color: var(--t5e-color-palette-white);
             border: 0.0625rem solid var(--t5e-theme-color-highlight);
             outline: none;
@@ -1028,10 +1028,10 @@
 
 
           &:hover::before {
-            width: 10.125rem;
-            height: 10.125rem;
+            width: 0.75rem;
+            height: 0.75rem;
             border-width: 0.0625rem;
-            box-shadow: 0 0 10.125rem 0.1875rem var(--t5e-theme-color-highlight);
+            box-shadow: 0 0 0.75rem 0.1875rem var(--t5e-theme-color-highlight);
           }
         }
 
@@ -1040,13 +1040,10 @@
           width: 2.75rem;
           height: 2.75rem;
 
-          // .level {
-          //   margin-bottom: 0.0625rem;
-          // }
 
           .inspiration-level {
-            width: var(--t5e-size-5x);
-            height: var(--t5e-size-5x);
+            width: 1.25rem;
+            height: 1.25rem;
             border-radius: 100%;
             border: 0.0625rem solid transparent;
             transition: all var(--t5e-transition-default);
