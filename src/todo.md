@@ -2,10 +2,7 @@
 
 ### The Short List
 
-- [x] Remove Saturated Rarity Color option and its localizations
-- [x] Ensure "Header Background" is named "Actor Header Background" and only shows when looking at it from World Settings or from an Actor's sheet
-- [x] Add "Item Sidebar Background" and always show it for every configuration, because item sheets inherit their parent actor's styles, meaning World, Actor, and Item level settings should have the option. 
-- [ ] Pull theme application to the Svelte mixin. Everyone must abide by theming.
+- [ ] Pull theme application to the Svelte mixin. Everyone must abide by theming. We just have to live with the fact that this mixin must entertain the possibility of an inheriting class optionally having a document. Blech 
 - [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
 - [ ] Consider extracting import button to its own component to keep things clean.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
@@ -202,3 +199,6 @@ Limited:
   - [x] World Setting: notifications `Record<string, boolean>`
   - [x] On ready, decide what notification(s) to show and pop GM only 
   - [x] Mark off one-time notifications so they no longer show on subsequent loads
+- [x] Remove Saturated Rarity Color option and its localizations
+- [x] Ensure "Header Background" is named "Actor Header Background" and only shows when looking at it from World Settings or from an Actor's sheet
+- [x] Add "Item Sidebar Background" and always show it for every configuration, because item sheets inherit their parent actor's styles, meaning World, Actor, and Item level settings should have the option. 
