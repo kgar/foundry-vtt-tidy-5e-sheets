@@ -91,7 +91,7 @@ input.uninput:hover {
   padding-inline-end: 0.5rem;
 
   &:focus-within {
-    box-shadow: 0px 0px 0px 2px var(--t5e-color-text-gold-light);
+    box-shadow: 0 0 0 0.125rem var(--t5e-color-text-gold-light);
   }
 
   &:hover {
@@ -479,9 +479,9 @@ input[type='text']:not(:disabled):not(.uninput) {
     box-shadow: none;
     outline-offset: 0;
     margin: var(--t5e-size-1) -0.3125rem 0.25rem;
-    padding: 9px 7px 7px;
+    padding: 0.5625rem 0.4375rem 0.4375rem;
     height: 2.75rem;
-    width: calc(100% + 7px);
+    width: calc(100% + 0.4375rem);
 
     &:hover,
     &:active {

@@ -1,7 +1,7 @@
 .tidy5e-sheet.application:where(.quadrone.item) {
   --sidebar-expanded-width: 9rem;
   --sidebar-width: var(--sidebar-expanded-width);
-  --sidebar-background-image-height: 510px;
+  --sidebar-background-image-height: 31.875rem;
   --window-border-color: var(--t5e-color-gold);
   $sidebar-bg: url(../../modules/tidy5e-sheet/images/sidebar-item-sheet.webp) top center / auto no-repeat,
     var(--t5e-component-card-dark-darker);
@@ -51,7 +51,7 @@
 
     &:has(.item-header-start-scroll-marker.off-screen) {
       .window-header {
-        border-bottom: 1px solid var(--window-border-color);
+        border-bottom: 0.0625rem solid var(--window-border-color);
         background: var(--t5e-component-card-darker);
       }
 
@@ -65,7 +65,7 @@
       .header-over-sidebar {
         background: $sidebar-bg;
         background-attachment: scroll, local;
-        border-right: 1px solid var(--window-border-color, #9f9275);
+        border-right: 0.0625rem solid var(--window-border-color, #9f9275);
       }
     }
 
@@ -169,7 +169,7 @@
     background: $sidebar-bg;
     background-attachment: scroll, local;
     background-blend-mode: luminosity;
-    border-right: 1px solid var(--window-border-color, #9f9275);
+    border-right: 0.0625rem solid var(--window-border-color, #9f9275);
     display: flex;
     flex-direction: column;
     gap: var(--t5e-size-4x);
@@ -435,7 +435,7 @@
 
     >*+*::before {
       content: '';
-      width: 1px;
+      width: 0.0625rem;
       height: var(--t5e-size-3x);
       opacity: 0.5;
       background: var(--t5e-color-gold, #9f9275);
@@ -499,7 +499,7 @@
 
     &:is(input) {
       border-radius: 0.125rem;
-      border: 1px solid var(--t5e-component-field-border);
+      border: 0.0625rem solid var(--t5e-component-field-border);
       background: linear-gradient(0deg,
           rgba(255, 255, 255, 0.5) 0%,
           rgba(255, 255, 255, 0.5) 100%),

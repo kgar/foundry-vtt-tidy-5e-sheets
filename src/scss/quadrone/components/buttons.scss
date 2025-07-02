@@ -16,7 +16,7 @@
   --button-icon: var(--t5e-color-icon-button);
   --button-icon-hover: var(--t5e-color-icon-default);
   --button-shadow: var(--t5e-drop-shadow-field);
-  --button-focus: 0px 0px 0px 2px var(--t5e-theme-color-default);
+  --button-focus: 0 0 0 0.125rem var(--t5e-theme-color-default);
 
 
   display: inline-flex;
@@ -65,7 +65,7 @@
     --icon-fill: var(--button-icon);
 
     color: var(--button-text);
-    border: 1px solid var(--button-border);
+    border: 0.0625rem solid var(--button-border);
     background: var(--button-background);
 
     :where(i) {
@@ -79,7 +79,7 @@
   }
 
   &.button-secondary {
-    border: 1px solid var(--button-border);
+    border: 0.0625rem solid var(--button-border);
     background: var(--button-background);
     color: var(--button-text);
 
@@ -97,7 +97,7 @@
 
   &.button {
     background: var(--button-background);
-    border: 1px solid var(--button-border);
+    border: 0.0625rem solid var(--button-border);
     color: var(--button-text);
     --icon-color: var(--button-icon);
 
@@ -114,7 +114,7 @@
   &.button-tertiary {
     border-style: dashed;
     background: transparent;
-    border-radius: 3px;
+    border-radius: 0.1875rem;
     box-shadow: none;
 
     &:hover:not(:disabled) {
@@ -227,7 +227,7 @@
         border-color: transparent;
         box-shadow: none;
         // text-shadow: var(--t5e-drop-shadow-field);
-        text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
       }
     }
   }
@@ -281,7 +281,7 @@
     &:active,
     &:focus {
       &:not(:disabled) {
-        outline: 1px solid var(--t5e-component-field-border-hover);
+        outline: 0.0625rem solid var(--t5e-component-field-border-hover);
 
         &:not(:last-child) {
           border-width: 0 0.0625rem 0 0;
@@ -369,7 +369,7 @@
     flex-direction: column;
     gap: 0.5rem;
     background: var(--t5e-component-card-darker);
-    border: 1px solid var(--t5e-component-field-border);
+    border: 0.0625rem solid var(--t5e-component-field-border);
     border-radius: 0.25rem;
     z-index: 2;
     white-space: nowrap;
@@ -416,7 +416,7 @@
 
   menu.expanded {
     width: fit-content;
-    border: 1px solid var(--t5e-component-field-border);
+    border: 0.0625rem solid var(--t5e-component-field-border);
     display: flex;
     flex-direction: column;
     gap: 1.125rem;
@@ -472,7 +472,7 @@
       &:active,
       &:focus {
         &:not(:disabled) {
-          outline: 1px solid var(--t5e-component-field-border);
+          outline: 0.0625rem solid var(--t5e-component-field-border);
         }
       }
     }
@@ -509,7 +509,7 @@
     }
 
     &.button-icon-only:hover {
-      text-shadow: 0px 0px 6px var(--t5e-color-text-gold);
+      text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
     }
 
     &.button-icon-only.button-borderless {

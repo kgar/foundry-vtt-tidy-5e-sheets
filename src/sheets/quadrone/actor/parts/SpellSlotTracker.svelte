@@ -32,19 +32,19 @@
   }
 </script>
 
-<div class={['spell-slot-tracker']}>
+<div class={['spell-slot-tracker flexrow']}>
   <button
     type="button"
-    class="spell-slot-tracker-button button button-borderless button-icon-only"
+    class="spell-slot-tracker-button button button-borderless button-icon-only flexshrink"
     disabled={uses <= 0}
     onclick={() => updateSlots(uses - 1)}>
-    <i class="fa-solid fa-minus"></i>
+    <i class="fa-solid fa-hexagon-minus"></i>
   </button>
   {#if context.unlocked}
     <NumberInputQuadrone
       document={context.actor}
       field="system.spells.{section.prop}.value"
-      class={['spell-slot-uses', { ['has-temp-slots']: hasTempSlots }]}
+      class={['spell-slot-uses uninput uses-value color-text-default', { ['has-temp-slots']: hasTempSlots }]}
       value={uses}
       placeholder="0"
       min="0"
@@ -53,12 +53,12 @@
   {:else}
     <span class={['value', { ['has-temp-slots']: hasTempSlots }, { ['color-text-lightest']: uses <= 0 }]}>{uses}</span>
   {/if}
-  <span class="separator">/</span>
-  <span class="max">{slots}</span>
+  <span class="separator color-text-lightest">/</span>
+  <span class="max color-text-lighter">{slots}</span>
   <button
     type="button"
-    class="spell-slot-tracker-button button button-borderless button-icon-only"
+    class="spell-slot-tracker-button button button-borderless button-icon-only flexshrink"
     onclick={() => updateSlots(uses + 1)}>
-    <i class="fa-solid fa-plus"></i>
+    <i class="fa-solid fa-hexagon-plus"></i>
   </button>
 </div>

@@ -25,7 +25,7 @@
     }
   }
 
-  @container (width < 480px) {
+  @container (width < 30rem) {
     .button-toggle {
       &[data-filter-text][data-filter-abbr]:not([data-filter-abbr=""]) {
         &::before {
@@ -36,7 +36,7 @@
   }
 }
 
-@container action-bar (width < 640px) {
+@container action-bar (width < 40rem) {
 
   .spellbook,
   .contents {

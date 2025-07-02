@@ -32,8 +32,8 @@
     display: block;
     place-content: unset;
     font-size: var(--font-size-23);
-    margin-top: -21px;
-    filter: drop-shadow(0 0 6px var(--color-shadow-dark));
+    margin-top: -1.3125rem;
+    filter: drop-shadow(0 0 0.375rem var(--color-shadow-dark));
   }
 
   /* Level */
@@ -72,7 +72,7 @@
         align-content: center;
         flex: 1;
         height: 1.75rem;
-        padding-bottom: 1px;
+        padding-bottom: 0.0625rem;
       }
 
       :where(.list-content) {
@@ -157,7 +157,7 @@
       background: var(--t5e-component-card-darker);
       transition: background var(--t5e-transition-default), color var(--t5e-transition-default);
       border-radius: var(--t5e-size-halfx);
-      border: 1px solid var(--t5e-component-card-default);
+      border: 0.0625rem solid var(--t5e-component-card-default);
       box-sizing: border-box;
 
       --icon-fill: var(--t5e-color-text-lightest);
