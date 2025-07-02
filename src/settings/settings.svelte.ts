@@ -267,6 +267,22 @@ export function createSettings() {
       },
     },
     settings: {
+      notifications: {
+        options: {
+          name: 'Tidy Notifications Tracker',
+          hint: '',
+          scope: 'world',
+          config: false,
+          type: Object,
+          default: {},
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<Record<string, boolean>>(
+            'notifications'
+          );
+        },
+      },
+
       migrationsConfirmationTally: {
         options: {
           name: 'Migrations Confirmation Tally',

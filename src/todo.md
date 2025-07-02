@@ -3,12 +3,18 @@
 ### The Short List
 
 - [x] Make theme versioned at 2 for quadrone theme files.
+- [x] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. <https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882>
+  - [x] World Setting: notifications `Record<string, boolean>`
+  - [x] On ready, decide what notification(s) to show and pop GM only 
+  - [x] Mark off one-time notifications so they no longer show on subsequent loads
+- [ ] Remove Saturated Rarity Color option and its localizations
+- [ ] Ensure "Header Background" is named "Actor Header Background" and only shows when looking at it from World Settings or from an Actor's sheet
+- [ ] Add "Item Sidebar Background" and always show it for every configuration, because item sheets inherit their parent actor's styles, meaning World, Actor, and Item level settings should have the option. 
 - [ ] Pull theme application to the Svelte mixin. Everyone must abide by theming.
 - [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
 - [ ] Consider extracting import button to its own component to keep things clean.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait.
-- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. <https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882>
 - [ ] Implement Responsive Tab Strip
 
 ### (Almost) Everything after the short list
