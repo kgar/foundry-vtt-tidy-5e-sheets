@@ -5,7 +5,7 @@ export type ThemeColorSetting = {
   value: string;
 };
 
-export type ThemeSettingsV1 = {
+export type ThemeSettingsV2 = {
   accentColor: string;
   headerBackground: string;
   portraitShape: PortraitShape | undefined;
@@ -29,7 +29,7 @@ export type ThemeQuadroneStyleDeclaration = {
 export type ThemeSettingsConfigurationOptions = {
   doc?: any;
   mergeParentDocumentSettings?: boolean;
-  settingsOverride?: ThemeSettingsV1;
+  settingsOverride?: ThemeSettingsV2;
   idOverride?: string;
 };
 

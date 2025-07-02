@@ -5,7 +5,7 @@ import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQ
 import type {
   PortraitShape,
   ThemeQuadroneStyleDeclaration,
-  ThemeSettingsV1,
+  ThemeSettingsV2,
   ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
 import { TidyFlags, TidyHooks } from 'src/api';
@@ -25,7 +25,7 @@ export type ThemeableSheetType =
   | Tidy5eContainerSheetQuadrone;
 
 export class ThemeQuadrone {
-  static readonly CURRENT_THEME_VERSION = 1;
+  static readonly CURRENT_THEME_VERSION = 2;
 
   static onReady() {
     setTimeout(() => {
@@ -50,7 +50,7 @@ export class ThemeQuadrone {
     });
   }
 
-  static getDefaultThemeSettings(): ThemeSettingsV1 {
+  static getDefaultThemeSettings(): ThemeSettingsV2 {
     return {
       accentColor: '',
       headerBackground: '',
@@ -61,14 +61,14 @@ export class ThemeQuadrone {
     };
   }
 
-  static getWorldThemeSettings(): ThemeSettingsV1 {
+  static getWorldThemeSettings(): ThemeSettingsV2 {
     return foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings.value.worldThemeSettings
     );
   }
 
-  static saveWorldThemeSettings(settings: ThemeSettingsV1) {
+  static saveWorldThemeSettings(settings: ThemeSettingsV2) {
     const toSave = foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings
@@ -79,7 +79,7 @@ export class ThemeQuadrone {
 
   static getSheetThemeSettings(
     options: ThemeSettingsConfigurationOptions
-  ): ThemeSettingsV1 {
+  ): ThemeSettingsV2 {
     let defaultSettings = this.getDefaultThemeSettings();
 
     if (options.mergeParentDocumentSettings && options.doc?.parent) {
@@ -97,12 +97,12 @@ export class ThemeQuadrone {
     const preferences = foundry.utils.mergeObject(
       defaultSettings,
       TidyFlags.sheetThemeSettings.get(options.doc)
-    ) as ThemeSettingsV1;
+    ) as ThemeSettingsV2;
 
     return preferences;
   }
 
-  static saveSheetThemeSettings(doc: any, settings: ThemeSettingsV1) {
+  static saveSheetThemeSettings(doc: any, settings: ThemeSettingsV2) {
     const toSave = foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings
@@ -228,11 +228,11 @@ export class ThemeQuadrone {
   /*  Theme Import/Export                         */
   /* -------------------------------------------- */
 
-  static async import(file: File): Promise<ThemeSettingsV1 | undefined> {
+  static async import(file: File): Promise<ThemeSettingsV2 | undefined> {
     try {
       let result = await readFileAsText(file);
 
-      const toImport = JSON.parse(result) as ThemeSettingsV1 & {
+      const toImport = JSON.parse(result) as ThemeSettingsV2 & {
         version: number;
       };
 
@@ -266,11 +266,11 @@ export class ThemeQuadrone {
     }
   }
 
-  static validateImportFile(theme: ThemeSettingsV1 & { version: number }) {
+  static validateImportFile(theme: ThemeSettingsV2 & { version: number }) {
     return theme.version === this.CURRENT_THEME_VERSION;
   }
 
-  static async export(data: ThemeSettingsV1) {
+  static async export(data: ThemeSettingsV2) {
     const toExport: Record<string, any> = {
       version: ThemeQuadrone.CURRENT_THEME_VERSION,
       ...data,

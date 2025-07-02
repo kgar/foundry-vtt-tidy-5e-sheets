@@ -3,7 +3,7 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import type {
   PortraitShape,
   ThemeColorSetting,
-  ThemeSettingsV1 as ThemeSettingsV1,
+  ThemeSettingsV2 as ThemeSettingsV2,
 } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
@@ -109,7 +109,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {};
   }
 
-  _getSettings(settingsOverride?: ThemeSettingsV1) {
+  _getSettings(settingsOverride?: ThemeSettingsV2) {
     let themeSettings =
       settingsOverride ??
       structuredClone(
@@ -189,7 +189,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   async apply() {
     const data = this._settings;
 
-    let themeSettings: ThemeSettingsV1 = this.mapContextToSettings(data);
+    let themeSettings: ThemeSettingsV2 = this.mapContextToSettings(data);
 
     if (this.document) {
       await ThemeQuadrone.saveSheetThemeSettings(this.document, themeSettings);
@@ -198,7 +198,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     }
   }
 
-  mapContextToSettings(data: ThemeSettingsContext): ThemeSettingsV1 {
+  mapContextToSettings(data: ThemeSettingsContext): ThemeSettingsV2 {
     return {
       accentColor: data.accentColor ?? '',
       headerBackground: data.headerBackground,

@@ -1,6 +1,6 @@
 import { isNil } from 'src/utils/data';
 import type {
-  ThemeSettingsV1,
+  ThemeSettingsV2,
   ThemeSettingsConfigurationOptions,
   ThemeQuadroneStyleDeclaration,
   ThemeQuadroneStyleRule,
@@ -8,7 +8,7 @@ import type {
 
 export class ThemeStylesProvider {
   static create(
-    settings: ThemeSettingsV1,
+    settings: ThemeSettingsV2,
     options: ThemeSettingsConfigurationOptions
   ): ThemeQuadroneStyleDeclaration[] {
     let { doc, idOverride } = options;
@@ -47,7 +47,7 @@ export class ThemeStylesProvider {
 
   static getAccentColorDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV1,
+    settings: ThemeSettingsV2,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -77,7 +77,7 @@ export class ThemeStylesProvider {
 
   static getHeaderBackgroundDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV1,
+    settings: ThemeSettingsV2,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -107,7 +107,7 @@ export class ThemeStylesProvider {
 
   static getRarityColorsDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV1,
+    settings: ThemeSettingsV2,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -138,7 +138,7 @@ export class ThemeStylesProvider {
 
   static getSpellPreparationModesDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV1,
+    settings: ThemeSettingsV2,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
