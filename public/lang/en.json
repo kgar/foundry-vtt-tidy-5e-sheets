@@ -698,6 +698,9 @@
       "deleteFlags": "Delete Affected CCSS Flags",
       "deleteFlagsTooltip": "When migrating from CCSS to Tidy custom sections, the CCSS flags remain in place by default. Check this option to remove those flags."
     },
+    "Journal": {
+      "explanation1": "The UI Overhaul of Tidy 5e Sheets has revamped the Journal to be as many entries as you want. To accommodate this, a migration from the old Journal structure to the new extensible journal structure is needed. Old Journal data will not be visible in the overhauled Tidy 5e Sheets."
+    },
     "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
     "Selection": {
       "TotalSelectedLabel": "Total Selected: {total}",

@@ -4,18 +4,24 @@
     WorldTabConfigurationQuadroneApplication,
   } from './WorldTabConfigurationQuadroneApplication.svelte';
   import type { TabStripInfo } from 'src/components/tabs/Tabs.svelte';
-  import Tabs from 'src/components/tabs/Tabs.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabConfigurationEntry from './parts/TabConfigurationEntry.svelte';
+  import VerticalTabs from 'src/components/tabs/VerticalTabs.svelte';
 
   interface Props {
     app: WorldTabConfigurationQuadroneApplication;
     config: WorldTabConfigContext;
   }
 
-  let { config, app }: Props = $props();
+  let { config = $bindable(), app }: Props = $props();
 
   let selectedTabId = $state('');
+
+  $effect(() => {
+    if (selectedTabId === '' && tabs.length) {
+      selectedTabId = tabs[0].id;
+    }
+  });
 
   function getTabId(documentName: string, documentType: string) {
     return `${documentName}-${documentType}`;
@@ -32,9 +38,11 @@
 </script>
 
 <div class="configuration-tabs flexrow flex1">
-  <Tabs bind:selectedTabId {tabs} orientation="vertical" cssClass="noflex" />
+  <div class="flexcol noflex">
+    <VerticalTabs bind:selectedTabId {tabs} class="flex1" />
+  </div>
 
-  {#each config as entry}
+  {#each config as entry, i}
     {@const tabId = getTabId(entry.documentName, entry.documentType)}
     {@const title = localize('TIDY5E.TabSelection.Title', {
       documentName: localize(
@@ -54,7 +62,7 @@
       <h2>
         {title}
       </h2>
-      <TabConfigurationEntry {entry} />
+      <TabConfigurationEntry bind:entry={config[i]} />
     </div>
   {/each}
 </div>

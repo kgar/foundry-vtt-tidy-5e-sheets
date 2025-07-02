@@ -8,6 +8,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
+  import { getSingleFileFromDropEvent } from 'src/utils/file';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
@@ -17,6 +18,8 @@
   let { app, settings: data }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  let fileImportInput: HTMLInputElement;
 
   let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
 
@@ -37,14 +40,80 @@
   }
 
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
+
+  $effect(() => {
+    const liveSettings = app.mapContextToSettings(data);
+    ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+      doc: app.document,
+      mergeParentDocumentSettings: true,
+      settingsOverride: liveSettings,
+    });
+  });
+
+  async function onDrop(
+    ev: DragEvent & {
+      currentTarget: EventTarget & HTMLElement;
+    },
+  ) {
+    let file = getSingleFileFromDropEvent(ev);
+
+    await processImportFile(file);
+  }
+
+  async function processImportFile(file: File | null | undefined) {
+    if (file) {
+      const imported = await ThemeQuadrone.import(file);
+      if (imported) {
+        data = app._getSettings(imported);
+      }
+    }
+  }
+
+  function onFileChanged(
+    ev: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+  ) {
+    const file = ev.currentTarget.files?.[0];
+
+    ev.currentTarget.value = '';
+
+    processImportFile(file);
+  }
 </script>
 
-<div class="scrollable flex1">
+<div class="scrollable flex1" ondrop={onDrop}>
   <h2>
     {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
   </h2>
 
-  <fieldset>
+  <div class="flexrow flexgap-1">
+    <button
+      type="button"
+      class="button flexshrink"
+      onclick={() => fileImportInput.click()}
+    >
+      <i class="fa-solid fa-file-import"></i>
+      {localize('TIDY5E.ThemeSettings.Sheet.import')}
+    </button>
+    <button
+      type="button"
+      class="button flexshrink"
+      onclick={() => ThemeQuadrone.export(app.mapContextToSettings(data))}
+    >
+      <i class="fa-solid fa-file-export"></i>
+      {localize('TIDY5E.ThemeSettings.Sheet.export')}
+    </button>
+  </div>
+  <input
+    class="theme-import-input hidden"
+    type="file"
+    accept={CONSTANTS.THEME_EXTENSION_WITH_DOT}
+    onchange={onFileChanged}
+    bind:this={fileImportInput}
+  />
+
+  <fieldset oninput={() => app.throttledLiveUpdate(data)}>
     <legend>
       {localize('TIDY5E.ThemeSettings.SheetTheme.title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -103,55 +172,52 @@
         </div>
       </div>
     {/if}
+  </fieldset>
+  <fieldset>
+    <legend>
+      {localize('TIDY5E.ThemeSettings.RarityColors.title')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </legend>
 
-    <fieldset>
-      <legend>
-        {localize('TIDY5E.ThemeSettings.RarityColors.title')}
-        <tidy-gold-header-underline></tidy-gold-header-underline>
-      </legend>
-
-      <div class="form-group">
-        <label for="{idPrefix}-use-saturated-rarity-colors"
-          >{localize(
-            'TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.name',
-          )}</label
-        >
-        <div class="form-fields">
-          <input
-            id="{idPrefix}-use-saturated-rarity-colors"
-            type="checkbox"
-            bind:checked={data.useSaturatedRarityColors}
-          />
-        </div>
-        <p class="hint">
-          {localize(
-            'TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.hint',
-          )}
-        </p>
+    <div class="form-group">
+      <label for="{idPrefix}-use-saturated-rarity-colors"
+        >{localize(
+          'TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.name',
+        )}</label
+      >
+      <div class="form-fields">
+        <input
+          id="{idPrefix}-use-saturated-rarity-colors"
+          type="checkbox"
+          bind:checked={data.useSaturatedRarityColors}
+        />
       </div>
-      {#each data.rarityColors as color}
-        <ThemeSettingColorFormGroupQuadrone
-          key={color.key}
-          bind:value={color.value}
-          label={color.label.titleCase()}
-        />
-      {/each}
-    </fieldset>
+      <p class="hint">
+        {localize('TIDY5E.ThemeSettings.RarityColors.UseSaturatedColors.hint')}
+      </p>
+    </div>
+    {#each data.rarityColors as color}
+      <ThemeSettingColorFormGroupQuadrone
+        key={color.key}
+        bind:value={color.value}
+        label={color.label.titleCase()}
+      />
+    {/each}
+  </fieldset>
 
-    <fieldset>
-      <legend>
-        {localize('TIDY5E.ThemeSettings.SpellPreparationModeColors.title')}
-        <tidy-gold-header-underline></tidy-gold-header-underline>
-      </legend>
+  <fieldset>
+    <legend>
+      {localize('TIDY5E.ThemeSettings.SpellPreparationModeColors.title')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </legend>
 
-      {#each data.spellPreparationModeColors as color}
-        <ThemeSettingColorFormGroupQuadrone
-          key={color.key}
-          bind:value={color.value}
-          label={color.label}
-        />
-      {/each}
-    </fieldset>
+    {#each data.spellPreparationModeColors as color}
+      <ThemeSettingColorFormGroupQuadrone
+        key={color.key}
+        bind:value={color.value}
+        label={color.label}
+      />
+    {/each}
   </fieldset>
 </div>
 
