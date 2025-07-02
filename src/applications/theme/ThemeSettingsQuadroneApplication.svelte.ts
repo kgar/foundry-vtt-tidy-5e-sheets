@@ -26,7 +26,8 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 
 export type ThemeSettingsContext = {
   accentColor: string;
-  headerBackground: string;
+  actorHeaderBackground: string;
+  itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: ThemeColorSettingConfigEntry[];
   spellPreparationModeColors: ThemeColorSettingConfigEntry[];
@@ -40,7 +41,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   document?: any;
   _settings: ThemeSettingsContext = $state({
     accentColor: '',
-    headerBackground: '',
+    actorHeaderBackground: '',
+    itemSidebarBackground: '',
     portraitShape: undefined,
     rarityColors: [],
     spellPreparationModeColors: [],
@@ -120,7 +122,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
     let context: ThemeSettingsContext = {
       accentColor: themeSettings.accentColor,
-      headerBackground: themeSettings.headerBackground,
+      actorHeaderBackground: themeSettings.actorHeaderBackground,
+      itemSidebarBackground: themeSettings.itemSidebarBackground,
       portraitShape: themeSettings.portraitShape,
       rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
         ([key, label]) => {
@@ -198,7 +201,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   mapContextToSettings(data: ThemeSettingsContext): ThemeSettingsV2 {
     return {
       accentColor: data.accentColor ?? '',
-      headerBackground: data.headerBackground,
+      actorHeaderBackground: data.actorHeaderBackground,
+      itemSidebarBackground: data.itemSidebarBackground,
       portraitShape: data.portraitShape,
       rarityColors: data.rarityColors
         .filter((t) => !isNil(t.value.trim(), ''))

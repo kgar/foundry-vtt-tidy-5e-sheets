@@ -7,7 +7,8 @@ export type ThemeColorSetting = {
 
 export type ThemeSettingsV2 = {
   accentColor: string;
-  headerBackground: string;
+  actorHeaderBackground: string;
+  itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;
   spellPreparationModeColors: Record<string, string>;

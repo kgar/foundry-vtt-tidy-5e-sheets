@@ -21,7 +21,13 @@ export class ThemeStylesProvider {
         doc,
         idOverride
       ),
-      ...this.getHeaderBackgroundDeclarations(
+      ...this.getActorHeaderBackgroundDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
+      ...this.getItemSidebarBackgroundDeclarations(
         selectorPrefix,
         settings,
         doc,
@@ -75,18 +81,18 @@ export class ThemeStylesProvider {
     ];
   }
 
-  static getHeaderBackgroundDeclarations(
+  static getActorHeaderBackgroundDeclarations(
     selectorPrefix: string,
     settings: ThemeSettingsV2,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
-    if (isNil(settings.headerBackground, '')) {
+    if (isNil(settings.actorHeaderBackground, '')) {
       return [];
     }
 
     const identifierRule = this.getDeclarationKeyRule(
-      'headerBackground',
+      'actorHeaderBackground',
       doc,
       idOverride
     );
@@ -98,7 +104,37 @@ export class ThemeStylesProvider {
           identifierRule,
           {
             property: '--t5e-sheet-header-bg',
-            value: `url(${settings.headerBackground})`,
+            value: `url(${settings.actorHeaderBackground})`,
+          },
+        ],
+      },
+    ];
+  }
+
+  static getItemSidebarBackgroundDeclarations(
+    selectorPrefix: string,
+    settings: ThemeSettingsV2,
+    doc: any | undefined,
+    idOverride?: string
+  ): ThemeQuadroneStyleDeclaration[] {
+    if (isNil(settings.itemSidebarBackground, '')) {
+      return [];
+    }
+
+    const identifierRule = this.getDeclarationKeyRule(
+      'itemSidebarBackground',
+      doc,
+      idOverride
+    );
+    return [
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: selectorPrefix,
+        ruleset: [
+          identifierRule,
+          {
+            property: '--t5e-sidebar-bg',
+            value: `url(${settings.itemSidebarBackground})`,
           },
         ],
       },

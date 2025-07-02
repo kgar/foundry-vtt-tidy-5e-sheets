@@ -761,7 +761,8 @@
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor.title": "Accent Color",
-    "HeaderBackground.title": "Header Background",
+    "ActorHeaderBackground.title": "Actor Header Background",
+    "ItemSidebarBackground.title": "Item Sidebar Background",
     "PortraitShape": {
       "title": "{type} Portrait Shape",
       "option.round": "Round",

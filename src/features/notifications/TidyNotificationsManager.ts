@@ -11,7 +11,7 @@ export class TidyNotificationsManager {
     const notifications: Record<string, boolean> =
       SettingsProvider.settings.notifications.get() ?? {};
 
-    if (!notifications.firstTimeWelcome || true) {
+    if (!notifications.firstTimeWelcome) {
       const message1 = FoundryAdapter.localize(
         'TIDY5E.Notifications.FirstTimeWelcome1',
         {

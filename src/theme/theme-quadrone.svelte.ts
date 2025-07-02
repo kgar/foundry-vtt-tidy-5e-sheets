@@ -53,7 +53,8 @@ export class ThemeQuadrone {
   static getDefaultThemeSettings(): ThemeSettingsV2 {
     return {
       accentColor: '',
-      headerBackground: '',
+      actorHeaderBackground: '',
+      itemSidebarBackground: '',
       portraitShape: undefined,
       rarityColors: {},
       spellPreparationModeColors: {},

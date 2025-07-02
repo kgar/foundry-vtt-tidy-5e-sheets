@@ -23,20 +23,25 @@
 
   let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
 
-  function pickHeaderBackground(
+  function pickImage(
     event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
-  ) {
+    current: string,
+  ): Promise<string> {
     const rect = event.currentTarget.getBoundingClientRect();
-    const fp = new foundry.applications.apps.FilePicker({
-      type: 'image',
-      current: data.headerBackground,
-      callback: (path: string) => {
-        data.headerBackground = path;
-      },
-      top: rect.top + 40,
-      left: rect.left + 10,
+
+    return new Promise((resolve) => {
+      const fp = new foundry.applications.apps.FilePicker({
+        type: 'image',
+        current: current,
+        callback: (path: string) => {
+          resolve(path ?? '');
+        },
+        top: rect.top + 40,
+        left: rect.left + 10,
+      });
+
+      fp.browse();
     });
-    return fp.browse();
   }
 
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
@@ -83,8 +88,6 @@
 </script>
 
 <div class="scrollable flex1" ondrop={onDrop}>
-
-
   <div class="flexrow flexgap-1">
     <h2>
       {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
@@ -129,26 +132,6 @@
       {localize('TIDY5E.ThemeSettings.SheetTheme.hint')}
     </p>
 
-    <div class="form-group">
-      <label for="{idPrefix}-header-background">
-        {localize('TIDY5E.ThemeSettings.HeaderBackground.title')}
-      </label>
-      <div class="form-fields">
-        <input
-          id="{idPrefix}-header-background"
-          type="text"
-          bind:value={data.headerBackground}
-        />
-        <button
-          type="button"
-          class="button button-icon-only"
-          onclick={pickHeaderBackground}
-        >
-          <i class="fa-solid fa-search"></i>
-        </button>
-      </div>
-    </div>
-
     {#if isNil(app.document?.documentName, CONSTANTS.DOCUMENT_NAME_ACTOR)}
       <div class="form-group">
         <label for="{idPrefix}-actor-portrait-shape">
@@ -172,7 +155,54 @@
           </select>
         </div>
       </div>
+      <div class="form-group">
+        <label for="{idPrefix}-actor-header-background">
+          {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
+        </label>
+        <div class="form-fields">
+          <input
+            id="{idPrefix}-actor-header-background"
+            type="text"
+            bind:value={data.actorHeaderBackground}
+          />
+          <button
+            type="button"
+            class="button button-icon-only"
+            onclick={async (ev) =>
+              (data.actorHeaderBackground = await pickImage(
+                ev,
+                data.actorHeaderBackground,
+              ))}
+          >
+            <i class="fa-solid fa-search"></i>
+          </button>
+        </div>
+      </div>
     {/if}
+
+    <div class="form-group">
+      <label for="{idPrefix}-item-sidebar-background">
+        {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
+      </label>
+      <div class="form-fields">
+        <input
+          id="{idPrefix}-item-sidebar-background"
+          type="text"
+          bind:value={data.itemSidebarBackground}
+        />
+        <button
+          type="button"
+          class="button button-icon-only"
+          onclick={async (ev) =>
+            (data.itemSidebarBackground = await pickImage(
+              ev,
+              data.itemSidebarBackground,
+            ))}
+        >
+          <i class="fa-solid fa-search"></i>
+        </button>
+      </div>
+    </div>
   </fieldset>
   <fieldset>
     <legend>
