@@ -230,6 +230,15 @@
       }
     }
 
+    &:hover,
+    &:focus-within {
+
+      >label,
+      >p.hint {
+        color: var(--t5e-color-text-default);
+      }
+    }
+
     // Flex form inputs
     >* {
       flex: 2;
@@ -241,18 +250,12 @@
 
     // Labels
     >label {
+      transition: color var(--t5e-transition-default);
       flex: 1;
+    }
 
-      // > i {
-      //   margin-right: 0.25rem;
-      // }
-      // > input {
-      //   font-weight: initial;
-      // }
-      // > .units {
-      //   color: var(--color-text-subtle);
-      //   //   font-size: var(--font-size-12);
-      // }
+    >p.hint {
+      transition: color var(--t5e-transition-default);
     }
 
     &:not(.label-top) {
@@ -354,19 +357,6 @@
       gap: 0 0.25rem;
 
       >.form-fields {
-        // TODO: Need sample in debug sheet
-        // &.field-groups {
-        //   flex-direction: column;
-        //   align-items: stretch;
-        // }
-
-        // .field-group {
-        //   display: flex;
-        //   gap: 0.25rem;
-        //   > .form-group {
-        //     flex: 1;
-        //   }
-        // }
 
         .form-group {
           flex-wrap: nowrap;
@@ -379,30 +369,8 @@
             flex: unset;
           }
         }
-
-        // TODO: Need example of control button
-        // > .control-button,
-        // .field-group > .control-button {
-        //   position: absolute;
-        //   inset: auto 0 0 auto;
-        // }
-
-        // TODO: Need example of singleton
-        // .singleton {
-        //   align-self: center;
-        //   margin: 0 0.375rem;
-        // }
-
-        /* 
-          multi-select .tags.input-element-tags .tag {
-      */
       }
     }
-
-    // &.split-group.full-width > .form-fields {
-    //   position: relative;
-    //   padding-right: 1.25rem;
-    // }
 
     /* Full-Width Groups */
     &.full-width {
