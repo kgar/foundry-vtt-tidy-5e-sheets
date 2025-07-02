@@ -77,7 +77,7 @@
         padding: 0 0 var(--t5e-size-halfx);
       }
 
-      &:hover {
+      &:hover:not(:disabled) {
         background: none;
         border: none;
 
@@ -794,6 +794,20 @@
   .spell-slot-tracker {
     margin-left: var(--t5e-size-1x);
     transform: translateY(var(--t5e-size-1));
+    gap: var(--t5e-size-1x);
+
+    input,
+    span {
+      flex: 0 1 content;
+    }
+
+    input[type="number"] {
+      font-family: var(--t5e-font-family-title);
+      font-size: var(--font-size-16);
+      max-width: var(--t5e-field-size-default);
+      text-align: right;
+      padding-bottom: 0.0625rem;
+    }
   }
 
   .pips.spell-pips {
