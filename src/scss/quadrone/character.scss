@@ -1881,27 +1881,40 @@
     }
 
     &.attributes {
-
       container-name: character-tab;
       container-type: inline-size;
 
       .columns {
-        display: flex;
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: minmax(0, 18.75rem) minmax(0, 1fr);
         gap: var(--t5e-size-6x);
       }
 
-      .left {
-        flex: 0 0 12.5rem;
-        gap: var(--t5e-size-4x);
+      .attributes-column {
+        display: flex;
+        flex-direction: column;
+        gap: var(--t5e-size-6x);
+        padding-bottom: var(--t5e-size-8x);
       }
 
-      .right {
-        flex: 1;
-        gap: var(--t5e-size-4x);
+      .skills {
+        grid-area: skills;
+        height: fit-content;
+      }
 
-        container-type: inline-size;
-        container-name: tab-right-column;
+      .saving-throws {
+        grid-area: saves;
+        height: fit-content;
+      }
+
+      .character-traits {
+        grid-area: traits;
+        height: fit-content;
+      }
+
+      .tools {
+        grid-area: tools;
+        height: fit-content;
       }
 
       .use-ability-list li {
@@ -1911,11 +1924,38 @@
   }
 
   @container character-tab (width < 40rem) {
-    .tidy-tab-contents.attributes {
-      .columns {
-        flex-direction: column;
-        gap: var(--t5e-size-4x);
+    .tidy-tab-contents.attributes .columns {
+      grid-template-rows: auto 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        'skills saves'
+        'skills tools'
+        'traits traits';
+    }
+
+    .saving-throws .use-ability-list {
+      flex-direction: column;
+
+      li {
+        flex: 1;
+        max-width: unset;
       }
+    }
+
+    .tidy-tab-contents.attributes .attributes-column {
+      display: contents;
+    }
+  }
+
+  @container character-tab (width < 30rem) {
+    .tidy-tab-contents.attributes .columns {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'skills'
+        'saves'
+        'tools'
+        'traits';
+      gap: var(--t5e-size-4x);
     }
   }
 

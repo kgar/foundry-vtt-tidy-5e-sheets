@@ -14,6 +14,7 @@
 
   // TODO: Move this to a more specific component file
   .attributes {
+
     .character-traits {
       padding-bottom: var(--t5e-size-12x);
     }
@@ -142,15 +143,11 @@
     }
   }
 
-
-
   .card {
     background-color: var(--t5e-component-card-default);
     padding: 0.3125rem 0.875rem 0.5rem;
 
   }
-
-
 
   .use-ability-header {
     display: flex;

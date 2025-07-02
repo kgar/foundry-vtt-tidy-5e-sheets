@@ -28,7 +28,7 @@
     <h3 class="font-label-medium">
       {localize('DND5E.ClassSaves')}
     </h3>
-    <span class="modifier-label color-text-lightest font-default-medium">
+    <span class="modifier-label color-text-lightest font-default-medium flexshrink">
       {localize('DND5E.Modifier')}
     </span>
   </div>

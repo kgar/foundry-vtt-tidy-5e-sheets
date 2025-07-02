@@ -90,8 +90,8 @@
 - [x] Review Container Sheet Limited View. I think this is good and already 1:1 with default sheets.
 - [x] Quadrone Item Images are somehow more pixellated than others: <https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806>
 - [x] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
-- [ ] Reorganize responsive view of Character tab when sidebar is open (Skills top left, Tools/abilities top right, Features below)
-- [ ] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
+- [x] Reorganize responsive view of Character tab when sidebar is open (Skills top left, Tools/abilities top right, Features below)
+- [x] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
 - [ ] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
 - [x] Favorites - there are scrollbars on title and subtitle

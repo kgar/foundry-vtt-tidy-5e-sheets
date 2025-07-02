@@ -6,11 +6,11 @@
 </script>
 
 <div class="columns">
-  <div class="left flexcol">
+  <div class="attributes-column">
     <SkillsCard />
     <ToolsCard />
   </div>
-  <div class="right flexcol">
+  <div class="attributes-column">
     <SavingThrowsCard />
     <CharacterTraits />
   </div>
