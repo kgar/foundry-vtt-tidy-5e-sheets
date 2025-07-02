@@ -531,6 +531,10 @@
             flex: 1;
           }
 
+          .hit-points:has(+.button.editMode) {
+            box-shadow: 0.125rem 0 0 var(--t5e-color-gold);
+          }
+
           .button {
             &:not(.editMode) {
               position: absolute;
