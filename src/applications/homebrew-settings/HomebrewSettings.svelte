@@ -20,7 +20,7 @@
 <div class="flexcol flex1">
   <fieldset>
     <legend>
-      {localize('TIDY5E.Settings.BankedInspiration.title')}
+      <h2>{localize('TIDY5E.Settings.BankedInspiration.title')}</h2>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 

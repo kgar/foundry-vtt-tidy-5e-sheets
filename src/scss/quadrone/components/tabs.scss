@@ -32,12 +32,12 @@
     &.active {
       background: linear-gradient(var(--t5e-theme-color-lightest),
           var(--t5e-theme-color-default)) bottom no-repeat;
-      background-size: 100% 3px;
+      background-size: 100% 0.1875rem;
 
       &:hover {
         background: linear-gradient(var(--t5e-theme-color-default),
             var(--t5e-theme-color-darkest)) bottom no-repeat;
-        background-size: 100% 3px;
+        background-size: 100% 0.1875rem;
       }
     }
   }
@@ -74,19 +74,19 @@
     &.active {
       background: linear-gradient(var(--t5e-theme-color-lightest),
           var(--t5e-theme-color-default)) bottom no-repeat;
-      background-size: 100% 3px;
+      background-size: 100% 0.1875rem;
 
       &:hover {
         background: linear-gradient(var(--t5e-theme-color-default),
             var(--t5e-theme-color-darkest)) bottom no-repeat;
-        background-size: 100% 3px;
+        background-size: 100% 0.1875rem;
       }
     }
 
     &:hover {
       background: linear-gradient(oklch(from var(--t5e-theme-color-default) l c h / 0.4),
           oklch(from var(--t5e-theme-color-darker) l c h / 0.4)) bottom no-repeat;
-      background-size: 100% 2px;
+      background-size: 100% 0.125rem;
     }
 
     .tab-title-count {
