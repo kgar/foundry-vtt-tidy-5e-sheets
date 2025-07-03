@@ -152,7 +152,7 @@ export function getItemContextOptions(
   if (
     'preparation' in item.system &&
     FoundryAdapter.canPrepareSpell(item) &&
-    !item.getFlag('dnd5e', 'cachedFor')
+    !item.system.linkedActivity
   ) {
     const isPrepared = item.system?.preparation?.prepared === true;
     options.push({
@@ -343,7 +343,7 @@ export function getItemContextOptions(
     },
     condition: () =>
       item.type === 'spell' &&
-      !item.getFlag('dnd5e', 'cachedFor') &&
+      !item.system.linkedActivity &&
       itemParent?.isOwner &&
       !FoundryAdapter.isLockedInCompendium(itemParent),
     group: 'action',

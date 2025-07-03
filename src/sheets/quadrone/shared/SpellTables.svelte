@@ -183,6 +183,7 @@
                     item.system.preparation.mode ===
                       CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
                   unprepared:
+                    !item.system.linkedActivity &&
                     item.system.preparation.mode ===
                       CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
                     !item.system.preparation.prepared,
