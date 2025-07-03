@@ -700,7 +700,9 @@
         "RarityColors.UseSaturatedColors.hint": "У деяких випадках Tidy 5e буде десантувати рідкість кольорів для зменшення напруги очей, особливо з текстом. Виберіть цю опцію, щоб використовувати повністю насичений колір рідкості.",
         "SheetTheme.title": "Тема аркуша",
         "SheetTheme.hint": "Для найкращих результатів виберіть колір біля центру кольорової палітри.",
-        "SpellPreparationModeColors.title": "Кольори режиму підготовки заклинань"
+        "SpellPreparationModeColors.title": "Кольори режиму підготовки заклинань",
+        "ActorHeaderBackground.title": "Фон заголовка актора",
+        "ItemSidebarBackground.title": "Фон бічної панелі елемента"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Чари рівня {number}",
     "TIDY5E.TotalCrewCount": "Всього екіпажу",
@@ -907,5 +909,6 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Розділ на предмет",
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Висхід",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Низхідний",
-    "TIDY5E.ItemSheet.FeatureOriginLabel": "Особливості походження"
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Особливості походження",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Вітаємо Вас в \"Уряжених 5e листах\"! Щоб почати, вам потрібно змінити {sheetLinkStart}лист{sheetLinkEnd} (або {allSheetsLinkStart]всі ваші лісти{allSheets LinkEnd}!) для використання версії Tidy. Дізнайтеся більше про цей модуль і що він може зробити на {wikiLinkStart}офіційному вікі{wikiLinkEnd}."
 }
