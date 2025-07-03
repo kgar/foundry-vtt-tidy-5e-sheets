@@ -72,6 +72,10 @@
         padding: 0;
         column-gap: var(--t5e-size-1);
 
+        padding-inline-start: 0.5rem;
+        margin-inline-start: -0.5rem;
+        padding-inline-end: 0.6875rem;
+
         >i {
           color: var(--t5e-color-icon-diminished);
         }
