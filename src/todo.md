@@ -2,6 +2,10 @@
 
 ### The Short List
 
+- [x] And character.scss line 1946 change the grid-template-columns to 17.5rem, it's a little too wide in the responsive view now that I'm playing with it moregrid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+- [x] PC sheet - edit mode - header abilities - Setting buttons are too low at a very specific width 
+- [ ] The sidebar button's hitbox should be a little wider.
+- [ ] Make the sidebar button a little wider
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait.
 - [ ] Implement Responsive Tab Strip
 - [ ] Consider extracting import button to its own component to keep things clean.
@@ -93,6 +97,8 @@
 - [x] Character Sheet - Light Mode - Bastion tab - progress text is very dark against a dark bar.
 - [x] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
+- [ ] Skill abilities - dark mode - the dropdown background is not dark
+
 
 ### Post-Beta Stretch Goals
 

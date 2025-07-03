@@ -9,6 +9,7 @@
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
+  import { settings } from 'src/settings/settings.svelte';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
@@ -179,29 +180,31 @@
       </div>
     {/if}
 
-    <div class="form-group">
-      <label for="{idPrefix}-item-sidebar-background">
-        {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
-      </label>
-      <div class="form-fields">
-        <input
-          id="{idPrefix}-item-sidebar-background"
-          type="text"
-          bind:value={data.itemSidebarBackground}
-        />
-        <button
-          type="button"
-          class="button button-icon-only"
-          onclick={async (ev) =>
-            (data.itemSidebarBackground = await pickImage(
-              ev,
-              data.itemSidebarBackground,
-            ))}
-        >
-          <i class="fa-solid fa-search"></i>
-        </button>
+    {#if settings.value.truesight}
+      <div class="form-group">
+        <label for="{idPrefix}-item-sidebar-background">
+          {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
+        </label>
+        <div class="form-fields">
+          <input
+            id="{idPrefix}-item-sidebar-background"
+            type="text"
+            bind:value={data.itemSidebarBackground}
+          />
+          <button
+            type="button"
+            class="button button-icon-only"
+            onclick={async (ev) =>
+              (data.itemSidebarBackground = await pickImage(
+                ev,
+                data.itemSidebarBackground,
+              ))}
+          >
+            <i class="fa-solid fa-search"></i>
+          </button>
+        </div>
       </div>
-    </div>
+    {/if}
   </fieldset>
   <fieldset>
     <legend>

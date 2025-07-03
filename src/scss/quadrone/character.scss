@@ -1817,11 +1817,9 @@
       &:has(:nth-child(9)) {
         @include ability-smaller;
 
-
-
         .ability {
           .button-config {
-            bottom: -5rem;
+            bottom: -4.125rem;
             right: auto;
           }
         }
@@ -1833,7 +1831,7 @@
         .ac-container .button-config {
           right: 0;
           left: 0;
-          bottom: -5.5rem;
+          bottom: -4.825rem;
           width: 100%;
         }
 
@@ -1860,8 +1858,18 @@
       &:has(:nth-child(9)) {
         @include collapse-abilities;
 
+        .ability {
+          .button-config {
+            bottom: -5rem;
+          }
+        }
+
         .ac-container .shield {
           min-height: auto;
+        }
+
+        .ac-container .button-config {
+          bottom: -5.5rem;
         }
 
         .concentration .concentration-roll-button {
@@ -1943,7 +1951,7 @@
 
       .columns {
         display: grid;
-        grid-template-columns: minmax(0, 18.75rem) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
         gap: var(--t5e-size-6x);
       }
 
