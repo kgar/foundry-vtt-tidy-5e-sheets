@@ -910,5 +910,5 @@
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Висхід",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Низхідний",
     "TIDY5E.ItemSheet.FeatureOriginLabel": "Особливості походження",
-    "TIDY5E.Notifications.FirstTimeWelcome1": "Вітаємо Вас в \"Уряжених 5e листах\"! Щоб почати, вам потрібно змінити {sheetLinkStart}лист{sheetLinkEnd} (або {allSheetsLinkStart]всі ваші лісти{allSheets LinkEnd}!) для використання версії Tidy. Дізнайтеся більше про цей модуль і що він може зробити на {wikiLinkStart}офіційному вікі{wikiLinkEnd}."
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Вітаємо Вас в \"Tidy 5e Sheets\"! Щоб почати, вам потрібно змінити {sheetLinkStart}лист{sheetLinkEnd} (або {allSheetsLinkStart]всі ваші лісти{allSheets LinkEnd}!) для використання версії Tidy. Дізнайтеся більше про цей модуль і що він може зробити на {wikiLinkStart}офіційному вікі{wikiLinkEnd}."
 }
