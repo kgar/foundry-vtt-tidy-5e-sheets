@@ -23,12 +23,14 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 };
 
 export type ThemeSettingsContext = {
-  accentColor: string;
-  actorHeaderBackground: string;
-  itemSidebarBackground: string;
-  portraitShape: PortraitShape | undefined;
-  rarityColors: ThemeColorSettingConfigEntry[];
-  spellPreparationModeColors: ThemeColorSettingConfigEntry[];
+  value: {
+    accentColor: string;
+    actorHeaderBackground: string;
+    itemSidebarBackground: string;
+    portraitShape: PortraitShape | undefined;
+    rarityColors: ThemeColorSettingConfigEntry[];
+    spellPreparationModeColors: ThemeColorSettingConfigEntry[];
+  };
 };
 
 type ConstructorArgs = Partial<ApplicationConfiguration & { document?: any }>;
@@ -38,12 +40,14 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 ) {
   document?: any;
   _settings: ThemeSettingsContext = $state({
-    accentColor: '',
-    actorHeaderBackground: '',
-    itemSidebarBackground: '',
-    portraitShape: undefined,
-    rarityColors: [],
-    spellPreparationModeColors: [],
+    value: {
+      accentColor: '',
+      actorHeaderBackground: '',
+      itemSidebarBackground: '',
+      portraitShape: undefined,
+      rarityColors: [],
+      spellPreparationModeColors: [],
+    },
   });
 
   themeConfigOptions(): ThemeSettingsConfigurationOptions {
@@ -119,28 +123,30 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       );
 
     let context: ThemeSettingsContext = {
-      accentColor: themeSettings.accentColor,
-      actorHeaderBackground: themeSettings.actorHeaderBackground,
-      itemSidebarBackground: themeSettings.itemSidebarBackground,
-      portraitShape: themeSettings.portraitShape,
-      rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
-        ([key, label]) => {
+      value: {
+        accentColor: themeSettings.accentColor,
+        actorHeaderBackground: themeSettings.actorHeaderBackground,
+        itemSidebarBackground: themeSettings.itemSidebarBackground,
+        portraitShape: themeSettings.portraitShape,
+        rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
+          ([key, label]) => {
+            return {
+              label,
+              key: key,
+              value: themeSettings.rarityColors[key] ?? '',
+            };
+          }
+        ),
+        spellPreparationModeColors: Object.entries(
+          CONFIG.DND5E.spellPreparationModes
+        ).map(([key, config]) => {
           return {
-            label,
+            label: config.label,
             key: key,
-            value: themeSettings.rarityColors[key] ?? '',
+            value: themeSettings.spellPreparationModeColors[key] ?? '',
           };
-        }
-      ),
-      spellPreparationModeColors: Object.entries(
-        CONFIG.DND5E.spellPreparationModes
-      ).map(([key, config]) => {
-        return {
-          label: config.label,
-          key: key,
-          value: themeSettings.spellPreparationModeColors[key] ?? '',
-        };
-      }),
+        }),
+      },
     };
 
     return context;
@@ -156,9 +162,9 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   }
 
   async apply() {
-    const data = this._settings;
+    const context = this._settings;
 
-    let themeSettings: ThemeSettingsV2 = this.mapContextToSettings(data);
+    let themeSettings: ThemeSettingsV2 = this.mapContextToSettings(context);
 
     if (this.document) {
       await ThemeQuadrone.saveSheetThemeSettings(this.document, themeSettings);
@@ -167,19 +173,19 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     }
   }
 
-  mapContextToSettings(data: ThemeSettingsContext): ThemeSettingsV2 {
+  mapContextToSettings(context: ThemeSettingsContext): ThemeSettingsV2 {
     return {
-      accentColor: data.accentColor ?? '',
-      actorHeaderBackground: data.actorHeaderBackground,
-      itemSidebarBackground: data.itemSidebarBackground,
-      portraitShape: data.portraitShape,
-      rarityColors: data.rarityColors
+      accentColor: context.value.accentColor ?? '',
+      actorHeaderBackground: context.value.actorHeaderBackground,
+      itemSidebarBackground: context.value.itemSidebarBackground,
+      portraitShape: context.value.portraitShape,
+      rarityColors: context.value.rarityColors
         .filter((t) => !isNil(t.value.trim(), ''))
         .reduce<Record<string, string>>((prev, curr) => {
           prev[curr.key] = curr.value;
           return prev;
         }, {}),
-      spellPreparationModeColors: data.spellPreparationModeColors
+      spellPreparationModeColors: context.value.spellPreparationModeColors
         .filter((t) => !isNil(t.value.trim(), ''))
         .reduce<Record<string, string>>((prev, curr) => {
           prev[curr.key] = curr.value;

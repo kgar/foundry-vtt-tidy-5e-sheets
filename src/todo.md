@@ -2,9 +2,7 @@
 
 ### The Short List
 
-- [ ] Implement Responsive Tab Strip
 - [ ] Consider extracting import button to its own component to keep things clean.
-- [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 
@@ -66,6 +64,7 @@
 - [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. <https://discord.com/channels/@me/1243307347682529423/1388371150291210290>
+- [ ] (Take our time on this one; it's never been solved by any sheet, except for vertical tabs) Implement Responsive Tab Strip
 
 ### Module Compatibility
 
@@ -203,3 +202,5 @@ Limited:
 - [x] Extend Spell Slot drag-and-drop to entire section header.
 - [x] // TODO: Change to linkedActivity
   - [x] If it works, then eliminate usages of cachedFor.
+- [x] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
+
