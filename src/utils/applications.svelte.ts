@@ -2,7 +2,7 @@ import { TidyFlags } from 'src/api';
 import { debug } from './logging';
 import { getThemeV2 } from 'src/theme/theme';
 import { settings } from 'src/settings/settings.svelte';
-import type { ThemeSettingsV1 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettingsV2 } from 'src/theme/theme-quadrone.types';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
   if (!element) {
@@ -25,11 +25,7 @@ export function applyTitleToWindow(title: string, element: HTMLElement) {
   }
 }
 
-export function applyThemeToApplication(
-  element?: HTMLElement,
-  doc?: any,
-  themeSettingPreview?: ThemeSettingsV1
-) {
+export function applyThemeToApplication(element?: HTMLElement, doc?: any) {
   if (!element) {
     return;
   }

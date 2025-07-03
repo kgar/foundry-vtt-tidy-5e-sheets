@@ -5,13 +5,13 @@ export type ThemeColorSetting = {
   value: string;
 };
 
-export type ThemeSettingsV1 = {
+export type ThemeSettingsV2 = {
   accentColor: string;
-  headerBackground: string;
+  actorHeaderBackground: string;
+  itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;
   spellPreparationModeColors: Record<string, string>;
-  useSaturatedRarityColors: boolean;
   // etc. settings here ;)
 };
 
@@ -28,8 +28,12 @@ export type ThemeQuadroneStyleDeclaration = {
 
 export type ThemeSettingsConfigurationOptions = {
   doc?: any;
-  mergeParentDocumentSettings?: boolean;
-  settingsOverride?: ThemeSettingsV1;
+  settingsOverride?: ThemeSettingsV2;
+  /**
+   * Some applications are related to a document but are
+   * a separate dialog. This ID override ensures they receive
+   * their own style declarations related to their related document.
+   */
   idOverride?: string;
 };
 

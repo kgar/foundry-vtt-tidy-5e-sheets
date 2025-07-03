@@ -7,6 +7,10 @@ import type {
 } from 'src/types/application.types';
 import { unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+import { applyThemeToApplication } from 'src/utils/applications.svelte';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
+import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -49,6 +53,12 @@ export function SvelteApplicationMixin<
         : this.element;
     }
 
+    themeConfigOptions(): ThemeSettingsConfigurationOptions {
+      return {
+        doc: this.document,
+      };
+    }
+
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
     /* -------------------------------------------- */
@@ -80,6 +90,18 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
     /*  Rendering                                   */
     /* -------------------------------------------- */
+
+    async _renderFrame(options: ApplicationRenderOptions) {
+      const element = await super._renderFrame(options);
+
+      applyThemeToApplication(element, this.document);
+
+      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
+        this.themeConfigOptions()
+      );
+
+      return element;
+    }
 
     /**
      * Prepares context data which matches the request data type.
@@ -132,6 +154,8 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
+      this.themeSettingsSubscription?.unsubscribe();
+
       await super.close(options);
     }
 
@@ -157,8 +181,16 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
+
+    themeSettingsSubscription?: Unsubscribable;
+
     _attachFrameListeners() {
       super._attachFrameListeners();
+
+      this.themeSettingsSubscription =
+        ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
+          this.themeConfigOptions()
+        );
 
       try {
         // If a controls dropdown button is clicked, close the controls dropdown.

@@ -19,7 +19,7 @@ import type {
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
-import type { ThemeSettingsV1 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettingsV2 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
@@ -267,6 +267,22 @@ export function createSettings() {
       },
     },
     settings: {
+      notifications: {
+        options: {
+          name: 'Tidy Notifications Tracker',
+          hint: '',
+          scope: 'world',
+          config: false,
+          type: Object,
+          default: {},
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<Record<string, boolean>>(
+            'notifications'
+          );
+        },
+      },
+
       migrationsConfirmationTally: {
         options: {
           name: 'Migrations Confirmation Tally',
@@ -1452,7 +1468,7 @@ export function createSettings() {
           type: Object,
           default: undefined,
           config: false,
-          onChange: (settings: ThemeSettingsV1) => {
+          onChange: (settings: ThemeSettingsV2) => {
             ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
               settingsOverride: settings,
             });
@@ -1460,7 +1476,7 @@ export function createSettings() {
         },
         get() {
           return (
-            FoundryAdapter.getTidySetting<ThemeSettingsV1>(
+            FoundryAdapter.getTidySetting<ThemeSettingsV2>(
               'worldThemeSettings'
             ) ?? ThemeQuadrone.getDefaultThemeSettings()
           );

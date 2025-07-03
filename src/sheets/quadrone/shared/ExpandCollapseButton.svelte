@@ -48,7 +48,9 @@
     ? 'expanded'
     : 'collapsed'}"
   buttonAttributes={{
-    title: localize(allExpanded ? "TIDY5E.Commands.CollapseAll" : "TIDY5E.Commands.ExpandAll")
+    title: localize(
+      allExpanded ? 'TIDY5E.Commands.CollapseAll' : 'TIDY5E.Commands.ExpandAll',
+    ),
   }}
   onclick={() => toggleContents()}
 >
@@ -70,11 +72,11 @@
     </label>
     <label
       class="radio"
-      for="{context.document.id}-expand-collapse-behavior-all-sections"
+      for="{context.document.id}-{tabId}-expand-collapse-behavior-all-sections"
     >
       <input
         type="radio"
-        id="{context.document.id}-expand-collapse-behavior-all-sections"
+        id="{context.document.id}-{tabId}-expand-collapse-behavior-all-sections"
         checked={context.userPreferences.expandCollapseBehavior === 'all'}
         value={'all' satisfies ExpandCollapseBehavior}
         onchange={onExpandCollapseBehaviorChanged}

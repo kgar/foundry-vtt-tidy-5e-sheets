@@ -761,7 +761,8 @@
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor.title": "Accent Color",
-    "HeaderBackground.title": "Header Background",
+    "ActorHeaderBackground.title": "Actor Header Background",
+    "ItemSidebarBackground.title": "Item Sidebar Background",
     "PortraitShape": {
       "title": "{type} Portrait Shape",
       "option.round": "Round",
@@ -769,8 +770,6 @@
       "option.square": "Square"
     },
     "RarityColors.title": "Rarity Colors",
-    "RarityColors.UseSaturatedColors.name": "Use Saturated Rarity Colors",
-    "RarityColors.UseSaturatedColors.hint": "In some cases, Tidy 5e will desaturate rarity colors to reduce eye strain, particularly with text. Select this option to use the fully saturated rarity color.",
     "SheetTheme.title": "Sheet Theme",
     "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
     "SpellPreparationModeColors.title": "Spell Preparation Mode Colors"
@@ -882,5 +881,6 @@
   "TIDY5E.HitDice.Abbreviation": "HD",
   "TIDY5E.HitDice.Current.Label": "Current Hit Dice",
   "TIDY5E.HitDice.Max.Label": "Max Hit Dice",
-  "TIDY5E.CharacterTraits.Title": "Character Traits"
+  "TIDY5E.CharacterTraits.Title": "Character Traits",
+  "TIDY5E.Notifications.FirstTimeWelcome1": "Welcome to Tidy 5e Sheets! To get started, you'll need to change {sheetLinkStart}a sheet{sheetLinkEnd} (or {allSheetsLinkStart}all your sheets{allSheetsLinkEnd}!) to use the Tidy version. Learn more about this module and what it can do on the {wikiLinkStart}official wiki{wikiLinkEnd}."
 }

@@ -116,15 +116,6 @@
     });
   }
 
-  // TODO: Either move this to context prep or eliminate in favor of a pure CSS solution.
-  let useSaturatedColors = $derived(
-    settings.value.worldThemeSettings.useSaturatedRarityColors === true ||
-      ThemeQuadrone.getSheetThemeSettings({
-        doc: context.document,
-        mergeParentDocumentSettings: true,
-      })?.useSaturatedRarityColors === true,
-  );
-
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>([
     context.system.identified === false ? 'disabled' : undefined,
@@ -132,7 +123,6 @@
     coalesce(rarity?.slugify(), 'none'),
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
     context.system.preparation?.mode?.slugify(),
-    { saturate: useSaturatedColors },
   ]);
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
