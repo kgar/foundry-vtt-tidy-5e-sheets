@@ -98,7 +98,7 @@ export function SvelteApplicationMixin<
       applyThemeToApplication(element, this.document);
 
       ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
-        this.themeConfigSettings
+        this.themeConfigOptions()
       );
 
       return element;
