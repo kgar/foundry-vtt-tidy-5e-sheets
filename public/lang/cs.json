@@ -420,7 +420,7 @@
         "Explanation": "Jakékoli karty, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
         "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není aktuálně nastaven pro výběr karty.",
         "Title": "Výběr karty: {documentName}",
-        "MenuOptionText": "Výběr karty",
+        "MenuOptionText": "Výběr karet",
         "AtLeastOneRequiredErrorMessage": "Je vyžadována alespoň jedna karta.",
         "AvailableHeader": "Skryté karty"
     },
