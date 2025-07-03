@@ -4,9 +4,9 @@
 
 - [x] And character.scss line 1946 change the grid-template-columns to 17.5rem, it's a little too wide in the responsive view now that I'm playing with it moregrid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
 - [x] PC sheet - edit mode - header abilities - Setting buttons are too low at a very specific width 
-- [ ] The sidebar button's hitbox should be a little wider.
-- [ ] Make the sidebar button a little wider
-- [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait.
+- [x] The sidebar button's hitbox should be a little wider.
+- [x] Make the sidebar button a little wider
+- [ ] Special Traits - tell the user whether there's an active effect modifying the value of a given special trait. Use the classic sheet approach of disabling and tooltipping.
 - [ ] Implement Responsive Tab Strip
 - [ ] Consider extracting import button to its own component to keep things clean.
 - [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
