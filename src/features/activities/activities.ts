@@ -82,6 +82,7 @@ export class Activities {
     actor: Actor5e,
     context: CharacterItemContext | NpcItemContext
   ) {
+    // TODO: Change to linkedActivity
     const cachedFor = fromUuidSync(item.flags.dnd5e?.cachedFor, {
       relative: actor,
       strict: false,

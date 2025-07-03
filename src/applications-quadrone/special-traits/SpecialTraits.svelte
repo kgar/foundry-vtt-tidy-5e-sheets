@@ -62,7 +62,7 @@
           localize={true}
           name={field.name}
           groupClasses={{ slim: isCheckbox }}
-          
+          disableOverriddenInputs
         />
       {/each}
     </fieldset>

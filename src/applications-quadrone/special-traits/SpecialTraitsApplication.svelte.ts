@@ -80,7 +80,10 @@ export class SpecialTraitsApplication extends DocumentSheetDialog<DocumentSheetA
       sections: [],
     };
     const sections: Record<string, SpecialTraitSectionField[]> = {};
-    const source = this.document._source;
+
+    // Always show the effective value, after active effects, because Special Traits application
+    //  doesn't have a sheet mode mechanism to toggle views.
+    const source = this.document;
 
     flags.classes = Object.values(this.document.classes)
       .map((cls: Item5e) => ({ value: cls.id, label: cls.name }))
@@ -139,6 +142,19 @@ export class SpecialTraitsApplication extends DocumentSheetDialog<DocumentSheetA
       label,
       fields,
     }));
+
+    if (this.document.type === CONSTANTS.SHEET_TYPE_NPC) {
+      flags.sections.unshift({
+        label: game.i18n.localize('DND5E.NPC.Label'),
+        fields: [
+          {
+            field: this.document.system.schema.fields.traits.fields.important,
+            name: 'system.traits.important',
+            value: this.document.system.traits.important,
+          },
+        ],
+      });
+    }
 
     return flags;
   }

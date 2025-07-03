@@ -19,6 +19,7 @@
   import SelectOptions from '../inputs/SelectOptions.svelte';
   import { isNil } from 'src/utils/data';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type PartialBuilderProps = Partial<ComponentProps<typeof FormGroupBuilder>>;
 
@@ -69,7 +70,9 @@
         effectiveField,
       );
 
-    const effectOverrideTooltip = disabledViaEffect ? '' : undefined;
+    const effectOverrideTooltip = disabledViaEffect
+      ? FoundryAdapter.localize('DND5E.ActiveEffectOverrideWarning')
+      : undefined;
 
     const disabled = !editable || disabledViaEffect;
 
