@@ -388,6 +388,7 @@ input[type='checkbox'] {
   &::before,
   &::after {
     content: unset;
+    font-size: 0.8125rem;
     font-weight: 900;
   }
 
@@ -397,19 +398,28 @@ input[type='checkbox'] {
 
   &:checked::before {
     content: '\f00c';
-    font-size: 0.825rem;
     color: var(--t5e-component-toggle-toggled-text);
-    // height: var(--t5e-checkbox-size);
-    // line-height: var(--t5e-checkbox-size);
-    // width: var(--t5e-checkbox-size);
+  }
+
+  &:checked:disabled::before {
+    font-family: var(--font-awesome);
+    content: '\f023';
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.72);
   }
 
   &:not(:checked):disabled::before {
     content: '\e59b';
-    font-size: 0.825rem;
     color: var(--t5e-color-palette-grey-60);
   }
 }
+
+/* TODO: Remove if we want to keep checkboxes in items. */
+// &.item input[type='checkbox']:checked:disabled::before {
+//   font-size: 0.8125rem;
+//   content: '\f00c';
+//   color: var(--t5e-component-toggle-toggled-text);
+// }
 
 /* TODO: If this is still used, then fix text alignment when no label present (0.0625rem too low without) */
 select {
