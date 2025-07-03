@@ -50,7 +50,6 @@
     const liveSettings = app.mapContextToSettings(data);
     ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
       doc: app.document,
-      mergeParentDocumentSettings: true,
       settingsOverride: liveSettings,
     });
   });
@@ -117,7 +116,7 @@
     bind:this={fileImportInput}
   />
 
-  <fieldset oninput={() => app.throttledLiveUpdate(data)}>
+  <fieldset>
     <legend>
       {localize('TIDY5E.ThemeSettings.SheetTheme.title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>

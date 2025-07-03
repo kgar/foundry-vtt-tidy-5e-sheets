@@ -56,7 +56,6 @@ export function SvelteApplicationMixin<
     themeConfigOptions(): ThemeSettingsConfigurationOptions {
       return {
         doc: this.document,
-        mergeParentDocumentSettings: true,
       };
     }
 
@@ -190,7 +189,7 @@ export function SvelteApplicationMixin<
 
       this.themeSettingsSubscription =
         ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
-          this.themeConfigSettings
+          this.themeConfigOptions()
         );
 
       try {

@@ -52,7 +52,6 @@ export function DocumentSheetDialog<
     themeConfigOptions(): ThemeSettingsConfigurationOptions {
       return {
         doc: this.document,
-        mergeParentDocumentSettings: true,
         idOverride: this.id,
       };
     }

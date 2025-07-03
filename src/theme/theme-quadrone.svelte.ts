@@ -82,7 +82,7 @@ export class ThemeQuadrone {
   ): ThemeSettingsV2 {
     let defaultSettings = this.getDefaultThemeSettings();
 
-    if (options.mergeParentDocumentSettings && options.doc?.parent) {
+    if (options.doc?.parent) {
       let parentSettings = this.getSheetThemeSettings({
         ...options,
         doc: options.doc?.parent,

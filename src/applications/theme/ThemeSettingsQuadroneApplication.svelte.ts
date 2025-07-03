@@ -50,7 +50,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     console.warn('theme settings options are used!');
     return {
       doc: this.document,
-      mergeParentDocumentSettings: true,
       idOverride: this.id,
     };
   }

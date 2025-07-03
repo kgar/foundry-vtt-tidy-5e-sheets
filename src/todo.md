@@ -2,8 +2,8 @@
 
 ### The Short List
 
-- [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
 - [ ] Consider extracting import button to its own component to keep things clean.
+- [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait.
 - [ ] Implement Responsive Tab Strip
