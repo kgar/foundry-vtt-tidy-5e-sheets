@@ -11,6 +11,8 @@
   import { getSingleFileFromDropEvent } from 'src/utils/file';
   import { settings } from 'src/settings/settings.svelte';
   import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
+  import ImportButton from './parts/ImportButton.svelte';
+  import ImagePickerButton from './parts/ImagePickerButton.svelte';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
@@ -21,30 +23,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let fileImportInput: HTMLInputElement;
-
   let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
-
-  function pickImage(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
-    current: string,
-  ): Promise<string> {
-    const rect = event.currentTarget.getBoundingClientRect();
-
-    return new Promise((resolve) => {
-      const fp = new foundry.applications.apps.FilePicker({
-        type: 'image',
-        current: current,
-        callback: (path: string) => {
-          resolve(path ?? '');
-        },
-        top: rect.top + 40,
-        left: rect.left + 10,
-      });
-
-      fp.browse();
-    });
-  }
 
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
 
@@ -74,18 +53,6 @@
       }
     }
   }
-
-  function onFileChanged(
-    ev: Event & {
-      currentTarget: EventTarget & HTMLInputElement;
-    },
-  ) {
-    const file = ev.currentTarget.files?.[0];
-
-    ev.currentTarget.value = '';
-
-    processImportFile(file);
-  }
 </script>
 
 <div class="scrollable flex1" ondrop={onDrop}>
@@ -93,14 +60,7 @@
     <h2>
       {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
     </h2>
-    <button
-      type="button"
-      class="button flexshrink"
-      onclick={() => fileImportInput.click()}
-    >
-      <i class="fa-solid fa-file-import"></i>
-      {localize('TIDY5E.ThemeSettings.Sheet.import')}
-    </button>
+    <ImportButton onfilechanged={(file) => processImportFile(file)} />
     <button
       type="button"
       class="button flexshrink"
@@ -111,13 +71,6 @@
       {localize('TIDY5E.ThemeSettings.Sheet.export')}
     </button>
   </div>
-  <input
-    class="theme-import-input hidden"
-    type="file"
-    accept={CONSTANTS.THEME_EXTENSION_WITH_DOT}
-    onchange={onFileChanged}
-    bind:this={fileImportInput}
-  />
 
   <fieldset>
     <legend>
@@ -167,17 +120,11 @@
             type="text"
             bind:value={context.value.actorHeaderBackground}
           />
-          <button
-            type="button"
-            class="button button-icon-only"
-            onclick={async (ev) =>
-              (context.value.actorHeaderBackground = await pickImage(
-                ev,
-                context.value.actorHeaderBackground,
-              ))}
-          >
-            <i class="fa-solid fa-search"></i>
-          </button>
+          <ImagePickerButton
+            current={context.value.actorHeaderBackground}
+            onimagepicked={(image) =>
+              (context.value.actorHeaderBackground = image)}
+          />
         </div>
       </div>
     {/if}
@@ -193,17 +140,11 @@
             type="text"
             bind:value={context.value.itemSidebarBackground}
           />
-          <button
-            type="button"
-            class="button button-icon-only"
-            onclick={async (ev) =>
-              (context.value.itemSidebarBackground = await pickImage(
-                ev,
-                context.value.itemSidebarBackground,
-              ))}
-          >
-            <i class="fa-solid fa-search"></i>
-          </button>
+          <ImagePickerButton
+            current={context.value.itemSidebarBackground}
+            onimagepicked={(image) =>
+              (context.value.itemSidebarBackground = image)}
+          />
         </div>
       </div>
     {/if}
