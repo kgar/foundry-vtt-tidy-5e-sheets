@@ -559,21 +559,20 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             !game.user.isGM && item.system.identified === false;
 
           // Item grouping
-          const [originId] =
-            item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
-          const group = this.actor.items.get(originId);
-          switch (group?.type) {
-            case 'race':
+          const originId = FoundryAdapter.getAdvancementOriginId(item);
+          const originItem = this.actor.items.get(originId);
+          switch (originItem?.type) {
+            case CONSTANTS.ITEM_TYPE_RACE:
               ctx.group = 'species';
               break;
-            case 'background':
-              ctx.group = 'background';
+            case CONSTANTS.ITEM_TYPE_BACKGROUND:
+              ctx.group = CONSTANTS.ITEM_TYPE_BACKGROUND;
               break;
-            case 'class':
-              ctx.group = group.identifier;
+            case CONSTANTS.ITEM_TYPE_CLASS:
+              ctx.group = originItem.identifier;
               break;
-            case 'subclass':
-              ctx.group = group.class?.identifier ?? 'other';
+            case CONSTANTS.ITEM_TYPE_SUBCLASS:
+              ctx.group = originItem.class?.identifier ?? 'other';
               break;
             default:
               ctx.group = 'other';

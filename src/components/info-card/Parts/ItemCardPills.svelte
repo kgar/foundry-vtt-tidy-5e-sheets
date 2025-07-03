@@ -31,7 +31,7 @@
     }
     if (item?.labels?.damage && item.labels?.damages?.length > 0) {
       props.push(
-        item.labels.damages[0].label.replace(' + ', '+').replace(' - ', '-'),
+        item.labels.damages?.[0].label.replace(' + ', '+').replace(' - ', '-'),
       );
     }
     if (item?.labels?.save) {

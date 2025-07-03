@@ -9,45 +9,26 @@
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
+  import { settings } from 'src/settings/settings.svelte';
+  import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
+  import ImportButton from './parts/ImportButton.svelte';
+  import ImagePickerButton from './parts/ImagePickerButton.svelte';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
     settings: ThemeSettingsContext;
   }
 
-  let { app, settings: data }: Props = $props();
+  let { app, settings: context }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let fileImportInput: HTMLInputElement;
-
   let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
-
-  function pickImage(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
-    current: string,
-  ): Promise<string> {
-    const rect = event.currentTarget.getBoundingClientRect();
-
-    return new Promise((resolve) => {
-      const fp = new foundry.applications.apps.FilePicker({
-        type: 'image',
-        current: current,
-        callback: (path: string) => {
-          resolve(path ?? '');
-        },
-        top: rect.top + 40,
-        left: rect.left + 10,
-      });
-
-      fp.browse();
-    });
-  }
 
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
 
   $effect(() => {
-    const liveSettings = app.mapContextToSettings(data);
+    const liveSettings = app.mapContextToSettings(context);
     ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
       doc: app.document,
       settingsOverride: liveSettings,
@@ -66,23 +47,11 @@
 
   async function processImportFile(file: File | null | undefined) {
     if (file) {
-      const imported = await ThemeQuadrone.import(file);
+      const imported = await ThemeQuadroneImportService.import(file);
       if (imported) {
-        data = app._getSettings(imported);
+        context.value = app._getSettings(imported).value;
       }
     }
-  }
-
-  function onFileChanged(
-    ev: Event & {
-      currentTarget: EventTarget & HTMLInputElement;
-    },
-  ) {
-    const file = ev.currentTarget.files?.[0];
-
-    ev.currentTarget.value = '';
-
-    processImportFile(file);
   }
 </script>
 
@@ -91,30 +60,17 @@
     <h2>
       {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
     </h2>
+    <ImportButton onfilechanged={(file) => processImportFile(file)} />
     <button
       type="button"
       class="button flexshrink"
-      onclick={() => fileImportInput.click()}
-    >
-      <i class="fa-solid fa-file-import"></i>
-      {localize('TIDY5E.ThemeSettings.Sheet.import')}
-    </button>
-    <button
-      type="button"
-      class="button flexshrink"
-      onclick={() => ThemeQuadrone.export(app.mapContextToSettings(data))}
+      onclick={() =>
+        ThemeQuadroneImportService.export(app.mapContextToSettings(context))}
     >
       <i class="fa-solid fa-file-export"></i>
       {localize('TIDY5E.ThemeSettings.Sheet.export')}
     </button>
   </div>
-  <input
-    class="theme-import-input hidden"
-    type="file"
-    accept={CONSTANTS.THEME_EXTENSION_WITH_DOT}
-    onchange={onFileChanged}
-    bind:this={fileImportInput}
-  />
 
   <fieldset>
     <legend>
@@ -124,7 +80,7 @@
 
     <ThemeSettingColorFormGroupQuadrone
       key="accent-color"
-      bind:value={data.accentColor}
+      bind:value={context.value.accentColor}
       label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
     />
     <p class="hint">
@@ -141,7 +97,7 @@
         <div class="form-fields">
           <select
             id="{idPrefix}-actor-portrait-shape"
-            bind:value={data.portraitShape}
+            bind:value={context.value.portraitShape}
           >
             <option></option>
             {#each portraitShapes as shape}
@@ -162,46 +118,36 @@
           <input
             id="{idPrefix}-actor-header-background"
             type="text"
-            bind:value={data.actorHeaderBackground}
+            bind:value={context.value.actorHeaderBackground}
           />
-          <button
-            type="button"
-            class="button button-icon-only"
-            onclick={async (ev) =>
-              (data.actorHeaderBackground = await pickImage(
-                ev,
-                data.actorHeaderBackground,
-              ))}
-          >
-            <i class="fa-solid fa-search"></i>
-          </button>
+          <ImagePickerButton
+            current={context.value.actorHeaderBackground}
+            onimagepicked={(image) =>
+              (context.value.actorHeaderBackground = image)}
+          />
         </div>
       </div>
     {/if}
 
-    <div class="form-group">
-      <label for="{idPrefix}-item-sidebar-background">
-        {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
-      </label>
-      <div class="form-fields">
-        <input
-          id="{idPrefix}-item-sidebar-background"
-          type="text"
-          bind:value={data.itemSidebarBackground}
-        />
-        <button
-          type="button"
-          class="button button-icon-only"
-          onclick={async (ev) =>
-            (data.itemSidebarBackground = await pickImage(
-              ev,
-              data.itemSidebarBackground,
-            ))}
-        >
-          <i class="fa-solid fa-search"></i>
-        </button>
+    {#if settings.value.truesight}
+      <div class="form-group">
+        <label for="{idPrefix}-item-sidebar-background">
+          {localize('TIDY5E.ThemeSettings.ItemSidebarBackground.title')}
+        </label>
+        <div class="form-fields">
+          <input
+            id="{idPrefix}-item-sidebar-background"
+            type="text"
+            bind:value={context.value.itemSidebarBackground}
+          />
+          <ImagePickerButton
+            current={context.value.itemSidebarBackground}
+            onimagepicked={(image) =>
+              (context.value.itemSidebarBackground = image)}
+          />
+        </div>
       </div>
-    </div>
+    {/if}
   </fieldset>
   <fieldset>
     <legend>
@@ -209,7 +155,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {#each data.rarityColors as color}
+    {#each context.value.rarityColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}
         bind:value={color.value}
@@ -224,7 +170,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {#each data.spellPreparationModeColors as color}
+    {#each context.value.spellPreparationModeColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}
         bind:value={color.value}

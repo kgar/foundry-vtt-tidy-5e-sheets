@@ -82,28 +82,28 @@ export class Activities {
     actor: Actor5e,
     context: CharacterItemContext | NpcItemContext
   ) {
-    const cachedFor = fromUuidSync(item.flags.dnd5e?.cachedFor, {
-      relative: actor,
-      strict: false,
-    });
-    if (cachedFor) {
-      context.linkedUses = cachedFor.consumption?.targets.find(
+    const linkedActivity = item.system.linkedActivity;
+
+    if (linkedActivity) {
+      context.linkedUses = linkedActivity.consumption?.targets.find(
         (t: any) => t.type === 'activityUses'
       )
         ? {
-            ...cachedFor.uses,
+            ...linkedActivity.uses,
             valueProp: 'uses.value',
             spentProp: 'uses.spent',
             maxProp: 'uses.max',
-            doc: cachedFor,
+            doc: linkedActivity,
           }
-        : cachedFor.consumption?.targets.find((t: any) => t.type === 'itemUses')
+        : linkedActivity.consumption?.targets.find(
+            (t: any) => t.type === 'itemUses'
+          )
         ? {
-            ...cachedFor.item.system.uses,
+            ...linkedActivity.item.system.uses,
             valueProp: 'system.uses.value',
             spentProp: 'system.uses.spent',
             maxProp: 'system.uses.max',
-            doc: cachedFor.item,
+            doc: linkedActivity.item,
           }
         : null;
     }

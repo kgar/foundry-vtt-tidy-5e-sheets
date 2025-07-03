@@ -244,11 +244,6 @@ export function Tidy5eActorSheetQuadroneBase<
         filterData: this.itemFilterService.getFilterData(),
         filterPins:
           ItemFilterRuntime.defaultFilterPinsQuadrone[this.actor.type],
-        flags: {
-          classes: [],
-          data: {},
-          sections: [],
-        },
         currentTabId: this.currentTabId,
         isConcentrating,
         itemContext: {},
@@ -278,9 +273,6 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Prepare owned items
       this._prepareItems(context);
-
-      // Prepare Special Traits
-      this._prepareSpecialTraitsContext(context);
 
       // Concentration
       this._applyConcentration(context);
@@ -321,79 +313,6 @@ export function Tidy5eActorSheetQuadroneBase<
     _prepareItems(context: ActorSheetQuadroneContext) {}
 
     /* -------------------------------------------- */
-
-    /**
-     * Prepare rendering context for the special traits tab.
-     */
-    async _prepareSpecialTraitsContext(context: ActorSheetQuadroneContext) {
-      const sections: Record<string, SpecialTraitSectionField[]> = {};
-      const source = context.editable ? this.document._source : this.document;
-
-      context.flags.classes = Object.values(this.document.classes)
-        .map((cls: Item5e) => ({ value: cls.id, label: cls.name }))
-        .toSorted((lhs, rhs) =>
-          lhs.label.localeCompare(rhs.label, game.i18n.lang)
-        );
-
-      context.flags.data = source.flags?.dnd5e ?? {};
-
-      // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
-      for (const [key, config] of Object.entries(CONFIG.DND5E.characterFlags)) {
-        const fieldOptions = { label: config.name, hint: config.hint };
-
-        const flag: SpecialTraitSectionField = {
-          field:
-            'type' in config && config.type === Boolean
-              ? new foundry.data.fields.BooleanField(fieldOptions)
-              : 'type' in config && config.type === Number
-              ? new foundry.data.fields.NumberField(fieldOptions)
-              : new foundry.data.fields.StringField(fieldOptions),
-          ...config,
-          name: `flags.dnd5e.${key}`,
-          value: foundry.utils.getProperty(context.flags.data, key),
-        };
-
-        sections[config.section] ??= [];
-        sections[config.section].push(flag);
-      }
-
-      // Global Bonuses
-      const globals: SpecialTraitSectionField[] = [];
-      const addBonus = (field: any) => {
-        if (field === undefined) {
-          return;
-        }
-
-        if (field instanceof foundry.data.fields.SchemaField) {
-          Object.values(field.fields).forEach((f) => addBonus(f));
-        } else {
-          globals.push({
-            field,
-            name: field.fieldPath,
-            value: foundry.utils.getProperty(source, field.fieldPath),
-          });
-        }
-      };
-
-      addBonus(this.document.system.schema.fields.bonuses);
-
-      if (globals.length) {
-        sections[game.i18n.localize('DND5E.BONUSES.FIELDS.bonuses.label')] =
-          globals;
-      }
-
-      context.flags.sections = Object.entries(sections).map(
-        ([label, fields]) => ({
-          label,
-          fields,
-        })
-      );
-
-      // Cache concentration data and prepare items
-      this._concentration = this.actor.concentration;
-
-      return context;
-    }
 
     _applyConcentration(context: ActorSheetQuadroneContext) {
       if (

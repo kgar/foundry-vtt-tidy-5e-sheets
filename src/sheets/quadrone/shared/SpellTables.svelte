@@ -23,7 +23,7 @@
   import SpellSlotManagementQuadrone from '../actor/parts/SpellSlotManagementQuadrone.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-    import { isNil } from 'src/utils/data';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     sections: SpellbookSection[];
@@ -101,12 +101,22 @@
       >
         {#snippet header(expanded)}
           {@const mode = section.prepMode?.slugify()}
+          {@const draggableHeaderAttributes = section.usesSlots
+            ? {
+                ['data-tidy-draggable']: true,
+                ['data-key']: section.key,
+                ['data-preparation-mode']: section.prepMode,
+                ['data-level']: section.dataset['system.level'],
+                ['data-slots']: true,
+              }
+            : {}}
           <TidyTableHeaderRow
             class={[
               'theme-dark',
               'spell-preparation',
               { [`mode-${mode}`]: !isNil(mode, '') },
             ]}
+            {...draggableHeaderAttributes}
           >
             <TidyTableHeaderCell primary={true} class="header-label-cell">
               <h3>
@@ -115,11 +125,6 @@
               <span class="table-header-count">{section.spells.length}</span>
               {#if section.usesSlots}
                 <div
-                  data-tidy-draggable
-                  data-key={section.key}
-                  data-preparation-mode={section.prepMode}
-                  data-level={section.dataset['system.level']}
-                  data-slots
                   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
                 >
                   <SpellSlotManagementQuadrone
@@ -178,6 +183,7 @@
                     item.system.preparation.mode ===
                       CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
                   unprepared:
+                    !item.system.linkedActivity &&
                     item.system.preparation.mode ===
                       CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
                     !item.system.preparation.prepared,

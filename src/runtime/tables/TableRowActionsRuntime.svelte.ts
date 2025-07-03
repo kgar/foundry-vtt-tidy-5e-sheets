@@ -144,14 +144,14 @@ class TableRowActionsRuntime {
                     doc,
                     deleteFn: () => doc.deleteDialog(),
                   },
-                  condition: (doc) => !doc.system.linkedActivity,
+                  condition: (doc: any) => !doc.system.linkedActivity,
                 },
                 {
                   component: OpenActivityButton,
                   props: {
                     doc,
                   },
-                  condition: (doc) => !!doc.system.linkedActivity,
+                  condition: (doc: any) => !!doc.system.linkedActivity,
                 },
               ],
             }),

@@ -414,12 +414,17 @@
     }
   }
 
-  menu.expanded {
+  menu {
     width: fit-content;
     border: 0.0625rem solid var(--t5e-component-field-border);
+    gap: 1.125rem;
+    min-width: 16.25rem;
+    max-width: 35rem;
+  }
+
+  menu.expanded {
     display: flex;
     flex-direction: column;
-    gap: 1.125rem;
     // TODO: Parchment background for light / ??? background for dark
     // Can we do some kind of special class that means "Use the textured background, whatever the theme?"
   }
