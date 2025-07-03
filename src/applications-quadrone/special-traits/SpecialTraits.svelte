@@ -62,6 +62,7 @@
           localize={true}
           name={field.name}
           groupClasses={{ slim: isCheckbox }}
+          
         />
       {/each}
     </fieldset>

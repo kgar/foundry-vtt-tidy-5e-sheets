@@ -138,7 +138,7 @@
       result.push(savePill);
     }
 
-    if (!isNil(context.labels.damages[0]?.label, '')) {
+    if (!isNil(context.labels.damages?.[0]?.label, '')) {
       result.push(damagePills);
     }
 

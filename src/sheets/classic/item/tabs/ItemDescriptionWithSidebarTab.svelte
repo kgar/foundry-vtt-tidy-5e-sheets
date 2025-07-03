@@ -125,7 +125,7 @@
       <SpellBlock {context} />
     {/if}
 
-    {#if context.labels.toHit || context.labels.damages.length}
+    {#if context.labels.toHit || context.labels.damages?.length}
       <h4 class="properties-header">
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>

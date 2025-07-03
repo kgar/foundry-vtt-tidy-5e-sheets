@@ -9,7 +9,7 @@
 </script>
 
 <div>
-  {#each rowDocument.labels.damages as damage}
+  {#each (rowDocument.labels.damages ?? []) as damage}
     {@const damageHealingIcon = damageHealingTypeIcons[damage.damageType]}
     <div class="flexrow">
       <span class="flexshrink damage-formula">{damage.formula}</span>

@@ -18,6 +18,7 @@
   import SelectQuadrone from '../inputs/SelectQuadrone.svelte';
   import SelectOptions from '../inputs/SelectOptions.svelte';
   import { isNil } from 'src/utils/data';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   type PartialBuilderProps = Partial<ComponentProps<typeof FormGroupBuilder>>;
 
@@ -28,6 +29,7 @@
     layout: Exclude<SheetLayout, 'all'>;
     document: any;
     editable?: boolean;
+    disableOverriddenInputs?: boolean;
   };
 
   let {
@@ -38,6 +40,7 @@
     name,
     editable = true,
     rootId,
+    disableOverriddenInputs,
     ...rest
   }: Props = $props();
 
@@ -57,44 +60,61 @@
   let inputs = $derived.by(() => {
     const id = !isNil(rootId) ? getFieldId(field) : undefined;
 
+    const effectiveField = name ?? field.fieldPath;
+
+    const disabledViaEffect =
+      disableOverriddenInputs &&
+      ActiveEffectsHelper.isActiveEffectAppliedToField(
+        document,
+        effectiveField,
+      );
+
+    const effectOverrideTooltip = disabledViaEffect ? '' : undefined;
+
+    const disabled = !editable || disabledViaEffect;
+
     if (field instanceof foundry.data.fields.StringField) {
       // Handle choices - select
       let input =
         layout === 'classic' && field.choices
           ? componentWithProps(Select, {
               document: document,
-              field: name ?? field.fieldPath,
+              field: effectiveField,
               id: id,
               value,
               children: () => StringChoices(field),
-              disabled: !editable,
+              disabled,
+              tooltip: effectOverrideTooltip,
             })
           : layout === 'classic' && !field.choices
             ? componentWithProps(TextInput, {
                 document: document,
-                field: name ?? field.fieldPath,
+                field: effectiveField,
                 id: id,
                 selectOnFocus: true,
                 value,
-                disabled: !editable,
+                disabled,
+                tooltip: effectOverrideTooltip,
               })
             : layout === 'quadrone' && field.choices
               ? componentWithProps(SelectQuadrone, {
                   document: document,
-                  field: name ?? field.fieldPath,
+                  field: effectiveField,
                   id: id,
                   value,
                   children: () => StringChoices(field),
-                  disabled: !editable,
+                  disabled,
+                  ['data-tooltip']: effectOverrideTooltip,
                 })
               : layout === 'quadrone' && !field.choices
                 ? componentWithProps(TextInputQuadrone, {
                     document: document,
-                    field: name ?? field.fieldPath,
+                    field: effectiveField,
                     id: id,
                     selectOnFocus: true,
                     value,
-                    disabled: !editable,
+                    disabled,
+                    ['data-tooltip']: effectOverrideTooltip,
                   })
                 : undefined;
 
@@ -107,38 +127,42 @@
         layout === 'classic' && field.choices
           ? componentWithProps(Select, {
               document: document,
-              field: name ?? field.fieldPath,
+              field: effectiveField,
               id: id,
               value,
               children: () => NumberChoices(field),
-              disabled: !editable,
+              disabled,
+              tooltip: effectOverrideTooltip,
             })
           : layout === 'classic' && !field.choices
             ? componentWithProps(NumberInput, {
                 document: document,
-                field: name ?? field.fieldPath,
+                field: effectiveField,
                 id: id,
                 selectOnFocus: true,
                 value,
-                disabled: !editable,
+                disabled,
+                tooltip: effectOverrideTooltip,
               })
             : layout === 'quadrone' && field.choices
               ? componentWithProps(SelectQuadrone, {
                   document: document,
-                  field: name ?? field.fieldPath,
+                  field: effectiveField,
                   id: id,
                   value,
                   children: () => NumberChoices(field),
-                  disabled: !editable,
+                  disabled,
+                  ['data-tooltip']: effectOverrideTooltip,
                 })
               : layout === 'quadrone' && !field.choices
                 ? componentWithProps(NumberInputQuadrone, {
                     document: document,
-                    field: name ?? field.fieldPath,
+                    field: effectiveField,
                     id: id,
                     selectOnFocus: true,
                     value,
-                    disabled: !editable,
+                    disabled,
+                    ['data-tooltip']: effectOverrideTooltip,
                   })
                 : undefined;
 
@@ -150,17 +174,19 @@
         layout === 'classic'
           ? componentWithProps(Checkbox, {
               document: document,
-              field: name ?? field.fieldPath,
+              field: effectiveField,
               id: id,
               checked: !!value,
-              disabled: !editable,
+              disabled,
+              tooltip: effectOverrideTooltip,
             })
           : componentWithProps(CheckboxQuadrone, {
               document: document,
-              field: name ?? field.fieldPath,
+              field: effectiveField,
               id: id,
               checked: !!value,
-              disabled: !editable,
+              disabled,
+              ['data-tooltip']: effectOverrideTooltip,
             });
 
       return [input];
@@ -169,38 +195,42 @@
         layout === 'classic' && field.choices
           ? componentWithProps(Select, {
               document: document,
-              field: name ?? field.fieldPath,
+              field: effectiveField,
               id: id,
               value,
               children: () => StringChoices(field),
-              disabled: !editable,
+              disabled,
+              tooltip: effectOverrideTooltip,
             })
           : layout === 'classic' && !field.choices
             ? componentWithProps(TextInput, {
                 document: document,
-                field: name ?? field.fieldPath,
+                field: effectiveField,
                 id: id,
                 selectOnFocus: false,
                 value,
-                disabled: !editable,
+                disabled,
+                tooltip: effectOverrideTooltip,
               })
             : layout === 'quadrone' && field.choices
               ? componentWithProps(SelectQuadrone, {
                   document: document,
-                  field: name ?? field.fieldPath,
+                  field: effectiveField,
                   id: id,
                   value,
                   children: () => StringChoices(field),
-                  disabled: !editable,
+                  disabled,
+                  ['data-tooltip']: effectOverrideTooltip,
                 })
               : layout === 'quadrone' && !field.choices
                 ? componentWithProps(TextInputQuadrone, {
                     document: document,
-                    field: name ?? field.fieldPath,
+                    field: effectiveField,
                     id: id,
                     selectOnFocus: false,
                     value,
-                    disabled: !editable,
+                    disabled,
+                    ['data-tooltip']: effectOverrideTooltip,
                   })
                 : undefined;
 
