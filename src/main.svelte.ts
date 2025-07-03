@@ -29,6 +29,7 @@ import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadro
 import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
+import { TidyNotificationsManager } from './features/notifications/TidyNotificationsManager';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
@@ -199,6 +200,10 @@ Hooks.once('ready', async () => {
   DebugTools.onReady(api);
 
   ThemeQuadrone.onReady();
+
+  if (settings.value.truesight) {
+    TidyNotificationsManager.onReady();
+  }
 });
 
 function handleMigrationNotification() {

@@ -3,7 +3,8 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import type {
   PortraitShape,
   ThemeColorSetting,
-  ThemeSettingsV1 as ThemeSettingsV1,
+  ThemeSettingsConfigurationOptions,
+  ThemeSettingsV2 as ThemeSettingsV2,
 } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
@@ -13,12 +14,9 @@ import type {
 import { mount } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
 import { TidyFlags, TidyHooks } from 'src/api';
-import { error } from 'src/utils/logging';
-import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
   label: string;
@@ -26,9 +24,9 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 
 export type ThemeSettingsContext = {
   accentColor: string;
-  headerBackground: string;
+  actorHeaderBackground: string;
+  itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
-  useSaturatedRarityColors: boolean;
   rarityColors: ThemeColorSettingConfigEntry[];
   spellPreparationModeColors: ThemeColorSettingConfigEntry[];
 };
@@ -41,17 +39,17 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   document?: any;
   _settings: ThemeSettingsContext = $state({
     accentColor: '',
-    headerBackground: '',
+    actorHeaderBackground: '',
+    itemSidebarBackground: '',
     portraitShape: undefined,
     rarityColors: [],
     spellPreparationModeColors: [],
-    useSaturatedRarityColors: false,
   });
 
-  private get themeConfigOptions() {
+  themeConfigOptions(): ThemeSettingsConfigurationOptions {
+    console.warn('theme settings options are used!');
     return {
       doc: this.document,
-      mergeParentDocumentSettings: true,
       idOverride: this.id,
     };
   }
@@ -109,7 +107,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {};
   }
 
-  _getSettings(settingsOverride?: ThemeSettingsV1) {
+  _getSettings(settingsOverride?: ThemeSettingsV2) {
     let themeSettings =
       settingsOverride ??
       structuredClone(
@@ -122,7 +120,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
     let context: ThemeSettingsContext = {
       accentColor: themeSettings.accentColor,
-      headerBackground: themeSettings.headerBackground,
+      actorHeaderBackground: themeSettings.actorHeaderBackground,
+      itemSidebarBackground: themeSettings.itemSidebarBackground,
       portraitShape: themeSettings.portraitShape,
       rarityColors: Object.entries(CONFIG.DND5E.itemRarity).map(
         ([key, label]) => {
@@ -142,7 +141,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
           value: themeSettings.spellPreparationModeColors[key] ?? '',
         };
       }),
-      useSaturatedRarityColors: themeSettings.useSaturatedRarityColors ?? false,
     };
 
     return context;
@@ -152,35 +150,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
 
-  themeSettingsSubscription?: Unsubscribable;
-
-  async _renderFrame(options: ApplicationRenderOptions) {
-    const element = await super._renderFrame(options);
-
-    if (this.document) {
-      try {
-        applyThemeToApplication(element, this.document);
-
-        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
-          this.themeConfigOptions
-        );
-
-        this.themeSettingsSubscription =
-          ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
-            this.themeConfigOptions
-          );
-      } catch (e) {
-        error(
-          'An error occurred while applying theme to application',
-          false,
-          e
-        );
-      }
-    }
-
-    return element;
-  }
-
   async save() {
     await this.apply();
     await this.close();
@@ -189,7 +158,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   async apply() {
     const data = this._settings;
 
-    let themeSettings: ThemeSettingsV1 = this.mapContextToSettings(data);
+    let themeSettings: ThemeSettingsV2 = this.mapContextToSettings(data);
 
     if (this.document) {
       await ThemeQuadrone.saveSheetThemeSettings(this.document, themeSettings);
@@ -198,12 +167,12 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     }
   }
 
-  mapContextToSettings(data: ThemeSettingsContext): ThemeSettingsV1 {
+  mapContextToSettings(data: ThemeSettingsContext): ThemeSettingsV2 {
     return {
       accentColor: data.accentColor ?? '',
-      headerBackground: data.headerBackground,
+      actorHeaderBackground: data.actorHeaderBackground,
+      itemSidebarBackground: data.itemSidebarBackground,
       portraitShape: data.portraitShape,
-      useSaturatedRarityColors: data.useSaturatedRarityColors,
       rarityColors: data.rarityColors
         .filter((t) => !isNil(t.value.trim(), ''))
         .reduce<Record<string, string>>((prev, curr) => {
@@ -247,8 +216,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   /* -------------------------------------------- */
 
   async close(options: ApplicationClosingOptions = {}) {
-    this.themeSettingsSubscription?.unsubscribe();
-
     TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
 
     await super.close(options);

@@ -2,17 +2,16 @@
 
 ### The Short List
 
-- [ ] Make theme versioned at 2 for quadrone theme files.
-- [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
-- [ ] Consider extracting import button to its own component to keep things clean.
-- [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait.
-- [ ] On first load after Tidy 5e is activated, provide instructions on how to change sheets to Tidy, with potentially a link to the Wiki. <https://discord.com/channels/1167985253072257115/1383159779253555272/1383161370186485882>
 - [ ] Implement Responsive Tab Strip
+- [ ] Consider extracting import button to its own component to keep things clean.
+- [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
+- [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
+- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
+
 
 ### (Almost) Everything after the short list
 
-- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Scaffold the NPC Sheet
 - [ ] Set up NPC Sheet Tab Selection
 - [ ] Scaffold the Group Sheet
@@ -74,7 +73,6 @@
 - [ ] DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
 - [ ] So Inspired! - add API for globally overriding inspiration tracking. Require
 - [ ] Drakkenheim Corruption tab: support it in Quadrone
-- [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 - [ ] Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
 
@@ -94,6 +92,7 @@
 - [x] Favorites - there are scrollbars on title and subtitle
 - [x] Character Sheet - Light Mode - Bastion tab - progress text is very dark against a dark bar.
 - [x] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
+- [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 
 ### Post-Beta Stretch Goals
 
@@ -194,4 +193,3 @@ Limited:
 
 ### To Do Graveyard
 
-- [x] (Stretch) **Theme Settings**: Import/Export theme settings (will have a version stamp for these so that migrations can occur when the model changes in breaking ways); can go in the header menu for this particular application 🚀🧑‍🚀
