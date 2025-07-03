@@ -1489,4 +1489,11 @@ export const FoundryAdapter = {
       label: CONFIG.DND5E.activityActivationTypes[type]?.label,
     };
   },
+  getAdvancementOriginId(item: Item5e) {
+    let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split(
+      '.',
+    );
+
+    return originId;
+  }
 };

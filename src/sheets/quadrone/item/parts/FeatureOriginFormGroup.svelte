@@ -34,12 +34,9 @@
   });
 
   // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
-  let originValue = $derived.by(() => {
-    let [originId] = (context.item.flags.dnd5e?.advancementOrigin ?? '').split(
-      '.',
-    );
-    return originId;
-  });
+  let originValue = $derived(
+    FoundryAdapter.getAdvancementOriginId(context.item),
+  );
 
   let id = `feature-origin-${foundry.utils.randomID()}`;
 
