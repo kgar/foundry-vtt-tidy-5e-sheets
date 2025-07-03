@@ -2,12 +2,6 @@
 
 ### The Short List
 
-- [x] And character.scss line 1946 change the grid-template-columns to 17.5rem, it's a little too wide in the responsive view now that I'm playing with it moregrid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
-- [x] PC sheet - edit mode - header abilities - Setting buttons are too low at a very specific width 
-- [x] The sidebar button's hitbox should be a little wider.
-- [x] Make the sidebar button a little wider
-- [x] Special Traits - tell the user whether there's an active effect modifying the value of a given special trait. Use the classic sheet approach of disabling and tooltipping.
-- [ ] Extend Spell Slot drag-and-drop to entire section header.
 - [ ] // TODO: Change to linkedActivity
   - [ ] If it works, then eliminate usages of cachedFor.
 - [ ] Implement Responsive Tab Strip
@@ -101,6 +95,7 @@
 - [x] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
+- [ ] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
 
 
 ### Post-Beta Stretch Goals
@@ -202,3 +197,9 @@ Limited:
 
 ### To Do Graveyard
 
+- [x] And character.scss line 1946 change the grid-template-columns to 17.5rem, it's a little too wide in the responsive view now that I'm playing with it moregrid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
+- [x] PC sheet - edit mode - header abilities - Setting buttons are too low at a very specific width 
+- [x] The sidebar button's hitbox should be a little wider.
+- [x] Make the sidebar button a little wider
+- [x] Special Traits - tell the user whether there's an active effect modifying the value of a given special trait. Use the classic sheet approach of disabling and tooltipping.
+- [x] Extend Spell Slot drag-and-drop to entire section header.
