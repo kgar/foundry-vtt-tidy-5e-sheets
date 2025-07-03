@@ -2,7 +2,26 @@
 
 ### The Short List
 
+- [ ] Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
+- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
+- [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
+- [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
+- [ ] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
+- [ ] add a class to section headers when there are no search results `.search-no-results`
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
+- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
+- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings
+- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
+- [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
+  - hightouch recommendation: in the tab config menu
+- [ ] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
+- [ ] (Module Compatibility) So Inspired! - provide PR to module repo
+- [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
+- [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
+- [ ] (Module Compatibility) Test Hidden Death Saves module
+- [ ] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
 
 
 ### (Almost) Everything after the short list
@@ -19,27 +38,14 @@
 - [ ] Propagate Data-Driven Columns to Effects tables
 - [ ] All section configs: pass in callback for preparing sections to view, so that we're not processing this during non-option-sheet renders. It should only render on option sheet prerender.
 - [ ] Configure {TabId}: include a hook that allows people to pass in their own settings.
-- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Resolve TODO -  // TODO: Make this a callback to send through to the component for preparing sections properly
 - [ ] Effect Summary eagerly refreshes. Add suppression to HTML enrichment to only when the effect summary is shown.
-- [ ] Additional Document header option: Context Menu Options (literally show the context menu options)
 - [ ] Ensure all item sheets enforce this Unidentified UI feature:
   - [ ] (Non-container sheets only) Sidebar sections all hidden except Sections section and pill switches
-- [x] Add background circle hover style to section row buttons
-- [x] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
-- [x] Editor style needs CSS help: <https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869>
-- [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
-- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] (stretch) Implement generic width / priority observer feature that can be used to control pinned filter visibility generically and then be used for other purposes later.
   - [ ] Propagate this to all action bars
-- [ ] Evolve ItemLists further
-  - 💡 It is still for Items only, which should keep things simple with itemContext usage.
-  - Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
-- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
-- [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+- [ ] Extract the Tidy Table rendering components for churning out columns from column specs. This functionality will be reused for Effects and Activity tables.
 - [ ] (lowest priority: the system should probably work this out first) Figure out: can get it so I can add Artisan's tools ("art") to Favorites? It represents all Artisan's Tools.
-- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings
 - [ ] Bastion tab idea: Include an actual Add button in addition to the Compendium button. People should be allowed to add a new Bastion directly to a sheet.
 - [ ] Bastion tab: Disabled facilities are completely nonresponsive even to a GM. It seems like at least the GM should be able to fix an accidentally broken facility. The Foundry / dnd5e way has been "if you own the sheet, you can do whatever you want to the sheet," so this particular feature as it currently exists sort of contradicts that philosophy.
 - [ ] Discuss: new Action List option: "Require Item to be Equipped for Cast Activity Spells" - would have an explanation detailing that this requirement is in addition to the standard Attunement requirements | <https://discord.com/channels/1167985253072257115/1169792539545587733/1384379958801076255>
@@ -49,28 +55,20 @@
 - [ ] (Stretch) Advanced Settings Section - do you know what specific CSS variable alterations you want to make to Tidy? Put 'em here. An array of 0 to many direct variable overrides. If someone goes real deep into Tidy and wants to submit some community theme JSON, they may do so.
 - [ ] (Stretch) **Theming**: Community Theme submissions - they'll go in a dedicated folder in github and, with an active internet connection, can be pulled directly from within Foundry
 - [ ] (Stretch) **Theme Settings**: Saved Themes in campaign world - be able to create multiple themes and save them to the game world for all to enjoy
-- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
 - [ ] **Theme Settings**: Add support for Item Sidebar Width?
 - [ ] Item cards
   - [ ] ~~Implement a shared portal for item cards. All attached item cards will use the one portal anchor. This is so the card can live outside the sheet's overflow hiding window content, so we don't have to worry about compromising design.~~ Can item cards leverage a shared dialog component so they can ignore overflow?
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
-- [ ] add a class to section headers when there are no search results `.search-no-results`
-- [ ] Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>
 - [x] Swap left and right areas in tab selection (left = selected, right = hidden)
-- [ ] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. <https://discord.com/channels/@me/1243307347682529423/1388371150291210290>
 - [ ] (Take our time on this one; it's never been solved by any sheet, except for vertical tabs) Implement Responsive Tab Strip
 
 ### Module Compatibility
 
-- [ ] DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
-- [ ] So Inspired! - add API for globally overriding inspiration tracking. Require
-- [ ] Drakkenheim Corruption tab: support it in Quadrone
-- [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
-- [ ] Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
+
 
 ## hightouch To Do
 
@@ -91,6 +89,10 @@
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
 - [ ] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
+
+### Huh?
+
+- [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 
 
 ### Post-Beta Stretch Goals
@@ -203,3 +205,8 @@ Limited:
 - [x] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
 - [x] Consider extracting import button to its own component to keep things clean.
 - [x] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
+- [x] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
+- [x] Add background circle hover style to section row buttons
+- [x] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
+- [x] Editor style needs CSS help: <https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869>
+- [x] (Module Compatibility) So Inspired! - add API for globally overriding inspiration tracking.
