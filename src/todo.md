@@ -2,12 +2,70 @@
 
 ### The Short List
 
-- [ ] Pull theme application to the Svelte mixin. Everyone must abide by theming. We just have to live with the fact that this mixin must entertain the possibility of an inheriting class optionally having a document. Blech 
+- [ ] Fix radio warning
+- [ ] idOverride is not getting picked up by Svelte Mixin when doing themes
 - [ ] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
 - [ ] Consider extracting import button to its own component to keep things clean.
 - [ ] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
 - [ ] Special Traits - (still planning) tell the user whether there's an active effect modifying the value of a given special trait.
 - [ ] Implement Responsive Tab Strip
+
+**Radio warning**:
+```
+logging.ts:16 DEBUG | tidy5e-sheet | Applying theme type dark to window
+foundry.mjs:23613 Foundry VTT | Registered callback for tidy5e-sheet.themeSettingsChanged hook
+logging.ts:16 DEBUG | tidy5e-sheet | Applying theme type light to window
+foundry.mjs:23613 Foundry VTT | Registered callback for tidy5e-sheet.themeSettingsChanged hook
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(42), criteria: '', itemContext: {…}, sections: Array(9), tabId: 'actions'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(43), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'inventory'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(32), criteria: '', itemContext: {…}, sections: Array(10), tabId: 'spellbook'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(26), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'features'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(42), criteria: '', itemContext: {…}, sections: Array(9), tabId: 'actions'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(43), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'inventory'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(32), criteria: '', itemContext: {…}, sections: Array(10), tabId: 'spellbook'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(26), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'features'}
+chunk-CAMFGI3V.js?v=c9078ac5:1793 [Violation] 'keydown' handler took 394ms
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Opened
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:16 DEBUG | tidy5e-sheet | Applying theme type light to window
+foundry.mjs:23613 Foundry VTT | Registered callback for tidy5e-sheet.themeSettingsChanged hook
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+game:1 [DOM] Found 4 elements with non-unique id #KiKH4Y6SR8QPtjNK-expand-collapse-behavior-all-sections: (More info: https://goo.gl/9p2vKq) <input type=​"radio" value=​"all" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-all-sections">​flex <input type=​"radio" value=​"all" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-all-sections">​flex <input type=​"radio" value=​"all" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-all-sections">​flex <input type=​"radio" value=​"all" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-all-sections">​flex
+game:1 [DOM] Found 4 elements with non-unique id #KiKH4Y6SR8QPtjNK-expand-collapse-behavior-top-level-sections: (More info: https://goo.gl/9p2vKq) <input type=​"radio" value=​"top-level" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-top-level-sections">​flex <input type=​"radio" value=​"top-level" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-top-level-sections">​flex <input type=​"radio" value=​"top-level" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-top-level-sections">​flex <input type=​"radio" value=​"top-level" id=​"KiKH4Y6SR8QPtjNK-expand-collapse-behavior-top-level-sections">​flex
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+longpress.svelte.ts:29 [Violation] Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+(anonymous) @ longpress.svelte.ts:29
+handleMouseDown @ longpress.svelte.ts:28
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+longpress.svelte.ts:29 [Violation] Added non-passive event listener to a scroll-blocking 'touchmove' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+(anonymous) @ longpress.svelte.ts:29
+handleMouseDown @ longpress.svelte.ts:28
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(42), criteria: '', itemContext: {…}, sections: Array(9), tabId: 'actions'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(43), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'inventory'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(32), criteria: '', itemContext: {…}, sections: Array(10), tabId: 'spellbook'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(26), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'features'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(42), criteria: '', itemContext: {…}, sections: Array(9), tabId: 'actions'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(43), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'inventory'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(32), criteria: '', itemContext: {…}, sections: Array(10), tabId: 'spellbook'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(26), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'features'}
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(42), criteria: '', itemContext: {…}, sections: Array(9), tabId: 'actions'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(43), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'inventory'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(32), criteria: '', itemContext: {…}, sections: Array(10), tabId: 'spellbook'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(26), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'features'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(42), criteria: '', itemContext: {…}, sections: Array(9), tabId: 'actions'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(43), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'inventory'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(32), criteria: '', itemContext: {…}, sections: Array(10), tabId: 'spellbook'}
+logging.ts:14 DEBUG | tidy5e-sheet | Item IDs to show {results: Set(26), criteria: '', itemContext: {…}, sections: Array(8), tabId: 'features'}
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+logging.ts:16 DEBUG | tidy5e-sheet | App V2 - On Menu Closed
+```
+
 
 ### (Almost) Everything after the short list
 
@@ -202,3 +260,4 @@ Limited:
 - [x] Remove Saturated Rarity Color option and its localizations
 - [x] Ensure "Header Background" is named "Actor Header Background" and only shows when looking at it from World Settings or from an Actor's sheet
 - [x] Add "Item Sidebar Background" and always show it for every configuration, because item sheets inherit their parent actor's styles, meaning World, Actor, and Item level settings should have the option. 
+- [x] Pull theme application to the Svelte mixin. Everyone must abide by theming. We just have to live with the fact that this mixin must entertain the possibility of an inheriting class optionally having a document. Blech 

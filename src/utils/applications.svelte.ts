@@ -25,11 +25,7 @@ export function applyTitleToWindow(title: string, element: HTMLElement) {
   }
 }
 
-export function applyThemeToApplication(
-  element?: HTMLElement,
-  doc?: any,
-  themeSettingPreview?: ThemeSettingsV2
-) {
+export function applyThemeToApplication(element?: HTMLElement, doc?: any) {
   if (!element) {
     return;
   }

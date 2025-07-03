@@ -1,6 +1,5 @@
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { RegisteredContent } from 'src/runtime/types';
 import type {
   ApplicationClickAction,
   ApplicationClosingOptions,
@@ -18,10 +17,7 @@ import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
 import { tick } from 'svelte';
-import {
-  applySheetAttributesToWindow,
-  applyThemeToApplication,
-} from 'src/utils/applications.svelte';
+import { applySheetAttributesToWindow } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 import { processInputChangeDelta } from 'src/utils/form';
 import type {
@@ -37,10 +33,6 @@ import {
 } from 'src/features/sheet-header-controls/header-controls';
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import { settings } from 'src/settings/settings.svelte';
-import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -60,26 +52,15 @@ export function TidyExtensibleDocumentSheetMixin<
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
     _mode = $state<number | undefined>();
 
-    private get themeConfigSettings() {
-      return {
-        doc: this.document,
-        mergeParentDocumentSettings: true,
-      };
-    }
-
     constructor(options: TConstructorArgs) {
       super(options);
     }
 
     static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
       window: {
-        controls: [
-          
-        ],
+        controls: [],
       },
-      actions: {
-        
-      },
+      actions: {},
     };
 
     get sheetMode() {
@@ -243,13 +224,7 @@ export function TidyExtensibleDocumentSheetMixin<
           element
         );
 
-        applyThemeToApplication(element, this.document);
-
         this._applySheetModeClass(element);
-
-        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
-          this.themeConfigSettings
-        );
 
         // Support injected named inputs
         element.addEventListener(
@@ -463,19 +438,12 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Rendering Life-Cycle Methods                */
     /* -------------------------------------------- */
 
-    themeSettingsSubscription?: Unsubscribable;
-
     /**
      * Attach event listeners to the Application frame.
      * @protected
      */
     _attachFrameListeners() {
       game.user.apps[this.id] = this;
-
-      this.themeSettingsSubscription =
-        ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
-          this.themeConfigSettings
-        );
 
       super._attachFrameListeners();
     }
@@ -504,8 +472,6 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     _onClose(options: TidyDocumentSheetRenderOptions) {
       delete game.user.apps[this.id];
-
-      this.themeSettingsSubscription?.unsubscribe();
 
       super._onClose(options);
     }

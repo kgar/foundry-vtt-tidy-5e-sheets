@@ -3,6 +3,7 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import type {
   PortraitShape,
   ThemeColorSetting,
+  ThemeSettingsConfigurationOptions,
   ThemeSettingsV2 as ThemeSettingsV2,
 } from 'src/theme/theme-quadrone.types';
 import type {
@@ -13,12 +14,9 @@ import type {
 import { mount } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
 import { TidyFlags, TidyHooks } from 'src/api';
-import { error } from 'src/utils/logging';
-import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 
 export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
   label: string;
@@ -48,7 +46,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     spellPreparationModeColors: [],
   });
 
-  private get themeConfigOptions() {
+  themeConfigOptions(): ThemeSettingsConfigurationOptions {
+    console.warn('theme settings options are used!');
     return {
       doc: this.document,
       mergeParentDocumentSettings: true,
@@ -152,35 +151,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   /*  Event Listeners and Handlers                */
   /* -------------------------------------------- */
 
-  themeSettingsSubscription?: Unsubscribable;
-
-  async _renderFrame(options: ApplicationRenderOptions) {
-    const element = await super._renderFrame(options);
-
-    if (this.document) {
-      try {
-        applyThemeToApplication(element, this.document);
-
-        ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
-          this.themeConfigOptions
-        );
-
-        this.themeSettingsSubscription =
-          ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
-            this.themeConfigOptions
-          );
-      } catch (e) {
-        error(
-          'An error occurred while applying theme to application',
-          false,
-          e
-        );
-      }
-    }
-
-    return element;
-  }
-
   async save() {
     await this.apply();
     await this.close();
@@ -247,8 +217,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   /* -------------------------------------------- */
 
   async close(options: ApplicationClosingOptions = {}) {
-    this.themeSettingsSubscription?.unsubscribe();
-
     TidyHooks.tidy5eSheetsThemeSettingsChanged(this.document);
 
     await super.close(options);

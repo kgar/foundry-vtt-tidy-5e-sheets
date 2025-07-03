@@ -1,12 +1,10 @@
-import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
   DocumentSheetApplicationConfiguration,
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
-import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { error } from 'src/utils/logging';
 
 export function DocumentSheetDialog<
@@ -51,9 +49,7 @@ export function DocumentSheetDialog<
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
 
-    themeSettingsSubscription?: Unsubscribable;
-
-    private get themeConfigOptions() {
+    themeConfigOptions(): ThemeSettingsConfigurationOptions {
       return {
         doc: this.document,
         mergeParentDocumentSettings: true,
@@ -63,18 +59,6 @@ export function DocumentSheetDialog<
 
     _attachFrameListeners() {
       super._attachFrameListeners();
-
-      // Tidy 5e relies on `themed theme-{theme}` to be on every one of its applications.
-      applyThemeToApplication(this.element, this.document);
-
-      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
-        this.themeConfigOptions
-      );
-
-      this.themeSettingsSubscription =
-        ThemeQuadrone.subscribeAndReactToThemeSettingsChanges(
-          this.themeConfigOptions
-        );
     }
 
     /* -------------------------------------------- */
@@ -82,8 +66,6 @@ export function DocumentSheetDialog<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
-      this.themeSettingsSubscription?.unsubscribe();
-
       // Trigger saving of the form if configured and allowed
       const submit =
         !options.bypassSubmitOnClose &&
