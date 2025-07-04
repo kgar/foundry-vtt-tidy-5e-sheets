@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
+- [x] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
 - [ ] (Module Compatibility) So Inspired! - provide PR to module repo
 - [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
 - [ ] (Module Compatibility) Test Hidden Death Saves module

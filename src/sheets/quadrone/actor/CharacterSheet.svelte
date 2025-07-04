@@ -75,7 +75,10 @@
           : ''}"
       >
         <div class="flexcol flex1">
-          <div class="character-details-name-row">
+          <div
+            class="character-details-name-row"
+            data-tidy-sheet-part="name-header-row"
+          >
             {#if context.unlocked}
               <TextInputQuadrone
                 field="name"
