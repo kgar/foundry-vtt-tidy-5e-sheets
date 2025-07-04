@@ -2,6 +2,12 @@
 
 ### The Short List
 
+- [ ] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
+- [ ] (Module Compatibility) So Inspired! - provide PR to module repo
+- [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
+- [ ] (Module Compatibility) Test Hidden Death Saves module
+- [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
+- [ ] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
 - [ ] Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
@@ -16,12 +22,6 @@
 - [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
-- [ ] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
-- [ ] (Module Compatibility) So Inspired! - provide PR to module repo
-- [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
-- [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
-- [ ] (Module Compatibility) Test Hidden Death Saves module
-- [ ] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
 
 
 ### (Almost) Everything after the short list
