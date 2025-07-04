@@ -315,8 +315,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return {
         change: async (delta) =>
           await apiConfig.change!(this, this.actor, delta),
-        value: data.value ?? 0,
-        max: data.max ?? 0,
+        value: data?.value ?? 0,
+        max: data?.max ?? 0,
       };
     }
 

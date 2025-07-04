@@ -3,7 +3,7 @@
 ### The Short List
 
 - [x] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
-- [ ] (Module Compatibility) So Inspired! - provide PR to module repo
+- [x] (Module Compatibility) So Inspired! - provide PR to module repo
 - [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
 - [ ] (Module Compatibility) Test Hidden Death Saves module
 - [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
