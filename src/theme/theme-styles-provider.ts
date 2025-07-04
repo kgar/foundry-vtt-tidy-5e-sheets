@@ -96,6 +96,9 @@ export class ThemeStylesProvider {
       doc,
       idOverride
     );
+
+    const urlValue = getUrlValue(settings.actorHeaderBackground);
+
     return [
       {
         identifier: `${identifierRule.property}: "${identifierRule.value}"`,
@@ -104,7 +107,7 @@ export class ThemeStylesProvider {
           identifierRule,
           {
             property: '--t5e-sheet-header-bg',
-            value: `url(${settings.actorHeaderBackground})`,
+            value: urlValue,
           },
         ],
       },
@@ -126,6 +129,9 @@ export class ThemeStylesProvider {
       doc,
       idOverride
     );
+
+    const urlValue = getUrlValue(settings.itemSidebarBackground);
+
     return [
       {
         identifier: `${identifierRule.property}: "${identifierRule.value}"`,
@@ -134,7 +140,7 @@ export class ThemeStylesProvider {
           identifierRule,
           {
             property: '--t5e-sidebar-bg',
-            value: `url(${settings.itemSidebarBackground})`,
+            value: urlValue,
           },
         ],
       },
@@ -241,4 +247,14 @@ export class ThemeStylesProvider {
   static themeSettingIdentifierValue(settingName: string) {
     return `tidy5e-sheet-theme-setting-${settingName}`;
   }
+}
+
+/** Creates a URL(...) CSS style value and accounts for content pulled from the web. */
+function getUrlValue(path: string) {
+  const pathPrefix =
+    // This backs the file directory location out of the Tidy module
+    '../../';
+
+  const urlValue = `url(${pathPrefix}${path})`;
+  return urlValue;
 }
