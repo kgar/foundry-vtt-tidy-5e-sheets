@@ -2,8 +2,6 @@
 
 ### The Short List
 
-- [x] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
-- [x] (Module Compatibility) So Inspired! - provide PR to module repo
 - [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
 - [ ] (Module Compatibility) Test Hidden Death Saves module
 - [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
@@ -210,3 +208,5 @@ Limited:
 - [x] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
 - [x] Editor style needs CSS help: <https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869>
 - [x] (Module Compatibility) So Inspired! - add API for globally overriding inspiration tracking.
+- [x] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
+- [x] (Module Compatibility) So Inspired! - provide PR to module repo
