@@ -20,7 +20,9 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
       },
     });
 
-    api.registerCharacterTab(contaminationTab, { layout: 'classic' });
-    api.registerNpcTab(contaminationTab, { layout: 'classic' });
+    api.registerCharacterTab(contaminationTab, {
+      layout: ['classic', 'quadrone'],
+    });
+    api.registerNpcTab(contaminationTab, { layout: ['classic', 'quadrone'] });
   }
 }

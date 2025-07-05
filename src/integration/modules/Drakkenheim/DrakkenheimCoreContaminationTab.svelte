@@ -4,11 +4,15 @@
   import type {
     ActorSheetContextV1,
     ActorSheetClassicContextV2,
+    ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
 
-  const context = $derived(getSheetContext<ActorSheetContextV1 | ActorSheetClassicContextV2>());
+  const context =
+    $derived(
+      getSheetContext<ActorSheetClassicContextV2 | ActorSheetQuadroneContext>(),
+    );
 
   let contanimationLevel = $derived(
     FoundryAdapter.getProperty<number | undefined>(
