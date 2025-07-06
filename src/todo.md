@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"

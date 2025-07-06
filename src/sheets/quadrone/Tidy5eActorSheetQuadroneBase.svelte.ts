@@ -844,6 +844,22 @@ export function Tidy5eActorSheetQuadroneBase<
         return;
       }
 
+      if (el.dataset.activityId) {
+        const itemDataset =
+          event.target.closest<HTMLElement>('[data-item-id]')?.dataset;
+        const activityDataset =
+          event.target.closest<HTMLElement>('[data-activity-id]')?.dataset;
+        const activity = this.actor.items
+          .get(itemDataset?.itemId)
+          ?.system.activities?.get(activityDataset?.activityId);
+        if (activity)
+          event.dataTransfer?.setData(
+            'text/plain',
+            JSON.stringify(activity.toDragData())
+          );
+        return;
+      }
+
       super._onDragStart(event);
     }
 
@@ -860,13 +876,15 @@ export function Tidy5eActorSheetQuadroneBase<
       // Handle different data types
       switch (data.type) {
         case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
-          return this._onDropJournal(event, data);
+          return await this._onDropJournal(event, data);
         case CONSTANTS.DOCUMENT_NAME_ACTOR:
-          return this._onDropActor(event, data);
+          return await this._onDropActor(event, data);
         case CONSTANTS.DOCUMENT_NAME_ITEM:
-          return this._onDropItem(event, data);
+          return await this._onDropItem(event, data);
+        case CONSTANTS.DOCUMENT_NAME_ACTIVITY:
+          return await this._onDropActivity(event, data);
         case 'Folder': // TODO: figure out how to extract this as a constant. Is it a Document Name? Or what?
-          return this._onDropFolder(event, data);
+          return await this._onDropFolder(event, data);
       }
 
       return super._onDrop(event);
@@ -1291,6 +1309,69 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Case 3: Drop a leveled spell in a specific section.
       else prep.mode = preparationMode;
+    }
+
+    /**
+     * Handle dropping an Activity onto the sheet.
+     * @param {DragEvent} event       The drag event.
+     * @param {object} transfer       The dropped data.
+     * @param {object} transfer.data  The Activity data.
+     * @protected
+     */
+    async _onDropActivity(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      { data, uuid }: any
+    ) {
+      const { _id: id, type } = data;
+
+      const droppedActivityDocument = await fromUuid(uuid);
+
+      const targetItemId = event.target
+        .closest('[data-item-id]')
+        ?.getAttribute('data-item-id');
+
+      const targetItem = this.actor.items.get(targetItemId);
+
+      // Reordering
+      if (
+        !!targetItem &&
+        targetItem.uuid === droppedActivityDocument.item?.uuid
+      ) {
+        const source = targetItem.system.activities.get(id);
+        const targetId = event.target.closest<HTMLElement>(
+          '.activity[data-activity-id]'
+        )?.dataset.activityId;
+        const target = targetItem.system.activities.get(targetId);
+        if (!target || target === source) return;
+        const siblings = targetItem.system.activities.filter(
+          (a: any) => a._id !== id
+        );
+        const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
+          source,
+          {
+            target,
+            siblings,
+          }
+        );
+        const updateData = Object.fromEntries(
+          sortUpdates.map(
+            ({ target, update }: { target: any; update: any }) => {
+              return [target._id, { sort: update.sort }];
+            }
+          )
+        );
+        targetItem.update({ 'system.activities': updateData });
+      }
+
+      // Copying/Moving
+      else if (targetItem) {
+        delete data._id;
+        const behavior = this._dropBehavior(event, { data, uuid });
+        await targetItem.createActivity(type, data, { renderSheet: false });
+        if (behavior === 'move') {
+          await droppedActivityDocument.delete();
+        }
+      }
     }
 
     async _onDropFolder(

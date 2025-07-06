@@ -1291,14 +1291,15 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
    */
   async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    activity: Activity5e
+    { data, uuid }: any
   ) {
+    const activity = await fromUuid(uuid);
     if (!event.target.closest('.favorites') || activity.actor !== this.actor)
-      return;
-    const uuid = `${activity.item.getRelativeUUID(this.actor)}.Activity.${
-      activity.id
-    }`;
-    return this._onDropFavorite(event, { type: 'activity', id: uuid });
+      return super._onDropActivity(event, { data, uuid });
+    const relativeUuid = `${activity.item.getRelativeUUID(
+      this.actor
+    )}.Activity.${activity.id}`;
+    return this._onDropFavorite(event, { type: 'activity', id: relativeUuid });
   }
 
   async _onDropItem(

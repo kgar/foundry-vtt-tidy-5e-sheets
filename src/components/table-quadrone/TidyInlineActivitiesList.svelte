@@ -51,11 +51,13 @@
       {@const configurable = Activities.isConfigurable(ctx.activity)}
       <TidyTableRow
         rowAttributes={{
+          'data-item-id': ctx.activity.item.id,
           'data-activity-id': ctx.activity.id,
           'data-configurable': configurable,
           'data-info-card': 'activity',
           'data-info-card-entity-uuid': ctx.activity.uuid,
           'data-context-menu': CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
+          'data-tidy-always-draggable': '',
         }}
         rowClass="activity"
         onmousedown={(event) =>
@@ -69,9 +71,17 @@
           onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
         >
           {#if ctx.activity.img?.endsWith('.svg')}
-            <img class="item-image" src={ctx.activity.img} alt={ctx.activity.name} />
+            <img
+              class="item-image"
+              src={ctx.activity.img}
+              alt={ctx.activity.name}
+            />
           {:else}
-            <img class="item-image" alt={ctx.activity.name} src={ctx.activity.img} />
+            <img
+              class="item-image"
+              alt={ctx.activity.name}
+              src={ctx.activity.img}
+            />
           {/if}
           <span class="roll-prompt">
             <i class="fa fa-dice-d20"></i>
