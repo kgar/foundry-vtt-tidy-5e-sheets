@@ -58,12 +58,6 @@
         };
       },
     );
-
-    $effect(() => {
-      return () => {
-        sectionExpansionTracker.unregister(key, tabId, location);
-      };
-    });
   }
 
   let expanded = $derived(

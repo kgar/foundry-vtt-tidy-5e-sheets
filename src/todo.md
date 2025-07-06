@@ -2,20 +2,19 @@
 
 ### The Short List
 
-- [ ] Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
-- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
-- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
+- [ ] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
-- [ ] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
 - [ ] add a class to section headers when there are no search results `.search-no-results`
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
-- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
-- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
-- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings
-- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
+- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
+- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings.
+- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
+- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
+- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 
 
 ### (Almost) Everything after the short list
@@ -211,3 +210,7 @@ Limited:
 - [x] Tidy API for pseudo traits: support on new character sheet
 - [x] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
 - [x] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
+- [x] Remember section expand/collapse state between sheet open/close.
+  - [x] On toggle, debounced by 250ms, persist to a client setting which hold all expansion tracker state via a map from UUID to expansion trackers, essentially. This setting will not be visualized in the UI.
+  - [x] On construction, look for ones own tracking data from the client setting and populate self.
+  - Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~

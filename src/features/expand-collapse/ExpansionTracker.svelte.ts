@@ -1,12 +1,13 @@
 import { CONSTANTS } from 'src/constants';
-import { debug, warn } from 'src/utils/logging';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { getContext, setContext } from 'svelte';
 
 interface ExpansionState {
   expanded: boolean;
 }
 
-interface TrackedTabs {
+export interface TrackedTabs {
   [tabId: string]: {
     [location: string]: {
       [entityId: string]: ExpansionState;
@@ -31,25 +32,56 @@ export class ExpansionTracker {
   #tabs = $state<TrackedTabs>({});
   #initialState: boolean;
   #locationSegment: string;
+  document: any;
 
   tabStats = $derived.by(() => {
     return this.getTabStats();
   });
 
-  constructor(initialState: boolean, locationSegment: string = '') {
+  private debouncedPersistState = FoundryAdapter.debounce(() => {
+    if (!this.document.uuid) {
+      return;
+    }
+    const state = SettingsProvider.settings.sectionExpansionState.get();
+    state[this.clientStateKey] = this.#tabs;
+    FoundryAdapter.setTidySetting('sectionExpansionState', state);
+  }, 250);
+
+  get clientStateKey() {
+    return `${this.document?.uuid}-${this.#locationSegment}`;
+  }
+
+  constructor(
+    initialState: boolean,
+    document: any,
+    locationSegment: string = ''
+  ) {
     this.#initialState = initialState;
     this.#locationSegment = locationSegment;
+    this.document = document;
+
+    if (this.document?.uuid) {
+      const state =
+        SettingsProvider.settings.sectionExpansionState.get()?.[
+          this.clientStateKey
+        ];
+
+      if (state) {
+        Object.assign(this.#tabs, state);
+      }
+    }
   }
 
   toggle(entityId: string, tabId: string, location: string, value?: boolean) {
     const expansionState = this.#tabs[tabId]?.[location]?.[entityId];
 
     if (!expansionState) {
-      warn('Expansion State not found :| (TODO: Delete after implementing)');
       return;
     }
 
     expansionState.expanded = value ?? !expansionState.expanded;
+
+    this.debouncedPersistState();
   }
 
   getContextKeys() {
@@ -65,7 +97,7 @@ export class ExpansionTracker {
     entityId: string,
     tabId: string,
     location: string,
-    expanded: boolean = true
+    expanded?: boolean
   ) {
     const expansionState = this.getOrCreateExpansionState(
       tabId,
@@ -73,7 +105,9 @@ export class ExpansionTracker {
       entityId
     );
 
-    expansionState.expanded = expanded;
+    if (expanded !== undefined) {
+      expansionState.expanded = expanded;
+    }
   }
 
   private getOrCreateExpansionState(
@@ -133,6 +167,8 @@ export class ExpansionTracker {
         state.expanded = value;
       }
     }
+
+    this.debouncedPersistState();
   }
 
   locationSegmentsMatch(left: string, right: string) {
@@ -208,12 +244,13 @@ export class ExpansionTracker {
   static getOrInit(
     contextKey: string,
     initialState: boolean = true,
-    locationSegment: string = ''
+    locationSegment: string = '',
+    document: any = undefined
   ) {
     let tracker = getContext<ExpansionTracker>(contextKey);
 
     if (!tracker) {
-      tracker = new ExpansionTracker(initialState, locationSegment);
+      tracker = new ExpansionTracker(initialState, document, locationSegment);
       setContext(contextKey, tracker);
     }
 
