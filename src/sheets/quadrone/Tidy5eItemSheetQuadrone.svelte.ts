@@ -88,7 +88,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           label: 'TIDY5E.ThemeSettings.SheetMenu.name',
           action: 'themeSettings',
           ownership: 'OWNER',
-          visible: () => settings.value.truesight,
+          visible: function (this: Tidy5eItemSheetQuadrone) {
+            return settings.value.truesight && this.isEditable;
+          },
         },
       ],
     },

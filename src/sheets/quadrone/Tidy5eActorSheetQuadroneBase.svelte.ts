@@ -116,7 +116,9 @@ export function Tidy5eActorSheetQuadroneBase<
             label: 'TIDY5E.ThemeSettings.SheetMenu.name',
             action: 'themeSettings',
             ownership: 'OWNER',
-            visible: () => settings.value.truesight,
+            visible: function (this: Tidy5eActorSheetQuadroneBase) {
+              return settings.value.truesight && this.isEditable;
+            },
           },
         ],
         resizable: true,
