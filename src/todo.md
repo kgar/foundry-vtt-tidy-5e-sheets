@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
+- [ ] Control which sheet header controls are available for non-owners and locked-in-compendia.
 - [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
 - [ ] add a class to section headers when there are no search results `.search-no-results`
@@ -214,3 +214,4 @@ Limited:
   - [x] On toggle, debounced by 250ms, persist to a client setting which hold all expansion tracker state via a map from UUID to expansion trackers, essentially. This setting will not be visualized in the UI.
   - [x] On construction, look for ones own tracking data from the client setting and populate self.
   - Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
+- [x] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
