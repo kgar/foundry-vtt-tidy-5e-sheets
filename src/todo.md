@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
+- [x] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
 - [ ] (Module Compatibility) Test Hidden Death Saves module
 - [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
 - [ ] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
