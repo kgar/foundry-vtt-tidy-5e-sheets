@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Tidy API for pseudo traits: support on new character sheet
 - [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
 - [ ] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
 - [ ] Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
@@ -211,3 +210,4 @@ Limited:
 - [x] (Module Compatibility) So Inspired! - provide PR to module repo
 - [x] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
 - [x] (Module Compatibility) Test Hidden Death Saves module; tested, submitted github issue, hoping to hear back. Compat should be real easy on this one.
+- [x] Tidy API for pseudo traits: support on new character sheet

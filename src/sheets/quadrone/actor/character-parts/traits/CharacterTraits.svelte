@@ -160,5 +160,22 @@
       onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
       icon="fa-solid fa-comments"
     />
+
+    {#each context.customActorTraits as trait}
+      <CharacterTraitConfigurableListEntry
+        label={localize(trait.title)}
+        entries={[]}
+        onconfig={(ev) =>
+          trait.openConfiguration?.({
+            app: context.document.sheet,
+            data: context,
+            element: context.document.sheet.element,
+            event: ev,
+          })}
+        configurationTooltip={trait.openConfigurationTooltip}
+        icon={trait.iconClass}
+        isCustomTrait={true}
+      />
+    {/each}
   </div>
 </section>

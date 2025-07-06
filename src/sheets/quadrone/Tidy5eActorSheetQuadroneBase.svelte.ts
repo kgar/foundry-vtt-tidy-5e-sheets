@@ -29,7 +29,6 @@ import type {
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorTraitContext,
   MessageBus,
-  SpecialTraitSectionField,
 } from 'src/types/types';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
@@ -42,6 +41,7 @@ import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
 import ActorWarnings from './shared/ActorWarnings.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -276,6 +276,9 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Concentration
       this._applyConcentration(context);
+
+      context.customActorTraits =
+        CustomActorTraitsRuntime.getEnabledTraits(context);
 
       return context;
     }
