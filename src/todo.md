@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Adjust truesight to reveal the next batch of the overhaul
 - [ ] Update the readme
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
@@ -92,6 +91,7 @@
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
 - [ ] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
+- [ ] Implement item HP UI for item sheets with HP: src\sheets\quadrone\item\parts\Sidebar.svelte , look for the truesight setting usage
 
 ### Huh?
 

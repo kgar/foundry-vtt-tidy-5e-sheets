@@ -117,7 +117,7 @@ export function Tidy5eActorSheetQuadroneBase<
             action: 'themeSettings',
             ownership: 'OWNER',
             visible: function (this: Tidy5eActorSheetQuadroneBase) {
-              return settings.value.truesight && this.isEditable;
+              return this.isEditable;
             },
           },
         ],

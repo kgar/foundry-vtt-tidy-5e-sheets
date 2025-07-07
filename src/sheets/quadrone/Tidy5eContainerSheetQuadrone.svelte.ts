@@ -105,7 +105,7 @@ export class Tidy5eContainerSheetQuadrone
           action: 'themeSettings',
           ownership: 'OWNER',
           visible: function (this: Tidy5eContainerSheetQuadrone) {
-            return settings.value.truesight && this.isEditable;
+            return this.isEditable;
           },
         },
       ],
