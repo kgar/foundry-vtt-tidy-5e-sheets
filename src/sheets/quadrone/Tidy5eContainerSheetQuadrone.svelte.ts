@@ -54,10 +54,7 @@ export class Tidy5eContainerSheetQuadrone
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemFilterService: ItemFilterService;
-  sectionExpansionTracker = new ExpansionTracker(
-    true,
-    CONSTANTS.LOCATION_SECTION
-  );
+  sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: ApplicationConfiguration | undefined) {
     super(options);
@@ -69,6 +66,12 @@ export class Tidy5eContainerSheetQuadrone
     );
 
     this.currentTabId = CONSTANTS.TAB_CONTAINER_CONTENTS;
+
+    this.sectionExpansionTracker = new ExpansionTracker(
+      true,
+      this.document,
+      CONSTANTS.LOCATION_SECTION
+    );
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -101,7 +104,9 @@ export class Tidy5eContainerSheetQuadrone
           label: 'TIDY5E.ThemeSettings.SheetMenu.name',
           action: 'themeSettings',
           ownership: 'OWNER',
-          visible: () => settings.value.truesight,
+          visible: function (this: Tidy5eContainerSheetQuadrone) {
+            return settings.value.truesight && this.isEditable;
+          },
         },
       ],
     },

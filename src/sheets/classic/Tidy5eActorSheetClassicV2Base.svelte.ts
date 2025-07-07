@@ -77,6 +77,9 @@ export function Tidy5eActorSheetClassicV2Base<
             action: 'openTabSelection',
             icon: 'fas fa-file-invoice',
             label: 'TIDY5E.TabSelection.MenuOptionText',
+            visible: function (this: Tidy5eActorSheetClassicV2Base) {
+              return this.isEditable;
+            }
           },
           {
             action: 'restoreTransformation',
@@ -90,6 +93,9 @@ export function Tidy5eActorSheetClassicV2Base<
             icon: 'fas fa-swatchbook',
             label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
             ownership: 'OWNER',
+            visible: function (this: Tidy5eActorSheetClassicV2Base) {
+              return this.isEditable;
+            }
           },
         ],
         resizable: true,

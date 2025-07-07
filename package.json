@@ -18,7 +18,7 @@
     "link-remove": "node symlink-module-build-dir.js --clean"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^5.0.3",
+    "@sveltejs/vite-plugin-svelte": "^5.1.0",
     "@tsconfig/svelte": "^5.0.4",
     "@types/node": "^22.15.18",
     "dotenv": "^16.5.0",
@@ -34,7 +34,7 @@
     "yargs": "^17.7.2"
   },
   "dependencies": {
-    "@melloware/coloris": "^0.24.0",
+    "@melloware/coloris": "^0.25.0",
     "colord": "^2.9.3"
   }
 }

@@ -19,38 +19,40 @@
   class:stacked={!!inspirationSource}
 >
   {#if inspirationSource}
-    <button
-      aria-label="Inspiration"
-      type="button"
-      class="inspiration button button-borderless button-icon-only stacked"
-      class:inspired={inspirationSource.value > 0}
-    >
-      <span class="inspiration-level">
-        <span class="level font-data-large color-text-inverse">
-          {inspirationSource.value}
+    {#if inspirationSource.max > 0}
+      <button
+        aria-label="Inspiration"
+        type="button"
+        class="inspiration button button-borderless button-icon-only stacked"
+        class:inspired={inspirationSource.value > 0}
+      >
+        <span class="inspiration-level">
+          <span class="level font-data-large color-text-inverse">
+            {inspirationSource.value}
+          </span>
         </span>
-      </span>
-    </button>
-    <div class="inspiration-controls">
-      <button
-        type="button"
-        class="button button-borderless button-icon-only"
-        aria-label="Remove Inspiration"
-        disabled={inspirationSource.value === 0}
-        onclick={() => inspirationSource.change(-1)}
-      >
-        <i class="fas fa-hexagon-minus"></i>
       </button>
-      <button
-        type="button"
-        class="button button-borderless button-icon-only"
-        aria-label="Add Inspiration"
-        disabled={inspirationSource.value === inspirationSource.max}
-        onclick={() => inspirationSource.change(1)}
-      >
-        <i class="fas fa-hexagon-plus"></i>
-      </button>
-    </div>
+      <div class="inspiration-controls">
+        <button
+          type="button"
+          class="button button-borderless button-icon-only"
+          aria-label="Remove Inspiration"
+          disabled={inspirationSource.value === 0}
+          onclick={() => inspirationSource.change(-1)}
+        >
+          <i class="fas fa-hexagon-minus"></i>
+        </button>
+        <button
+          type="button"
+          class="button button-borderless button-icon-only"
+          aria-label="Add Inspiration"
+          disabled={inspirationSource.value === inspirationSource.max}
+          onclick={() => inspirationSource.change(1)}
+        >
+          <i class="fas fa-hexagon-plus"></i>
+        </button>
+      </div>
+    {/if}
   {:else}
     <button
       type="button"

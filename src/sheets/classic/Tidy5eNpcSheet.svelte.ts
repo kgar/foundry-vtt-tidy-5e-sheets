@@ -63,10 +63,7 @@ export class Tidy5eNpcSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
-  sectionExpansionTracker = new ExpansionTracker(
-    true,
-    CONSTANTS.LOCATION_SECTION
-  );
+  sectionExpansionTracker: ExpansionTracker;
   classSpellbookFilter: string = '';
 
   /**
@@ -88,6 +85,12 @@ export class Tidy5eNpcSheet
     });
 
     this.currentTabId = settings.value.initialNpcSheetTab;
+
+    this.sectionExpansionTracker = new ExpansionTracker(
+      true,
+      this.document,
+      CONSTANTS.LOCATION_SECTION
+    );
   }
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
@@ -631,9 +634,7 @@ export class Tidy5eNpcSheet
       containerPanelItems: await Inventory.getContainerPanelItems(
         defaultDocumentContext.items
       ),
-      defaultSkills: new Set<string>(
-        systemSettings.value.defaultSkills
-      ),
+      defaultSkills: new Set<string>(systemSettings.value.defaultSkills),
       features: [],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,

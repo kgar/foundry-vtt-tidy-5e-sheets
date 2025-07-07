@@ -37,13 +37,16 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
   >(foundry.applications.sheets.ItemSheetV2)
 ) {
   currentTabId: string | undefined = undefined;
-  sectionExpansionTracker = new ExpansionTracker(
-    true,
-    CONSTANTS.LOCATION_SECTION
-  );
+  sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
+
+    this.sectionExpansionTracker = new ExpansionTracker(
+      true,
+      this.document,
+      CONSTANTS.LOCATION_SECTION
+    );
   }
 
   static DEFAULT_OPTIONS: Partial<

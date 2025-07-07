@@ -70,16 +70,19 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
-  sectionExpansionTracker = new ExpansionTracker(
-    true,
-    CONSTANTS.LOCATION_SECTION
-  );
+  sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
     this.currentTabId = CONSTANTS.TAB_ACTOR_ACTIONS;
     this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_SKILLS;
+
+    this.sectionExpansionTracker = new ExpansionTracker(
+      true,
+      this.document,
+      CONSTANTS.LOCATION_SECTION
+    );
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -315,8 +318,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return {
         change: async (delta) =>
           await apiConfig.change!(this, this.actor, delta),
-        value: data.value ?? 0,
-        max: data.max ?? 0,
+        value: data?.value ?? 0,
+        max: data?.max ?? 0,
       };
     }
 
@@ -1288,14 +1291,15 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
    */
   async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    activity: Activity5e
+    { data, uuid }: any
   ) {
+    const activity = await fromUuid(uuid);
     if (!event.target.closest('.favorites') || activity.actor !== this.actor)
-      return;
-    const uuid = `${activity.item.getRelativeUUID(this.actor)}.Activity.${
-      activity.id
-    }`;
-    return this._onDropFavorite(event, { type: 'activity', id: uuid });
+      return super._onDropActivity(event, { data, uuid });
+    const relativeUuid = `${activity.item.getRelativeUUID(
+      this.actor
+    )}.Activity.${activity.id}`;
+    return this._onDropFavorite(event, { type: 'activity', id: relativeUuid });
   }
 
   async _onDropItem(

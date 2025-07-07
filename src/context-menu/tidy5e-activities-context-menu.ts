@@ -3,6 +3,7 @@ import { AttributePins } from 'src/features/attribute-pins/AttributePins';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+import { getContextMenuOptionsQuadrone } from './tidy5e-activities-context-menu-quadrone';
 
 export function configureActivitiesContextMenu(element: HTMLElement, app: any) {
   const itemId = element.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
@@ -33,7 +34,11 @@ export function configureActivitiesContextMenu(element: HTMLElement, app: any) {
     return;
   }
 
-  const menuItems = getContextMenuOptions(activity, app, configurable);
+  const isQuadroneSheet = element.closest('.quadrone');
+
+  const menuItems = isQuadroneSheet
+    ? getContextMenuOptionsQuadrone(activity, app, configurable)
+    : getContextMenuOptions(activity, app, configurable);
 
   /**
    * A hook even that fires when the context menu for an Activity is opened.

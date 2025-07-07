@@ -110,7 +110,11 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     async #persistSheetPositionPreferences(position?: ApplicationPosition) {
-      if (!position || this.minimized) {
+      if (
+        !position ||
+        this.minimized ||
+        this.element?.matches(':is(.minimizing, .minimized, .maximizing)')
+      ) {
         return;
       }
 

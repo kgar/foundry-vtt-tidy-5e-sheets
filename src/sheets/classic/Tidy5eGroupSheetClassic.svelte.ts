@@ -73,10 +73,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     >(foundry.applications.sheets.ActorSheetV2)
   )
 ) {
-  sectionExpansionTracker = new ExpansionTracker(
-    true,
-    CONSTANTS.LOCATION_SECTION
-  );
+  sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -84,6 +81,12 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     this._supportedItemTypes = new Set(Inventory.getInventoryTypes());
     this._supportedItemTypes.add(CONSTANTS.ITEM_TYPE_SPELL);
     this.itemFilterService = new ItemFilterService({}, this.actor);
+
+    this.sectionExpansionTracker = new ExpansionTracker(
+      true,
+      this.document,
+      CONSTANTS.LOCATION_SECTION
+    );
   }
 
   static DEFAULT_OPTIONS: Partial<

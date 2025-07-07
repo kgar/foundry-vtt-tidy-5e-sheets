@@ -7,13 +7,29 @@
 
   interface Props {
     entries: ActorTraitContext[];
-    onconfig: () => void;
+    onconfig: (
+      ev: MouseEvent & {
+        currentTarget: EventTarget & HTMLButtonElement;
+      },
+    ) => void;
+    configurationTooltip?: string;
     icon?: ClassValue;
     label: string;
     pillClass?: ClassValue;
+    alwaysShow?: boolean;
+    isCustomTrait?: boolean;
   }
 
-  let { entries = [], onconfig, icon, label, pillClass }: Props = $props();
+  let {
+    entries = [],
+    onconfig,
+    configurationTooltip,
+    icon,
+    label,
+    pillClass,
+    alwaysShow,
+    isCustomTrait,
+  }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -22,8 +38,8 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if context.unlocked || entries.length}
-  <div class={['list-entry', { empty }]}>
+{#if context.unlocked || entries.length || !!alwaysShow}
+  <div class={['list-entry', { empty: empty && !isCustomTrait }]}>
     <div class={['list-label']}>
       <h4 class="font-weight-label">
         <i class={icon}></i>
@@ -35,11 +51,12 @@
         {#if entries.length}
           <ActorTraitPills values={entries} {pillClass} />
         {/if}
-        {#if context.unlocked && !entries.length}
+        {#if context.unlocked && empty && !isCustomTrait}
           <button
             type="button"
             class="button button-tertiary"
-            onclick={(ev) => onconfig()}
+            data-tooltip={configurationTooltip}
+            onclick={(ev) => onconfig(ev)}
           >
             {localize('CONTROLS.CommonEdit')}
           </button>
@@ -51,7 +68,8 @@
             aria-label="Configure {label}"
             type="button"
             class="button button-borderless button-icon-only button-config"
-            onclick={(ev) => onconfig()}
+            data-tooltip={configurationTooltip}
+            onclick={(ev) => onconfig(ev)}
           >
             <i class="fa-solid fa-cog"></i>
           </button>

@@ -24,6 +24,7 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
 import { HomebrewSettingsApplication } from 'src/applications/homebrew-settings/HomebrewSettingsApplication.svelte';
+import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1968,6 +1969,22 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'bankedInspirationGmOnly'
+          );
+        },
+      },
+
+      sectionExpansionState: {
+        options: {
+          name: 'Section expansion state',
+          hint: 'Internal use only: Track the state of sections on any sheet with expandable/collapsible sections. This is an object mapping "{UUID}-{Location Section}" keys to full expansion tracking graphs.',
+          scope: 'client',
+          config: false,
+          default: {},
+          type: Object,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<Record<string, TrackedTabs>>(
+            'sectionExpansionState'
           );
         },
       },

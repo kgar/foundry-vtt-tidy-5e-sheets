@@ -2,26 +2,17 @@
 
 ### The Short List
 
-- [ ] Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
-- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
-- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
-- [ ] Make inline activities draggable / droppable within the scope of an item table row / summary
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
-- [ ] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
 - [ ] add a class to section headers when there are no search results `.search-no-results`
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
-- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
-- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
-- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings
-- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
-- [ ] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
-- [ ] (Module Compatibility) So Inspired! - provide PR to module repo
-- [ ] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
-- [ ] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
-- [ ] (Module Compatibility) Test Hidden Death Saves module
-- [ ] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
+- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
+- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings.
+- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
+- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
+- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 
 
 ### (Almost) Everything after the short list
@@ -75,17 +66,20 @@
 - [x] Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
 - [x] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
 - [x] Review Character Sheet Limited View
-- [ ] (not ready yet) Review Item Sheet Limited View. Only needs hide activity icon, everything else seems to match default sheets.
+- [x] (not ready yet) Review Item Sheet Limited View. Only needs hide activity icon, everything else seems to match default sheets.
 - [x] Review Container Sheet Limited View. I think this is good and already 1:1 with default sheets.
 - [x] Quadrone Item Images are somehow more pixellated than others: <https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806>
 - [x] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
 - [x] Reorganize responsive view of Character tab when sidebar is open (Skills top left, Tools/abilities top right, Features below)
 - [x] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
-- [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
 - [x] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
 - [x] Favorites - there are scrollbars on title and subtitle
 - [x] Character Sheet - Light Mode - Bastion tab - progress text is very dark against a dark bar.
 - [x] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
+- [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
+  - [ ] both - identify the things that can be disabled to appreciably improve perf
+  - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
+  - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
 - [ ] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
@@ -210,3 +204,17 @@ Limited:
 - [x] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
 - [x] Editor style needs CSS help: <https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869>
 - [x] (Module Compatibility) So Inspired! - add API for globally overriding inspiration tracking.
+- [x] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
+- [x] (Module Compatibility) So Inspired! - provide PR to module repo
+- [x] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
+- [x] (Module Compatibility) Test Hidden Death Saves module; tested, submitted github issue, hoping to hear back. Compat should be real easy on this one.
+- [x] Tidy API for pseudo traits: support on new character sheet
+- [x] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
+- [x] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
+- [x] Remember section expand/collapse state between sheet open/close.
+  - [x] On toggle, debounced by 250ms, persist to a client setting which hold all expansion tracker state via a map from UUID to expansion trackers, essentially. This setting will not be visualized in the UI.
+  - [x] On construction, look for ones own tracking data from the client setting and populate self.
+  - Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
+- [x] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
+- [x] Control which sheet header controls are available for non-owners and locked-in-compendia.
+- [x] Suppress user preference persistence when minimized, minimizing, and maximizing. I think this is causing a Last Known Width/Height bug.

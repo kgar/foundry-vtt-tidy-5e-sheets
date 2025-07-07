@@ -55,10 +55,7 @@ export class Tidy5eVehicleSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   itemTableTogglesCache: ItemTableToggleCacheService;
-  sectionExpansionTracker = new ExpansionTracker(
-    true,
-    CONSTANTS.LOCATION_SECTION
-  );
+  sectionExpansionTracker: ExpansionTracker;
 
   constructor(...args: any[]) {
     super(...args);
@@ -69,6 +66,12 @@ export class Tidy5eVehicleSheet
     });
 
     this.currentTabId = settings.value.initialVehicleSheetTab;
+
+    this.sectionExpansionTracker = new ExpansionTracker(
+      true,
+      this.document,
+      CONSTANTS.LOCATION_SECTION
+    );
   }
 
   /** @override */
