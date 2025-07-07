@@ -122,8 +122,8 @@
     "TIDY5E.TabSelection": {
         "Title": "Seleção de Aba: {documentName}",
         "MenuOptionText": "Seleção de Aba",
-        "AvailableHeader": "Abas Disponíveis",
-        "SelectedHeader": "Abas Selecionadas",
+        "AvailableHeader": "Abas Ocultas",
+        "SelectedHeader": "Abas Visíveis",
         "UnsupportedDocumentErrorMessage": "O tipo de documento {documentType} não está atualmente configurado para seleção de aba.",
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma aba.",
         "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na planilha, mesmo que selecionada."
@@ -828,5 +828,24 @@
     "TIDY5E.StatblockTabName": "Bloco de Estatísticas",
     "TIDY5E.ItemSheet.FeatureOriginLabel": "Talento de Origem",
     "TIDY5E.JournalEntry.NewTitle": "Entrada de Diário {number}",
-    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Definir como Fonte de Inspiração"
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Definir como Origem de Inspiração",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remover como Origem de Inspiração",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Adicionar à Aba da Ficha",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remover da Aba da Ficha",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Origem de Inspiração",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Configurações de Tema",
+        "label": "Definir Configurações de Tema",
+        "hint": "Apenas Novas Fichas Tidy: Define as configurações de tema padrão para o seu mundo de jogo. Elas se aplicam a todos os tipos de fichas."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Homebrew",
+        "label": "Configurar Homebrew",
+        "hint": "Habilite e configure as opções de homebrew fornecidas por este módulo."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Abas da Ficha",
+        "label": "Configurar Abas da Ficha",
+        "hint": "Apenas Novas Fichas Tidy: configure quais guias serão visíveis para todas as planilhas de atores e itens."
+    }
 }
