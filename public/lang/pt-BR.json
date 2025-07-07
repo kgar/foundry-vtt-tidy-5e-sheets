@@ -617,7 +617,10 @@
             "selectionDialogTitle": "Migração: Exaustão de PnJ para o sistema"
         },
         "Parent": "Pai",
-        "chatNotification": "Uma nova migração do Tidy 5e Sheets está disponível. Consulte as Configurações de Jogo do Tidy 5e Sheets para ver as migrações disponíveis."
+        "chatNotification": "Uma nova migração do Tidy 5e Sheets está disponível. Consulte as Configurações de Jogo do Tidy 5e Sheets para ver as migrações disponíveis.",
+        "Journal": {
+            "explanation1": "A Reformulação da Interface do Tidy 5e Sheets alterou o Diário para que ele tenha quantas entradas você quiser. Para acomodar isso, é necessária uma migração da estrutura antiga do Diário para a nova estrutura extensível. Os dados antigos do Diário não serão visíveis nas Fichas Tidy 5e reformuladas."
+        }
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
@@ -649,7 +652,7 @@
         "SheetMenu": {
             "name": "Configurações de Temas",
             "buttonLabel": "Configurações de Tema",
-            "hint": "Personalize as cores do Tidy 5e Sheets."
+            "hint": "Apenas Ficha Clássica Tidy: Personalize as cores do Tidy 5e Sheets."
         },
         "Sheet": {
             "title": "Configurações do Tema: {userName}",
@@ -663,7 +666,18 @@
             "importSuccess": "O tema foi importado com sucesso!",
             "menuLabel": "Menu",
             "explanation": "Selecione a cor que você deseja usar para cada opção. O valor \"#00000000\" é equivalente a desativar a cor."
-        }
+        },
+        "hint": "Personalize sua ficha para criar uma experiência imersiva que complemente seu jogo.",
+        "AccentColor.title": "Cor de Destaque",
+        "ActorHeaderBackground.title": "Fundo do Cabeçalho do Ator",
+        "ItemSidebarBackground.title": "Fundo da Lateral do Item",
+        "PortraitShape": {
+            "title": "Formato {type} do Retrato",
+            "option.round": "Redondo",
+            "option.transparent": "Transparente",
+            "option.square": "Quadrado"
+        },
+        "RarityColors.title": "Cores Raras"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",
@@ -846,6 +860,15 @@
     "TIDY5E.SettingsMenu.TabConfiguration": {
         "name": "Abas da Ficha",
         "label": "Configurar Abas da Ficha",
-        "hint": "Apenas Novas Fichas Tidy: configure quais guias serão visíveis para todas as planilhas de atores e itens."
+        "hint": "Apenas Novas Fichas Tidy: Configure quais abas serão visíveis para todas as fichas de atores e itens."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "Acúmulo de Inspirações",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Habilitar Acúmulo de Inspirações",
+        "hint": "Habilite esta opção para permitir que o usuário defina um item de destaque como origem de inspiração. Procure a opção como um item do Menu de Contexto em itens de características com usos."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Gestão de Acúmulo de Inspiração - Apenas Mestre",
+        "hint": "Habilite esta opção para limitar o gerenciamento de inspiração acumulada ao Mestre."
     }
 }
