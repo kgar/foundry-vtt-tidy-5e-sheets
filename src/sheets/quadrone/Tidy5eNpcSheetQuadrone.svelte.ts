@@ -172,6 +172,18 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
+      showLairTracker:
+        actorContext.unlocked ||
+        (actorContext.modernRules && this.actor.system.resources.lair.value) ||
+        (!actorContext.modernRules &&
+          this.actor.system.resources.lair.initiative),
+      showLegendaryActions:
+        actorContext.unlocked || this.actor.system.resources.legact.max,
+      showLegendaryResistances:
+        actorContext.unlocked || this.actor.system.resources.legres.max,
+      showLoyaltyTracker:
+        this.actor.system.traits.important &&
+        game.settings.get('dnd5e', 'loyaltyScore'),
       speeds: super._getMovementSpeeds(true),
       spellbook: [],
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),

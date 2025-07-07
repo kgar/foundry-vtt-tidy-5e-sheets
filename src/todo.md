@@ -17,20 +17,36 @@
 
 ### NPC Sheet
 
-- [ ] Sidebar
+- [ ] Header
+  - [ ] Portrait
+  - [ ] AC and Vitals
+  - [ ] Name
+  - [ ] Subtitle
+  - [ ] Sheet header buttons
+  - [ ] CR
+  - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
+  - [ ] abilities
+- [x] Sidebar
   - [x] Traits
   - [x] (Collapsed by default) Skills
-  - [ ] Loyalty tracker
-    - [ ] Show when 
-      - [ ] `this.actor.system.traits.important` AND
-      - [ ] `game.settings.get('dnd5e', 'loyaltyScore')` AND
-      - [ ] `game.user.isGM`
-  - [ ] Legendary trackers
-    - [ ] Show each when unlocked or when each is eligible
-      - [ ] legact - `this.actor.system.resources.legact.max`
-      - [ ] legres - `this.actor.system.resources.legres.max`
-      - [ ] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
-
+  - [x] Loyalty tracker
+    - [x] Show when 
+      - [x] `this.actor.system.traits.important` AND
+      - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
+      - [x] `game.user.isGM`
+  - [x] Legendary trackers
+    - [x] Show each when unlocked or when each is eligible
+      - [x] legact - `this.actor.system.resources.legact.max`
+      - [x] legres - `this.actor.system.resources.legres.max`
+      - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
+        - [x] 2014
+        - [x] Modern
+- [ ] Statblock
+- [ ] Inventory
+- [ ] Spellbook
+- [ ] Effects
+- [ ] Background
+- [ ] Journal
 
 ### (Almost) Everything after the short list
 

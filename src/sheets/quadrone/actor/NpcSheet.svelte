@@ -57,10 +57,38 @@
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
 
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
-  
+
   let ini = $derived(getModifierData(context.system.attributes.init.total));
 
-let extraTabs = new SvelteSet<string>();
+  let formattedCr = $derived(dnd5e.utils.formatCR(context.system.details.cr));
+
+  function calculateSaveCr(crValue: string): boolean {
+    const crs: Record<string, number> = {
+      '1/8': 0.125,
+      '⅛': 0.125,
+      '1/4': 0.25,
+      '¼': 0.25,
+      '1/2': 0.5,
+      '½': 0.5,
+    };
+
+    let cr: string | number | null = crValue;
+    if (cr === '' || cr === '—') cr = null;
+    else {
+      cr = crs[cr] || parseFloat(cr);
+      if (Number.isNaN(cr)) {
+        cr = null;
+      } else {
+        cr = cr < 1 ? cr : parseInt(cr.toString());
+      }
+    }
+
+    context.actor.update({ 'system.details.cr': cr });
+
+    return false;
+  }
+
+  let extraTabs = new SvelteSet<string>();
 </script>
 
 <header class="sheet-header flexcol theme-dark">
@@ -104,7 +132,34 @@ let extraTabs = new SvelteSet<string>();
           </div>
           <NpcSubtitle />
         </div>
-        <div class="cr-container">CR Here</div>
+        <div
+          class="challenge-rating"
+          aria-label={localize('DND5E.CRLabel', {
+            cr: context.system.details.cr,
+          })}
+          title={!context.unlocked ? localize('DND5E.ChallengeRating') : ''}
+        >
+          <label
+            for="{context.appId}-system-details-cr"
+            class="challenge-rating-label"
+          >
+            {localize('DND5E.AbbreviationCR')}
+          </label>
+          {#if context.unlocked}
+            <TextInputQuadrone
+              document={context.actor}
+              value={formattedCr}
+              field="system.details.cr"
+              class="challenge-rating-input"
+              selectOnFocus={true}
+              data-tooltip="DND5E.ChallengeRating"
+              id="{context.appId}-system-details-cr"
+              onSaveChange={(ev) => calculateSaveCr(ev.currentTarget.value)}
+            />
+          {:else}
+            <span class="challenge-rating-label">{formattedCr}</span>
+          {/if}
+        </div>
       </div>
       <div
         class={[

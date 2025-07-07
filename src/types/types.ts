@@ -1176,7 +1176,11 @@ export type NpcSheetQuadroneContext = {
   habitats: { label: string }[];
   inventory: InventorySection[];
   showContainerPanel: boolean;
-  showDeathSaves: boolean;
+  showDeathSaves: boolean
+  showLairTracker: boolean;
+  showLegendaryActions: boolean;
+  showLegendaryResistances: boolean;
+  showLoyaltyTracker: boolean;
   senses: ActorSpeedSenseEntryContext[];
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
