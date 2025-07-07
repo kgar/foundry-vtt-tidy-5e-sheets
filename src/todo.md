@@ -83,6 +83,11 @@
 - [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
 - [ ] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
+- [ ] Dying red color for transparent portraits
+- [ ] Tranparent portrait ring color lighten one step
+- [ ] Bypassed resistance pill styles using `.physical-bypass`
+- [ ] Wrapping header text styles
+- [ ] Item sheet sidebar (low)
 
 ### Huh?
 
