@@ -677,7 +677,10 @@
             "option.transparent": "Transparente",
             "option.square": "Quadrado"
         },
-        "RarityColors.title": "Cores Raras"
+        "RarityColors.title": "Cores de Raridade",
+        "SheetTheme.title": "Tema da Ficha",
+        "SheetTheme.hint": "Para melhores resultados, escolha uma cor próxima ao centro da paleta de cores.",
+        "SpellPreparationModeColors.title": "Cores do Modo de Preparação de Magias"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",
@@ -870,5 +873,11 @@
     "TIDY5E.Settings.BankedInspirationGmOnly": {
         "name": "Gestão de Acúmulo de Inspiração - Apenas Mestre",
         "hint": "Habilite esta opção para limitar o gerenciamento de inspiração acumulada ao Mestre."
-    }
+    },
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Agrupamento de Atividade de Conjuração de Magias",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Seção de Magias Adicionais",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Seção por Item",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ordem Crescente",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Ordem Decrescente",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Bem-vindo ao Tidy 5e Sheets! Para começar, você precisará alterar {sheetLinkStart}uma ficha{sheetLinkEnd} (ou {allSheetsLinkStart}todas as suas fichas{allSheetsLinkEnd}!) para usar a versão Tidy. Saiba mais sobre este módulo e o que ele pode fazer na {wikiLinkStart}wiki oficial{wikiLinkEnd}."
 }
