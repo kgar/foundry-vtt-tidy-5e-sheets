@@ -79,7 +79,7 @@ export function Tidy5eActorSheetClassicV2Base<
             label: 'TIDY5E.TabSelection.MenuOptionText',
             visible: function (this: Tidy5eActorSheetClassicV2Base) {
               return this.isEditable;
-            }
+            },
           },
           {
             action: 'restoreTransformation',
@@ -95,7 +95,7 @@ export function Tidy5eActorSheetClassicV2Base<
             ownership: 'OWNER',
             visible: function (this: Tidy5eActorSheetClassicV2Base) {
               return this.isEditable;
-            }
+            },
           },
         ],
         resizable: true,
@@ -778,7 +778,7 @@ export function Tidy5eActorSheetClassicV2Base<
     async _renderFrame(options: ApplicationRenderOptions = {}) {
       const html = await super._renderFrame(options);
       if (!game.user.isGM && this.actor.limited) return html;
-      
+
       // Preparation warnings.
       const warnings = document.createElement('button');
       warnings.classList.add('preparation-warnings', 'header-control', 'icon');
@@ -786,7 +786,7 @@ export function Tidy5eActorSheetClassicV2Base<
       warnings.setAttribute('aria-label', game.i18n.localize('Warnings'));
       warnings.innerHTML = '<i class="fas fa-triangle-exclamation"></i>';
       warnings.addEventListener('click', this._onOpenWarnings.bind(this));
-      
+
       const header = html.querySelector('.window-header');
       header
         .querySelector('.window-title')
