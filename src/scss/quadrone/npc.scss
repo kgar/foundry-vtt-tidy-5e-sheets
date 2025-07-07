@@ -1,3 +1,59 @@
 .tidy5e-sheet:where(.quadrone.npc) {
-    
+  --sidebar-expanded-width: 17.25rem;
+
+  .window-content {
+    .sheet-body {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position: relative;
+      z-index: 0;
+    }
+
+    .main-content {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+      overflow: hidden;
+
+      > .sidebar {
+        flex-basis: var(--sidebar-expanded-width);
+        gap: var(--t5e-size-3x);
+        margin-inline-end: var(--t5e-size-4x);
+        margin-inline-start: calc(
+          (var(--sidebar-expanded-width) + var(--t5e-size-4x)) * -1
+        );
+        overflow-y: auto;
+        transition: margin var(--t5e-transition-default);
+
+        &.expanded {
+          margin-inline-start: 0;
+          margin-inline-end: 0;
+          padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x)
+            var(--t5e-size-4x);
+          max-width: var(--sidebar-expanded-width);
+        }
+      }
+
+      .sidebar-tab-contents {
+        gap: var(--t5e-size-4x);
+        padding-bottom: var(--t5e-size-6x);
+      }
+
+      .sidebar-tab-strip {
+        .tab-option {
+          flex: 1;
+        }
+      }
+
+      > .tidy-tab {
+        flex: 1;
+        overflow-y: auto;
+        padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x)
+          var(--t5e-size-4x);
+      }
+    }
+  }
 }

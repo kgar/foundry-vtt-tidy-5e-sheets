@@ -63,11 +63,6 @@
               <button
                 type="button"
                 class="button button-icon-only short-rest button-gold"
-                >(Magic wand thingy?)</button
-              >
-              <button
-                type="button"
-                class="button button-icon-only short-rest button-gold"
                 data-tooltip="DND5E.REST.Short.Label"
                 aria-label={localize('DND5E.REST.Short.Label')}
                 onclick={() => context.actor.shortRest()}

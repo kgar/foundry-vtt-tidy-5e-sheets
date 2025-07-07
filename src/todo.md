@@ -15,6 +15,22 @@
 - [ ] add a class to section headers when there are no search results `.search-no-results`
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 
+### NPC Sheet
+
+- [ ] Sidebar
+  - [ ] Traits
+  - [ ] (Collapsed by default) Skills
+  - [ ] Loyalty tracker
+    - [ ] Show when 
+      - [ ] `this.actor.system.traits.important` AND
+      - [ ] `game.settings.get('dnd5e', 'loyaltyScore')` AND
+      - [ ] `game.user.isGM`
+  - [ ] Legendary trackers
+    - [ ] Show each when unlocked or when each is eligible
+      - [ ] legact - `this.actor.system.resources.legact.max`
+      - [ ] legres - `this.actor.system.resources.legres.max`
+      - [ ] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
+
 
 ### (Almost) Everything after the short list
 
