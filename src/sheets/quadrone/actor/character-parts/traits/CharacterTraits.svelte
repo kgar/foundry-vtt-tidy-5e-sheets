@@ -100,6 +100,10 @@
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
       icon="fa-solid fa-shield-halved"
       pillClass="positive"
+      aggregateIcons={{
+        iconClass: 'fa-solid fa-shield-exclamation',
+        pillClass: 'physical-bypass',
+      }}
     />
 
     <!-- Damage Immunities -->
@@ -109,6 +113,10 @@
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
       icon="fa-solid fa-shield"
       pillClass="positive"
+      aggregateIcons={{
+        iconClass: 'fa-solid fa-shield-exclamation',
+        pillClass: 'physical-bypass',
+      }}
     />
 
     <!-- Condition Immunities -->
@@ -127,6 +135,10 @@
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
       icon="fa-solid fa-heart-crack"
       pillClass="negative"
+      aggregateIcons={{
+        iconClass: 'fa-solid fa-shield-exclamation',
+        pillClass: 'physical-bypass',
+      }}
     />
 
     <!-- Damage Modification -->
@@ -135,6 +147,10 @@
       entries={context.traits.dm}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
       icon="fa-solid fa-heart-circle-plus"
+      aggregateIcons={{
+        iconClass: 'fa-solid fa-shield-exclamation',
+        pillClass: 'physical-bypass',
+      }}
     />
 
     <!-- Armor -->
