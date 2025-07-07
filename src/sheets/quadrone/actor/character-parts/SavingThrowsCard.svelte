@@ -99,7 +99,7 @@
     disabled={!context.unlocked}
     path="system.abilities.{ability.key}.proficient"
     type="ability"
-    value={context.unlocked ? ability.source.proficient : ability.proficient}
+    value={context.unlocked ? (ability.source?.proficient ?? 0) : ability.proficient}
   />
   <button
     type="button"

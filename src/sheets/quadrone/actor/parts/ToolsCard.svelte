@@ -53,13 +53,13 @@
             disabled={!context.unlocked}
             path="system.tools.{tool.key}.value"
             type="tool"
-            value={context.unlocked ? tool.source.value : tool.value}
+            value={context.unlocked ? (tool.source?.value ?? 0) : tool.value}
           />
           {#if context.unlocked}
             <SelectQuadrone
               document={context.actor}
               field="system.tools.{tool.key}.ability"
-              value={tool.source.ability}
+              value={tool.baseAbility}
               class="skill-ability"
             >
               <SelectOptions
