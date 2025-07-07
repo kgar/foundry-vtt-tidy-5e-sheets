@@ -27,6 +27,7 @@ import type {
   ActorSaves,
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
+  ActorSpeedSenseEntryContext,
   ActorTraitContext,
   MessageBus,
 } from 'src/types/types';
@@ -537,6 +538,82 @@ export function Tidy5eActorSheetQuadroneBase<
           source: context.source[property]?.[key],
         })
       );
+    }
+
+    _getMovementSpeeds(
+      includeDefaultWalkSpeed?: boolean
+    ): ActorSpeedSenseEntryContext[] {
+      const movement = this.actor.system.attributes.movement;
+
+      const speeds = Object.entries(CONFIG.DND5E.movementTypes)
+        .reduce<ActorSpeedSenseEntryContext[]>((acc, [key, label]) => {
+          const value = movement[key];
+
+          if (!value || value === 0) {
+            return acc;
+          }
+
+          acc.push({
+            key,
+            label,
+            value: Math.round(+value).toString() ?? '',
+            units: movement.units,
+          });
+
+          return acc;
+        }, [])
+        .toSorted((left, right) =>
+          left.key === 'walk'
+            ? -1
+            : right.key === 'walk'
+            ? 1
+            : +(right.value ?? 0) - +(left.value ?? 0)
+        );
+
+      if (speeds.length === 0 && includeDefaultWalkSpeed) {
+        const defaultWalkSpeed =
+          this.document.system.details?.race?.system?.movement?.walk ?? null;
+
+        speeds.push({
+          key: 'walk',
+          label: CONFIG.DND5E.movementTypes.walk,
+          units: movement.units,
+          value: defaultWalkSpeed ?? '0',
+        });
+      }
+
+      return speeds;
+    }
+
+    _getSenses(): ActorSpeedSenseEntryContext[] {
+      const senseConfig = this.actor.system.attributes.senses;
+
+      const senses = Object.entries(CONFIG.DND5E.senses)
+        .reduce<ActorSpeedSenseEntryContext[]>((acc, [key, label]) => {
+          const value = senseConfig[key];
+
+          if (!value || value === 0) {
+            return acc;
+          }
+
+          acc.push({
+            key,
+            label,
+            value: Math.round(+value).toString(),
+            units: senseConfig.units,
+          });
+
+          return acc;
+        }, [])
+        .toSorted((left, right) =>
+          left.key === 'darkvision'
+            ? -1
+            : right.key === 'darkvision'
+            ? 1
+            : +right.value - +left.value
+        );
+
+      return senses;
     }
 
     /* -------------------------------------------- */

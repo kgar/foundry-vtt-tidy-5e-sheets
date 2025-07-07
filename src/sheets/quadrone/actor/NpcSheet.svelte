@@ -9,9 +9,10 @@
   import NpcPortrait from './npc-parts/NpcPortrait.svelte';
   import NpcExhaustionBar from './npc-parts/NpcExhaustionBar.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import ActorSidebar from './character-parts/CharacterSidebar.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import NpcSidebar from './npc-parts/NpcSidebar.svelte';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { untrack } from 'svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -21,7 +22,26 @@
 
   let selectedTabId: string = $derived(context.currentTabId);
 
-  let sidebarExpanded = $state(false);
+  let sidebarExpanded = $state(true);
+
+  // When the user changes tabs, check their preference on the new tab and apply expanded state.
+  $effect(() => {
+    const type = untrack(() => context.actor.type);
+
+    sidebarExpanded =
+      SheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
+        ?.sidebarExpanded == true;
+  });
+
+  // When the user expands or collapses the sidebar, remember their preference for this tab.
+  $effect(() => {
+    SheetPreferencesService.setDocumentTypeTabPreference(
+      untrack(() => context.actor.type),
+      untrack(() => selectedTabId),
+      'sidebarExpanded',
+      sidebarExpanded,
+    );
+  });
 
   let hpValueInputFocused = $state(false);
   let hpTempInputFocused = $state(false);
@@ -37,10 +57,10 @@
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
 
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
-
-  let extraTabs = new SvelteSet<string>();
-
+  
   let ini = $derived(getModifierData(context.system.attributes.init.total));
+
+let extraTabs = new SvelteSet<string>();
 </script>
 
 <header class="sheet-header flexcol theme-dark">

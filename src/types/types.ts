@@ -936,12 +936,12 @@ export type ActorSizeContext = {
   mod: number;
 };
 
-export type ActorTraitContext = {
+export type ActorTraitContext<TValue = unknown> = {
   key?: string;
   icons?: { icon: string; label: string }[];
   label: string;
   sign?: string;
-  value?: unknown;
+  value?: TValue;
   units?: string;
   cssClass?: ClassValue;
 };
@@ -991,12 +991,12 @@ export type ActorAbilityContextEntry = Ability & {
 };
 
 export type CharacterSpeedSenseContext = {
-  main: CharacterSpeedSenseEntryContext[];
-  secondary: CharacterSpeedSenseEntryContext[];
+  main: ActorSpeedSenseEntryContext[];
+  secondary: ActorSpeedSenseEntryContext[];
   traitEntries: ActorTraitContext[];
 };
 
-export type CharacterSpeedSenseEntryContext = {
+export type ActorSpeedSenseEntryContext = {
   key: string;
   label: string;
   value: string;
@@ -1173,15 +1173,19 @@ export type NpcSheetQuadroneContext = {
     biography: string;
   };
   features: NpcAbilitySection[];
+  habitats: { label: string }[];
   inventory: InventorySection[];
   showContainerPanel: boolean;
   showDeathSaves: boolean;
+  senses: ActorSpeedSenseEntryContext[];
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
+  treasures: { label: string }[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & ActorSheetQuadroneContext<any>;
 

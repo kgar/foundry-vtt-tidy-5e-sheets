@@ -16,9 +16,10 @@
 
   interface Props {
     allowToggle?: boolean;
+    defaultExpansionState?: boolean;
   }
 
-  let { allowToggle = false }: Props = $props();
+  let { allowToggle = false, defaultExpansionState = true }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -29,7 +30,9 @@
       >(),
     );
 
-  let expanded = $derived(TidyFlags.skillsExpanded.get(context.actor) ?? true);
+  let expanded = $derived(
+    TidyFlags.skillsExpanded.get(context.actor) ?? defaultExpansionState,
+  );
 
   let skills = $derived(
     expanded || !allowToggle

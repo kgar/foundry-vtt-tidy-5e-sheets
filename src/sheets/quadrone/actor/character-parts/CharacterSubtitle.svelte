@@ -2,7 +2,7 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import type { CharacterSpeedSenseEntryContext } from 'src/types/types';
+  import type { ActorSpeedSenseEntryContext } from 'src/types/types';
   import type { ClassValue } from 'svelte/elements';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -36,7 +36,7 @@
 </script>
 
 {#snippet speedSenseSummary(
-  speed: CharacterSpeedSenseEntryContext,
+  speed: ActorSpeedSenseEntryContext,
   clsx?: ClassValue,
   hide?: ClassValue,
 )}

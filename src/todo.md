@@ -18,8 +18,8 @@
 ### NPC Sheet
 
 - [ ] Sidebar
-  - [ ] Traits
-  - [ ] (Collapsed by default) Skills
+  - [x] Traits
+  - [x] (Collapsed by default) Skills
   - [ ] Loyalty tracker
     - [ ] Show when 
       - [ ] `this.actor.system.traits.important` AND

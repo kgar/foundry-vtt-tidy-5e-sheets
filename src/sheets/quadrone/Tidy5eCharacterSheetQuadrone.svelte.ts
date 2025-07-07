@@ -16,7 +16,7 @@ import type {
   CharacterItemPartitions,
   CharacterSheetQuadroneContext,
   CharacterSpeedSenseContext,
-  CharacterSpeedSenseEntryContext,
+  ActorSpeedSenseEntryContext,
   ChosenFacilityContext,
   CreatureTypeContext,
   ExpandedItemData,
@@ -232,7 +232,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       initialSidebarTabId: this.currentSidebarTabId,
       inspirationSource,
       inventory: [],
-      senses: this._getSenses(),
+      senses: this._getCharacterSenses(),
       size: {
         key: this.actor.system.traits.size,
         label:
@@ -253,7 +253,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             name: species.name,
           }
         : undefined,
-      speeds: this._getMovementSpeeds(),
+      speeds: this._getCharacterMovementSpeeds(),
       spellbook: [],
       spellcasting: this._prepareSpellcastingContext(),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
@@ -729,35 +729,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   /* -------------------------------------------- */
 
-  _getSenses(): CharacterSpeedSenseContext {
-    const senseConfig = this.actor.system.attributes.senses;
+  _getCharacterSenses(): CharacterSpeedSenseContext {
+    const senses = super._getSenses();
 
-    const senses = Object.entries(CONFIG.DND5E.senses)
-      .reduce<CharacterSpeedSenseEntryContext[]>((acc, [key, label]) => {
-        const value = senseConfig[key];
-
-        if (!value || value === 0) {
-          return acc;
-        }
-
-        acc.push({
-          key,
-          label,
-          value: Math.round(+value).toString(),
-          units: senseConfig.units,
-        });
-
-        return acc;
-      }, [])
-      .toSorted((left, right) =>
-        left.key === 'darkvision'
-          ? -1
-          : right.key === 'darkvision'
-          ? 1
-          : +right.value - +left.value
-      );
-
-    const main: CharacterSpeedSenseEntryContext[] = [];
+    const main: ActorSpeedSenseEntryContext[] = [];
 
     if (senses.at(0)?.key === 'darkvision') {
       main.push(senses.shift()!);
@@ -770,45 +745,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
   }
 
-  _getMovementSpeeds(): CharacterSpeedSenseContext {
+  _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const movement = this.actor.system.attributes.movement;
 
-    const speeds = Object.entries(CONFIG.DND5E.movementTypes)
-      .reduce<CharacterSpeedSenseEntryContext[]>((acc, [key, label]) => {
-        const value = movement[key];
-
-        if (!value || value === 0) {
-          return acc;
-        }
-
-        acc.push({
-          key,
-          label,
-          value: Math.round(+value).toString(),
-          units: movement.units,
-        });
-
-        return acc;
-      }, [])
-      .toSorted((left, right) =>
-        left.key === 'walk'
-          ? -1
-          : right.key === 'walk'
-          ? 1
-          : +right.value - +left.value
-      );
-
-    if (speeds.length === 0) {
-      const defaultWalkSpeed =
-        this.document.system.details?.race?.system?.movement?.walk ?? null;
-
-      speeds.push({
-        key: 'walk',
-        label: CONFIG.DND5E.movementTypes.walk,
-        units: movement.units,
-        value: defaultWalkSpeed ?? '0',
-      });
-    }
+    const speeds = super._getMovementSpeeds(true);
 
     const main = speeds.slice(0, 2);
     const secondary = speeds.slice(2);
