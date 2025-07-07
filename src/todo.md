@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Suppress user prefernce persistence when minimized, minimizing, and maximizing. I think this is causing a Last Known Width/Height bug.
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
 - [ ] add a class to section headers when there are no search results `.search-no-results`
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
@@ -218,3 +217,4 @@ Limited:
   - Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
 - [x] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
 - [x] Control which sheet header controls are available for non-owners and locked-in-compendia.
+- [x] Suppress user preference persistence when minimized, minimizing, and maximizing. I think this is causing a Last Known Width/Height bug.
