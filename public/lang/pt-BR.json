@@ -826,5 +826,7 @@
     "TIDY5E.HitDice.Max.Label": "Dados de Vida Máximos",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Rastreamento de Espaço de Magia",
     "TIDY5E.StatblockTabName": "Bloco de Estatísticas",
-    "TIDY5E.ItemSheet.FeatureOriginLabel": "Talento de Origem"
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Talento de Origem",
+    "TIDY5E.JournalEntry.NewTitle": "Entrada de Diário {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Definir como Fonte de Inspiração"
 }
