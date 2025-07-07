@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] (testing) Finish testing all documented CONFIG.DND5E customizations
 - [ ] Adjust truesight to reveal the next batch of the overhaul
 - [ ] Update the readme
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
@@ -17,19 +16,6 @@
 - [ ] add a class to section headers when there are no search results `.search-no-results`
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 
-### CONFIG.DND5E test targets
-
-// ✅ Add a new Skill
-// ✅ Add a new Ability
-// ✅ Adds a new "plasma" damage type that will be selectable as a new type of damage for weapons and a new type of resistance for actors.
-// Adds a new "Laser" Weapon Property and Physical Property for resistance bypass
-// Add a new Spell School that can be selected in Spell Items
-// Adds a new "Blood Curse" class feature type
-// Adds in a new feature type, similar to "Class Feature" called "Martial Exploit", with 3 different subtypes for it.
-// Add a new AC Calculation
-// Adds in options to display in the Activation Cost dropdown
-// Adds new Weapon types of Hand Cannon and Magnum
-// Adds new Tool Proficiency for Hacking Tools
 
 ### (Almost) Everything after the short list
 
@@ -243,3 +229,4 @@ Limited:
 - [x] Suppress user preference persistence when minimized, minimizing, and maximizing. I think this is causing a Last Known Width/Height bug.
 - [x] Phys bypasses: ok what I'd try instead is to use the tooltip for sure, but thin toss on `fa-shield-exclamation` and try changing the color to either orange-40 or orange-70, or if that feels weird then same green but change the icon to `rgba(255, 236, 149, 1)` or something https://discord.com/channels/@me/1243307347682529423/1391632333337002082
 - [x] (testing) Fix issue with https://github.com/KibblesTasty/kibbles-compendium-of-craft-and-creation
+- [x] (testing) Finish testing all documented CONFIG.DND5E customizations
