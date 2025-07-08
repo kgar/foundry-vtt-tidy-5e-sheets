@@ -23,10 +23,10 @@
     "TIDY5E.Class.Warlock": "வார்லாக்",
     "TIDY5E.TabSelection": {
         "MenuOptionText": "தாவல் தேர்வு",
-        "AvailableHeader": "கிடைக்கும் தாவல்கள்",
+        "AvailableHeader": "மறைக்கப்பட்ட தாவல்கள்",
         "AtLeastOneRequiredErrorMessage": "குறைந்தது ஒரு தாவல் தேவை.",
         "Title": "தாவல் தேர்வு: {documentName}",
-        "SelectedHeader": "தேர்ந்தெடுக்கப்பட்ட தாவல்கள்",
+        "SelectedHeader": "தெரியும் தாவல்கள்",
         "UnsupportedDocumentErrorMessage": "ஆவண வகை {documentType} தற்போது தாவல் தேர்வுக்கு அமைக்கப்படவில்லை.",
         "Explanation": "பார்க்கக்கூடாது என்று பயனர் அல்லது தாள் கட்டமைக்கப்பட்ட எந்த தாவல்களும் (எ.கா., பத்திரிகையை கட்டமைப்பு அமைப்புகளில் முடக்குவது) தேர்ந்தெடுக்கப்பட்டாலும் கூட தாளில் இன்னும் தோன்றாது."
     },
@@ -126,7 +126,7 @@
         "AtLeastOneTabRequiredErrorMessage": "இயல்புநிலை தாவல்கள்: ஒவ்வொரு நடிகர் வகைக்கும் குறைந்தது ஒரு தாவல் தேவை."
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "hint": "இறப்பு சேமிப்பு மற்றும் இறப்பு ஆகியவை GM க்கு மட்டுமே காணக்கூடிய முடிவுகளைச் சேமிக்கின்றன.",
+        "hint": "இறப்பு சேமிப்பு மொத்தத்தை GM க்கு மட்டுமே காண வைக்கிறது. இறப்பு சேமி ரோல் பொத்தானை தெரியும்.",
         "name": "வீரர்களிடமிருந்து மரணத்தை மறைக்கவும்"
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
@@ -239,7 +239,8 @@
             "sectionTitle": "NPC சோர்வு",
             "selectionDialogTitle": "இடம்பெயர்வு: அமைப்புக்கு NPC சோர்வு"
         },
-        "Parent": "பெற்றோர்"
+        "Parent": "பெற்றோர்",
+        "chatNotification": "ஒரு புதிய நேர்த்தியான 5e தாள்கள் இடம்பெயர்வு கிடைக்கிறது. கிடைக்கக்கூடிய இடம்பெயர்வுகளைக் காண நேர்த்தியான 5e தாள்கள் விளையாட்டு அமைப்புகளைப் பார்க்கவும்."
     },
     "TIDY5E.Settings.About": {
         "GithubParagraph": "உங்களிடம் அம்ச சிந்தனை இருக்கிறதா? ஏதோ தவறு இருக்கிறதா? ஒரு {urlStart} github வெளியீடு {urlEnd} சமர்ப்பிக்கவும்.",
@@ -290,7 +291,14 @@
         "LabelPl": "பிரிவுகள்",
         "Tooltip": "ஒரு நடிகர் தாளில் வைக்கப்படும்போது இந்த உருப்படிக்கான தனிப்பயன் பகுதியைக் குறிப்பிடவும் அல்லது இயல்புநிலை நடத்தைக்கு காலியாக விடவும்.",
         "ActionLabel": "செயல் பிரிவு",
-        "ActionTooltip": "செயல்கள் தாவலில் வைக்கப்படும்போது இந்த உருப்படிக்கான தனிப்பயன் பகுதியைக் குறிப்பிடவும் அல்லது இயல்புநிலை நடத்தைக்கு காலியாக விடவும்."
+        "ActionTooltip": "செயல்கள் தாவலில் வைக்கப்படும்போது இந்த உருப்படிக்கான தனிப்பயன் பகுதியைக் குறிப்பிடவும் அல்லது இயல்புநிலை நடத்தைக்கு காலியாக விடவும்.",
+        "SectionSelectorChooseSectionTooltip": "ஒரு பகுதியைத் தேர்வுசெய்க",
+        "SectionSelectorChooseActionSectionTooltip": "செயல் பிரிவைத் தேர்வுசெய்க",
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "SectionSelectorExistingSections": "தற்போதுள்ள பிரிவுகள்",
+        "SectionSelectorCreateNewSection": "புதிய பகுதியை உருவாக்கவும்",
+        "SectionSelectorNewSectionName": "புதிய பிரிவு பெயர்",
+        "SectionSelectorSaveNewSection": "புதிய பகுதியைச் சேமிக்கவும்"
     },
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "ஒதுக்கப்படாததை மட்டும் காட்டு",
     "TIDY5E.SortMenu.OptionAlphabetical": "அகரவரிசை (A-Z)",
@@ -753,5 +761,69 @@
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "நடத்தை விரிவாக்க/சரிவு",
     "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "உயர்மட்ட பிரிவுகள்",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "அனைத்து பிரிவுகளும்",
-    "TIDY5E.SortMenu.OptionEquipped": "பொருத்தப்பட்ட"
+    "TIDY5E.SortMenu.OptionEquipped": "பொருத்தப்பட்ட",
+    "TIDY5E.ModuleName": "நேர்த்தியான 5e தாள்கள்",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "நேர்த்தியான 5e எழுத்து தாள்",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "நேர்த்தியான 5e NPC தாள்",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "நேர்த்தியான 5e கொள்கலன் தாள்",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "நேர்த்தியான 5e உருப்படி தாள்",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "நேர்த்தியான 5e வாகன தாள்",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "நேர்த்தியான 5e குழு தாள்",
+    "TIDY5E.AddSpecific": "{name} சேர்க்கவும்",
+    "TIDY5E.StatblockTabName": "StatBlock",
+    "TIDY5E.ContextMenuActionView": "பார்வை",
+    "TIDY5E.ContextMenuActionPinToAttributes": "பண்புகளுக்கு முள்",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "பண்புகளிலிருந்து அவிழ்த்து விடுங்கள்",
+    "TIDY5E.ContextMenuActionShowLimitedUses": "வரையறுக்கப்பட்ட பயன்பாடுகளைக் காட்டு",
+    "TIDY5E.ContextMenuActionShowQuantity": "அளவைக் காட்டு",
+    "TIDY5E.Ability.EditScore.label": "ச்கோர் திருத்து",
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "tabLabel": "தனிப்பயன் பிரிவுகள்",
+        "CustomizedIndicatorLabel": "தனிப்பயனாக்கப்பட்டது",
+        "ShowWhenEmptyLabel": "காலியாக இருக்கும்போது பகுதியைக் காட்டு",
+        "ShowWhenEmptyTooltip": "உருப்படி அட்டவணைகள் கொண்ட அனைத்து தாவல்களும் இயல்புநிலை பிரிவுகளின் தொகுப்பைக் கொண்டுள்ளன, அவை பிரிவில் உருப்படிகள் இல்லாதபோது கூட எப்போதும் காண்பிக்கப்படும். காலியாக இருக்கும்போது கூட எப்போதும் இந்த பகுதியைக் காட்டுங்கள்.",
+        "LimitToSpecificSheetsLabel": "குறிப்பிட்ட தாள்களுக்கு பிரிவு காட்டப்பட்டுள்ளது",
+        "LimitToSpecificTabsLabel": "குறிப்பிட்ட தாவல்களுக்கு காட்டப்பட்டுள்ள பிரிவு வரம்பு"
+    },
+    "TIDY5E.UserSettings.TabActivities": {
+        "tabLabel": "நடவடிக்கைகள்"
+    },
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "name": "இயல்புநிலை இறப்பு ரோல் சேமி",
+        "hint": "இறப்பு சேமிப்பு வீசுதலை உருட்டும்போது பயன்படுத்த இயல்புநிலை ரோல் வகையை தீர்மானிக்கிறது."
+    },
+    "TIDY5E.Settings.InlineActivitiesPosition": {
+        "name": "இன்லைன் நடவடிக்கைகள் நிலை",
+        "hint": "ஒரு உருப்படியை விரிவுபடுத்தும்போது, அந்த உருப்படியுக்கான செயல்பாடுகள் காண்பிக்கப்படுகின்றன. உருப்படி விளக்கத்திற்கு முன், அல்லது கீழே, உருப்படி விளக்கம், பொத்தான்கள் மற்றும் குறிச்சொற்களுக்கு கீழே செயல்பாடுகள் மேலே வைக்கப்படுகிறதா என்பதை தீர்மானிக்க இந்த அமைப்பைப் பயன்படுத்தவும்.",
+        "top": "மேலே",
+        "bottom": "கீழே"
+    },
+    "TIDY5E.Settings.GlobalCustomSections": {
+        "name": "உலகளாவிய தனிப்பயன் பிரிவுகள்",
+        "hint": "பல்வேறு நோக்கங்களுக்காக கட்டமைக்கக்கூடிய உலக தனிப்பயன் பிரிவுகள். உலகளாவிய தனிப்பயன் பிரிவுகள் எப்போதும் பிரிவு தேர்வாளரில் சேர்க்கப்படும்.",
+        "AddSection": "பகுதியைச் சேர்க்கவும்"
+    },
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "சடங்குகளை \"முடியும்\"",
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "ச்லாட் கண்காணிப்பு எழுத்துப்பிழை",
+    "TIDY5E.Utilities.SpellPips": "எழுத்துப்பிழை",
+    "TIDY5E.Utilities.SpellValueMax": "எழுத்துப்பிழை மதிப்பு/அதிகபட்சம்",
+    "TIDY5E.RollRecharge.Label": "ரீசார்ச்",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "அகர வரிசைப்படி ஏறும்",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "அகர வரிசைப்படி வரிசைப்படுத்துதல்",
+    "TIDY5E.SortMenu.OptionPriority": "முன்னுரிமை",
+    "TIDY5E.Activities.Cast.SourceHintText": "{itemName} இலிருந்து",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart} ஓல்ட்ச் {holdsElementEnd} {numberElementStart} {number} {numberElementEnd} {{{{unitsElementStart} {units}",
+    "TIDY5E.BrokenLink": "உடைந்த இணைப்பு",
+    "TIDY5E.Visible": "தெரியும்",
+    "TIDY5E.Hidden": "மறைக்கப்பட்ட",
+    "TIDY5E.Options.Title": "விருப்பங்கள்",
+    "TIDY5E.ConfigureTab.Title": "{TabName ஐ உள்ளமைக்கவும்",
+    "TIDY5E.DisplayOptions.Title": "காட்சி விருப்பங்கள்",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "கொள்கலன் வரிசையைக் காட்டு",
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "{ordinal} இல் நடிப்பு",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "அம்ச தோற்றம்",
+    "TIDY5E.HitDice.Abbreviation": "எச்டி",
+    "TIDY5E.HitDice.Current.Label": "தற்போதைய செய் பகடை",
+    "TIDY5E.HitDice.Max.Label": "மேக்ச் இட் டைச்",
+    "TIDY5E.CharacterTraits.Title": "எழுத்து பண்புகள்"
 }
