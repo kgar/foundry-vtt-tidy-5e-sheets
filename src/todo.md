@@ -16,7 +16,6 @@
 - [ ] add a class to section headers when there are no search results `.search-no-results`
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 
-
 ### (Almost) Everything after the short list
 
 - [ ] Scaffold the NPC Sheet
@@ -55,20 +54,15 @@
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
   - [ ] Use popovers 💖
-  - [ ] Have or reuse options for show/hide timing 
+  - [ ] Have or reuse options for show/hide timing
 - [x] Swap left and right areas in tab selection (left = selected, right = hidden)
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. <https://discord.com/channels/@me/1243307347682529423/1388371150291210290>
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
-  - Does not work on default sheets or Tidy classic. 
+  - Does not work on default sheets or Tidy classic.
 - [ ] (Take our time on this one; it's never been solved by any sheet, except for vertical tabs) Implement Responsive Tab Strip
 
-
-
-
 ### Module Compatibility
-
-
 
 ## hightouch To Do
 
@@ -89,11 +83,11 @@
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
-- [ ] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
+- [x] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
 - [ ] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
-- [ ] Dying red color for transparent portraits
-- [ ] Tranparent portrait ring color lighten one step
+- [x] Dying red color for transparent portraits
+- [x] Tranparent portrait ring color lighten one step
 - [ ] Bypassed resistance pill styles using `.physical-bypass`
 - [ ] Wrapping header text styles
 - [ ] Item sheet sidebar (low)
@@ -101,7 +95,6 @@
 ### Huh?
 
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
-
 
 ### Post-Beta Stretch Goals
 
@@ -203,7 +196,7 @@ Limited:
 ### To Do Graveyard
 
 - [x] And character.scss line 1946 change the grid-template-columns to 17.5rem, it's a little too wide in the responsive view now that I'm playing with it moregrid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
-- [x] PC sheet - edit mode - header abilities - Setting buttons are too low at a very specific width 
+- [x] PC sheet - edit mode - header abilities - Setting buttons are too low at a very specific width
 - [x] The sidebar button's hitbox should be a little wider.
 - [x] Make the sidebar button a little wider
 - [x] Special Traits - tell the user whether there's an active effect modifying the value of a given special trait. Use the classic sheet approach of disabling and tooltipping.
@@ -232,6 +225,6 @@ Limited:
 - [x] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
 - [x] Control which sheet header controls are available for non-owners and locked-in-compendia.
 - [x] Suppress user preference persistence when minimized, minimizing, and maximizing. I think this is causing a Last Known Width/Height bug.
-- [x] Phys bypasses: ok what I'd try instead is to use the tooltip for sure, but thin toss on `fa-shield-exclamation` and try changing the color to either orange-40 or orange-70, or if that feels weird then same green but change the icon to `rgba(255, 236, 149, 1)` or something https://discord.com/channels/@me/1243307347682529423/1391632333337002082
-- [x] (testing) Fix issue with https://github.com/KibblesTasty/kibbles-compendium-of-craft-and-creation
+- [x] Phys bypasses: ok what I'd try instead is to use the tooltip for sure, but thin toss on `fa-shield-exclamation` and try changing the color to either orange-40 or orange-70, or if that feels weird then same green but change the icon to `rgba(255, 236, 149, 1)` or something <https://discord.com/channels/@me/1243307347682529423/1391632333337002082>
+- [x] (testing) Fix issue with <https://github.com/KibblesTasty/kibbles-compendium-of-craft-and-creation>
 - [x] (testing) Finish testing all documented CONFIG.DND5E customizations
