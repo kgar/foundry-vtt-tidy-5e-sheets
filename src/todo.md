@@ -66,19 +66,6 @@
 
 ## hightouch To Do
 
-- [x] Character tab; responsively move the right side below the left side after a certain threshold so that character traits aren't squashed.
-- [x] (hightouch) TidyItemSummary - can use `.titleCase()` for strings.
-- [x] Review Character Sheet Limited View
-- [x] (not ready yet) Review Item Sheet Limited View. Only needs hide activity icon, everything else seems to match default sheets.
-- [x] Review Container Sheet Limited View. I think this is good and already 1:1 with default sheets.
-- [x] Quadrone Item Images are somehow more pixellated than others: <https://discord.com/channels/1167985253072257115/1170003836556017755/1387894528576454806>
-- [x] Fix Action Bar actions button group collapse behavior so that search isn't out of space.
-- [x] Reorganize responsive view of Character tab when sidebar is open (Skills top left, Tools/abilities top right, Features below)
-- [x] Review context menu and see if there's anything else needed: missing options, weird configurations, style adjustments, whatever you notice.
-- [x] Check the Configure Homebrew dialog. I'm using the standard foundry form classes, and our checkboxes are squashed up on the labels. I know Foundry's default is for `.form-field` to have `align-items: flex-end` or the like. Would that work for us? Or perhaps some other option.
-- [x] Favorites - there are scrollbars on title and subtitle
-- [x] Character Sheet - Light Mode - Bastion tab - progress text is very dark against a dark bar.
-- [x] Character Sheet - Spellbook tab - Spellbook Settings cog on action bar - the configuration options need some help.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
@@ -89,8 +76,8 @@
 - [x] Dying red color for transparent portraits
 - [x] Tranparent portrait ring color lighten one step
 - [ ] Bypassed resistance pill styles using `.physical-bypass`
-- [ ] Wrapping header text styles
-- [ ] Item sheet sidebar (low)
+- [ ] Wrapping text styles for character name in header
+- [ ] Item sheet sidebar background image (low)
 
 ### Huh?
 
