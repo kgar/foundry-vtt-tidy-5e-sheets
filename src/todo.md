@@ -2,8 +2,8 @@
 
 ### The Short List
 
-- [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
-- [ ] add a class to section headers when there are no search results `.search-no-results`
+- [ ] Adjust truesight to reveal the next batch of the overhaul
+- [ ] Update the readme
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
@@ -13,6 +13,8 @@
 - [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
 - [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
+- [ ] add a class to section headers when there are no search results `.search-no-results`
+  - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 
 
 ### (Almost) Everything after the short list
@@ -52,10 +54,17 @@
   - [ ] Have item cards be targeted via `.tidy5e-sheet.classic....` etc.
   - [ ] Test spell info on item summary and cards
   - [x] ~~For fun, test with PopOut!~~
+  - [ ] Use popovers 💖
+  - [ ] Have or reuse options for show/hide timing 
 - [x] Swap left and right areas in tab selection (left = selected, right = hidden)
 - [ ] Refactor: As feasible, where able, start pivoting from Objects to Maps. It's apparently more performant.
 - [ ] Wiki: document tab registration and show off Mestre Mahakala's final product as an example of interacting with external data sources and making a very unique tab. <https://discord.com/channels/@me/1243307347682529423/1388371150291210290>
+- [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
+  - Does not work on default sheets or Tidy classic. 
 - [ ] (Take our time on this one; it's never been solved by any sheet, except for vertical tabs) Implement Responsive Tab Strip
+
+
+
 
 ### Module Compatibility
 
@@ -223,3 +232,6 @@ Limited:
 - [x] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
 - [x] Control which sheet header controls are available for non-owners and locked-in-compendia.
 - [x] Suppress user preference persistence when minimized, minimizing, and maximizing. I think this is causing a Last Known Width/Height bug.
+- [x] Phys bypasses: ok what I'd try instead is to use the tooltip for sure, but thin toss on `fa-shield-exclamation` and try changing the color to either orange-40 or orange-70, or if that feels weird then same green but change the icon to `rgba(255, 236, 149, 1)` or something https://discord.com/channels/@me/1243307347682529423/1391632333337002082
+- [x] (testing) Fix issue with https://github.com/KibblesTasty/kibbles-compendium-of-craft-and-creation
+- [x] (testing) Finish testing all documented CONFIG.DND5E customizations

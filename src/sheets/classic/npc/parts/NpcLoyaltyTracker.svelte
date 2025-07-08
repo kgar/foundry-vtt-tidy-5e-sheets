@@ -25,7 +25,7 @@
     <TextInput
       document={context.actor}
       field="system.attributes.loyalty.value"
-      value={context.source.attributes.loyalty.value ?? ''}
+      value={context.source.attributes.loyalty?.value ?? ''}
       class="uninput loyalty-input"
       placeholder="—"
       selectOnFocus={true}
@@ -33,7 +33,7 @@
     />
   {:else}
     <span class="loyalty-text">
-      {context.system.attributes.loyalty.value}
+      {context.system.attributes.loyalty?.value}
     </span>
   {/if}
 </div>

@@ -18,6 +18,10 @@
     pillClass?: ClassValue;
     alwaysShow?: boolean;
     isCustomTrait?: boolean;
+    aggregateIcons?: {
+      pillClass: string;
+      iconClass: string;
+    };
   }
 
   let {
@@ -29,6 +33,7 @@
     pillClass,
     alwaysShow,
     isCustomTrait,
+    aggregateIcons,
   }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -49,7 +54,7 @@
     <div class="list-content">
       <div class="list-values">
         {#if entries.length}
-          <ActorTraitPills values={entries} {pillClass} />
+          <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
         {/if}
         {#if context.unlocked && empty && !isCustomTrait}
           <button

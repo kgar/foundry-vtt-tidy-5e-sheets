@@ -79,7 +79,7 @@ export function Tidy5eActorSheetClassicV2Base<
             label: 'TIDY5E.TabSelection.MenuOptionText',
             visible: function (this: Tidy5eActorSheetClassicV2Base) {
               return this.isEditable;
-            }
+            },
           },
           {
             action: 'restoreTransformation',
@@ -95,7 +95,7 @@ export function Tidy5eActorSheetClassicV2Base<
             ownership: 'OWNER',
             visible: function (this: Tidy5eActorSheetClassicV2Base) {
               return this.isEditable;
-            }
+            },
           },
         ],
         resizable: true,
@@ -144,8 +144,11 @@ export function Tidy5eActorSheetClassicV2Base<
 
       const documentSheetContext = await super._prepareContext(options);
 
-      // The Actor's data
-      const source = this.actor.toObject();
+      documentSheetContext.source = documentSheetContext.editable
+        ? this.actor.system._source
+        : this.actor.system;
+
+      const source = documentSheetContext.source;
 
       // Concentration
       let saves: ActorSaves = {};
@@ -274,13 +277,13 @@ export function Tidy5eActorSheetClassicV2Base<
         abl.icon = this._getProficiencyIcon(abl.proficient);
         abl.hover = CONFIG.DND5E.proficiencyLevels[abl.proficient];
         abl.label = CONFIG.DND5E.abilities[a]?.label;
-        abl.baseProf = source.system.abilities[a]?.proficient ?? 0;
+        abl.baseProf = source.abilities[a]?.proficient ?? 0;
         abl.key = a;
       }
 
       // Skills & tools.
       const baseAbility = (prop: string, key: string) => {
-        let src = source.system[prop]?.[key]?.ability;
+        let src = source[prop]?.[key]?.ability;
         if (src) return src;
         if (prop === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
         return src ?? 'int';
@@ -295,7 +298,7 @@ export function Tidy5eActorSheetClassicV2Base<
             prop === 'skills'
               ? CONFIG.DND5E.skills[key]?.label
               : dnd5e.documents.Trait.keyLabel(key, { trait: 'tool' });
-          entry.baseValue = source.system[prop]?.[key]?.value ?? 0;
+          entry.baseValue = source[prop]?.[key]?.value ?? 0;
           entry.baseAbility = baseAbility(prop, key);
         }
       });
@@ -774,7 +777,7 @@ export function Tidy5eActorSheetClassicV2Base<
     async _renderFrame(options: ApplicationRenderOptions = {}) {
       const html = await super._renderFrame(options);
       if (!game.user.isGM && this.actor.limited) return html;
-      
+
       // Preparation warnings.
       const warnings = document.createElement('button');
       warnings.classList.add('preparation-warnings', 'header-control', 'icon');
@@ -782,7 +785,7 @@ export function Tidy5eActorSheetClassicV2Base<
       warnings.setAttribute('aria-label', game.i18n.localize('Warnings'));
       warnings.innerHTML = '<i class="fas fa-triangle-exclamation"></i>';
       warnings.addEventListener('click', this._onOpenWarnings.bind(this));
-      
+
       const header = html.querySelector('.window-header');
       header
         .querySelector('.window-title')

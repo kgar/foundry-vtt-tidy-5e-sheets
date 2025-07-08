@@ -70,7 +70,7 @@ export type Tab = {
   condition?: (document: any) => boolean;
   iconClass?: string;
   itemCount?: (context: any) => number;
-  attributes?: HTMLAttributes<HTMLElement>
+  attributes?: HTMLAttributes<HTMLElement>;
 };
 
 export type CustomContent = {
@@ -1033,7 +1033,7 @@ export type ActorSkillsToolsContext<T> = {
   baseAbility: string;
   hover: string;
   label: string;
-  source: T;
+  source: T | undefined;
 } & T;
 
 export type ItemFavoriteContextEntry = {
