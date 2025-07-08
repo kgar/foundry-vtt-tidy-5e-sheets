@@ -83,8 +83,8 @@ Item Sheets Progress:
 
 Actor Sheets Progress:  
 ✅ Character  
-⬜ Group  
 ⬜ NPC  
+⬜ Group  
 ⬜ Vehicle  
 
 _**Behold**_:
