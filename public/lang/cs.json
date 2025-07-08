@@ -83,7 +83,7 @@
     "TIDY5E.UserSettings.Menu": {
         "name": "Uživatelské nastavení",
         "hint": "Přizpůsob si svou vlastní verzi deníků Tidy 5e. Toto nastavení se uloží do prohlížeče a použije se na tvé deníky.",
-        "label": "Uživatelské nastavení",
+        "label": "Uživatelská nastavení",
         "title": "Uživatelské nastavení: {userName}"
     },
     "TIDY5E.UserSettings.TabPlayers": {
@@ -615,7 +615,7 @@
         "name": "Omezit akce na triky?"
     },
     "TIDY5E.Settings.SheetPreferences": {
-        "buttonLabel": "Nastavit Tidy jako základní deník",
+        "buttonLabel": "Tidy jako základní deník",
         "hint": "Pokud chceš nastavit deníky Tidy 5e jako výchozí pro jeden nebo více typů dokumentů, ale základní nabídka konfigurace výchozích deníků nefunguje dle očekávání, použij tuto nabídku pro výběr předvoleb.",
         "explanation": "Vyber všechny typy dokumentů, u kterých chceš, aby byly jako výchozí nastaveny deníky Tidy 5e.",
         "name": "Nastavit Tidy jako základní deník"
@@ -630,7 +630,7 @@
         "tabLabel": "Postava"
     },
     "TIDY5E.WorldSettings.Menu": {
-        "label": "Celkové nastavení",
+        "label": "Celková nastavení",
         "title": "Celkové nastavení (pouze PJ)",
         "hint": "Uprav nastavení na celkové úrovni a přizpůsob si tak zážitek z deníků Tidy 5e. Toto nastavení je následně uloženo v tomto světě Foundry a platí pro veškerý příslušný obsah deníků Tidy 5e.",
         "name": "Celkové nastavení"
@@ -688,7 +688,7 @@
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "hint": "Výchozí deník 5e umožňuje tabelovat klávesnicí z aktuálního vstupu bodů výdrže do aktuálního vstupu dočasných bodů výdrže. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta možnost „Používat podporu přístupnosti klávesnicí“.",
-        "name": "Použití výchozí BV deníku tabulátorem na klávesnici"
+        "name": "Tabelovat výchozí BV deníku pomocí tabulátoru na klávesnici?"
     },
     "TIDY5E.Settings.ActionList.Header": "Seznam akcí",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Různé",
@@ -835,5 +835,24 @@
     "TIDY5E.HitDice.Abbreviation": "K.O.",
     "TIDY5E.HitDice.Current.Label": "Stávající kostky obnovy",
     "TIDY5E.HitDice.Max.Label": "Maximum kostek obnovy",
-    "TIDY5E.CharacterTraits.Title": "Rysy postavy"
+    "TIDY5E.CharacterTraits.Title": "Rysy postavy",
+    "TIDY5E.JournalEntry.NewTitle": "Záznam číslo {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Nastavit jako zdroj Inspirace",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Odstranit zdroj Inspirace",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Přidat do deníku",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Odstranit z deníku",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Zdroj Inspirace",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Motiv nastavení",
+        "label": "Nastavit motiv nastavení",
+        "hint": "Pouze nové deníky Tidy: Nastav výchozí motiv pro svůj herní svět. Tato nastavení se vztahují na všechny typy deníků."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Domácí tvorba",
+        "label": "Nastavit domácí tvorbu",
+        "hint": "Povolit a nastavit možnosti domácí tvorby poskytované tímto modulem."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Záložky deníků"
+    }
 }
