@@ -14,7 +14,7 @@
     "TIDY5E.AbbrMod": "மோட்",
     "TIDY5E.ActorSpellAttackFlavorText": "எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - கைகலப்பு எழுத்துப்பிழை தாக்குதல்",
-    "TIDY5E.RangedSpellAttackMod": "எழுத்துப்பிழை தாக்குதல் மோட்",
+    "TIDY5E.RangedSpellAttackMod": "வீச்சு எழுத்துப்பிழை தாக்குதல் மோட்",
     "TIDY5E.PreparedSpells": "தயாரிக்கப்பட்ட மந்திரங்கள்",
     "TIDY5E.Class.Artificer": "கலைஞர்",
     "TIDY5E.Class.Ranger": "ரேஞ்சர்",
@@ -160,7 +160,7 @@
         "hint": "இது செயலில் உள்ள விளையாட்டு அமைப்பின் இயல்புநிலைக்கு திரும்புவதற்கான அனைத்து அமைப்புகளையும் மீட்டமைக்கும். இது GM விருப்பங்கள் போன்ற \"உலக\"-ச்கோப் செய்யப்பட்ட அமைப்புகளை மட்டுமே பாதிக்கிறது."
     },
     "TIDY5E.Settings.Migrations": {
-        "name": "இடம்பெயர்வு",
+        "name": "இடம்பெயர்வுகள்",
         "migrateConfirmTitle": "இடம்பெயர்வு உறுதிப்படுத்தவும்",
         "OptionDeleteFlags.Text": "பாதிக்கப்பட்ட நேர்த்தியான கொடிகளை நீக்கு",
         "CcssToTidy": {
@@ -240,7 +240,10 @@
             "selectionDialogTitle": "இடம்பெயர்வு: அமைப்புக்கு NPC சோர்வு"
         },
         "Parent": "பெற்றோர்",
-        "chatNotification": "ஒரு புதிய நேர்த்தியான 5e தாள்கள் இடம்பெயர்வு கிடைக்கிறது. கிடைக்கக்கூடிய இடம்பெயர்வுகளைக் காண நேர்த்தியான 5e தாள்கள் விளையாட்டு அமைப்புகளைப் பார்க்கவும்."
+        "chatNotification": "ஒரு புதிய நேர்த்தியான 5e தாள்கள் இடம்பெயர்வு கிடைக்கிறது. கிடைக்கக்கூடிய இடம்பெயர்வுகளைக் காண நேர்த்தியான 5e தாள்கள் விளையாட்டு அமைப்புகளைப் பார்க்கவும்.",
+        "Journal": {
+            "explanation1": "நேர்த்தியான 5e தாள்களின் இடைமுகம் மாற்றியமைத்தல் நீங்கள் விரும்பும் அளவுக்கு உள்ளீடுகளாக இருக்க பத்திரிகையை புதுப்பித்துள்ளது. இதற்கு இடமளிக்க, பழைய செய்தித் தாள் கட்டமைப்பிலிருந்து புதிய விரிவாக்கக்கூடிய செய்தித் தாள் கட்டமைப்பிற்கு இடம்பெயர்வது தேவை. பழைய செய்தித் தாள் தரவு மாற்றியமைக்கப்பட்ட நேர்த்தியான 5e தாள்களில் காணப்படாது."
+        }
     },
     "TIDY5E.Settings.About": {
         "GithubParagraph": "உங்களிடம் அம்ச சிந்தனை இருக்கிறதா? ஏதோ தவறு இருக்கிறதா? ஒரு {urlStart} github வெளியீடு {urlEnd} சமர்ப்பிக்கவும்.",
@@ -275,8 +278,22 @@
         "SheetMenu": {
             "name": "நேர்த்தியான கருப்பொருள் அமைப்புகள்",
             "buttonLabel": "கருப்பொருள் அமைப்புகள்",
-            "hint": "நேர்த்தியான 5e தாள்களின் வண்ணங்களைத் தனிப்பயனாக்குங்கள்."
-        }
+            "hint": "கிளாசிக் நேர்த்தியான தாள்கள் மட்டும்: நேர்த்தியான 5e தாள்களின் வண்ணங்களைத் தனிப்பயனாக்கவும்."
+        },
+        "hint": "உங்கள் விளையாட்டை நிறைவு செய்யும் அதிவேக அனுபவத்தை உருவாக்க உங்கள் தாளைத் தனிப்பயனாக்கவும்.",
+        "AccentColor.title": "உச்சரிப்பு நிறம்",
+        "ActorHeaderBackground.title": "நடிகர் தலைப்பு பின்னணி",
+        "ItemSidebarBackground.title": "உருப்படி பக்கப்பட்டி பின்னணி",
+        "PortraitShape": {
+            "title": "{type} உருவப்படம் வடிவம்",
+            "option.round": "சுற்று",
+            "option.transparent": "வெளிப்படையானது",
+            "option.square": "நாற்கை"
+        },
+        "RarityColors.title": "அரிதான வண்ணங்கள்",
+        "SheetTheme.title": "தாள் கருப்பொருள்",
+        "SheetTheme.hint": "சிறந்த முடிவுகளுக்கு, வண்ணத் தட்டின் மையத்திற்கு அருகில் ஒரு வண்ணத்தைத் தேர்வுசெய்க.",
+        "SpellPreparationModeColors.title": "எழுத்துப்பிழை தயாரிப்பு முறை வண்ணங்கள்"
     },
     "TIDY5E.ReminderToBackUp": "உங்கள் உலகத்தை காப்புப் பிரதி எடுக்க எப்போதும் நினைவில் கொள்ளுங்கள்.",
     "TIDY5E.Utilities.ConfigureSections": "பிரிவுகளை உள்ளமைக்கவும்",
@@ -345,7 +362,7 @@
     "TIDY5E.JournalPersonsOfInterest": "ஆர்வமுள்ள நபர்கள்",
     "TIDY5E.JournalMisc": "மற்றவை",
     "TIDY5E.JournalEntries": "செய்தித் தாள் உள்ளீடுகள்",
-    "TIDY5E.ContextMenuActionAttune": "Attune",
+    "TIDY5E.ContextMenuActionAttune": "சுருதிசேர்",
     "TIDY5E.TogglePersonalityInfo": "ஆளுமை தகவலை மாற்றவும்",
     "TIDY5E.ContextMenuActionUnattune": "டோனெட்",
     "TIDY5E.SheetEdit.Disable.Hint": "திருத்து முடக்கு - {description}",
@@ -381,8 +398,8 @@
     "TIDY5E.AttackMod": "தாக்குதல் மோட்",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "கைகலப்பு எழுத்துப்பிழை தாக்குதல்",
-    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - எழுத்துப்பிழை தாக்குதல்",
-    "TIDY5E.ActorRangedSpellAttackFlavorText": "எழுத்துப்பிழை தாக்குதல்",
+    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - வீச்சு எழுத்துப்பிழை தாக்குதல்",
+    "TIDY5E.ActorRangedSpellAttackFlavorText": "வீச்சு எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.SpellAttackMod": "எழுத்துப்பிழை தாக்குதல் மோட்",
     "TIDY5E.MeleeSpellAttackMod": "கைகலப்பு எழுத்துப்பிழை தாக்குதல் மோட்",
     "TIDY5E.TokenLinked": "கிள்ளாக்கு நடிகருடன் இணைக்கப்பட்டுள்ளது",
@@ -662,7 +679,7 @@
         "name": "வில் கோடிட்டுக் காட்டுங்கள்"
     },
     "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "AT AT உச்சரிப்பு"
+        "name": "விருப்படி உச்சரிப்பு"
     },
     "TIDY5E.Settings.ColorPickerRitualOnly": {
         "name": "சடங்கு மட்டுமே"
@@ -825,5 +842,41 @@
     "TIDY5E.HitDice.Abbreviation": "எச்டி",
     "TIDY5E.HitDice.Current.Label": "தற்போதைய செய் பகடை",
     "TIDY5E.HitDice.Max.Label": "மேக்ச் இட் டைச்",
-    "TIDY5E.CharacterTraits.Title": "எழுத்து பண்புகள்"
+    "TIDY5E.CharacterTraits.Title": "எழுத்து பண்புகள்",
+    "TIDY5E.JournalEntry.NewTitle": "செய்தித் தாள் நுழைவு {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "ஊக்கம் மூலமாக அமைக்கவும்",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "ஊக்கம் மூலமாக அகற்று",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "தாள் தாவலில் சேர்க்கவும்",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "தாள் தாவலில் இருந்து அகற்று",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "ஊக்கம் மூல",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "கருப்பொருள் அமைப்புகள்",
+        "label": "கருப்பொருள் அமைப்புகளை உள்ளமைக்கவும்",
+        "hint": "புதிய நேர்த்தியான தாள்கள் மட்டுமே: உங்கள் விளையாட்டு உலகத்திற்கான இயல்புநிலை கருப்பொருள் அமைப்புகளை நிறுவவும். இவை அனைத்து தாள் வகைகளுக்கும் பொருந்தும்."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "ஓம்பிரூ",
+        "label": "ஓம்பிரூவை உள்ளமைக்கவும்",
+        "hint": "இந்த தொகுதி வழங்கிய ஓம்பிரூ விருப்பங்களை இயக்கவும் உள்ளமைக்கவும்."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "தாள் தாவல்கள்",
+        "label": "தாள் தாவல்களை உள்ளமைக்கவும்",
+        "hint": "புதிய நேர்த்தியான தாள்கள் மட்டுமே: அனைத்து நடிகர்களுக்கும் உருப்படி தாள்களுக்கும் எந்த தாவல்கள் தெரியும்."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "வங்கி ஊக்கம்",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "வங்கி உத்வேகத்தை இயக்கவும்",
+        "hint": "ஒரு அம்ச உருப்படியை ஒரு ஊக்கம் மூலமாக அமைக்க பயனரை அனுமதிக்க இந்த விருப்பத்தை இயக்கவும். பயன்பாடுகளுடன் அம்ச உருப்படிகளில் சூழல் பட்டியல் உருப்படியாக விருப்பத்தைத் தேடுங்கள்."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "வங்கி ஊக்கம் மேலாண்மை - GM மட்டும்",
+        "hint": "வங்கி ஊக்கம் நிர்வாகத்தை GM க்கு கட்டுப்படுத்த இந்த விருப்பத்தை இயக்கவும்."
+    },
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "நடிகர்கள் செயல்பாட்டு எழுத்துப்பிழை குழு",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "கூடுதல் எழுத்துக்கள் பிரிவு",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "ஒரு பொருளுக்கு பிரிவு",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "ஏறுதல்",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "இறங்கு",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "நேர்த்தியான 5e தாள்களுக்கு வருக! தொடங்குவதற்கு, நீங்கள் நேர்த்தியான பதிப்பைப் பயன்படுத்த {sheetLinkStart} a sheet {sheetLinkEnd} (அல்லது {allSheetsLinkStart} உங்கள் அனைத்து தாள்கள் {allSheetsLinkEnd}!) ஐ மாற்ற வேண்டும். இந்த தொகுதி மற்றும் {wikiLinkStart} அதிகாரப்பூர்வ விக்கி {wikiLinkEnd} இல் என்ன செய்ய முடியும் என்பதைப் பற்றி மேலும் அறிக."
 }
