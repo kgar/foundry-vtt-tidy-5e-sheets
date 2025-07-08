@@ -82,12 +82,14 @@ Item Sheets Progress:
 ✅ Weapon  
 
 Actor Sheets Progress:  
-⬜ Character  
+✅ Character  
 ⬜ Group  
 ⬜ NPC  
 ⬜ Vehicle  
 
 _**Behold**_:
+
+TODO: Beautiful, evocative Character Sheet images here, showing off customization, tab selection, the works.
 
 ![Container and Spell Sheets](readme-assets/quadrone-container-and-spell-sheets.png)
 
