@@ -72,7 +72,7 @@
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
 - [x] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
-- [ ] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
+- [x] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
 - [x] Dying red color for transparent portraits
 - [x] Tranparent portrait ring color lighten one step
 - [ ] Bypassed resistance pill styles using `.physical-bypass`
