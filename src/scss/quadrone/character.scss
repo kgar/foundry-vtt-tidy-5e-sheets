@@ -55,8 +55,8 @@
   .window-content {
     display: flex;
     flex-direction: column;
-    padding: 0;
-    transform: translateY(-0.375rem);
+    padding: 0.5rem 0 0;
+    margin-top: -0.75rem;
 
     .tabs-row {
       container-name: sheet-tabs;
@@ -166,6 +166,7 @@
         flex: 1;
         overflow-y: auto;
         padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x) var(--t5e-size-4x);
+        position: relative;
         // container-type: inline-size;
       }
     }
@@ -182,7 +183,7 @@
     display: flex;
     flex-direction: column;
     align-content: flex-start;
-    padding: 0 var(--t5e-size-2x);
+    padding: 0.375rem var(--t5e-size-2x) 0;
     gap: var(--t5e-size-2x);
 
     .sheet-header-content {
@@ -2146,6 +2147,19 @@
   .inventory-footer {
     container-type: inline-size;
     container-name: inventory-footer;
+    position: sticky;
+    bottom: 0;
+    padding-top: var(--t5e-size-1x);
+    transition: margin var(--t5e-transition-default);
+
+    &:is(.tidy5e-sheet.theme-dark .inventory-footer) {
+      background: var(--t5e-component-card-darker);
+      box-shadow: 0 -0.125rem 0.25rem var(--t5e-component-card-darker);
+    }
+
+    &:is(.tidy5e-sheet.theme-light .inventory-footer) {
+      filter: drop-shadow(0 0 0.1875rem rgba(0, 0, 0, 0.1));
+    }
 
     .attunement-tracker {
       height: var(--t5e-field-size-default);
