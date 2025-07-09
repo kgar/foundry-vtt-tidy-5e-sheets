@@ -14,8 +14,8 @@
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
         "Title": "Wybór zakładki dla {documentName}",
         "MenuOptionText": "Wybór zakładki",
-        "AvailableHeader": "Dostępne zakładki",
-        "SelectedHeader": "Wybrane zakładki",
+        "AvailableHeader": "Ukryte zakładki",
+        "SelectedHeader": "Widoczne zakładki",
         "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
         "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone."
     },
@@ -306,7 +306,10 @@
         "MigrateCompendia.SelectionDialogTitle": "Wybierz kompendia do migracji",
         "MigrateCompendia.CompendiumLabel": "Kompendium",
         "MigrateCompendia.Title": "Przeprowadź migrację kompendium",
-        "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje."
+        "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje.",
+        "Journal": {
+            "explanation1": "UiI Overhaul w Tidy 5e Sheets wprowadził możliwość tworzenia dowolnej ilości wpisów w Dzienniku. Aby dostosować się do tej zmiany, konieczna jest migracja  ze starej struktury Dziennika do nowej rozszerzalnej struktury Dziennika. Dane ze starego Dziennika nie będą widoczne w odświeżonej wersji Tidy 5e Sheets"
+        }
     },
     "TIDY5E.ThemeSettings": {
         "Sheet": {
@@ -825,5 +828,35 @@
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Karta Grupy Tidy 5e",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Karta postaci Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Rzut na {ordinal}",
-    "TIDY5E.AddSpecific": "Dodaj {name}"
+    "TIDY5E.AddSpecific": "Dodaj {name}",
+    "TIDY5E.StatblockTabName": "Blok statystyk",
+    "TIDY5E.JournalEntry.NewTitle": "Wpis dziennika {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Ustaw jako źródło inspiracji",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Usuń źródło inspiracji",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Źródło inspiracji",
+    "TIDY5E.Ability.EditScore.label": "Edytuj wartość",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Ustawienia motywu",
+        "label": "Konfiguruj ustawienia motywu",
+        "hint": "Tylko nowe karty Tidy: Ustaw domyślne ustawienia motywu dla swojego świata gry. Stosowane są do wszystkich typów kart."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Zasady domowe",
+        "label": "Konfigurowanie zasad domowych",
+        "hint": "Włącz i skonfiguruj opcje zasad domowych udostępnianych przez ten moduł."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Zakładki karty",
+        "label": "Konfigurowanie zakładek karty",
+        "hint": "Tylko Nowe Karty Tidy: skonfiguruj, które zakładki będą widoczne dla wszystkich kart aktorów i przedmiotów."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "Gromadzona inspiracja",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Włącz gromadzoną inspirację",
+        "hint": "Włącz tę opcję, aby umożliwić użytkownikowi ustawienie zdolności jako źródła inspiracji. Szukaj opcji w menu kontekstowym zdolności z użyciami."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Zarządzanie gromadzoną inspiracją - tylko MG",
+        "hint": "Włącz tę opcję, aby ograniczyć zarządzanie gromadzoną inspiracją tylko do GM."
+    }
 }
