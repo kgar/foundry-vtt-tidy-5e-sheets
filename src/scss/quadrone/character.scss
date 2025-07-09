@@ -172,6 +172,12 @@
     }
   }
 
+  .tidy-tab {
+    .tidy-table-row {
+      min-height: 2.0625rem;
+    }
+  }
+
   .sheet-header {
     --header-padding: 1rem;
 

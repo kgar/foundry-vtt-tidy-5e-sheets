@@ -31,7 +31,7 @@
 
 <button
   type="button"
-  class="button button-borderless favorite-button"
+  class="favorite-button"
   onclick={handleClick}
 >
   <a
