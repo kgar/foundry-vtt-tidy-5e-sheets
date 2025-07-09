@@ -291,8 +291,6 @@
     <div class="character-vitals-container">
       <!-- TODO: Add switch for size -->
       <CharacterPortrait
-        imageUrl={context.actor.img}
-        imageAlt={context.actor.name}
       />
       <div class="character-vitals">
         <div class="hp-row flexrow">

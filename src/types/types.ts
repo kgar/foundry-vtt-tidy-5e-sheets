@@ -1152,6 +1152,7 @@ export type CharacterSheetQuadroneContext = {
   senses: CharacterSpeedSenseContext;
   showContainerPanel: boolean;
   showDeathSaves: boolean;
+  showToken: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   species?: ActorTraitItemContext;

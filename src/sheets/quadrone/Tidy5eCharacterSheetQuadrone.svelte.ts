@@ -60,6 +60,7 @@ import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -139,6 +140,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const actorContext = (await super._prepareContext(
       options
     )) as ActorSheetQuadroneContext;
+
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: this.actor,
+    });
 
     // Effects & Conditions
     let { conditions, effects: enhancedEffectSections } =
@@ -246,6 +251,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
+      showToken:
+        !!FoundryAdapter.getSystemSetting(
+          CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
+        ) || themeSettings.portraitShape === 'token',
       species: species
         ? {
             id: species.id,
