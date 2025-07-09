@@ -308,7 +308,7 @@
         "MigrateCompendia.Title": "Przeprowadź migrację kompendium",
         "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje.",
         "Journal": {
-            "explanation1": "UiI Overhaul w Tidy 5e Sheets wprowadził możliwość tworzenia dowolnej ilości wpisów w Dzienniku. Aby dostosować się do tej zmiany, konieczna jest migracja ze starej struktury Dziennika do nowej rozszerzalnej struktury Dziennika. Dane ze starego Dziennika nie będą widoczne w odświeżonej wersji Tidy 5e Sheets."
+            "explanation1": "UI Overhaul w Tidy 5e Sheets wprowadził możliwość tworzenia dowolnej ilości wpisów w Dzienniku. Aby dostosować się do tej zmiany, konieczna jest migracja ze starej struktury Dziennika do nowej rozszerzalnej struktury Dziennika. Dane ze starego Dziennika nie będą widoczne w odświeżonej wersji Tidy 5e Sheets."
         }
     },
     "TIDY5E.ThemeSettings": {
