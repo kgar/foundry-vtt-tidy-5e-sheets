@@ -8,6 +8,7 @@
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
+  import { firstOfSet } from 'src/utils/set';
 
   interface Props {
     favorite: ActivityFavoriteContextEntry;
@@ -104,7 +105,7 @@
             {save.dc.value}
           </span>
           <span class="ability font-label-medium color-text-gold-emphasis">
-            {save.ability}
+            {save.ability?.size ? firstOfSet(save.ability) : save.ability}
           </span>
         </span>
       {/if}
