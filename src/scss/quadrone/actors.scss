@@ -139,6 +139,15 @@
         &:not(.positive, .negative) {
           background-color: var(--t5e-component-field-background);
         }
+
+        &:is(.physical-bypass) {
+          background-color: var(--t5e-color-palette-orange-55);
+          border-color: var(--t5e-color-palette-orange-40);
+
+          i {
+            color: var(--t5e-color-text-oninverse-default);
+          }
+        }
       }
     }
   }

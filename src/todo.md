@@ -78,6 +78,7 @@
 - [ ] Bypassed resistance pill styles using `.physical-bypass`
 - [ ] Wrapping text styles for character name in header
 - [ ] Item sheet sidebar background image (low)
+- [x] Inventory sticky footer
 
 ### Huh?
 
