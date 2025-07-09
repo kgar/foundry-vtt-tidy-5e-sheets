@@ -24,10 +24,7 @@
   <div class="sheet-header-content flexrow">
     <h1 class="character-name flex1">{context.actor.name}</h1>
     <div class="character-vitals-container">
-      <CharacterPortrait
-        imageUrl={context.actor.img}
-        imageAlt={context.actor.name}
-      />
+      <CharacterPortrait />
     </div>
   </div>
 </header>
