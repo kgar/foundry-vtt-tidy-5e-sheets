@@ -122,8 +122,8 @@
     "TIDY5E.TabSelection": {
         "Title": "Seleção de Aba: {documentName}",
         "MenuOptionText": "Seleção de Aba",
-        "AvailableHeader": "Abas Disponíveis",
-        "SelectedHeader": "Abas Selecionadas",
+        "AvailableHeader": "Abas Ocultas",
+        "SelectedHeader": "Abas Visíveis",
         "UnsupportedDocumentErrorMessage": "O tipo de documento {documentType} não está atualmente configurado para seleção de aba.",
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma aba.",
         "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na planilha, mesmo que selecionada."
@@ -617,7 +617,10 @@
             "selectionDialogTitle": "Migração: Exaustão de PnJ para o sistema"
         },
         "Parent": "Pai",
-        "chatNotification": "Uma nova migração do Tidy 5e Sheets está disponível. Consulte as Configurações de Jogo do Tidy 5e Sheets para ver as migrações disponíveis."
+        "chatNotification": "Uma nova migração do Tidy 5e Sheets está disponível. Consulte as Configurações de Jogo do Tidy 5e Sheets para ver as migrações disponíveis.",
+        "Journal": {
+            "explanation1": "A Reformulação da Interface do Tidy 5e Sheets alterou o Diário para que ele tenha quantas entradas você quiser. Para acomodar isso, é necessária uma migração da estrutura antiga do Diário para a nova estrutura extensível. Os dados antigos do Diário não serão visíveis nas Fichas Tidy 5e reformuladas."
+        }
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
@@ -649,7 +652,7 @@
         "SheetMenu": {
             "name": "Configurações de Temas",
             "buttonLabel": "Configurações de Tema",
-            "hint": "Personalize as cores do Tidy 5e Sheets."
+            "hint": "Apenas Ficha Clássica Tidy: Personalize as cores do Tidy 5e Sheets."
         },
         "Sheet": {
             "title": "Configurações do Tema: {userName}",
@@ -663,7 +666,21 @@
             "importSuccess": "O tema foi importado com sucesso!",
             "menuLabel": "Menu",
             "explanation": "Selecione a cor que você deseja usar para cada opção. O valor \"#00000000\" é equivalente a desativar a cor."
-        }
+        },
+        "hint": "Personalize sua ficha para criar uma experiência imersiva que complemente seu jogo.",
+        "AccentColor.title": "Cor de Destaque",
+        "ActorHeaderBackground.title": "Fundo do Cabeçalho do Ator",
+        "ItemSidebarBackground.title": "Fundo da Lateral do Item",
+        "PortraitShape": {
+            "title": "Formato {type} do Retrato",
+            "option.round": "Redondo",
+            "option.transparent": "Transparente",
+            "option.square": "Quadrado"
+        },
+        "RarityColors.title": "Cores de Raridade",
+        "SheetTheme.title": "Tema da Ficha",
+        "SheetTheme.hint": "Para melhores resultados, escolha uma cor próxima ao centro da paleta de cores.",
+        "SpellPreparationModeColors.title": "Cores do Modo de Preparação de Magias"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",
@@ -826,5 +843,41 @@
     "TIDY5E.HitDice.Max.Label": "Dados de Vida Máximos",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Rastreamento de Espaço de Magia",
     "TIDY5E.StatblockTabName": "Bloco de Estatísticas",
-    "TIDY5E.ItemSheet.FeatureOriginLabel": "Talento de Origem"
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Talento de Origem",
+    "TIDY5E.JournalEntry.NewTitle": "Entrada de Diário {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Definir como Origem de Inspiração",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remover como Origem de Inspiração",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Adicionar à Aba da Ficha",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remover da Aba da Ficha",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Origem de Inspiração",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Configurações de Tema",
+        "label": "Definir Configurações de Tema",
+        "hint": "Apenas Novas Fichas Tidy: Define as configurações de tema padrão para o seu mundo de jogo. Elas se aplicam a todos os tipos de fichas."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Homebrew",
+        "label": "Configurar Homebrew",
+        "hint": "Habilite e configure as opções de homebrew fornecidas por este módulo."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Abas da Ficha",
+        "label": "Configurar Abas da Ficha",
+        "hint": "Apenas Novas Fichas Tidy: Configure quais abas serão visíveis para todas as fichas de atores e itens."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "Acúmulo de Inspirações",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Habilitar Acúmulo de Inspirações",
+        "hint": "Habilite esta opção para permitir que o usuário defina um item de destaque como origem de inspiração. Procure a opção como um item do Menu de Contexto em itens de características com usos."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Gestão de Acúmulo de Inspiração - Apenas Mestre",
+        "hint": "Habilite esta opção para limitar o gerenciamento de inspiração acumulada ao Mestre."
+    },
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Agrupamento de Atividade de Conjuração de Magias",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Seção de Magias Adicionais",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Seção por Item",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ordem Crescente",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Ordem Decrescente",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Bem-vindo ao Tidy 5e Sheets! Para começar, você precisará alterar {sheetLinkStart}uma ficha{sheetLinkEnd} (ou {allSheetsLinkStart}todas as suas fichas{allSheetsLinkEnd}!) para usar a versão Tidy. Saiba mais sobre este módulo e o que ele pode fazer na {wikiLinkStart}wiki oficial{wikiLinkEnd}."
 }
