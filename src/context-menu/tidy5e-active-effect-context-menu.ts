@@ -4,6 +4,7 @@ import { settings } from 'src/settings/settings.svelte';
 import { warn } from 'src/utils/logging';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { getActiveEffectContextOptionsQuadrone } from './tidy5e-active-effect-context-menu-quadrone';
 
 export function configureActiveEffectsContextMenu(
   element: HTMLElement,
@@ -24,8 +25,11 @@ export function configureActiveEffectsContextMenu(
     return;
   }
 
-  // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
-  ui.context.menuItems = getActiveEffectContextOptions(effect, app);
+  const isQuadroneSheet = element.closest('.quadrone');
+
+  ui.context.menuItems = isQuadroneSheet
+    ? getActiveEffectContextOptionsQuadrone(effect, app)
+    : getActiveEffectContextOptions(effect, app);
   TidyHooks.dnd5eGetActiveEffectContextOptions(effect, ui.context.menuItems);
 }
 

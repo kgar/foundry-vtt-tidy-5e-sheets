@@ -4,7 +4,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
