@@ -52,7 +52,7 @@
 >
   <button
     type="button"
-    class="favorite-effect favorite-button"
+    class="button button-borderless favorite-effect favorite-button"
     class:disabled={favorite.effect.isSuppressed}
     onclick={handleChange}
     data-favorite-type="effect"
