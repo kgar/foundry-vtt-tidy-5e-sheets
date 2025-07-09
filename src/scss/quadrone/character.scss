@@ -2153,19 +2153,15 @@
   .inventory-footer {
     container-type: inline-size;
     container-name: inventory-footer;
-    position: sticky;
-    bottom: 0;
-    padding-top: var(--t5e-size-1x);
-    transition: margin var(--t5e-transition-default);
 
-    &:is(.tidy5e-sheet.theme-dark .inventory-footer) {
-      background: var(--t5e-component-card-darker);
-      box-shadow: 0 -0.125rem 0.25rem var(--t5e-component-card-darker);
+    &.fixed {
+      padding-bottom: 0;
+
     }
 
-    &:is(.tidy5e-sheet.theme-light .inventory-footer) {
-      filter: drop-shadow(0 0 0.1875rem rgba(0, 0, 0, 0.1));
-    }
+    &:is(.tidy5e-sheet.theme-dark .inventory-footer) {}
+
+    &:is(.tidy5e-sheet.theme-light .inventory-footer) {}
 
     .attunement-tracker {
       height: var(--t5e-field-size-default);

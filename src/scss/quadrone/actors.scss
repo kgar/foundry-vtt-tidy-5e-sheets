@@ -409,22 +409,23 @@
     }
   }
 
+  // TODO: @kgar still need to move inventory footer to flex positioned outside rest of content. Here was some of the padding changes
   .window-content .main-content>.tidy-tab.inventory {
-    padding: 0;
+    //   padding: 0;
 
-    >* {
-      margin-left: var(--t5e-size-4x);
-      margin-right: var(--t5e-size-4x);
-    }
+    //   >* {
+    //     margin-left: var(--t5e-size-4x);
+    //     margin-right: var(--t5e-size-4x);
+    //   }
 
-    >:first-child {
-      margin-top: var(--t5e-size-3x);
-    }
+    //   >:first-child {
+    //     margin-top: var(--t5e-size-3x);
+    //   }
 
-    >:last-child {
-      margin: 0 var(--t5e-size-3x) var(--t5e-size-3x);
-      padding: var(--t5e-size-1x);
-    }
+    //   >:last-child {
+    //     margin: 0 var(--t5e-size-3x) var(--t5e-size-3x);
+    //     padding: var(--t5e-size-1x);
+    //   }
 
   }
 
