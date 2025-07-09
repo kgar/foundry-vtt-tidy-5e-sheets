@@ -767,7 +767,8 @@
       "title": "{type} Portrait Shape",
       "option.round": "Round",
       "option.transparent": "Transparent",
-      "option.square": "Square"
+      "option.square": "Square",
+      "option.token": "Token"
     },
     "RarityColors.title": "Rarity Colors",
     "SheetTheme.title": "Sheet Theme",

@@ -205,7 +205,7 @@ export class ThemeQuadrone {
   /* -------------------------------------------- */
 
   static getActorPortraitShapes(): PortraitShape[] {
-    return ['round', 'transparent', 'square'];
+    return ['round', 'transparent', 'square', 'token'];
   }
 
   static getActorPortraitShape(doc: any): PortraitShape {
@@ -220,5 +220,13 @@ export class ThemeQuadrone {
     const settings = this.getSheetThemeSettings({ doc: doc });
     settings.portraitShape = newShape;
     this.saveSheetThemeSettings(doc, settings);
+    this.syncSystemTokenPortraitSetting(newShape);
+  }
+
+  static syncSystemTokenPortraitSetting(newShape: PortraitShape) {
+    FoundryAdapter.setSystemSetting(
+      CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT,
+      newShape === 'token'
+    );
   }
 }
