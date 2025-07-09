@@ -1,4 +1,5 @@
 import { TidyFlags } from 'src/api';
+import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -36,7 +37,7 @@ export async function migrateClassicTidyJournalsToTidyQuadrone(
   ].filter((n) => !isNil(n.value, '') || !isNil(n.title, ''));
 
   for (let note of notes) {
-    await TidyFlags.documentJournal.add(actor, {
+    await JournalQuadrone.add(actor, {
       title: note.title,
       value: note.value,
     });

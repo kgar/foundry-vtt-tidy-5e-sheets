@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
 - [ ] Update the readme
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 - [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings.
@@ -253,3 +252,4 @@ Limited:
 - [x] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
 - [x] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
+- [x] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.

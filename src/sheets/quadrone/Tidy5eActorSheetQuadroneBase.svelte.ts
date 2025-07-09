@@ -43,6 +43,7 @@ import ActorWarnings from './shared/ActorWarnings.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
+import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -990,7 +991,7 @@ export function Tidy5eActorSheetQuadroneBase<
           return;
         }
 
-        TidyFlags.documentJournal.sort(
+        JournalQuadrone.sort(
           this.actor,
           sourceEntry.id,
           targetEntryId
@@ -1011,14 +1012,14 @@ export function Tidy5eActorSheetQuadroneBase<
         const behavior = this._dropBehavior(event, data);
 
         const newId = foundry.utils.randomID();
-        TidyFlags.documentJournal.add(this.actor, {
+        JournalQuadrone.add(this.actor, {
           ...sourceEntry,
           id: newId,
         });
 
         // Remove from source actor if this is a move
         if (behavior === 'move') {
-          TidyFlags.documentJournal.remove(sourceDocument, data.tidyJournalId);
+          JournalQuadrone.remove(sourceDocument, data.tidyJournalId);
         }
       }
     }
