@@ -308,7 +308,7 @@
         "MigrateCompendia.Title": "Przeprowadź migrację kompendium",
         "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje.",
         "Journal": {
-            "explanation1": "UiI Overhaul w Tidy 5e Sheets wprowadził możliwość tworzenia dowolnej ilości wpisów w Dzienniku. Aby dostosować się do tej zmiany, konieczna jest migracja ze starej struktury Dziennika do nowej rozszerzalnej struktury Dziennika. Dane ze starego Dziennika nie będą widoczne w odświeżonej wersji Tidy 5e Sheets"
+            "explanation1": "UiI Overhaul w Tidy 5e Sheets wprowadził możliwość tworzenia dowolnej ilości wpisów w Dzienniku. Aby dostosować się do tej zmiany, konieczna jest migracja ze starej struktury Dziennika do nowej rozszerzalnej struktury Dziennika. Dane ze starego Dziennika nie będą widoczne w odświeżonej wersji Tidy 5e Sheets."
         }
     },
     "TIDY5E.ThemeSettings": {
@@ -326,10 +326,24 @@
             "explanation": "Wybierz kolor, którego chcesz użyć dla każdej opcji. Wartość \"#00000000\" oznacza wyłączenie koloru."
         },
         "SheetMenu": {
-            "hint": "Dostosuj kolory Tidy 5e Sheets.",
+            "hint": "Tylko klasyczne karty Tidy: Dostosuj kolory Tidy 5e Sheets.",
             "name": "Ustawienia motywu Tidy",
             "buttonLabel": "Ustawienia motywu"
-        }
+        },
+        "hint": "Spersonalizuj swoją kartę, aby stworzyć immersyjne doświadczenie, dopasowane do twojej gry.",
+        "AccentColor.title": "Kolor akcentu",
+        "ActorHeaderBackground.title": "Tło nagłówka postaci",
+        "ItemSidebarBackground.title": "Tło bocznego panelu przedmiotu",
+        "PortraitShape": {
+            "title": "Kształt portretu {type}",
+            "option.round": "Okrągły",
+            "option.transparent": "Przezroczysty",
+            "option.square": "Kwadratowy"
+        },
+        "RarityColors.title": "Kolory rzadkości",
+        "SheetTheme.title": "Motyw karty",
+        "SheetTheme.hint": "Najlepsze rezultaty uzyskasz, wybierając kolor znajdujący się w pobliżu środka palety barw.",
+        "SpellPreparationModeColors.title": "Kolory stanu przygotowania zaklęć"
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
         "name": "Wrodzone - akcent"
@@ -515,8 +529,8 @@
         "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawiatury z jednego atrybutu do następnego, ukrywając elementy sterujące przed kolejności tabulacji. Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
     "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "hint": "Umieszcza atrybuty poniżej zasobów postaci.",
-        "name": "Przenieś atrybuty poniżej zasobów"
+        "hint": "Umieszcza atrybuty po prawej stronie listy umiejętności, nad większością innych elementów interfejsu (np. Ulubione, Zdolności NPC).",
+        "name": "Przenieś atrybuty na prawo od umiejętności"
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "hint": "Pokazuje zakładkę księgi czarów dla NPC-ów. Wyłącz, aby przenieść sekcję księgi czarów do zakładki Atrybuty.",
@@ -858,5 +872,14 @@
     "TIDY5E.Settings.BankedInspirationGmOnly": {
         "name": "Zarządzanie gromadzoną inspiracją - tylko MG",
         "hint": "Włącz tę opcję, aby ograniczyć zarządzanie gromadzoną inspiracją tylko do GM."
-    }
+    },
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Śledzenie komórek zaklęć",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Witamy w Tidy 5e Sheets! Aby rozpocząć, musisz zmienić {sheetLinkStart}kartę{sheetLinkEnd} (lub {allSheetsLinkStart}wszystkie swoje karty{allSheetsLinkEnd}!), na wersję Tidy. Dowiedz się więcej o tym module i jego możliwościach na {wikiLinkStart}oficjalnej wiki{wikiLinkEnd}.",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Rosnąco",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Malejąco",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Pochodzenie zdolności",
+    "TIDY5E.HitDice.Abbreviation": "KW",
+    "TIDY5E.HitDice.Current.Label": "Aktualne kości wytrzymałości",
+    "TIDY5E.HitDice.Max.Label": "Max kości wytrzymałości",
+    "TIDY5E.CharacterTraits.Title": "Atrybuty postaci"
 }
