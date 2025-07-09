@@ -7,7 +7,7 @@
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
-  let imageUrl = $derived(context.actor.img);
+  let imageUrl = $derived(context.portrait.src);
   let imageAlt = $derived(context.actor.name);
 
   let characterIsDead = $derived(
@@ -17,10 +17,7 @@
       context.system.attributes.death.success < 3,
   );
 
-  // Make portraitShape mutable for the debug button
-  let currentPortraitShape = $derived(
-    ThemeQuadrone.getActorPortraitShape(context.document),
-  );
+  let currentPortraitShape = $derived(context.portrait.shape);
 
   const availableShapes = ThemeQuadrone.getActorPortraitShapes();
 
@@ -95,7 +92,7 @@
     {:else if currentPortraitShape === 'square'}
       <i class="fas fa-square-user"></i>
     {:else if currentPortraitShape === 'token'}
-      <i class="fas fa-coin"></i>
+      <i class="fas fa-circle"></i>
     {:else}
       <i class="fas fa-user"></i>
     {/if}

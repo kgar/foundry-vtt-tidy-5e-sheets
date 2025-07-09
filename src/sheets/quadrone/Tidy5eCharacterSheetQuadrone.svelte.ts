@@ -181,6 +181,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     let background = this.actor.system.details.background;
     let species = this.actor.system.details.race;
 
+    const showToken =
+      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+        true || themeSettings.portraitShape === 'token';
+    const effectiveToken = this.actor.isToken
+      ? this.actor.token
+      : this.actor.prototypeToken;
+
     const context: CharacterSheetQuadroneContext = {
       background: background
         ? {
@@ -251,10 +258,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
-      showToken:
-        !!FoundryAdapter.getSystemSetting(
-          CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
-        ) || themeSettings.portraitShape === 'token',
+      portrait: {
+        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+        src: showToken
+          ? effectiveToken?.texture.src ?? this.actor.img
+          : this.actor.img,
+      },
       species: species
         ? {
             id: species.id,

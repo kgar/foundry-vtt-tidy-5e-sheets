@@ -29,6 +29,7 @@ import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
+import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 
 export type Actor5e = any;
 export type TokenDocument = any;
@@ -1152,7 +1153,10 @@ export type CharacterSheetQuadroneContext = {
   senses: CharacterSpeedSenseContext;
   showContainerPanel: boolean;
   showDeathSaves: boolean;
-  showToken: boolean;
+  portrait: {
+    src: string;
+    shape: PortraitShape;
+  };
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   species?: ActorTraitItemContext;

@@ -97,6 +97,13 @@ export class ThemeQuadrone {
       TidyFlags.sheetThemeSettings.get(options.doc)
     ) as ThemeSettingsV2;
 
+    if (
+      options.doc?.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+      true
+    ) {
+      preferences.portraitShape = 'token';
+    }
+
     return preferences;
   }
 
@@ -106,7 +113,9 @@ export class ThemeQuadrone {
       settings
     );
 
-    return TidyFlags.sheetThemeSettings.set(doc, toSave);
+    const result = TidyFlags.sheetThemeSettings.set(doc, toSave);
+    this.syncSystemTokenPortraitSetting(doc, settings.portraitShape ?? 'round');
+    return result;
   }
 
   static getTidyStyleSheet() {
@@ -220,13 +229,13 @@ export class ThemeQuadrone {
     const settings = this.getSheetThemeSettings({ doc: doc });
     settings.portraitShape = newShape;
     this.saveSheetThemeSettings(doc, settings);
-    this.syncSystemTokenPortraitSetting(newShape);
+    this.syncSystemTokenPortraitSetting(doc, newShape);
   }
 
-  static syncSystemTokenPortraitSetting(newShape: PortraitShape) {
-    FoundryAdapter.setSystemSetting(
-      CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT,
-      newShape === 'token'
-    );
+  static syncSystemTokenPortraitSetting(doc: any, newShape: PortraitShape) {
+    doc.update({
+      [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:
+        newShape === 'token',
+    });
   }
 }
