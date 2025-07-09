@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [ ] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
 - [ ] Update the readme
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
