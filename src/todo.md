@@ -2,6 +2,8 @@
 
 ### The Short List
 
+- [ ] Make Quadrone Effects context menu handler; determine if there are any others.
+- [ ] Try to fix the inventory footer with Flex Parent ( Rest of Inventory, Footer )
 - [ ] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
 - [ ] Update the readme
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
