@@ -4,17 +4,15 @@
   import { CONSTANTS } from 'src/constants';
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TidyTable, {
-    type TidyTableColumns,
-  } from 'src/components/table/TidyTable.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
-  import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
-  import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
-  import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
-  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
+  import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
 
   let context = $derived(
     getContext<CoarseReactivityProvider<SpellSourceClassAssignmentsContext>>(
@@ -45,21 +43,6 @@
     ),
   );
 
-  let gridTemplateColumns: TidyTableColumns = $derived.by(() => {
-    let columns: TidyTableColumns = [
-      { name: 'Spell Name', width: 'minmax(12.5rem, 1fr)' },
-    ];
-
-    let standardClassColumnWidth = '10rem';
-    classColumns.forEach((column) => {
-      columns.push({ name: column.item.name, width: standardClassColumnWidth });
-    });
-
-    columns.push({ name: 'Identifier', width: '12.5rem' });
-
-    return columns;
-  });
-
   async function setItemSourceClass(item: Item5e, sourceClass: string) {
     await item.update({
       'system.sourceClass': sourceClass,
@@ -71,31 +54,38 @@
   var showUnassignedOnly = $state(false);
 </script>
 
-<section class="flex-column small-gap full-height">
-  <div role="presentation" class="flex-row small-gap">
+<section class="flexcol flexgap-3 full-height">
+  <div role="presentation" class="flexrow flexgap-3">
     <Search bind:value={searchCriteria} />
-    <label class="flex-row extra-small-gap align-items-center">
+    <label class="flexshrink checkbox">
       <input type="checkbox" bind:checked={showUnassignedOnly} />
       {localize('TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text')}
     </label>
   </div>
-  <div role="presentation" class="scroll-container flex-1">
-    <TidyTable
-      key="spell-source-class-assignments-matrix"
-      toggleable={false}
-      {gridTemplateColumns}
-    >
+  <div role="presentation" class="scroll-container flex1">
+    <TidyTable key="spell-source-class-assignments-matrix" toggleable={false}>
       {#snippet header()}
-        <TidyTableHeaderRow>
-          <TidyTableHeaderCell primary={true} class="p-1 capitalize">
-            {localize('DND5E.spell')}
+        <TidyTableHeaderRow class="unset-header-height">
+          <TidyTableHeaderCell primary={true}>
+            <h3
+              class="truncate"
+              data-tooltip="DND5E.spell"
+              style="padding-inline-start: 0.75rem"
+            >
+              {localize('DND5E.spell')}
+            </h3>
           </TidyTableHeaderCell>
           {#each classColumns as classColumn}
-            <TidyTableHeaderCell>
-              {classColumn.item.name}
+            <TidyTableHeaderCell
+              columnWidth="8rem"
+              data-tooltip={classColumn.item.name}
+            >
+              <span class="truncate">
+                {classColumn.item.name}
+              </span>
             </TidyTableHeaderCell>
           {/each}
-          <TidyTableHeaderCell class="flex-row small-gap">
+          <TidyTableHeaderCell columnWidth="12.5rem" class="flexgap-1">
             <span
               >{localize('TIDY5E.SpellSourceClassAssignments.Identifier')}</span
             >
@@ -116,30 +106,31 @@
             !visibleSelectablesIdSubset.has(assignment.item.id) ||
             (showUnassignedOnly && !sourceClassIsUnassigned)}
           <TidyTableRow hidden={hideRow}>
-            <TidyTableCell primary={true} class="p-1 semibold">
+            <TidyTableCell primary={true} class="flexrow">
               <a
-                class="flex-1 highlight-on-hover"
+                class="button button-borderless"
+                style="justify-content: flex-start;"
                 onclick={async () =>
                   FoundryAdapter.renderSheetFromUuid(assignment.item.uuid)}
               >
                 {assignment.item.name}
-                </a>
+              </a>
             </TidyTableCell>
             {#each classColumns as classColumn}
               {@const selected =
                 assignment.item.system.sourceClass === classColumn.key}
-              <TidyTableHeaderCell>
-                <TidySwitch
+              <TidyTableCell columnWidth="8rem">
+                <FieldToggle
                   checked={selected}
-                  onChange={(ev) =>
+                  onchange={(ev) =>
                     setItemSourceClass(
                       assignment.item,
                       ev.currentTarget.checked ? classColumn.key : '',
                     )}
                 />
-              </TidyTableHeaderCell>
+              </TidyTableCell>
             {/each}
-            <TidyTableCell>
+            <TidyTableCell columnWidth="12.5rem">
               <TextInput
                 document={assignment.item}
                 disabled={!assignment.item.isOwner}

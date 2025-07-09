@@ -37,7 +37,14 @@ export type RadioSetting = {
   default?: string;
 };
 
-export type SectionSetting = BooleanSetting | RadioSetting;
+export type ButtonSetting = {
+  type: 'button';
+  icon?: string;
+  label?: string;
+  onclick: (ev: MouseEvent & { currentTarget: HTMLElement }, doc: any) => void;
+};
+
+export type SectionSetting = BooleanSetting | RadioSetting | ButtonSetting;
 
 export type SectionOptionGroup = {
   title: string;
@@ -124,6 +131,10 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
 
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
+        if (setting.type === 'button') {
+          return;
+        }
+
         let doc = setting.doc ?? this.document;
         if (setting.type === 'boolean') {
           setting.checked =
@@ -157,6 +168,10 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
 
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
+        if (setting.type === 'button') {
+          return;
+        }
+
         let doc = setting.doc ?? this.document;
         let toSave =
           documentsToSave.get(doc) ?? documentsToSave.set(doc, {}).get(doc)!;

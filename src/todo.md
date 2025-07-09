@@ -3,8 +3,6 @@
 ### The Short List
 
 - [ ] Update the readme
-- [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
-  - hightouch recommendation: in the tab config menu
 - [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
 - [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
@@ -253,3 +251,5 @@ Limited:
 - [x] Try to fix the inventory footer with Flex Parent ( Rest of Inventory, Footer )
 - [x] Make Quadrone Effects context menu handler; determine if there are any others.
 - [x] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
+- [x] Figure out where to put power tools like "Assign Spells to Source Classes"
+  - hightouch recommendation: in the tab config menu

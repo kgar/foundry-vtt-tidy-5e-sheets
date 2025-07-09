@@ -42,7 +42,7 @@
     box-shadow: 0 0 0.0625rem inset var(--t5e-table-header-border-color);
     color: var(--t5e-color-text-default);
     max-height: var(--t5e-table-header-row-height);
-
+    
     &.spell-preparation {
       --t5e-table-header-background-left: oklch(from var(--t5e-mode-color, var(--t5e-theme-color-darkest)) calc(l * 0.75) calc(c * 1.2) h);
       --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-default));
@@ -306,6 +306,8 @@
 
     &:not(.primary) {
       flex-basis: var(--tidy-table-column-width, var(--t5e-size-20x));
+      // max-width triggers truncated content to show ellipses
+      max-width: var(--tidy-table-column-width, var(--t5e-size-20x));
     }
 
     &.text-cell {

@@ -6,6 +6,7 @@
     ConfigureSectionsApplication,
     SectionOptionGroup,
   } from './ConfigureSectionsApplication.svelte';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     optionGroups?: SectionOptionGroup[];
@@ -58,6 +59,17 @@
                     {localize(option.label)}
                   </label>
                 {/each}
+              {:else if setting.type === 'button'}
+                <button
+                  type="button"
+                  class="button"
+                  onclick={(ev) => setting.onclick(ev, application.document)}
+                >
+                  {#if !isNil(setting.icon)}
+                    <i class={setting.icon}></i>
+                  {/if}
+                  {localize(setting.label ?? '')}
+                </button>
               {/if}
             {/each}
           </div>
