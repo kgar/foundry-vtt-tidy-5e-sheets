@@ -103,6 +103,8 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          height: auto;
+          width: auto;
 
           img {
             width: 1.625rem;
@@ -120,6 +122,7 @@
         &:focus,
         &:active {
           text-shadow: none;
+          outline: none;
 
           .item-use-button {
             img {
@@ -162,6 +165,16 @@
 
         .effect-use-icon img {
           opacity: 0.5;
+        }
+      }
+
+      &:is([data-favorite-type="activity"]) {
+        .item-use-button {
+          background: var(--t5e-color-text-gold-emphasis);
+
+          img {
+            z-index: 0;
+          }
         }
       }
     }

@@ -139,6 +139,15 @@
         &:not(.positive, .negative) {
           background-color: var(--t5e-component-field-background);
         }
+
+        &:is(.physical-bypass) {
+          background-color: var(--t5e-color-palette-orange-55);
+          border-color: var(--t5e-color-palette-orange-40);
+
+          i {
+            color: var(--t5e-color-text-oninverse-default);
+          }
+        }
       }
     }
   }
@@ -398,6 +407,26 @@
       transform: translateX(-50%);
       z-index: 1;
     }
+  }
+
+  // TODO: @kgar still need to move inventory footer to flex positioned outside rest of content. Here was some of the padding changes
+  .window-content .main-content>.tidy-tab.inventory {
+    //   padding: 0;
+
+    //   >* {
+    //     margin-left: var(--t5e-size-4x);
+    //     margin-right: var(--t5e-size-4x);
+    //   }
+
+    //   >:first-child {
+    //     margin-top: var(--t5e-size-3x);
+    //   }
+
+    //   >:last-child {
+    //     margin: 0 var(--t5e-size-3x) var(--t5e-size-3x);
+    //     padding: var(--t5e-size-1x);
+    //   }
+
   }
 
   .tidy-tab.journal {
