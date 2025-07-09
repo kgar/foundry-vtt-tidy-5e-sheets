@@ -298,6 +298,16 @@
           }
         }
 
+        &.token{
+          img { 
+            filter: var(--t5e-filter-drop-shadow-token); 
+          }
+
+          &::before {
+            border: none;
+          }
+        }
+
         &.dead {
           &:not(.transparent) {
             background-color: var(--t5e-component-card-dark-darker);

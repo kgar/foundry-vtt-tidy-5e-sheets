@@ -202,6 +202,9 @@
   --t5e-outline-field-focus: 0.125rem solid var(--t5e-theme-color-default);
   --t5e-enricher-background: rgba(0, 0, 0, 0.05);
 
+  /* Filters */
+  --t5e-filter-drop-shadow-token: drop-shadow(0 0 8px var(--dnd5e-color-black));
+
   /* Transitions */
   --t5e-transition-speed: 150ms;
   --t5e-transition-animation: ease-in-out;
