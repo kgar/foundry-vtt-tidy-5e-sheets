@@ -16,7 +16,7 @@
     NpcSheetQuadroneContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import CharacterInventoryFooter from '../character-parts/CharacterInventoryFooter.svelte';
+  import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import ContainerPanel from 'src/sheets/quadrone/shared/ContainerPanel.svelte';
@@ -58,27 +58,27 @@
   });
 </script>
 
-<InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+<div class="inventory-content">
+  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
-<CharacterEncumbranceRow />
+  <CharacterEncumbranceRow />
 
-{#if context.showContainerPanel && !!context.containerPanelItems.length}
-  <ContainerPanel
+  {#if context.showContainerPanel && !!context.containerPanelItems.length}
+    <ContainerPanel
+      {searchCriteria}
+      containerPanelItems={context.containerPanelItems}
+    />
+  {/if}
+
+  <InventoryTables
+    sections={inventory}
+    editable={context.editable}
+    itemContext={context.itemContext}
+    {inlineToggleService}
     {searchCriteria}
-    containerPanelItems={context.containerPanelItems}
+    sheetDocument={context.actor}
+    root={true}
   />
-{/if}
+</div>
 
-<InventoryTables
-  sections={inventory}
-  editable={context.editable}
-  itemContext={context.itemContext}
-  {inlineToggleService}
-  {searchCriteria}
-  sheetDocument={context.actor}
-  root={true}
-/>
-
-<CharacterInventoryFooter
-  class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
-/>
+<ActorInventoryFooter />

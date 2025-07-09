@@ -3,7 +3,6 @@
 ### The Short List
 
 - [ ] Make Quadrone Effects context menu handler; determine if there are any others.
-- [ ] Try to fix the inventory footer with Flex Parent ( Rest of Inventory, Footer )
 - [ ] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
 - [ ] Update the readme
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
@@ -251,3 +250,4 @@ Limited:
 - [x] Phys bypasses: ok what I'd try instead is to use the tooltip for sure, but thin toss on `fa-shield-exclamation` and try changing the color to either orange-40 or orange-70, or if that feels weird then same green but change the icon to `rgba(255, 236, 149, 1)` or something <https://discord.com/channels/@me/1243307347682529423/1391632333337002082>
 - [x] (testing) Fix issue with <https://github.com/KibblesTasty/kibbles-compendium-of-craft-and-creation>
 - [x] (testing) Finish testing all documented CONFIG.DND5E customizations
+- [x] Try to fix the inventory footer with Flex Parent ( Rest of Inventory, Footer )
