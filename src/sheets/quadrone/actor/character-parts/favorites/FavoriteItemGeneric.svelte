@@ -13,7 +13,12 @@
 
   let { favorite }: Props = $props();
 
-  let subtitle = 'todo';
+  let subtitle = $derived(
+    [
+      favorite.item.system.type.label ??
+        game.i18n.localize(CONFIG.Item.typeLabels[favorite.item.type]),
+    ].filterJoin(` <div class="divider-dot"></div> `),
+  );
 
   let uses = $derived(
     favorite.item?.system?.hasLimitedUses

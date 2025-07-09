@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
 - [ ] Update the readme
 - [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
   - hightouch recommendation: in the tab config menu
@@ -94,6 +93,8 @@
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
   - Does not work on default sheets or Tidy classic.
 - [ ] (Take our time on this one; it's never been solved by any sheet, except for vertical tabs) Implement Responsive Tab Strip
+- [ ] Magical Tattoos: provide first-class favorite card. Expand system to accommodate custom favorite card renderers so that it can be registered thus.
+
 
 ### Module Compatibility
 
@@ -251,3 +252,4 @@ Limited:
 - [x] (testing) Finish testing all documented CONFIG.DND5E customizations
 - [x] Try to fix the inventory footer with Flex Parent ( Rest of Inventory, Footer )
 - [x] Make Quadrone Effects context menu handler; determine if there are any others.
+- [x] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
