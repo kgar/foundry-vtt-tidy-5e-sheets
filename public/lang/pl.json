@@ -882,9 +882,9 @@
     "TIDY5E.HitDice.Current.Label": "Aktualne kości wytrzymałości",
     "TIDY5E.HitDice.Max.Label": "Max kości wytrzymałości",
     "TIDY5E.CharacterTraits.Title": "Atrybuty postaci",
-    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sekcja dodatkowych zaklęć",
-    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekcja na przedmiot",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sekcja Dodatkowe czary",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekcja Na przedmiot",
     "TIDY5E.ContextMenuActionAddToSheetTab": "Dodaj do zakładki karty",
     "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Usuń z zakładki karty",
-    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z działania Czarowanie"
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z aktywności Rzucanie"
 }
