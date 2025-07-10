@@ -4,6 +4,7 @@
   import type { SlotsFavoriteContextEntry } from 'src/types/types';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     favorite: SlotsFavoriteContextEntry;
@@ -31,6 +32,10 @@
   data-key={favorite.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
   data-slots
+  onmousedown={(event) =>
+    FoundryAdapter.doActionOnMiddleClick(event, () =>
+      FoundryAdapter.openSpellSlotsConfig(context.actor),
+    )}
 >
   <FavoriteRollButton
     {favorite}

@@ -198,17 +198,24 @@ export const FoundryAdapter = {
   getCurrentLang() {
     return game.i18n.lang;
   },
+  doActionOnMiddleClick(event: MouseEvent, action: () => any) {
+    if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
+      return;
+    }
+
+    event.preventDefault();
+
+    return action();
+  },
   editOnMiddleClick(
     event: MouseEvent,
     entityWithSheet: {
       sheet: { render: (force: boolean) => void; isEditable: boolean };
     }
   ) {
-    if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
-      return;
-    }
-
-    FoundryAdapter.editOnMouseEvent(event, entityWithSheet);
+    return FoundryAdapter.doActionOnMiddleClick(event, () =>
+      FoundryAdapter.editOnMouseEvent(event, entityWithSheet)
+    );
   },
   editOnMouseEvent(
     event: MouseEvent,
@@ -1458,10 +1465,8 @@ export const FoundryAdapter = {
     };
   },
   getAdvancementOriginId(item: Item5e) {
-    let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split(
-      '.',
-    );
+    let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split('.');
 
     return originId;
-  }
+  },
 };

@@ -50,6 +50,8 @@
   data-item-id={favorite.item?.id}
   data-favorite-id={favorite.id}
   data-tidy-draggable
+  onmousedown={(event) =>
+    FoundryAdapter.editOnMiddleClick(event, favorite.item)}
 >
   <FavoriteRollButton
     {favorite}

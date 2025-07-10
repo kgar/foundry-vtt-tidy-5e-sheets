@@ -37,6 +37,10 @@
 
     await context.actor.rollToolCheck({ tool: favorite.key, event });
   }
+
+  let trait: 'skills' | 'tool' = $derived(
+    favorite.type === 'skill' ? 'skills' : 'tool',
+  );
 </script>
 
 <div
@@ -48,6 +52,10 @@
   data-favorite-id={favorite.id}
   data-key={favorite.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
+  onmousedown={(event) =>
+    FoundryAdapter.doActionOnMiddleClick(event, () =>
+      FoundryAdapter.renderSkillToolConfig(context.actor, trait, favorite.key ?? ''),
+    )}
 >
   <FavoriteRollButton
     {favorite}
