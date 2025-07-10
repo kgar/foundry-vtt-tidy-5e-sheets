@@ -27,6 +27,7 @@ export type ThemeQuadroneStyleDeclaration = {
 };
 
 export type ThemeSettingsConfigurationOptions = {
+  
   doc?: any;
   settingsOverride?: ThemeSettingsV2;
   /**

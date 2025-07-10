@@ -292,6 +292,7 @@ export function getItemContextOptionsQuadrone(
       new SectionSelectorApplication(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.Label'),
+        itemParent ?? item,
         { document: item }
       ).render(true),
   });
@@ -309,6 +310,7 @@ export function getItemContextOptionsQuadrone(
       new SectionSelectorApplication(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
+        itemParent ?? item,
         { document: item }
       ).render(true),
   });
