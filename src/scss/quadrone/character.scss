@@ -139,14 +139,13 @@
         gap: var(--t5e-size-3x);
         margin-inline-end: var(--t5e-size-4x);
         margin-inline-start: calc((var(--sidebar-expanded-width) + var(--t5e-size-4x)) * -1);
-        //overflow-x: clip; // TODO: Confirm that we need this. removed for hover state.
+        padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-4x);
         overflow-y: auto;
         transition: margin var(--t5e-transition-default);
 
         &.expanded {
           margin-inline-start: 0;
           margin-inline-end: 0;
-          padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-4x);
           max-width: var(--sidebar-expanded-width);
         }
       }
@@ -249,11 +248,11 @@
         overflow: hidden;
 
         img {
-          width: 100%;
-          height: 100%;
           border: none;
           display: block;
-
+          height: 11.25rem;
+          width: 11.25rem;
+          object-fit: cover;
         }
 
         &::before {
@@ -288,11 +287,14 @@
 
         &.square {
           padding: var(--t5e-size-1x);
-          box-shadow: var(--header-shadow);
           --inset: 0.5625rem;
 
           &::before {
             border-width: 0.0625rem;
+          }
+
+          img {
+            box-shadow: var(--header-shadow);
           }
         }
 
@@ -878,6 +880,7 @@
 
       &.xp-value {
         text-align: right;
+        background-color: rgba(0, 0, 0, 0.40);
       }
 
       &:hover,
@@ -1231,6 +1234,7 @@
       container-type: inline-size;
       display: flex;
       flex-direction: row;
+      overflow-x: auto;
 
       >* {
         flex: 1 1 auto;
@@ -1659,6 +1663,11 @@
   @container character-sheet (width < 43.75rem) {
     .sheet-header .character-vitals-container {
       max-width: 10rem;
+
+      .character-image img {
+        height: 10rem;
+        width: 10rem;
+      }
     }
   }
 
@@ -1849,7 +1858,7 @@
 
   @container abilities (width < 47.5rem) {
     .sheet-header .abilities-container .abilities-container-inner {
-      &:has(:nth-child(12)) {
+      &:has(:nth-child(11)) {
         @include ability-smaller;
       }
     }
@@ -1858,7 +1867,7 @@
   @container abilities (width < 45rem) {
     .sheet-header .abilities-container .abilities-container-inner {
 
-      &:has(:nth-child(12)) {
+      &:has(:nth-child(11)) {
         @include collapse-abilities;
         overflow-x: auto;
         overflow-y: hidden;
@@ -1900,10 +1909,20 @@
           width: 100%;
         }
       }
+
+      &:has(:nth-child(11)) {
+        .ability {
+          .button-config {
+            bottom: -5rem;
+          }
+        }
+
+      }
     }
   }
 
   @container abilities (width < 33.75rem) {
+
     .sheet-header .abilities-container .abilities-container-inner {
       &:has(:nth-child(8)):not(:has(:nth-child(9))) {
         @include ability-smaller;
