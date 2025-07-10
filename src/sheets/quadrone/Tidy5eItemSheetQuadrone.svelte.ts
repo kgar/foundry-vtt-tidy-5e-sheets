@@ -21,8 +21,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Activities } from 'src/features/activities/activities';
 import { getPercentage } from 'src/utils/numbers';
-import type { GroupableSelectOption, Tab } from 'src/types/types';
-import { TabManager } from 'src/runtime/tab/TabManager';
+import type { ActiveEffect5e, GroupableSelectOption } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import ItemHeaderStart from './item/parts/ItemHeaderStart.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
@@ -868,10 +867,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
    * Handle the dropping of ActiveEffect data onto an Item Sheet
    * @param {DragEvent} event                  The concluding DragEvent which contains drop data
    * @param {object} data                      The data transfer extracted from the event
-   * @returns {Promise<ActiveEffect|boolean>}  The created ActiveEffect object or false if it couldn't be created.
+   * @returns {Promise<ActiveEffect5e|boolean>}  The created ActiveEffect object or false if it couldn't be created.
    * @protected
    */
-  async _onDropActiveEffect(event: DragEvent, data: any) {
+  async _onDropActiveEffect(
+    event: DragEvent,
+    data: any
+  ): Promise<ActiveEffect5e | boolean> {
     const effect = await ActiveEffect.implementation.fromDropData(data);
     if (
       !this.item.isOwner ||
@@ -891,7 +893,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       options.keepOrigin = true;
       options.dnd5e = {
         enchantmentProfile: effect.id,
-        activityId: data.activityId,
+        activityId:
+          data.activityId ??
+          effect.parent?.system.activities
+            ?.getByType('enchant')
+            .find((a: any) => a.effects.some((e: any) => e._id === effect.id))
+            ?.id,
       };
     }
 

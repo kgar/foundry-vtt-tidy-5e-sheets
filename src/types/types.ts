@@ -32,6 +32,7 @@ import type { UserPreferences } from 'src/features/user-preferences/user-prefere
 import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 
 export type Actor5e = any;
+export type Folder = any;
 export type TokenDocument = any;
 
 export type SvelteTabContent = {

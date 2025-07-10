@@ -29,7 +29,7 @@ export function getItemContextOptionsQuadrone(
   let options: ContextMenuEntry[] = [];
 
   // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
-  
+
   options.push({
     name: 'TIDY5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',

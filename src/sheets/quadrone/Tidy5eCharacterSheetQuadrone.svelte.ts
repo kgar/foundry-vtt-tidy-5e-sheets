@@ -1116,7 +1116,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     // Handle Activity drop
     if (data.type === 'Activity') {
       const activity = await fromUuid(data.uuid);
-      if (activity) return this._onDropActivity(event, data);
+      if (activity) {
+        return this._onDropActivity(event, activity);
+      }
     }
 
     return super._onDrop(event);
@@ -1125,10 +1127,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   /** @inheritDoc */
   async _onDropActor(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    document: Actor5e
   ) {
-    if (!event.target.closest('.facility-occupants') || !data.uuid) {
-      return super._onDropActor(event, data);
+    if (!event.target.closest('.facility-occupants') || !document.uuid) {
+      return super._onDropActor(event, document);
     }
 
     const facilityId =
@@ -1151,7 +1153,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return;
     }
 
-    this._onDropActorAddToFacility(facility, prop, data.uuid);
+    this._onDropActorAddToFacility(facility, prop, document.uuid);
   }
 
   _onDropActorAddToFacility(facility: Item5e, prop: string, actorUuid: string) {
@@ -1249,49 +1251,63 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
    */
   async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    { data, uuid }: any
-  ) {
-    const activity = await fromUuid(uuid);
-    if (!event.target.closest('.favorites') || activity.actor !== this.actor)
-      return super._onDropActivity(event, { data, uuid });
-    const relativeUuid = `${activity.item.getRelativeUUID(
+    document: Activity5e
+  ): Promise<Actor5e | void> {
+    if (!event.target.closest('.favorites') || document.actor !== this.actor) {
+      return super._onDropActivity(event, document);
+    }
+
+    const relativeUuid = `${document.item.getRelativeUUID(
       this.actor
-    )}.Activity.${activity.id}`;
+    )}.Activity.${document.id}`;
+
     return this._onDropFavorite(event, { type: 'activity', id: relativeUuid });
   }
 
   async _onDropItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    document: Item5e
   ) {
-    const item = await Item.implementation.fromDropData(data);
-
-    if (!event.target.closest('.favorites') || item.parent !== this.actor) {
+    if (!event.target.closest('.favorites') || document.parent !== this.actor) {
       // Handle Feature Origin Transfer
       let targetOrigin = event.target.closest<HTMLElement>(
         '[data-tidy-section-key]'
       )?.dataset?.[CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN];
 
       let sourceItemOrigin = FoundryAdapter.getProperty(
-        item,
+        document,
         CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN
       );
 
-      if (sourceItemOrigin !== targetOrigin && item.parent === this.actor) {
+      if (sourceItemOrigin !== targetOrigin && document.parent === this.actor) {
         !isNil(targetOrigin)
-          ? await item.update({
+          ? await document.update({
               [CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN]: targetOrigin,
             })
-          : await item.unsetFlag(
+          : await document.unsetFlag(
               'dnd5e',
               CONSTANTS.SYSTEM_FLAG_ADVANCEMENT_ORIGIN
             );
       }
 
-      return await super._onDropItem(event, item);
+      return await super._onDropItem(event, document);
     }
-    const uuid = item.getRelativeUUID(this.actor);
+    const uuid = document.getRelativeUUID(this.actor);
     return await this._onDropFavorite(event, { type: 'item', id: uuid });
+  }
+
+  deleteOccupant(facilityId: string, prop: string, index: number) {
+    const facility = this.actor.items.get(facilityId);
+
+    if (!facility || !prop || index === undefined) {
+      return;
+    }
+
+    let { value } = foundry.utils.getProperty(facility, prop);
+
+    value = value.filter((_: any, i: number) => i !== index);
+
+    return facility.update({ [`${prop}.value`]: value });
   }
 
   /* -------------------------------------------- */

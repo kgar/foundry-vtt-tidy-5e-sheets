@@ -93,6 +93,46 @@ export class TidyHooks {
   }
 
   /**
+   * The facility occupant context menu has established its options and is about to show.
+   * @param actor           The affected actor.
+   * @param facility        The affected facility.
+   * @param occupantUuid    The occupant UUID.
+   * @param prop            The property for saving changes to the target occupant.
+   * @param index           The index of the occupant.
+   * @param contextOptions  The menu items for this occupant.
+   * @returns               `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   */
+  static dnd5eGetFacilityOccupantContextOptions(
+    actor: Actor5e,
+    facility: Item5e,
+    occupantUuid: string | null,
+    prop: string | null,
+    index: number | null,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getFacilityOccupantContextOptions',
+      actor,
+      facility,
+      occupantUuid,
+      prop,
+      index,
+      contextOptions
+    );
+  }
+
+  /**
+   * Something was dropped on an actor sheet. To cancel the drop, return `false`.
+   * @param actor     The affected actor.
+   * @param app       The affected sheet.
+   * @param data      The drop data.
+   * @returns         `true` or nothing to allow the drop to continue, `false` to cancel the drop.
+   */
+  static foundryDropActorSheetData(actor: Actor5e, app: any, data: any) {
+    return Hooks.call('dropActorSheetData', actor, app, data);
+  }
+
+  /**
    * The context menu is about to show for a given item on a sheet.
    * @param {Item5e} item The item document instance.
    * @param {object} options The mouse event which triggered the context menu.
@@ -164,35 +204,6 @@ export class TidyHooks {
       item,
       occupantType,
       prop
-    );
-  }
-
-  /**
-   * The facility occupant context menu has established its options and is about to show.
-   * @param actor           The affected actor.
-   * @param facility        The affected facility.
-   * @param occupantUuid    The occupant UUID.
-   * @param prop            The property for saving changes to the target occupant.
-   * @param index           The index of the occupant.
-   * @param contextOptions  The menu items for this occupant.
-   * @returns               `true` to allow the menu to show, `false` to prevent the default menu from showing.
-   */
-  static dnd5eGetFacilityOccupantContextOptions(
-    actor: Actor5e,
-    facility: Item5e,
-    occupantUuid: string | null,
-    prop: string | null,
-    index: number | null,
-    contextOptions: ContextMenuEntry[]
-  ): boolean {
-    return Hooks.call(
-      'tidy5e-sheet.getFacilityOccupantContextOptions',
-      actor,
-      facility,
-      occupantUuid,
-      prop,
-      index,
-      contextOptions
     );
   }
 

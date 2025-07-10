@@ -33,20 +33,20 @@ export function getActiveEffectContextOptionsQuadrone(effect: any, app: any) {
       name: effect.disabled
         ? 'DND5E.ContextMenuActionEnable'
         : 'DND5E.ContextMenuActionDisable',
-        icon: effect.disabled
+      icon: effect.disabled
         ? "<i class='fas fa-check fa-fw'></i>"
         : "<i class='fas fa-times fa-fw'></i>",
-        callback: () => effect.update({ disabled: !effect.disabled }),
-        condition: () => effect.isOwner && !isConcentrationEffect,
-        group: 'state',
-      },
-      {
-        name: 'DND5E.ConcentrationBreak',
-        icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
-        condition: () => isConcentrationEffect,
-        callback: () => app.document.endConcentration(effect),
-        group: 'state',
-      },
+      callback: () => effect.update({ disabled: !effect.disabled }),
+      condition: () => effect.isOwner && !isConcentrationEffect,
+      group: 'state',
+    },
+    {
+      name: 'DND5E.ConcentrationBreak',
+      icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
+      condition: () => isConcentrationEffect,
+      callback: () => app.document.endConcentration(effect),
+      group: 'state',
+    },
     {
       name: 'DND5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
@@ -56,8 +56,8 @@ export function getActiveEffectContextOptionsQuadrone(effect: any, app: any) {
     {
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: isFav
-      ? `<i class='fa-regular fa-star fa-fw'></i>`
-      : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
+        ? `<i class='fa-regular fa-star fa-fw'></i>`
+        : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
       condition: () => 'favorites' in actor.system,
       callback: () => {
         if (!effect) {
@@ -85,7 +85,7 @@ export function getActiveEffectContextOptionsQuadrone(effect: any, app: any) {
     },
     {
       name: 'DND5E.ContextMenuActionDelete',
-      icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
+      icon: `<i class="fas fa-trash fa-fw" style='color: var(--t5e-warning-accent-color);'></i>`,
       callback: () => effect.deleteDialog(),
       condition: () => canEditEffect(effect) && !isConcentrationEffect,
       group: 'be-careful',

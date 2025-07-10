@@ -7,7 +7,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svel
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import { Inventory } from 'src/features/sections/Inventory';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-import type { SkillData, ToolData } from 'src/foundry/dnd5e.types';
+import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
@@ -23,12 +23,14 @@ import type { Ability } from 'src/types/dnd5e.actor5e.types';
 import type { Item5e } from 'src/types/item.types';
 import type {
   ActiveEffect5e,
+  Actor5e,
   ActorAbilityContextEntry,
   ActorSaves,
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorSpeedSenseEntryContext,
   ActorTraitContext,
+  Folder,
   MessageBus,
 } from 'src/types/types';
 import { splitSemicolons } from 'src/utils/array';
@@ -44,6 +46,7 @@ import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -803,7 +806,10 @@ export function Tidy5eActorSheetQuadroneBase<
     /*  Drag and Drop
     /* -------------------------------------------- */
 
-    _allowedDropBehaviors(event: DragEvent, data: any) {
+    _allowedDropBehaviors(
+      event: DragEvent,
+      data: { type?: string; uuid?: string }
+    ) {
       if (!data.uuid) {
         return new Set<DropEffectValue>(['copy', 'link']);
       }
@@ -826,7 +832,10 @@ export function Tidy5eActorSheetQuadroneBase<
       return allowed;
     }
 
-    _defaultDropBehavior(event: DragEvent, data: any): DropEffectValue {
+    _defaultDropBehavior(
+      event: DragEvent,
+      data: { type?: string; uuid?: string }
+    ): DropEffectValue {
       if (!data.uuid) {
         return 'copy';
       }
@@ -847,12 +856,12 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     _onDragOver(event: DragEvent & { currentTarget: HTMLElement }) {
-      const data =
-        foundry.applications.ux.DragDrop.implementation.getPayload(event);
-
       if (event.dataTransfer == null) {
         return;
       }
+
+      const data =
+        foundry.applications.ux.DragDrop.implementation.getPayload(event);
 
       foundry.applications.ux.DragDrop.implementation.dropEffect =
         event.dataTransfer.dropEffect =
@@ -865,7 +874,10 @@ export function Tidy5eActorSheetQuadroneBase<
      * The behavior for the dropped data. When called during the drop event, ensure this is called before awaiting
      * anything or the drop behavior will be lost.
      */
-    _dropBehavior(event: DragEvent, data: unknown): DropEffectValue {
+    _dropBehavior(
+      event: DragEvent,
+      data: { type?: string; uuid?: string }
+    ): DropEffectValue {
       const allowed = this._allowedDropBehaviors(event, data);
 
       let behavior =
@@ -947,25 +959,41 @@ export function Tidy5eActorSheetQuadroneBase<
       this._currentDragEvent = event;
       const data = foundry.applications.ux.TextEditor.getDragEventData(event);
       const actor = this.actor;
-      // TODO: Extract hook call
-      const allowed = Hooks.call('dropActorSheetData', actor, this, data);
+      const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
       if (allowed === false) return;
 
-      // Handle different data types
+      // Dropped Documents
+      const documentClass = foundry.utils.getDocumentClass(data.type);
+      if (documentClass) {
+        const document = await documentClass.fromDropData(data);
+        return await this._onDropDocument(event, document);
+      }
+
+      // Other Drops
       switch (data.type) {
         case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
           return await this._onDropJournal(event, data);
-        case CONSTANTS.DOCUMENT_NAME_ACTOR:
-          return await this._onDropActor(event, data);
-        case CONSTANTS.DOCUMENT_NAME_ITEM:
-          return await this._onDropItem(event, data);
         case CONSTANTS.DOCUMENT_NAME_ACTIVITY:
-          return await this._onDropActivity(event, data);
-        case 'Folder': // TODO: figure out how to extract this as a constant. Is it a Document Name? Or what?
-          return await this._onDropFolder(event, data);
+          // Activity5e can't be found by `.getDocumentClass()`.
+          const document = await fromUuid(data.uuid);
+          return await this._onDropActivity(event, document);
       }
 
       return super._onDrop(event);
+    }
+
+    async _onDropDocument(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      document: any
+    ) {
+      switch (document.documentName) {
+        case CONSTANTS.DOCUMENT_NAME_ACTOR:
+          return await this._onDropActor(event, document);
+        case CONSTANTS.DOCUMENT_NAME_ITEM:
+          return await this._onDropItem(event, document);
+        case CONSTANTS.DOCUMENT_NAME_FOLDER:
+          return await this._onDropFolder(event, document);
+      }
     }
 
     async _onDropJournal(
@@ -991,11 +1019,7 @@ export function Tidy5eActorSheetQuadroneBase<
           return;
         }
 
-        JournalQuadrone.sort(
-          this.actor,
-          sourceEntry.id,
-          targetEntryId
-        );
+        JournalQuadrone.sort(this.actor, sourceEntry.id, targetEntryId);
       } else {
         if (!sourceDocument) {
           return;
@@ -1025,9 +1049,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /** @override */
-    async _onDropActor(event: DragEvent, data: any) {
-      const droppedActor = await fromUuid(data.uuid);
-
+    async _onDropActor(event: DragEvent, document: Actor5e) {
       const canPolymorph =
         game.user.isGM ||
         (this.actor.isOwner && game.settings.get('dnd5e', 'allowPolymorphing'));
@@ -1044,7 +1066,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const settings =
         await dnd5e.applications.actor.TransformDialog.promptSettings(
           this.actor,
-          droppedActor,
+          document,
           {
             transform: {
               settings: game.settings.get('dnd5e', 'transformationSettings'),
@@ -1062,29 +1084,27 @@ export function Tidy5eActorSheetQuadroneBase<
         settings.toObject()
       );
 
-      return this.actor.transformInto(droppedActor, settings);
+      return this.actor.transformInto(document, settings);
     }
 
     async _onDropItem(
       event: DragEvent & { currentTarget: HTMLElement },
-      data: unknown
+      document: Item5e
     ): Promise<object | boolean | undefined> {
-      const behavior = this._dropBehavior(event, data);
+      const behavior = this._dropBehavior(event, document.toDragData());
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
       }
 
-      const item = await Item.implementation.fromDropData(data);
-
       // Handle moving out of container & item sorting
-      if (behavior === 'move' && this.actor.uuid === item.parent?.uuid) {
-        const removingFromContainer = !isNil(item.system.container);
+      if (behavior === 'move' && this.actor.uuid === document.parent?.uuid) {
+        const removingFromContainer = !isNil(document.system.container);
         if (removingFromContainer) {
-          await item.update({ 'system.container': null });
+          await document.update({ 'system.container': null });
         }
 
-        const itemData = item.toObject();
+        const itemData = document.toObject();
 
         const sourceSection = foundry.utils.getProperty(
           itemData,
@@ -1112,17 +1132,17 @@ export function Tidy5eActorSheetQuadroneBase<
         }
 
         if (isMovedToNewSection) {
-          TidyFlags.section.set(item, targetSection);
+          TidyFlags.section.set(document, targetSection);
           return;
         } else if (isMovedToDefaultSection) {
-          TidyFlags.section.unset(item);
+          TidyFlags.section.unset(document);
           return;
         }
 
         return initialSortResult;
       }
 
-      return this._onDropItemCreate(item, event, behavior);
+      return this._onDropItemCreate(document, event, behavior);
     }
 
     /**
@@ -1398,12 +1418,8 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     async _onDropActivity(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      { data, uuid }: any
+      document: Activity5e
     ) {
-      const { _id: id, type } = data;
-
-      const droppedActivityDocument = await fromUuid(uuid);
-
       const targetItemId = event.target
         .closest('[data-item-id]')
         ?.getAttribute('data-item-id');
@@ -1411,18 +1427,15 @@ export function Tidy5eActorSheetQuadroneBase<
       const targetItem = this.actor.items.get(targetItemId);
 
       // Reordering
-      if (
-        !!targetItem &&
-        targetItem.uuid === droppedActivityDocument.item?.uuid
-      ) {
-        const source = targetItem.system.activities.get(id);
+      if (!!targetItem && targetItem.uuid === document.item?.uuid) {
+        const source = targetItem.system.activities.get(document._id);
         const targetId = event.target.closest<HTMLElement>(
           '.activity[data-activity-id]'
         )?.dataset.activityId;
         const target = targetItem.system.activities.get(targetId);
         if (!target || target === source) return;
         const siblings = targetItem.system.activities.filter(
-          (a: any) => a._id !== id
+          (a: any) => a._id !== document._id
         );
         const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
           source,
@@ -1443,31 +1456,28 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Copying/Moving
       else if (targetItem) {
+        const data = document.toObject();
         delete data._id;
-        const behavior = this._dropBehavior(event, { data, uuid });
-        await targetItem.createActivity(type, data, { renderSheet: false });
+        const behavior = this._dropBehavior(event, document.toDragData());
+        await targetItem.createActivity(data.type, data, {
+          renderSheet: false,
+        });
         if (behavior === 'move') {
-          await droppedActivityDocument.delete();
+          await document.delete();
         }
       }
     }
 
     async _onDropFolder(
       event: DragEvent & { currentTarget: HTMLElement },
-      data: Record<string, any>
+      document: Folder
     ): Promise<object | boolean | undefined> {
-      if (!this.actor.isOwner) {
-        return [];
-      }
-
-      const folder = await Folder.implementation.fromDropData(data);
-
-      if (folder.type !== 'Item') {
+      if (!this.actor.isOwner || document.type !== 'Item') {
         return [];
       }
 
       const droppedItemData = await Promise.all(
-        folder.contents.map(async (item: any) => {
+        document.contents.map(async (item: any) => {
           if (!(item instanceof Item)) item = await fromUuid(item.uuid);
           return item;
         })

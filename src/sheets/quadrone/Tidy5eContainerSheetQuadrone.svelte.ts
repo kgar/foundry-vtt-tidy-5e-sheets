@@ -414,28 +414,33 @@ export class Tidy5eContainerSheetQuadrone
       return;
     }
 
+    const documentClass = foundry.utils.getDocumentClass(data.type);
+
+    const document = await documentClass.fromDropData(data);
+
     if (data.type === 'Folder') {
-      return this._onDropFolder(event, data);
+      return this._onDropFolder(event, document);
     }
 
-    return this._onDropItem(event, data);
+    return this._onDropItem(event, document);
   }
 
   /* -------------------------------------------- */
 
   async _onDropFolder(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    document: any
   ): Promise<Item5e[]> {
-    const folder = await Folder.implementation.fromDropData(data);
-    if (!this.item.isOwner || folder.type !== 'Item') return [];
+    if (!this.item.isOwner || document.type !== 'Item') {
+      return [];
+    }
 
     let recursiveWarning = false;
     const parentContainers = await this.item.system.allContainers();
     const containers = new Set();
 
     let items = await Promise.all(
-      folder.contents.map(async (item: any) => {
+      document.contents.map(async (item: any) => {
         if (!(item instanceof Item)) item = await fromUuid(item.uuid);
         if (item.system.container === this.item.id) return;
         if (this.item.uuid === item.uuid || parentContainers.includes(item)) {
@@ -483,23 +488,29 @@ export class Tidy5eContainerSheetQuadrone
 
   async _onDropItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    document: Item5e
   ): Promise<Item5e[] | boolean | void> {
-    const behavior = this._dropBehavior(event, data);
-    const item = await Item.implementation.fromDropData(data);
+    if (!this.item.isOwner || !document) {
+      return false;
+    }
 
-    if (!this.item.isOwner || !item || behavior === 'none') {
+    const behavior = this._dropBehavior(event, document.toDragData());
+
+    if (behavior === 'none') {
       return false;
     }
 
     // If item already exists in this container, just adjust its sorting
-    if (behavior === 'move' && item.system.container === this.item.id) {
-      return this._onSortItem(event, item);
+    if (behavior === 'move' && document.system.container === this.item.id) {
+      return this._onSortItem(event, document);
     }
 
     // Prevent dropping containers within themselves
     const parentContainers = await this.item.system.allContainers();
-    if (this.item.uuid === item.uuid || parentContainers.includes(item)) {
+    if (
+      this.item.uuid === document.uuid ||
+      parentContainers.includes(document)
+    ) {
       ui.notifications.error('DND5E.ContainerRecursiveError', {
         localize: true,
       });
@@ -509,21 +520,24 @@ export class Tidy5eContainerSheetQuadrone
     // If item already exists in same DocumentCollection, just adjust its container property
     if (
       behavior === 'move' &&
-      item.actor === this.item.actor &&
-      item.pack === this.item.pack
+      document.actor === this.item.actor &&
+      document.pack === this.item.pack
     ) {
-      return item.update({
+      return document.update({
         folder: this.item.folder,
         'system.container': this.item.id,
       });
     }
 
     // Otherwise, create a new item & contents in this context
-    const toCreate = await dnd5e.documents.Item5e.createWithContents([item], {
-      container: this.item,
-      transformAll: (itemData: any, options: any) =>
-        this._onDropSingleItem(itemData, { ...options, event }),
-    });
+    const toCreate = await dnd5e.documents.Item5e.createWithContents(
+      [document],
+      {
+        container: this.item,
+        transformAll: (itemData: any, options: any) =>
+          this._onDropSingleItem(itemData, { ...options, event }),
+      }
+    );
     if (this.item.folder) {
       toCreate.forEach((d: any) => (d.folder = this.item.folder.id));
     }
@@ -535,7 +549,7 @@ export class Tidy5eContainerSheetQuadrone
     });
 
     if (behavior === 'move') {
-      item.delete({ deleteContents: true });
+      document.delete({ deleteContents: true });
     }
 
     return created;
