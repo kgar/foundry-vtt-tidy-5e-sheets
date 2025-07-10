@@ -810,13 +810,13 @@
     "TIDY5E.Activities.Cast.SourceHintText": "Z {itemName}",
     "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Posiada{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
     "TIDY5E.UserSettings.TabActivities": {
-        "tabLabel": "Działania"
+        "tabLabel": "Aktywności"
     },
     "TIDY5E.Settings.InlineActivitiesPosition": {
         "top": "Na górze",
         "bottom": "Na dole",
-        "name": "Pozycja wiersza działań",
-        "hint": "Podczas rozwijania elementu wyświetlane są działania tego elementu. Użyj tego ustawienia, aby określić, czy działania są umieszczane na górze, przed opisem elementu, czy na dole, pod opisem elementu, przyciskami i tagami."
+        "name": "Pozycja wiersza aktywności",
+        "hint": "Podczas rozwijania elementu wyświetlane są aktywności tego elementu. Użyj tego ustawienia, aby określić, czy aktywności są umieszczane na górze, przed opisem elementu, czy na dole, pod opisem elementu, przyciskami i tagami."
     },
     "TIDY5E.ContextMenuActionShowLimitedUses": "Pokaż ograniczone użycia",
     "TIDY5E.ContextMenuActionPinToAttributes": "Przypnij do atrybutów",
@@ -881,5 +881,10 @@
     "TIDY5E.HitDice.Abbreviation": "KW",
     "TIDY5E.HitDice.Current.Label": "Aktualne kości wytrzymałości",
     "TIDY5E.HitDice.Max.Label": "Max kości wytrzymałości",
-    "TIDY5E.CharacterTraits.Title": "Atrybuty postaci"
+    "TIDY5E.CharacterTraits.Title": "Atrybuty postaci",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sekcja dodatkowych zaklęć",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekcja na przedmiot",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Dodaj do zakładki karty",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Usuń z zakładki karty",
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z działania Czarowanie"
 }
