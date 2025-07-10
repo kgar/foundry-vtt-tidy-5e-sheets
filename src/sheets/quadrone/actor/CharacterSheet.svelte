@@ -23,7 +23,7 @@
 
   let selectedTabId: string = $derived(context.currentTabId);
 
-  let sidebarExpanded = $state(false);
+  let sidebarExpanded = $state(true);
 
   // When the user changes tabs, check their preference on the new tab and apply expanded state.
   $effect(() => {
@@ -31,7 +31,7 @@
 
     sidebarExpanded =
       SheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
-        ?.sidebarExpanded == true;
+        ?.sidebarExpanded ?? true;
   });
 
   // When the user expands or collapses the sidebar, remember their preference for this tab.
@@ -290,8 +290,7 @@
     </div>
     <div class="character-vitals-container">
       <!-- TODO: Add switch for size -->
-      <CharacterPortrait
-      />
+      <CharacterPortrait />
       <div class="character-vitals">
         <div class="hp-row flexrow">
           <div

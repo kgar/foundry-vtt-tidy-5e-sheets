@@ -77,7 +77,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     super(options);
 
     this.currentTabId = CONSTANTS.TAB_ACTOR_ACTIONS;
-    this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_SKILLS;
+    this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
 
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
