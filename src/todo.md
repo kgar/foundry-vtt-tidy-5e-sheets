@@ -2,9 +2,6 @@
 
 ### The Short List
 
-- [ ] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
-  - [ ] Item - Remove Spell Scroll, Dup, Delete
-  - [ ] Activity/Effect - Remove Dup and Delete
 - [ ] Update the readme
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
@@ -268,3 +265,6 @@ Limited:
   - [x] Items, Activities, Effects
   - [x] Spell Slot middle-click - open spell slot config
   - [x] Skill/Tool middle-click - open skill/tool config
+- [x] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
+  - [x] Item - Remove Spell Scroll, Dup, Delete
+  - [x] Activity/Effect - Remove Dup and Delete

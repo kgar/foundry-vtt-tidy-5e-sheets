@@ -4,7 +4,11 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { settings } from 'src/settings/settings.svelte';
 import { warn } from 'src/utils/logging';
 
-export function getActiveEffectContextOptionsQuadrone(effect: any, app: any) {
+export function getActiveEffectContextOptionsQuadrone(
+  effect: any,
+  app: any,
+  element: HTMLElement
+) {
   const effectParent = effect.parent;
 
   // Assumption: Either the effect belongs to the character or is transferred from an item.
@@ -25,6 +29,8 @@ export function getActiveEffectContextOptionsQuadrone(effect: any, app: any) {
     effect,
     app
   );
+
+  const isInFavorites = !!element.closest('.favorites');
 
   const isFav = FoundryAdapter.isEffectFavorited(effect, actor);
 
@@ -80,14 +86,15 @@ export function getActiveEffectContextOptionsQuadrone(effect: any, app: any) {
           },
           { save: true }
         ),
-      condition: () => canEditEffect(effect),
+      condition: () => !isInFavorites && canEditEffect(effect),
       group: 'common',
     },
     {
       name: 'DND5E.ContextMenuActionDelete',
       icon: `<i class="fas fa-trash fa-fw" style='color: var(--t5e-warning-accent-color);'></i>`,
       callback: () => effect.deleteDialog(),
-      condition: () => canEditEffect(effect) && !isConcentrationEffect,
+      condition: () =>
+        !isInFavorites && canEditEffect(effect) && !isConcentrationEffect,
       group: 'be-careful',
     },
   ];

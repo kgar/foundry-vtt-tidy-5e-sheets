@@ -1,4 +1,4 @@
-import { TidyFlags } from "src/foundry/TidyFlags";
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { CONSTANTS } from 'src/constants';
 import { isItemInActionList } from 'src/features/actions/actions.svelte';
@@ -25,6 +25,8 @@ export function getItemContextOptionsQuadrone(
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
   const isCharacter =
     itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+
+  const isInFavorites = !!element.closest('.favorites');
 
   let options: ContextMenuEntry[] = [];
 
@@ -156,6 +158,7 @@ export function getItemContextOptionsQuadrone(
     name: 'DND5E.Scroll.CreateScroll',
     icon: '<i class="fa-solid fa-scroll"></i>',
     condition: () =>
+      !isInFavorites &&
       item.type === 'spell' &&
       !item.system.linkedActivity &&
       itemParent?.isOwner &&
@@ -205,6 +208,7 @@ export function getItemContextOptionsQuadrone(
     name: 'DND5E.ContextMenuActionDuplicate',
     icon: "<i class='fas fa-clone fa-fw'></i>",
     condition: () =>
+      !isInFavorites &&
       item.canDuplicate &&
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
@@ -321,6 +325,7 @@ export function getItemContextOptionsQuadrone(
     name: 'TIDY5E.ContextMenuActionDelete',
     icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
     condition: () =>
+      !isInFavorites &&
       item.canDelete &&
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),

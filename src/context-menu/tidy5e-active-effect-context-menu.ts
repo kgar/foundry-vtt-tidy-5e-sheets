@@ -28,7 +28,7 @@ export function configureActiveEffectsContextMenu(
   const isQuadroneSheet = element.closest('.quadrone');
 
   ui.context.menuItems = isQuadroneSheet
-    ? getActiveEffectContextOptionsQuadrone(effect, app)
+    ? getActiveEffectContextOptionsQuadrone(effect, app, element)
     : getActiveEffectContextOptions(effect, app);
   TidyHooks.dnd5eGetActiveEffectContextOptions(effect, ui.context.menuItems);
 }
