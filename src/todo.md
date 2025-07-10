@@ -103,6 +103,7 @@
 
 ## hightouch To Do
 
+- [ ] Character Sidebar - adjust gap and padding to taste
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
