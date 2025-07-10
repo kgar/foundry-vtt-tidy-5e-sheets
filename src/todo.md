@@ -2,11 +2,6 @@
 
 ### The Short List
 
-- [x] Middle-click to edit favorite entries
-  - [x] Items, Activities, Effects
-  - [x] Spell Slot middle-click - open spell slot config
-  - [x] Skill/Tool middle-click - open skill/tool config
-- [ ] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
   - [ ] Item - Remove Spell Scroll, Dup, Delete
   - [ ] Activity/Effect - Remove Dup and Delete
@@ -103,6 +98,7 @@
 
 ## hightouch To Do
 
+- [ ] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Character Sidebar - adjust gap and padding to taste
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
