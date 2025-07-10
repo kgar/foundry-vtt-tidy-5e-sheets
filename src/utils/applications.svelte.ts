@@ -1,4 +1,4 @@
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from "src/foundry/TidyFlags";
 import { debug } from './logging';
 import { getThemeV2 } from 'src/theme/theme';
 import { settings } from 'src/settings/settings.svelte';

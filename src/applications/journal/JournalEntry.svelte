@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { TidyFlags, type DocumentJournalEntry } from 'src/api';
   import type {
     JournalEntryApplication,
     JournalMode,
@@ -9,6 +8,8 @@
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import type { DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
 
   interface Props {
     entry: CoarseReactivityProvider<DocumentJournalEntry | undefined>;

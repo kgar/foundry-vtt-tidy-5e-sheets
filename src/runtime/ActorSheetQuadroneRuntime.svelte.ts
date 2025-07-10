@@ -9,7 +9,7 @@ import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from "src/foundry/TidyFlags";
 import { settings } from 'src/settings/settings.svelte';
 
 export class ActorSheetQuadroneRuntime<

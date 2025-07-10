@@ -1,4 +1,4 @@
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from "src/foundry/TidyFlags";
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { CONSTANTS } from 'src/constants';
 import { isItemInActionList } from 'src/features/actions/actions.svelte';

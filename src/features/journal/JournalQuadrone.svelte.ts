@@ -1,4 +1,5 @@
-import { TidyFlags, type DocumentJournalEntry } from 'src/api';
+import type { DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class JournalQuadrone {

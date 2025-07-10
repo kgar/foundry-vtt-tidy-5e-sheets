@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from "src/foundry/TidyFlags";
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {

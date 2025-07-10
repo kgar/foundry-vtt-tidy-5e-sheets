@@ -1,4 +1,4 @@
-import type { Tidy5eSheetsApi } from 'src/api';
+import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { ThirdPartyIntegrationBase } from '../integration-classes';
 import Coloris from '@melloware/coloris';
 import { settings } from 'src/settings/settings.svelte';

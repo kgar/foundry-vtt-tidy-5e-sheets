@@ -8,14 +8,13 @@ import type {
   ThemeSettingsV2,
   ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
-import { TidyFlags, TidyHooks } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { coalesce } from 'src/utils/formatting';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { ThemeStylesProvider } from './theme-styles-provider';
-import { downloadTextFile, readFileAsText } from 'src/utils/file';
-import { error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 
 export type ThemeableSheetType =

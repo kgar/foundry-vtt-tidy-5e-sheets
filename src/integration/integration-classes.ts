@@ -1,4 +1,4 @@
-import type { Tidy5eSheetsApi } from 'src/api';
+import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 
 export abstract class ModuleIntegrationBase {
   abstract get moduleId(): string;

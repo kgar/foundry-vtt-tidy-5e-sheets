@@ -3,6 +3,7 @@
 ### The Short List
 
 - [ ] root out uses of 'src/api' where able
+- [ ] PC Sheet Sidebar - Default Open
 - [ ] Spell Slot Context menu - Edit - open Spell Slot Config ;)
 - [ ] Skill/Tool Context menu - Edit - open Skill/Tool Config ;)
 - [ ] Middle-click to edit favorite entries

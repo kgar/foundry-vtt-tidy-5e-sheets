@@ -43,7 +43,7 @@ import SubclassSheet from 'src/sheets/quadrone/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/quadrone/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from "src/foundry/TidyFlags";
 import { settings } from 'src/settings/settings.svelte';
 
 export type ItemSheetInfo = {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from "src/foundry/TidyFlags";
   import { isItemInActionList } from 'src/features/actions/actions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 

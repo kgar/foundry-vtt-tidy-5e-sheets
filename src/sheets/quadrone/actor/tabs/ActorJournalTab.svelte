@@ -1,6 +1,7 @@
 <script lang="ts">
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
-  import { TidyFlags, type DocumentJournalEntry } from 'src/api';
+  import { type DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { JournalEntryApplication } from 'src/applications/journal/JournalEntryApplication.svelte';
   import type { TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import VerticalTabs from 'src/components/tabs/VerticalTabs.svelte';

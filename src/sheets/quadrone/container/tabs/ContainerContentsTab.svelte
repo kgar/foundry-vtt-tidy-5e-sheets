@@ -13,9 +13,7 @@
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import { Container } from 'src/features/containers/Container';
-  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-  import { TidyFlags } from 'src/api';
-  import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ActionBar from '../../shared/ActionBar.svelte';

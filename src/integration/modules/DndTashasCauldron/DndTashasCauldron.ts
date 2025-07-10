@@ -1,4 +1,4 @@
-import type { Tidy5eSheetsApi } from 'src/api';
+import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { CONSTANTS } from 'src/constants';
 import type { ModuleIntegrationBase } from 'src/integration/integration-classes';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';

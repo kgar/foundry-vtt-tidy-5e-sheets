@@ -2,7 +2,7 @@ import type {
   OnContentReadyParams,
   OnRenderParams,
   RenderScheme,
-} from 'src/api';
+} from 'src/api/api.types';
 import { CONSTANTS } from 'src/constants';
 import type { ApplicationRenderOptions } from 'src/types/application.types';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';

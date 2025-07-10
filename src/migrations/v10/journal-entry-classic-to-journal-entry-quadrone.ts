@@ -1,4 +1,4 @@
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from "src/foundry/TidyFlags";
 import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
