@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -31,7 +31,7 @@
   data-favorite-id={favorite.id}
   data-tidy-draggable
 >
-  <FavoriteItemRollButton
+  <FavoriteRollButton
     {favorite}
     img={favorite.item.img}
     title={favorite.item.name}

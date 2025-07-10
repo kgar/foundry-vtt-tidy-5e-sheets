@@ -3,7 +3,7 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
 
   interface Props {
     favorite: ItemFavoriteContextEntry;
@@ -32,7 +32,7 @@
   data-tidy-draggable
   data-favorite-id={favorite.id}
 >
-  <FavoriteItemRollButton
+  <FavoriteRollButton
     {favorite}
     img={favorite.item.img}
     title={favorite.item.name}

@@ -12,9 +12,18 @@
     title: string;
     name: string;
     subtitle: string;
+    useTooltip?: boolean;
   }
 
-  let { favorite, img, onUse, title, name, subtitle }: Props = $props();
+  let {
+    favorite,
+    img,
+    onUse,
+    title,
+    name,
+    subtitle,
+    useTooltip = true,
+  }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -27,14 +36,23 @@
 
     onUse?.(event, favorite);
   }
+
+  let theSubtitle = $state<HTMLElement>();
+
+  let tooltip = $derived(
+    useTooltip
+      ? `${name} <br /> ${theSubtitle?.innerText.replaceAll('\n', ' • ') ?? ''}`
+      : undefined,
+  );
 </script>
 
 <button
   type="button"
   class="button button-borderless favorite-button"
   onclick={handleClick}
+  data-tooltip={tooltip}
 >
-  <a
+  <span
     class={[
       'tidy-table-row-use-button item-use-button',
       { disabled: !context.editable },
@@ -46,14 +64,17 @@
         <i class="fa fa-dice-d20"></i>
       {/if}
     </span>
-  </a>
+  </span>
 
   <div class="item-name-container">
     <div class="item-name stacked">
       <span class="title">
         {name}
       </span>
-      <span class="subtitle flexrow color-text-lighter font-default-small">
+      <span
+        class="subtitle flexrow color-text-lighter font-default-small"
+        bind:this={theSubtitle}
+      >
         {@html subtitle}
       </span>
     </div>

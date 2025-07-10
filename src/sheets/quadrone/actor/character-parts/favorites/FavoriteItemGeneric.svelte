@@ -3,7 +3,7 @@
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
-  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -45,7 +45,7 @@
   data-favorite-id={favorite.id}
   data-tidy-draggable
 >
-  <FavoriteItemRollButton
+  <FavoriteRollButton
     {favorite}
     img={favorite.item?.img}
     title={favorite.item?.name}

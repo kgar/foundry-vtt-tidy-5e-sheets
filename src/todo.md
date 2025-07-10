@@ -2,12 +2,14 @@
 
 ### The Short List
 
-- [ ] Spell Slot Context menu - Edit - open Spell Slot Config ;)
-- [ ] Skill/Tool Context menu - Edit - open Skill/Tool Config ;)
+- [ ] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Middle-click to edit favorite entries
   - [ ] Spell Slot middle-click - open spell slot config
   - [ ] Skill/Tool middle-click - open skill/tool config
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
+- [ ] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
+  - [ ] Item - Remove Spell Scroll, Dup, Delete
+  - [ ] Activity/Effect - Remove Dup and Delete
 - [ ] Update the readme
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
@@ -262,3 +264,5 @@ Limited:
 - [x] root out uses of 'src/api' where able
 - [x] PC Sheet Sidebar - Default Open
 - [x] PC Sheet Sidebar - Default selected Favorites, Favorites first tab
+- [x] Spell Slot Context menu - Edit - open Spell Slot Config ;)
+- [x] Skill/Tool Context menu - Edit - open Skill/Tool Config ;)

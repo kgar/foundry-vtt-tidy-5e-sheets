@@ -1,6 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import type { ContextMenuPositionInfo } from './context-menu.types';
-import { TidyHooks } from 'src/foundry/TidyHooks';
 
 interface ContextMenuEntry {
   name: string;

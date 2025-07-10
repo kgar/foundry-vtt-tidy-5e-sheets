@@ -24,6 +24,7 @@
     [
       favorite.activity.labels.activation,
       favorite.activity.labels.recovery,
+      favorite.activity.item.name,
     ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
