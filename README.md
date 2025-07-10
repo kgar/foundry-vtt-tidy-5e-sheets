@@ -58,6 +58,8 @@ Or, you can still install Tidy manually via the `module.json` URL:
 2. Change individual sheets to Tidy using the **three-dot Toggle Controls menu** at the top of each sheet and choosing **Configure sheet.**
 3. Globally change all sheets from the **Game Settings** sidebar tab, choosing **Configure Settings**. Here you can change **Core** → **Configure Default Sheets**, or **Tidy 5e Sheets** → **Set Tidy as Default Sheet**.
 
+![TODO: Configuration image here]()
+
 ## Tidy 5e Sheets UI
 
 ⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, has begun, and we are gradually releasing new sheets into the beta. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
@@ -111,23 +113,21 @@ Evocative character sheets that give players and DMs more control, with more way
 
 An alternate view of items that brings more functionality to the surface
 
-<img src="readme-assets/quadrone-container-and-spell-sheets.png" alt="Container and Spell Sheets" style="max-height: 640px;">
+![Container and Spell Sheets](readme-assets/quadrone-container-and-spell-sheets.png)
 
-<img src="readme-assets/quadrone-equipment-sheet.png" alt="Equipment Sheet" style="max-height: 640px;">
+![Equipment Sheet](readme-assets/quadrone-equipment-sheet.png)
 
-<img src="readme-assets/quadrone-loot-sheet.png" alt="Loot Sheet" style="max-height: 640px;">
+![Loot Sheet](readme-assets/quadrone-loot-sheet.png)
 
-<img src="readme-assets/quadrone-spell-sheets.png" alt="Spell Sheets" style="max-height: 640px;">
+![Spell Sheets](readme-assets/quadrone-spell-sheets.png)
 
-<img src="readme-assets/quadrone-tool-and-consumable-sheets.png" alt="Tool and Consumable Sheets" style="max-height: 640px;">
+![Tool and Consumable Sheets](readme-assets/quadrone-tool-and-consumable-sheets.png)
 
-<img src="readme-assets/quadrone-weapon-sheets.png" alt="Weapon Sheets" style="max-height: 640px;">
+![Weapon Sheets](readme-assets/quadrone-weapon-sheets.png)
 
-<img src="readme-assets/quadrone-class-subclass-background-species-sheets.png" alt="Class, Subclass, Background, and Species Sheets" style="max-height: 640px;">
+![Class, Subclass, Background, and Species Sheets](readme-assets/quadrone-class-subclass-background-species-sheets.png)
 
-<img src="readme-assets/quadrone-facility-feat-tattoo-sheets.png" alt="Facility, Feature, and Tattoo Sheets" style="max-height: 640px;">
-
-
+![Facility, Feature, and Tattoo Sheets](readme-assets/quadrone-facility-feat-tattoo-sheets.png)
 
 ![image](https://github.com/user-attachments/assets/68b553b2-0113-40ff-89f0-83e13f457f95)
 
@@ -144,9 +144,9 @@ An alternate view of items that brings more functionality to the surface
 
 ## NPC Sheets
 
-<img src="readme-assets/npc-sheet.png" style="max-height: 640px;">
+![NPC Sheet](readme-assets/npc-sheet.png)
 
-### What's unique about Tidy's NPC sheets?
+### TODO: What's unique about Tidy's NPC sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
@@ -154,9 +154,10 @@ An alternate view of items that brings more functionality to the surface
 
 ## Vehicle Sheets
 
-<img src="readme-assets/vehicle-sheet.png" style="max-height: 640px;">
+![Vehicle Sheet](readme-assets/vehicle-sheet.png)
 
 
+### TODO: What's unique about Tidy's NPC sheets?
 ### What's unique about Tidy's Vehicle sheets?
 
 | Core Functionality | Additional Features |
@@ -165,8 +166,9 @@ An alternate view of items that brings more functionality to the surface
 
 ## Group Sheets
 
-![Group Sheet](???)
+![TODO: Group Sheet image here](???)
 
+### TODO: What's unique about Tidy's NPC sheets?
 ### What's unique about Tidy's Group sheets?
 
 | Core Functionality | Additional Features |
