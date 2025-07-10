@@ -122,7 +122,7 @@
     !isNil(rarity, '') ? 'rarity' : undefined,
     coalesce(rarity?.slugify(), 'none'),
     !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
-    context.system.preparation?.mode?.slugify(),
+    'mode-' + context.system.preparation?.mode?.slugify(),
   ]);
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
