@@ -105,7 +105,7 @@
 - [x] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
 - [x] Dying red color for transparent portraits
 - [x] Tranparent portrait ring color lighten one step
-- [ ] Bypassed resistance pill styles using `.physical-bypass`
+- [x] Bypassed resistance pill styles using `.physical-bypass`
 - [ ] Wrapping text styles for character name in header
 - [ ] Item sheet sidebar background image (low)
 - [x] Inventory sticky footer

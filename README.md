@@ -132,6 +132,7 @@ An alternate view of items that brings more functionality to the surface
 | Equip, attune, identify from the sidebar | Prominent rarity/spellcasting mode theming |
 | Container contents as powerful as Character inventory | Player identification optionally hidden |
 | Fully themed descriptions including statblocks | Feat origin source selection |
+| Resizable and responsive sheets | |
 
 
 ## NPC Sheets
