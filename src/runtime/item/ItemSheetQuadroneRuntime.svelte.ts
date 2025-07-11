@@ -43,7 +43,7 @@ import SubclassSheet from 'src/sheets/quadrone/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/quadrone/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from "src/foundry/TidyFlags";
 import { settings } from 'src/settings/settings.svelte';
 
 export type ItemSheetInfo = {
@@ -52,8 +52,8 @@ export type ItemSheetInfo = {
 };
 
 class ItemSheetQuadroneRuntimeImpl {
-  private _content: RegisteredContent<ItemSheetQuadroneContext>[] = $state([]);
-  private _tabs: RegisteredTab<ItemSheetQuadroneContext>[] = $state([]);
+  private _content = $state<RegisteredContent<ItemSheetQuadroneContext>[]>([]);
+  private _tabs = $state<RegisteredTab<ItemSheetQuadroneContext>[]>([]);
   private _sheetMap: SvelteMap<string, ItemSheetInfo>;
 
   constructor(
@@ -74,8 +74,7 @@ class ItemSheetQuadroneRuntimeImpl {
     // There is surely a more efficient way to do this, but it's just not worth it.
     existingTabIds?.forEach((tabId) => {
       for (let tab of this._tabs) {
-        if (tab.id === tabId) {
-          tab.types ??= new Set<string>();
+        if (tab.id === tabId && tab.types) {
           tab.types.add(type);
         }
       }

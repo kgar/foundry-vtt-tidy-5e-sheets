@@ -93,12 +93,11 @@ export function SvelteApplicationMixin<
 
     async _renderFrame(options: ApplicationRenderOptions) {
       const element = await super._renderFrame(options);
+      const themeConfigOptions = this.themeConfigOptions();
 
-      applyThemeToApplication(element, this.document);
+      applyThemeToApplication(element, themeConfigOptions.doc ?? this.document);
 
-      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(
-        this.themeConfigOptions()
-      );
+      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
 
       return element;
     }

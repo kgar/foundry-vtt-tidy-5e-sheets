@@ -144,6 +144,7 @@ export function Tidy5eActorSheetClassicV2Base<
 
       const documentSheetContext = await super._prepareContext(options);
 
+      // The Actor's data
       documentSheetContext.source = documentSheetContext.editable
         ? this.actor.system._source
         : this.actor.system;

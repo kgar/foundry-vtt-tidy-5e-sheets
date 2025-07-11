@@ -1,4 +1,4 @@
-import type { CustomHeaderControlsEntry } from 'src/api';
+import type { CustomHeaderControlsEntry } from 'src/api/api.types';
 
 export class HeaderControlsRuntime {
   private static _headerControls: RegisteredCustomHeaderControlsEntry[] = [];

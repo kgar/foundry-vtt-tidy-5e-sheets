@@ -19,7 +19,7 @@
   {#snippet header()}
     <TidyTableHeaderRow class="theme-dark">
       <TidyTableHeaderCell primary={true}>
-        {localize('DND5E.Conditions')}
+        <h3>{localize('DND5E.Conditions')}</h3>
       </TidyTableHeaderCell>
     </TidyTableHeaderRow>
   {/snippet}

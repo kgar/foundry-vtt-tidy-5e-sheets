@@ -198,17 +198,24 @@ export const FoundryAdapter = {
   getCurrentLang() {
     return game.i18n.lang;
   },
+  doActionOnMiddleClick(event: MouseEvent, action: () => any) {
+    if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
+      return;
+    }
+
+    event.preventDefault();
+
+    return action();
+  },
   editOnMiddleClick(
     event: MouseEvent,
     entityWithSheet: {
       sheet: { render: (force: boolean) => void; isEditable: boolean };
     }
   ) {
-    if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
-      return;
-    }
-
-    FoundryAdapter.editOnMouseEvent(event, entityWithSheet);
+    return FoundryAdapter.doActionOnMiddleClick(event, () =>
+      FoundryAdapter.editOnMouseEvent(event, entityWithSheet)
+    );
   },
   editOnMouseEvent(
     event: MouseEvent,
@@ -538,38 +545,6 @@ export const FoundryAdapter = {
         searchCriteria.trim() === '' ||
         x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())
     );
-  },
-  getAllClassesDropdownOptions(
-    spellClassFilterAdditionalClassesText: string = ''
-  ) {
-    const allClasses: DropdownListOption[] = Object.entries(
-      CONSTANTS.DND5E_CLASSES
-    ).map((x) => ({
-      value: x[0],
-      text: x[1],
-    }));
-
-    if (spellClassFilterAdditionalClassesText?.trim() !== '') {
-      const additionalClasses = spellClassFilterAdditionalClassesText
-        .split(',')
-        .reduce((arr: DropdownListOption[], x: string) => {
-          const pieces = x.split('|');
-          if (pieces.length !== 2) {
-            return arr;
-          }
-          arr.push({
-            value: pieces[0],
-            text: pieces[1],
-          });
-          return arr;
-        }, []);
-
-      allClasses.push(...additionalClasses);
-    }
-
-    allClasses.sort((a, b) => a.text.localeCompare(b.text, game.i18n.lang));
-
-    return allClasses;
   },
   parseAdditionalClassesDropDownItems(
     spellClassFilterAdditionalClassesText: string
@@ -1490,10 +1465,8 @@ export const FoundryAdapter = {
     };
   },
   getAdvancementOriginId(item: Item5e) {
-    let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split(
-      '.',
-    );
+    let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split('.');
 
     return originId;
-  }
+  },
 };

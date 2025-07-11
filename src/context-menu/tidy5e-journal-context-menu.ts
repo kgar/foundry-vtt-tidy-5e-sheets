@@ -1,5 +1,5 @@
-import { TidyFlags } from 'src/api';
 import { JournalEntryApplication } from 'src/applications/journal/JournalEntryApplication.svelte';
+import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 
@@ -44,7 +44,7 @@ export function configureActorJournalContextMenu(
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
       callback: () => {
-        TidyFlags.documentJournal.remove(app.actor, id);
+        JournalQuadrone.remove(app.actor, id);
       },
     },
     {
@@ -54,7 +54,7 @@ export function configureActorJournalContextMenu(
         app.document.isOwner &&
         !FoundryAdapter.isLockedInCompendium(app.document),
       callback: () => {
-        TidyFlags.documentJournal.duplicate(app.actor, id);
+        JournalQuadrone.duplicate(app.actor, id);
       },
     },
   ] satisfies ContextMenuEntry[];

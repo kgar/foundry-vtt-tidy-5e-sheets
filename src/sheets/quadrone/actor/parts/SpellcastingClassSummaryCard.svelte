@@ -2,6 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getSourceClassFilterName } from 'src/runtime/item/default-item-filters';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     CharacterSheetQuadroneContext,
@@ -35,10 +36,10 @@
 
   function onPreparedClicked(): any {
     itemFilterService.onFilterClearAll(tabId);
-    itemFilterService.onFilter(tabId, 'prepared', true);
+    itemFilterService.onFilter(tabId, CONSTANTS.FILTER_PREPARED, true);
     itemFilterService.onFilter(
       tabId,
-      `source-class-${info.classIdentifier}`,
+      getSourceClassFilterName(info.classIdentifier),
       true,
     );
   }
@@ -60,8 +61,9 @@
 
     {#if info.primary}
       <i
-        data-tooltip="DND5E.SpellAbility" 
-        class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis">
+        data-tooltip="DND5E.SpellAbility"
+        class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"
+      >
       </i>
     {:else if context.unlocked}
       <a
@@ -72,7 +74,9 @@
             'system.attributes.spellcasting': info.ability.key,
           })}
       >
-        <i class="fa-regular fa-chess-queen primary-icon color-text-gold-emphasis"></i>
+        <i
+          class="fa-regular fa-chess-queen primary-icon color-text-gold-emphasis"
+        ></i>
       </a>
     {/if}
   </div>
@@ -81,27 +85,46 @@
       {info.ability.label}
     </div>
     <div class="ability pill pill-medium">
-      <span class="label font-label-medium color-text-lighter">{localize('DND5E.Ability')}</span>
+      <span class="label font-label-medium color-text-lighter"
+        >{localize('DND5E.Ability')}</span
+      >
       <span class="value">
-        <span class="sign font-label-medium color-text-lightest">{info.ability.mod.sign}</span><span class="font-data-medium">{info.ability.mod.value}</span>
+        <span class="sign font-label-medium color-text-lightest"
+          >{info.ability.mod.sign}</span
+        ><span class="font-data-medium">{info.ability.mod.value}</span>
       </span>
     </div>
     <div class="attack pill pill-medium">
-      <span class="label font-label-medium color-text-lighter">{localize('DND5E.Attack')}</span>
+      <span class="label font-label-medium color-text-lighter"
+        >{localize('DND5E.Attack')}</span
+      >
       <span class="value">
-        <span class="sign font-label-medium color-text-lightest">{info.attack.mod.sign}</span><span class="font-data-medium">{info.attack.mod.value}</span>
+        <span class="sign font-label-medium color-text-lightest"
+          >{info.attack.mod.sign}</span
+        ><span class="font-data-medium">{info.attack.mod.value}</span>
       </span>
     </div>
     <div class="save pill pill-medium">
-      <span class="label font-label-medium color-text-lighter">{localize('DND5E.SpellDC')}</span>
+      <span class="label font-label-medium color-text-lighter"
+        >{localize('DND5E.SpellDC')}</span
+      >
       <span class="value">
         <span class="font-data-medium">{info.save}</span>
       </span>
     </div>
-    <a class="prepared pill pill-medium interactive" onclick={() => onPreparedClicked()}>
-      <span class="label font-label-medium color-text-lighter">{localize('DND5E.Prepared')}</span>
+    <a
+      class="prepared pill pill-medium interactive"
+      onclick={() => onPreparedClicked()}
+    >
+      <span class="label font-label-medium color-text-lighter"
+        >{localize('DND5E.Prepared')}</span
+      >
       <span class="value preparations">
-        <span class="count font-data-medium">{info.prepared.value}</span><span class="separator font-default-medium color-text-gold">/</span><span class="max font-label-medium color-text-lighter">{info.prepared.max}</span>
+        <span class="count font-data-medium">{info.prepared.value}</span><span
+          class="separator font-default-medium color-text-gold">/</span
+        ><span class="max font-label-medium color-text-lighter"
+          >{info.prepared.max}</span
+        >
       </span>
     </a>
   </div>

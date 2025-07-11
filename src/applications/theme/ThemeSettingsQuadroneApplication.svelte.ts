@@ -13,7 +13,8 @@ import type {
 } from 'src/types/application.types';
 import { mount } from 'svelte';
 import ThemeSettingsQuadrone from './ThemeSettingsQuadrone.svelte';
-import { TidyFlags, TidyHooks } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 import { isNil } from 'src/utils/data';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';

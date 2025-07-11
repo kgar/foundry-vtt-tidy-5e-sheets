@@ -8,6 +8,7 @@
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
   import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
+  import { firstOfSet } from 'src/utils/set';
 
   interface Props {
     favorite: ActivityFavoriteContextEntry;
@@ -23,6 +24,7 @@
     [
       favorite.activity.labels.activation,
       favorite.activity.labels.recovery,
+      favorite.activity.item.name,
     ].filterJoin(` <div class="divider-dot"></div> `),
   );
 
@@ -44,6 +46,8 @@
   data-configurable={configurable}
   data-tidy-draggable
   data-favorite-id={favorite.id}
+  onmousedown={(event) =>
+    FoundryAdapter.editOnMiddleClick(event, favorite.activity)}
 >
   <FavoriteRollButton
     {favorite}
@@ -100,11 +104,15 @@
         </span>
       {:else if save?.dc?.value}
         <span class="save">
+          <span class="ability font-label-medium color-text-gold-emphasis">
+            {save.ability?.size > 1
+              ? FoundryAdapter.localize('DND5E.AbbreviationDC')
+              : save.ability?.size
+                ? firstOfSet(save.ability)
+                : save.ability}
+          </span>
           <span class="value font-data-medium color-text-default">
             {save.dc.value}
-          </span>
-          <span class="ability font-label-medium color-text-gold-emphasis">
-            {save.ability}
           </span>
         </span>
       {/if}

@@ -17,7 +17,11 @@
   <div role="presentation" class="pinned-filter-toggles">
     {#each filters as filter (filter.name)}
       <PinnedFilterToggle {filterGroupName} {filter}>
-        {localize(filter.abbreviation ?? filter.text)}
+        {localize(
+          filter.useLegacyAbbreviation
+            ? (filter.abbreviation ?? filter.text)
+            : filter.text,
+        )}
       </PinnedFilterToggle>
     {/each}
   </div>

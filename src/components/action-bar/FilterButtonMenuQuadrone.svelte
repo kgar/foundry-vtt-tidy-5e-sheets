@@ -5,6 +5,7 @@
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import type { DocumentFilters } from 'src/runtime/item/item.types';
   import FilterToggle from '../buttons/FilterToggle.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   const localize = FoundryAdapter.localize;
 
@@ -16,11 +17,12 @@
 
   const { tabId, filterData, beforeClearButton }: Props = $props();
 
-  const onFilterClearAll =
-    getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
+  const onFilterClearAll = getContext<ItemFilterService['onFilterClearAll']>(
+    CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
+  );
 
   let categories = $derived(filterData[tabId] ?? {});
-  
+
   let filterButtonActive = $derived(
     Object.entries(categories).some(([_, filters]) =>
       filters.some((f) => f.value !== null),
@@ -37,7 +39,7 @@
   buttonClasses="button-icon-only button-toggle"
   containerClasses="filter-menu"
   buttonAttributes={{
-    title: localize("TIDY5E.ItemFilters.MenuTooltip.Filters")
+    title: localize('TIDY5E.ItemFilters.MenuTooltip.Filters'),
   }}
 >
   <i class="fas fa-filter"></i>

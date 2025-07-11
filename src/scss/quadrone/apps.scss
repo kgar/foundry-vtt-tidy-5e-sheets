@@ -138,6 +138,14 @@
     gap: var(--t5e-size-1x);
   }
 
+  .flexgap-2 {
+    gap: var(--t5e-size-2x);
+  }
+  
+  .flexgap-3 {
+    gap: var(--t5e-size-3x);
+  }
+
   &.minimized .window-content {
     display: none;
     background: none;

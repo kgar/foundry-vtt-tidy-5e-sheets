@@ -1,4 +1,5 @@
-import { TidyFlags, type DocumentJournalEntry } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import type { DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
 import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 import { CONSTANTS } from 'src/constants';
 import type { DocumentSheetApplicationConfiguration } from 'src/types/application.types';

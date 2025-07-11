@@ -3,7 +3,7 @@
   import type { ItemFavoriteContextEntry } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { getModifierData } from 'src/utils/formatting';
-  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import FavoriteItemUses from './parts/FavoriteItemUses.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -13,7 +13,12 @@
 
   let { favorite }: Props = $props();
 
-  let subtitle = 'todo';
+  let subtitle = $derived(
+    [
+      favorite.item.system.type.label ??
+        game.i18n.localize(CONFIG.Item.typeLabels[favorite.item.type]),
+    ].filterJoin(` <div class="divider-dot"></div> `),
+  );
 
   let uses = $derived(
     favorite.item?.system?.hasLimitedUses
@@ -39,8 +44,10 @@
   data-item-id={favorite.item?.id}
   data-favorite-id={favorite.id}
   data-tidy-draggable
+  onmousedown={(event) =>
+    FoundryAdapter.editOnMiddleClick(event, favorite.item)}
 >
-  <FavoriteItemRollButton
+  <FavoriteRollButton
     {favorite}
     img={favorite.item?.img}
     title={favorite.item?.name}

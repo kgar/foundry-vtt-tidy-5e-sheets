@@ -10,8 +10,6 @@
   } from 'src/types/types';
   import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
   import type { Item5e } from 'src/types/item.types';
-  import { Tooltip } from 'src/tooltips/Tooltip';
-  import { getThemeV2 } from 'src/theme/theme';
   import type { ClassValue } from 'svelte/elements';
 
   interface Props {
@@ -60,7 +58,7 @@
 
 <!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
 <div
-  class={['sheet-footer', 'fixed', 'flexrow', 'inventory-footer', classValue]}
+  class={['sheet-footer', 'flexrow', 'inventory-footer', classValue]}
 >
   <div class="footer-content-left flexrow flexshrink">
     <div

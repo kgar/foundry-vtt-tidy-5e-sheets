@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from "src/foundry/TidyFlags";
   import type { Actor5e } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication.svelte';

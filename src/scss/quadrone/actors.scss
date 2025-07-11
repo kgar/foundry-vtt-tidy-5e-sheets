@@ -427,6 +427,22 @@
     //     padding: var(--t5e-size-1x);
     //   }
 
+    row-gap: 0;
+    padding-inline-end: 0;
+
+    .inventory-content {
+      display: flex;
+      flex-direction:column;
+      flex: 1 1 0;
+      overflow: auto;
+      padding-inline-end: var(--t5e-size-4x);
+      row-gap: var(--t5e-size-3x);
+    }
+
+    .inventory-footer {
+      flex: 0 0 auto;
+      padding-inline-end: var(--t5e-size-4x);
+    }
   }
 
   .tidy-tab.journal {

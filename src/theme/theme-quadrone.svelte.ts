@@ -8,14 +8,13 @@ import type {
   ThemeSettingsV2,
   ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
-import { TidyFlags, TidyHooks } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { coalesce } from 'src/utils/formatting';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { ThemeStylesProvider } from './theme-styles-provider';
-import { downloadTextFile, readFileAsText } from 'src/utils/file';
-import { error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 
 export type ThemeableSheetType =
@@ -97,6 +96,13 @@ export class ThemeQuadrone {
       TidyFlags.sheetThemeSettings.get(options.doc)
     ) as ThemeSettingsV2;
 
+    if (
+      options.doc?.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+      true
+    ) {
+      preferences.portraitShape = 'token';
+    }
+
     return preferences;
   }
 
@@ -106,7 +112,9 @@ export class ThemeQuadrone {
       settings
     );
 
-    return TidyFlags.sheetThemeSettings.set(doc, toSave);
+    const result = TidyFlags.sheetThemeSettings.set(doc, toSave);
+    this.syncSystemTokenPortraitSetting(doc, settings.portraitShape ?? 'round');
+    return result;
   }
 
   static getTidyStyleSheet() {
@@ -205,7 +213,7 @@ export class ThemeQuadrone {
   /* -------------------------------------------- */
 
   static getActorPortraitShapes(): PortraitShape[] {
-    return ['round', 'transparent', 'square'];
+    return ['round', 'transparent', 'square', 'token'];
   }
 
   static getActorPortraitShape(doc: any): PortraitShape {
@@ -220,5 +228,13 @@ export class ThemeQuadrone {
     const settings = this.getSheetThemeSettings({ doc: doc });
     settings.portraitShape = newShape;
     this.saveSheetThemeSettings(doc, settings);
+    this.syncSystemTokenPortraitSetting(doc, newShape);
+  }
+
+  static syncSystemTokenPortraitSetting(doc: any, newShape: PortraitShape) {
+    doc.update({
+      [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:
+        newShape === 'token',
+    });
   }
 }

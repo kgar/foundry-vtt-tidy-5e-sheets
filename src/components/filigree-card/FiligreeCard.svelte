@@ -1,4 +1,6 @@
 <script lang="ts">
+    import type { ClassValue } from "svelte/elements";
+
   // SVG path definitions for the filigree border elements
   const svgPaths = {
     corner: "M 3 21.7 C 5.383 14.227 9.646 7.066 18.1 3.2 L 12.2 3.2 L 3 12.8 Z M 6.9 15.7 C 5.088 19.235 3.776 23.004 3 26.9 L 2.999 30 L 0 30 L 0 11.5 L 11 0 L 25 0 L 25 3.1 L 22.4 3.1 C 16.737 4.586 11.822 8.112 8.6 13 L 8.6 30 L 6.9 30 Z",
@@ -7,7 +9,7 @@
   };
 
   interface Props {
-    class?: string;
+    class?: ClassValue;
   }
 
   let { 
@@ -16,7 +18,7 @@
   
 </script>
 
-<div class="filigree-card {cssClass}">
+<div class={["filigree-card", cssClass]}>
   <div class="backdrop"></div>
   
   <!-- Corners -->

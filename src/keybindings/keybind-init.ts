@@ -1,4 +1,4 @@
-import { Tidy5eSheetsApi, TidyFlags } from 'src/api';
+import { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { CONSTANTS } from 'src/constants';
 
 export function initKeybindings() {

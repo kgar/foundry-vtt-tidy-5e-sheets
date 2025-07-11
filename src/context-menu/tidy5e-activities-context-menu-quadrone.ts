@@ -5,26 +5,29 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 export function getContextMenuOptionsQuadrone(
   activity: Activity5e,
   app: any,
-  configurable: boolean
+  configurable: boolean,
+  element: HTMLElement
 ): ContextMenuEntry[] {
   const isUnlockedForOwner =
     activity.item.isOwner &&
     !FoundryAdapter.isLockedInCompendium(activity.item);
 
+  const isInFavorites = !!element.closest('.favorites');
+
   const entries: ContextMenuEntry[] = [];
   entries.push({
     name: 'DND5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',
-    callback: async () => await activity.sheet.render({ force: true }),
     condition: () => configurable && !isUnlockedForOwner,
+    callback: async () => await activity.sheet.render({ force: true }),
     group: 'common',
   });
 
   entries.push({
     name: 'DND5E.ContextMenuActionEdit',
     icon: '<i class="fas fa-pen-to-square fa-fw"></i>',
-    callback: async () => await activity.sheet.render({ force: true }),
     condition: () => configurable && isUnlockedForOwner,
+    callback: async () => await activity.sheet.render({ force: true }),
     group: 'common',
   });
 
@@ -53,6 +56,7 @@ export function getContextMenuOptionsQuadrone(
   entries.push({
     name: 'DND5E.ContextMenuActionDuplicate',
     icon: '<i class="fas fa-copy fa-fw"></i>',
+    condition: () => !isInFavorites && configurable && isUnlockedForOwner,
     callback: async () => {
       const createData = activity.toObject();
       delete createData._id;
@@ -60,15 +64,14 @@ export function getContextMenuOptionsQuadrone(
         renderSheet: false,
       });
     },
-    condition: () => configurable && isUnlockedForOwner,
     group: 'common',
   });
 
   entries.push({
     name: 'DND5E.ContextMenuActionDelete',
-    icon: '<i class="fas fa-trash fa-fw"></i>',
+    icon: `<i class="fas fa-trash fa-fw" style="color: var(--t5e-warning-accent-color);"></i>`,
+    condition: () => !isInFavorites && configurable && isUnlockedForOwner,
     callback: async () => await activity.deleteDialog(),
-    condition: () => configurable && isUnlockedForOwner,
     group: 'be-careful',
   });
 

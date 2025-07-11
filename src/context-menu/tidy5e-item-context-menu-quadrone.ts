@@ -1,4 +1,4 @@
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { CONSTANTS } from 'src/constants';
 import { isItemInActionList } from 'src/features/actions/actions.svelte';
@@ -26,10 +26,12 @@ export function getItemContextOptionsQuadrone(
   const isCharacter =
     itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
 
+  const isInFavorites = !!element.closest('.favorites');
+
   let options: ContextMenuEntry[] = [];
 
   // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
-  
+
   options.push({
     name: 'TIDY5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',
@@ -156,6 +158,7 @@ export function getItemContextOptionsQuadrone(
     name: 'DND5E.Scroll.CreateScroll',
     icon: '<i class="fa-solid fa-scroll"></i>',
     condition: () =>
+      !isInFavorites &&
       item.type === 'spell' &&
       !item.system.linkedActivity &&
       itemParent?.isOwner &&
@@ -205,6 +208,7 @@ export function getItemContextOptionsQuadrone(
     name: 'DND5E.ContextMenuActionDuplicate',
     icon: "<i class='fas fa-clone fa-fw'></i>",
     condition: () =>
+      !isInFavorites &&
       item.canDuplicate &&
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
@@ -292,6 +296,7 @@ export function getItemContextOptionsQuadrone(
       new SectionSelectorApplication(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.Label'),
+        itemParent ?? item,
         { document: item }
       ).render(true),
   });
@@ -309,6 +314,7 @@ export function getItemContextOptionsQuadrone(
       new SectionSelectorApplication(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
+        itemParent ?? item,
         { document: item }
       ).render(true),
   });
@@ -319,6 +325,7 @@ export function getItemContextOptionsQuadrone(
     name: 'TIDY5E.ContextMenuActionDelete',
     icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
     condition: () =>
+      !isInFavorites &&
       item.canDelete &&
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),

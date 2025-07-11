@@ -4,7 +4,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { settings } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -386,6 +386,7 @@ export function getItemContextOptions(
       new SectionSelectorApplication(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.Label'),
+        itemParent ?? item,
         { document: item }
       ).render(true),
     condition: () =>
@@ -403,6 +404,7 @@ export function getItemContextOptions(
       new SectionSelectorApplication(
         TidyFlags.section.prop,
         FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
+        itemParent ?? item,
         { document: item }
       ).render(true),
     condition: () =>

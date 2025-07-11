@@ -27,6 +27,7 @@ export type ThemeQuadroneStyleDeclaration = {
 };
 
 export type ThemeSettingsConfigurationOptions = {
+  
   doc?: any;
   settingsOverride?: ThemeSettingsV2;
   /**
@@ -37,4 +38,4 @@ export type ThemeSettingsConfigurationOptions = {
   idOverride?: string;
 };
 
-export type PortraitShape = 'transparent' | 'round' | 'square';
+export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';

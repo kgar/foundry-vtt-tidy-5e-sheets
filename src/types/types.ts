@@ -29,8 +29,10 @@ import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
+import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 
 export type Actor5e = any;
+export type Folder = any;
 export type TokenDocument = any;
 
 export type SvelteTabContent = {
@@ -936,12 +938,12 @@ export type ActorSizeContext = {
   mod: number;
 };
 
-export type ActorTraitContext = {
+export type ActorTraitContext<TValue = unknown> = {
   key?: string;
   icons?: { icon: string; label: string }[];
   label: string;
   sign?: string;
-  value?: unknown;
+  value?: TValue;
   units?: string;
   cssClass?: ClassValue;
 };
@@ -991,12 +993,12 @@ export type ActorAbilityContextEntry = Ability & {
 };
 
 export type CharacterSpeedSenseContext = {
-  main: CharacterSpeedSenseEntryContext[];
-  secondary: CharacterSpeedSenseEntryContext[];
+  main: ActorSpeedSenseEntryContext[];
+  secondary: ActorSpeedSenseEntryContext[];
   traitEntries: ActorTraitContext[];
 };
 
-export type CharacterSpeedSenseEntryContext = {
+export type ActorSpeedSenseEntryContext = {
   key: string;
   label: string;
   value: string;
@@ -1152,6 +1154,10 @@ export type CharacterSheetQuadroneContext = {
   senses: CharacterSpeedSenseContext;
   showContainerPanel: boolean;
   showDeathSaves: boolean;
+  portrait: {
+    src: string;
+    shape: PortraitShape;
+  };
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   species?: ActorTraitItemContext;
@@ -1173,15 +1179,23 @@ export type NpcSheetQuadroneContext = {
     biography: string;
   };
   features: NpcAbilitySection[];
+  habitats: { label: string }[];
   inventory: InventorySection[];
   showContainerPanel: boolean;
-  showDeathSaves: boolean;
+  showDeathSaves: boolean
+  showLairTracker: boolean;
+  showLegendaryActions: boolean;
+  showLegendaryResistances: boolean;
+  showLoyaltyTracker: boolean;
+  senses: ActorSpeedSenseEntryContext[];
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
+  treasures: { label: string }[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & ActorSheetQuadroneContext<any>;
 
