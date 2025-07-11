@@ -16,15 +16,22 @@ export function configureKeyedFavoriteContextMenu(
 
   let type: CharacterFavoriteType | undefined;
 
+  let onEdit = (_app: any) => {};
+
   if (!isNil(key) && key in CONFIG.DND5E.skills) {
     type = 'skill';
+    onEdit = (app) =>
+      FoundryAdapter.renderSkillToolConfig(app.document, 'skills', key);
   } else if (!isNil(key) && key in CONFIG.DND5E.tools) {
     type = 'tool';
+    onEdit = (app) =>
+      FoundryAdapter.renderSkillToolConfig(app.document, 'tool', key);
   } else if (isSlots) {
     type = 'slots';
+    onEdit = (app) => FoundryAdapter.openSpellSlotsConfig(app.document);
   }
 
-  if (!type || !key) {
+  if (!type) {
     ui.context.menuItems = [];
     return;
   }
@@ -37,6 +44,13 @@ export function configureKeyedFavoriteContextMenu(
   let hasFavorite = app.actor.system.hasFavorite(favorite.id);
 
   ui.context.menuItems = [
+    {
+      name: 'TIDY5E.ContextMenuActionEdit',
+      icon: '<i class="fa-solid fa-pen-to-square fa-fw"></i>',
+      condition: () => app.isEditable,
+      group: 'common',
+      callback: () => onEdit(app),
+    },
     {
       name: hasFavorite ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: hasFavorite

@@ -37,6 +37,12 @@
   const handleChange = !favorite.effect.isSuppressed
     ? () => favorite.effect.update({ disabled: !favorite.effect.disabled })
     : undefined;
+
+  let theSubtitle = $state<HTMLElement>();
+
+  let tooltip = $derived(
+    `${favorite.effect.name} <br /> ${theSubtitle?.innerText.replaceAll('\n', ' • ')}`,
+  );
 </script>
 
 <div
@@ -49,6 +55,9 @@
   data-parent-id={parentId}
   data-tidy-draggable
   data-favorite-id={favorite.id}
+  data-tooltip={tooltip}
+  onmousedown={(event) =>
+    FoundryAdapter.editOnMiddleClick(event, favorite.effect)}
 >
   <button
     type="button"
@@ -70,7 +79,10 @@
         <span class="title">
           {favorite.effect.name}
         </span>
-        <span class="subtitle flexrow color-text-lighter font-default-small">
+        <span
+          class="subtitle flexrow color-text-lighter font-default-small"
+          bind:this={theSubtitle}
+        >
           {@html subtitle}
         </span>
       </div>

@@ -37,7 +37,7 @@ export function configureActivitiesContextMenu(element: HTMLElement, app: any) {
   const isQuadroneSheet = element.closest('.quadrone');
 
   const menuItems = isQuadroneSheet
-    ? getContextMenuOptionsQuadrone(activity, app, configurable)
+    ? getContextMenuOptionsQuadrone(activity, app, configurable, element)
     : getContextMenuOptions(activity, app, configurable);
 
   /**

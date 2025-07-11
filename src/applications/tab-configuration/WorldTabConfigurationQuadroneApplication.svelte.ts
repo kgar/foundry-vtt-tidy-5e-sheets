@@ -70,15 +70,15 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
     let actorConfigs = setting?.[CONSTANTS.DOCUMENT_NAME_ACTOR];
 
-    if (settings.value.truesight) {
-      config.push(
-        getActorTabContext(
-          CharacterSheetQuadroneRuntime,
-          CONSTANTS.SHEET_TYPE_CHARACTER,
-          actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER]
-        )
-      );
+    config.push(
+      getActorTabContext(
+        CharacterSheetQuadroneRuntime,
+        CONSTANTS.SHEET_TYPE_CHARACTER,
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER]
+      )
+    );
 
+    if (settings.value.truesight) {
       config.push(
         getActorTabContext(
           NpcSheetQuadroneRuntime,

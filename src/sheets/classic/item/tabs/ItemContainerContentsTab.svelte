@@ -20,7 +20,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getContainerSheetClassicContext } from 'src/sheets/sheet-context.svelte';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from "src/foundry/TidyFlags";
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 

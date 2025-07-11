@@ -521,6 +521,7 @@
             new SectionSelectorApplication(
               TidyFlags.section.prop,
               localize('TIDY5E.Section.Label'),
+              context.item,
               { document: context.item },
             ).render(true)}
         >
@@ -539,6 +540,7 @@
             new SectionSelectorApplication(
               TidyFlags.actionSection.prop,
               localize('TIDY5E.Section.ActionLabel'),
+              context.item,
               { document: context.item },
             ).render(true)}
         >

@@ -7,7 +7,7 @@ import type { TabConfigContextEntry } from './tab-configuration.types';
 import { CONSTANTS } from 'src/constants';
 import SheetTabConfigurationQuadrone from './SheetTabConfigurationQuadrone.svelte';
 import { mount } from 'svelte';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import {
   getActorTabContext,
   getItemTabContext,

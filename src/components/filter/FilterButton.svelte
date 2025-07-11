@@ -8,6 +8,7 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import type { ContainerSheetClassicContext } from 'src/types/item.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   interface Props {
     tabId: string;
@@ -21,8 +22,9 @@
     $derived(
       getSheetContext<ActorSheetContextV1 | ContainerSheetClassicContext>(),
     );
-  const onFilterClearAll =
-    getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
+  const onFilterClearAll = getContext<ItemFilterService['onFilterClearAll']>(
+    CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
+  );
   let categories = $derived(context.filterData[tabId] ?? {});
   let hasActiveFilters = $derived(
     Object.entries(categories).some(([_, filters]) =>

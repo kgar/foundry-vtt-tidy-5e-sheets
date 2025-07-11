@@ -273,6 +273,7 @@ export type ItemDescription = {
 };
 
 export type Item5e = any;
+export type Advancement5e = any;
 
 export type ItemChatData = {
   description: { value: string };

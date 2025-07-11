@@ -1,4 +1,5 @@
-import { TidyFlags, type Tidy5eSheetsApi } from 'src/api';
+import { type Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SystemIntegrationBase } from '../integration-classes';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';

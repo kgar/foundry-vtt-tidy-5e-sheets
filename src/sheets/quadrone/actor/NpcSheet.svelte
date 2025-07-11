@@ -9,9 +9,10 @@
   import NpcPortrait from './npc-parts/NpcPortrait.svelte';
   import NpcExhaustionBar from './npc-parts/NpcExhaustionBar.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import ActorSidebar from './character-parts/CharacterSidebar.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import NpcSidebar from './npc-parts/NpcSidebar.svelte';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { untrack } from 'svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -21,7 +22,26 @@
 
   let selectedTabId: string = $derived(context.currentTabId);
 
-  let sidebarExpanded = $state(false);
+  let sidebarExpanded = $state(true);
+
+  // When the user changes tabs, check their preference on the new tab and apply expanded state.
+  $effect(() => {
+    const type = untrack(() => context.actor.type);
+
+    sidebarExpanded =
+      SheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
+        ?.sidebarExpanded == true;
+  });
+
+  // When the user expands or collapses the sidebar, remember their preference for this tab.
+  $effect(() => {
+    SheetPreferencesService.setDocumentTypeTabPreference(
+      untrack(() => context.actor.type),
+      untrack(() => selectedTabId),
+      'sidebarExpanded',
+      sidebarExpanded,
+    );
+  });
 
   let hpValueInputFocused = $state(false);
   let hpTempInputFocused = $state(false);
@@ -38,9 +58,37 @@
 
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
 
-  let extraTabs = new SvelteSet<string>();
-
   let ini = $derived(getModifierData(context.system.attributes.init.total));
+
+  let formattedCr = $derived(dnd5e.utils.formatCR(context.system.details.cr));
+
+  function calculateSaveCr(crValue: string): boolean {
+    const crs: Record<string, number> = {
+      '1/8': 0.125,
+      '⅛': 0.125,
+      '1/4': 0.25,
+      '¼': 0.25,
+      '1/2': 0.5,
+      '½': 0.5,
+    };
+
+    let cr: string | number | null = crValue;
+    if (cr === '' || cr === '—') cr = null;
+    else {
+      cr = crs[cr] || parseFloat(cr);
+      if (Number.isNaN(cr)) {
+        cr = null;
+      } else {
+        cr = cr < 1 ? cr : parseInt(cr.toString());
+      }
+    }
+
+    context.actor.update({ 'system.details.cr': cr });
+
+    return false;
+  }
+
+  let extraTabs = new SvelteSet<string>();
 </script>
 
 <header class="sheet-header flexcol theme-dark">
@@ -60,11 +108,6 @@
               <h1 class="npc-name flex1">{context.actor.name}</h1>
             {/if}
             <div class={['sheet-header-actions', 'flexrow']}>
-              <button
-                type="button"
-                class="button button-icon-only short-rest button-gold"
-                >(Magic wand thingy?)</button
-              >
               <button
                 type="button"
                 class="button button-icon-only short-rest button-gold"
@@ -89,7 +132,34 @@
           </div>
           <NpcSubtitle />
         </div>
-        <div class="cr-container">CR Here</div>
+        <div
+          class="challenge-rating"
+          aria-label={localize('DND5E.CRLabel', {
+            cr: context.system.details.cr,
+          })}
+          title={!context.unlocked ? localize('DND5E.ChallengeRating') : ''}
+        >
+          <label
+            for="{context.appId}-system-details-cr"
+            class="challenge-rating-label"
+          >
+            {localize('DND5E.AbbreviationCR')}
+          </label>
+          {#if context.unlocked}
+            <TextInputQuadrone
+              document={context.actor}
+              value={formattedCr}
+              field="system.details.cr"
+              class="challenge-rating-input"
+              selectOnFocus={true}
+              data-tooltip="DND5E.ChallengeRating"
+              id="{context.appId}-system-details-cr"
+              onSaveChange={(ev) => calculateSaveCr(ev.currentTarget.value)}
+            />
+          {:else}
+            <span class="challenge-rating-label">{formattedCr}</span>
+          {/if}
+        </div>
       </div>
       <div
         class={[

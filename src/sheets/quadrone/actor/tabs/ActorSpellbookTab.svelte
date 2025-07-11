@@ -17,6 +17,7 @@
   } from 'src/features/search/search.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import CharacterSpellbookFooter from '../character-parts/CharacterSpellbookFooter.svelte';
+  import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
 
   let context =
     $derived(
@@ -81,6 +82,20 @@
           prop: 'flags.tidy5e-sheet.userPreferences.castActivitySpellGrouping',
           doc: game.user,
           default: CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL,
+        },
+      ],
+    },
+    {
+      title: 'TIDY5E.Utilities.Tools',
+      settings: [
+        {
+          type: 'button',
+          icon: 'fa-solid fa-list-check',
+          label: 'TIDY5E.Utilities.AssignSpellsToClasses',
+          onclick: (ev, doc) =>
+            new SpellSourceClassAssignmentsFormApplication({
+              document: context.actor,
+            }).render({ force: true }),
         },
       ],
     },

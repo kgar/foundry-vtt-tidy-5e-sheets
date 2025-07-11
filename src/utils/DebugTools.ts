@@ -1,7 +1,5 @@
-import {
-  type HeaderControlRegistrationParams,
-  type Tidy5eSheetsApi,
-} from 'src/api';
+import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
+import { type HeaderControlRegistrationParams } from 'src/api/api.types';
 import { settings } from 'src/settings/settings.svelte';
 
 export class DebugTools {

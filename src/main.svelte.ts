@@ -47,6 +47,16 @@ Hooks.once('init', () => {
   documentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eCharacterSheetQuadrone,
+    {
+      types: [CONSTANTS.SHEET_TYPE_CHARACTER],
+      label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
+    }
+  );
+
+  documentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eNpcSheet,
     {
       types: [CONSTANTS.SHEET_TYPE_NPC],
@@ -153,16 +163,6 @@ Hooks.once('init', () => {
     documentSheetConfig.registerSheet(
       Actor,
       CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eCharacterSheetQuadrone,
-      {
-        types: [CONSTANTS.SHEET_TYPE_CHARACTER],
-        label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
-      }
-    );
-
-    documentSheetConfig.registerSheet(
-      Actor,
-      CONSTANTS.DND5E_SYSTEM_ID,
       Tidy5eNpcSheetQuadrone,
       {
         types: [CONSTANTS.SHEET_TYPE_NPC],
@@ -201,9 +201,7 @@ Hooks.once('ready', async () => {
 
   ThemeQuadrone.onReady();
 
-  if (settings.value.truesight) {
-    TidyNotificationsManager.onReady();
-  }
+  TidyNotificationsManager.onReady();
 });
 
 function handleMigrationNotification() {

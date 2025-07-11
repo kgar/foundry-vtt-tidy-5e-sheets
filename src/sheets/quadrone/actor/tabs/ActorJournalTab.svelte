@@ -1,10 +1,12 @@
 <script lang="ts">
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
-  import { TidyFlags, type DocumentJournalEntry } from 'src/api';
+  import { type DocumentJournalEntry } from 'src/foundry/TidyFlags.types';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { JournalEntryApplication } from 'src/applications/journal/JournalEntryApplication.svelte';
   import type { TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import VerticalTabs from 'src/components/tabs/VerticalTabs.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
@@ -113,7 +115,7 @@
       class="button add"
       disabled={!context.owner}
       onclick={async () => {
-        const newId = await TidyFlags.documentJournal.add(context.actor);
+        const newId = await JournalQuadrone.add(context.actor);
         edit(newId);
       }}
     >

@@ -202,7 +202,6 @@ export function createSettings() {
           icon: 'fa-solid fa-swatchbook',
           type: ThemeSettingsQuadroneApplication,
           restricted: true,
-          truesight: true,
         },
       },
       tabConfigurationMenu: {
@@ -213,7 +212,6 @@ export function createSettings() {
           icon: 'fa-solid fa-table-columns',
           type: WorldTabConfigurationQuadroneApplication,
           restricted: true,
-          truesight: true,
         },
       },
       homebrew: {
@@ -224,7 +222,6 @@ export function createSettings() {
           icon: `fa-solid fa-beer-mug`,
           type: HomebrewSettingsApplication,
           restricted: true,
-          truesight: true,
         },
       },
       resetAllSettings: {

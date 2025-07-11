@@ -2,8 +2,9 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SlotsFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
     favorite: SlotsFavoriteContextEntry;
@@ -31,8 +32,12 @@
   data-key={favorite.id}
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
   data-slots
+  onmousedown={(event) =>
+    FoundryAdapter.doActionOnMiddleClick(event, () =>
+      FoundryAdapter.openSpellSlotsConfig(context.actor),
+    )}
 >
-  <FavoriteItemRollButton
+  <FavoriteRollButton
     {favorite}
     img={favorite.img}
     title={favorite.name}

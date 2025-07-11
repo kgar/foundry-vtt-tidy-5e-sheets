@@ -6,6 +6,7 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   LocationToSearchTextMap,
+  NpcHabitat,
   NpcItemContext,
   NpcSheetQuadroneContext,
 } from 'src/types/types';
@@ -26,13 +27,14 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from "src/foundry/TidyFlags";
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Container } from 'src/features/containers/Container';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { splitSemicolons } from 'src/utils/array';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -154,9 +156,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         ),
       },
       features: [],
+      habitats: [],
       inventory: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
+      senses: super._getSenses(),
       size: {
         key: this.actor.system.traits.size,
         label:
@@ -168,12 +172,26 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
+      showLairTracker:
+        actorContext.unlocked ||
+        (actorContext.modernRules && this.actor.system.resources.lair.value) ||
+        (!actorContext.modernRules &&
+          this.actor.system.resources.lair.initiative),
+      showLegendaryActions:
+        actorContext.unlocked || this.actor.system.resources.legact.max,
+      showLegendaryResistances:
+        actorContext.unlocked || this.actor.system.resources.legres.max,
+      showLoyaltyTracker:
+        this.actor.system.traits.important &&
+        game.settings.get('dnd5e', 'loyaltyScore'),
+      speeds: super._getMovementSpeeds(true),
       spellbook: [],
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         preferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
       tools: [],
+      treasures: [],
       type: CONSTANTS.SHEET_TYPE_NPC,
       ...actorContext,
     };
@@ -191,6 +209,50 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         }
       );
     }
+
+    let details = this.actor.system.details;
+
+    // Habitat
+    if (details?.habitat?.value.length || details?.habitat?.custom) {
+      const { habitat } = details;
+      const any = details.habitat.value.find(
+        ({ type }: NpcHabitat) => type === CONSTANTS.HABITAT_TYPE_ANY
+      );
+      context.habitats = habitat.value
+        .reduce((arr: { label: string }[], { type, subtype }: NpcHabitat) => {
+          let { label } = CONFIG.DND5E.habitats[type] ?? {};
+          if (label && (!any || type === CONSTANTS.HABITAT_TYPE_ANY)) {
+            if (subtype)
+              label = game.i18n.format('DND5E.Habitat.Subtype', {
+                type: label,
+                subtype,
+              });
+            arr.push({ label });
+          }
+          return arr;
+        }, [])
+        .concat(splitSemicolons(habitat.custom).map((label) => ({ label })))
+        .sort((a: { label: string }, b: { label: string }) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        );
+    }
+
+    // Treasure
+    if (details?.treasure?.value.size) {
+      const any = details.treasure.value.has(CONSTANTS.TREASURE_ANY);
+      context.treasures = details.treasure.value
+        .reduce((arr: { label: string }[], id: string) => {
+          const { label } = CONFIG.DND5E.treasure[id] ?? {};
+          if (label && (!any || id === CONSTANTS.TREASURE_ANY))
+            arr.push({ label });
+          return arr;
+        }, [])
+        .toSorted((a: { label: string }, b: { label: string }) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        );
+    }
+
+    context.speeds = this._getMovementSpeeds();
 
     context.customContent = await NpcSheetQuadroneRuntime.getContent(context);
 

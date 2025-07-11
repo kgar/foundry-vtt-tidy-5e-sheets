@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemFavoriteContextEntry } from 'src/types/types';
-  import FavoriteItemRollButton from './parts/FavoriteRollButton.svelte';
+  import FavoriteRollButton from './parts/FavoriteRollButton.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -29,8 +29,10 @@
   data-item-id={favorite.item?.id}
   data-favorite-id={favorite.id}
   data-tidy-draggable
+  onmousedown={(event) =>
+    FoundryAdapter.editOnMiddleClick(event, favorite.item)}
 >
-  <FavoriteItemRollButton
+  <FavoriteRollButton
     {favorite}
     img={favorite.item.img}
     title={favorite.item.name}

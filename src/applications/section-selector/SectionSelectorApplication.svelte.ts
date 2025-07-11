@@ -11,6 +11,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Tab } from 'src/types/types';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
+import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 
 export type SectionSelectorContext = {
   sections: string[];
@@ -25,16 +26,23 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
 >() {
   _prop: string;
   _sectionType: string;
+  /** 
+   * The document that requested this application, not necessarily the document 
+   * to be edited. This is used to determine the theme of this application.
+   */
+  _callingDocument: any;
 
   constructor(
     flag: string,
     sectionType: string,
+    callingDocument: any,
     options: DocumentSheetApplicationConfiguration
   ) {
     super(options);
 
     this._prop = flag;
     this._sectionType = sectionType;
+    this._callingDocument = callingDocument;
   }
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
@@ -45,6 +53,7 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
       'tidy-section-selector-application',
       'scrollable-window-content',
     ],
+    id: 'tidy-section-selector-application-{id}',
     tag: 'div',
     sheetConfig: false,
     window: {
@@ -60,6 +69,13 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
     actions: {},
     submitOnClose: false,
   };
+
+  themeConfigOptions(): ThemeSettingsConfigurationOptions {
+    return {
+      doc: this._callingDocument,
+      idOverride: this.id,
+    };
+  }
 
   _createComponent(node: HTMLElement): Record<string, any> {
     const component = mount(SectionSelector, {

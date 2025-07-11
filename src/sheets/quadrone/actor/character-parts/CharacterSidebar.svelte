@@ -21,15 +21,6 @@
 
   let tabs: Tab[] = $state([
     {
-      id: 'sidebar-skills',
-      title: 'DND5E.Skills',
-      content: {
-        type: 'svelte',
-        component: SidebarTabSkills,
-      },
-      iconClass: 'fa-solid fa-briefcase',
-    } satisfies Tab,
-    {
       id: 'sidebar-favorites',
       title: 'DND5E.Favorites',
       content: {
@@ -38,6 +29,15 @@
         cssClass: 'favorites',
       },
       iconClass: 'fa-solid fa-star',
+    } satisfies Tab,
+    {
+      id: 'sidebar-skills',
+      title: 'DND5E.Skills',
+      content: {
+        type: 'svelte',
+        component: SidebarTabSkills,
+      },
+      iconClass: 'fa-solid fa-briefcase',
     } satisfies Tab,
   ]);
 

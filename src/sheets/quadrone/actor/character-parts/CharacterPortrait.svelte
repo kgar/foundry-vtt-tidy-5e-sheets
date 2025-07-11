@@ -5,14 +5,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
-  type Props = {
-    imageUrl: string;
-    imageAlt: string;
-  };
-
-  let { imageUrl, imageAlt }: Props = $props();
-
   let context = $derived(getCharacterSheetQuadroneContext());
+
+  let imageUrl = $derived(context.portrait.src);
+  let imageAlt = $derived(context.actor.name);
 
   let characterIsDead = $derived(
     context.system.attributes?.hp?.value === 0 &&
@@ -21,10 +17,7 @@
       context.system.attributes.death.success < 3,
   );
 
-  // Make portraitShape mutable for the debug button
-  let currentPortraitShape = $derived(
-    ThemeQuadrone.getActorPortraitShape(context.document),
-  );
+  let currentPortraitShape = $derived(context.portrait.shape);
 
   const availableShapes = ThemeQuadrone.getActorPortraitShapes();
 
@@ -98,6 +91,8 @@
       <i class="fas fa-circle-user"></i>
     {:else if currentPortraitShape === 'square'}
       <i class="fas fa-square-user"></i>
+    {:else if currentPortraitShape === 'token'}
+      <i class="fas fa-circle"></i>
     {:else}
       <i class="fas fa-user"></i>
     {/if}

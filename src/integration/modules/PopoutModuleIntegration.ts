@@ -1,4 +1,4 @@
-import type { Tidy5eSheetsApi } from 'src/api';
+import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import type { ModuleIntegrationBase } from '../integration-classes';
 import type { ContextMenuPositionInfo } from 'src/context-menu/context-menu.types';
 

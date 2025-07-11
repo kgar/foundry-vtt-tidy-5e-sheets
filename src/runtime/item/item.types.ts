@@ -9,6 +9,8 @@ export type ItemFilter = {
   /** Used for scenarios where space is limited and an abbreviation is available. */
   abbreviation?: string;
   pinnedFilterClass?: string;
+  /** Classic Sheets only: denotes that an abbreviation should be used, regardless of available space. */
+  useLegacyAbbreviation?: boolean;
 };
 
 type Category = string;

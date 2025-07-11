@@ -2,24 +2,45 @@
 
 ### The Short List
 
-- [ ] Adjust truesight to reveal the next batch of the overhaul
-- [ ] Update the readme
-- [ ] Figure out where to put power tools like "Assign Spells to Source Classes"
-  - hightouch recommendation: in the tab config menu
-- [ ] Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
-- [ ] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
-- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings.
-- [ ] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
-- [ ] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
-- [ ] add a class to section headers when there are no search results `.search-no-results`
-  - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
+- [ ] Update the readme
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+
+### NPC Sheet
+
+- [ ] Header
+  - [ ] Portrait
+  - [ ] AC and Vitals
+  - [ ] Name
+  - [ ] Subtitle
+  - [ ] Sheet header buttons
+  - [ ] CR
+  - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
+  - [ ] abilities
+- [x] Sidebar
+  - [x] Traits
+  - [x] (Collapsed by default) Skills
+  - [x] Loyalty tracker
+    - [x] Show when 
+      - [x] `this.actor.system.traits.important` AND
+      - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
+      - [x] `game.user.isGM`
+  - [x] Legendary trackers
+    - [x] Show each when unlocked or when each is eligible
+      - [x] legact - `this.actor.system.resources.legact.max`
+      - [x] legres - `this.actor.system.resources.legres.max`
+      - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
+        - [x] 2014
+        - [x] Modern
+- [ ] Statblock
+- [ ] Inventory
+- [ ] Spellbook
+- [ ] Effects
+- [ ] Background
+- [ ] Journal
 
 ### (Almost) Everything after the short list
 
-- [ ] Scaffold the NPC Sheet
-- [ ] Set up NPC Sheet Tab Selection
 - [ ] Scaffold the Group Sheet
 - [ ] Set up Group Sheet Tab Selection
 - [ ] Scaffold the Vehicle Sheet
@@ -61,11 +82,20 @@
 - [ ] Bug? Secret button doesn't work on Item Description in Actor sheet
   - Does not work on default sheets or Tidy classic.
 - [ ] (Take our time on this one; it's never been solved by any sheet, except for vertical tabs) Implement Responsive Tab Strip
+- [ ] Magical Tattoos: provide first-class favorite card. Expand system to accommodate custom favorite card renderers so that it can be registered thus.
+- [ ] (Take your time on this one, maybe after the overhaul is complete) Refactor: consider combining the actor sheet runtimes into a single collective like Item Sheet Runtime. Then, consider extracting a common base class 🔥.
+- [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings.
+- [ ] add a class to section headers when there are no search results `.search-no-results`
+  - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
+
 
 ### Module Compatibility
 
 ## hightouch To Do
 
+- [ ] Make sidebar tab strip a separate container so that only the tab content area scrolls.
+- [ ] Character Sidebar - adjust gap and padding to taste
+- [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
@@ -216,3 +246,23 @@ Limited:
 - [x] Phys bypasses: ok what I'd try instead is to use the tooltip for sure, but thin toss on `fa-shield-exclamation` and try changing the color to either orange-40 or orange-70, or if that feels weird then same green but change the icon to `rgba(255, 236, 149, 1)` or something <https://discord.com/channels/@me/1243307347682529423/1391632333337002082>
 - [x] (testing) Fix issue with <https://github.com/KibblesTasty/kibbles-compendium-of-craft-and-creation>
 - [x] (testing) Finish testing all documented CONFIG.DND5E customizations
+- [x] Try to fix the inventory footer with Flex Parent ( Rest of Inventory, Footer )
+- [x] Make Quadrone Effects context menu handler; determine if there are any others.
+- [x] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
+- [x] Figure out where to put power tools like "Assign Spells to Source Classes"
+  - hightouch recommendation: in the tab config menu
+- [x] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
+- [x] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
+- [x] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
+- [x] root out uses of 'src/api' where able
+- [x] PC Sheet Sidebar - Default Open
+- [x] PC Sheet Sidebar - Default selected Favorites, Favorites first tab
+- [x] Spell Slot Context menu - Edit - open Spell Slot Config ;)
+- [x] Skill/Tool Context menu - Edit - open Skill/Tool Config ;)
+- [x] Middle-click to edit favorite entries
+  - [x] Items, Activities, Effects
+  - [x] Spell Slot middle-click - open spell slot config
+  - [x] Skill/Tool middle-click - open skill/tool config
+- [x] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
+  - [x] Item - Remove Spell Scroll, Dup, Delete
+  - [x] Activity/Effect - Remove Dup and Delete

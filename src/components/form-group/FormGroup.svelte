@@ -7,7 +7,6 @@
     StringField,
   } from 'foundry.data.fields';
   import { componentWithProps } from 'src/utils/component';
-  import type { SheetLayout } from 'src/api';
   import TextInputQuadrone from '../inputs/TextInputQuadrone.svelte';
   import TextInput from '../inputs/TextInput.svelte';
   import NumberInput from '../inputs/NumberInput.svelte';
@@ -20,6 +19,7 @@
   import { isNil } from 'src/utils/data';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { SheetLayout } from 'src/runtime/types';
 
   type PartialBuilderProps = Partial<ComponentProps<typeof FormGroupBuilder>>;
 

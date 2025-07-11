@@ -16,7 +16,7 @@ import type {
   CharacterItemPartitions,
   CharacterSheetQuadroneContext,
   CharacterSpeedSenseContext,
-  CharacterSpeedSenseEntryContext,
+  ActorSpeedSenseEntryContext,
   ChosenFacilityContext,
   CreatureTypeContext,
   ExpandedItemData,
@@ -60,6 +60,7 @@ import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -76,7 +77,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     super(options);
 
     this.currentTabId = CONSTANTS.TAB_ACTOR_ACTIONS;
-    this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_SKILLS;
+    this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
 
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
@@ -140,6 +141,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: this.actor,
+    });
+
     // Effects & Conditions
     let { conditions, effects: enhancedEffectSections } =
       await ConditionsAndEffects.getConditionsAndEffectsForActor(
@@ -175,6 +180,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     let background = this.actor.system.details.background;
     let species = this.actor.system.details.race;
+
+    const showToken =
+      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+        true || themeSettings.portraitShape === 'token';
+    const effectiveToken = this.actor.isToken
+      ? this.actor.token
+      : this.actor.prototypeToken;
 
     const context: CharacterSheetQuadroneContext = {
       background: background
@@ -232,7 +244,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       initialSidebarTabId: this.currentSidebarTabId,
       inspirationSource,
       inventory: [],
-      senses: this._getSenses(),
+      senses: this._getCharacterSenses(),
       size: {
         key: this.actor.system.traits.size,
         label:
@@ -246,6 +258,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
+      portrait: {
+        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+        src: showToken
+          ? effectiveToken?.texture.src ?? this.actor.img
+          : this.actor.img,
+      },
       species: species
         ? {
             id: species.id,
@@ -253,7 +271,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             name: species.name,
           }
         : undefined,
-      speeds: this._getMovementSpeeds(),
+      speeds: this._getCharacterMovementSpeeds(),
       spellbook: [],
       spellcasting: this._prepareSpellcastingContext(),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
@@ -729,35 +747,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   /* -------------------------------------------- */
 
-  _getSenses(): CharacterSpeedSenseContext {
-    const senseConfig = this.actor.system.attributes.senses;
+  _getCharacterSenses(): CharacterSpeedSenseContext {
+    const senses = super._getSenses();
 
-    const senses = Object.entries(CONFIG.DND5E.senses)
-      .reduce<CharacterSpeedSenseEntryContext[]>((acc, [key, label]) => {
-        const value = senseConfig[key];
-
-        if (!value || value === 0) {
-          return acc;
-        }
-
-        acc.push({
-          key,
-          label,
-          value: Math.round(+value).toString(),
-          units: senseConfig.units,
-        });
-
-        return acc;
-      }, [])
-      .toSorted((left, right) =>
-        left.key === 'darkvision'
-          ? -1
-          : right.key === 'darkvision'
-          ? 1
-          : +right.value - +left.value
-      );
-
-    const main: CharacterSpeedSenseEntryContext[] = [];
+    const main: ActorSpeedSenseEntryContext[] = [];
 
     if (senses.at(0)?.key === 'darkvision') {
       main.push(senses.shift()!);
@@ -770,45 +763,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
   }
 
-  _getMovementSpeeds(): CharacterSpeedSenseContext {
+  _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const movement = this.actor.system.attributes.movement;
 
-    const speeds = Object.entries(CONFIG.DND5E.movementTypes)
-      .reduce<CharacterSpeedSenseEntryContext[]>((acc, [key, label]) => {
-        const value = movement[key];
-
-        if (!value || value === 0) {
-          return acc;
-        }
-
-        acc.push({
-          key,
-          label,
-          value: Math.round(+value).toString(),
-          units: movement.units,
-        });
-
-        return acc;
-      }, [])
-      .toSorted((left, right) =>
-        left.key === 'walk'
-          ? -1
-          : right.key === 'walk'
-          ? 1
-          : +right.value - +left.value
-      );
-
-    if (speeds.length === 0) {
-      const defaultWalkSpeed =
-        this.document.system.details?.race?.system?.movement?.walk ?? null;
-
-      speeds.push({
-        key: 'walk',
-        label: CONFIG.DND5E.movementTypes.walk,
-        units: movement.units,
-        value: defaultWalkSpeed ?? '0',
-      });
-    }
+    const speeds = super._getMovementSpeeds(true);
 
     const main = speeds.slice(0, 2);
     const secondary = speeds.slice(2);
@@ -1158,7 +1116,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     // Handle Activity drop
     if (data.type === 'Activity') {
       const activity = await fromUuid(data.uuid);
-      if (activity) return this._onDropActivity(event, data);
+      if (activity) {
+        return this._onDropActivity(event, activity);
+      }
     }
 
     return super._onDrop(event);
@@ -1167,10 +1127,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   /** @inheritDoc */
   async _onDropActor(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    document: Actor5e
   ) {
-    if (!event.target.closest('.facility-occupants') || !data.uuid) {
-      return super._onDropActor(event, data);
+    if (!event.target.closest('.facility-occupants') || !document.uuid) {
+      return super._onDropActor(event, document);
     }
 
     const facilityId =
@@ -1193,7 +1153,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return;
     }
 
-    this._onDropActorAddToFacility(facility, prop, data.uuid);
+    this._onDropActorAddToFacility(facility, prop, document.uuid);
   }
 
   _onDropActorAddToFacility(facility: Item5e, prop: string, actorUuid: string) {
@@ -1291,49 +1251,63 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
    */
   async _onDropActivity(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    { data, uuid }: any
-  ) {
-    const activity = await fromUuid(uuid);
-    if (!event.target.closest('.favorites') || activity.actor !== this.actor)
-      return super._onDropActivity(event, { data, uuid });
-    const relativeUuid = `${activity.item.getRelativeUUID(
+    document: Activity5e
+  ): Promise<Actor5e | void> {
+    if (!event.target.closest('.favorites') || document.actor !== this.actor) {
+      return super._onDropActivity(event, document);
+    }
+
+    const relativeUuid = `${document.item.getRelativeUUID(
       this.actor
-    )}.Activity.${activity.id}`;
+    )}.Activity.${document.id}`;
+
     return this._onDropFavorite(event, { type: 'activity', id: relativeUuid });
   }
 
   async _onDropItem(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: any
+    document: Item5e
   ) {
-    const item = await Item.implementation.fromDropData(data);
-
-    if (!event.target.closest('.favorites') || item.parent !== this.actor) {
+    if (!event.target.closest('.favorites') || document.parent !== this.actor) {
       // Handle Feature Origin Transfer
       let targetOrigin = event.target.closest<HTMLElement>(
         '[data-tidy-section-key]'
       )?.dataset?.[CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN];
 
       let sourceItemOrigin = FoundryAdapter.getProperty(
-        item,
+        document,
         CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN
       );
 
-      if (sourceItemOrigin !== targetOrigin && item.parent === this.actor) {
+      if (sourceItemOrigin !== targetOrigin && document.parent === this.actor) {
         !isNil(targetOrigin)
-          ? await item.update({
+          ? await document.update({
               [CONSTANTS.SYSTEM_FLAG_PATH_ADVANCEMENT_ORIGIN]: targetOrigin,
             })
-          : await item.unsetFlag(
+          : await document.unsetFlag(
               'dnd5e',
               CONSTANTS.SYSTEM_FLAG_ADVANCEMENT_ORIGIN
             );
       }
 
-      return await super._onDropItem(event, item);
+      return await super._onDropItem(event, document);
     }
-    const uuid = item.getRelativeUUID(this.actor);
+    const uuid = document.getRelativeUUID(this.actor);
     return await this._onDropFavorite(event, { type: 'item', id: uuid });
+  }
+
+  deleteOccupant(facilityId: string, prop: string, index: number) {
+    const facility = this.actor.items.get(facilityId);
+
+    if (!facility || !prop || index === undefined) {
+      return;
+    }
+
+    let { value } = foundry.utils.getProperty(facility, prop);
+
+    value = value.filter((_: any, i: number) => i !== index);
+
+    return facility.update({ [`${prop}.value`]: value });
   }
 
   /* -------------------------------------------- */

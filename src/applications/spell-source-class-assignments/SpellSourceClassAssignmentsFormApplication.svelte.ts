@@ -39,12 +39,12 @@ export default class SpellSourceClassAssignmentsFormApplication extends Document
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application-shell',
       'sheet',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      CONSTANTS.SHEET_LAYOUT_QUADRONE,
       'tidy-spell-source-class-assignments-application',
       'scrollable-window-content',
     ],
+    id: 'tidy-spell-source-class-assignments-{id}',
     sheetConfig: false,
     window: {
       frame: true,
