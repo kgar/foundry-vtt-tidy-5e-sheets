@@ -5,8 +5,10 @@
   import FavoriteEffect from '../character-parts/favorites/FavoriteEffect.svelte';
   import FavoriteActivity from '../character-parts/favorites/FavoriteActivity.svelte';
   import FavoriteItem from '../character-parts/favorites/FavoriteItem.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = $derived(getCharacterSheetQuadroneContext());
+  const localize = FoundryAdapter.localize;
 </script>
 
 {#if context.favorites.length}
@@ -25,4 +27,12 @@
       {/if}
     {/each}
   </div>
+{:else}
+  <div class="favorites list">
+    <div class="favorites-empty">
+      {localize('TIDY5E.EmptyFavorites')}
+    </div>
+  </div>
 {/if}
+
+

@@ -98,6 +98,8 @@ Evocative character sheets that give players and DMs more control, with more way
 ![Character sheet](readme-assets/t5e-pc-hero.webp)
 ![Character sheet](readme-assets/t5e-pc-organize.webp)
 ![Character sheet](readme-assets/t5e-pc-edit-mode.webp)
+*Dragonborn Warlock Channels Magic by [Iqnatius Budi](https://b03di.artstation.com/), © Wizards of the Coast.*
+ 
 ![Character sheet](readme-assets/t5e-pc-theme.webp)
 
 ### What's unique about Tidy's Character sheets?
@@ -121,6 +123,7 @@ An alternate view of items that brings more functionality to the surface
 ![Item Sheets](readme-assets/t5e-items-featured.webp)
 ![Spell Sheets](readme-assets/t5e-item-spells.webp)
 ![Equipment Sheets](readme-assets/t5e-item-equipment.webp)
+*Thundrous Refrain image by community member [CRASH](https://github.com/crash1115), all rights reserved.*
 ![Equipment Sheets](readme-assets/t5e-item-advancements.webp)
 
 ### What's unique about Tidy's item sheets?
@@ -163,6 +166,7 @@ An alternate view of items that brings more functionality to the surface
 ## Group Sheets
 
 ![Group Sheet](readme-assets/t5e-group-hero.webp)
+*Adventuring Party commissioned work by [Sar Cousins](https://sarcousins.co.uk/), © Sar Cousins.
 
 ### What's unique about Tidy's Group sheets?
 

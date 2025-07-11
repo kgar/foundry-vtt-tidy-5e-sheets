@@ -115,12 +115,15 @@
   "TIDY5E.AddFavorite": "Add Favorite",
   "TIDY5E.Favorite": "Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
+  "TIDY5E.EmptyFavorites": "Right-click and Favorite anything from your sheet to quickly access it here.",
 
   "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
   "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
 
   "TIDY5E.Abilities": "Abilities",
   "TIDY5E.Ability.EditScore.label": "Edit Score",
+
+  "TIDY5E.EmptyTools": "No tool proficiencies.",
 
   "TIDY5E.Environment": "Environment",
   "TIDY5E.EnvironmentTooltip": "Environment: {environment}",
