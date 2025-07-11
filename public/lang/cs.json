@@ -1,8 +1,8 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Deník postavy Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Deník NP Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Deník položky Tidy 5e",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Deník dopravního prostředku Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Klasický deník postavy Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Klasický deník NP Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetClassic": "Klasický deník položky Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Klasický deník dopravního prostředku Tidy 5e",
     "TIDY5E.PlayerName": "Jméno hráče",
     "TIDY5E.EditSheetImageHint": "Levé tlačítko myši: Upravit obrázek",
     "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
@@ -83,7 +83,7 @@
     "TIDY5E.UserSettings.Menu": {
         "name": "Uživatelské nastavení",
         "hint": "Přizpůsob si svou vlastní verzi deníků Tidy 5e. Toto nastavení se uloží do prohlížeče a použije se na tvé deníky.",
-        "label": "Uživatelské nastavení",
+        "label": "Uživatelská nastavení",
         "title": "Uživatelské nastavení: {userName}"
     },
     "TIDY5E.UserSettings.TabPlayers": {
@@ -377,7 +377,7 @@
         "SheetMenu": {
             "name": "Nastavení motivu Tidy",
             "buttonLabel": "Nastavení motivů",
-            "hint": "Přizpůsob si barvy deníků Tidy 5e."
+            "hint": "Pouze klasické deníky Tidy: Přizpůsob si barvy deníků Tidy 5e."
         },
         "Sheet": {
             "title": "Nastavení motivu: {userName}",
@@ -391,7 +391,21 @@
             "importSuccess": "Motiv byl úspěšně importován!",
             "menuLabel": "Nabídka",
             "explanation": "Vyber barvu, kterou chceš použít pro každou volbu. Hodnota „#00000000“ znamená zákaz barvy."
-        }
+        },
+        "hint": "Přizpůsob si svůj deník a vytvoř si tak pohlcující zážitek, který doplní tvou hru.",
+        "AccentColor.title": "Akcentující barva",
+        "ActorHeaderBackground.title": "Pozadí záhlaví aktéra",
+        "ItemSidebarBackground.title": "Pozadí postranního panelu položky",
+        "PortraitShape": {
+            "title": "Tvar portrétu typu {typ}",
+            "option.round": "Kolo",
+            "option.transparent": "Transparentní",
+            "option.square": "Čtverec"
+        },
+        "RarityColors.title": "Vzácné barvy",
+        "SheetTheme.title": "Motiv deníku",
+        "SheetTheme.hint": "Pro dosažení nejlepších výsledků vyber barvu blízko prostředku palety barev.",
+        "SpellPreparationModeColors.title": "Barvy režimu přípravy kouzel"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Stupeň kouzla {number}",
     "TIDY5E.ApplyChanges": "Použít změny",
@@ -506,7 +520,10 @@
             "selectionDialogTitle": "Migrace: Kouzla povolání do zdrojového povolání",
             "sectionTitle": "Kouzla povolání do zdrojového povolání"
         },
-        "chatNotification": "K dispozici je migrace na nové Deníky Tidy 5e. Dostupné migrace nalezneš v Nastavení Deníků Tidy 5e."
+        "chatNotification": "K dispozici je migrace na nové deníky Tidy 5e. Dostupné migrace nalezneš v Nastavení deníků Tidy 5e.",
+        "Journal": {
+            "explanation1": "V rámci přepracování uživatelského rozhraní aplikace Deníků Tidy 5e byl deník upraven tak, aby mohl obsahovat libovolný počet záznamů. Z tohoto důvodu je nutné provést migraci ze staré struktury deníku do nové rozšiřitelné struktury. Stará data deníku nebudou v přepracované aplikaci Deníků Tidy 5e viditelná."
+        }
     },
     "TIDY5E.SpellSourceIdentifierLabelHint": "Aktér, který má toto kouzlo, nemá zdrojové povolání u tohoto kouzla uvedené.",
     "TIDY5E.Settings.DefaultSheetTabs": {
@@ -615,7 +632,7 @@
         "name": "Omezit akce na triky?"
     },
     "TIDY5E.Settings.SheetPreferences": {
-        "buttonLabel": "Nastavit Tidy jako základní deník",
+        "buttonLabel": "Tidy jako základní deník",
         "hint": "Pokud chceš nastavit deníky Tidy 5e jako výchozí pro jeden nebo více typů dokumentů, ale základní nabídka konfigurace výchozích deníků nefunguje dle očekávání, použij tuto nabídku pro výběr předvoleb.",
         "explanation": "Vyber všechny typy dokumentů, u kterých chceš, aby byly jako výchozí nastaveny deníky Tidy 5e.",
         "name": "Nastavit Tidy jako základní deník"
@@ -630,7 +647,7 @@
         "tabLabel": "Postava"
     },
     "TIDY5E.WorldSettings.Menu": {
-        "label": "Celkové nastavení",
+        "label": "Celková nastavení",
         "title": "Celkové nastavení (pouze PJ)",
         "hint": "Uprav nastavení na celkové úrovni a přizpůsob si tak zážitek z deníků Tidy 5e. Toto nastavení je následně uloženo v tomto světě Foundry a platí pro veškerý příslušný obsah deníků Tidy 5e.",
         "name": "Celkové nastavení"
@@ -648,12 +665,12 @@
     },
     "TIDY5E.Settings.About": {
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
-        "hint": "Informace o modulu Deníky Tidy 5e.",
+        "hint": "Informace o modulu Tidy 5e.",
         "buttonLabel": "O denících Tidy 5e",
         "dialogTitle": "O denících Tidy 5e",
         "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Lokalizuješ obsah webu? Deníky Tidy 5e by potřebovaly tvou pomoc! Přejdi na webové stránky Weblate a podívej se na průběh lokalizace do různých jazyků. Tento modul přijímá nové jazykové překlady a úpravy stávajících překladů.",
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
-        "FinancialSupportParagraph": "Pokud se ti Deníky Tidy 5e líbí a chceš je finančně podpořit, zde je několik možností, jak to udělat:",
+        "FinancialSupportParagraph": "Pokud se ti Tidy 5e líbí a chceš je finančně podpořit, zde je několik možností, jak to udělat:",
         "name": "O Tidy 5e",
         "BuyMeACoffeeLink": "{urlStart}Kup mi kafe{urlEnd}",
         "MaintainerParagraph": "Deníky Tidy 5e spravuje {urlStart}kgar{urlEnd}.",
@@ -688,7 +705,7 @@
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "hint": "Výchozí deník 5e umožňuje tabelovat klávesnicí z aktuálního vstupu bodů výdrže do aktuálního vstupu dočasných bodů výdrže. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta možnost „Používat podporu přístupnosti klávesnicí“.",
-        "name": "Použití výchozí BV deníku tabulátorem na klávesnici"
+        "name": "Tabelovat výchozí BV deníku pomocí tabulátoru na klávesnici?"
     },
     "TIDY5E.Settings.ActionList.Header": "Seznam akcí",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Různé",
@@ -730,7 +747,7 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Vyčerpání"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Deník kontejneru Tidy 5e",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Klasický deník kontejneru Tidy 5e",
     "TIDY5E.Reset": "Obnovení výchozího nastavení",
     "TIDY5E.Tidy5eSettings": "Nastavení deníků Tidy 5e",
     "TIDY5E.ExhaustionLevelTooltip": "Úroveň vyčerpání {level}",
@@ -738,7 +755,7 @@
     "TIDY5E.Group.HideMemberTabInfoPanel": "Skrýt informační panel",
     "TIDY5E.Group.EmptyMembersTabHint": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu.",
     "TIDY5E.Group.RemoveMemberFromGroup": "Odstranit člena ze skupiny",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Deník skupiny Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetClassic": "Klasický deník skupiny Tidy 5e",
     "TIDY5E.NoSpecialSenses": "Žádné zvláštní smysly",
     "TIDY5E.Group.NamePlaceholder": "Název skupiny",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
@@ -835,5 +852,41 @@
     "TIDY5E.HitDice.Abbreviation": "K.O.",
     "TIDY5E.HitDice.Current.Label": "Stávající kostky obnovy",
     "TIDY5E.HitDice.Max.Label": "Maximum kostek obnovy",
-    "TIDY5E.CharacterTraits.Title": "Rysy postavy"
+    "TIDY5E.CharacterTraits.Title": "Rysy postavy",
+    "TIDY5E.JournalEntry.NewTitle": "Záznam číslo {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Nastavit jako zdroj Inspirace",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Odstranit zdroj Inspirace",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Přidat k záložkám deníku",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Odstranit ze záložek deníku",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Zdroj Inspirace",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Motiv nastavení",
+        "label": "Nastavit motiv nastavení",
+        "hint": "Pouze nové deníky Tidy: Nastav výchozí motiv pro svůj herní svět. Tato nastavení se vztahují na všechny typy deníků."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Domácí tvorba",
+        "label": "Nastavit domácí tvorbu",
+        "hint": "Povolit a nastavit možnosti domácí tvorby poskytované tímto modulem."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Záložky deníků",
+        "label": "Nastavit záložky deníku",
+        "hint": "Pouze nové deníky Tidy: Nastav, které karty budou viditelné pro všechny deníky aktérů a položek."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "Uložená Inspirace",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Zapnout ukládání Inspirace",
+        "hint": "Povolením této možnosti bude moci uživatel nastavit odbornost jako zdroj Inspirace. Tuto možnost najdeš jako položku kontextového menu položek odborností s použitím."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Správa ukládání Inspirace (pouze PJ)",
+        "hint": "Zaškrtnutím této možnosti se omezuje správa nahromaděných Inspirací pouze pro PJ."
+    },
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Seskupení aktivit sesílání kouzla",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sekce dalších kouzel",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekce na položku",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Vzestupně",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Sestupně",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}."
 }
