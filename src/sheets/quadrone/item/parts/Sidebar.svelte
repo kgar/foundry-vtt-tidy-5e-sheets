@@ -9,7 +9,6 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Snippet } from 'svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import type { Item5e } from 'src/types/item.types';
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import type { ClassValue } from 'svelte/elements';
@@ -17,7 +16,6 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { settings } from 'src/settings/settings.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   let context = $derived(getContainerOrItemSheetContextQuadrone());
 
@@ -87,34 +85,6 @@
   let showCustomSections = $derived(
     SheetSections.itemSupportsCustomSections(context.item.type),
   );
-
-  // Combined
-
-  function openItemImagePicker(target: HTMLElement, item: Item5e) {
-    const rect = target.getBoundingClientRect();
-    const current = item.img;
-    return FoundryAdapter.browseFilePicker({
-      type: 'image',
-      current,
-      callback: (path: string) => {
-        item.update({ img: path });
-      },
-      top: rect.top + 40,
-      left: rect.left + 10,
-    });
-  }
-
-  function showItemArt(item: Item5e) {
-    FoundryAdapter.renderImagePopout({
-      src: item.img,
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.ItemImageTitle', {
-          subject: item.name,
-        }),
-      },
-      uuid: item.uuid,
-    });
-  }
 
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>([
@@ -227,18 +197,13 @@
         { disabled: facilityIsDisabled },
       ]}
     >
-      <a
-        onclick={(ev) =>
-          context.unlocked
-            ? openItemImagePicker(ev.currentTarget, context.item)
-            : showItemArt(context.item)}
-      >
-        <img
-          class="item-image"
-          src={context.item.img}
-          alt={context.item.name}
-        />
-      </a>
+      <img
+        class="item-image"
+        src={context.item.img}
+        alt={context.item.name}
+        data-action={context.unlocked ? 'editImage' : 'showIcon'}
+        data-edit="img"
+      />
       <ItemImageBorder />
     </div>
     {#if 'rarity' in context.system}

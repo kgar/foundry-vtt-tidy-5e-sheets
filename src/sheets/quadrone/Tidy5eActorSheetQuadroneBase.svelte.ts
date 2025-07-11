@@ -143,6 +143,19 @@ export function Tidy5eActorSheetQuadroneBase<
             document: this.document,
           }).render({ force: true });
         },
+        showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
+          const showTokenPortrait =
+            this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT];
+          const token = this.actor.isToken
+            ? this.actor.token
+            : this.actor.prototypeToken;
+          const img = showTokenPortrait ? token.texture.src : this.actor.img;
+          new foundry.applications.apps.ImagePopout({
+            src: img,
+            uuid: this.actor.uuid,
+            window: { title: this.actor.name },
+          }).render({ force: true });
+        },
         themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
           await new ThemeSettingsQuadroneApplication({
             document: this.document,

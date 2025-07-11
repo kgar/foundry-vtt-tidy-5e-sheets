@@ -21,7 +21,9 @@
   let { actor, useHpOverlay }: Props = $props();
 
   let context =
-    $derived(getSheetContext<ActorSheetContextV1 | ActorSheetClassicContextV2<any>>());
+    $derived(
+      getSheetContext<ActorSheetContextV1 | ActorSheetClassicContextV2<any>>(),
+    );
 
   const localize = FoundryAdapter.localize;
 
@@ -49,28 +51,6 @@
       left: rect.left + 10,
     });
     return fp.browse();
-  }
-
-  function onPortraitClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-  ) {
-    switch (event.button) {
-      case CONSTANTS.MOUSE_BUTTON_MAIN:
-        if (context.unlocked) {
-          openPortraitPicker(event);
-        } else {
-          FoundryAdapter.renderImagePopout({
-            src: context.actor.img,
-            window: {
-              title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-                subject: context.actor.name,
-              }),
-            },
-            uuid: context.actor.uuid,
-          });
-        }
-        break;
-    }
   }
 
   let portraitContainer: HTMLElement;
@@ -114,7 +94,6 @@
   bind:this={portraitContainer}
   class="portrait"
   class:round-portrait={context.useRoundedPortraitStyle}
-  onmousedown={onPortraitClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_CONTAINER}
 >
   <div
@@ -129,6 +108,8 @@
       alt={actor.name}
       title={actorImageTitle}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_IMAGE}
+      data-action={context.unlocked ? 'editImage' : 'showPortraitArtwork'}
+      data-edit={context.actor.isToken ? '' : 'img'}
     />
   </div>
 </div>

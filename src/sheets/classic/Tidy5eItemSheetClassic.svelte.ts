@@ -70,7 +70,19 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       width: 560,
       height: 600,
     },
-    actions: {},
+    actions: {
+      showIcon: async function (this: Tidy5eItemSheetClassic) {
+        const title =
+          this.item.system.identified === false
+            ? this.item.system.unidentified.name
+            : this.item.name;
+        new foundry.applications.apps.ImagePopout({
+          src: this.item.img,
+          uuid: this.item.uuid,
+          window: { title },
+        }).render({ force: true });
+      },
+    },
     dragDrop: [
       {
         dragSelector: `[data-tidy-always-draggable]`,

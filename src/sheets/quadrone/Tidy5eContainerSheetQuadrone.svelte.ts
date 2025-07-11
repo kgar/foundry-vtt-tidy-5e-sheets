@@ -122,6 +122,18 @@ export class Tidy5eContainerSheetQuadrone
           document: this.document,
         }).render({ force: true });
       },
+      // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
+      showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
+        const title =
+          this.item.system.identified === false
+            ? this.item.system.unidentified.name
+            : this.item.name;
+        new foundry.applications.apps.ImagePopout({
+          src: this.item.img,
+          uuid: this.item.uuid,
+          window: { title },
+        }).render({ force: true });
+      },
       themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
         await new ThemeSettingsQuadroneApplication({
           document: this.document,

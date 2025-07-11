@@ -87,6 +87,7 @@
 - [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings.
 - [ ] add a class to section headers when there are no search results `.search-no-results`
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
+- [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 
 
 ### Module Compatibility
@@ -266,3 +267,7 @@ Limited:
 - [x] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
   - [x] Item - Remove Spell Scroll, Dup, Delete
   - [x] Activity/Effect - Remove Dup and Delete
+- [x] Upgrade all sheets to us the sheet actions for editImage, showArtwork, and editIcon (items and containers)
+  - [x] Quadrone Actors and Items
+  - [x] Classic Actors
+  - [x] Classic Items
