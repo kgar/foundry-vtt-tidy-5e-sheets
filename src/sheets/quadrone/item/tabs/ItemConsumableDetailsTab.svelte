@@ -147,6 +147,8 @@
   {/if}
 </fieldset>
 
+
+{#if context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
 <fieldset>
   <legend>
     {localize('DND5E.CONSUMABLE.FIELDS.damage.label')}
@@ -173,8 +175,6 @@
       {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}
     </p>
   </div>
-
-  {#if context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
     <FieldDamage
       prefix="system.damage.base."
       source={context.source.damage.base}
@@ -182,8 +182,8 @@
       denominationOptions={context.denominationOptions}
       types={context.damageTypes}
     />
-  {/if}
 </fieldset>
+{/if}
 
 <FieldUses />
 

@@ -93,7 +93,8 @@
 
 ## hightouch To Do
 
-- [ ] Make sidebar tab strip a separate container so that only the tab content area scrolls.
+- [ ] Character Sidebar - Add empty state.
+- [x] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Character Sidebar - adjust gap and padding to taste
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
@@ -105,7 +106,7 @@
 - [x] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
 - [x] Dying red color for transparent portraits
 - [x] Tranparent portrait ring color lighten one step
-- [ ] Bypassed resistance pill styles using `.physical-bypass`
+- [x] Bypassed resistance pill styles using `.physical-bypass`
 - [ ] Wrapping text styles for character name in header
 - [ ] Item sheet sidebar background image (low)
 - [x] Inventory sticky footer

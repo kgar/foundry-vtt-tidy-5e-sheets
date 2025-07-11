@@ -103,9 +103,7 @@
       <span class="font-label-medium color-text-gold">{alignment}</span>
     </span>
     <div
-      class="divider-dot {context.speeds.secondary.length > 0
-        ? 'hide-under-600'
-        : 'hide-under-700'}"
+      class="divider-dot {context.speeds.secondary.length > 0 ? (context.enableXp ? 'hide-under-500' : 'hide-under-600') : (context.enableXp ? 'hide-under-600' : 'hide-under-700')}"
     ></div>
     {#each context.classes as entry, i}
       <span class="class {i > 0 ? (context.enableXp ? 'hide-under-500' : 'hide-under-600') : ''}">
