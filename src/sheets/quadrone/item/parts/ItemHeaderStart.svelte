@@ -6,9 +6,8 @@
   const context = $derived(getContainerSheetQuadroneContext());
 
   let sourceText = $derived(
-    context.editable
-      ? context.system.source?.label ||
-          game.i18n.localize('DND5E.SOURCE.FIELDS.source.label')
+    (context.unlocked && !context.system.source?.label)
+      ? game.i18n.localize('DND5E.SOURCE.FIELDS.source.label')
       : context.system.source?.label,
   );
 </script>
