@@ -2,6 +2,8 @@
 
 ### The Short List
 
+- [ ] Fix never-ending render issue with MLD, if able. The ideal may be to simply re-render manually when adjusting a setting, rather than hooking into the User changed event.
+- [ ] Add level breakdown tooltip to the level badge, else instructions for getting started.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -277,3 +279,7 @@ Limited:
   - [x] Quadrone Actors and Items
   - [x] Classic Actors
   - [x] Classic Items
+- [x] Add reference tooltips to skills and tools
+  - tool: `data-reference={dnd5e.documents.Trait.getBaseItemUUID(CONFIG.DND5E.tools[id]?.id)}`
+  - skill: `data-reference={CONFIG.DND5E.skills[id]?.reference}`
+  - make sure to derive it per skill/tool.

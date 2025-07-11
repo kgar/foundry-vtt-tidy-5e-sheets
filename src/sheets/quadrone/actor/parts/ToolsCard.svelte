@@ -11,6 +11,7 @@
   import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getModifierData } from 'src/utils/formatting';
+  import { isNil } from 'src/utils/data';
 
   const localize = FoundryAdapter.localize;
 
@@ -20,6 +21,18 @@
         CharacterSheetQuadroneContext | NpcSheetQuadroneContext
       >(),
     );
+
+  let references = $derived(
+    context.tools.reduce<Record<string, string>>((prev, tool) => {
+      const id = CONFIG.DND5E.tools[tool.key]?.id;
+
+      if (!isNil(id, '')) {
+        prev[tool.key] = dnd5e.documents.Trait.getBaseItemUUID(id);
+      }
+
+      return prev;
+    }, {}),
+  );
 </script>
 
 <!-- TODO: add tooltips to config buttons -->
@@ -45,7 +58,7 @@
       {#each context.tools as tool (tool.key)}
         {@const modTotal = getModifierData(tool.total)}
 
-        <li>
+        <li data-reference-tooltip={references[tool.key]}>
           <ProficiencyCycle
             actor={context.actor}
             aria-label={localize(tool.hover)}

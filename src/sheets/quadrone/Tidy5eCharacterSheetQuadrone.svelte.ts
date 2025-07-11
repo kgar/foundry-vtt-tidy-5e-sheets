@@ -532,7 +532,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
         if (type === 'tool') {
           reference = dnd5e.documents.Trait.getBaseItemUUID(
-            CONFIG.DND5E.tools[id]?.id
+            CONFIG.DND5E.tools[id]?.id ?? ''
           );
           ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
             indexOnly: true,
