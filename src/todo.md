@@ -2,9 +2,14 @@
 
 ### The Short List
 
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+  - [ ] header parts
+  - [ ] sidebar parts
+  - [ ] tab contents
+    - [ ] toolbar
+  - [ ] ...
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Update the readme
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 
 ### NPC Sheet
 
