@@ -237,7 +237,7 @@
     }
 
     blockquote {
-      border-color: var(--t5e-theme-color-lightest);
+      border-left: 0.1875rem solid var(--t5e-theme-color-lightest);
       padding-top: var(--t5e-size-1x);
       padding-bottom: var(--t5e-size-1x);
       padding-left: var(--t5e-size-3x);

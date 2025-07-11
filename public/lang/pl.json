@@ -14,8 +14,8 @@
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
         "Title": "Wybór zakładki dla {documentName}",
         "MenuOptionText": "Wybór zakładki",
-        "AvailableHeader": "Dostępne zakładki",
-        "SelectedHeader": "Wybrane zakładki",
+        "AvailableHeader": "Ukryte zakładki",
+        "SelectedHeader": "Widoczne zakładki",
         "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
         "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone."
     },
@@ -306,7 +306,10 @@
         "MigrateCompendia.SelectionDialogTitle": "Wybierz kompendia do migracji",
         "MigrateCompendia.CompendiumLabel": "Kompendium",
         "MigrateCompendia.Title": "Przeprowadź migrację kompendium",
-        "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje."
+        "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje.",
+        "Journal": {
+            "explanation1": "UI Overhaul w Tidy 5e Sheets wprowadził możliwość tworzenia dowolnej ilości wpisów w Dzienniku. Aby dostosować się do tej zmiany, konieczna jest migracja ze starej struktury Dziennika do nowej rozszerzalnej struktury Dziennika. Dane ze starego Dziennika nie będą widoczne w odświeżonej wersji Tidy 5e Sheets."
+        }
     },
     "TIDY5E.ThemeSettings": {
         "Sheet": {
@@ -323,10 +326,24 @@
             "explanation": "Wybierz kolor, którego chcesz użyć dla każdej opcji. Wartość \"#00000000\" oznacza wyłączenie koloru."
         },
         "SheetMenu": {
-            "hint": "Dostosuj kolory Tidy 5e Sheets.",
+            "hint": "Tylko klasyczne karty Tidy: Dostosuj kolory Tidy 5e Sheets.",
             "name": "Ustawienia motywu Tidy",
             "buttonLabel": "Ustawienia motywu"
-        }
+        },
+        "hint": "Spersonalizuj swoją kartę, aby stworzyć immersyjne doświadczenie, dopasowane do twojej gry.",
+        "AccentColor.title": "Kolor akcentu",
+        "ActorHeaderBackground.title": "Tło nagłówka postaci",
+        "ItemSidebarBackground.title": "Tło bocznego panelu przedmiotu",
+        "PortraitShape": {
+            "title": "Kształt portretu {type}",
+            "option.round": "Okrągły",
+            "option.transparent": "Przezroczysty",
+            "option.square": "Kwadratowy"
+        },
+        "RarityColors.title": "Kolory rzadkości",
+        "SheetTheme.title": "Motyw karty",
+        "SheetTheme.hint": "Najlepsze rezultaty uzyskasz, wybierając kolor znajdujący się w pobliżu środka palety barw.",
+        "SpellPreparationModeColors.title": "Kolory stanu przygotowania zaklęć"
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
         "name": "Wrodzone - akcent"
@@ -512,8 +529,8 @@
         "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawiatury z jednego atrybutu do następnego, ukrywając elementy sterujące przed kolejności tabulacji. Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
     "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "hint": "Umieszcza atrybuty poniżej zasobów postaci.",
-        "name": "Przenieś atrybuty poniżej zasobów"
+        "hint": "Umieszcza atrybuty po prawej stronie listy umiejętności, nad większością innych elementów interfejsu (np. Ulubione, Zdolności NPC).",
+        "name": "Przenieś atrybuty na prawo od umiejętności"
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "hint": "Pokazuje zakładkę księgi czarów dla NPC-ów. Wyłącz, aby przenieść sekcję księgi czarów do zakładki Atrybuty.",
@@ -793,13 +810,13 @@
     "TIDY5E.Activities.Cast.SourceHintText": "Z {itemName}",
     "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Posiada{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
     "TIDY5E.UserSettings.TabActivities": {
-        "tabLabel": "Działania"
+        "tabLabel": "Aktywności"
     },
     "TIDY5E.Settings.InlineActivitiesPosition": {
         "top": "Na górze",
         "bottom": "Na dole",
-        "name": "Pozycja wiersza działań",
-        "hint": "Podczas rozwijania elementu wyświetlane są działania tego elementu. Użyj tego ustawienia, aby określić, czy działania są umieszczane na górze, przed opisem elementu, czy na dole, pod opisem elementu, przyciskami i tagami."
+        "name": "Pozycja wiersza aktywności",
+        "hint": "Podczas rozwijania elementu wyświetlane są aktywności tego elementu. Użyj tego ustawienia, aby określić, czy aktywności są umieszczane na górze, przed opisem elementu, czy na dole, pod opisem elementu, przyciskami i tagami."
     },
     "TIDY5E.ContextMenuActionShowLimitedUses": "Pokaż ograniczone użycia",
     "TIDY5E.ContextMenuActionPinToAttributes": "Przypnij do atrybutów",
@@ -825,5 +842,49 @@
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Karta Grupy Tidy 5e",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Karta postaci Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Rzut na {ordinal}",
-    "TIDY5E.AddSpecific": "Dodaj {name}"
+    "TIDY5E.AddSpecific": "Dodaj {name}",
+    "TIDY5E.StatblockTabName": "Blok statystyk",
+    "TIDY5E.JournalEntry.NewTitle": "Wpis dziennika {number}",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Ustaw jako źródło inspiracji",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Usuń źródło inspiracji",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Źródło inspiracji",
+    "TIDY5E.Ability.EditScore.label": "Edytuj wartość",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Ustawienia motywu",
+        "label": "Konfiguruj ustawienia motywu",
+        "hint": "Tylko nowe karty Tidy: Ustaw domyślne ustawienia motywu dla swojego świata gry. Stosowane są do wszystkich typów kart."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Zasady domowe",
+        "label": "Konfigurowanie zasad domowych",
+        "hint": "Włącz i skonfiguruj opcje zasad domowych udostępnianych przez ten moduł."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Zakładki karty",
+        "label": "Konfigurowanie zakładek karty",
+        "hint": "Tylko Nowe Karty Tidy: skonfiguruj, które zakładki będą widoczne dla wszystkich kart aktorów i przedmiotów."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "Gromadzona inspiracja",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Włącz gromadzoną inspirację",
+        "hint": "Włącz tę opcję, aby umożliwić użytkownikowi ustawienie zdolności jako źródła inspiracji. Szukaj opcji w menu kontekstowym zdolności z użyciami."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Zarządzanie gromadzoną inspiracją - tylko MG",
+        "hint": "Włącz tę opcję, aby ograniczyć zarządzanie gromadzoną inspiracją tylko do GM."
+    },
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Śledzenie komórek zaklęć",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Witamy w Tidy 5e Sheets! Aby rozpocząć, musisz zmienić {sheetLinkStart}kartę{sheetLinkEnd} (lub {allSheetsLinkStart}wszystkie swoje karty{allSheetsLinkEnd}!), na wersję Tidy. Dowiedz się więcej o tym module i jego możliwościach na {wikiLinkStart}oficjalnej wiki{wikiLinkEnd}.",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Rosnąco",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Malejąco",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Pochodzenie zdolności",
+    "TIDY5E.HitDice.Abbreviation": "KW",
+    "TIDY5E.HitDice.Current.Label": "Aktualne kości wytrzymałości",
+    "TIDY5E.HitDice.Max.Label": "Max kości wytrzymałości",
+    "TIDY5E.CharacterTraits.Title": "Atrybuty postaci",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sekcja Dodatkowe czary",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekcja Na przedmiot",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Dodaj do zakładki karty",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Usuń z zakładki karty",
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z aktywności Rzucanie"
 }
