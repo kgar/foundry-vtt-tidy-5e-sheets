@@ -829,7 +829,7 @@
     "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "அகர வரிசைப்படி வரிசைப்படுத்துதல்",
     "TIDY5E.SortMenu.OptionPriority": "முன்னுரிமை",
     "TIDY5E.Activities.Cast.SourceHintText": "{itemName} இலிருந்து",
-    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart} ஓல்ட்ச் {holdsElementEnd} {numberElementStart} {number} {numberElementEnd} {{{{unitsElementStart} {units}",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart} ஓல்ட்ச் {holdsElementEnd} {numberElementStart} {number} {numberElementEnd} {unitsElementStart} {units} {unitsElementEnd}",
     "TIDY5E.BrokenLink": "உடைந்த இணைப்பு",
     "TIDY5E.Visible": "தெரியும்",
     "TIDY5E.Hidden": "மறைக்கப்பட்ட",
