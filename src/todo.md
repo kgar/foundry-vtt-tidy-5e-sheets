@@ -93,7 +93,8 @@
 
 ## hightouch To Do
 
-- [ ] Make sidebar tab strip a separate container so that only the tab content area scrolls.
+- [ ] Character Sidebar - Add empty state.
+- [x] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Character Sidebar - adjust gap and padding to taste
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
