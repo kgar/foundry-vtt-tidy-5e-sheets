@@ -106,6 +106,8 @@ Evocative character sheets that give players and DMs more control, with more way
 | "Sheet" tab to hold everything a character uses grouped by action | Journal Tab |
 | Easy module integration | Extensible inspiration and exhaustion |
 | Responsive design | Rarity colors |
+| Fully expandable containers | Easy to expand items |
+| Quick edit with middle click, open with double-click | Expanded context menus |
 
 
 
@@ -113,17 +115,9 @@ Evocative character sheets that give players and DMs more control, with more way
 
 An alternate view of items that brings more functionality to the surface
 
-![Container and Spell Sheets](readme-assets/quadrone-container-and-spell-sheets.png)
-
-![Equipment Sheet](readme-assets/quadrone-equipment-sheet.png)
-
-![Loot Sheet](readme-assets/quadrone-loot-sheet.png)
-
-![Spell Sheets](readme-assets/quadrone-spell-sheets.png)
-
-![Tool and Consumable Sheets](readme-assets/quadrone-tool-and-consumable-sheets.png)
-
-![Weapon Sheets](readme-assets/quadrone-weapon-sheets.png)
+![Item Sheets](readme-assets/t5e-item-6up.webp)
+![Spell Sheets](readme-assets/t5e-item-spells.webp)
+![Equipment Sheets](readme-assets/t5e-item-equipment.webp)
 
 ![Class, Subclass, Background, and Species Sheets](readme-assets/quadrone-class-subclass-background-species-sheets.png)
 

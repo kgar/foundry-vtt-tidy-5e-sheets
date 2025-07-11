@@ -285,8 +285,8 @@
       pointer-events: none;
     }
 
-    &.spell-preparation.prepared {
-      --t5e-item-color: var(--t5e-color-gold);
+    &.spell-preparation:not(.mode-prepared) {
+      --filigree-border-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 0.88) h);
     }
 
   }
