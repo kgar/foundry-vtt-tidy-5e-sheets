@@ -17,6 +17,7 @@
   class="inspiration-badge"
   class:single={!inspirationSource}
   class:stacked={!!inspirationSource}
+  data-tidy-sheet-part="inspiration-tracker-container"
 >
   {#if inspirationSource}
     {#if inspirationSource.max > 0}
@@ -25,6 +26,7 @@
         type="button"
         class="inspiration button button-borderless button-icon-only stacked"
         class:inspired={inspirationSource.value > 0}
+        data-tidy-sheet-part="banked-inspiration-value"
       >
         <span class="inspiration-level">
           <span class="level font-data-large color-text-inverse">
@@ -32,13 +34,17 @@
           </span>
         </span>
       </button>
-      <div class="inspiration-controls">
+      <div
+        class="inspiration-controls"
+        data-tidy-sheet-part="banked-inspiration-controls-container"
+      >
         <button
           type="button"
           class="button button-borderless button-icon-only"
           aria-label="Remove Inspiration"
           disabled={inspirationSource.value === 0}
           onclick={() => inspirationSource.change(-1)}
+          data-tidy-sheet-part="banked-inspiration-decrementer"
         >
           <i class="fas fa-hexagon-minus"></i>
         </button>
@@ -48,6 +54,7 @@
           aria-label="Add Inspiration"
           disabled={inspirationSource.value === inspirationSource.max}
           onclick={() => inspirationSource.change(1)}
+          data-tidy-sheet-part="banked-inspiration-incrementer"
         >
           <i class="fas fa-hexagon-plus"></i>
         </button>
@@ -66,6 +73,7 @@
         context.actor.update({
           ['system.attributes.inspiration']: !inspired,
         })}
+      data-tidy-sheet-part="inspiration-tracker-toggle"
     >
     </button>
   {/if}

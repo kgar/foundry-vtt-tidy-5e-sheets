@@ -2,13 +2,13 @@
 
 ### The Short List
 
-- [ ] Add level breakdown tooltip to the level badge, else instructions for getting started.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
   - [ ] tab contents
     - [ ] toolbar
   - [ ] ...
+- [ ] Decide: do I continue to make constants for the sheet parts?
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Update the readme
 
@@ -283,3 +283,4 @@ Limited:
   - skill: `data-reference={CONFIG.DND5E.skills[id]?.reference}`
   - make sure to derive it per skill/tool.
 - [x] Fix never-ending render issue with MLD, if able. The ideal may be to simply re-render manually when adjusting a setting, rather than hooking into the User changed event.
+- [x] ~~Add level breakdown tooltip to the level badge, else instructions for getting started.~~ Nah. It's in the subtitle AND the Character tab. 
