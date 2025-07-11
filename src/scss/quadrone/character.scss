@@ -142,6 +142,17 @@
         padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-4x);
         overflow-y: auto;
         transition: margin var(--t5e-transition-default);
+        display: flex;
+        flex-direction: column;
+
+        .sidebar-header {
+          flex: 0;
+        }
+
+        .sidebar-tab-contents {
+          overflow-y: auto;
+          flex: 1;
+        }
 
         &.expanded {
           margin-inline-start: 0;

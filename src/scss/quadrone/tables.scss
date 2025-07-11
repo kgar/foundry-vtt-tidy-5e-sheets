@@ -160,8 +160,8 @@
     border-width: 0 0 0.0625rem 0;
     border-style: solid;
     border-image: var(--t5e-table-row-border-image);
-
     position: relative;
+    align-items: stretch;
 
     .highlight {
       position: absolute;
@@ -180,28 +180,6 @@
 
     >* {
       z-index: 0;
-    }
-
-    // TODO: Finish other unidentified styles. Classes aren't applied yet.
-    &.unidentified {
-      color: var(--t5e-color-text-lighter);
-      background: transparent;
-
-      .tidy-table-row-use-button {
-        outline-color: var(--t5e-color-palette-grey-40);
-      }
-
-      .item-image {
-        filter: grayscale(100%) opacity(75%);
-      }
-
-      .item-name .cell-name {
-        font-style: italic;
-      }
-
-      &::before {
-        content: none;
-      }
     }
 
     &.advancement-item {
@@ -230,6 +208,7 @@
       .tidy-table-row-use-button {
         --t5e-use-button-border-color: var(--t5e-item-color);
         outline: 0.125rem solid var(--t5e-use-button-border-color);
+        outline-offset: -0.0625rem;
 
         i {
           color: oklch(from var(--t5e-item-color) calc(l * 0.85) calc(c * 1.2) h);
@@ -256,11 +235,40 @@
 
     .item-state-indicator {
       display: flex;
+      align-self: center;
       align-items: center;
       justify-content: center;
       height: 100%;
       min-height: var(--t5e-icon-size-7x);
       min-width: var(--t5e-icon-size-6x);
+    }
+
+
+    // TODO: Finish other unidentified styles. Classes aren't applied yet.
+    // Make sure this is last.
+    &.unidentified {
+      color: var(--t5e-color-text-lighter);
+      background: transparent;
+
+      div.highlight {
+        background: none;
+      }
+
+      .tidy-table-row-use-button {
+        outline-color: var(--t5e-color-palette-grey-40);
+      }
+
+      .item-image {
+        filter: grayscale(100%) opacity(75%);
+      }
+
+      .item-name .cell-name {
+        font-style: italic;
+      }
+
+      &::before {
+        content: none;
+      }
     }
   }
 
@@ -772,6 +780,7 @@
 
       .tidy-table-row-use-button {
         outline: 0.125rem solid var(--t5e-use-button-border-color);
+        outline-offset: -0.0625rem;
       }
 
       .highlight {
