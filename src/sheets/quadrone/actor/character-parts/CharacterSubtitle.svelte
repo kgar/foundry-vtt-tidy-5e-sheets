@@ -29,10 +29,6 @@
       return context.system.details.race;
     }
   });
-
-  let checkWidths = $derived(() => {
-    console.log(window.innerWidth);
-  });
 </script>
 
 {#snippet speedSenseSummary(

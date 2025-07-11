@@ -52,7 +52,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   });
 
   themeConfigOptions(): ThemeSettingsConfigurationOptions {
-    console.warn('theme settings options are used!');
     return {
       doc: this.document,
       idOverride: this.id,
