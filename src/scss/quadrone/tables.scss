@@ -184,6 +184,10 @@
 
     &.advancement-item {
       min-height: 2.25rem;
+
+      .tidy-table-row-use-button img {
+        background: transparent;
+      }
     }
 
     &.spell:not(.equipped) {

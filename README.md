@@ -13,11 +13,14 @@ Alternate [D&D 5e](https://github.com/foundryvtt/dnd5e) sheet layouts for [Found
 
 Completely rewritten from the ground up, based on the original [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992), and the excellent foundation laid by the 5e system module.
 
-- [Foundry Package](<https://foundryvtt.com/packages/tidy5e-sheet/>)
-- [Tidy 5e Sheets API](https://kgar.github.io/foundry-vtt-tidy-5e-sheets/)
-
-
-⚙️🤖 Our quadrones have gone rogue developing a [new UI overhaul](<#tidy-5e-sheets-ui-overhaul-beta>)! *(currently in beta)* ⚙️
+| Helpful links | In this document |
+| ------------- | ----------- |
+| [Foundry Package](<https://foundryvtt.com/packages/tidy5e-sheet/>) | [Installation guide](https://github.com/kgar/foundry-vtt-tidy-5e-sheets#installation) |
+| [Tidy 5e Sheets API](https://kgar.github.io/foundry-vtt-tidy-5e-sheets/) | [Sheet overview](https://github.com/kgar/foundry-vtt-tidy-5e-sheets#tidy-5e-sheets-ui) |
+| [Tidy 5e Wiki](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki) | [Reporting issues](https://github.com/kgar/foundry-vtt-tidy-5e-sheets#reporting-issues)|
+| | [API-Extensible Sheets](https://github.com/kgar/foundry-vtt-tidy-5e-sheets#api-extensible-sheets) |
+| | [Module Compatibility](https://github.com/kgar/foundry-vtt-tidy-5e-sheets#module-compatibility) |
+| | [Tidy 5e Sheets Manifesto](https://github.com/kgar/foundry-vtt-tidy-5e-sheets#tidy-5e-sheets-manifesto) |
 
 
 ## Get Involved
@@ -58,7 +61,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 2. Change individual sheets to Tidy using the **three-dot Toggle Controls menu** at the top of each sheet and choosing **Configure sheet.**
 3. Globally change all sheets from the **Game Settings** sidebar tab, choosing **Configure Settings**. Here you can change **Core** → **Configure Default Sheets**, or **Tidy 5e Sheets** → **Set Tidy as Default Sheet**.
 
-![TODO: Configuration image here]()
+![Set up Tidy Sheets](readme-assets/t5e-pick-sheet.webp)
 
 ## Tidy 5e Sheets UI
 
@@ -102,12 +105,12 @@ Evocative character sheets that give players and DMs more control, with more way
 | Core Functionality | New Features |
 | --- | --- |
 | Custom sheet themes, colors, and images | Custom sections |
-| Sidebar with at-a-glance Skills and Favorites | Hidden Tabs |
-| "Sheet" tab to hold everything a character uses grouped by action | Journal Tab |
+| Sidebar for quick access to Favorites and Skills | Hidden Tabs |
+| Sheet tab for all a character's most used items, grouped by action | Journal Tab |
 | Easy module integration | Extensible inspiration and exhaustion |
-| Responsive design | Rarity colors |
 | Fully expandable containers | Easy to expand items |
 | Quick edit with middle click, open with double-click | Expanded context menus |
+| Responsive design | Rarity colors |
 
 
 
@@ -115,36 +118,33 @@ Evocative character sheets that give players and DMs more control, with more way
 
 An alternate view of items that brings more functionality to the surface
 
-![Item Sheets](readme-assets/t5e-item-6up.webp)
+![Item Sheets](readme-assets/t5e-items-featured.webp)
 ![Spell Sheets](readme-assets/t5e-item-spells.webp)
 ![Equipment Sheets](readme-assets/t5e-item-equipment.webp)
-
-![Class, Subclass, Background, and Species Sheets](readme-assets/quadrone-class-subclass-background-species-sheets.png)
-
-![Facility, Feature, and Tattoo Sheets](readme-assets/quadrone-facility-feat-tattoo-sheets.png)
-
-![image](https://github.com/user-attachments/assets/68b553b2-0113-40ff-89f0-83e13f457f95)
+![Equipment Sheets](readme-assets/t5e-item-advancements.webp)
 
 ### What's unique about Tidy's item sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
-| All reference data on one page | Prominent rarity/spellcasting mode theming |
-| Equip, attune, identify from the sidebar | Accessible form styles |
-| Container contents as powerful as Character inventory |  |
-| Fully themed descriptions including statblocks |  |
-| Quick DM edit access |  |
+| All reference data on one page | Additional item fields |
+| All editable data on one page | Section selection |
+| Equip, attune, identify from the sidebar | Prominent rarity/spellcasting mode theming |
+| Container contents as powerful as Character inventory | Player identification optionally hidden |
+| Fully themed descriptions including statblocks | Feat origin source selection |
 
 
 ## NPC Sheets
 
-![NPC Sheet](readme-assets/npc-sheet.png)
+![NPC Sheets](readme-assets/t5e-npc-hero.webp)
 
 ### TODO: What's unique about Tidy's NPC sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
-|   |   |
+| Sheets closely aligned with character sheet functionality | Tab selection |
+| Detailed tables with drag and drop, sorting, and filtering | Custom sections |
+| Show spells with other NPC features | Quick access to roll HP |
 
 ## Vehicle Sheets
 
@@ -156,18 +156,19 @@ An alternate view of items that brings more functionality to the surface
 
 | Core Functionality | Additional Features |
 | --- | --- |
-|   |   |
+| Sheets closely aligned with character sheet functionality | Combined attributes and features |
+| Detailed tables with drag and drop, sorting, and filtering |  |
 
 ## Group Sheets
 
-![TODO: Group Sheet image here](???)
+![Group Sheet](readme-assets/t5e-group-hero.webp)
 
-### TODO: What's unique about Tidy's NPC sheets?
 ### What's unique about Tidy's Group sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
-|   |   |
+| At a glance character stats and skills | Party languages and skills lists |
+| Inventory sorting, filtering, and customization matching other sheets | Hide and reorder sections |
 
 
 
