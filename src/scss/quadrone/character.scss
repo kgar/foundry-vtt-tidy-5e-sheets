@@ -206,8 +206,17 @@
       flex-direction: row-reverse;
       flex-wrap: nowrap;
       justify-content: flex-end;
+
+      >.flexcol {
+        min-width: 0;
+      }
     }
 
+    .character-context-row {
+      >.flexcol {
+        min-width: 0;
+      }
+    }
 
     .button-config {
       color: var(--t5e-color-icon-button);
@@ -216,9 +225,6 @@
         background-color: transparent;
       }
     }
-
-
-
 
     .character-details {
       &-name-row {
@@ -638,7 +644,6 @@
           .button-config {
             border-radius: 0;
             background-color: var(--t5e-color-hp-dark);
-            box-shadow: -0.125rem 0 0 var(--t5e-color-gold);
 
             &:hover {
               background-color: var(--t5e-color-hp-dark);
@@ -887,6 +892,8 @@
       margin: 0 0 0 var(--header-padding);
       text-shadow: var(--header-shadow);
       line-height: 100%;
+      text-wrap: nowrap;
+      overflow: hidden;
     }
 
     input[type="text"]:not(:disabled):not(.uninput) {
@@ -992,8 +999,10 @@
 
     .sheet-header-actions {
       margin-right: var(--t5e-size-3x);
+      margin-left: var(--t5e-size-2x);
       align-items: center;
       gap: var(--t5e-size-2x);
+      flex: 0 0 fit-content;
 
       .button-gold {
         border: 0.125rem solid var(--t5e-color-palette-gold-62);

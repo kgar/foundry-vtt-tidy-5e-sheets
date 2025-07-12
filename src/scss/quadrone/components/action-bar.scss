@@ -22,6 +22,16 @@
         font-size: var(--font-size-13);
         color: var(--button-text, var(--t5e-color-text-default));
       }
+
+      &.exclude,
+      &.disabled {
+        &::before {
+          --icon-fill: var(--t5e-color-text-lightest);
+          font-style: italic;
+          color: var(--t5e-color-text-lightest);
+          box-shadow: none;
+        }
+      }
     }
   }
 

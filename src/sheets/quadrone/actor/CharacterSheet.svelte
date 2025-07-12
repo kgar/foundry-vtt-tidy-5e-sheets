@@ -68,7 +68,7 @@
 
 <header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
-    <div class="flexcol">
+    <div class="character-details-container flexcol">
       <div
         class="character-context-row flexrow {context.enableXp
           ? 'show-xp'
