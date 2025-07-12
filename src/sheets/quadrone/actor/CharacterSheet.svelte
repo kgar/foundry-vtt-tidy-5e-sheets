@@ -527,7 +527,10 @@
 </header>
 <div class="sheet-body">
   <div class="main-content">
-    <div class={['sidebar flexcol', { expanded: sidebarExpanded }]}>
+    <div
+      class={['sidebar flexcol', { expanded: sidebarExpanded }]}
+      data-tidy-sheet-part="sidebar-container"
+    >
       <CharacterSidebar />
     </div>
 

@@ -36,6 +36,7 @@
     FoundryAdapter.doActionOnMiddleClick(event, () =>
       FoundryAdapter.openSpellSlotsConfig(context.actor),
     )}
+  data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
     {favorite}
