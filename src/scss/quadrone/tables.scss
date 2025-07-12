@@ -184,9 +184,15 @@
 
     &.advancement-item {
       min-height: 2.25rem;
+      --icon-fill: var(--t5e-color-icon-default);
 
       .tidy-table-row-use-button img {
         background: transparent;
+
+
+        &[src$=".svg"] {
+          filter: invert(48%) sepia(11%) saturate(1211%) hue-rotate(9deg) brightness(90%) contrast(87%);
+        }
       }
     }
 
@@ -966,6 +972,14 @@
         background: linear-gradient(to right,
             var(--t5e-theme-color-darkest) -25%,
             transparent 25%);
+      }
+
+      &.advancement-item {
+        .tidy-table-row-use-button img {
+          &[src$='.svg'] {
+            filter: invert(78%) sepia(21%) saturate(544%) hue-rotate(2deg) brightness(88%) contrast(83%);
+          }
+        }
       }
     }
 
