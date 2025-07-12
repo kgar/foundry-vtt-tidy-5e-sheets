@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Container - drag out of custom section is not working
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -290,3 +289,4 @@ Limited:
 - [x] Dropping an item from a compendium window doesn't work every time. The drop behavior is resolving to "none" inexplicably.
 - [x] Can we just do what module\applications\mixins\drag-drop-mixin.mjs is doing for `_dropBehavior()`. Basically, just do it there, only?
 - [x] Sheet tab - drop in custom section is not working
+- [x] Container - drag out of custom section is not working

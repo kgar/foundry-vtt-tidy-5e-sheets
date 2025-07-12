@@ -612,8 +612,12 @@ export class Tidy5eContainerSheetQuadrone
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     item: Item5e
   ) {
-    const dropTarget = event.target.closest<HTMLElement>('[data-item-id]');
+    const eventTarget = event.target;
+
+    const dropTarget = eventTarget.closest<HTMLElement>('[data-item-id]');
+
     if (!dropTarget) return;
+
     const contents = await this.item.system.contents;
     const target = contents.get(dropTarget.dataset.itemId);
 
@@ -630,6 +634,11 @@ export class Tidy5eContainerSheetQuadrone
       }
     }
 
+    const sectionUpdate = FoundryAdapter.getSectionUpdateForDropTarget(
+      eventTarget,
+      item
+    );
+
     // Perform the sort
     const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(item, {
       target,
@@ -638,6 +647,9 @@ export class Tidy5eContainerSheetQuadrone
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target.id;
+      if (update._id === item.id) {
+        foundry.utils.mergeObject(update, sectionUpdate);
+      }
       return update;
     });
 

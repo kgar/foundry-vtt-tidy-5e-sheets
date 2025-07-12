@@ -1241,33 +1241,13 @@ export const FoundryAdapter = {
   onSortItemForActor(actor: Actor5e, event: Event, itemData: any): any {
     const eventTarget = event.target as HTMLElement | null;
 
-    // Handle Tidy Custom Section Transfer
-    const sectionProp = eventTarget?.closest('.tidy-tab.actions')
-      ? 'actionSection'
-      : 'section';
-
-    const sourceSection = foundry.utils.getProperty(
-      itemData,
-      TidyFlags[sectionProp].prop
-    );
-
-    const targetSection = (event.target as HTMLElement | null)
-      ?.closest('[data-tidy-section-key][data-custom-section="true"]')
-      ?.getAttribute('data-tidy-section-key');
-
-    const isMovedToNewSection =
-      !isNil(targetSection?.trim(), '') && sourceSection !== targetSection;
-
-    const isMovedToDefaultSection =
-      !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
+    if (!eventTarget) {
+      return;
+    }
 
     // Get the drag source and drop target
     const items = actor.items;
     const source = items.get(itemData._id);
-
-    if (!eventTarget) {
-      return;
-    }
 
     const dropTarget = eventTarget.closest<HTMLElement>('[data-item-id]');
     if (!dropTarget) return;
@@ -1294,22 +1274,54 @@ export const FoundryAdapter = {
         siblings,
       }
     );
+
+    const sectionUpdate = FoundryAdapter.getSectionUpdateForDropTarget(
+      eventTarget,
+      itemData
+    );
+
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target._id;
       if (update._id === source.id) {
-        // apply section change, if any
-        if (isMovedToNewSection) {
-          update[TidyFlags[sectionProp].prop] = targetSection;
-        } else if (isMovedToDefaultSection) {
-          update[TidyFlags[sectionProp].unsetProp] = null;
-        }
+        foundry.utils.mergeObject(update, sectionUpdate);
       }
       return update;
     });
 
     // Perform the update
     return actor.updateEmbeddedDocuments('Item', updateData);
+  },
+  getSectionUpdateForDropTarget(eventTarget: HTMLElement, itemData: any) {
+    // Handle Tidy Custom Section Transfer
+    const sectionProp = eventTarget.closest('.tidy-tab.actions')
+      ? 'actionSection'
+      : 'section';
+
+    const sourceSection = foundry.utils.getProperty(
+      itemData,
+      TidyFlags[sectionProp].prop
+    );
+
+    const targetSection = eventTarget
+      .closest('[data-tidy-section-key][data-custom-section="true"]')
+      ?.getAttribute('data-tidy-section-key');
+
+    const isMovedToNewSection =
+      !isNil(targetSection?.trim(), '') && sourceSection !== targetSection;
+
+    const isMovedToDefaultSection =
+      !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
+
+    let sectionUpdate: Record<string, any> = {};
+
+    if (isMovedToNewSection) {
+      sectionUpdate[TidyFlags[sectionProp].prop] = targetSection;
+    } else if (isMovedToDefaultSection) {
+      sectionUpdate[TidyFlags[sectionProp].unsetProp] = null;
+    }
+
+    return sectionUpdate;
   },
   formatCr(cr: unknown) {
     return dnd5e.utils.formatCR(cr);
