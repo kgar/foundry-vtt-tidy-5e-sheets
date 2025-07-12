@@ -101,24 +101,15 @@
 
 ## hightouch To Do
 
-- [x] Dark mode advancement icons are black instead of white
-- [x] Character Sidebar - Add empty state.
-- [x] Make sidebar tab strip a separate container so that only the tab content area scrolls.
-- [x] Character Sidebar - adjust gap and padding to taste
+- [ ] Fix Bastion Item Sheet, Crafting UI
+- [ ] Test Korean language in Mac electron app
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
-- [x] Figure out how to fix portrait drop shadows due to the header overflow being hidden.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
-- [x] Overridden / disabled special traits that are checked look like they're enabled at a glance. Should we grayscale or otherwise diminish the enabled-ness of checkboxes when disabled and checked?
-- [x] Dying red color for transparent portraits
-- [x] Tranparent portrait ring color lighten one step
-- [x] Bypassed resistance pill styles using `.physical-bypass`
-- [x] Wrapping text styles for character name in header
 - [ ] Item sheet sidebar background image (low)
-- [x] Inventory sticky footer
 - [ ] Add Bastion facility roll icon on hover
 
 ### Huh?
