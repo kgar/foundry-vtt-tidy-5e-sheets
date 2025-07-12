@@ -3,8 +3,8 @@ import { CONSTANTS } from 'src/constants';
 import ContainerSheet from './container/ContainerSheet.svelte';
 import type {
   ApplicationClosingOptions,
-  ApplicationConfiguration,
   ApplicationRenderOptions,
+  DocumentSheetApplicationConfiguration,
 } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
@@ -42,7 +42,7 @@ export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
     CONSTANTS.SHEET_TYPE_CONTAINER,
     SvelteApplicationMixin<
-      ApplicationConfiguration | undefined,
+      DocumentSheetApplicationConfiguration | undefined,
       ContainerSheetQuadroneContext
     >(foundry.applications.sheets.ItemSheetV2)
   )
@@ -56,7 +56,7 @@ export class Tidy5eContainerSheetQuadrone
   itemFilterService: ItemFilterService;
   sectionExpansionTracker: ExpansionTracker;
 
-  constructor(options?: ApplicationConfiguration | undefined) {
+  constructor(options?: DocumentSheetApplicationConfiguration | undefined) {
     super(options);
 
     this.itemFilterService = new ItemFilterService(
@@ -75,7 +75,9 @@ export class Tidy5eContainerSheetQuadrone
   }
 
   static DEFAULT_OPTIONS: Partial<
-    ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
+    DocumentSheetApplicationConfiguration & {
+      dragDrop: Partial<DragDropConfiguration>[];
+    }
   > = {
     classes: [
       CONSTANTS.MODULE_ID,
