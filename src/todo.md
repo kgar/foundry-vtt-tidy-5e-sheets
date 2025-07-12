@@ -101,7 +101,7 @@
 
 ## hightouch To Do
 
-- [ ] Spellbook and inventory empty state button
+- [ ] Dark mode advancement icons are black instead of white
 - [x] Character Sidebar - Add empty state.
 - [x] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Character Sidebar - adjust gap and padding to taste
