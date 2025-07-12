@@ -8,7 +8,7 @@
   - [ ] tab contents
     - [ ] toolbar
   - [ ] ...
-- [ ] Decide: do I continue to make constants for the sheet parts?
+- [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Update the readme
 
