@@ -284,8 +284,18 @@
           outline: none;
 
           option {
+            color: var(--t5e-color-palette-grey-0);
             background-color: transparent;
             text-shadow: none;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &:checked {
+              color: var(--t5e-color-palette-grey-0);
+              background-color: transparent;
+              text-shadow: none;
+            }
           }
         }
       }
