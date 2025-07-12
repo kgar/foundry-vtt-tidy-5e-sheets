@@ -2,6 +2,10 @@
 
 ### The Short List
 
+- [ ] Release notes: add section on the header
+- [ ] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
+- [ ] Foundry package page: revamp
+- [ ] 
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
