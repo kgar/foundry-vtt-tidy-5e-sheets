@@ -541,6 +541,28 @@
         padding-top: 0;
       }
     }
+
+
+    .facility-craft {
+      display: flex;
+      flex-direction: column;
+      gap: var(--t5e-size-2x);
+
+      .details img {
+        max-height: var(--t5e-size-7x);
+        max-width: var(--t5e-size-7x);
+        margin-inline-end: var(--t5e-size-2x);
+      }
+
+      .list-controls {
+        justify-content: flex-end;
+
+        >* {
+          flex-grow: 0;
+        }
+      }
+    }
+
   }
 
   &.container {

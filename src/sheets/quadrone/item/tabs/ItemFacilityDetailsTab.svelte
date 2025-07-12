@@ -379,7 +379,7 @@
     </p>
 
     <div class:harvesting={context.isHarvesting}>
-      <ul class="separated-list single-item facility-craft">
+      <ul class="unlist single-item facility-craft">
         <li>
           {#if context.craft}
             <div class="details flexrow">
@@ -388,7 +388,7 @@
               <div class="list-controls flexrow">
                 <button
                   type="button"
-                  class="button-icon-only"
+                  class="button button-borderless button-icon-only"
                   onclick={() =>
                     context.item.sheet.submit({
                       updateData: { 'system.craft': null },

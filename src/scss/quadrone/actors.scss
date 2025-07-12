@@ -51,6 +51,9 @@
       // TODO: Fix responsive behavior to handle small screens in edit mode.
       .list-content {
         flex: 2;
+        min-width: 0;
+        flex-wrap: wrap;
+        gap: var(--t5e-size-1x);
       }
 
 
@@ -124,8 +127,11 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        flex: 1;
+        justify-content: end;
 
         select {
+          flex: 1;
           margin-right: var(--t5e-size-1x);
         }
       }
@@ -278,8 +284,18 @@
           outline: none;
 
           option {
+            color: var(--t5e-color-palette-grey-0);
             background-color: transparent;
             text-shadow: none;
+
+            &:hover,
+            &:focus,
+            &:active,
+            &:checked {
+              color: var(--t5e-color-palette-grey-0);
+              background-color: transparent;
+              text-shadow: none;
+            }
           }
         }
       }
@@ -442,51 +458,6 @@
     .inventory-footer {
       flex: 0 0 auto;
       padding-inline-end: var(--t5e-size-4x);
-    }
-  }
-
-
-
-  .tidy-tab .empty-state-container {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    &:not(.empty-classes) {
-      flex: 1;
-
-      .button {
-        padding: var(--t5e-size-6x) var(--t5e-size-12x);
-      }
-    }
-
-    &.empty-classes {
-      flex: 0 1 fit-content;
-
-      .button {
-        padding-inline-start: var(--t5e-size-8x);
-        padding-inline-end: var(--t5e-size-8x);
-      }
-    }
-
-    &.empty-state-description {
-      padding: var(--t5e-size-3x);
-      border-radius: var(--t5e-component-card-radius);
-      border: 0.0625rem dashed var(--t5e-component-field-border);
-      color: var(--t5e-color-text-lighter);
-      min-height: 3rem;
-      gap: 0.25rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      flex: 0 1 fit-content;
-
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: var(--t5e-color-text-default);
-      }
     }
   }
 
