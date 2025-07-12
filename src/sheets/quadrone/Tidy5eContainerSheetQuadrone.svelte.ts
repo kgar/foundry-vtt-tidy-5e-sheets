@@ -419,7 +419,7 @@ export class Tidy5eContainerSheetQuadrone
   ): Promise<unknown> {
     const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     if (!['Item', 'Folder'].includes(data.type)) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
@@ -431,10 +431,10 @@ export class Tidy5eContainerSheetQuadrone
     const document = await documentClass.fromDropData(data);
 
     if (data.type === 'Folder') {
-      return this._onDropFolder(event, document);
+      return await this._onDropFolder(event, document);
     }
 
-    return this._onDropItem(event, document);
+    return await this._onDropItem(event, document);
   }
 
   /* -------------------------------------------- */

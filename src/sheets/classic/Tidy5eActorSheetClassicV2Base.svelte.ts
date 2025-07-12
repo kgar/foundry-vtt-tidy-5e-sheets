@@ -830,13 +830,13 @@ export function Tidy5eActorSheetClassicV2Base<
     /*  Drag and Drop
     /* -------------------------------------------- */
 
-    _allowedDropBehaviors(event: DragEvent, data: any) {
-      if (!data.uuid) {
+    _allowedDropBehaviors(event: DragEvent, data?: any) {
+      if (!data?.uuid) {
         return new Set<DropEffectValue>(['copy', 'link']);
       }
 
       const allowed = new Set<DropEffectValue>(['copy', 'move', 'link']);
-      const s = foundry.utils.parseUuid(data.uuid);
+      const s = foundry.utils.parseUuid(data?.uuid);
       const t = foundry.utils.parseUuid(this.document.uuid);
       const sCompendium =
         s.collection instanceof
@@ -855,9 +855,9 @@ export function Tidy5eActorSheetClassicV2Base<
 
     _defaultDropBehavior(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: any
+      data?: { uuid?: string }
     ): DropEffectValue {
-      if (!data.uuid) {
+      if (!data?.uuid) {
         return 'copy';
       }
 
@@ -882,11 +882,10 @@ export function Tidy5eActorSheetClassicV2Base<
         return;
       }
 
-      foundry.applications.ux.DragDrop.implementation.dropEffect =
-        event.dataTransfer.dropEffect =
-          foundry.utils.getType(data) === 'Object'
-            ? this._dropBehavior(event, data)
-            : 'copy';
+      CONFIG.ux.DragDrop.dropEffect = event.dataTransfer.dropEffect =
+        foundry.utils.getType(data) === 'Object'
+          ? this._dropBehavior(event, data)
+          : 'copy';
     }
 
     /**
@@ -895,13 +894,12 @@ export function Tidy5eActorSheetClassicV2Base<
      */
     _dropBehavior(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: unknown
+      data?: { uuid?: string }
     ): DropEffectValue {
       const allowed = this._allowedDropBehaviors(event, data);
 
       let behavior =
-        foundry.applications.ux.DragDrop.implementation.dropEffect ??
-        event.dataTransfer?.dropEffect;
+        CONFIG.ux.DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
 
       if (event.type === 'dragover') {
         if (dnd5e.utils.areKeysPressed(event, 'dragMove')) behavior = 'move';
@@ -941,27 +939,35 @@ export function Tidy5eActorSheetClassicV2Base<
       super._onDragStart(event);
     }
 
+    #dropBehavior: DropEffectValue | null = null;
+
     async _onDrop(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
     ): Promise<any> {
-      this._currentDragEvent = event;
-      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
-      const actor = this.actor;
-      // TODO: Extract hook call
-      const allowed = Hooks.call('dropActorSheetData', actor, this, data);
-      if (allowed === false) return;
+      this.#dropBehavior = this._dropBehavior(event);
 
-      // Handle different data types
-      switch (data.type) {
-        case 'Actor':
-          return this._onDropActor(event, data);
-        case 'Item':
-          return this._onDropItem(event, data);
-        case 'Folder':
-          return this._onDropFolder(event, data);
+      try {
+        this._currentDragEvent = event;
+        const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+        const actor = this.actor;
+        // TODO: Extract hook call
+        const allowed = Hooks.call('dropActorSheetData', actor, this, data);
+        if (allowed === false) return;
+
+        // Handle different data types
+        switch (data.type) {
+          case 'Actor':
+            return await this._onDropActor(event, data);
+          case 'Item':
+            return await this._onDropItem(event, data);
+          case 'Folder':
+            return await this._onDropFolder(event, data);
+        }
+
+        return await super._onDrop(event);
+      } finally {
+        this.#dropBehavior = null;
       }
-
-      return super._onDrop(event);
     }
 
     /** @override */
@@ -1007,9 +1013,9 @@ export function Tidy5eActorSheetClassicV2Base<
 
     async _onDropItem(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: unknown
+      data: { uuid?: string }
     ): Promise<object | boolean | undefined> {
-      const behavior = this._dropBehavior(event, data);
+      const behavior = this.#dropBehavior ?? 'none';
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
@@ -1359,7 +1365,11 @@ export function Tidy5eActorSheetClassicV2Base<
         })
       );
 
-      return this._onDropItemCreate(droppedItemData, event);
+      return this._onDropItemCreate(
+        droppedItemData,
+        event,
+        this.#dropBehavior ?? 'none'
+      );
     }
 
     /**

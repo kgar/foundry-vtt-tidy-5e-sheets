@@ -587,7 +587,7 @@ export class Tidy5eVehicleSheet
       return scroll.toObject();
     }
 
-    return super._onDropSingleItem.call(this, itemData, event);
+    return await super._onDropSingleItem.call(this, itemData, event);
   }
 
   _disableFields(...args: any[]) {

@@ -1113,7 +1113,7 @@ export class Tidy5eNpcSheet
       return scroll.toObject();
     }
 
-    return super._onDropSingleItem(itemData, event);
+    return await super._onDropSingleItem(itemData, event);
   }
 
   _disableFields(...args: any[]) {

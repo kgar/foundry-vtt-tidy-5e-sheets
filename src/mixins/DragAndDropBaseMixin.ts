@@ -69,11 +69,10 @@ export function DragAndDropMixin(BaseApplication: any) {
         return;
       }
 
-      foundry.applications.ux.DragDrop.implementation.dropEffect =
-        event.dataTransfer.dropEffect =
-          foundry.utils.getType(data) === 'Object'
-            ? this._dropBehavior(event, data)
-            : 'copy';
+      CONFIG.ux.DragDrop.dropEffect = event.dataTransfer.dropEffect =
+        foundry.utils.getType(data) === 'Object'
+          ? this._dropBehavior(event, data)
+          : 'copy';
     }
 
     _onDrop(
@@ -106,8 +105,7 @@ export function DragAndDropMixin(BaseApplication: any) {
       const allowed = this._allowedDropBehaviors(event, data);
 
       let behavior =
-        foundry.applications.ux.DragDrop.implementation.dropEffect ??
-        event.dataTransfer?.dropEffect;
+        CONFIG.ux.DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
 
       if (event.type === 'dragover') {
         if (dnd5e.utils.areKeysPressed(event, 'dragMove')) behavior = 'move';
