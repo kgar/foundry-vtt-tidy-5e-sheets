@@ -935,7 +935,7 @@
         }
       }
 
-      &.spell-preparation .highlight {
+      &.spell-preparation.mode-always .highlight {
         background: linear-gradient(to right, oklch(from var(--t5e-mode-color) l c h / 0.25) 10%, transparent 40%);
       }
 
