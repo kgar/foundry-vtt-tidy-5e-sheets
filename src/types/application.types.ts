@@ -73,7 +73,7 @@ export interface ApplicationRenderOptions {
   parts?: string[];
   isFirstRender?: boolean;
   renderContext?: string;
-  renderData?: object;
+  renderData?: any;
   action?: string;
   data?: object;
 }

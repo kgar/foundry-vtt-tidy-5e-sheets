@@ -169,7 +169,7 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
     for (let group of this.optionsGroups) {
       for (let setting of group.settings) {
         if (setting.type === 'button') {
-          return;
+          continue;
         }
 
         let doc = setting.doc ?? this.document;

@@ -21,8 +21,8 @@
 </script>
 
 <div class="hidden">
-  <div bind:this={tooltip} class="bulleted-list-tooltip">
-    <ul>
+  <div bind:this={tooltip} class="list-items-tooltip">
+    <ul class="unlist">
       {#each entries as entry}
         <li>
           {@html entry}

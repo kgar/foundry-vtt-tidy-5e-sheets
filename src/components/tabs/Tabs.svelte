@@ -121,51 +121,49 @@
   class={['tidy-tabs', cssClass, { vertical: orientation === 'vertical' }]}
   bind:this={nav}
 >
-  {#if tabs.length > 1}
-    {#each tabs as tab, i (tab.id)}
-      {@const title = localize(tab.title)}
-      <svelte:boundary
-        onerror={(e) => {
-          error('An error occurred while rendering a tab', false, {
-            tab,
-            error: e,
-          });
-        }}
+  {#each tabs as tab, i (tab.id)}
+    {@const title = localize(tab.title)}
+    <svelte:boundary
+      onerror={(e) => {
+        error('An error occurred while rendering a tab', false, {
+          tab,
+          error: e,
+        });
+      }}
+    >
+      {@const tabIsSelected =
+        tab.id === selectedTabId || extraTabs?.has(tab.id)}
+      {@const tabindex = tabIsSelected ? 0 : -1}
+      {@const itemCount = tab.itemCount?.(itemCountContext) ?? 0}
+      <a
+        class={[
+          CONSTANTS.TAB_OPTION_CLASS,
+          {
+            active: tabIsSelected,
+            ['first-tab']: i === 0,
+            ['no-border-on-last-tab']: !tabEnd && i === tabs.length - 1,
+          },
+          tabCssClass,
+        ]}
+        data-tab-id={tab.id}
+        role="tab"
+        aria-selected={tabIsSelected}
+        onclick={(ev) => onTabClicked(ev, tab)}
+        onkeydown={(ev) => onKeyDown(ev, i)}
+        {tabindex}
+        {title}
       >
-        {@const tabIsSelected =
-          tab.id === selectedTabId || extraTabs?.has(tab.id)}
-        {@const tabindex = tabIsSelected ? 0 : -1}
-        {@const itemCount = tab.itemCount?.(itemCountContext) ?? 0}
-        <a
-          class={[
-            CONSTANTS.TAB_OPTION_CLASS,
-            {
-              active: tabIsSelected,
-              ['first-tab']: i === 0,
-              ['no-border-on-last-tab']: !tabEnd && i === tabs.length - 1,
-            },
-            tabCssClass,
-          ]}
-          data-tab-id={tab.id}
-          role="tab"
-          aria-selected={tabIsSelected}
-          onclick={(ev) => onTabClicked(ev, tab)}
-          onkeydown={(ev) => onKeyDown(ev, i)}
-          {tabindex}
-          {title}
-        >
-          {#if tab.iconClass}
-            <i class={['tab-icon', tab.iconClass]}></i>
-          {/if}
+        {#if tab.iconClass}
+          <i class={['tab-icon', tab.iconClass]}></i>
+        {/if}
 
-          <span class="tab-title">{title}</span>
+        <span class="tab-title">{title}</span>
 
-          {#if itemCount > 0}
-            <span class="tab-title-count">{itemCount}</span>
-          {/if}
-        </a>
-      </svelte:boundary>
-    {/each}
-  {/if}
+        {#if itemCount > 0}
+          <span class="tab-title-count">{itemCount}</span>
+        {/if}
+      </a>
+    </svelte:boundary>
+  {/each}
   {@render tabEnd?.()}
 </div>

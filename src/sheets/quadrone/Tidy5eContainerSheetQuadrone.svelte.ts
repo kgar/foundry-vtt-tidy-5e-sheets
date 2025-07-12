@@ -3,8 +3,8 @@ import { CONSTANTS } from 'src/constants';
 import ContainerSheet from './container/ContainerSheet.svelte';
 import type {
   ApplicationClosingOptions,
-  ApplicationConfiguration,
   ApplicationRenderOptions,
+  DocumentSheetApplicationConfiguration,
 } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
@@ -42,7 +42,7 @@ export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
     CONSTANTS.SHEET_TYPE_CONTAINER,
     SvelteApplicationMixin<
-      ApplicationConfiguration | undefined,
+      DocumentSheetApplicationConfiguration | undefined,
       ContainerSheetQuadroneContext
     >(foundry.applications.sheets.ItemSheetV2)
   )
@@ -56,7 +56,7 @@ export class Tidy5eContainerSheetQuadrone
   itemFilterService: ItemFilterService;
   sectionExpansionTracker: ExpansionTracker;
 
-  constructor(options?: ApplicationConfiguration | undefined) {
+  constructor(options?: DocumentSheetApplicationConfiguration | undefined) {
     super(options);
 
     this.itemFilterService = new ItemFilterService(
@@ -75,7 +75,9 @@ export class Tidy5eContainerSheetQuadrone
   }
 
   static DEFAULT_OPTIONS: Partial<
-    ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
+    DocumentSheetApplicationConfiguration & {
+      dragDrop: Partial<DragDropConfiguration>[];
+    }
   > = {
     classes: [
       CONSTANTS.MODULE_ID,
@@ -120,6 +122,18 @@ export class Tidy5eContainerSheetQuadrone
       ) {
         new SheetTabConfigurationQuadroneApplication({
           document: this.document,
+        }).render({ force: true });
+      },
+      // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
+      showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
+        const title =
+          this.item.system.identified === false
+            ? this.item.system.unidentified.name
+            : this.item.name;
+        new foundry.applications.apps.ImagePopout({
+          src: this.item.img,
+          uuid: this.item.uuid,
+          window: { title },
         }).render({ force: true });
       },
       themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
@@ -407,7 +421,7 @@ export class Tidy5eContainerSheetQuadrone
   ): Promise<unknown> {
     const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     if (!['Item', 'Folder'].includes(data.type)) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
@@ -419,10 +433,10 @@ export class Tidy5eContainerSheetQuadrone
     const document = await documentClass.fromDropData(data);
 
     if (data.type === 'Folder') {
-      return this._onDropFolder(event, document);
+      return await this._onDropFolder(event, document);
     }
 
-    return this._onDropItem(event, document);
+    return await this._onDropItem(event, document);
   }
 
   /* -------------------------------------------- */
@@ -600,8 +614,12 @@ export class Tidy5eContainerSheetQuadrone
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
     item: Item5e
   ) {
-    const dropTarget = event.target.closest<HTMLElement>('[data-item-id]');
+    const eventTarget = event.target;
+
+    const dropTarget = eventTarget.closest<HTMLElement>('[data-item-id]');
+
     if (!dropTarget) return;
+
     const contents = await this.item.system.contents;
     const target = contents.get(dropTarget.dataset.itemId);
 
@@ -618,6 +636,11 @@ export class Tidy5eContainerSheetQuadrone
       }
     }
 
+    const sectionUpdate = FoundryAdapter.getSectionUpdateForDropTarget(
+      eventTarget,
+      item
+    );
+
     // Perform the sort
     const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(item, {
       target,
@@ -626,6 +649,9 @@ export class Tidy5eContainerSheetQuadrone
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target.id;
+      if (update._id === item.id) {
+        foundry.utils.mergeObject(update, sectionUpdate);
+      }
       return update;
     });
 

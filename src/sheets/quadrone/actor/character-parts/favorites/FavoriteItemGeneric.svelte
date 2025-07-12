@@ -46,6 +46,7 @@
   data-tidy-draggable
   onmousedown={(event) =>
     FoundryAdapter.editOnMiddleClick(event, favorite.item)}
+  data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
     {favorite}

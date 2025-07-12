@@ -263,6 +263,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         src: showToken
           ? effectiveToken?.texture.src ?? this.actor.img
           : this.actor.img,
+        path: showToken
+          ? this.actor.isToken
+            ? ''
+            : 'prototypeToken.texture.src'
+          : 'img',
       },
       species: species
         ? {
@@ -527,7 +532,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
         if (type === 'tool') {
           reference = dnd5e.documents.Trait.getBaseItemUUID(
-            CONFIG.DND5E.tools[id]?.id
+            CONFIG.DND5E.tools[id]?.id ?? ''
           );
           ({ img, name: name } = dnd5e.documents.Trait.getBaseItem(reference, {
             indexOnly: true,
@@ -1087,7 +1092,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ) {
     if (!event.target.closest('.favorites')) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     const dragData =
@@ -1095,7 +1100,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       event.dataTransfer!.getData('text/plain');
 
     if (!dragData) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     let data;
@@ -1110,18 +1115,18 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     // Add to Favorites
     if (action === 'favorite') {
-      return this._onDropFavorite(event, { type, id });
+      return await this._onDropFavorite(event, { type, id });
     }
 
     // Handle Activity drop
     if (data.type === 'Activity') {
       const activity = await fromUuid(data.uuid);
       if (activity) {
-        return this._onDropActivity(event, activity);
+        return await this._onDropActivity(event, activity);
       }
     }
 
-    return super._onDrop(event);
+    return await super._onDrop(event);
   }
 
   /** @inheritDoc */
@@ -1130,7 +1135,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     document: Actor5e
   ) {
     if (!event.target.closest('.facility-occupants') || !document.uuid) {
-      return super._onDropActor(event, document);
+      return await super._onDropActor(event, document);
     }
 
     const facilityId =
@@ -1153,7 +1158,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return;
     }
 
-    this._onDropActorAddToFacility(facility, prop, document.uuid);
+    await this._onDropActorAddToFacility(facility, prop, document.uuid);
   }
 
   _onDropActorAddToFacility(facility: Item5e, prop: string, actorUuid: string) {
@@ -1236,10 +1241,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     effect: ActiveEffect5e
   ) {
     if (!event.target.closest('.favorites') || effect.target !== this.actor) {
-      return super._onDropActiveEffect(event, effect);
+      return await super._onDropActiveEffect(event, effect);
     }
     const uuid = effect.getRelativeUUID(this.actor);
-    return this._onDropFavorite(event, { type: 'effect', id: uuid });
+    return await this._onDropFavorite(event, { type: 'effect', id: uuid });
   }
 
   /**
@@ -1254,14 +1259,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     document: Activity5e
   ): Promise<Actor5e | void> {
     if (!event.target.closest('.favorites') || document.actor !== this.actor) {
-      return super._onDropActivity(event, document);
+      return await super._onDropActivity(event, document);
     }
 
     const relativeUuid = `${document.item.getRelativeUUID(
       this.actor
     )}.Activity.${document.id}`;
 
-    return this._onDropFavorite(event, { type: 'activity', id: relativeUuid });
+    return await this._onDropFavorite(event, { type: 'activity', id: relativeUuid });
   }
 
   async _onDropItem(

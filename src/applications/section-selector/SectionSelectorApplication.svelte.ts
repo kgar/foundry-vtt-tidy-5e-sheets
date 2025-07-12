@@ -26,8 +26,8 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
 >() {
   _prop: string;
   _sectionType: string;
-  /** 
-   * The document that requested this application, not necessarily the document 
+  /**
+   * The document that requested this application, not necessarily the document
    * to be edited. This is used to determine the theme of this application.
    */
   _callingDocument: any;

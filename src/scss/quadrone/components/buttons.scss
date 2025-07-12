@@ -119,6 +119,7 @@
 
     &:hover:not(:disabled) {
       background: var(--t5e-component-field-background-hover);
+      border-style: solid;
     }
   }
 

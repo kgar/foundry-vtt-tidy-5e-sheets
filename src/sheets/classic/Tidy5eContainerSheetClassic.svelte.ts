@@ -83,7 +83,19 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       width: 560,
       height: 600,
     },
-    actions: {},
+    actions: {
+      showIcon: async function (this: Tidy5eContainerSheetClassic) {
+        const title =
+          this.item.system.identified === false
+            ? this.item.system.unidentified.name
+            : this.item.name;
+        new foundry.applications.apps.ImagePopout({
+          src: this.item.img,
+          uuid: this.item.uuid,
+          window: { title },
+        }).render({ force: true });
+      },
+    },
     dragDrop: [
       {
         dragSelector: `[data-tidy-always-draggable]`,
@@ -394,7 +406,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
   ): Promise<unknown> {
     const data = foundry.applications.ux.TextEditor.getDragEventData(event);
     if (!['Item', 'Folder'].includes(data.type)) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
@@ -402,10 +414,10 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
     }
 
     if (data.type === 'Folder') {
-      return this._onDropFolder(event, data);
+      return await this._onDropFolder(event, data);
     }
 
-    return this._onDropItem(event, data);
+    return await this._onDropItem(event, data);
   }
 
   /* -------------------------------------------- */

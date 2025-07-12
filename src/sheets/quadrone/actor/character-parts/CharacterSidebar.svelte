@@ -48,7 +48,7 @@
   setContext(CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, onSidebarTabSelected);
 </script>
 
-<div class="sidebar-header">
+<div class="sidebar-header" data-tidy-sheet-part="sidebar-header">
   <Tabs
     bind:selectedTabId
     {tabs}

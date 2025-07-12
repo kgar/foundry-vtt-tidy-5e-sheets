@@ -2,9 +2,15 @@
 
 ### The Short List
 
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+  - [ ] header parts
+  - [ ] sidebar parts
+  - [ ] tab contents
+    - [ ] toolbar
+  - [ ] ...
+- [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Update the readme
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
 
 ### NPC Sheet
 
@@ -41,6 +47,7 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Scaffold the Group Sheet
 - [ ] Set up Group Sheet Tab Selection
 - [ ] Scaffold the Vehicle Sheet
@@ -87,13 +94,14 @@
 - [ ] (PC: Feature tab) Implement alternate section groupings - <https://discord.com/channels/1167985253072257115/1170021717524107274/1382889612959158355> | include toggle option as sheet flag in tab settings.
 - [ ] add a class to section headers when there are no search results `.search-no-results`
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
+- [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 
 
 ### Module Compatibility
 
 ## hightouch To Do
 
-- [ ] Spellbook and inventory empty state button
+- [ ] Dark mode advancement icons are black instead of white
 - [x] Character Sidebar - Add empty state.
 - [x] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Character Sidebar - adjust gap and padding to taste
@@ -268,3 +276,17 @@ Limited:
 - [x] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
   - [x] Item - Remove Spell Scroll, Dup, Delete
   - [x] Activity/Effect - Remove Dup and Delete
+- [x] Upgrade all sheets to us the sheet actions for editImage, showArtwork, and editIcon (items and containers)
+  - [x] Quadrone Actors and Items
+  - [x] Classic Actors
+  - [x] Classic Items
+- [x] Add reference tooltips to skills and tools
+  - tool: `data-reference={dnd5e.documents.Trait.getBaseItemUUID(CONFIG.DND5E.tools[id]?.id)}`
+  - skill: `data-reference={CONFIG.DND5E.skills[id]?.reference}`
+  - make sure to derive it per skill/tool.
+- [x] Fix never-ending render issue with MLD, if able. The ideal may be to simply re-render manually when adjusting a setting, rather than hooking into the User changed event.
+- [x] ~~Add level breakdown tooltip to the level badge, else instructions for getting started.~~ Nah. It's in the subtitle AND the Character tab. 
+- [x] Dropping an item from a compendium window doesn't work every time. The drop behavior is resolving to "none" inexplicably.
+- [x] Can we just do what module\applications\mixins\drag-drop-mixin.mjs is doing for `_dropBehavior()`. Basically, just do it there, only?
+- [x] Sheet tab - drop in custom section is not working
+- [x] Container - drag out of custom section is not working

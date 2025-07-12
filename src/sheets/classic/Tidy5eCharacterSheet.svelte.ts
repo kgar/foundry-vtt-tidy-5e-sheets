@@ -1491,7 +1491,7 @@ export class Tidy5eCharacterSheet
       return scroll.toObject();
     }
 
-    return super._onDropSingleItem(itemData, event);
+    return await super._onDropSingleItem(itemData, event);
   }
 
   deleteOccupant(facilityId: string, prop: string, index: number) {
@@ -1516,13 +1516,13 @@ export class Tidy5eCharacterSheet
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ) {
     if (!event.target.closest('[data-tidy-favorites], [data-pin-id]')) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     const dragData = event.dataTransfer?.getData('text/plain');
 
     if (!dragData) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     let data;
@@ -1534,19 +1534,19 @@ export class Tidy5eCharacterSheet
     }
 
     if (data.type === CONSTANTS.DOCUMENT_NAME_ACTOR) {
-      return super._onDrop(event);
+      return await super._onDrop(event);
     }
 
     const doc = await fromUuid(data.uuid);
     let relativeUuid = AttributePins.getRelativeUUID(doc);
 
     if (event.target.closest('[data-pin-id]')) {
-      return this._onDropPin(event, { id: relativeUuid, doc });
+      return await this._onDropPin(event, { id: relativeUuid, doc });
     }
 
     let type = 'item' as const;
 
-    return this._onDropFavorite(event, { type, id: relativeUuid });
+    return await this._onDropFavorite(event, { type, id: relativeUuid });
   }
 
   _prepareTraits(systemData: any) {
@@ -1571,7 +1571,7 @@ export class Tidy5eCharacterSheet
     data: any
   ) {
     if (!event.target.closest('.facility-occupants') || !data.uuid) {
-      return super._onDropActor(event, data);
+      return await super._onDropActor(event, data);
     }
 
     const facilityId =

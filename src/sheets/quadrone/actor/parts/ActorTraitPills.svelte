@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import BulletedListTooltip from 'src/tooltips/BulletedListTooltip.svelte';
+  import ListItemsTooltip from 'src/tooltips/ListItemsTooltip.svelte';
   import {
     type ActorSheetQuadroneContext,
     type ActorTraitContext,
@@ -21,7 +21,7 @@
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
-  let bulletedListTooltip: BulletedListTooltip;
+  let listItemsTooltip: ListItemsTooltip;
 
   let entries = $state<string[]>([]);
 
@@ -35,18 +35,16 @@
 
     const currentTarget = event.currentTarget;
 
-    console.warn(currentTarget.nodeName);
-
     entries = pill.icons?.map((i) => i.label) ?? [];
 
     await tick();
 
-    bulletedListTooltip.tryShow(currentTarget);
+    listItemsTooltip.tryShow(currentTarget);
   }
 </script>
 
-<BulletedListTooltip
-  bind:this={bulletedListTooltip}
+<ListItemsTooltip
+  bind:this={listItemsTooltip}
   {entries}
   sheetDocument={context.document}
 />

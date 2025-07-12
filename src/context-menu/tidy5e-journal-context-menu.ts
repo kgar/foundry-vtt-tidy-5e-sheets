@@ -17,6 +17,16 @@ export function configureActorJournalContextMenu(
 
   ui.context.menuItems = [
     {
+      name: 'TIDY5E.ContextMenuActionView',
+      icon: '<i class="fas fa-eye fa-fw"></i>',
+      callback: () => {
+        new JournalEntryApplication(id, 'view', {
+          document: app.document,
+        }).render({ force: true });
+      },
+      group: 'common',
+    },
+    {
       name: 'SIDEBAR.Edit',
       icon: '<i class="fa-solid fa-pencil-alt fa-fw"></i>',
       condition: () =>
@@ -27,25 +37,7 @@ export function configureActorJournalContextMenu(
           document: app.document,
         }).render({ force: true });
       },
-    },
-    {
-      name: 'TIDY5E.ContextMenuActionView',
-      icon: '<i class="fas fa-eye fa-fw"></i>',
-      callback: () => {
-        new JournalEntryApplication(id, 'view', {
-          document: app.document,
-        }).render({ force: true });
-      },
-    },
-    {
-      name: 'SIDEBAR.Delete',
-      icon: '<i class="fa-solid fa-trash"></i>',
-      condition: () =>
-        app.document.isOwner &&
-        !FoundryAdapter.isLockedInCompendium(app.document),
-      callback: () => {
-        JournalQuadrone.remove(app.actor, id);
-      },
+      group: 'common',
     },
     {
       name: 'SIDEBAR.Duplicate',
@@ -56,6 +48,18 @@ export function configureActorJournalContextMenu(
       callback: () => {
         JournalQuadrone.duplicate(app.actor, id);
       },
+      group: 'common',
+    },
+    {
+      name: 'SIDEBAR.Delete',
+      icon: `<i class="fa-solid fa-trash" style='color: var(--t5e-warning-accent-color);'></i>`,
+      condition: () =>
+        app.document.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(app.document),
+      callback: () => {
+        JournalQuadrone.remove(app.actor, id);
+      },
+      group: 'be-careful',
     },
   ] satisfies ContextMenuEntry[];
 }

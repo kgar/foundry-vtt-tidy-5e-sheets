@@ -29,45 +29,6 @@
     ThemeQuadrone.updatePortraitShape(context.actor, newShape);
   }
 
-  function handlePortraitClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-  ) {
-    if (context.unlocked) {
-      openPortraitPicker(event);
-      return;
-    }
-
-    FoundryAdapter.renderImagePopout({
-      src: context.actor.img,
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
-          subject: context.actor.name,
-        }),
-      },
-      uuid: context.actor.uuid,
-    });
-  }
-
-  function openPortraitPicker(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-  ) {
-    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker(context, event)) {
-      return;
-    }
-    const rect = event.currentTarget.getBoundingClientRect();
-    const current = context.actor.img;
-    const fp = new foundry.applications.apps.FilePicker({
-      type: 'image',
-      current,
-      callback: (path: string) => {
-        context.actor.update({ img: path });
-      },
-      top: rect.top + 40,
-      left: rect.left + 10,
-    });
-    return fp.browse();
-  }
-
   const localize = FoundryAdapter.localize;
 
   let cyclerTooltip = $derived(
@@ -107,7 +68,8 @@
     src={imageUrl}
     alt={imageAlt}
     class={['pointer', { dead: characterIsDead }]}
-    onclick={(ev) => handlePortraitClick(ev)}
+    data-action={context.unlocked ? 'editImage' : 'showArtwork'}
+    data-edit={context.portrait.path}
   />
   {#if characterIsDead}
     <div class="dead-overlay"></div>

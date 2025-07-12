@@ -85,9 +85,15 @@
                 document={context.actor}
                 value={context.actor.name}
                 class="character-name flex1 h1"
+                data-tidy-sheet-part="actor-name"
               />
             {:else}
-              <h1 class="character-name flex1">{context.actor.name}</h1>
+              <h1
+                class="character-name flex1"
+                data-tidy-sheet-part="actor-name"
+              >
+                {context.actor.name}
+              </h1>
             {/if}
             <div
               class={[
@@ -95,6 +101,7 @@
                 'flexrow',
                 { ['show-xp']: context.enableXp },
               ]}
+              data-tidy-sheet-part="sheet-header-actions-container"
             >
               <button
                 type="button"
@@ -118,8 +125,6 @@
               </button>
             </div>
           </div>
-          <!-- onRollAbility={(event, key) =>
-              context.actor.rollAbilityCheck({ ability: key, event })} -->
           <CharacterSubtitle />
         </div>
         <div class="level-container flex0 flexrow">
@@ -522,7 +527,10 @@
 </header>
 <div class="sheet-body">
   <div class="main-content">
-    <div class={['sidebar flexcol', { expanded: sidebarExpanded }]}>
+    <div
+      class={['sidebar flexcol', { expanded: sidebarExpanded }]}
+      data-tidy-sheet-part="sidebar-container"
+    >
       <CharacterSidebar />
     </div>
 

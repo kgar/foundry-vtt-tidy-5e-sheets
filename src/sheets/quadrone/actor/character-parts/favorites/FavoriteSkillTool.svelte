@@ -54,8 +54,13 @@
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
   onmousedown={(event) =>
     FoundryAdapter.doActionOnMiddleClick(event, () =>
-      FoundryAdapter.renderSkillToolConfig(context.actor, trait, favorite.key ?? ''),
+      FoundryAdapter.renderSkillToolConfig(
+        context.actor,
+        trait,
+        favorite.key ?? '',
+      ),
     )}
+  data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
     {favorite}

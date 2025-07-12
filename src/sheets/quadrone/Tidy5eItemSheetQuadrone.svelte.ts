@@ -106,6 +106,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           document: this.document,
         }).render({ force: true });
       },
+      showIcon: async function (this: Tidy5eItemSheetQuadrone) {
+        const title =
+          this.item.system.identified === false
+            ? this.item.system.unidentified.name
+            : this.item.name;
+        new foundry.applications.apps.ImagePopout({
+          src: this.item.img,
+          uuid: this.item.uuid,
+          window: { title },
+        }).render({ force: true });
+      },
       themeSettings: async function (this: Tidy5eItemSheetQuadrone) {
         await new ThemeSettingsQuadroneApplication({
           document: this.document,
