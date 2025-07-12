@@ -37,6 +37,7 @@ import UserPreferencesService from 'src/features/user-preferences/UserPreference
 import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
@@ -415,28 +416,36 @@ export class Tidy5eContainerSheetQuadrone
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 
+  #dropBehavior: DropEffectValue | null = null;
+
   /** @inheritDoc */
   async _onDrop(
     event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
   ): Promise<unknown> {
-    const data = foundry.applications.ux.TextEditor.getDragEventData(event);
-    if (!['Item', 'Folder'].includes(data.type)) {
-      return await super._onDrop(event);
+    this.#dropBehavior = this._dropBehavior(event);
+
+    try {
+      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+      if (!['Item', 'Folder'].includes(data.type)) {
+        return await super._onDrop(event);
+      }
+
+      if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
+        return;
+      }
+
+      const documentClass = foundry.utils.getDocumentClass(data.type);
+
+      const document = await documentClass.fromDropData(data);
+
+      if (data.type === 'Folder') {
+        return await this._onDropFolder(event, document);
+      }
+
+      return await this._onDropItem(event, document);
+    } finally {
+      this.#dropBehavior = null;
     }
-
-    if (TidyHooks.dnd5eDropItemSheetData(this.item, this, data) === false) {
-      return;
-    }
-
-    const documentClass = foundry.utils.getDocumentClass(data.type);
-
-    const document = await documentClass.fromDropData(data);
-
-    if (data.type === 'Folder') {
-      return await this._onDropFolder(event, document);
-    }
-
-    return await this._onDropItem(event, document);
   }
 
   /* -------------------------------------------- */
@@ -508,7 +517,7 @@ export class Tidy5eContainerSheetQuadrone
       return false;
     }
 
-    const behavior = this._dropBehavior(event, document.toDragData());
+    const behavior = this.#dropBehavior ?? 'none';
 
     if (behavior === 'none') {
       return false;

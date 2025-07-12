@@ -1,14 +1,18 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
-  import type { ChangeEventHandler } from 'svelte/elements';
+  import type {
+    ChangeEventHandler,
+    ClassValue,
+    HTMLAttributes,
+  } from 'svelte/elements';
 
-  interface Props {
+  interface Props extends HTMLAttributes<HTMLElement> {
     checked?: boolean;
     disabled?: boolean;
     thumbIconClass?: string | undefined;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     children?: Snippet;
-    [key: string]: any;
+    class?: ClassValue;
   }
 
   let {
@@ -17,6 +21,7 @@
     thumbIconClass = undefined,
     onChange,
     children,
+    class: cssClass,
     ...rest
   }: Props = $props();
 
@@ -24,10 +29,10 @@
 </script>
 
 <label
-  class="tidy-switch {rest.class ?? ''}"
+  class={['tidy-switch', cssClass]}
   class:disabled
   id={switchLabelId}
-  title={rest.title ?? null}
+  {...rest}
 >
   {@render children?.()}
   <div role="switch" aria-checked={checked} aria-labelledby={switchLabelId}>
