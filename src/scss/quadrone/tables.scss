@@ -434,6 +434,12 @@
       }
     }
 
+    .damage-formula-container {
+      flex-wrap: nowrap;
+      text-wrap: nowrap;
+      overflow: hidden;
+    }
+
     .damage-icon {
       --icon-fill: var(--t5e-color-icon-diminished);
       padding: 0.0625rem 0 0 0.125rem;

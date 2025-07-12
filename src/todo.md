@@ -101,7 +101,7 @@
 
 ## hightouch To Do
 
-- [ ] Dark mode advancement icons are black instead of white
+- [x] Dark mode advancement icons are black instead of white
 - [x] Character Sidebar - Add empty state.
 - [x] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [x] Character Sidebar - adjust gap and padding to taste
@@ -116,7 +116,7 @@
 - [x] Dying red color for transparent portraits
 - [x] Tranparent portrait ring color lighten one step
 - [x] Bypassed resistance pill styles using `.physical-bypass`
-- [ ] Wrapping text styles for character name in header
+- [x] Wrapping text styles for character name in header
 - [ ] Item sheet sidebar background image (low)
 - [x] Inventory sticky footer
 - [ ] Add Bastion facility roll icon on hover

@@ -26,7 +26,7 @@
   {#each rowDocument.labels.damages ?? [] as damage}
     {@const formula = getTrimmedExpression(damage.formula)}
     {@const damageHealingIcon = damageHealingTypeIcons[damage.damageType]}
-    <div class="flexrow">
+    <div class="flexrow damage-formula-container">
       <span class="flexshrink damage-formula">{formula}</span>
       {#if damageHealingIcon}
         <span class="flexshrink damage-icon" aria-label={damage.label}>
