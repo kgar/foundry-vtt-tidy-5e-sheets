@@ -82,9 +82,32 @@
       observer.disconnect();
     };
   });
+
+  let totalItemCount = $derived(
+    sections.reduce((count, s) => count + s.items.length, 0),
+  );
 </script>
 
 <div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
+  {#if totalItemCount === 0}
+    <div class="inventory-empty empty-state-container">
+      <button
+        type="button"
+        class="button button-tertiary"
+        title={localize('DND5E.ItemCreate')}
+        aria-label={localize('DND5E.ItemCreate')}
+        onclick={() =>
+          sheetDocument.sheet._addDocument({
+            tabId,
+            creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
+          })}
+      >
+        <i class="fas fa-plus"></i>
+        {localize('DND5E.ItemCreate')}
+      </button>
+      
+    </div>
+  {:else}
   {#each sections as section (section.key)}
     {@const hasViewableItems = ItemVisibility.hasViewableItems(
       section.items,
@@ -261,6 +284,7 @@
           {/each}
         {/snippet}
       </TidyTable>
-    {/if}
-  {/each}
+      {/if}
+    {/each}
+  {/if}
 </div>

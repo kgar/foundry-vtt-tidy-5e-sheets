@@ -96,6 +96,24 @@
   );
 </script>
 
+{#if entries.length === 0}
+<div class="journal-empty empty-state-container">
+  <button
+    type="button"
+    class="button button-tertiary"
+    title={localize('JOURNAL.AddPage')}
+    aria-label={localize('JOURNAL.AddPage')}
+    disabled={!context.owner}
+    onclick={async () => {
+      const newId = await JournalQuadrone.add(context.actor);
+      edit(newId);
+    }}
+  >
+  <i class="fa-solid fa-plus"></i>
+  {localize('JOURNAL.AddPage')}
+  </button>
+</div>
+{:else}
 <div class={['journal-entry-selector']}>
   <VerticalTabs {tabs} bind:selectedTabId includeTabNumber />
   <div class="action-buttons">
@@ -163,3 +181,4 @@
     {/await}
   {/if}
 </div>
+{/if}

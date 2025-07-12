@@ -29,7 +29,7 @@
   </div>
 {:else}
   <div class="favorites list">
-    <div class="favorites-empty">
+    <div class="empty-state-container empty-state-description">
       {localize('TIDY5E.EmptyFavorites')}
     </div>
   </div>

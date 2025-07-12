@@ -71,9 +71,31 @@
       observer.disconnect();
     };
   });
+
+  let totalSpellCount = $derived(
+    sections.reduce((count, s) => count + s.spells.length, 0),
+  );
 </script>
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
+  {#if totalSpellCount === 0}
+    <div class="spellbook-empty empty-state-container">
+      <button
+        type="button"
+        class="button button-tertiary"
+        title={localize('DND5E.SpellAdd')}
+        aria-label={localize('DND5E.SpellAdd')}
+        onclick={() =>
+          sheetDocument.sheet._addDocument({
+            tabId,
+            creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
+          })}
+      >
+        <i class="fas fa-plus"></i>
+        {localize('DND5E.SpellAdd')}
+      </button>
+    </div>
+  {:else}
   {#each sections as section (section.key)}
     {@const hasViewableItems = ItemVisibility.hasViewableItems(
       section.spells,
@@ -254,4 +276,5 @@
       </TidyTable>
     {/if}
   {/each}
+  {/if}
 </div>
