@@ -99,7 +99,6 @@
         onclick={() =>
           sheetDocument.sheet._addDocument({
             tabId,
-            creationItemTypes: [CONSTANTS.TAB_ACTOR_INVENTORY],
           })}
       >
         <i class="fas fa-plus"></i>
