@@ -136,10 +136,9 @@
 
       >.sidebar {
         flex-basis: var(--sidebar-expanded-width);
-        gap: var(--t5e-size-3x);
         margin-inline-end: var(--t5e-size-4x);
         margin-inline-start: calc((var(--sidebar-expanded-width) + var(--t5e-size-4x)) * -1);
-        padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-4x);
+        padding: var(--t5e-size-3x) var(--t5e-size-3x) 0 var(--t5e-size-4x);
         overflow-y: auto;
         transition: margin var(--t5e-transition-default);
         display: flex;
@@ -150,6 +149,7 @@
         }
 
         .sidebar-tab-contents {
+          padding: var(--t5e-size-3x) 0;
           overflow-y: auto;
           flex: 1;
         }
@@ -323,9 +323,9 @@
           }
         }
 
-        &.token{
-          img { 
-            filter: var(--t5e-filter-drop-shadow-token); 
+        &.token {
+          img {
+            filter: var(--t5e-filter-drop-shadow-token);
           }
 
           &::before {
@@ -2086,6 +2086,18 @@
 
       .use-ability-list li {
         width: auto;
+      }
+    }
+  }
+
+  .tidy-tab {
+
+    .tools .tools-empty {
+      padding: var(--t5e-size-3x) var(--t5e-size-2x);
+      color: var(--t5e-color-text-lighter);
+
+      &:hover {
+        color: var(--t5e-color-text-default);
       }
     }
   }

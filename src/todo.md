@@ -93,7 +93,8 @@
 
 ## hightouch To Do
 
-- [ ] Character Sidebar - Add empty state.
+- [ ] Spellbook and inventory empty state button
+- [x] Character Sidebar - Add empty state.
 - [x] Make sidebar tab strip a separate container so that only the tab content area scrolls.
 - [ ] Character Sidebar - adjust gap and padding to taste
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
