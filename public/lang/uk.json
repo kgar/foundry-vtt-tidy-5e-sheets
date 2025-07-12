@@ -693,7 +693,8 @@
             "title": "{type} Форма портрета",
             "option.round": "Круглий",
             "option.transparent": "Прозорий",
-            "option.square": "Квадратний"
+            "option.square": "Квадратний",
+            "option.token": "Токен"
         },
         "RarityColors.title": "Рідкісні кольори",
         "RarityColors.UseSaturatedColors.name": "Використовуйте насичені кольори рідкості",
