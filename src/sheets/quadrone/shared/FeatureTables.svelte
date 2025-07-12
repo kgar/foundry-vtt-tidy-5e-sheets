@@ -76,21 +76,21 @@
 </script>
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
-  {#if totalFeatureCount === 0}
-<div class="journal-empty empty-state-container">
+{#if totalFeatureCount === 0}
+<div class="spellbook-empty empty-state-container">
   <button
     type="button"
     class="button button-tertiary"
     title={localize('DND5E.FeatureAdd')}
     aria-label={localize('DND5E.FeatureAdd')}
-    disabled={!context.owner}
-    onclick={async () => {
-      const newId = await JournalQuadrone.add(context.actor);
-      edit(newId);
-    }}
+    onclick={() =>
+      sheetDocument.sheet._addDocument({
+        tabId,
+        creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
+      })}
   >
-  <i class="fa-solid fa-plus"></i>
-  {localize('DND5E.FeatureAdd')}
+    <i class="fas fa-plus"></i>
+    {localize('DND5E.FeatureAdd')}
   </button>
 </div>
 {:else}
@@ -238,23 +238,6 @@
         {/snippet}
       </TidyTable>
     {/if}
-  {:else}
-    <div class="spellbook-empty empty-state-container">
-      <button
-        type="button"
-        class="button button-tertiary"
-        title={localize('DND5E.FeatureAdd')}
-        aria-label={localize('DND5E.FeatureAdd')}
-        onclick={() =>
-          sheetDocument.sheet._addDocument({
-            tabId,
-            creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
-          })}
-      >
-        <i class="fas fa-plus"></i>
-        {localize('DND5E.FeatureAdd')}
-      </button>
-    </div>
   {/each}
   {/if}
 </div>
