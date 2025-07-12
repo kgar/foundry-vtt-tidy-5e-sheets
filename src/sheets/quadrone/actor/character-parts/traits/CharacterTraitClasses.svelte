@@ -19,6 +19,35 @@
   let restClasses = $derived(context.classes.slice(1));
 </script>
 
+{#if context.classes.length === 0}
+  <div class="list-entry">
+    <div class="list-label">
+      <h4 class="font-weight-label">
+        {localize('TYPES.Item.class')}
+      </h4>
+    </div>
+    
+    <div class="list-content">
+      <div class="list-values trait-item empty-state-container empty-classes">
+        <button
+          aria-label="Add {localize('TYPES.Item.class')}"
+          type="button"
+          class="button button-tertiary"
+          data-tooltip="DND5E.ClassAdd"
+          onclick={(ev) =>
+            context.actor.sheet.findItem({
+              event: ev,
+              type: 'class',
+            })}
+        >
+          <i class="fa-solid fa-plus"></i>
+          {localize('DND5E.ClassAdd')}
+        </button>
+      </div>
+    </div>
+  </div>
+{:else}
+
 <!-- Primary class -->
 {#if firstClass}
   <div
@@ -93,6 +122,7 @@
 {#each context.orphanedSubclasses as subclass}
   {@render subclassListEntry(subclass, true)}
 {/each}
+{/if}
 
 {#snippet classContent(cls?: CharacterClassEntryContext)}
   <div class="list-content">

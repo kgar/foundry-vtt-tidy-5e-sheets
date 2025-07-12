@@ -73,144 +73,154 @@
       observer.disconnect();
     };
   });
+
+  let totalActionCount = $derived(
+    sections.reduce((count, s) => count + s.items.length, 0),
+  );
 </script>
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
-  {#each sections as section (section.key)}
-    {@const hasViewableItems = ItemVisibility.hasViewableItems(
-      section.items,
-      searchResults.uuids,
-    )}
-    {#if section.show && hasViewableItems}
-      {@const columns = new ColumnsLoadout(
-        ItemColumnRuntime.getConfiguredColumnSpecifications(
-          sheetDocument.type,
-          tabId,
-          section.key,
-          {
-            rowActions: section.rowActions,
-          },
-        ),
+  {#if totalActionCount === 0}
+    <div class="empty-state-container empty-state-description">
+        {localize('TIDY5E.SheetLock.Empty.Hint')}
+    </div>
+  {:else}
+    {#each sections as section (section.key)}
+      {@const hasViewableItems = ItemVisibility.hasViewableItems(
+        section.items,
+        searchResults.uuids,
       )}
-      {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
-        sectionsInlineWidth,
-        columns,
-      )}
-      <TidyTable
-        key={section.key}
-        data-custom-section={section.custom ? true : null}
-        dataset={section.dataset}
-      >
-        {#snippet header(expanded)}
-          <TidyTableHeaderRow class={['theme-dark']}>
-            <TidyTableHeaderCell primary={true} class="header-label-cell">
-              <h3>
-                {localize(section.label)}
-              </h3>
-              <span class="table-header-count">{section.items.length}</span>
-            </TidyTableHeaderCell>
-            {#each columns.ordered as column}
-              {@const hidden = hiddenColumns.has(column.key)}
-
-              <TidyTableHeaderCell
-                class={[column.headerClasses, { hidden }]}
-                columnWidth="{column.widthRems}rem"
-              >
-                {#if !!column.headerContent}
-                  {#if column.headerContent.type === 'callback'}
-                    {@html column.headerContent.callback?.(
-                      context.document,
-                      context,
-                    )}
-                  {:else if column.headerContent.type === 'component'}
-                    <column.headerContent.component
-                      sheetContext={context}
-                      sheetDocument={context.document}
-                      {section}
-                    />
-                  {:else if column.headerContent.type === 'html'}
-                    {@html column.headerContent.html}
-                  {/if}
-                {/if}
+      {#if section.show && hasViewableItems}
+        {@const columns = new ColumnsLoadout(
+          ItemColumnRuntime.getConfiguredColumnSpecifications(
+            sheetDocument.type,
+            tabId,
+            section.key,
+            {
+              rowActions: section.rowActions,
+            },
+          ),
+        )}
+        {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
+          sectionsInlineWidth,
+          columns,
+        )}
+        <TidyTable
+          key={section.key}
+          data-custom-section={section.custom ? true : null}
+          dataset={section.dataset}
+        >
+          {#snippet header(expanded)}
+            <TidyTableHeaderRow class={['theme-dark']}>
+              <TidyTableHeaderCell primary={true} class="header-label-cell">
+                <h3>
+                  {localize(section.label)}
+                </h3>
+                <span class="table-header-count">{section.items.length}</span>
               </TidyTableHeaderCell>
-            {/each}
-          </TidyTableHeaderRow>
-        {/snippet}
+              {#each columns.ordered as column}
+                {@const hidden = hiddenColumns.has(column.key)}
 
-        {#snippet body()}
-          {@const itemEntries = section.items.map((item) => ({
-            item,
-            ctx: itemContext[item.id],
-          }))}
-          {#each itemEntries as { item, ctx }, i (item.id)}
-            {@const expanded = !!itemToggleMap.get(tabId)?.has(item.id)}
-
-            <TidyItemTableRow
-              {item}
-              hidden={!searchResults.show(item.uuid)}
-              rowClass={[{ expanded }]}
-              contextMenu={{
-                type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                uuid: item.uuid,
-              }}
-            >
-              {#snippet children({ toggleSummary, expanded })}
-                <div class="highlight"></div>
-                <a
-                  class={['tidy-table-row-use-button']}
-                  onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
+                <TidyTableHeaderCell
+                  class={[column.headerClasses, { hidden }]}
+                  columnWidth="{column.widthRems}rem"
                 >
-                  <img class="item-image" alt={item.name} src={item.img} />
-                  <span class="roll-prompt">
-                    <i class="fa fa-dice-d20"></i>
-                  </span>
-                </a>
-
-                <TidyTableCell primary={true} class="item-label text-cell">
-                  <a class="item-name" onclick={(ev) => toggleSummary()}>
-                    <span class="cell-text">
-                      <span class="cell-name">{item.name}</span>
-                      {#if ctx.actionSubtitle}
-                        <span class="cell-context"
-                          >{@html ctx.actionSubtitle}</span
-                        >
-                      {/if}
-                    </span>
-                    <span class="row-detail-expand-indicator">
-                      <i
-                        class="fa-solid fa-angle-right expand-indicator"
-                        class:expanded
-                      >
-                      </i>
-                    </span>
-                  </a>
-                </TidyTableCell>
-                {#each columns.ordered as column}
-                  {@const hidden = hiddenColumns.has(column.key)}
-
-                  <TidyTableCell
-                    columnWidth="{column.widthRems}rem"
-                    class={[column.cellClasses, { hidden }]}
-                  >
-                    {#if column.cellContent.type === 'callback'}
-                      {@html column.cellContent.callback?.(
+                  {#if !!column.headerContent}
+                    {#if column.headerContent.type === 'callback'}
+                      {@html column.headerContent.callback?.(
                         context.document,
                         context,
                       )}
-                    {:else if column.cellContent.type === 'component'}
-                      <column.cellContent.component
-                        rowContext={ctx}
-                        rowDocument={item}
+                    {:else if column.headerContent.type === 'component'}
+                      <column.headerContent.component
+                        sheetContext={context}
+                        sheetDocument={context.document}
                         {section}
                       />
+                    {:else if column.headerContent.type === 'html'}
+                      {@html column.headerContent.html}
                     {/if}
+                  {/if}
+                </TidyTableHeaderCell>
+              {/each}
+            </TidyTableHeaderRow>
+          {/snippet}
+
+          {#snippet body()}
+            {@const itemEntries = section.items.map((item) => ({
+              item,
+              ctx: itemContext[item.id],
+            }))}
+            {#each itemEntries as { item, ctx }, i (item.id)}
+              {@const expanded = !!itemToggleMap.get(tabId)?.has(item.id)}
+
+              <TidyItemTableRow
+                {item}
+                hidden={!searchResults.show(item.uuid)}
+                rowClass={[{ expanded }]}
+                contextMenu={{
+                  type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                  uuid: item.uuid,
+                }}
+              >
+                {#snippet children({ toggleSummary, expanded })}
+                  <div class="highlight"></div>
+                  <a
+                    class={['tidy-table-row-use-button']}
+                    onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
+                  >
+                    <img class="item-image" alt={item.name} src={item.img} />
+                    <span class="roll-prompt">
+                      <i class="fa fa-dice-d20"></i>
+                    </span>
+                  </a>
+
+                  <TidyTableCell primary={true} class="item-label text-cell">
+                    <a class="item-name" onclick={(ev) => toggleSummary()}>
+                      <span class="cell-text">
+                        <span class="cell-name">{item.name}</span>
+                        {#if ctx.actionSubtitle}
+                          <span class="cell-context"
+                            >{@html ctx.actionSubtitle}</span
+                          >
+                        {/if}
+                      </span>
+                      <span class="row-detail-expand-indicator">
+                        <i
+                          class="fa-solid fa-angle-right expand-indicator"
+                          class:expanded
+                        >
+                        </i>
+                      </span>
+                    </a>
                   </TidyTableCell>
-                {/each}
-              {/snippet}
-            </TidyItemTableRow>
-          {/each}
-        {/snippet}
-      </TidyTable>
-    {/if}
-  {/each}
+                  {#each columns.ordered as column}
+                    {@const hidden = hiddenColumns.has(column.key)}
+
+                    <TidyTableCell
+                      columnWidth="{column.widthRems}rem"
+                      class={[column.cellClasses, { hidden }]}
+                    >
+                      {#if column.cellContent.type === 'callback'}
+                        {@html column.cellContent.callback?.(
+                          context.document,
+                          context,
+                        )}
+                      {:else if column.cellContent.type === 'component'}
+                        <column.cellContent.component
+                          rowContext={ctx}
+                          rowDocument={item}
+                          {section}
+                        />
+                      {/if}
+                    </TidyTableCell>
+                  {/each}
+                {/snippet}
+              </TidyItemTableRow>
+            {/each}
+          {/snippet}
+        </TidyTable>
+      {/if}
+    {/each}
+  {/if}
 </div>

@@ -74,6 +74,7 @@
   "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
   "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
   "TIDY5E.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
+  "TIDY5E.SheetLock.Empty.Hint": "Start by adding a class and your first items. Then, use the item menu or right-click and choose \"Add to Sheet tab\" to add them here.",
 
   "TIDY5E.Inventory.Weight.Tooltip": "Weight: {weight} {weightUnit}",
   "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
@@ -115,12 +116,15 @@
   "TIDY5E.AddFavorite": "Add Favorite",
   "TIDY5E.Favorite": "Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
+  "TIDY5E.EmptyFavorites": "Right-click and Favorite, or drag anything from your sheet here to for quick access.",
 
   "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
   "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
 
   "TIDY5E.Abilities": "Abilities",
   "TIDY5E.Ability.EditScore.label": "Edit Score",
+
+  "TIDY5E.EmptyTools": "No tool proficiencies.",
 
   "TIDY5E.Environment": "Environment",
   "TIDY5E.EnvironmentTooltip": "Environment: {environment}",
