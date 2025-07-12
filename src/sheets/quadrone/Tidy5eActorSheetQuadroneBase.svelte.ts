@@ -868,22 +868,6 @@ export function Tidy5eActorSheetQuadroneBase<
         : 'copy';
     }
 
-    _onDragOver(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
-    ) {
-      if (event.dataTransfer == null) {
-        return;
-      }
-
-      const data =
-        foundry.applications.ux.DragDrop.implementation.getPayload(event);
-
-      CONFIG.ux.DragDrop.dropEffect = event.dataTransfer.dropEffect =
-        foundry.utils.getType(data) === 'Object'
-          ? this._dropBehavior(event, data)
-          : 'copy';
-    }
-
     /** @inheritDoc */
     _onDragStart(
       event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
@@ -979,6 +963,8 @@ export function Tidy5eActorSheetQuadroneBase<
       document: any
     ) {
       switch (document.documentName) {
+        case CONSTANTS.DOCUMENT_NAME_ACTIVE_EFFECT:
+          return await this._onDropActiveEffect(event, document);
         case CONSTANTS.DOCUMENT_NAME_ACTOR:
           return await this._onDropActor(event, document);
         case CONSTANTS.DOCUMENT_NAME_ITEM:
