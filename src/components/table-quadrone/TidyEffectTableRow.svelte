@@ -74,11 +74,9 @@
 </script>
 
 <TidyTableRow
-  rowContainerAttributes={{
-    ['data-effect-id']: effectContext.id,
-  }}
   rowClass="tidy-table-row-v2 {rowClass} {expanded ? 'expanded' : ''}"
   rowAttributes={{
+    ['data-effect-id']: effectContext.id,
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
     ['data-tidy-always-draggable']: '',
     ['data-tidy-table-row']: '',
