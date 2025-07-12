@@ -58,6 +58,7 @@ export class TidyFlags {
   static actionSection = {
     key: 'actionSection' as const,
     prop: TidyFlags.getFlagPropertyPath('actionSection'),
+    unsetProp: TidyFlags.getFlagPropertyPath('-=actionSection'),
     /** Gets the item's Action Section setting. */
     get(item: Item5e): string | undefined {
       const actionSection = TidyFlags.tryGetFlag<string>(

@@ -29,10 +29,6 @@
       return context.system.details.race;
     }
   });
-
-  let checkWidths = $derived(() => {
-    console.log(window.innerWidth);
-  });
 </script>
 
 {#snippet speedSenseSummary(
@@ -48,8 +44,8 @@
   <div class={[hide, 'divider-dot']}></div>
 {/snippet}
 
-<div class="character-details-subtitle-row">
-  <div class="character-subtitle flexrow">
+<div class="character-details-subtitle-row" data-tidy-sheet-part="character-details-row">
+  <div class="character-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
     {#each context.speeds.main as speed}
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
@@ -130,7 +126,7 @@
     {/each}
   </div>
   {#if context.enableXp}
-    <div class="xp-container">
+    <div class="xp-container" data-tidy-sheet-part="xp-container">
       <div class="xp-label flexrow">
         <span class="label font-label-medium color-text-gold flexshrink"
           >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
@@ -158,6 +154,7 @@
       <div
         class="xp-bar xp meter progress"
         style="--bar-percentage: {context.system.details.xp.pct}%;"
+        data-tidy-sheet-part="xp-bar"
       >
         <span
           class="xp-bar-current"

@@ -10,38 +10,13 @@
 
   const localize = FoundryAdapter.localize;
 
-  function openItemImagePicker(target: HTMLImageElement, item: Item5e) {
-    const rect = target.getBoundingClientRect();
-    const current = item.img;
-    return FoundryAdapter.browseFilePicker({
-      type: 'image',
-      current,
-      callback: (path: string) => {
-        item.update({ img: path });
-      },
-      top: rect.top + 40,
-      left: rect.left + 10,
-    });
-  }
-
-  function showItemArt(item: Item5e) {
-    FoundryAdapter.renderImagePopout({
-      src: item.img,
-      window: {
-        title: FoundryAdapter.localize('TIDY5E.ItemImageTitle', {
-          subject: item.name,
-        }),
-      },
-      uuid: item.uuid,
-    });
-  }
-
   let itemImageContainer: HTMLElement;
   let contextMenuOptions: ContextMenuEntry[] = $derived([
     {
       name: 'TIDY5E.ShowItemArt',
       icon: '<i class="fa-solid fa-image fa-fw"></i>',
-      callback: () => showItemArt(context.item),
+      callback: () =>
+        context.item.sheet.options.actions.showIcon.call(context.item.sheet),
     },
   ]);
 
@@ -74,8 +49,9 @@
     title="{localize('TIDY5E.EditSheetImageHint')} / {localize(
       'TIDY5E.SheetImageOptionsHint',
     )}"
-    onclick={(event) => openItemImagePicker(event.currentTarget, context.item)}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE}
+    data-action="editImage"
+    data-edit="img"
   />
   <div
     role="presentation"

@@ -48,14 +48,9 @@
 </script>
 
 <div
-  class={[
-    'tidy-tab',
-    tab.id,
-    tab.content.cssClass,
-    cssClass,
-    { active },
-  ]}
+  class={['tidy-tab', tab.id, tab.content.cssClass, cssClass, { active }]}
   data-tab-contents-for={tab.id}
   role="tabpanel"
+  data-tidy-sheet-part="tab-content"
   bind:this={tidyTab}
 ></div>

@@ -48,6 +48,7 @@
   data-favorite-id={favorite.id}
   onmousedown={(event) =>
     FoundryAdapter.editOnMiddleClick(event, favorite.activity)}
+  data-tidy-sheet-part="favorite-entry"
 >
   <FavoriteRollButton
     {favorite}

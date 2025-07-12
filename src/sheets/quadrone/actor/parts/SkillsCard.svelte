@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyFlags } from "src/foundry/TidyFlags";
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
@@ -13,6 +13,7 @@
   import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     allowToggle?: boolean;
@@ -38,6 +39,16 @@
     expanded || !allowToggle
       ? context.skills
       : context.skills.filter((s) => s.proficient !== 0),
+  );
+
+  let references = $derived(
+    context.skills.reduce<Record<string, string>>((prev, skill) => {
+      const ref = CONFIG.DND5E.skills[skill.key]?.reference;
+      if (!isNil(ref, '')) {
+        prev[skill.key] = ref;
+      }
+      return prev;
+    }, {}),
   );
 </script>
 
@@ -82,7 +93,7 @@
     <ul class="skill-list unlist use-ability-list">
       {#each skills as skill (skill.key)}
         {@const modifier = getModifierData(skill.total)}
-        <li>
+        <li data-reference-tooltip={references[skill.key]}>
           <ProficiencyCycle
             actor={context.actor}
             aria-label={localize(skill.hover)}

@@ -1157,6 +1157,7 @@ export type CharacterSheetQuadroneContext = {
   portrait: {
     src: string;
     shape: PortraitShape;
+    path: string;
   };
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];

@@ -11,6 +11,7 @@ import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
+import { CONSTANTS } from 'src/constants';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -165,16 +166,21 @@ export function SvelteApplicationMixin<
       super._tearDown(options);
     }
 
-    async render(options = {}, _options = {}) {
-      try {
-        // TODO: remove these shallow copies when either Foundry or dnd5e releases the fix. Reference: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/997
-        options = typeof options === 'object' ? { ...options } : options;
-        _options = { ..._options };
-        return await super.render(options, _options);
-      } catch (e) {
-        error('An error occurred while rendering a Tidy application', false, e);
-        return await super.render(options, _options);
+    async render(
+      options: boolean | ApplicationRenderOptions = {},
+      _options: ApplicationRenderOptions = {}
+    ) {
+      if (
+        _options.renderContext === CONSTANTS.RENDER_CONTEXT_UPDATE_USER &&
+        !_options.renderData?.flags?.[CONSTANTS.MODULE_ID]
+      ) {
+        debug(
+          'Ignoring non-Tidy-related user update and preventing re-render.'
+        );
+        return;
       }
+
+      return await super.render(options, _options);
     }
 
     /* -------------------------------------------- */

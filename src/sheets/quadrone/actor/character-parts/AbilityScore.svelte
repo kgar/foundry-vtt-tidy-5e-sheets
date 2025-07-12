@@ -76,11 +76,13 @@
       'bonus-container',
       { proficient: ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT },
     ]}
+    data-tidy-sheet-part="ability-mod-container"
   >
     <button
       type="button"
       onclick={(ev) => onRollAbility?.(ev, ability.key)}
       class="ability-roll-button label font-label-medium color-text-gold"
+      data-tidy-sheet-part="ability-roller"
     >
       {ability.abbr}
     </button>
@@ -89,13 +91,15 @@
         class={[
           'modifier font-label-xlarge color-text-lightest',
           { invisible: editingScore },
-        ]}>{mod.sign}</span
+        ]}
+        data-tidy-sheet-part="ability-mod">{mod.sign}</span
       >
       <span
         class={[
           'value bonus font-data-xlarge color-text-default',
           { invisible: editingScore },
-        ]}>{mod.value}</span
+        ]}
+        data-tidy-sheet-part="ability-value">{mod.value}</span
       >
 
       {#if unlocked}
@@ -112,6 +116,7 @@
           onchange={onScoreChange}
           onfocus={(ev) => onScoreInputFocused(ev)}
           onblur={(ev) => onScoreInputBlurred(ev)}
+          data-tidy-sheet-part="ability-score-input"
         />
       {/if}
     </div>
@@ -125,6 +130,7 @@
         ]}
         data-tooltip={configButtonTooltip}
         onclick={(ev) => onConfigClicked?.(ability.key)}
+        data-tidy-sheet-part="ability-configuration-control"
       >
         <i class="fas fa-cog"></i>
       </button>
@@ -138,6 +144,7 @@
   <label
     class={['ability-score', { invisible: editingScore }]}
     for={abilityInputId}
+    data-tidy-sheet-part="ability-score"
   >
     <span class="font-title-small color-text-default">{ability.value}</span>
   </label>
@@ -145,6 +152,7 @@
     type="button"
     class={['ability-save flexrow', { invisible: editingScore }]}
     onclick={(ev) => onRollSave?.(ev, ability.key)}
+    data-tidy-sheet-part="ability-save-roller"
   >
     <span class="modifier font-label-medium color-text-lightest"
       >{save.sign}</span

@@ -8,6 +8,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import type { MessageBus } from 'src/types/types';
+  import { Tidy5eContainerSheetQuadrone } from '../../Tidy5eContainerSheetQuadrone.svelte';
 
   interface Props {
     container: Item5e;
@@ -38,7 +39,14 @@
   async function onDrop(
     event: DragEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
-    container.sheet._onDrop(event);
+    const sheet = new Tidy5eContainerSheetQuadrone({ document: container });
+
+    sheet._onDrop(
+      event as DragEvent & {
+        currentTarget: EventTarget & HTMLElement;
+        target: HTMLElement;
+      },
+    );
 
     event.preventDefault();
     event.stopImmediatePropagation();
