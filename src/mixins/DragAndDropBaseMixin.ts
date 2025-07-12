@@ -100,8 +100,9 @@ export function DragAndDropMixin(BaseApplication: any) {
      */
     _dropBehavior(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data: unknown
+      data?: { uuid?: string }
     ): DropEffectValue {
+      data ??= CONFIG.ux.DragDrop.getPayload(event);
       const allowed = this._allowedDropBehaviors(event, data);
 
       let behavior =

@@ -888,35 +888,6 @@ export function Tidy5eActorSheetClassicV2Base<
           : 'copy';
     }
 
-    /**
-     * The behavior for the dropped data. When called during the drop event, ensure this is called before awaiting
-     * anything or the drop behavior will be lost.
-     */
-    _dropBehavior(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      data?: { uuid?: string }
-    ): DropEffectValue {
-      const allowed = this._allowedDropBehaviors(event, data);
-
-      let behavior =
-        CONFIG.ux.DragDrop.dropEffect ?? event.dataTransfer?.dropEffect;
-
-      if (event.type === 'dragover') {
-        if (dnd5e.utils.areKeysPressed(event, 'dragMove')) behavior = 'move';
-        else if (dnd5e.utils.areKeysPressed(event, 'dragCopy')) {
-          behavior = 'copy';
-        } else {
-          behavior = this._defaultDropBehavior(event, data);
-        }
-      }
-
-      if (behavior !== 'none' && !allowed.has(behavior)) {
-        return firstOfSet(allowed) ?? 'none';
-      }
-
-      return behavior || 'copy';
-    }
-
     /** @inheritDoc */
     _onDragStart(
       event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }

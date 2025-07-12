@@ -2,8 +2,6 @@
 
 ### The Short List
 
-- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
-- [ ] Sheet tab - drop in custom section is not working
 - [ ] Container - drag out of custom section is not working
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
@@ -50,6 +48,7 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Scaffold the Group Sheet
 - [ ] Set up Group Sheet Tab Selection
 - [ ] Scaffold the Vehicle Sheet
@@ -289,3 +288,5 @@ Limited:
 - [x] Fix never-ending render issue with MLD, if able. The ideal may be to simply re-render manually when adjusting a setting, rather than hooking into the User changed event.
 - [x] ~~Add level breakdown tooltip to the level badge, else instructions for getting started.~~ Nah. It's in the subtitle AND the Character tab. 
 - [x] Dropping an item from a compendium window doesn't work every time. The drop behavior is resolving to "none" inexplicably.
+- [x] Can we just do what module\applications\mixins\drag-drop-mixin.mjs is doing for `_dropBehavior()`. Basically, just do it there, only?
+- [x] Sheet tab - drop in custom section is not working

@@ -1239,10 +1239,16 @@ export const FoundryAdapter = {
    * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
    */
   onSortItemForActor(actor: Actor5e, event: Event, itemData: any): any {
+    const eventTarget = event.target as HTMLElement | null;
+
     // Handle Tidy Custom Section Transfer
+    const sectionProp = eventTarget?.closest('.tidy-tab.actions')
+      ? 'actionSection'
+      : 'section';
+
     const sourceSection = foundry.utils.getProperty(
       itemData,
-      TidyFlags.section.prop
+      TidyFlags[sectionProp].prop
     );
 
     const targetSection = (event.target as HTMLElement | null)
@@ -1258,10 +1264,11 @@ export const FoundryAdapter = {
     // Get the drag source and drop target
     const items = actor.items;
     const source = items.get(itemData._id);
-    const eventTarget = event.target;
-    if (!(eventTarget instanceof HTMLElement)) {
+
+    if (!eventTarget) {
       return;
     }
+
     const dropTarget = eventTarget.closest<HTMLElement>('[data-item-id]');
     if (!dropTarget) return;
     const target = items.get(dropTarget.dataset.itemId);
@@ -1293,9 +1300,9 @@ export const FoundryAdapter = {
       if (update._id === source.id) {
         // apply section change, if any
         if (isMovedToNewSection) {
-          update[TidyFlags.section.prop] = targetSection;
+          update[TidyFlags[sectionProp].prop] = targetSection;
         } else if (isMovedToDefaultSection) {
-          update[TidyFlags.section.unsetProp] = null;
+          update[TidyFlags[sectionProp].unsetProp] = null;
         }
       }
       return update;
