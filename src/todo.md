@@ -2,7 +2,21 @@
 
 ### The Short List
 
-- [ ] Foundry package page: revamp
+- [x] Include player color in the available coloris swatches
+- [x] Tools cog always visible. Limit to Edit mode.
+- [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
+- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
+- [ ] Formula column
+  - [ ] Truncate to one line and show tooltip
+  - [ ] Inline Activities - add Formula column and don't truncate
+    - What about Activity Tables in item sheets?
+- [ ] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
+- [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
+  - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
+    - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
+  - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
+- [ ] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to all the selection listboxes and sorting listboxes.
+- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
   - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
@@ -17,6 +31,7 @@
 - [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Update the readme
+- [ ] Foundry package page: revamp
 
 ### NPC Sheet
 
@@ -53,7 +68,8 @@
 
 ### (Almost) Everything after the short list
 
-- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
+- [ ] Only show Action tab control when the action tab is in use.
+  - This is way more difficult than it has any business being. The ActorSheetRuntime refactor might be needed to make this viable.
 - [ ] Scaffold the Group Sheet
 - [ ] Set up Group Sheet Tab Selection
 - [ ] Scaffold the Vehicle Sheet
@@ -108,6 +124,8 @@
 ## hightouch To Do
 
 - [x] Fix Bastion Item Sheet, Crafting UI
+- [ ] Weapon Favorite stats cell is missing formatting classes
+- [ ] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
 - [ ] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.

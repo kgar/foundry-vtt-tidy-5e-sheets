@@ -41,12 +41,15 @@
     <button
       type="button"
       class="button button-borderless skill-expand-button"
-      onclick={(ev) => FoundryAdapter.renderToolsConfig(context.actor)}
+      onclick={() =>
+        context.unlocked && FoundryAdapter.renderToolsConfig(context.actor)}
     >
       <i class="fa-solid fa-hammer color-text-lightest"></i>
       <h3 class="font-label-medium">
         <span>{localize('TYPES.Item.toolPl')}</span>
-        <i class="fa-solid fa-cog"></i>
+        {#if context.unlocked}
+          <i class="fa-solid fa-cog"></i>
+        {/if}
       </h3>
       <span class="modifier-label color-text-lightest font-default-medium">
         {localize('DND5E.Modifier')}
@@ -126,7 +129,7 @@
     </ul>
   {:else}
     <!-- Do we want any kind of content for when there are no proficient tools? -->
-     
+
     <div class="tools-empty">
       {localize('TIDY5E.EmptyTools')}
     </div>

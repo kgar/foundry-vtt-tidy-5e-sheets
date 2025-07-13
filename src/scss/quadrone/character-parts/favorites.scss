@@ -86,6 +86,11 @@
           text-wrap: nowrap;
           text-overflow: ellipsis;
           overflow-x: hidden;
+          line-height: normal;
+        }
+
+        .subtitle {
+          margin-block-start: -0.125rem;
         }
       }
 

@@ -35,6 +35,8 @@ function onDocumentContext(this: any, element: HTMLElement) {
 
   const app = this;
 
+  ui.context.menuItems = [];
+
   switch (contextMenuType) {
     case CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES:
       configureActivitiesContextMenu(element, app);

@@ -164,7 +164,7 @@ declare global {
   }
 
   interface NumberConstructor {
-    isNumeric: (n: any) => boolean;
+    isNumeric: (n: any) => n is number;
   }
 
   interface Number {

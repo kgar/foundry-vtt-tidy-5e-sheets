@@ -252,8 +252,11 @@ export class ThemeStylesProvider {
 /** Creates a URL(...) CSS style value and accounts for content pulled from the web. */
 function getUrlValue(path: string) {
   const pathPrefix =
-    // This backs the file directory location out of the Tidy module
-    '../../';
+    path.toLowerCase().startsWith('http:') ||
+    path.toLowerCase().startsWith('https:')
+      ? ''
+      : // This backs the file directory location out of the Tidy module
+        '../../';
 
   const urlValue = `url(${pathPrefix}${path})`;
   return urlValue;

@@ -467,8 +467,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       }
 
       if (type === 'item') {
-        // Only push a supposed "item" type if its document name matches
-        favorite.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
+        // Only include a supposed "item" type if the actor owns it
+        this.actor.items.get(favorite.id) &&
           entries.push({
             id,
             type: 'item',
@@ -480,7 +480,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           });
         continue;
       } else if (type === 'effect') {
-        // Only push a supposed "effect" type if its document name matches
+        // Only include a supposed "effect" type if its document name matches
+        // TODO: Find a performant way to tell if this actor should be able to see this effect
         favorite.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVE_EFFECT &&
           entries.push({
             id,
@@ -489,8 +490,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           });
         continue;
       } else if (type === 'activity') {
-        // Only push a supposed "activity" type if its document name matches
-        favorite.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
+        // Only include a supposed "activity" type the actor owns it
+        this.actor.items.get(favorite.item.id) &&
           entries.push({
             id,
             type: 'activity',

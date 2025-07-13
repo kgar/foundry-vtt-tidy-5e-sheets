@@ -76,11 +76,11 @@
     });
 
     if (blurAfterChange) {
-      theInput.blur();
+      theInput?.blur();
     } else {
       setTimeout(() => {
         if (selectOnFocus && theInput === window.document.activeElement) {
-          theInput.select();
+          theInput?.select();
         }
       });
     }
