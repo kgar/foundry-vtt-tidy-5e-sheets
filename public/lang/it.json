@@ -582,7 +582,7 @@
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
         "FinancialSupportParagraph": "Se ti piace Tidy 5e Sheets e vuoi sostenerlo finanziariamente, ecco alcuni modi per farlo:",
         "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Traduci contenuto web? Tidy 5e Sheets può usare il tuo aiuto! Vai al sito web Weblate per vedere i nostri progressi nella localizzazione in varie lingue. Questo modulo accetta traduzioni in nuove lingue e modifiche alle traduzioni esistenti.",
-        "name": "Su"
+        "name": "Informazioni"
     },
     "TIDY5E.UseDefault": "Usa Predefinito",
     "TIDY5E.Reset": "Ripristina",
@@ -640,12 +640,12 @@
         "hint": "Consente agli utenti di scorrere la maggior parte dei pulsanti/comandi su Tidy 5e Sheets ed eseguirli con i tradizionali tasti di scelta rapida da tastiera basati su pulsanti. Nota: quando è attivo un pulsante in Foundry, le combinazioni di tasti da \"Configura controlli\" non rispondono. Se un modulo utilizza questa funzionalità Foundry per i controlli sui fogli, come l'utilizzo di oggetti tenendo premuto un tasto speciale, l'abilitazione di questa opzione Tidy 5e Sheets interferirà con tali combinazioni di tasti."
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Utilizza la tabulazione della tastiera con attributi del foglio predefiniti",
+        "name": "Usa tabulazione tastiera con attributi del foglio predefinito",
         "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input di un attributo a quello successivo nascondendo i controlli attorno ad essi dall'ordine di tabulazione. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Usa scheda predefinita dei PF da tastiera",
-        "hint": "Il foglio 5e predefinito consente il tabulazione della tastiera dall'input HP corrente all'input HP temporaneo corrente. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
+        "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input PF attuali all'input PF temporanei attuali. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "Attiva/disattiva le abilità dei personaggi vuoti",
