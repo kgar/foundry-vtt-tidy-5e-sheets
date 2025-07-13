@@ -23,29 +23,21 @@
     "TIDY5E.ShowItemImage": "우클릭: 아이템 이미지 보기",
     "TIDY5E.ShowItemArt": "이미지 보기",
     "TIDY5E.Tidy5eSettings": "Tidy 5e 시트 설정",
-
     "TIDY5E.AddSpecific": "{name} 추가",
-
     "TIDY5E.ExhaustionLevelTooltip": "탈진 {level}단계",
-
     "TIDY5E.AbbrInitiative": "우선권",
-
     "TIDY5E.NoSpecialSenses": "특수 감각 없음",
-
     "TIDY5E.Group.NamePlaceholder": "그룹 이름",
     "TIDY5E.Group.RemoveMemberFromGroup": "그룹에서 멤버 삭제",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "정보 패널 보이기",
     "TIDY5E.Group.HideMemberTabInfoPanel": "정보 패널 숨기기",
     "TIDY5E.Group.EmptyMembersTabHint": "이 그룹은 비었습니다. 멤버를 추가하려면 사이드바에서 액터를 드래그하세요.",
-
     "TIDY5E.RestHint": "휴식 취하기",
     "TIDY5E.ShortRest": "짧은 휴식",
     "TIDY5E.LongRest": "긴 휴식",
     "TIDY5E.HitDiceRollAverage": "우클릭: 평균 적용",
-
     "TIDY5E.JournalTabName": "저널",
     "TIDY5E.StatblockTabName": "능력치 블록",
-
     "TIDY5E.Actions": {
         "TabName": "행동",
         "OverriddenSetOverrideFalse": "행동 목록에서 제거(Shift+클릭으로 덮어쓰기)",
@@ -54,11 +46,8 @@
         "SetOverrideTrue": "행동 목록에 추가",
         "ResetActionDefault": "행동 기본으로 복원"
     },
-
     "TIDY5E.HitDC": "명중 / DC",
-
     "TIDY5E.RestoreOnRest": "휴식시 복원",
-
     "TIDY5E.JournalPersonsOfInterest": "흥미로운 인물",
     "TIDY5E.JournalLocationsOfInterest": "흥미로운 장소",
     "TIDY5E.JournalQuests": "퀘스트",
@@ -66,18 +55,14 @@
     "TIDY5E.JournalEntries": "저널 항목",
     "TIDY5E.JournalEntry.NewTitle": "저널 항목 {number}",
     "TIDY5E.TogglePersonalityInfo": "성격 정보 전환",
-
     "TIDY5E.SheetEdit.Enable.Hint": "편집 활성 - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "편집 비활성 - {description}",
     "TIDY5E.SheetEdit.Description": "추가/삭제 버튼과 빈 섹션의 표시 여부를 전환",
-
     "TIDY5E.SheetLock.Unlock.Hint": "잠금 해제 - {description}",
     "TIDY5E.SheetLock.Lock.Hint": "잠금 - {description}",
     "TIDY5E.SheetLock.Description": "바뀌면 안 되는 중요 정보 편집을 잠그기",
-
     "TIDY5E.Inventory.Weight.Tooltip": "무게: {weight} {weightUnit}",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
-
     "TIDY5E.ContextMenuActionEquip": "아이템 착용",
     "TIDY5E.ContextMenuActionUnequip": "아이템 해제",
     "TIDY5E.ContextMenuActionAttune": "아이템 조율",
@@ -95,44 +80,31 @@
     "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "고양감 자원에서 제거",
     "TIDY5E.ContextMenuActionAddToSheetTab": "시트 탭에 추가",
     "TIDY5E.ContextMenuActionRemoveFromSheetTab": "시트 탭에서 제거",
-
-  "TIDY5E.InspirationSource.ItemIsSourceTooltip": "고양감 자원",
-
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "고양감 자원",
     "TIDY5E.EmptyContainer": "이 용기는 비어 있습니다.",
     "TIDY5E.EmptySection": "이 섹션은 비어 있습니다. 편집할 시트의 잠금을 해제합니다.",
     "TIDY5E.GMOnlyEdit": "GM만이 이 색션을 편집할 수 있습니다.",
-
     "TIDY5E.AttunementWarning": "조율 경고: {number}개보다 많은 아이템에 조율할 수 없습니다.",
     "TIDY5E.AttunementItems": "조율한 아이템",
     "TIDY5E.AttunementMax": "최대 조율 수",
-
     "TIDY5E.GridLayout": "격자 레이아웃",
     "TIDY5E.ListLayout": "목록 레이아웃",
     "TIDY5E.LayoutNotSupported": "레이아웃 모드 지원 불가",
-
     "TIDY5E.Encumbrance": "과적",
-
     "TIDY5E.AddFavorite": "즐겨찾기에 추가",
     "TIDY5E.Favorite": "즐겨찾기",
     "TIDY5E.RemoveFavorite": "줄겨찾기에서 삭제",
-
     "TIDY5E.ShowNotProficientSkills": "비숙련 항목 표시",
     "TIDY5E.HideNotProficientSkills": "비숙련 항목 숨기기",
-    
     "TIDY5E.Abilities": "능력치",
     "TIDY5E.Ability.EditScore.label": "점수 편집",
-
     "TIDY5E.Environment": "환경",
     "TIDY5E.EnvironmentTooltip": "환경: {environment}",
-
     "TIDY5E.Search": "검색",
     "TIDY5E.SearchClear": "검색 지우기",
     "TIDY5E.SearchHint": "찾고자 하는 것을 입력합니다.",
-
     "TIDY5E.InfoCardInspectHint": "{inspectKey} 점검",
-
     "TIDY5E.ItemCardsMouseHint": "마우스 휠 클릭을 통해 아이템 보기/편집",
-
     "TIDY5E.AbbrMod": "수정치",
     "TIDY5E.AbbrSavingThrow": "내성 굴림",
     "TIDY5E.AttackMod": "공격 수정치",
@@ -146,13 +118,10 @@
     "TIDY5E.MeleeSpellAttackMod": "근접 공격 수정치",
     "TIDY5E.RangedSpellAttackMod": "원거리 공격 수정치",
     "TIDY5E.PreparedSpells": "준비된 주문",
-
     "TIDY5E.TokenLinked": "액터에 연결된 토큰",
     "TIDY5E.TokenUnlinked": "액터에 연결되지 않은 토큰",
-
     "TIDY5E.SpellSourceIdentifierSelectText": "클래스 식별: {identifier}",
     "TIDY5E.SpellSourceIdentifierLabelHint": "이 주문이 있는 액터에게 여기에 지정된 출처 클래스가 없습니다.",
-
     "TIDY5E.Class.Artificer": "아티피서",
     "TIDY5E.Class.Barbarian": "바바리안",
     "TIDY5E.Class.Bard": "바드",
@@ -167,16 +136,13 @@
     "TIDY5E.Class.Sorcerer": "소서러",
     "TIDY5E.Class.Warlock": "워락",
     "TIDY5E.Class.Wizard": "위저드",
-
     "TIDY5E.OriginSummaryConfig": "출신 요약 설정: {actorName}",
-
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "주문 준비 수 최대값 설정: {documentName}",
         "ExamplesHeader": "예시 공식",
         "ButtonTooltip": "주문 준비 수 최대값 설정",
         "MoreFormulas": "추가 공식"
     },
-
     "TIDY5E.TabSelection": {
         "Title": "탭 선택: {documentName}",
         "MenuOptionText": "탭 선택",
@@ -186,9 +152,7 @@
         "AtLeastOneRequiredErrorMessage": "최소 한 개의 탭을 활성화해야 합니다.",
         "Explanation": "사용자 또는 시트가 표시되지 않도록 설정된 모든 탭(예: 설정 지정에서 저널 비활성화)은 선택하더라도 시트에 표시되지 않습니다."
     },
-
     "TIDY5E.ButtonConfirm.Text": "확인",
-    
     "TIDY5E.Listbox": {
         "MoveUp": "위로 이동 (Alt + Up 키)",
         "MoveDown": "아래로 이동 (Alt + Down 키",
@@ -197,7 +161,6 @@
         "MoveAllLeft": "모두 왼쪽으로 이동",
         "MoveAllRight": "모두 오른쪽으로 이동"
     },
-
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "캐릭터"
     },
@@ -261,52 +224,45 @@
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "아이콘"
     },
-     "TIDY5E.WorldSettings.TabCustomSections": {
-      "tabLabel": "사용자 지정 항목",
-      "CustomizedIndicatorLabel": "사용자 지정됨",
-      "ShowWhenEmptyLabel": "공백인 항목 보이기",
-      "ShowWhenEmptyTooltip": "아이템 표가 있는 모든 탭에는 항목에 아이템이 없을 때에도 항상 표시되는 기본 섹션 세트가 있습니다. 비어 있는 경우에도 항상 이 섹션을 표시합니다.",
-      "LimitToSpecificSheetsLabel": "표시되는 항목을 특정 시트로 제한",
-      "LimitToSpecificTabsLabel": "표시되는 항목을 특정 탭으로 제한"
-     },
-
-     "TIDY5E.SettingsMenu.WorldThemeSettings": {
-      "name": "테마 환경",
-      "label": "테마 환경 설정",
-      "hint": "새 Tidy Sheets 전용: 게임 월드의 기본 테마 환경을 설정합니다. 이는 모든 시트 유형에 적용됩니다."
-     },
-
-     "TIDY5E.SettingsMenu.Homebrew": {
-      "name": "홈브루",
-      "label": "홈브루 설정",
-      "hint": "이 모듈에서 제공하는 홈브루 옵션을 활성화하고 설정합니다."
-     },
-
-     "TIDY5E.SettingsMenu.TabConfiguration": {
-      "name": "시트 탭",
-      "label": "시트 탭 설정",
-      "hint": "새 Tidy Sheets 전용: 모든 액터 및 아이템 시트에 표시할 탭을 구성합니다."
-     },
-
-     "TIDY5E.Settings.BankedInspiration.title": "고양감 누적",
-     "TIDY5E.Settings.EnableBankedInspiration": {
-      "name": "고양감 누적 활성화",
-      "hint": "사용자가 특성 아이템을 고양감 원천으로 설정할 수 있도록 하려면 이 옵션을 활성화합니다. 이 옵션은 사용량이 있는 특성 아이템의 맥락 메뉴 항목에서 찾을 수 있습니다."
-     },
-     "TIDY5E.Settings.BankedInspirationGmOnly": {
-      "name": "고양감 누적 관리 - GM 전용",
-      "hint": "이 옵션을 활성화하면 누적된 고양감 관리 기능을 GM 전용으로 제한할 수 있습니다."
-     },
-
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "tabLabel": "사용자 지정 항목",
+        "CustomizedIndicatorLabel": "사용자 지정됨",
+        "ShowWhenEmptyLabel": "공백인 항목 보이기",
+        "ShowWhenEmptyTooltip": "아이템 표가 있는 모든 탭에는 항목에 아이템이 없을 때에도 항상 표시되는 기본 섹션 세트가 있습니다. 비어 있는 경우에도 항상 이 섹션을 표시합니다.",
+        "LimitToSpecificSheetsLabel": "표시되는 항목을 특정 시트로 제한",
+        "LimitToSpecificTabsLabel": "표시되는 항목을 특정 탭으로 제한"
+    },
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "테마 환경",
+        "label": "테마 환경 설정",
+        "hint": "새 Tidy Sheets 전용: 게임 월드의 기본 테마 환경을 설정합니다. 이는 모든 시트 유형에 적용됩니다."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "홈브루",
+        "label": "홈브루 설정",
+        "hint": "이 모듈에서 제공하는 홈브루 옵션을 활성화하고 설정합니다."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "시트 탭",
+        "label": "시트 탭 설정",
+        "hint": "새 Tidy Sheets 전용: 모든 액터 및 아이템 시트에 표시할 탭을 구성합니다."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "고양감 누적",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "고양감 누적 활성화",
+        "hint": "사용자가 특성 아이템을 고양감 원천으로 설정할 수 있도록 하려면 이 옵션을 활성화합니다. 이 옵션은 사용량이 있는 특성 아이템의 맥락 메뉴 항목에서 찾을 수 있습니다."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "고양감 누적 관리 - GM 전용",
+        "hint": "이 옵션을 활성화하면 누적된 고양감 관리 기능을 GM 전용으로 제한할 수 있습니다."
+    },
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "다중클래스 주문책 필터",
-
     "TIDY5E.WorldSettings.Menu": {
         "name": "월드 세팅",
         "hint": "월드 레벨 설정을 조정하여 Tidy 5e Sheets 환경을 사용자 지정합니다. 이러한 설정은 이 Foundry 월드에 저장되며 모든 관련 Tidy 5e 시트 콘텐츠에 적용됩니다.",
         "label": "월드 세팅",
         "title": "월드 세팅(GM 한정)"
     },
-
     "TIDY5E.UserSettings.Menu": {
         "name": "사용자 세팅",
         "hint": "Tidy 5e 시트 개인 버전을 사용자 지정합니다. 이러한 설정은 브라우저에 저장되어 시트에 적용됩니다.",
@@ -329,8 +285,8 @@
         "tabLabel": "행동 목록"
     },
     "TIDY5E.UserSettings.TabActivities": {
-    "tabLabel": "활동"
-    },    
+        "tabLabel": "활동"
+    },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "모든 레이아웃에 아이템 정보 카드 표시",
         "hint": "이 설정을 비활성화시, 아이템 카드는 격자 레이아웃으로만 표시됩니다."
@@ -759,20 +715,20 @@
             "menuLabel": "메뉴",
             "explanation": "각 옵션에 사용할 색상을 선택합니다. \"#00000000\" 값은 색상을 비활성화하는 것과 같습니다."
         },
-    "hint": "시트를 사용자 지정하여 게임을 보완하는 몰입형 환경을 만듭니다.",
-    "AccentColor.title": "색상 강조",
-    "ActorHeaderBackground.title": "액터 헤더 배경",
-    "ItemSidebarBackground.title": "아이템 사이드바 배경",
-    "PortraitShape": {
-      "title": "{type} 포트레이트 형태",
-      "option.round": "원형",
-      "option.transparent": "투명",
-      "option.square": "사각형"
-    },
-    "RarityColors.title": "Rarity Colors",
-    "SheetTheme.title": "시트 테마",
-    "SheetTheme.hint": "최적화를 위해, 색상 팔레트 중앙 주변의 색상을 선택하십시오.",
-    "SpellPreparationModeColors.title": "주문 준비 모드 색상"        
+        "hint": "시트를 사용자 지정하여 게임을 보완하는 몰입형 환경을 만듭니다.",
+        "AccentColor.title": "색상 강조",
+        "ActorHeaderBackground.title": "액터 헤더 배경",
+        "ItemSidebarBackground.title": "아이템 사이드바 배경",
+        "PortraitShape": {
+            "title": "{type} 포트레이트 형태",
+            "option.round": "원형",
+            "option.transparent": "투명",
+            "option.square": "사각형"
+        },
+        "RarityColors.title": "Rarity Colors",
+        "SheetTheme.title": "시트 테마",
+        "SheetTheme.hint": "최적화를 위해, 색상 팔레트 중앙 주변의 색상을 선택하십시오.",
+        "SpellPreparationModeColors.title": "주문 준비 모드 색상"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "주문 레벨 {number}",
     "TIDY5E.ApplyChanges": "변경 적용",
@@ -797,7 +753,7 @@
     "TIDY5E.Commands.ShowContainerPanel": "용기 패널 보이기",
     "TIDY5E.Commands.HideContainerPanel": "용기 패널 숨기기",
     "TIDY5E.ItemFilters.CanCast": "시전 가능",
-  "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "의식을 \"시전 가능\"에 포함",
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "의식을 \"시전 가능\"에 포함",
     "TIDY5E.ItemFilters.CanUse": "사용 가능",
     "TIDY5E.ItemFilters.ClearAll": "전체 지우기",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "기타",
@@ -811,13 +767,13 @@
     "TIDY5E.GenericErrorNotification": "이 작업을 수행하는 동안 오류가 발생했습니다. 자세한 내용은 개발자 도구 콘솔을 참조하세요.",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "모든 아이템을 식별되지 않음으로 표기",
     "TIDY5E.Utilities.ConfigureSections": "섹션 구성",
-  "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "주문 슬롯 추적",
-  "TIDY5E.Utilities.SpellPips": "주문 표시",
-  "TIDY5E.Utilities.SpellValueMax": "주문 가치/최대",
-  "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "활동 주문 시전 그룹화",
-  "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "추가 주문 항목",
-  "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "아이템 당 항목",
-  "TIDY5E.Section": {
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "주문 슬롯 추적",
+    "TIDY5E.Utilities.SpellPips": "주문 표시",
+    "TIDY5E.Utilities.SpellValueMax": "주문 가치/최대",
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "활동 주문 시전 그룹화",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "추가 주문 항목",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "아이템 당 항목",
+    "TIDY5E.Section": {
         "Default": "기본 섹션",
         "Label": "섹션",
         "LabelPl": "항목",
@@ -829,58 +785,58 @@
             "showTooltip": "이 섹션 보이기",
             "hideTooltip": "이 섹션 숨기기"
         },
-    "SectionSelectorChooseSectionTooltip": "항목 선택",
-    "SectionSelectorChooseActionSectionTooltip": "행동 항목 선택",
-    "SectionSelectorTitle": "{sectionType}: {documentName}",
-    "SectionSelectorExistingSections": "존재하는 항목",
-    "SectionSelectorCreateNewSection": "새 항목 생성",
-    "SectionSelectorNewSectionName": "새 항목 이름",
-    "SectionSelectorSaveNewSection": "새 항목 저장"
+        "SectionSelectorChooseSectionTooltip": "항목 선택",
+        "SectionSelectorChooseActionSectionTooltip": "행동 항목 선택",
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "SectionSelectorExistingSections": "존재하는 항목",
+        "SectionSelectorCreateNewSection": "새 항목 생성",
+        "SectionSelectorNewSectionName": "새 항목 이름",
+        "SectionSelectorSaveNewSection": "새 항목 저장"
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "확인: 기본값 사용",
         "text": "기본값을 사용하시겠습니까?"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click로 굴림을 건너뛰고 즉시 충전) ",
-  "TIDY5E.RollRecharge.Label": "재충전",
+    "TIDY5E.RollRecharge.Label": "재충전",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "출처 클래스 식별자",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "주문의 출처 클래스 식별자가 여기에 나타납니다. 캐릭터가 소유하지 않은 식별자를 할당하려면 이 텍스트 필드에 클래스 식별자를 입력하세요.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "할당되지 않은 항목만 표시",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "시트 잠금 토글",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Tidy 시트가 UI의 현재 활성 창인 경우 이 결합키는 시트 잠금을 켜거나 끕니다.",
-  "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "헤더 메뉴 켜기",
-  "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Tidy sheet가 UI의 현재 활성 창인 경우 이 키 바인딩은 시트 헤더 메뉴를 켭니다.",
-  "TIDY5E.Facilities.Hirelings.Label": "고용인",
-  "TIDY5E.Facilities.Defenders.Label": "방어자",
-  "TIDY5E.Facilities.Creatures.Label": "크리쳐",
-  "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
-  "TIDY5E.Facilities.ContextMenuActionRemove": "{facilityName}에서 제거",
-  "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "헤더 메뉴 켜기",
+    "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Tidy sheet가 UI의 현재 활성 창인 경우 이 키 바인딩은 시트 헤더 메뉴를 켭니다.",
+    "TIDY5E.Facilities.Hirelings.Label": "고용인",
+    "TIDY5E.Facilities.Defenders.Label": "방어자",
+    "TIDY5E.Facilities.Creatures.Label": "크리쳐",
+    "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
+    "TIDY5E.Facilities.ContextMenuActionRemove": "{facilityName}에서 제거",
+    "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
     "TIDY5E.LocalizationTestKey": "번역 테스트 키",
-  "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
-  "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
-  "TIDY5E.ExpandCollapseMenu.OptionAllSections": "모든 항목",
-  "TIDY5E.SortMenu.OptionAlphabetical": "알파벳 순서로 (A-Z)",
-  "TIDY5E.SortMethod.AlphabeticalAscending.Label": "오름",
-  "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "알파벳 오름차순으로",
-  "TIDY5E.SortMethod.AlphabeticalDescending.Label": "내림",
-  "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "알파벳 내림차순으로",
-  "TIDY5E.SortMenu.OptionManual": "수동",
-  "TIDY5E.SortMenu.OptionPriority": "우선 사항",
-  "TIDY5E.Activities.Cast.SourceHintText": "출처 {itemName}",
-  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}고정{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
-  "TIDY5E.BrokenLink": "끊어진 연결",
-  "TIDY5E.Visible": "보임",
-  "TIDY5E.Hidden": "숨김",
-  "TIDY5E.Options.Title": "옵션",
-  "TIDY5E.ConfigureTab.Title": "{tabName} 설정",
-  "TIDY5E.DisplayOptions.Title": "옵션 표시",
-  "TIDY5E.DisplayOptions.ShowContainerRow.Label": "용기 열 표시",
-  "TIDY5E.ItemSheet.PactLevelCastLabel": "{ordinal}로 시전",
-  "TIDY5E.ItemSheet.FeatureOriginLabel": "특성 기원",
-  "TIDY5E.HitDice.Abbreviation": "HD",
-  "TIDY5E.HitDice.Current.Label": "현재 체력 주사위",
-  "TIDY5E.HitDice.Max.Label": "최대 체력 주사위",
-  "TIDY5E.CharacterTraits.Title": "캐릭터 특성에",
-  "TIDY5E.Notifications.FirstTimeWelcome1": "Tidy 5e 시트에 오신 것을 환영합니다! 시작하려면 {sheetLinkStart}시트 하나{sheetLinkEnd}(또는 {allSheetsLinkStart}모든 시트{allSheetsLinkEnd}!)를 변경하여 Tidy 버전을 사용해야 합니다. 이 모듈과 이 모듈의 기능에 대한 자세한 내용은 {wikiLinkStart}공식 위키{wikiLinkEnd}에서 알아보세요."
+    "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
+    "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
+    "TIDY5E.ExpandCollapseMenu.OptionAllSections": "모든 항목",
+    "TIDY5E.SortMenu.OptionAlphabetical": "알파벳 순서로 (A-Z)",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "오름",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "알파벳 오름차순으로",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "내림",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "알파벳 내림차순으로",
+    "TIDY5E.SortMenu.OptionManual": "수동",
+    "TIDY5E.SortMenu.OptionPriority": "우선 사항",
+    "TIDY5E.Activities.Cast.SourceHintText": "출처 {itemName}",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}고정{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.BrokenLink": "끊어진 연결",
+    "TIDY5E.Visible": "보임",
+    "TIDY5E.Hidden": "숨김",
+    "TIDY5E.Options.Title": "옵션",
+    "TIDY5E.ConfigureTab.Title": "{tabName} 설정",
+    "TIDY5E.DisplayOptions.Title": "옵션 표시",
+    "TIDY5E.DisplayOptions.ShowContainerRow.Label": "용기 열 표시",
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "{ordinal}로 시전",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "특성 기원",
+    "TIDY5E.HitDice.Abbreviation": "HD",
+    "TIDY5E.HitDice.Current.Label": "현재 체력 주사위",
+    "TIDY5E.HitDice.Max.Label": "최대 체력 주사위",
+    "TIDY5E.CharacterTraits.Title": "캐릭터 특성에",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Tidy 5e 시트에 오신 것을 환영합니다! 시작하려면 {sheetLinkStart}시트 하나{sheetLinkEnd}(또는 {allSheetsLinkStart}모든 시트{allSheetsLinkEnd}!)를 변경하여 Tidy 버전을 사용해야 합니다. 이 모듈과 이 모듈의 기능에 대한 자세한 내용은 {wikiLinkStart}공식 위키{wikiLinkEnd}에서 알아보세요."
 }

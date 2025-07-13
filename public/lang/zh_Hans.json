@@ -406,5 +406,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "初始卡选项卡",
         "hint": "首次打开工作卡时显示指定的选项卡。"
-    }
+    },
+    "TIDY5E.ModuleName": "Tidy 5e 表单"
 }
