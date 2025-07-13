@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Foundry package page: revamp
+- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
   - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
@@ -17,6 +17,7 @@
 - [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Update the readme
+- [ ] Foundry package page: revamp
 
 ### NPC Sheet
 
@@ -53,7 +54,6 @@
 
 ### (Almost) Everything after the short list
 
-- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Scaffold the Group Sheet
 - [ ] Set up Group Sheet Tab Selection
 - [ ] Scaffold the Vehicle Sheet
