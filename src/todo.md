@@ -2,10 +2,6 @@
 
 ### The Short List
 
-- [x] Include player color in the available coloris swatches
-- [x] Tools cog always visible. Limit to Edit mode.
-- [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
-- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [ ] Inline Activities - add Formula column and don't truncate
@@ -245,3 +241,7 @@ Limited:
 
 - [x] Release notes: add section on the header
 - [x] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
+- [x] Include player color in the available coloris swatches
+- [x] Tools cog always visible. Limit to Edit mode.
+- [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
+- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
