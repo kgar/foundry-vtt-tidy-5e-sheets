@@ -126,7 +126,7 @@
         "SelectedHeader": "Abas Visíveis",
         "UnsupportedDocumentErrorMessage": "O tipo de documento {documentType} não está atualmente configurado para seleção de aba.",
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma aba.",
-        "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na planilha, mesmo que selecionada."
+        "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada."
     },
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Listbox": {
@@ -152,7 +152,7 @@
     "TIDY5E.WorldSettings.Exhaustion": {
         "Header": "Exaustão de Personagem/PnJ",
         "name": "Configuração de Exaustão",
-        "hint": "Determina como a exaustão não relacionada a veículos é configurada e apresentada nas fichas de personagem e de PnJs.",
+        "hint": "Determina como a exaustão não relacionada a veículos é configurada e apresentada nas fichas de personagem e de PNJs.",
         "options.specific.text": "Níveis Específicos",
         "options.specific.levels.name": "Níveis Totais",
         "options.specific.levels.hint": "Determina o número máximo de níveis de exaustão.",
@@ -848,8 +848,8 @@
     "TIDY5E.JournalEntry.NewTitle": "Entrada de Diário {number}",
     "TIDY5E.ContextMenuActionSetAsInspirationSource": "Definir como Origem de Inspiração",
     "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remover como Origem de Inspiração",
-    "TIDY5E.ContextMenuActionAddToSheetTab": "Adicionar à Aba da Ficha",
-    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remover da Aba da Ficha",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Adicionar à Aba Ficha",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remover da Aba Ficha",
     "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Origem de Inspiração",
     "TIDY5E.SettingsMenu.WorldThemeSettings": {
         "name": "Configurações de Tema",
@@ -881,7 +881,7 @@
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ordem Crescente",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Ordem Decrescente",
     "TIDY5E.Notifications.FirstTimeWelcome1": "Bem-vindo ao Tidy 5e Sheets! Para começar, você precisará alterar {sheetLinkStart}uma ficha{sheetLinkEnd} (ou {allSheetsLinkStart}todas as suas fichas{allSheetsLinkEnd}!) para usar a versão Tidy. Saiba mais sobre este módulo e o que ele pode fazer na {wikiLinkStart}wiki oficial{wikiLinkEnd}.",
-    "TIDY5E.SheetLock.Empty.Hint": "Comece adicionando uma classe e seus primeiros itens. Em seguida, use o menu de itens ou clique com o botão direito e escolha \"Adicionar à aba da Ficha\" para adicioná-los aqui.",
+    "TIDY5E.SheetLock.Empty.Hint": "Comece adicionando uma classe e seus primeiros itens. Em seguida, use o menu de itens ou clique com o botão direito e escolha \"Adicionar à aba Ficha\" para adicioná-los aqui.",
     "TIDY5E.EmptyFavorites": "Clique com o botão direito e adicione aos Favoritos, ou arraste qualquer coisa da sua ficha para cá para acesso rápido.",
     "TIDY5E.EmptyTools": "Sem proficiência em ferramentas."
 }
