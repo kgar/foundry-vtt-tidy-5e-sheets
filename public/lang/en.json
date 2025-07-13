@@ -161,7 +161,6 @@
   "TIDY5E.Class.Barbarian": "Barbarian",
   "TIDY5E.Class.Bard": "Bard",
   "TIDY5E.Class.Cleric": "Cleric",
-  "TIDY5E.Class.Custom": "Custom",
   "TIDY5E.Class.Druid": "Druid",
   "TIDY5E.Class.Fighter": "Fighter",
   "TIDY5E.Class.Monk": "Monk",
@@ -171,7 +170,7 @@
   "TIDY5E.Class.Sorcerer": "Sorcerer",
   "TIDY5E.Class.Warlock": "Warlock",
   "TIDY5E.Class.Wizard": "Wizard",
-  "TIDY5E.Class.AddCustom": "Custom Class",
+  "TIDY5E.Class.Custom": "Custom Class",
 
   "TIDY5E.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
 
