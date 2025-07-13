@@ -160,8 +160,12 @@
     .class-item {
       display: flex;
       flex-direction: column;
-      flex: 1;
       gap: var(--t5e-size-1x);
+      flex: 1;
+
+      .flexshrink {
+        flex: 0 1 fit-content;
+      }
     }
   }
 

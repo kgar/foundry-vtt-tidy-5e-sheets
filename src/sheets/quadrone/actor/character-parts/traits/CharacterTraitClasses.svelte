@@ -192,6 +192,20 @@
             </button>
           </div>
         {/if}
+        {#if !context.unlocked && cls && !hitLevelCap}
+        <div class="list-controls flexshrink">
+          <button
+            aria-label="{localize('DND5E.LevelActionIncrease')}"
+            type="button"
+            class="button button-borderless button-icon-only"
+            data-tooltip="DND5E.LevelActionIncrease"
+            disabled={hitLevelCap}
+            onclick={() => FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
+          >
+            <i class="fa-solid fa-square-up"></i>
+          </button>
+        </div>
+        {/if}
       </div>
       {#if context.unlocked && cls}
       <div class="flexrow">
@@ -203,7 +217,7 @@
             class="level-selector flex0"
           />
           <button
-            aria-label="Level Up"
+            aria-label="{localize('DND5E.LevelActionIncrease')}"
             type="button"
             class="button button-primary button-level-up"
             data-tooltip="DND5E.LevelActionIncrease"
