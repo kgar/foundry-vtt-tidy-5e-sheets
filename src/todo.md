@@ -5,7 +5,7 @@
 - [x] Include player color in the available coloris swatches
 - [x] Tools cog always visible. Limit to Edit mode.
 - [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
-- [ ] Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353
+- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [ ] Inline Activities - add Formula column and don't truncate
@@ -124,6 +124,8 @@
 ## hightouch To Do
 
 - [x] Fix Bastion Item Sheet, Crafting UI
+- [ ] Weapon Favorite stats cell is missing formatting classes
+- [ ] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
 - [ ] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
