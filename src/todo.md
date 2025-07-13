@@ -2,8 +2,6 @@
 
 ### The Short List
 
-- [ ] Release notes: add section on the header
-- [ ] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
 - [ ] Foundry package page: revamp
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
@@ -223,3 +221,5 @@ Limited:
 
 ### To Do Graveyard
 
+- [x] Release notes: add section on the header
+- [x] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
