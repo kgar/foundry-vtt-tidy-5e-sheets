@@ -12,7 +12,7 @@
   ) {
     const rect = event.currentTarget.getBoundingClientRect();
 
-    const fp = new foundry.applications.apps.FilePicker({
+    const fp = new foundry.applications.apps.FilePicker.implementation({
       type: 'image',
       current: current,
       callback: (path: string) => {

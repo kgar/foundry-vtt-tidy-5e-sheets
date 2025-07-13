@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Character: Portrait is doing double actions at the moment?
 - [ ] Release notes: add section on the header
 - [ ] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
 - [ ] Foundry package page: revamp
@@ -291,3 +290,4 @@ Limited:
 - [x] Can we just do what module\applications\mixins\drag-drop-mixin.mjs is doing for `_dropBehavior()`. Basically, just do it there, only?
 - [x] Sheet tab - drop in custom section is not working
 - [x] Container - drag out of custom section is not working
+- [x] Character: Portrait is doing double actions at the moment? Nope
