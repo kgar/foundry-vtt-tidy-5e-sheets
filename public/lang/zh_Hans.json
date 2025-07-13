@@ -76,7 +76,7 @@
     "TIDY5E.Favorite": "收藏夹",
     "TIDY5E.RemoveFavorite": "取消收藏",
     "TIDY5E.ShowNotProficientSkills": "显示未熟练",
-    "TIDY5E.HideNotProficientSkills": "隐藏不熟练",
+    "TIDY5E.HideNotProficientSkills": "隐藏未熟练",
     "TIDY5E.Abilities": "属性",
     "TIDY5E.Environment": "环境",
     "TIDY5E.EnvironmentTooltip": "环境：{environment}",
@@ -413,5 +413,10 @@
     "TIDY5E.SheetLock.Empty.Hint": "首先添加一个职业和首个物品。然后，使用物品菜单或右键单击并选择“添加到表单选项卡”将它们添加到这里。",
     "TIDY5E.ContextMenuActionSetAsInspirationSource": "设为激励来源",
     "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "移除作为激励来源",
-    "TIDY5E.ContextMenuActionAddToSheetTab": "添加到“表单”选项卡"
+    "TIDY5E.ContextMenuActionAddToSheetTab": "添加至表单选项卡",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "从表单选项卡移除",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "激励来源",
+    "TIDY5E.EmptyFavorites": "右键单击并收藏，或者将表单中的任意内容拖至此处以实现快速访问。",
+    "TIDY5E.Ability.EditScore.label": "编辑属性值",
+    "TIDY5E.EmptyTools": "无工具熟练"
 }
