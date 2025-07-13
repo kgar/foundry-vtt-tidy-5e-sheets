@@ -2,10 +2,15 @@
 
 ### The Short List
 
+- [ ] Character: Portrait is doing double actions at the moment?
 - [ ] Release notes: add section on the header
 - [ ] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
 - [ ] Foundry package page: revamp
-- [ ] 
+- [ ] Prepared footer macro filter:
+  - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
+  - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
+  - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
+  - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts

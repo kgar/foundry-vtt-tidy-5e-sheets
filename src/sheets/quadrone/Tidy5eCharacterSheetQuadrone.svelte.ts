@@ -467,29 +467,35 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       }
 
       if (type === 'item') {
-        entries.push({
-          id,
-          type: 'item',
-          item: favorite,
-          capacity:
-            favorite.type === CONSTANTS.SHEET_TYPE_CONTAINER
-              ? await favorite.system.computeCapacity()
-              : null,
-        });
+        // Only push a supposed "item" type if its document name matches
+        favorite.documentName === CONSTANTS.DOCUMENT_NAME_ITEM &&
+          entries.push({
+            id,
+            type: 'item',
+            item: favorite,
+            capacity:
+              favorite.type === CONSTANTS.SHEET_TYPE_CONTAINER
+                ? await favorite.system.computeCapacity()
+                : null,
+          });
         continue;
       } else if (type === 'effect') {
-        entries.push({
-          id,
-          type: 'effect',
-          effect: favorite,
-        });
+        // Only push a supposed "effect" type if its document name matches
+        favorite.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVE_EFFECT &&
+          entries.push({
+            id,
+            type: 'effect',
+            effect: favorite,
+          });
         continue;
       } else if (type === 'activity') {
-        entries.push({
-          id,
-          type: 'activity',
-          activity: favorite,
-        });
+        // Only push a supposed "activity" type if its document name matches
+        favorite.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY &&
+          entries.push({
+            id,
+            type: 'activity',
+            activity: favorite,
+          });
         continue;
       } else if (type === 'slots') {
         const { value, max, level } = this.actor.system.spells[id] ?? {};
@@ -1266,7 +1272,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this.actor
     )}.Activity.${document.id}`;
 
-    return await this._onDropFavorite(event, { type: 'activity', id: relativeUuid });
+    return await this._onDropFavorite(event, {
+      type: 'activity',
+      id: relativeUuid,
+    });
   }
 
   async _onDropItem(
