@@ -5,6 +5,12 @@
 - [x] Include player color in the available coloris swatches
 - [x] Tools cog always visible. Limit to Edit mode.
 - [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
+- [ ] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
+- [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
+  - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
+    - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
+  - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
+- [ ] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to all the selection listboxes and sorting listboxes.
 - [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude

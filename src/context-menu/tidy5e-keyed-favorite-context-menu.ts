@@ -54,8 +54,8 @@ export function configureKeyedFavoriteContextMenu(
     {
       name: hasFavorite ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: hasFavorite
-        ? `<i class='fas fa-bookmark fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
-        : `<i class='fas fa-bookmark fa-fw inactive'></i>`,
+        ? `<i class='fa-regular fa-star fa-fw'></i>`
+        : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
       callback: () => {
         hasFavorite
           ? app.actor.system.removeFavorite(favorite.id)
