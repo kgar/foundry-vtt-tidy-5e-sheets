@@ -118,7 +118,7 @@ Evocative character sheets that give players and DMs more control, with more way
 
 ## Item sheets
 
-An alternate view of items that brings more functionality to the surface
+An alternate view of items that brings more functionality to the surface.
 
 ![Item Sheets](readme-assets/t5e-items-featured.webp)
 ![Spell Sheets](readme-assets/t5e-item-spells.webp)
@@ -142,7 +142,7 @@ An alternate view of items that brings more functionality to the surface
 
 ![NPC Sheets](readme-assets/t5e-npc-hero.webp)
 
-### TODO: What's unique about Tidy's NPC sheets?
+### What's unique about Tidy's NPC sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
@@ -155,7 +155,7 @@ An alternate view of items that brings more functionality to the surface
 ![Vehicle Sheet](readme-assets/vehicle-sheet.png)
 
 
-### TODO: What's unique about Tidy's NPC sheets?
+### What's unique about Tidy's NPC sheets?
 ### What's unique about Tidy's Vehicle sheets?
 
 | Core Functionality | Additional Features |
