@@ -5,6 +5,10 @@
 - [x] Include player color in the available coloris swatches
 - [x] Tools cog always visible. Limit to Edit mode.
 - [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
+- [ ] Formula column
+  - [ ] Truncate to one line and show tooltip
+  - [ ] Inline Activities - add Formula column and don't truncate
+    - What about Activity Tables in item sheets?
 - [ ] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
