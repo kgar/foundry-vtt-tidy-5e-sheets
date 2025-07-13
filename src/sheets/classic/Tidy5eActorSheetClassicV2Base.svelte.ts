@@ -872,22 +872,6 @@ export function Tidy5eActorSheetClassicV2Base<
         : 'copy';
     }
 
-    _onDragOver(
-      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
-    ) {
-      const data =
-        foundry.applications.ux.DragDrop.implementation.getPayload(event);
-
-      if (event.dataTransfer == null) {
-        return;
-      }
-
-      CONFIG.ux.DragDrop.dropEffect = event.dataTransfer.dropEffect =
-        foundry.utils.getType(data) === 'Object'
-          ? this._dropBehavior(event, data)
-          : 'copy';
-    }
-
     /** @inheritDoc */
     _onDragStart(
       event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }

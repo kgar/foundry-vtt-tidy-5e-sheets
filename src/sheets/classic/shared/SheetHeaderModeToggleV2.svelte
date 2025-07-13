@@ -46,9 +46,7 @@
     <TidySwitch
       --tidy-switch-scale="1"
       --tidy-switch-thumb-transform-duration="0.15s"
-      title={unlocked
-        ? localize('DND5E.SheetModeEdit')
-        : localize('DND5E.SheetModePlay')}
+      data-tooltip={unlocked ? 'DND5E.SheetModeEdit' : 'DND5E.SheetModePlay'}
       checked={unlocked}
       thumbIconClass="{unlocked ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
       onChange={() => toggleMode()}
