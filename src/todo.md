@@ -3,6 +3,7 @@
 ### The Short List
 
 - [x] Include player color in the available coloris swatches
+- [x] Tools cog always visible. Limit to Edit mode.
 - [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
