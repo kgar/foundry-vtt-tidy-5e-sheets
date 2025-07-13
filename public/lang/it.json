@@ -68,7 +68,7 @@
     "TIDY5E.Class.Barbarian": "Barbaro",
     "TIDY5E.Class.Bard": "Bardo",
     "TIDY5E.Class.Cleric": "Chierico",
-    "TIDY5E.Class.Custom": "Personalizzato",
+    "TIDY5E.Class.Custom": "Classe Personalizzata",
     "TIDY5E.Class.Druid": "Druido",
     "TIDY5E.Class.Fighter": "Guerriero",
     "TIDY5E.Class.Monk": "Monaco",
@@ -377,7 +377,7 @@
         "SheetMenu": {
             "name": "Impostazioni del tema Tidy",
             "buttonLabel": "Impostazioni Tema",
-            "hint": "Personalizza i colori di Tidy 5e Sheets."
+            "hint": "Solo Classic Tidy Sheets: Personalizza i colori di Tidy 5e Sheets."
         },
         "Sheet": {
             "title": "Impostazioni Tema: {userName}",
@@ -425,9 +425,9 @@
         "MoreFormulas": "Più formule"
     },
     "TIDY5E.TabSelection": {
-        "SelectedHeader": "Schede Selezionate",
+        "SelectedHeader": "Schede Visibili",
         "MenuOptionText": "Selezione Scheda",
-        "AvailableHeader": "Schede Disponibili",
+        "AvailableHeader": "Schede Nascoste",
         "AtLeastOneRequiredErrorMessage": "Almeno una scheda è richiesta.",
         "Title": "Selezione Scheda: {documentName}",
         "UnsupportedDocumentErrorMessage": "Il tipo di documento {documentType} non è attualmente impostato per la selezione della scheda.",
@@ -863,5 +863,15 @@
     "TIDY5E.CharacterTraits.Title": "Tratti Personaggio",
     "TIDY5E.HitDice.Current.Label": "Dadi Vita Attuali",
     "TIDY5E.SidebarPinnedTab.Title": "Fissato",
-    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Controllo Slot Incantesimi"
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Controllo Slot Incantesimi",
+    "TIDY5E.StatblockTabName": "Statistiche",
+    "TIDY5E.JournalEntry.NewTitle": "Voce Diario {number}",
+    "TIDY5E.SheetLock.Empty.Hint": "Inizia aggiungendo una classe e i tuoi primi elementi. Quindi, usa il menu degli elementi o clicca con il tasto destro del mouse e seleziona \"Aggiungi alla Scheda\" per aggiungerli qui.",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Imposta come Fonte di Ispirazione",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Rimuovi come Fonte di Ispirazione",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Aggiungi alla Scheda",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Rimuovi dalla Scheda",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Fonte di Ispirazione",
+    "TIDY5E.EmptyFavorites": "Clicca col pulsante destro e aggiungi ai preferiti, oppure trascina qui qualsiasi elemento dalla tua scheda per accedervi rapidamente.",
+    "TIDY5E.EmptyTools": "Nessuna competenza strumenti"
 }
