@@ -873,5 +873,26 @@
     "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Rimuovi dalla Scheda",
     "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Fonte di Ispirazione",
     "TIDY5E.EmptyFavorites": "Clicca col pulsante destro e aggiungi ai preferiti, oppure trascina qui qualsiasi elemento dalla tua scheda per accedervi rapidamente.",
-    "TIDY5E.EmptyTools": "Nessuna competenza strumenti"
+    "TIDY5E.EmptyTools": "Nessuna competenza strumenti.",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Impostazioni Tema",
+        "label": "Configura Impostazioni Tema",
+        "hint": "Solo nuove schede Tidy: Definisci le impostazioni predefinite del tema per il tuo mondo di gioco. Queste si applicano a tutti i tipi di schede."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Homebrew",
+        "label": "Configura Homebrew",
+        "hint": "Abilita e configura le opzioni homebrew fornite da questo modulo."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Fogli della Scheda",
+        "label": "Configura Fogli della Scheda",
+        "hint": "Solo nuove Schede Tidy: configura quali schede sono visibili per tutti i fogli di personaggi ed elementi."
+    },
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Benvenuti in Tidy 5e Sheets! Per iniziare, dovrete modificare {sheetLinkStart}un foglio{sheetLinkEnd} (o {allSheetsLinkStart}tutti i vostri fogli{allSheetsLinkEnd}!) per utilizzare la versione Tidy. Scoprite di più su questo modulo e sulle sue funzionalità sul {wikiLinkStart}wiki ufficiale{wikiLinkEnd}.",
+    "TIDY5E.Settings.BankedInspiration.title": "Ispirazione Risparmiata",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Abilita Ispirazione Risparmiata",
+        "hint": "Abilita questa opzione per consentire all'utente di impostare un elemento caratteristico come fonte di ispirazione. Cerca l'opzione come voce del menu contestuale sulle caratteristiche con usi."
+    }
 }
