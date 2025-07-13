@@ -4,6 +4,7 @@
 
 - [x] Include player color in the available coloris swatches
 - [x] Tools cog always visible. Limit to Edit mode.
+- [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
 - [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
