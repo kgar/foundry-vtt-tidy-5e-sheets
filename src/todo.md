@@ -101,8 +101,8 @@
 
 ## hightouch To Do
 
-- [ ] Fix Bastion Item Sheet, Crafting UI
-- [ ] Test Korean language in Mac electron app
+- [x] Fix Bastion Item Sheet, Crafting UI
+- [ ] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
@@ -110,7 +110,10 @@
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
 - [ ] Skill abilities - dark mode - the dropdown background is not dark
 - [ ] Item sheet sidebar background image (low)
-- [ ] Add Bastion facility roll icon on hover
+- [ ] Make a generic roll button component
+  - [ ] Fix Slot favorite roll icon not appearing
+  - [ ] Add Bastion facility roll icon on hover
+  - [ ] Add Character tab roll icon on hover
 
 ### Huh?
 

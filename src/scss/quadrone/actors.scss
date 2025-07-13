@@ -156,6 +156,13 @@
         }
       }
     }
+
+    .class-item {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      gap: var(--t5e-size-1x);
+    }
   }
 
   .card {

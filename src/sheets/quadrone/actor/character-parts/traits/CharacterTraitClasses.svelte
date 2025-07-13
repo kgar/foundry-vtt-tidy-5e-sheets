@@ -90,6 +90,20 @@
       {/if}
     </div>
     <div class="list-content">
+      <button
+        aria-label="Browse for {localize('TYPES.Item.class')}"
+        type="button"
+        class="button button-secondary"
+        data-tooltip="DND5E.ClassAdd"
+        onclick={(ev) =>
+          context.actor.sheet.findItem({
+            event: ev,
+            type: 'class',
+          })}
+      >
+      <i class="fa-solid fa-book-open-reader"></i>
+      {localize('DND5E.ClassAdd')}
+      </button>
       <div class="list-values trait-item">
         <button
           aria-label="Add {localize('TYPES.Item.class')}"
@@ -99,20 +113,7 @@
           onclick={(ev) =>
             FoundryAdapter.createItem({ type: 'class' }, context.actor)}
         >
-          {localize('DND5E.ClassAdd')}
-        </button>
-        <button
-          aria-label="Browse for {localize('TYPES.Item.class')}"
-          type="button"
-          class="button button-borderless button-icon-only"
-          data-tooltip="DND5E.ClassAdd"
-          onclick={(ev) =>
-            context.actor.sheet.findItem({
-              event: ev,
-              type: 'class',
-            })}
-        >
-          <i class="fa-solid fa-book-open-reader"></i>
+          {localize('TIDY5E.Class.Custom') + " " + localize('TYPES.Item.class')}
         </button>
       </div>
     </div>
@@ -126,85 +127,95 @@
 
 {#snippet classContent(cls?: CharacterClassEntryContext)}
   <div class="list-content">
-    <div class="list-values trait-class trait-item">
-      {#if cls}
-        <a
-          aria-label="View {localize('TYPES.Item.class')}"
-          class="item-image-link"
-          role="button"
-          onclick={() => cls.item.sheet.render({
-            force: true,
-            mode: CONSTANTS.SHEET_MODE_PLAY,
-          })}
-          onkeydown={(e) => e.key === 'Enter' && cls.item.sheet.render({
-            force: true,
-            mode: CONSTANTS.SHEET_MODE_PLAY,
-          })}
-        >
-          <img src={cls.img} alt={cls.name} class="item-image flex0" />
-        </a>
-        <span class="trait-name font-label-medium">
-          {cls.name}
-        </span>
-        {#if !context.unlocked}
-          <div class="divider-dot"></div>
-          <span class="trait-class-level color-text-lighter font-label-medium">
-            {@html localize('DND5E.LevelNumber', {
-              level: `</span><span class="font-data-medium color-text-default">${cls.levels}`,
-            })}
-          </span>
+    <div class="class-item">
+      <div class="flexrow">
+        <div class="list-values trait-class trait-item">
+          {#if cls}
+            <a
+              aria-label="View {localize('TYPES.Item.class')}"
+              class="item-image-link"
+              role="button"
+              onclick={() => cls.item.sheet.render({
+                force: true,
+                mode: CONSTANTS.SHEET_MODE_PLAY,
+              })}
+              onkeydown={(e) => e.key === 'Enter' && cls.item.sheet.render({
+                force: true,
+                mode: CONSTANTS.SHEET_MODE_PLAY,
+              })}
+            >
+              <img src={cls.img} alt={cls.name} class="item-image flex0" />
+            </a>
+            <span class="trait-name font-label-medium">
+              {cls.name}
+            </span>
+            {#if !context.unlocked}
+              <div class="divider-dot"></div>
+              <span class="trait-class-level color-text-lighter font-label-medium">
+                {@html localize('DND5E.LevelNumber', {
+                  level: `</span><span class="font-data-medium color-text-default">${cls.levels}`,
+                })}
+              </span>
+            {/if}
+            {#if cls.isOriginalClass}
+              <i
+                class="flex0 fa-solid fa-chess-queen color-text-gold-emphasis icon-class-original"
+                data-tooltip="DND5E.ClassOriginal"
+                aria-label={localize('DND5E.ClassOriginal')}
+              ></i>
+            {/if}
+          {/if}
+        </div>
+        {#if context.unlocked && cls}
+          <div class="list-controls">
+            <button
+              aria-label="Edit {localize('TYPES.Item.class')}"
+              type="button"
+              class="button button-borderless button-icon-only"
+              data-tooltip="DND5E.ItemEdit"
+              onclick={() =>
+                cls.item.sheet.render({
+                  force: true,
+                  mode: CONSTANTS.SHEET_MODE_EDIT,
+                })}
+            >
+              <i class="fa-solid fa-edit"></i>
+            </button>
+            <button
+              aria-label="{localize('TYPES.Item.class')} Context Menu"
+              type="button"
+              class="button button-borderless button-icon-only"
+              onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+            >
+              <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+            </button>
+          </div>
         {/if}
-        {#if cls.isOriginalClass}
-          <i
-            class="flex0 fa-solid fa-chess-queen color-text-gold-emphasis icon-class-original"
-            data-tooltip="DND5E.ClassOriginal"
-            aria-label={localize('DND5E.ClassOriginal')}
-          ></i>
-        {/if}
-      {/if}
-    </div>
-    {#if context.unlocked && cls}
-      <div class="list-controls">
-        {#if context.unlocked}
+      </div>
+      {#if context.unlocked && cls}
+      <div class="flexrow">
+        <div class="list-controls">
+              
           <LevelUpDropdown
             availableLevels={cls.availableLevels}
             item={cls.item}
             class="level-selector flex0"
           />
-        {/if}
-        <button
-          aria-label="Level Up"
-          type="button"
-          class="button button-borderless button-icon-only button-level-up"
-          data-tooltip="DND5E.LevelActionIncrease"
-          disabled={hitLevelCap}
-          onclick={() => FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
-        >
-          <i class="fa-solid fa-square-up"></i>
-        </button>
-        <button
-          aria-label="Edit {localize('TYPES.Item.class')}"
-          type="button"
-          class="button button-borderless button-icon-only"
-          data-tooltip="DND5E.ItemEdit"
-          onclick={() =>
-            cls.item.sheet.render({
-              force: true,
-              mode: CONSTANTS.SHEET_MODE_EDIT,
-            })}
-        >
-          <i class="fa-solid fa-edit"></i>
-        </button>
-        <button
-          aria-label="{localize('TYPES.Item.class')} Context Menu"
-          type="button"
-          class="button button-borderless button-icon-only"
-          onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
-        >
-          <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-        </button>
+          <button
+            aria-label="Level Up"
+            type="button"
+            class="button button-primary button-level-up"
+            data-tooltip="DND5E.LevelActionIncrease"
+            disabled={hitLevelCap}
+            onclick={() => FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
+          >
+            <i class="fa-solid fa-square-up"></i>
+            {localize('DND5E.LevelActionIncrease')}
+          </button>
+        </div>
       </div>
-    {/if}
+      {/if}
+    </div>
   </div>
 {/snippet}
 
