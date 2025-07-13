@@ -120,6 +120,7 @@
   - [ ] Fix Slot favorite roll icon not appearing
   - [ ] Add Bastion facility roll icon on hover
   - [ ] Add Character tab roll icon on hover
+- [ ] Figure out what's up with multiclassed spellbook footer padding missing
 
 ### Huh?
 
