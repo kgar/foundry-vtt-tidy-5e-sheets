@@ -391,7 +391,22 @@
             "importSuccess": "Tema importato con successo!",
             "menuLabel": "Menu",
             "explanation": "Seleziona il colore che desideri utilizzare per ciascuna opzione. Il valore \"#00000000\" equivale a disabilitare il colore."
-        }
+        },
+        "hint": "Personalizza la tua scheda per creare un'esperienza immersiva che completi il tuo gioco.",
+        "ActorHeaderBackground.title": "Sfondo Titolo Personaggio",
+        "AccentColor.title": "Colore Base",
+        "ItemSidebarBackground.title": "Sfondo Barra Laterale",
+        "PortraitShape": {
+            "title": "{type} Forma Ritratto",
+            "option.round": "Rotondo",
+            "option.transparent": "Trasparente",
+            "option.square": "Squadrato",
+            "option.token": "Token"
+        },
+        "RarityColors.title": "Colori Rarità",
+        "SheetTheme.title": "Tema Scheda",
+        "SheetTheme.hint": "Per risultati ottimali, scegli un colore vicino al centro della tavolozza dei colori.",
+        "SpellPreparationModeColors.title": "Colori Modalità Preparazione Incantesimi"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Livello Incantesimo {number}",
     "TIDY5E.ApplyChanges": "Applica Modifiche",
@@ -544,7 +559,10 @@
             "sectionTitle": "Indebolimento PNG",
             "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
         },
-        "chatNotification": "È disponibile una nuova migrazione di Tidy 5e Sheets. Vedi le impostazioni di gioco di Tidy 5e Sheets per visualizzare le migrazioni disponibili."
+        "chatNotification": "È disponibile una nuova migrazione di Tidy 5e Sheets. Vedi le impostazioni di gioco di Tidy 5e Sheets per visualizzare le migrazioni disponibili.",
+        "Journal": {
+            "explanation1": "La revisione dell'interfaccia utente di Tidy 5e Sheets ha migliorato il Diario, consentendo di gestire tutte le voci desiderate. Per questo motivo, è necessaria una migrazione dalla vecchia struttura del diario alla nuova struttura estensibile. I dati del registro precedente non saranno visibili nella versione rinnovata di Tidy 5e Sheets."
+        }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -755,7 +773,7 @@
     },
     "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",
     "TIDY5E.SpellSourceIdentifierLabelHint": "Il personaggio che possiede questo incantesimo non ha la classe sorgente specificata qui.",
-    "TIDY5E.Utilities.Tools": "Attrezzi",
+    "TIDY5E.Utilities.Tools": "Strumenti",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Assegna Incantesimi a Classi",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
@@ -890,9 +908,19 @@
         "hint": "Solo nuove Schede Tidy: configura quali schede sono visibili per tutti i fogli di personaggi ed elementi."
     },
     "TIDY5E.Notifications.FirstTimeWelcome1": "Benvenuti in Tidy 5e Sheets! Per iniziare, dovrete modificare {sheetLinkStart}un foglio{sheetLinkEnd} (o {allSheetsLinkStart}tutti i vostri fogli{allSheetsLinkEnd}!) per utilizzare la versione Tidy. Scoprite di più su questo modulo e sulle sue funzionalità sul {wikiLinkStart}wiki ufficiale{wikiLinkEnd}.",
-    "TIDY5E.Settings.BankedInspiration.title": "Ispirazione Risparmiata",
+    "TIDY5E.Settings.BankedInspiration.title": "Ispirazione Accumulata",
     "TIDY5E.Settings.EnableBankedInspiration": {
-        "name": "Abilita Ispirazione Risparmiata",
+        "name": "Abilita Ispirazione Accumulata",
         "hint": "Abilita questa opzione per consentire all'utente di impostare un elemento caratteristico come fonte di ispirazione. Cerca l'opzione come voce del menu contestuale sulle caratteristiche con usi."
-    }
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Gestione Ispirazione Accumulata - Solo DM",
+        "hint": "Abilita questa opzione per limitare la gestione dell'ispirazione accumulata al GM."
+    },
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Raggruppamento Attività Lancio Incantesimo",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sezione Incantesimi aggiuntivi",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sezione per Elemento",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Crescente",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Decrescente",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Privilegi Origine"
 }
