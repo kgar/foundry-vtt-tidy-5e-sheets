@@ -60,7 +60,40 @@ export function TidyExtensibleDocumentSheetMixin<
       window: {
         controls: [],
       },
-      actions: {},
+      actions: {
+        editImage: async function (this: TidyDocumentSheet, _event, target) {
+          if (target.nodeName !== 'IMG') {
+            throw new Error(
+              'The editImage action is available only for IMG elements.'
+            );
+          }
+          const attr = target.dataset.edit ?? '';
+          const current = foundry.utils.getProperty(
+            this.document._source,
+            attr
+          );
+          const defaultArtwork =
+            this.document.constructor.getDefaultArtwork?.(
+              this.document._source
+            ) ?? {};
+          const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
+          const fp = new foundry.applications.apps.FilePicker.implementation({
+            current,
+            type: 'image',
+            redirectToRoot: defaultImage ? [defaultImage] : [],
+            callback: (path: string) => {
+              this.document.update({
+                [attr]: path,
+              });
+            },
+            position: {
+              top: this.position.top + 40,
+              left: this.position.left + 10,
+            },
+          });
+          await fp.browse();
+        },
+      },
     };
 
     get sheetMode() {
