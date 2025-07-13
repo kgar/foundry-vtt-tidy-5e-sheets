@@ -393,7 +393,7 @@
             "explanation": "Seleziona il colore che desideri utilizzare per ciascuna opzione. Il valore \"#00000000\" equivale a disabilitare il colore."
         },
         "hint": "Personalizza la tua scheda per creare un'esperienza immersiva che completi il tuo gioco.",
-        "ActorHeaderBackground.title": "Sfondo Titolo Personaggio",
+        "ActorHeaderBackground.title": "Sfondo Intestazione Personaggio",
         "AccentColor.title": "Colore Base",
         "ItemSidebarBackground.title": "Sfondo Barra Laterale",
         "PortraitShape": {
