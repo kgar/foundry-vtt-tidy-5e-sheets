@@ -5,6 +5,7 @@
 - [x] Include player color in the available coloris swatches
 - [x] Tools cog always visible. Limit to Edit mode.
 - [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
+- [ ] Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [ ] Inline Activities - add Formula column and don't truncate
