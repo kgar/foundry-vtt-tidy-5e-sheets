@@ -113,7 +113,8 @@
           onclick={(ev) =>
             FoundryAdapter.createItem({ type: 'class' }, context.actor)}
         >
-          {localize('TIDY5E.Class.Custom') + " " + localize('TYPES.Item.class')}
+          <i class="fa-solid fa-plus"></i>
+          {localize('TIDY5E.Class.Custom')}
         </button>
       </div>
     </div>

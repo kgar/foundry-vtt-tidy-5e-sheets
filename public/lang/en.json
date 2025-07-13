@@ -171,6 +171,7 @@
   "TIDY5E.Class.Sorcerer": "Sorcerer",
   "TIDY5E.Class.Warlock": "Warlock",
   "TIDY5E.Class.Wizard": "Wizard",
+  "TIDY5E.Class.AddCustom": "Custom Class",
 
   "TIDY5E.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
 
