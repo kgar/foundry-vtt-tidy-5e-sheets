@@ -124,7 +124,7 @@
     "TIDY5E.Class.Barbarian": "野蛮人",
     "TIDY5E.Class.Bard": "吟游诗人",
     "TIDY5E.Class.Cleric": "牧师",
-    "TIDY5E.Class.Custom": "自定义",
+    "TIDY5E.Class.Custom": "自定义职业",
     "TIDY5E.Class.Druid": "德鲁伊",
     "TIDY5E.Class.Fighter": "战士",
     "TIDY5E.Class.Monk": "武僧",
@@ -136,8 +136,8 @@
     "TIDY5E.TabSelection": {
         "Title": "选项卡选择：{documentName}",
         "MenuOptionText": "选项卡选择",
-        "AvailableHeader": "可用选项卡",
-        "SelectedHeader": "已选择选项卡",
+        "AvailableHeader": "隐藏选项卡",
+        "SelectedHeader": "显示选项卡",
         "UnsupportedDocumentErrorMessage": "文档类型 {documentType} 当前尚未设置为可选项卡选择。",
         "AtLeastOneRequiredErrorMessage": "至少需要一个标签卡。",
         "Explanation": "即使已选择，用户或卡的配置为不显示的任何选项卡（例如，在配置设置中禁用日志）也不会出现在卡上。"
@@ -401,7 +401,9 @@
     "TIDY5E.Settings.DefaultSheetTabs": {
         "name": "默认工作卡选项卡",
         "hint": "确定默认情况下哪些选项卡会显示以及显示的顺序。当尚未为某个角色选择选项卡时生效。",
-        "AvailableHeader": "可用选项卡"
+        "AvailableHeader": "可用选项卡",
+        "AtLeastOneTabRequiredErrorMessage": "默认选项卡：每种角色类型至少需要一个选项卡。",
+        "SelectedHeader": "已选选项卡"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "初始卡选项卡",
@@ -418,5 +420,41 @@
     "TIDY5E.InspirationSource.ItemIsSourceTooltip": "激励来源",
     "TIDY5E.EmptyFavorites": "右键单击并收藏，或者将表单中的任意内容拖至此处以实现快速访问。",
     "TIDY5E.Ability.EditScore.label": "编辑属性值",
-    "TIDY5E.EmptyTools": "无工具熟练"
+    "TIDY5E.EmptyTools": "无工具熟练。",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "主题设置",
+        "label": "配置主题设置",
+        "hint": "仅限新 Tidy 表单：为你的游戏世界设置默认主题设置。这些设置适用于所有表单类型。"
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "房规",
+        "label": "配置房规",
+        "hint": "启用并配置模组提供的房规选项。"
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "表单选项卡",
+        "label": "配置表单选项卡",
+        "hint": "仅限 Tidy 表单：配置所有角色和物品卡中可见的标签卡。"
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "激励储蓄",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "启用激励储蓄",
+        "hint": "启用此选项可允许用户将具有用途的特性物品设置为激励来源。在具有用途的特性物品上查找此选项，它会作为上下文菜单项出现。"
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "激励储蓄管理 - 仅GM",
+        "hint": "启用此选项可将激励储蓄管理权限限制为GM。"
+    },
+    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
+        "name": "隐藏玩家死亡豁免",
+        "hint": "仅GM可见死亡豁免总数。死亡豁免掷骰按钮仍可见。"
+    },
+    "TIDY5E.Settings.DefaultDeathSaveRoll": {
+        "name": "默认死亡豁免掷骰",
+        "hint": "确定进行死亡豁免掷骰时所使用的默认骰子类型。"
+    },
+    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
+        "name": "使用角色负重条",
+        "hint": "在角色卡上显示负重条。"
+    }
 }
