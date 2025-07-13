@@ -407,5 +407,11 @@
         "name": "初始卡选项卡",
         "hint": "首次打开工作卡时显示指定的选项卡。"
     },
-    "TIDY5E.ModuleName": "Tidy 5e 表单"
+    "TIDY5E.ModuleName": "Tidy 5e 表单",
+    "TIDY5E.StatblockTabName": "数据卡",
+    "TIDY5E.JournalEntry.NewTitle": "日志条目 {number}",
+    "TIDY5E.SheetLock.Empty.Hint": "首先添加一个职业和首个物品。然后，使用物品菜单或右键单击并选择“添加到表单选项卡”将它们添加到这里。",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "设为激励来源",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "移除作为激励来源",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "添加到“表单”选项卡"
 }
