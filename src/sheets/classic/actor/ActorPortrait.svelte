@@ -8,7 +8,6 @@
   } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { debug, error } from 'src/utils/logging';
-  import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { ContextMenuEntry } from 'src/foundry/foundry.types';
   import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -32,26 +31,6 @@
       ? `${localize('TIDY5E.EditSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`
       : `${localize('TIDY5E.PreviewSheetImageHint')} / ${localize('TIDY5E.SheetImageOptionsHint')}`,
   );
-
-  function openPortraitPicker(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-  ) {
-    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker(context, event)) {
-      return;
-    }
-    const rect = event.currentTarget.getBoundingClientRect();
-    const current = actor.img;
-    const fp = new foundry.applications.apps.FilePicker({
-      type: 'image',
-      current,
-      callback: (path: string) => {
-        actor.update({ img: path });
-      },
-      top: rect.top + 40,
-      left: rect.left + 10,
-    });
-    return fp.browse();
-  }
 
   let portraitContainer: HTMLElement;
 
