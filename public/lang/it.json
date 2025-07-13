@@ -636,7 +636,7 @@
         "title": "Impostazioni del Mondo (Solo DM)"
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Utilizza il supporto per tastiera accessibile",
+        "name": "Usa supporto per Tastiera Accessibile",
         "hint": "Consente agli utenti di scorrere la maggior parte dei pulsanti/comandi su Tidy 5e Sheets ed eseguirli con i tradizionali tasti di scelta rapida da tastiera basati su pulsanti. Nota: quando è attivo un pulsante in Foundry, le combinazioni di tasti da \"Configura controlli\" non rispondono. Se un modulo utilizza questa funzionalità Foundry per i controlli sui fogli, come l'utilizzo di oggetti tenendo premuto un tasto speciale, l'abilitazione di questa opzione Tidy 5e Sheets interferirà con tali combinazioni di tasti."
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
@@ -644,7 +644,7 @@
         "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input di un attributo a quello successivo nascondendo i controlli attorno ad essi dall'ordine di tabulazione. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Utilizza la scheda predefinita dei PF da tastiera",
+        "name": "Usa scheda predefinita dei PF da tastiera",
         "hint": "Il foglio 5e predefinito consente il tabulazione della tastiera dall'input HP corrente all'input HP temporaneo corrente. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
@@ -816,7 +816,7 @@
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Attiva/Disattiva Menu Intestazione",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il menu dell'intestazione della scheda.",
     "TIDY5E.Settings.UseEffectCards": {
-        "name": "Mostra Schede Informative degli effetti attivi",
+        "name": "Mostra Schede Informative Effetti Attivi",
         "hint": "Abilita per mostrare le schede informative degli effetti attivi per tutti i personaggi e gli elementi con effetti attivi."
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
