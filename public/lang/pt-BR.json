@@ -102,7 +102,7 @@
     "TIDY5E.Class.Barbarian": "Bárbaro",
     "TIDY5E.Class.Bard": "Bardo",
     "TIDY5E.Class.Cleric": "Clérigo",
-    "TIDY5E.Class.Custom": "Personalizado",
+    "TIDY5E.Class.Custom": "Classe Personalizada",
     "TIDY5E.Class.Druid": "Druida",
     "TIDY5E.Class.Fighter": "Guerreiro",
     "TIDY5E.Class.Monk": "Monge",
@@ -675,7 +675,8 @@
             "title": "Formato {type} do Retrato",
             "option.round": "Redondo",
             "option.transparent": "Transparente",
-            "option.square": "Quadrado"
+            "option.square": "Quadrado",
+            "option.token": "Token"
         },
         "RarityColors.title": "Cores de Raridade",
         "SheetTheme.title": "Tema da Ficha",
@@ -879,5 +880,8 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Seção por Item",
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ordem Crescente",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Ordem Decrescente",
-    "TIDY5E.Notifications.FirstTimeWelcome1": "Bem-vindo ao Tidy 5e Sheets! Para começar, você precisará alterar {sheetLinkStart}uma ficha{sheetLinkEnd} (ou {allSheetsLinkStart}todas as suas fichas{allSheetsLinkEnd}!) para usar a versão Tidy. Saiba mais sobre este módulo e o que ele pode fazer na {wikiLinkStart}wiki oficial{wikiLinkEnd}."
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Bem-vindo ao Tidy 5e Sheets! Para começar, você precisará alterar {sheetLinkStart}uma ficha{sheetLinkEnd} (ou {allSheetsLinkStart}todas as suas fichas{allSheetsLinkEnd}!) para usar a versão Tidy. Saiba mais sobre este módulo e o que ele pode fazer na {wikiLinkStart}wiki oficial{wikiLinkEnd}.",
+    "TIDY5E.SheetLock.Empty.Hint": "Comece adicionando uma classe e seus primeiros itens. Em seguida, use o menu de itens ou clique com o botão direito e escolha \"Adicionar à aba da Ficha\" para adicioná-los aqui.",
+    "TIDY5E.EmptyFavorites": "Clique com o botão direito e adicione aos Favoritos, ou arraste qualquer coisa da sua ficha para cá para acesso rápido.",
+    "TIDY5E.EmptyTools": "Sem proficiência em ferramentas."
 }
