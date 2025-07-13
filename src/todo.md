@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [x] Include player color in the available coloris swatches
 - [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
@@ -54,6 +55,8 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] Only show Action tab control when the action tab is in use.
+  - This is way more difficult than it has any business being. The ActorSheetRuntime refactor might be needed to make this viable.
 - [ ] Scaffold the Group Sheet
 - [ ] Set up Group Sheet Tab Selection
 - [ ] Scaffold the Vehicle Sheet
