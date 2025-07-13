@@ -2,6 +2,12 @@
 
 ### The Short List
 
+- [ ] Foundry package page: revamp
+- [ ] Prepared footer macro filter:
+  - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
+  - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
+  - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
+  - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -218,70 +224,5 @@ Limited:
 
 ### To Do Graveyard
 
-- [x] And character.scss line 1946 change the grid-template-columns to 17.5rem, it's a little too wide in the responsive view now that I'm playing with it moregrid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
-- [x] PC sheet - edit mode - header abilities - Setting buttons are too low at a very specific width
-- [x] The sidebar button's hitbox should be a little wider.
-- [x] Make the sidebar button a little wider
-- [x] Special Traits - tell the user whether there's an active effect modifying the value of a given special trait. Use the classic sheet approach of disabling and tooltipping.
-- [x] Extend Spell Slot drag-and-drop to entire section header.
-- [x] // TODO: Change to linkedActivity
-  - [x] If it works, then eliminate usages of cachedFor.
-- [x] Clean up and streamline the new import/export handling. Consider extracting to its own theme-quadrone class, so it can be dedicated to the task.
-- [x] Consider extracting import button to its own component to keep things clean.
-- [x] // TODO: This is some duplication with the Character sheet context prep. Find a way to share responsibly.
-- [x] **Theme Settings**: Verbally distinguish between "Actor Header Background" and "Item Sidebar Background". Add support for Item Sidebar Background.
-- [x] Add background circle hover style to section row buttons
-- [x] Always track and ensure that `currentTabId` is correct on the sheet. Use a getter/setter, and under the hood, use a stateful object. Make "change tab" function available and have it trigger rerenders.
-- [x] Editor style needs CSS help: <https://discord.com/channels/1167985253072257115/1169792539545587733/1362188451910258869>
-- [x] (Module Compatibility) So Inspired! - add API for globally overriding inspiration tracking.
-- [x] (Module Compatibility) DDB Importer - create and submit PR to support DDBI button or header menu across all relevant sheets.
-- [x] (Module Compatibility) So Inspired! - provide PR to module repo
-- [x] (Module Compatibility) Drakkenheim Corruption tab: support it in Quadrone
-- [x] (Module Compatibility) Test Hidden Death Saves module; tested, submitted github issue, hoping to hear back. Compat should be real easy on this one.
-- [x] Tidy API for pseudo traits: support on new character sheet
-- [x] (Module Compatibility) Search for module authors that integrate with Tidy Special Traits and make sure they're taken care of.
-- [x] (Module Compatibility) Discuss custom bars with Nox and (hopefully) LuMaster.
-- [x] Remember section expand/collapse state between sheet open/close.
-  - [x] On toggle, debounced by 250ms, persist to a client setting which hold all expansion tracker state via a map from UUID to expansion trackers, essentially. This setting will not be visualized in the UI.
-  - [x] On construction, look for ones own tracking data from the client setting and populate self.
-  - Remember section expand/collapse state between sheet open/close. ~~Tab setting (or possibly User setting / preference?): initialize all sections as closed. Moto Moto request. <https://discord.com/channels/915186263609454632/1107447125073199154/1379850522407735306>~~
-- [x] Make dedicated Quadrone Activities context menu. Remove inappropriate classic options like "Pin to Attributes"
-- [x] Control which sheet header controls are available for non-owners and locked-in-compendia.
-- [x] Suppress user preference persistence when minimized, minimizing, and maximizing. I think this is causing a Last Known Width/Height bug.
-- [x] Phys bypasses: ok what I'd try instead is to use the tooltip for sure, but thin toss on `fa-shield-exclamation` and try changing the color to either orange-40 or orange-70, or if that feels weird then same green but change the icon to `rgba(255, 236, 149, 1)` or something <https://discord.com/channels/@me/1243307347682529423/1391632333337002082>
-- [x] (testing) Fix issue with <https://github.com/KibblesTasty/kibbles-compendium-of-craft-and-creation>
-- [x] (testing) Finish testing all documented CONFIG.DND5E customizations
-- [x] Try to fix the inventory footer with Flex Parent ( Rest of Inventory, Footer )
-- [x] Make Quadrone Effects context menu handler; determine if there are any others.
-- [x] Implement a useful subtitle (if any) for the generic item. Remove the "todo". Determine whether we want to support a Magical Tattoo subtitle.
-- [x] Figure out where to put power tools like "Assign Spells to Source Classes"
-  - hightouch recommendation: in the tab config menu
-- [x] Refactor: Journal flag management is too complex. It needs to be extracted to a Tidy Journal controller class to keep the Tidy Flags layer as a simple data access layer.
-- [x] Create constants for all known filters. For those that are generated, provide a global filter name  provider function that takes a value (source class, for example) and churns out the appropriate name ('source-class-warlock'). Update the runtime and all those using hardcoded filter names (Spellbook Footer).
-- [x] `_onDropItem` - observe how Foundry core does this in V13. _onDropItem is provided with the full item on the Foundry side. Why are we doing our own thing? Can it be avoided? If not, then do that Foundry is doing. Copy how dnd5e is handling `_onDrop`, and this will enable you to then rely on Foundry core's `_onDropDocument`, which will provide the document instance for you.
-- [x] root out uses of 'src/api' where able
-- [x] PC Sheet Sidebar - Default Open
-- [x] PC Sheet Sidebar - Default selected Favorites, Favorites first tab
-- [x] Spell Slot Context menu - Edit - open Spell Slot Config ;)
-- [x] Skill/Tool Context menu - Edit - open Skill/Tool Config ;)
-- [x] Middle-click to edit favorite entries
-  - [x] Items, Activities, Effects
-  - [x] Spell Slot middle-click - open spell slot config
-  - [x] Skill/Tool middle-click - open skill/tool config
-- [x] Favorites Context Menu Adjustments - remove Duplicate and Delete actions
-  - [x] Item - Remove Spell Scroll, Dup, Delete
-  - [x] Activity/Effect - Remove Dup and Delete
-- [x] Upgrade all sheets to us the sheet actions for editImage, showArtwork, and editIcon (items and containers)
-  - [x] Quadrone Actors and Items
-  - [x] Classic Actors
-  - [x] Classic Items
-- [x] Add reference tooltips to skills and tools
-  - tool: `data-reference={dnd5e.documents.Trait.getBaseItemUUID(CONFIG.DND5E.tools[id]?.id)}`
-  - skill: `data-reference={CONFIG.DND5E.skills[id]?.reference}`
-  - make sure to derive it per skill/tool.
-- [x] Fix never-ending render issue with MLD, if able. The ideal may be to simply re-render manually when adjusting a setting, rather than hooking into the User changed event.
-- [x] ~~Add level breakdown tooltip to the level badge, else instructions for getting started.~~ Nah. It's in the subtitle AND the Character tab. 
-- [x] Dropping an item from a compendium window doesn't work every time. The drop behavior is resolving to "none" inexplicably.
-- [x] Can we just do what module\applications\mixins\drag-drop-mixin.mjs is doing for `_dropBehavior()`. Basically, just do it there, only?
-- [x] Sheet tab - drop in custom section is not working
-- [x] Container - drag out of custom section is not working
+- [x] Release notes: add section on the header
+- [x] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
