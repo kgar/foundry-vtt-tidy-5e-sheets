@@ -475,6 +475,14 @@
   <!-- Custom Sections -->
 
   {#if showCustomSections}
+    {@const actionsLabel =
+      context.item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+        ? 'Sheet'
+        : 'TIDY5E.Actions.TabName'}
+    {@const sectionType =
+      context.item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+        ? 'Sheet'
+        : 'TIDY5E.Section.Label'}
     <div>
       <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
       <div class="pills stacked">
@@ -485,7 +493,7 @@
           onclick={() =>
             new SectionSelectorApplication(
               TidyFlags.section.prop,
-              localize('TIDY5E.Section.Label'),
+              localize(sectionType),
               context.item,
               { document: context.item },
             ).render(true)}
@@ -510,7 +518,7 @@
             ).render(true)}
         >
           <span class="text-normal">
-            {localize('TIDY5E.Actions.TabName')}
+            {localize(actionsLabel)}
           </span>
           <span class="hyphens-auto">
             {actionSection}
