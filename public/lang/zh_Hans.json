@@ -456,5 +456,20 @@
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "使用角色负重条",
         "hint": "在角色卡上显示负重条。"
+    },
+    "TIDY5E.Settings.UseNPCEncumbranceBar": {
+        "name": "使用NPC负重条",
+        "hint": "在非玩家角色卡上显示负重条。"
+    },
+    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
+        "name": "使用载具负重条",
+        "hint": "在载具卡上显示负重条。"
+    },
+    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
+        "name": "使用兼职法术书筛选器",
+        "hint": "在法术书标签卡中，允许按职业类别筛选法术。必须使用法术编辑卡中的职业选择器将法术与某个职业相关联。"
+    },
+    "TIDY5E.Settings.UseSpellClassIcons": {
+        "name": "使用法术类别图标表示法术"
     }
 }
