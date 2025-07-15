@@ -68,7 +68,7 @@
     "TIDY5E.Class.Barbarian": "Barbaro",
     "TIDY5E.Class.Bard": "Bardo",
     "TIDY5E.Class.Cleric": "Chierico",
-    "TIDY5E.Class.Custom": "Personalizzato",
+    "TIDY5E.Class.Custom": "Classe Personalizzata",
     "TIDY5E.Class.Druid": "Druido",
     "TIDY5E.Class.Fighter": "Guerriero",
     "TIDY5E.Class.Monk": "Monaco",
@@ -377,7 +377,7 @@
         "SheetMenu": {
             "name": "Impostazioni del tema Tidy",
             "buttonLabel": "Impostazioni Tema",
-            "hint": "Personalizza i colori di Tidy 5e Sheets."
+            "hint": "Solo Classic Tidy Sheets: Personalizza i colori di Tidy 5e Sheets."
         },
         "Sheet": {
             "title": "Impostazioni Tema: {userName}",
@@ -391,7 +391,22 @@
             "importSuccess": "Tema importato con successo!",
             "menuLabel": "Menu",
             "explanation": "Seleziona il colore che desideri utilizzare per ciascuna opzione. Il valore \"#00000000\" equivale a disabilitare il colore."
-        }
+        },
+        "hint": "Personalizza la tua scheda per creare un'esperienza immersiva che completi il tuo gioco.",
+        "ActorHeaderBackground.title": "Sfondo Intestazione Personaggio",
+        "AccentColor.title": "Colore Base",
+        "ItemSidebarBackground.title": "Sfondo Barra Laterale",
+        "PortraitShape": {
+            "title": "{type} Forma Ritratto",
+            "option.round": "Rotondo",
+            "option.transparent": "Trasparente",
+            "option.square": "Squadrato",
+            "option.token": "Token"
+        },
+        "RarityColors.title": "Colori Rarità",
+        "SheetTheme.title": "Tema Scheda",
+        "SheetTheme.hint": "Per risultati ottimali, scegli un colore vicino al centro della tavolozza dei colori.",
+        "SpellPreparationModeColors.title": "Colori Modalità Preparazione Incantesimi"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Livello Incantesimo {number}",
     "TIDY5E.ApplyChanges": "Applica Modifiche",
@@ -425,9 +440,9 @@
         "MoreFormulas": "Più formule"
     },
     "TIDY5E.TabSelection": {
-        "SelectedHeader": "Schede Selezionate",
+        "SelectedHeader": "Schede Visibili",
         "MenuOptionText": "Selezione Scheda",
-        "AvailableHeader": "Schede Disponibili",
+        "AvailableHeader": "Schede Nascoste",
         "AtLeastOneRequiredErrorMessage": "Almeno una scheda è richiesta.",
         "Title": "Selezione Scheda: {documentName}",
         "UnsupportedDocumentErrorMessage": "Il tipo di documento {documentType} non è attualmente impostato per la selezione della scheda.",
@@ -544,7 +559,10 @@
             "sectionTitle": "Indebolimento PNG",
             "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
         },
-        "chatNotification": "È disponibile una nuova migrazione di Tidy 5e Sheets. Vedi le impostazioni di gioco di Tidy 5e Sheets per visualizzare le migrazioni disponibili."
+        "chatNotification": "È disponibile una nuova migrazione di Tidy 5e Sheets. Vedi le impostazioni di gioco di Tidy 5e Sheets per visualizzare le migrazioni disponibili.",
+        "Journal": {
+            "explanation1": "La revisione dell'interfaccia utente di Tidy 5e Sheets ha migliorato il Diario, consentendo di gestire tutte le voci desiderate. Per questo motivo, è necessaria una migrazione dalla vecchia struttura del diario alla nuova struttura estensibile. I dati del registro precedente non saranno visibili nella versione rinnovata di Tidy 5e Sheets."
+        }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -564,7 +582,7 @@
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
         "FinancialSupportParagraph": "Se ti piace Tidy 5e Sheets e vuoi sostenerlo finanziariamente, ecco alcuni modi per farlo:",
         "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Traduci contenuto web? Tidy 5e Sheets può usare il tuo aiuto! Vai al sito web Weblate per vedere i nostri progressi nella localizzazione in varie lingue. Questo modulo accetta traduzioni in nuove lingue e modifiche alle traduzioni esistenti.",
-        "name": "Su"
+        "name": "Informazioni"
     },
     "TIDY5E.UseDefault": "Usa Predefinito",
     "TIDY5E.Reset": "Ripristina",
@@ -618,16 +636,16 @@
         "title": "Impostazioni del Mondo (Solo DM)"
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Utilizza il supporto per tastiera accessibile",
+        "name": "Usa supporto per Tastiera Accessibile",
         "hint": "Consente agli utenti di scorrere la maggior parte dei pulsanti/comandi su Tidy 5e Sheets ed eseguirli con i tradizionali tasti di scelta rapida da tastiera basati su pulsanti. Nota: quando è attivo un pulsante in Foundry, le combinazioni di tasti da \"Configura controlli\" non rispondono. Se un modulo utilizza questa funzionalità Foundry per i controlli sui fogli, come l'utilizzo di oggetti tenendo premuto un tasto speciale, l'abilitazione di questa opzione Tidy 5e Sheets interferirà con tali combinazioni di tasti."
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Utilizza la tabulazione della tastiera con attributi del foglio predefiniti",
+        "name": "Usa tabulazione tastiera con attributi del foglio predefinito",
         "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input di un attributo a quello successivo nascondendo i controlli attorno ad essi dall'ordine di tabulazione. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Utilizza la scheda predefinita dei PF da tastiera",
-        "hint": "Il foglio 5e predefinito consente il tabulazione della tastiera dall'input HP corrente all'input HP temporaneo corrente. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
+        "name": "Usa scheda predefinita dei PF da tastiera",
+        "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input PF attuali all'input PF temporanei attuali. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "Attiva/disattiva le abilità dei personaggi vuoti",
@@ -755,7 +773,7 @@
     },
     "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",
     "TIDY5E.SpellSourceIdentifierLabelHint": "Il personaggio che possiede questo incantesimo non ha la classe sorgente specificata qui.",
-    "TIDY5E.Utilities.Tools": "Attrezzi",
+    "TIDY5E.Utilities.Tools": "Strumenti",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Assegna Incantesimi a Classi",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
@@ -798,7 +816,7 @@
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Attiva/Disattiva Menu Intestazione",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il menu dell'intestazione della scheda.",
     "TIDY5E.Settings.UseEffectCards": {
-        "name": "Mostra Schede Informative degli effetti attivi",
+        "name": "Mostra Schede Informative Effetti Attivi",
         "hint": "Abilita per mostrare le schede informative degli effetti attivi per tutti i personaggi e gli elementi con effetti attivi."
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
@@ -863,5 +881,46 @@
     "TIDY5E.CharacterTraits.Title": "Tratti Personaggio",
     "TIDY5E.HitDice.Current.Label": "Dadi Vita Attuali",
     "TIDY5E.SidebarPinnedTab.Title": "Fissato",
-    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Controllo Slot Incantesimi"
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Controllo Slot Incantesimi",
+    "TIDY5E.StatblockTabName": "Statistiche",
+    "TIDY5E.JournalEntry.NewTitle": "Voce Diario {number}",
+    "TIDY5E.SheetLock.Empty.Hint": "Inizia aggiungendo una classe e i tuoi primi elementi. Quindi, usa il menu degli elementi o clicca con il tasto destro del mouse e seleziona \"Aggiungi alla Scheda\" per aggiungerli qui.",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Imposta come Fonte di Ispirazione",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Rimuovi come Fonte di Ispirazione",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Aggiungi alla Scheda",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Rimuovi dalla Scheda",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Fonte di Ispirazione",
+    "TIDY5E.EmptyFavorites": "Clicca col pulsante destro e aggiungi ai preferiti, oppure trascina qui qualsiasi elemento dalla tua scheda per accedervi rapidamente.",
+    "TIDY5E.EmptyTools": "Nessuna competenza strumenti.",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Impostazioni Tema",
+        "label": "Configura Impostazioni Tema",
+        "hint": "Solo nuove schede Tidy: Definisci le impostazioni predefinite del tema per il tuo mondo di gioco. Queste si applicano a tutti i tipi di schede."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Homebrew",
+        "label": "Configura Homebrew",
+        "hint": "Abilita e configura le opzioni homebrew fornite da questo modulo."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Fogli della Scheda",
+        "label": "Configura Fogli della Scheda",
+        "hint": "Solo nuove Schede Tidy: configura quali schede sono visibili per tutti i fogli di personaggi ed elementi."
+    },
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Benvenuti in Tidy 5e Sheets! Per iniziare, dovrete modificare {sheetLinkStart}un foglio{sheetLinkEnd} (o {allSheetsLinkStart}tutti i vostri fogli{allSheetsLinkEnd}!) per utilizzare la versione Tidy. Scoprite di più su questo modulo e sulle sue funzionalità sul {wikiLinkStart}wiki ufficiale{wikiLinkEnd}.",
+    "TIDY5E.Settings.BankedInspiration.title": "Ispirazione Accumulata",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Abilita Ispirazione Accumulata",
+        "hint": "Abilita questa opzione per consentire all'utente di impostare un elemento caratteristico come fonte di ispirazione. Cerca l'opzione come voce del menu contestuale sulle caratteristiche con usi."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Gestione Ispirazione Accumulata - Solo DM",
+        "hint": "Abilita questa opzione per limitare la gestione dell'ispirazione accumulata al GM."
+    },
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Raggruppamento Attività Lancio Incantesimo",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sezione Incantesimi aggiuntivi",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sezione per Elemento",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Crescente",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Decrescente",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Privilegi Origine"
 }
