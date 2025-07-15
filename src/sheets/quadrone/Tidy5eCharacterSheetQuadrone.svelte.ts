@@ -776,9 +776,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
-    const movement = this.actor.system.attributes.movement;
-
-    const speeds = super._getMovementSpeeds(true);
+    const speeds = super._getMovementSpeeds();
 
     const main = speeds.slice(0, 2);
     const secondary = speeds.slice(2);

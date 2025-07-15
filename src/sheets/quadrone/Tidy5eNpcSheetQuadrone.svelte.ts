@@ -27,7 +27,7 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
-import { TidyFlags } from "src/foundry/TidyFlags";
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Container } from 'src/features/containers/Container';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
@@ -184,7 +184,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showLoyaltyTracker:
         this.actor.system.traits.important &&
         game.settings.get('dnd5e', 'loyaltyScore'),
-      speeds: super._getMovementSpeeds(true),
+      speeds: super._getMovementSpeeds(),
       spellbook: [],
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:

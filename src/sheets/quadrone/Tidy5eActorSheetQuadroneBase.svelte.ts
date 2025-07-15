@@ -557,24 +557,26 @@ export function Tidy5eActorSheetQuadroneBase<
       );
     }
 
-    _getMovementSpeeds(
-      includeDefaultWalkSpeed?: boolean
-    ): ActorSpeedSenseEntryContext[] {
-      const movement = this.actor.system.attributes.movement;
+    _getMovementSpeeds(): ActorSpeedSenseEntryContext[] {
+      const systemMovement = this.actor.system.attributes.movement;
+      const sourceMovement =
+        this.actor.system._source.attributes?.movement ?? {};
+
+      function excludeSpeed(key: string) {
+        return isNil(systemMovement[key], 0) && isNil(sourceMovement[key], 0);
+      }
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
         .reduce<ActorSpeedSenseEntryContext[]>((acc, [key, label]) => {
-          const value = movement[key];
-
-          if (!value || value === 0) {
+          if (excludeSpeed(key)) {
             return acc;
           }
 
           acc.push({
             key,
             label,
-            value: Math.round(+value).toString() ?? '',
-            units: movement.units,
+            value: Math.round(+systemMovement[key]).toString() ?? '',
+            units: systemMovement.units,
           });
 
           return acc;
@@ -587,15 +589,12 @@ export function Tidy5eActorSheetQuadroneBase<
             : +(right.value ?? 0) - +(left.value ?? 0)
         );
 
-      if (speeds.length === 0 && includeDefaultWalkSpeed) {
-        const defaultWalkSpeed =
-          this.document.system.details?.race?.system?.movement?.walk ?? null;
-
+      if (speeds.length === 0) {
         speeds.push({
           key: 'walk',
           label: CONFIG.DND5E.movementTypes.walk,
-          units: movement.units,
-          value: defaultWalkSpeed ?? '0',
+          units: systemMovement.units,
+          value: systemMovement.walk?.toString() ?? '0',
         });
       }
 
