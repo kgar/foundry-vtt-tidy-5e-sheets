@@ -8,8 +8,7 @@
     MessageBus,
     OnItemToggledFn,
   } from 'src/types/types';
-  import { warn } from 'src/utils/logging';
-  import { getContext, type Snippet } from 'svelte';
+  import { getContext, untrack, type Snippet } from 'svelte';
   import TidyItemSummary from './TidyItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -48,6 +47,10 @@
       !expanded
     ) {
       toggleSummary();
+
+      untrack(() => {
+        messageBus.message = undefined;
+      });
     }
   });
 
