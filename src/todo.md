@@ -154,6 +154,7 @@ This would accomplish allowing someone to quickly edit the current value without
 - [ ] add a class to section headers when there are no search results `.search-no-results`
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
+- [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 
 
 ### Module Compatibility
