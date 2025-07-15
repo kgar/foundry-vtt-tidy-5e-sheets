@@ -3,7 +3,6 @@
 ### The Short List
 
 
-- [ ] Add alignment to biography `system.details.alignment`, first field!
 - [ ] Add Activity uses to inline activities
 - [ ] Add damage formula to inline activities
 - [ ] Add alignment to header subtitle? Discuss with hightouch
@@ -264,3 +263,4 @@ Limited:
 - [x] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
 - [x] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to selection listboxes.
   - [x] Selection listbox
+- [x] Add alignment to biography `system.details.alignment`, first field!

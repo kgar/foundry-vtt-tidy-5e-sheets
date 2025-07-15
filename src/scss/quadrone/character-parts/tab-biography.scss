@@ -22,7 +22,7 @@
     padding-left: 0;
 
     li {
-      flex: 1 1 calc(50% - var(--t5e-size-4x));
+      flex: 0 1 calc(50% - var(--t5e-size-4x));
       min-width: 0;
     }
   }
