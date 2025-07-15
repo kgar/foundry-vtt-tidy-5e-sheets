@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   interface Props {
@@ -32,7 +33,7 @@
       FoundryAdapter.handleItemUsesChanged(event, item);
     }}
     disabled={!item.isOwner}
-    onfocus={(ev) => ev.currentTarget.select()}
+    {@attach InputAttachments.selectOnFocus}
     data-tidy-field="system.uses.value"
   />
   /
@@ -46,7 +47,7 @@
       onUsesMaxChanged(event, item);
     }}
     disabled={!item.isOwner}
-    onfocus={(ev) => ev.currentTarget.select()}
+    {@attach InputAttachments.selectOnFocus}
     data-tidy-field="system.uses.max"
   />
 </div>

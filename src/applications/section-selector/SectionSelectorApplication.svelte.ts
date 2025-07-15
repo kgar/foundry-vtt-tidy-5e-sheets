@@ -63,7 +63,7 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
       controls: [],
     },
     position: {
-      width: 600,
+      width: 400,
       height: 600,
     },
     actions: {},

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { PortraitCharmRadiusClass } from 'src/types/types';
 
@@ -45,7 +46,7 @@
       onchange={() => onLevelSelected?.(level)}
       bind:value={level}
       placeholder="0"
-      onfocus={(ev) => ev.currentTarget.select()}
+      {@attach InputAttachments.selectOnFocus}
       disabled={isActiveEffectApplied}
       data-tooltip={isActiveEffectApplied
         ? localize('DND5E.ActiveEffectOverrideWarning')

@@ -2,22 +2,21 @@
 
 ### The Short List
 
-
-- [ ] Add alignment to header subtitle? Discuss with hightouch
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
-  - [ ] Inline Activities - add Formula column and don't truncate
+  - [x] Inline Activities - add Formula column and don't truncate
     - What about Activity Tables in item sheets?
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
   - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
-- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
   - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
   - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
   - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
+- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+- [ ] Determine: When transforming, carry over favorites or not.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -29,6 +28,36 @@
 - [ ] Update the readme
 - [ ] Foundry package page: revamp
 
+#### Carrying over favorites
+
+The essential code for adding favorites during transformation.
+```ts
+      const hookId = Hooks.on(
+        'dnd5e.transformActorV2',
+        (
+          originalActor: Actor5e,
+          newActorSource: any,
+          data: any,
+          settings: unknown,
+          options: unknown
+        ) => {
+          if (this.actor.system.favorites) {
+            const favorites = structuredClone(this.actor.system.favorites);
+            foundry.utils.mergeObject(data, {
+              ['system.favorites']: favorites,
+            });
+          }
+        }
+      );
+
+      try {
+        const transformed = await this.actor.transformInto(document, settings);
+
+        return transformed;
+      } finally {
+        Hooks.off('dnd5e.transformActorV2', hookId);
+      }
+```
 
 #### Current Section Name Issue Notes
 
@@ -125,6 +154,7 @@ This would accomplish allowing someone to quickly edit the current value without
 - [ ] add a class to section headers when there are no search results `.search-no-results`
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
+- [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 
 
 ### Module Compatibility
@@ -264,3 +294,6 @@ Limited:
 - [x] Add alignment to biography `system.details.alignment`, first field!
 - [x] Add Activity uses to inline activities
 - [x] Add damage formula to inline activities
+- [x] ~~Add alignment to header subtitle? Discuss with hightouch~~ was already done
+- [x] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' https://discord.com/channels/1167985253072257115/1394345274402406523
+- [x] Custom Section Selector - be able to rename existing section without retyping the whole section title. (see notes below)

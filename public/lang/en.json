@@ -836,6 +836,7 @@
     },
     "SectionSelectorChooseSectionTooltip": "Choose a Section",
     "SectionSelectorChooseActionSectionTooltip": "Choose an Action Section",
+    "SectionSelectorChooseTabSectionTooltip": "Choose {tabName} Section",
     "SectionSelectorTitle": "{sectionType}: {documentName}",
     "SectionSelectorExistingSections": "Existing Sections",
     "SectionSelectorCreateNewSection": "Create a new section",

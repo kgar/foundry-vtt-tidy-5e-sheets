@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -52,7 +53,7 @@
     <input
       type="text"
       value={item.system.uses.value}
-      onfocus={(event) => event.currentTarget.select()}
+      {@attach InputAttachments.selectOnFocus}
       onchange={(event) => FoundryAdapter.handleItemUsesChanged(event, item)}
       class="uninput uses-value color-text-default"
       disabled={!context.editable}

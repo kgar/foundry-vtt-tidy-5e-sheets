@@ -402,7 +402,7 @@ export function getItemContextOptions(
     icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
       new SectionSelectorApplication(
-        TidyFlags.section.prop,
+        TidyFlags.actionSection.prop,
         FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
         itemParent ?? item,
         { document: item }
