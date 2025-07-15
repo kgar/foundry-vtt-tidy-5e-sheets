@@ -2,8 +2,6 @@
 
 ### The Short List
 
-
-- [ ] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' https://discord.com/channels/1167985253072257115/1394345274402406523
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [x] Inline Activities - add Formula column and don't truncate
@@ -265,3 +263,4 @@ Limited:
 - [x] Add Activity uses to inline activities
 - [x] Add damage formula to inline activities
 - [x] ~~Add alignment to header subtitle? Discuss with hightouch~~ was already done
+- [x] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' https://discord.com/channels/1167985253072257115/1394345274402406523

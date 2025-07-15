@@ -312,7 +312,7 @@ export function getItemContextOptionsQuadrone(
     group: 'customize',
     callback: () =>
       new SectionSelectorApplication(
-        TidyFlags.section.prop,
+        TidyFlags.actionSection.prop,
         FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
         itemParent ?? item,
         { document: item }
