@@ -2,8 +2,14 @@
   import type { Snippet } from 'svelte';
   import Listbox from './Listbox.svelte';
   import SelectionListboxToolbar from './SelectionListboxToolbar.svelte';
+  import { arrayTransfer } from 'src/utils/array';
 
   type TItem = $$Generic;
+
+  type SelectionListboxDragData = {
+    index: number;
+    origin: 'left' | 'right';
+  };
 
   interface Props {
     leftItems: TItem[];
@@ -207,6 +213,36 @@
       moveDown();
     }
   }
+
+  let dragSource = $state<SelectionListboxDragData>();
+
+  function onDragStart(data: SelectionListboxDragData) {
+    dragSource = data;
+  }
+
+  function onDragEnd() {
+    dragSource = undefined;
+  }
+
+  function onDrop(dropTarget: SelectionListboxDragData) {
+    if (!dragSource) {
+      return;
+    }
+
+    try {
+      const source = dragSource?.origin === 'left' ? leftItems : rightItems;
+      const target = dropTarget.origin === 'left' ? leftItems : rightItems;
+
+      arrayTransfer({
+        arrFrom: source,
+        arrTo: target,
+        arrFromIndex: dragSource.index,
+        arrToIndex: dropTarget.index,
+      });
+    } finally {
+      dragSource = undefined;
+    }
+  }
 </script>
 
 <div class="selection-listbox flexrow {rest.class ?? ''}">
@@ -225,6 +261,23 @@
       ondblclick={(detail) => onLeftListboxDblClick(detail.event)}
       onkeydown={handleLeftListboxKeydown}
       class={[listboxCssClass, 'listbox-selected']}
+      draggable={true}
+      ondragstart={(ev) =>
+        onDragStart({
+          index: ev.index,
+          origin: 'left',
+        })}
+      ondrop={(ev) =>
+        onDrop({
+          index: ev.index,
+          origin: 'left',
+        })}
+      onlistboxDrop={() =>
+        onDrop({
+          index: leftItems.length,
+          origin: 'left',
+        })}
+      ondragend={onDragEnd}
     >
       {#snippet itemTemplate({ item })}
         {#if leftItemTemplate}{@render leftItemTemplate({ item })}{:else}
@@ -268,6 +321,23 @@
       onkeydown={handleRightListboxKeydown}
       ondblclick={(detail) => onRightListboxDblClick(detail.event)}
       class={listboxCssClass}
+      draggable={true}
+      ondragstart={(ev) =>
+        onDragStart({
+          index: ev.index,
+          origin: 'right',
+        })}
+      ondrop={(ev) =>
+        onDrop({
+          index: ev.index,
+          origin: 'right',
+        })}
+      onlistboxDrop={() =>
+        onDrop({
+          index: rightItems.length,
+          origin: 'right',
+        })}
+      ondragend={onDragEnd}
     >
       {#snippet itemTemplate({ item })}
         {#if rightItemTemplate}{@render rightItemTemplate({ item })}{:else}

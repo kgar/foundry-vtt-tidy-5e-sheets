@@ -2,7 +2,11 @@
 
 ### The Short List
 
-- [ ] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to all the selection listboxes and sorting listboxes.
+
+- [ ] Add alignment to biography `system.details.alignment`, first field!
+- [ ] Add Activity uses to inline activities
+- [ ] Add damage formula to inline activities
+- [ ] Add alignment to header subtitle? Discuss with hightouch
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [ ] Inline Activities - add Formula column and don't truncate
@@ -258,3 +262,5 @@ Limited:
 - [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
 - [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
 - [x] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
+- [x] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to selection listboxes.
+  - [x] Selection listbox
