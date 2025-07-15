@@ -47,6 +47,14 @@ export class SheetSections {
     CONSTANTS.ITEM_TYPE_RACE,
   ]);
 
+  static readonly empty: TidySectionBase = Object.freeze({
+    label: '',
+    dataset: {},
+    key: '',
+    show: true,
+    rowActions: [],
+  });
+
   static itemSupportsCustomSections(itemType: string) {
     return !this._itemCustomSectionBlacklist.has(itemType);
   }

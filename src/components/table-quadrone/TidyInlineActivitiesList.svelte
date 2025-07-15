@@ -9,6 +9,7 @@
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
   import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
 
   interface Props {
     item?: Item5e | null;
@@ -99,13 +100,7 @@
             <ActivityUsesColumn
               rowDocument={ctx.activity}
               rowContext={ctx}
-              section={{
-                label: '',
-                dataset: {},
-                key: '',
-                show: true,
-                rowActions: [],
-              }}
+              section={SheetSections.empty}
             />
           {/if}
         </TidyTableCell>
