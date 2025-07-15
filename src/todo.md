@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title. (see notes below)
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [x] Inline Activities - add Formula column and don't truncate
@@ -264,3 +263,4 @@ Limited:
 - [x] Add damage formula to inline activities
 - [x] ~~Add alignment to header subtitle? Discuss with hightouch~~ was already done
 - [x] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' https://discord.com/channels/1167985253072257115/1394345274402406523
+- [x] Custom Section Selector - be able to rename existing section without retyping the whole section title. (see notes below)

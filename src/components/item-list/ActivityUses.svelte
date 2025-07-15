@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -35,7 +36,7 @@
       FoundryAdapter.handleActivityUsesChanged(event, activity);
     }}
     disabled={!activity.item.isOwner}
-    onfocus={(ev) => ev.currentTarget.select()}
+    {@attach InputAttachments.selectOnFocus}
     data-tidy-field="uses.value"
   />
   /
@@ -49,7 +50,7 @@
       onUsesMaxChanged(event, activity);
     }}
     disabled={!activity.item.isOwner}
-    onfocus={(ev) => ev.currentTarget.select()}
+    {@attach InputAttachments.selectOnFocus}
     data-tidy-field="uses.max"
   />
 </div>

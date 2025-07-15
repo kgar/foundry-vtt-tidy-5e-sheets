@@ -7,6 +7,8 @@
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
   import { isNil } from 'src/utils/data';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { untrack } from 'svelte';
 
   interface Props {
     sheet: SectionSelectorApplication;
@@ -33,6 +35,12 @@
   let freeText = $state('');
   let searchCriteria = $state('');
 
+  $effect(() => {
+    untrack(() => {
+      freeText = context.data?.currentSection ?? '';
+    });
+  });
+
   let filteredResults = $derived(
     searchCriteria.trim() === ''
       ? sections
@@ -45,6 +53,34 @@
 </script>
 
 <h2>{localize('TIDY5E.Section.LabelPl')}</h2>
+<form
+  onsubmit={(ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    onOptionSelected(freeText);
+  }}
+>
+  <fieldset>
+    <legend>
+      {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </legend>
+    <div class="flexrow button-bar">
+      <input
+        type="text"
+        bind:value={freeText}
+        placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
+        class="flex2"
+        autofocus
+        {@attach InputAttachments.selectOnFocus}
+      />
+      <button type="submit" class="button flex1"
+        >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
+      >
+    </div>
+  </fieldset>
+</form>
+
 <fieldset>
   <legend>
     {localize('TIDY5E.Section.SectionSelectorExistingSections')}
@@ -79,25 +115,4 @@
       {localize('TIDY5E.UseDefault')}
     </button>
   </section>
-</fieldset>
-
-<fieldset class="card">
-  <legend>
-    {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
-    <tidy-gold-header-underline></tidy-gold-header-underline>
-  </legend>
-  <div class="flexrow button-bar">
-    <input
-      type="text"
-      bind:value={freeText}
-      placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
-      class="flex2"
-    />
-    <button
-      type="button"
-      class="button flex1"
-      onclick={() => onOptionSelected(freeText)}
-      >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
-    >
-  </div>
 </fieldset>
