@@ -15,6 +15,8 @@
   - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
   - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
   - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
+- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+- [ ] Determine: When transforming, carry over favorites or not.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -26,6 +28,36 @@
 - [ ] Update the readme
 - [ ] Foundry package page: revamp
 
+#### Carrying over favorites
+
+The essential code for adding favorites during transformation.
+```ts
+      const hookId = Hooks.on(
+        'dnd5e.transformActorV2',
+        (
+          originalActor: Actor5e,
+          newActorSource: any,
+          data: any,
+          settings: unknown,
+          options: unknown
+        ) => {
+          if (this.actor.system.favorites) {
+            const favorites = structuredClone(this.actor.system.favorites);
+            foundry.utils.mergeObject(data, {
+              ['system.favorites']: favorites,
+            });
+          }
+        }
+      );
+
+      try {
+        const transformed = await this.actor.transformInto(document, settings);
+
+        return transformed;
+      } finally {
+        Hooks.off('dnd5e.transformActorV2', hookId);
+      }
+```
 
 #### Current Section Name Issue Notes
 

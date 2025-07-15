@@ -1031,9 +1031,9 @@ export function Tidy5eActorSheetQuadroneBase<
         game.user.isGM ||
         (this.actor.isOwner && game.settings.get('dnd5e', 'allowPolymorphing'));
 
-      // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
       if (
         !canPolymorph ||
+        // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
         this.currentTabId === CONSTANTS.TAB_CHARACTER_BASTION
       ) {
         return;
