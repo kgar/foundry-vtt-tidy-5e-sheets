@@ -3,7 +3,6 @@
 ### The Short List
 
 
-- [ ] Add Activity uses to inline activities
 - [ ] Add damage formula to inline activities
 - [ ] Add alignment to header subtitle? Discuss with hightouch
 - [ ] Formula column
@@ -264,3 +263,4 @@ Limited:
 - [x] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to selection listboxes.
   - [x] Selection listbox
 - [x] Add alignment to biography `system.details.alignment`, first field!
+- [x] Add Activity uses to inline activities

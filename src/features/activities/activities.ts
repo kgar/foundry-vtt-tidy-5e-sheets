@@ -57,6 +57,7 @@ export class Activities {
       id: activity.id,
       activity,
       hasRecharge,
+      hasLimitedUses: !!activity.uses?.max,
       isOnCooldown,
       activation: activationAbbr
         ? `${activity.activation.value ?? ''}${game.i18n.localize(

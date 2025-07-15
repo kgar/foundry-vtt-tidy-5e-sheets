@@ -4,11 +4,11 @@
   import TidyTableRow from './TidyTableRow.svelte';
   import TidyTableCell from './TidyTableCell.svelte';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
-  import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { Activities } from 'src/features/activities/activities';
   import type { ActivityItemContext } from 'src/types/types';
+  import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -94,26 +94,19 @@
             </span>
           </span>
         </TidyTableCell>
-        <TidyTableCell {...columns.uses}>
+        <TidyTableCell {...columns.uses} class="inline-uses">
           {#if configurable}
-            {#if ctx.isOnCooldown}
-              <!-- <RechargeControl
-                  document={ctx.activity}
-                  field={'uses.spent'}
-                  uses={ctx.activity.uses}
-                /> -->
-            {:else if ctx.hasRecharge}
-              {@const remaining =
-                ctx.activity.uses.max - ctx.activity.uses.spent}
-              {#if remaining > 1}
-                <span>{remaining}</span>
-              {/if}
-              <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
-            {:else if !!ctx.activity.uses?.max}
-              <!-- <ActivityUses activity={ctx.activity} /> -->
-            {:else}
-              <span class="text-body-tertiary">&mdash;</span>
-            {/if}
+            <ActivityUsesColumn
+              rowDocument={ctx.activity}
+              rowContext={ctx}
+              section={{
+                label: '',
+                dataset: {},
+                key: '',
+                show: true,
+                rowActions: [],
+              }}
+            />
           {/if}
         </TidyTableCell>
         <TidyTableCell {...columns.usage}>
