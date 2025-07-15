@@ -301,8 +301,28 @@ export function getItemContextOptionsQuadrone(
       ).render(true),
   });
 
+  let actionSectionContextName =
+    itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ? FoundryAdapter.localize(
+          'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
+          { tabName: FoundryAdapter.localize('Sheet') }
+        )
+      : itemParent?.type === CONSTANTS.SHEET_TYPE_NPC
+      ? FoundryAdapter.localize(
+          'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
+          { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') }
+        )
+      : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
+
+  let actionSectionConfigTitle =
+    itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ? FoundryAdapter.localize('Sheet')
+      : itemParent?.type === CONSTANTS.SHEET_TYPE_NPC
+      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
+      : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
+
   options.push({
-    name: 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
+    name: actionSectionContextName,
     icon: '<i class="fas fa-diagram-cells"></i>',
     condition: () =>
       item.isOwner &&
@@ -313,7 +333,7 @@ export function getItemContextOptionsQuadrone(
     callback: () =>
       new SectionSelectorApplication(
         TidyFlags.actionSection.prop,
-        FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
+        actionSectionConfigTitle,
         itemParent ?? item,
         { document: item }
       ).render(true),

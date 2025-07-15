@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title. (see notes below)
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [x] Inline Activities - add Formula column and don't truncate
@@ -10,7 +11,6 @@
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
   - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
-- [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
   - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
