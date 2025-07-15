@@ -5,6 +5,7 @@
   import type {
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
+    MessageBus,
     OnItemToggledFn,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
@@ -34,6 +35,21 @@
     children,
     expanded = $bindable(false),
   }: Props = $props();
+
+  let messageBus = getContext<MessageBus>(CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS);
+
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+
+  $effect(() => {
+    if (
+      messageBus.message?.message === 'expand-item' &&
+      messageBus.message.tabId === tabId &&
+      messageBus.message.uuid === item.uuid &&
+      !expanded
+    ) {
+      toggleSummary();
+    }
+  });
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },

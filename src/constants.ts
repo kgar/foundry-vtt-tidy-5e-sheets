@@ -87,6 +87,7 @@ export const CONSTANTS = {
   ITEM_SYSTEM_TYPE_AMMO: 'ammo',
   MESSAGE_BUS_COLLAPSE_ALL: 'collapse-all',
   MESSAGE_BUS_EXPAND_ALL: 'expand-all',
+  MESSAGE_BUS_EXPAND_ITEM: 'expand-item',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */

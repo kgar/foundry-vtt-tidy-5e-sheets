@@ -592,6 +592,11 @@ export type MessageBusMessage =
       tabId: string;
       message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
       options?: { includeInlineToggles?: boolean };
+    }
+  | {
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ITEM;
+      uuid: string;
     };
 
 export type Utilities<TContext> = Record<
@@ -1184,7 +1189,7 @@ export type NpcSheetQuadroneContext = {
   habitats: { label: string }[];
   inventory: InventorySection[];
   showContainerPanel: boolean;
-  showDeathSaves: boolean
+  showDeathSaves: boolean;
   showLairTracker: boolean;
   showLegendaryActions: boolean;
   showLegendaryResistances: boolean;
