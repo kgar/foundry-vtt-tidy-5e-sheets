@@ -3,10 +3,10 @@
 ### The Short List
 
 
-- [ ] Add alignment to header subtitle? Discuss with hightouch
+- [ ] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' https://discord.com/channels/1167985253072257115/1394345274402406523
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
-  - [ ] Inline Activities - add Formula column and don't truncate
+  - [x] Inline Activities - add Formula column and don't truncate
     - What about Activity Tables in item sheets?
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
@@ -264,3 +264,4 @@ Limited:
 - [x] Add alignment to biography `system.details.alignment`, first field!
 - [x] Add Activity uses to inline activities
 - [x] Add damage formula to inline activities
+- [x] ~~Add alignment to header subtitle? Discuss with hightouch~~ was already done
