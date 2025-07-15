@@ -47,7 +47,7 @@ export class SheetSections {
     CONSTANTS.ITEM_TYPE_RACE,
   ]);
 
-  static readonly empty: TidySectionBase = Object.freeze({
+  static readonly EMPTY: TidySectionBase = Object.freeze({
     label: '',
     dataset: {},
     key: '',

@@ -3,7 +3,6 @@
 ### The Short List
 
 
-- [ ] Add damage formula to inline activities
 - [ ] Add alignment to header subtitle? Discuss with hightouch
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
@@ -264,3 +263,4 @@ Limited:
   - [x] Selection listbox
 - [x] Add alignment to biography `system.details.alignment`, first field!
 - [x] Add Activity uses to inline activities
+- [x] Add damage formula to inline activities

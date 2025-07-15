@@ -7,9 +7,18 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { Activities } from 'src/features/activities/activities';
-  import type { ActivityItemContext } from 'src/types/types';
+  import type {
+    ActivityItemContext,
+    ActorSheetQuadroneContext,
+  } from 'src/types/types';
   import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
+  import ActivityTimeColumn from 'src/sheets/quadrone/item/columns/ActivityTimeColumn.svelte';
+  import ActivityDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ActivityDamageFormulasColumn.svelte';
+  import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { getDefaultColumns } from 'src/runtime/item/default-item-columns';
 
   interface Props {
     item?: Item5e | null;
@@ -18,11 +27,16 @@
 
   let { item = null, activities = [] }: Props = $props();
 
+  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
+
   const columns = $derived({
     uses: {
       columnWidth: '5rem',
     },
-    usage: {
+    time: {
+      columnWidth: '5rem',
+    },
+    formula: {
       columnWidth: '5rem',
     },
   });
@@ -31,15 +45,21 @@
     activity.use({ event });
   }
 
-  function getActivityUsageLabel(activity: Activity5e) {
-    return (
-      CONFIG.DND5E.activityActivationTypes[activity.activation?.type]?.label ??
-      activity.activation?.type ??
-      ''
-    );
-  }
+  let rowActions = $derived(
+    TableRowActionsRuntime.getActivityRowActions(
+      context.owner,
+      context.unlocked,
+    ),
+  );
 
-  const localize = FoundryAdapter.localize;
+  let actionsColumn = getDefaultColumns().actions;
+
+  let section = $derived({
+    ...SheetSections.EMPTY,
+    rowActions,
+  });
+
+  let actionsColumnWidthRems = $derived(actionsColumn.widthRems(section));
 </script>
 
 <TidyTable
@@ -100,12 +120,30 @@
             <ActivityUsesColumn
               rowDocument={ctx.activity}
               rowContext={ctx}
-              section={SheetSections.empty}
+              {section}
             />
           {/if}
         </TidyTableCell>
-        <TidyTableCell {...columns.usage}>
-          {getActivityUsageLabel(ctx.activity)}
+        <TidyTableCell {...columns.time}>
+          <ActivityTimeColumn
+            rowDocument={ctx.activity}
+            rowContext={ctx}
+            {section}
+          />
+        </TidyTableCell>
+        <TidyTableCell {...columns.formula}>
+          <ActivityDamageFormulasColumn
+            rowDocument={ctx.activity}
+            rowContext={ctx}
+            {section}
+          />
+        </TidyTableCell>
+        <TidyTableCell columnWidth="{actionsColumnWidthRems}rem">
+          <DocumentActionsColumn
+            rowDocument={ctx.activity}
+            rowContext={ctx}
+            {section}
+          />
         </TidyTableCell>
       </TidyTableRow>
     {/each}
