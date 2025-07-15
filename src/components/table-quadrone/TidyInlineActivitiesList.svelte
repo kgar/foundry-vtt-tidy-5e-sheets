@@ -4,11 +4,21 @@
   import TidyTableRow from './TidyTableRow.svelte';
   import TidyTableCell from './TidyTableCell.svelte';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
-  import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { Activities } from 'src/features/activities/activities';
-  import type { ActivityItemContext } from 'src/types/types';
+  import type {
+    ActivityItemContext,
+    ActorSheetQuadroneContext,
+  } from 'src/types/types';
+  import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import ActivityTimeColumn from 'src/sheets/quadrone/item/columns/ActivityTimeColumn.svelte';
+  import ActivityDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ActivityDamageFormulasColumn.svelte';
+  import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { getDefaultColumns } from 'src/runtime/item/default-item-columns';
 
   interface Props {
     item?: Item5e | null;
@@ -17,11 +27,16 @@
 
   let { item = null, activities = [] }: Props = $props();
 
+  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
+
   const columns = $derived({
     uses: {
       columnWidth: '5rem',
     },
-    usage: {
+    time: {
+      columnWidth: '5rem',
+    },
+    formula: {
       columnWidth: '5rem',
     },
   });
@@ -30,15 +45,21 @@
     activity.use({ event });
   }
 
-  function getActivityUsageLabel(activity: Activity5e) {
-    return (
-      CONFIG.DND5E.activityActivationTypes[activity.activation?.type]?.label ??
-      activity.activation?.type ??
-      ''
-    );
-  }
+  let rowActions = $derived(
+    TableRowActionsRuntime.getActivityRowActions(
+      context.owner,
+      context.unlocked,
+    ),
+  );
 
-  const localize = FoundryAdapter.localize;
+  let actionsColumn = getDefaultColumns().actions;
+
+  let section = $derived({
+    ...SheetSections.EMPTY,
+    rowActions,
+  });
+
+  let actionsColumnWidthRems = $derived(actionsColumn.widthRems(section));
 </script>
 
 <TidyTable
@@ -94,30 +115,35 @@
             </span>
           </span>
         </TidyTableCell>
-        <TidyTableCell {...columns.uses}>
+        <TidyTableCell {...columns.uses} class="inline-uses">
           {#if configurable}
-            {#if ctx.isOnCooldown}
-              <!-- <RechargeControl
-                  document={ctx.activity}
-                  field={'uses.spent'}
-                  uses={ctx.activity.uses}
-                /> -->
-            {:else if ctx.hasRecharge}
-              {@const remaining =
-                ctx.activity.uses.max - ctx.activity.uses.spent}
-              {#if remaining > 1}
-                <span>{remaining}</span>
-              {/if}
-              <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
-            {:else if !!ctx.activity.uses?.max}
-              <!-- <ActivityUses activity={ctx.activity} /> -->
-            {:else}
-              <span class="text-body-tertiary">&mdash;</span>
-            {/if}
+            <ActivityUsesColumn
+              rowDocument={ctx.activity}
+              rowContext={ctx}
+              {section}
+            />
           {/if}
         </TidyTableCell>
-        <TidyTableCell {...columns.usage}>
-          {getActivityUsageLabel(ctx.activity)}
+        <TidyTableCell {...columns.time}>
+          <ActivityTimeColumn
+            rowDocument={ctx.activity}
+            rowContext={ctx}
+            {section}
+          />
+        </TidyTableCell>
+        <TidyTableCell {...columns.formula}>
+          <ActivityDamageFormulasColumn
+            rowDocument={ctx.activity}
+            rowContext={ctx}
+            {section}
+          />
+        </TidyTableCell>
+        <TidyTableCell columnWidth="{actionsColumnWidthRems}rem">
+          <DocumentActionsColumn
+            rowDocument={ctx.activity}
+            rowContext={ctx}
+            {section}
+          />
         </TidyTableCell>
       </TidyTableRow>
     {/each}

@@ -5,6 +5,7 @@ import type {
   CharacterSheetQuadroneContext,
   InventorySection,
   SpellbookSection,
+  TidySectionBase,
 } from 'src/types/types';
 import type { Component } from 'svelte';
 import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
@@ -266,6 +267,46 @@ class TableRowActionsRuntime {
   }
 
   getEffectsRowActions() {}
+
+  getActivityRowActions(owner: boolean, unlocked: boolean) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Item5e,
+      TidySectionBase
+    >;
+
+    let rowActions: TableAction<any>[] = $derived.by(() => {
+      let result: TableAction<any>[] = [];
+
+      if (owner) {
+        if (unlocked) {
+          result.push({
+            component: EditButton,
+            props: (doc: any) => ({ doc }),
+          } satisfies TableAction<typeof EditButton>);
+
+          result.push({
+            component: DeleteButton,
+            props: (doc: any) => ({
+              doc,
+              deleteFn: () => doc.deleteDialog(),
+            }),
+          } satisfies TableAction<typeof DeleteButton>);
+        }
+      }
+
+      result.push({
+        component: MenuButton,
+        props: () => ({
+          targetSelector: '[data-context-menu]',
+        }),
+      } satisfies TableAction<typeof MenuButton>);
+
+      return result;
+    });
+
+    return rowActions;
+  }
 }
 
 const singleton = new TableRowActionsRuntime();

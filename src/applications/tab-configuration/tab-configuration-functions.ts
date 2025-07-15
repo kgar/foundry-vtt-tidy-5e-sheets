@@ -69,7 +69,13 @@ function buildContext(
     {}
   );
 
-  let selected = mapTabIdsToOptions(allTabs, settings?.selected ?? []);
+  const effectiveSelections = settings?.selected.filter((tabId) => allRegisteredTabs.some((t) => t.id === tabId)
+  ) ?? [];
+  
+  let selected = mapTabIdsToOptions(
+    allTabs,
+    effectiveSelections
+  );
 
   let defaultSelected = mapTabIdsToOptions(allTabs, defaultSelectedIds);
 

@@ -4,9 +4,9 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
 
-  let { rowDocument: item }: ColumnCellProps = $props();
+  let { rowDocument: activity, rowContext: ctx }: ColumnCellProps = $props();
 
-  let conceal = $derived(item.system.identified === false);
+  let conceal = $derived(activity.item.system.identified === false);
 
   let context = $derived(getSheetContext());
 
@@ -14,51 +14,52 @@
 
   let rechargeLabel = $derived(
     localize('TIDY5E.RollRecharge.Hint', {
-      rechargeLabel: item.labels?.recharge ?? '',
+      rechargeLabel: activity.labels?.recharge ?? '',
     }),
   );
 
   function onRechargeClicked(ev: MouseEvent) {
     ev.shiftKey
-      ? item.update({ ['system.uses.spent']: 0 })
-      : item.system.uses?.rollRecharge({ apply: true, event: ev });
+      ? activity.update({ ['uses.spent']: 0 })
+      : activity.uses?.rollRecharge({ apply: true, event: ev });
   }
 
   let { rechargeRange, diceIconClass } = $derived(
-    getUsesRechargeDiceRange(item.system.uses),
+    getUsesRechargeDiceRange(activity.uses),
   );
 </script>
 
-{#if item.hasLimitedUses && !conceal}
-  {#if item.hasRecharge && item.isOnCooldown}
+{#if ctx.hasLimitedUses && !conceal}
+  {#if ctx.hasRecharge && ctx.isOnCooldown}
     <a
-      class={['item-list-button', { disabled: !item.isOwner }]}
+      class={['item-list-button', { disabled: !activity.item.isOwner }]}
       data-tooltip={rechargeLabel}
-      onclick={(ev) => item.isOwner && onRechargeClicked(ev)}
+      onclick={(ev) => activity.item.isOwner && onRechargeClicked(ev)}
     >
       <i class="{diceIconClass} color-text-lighter text-label-icon"></i>
       <span class="recharge-range-text text-data">
         {rechargeRange}
       </span>
     </a>
-  {:else if item.hasRecharge && !item.isOnCooldown}
+  {:else if ctx.hasRecharge && !ctx.isOnCooldown}
     <span class="charged-text">
-      {#if item.system.uses.value > 1}
-        <span>{item.system.uses.value}</span>
+      {#if activity.uses.value > 1}
+        <span>{activity.uses.value}</span>
       {/if}
       <i class="fas fa-bolt" data-tooltip={localize('DND5E.Charged')}></i>
     </span>
   {:else}
     <input
       type="text"
-      value={item.system.uses.value}
+      value={activity.uses.value}
       onfocus={(event) => event.currentTarget.select()}
-      onchange={(event) => FoundryAdapter.handleItemUsesChanged(event, item)}
+      onchange={(event) =>
+        FoundryAdapter.handleItemUsesChanged(event, activity)}
       class="uninput uses-value color-text-default"
       disabled={!context.editable}
     />
     <span class="color-text-gold">/</span>
-    <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
+    <span class="uses-max color-text-lighter">{activity.uses.max}</span>
   {/if}
 {:else}
   <span class="color-text-disabled">&mdash;</span>

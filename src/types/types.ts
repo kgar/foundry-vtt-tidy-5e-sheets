@@ -296,6 +296,7 @@ export type CharacterItemContext = {
 export type ActivityItemContext = {
   activation: string;
   hasRecharge: boolean;
+  hasLimitedUses: boolean;
   isOnCooldown: boolean;
   id: string;
   activity: Activity5e;

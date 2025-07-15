@@ -2,20 +2,16 @@
 
 ### The Short List
 
-- [x] Include player color in the available coloris swatches
-- [x] Tools cog always visible. Limit to Edit mode.
-- [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
-- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
+
+- [ ] Add alignment to header subtitle? Discuss with hightouch
 - [ ] Formula column
   - [ ] Truncate to one line and show tooltip
   - [ ] Inline Activities - add Formula column and don't truncate
     - What about Activity Tables in item sheets?
-- [ ] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
   - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
-- [ ] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to all the selection listboxes and sorting listboxes.
 - [ ] Custom Section Selector - be able to rename existing section without retyping the whole section title
 - [ ] Prepared footer macro filter:
   - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
@@ -32,6 +28,18 @@
 - [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
 - [ ] Update the readme
 - [ ] Foundry package page: revamp
+
+
+#### Current Section Name Issue Notes
+
+I was contemplating the Sheet Sections hiccup we ran into with Jake: it is difficult to quickly change the name of a section for a given item when using the section selector.
+I was thinking we could do just a little rearranging and repurposing to make it work.
+
+1. We change "Create a New Section" to instead show the current, chosen section value in the input. Clicking on the input selects all text. "Save New Section" just changes to "Save Changes" or something.
+2. Move this custom value input to the top and have it autofocus on load.
+
+This would accomplish allowing someone to quickly edit the current value without having to retype it. The reframing of this would, I think, make it more immediately understandable, since your current value is always at the top, in the input box, and the input box being the focus allows for establishing settings quickly.
+
 
 ### NPC Sheet
 
@@ -126,6 +134,7 @@
 - [x] Fix Bastion Item Sheet, Crafting UI
 - [ ] Weapon Favorite stats cell is missing formatting classes
 - [ ] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
+- [ ] Non-square portraits need some CSS help: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940
 - [ ] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
@@ -245,3 +254,13 @@ Limited:
 
 - [x] Release notes: add section on the header
 - [x] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
+- [x] Include player color in the available coloris swatches
+- [x] Tools cog always visible. Limit to Edit mode.
+- [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
+- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
+- [x] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
+- [x] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to selection listboxes.
+  - [x] Selection listbox
+- [x] Add alignment to biography `system.details.alignment`, first field!
+- [x] Add Activity uses to inline activities
+- [x] Add damage formula to inline activities

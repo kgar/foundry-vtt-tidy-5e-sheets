@@ -439,8 +439,8 @@ const faces: Record<string, string> = {
 
 const unknownFace = 'fa-solid fa-dice';
 
-export function getItemRechargeDiceRange(item: Item5e) {
-  const recovery = item.system.uses?.recovery[0];
+export function getUsesRechargeDiceRange(uses: any | undefined) {
+  const recovery = uses?.recovery[0];
   const formula = recovery?.formula ?? '';
   const rechargeRange = formula === '6' ? formula : `${formula}-6`;
   const diceIconClass = faces[formula] ?? unknownFace;

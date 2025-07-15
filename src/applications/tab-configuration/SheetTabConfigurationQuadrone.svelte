@@ -28,7 +28,7 @@
   <h2>
     {title}
   </h2>
-  <TabConfigurationEntry entry={config.entry} />
+  <TabConfigurationEntry bind:entry={config.entry} />
 </div>
 <div class="flexrow flexgap-1">
   <button

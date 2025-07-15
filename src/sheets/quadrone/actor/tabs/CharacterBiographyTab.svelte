@@ -13,6 +13,11 @@
 
   let bioFields: SystemBioField[] = $derived([
     {
+      field: 'system.details.alignment',
+      value: context.system.details.alignment,
+      text: 'DND5E.Alignment',
+    },
+    {
       field: 'system.details.gender',
       value: context.system.details.gender,
       text: 'DND5E.Gender',
@@ -96,7 +101,9 @@
     <ul class="biography-entries">
       {#each bioFields as bioField (bioField.field)}
         <li class="form-group">
-          <label class="biography-entry-label" for={bioField.field}>{localize(bioField.text)}</label>
+          <label class="biography-entry-label" for={bioField.field}
+            >{localize(bioField.text)}</label
+          >
           <!-- {#if context.unlocked} -->
           <div class="form-fields">
             <TextInputQuadrone
@@ -190,7 +197,7 @@
         >
           <i class="fa-solid fa-feather"></i>
         </a>
-      </h3> 
+      </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
     {#key enriched}

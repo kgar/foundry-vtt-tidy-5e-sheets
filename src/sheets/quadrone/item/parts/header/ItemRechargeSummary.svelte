@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
-  import { getItemRechargeDiceRange } from 'src/utils/formula';
+  import { getUsesRechargeDiceRange } from 'src/utils/formula';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -13,7 +13,7 @@
     context.item.system.identified === false && !gmEditMode,
   );
 
-  let { rechargeRange, diceIconClass } = getItemRechargeDiceRange(context.item);
+  let { rechargeRange, diceIconClass } = $derived(getUsesRechargeDiceRange(context.item.system.uses));
 </script>
 
 <div class="item-recharge">
