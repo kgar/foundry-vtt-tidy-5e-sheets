@@ -5,19 +5,17 @@
   import { error } from 'src/utils/logging';
   import ListItemsTooltip from 'src/tooltips/ListItemsTooltip.svelte';
   import { getContext } from 'svelte';
-  import type { MessageBus } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { Tooltip } from 'src/tooltips/Tooltip';
+  import type { TidyTableToggleSummaryFunction } from 'src/components/table-quadrone/TidyItemTableRow.svelte';
 
   let { rowDocument, rowContext }: ColumnCellProps = $props();
 
   const damageHealingTypeIcons = Actions.damageAndHealingTypesIconSrcMap;
 
-  let messageBus = $derived(
-    getContext<MessageBus>(CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS),
+  let toggleSummary = getContext<TidyTableToggleSummaryFunction>(
+    CONSTANTS.SVELTE_CONTEXT.TIDY_TABLE_TOGGLE_SUMMARY,
   );
-
-  let tabId = $derived(getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID));
 
   function getTrimmedExpression(formula: string) {
     try {
@@ -69,11 +67,7 @@
           type="button"
           class="button remaining-damages-count"
           onclick={() => {
-            messageBus.message = {
-              message: 'expand-item',
-              tabId,
-              uuid: rowDocument.uuid,
-            };
+            toggleSummary?.(true);
             Tooltip.hide();
           }}
         >

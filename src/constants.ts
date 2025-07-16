@@ -473,6 +473,7 @@ export const CONSTANTS = {
     SECTION_EXPANSION_TOGGLE_PROVIDER: 'expansionTrackerSectionToggleProvider',
     STATS: 'stats',
     TAB_ID: 'tabId',
+    TIDY_TABLE_TOGGLE_SUMMARY: 'tidyTableToggleSummary',
     USE_DEFAULT: 'useDefault',
     VALIDATE: 'validate',
   },

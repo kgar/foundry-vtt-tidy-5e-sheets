@@ -1,3 +1,7 @@
+<script module>
+  export type TidyTableToggleSummaryFunction = (override?: boolean) => void;
+</script>
+
 <script lang="ts">
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -22,7 +26,9 @@
     contextMenu?: { type: string; uuid: string } | null;
     rowClass?: ClassValue;
     hidden?: boolean;
-    children?: Snippet<[{ toggleSummary: () => void; expanded: boolean }]>;
+    children?: Snippet<
+      [{ toggleSummary: TidyTableToggleSummaryFunction; expanded: boolean }]
+    >;
     expanded?: boolean;
   }
 
@@ -34,24 +40,6 @@
     children,
     expanded = $bindable(false),
   }: Props = $props();
-
-  let messageBus = getContext<MessageBus>(CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS);
-
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  $effect(() => {
-    if (
-      messageBus.message?.message === 'expand-item' &&
-      messageBus.message.tabId === tabId &&
-      messageBus.message.uuid === item.uuid
-    ) {
-      !expanded && toggleSummary();
-
-      untrack(() => {
-        messageBus.message = undefined;
-      });
-    }
-  });
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -74,11 +62,18 @@
 
   let chatData: ItemChatData | undefined = $state();
 
-  async function toggleSummary(override?: boolean) {
+  const toggleSummary: TidyTableToggleSummaryFunction = async (
+    override?: boolean,
+  ) => {
     chatData ??= await item.getChatData({ secrets: item.isOwner });
     expanded = override ?? !expanded;
     onItemToggled?.(item.id, expanded, location);
-  }
+  };
+
+  setContext<TidyTableToggleSummaryFunction>(
+    CONSTANTS.SVELTE_CONTEXT.TIDY_TABLE_TOGGLE_SUMMARY,
+    toggleSummary,
+  );
 
   async function onMouseEnter(event: Event) {
     TidyHooks.tidy5eSheetsItemHoverOn(event, item);

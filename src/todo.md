@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Refactor: remove the message bus message for expanding a single item. Use the context API to grant toggleSummary to child components ✅ and update the cell to use it on damages overflow button click.
 - [ ] Extract column specs for activity tables. 
   - [ ] Apply data-driven columns to inline activity sections.
   - [ ] Apply data-driven columns to the Activity tab in item sheets.
@@ -306,3 +305,4 @@ Limited:
 - [x] Activity Formula column
   - [x] Truncate damage strings
   - [x] Inline Activities - add Formula column and don't truncate
+- [x] Refactor: remove the message bus message for expanding a single item. Use the context API to grant toggleSummary to child components ✅ and update the cell to use it on damages overflow button click.
