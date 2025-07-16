@@ -8,7 +8,7 @@
     MessageBus,
     OnItemToggledFn,
   } from 'src/types/types';
-  import { getContext, untrack, type Snippet } from 'svelte';
+  import { getContext, setContext, untrack, type Snippet } from 'svelte';
   import TidyItemSummary from './TidyItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -43,10 +43,9 @@
     if (
       messageBus.message?.message === 'expand-item' &&
       messageBus.message.tabId === tabId &&
-      messageBus.message.uuid === item.uuid &&
-      !expanded
+      messageBus.message.uuid === item.uuid
     ) {
-      toggleSummary();
+      !expanded && toggleSummary();
 
       untrack(() => {
         messageBus.message = undefined;
@@ -75,9 +74,9 @@
 
   let chatData: ItemChatData | undefined = $state();
 
-  async function toggleSummary() {
+  async function toggleSummary(override?: boolean) {
     chatData ??= await item.getChatData({ secrets: item.isOwner });
-    expanded = !expanded;
+    expanded = override ?? !expanded;
     onItemToggled?.(item.id, expanded, location);
   }
 
