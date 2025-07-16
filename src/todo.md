@@ -160,6 +160,10 @@ This would accomplish allowing someone to quickly edit the current value without
 
 ## hightouch To Do
 
+- [ ] Formula column tidying needed. 
+  - the draft CSS is here in `src/scss/quadrone/tables.scss`, and the component is `src\sheets\quadrone\item\columns\ItemDamageFormulasColumn.svelte`
+  - right now, the overflow button is behind truesight
+  - to recap: a cell-wide button that encapsulates all the damage labels would require some retrofit styling to get it looking normal again. On the other hand, the overflow button is very small, so I dunno.
 - [x] Fix Bastion Item Sheet, Crafting UI
 - [ ] Weapon Favorite stats cell is missing formatting classes
 - [ ] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
