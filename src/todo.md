@@ -2,10 +2,9 @@
 
 ### The Short List
 
-- [ ] Formula column
-  - [ ] Truncate to one line and show tooltip
-  - [x] Inline Activities - add Formula column and don't truncate
-    - What about Activity Tables in item sheets?
+- [ ] Extract column specs for activity tables. 
+  - [ ] Apply data-driven columns to inline activity sections.
+  - [ ] Apply data-driven columns to the Activity tab in item sheets.
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
@@ -155,12 +154,16 @@ This would accomplish allowing someone to quickly edit the current value without
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
-
+- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? 
 
 ### Module Compatibility
 
 ## hightouch To Do
 
+- [ ] Formula column tidying needed. 
+  - the draft CSS is here in `src/scss/quadrone/tables.scss`, and the component is `src\sheets\quadrone\item\columns\ItemDamageFormulasColumn.svelte`
+  - right now, the overflow button is behind truesight
+  - to recap: a cell-wide button that encapsulates all the damage labels would require some retrofit styling to get it looking normal again. On the other hand, the overflow button is very small, so I dunno.
 - [x] Fix Bastion Item Sheet, Crafting UI
 - [ ] Weapon Favorite stats cell is missing formatting classes
 - [ ] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
@@ -297,3 +300,13 @@ Limited:
 - [x] ~~Add alignment to header subtitle? Discuss with hightouch~~ was already done
 - [x] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' https://discord.com/channels/1167985253072257115/1394345274402406523
 - [x] Custom Section Selector - be able to rename existing section without retyping the whole section title. (see notes below)
+- [x] Item Formula column
+  - [x] Show top 2 damages
+  - [x] If > 2 damages, 
+    - [x] show "+N", where N the number of damages above 2
+    - [x] the entire cell is clickable and opens the item (so use the MessageBus)
+  - [x] Truncate damage strings
+- [x] Activity Formula column
+  - [x] Truncate damage strings
+  - [x] Inline Activities - add Formula column and don't truncate
+- [x] Refactor: remove the message bus message for expanding a single item. Use the context API to grant toggleSummary to child components ✅ and update the cell to use it on damages overflow button click.

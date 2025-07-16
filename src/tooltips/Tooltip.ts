@@ -5,4 +5,7 @@ export class Tooltip {
       cssClass: `tidy5e-sheet application quadrone tooltip themed theme-${theme}`,
     });
   }
+  static hide() {
+    game.tooltip.deactivate();
+  }
 }

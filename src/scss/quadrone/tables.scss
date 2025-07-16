@@ -438,6 +438,18 @@
       flex-wrap: nowrap;
       text-wrap: nowrap;
       overflow: hidden;
+
+      // TODO: work with hightouch to make it nice
+      .remaining-damages-count {
+        border: 1px solid green;
+        background-color: pink;
+        border-radius: 3px;
+        padding: 0.0625rem;
+        flex: 0;
+        margin-inline-start: auto;
+        height: auto;
+        min-height: unset;
+      }
     }
 
     .damage-icon {
