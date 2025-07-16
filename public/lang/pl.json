@@ -884,7 +884,10 @@
     "TIDY5E.CharacterTraits.Title": "Atrybuty postaci",
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Sekcja Dodatkowe czary",
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekcja Na przedmiot",
-    "TIDY5E.ContextMenuActionAddToSheetTab": "Dodaj do zakładki karty",
-    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Usuń z zakładki karty",
-    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z aktywności Rzucanie"
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Dodaj do zakładki Karta",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Usuń z zakładki Karta",
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z aktywności Rzucanie",
+    "TIDY5E.SheetLock.Empty.Hint": "Zacznij od dodania klasy i pierwszych przedmiotów. Następnie skorzystaj z menu przedmiotu lub kliknij prawym przyciskiem myszy i wybierz „Dodaj do zakładki Karta”, aby dodać je tutaj.",
+    "TIDY5E.EmptyFavorites": "Kliknij prawym przyciskiem myszy i Dodaj do ulubionych lub przeciągnij dowolny element z karty tutaj, żeby mieć do nich szybki dostęp.",
+    "TIDY5E.EmptyTools": "Brak biegłości w posługiwaniu się narzędziami"
 }
