@@ -108,12 +108,12 @@
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
     "TIDY5E.RangedSpellAttackMod": "Modyfikator do rzutu na atak czarem dystansowym",
     "TIDY5E.PreparedSpells": "Przygotowane czary",
-    "TIDY5E.TokenLinked": "Żeton przypisany do aktora",
-    "TIDY5E.TokenUnlinked": "Żeton nie przypisany do aktora",
+    "TIDY5E.TokenLinked": "Token przypisany do aktora",
+    "TIDY5E.TokenUnlinked": "Token nie przypisany do aktora",
     "TIDY5E.Class.Artificer": "Wynalazca",
     "TIDY5E.Class.Barbarian": "Barbarzyńca",
     "TIDY5E.Class.Cleric": "Kleryk",
-    "TIDY5E.Class.Custom": "Niestandardowa",
+    "TIDY5E.Class.Custom": "Niestandardowa klasa",
     "TIDY5E.Class.Fighter": "Wojownik",
     "TIDY5E.Class.Monk": "Mnich",
     "TIDY5E.Class.Paladin": "Paladyn",
@@ -338,7 +338,8 @@
             "title": "Kształt portretu {type}",
             "option.round": "Okrągły",
             "option.transparent": "Przezroczysty",
-            "option.square": "Kwadratowy"
+            "option.square": "Kwadratowy",
+            "option.token": "Token"
         },
         "RarityColors.title": "Kolory rzadkości",
         "SheetTheme.title": "Motyw karty",
@@ -683,7 +684,8 @@
         "SectionSelectorExistingSections": "Istniejące sekcje",
         "SectionSelectorCreateNewSection": "Stwórz nową sekcję",
         "SectionSelectorNewSectionName": "Nazwa nowej sekcji",
-        "SectionSelectorSaveNewSection": "Zapisz nową sekcję"
+        "SectionSelectorSaveNewSection": "Zapisz nową sekcję",
+        "SectionSelectorChooseTabSectionTooltip": "Wybierz sekcję {tabName}"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+kliknij, aby pominąć rzut i natychmiast odnowić) ",
     "TIDY5E.UseDefaultDialog": {
@@ -889,5 +891,5 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z aktywności Rzucanie",
     "TIDY5E.SheetLock.Empty.Hint": "Zacznij od dodania klasy i pierwszych przedmiotów. Następnie skorzystaj z menu przedmiotu lub kliknij prawym przyciskiem myszy i wybierz „Dodaj do zakładki Karta”, aby dodać je tutaj.",
     "TIDY5E.EmptyFavorites": "Kliknij prawym przyciskiem myszy i Dodaj do ulubionych lub przeciągnij dowolny element z karty tutaj, żeby mieć do nich szybki dostęp.",
-    "TIDY5E.EmptyTools": "Brak biegłości w posługiwaniu się narzędziami"
+    "TIDY5E.EmptyTools": "Brak biegłości w posługiwaniu się narzędziami."
 }
