@@ -8,12 +8,13 @@
   import { CONSTANTS } from 'src/constants';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import type { TidyTableToggleSummaryFunction } from 'src/components/table-quadrone/TidyItemTableRow.svelte';
+  import { settings } from 'src/settings/settings.svelte';
 
   let { rowDocument, rowContext }: ColumnCellProps = $props();
 
   const damageHealingTypeIcons = Actions.damageAndHealingTypesIconSrcMap;
 
-  let toggleSummary = getContext<TidyTableToggleSummaryFunction>(
+  let toggleSummary = getContext<TidyTableToggleSummaryFunction | undefined>(
     CONSTANTS.SVELTE_CONTEXT.TIDY_TABLE_TOGGLE_SUMMARY,
   );
 
@@ -62,7 +63,7 @@
           <Dnd5eIcon src={damageHealingIcon} />
         </span>
       {/if}
-      {#if i === 1 && remainingDamagesCount > 0}
+      {#if settings.value.truesight && i === 1 && remainingDamagesCount > 0}
         <a
           type="button"
           class="button remaining-damages-count"
