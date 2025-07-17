@@ -150,9 +150,9 @@
     </div>
   {/if}
 
-  <!-- Preparation Mode -->
+  <!-- Preparation Method -->
   <div class="form-group">
-    <label for="{appId}-preparation-mode"
+    <label for="{appId}-method"
       >{localize('DND5E.SpellPreparation.Method')}</label
     >
     <div class="form-fields">
@@ -178,7 +178,7 @@
         </div>
       </div>
 
-      <!-- Prepared -->
+      <!-- Preparation -->
       {#if context.canPrepare}
         <div class="form-group label-top">
           <label for="{appId}-prepared">

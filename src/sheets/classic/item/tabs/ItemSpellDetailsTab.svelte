@@ -132,40 +132,56 @@
   </div>
 {/if}
 
-<!-- Preparation Mode -->
+<!-- Preparation Method -->
 <div class="form-group">
-  <label for="{appId}-preparation-mode"
-    >{localize('DND5E.SpellPreparation.Mode')}</label
+  <label for="{appId}-method">{localize('DND5E.SpellPreparation.Method')}</label
   >
   <div class="form-fields">
-    <!-- Prepared -->
-    {#if context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
-      <Checkbox
-        id="{appId}-preparation-prepared"
-        document={context.item}
-        field="system.preparation.prepared"
-        checked={context.source.preparation.prepared}
-        title={localize('DND5E.Prepared')}
-        attributes={{
-          ['aria-label']: localize('DND5E.Prepared'),
-        }}
-        disabled={!context.editable}
-      />
-    {/if}
+    <div class="form-group label-top">
+      <!-- Method -->
+      <label for="{appId}-method">
+        {localize('DND5E.Method')}
+      </label>
+      <div class="form-fields">
+        <Select
+          id="{appId}-method"
+          document={context.item}
+          field="system.method"
+          value={context.source.method}
+          disabled={!context.editable}
+        >
+          <SelectOptions
+            data={context.spellcastingMethods}
+            labelProp="label"
+            valueProp="value"
+          />
+        </Select>
+      </div>
+    </div>
 
-    <!-- Mode -->
-    <Select
-      id="{appId}-preparation-mode"
-      document={context.item}
-      field="system.preparation.mode"
-      value={context.source.preparation.mode}
-      disabled={!context.editable}
-    >
-      <SelectOptions
-        data={context.config.spellPreparationModes}
-        labelProp="label"
-      />
-    </Select>
+    <!-- Preparation -->
+    {#if context.item.system.canPrepare}
+      <div class="form-group label-top">
+        <label for="{appId}-prepared">
+          {localize('DND5E.Preparation')}
+        </label>
+        <div class="form-fields">
+          <Select
+            id="{appId}-prepared"
+            document={context.item}
+            field="system.prepared"
+            value={context.source.prepared}
+            disabled={!context.editable}
+          >
+            <SelectOptions
+              data={context.config.spellPreparationStates}
+              labelProp="label"
+              valueProp="value"
+            />
+          </Select>
+        </div>
+      </div>
+    {/if}
   </div>
 </div>
 
