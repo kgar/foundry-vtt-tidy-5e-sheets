@@ -658,9 +658,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     });
 
     // Section spells
-    // TODO: Take over `_prepareSpellbook` and
-    // - have custom sectioning built right into the process
-    // - set up `key` in the spellbook prep code, just like `prop`
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
       CONSTANTS.TAB_ACTOR_SPELLBOOK,

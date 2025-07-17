@@ -203,144 +203,97 @@ export class SheetSections {
 
   /**
    * Insert a spell into the spellbook object when rendering the character sheet.
-   * @param {object} context    Sheet rendering context data being prepared for render.
-   * @param {object[]} spells   Spells to be included in the spellbook.
-   * @returns {object[]}        Spellbook sections in the proper order.
+   * @param context    Sheet rendering context data being prepared for render.
+   * @param items      Spells to be included in the spellbook.
+   * @returns          Spellbook sections in the proper order.
    * @protected
    */
   static _prepareSpellbookLegacy(
     context: ActorSheetContextV1 | ActorSheetQuadroneContext,
-    spells: Item5e
+    items: Item5e[]
   ) {
     const owner = context.actor.isOwner;
-    const levels = context.actor.system.spells;
     const spellbook: Record<string, SpellbookSectionLegacy> = {};
     const castActivitySpellGroupingPreference =
       UserPreferencesService.get()?.castActivitySpellGrouping ??
       CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_ADDITIONAL;
 
-    // Define section and label mappings
-    const sections = Object.entries(CONFIG.DND5E.spellPreparationModes).reduce<
-      Record<string, any>
-    >((acc, [k, spell]) => {
-      if ('order' in spell && Number.isNumeric(spell.order)) {
-        acc[k] = Number(spell.order);
-      }
-      return acc;
-    }, {});
-    const useLabels: Record<string, string | number> = {
-      '-30': '-',
-      '-20': '-',
-      '-10': '-',
-      0: '&infin;',
-    };
-
-    type SpellSectionPrepArgs = {
-      prepMode?: string;
-      value?: number;
-      max?: number;
-      override?: number;
-      config?: (typeof CONFIG.DND5E.spellPreparationModes)[0];
-      levels?: any;
-    };
-
-    // Format a spellbook entry for a certain indexed level
+    /** Register a section in the spellbook */
     const registerSection = (
-      sl: string,
-      i: number,
-      label: string,
-      {
-        prepMode = 'prepared',
-        value,
-        max,
-        override,
-        config,
-      }: SpellSectionPrepArgs = {}
+      key: string,
+      level?: number,
+      config?: unknown,
+      customLabel?: string
     ) => {
-      const aeOverride = foundry.utils.hasProperty(
-        context.actor.overrides,
-        `system.spells.spell${i}.override`
+      level = config?.slots ? level : 1;
+
+      if (key in spellbook) {
+        return;
+      }
+
+      const label =
+        customLabel ??
+        config?.getLabel({ level }) ??
+        game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook');
+      const method = config?.key ?? key;
+      const order = level === 0 ? 0 : config?.order ?? 1000;
+      const usesSlots = config?.slots && level;
+
+      const spells = foundry.utils.getProperty(
+        context.actor.system.spells,
+        key
       );
-      spellbook[i] = {
-        order: i,
-        label: label,
-        usesSlots: i > 0,
+
+      spellbook[key] = {
+        label,
+        order,
+        usesSlots: usesSlots,
+        id: method,
         canCreate: owner,
-        canPrepare:
-          (context.actor.type === 'character' && i >= 1) || !!config?.prepares,
+        canPrepare: !!config?.prepares,
         spells: [],
-        uses: useLabels[i] || value || 0,
-        slots: useLabels[i] || max || 0,
-        override: override || 0,
+        uses: spells.value ?? 0,
+        slots: spells.override ?? spells.max ?? 0,
         dataset: {
           type: 'spell',
-          ['system.level']: prepMode in sections ? 1 : i,
-          ['system.preparation.mode']: prepMode,
+          ['system.level']: level,
+          ['system.method']: method,
         },
-        prop: sl,
-        editable: context.editable && !aeOverride,
-        prepMode,
+        slot: key,
+        editable: context.editable,
       };
     };
 
-    // Determine the maximum spell level which has a slot
-    const maxLevel = Array.fromRange(
-      Object.keys(CONFIG.DND5E.spellLevels).length - 1,
-      1
-    ).reduce((max, i) => {
-      const level = levels[`spell${i}`];
-      if (level && (level.max || level.override) && i > max) max = i;
-      return max;
-    }, 0);
-
-    // Level-based spellcasters have cantrips and leveled slots
-    if (maxLevel > 0) {
-      registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
-      for (let lvl = 1; lvl <= maxLevel; lvl++) {
-        const sl = `spell${lvl}`;
-        registerSection(sl, lvl, CONFIG.DND5E.spellLevels[lvl], levels[sl]);
-      }
-    }
-
-    // Create spellbook sections for all alternative spell preparation modes that have spell slots.
-    for (const [k, v] of Object.entries(CONFIG.DND5E.spellPreparationModes)) {
-      let upcast = 'upcast' in v && v.upcast;
-
-      if (!(k in levels) || !upcast || !levels[k].max) {
-        continue;
-      }
-
-      let cantrips = 'cantrips' in v && v.cantrips;
-      if (!spellbook['0'] && cantrips) {
-        registerSection('spell0', 0, CONFIG.DND5E.spellLevels[0]);
-      }
-
-      const l = levels[k];
-
-      const level = game.i18n.localize(`DND5E.SpellLevel${l.level}`);
-
-      const label = `${v.label} — ${level}`;
-
-      registerSection(k, sections[k], label, {
-        prepMode: k,
-        value: l.value,
-        max: l.max,
-        override: l.override,
-        config: v,
-      });
+    // Register sections for the available spellcasting methods this character has.
+    for (const spellcasting of Object.values(CONFIG.DND5E.spellcasting)) {
+      const levels = spellcasting.getAvailableLevels?.(context.actor) ?? [];
+      if (!levels.length) continue;
+      if (spellcasting.cantrips)
+        registerSection('spell0', 0, CONFIG.DND5E.spellcasting.spell);
+      levels.forEach((l) =>
+        registerSection(spellcasting.getSpellSlotKey(l), l, spellcasting)
+      );
     }
 
     // Iterate over every spell item, adding spells to the spellbook by section
-    spells.forEach((spell: Item5e) => {
-      const mode = spell.system.preparation.mode || 'prepared';
-      let key = spell.system.level || 0;
-      const sl = `spell${key}`;
+    items.forEach((spell: Item5e) => {
+      let method = spell.system.method as keyof CONFIG['DND5E']['spellcasting'];
+
+      if (!(method in CONFIG.DND5E.spellcasting)) {
+        method = 'innate'; // TODO: Constant
+      }
+
+      const spellcasting = CONFIG.DND5E.spellcasting[method];
+      const level = spell.system.level || 0;
+      method = spellcasting?.getSpellSlotKey?.(level) ?? method;
+      let key: string = method;
 
       // Spells from items
       if (spell.system.linkedActivity) {
         if (!spell.system.linkedActivity?.displayInSpellbook) return;
 
         let label = '';
+        key = method;
 
         if (
           castActivitySpellGroupingPreference ===
@@ -357,33 +310,15 @@ export class SheetSections {
         }
 
         if (!spellbook[key]) {
-          registerSection(key, key, label);
+          // TODO: Clean this up with an options object
+          registerSection(key, undefined, undefined, label);
           spellbook[key].order = 1000;
         }
       }
 
-      // Specialized spellcasting modes (if they exist)
-      else if (mode in sections) {
-        key = sections[mode];
-        if (!spellbook[key]) {
-          const l = levels[mode] || {};
-          const config = CONFIG.DND5E.spellPreparationModes[mode];
-          registerSection(mode, key, config.label, {
-            prepMode: mode,
-            value: l.value,
-            max: l.max,
-            override: l.override,
-            config: config,
-          });
-        }
-      }
-
-      // Sections for higher-level spells which the caster "should not" have, but spell items exist for
-      else if (!spellbook[key]) {
-        registerSection(sl, key, CONFIG.DND5E.spellLevels[key], {
-          // TODO: Investigate this. It seems unused.
-          levels: levels[sl],
-        });
+      // Sections for higher-level spells which the caster does not have any slots for.
+      else {
+        registerSection(method, level, spellcasting);
       }
 
       // Add the spell to the relevant heading
