@@ -36,6 +36,7 @@ import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import UserPreferencesService from '../user-preferences/UserPreferencesService';
+import type { SpellcastingConfigEntry } from 'src/foundry/config.types';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -97,6 +98,9 @@ export class SheetSections {
       },
       show: true,
       rowActions: [], // for the UI Overhaul
+      // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
+      slot: '',
+      method: '',
       ...options,
     };
   }
@@ -168,7 +172,8 @@ export class SheetSections {
           ...s,
           uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
           slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
-          key: s.prop,
+          key: s.slot,
+          method: s.id,
           show: true,
           rowActions: options.rowActions ?? [], // for the UI Overhaul
         } satisfies SpellbookSection)
@@ -176,7 +181,7 @@ export class SheetSections {
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
       (prev, curr) => {
-        let key = curr.prop ?? '';
+        let key = curr.slot ?? '';
         curr.key = key;
         prev[key] = curr;
         return prev;
@@ -222,7 +227,7 @@ export class SheetSections {
     const registerSection = (
       key: string,
       level?: number,
-      config?: unknown,
+      config?: SpellcastingConfigEntry,
       customLabel?: string
     ) => {
       level = config?.slots ? level : 1;
@@ -247,7 +252,7 @@ export class SheetSections {
       spellbook[key] = {
         label,
         order,
-        usesSlots: usesSlots,
+        usesSlots: !!usesSlots,
         id: method,
         canCreate: owner,
         canPrepare: !!config?.prepares,
@@ -267,11 +272,14 @@ export class SheetSections {
     // Register sections for the available spellcasting methods this character has.
     for (const spellcasting of Object.values(CONFIG.DND5E.spellcasting)) {
       const levels = spellcasting.getAvailableLevels?.(context.actor) ?? [];
+
       if (!levels.length) continue;
+      if (!spellcasting.getSpellSlotKey) continue;
+
       if (spellcasting.cantrips)
         registerSection('spell0', 0, CONFIG.DND5E.spellcasting.spell);
       levels.forEach((l) =>
-        registerSection(spellcasting.getSpellSlotKey(l), l, spellcasting)
+        registerSection(spellcasting.getSpellSlotKey!(l), l, spellcasting)
       );
     }
 

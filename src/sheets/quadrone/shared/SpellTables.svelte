@@ -121,12 +121,12 @@
           dataset={section.dataset}
         >
           {#snippet header(expanded)}
-            {@const mode = section.prepMode?.slugify()}
+            {@const method = section.method?.slugify()}
             {@const draggableHeaderAttributes = section.usesSlots
               ? {
                   ['data-tidy-draggable']: true,
                   ['data-key']: section.key,
-                  ['data-preparation-mode']: section.prepMode,
+                  ['data-method']: section.method,
                   ['data-level']: section.dataset['system.level'],
                   ['data-slots']: true,
                 }
@@ -134,8 +134,8 @@
             <TidyTableHeaderRow
               class={[
                 'theme-dark',
-                'spell-preparation',
-                { [`mode-${mode}`]: !isNil(mode, '') },
+                'spell-method',
+                { [`method-${method}`]: !isNil(method, '') },
               ]}
               {...draggableHeaderAttributes}
             >
@@ -198,19 +198,18 @@
                   {
                     expanded,
                     prepared:
-                      (item.system.preparation.mode ===
-                        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-                        item.system.preparation.prepared) ||
-                      item.system.preparation.mode ===
-                        CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
+                      item.system.canPrepare &&
+                      item.system.prepared ===
+                        CONFIG.DND5E.spellPreparationStates.prepared.value,
+                    always:
+                      item.system.canPrepare &&
+                      item.system.prepared ===
+                        CONFIG.DND5E.spellPreparationStates.always.value,
                     unprepared:
                       !item.system.linkedActivity &&
-                      item.system.preparation.mode ===
-                        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-                      !item.system.preparation.prepared,
-                    ['mode-always']:
-                      item.system.preparation.mode ===
-                      CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
+                      item.system.canPrepare &&
+                      item.system.prepared ===
+                        CONFIG.DND5E.spellPreparationStates.always.value,
                   },
                 ]}
                 contextMenu={{

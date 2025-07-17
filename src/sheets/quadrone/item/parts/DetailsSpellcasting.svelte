@@ -69,7 +69,7 @@
       <button
         type="button"
         title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
-        class="spell-preparation-search button button-icon-only"
+        class="spell-method-search button button-icon-only"
         onclick={() => {
           new MaxPreparedSpellsConfigFormApplication(
             context.item.name,

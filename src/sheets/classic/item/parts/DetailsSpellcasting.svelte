@@ -68,7 +68,7 @@
     />
     <a
       title={localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}
-      class="spell-preparation-search inline-icon-button"
+      class="spell-method-search inline-icon-button"
       onclick={() => {
         new MaxPreparedSpellsConfigFormApplication(
           context.item.name,

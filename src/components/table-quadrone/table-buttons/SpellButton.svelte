@@ -10,70 +10,75 @@
 
   let { doc }: Props = $props();
 
-  const localize = FoundryAdapter.localize;
-
-  let mode = $derived(doc.system.preparation?.mode ?? '');
+  let method = $derived(doc.system.preparation?.mode ?? '');
+  let config = $derived(CONFIG.DND5E.spellcasting[method]);
 
   function getIconClasses() {
-    switch (mode) {
-      case CONSTANTS.SPELL_PREPARATION_MODE_PREPARED:
-        let prepared = doc.system.preparation.prepared;
-        return prepared
-          ? 'fa-solid fa-book prepared'
+    if (config?.prepares) {
+      return doc.system.prepared ===
+        CONFIG.DND5E.spellPreparationStates.prepared.value
+        ? 'fa-solid fa-book prepared'
+        : doc.system.prepared ===
+            CONFIG.DND5E.spellPreparationStates.always.value
+          ? 'fa-solid fa-book always'
           : 'fa-regular fa-book unprepared';
-      case CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS:
-        return 'fa-solid fa-book';
-      case CONSTANTS.SPELL_PREPARATION_MODE_ATWILL:
+    }
+
+    switch (method) {
+      case CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL:
         return 'fa-solid fa-hand-sparkles';
-      case CONSTANTS.SPELL_PREPARATION_MODE_INNATE:
+      case CONSTANTS.SPELL_PREPARATION_METHOD_INNATE:
         return 'fa-solid fa-hand-holding-magic';
-      case CONSTANTS.SPELL_PREPARATION_MODE_PACT:
+      case CONSTANTS.SPELL_PREPARATION_METHOD_PACT:
         return 'fa-solid fa-moon';
-      case CONSTANTS.SPELL_PREPARATION_MODE_RITUAL:
+      case CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL:
         return 'fa-solid fa-candle-holder';
       default:
         return 'fa-solid fa-sparkles';
     }
   }
 
-  let modeIconClasses: ClassValue = $derived([
+  let iconClasses: ClassValue = $derived([
     'spell-row-icon',
     getIconClasses(),
     {
-      [`mode-${mode}`]: !isNil(mode, ''),
+      [`method-${method}`]: !isNil(method, ''),
     },
   ]);
 
   async function togglePreparation() {
+    let newPreparationValue = ((doc.system.prepared ?? 0) + 1) % 2;
+
     doc.update({
-      'system.preparation.prepared': !doc.system.preparation?.prepared,
+      'system.prepared': newPreparationValue,
     });
   }
 
   let tooltip = $derived.by(() => {
-    let mode = doc.system.preparation?.mode ?? '';
-
-    if (mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED) {
-      return doc.system.preparation.prepared
+    if (config.prepares) {
+      return doc.system.prepared ===
+        CONFIG.DND5E.spellPreparationStates.prepared.value
         ? 'DND5E.SpellPrepared'
-        : 'DND5E.SpellUnprepared';
+        : doc.system.prepared ===
+            CONFIG.DND5E.spellPreparationStates.always.value
+          ? 'DND5E.SpellPrepAlways'
+          : 'DND5E.SpellUnprepared';
     }
 
-    return CONFIG.DND5E.spellPreparationModes[mode]?.label ?? mode;
+    return config?.label ?? method;
   });
 </script>
 
 {#if !doc.system.linkedActivity}
-  {#if mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
+  {#if config.prepares}
     <a
       data-tooltip={tooltip}
       class="tidy-table-button"
       onclick={togglePreparation}
     >
-      <i class={modeIconClasses}></i>
+      <i class={iconClasses}></i>
     </a>
   {:else}
-    {@const iconClasses = getIconClasses()}
-    <i data-tooltip={tooltip} class={modeIconClasses}></i>
+    <i data-tooltip={tooltip} class={iconClasses}></i>
   {/if}
 {/if}

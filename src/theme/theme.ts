@@ -173,34 +173,40 @@ export function getInventoryItemThemeBackground(item: Item5e) {
 
 export function getSpellItemThemeBackground(spell: Item5e) {
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
   ) {
     return '--t5e-innate-background';
   }
 
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_RITUAL
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
   ) {
     return '--t5e-ritual-only-background';
   }
 
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
   ) {
     return '--t5e-atwill-background';
   }
 
-  if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT) {
+  if (
+    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
+  ) {
     return '--t5e-pact-background';
   }
 
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
+    spell.system.canPrepare &&
+    spell.system.prepared === CONFIG.DND5E.spellPreparationStates.always.value
   ) {
     return '--t5e-alwaysprepared-background';
   }
 
-  if (spell.system.preparation.prepared) {
+  if (
+    spell.system.canPrepare &&
+    spell.system.prepared === CONFIG.DND5E.spellPreparationStates.prepared.value
+  ) {
     return '--t5e-prepared-background';
   }
 

@@ -27,7 +27,7 @@
 
   function updateSlots(newValue: number) {
     context.actor.update({
-      [`system.spells.${section.prop}.value`]: newValue,
+      [`system.spells.${section.slot}.value`]: newValue,
     });
   }
 </script>
@@ -43,7 +43,7 @@
   {#if context.unlocked}
     <NumberInputQuadrone
       document={context.actor}
-      field="system.spells.{section.prop}.value"
+      field="system.spells.{section.slot}.value"
       class={['spell-slot-uses uninput uses-value color-text-default', { ['has-temp-slots']: hasTempSlots }]}
       value={uses}
       placeholder="0"

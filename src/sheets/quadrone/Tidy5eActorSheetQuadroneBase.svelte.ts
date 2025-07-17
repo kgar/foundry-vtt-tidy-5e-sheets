@@ -1275,11 +1275,6 @@ export function Tidy5eActorSheetQuadroneBase<
         }
       }
 
-      // Adjust the preparation mode of a leveled spell depending on the section on which it is dropped.
-      if (itemData.type === 'spell') {
-        this._onDropSpell(itemData, event);
-      }
-
       return itemData;
     }
 
@@ -1302,88 +1297,9 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     _onDropResetData(itemData: any) {
       if (!itemData.system) return;
-      ['attuned', 'equipped', 'prepared'].forEach(
-        (k) => delete itemData.system[k]
+      ['attuned', 'equipped', 'prepared'].forEach((k) =>
+        foundry.utils.deleteProperty(itemData.system, k)
       );
-    }
-
-    // TODO: Make this WORK! And update it to handle Always Prepared
-    /**
-     * Adjust the preparation mode of a dropped spell depending on the drop location on the sheet.
-     */
-    _onDropSpell(itemData: any, event: Event) {
-      if (
-        ![CONSTANTS.SHEET_TYPE_NPC, CONSTANTS.SHEET_TYPE_CHARACTER].includes(
-          this.document.type
-        )
-      )
-        return;
-
-      const dropTarget = event?.target;
-
-      if (!dropTarget || !(dropTarget instanceof HTMLElement)) {
-        return;
-      }
-
-      // Determine the section it is dropped on, if any.
-      const dataset =
-        dropTarget?.closest<HTMLElement>('[data-type="spell"]')?.dataset ?? {};
-      const level = dataset['system.level'];
-      const preparationMode = dataset['system.preparation.mode'];
-
-      // Determine the actor's spell slot progressions, if any.
-      const spellcastKeys = Object.keys(CONFIG.DND5E.spellcastingTypes);
-      const progs = Object.values(this.document.classes).reduce<Set<string>>(
-        (acc: any, cls: any) => {
-          const type = cls.spellcasting?.type;
-          if (spellcastKeys.includes(type)) acc.add(type);
-          return acc;
-        },
-        new Set<string>()
-      );
-
-      const prep = itemData.system.preparation;
-
-      // Case 1: Drop a cantrip.
-      if (itemData.system.level === 0) {
-        const modes = CONFIG.DND5E.spellPreparationModes;
-
-        const mode =
-          modes[
-            preparationMode as keyof typeof CONFIG.DND5E.spellPreparationModes
-          ] ?? {};
-
-        if ('cantrips' in mode && mode.cantrips) {
-          prep.mode = 'prepared';
-        } else if (!preparationMode) {
-          const isCaster =
-            this.document.system.attributes.spell.level || progs.size;
-          prep.mode = isCaster ? 'prepared' : 'innate';
-        } else {
-          prep.mode = preparationMode;
-        }
-
-        if ('prepares' in mode && mode.prepares) {
-          prep.prepared = true;
-        }
-      }
-
-      // Case 2: Drop a leveled spell in a section without a mode.
-      else if (level === '0' || !preparationMode) {
-        if (this.document.type === 'npc') {
-          prep.mode = this.document.system.attributes.spell.level
-            ? 'prepared'
-            : 'innate';
-        } else {
-          const m = progs.has('leveled')
-            ? 'prepared'
-            : firstOfSet(progs) ?? 'innate';
-          prep.mode = progs.has(prep.mode) ? prep.mode : m;
-        }
-      }
-
-      // Case 3: Drop a leveled spell in a specific section.
-      else prep.mode = preparationMode;
     }
 
     /**

@@ -46,8 +46,8 @@
         {#if owner}
           {#if !canPrepare && item.system.level !== 0}
             <span>
-              {CONFIG.DND5E.spellPreparationModes[item.system.preparation?.mode]
-                ?.label ?? item.system.preparation?.mode}
+              {CONFIG.DND5E.spellcasting[item.system.method]
+                ?.label ?? item.system.method}
             </span>
           {:else if canPrepare}
             <span>{toggleTitle ?? ''}</span>

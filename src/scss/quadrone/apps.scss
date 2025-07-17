@@ -716,53 +716,54 @@
   }
 
   // .spell-preparation {
-  :where(.mode-atwill) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-atwill);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  :where(.method-atwill) {
+    --t5e-method-color: var(--t5e-color-spellcasting-atwill);
+    --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 1.15) h);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-atwill)) {
+    &:is(.tidy5e-sheet.theme-dark :where(.method-atwill)) {
       --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-atwill) calc(l * 1.5) calc(c * .88) h);
     }
   }
 
-  :where(.mode-always) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-always);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  // TODO: the Always mode is no more. We have to find another way to distinguish Always prepared from Prepared/Unprepared.
+  // :where(.method-always) {
+  //   --t5e-method-color: var(--t5e-color-spellcasting-always);
+  //   --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 1.15) h);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-always)) {
-      --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-always) calc(l * 1.5) calc(c * .88) h);
-    }
-  }
+  //   &:is(.tidy5e-sheet.theme-dark :where(.method-always)) {
+  //     --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-always) calc(l * 1.5) calc(c * .88) h);
+  //   }
+  // }
 
-  :where(.mode-pact) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-pact);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  :where(.method-pact) {
+    --t5e-method-color: var(--t5e-color-spellcasting-pact);
+    --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 1.15) h);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-pact)) {
+    &:is(.tidy5e-sheet.theme-dark :where(.method-pact)) {
       --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-pact) calc(l * 1.5) calc(c * .88) h);
     }
   }
 
-  :where(.mode-innate) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-innate);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  :where(.method-innate) {
+    --t5e-method-color: var(--t5e-color-spellcasting-innate);
+    --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 1.15) h);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-innate)) {
+    &:is(.tidy5e-sheet.theme-dark :where(.method-innate)) {
       --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-innate) calc(l * 1.5) calc(c * .88) h);
     }
   }
 
-  :where(.mode-ritual) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-ritual);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  :where(.method-ritual) {
+    --t5e-method-color: var(--t5e-color-spellcasting-ritual);
+    --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 1.15) h);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-ritual)) {
+    &:is(.tidy5e-sheet.theme-dark :where(.method-ritual)) {
       --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-ritual) calc(l * 1.5) calc(c * .88) h);
     }
   }
 
-  :where(.mode-prepared) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-prepared);
+  :where(.method-spell) {
+    --t5e-method-color: var(--t5e-color-spellcasting-spell);
     --t5e-icon-color: var(--t5e-color-white);
   }
 

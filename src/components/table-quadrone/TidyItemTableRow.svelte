@@ -107,9 +107,9 @@
   const itemColorClasses = $derived<ClassValue>([
     !isNil(item.system.rarity, '') ? 'rarity' : undefined,
     item.system.rarity?.slugify(),
-    !isNil(item.system.preparation?.mode) ? 'spell-preparation' : undefined,
+    !isNil(item.system.method) ? 'spell-method' : undefined,
     {
-      [`mode-${item.system.preparation?.mode?.slugify()}`]: !isNil(
+      [`method-${item.system.method?.slugify()}`]: !isNil(
         item.system.preparation?.mode,
         '',
       ),

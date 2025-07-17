@@ -1,4 +1,4 @@
-import type { GroupableSelectOption } from 'src/types/types';
+import type { Actor5e, GroupableSelectOption } from 'src/types/types';
 
 type CurrencyItemConfig = {
   label: string;
@@ -3951,120 +3951,12 @@ export type CONFIG = {
       };
     };
     spellcasting: {
-      atwill: {
-        label: string;
-        order: number;
-        img: string;
-        type: string;
-      };
-      innate: {
-        label: string;
-        order: number;
-        img: string;
-        type: string;
-      };
-      ritual: {
-        label: string;
-        order: number;
-        img: string;
-        type: string;
-      };
-      pact: {
-        label: string;
-        type: string;
-        cantrips: boolean;
-        prepares: boolean;
-        order: number;
-        img: string;
-        table: Record<string, { slots: number; level: number }>;
-        progression: {
-          pact: {
-            label: string;
-            divisor: number;
-            roundUp: boolean;
-          };
-        };
-        exclusive: {
-          slots: boolean;
-          spells: boolean;
-        };
-      };
-      spell: {
-        label: string;
-        type: string;
-        cantrips: boolean;
-        prepares: boolean;
-        order: number;
-        img: string;
-        table: number[][];
-        progression: {
-          full: {
-            label: string;
-            divisor: number;
-            roundUp: boolean;
-          };
-          half: {
-            label: string;
-            divisor: number;
-            roundUp: boolean;
-          };
-          third: {
-            label: string;
-            divisor: number;
-            roundUp: boolean;
-          };
-          artificer: {
-            label: string;
-            divisor: number;
-            roundUp: boolean;
-          };
-        };
-        exclusive: {
-          slots: false;
-          spells: false;
-        };
-      };
-    };
-    spellPreparationModes:
-      | {
-          prepared: {
-            label: string;
-            upcast: boolean;
-            prepares: boolean;
-          };
-          pact: {
-            label: string;
-            upcast: boolean;
-            cantrips: boolean;
-            order: number;
-          };
-          always: {
-            label: string;
-            upcast: boolean;
-            prepares: boolean;
-          };
-          atwill: {
-            label: string;
-            order: number;
-          };
-          innate: {
-            label: string;
-            order: number;
-          };
-          ritual: {
-            label: string;
-            order: number;
-          };
-        } & Record<
-          string,
-          {
-            label: string;
-            order?: number;
-            upcast?: boolean;
-            prepares?: boolean;
-            cantrips?: boolean;
-          }
-        >;
+      atwill: SpellcastingConfigEntry;
+      innate: SpellcastingConfigEntry;
+      ritual: SpellcastingConfigEntry;
+      pact: SpellcastingConfigEntry;
+      spell: SpellcastingConfigEntry;
+    } & Record<string, SpellcastingConfigEntry>;
     spellcastingTypes: {
       leveled: {
         label: string;
@@ -5683,4 +5575,36 @@ export type Dnd5eAbility = {
   defaults?: {
     vehicle: number;
   };
+};
+
+type SpellcastingLevelMapTable = Record<
+  string,
+  { label: string; divisor: number; roundUp: boolean }
+>;
+type SpellcastingLevelArraysTable = number[][];
+type SpellcastingConfigEntryTable =
+  | SpellcastingLevelMapTable
+  | SpellcastingLevelArraysTable;
+
+export type SpellcastingConfigEntry = {
+  label: string;
+  order: number;
+  img: string;
+  type: string;
+  key?: string;
+  cantrips?: boolean;
+  prepares?: boolean;
+  table?: SpellcastingConfigEntryTable;
+  progression?: Record<
+    string,
+    { label: string; divisor: number; roundUp: boolean }
+  >;
+  exclusive?: {
+    slots: boolean;
+    spells: boolean;
+  };
+  slots?: boolean;
+  getAvailableLevels: ((actor: Actor5e) => number[]) | undefined;
+  getSpellSlotKey: ((level: number) => string) | undefined;
+  getLabel: (options?: { level?: number; format?: 'short' | 'long' }) => string;
 };

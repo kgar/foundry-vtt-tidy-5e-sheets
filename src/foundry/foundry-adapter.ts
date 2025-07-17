@@ -101,17 +101,17 @@ export const FoundryAdapter = {
       renderSheet: true,
     });
   },
+  /** A spell can be prepared if its method is prepareable and it is not Always Prepared. */
   canPrepareSpell(item: Item5e) {
     return (
-      item.system.preparation?.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_ATWILL &&
-      item.system.preparation?.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_INNATE &&
-      item.system.preparation?.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
-      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_PACT &&
-      (item.system.level !== 0 || settings.value.allowCantripsToBePrepared)
+      item.system.canPrepare &&
+      item.system.prepared !== CONFIG.DND5E.spellPreparationStates.always.value
     );
+  },
+  getPreparedLabel(item: Item5e) {
+    return Object.values(CONFIG.DND5E.spellPreparationStates).find(
+      (s) => s.value === item.system.prepared
+    )?.label;
   },
   /**
    *
@@ -364,44 +364,46 @@ export const FoundryAdapter = {
   getSpellRowClasses(spell: any): string {
     const classes: string[] = [];
 
-    if (
-      spell.system.preparation.mode ===
-        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-      (spell.system.level > 0 || settings.value.allowCantripsToBePrepared)
-    ) {
+    if (FoundryAdapter.canPrepareSpell(spell)) {
       classes.push('preparable');
     }
 
-    if (spell.system.preparation.prepared) {
+    if (
+      spell.system.prepared ===
+      CONFIG.DND5E.spellPreparationStates.prepared.value
+    ) {
       classes.push('prepared');
     }
 
     if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
+      spell.system.prepared === CONFIG.DND5E.spellPreparationStates.always.value
     ) {
       classes.push('always-prepared');
     }
 
     if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT
+      spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
     ) {
       classes.push('pact');
     }
 
     if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
+      spell.system.method ===
+      CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
     ) {
       classes.push('at-will');
     }
 
     if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_RITUAL
+      spell.system.method ===
+      CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
     ) {
       classes.push('ritual-only');
     }
 
     if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
+      spell.system.method ===
+      CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
     ) {
       classes.push('innate');
     }
@@ -838,7 +840,9 @@ export const FoundryAdapter = {
     });
   },
   browseFilePicker(...args: any[]) {
-    return new foundry.applications.apps.FilePicker.implementation(...args).browse();
+    return new foundry.applications.apps.FilePicker.implementation(
+      ...args
+    ).browse();
   },
   renderArmorConfig(document: any) {
     return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
@@ -1024,16 +1028,6 @@ export const FoundryAdapter = {
       debug('Dropdown mapping error troubleshooting info', { abilities });
       return [];
     }
-  },
-  countPreparedSpells(items: Item5e[]) {
-    return items.filter(
-      (item: Item5e) =>
-        item.type === CONSTANTS.ITEM_TYPE_SPELL &&
-        item.system.level > 0 &&
-        item.system.preparation.mode ===
-          CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-        item.system.preparation.prepared
-    ).length;
   },
   concealDetails(item: Item5e | null | undefined) {
     return !game.user.isGM && item?.system?.identified === false;

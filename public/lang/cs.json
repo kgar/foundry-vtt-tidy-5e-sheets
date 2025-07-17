@@ -405,7 +405,7 @@
         "RarityColors.title": "Vzácné barvy",
         "SheetTheme.title": "Motiv deníku",
         "SheetTheme.hint": "Pro dosažení nejlepších výsledků vyber barvu blízko prostředku palety barev.",
-        "SpellPreparationModeColors.title": "Barvy režimu přípravy kouzel"
+        "SpellPreparationMethodColors.title": "Barvy režimu přípravy kouzel"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Stupeň kouzla {number}",
     "TIDY5E.ApplyChanges": "Použít změny",

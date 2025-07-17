@@ -166,11 +166,11 @@
 
   <fieldset>
     <legend>
-      {localize('TIDY5E.ThemeSettings.SpellPreparationModeColors.title')}
+      {localize('TIDY5E.ThemeSettings.SpellPreparationMethodColors.title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {#each context.value.spellPreparationModeColors as color}
+    {#each context.value.spellPreparationMethodColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}
         bind:value={color.value}

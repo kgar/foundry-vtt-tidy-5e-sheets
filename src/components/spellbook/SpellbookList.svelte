@@ -89,7 +89,9 @@
           props: ({ item, ctx }) =>
             ({
               item: item,
-              prepared: item.system.preparation.prepared,
+              prepared:
+                item.system.prepared ===
+                CONFIG.DND5E.spellPreparationStates.prepared.value,
               title: ctx?.toggleTitle,
             }) satisfies ComponentProps<typeof SpellPrepareControl>,
           visible: ({ item }) => FoundryAdapter.canPrepareSpell(item),

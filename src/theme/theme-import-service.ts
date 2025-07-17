@@ -1,5 +1,5 @@
 import { downloadTextFile, readFileAsText } from "src/utils/file";
-import type { ThemeSettingsV2 } from "./theme-quadrone.types";
+import type { ThemeSettingsV3 } from "./theme-quadrone.types";
 import { ThemeQuadrone } from "./theme-quadrone.svelte";
 import { FoundryAdapter } from "src/foundry/foundry-adapter";
 import { error } from "src/utils/logging";
@@ -8,11 +8,11 @@ import { CONSTANTS } from "src/constants";
 export class ThemeQuadroneImportService {
   static readonly CURRENT_THEME_VERSION = 2;
 
-  static async import(file: File): Promise<ThemeSettingsV2 | undefined> {
+  static async import(file: File): Promise<ThemeSettingsV3 | undefined> {
     try {
       let result = await readFileAsText(file);
 
-      const toImport = JSON.parse(result) as ThemeSettingsV2 & {
+      const toImport = JSON.parse(result) as ThemeSettingsV3 & {
         version: number;
       };
 
@@ -46,11 +46,11 @@ export class ThemeQuadroneImportService {
     }
   }
 
-  static validateImportFile(theme: ThemeSettingsV2 & { version: number }) {
+  static validateImportFile(theme: ThemeSettingsV3 & { version: number }) {
     return theme.version === this.CURRENT_THEME_VERSION;
   }
 
-  static async export(data: ThemeSettingsV2) {
+  static async export(data: ThemeSettingsV3) {
     const toExport: Record<string, any> = {
       version: this.CURRENT_THEME_VERSION,
       ...data,

@@ -64,11 +64,10 @@
   // Spell Preparation
 
   let spellPreparationText = $derived(
-    'preparation' in context.system &&
-      context.system.preparation.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED
-      ? (CONFIG.DND5E.spellPreparationModes[context.system.preparation.mode]
-          ?.label ?? context.system.preparation.mode)
+    context.system.method &&
+      context.system.method !== CONSTANTS.SPELL_PREPARATION_METHOD_SPELL
+      ? (CONFIG.DND5E.spellcasting[context.system.method]?.label ??
+          context.system.method)
       : '',
   );
 
@@ -91,8 +90,8 @@
     context.system.identified === false ? 'disabled' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
     coalesce(rarity?.slugify(), 'none'),
-    !isNil(context.system.preparation?.mode) ? 'spell-preparation' : undefined,
-    'mode-' + context.system.preparation?.mode?.slugify(),
+    !isNil(context.system.method) ? 'spell-method' : undefined,
+    'method-' + context.system.method?.slugify(),
   ]);
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
@@ -232,8 +231,8 @@
           <div class={['item-rarity-text', itemColorClasses]}>{rarityText}</div>
         {/if}
       </div>
-    {:else if 'preparation' in context.system}
-      <div class={['spell-preparation-text', itemColorClasses]}>
+    {:else if !isNil(spellPreparationText, '')}
+      <div class={['spell-method-text', itemColorClasses]}>
         {spellPreparationText}
       </div>
     {:else if facilityIsDisabled}
@@ -350,17 +349,23 @@
         </PillSwitch>
       </li>
     {/if}
-    {#if context.item.actor && context.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
-      {@const prepared = context.system.preparation.prepared}
+    {#if context.item.actor && FoundryAdapter.canPrepareSpell(context.item)}
+      {@const prepared = context.system.prepared}
       <li>
         <PillSwitch
-          checked={prepared}
+          checked={prepared ==
+            CONFIG.DND5E.spellPreparationStates.prepared.value}
           checkedIconClass="fas fa-book fa-fw"
           uncheckedIconClass="fas fa-book fa-fw"
-          onchange={(ev) =>
+          onchange={(ev) => {
+            let newValue = ev.currentTarget?.checked
+              ? CONFIG.DND5E.spellPreparationStates.prepared.value
+              : CONFIG.DND5E.spellPreparationStates.unprepared.value;
+
             context.item.update({
-              'system.preparation.prepared': ev.currentTarget?.checked,
-            })}
+              'system.prepared': newValue,
+            });
+          }}
           disabled={!context.editable}
         >
           {#if !context.editable && !prepared}

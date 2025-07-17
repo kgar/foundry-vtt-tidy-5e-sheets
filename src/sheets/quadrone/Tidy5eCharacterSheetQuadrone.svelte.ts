@@ -1061,9 +1061,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const { key } =
       event.target.closest<HTMLElement>('[data-key]')?.dataset ?? {};
-    // TODO: Make a custom wrapper with specific fields related to spell slot drag
-    const { level, preparationMode } =
-      event.target.closest<HTMLElement>('[data-level]')?.dataset ?? {};
+
     const isSlots = !!event.target.closest('[data-slots]');
 
     let type;

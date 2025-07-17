@@ -683,9 +683,7 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       case 'consumable':
         return this.item.system.type.label;
       case 'spell':
-        return CONFIG.DND5E.spellPreparationModes[
-          this.item.system.preparation.mode
-        ]?.label;
+        return FoundryAdapter.getPreparedLabel(this.item);
       case 'tool':
         return CONFIG.DND5E.proficiencyLevels[
           this.item.system.prof?.multiplier || 0
