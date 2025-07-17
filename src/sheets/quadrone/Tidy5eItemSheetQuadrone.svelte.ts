@@ -455,6 +455,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       damageTypes: [],
       denominationOptions: [],
 
+      // Spell getSheetData
+      canPrepare: undefined,
+      spellcastingMethods: [],
+
       ...documentSheetContext,
     };
 

@@ -3935,38 +3935,94 @@ export type CONFIG = {
       };
     };
     SPELL_SLOT_TABLE: Array<Array<number>>;
-    pactCastingProgression: {
-      '1': {
-        slots: number;
-        level: number;
+    pactCastingProgression: Record<string, { slots: number; level: number }>;
+    spellPreparationStates: {
+      unprepared: {
+        label: string;
+        value: number;
       };
-      '2': {
-        slots: number;
-        level: number;
+      prepared: {
+        label: string;
+        value: number;
       };
-      '3': {
-        slots: number;
-        level: number;
+      always: {
+        label: string;
+        value: number;
       };
-      '5': {
-        slots: number;
-        level: number;
+    };
+    spellcasting: {
+      atwill: {
+        label: string;
+        order: number;
+        img: string;
+        type: string;
       };
-      '7': {
-        slots: number;
-        level: number;
+      innate: {
+        label: string;
+        order: number;
+        img: string;
+        type: string;
       };
-      '9': {
-        slots: number;
-        level: number;
+      ritual: {
+        label: string;
+        order: number;
+        img: string;
+        type: string;
       };
-      '11': {
-        slots: number;
-        level: number;
+      pact: {
+        label: string;
+        type: string;
+        cantrips: boolean;
+        prepares: boolean;
+        order: number;
+        img: string;
+        table: Record<string, { slots: number; level: number }>;
+        progression: {
+          pact: {
+            label: string;
+            divisor: number;
+            roundUp: boolean;
+          };
+        };
+        exclusive: {
+          slots: boolean;
+          spells: boolean;
+        };
       };
-      '17': {
-        slots: number;
-        level: number;
+      spell: {
+        label: string;
+        type: string;
+        cantrips: boolean;
+        prepares: boolean;
+        order: number;
+        img: string;
+        table: number[][];
+        progression: {
+          full: {
+            label: string;
+            divisor: number;
+            roundUp: boolean;
+          };
+          half: {
+            label: string;
+            divisor: number;
+            roundUp: boolean;
+          };
+          third: {
+            label: string;
+            divisor: number;
+            roundUp: boolean;
+          };
+          artificer: {
+            label: string;
+            divisor: number;
+            roundUp: boolean;
+          };
+        };
+        exclusive: {
+          slots: false;
+          spells: false;
+        };
       };
     };
     spellPreparationModes:
