@@ -66,7 +66,7 @@
             </SelectQuadrone>
           {:else}
             <ul class="pills">
-              <li class="pill">
+              <li class="pill pill-medium">
                 {context.size.label}
               </li>
             </ul>
