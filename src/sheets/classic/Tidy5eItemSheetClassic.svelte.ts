@@ -374,6 +374,10 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
 
       damageTypes: [],
       denominationOptions: [],
+
+      // getSheetData props
+      spellcastingMethods: [],
+
       ...documentSheetContext,
     };
 

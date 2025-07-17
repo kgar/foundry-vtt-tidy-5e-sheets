@@ -120,6 +120,10 @@ export type ItemSheetContext = {
   rollData: Record<string, any>;
   scalarTarget: boolean;
   source: any;
+  spellcastingMethods: {
+    label: string;
+    value: string;
+  }[];
   system: any;
   title: string;
   toggleAdvancementLock: () => Promise<void>;
