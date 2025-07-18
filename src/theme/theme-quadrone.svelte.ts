@@ -106,14 +106,18 @@ export class ThemeQuadrone {
     return preferences;
   }
 
-  static saveSheetThemeSettings(doc: any, settings: ThemeSettingsV2) {
+  static async saveSheetThemeSettings(doc: any, settings: ThemeSettingsV2) {
     const toSave = foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings
     );
 
-    const result = TidyFlags.sheetThemeSettings.set(doc, toSave);
-    this.syncSystemTokenPortraitSetting(doc, settings.portraitShape ?? 'round');
+    await TidyFlags.sheetThemeSettings.unset(doc);
+    const result = await TidyFlags.sheetThemeSettings.set(doc, toSave);
+    await this.syncSystemTokenPortraitSetting(
+      doc,
+      settings.portraitShape ?? 'round'
+    );
     return result;
   }
 
@@ -224,15 +228,18 @@ export class ThemeQuadrone {
     ) as PortraitShape;
   }
 
-  static updatePortraitShape(doc: any, newShape: PortraitShape) {
+  static async updatePortraitShape(doc: any, newShape: PortraitShape) {
     const settings = this.getSheetThemeSettings({ doc: doc });
     settings.portraitShape = newShape;
-    this.saveSheetThemeSettings(doc, settings);
-    this.syncSystemTokenPortraitSetting(doc, newShape);
+    await this.saveSheetThemeSettings(doc, settings);
+    await this.syncSystemTokenPortraitSetting(doc, newShape);
   }
 
-  static syncSystemTokenPortraitSetting(doc: any, newShape: PortraitShape) {
-    doc.update({
+  static async syncSystemTokenPortraitSetting(
+    doc: any,
+    newShape: PortraitShape
+  ) {
+    await doc.update({
       [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:
         newShape === 'token',
     });
