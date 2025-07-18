@@ -13,29 +13,43 @@
   let method = $derived(doc.system.method ?? '');
   let config = $derived(CONFIG.DND5E.spellcasting[method]);
 
-  function getIconClasses() {
+  function getIconClasses(): ClassValue {
+    let classes: ClassValue = [];
+
     if (config?.prepares) {
-      return doc.system.prepared ===
-        CONFIG.DND5E.spellPreparationStates.prepared.value
-        ? 'fa-solid fa-book prepared'
-        : doc.system.prepared ===
-            CONFIG.DND5E.spellPreparationStates.always.value
-          ? 'fa-solid fa-book always'
-          : 'fa-regular fa-book unprepared';
+      classes.push(
+        doc.system.prepared ===
+          CONFIG.DND5E.spellPreparationStates.prepared.value
+          ? 'fa-solid prepared'
+          : doc.system.prepared ===
+              CONFIG.DND5E.spellPreparationStates.always.value
+            ? 'fa-solid always'
+            : 'fa-regular unprepared',
+      );
     }
 
     switch (method) {
+      case CONSTANTS.SPELL_PREPARATION_METHOD_SPELL:
+        classes.push('fa-book');
+        break;
       case CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL:
-        return 'fa-solid fa-hand-sparkles';
+        classes.push('fa-hand-sparkles');
+        break;
       case CONSTANTS.SPELL_PREPARATION_METHOD_INNATE:
-        return 'fa-solid fa-hand-holding-magic';
+        classes.push('fa-hand-holding-magic');
+        break;
       case CONSTANTS.SPELL_PREPARATION_METHOD_PACT:
-        return 'fa-solid fa-moon';
+        classes.push('fa-moon');
+        break;
       case CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL:
-        return 'fa-solid fa-candle-holder';
+        classes.push('fa-candle-holder');
+        break;
       default:
-        return 'fa-solid fa-sparkles';
+        classes.push('fa-sparkles');
+        break;
     }
+
+    return classes;
   }
 
   let iconClasses: ClassValue = $derived([
