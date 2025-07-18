@@ -166,7 +166,7 @@
 
   <fieldset>
     <legend>
-      {localize('TIDY5E.ThemeSettings.SpellPreparationMethodColors.title')}
+      {localize('TIDY5E.ThemeSettings.SpellcastingMethodColors.title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 

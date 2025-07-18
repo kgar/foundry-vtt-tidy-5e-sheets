@@ -810,7 +810,7 @@
       &.expanded {}
     }
 
-    &.spell-method:not(.method-prepared) {
+    &.spell-method:not(.method-spell) {
       .tidy-table-row-use-button {
         --t5e-use-button-border-color: var(--t5e-method-color);
       }

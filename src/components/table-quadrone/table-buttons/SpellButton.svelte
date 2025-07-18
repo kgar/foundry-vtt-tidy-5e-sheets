@@ -70,7 +70,7 @@
 </script>
 
 {#if !doc.system.linkedActivity}
-  {#if config.prepares}
+  {#if FoundryAdapter.canPrepareSpell(doc)}
     <a
       data-tooltip={tooltip}
       class="tidy-table-button"

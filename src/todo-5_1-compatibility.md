@@ -8,6 +8,8 @@ Steps:
   - [x] Classic
   - [x] Quadrone
 - [x] Apply revamped spellbook preparation
+- [ ] Test Finding: Always prepare is showing unprepared styles, and the button is toggleable
+- [ ] Test Finding: Unprepared is showing prepared styles
 - [ ] Character / Actor Sheet: Item Spell Context Preparation has changed. Adapt to the updated version.
 - [ ] Test: Prepared controls
   - [ ] Classic

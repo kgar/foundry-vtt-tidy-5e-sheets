@@ -728,7 +728,7 @@
         "RarityColors.title": "Rarity Colors",
         "SheetTheme.title": "시트 테마",
         "SheetTheme.hint": "최적화를 위해, 색상 팔레트 중앙 주변의 색상을 선택하십시오.",
-        "SpellPreparationMethodColors.title": "주문 준비 모드 색상"
+        "SpellcastingMethodColors.title": "주문 준비 모드 색상"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "주문 레벨 {number}",
     "TIDY5E.ApplyChanges": "변경 적용",

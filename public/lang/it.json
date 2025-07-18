@@ -406,7 +406,7 @@
         "RarityColors.title": "Colori Rarità",
         "SheetTheme.title": "Tema Scheda",
         "SheetTheme.hint": "Per risultati ottimali, scegli un colore vicino al centro della tavolozza dei colori.",
-        "SpellPreparationMethodColors.title": "Colori Modalità Preparazione Incantesimi"
+        "SpellcastingMethodColors.title": "Colori Modalità Preparazione Incantesimi"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Livello Incantesimo {number}",
     "TIDY5E.ApplyChanges": "Applica Modifiche",

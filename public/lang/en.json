@@ -777,7 +777,7 @@
     "RarityColors.title": "Rarity Colors",
     "SheetTheme.title": "Sheet Theme",
     "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
-    "SpellPreparationMethodColors.title": "Spell Preparation Method Colors"
+    "SpellcastingMethodColors.title": "Spellcasting Method Colors"
   },
   "TIDY5E.FavoriteSpellLevelLabel": "Spell Level {number}",
   "TIDY5E.ApplyChanges": "Apply Changes",

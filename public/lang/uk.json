@@ -701,7 +701,7 @@
         "RarityColors.UseSaturatedColors.hint": "У деяких випадках Tidy 5e буде десантувати рідкість кольорів для зменшення напруги очей, особливо з текстом. Виберіть цю опцію, щоб використовувати повністю насичений колір рідкості.",
         "SheetTheme.title": "Тема аркуша",
         "SheetTheme.hint": "Для найкращих результатів виберіть колір біля центру кольорової палітри.",
-        "SpellPreparationMethodColors.title": "Кольори режиму підготовки заклинань",
+        "SpellcastingMethodColors.title": "Кольори режиму підготовки заклинань",
         "ActorHeaderBackground.title": "Фон заголовка актора",
         "ItemSidebarBackground.title": "Фон бічної панелі елемента"
     },

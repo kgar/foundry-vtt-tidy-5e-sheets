@@ -209,7 +209,7 @@
                       !item.system.linkedActivity &&
                       item.system.canPrepare &&
                       item.system.prepared ===
-                        CONFIG.DND5E.spellPreparationStates.always.value,
+                        CONFIG.DND5E.spellPreparationStates.unprepared.value,
                   },
                 ]}
                 contextMenu={{

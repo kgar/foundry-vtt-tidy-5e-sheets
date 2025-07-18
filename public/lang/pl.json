@@ -343,7 +343,7 @@
         "RarityColors.title": "Kolory rzadkości",
         "SheetTheme.title": "Motyw karty",
         "SheetTheme.hint": "Najlepsze rezultaty uzyskasz, wybierając kolor znajdujący się w pobliżu środka palety barw.",
-        "SpellPreparationMethodColors.title": "Kolory stanu przygotowania zaklęć"
+        "SpellcastingMethodColors.title": "Kolory stanu przygotowania zaklęć"
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
         "name": "Wrodzone - akcent"
