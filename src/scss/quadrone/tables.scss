@@ -441,14 +441,24 @@
 
       // TODO: work with hightouch to make it nice
       .remaining-damages-count {
-        border: 1px solid green;
-        background-color: pink;
-        border-radius: 3px;
-        padding: 0.0625rem;
+        border: none;
+        background: none;
+        color: var(--t5e-color-text-gold-emphasis);
         flex: 0;
-        margin-inline-start: auto;
+        margin: -0.125rem 0 -0.125rem 0;
+        padding: var(--t5e-size-halfx);
+        outline: 0.0625rem solid transparent;
+        outline-offset: -0.0625rem;
         height: auto;
         min-height: unset;
+        transition: all var(--t5e-transition-default);
+
+        &:hover,
+        &:focus,
+        &:active {
+          outline-color: var(--t5e-color-text-gold-emphasis);
+          border: none;
+        }
       }
     }
 
