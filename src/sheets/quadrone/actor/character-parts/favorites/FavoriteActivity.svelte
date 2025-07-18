@@ -123,7 +123,7 @@
     <div class="secondary font-default-medium">
       {#if range?.value}
         <span class="range">
-          <span class="valuecolor-text-default">
+          <span class="value color-text-default">
             {range.value}
           </span>
           {#if range.long}&sol; {range.long}{/if}
