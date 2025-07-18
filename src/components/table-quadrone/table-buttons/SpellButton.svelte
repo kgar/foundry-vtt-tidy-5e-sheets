@@ -10,7 +10,7 @@
 
   let { doc }: Props = $props();
 
-  let method = $derived(doc.system.preparation?.mode ?? '');
+  let method = $derived(doc.system.method ?? '');
   let config = $derived(CONFIG.DND5E.spellcasting[method]);
 
   function getIconClasses() {

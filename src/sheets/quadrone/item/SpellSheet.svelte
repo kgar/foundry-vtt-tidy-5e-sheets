@@ -28,7 +28,7 @@
     context.item.actor?.system.spells.pact?.level?.ordinalString(),
   );
   const isPactSpell = $derived(
-    context.item.system.preparation.mode ===
+    context.item.system.method ===
       CONSTANTS.SPELL_PREPARATION_METHOD_PACT,
   );
   const pactCastableLevelText = $derived(

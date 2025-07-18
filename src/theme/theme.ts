@@ -173,25 +173,25 @@ export function getInventoryItemThemeBackground(item: Item5e) {
 
 export function getSpellItemThemeBackground(spell: Item5e) {
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
+    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
   ) {
     return '--t5e-innate-background';
   }
 
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
+    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
   ) {
     return '--t5e-ritual-only-background';
   }
 
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
+    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
   ) {
     return '--t5e-atwill-background';
   }
 
   if (
-    spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
+    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
   ) {
     return '--t5e-pact-background';
   }

@@ -29,14 +29,14 @@ Steps:
 - [ ] Fix classic item table rows for prepared / not prepared
 - [ ] // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
 
+### Stretch goals for later
+
+- [ ] Stretch - how can we leverage the fact that spellcasting modes are all nicely revised and thoroughly data-driven?
+  - [ ] Filters - can we list out all prep modes just by using CONFIG.DND5E.spellcasting?
+  - [ ] SpellUtils.ts - are the isAtWill / isInnate / isEtc helper functions really necessary? 
+
 
 ### Migration notes
-
-Eliminate `preparation.mode` and `preparation?.mode`
-
-Find and evaluate `spellcasting-prepared`
-
-Eliminate `CONSTANTS.SPELL_PREPARATION_MODE_PREPARED`
 
 `prepared` mode is now `spell` method
 `always` mode is no longer a thing ; have to handle on a case-by-case basis

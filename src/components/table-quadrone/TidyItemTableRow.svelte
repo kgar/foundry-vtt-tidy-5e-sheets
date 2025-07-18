@@ -110,7 +110,7 @@
     !isNil(item.system.method) ? 'spell-method' : undefined,
     {
       [`method-${item.system.method?.slugify()}`]: !isNil(
-        item.system.preparation?.mode,
+        item.system.method,
         '',
       ),
     },

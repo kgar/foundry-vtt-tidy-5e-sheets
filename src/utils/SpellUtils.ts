@@ -74,10 +74,7 @@ export class SpellUtils {
 
   /** Is an At-Will spell. */
   static isAtWill(item: any): boolean {
-    return (
-      item.system.preparation?.mode ===
-      CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
-    );
+    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL;
   }
 
   /** Is an Innate spell with no limit on uses. */
@@ -87,17 +84,12 @@ export class SpellUtils {
 
   /** Is an Innate spell. */
   static isInnate(item: any): boolean {
-    return (
-      item.system.preparation?.mode ===
-      CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
-    );
+    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE;
   }
 
   /** Is pact magic. */
   static isPactMagic(item: Item5e) {
-    return (
-      item.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
-    );
+    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT;
   }
 
   /** Is a spell that requires preparation and is prepared. */
@@ -119,17 +111,10 @@ export class SpellUtils {
   }
 
   static getToggleTitle(item: Item5e) {
-    const prep = item.system.preparation || {};
-    const isAlways = prep.mode === 'always';
-    const isPrepared = !!prep.prepared;
-
-    if (isAlways) {
-      return CONFIG.DND5E.spellPreparationStates.always.label;
-    } else if (isPrepared) {
-      return CONFIG.DND5E.spellPreparationStates.prepared.label;
-    }
-
-    return game.i18n.localize('DND5E.SpellUnprepared');
+    return (
+      CONFIG.DND5E.spellPreparationStates[item.system.prepared]?.label ??
+      item.system.prepared
+    );
   }
 
   static tryFilterByClass(

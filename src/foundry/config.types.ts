@@ -3937,19 +3937,10 @@ export type CONFIG = {
     SPELL_SLOT_TABLE: Array<Array<number>>;
     pactCastingProgression: Record<string, { slots: number; level: number }>;
     spellPreparationStates: {
-      unprepared: {
-        label: string;
-        value: number;
-      };
-      prepared: {
-        label: string;
-        value: number;
-      };
-      always: {
-        label: string;
-        value: number;
-      };
-    };
+      unprepared: LabelValuePair;
+      prepared: LabelValuePair;
+      always: LabelValuePair;
+    } & Record<string, LabelValuePair>;
     spellcasting: {
       atwill: SpellcastingConfigEntry;
       innate: SpellcastingConfigEntry;
@@ -5608,3 +5599,8 @@ export type SpellcastingConfigEntry = {
   getSpellSlotKey: ((level: number) => string) | undefined;
   getLabel: (options?: { level?: number; format?: 'short' | 'long' }) => string;
 };
+
+type LabelValuePair = {
+  label: string;
+  value: string;
+}
