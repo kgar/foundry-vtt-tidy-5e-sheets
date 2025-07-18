@@ -747,7 +747,8 @@
         "SectionSelectorCreateNewSection": "Створити новий розділ",
         "SectionSelectorExistingSections": "Існуючі розділи",
         "SectionSelectorSaveNewSection": "Зберегти новий розділ",
-        "SectionSelectorNewSectionName": "Назва нового розілу"
+        "SectionSelectorNewSectionName": "Назва нового розілу",
+        "SectionSelectorChooseTabSectionTooltip": "Виберіть розділ {tabName}"
     },
     "TIDY5E.Tidy5eSettings": "Налаштування аркушівTidy 5e",
     "TIDY5E.Settings.Debug": {
