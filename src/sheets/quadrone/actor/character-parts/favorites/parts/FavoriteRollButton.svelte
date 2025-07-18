@@ -72,7 +72,7 @@
         {name}
       </span>
       <span
-        class="subtitle flexrow color-text-lighter font-default-small"
+        class="subtitle flexrow color-text-lighter font-default-medium"
         bind:this={theSubtitle}
       >
         {@html subtitle}

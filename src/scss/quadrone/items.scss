@@ -562,6 +562,17 @@
         }
       }
     }
+  }
+
+  .tidy-table-row {
+    padding-block-end: var(--t5e-size-halfx);
+    padding-block-start: var(--t5e-size-halfx);
+
+    .tidy-table-row-use-button {
+      height: calc(var(--t5e-size-7x) - var(--t5e-size-halfx));
+      width: calc(var(--t5e-size-7x) - var(--t5e-size-halfx));
+      border-radius: 0.0625rem;
+    }
 
   }
 

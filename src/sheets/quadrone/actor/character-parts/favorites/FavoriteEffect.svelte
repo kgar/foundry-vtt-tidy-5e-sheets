@@ -50,6 +50,8 @@
     'list-entry favorite',
     { suppressed: favorite.effect.isSuppressed, toggleable },
   ]}
+  role="button"
+  tabindex="0"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS}
   data-effect-id={favorite.effect.id}
   data-parent-id={parentId}
@@ -81,7 +83,7 @@
           {favorite.effect.name}
         </span>
         <span
-          class="subtitle flexrow color-text-lighter font-default-small"
+          class="subtitle flexrow color-text-lighter font-default-medium"
           bind:this={theSubtitle}
         >
           {@html subtitle}
