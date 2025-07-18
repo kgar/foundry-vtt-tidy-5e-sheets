@@ -68,7 +68,7 @@
     "TIDY5E.Class.Barbarian": "Barbar",
     "TIDY5E.Class.Bard": "Bard",
     "TIDY5E.Class.Cleric": "Klerik",
-    "TIDY5E.Class.Custom": "Vlastní",
+    "TIDY5E.Class.Custom": "Vlastní povolání",
     "TIDY5E.Class.Druid": "Druid",
     "TIDY5E.Class.Fighter": "Bojovník",
     "TIDY5E.Class.Monk": "Mnich",
@@ -79,7 +79,7 @@
     "TIDY5E.Class.Warlock": "Černokněžník",
     "TIDY5E.Class.Wizard": "Kouzelník",
     "TIDY5E.OriginSummaryConfig": "Souhrnné nastavení původu: {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr knihy kouzel multipovolání",
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr kouzel multipovolání",
     "TIDY5E.UserSettings.Menu": {
         "name": "Uživatelské nastavení",
         "hint": "Přizpůsob si svou vlastní verzi deníků Tidy 5e. Toto nastavení se uloží do prohlížeče a použije se na tvé deníky.",
@@ -175,8 +175,8 @@
         "hint": "Odstraní přepínací tlačítko viditelnosti dovedností bez zdatnosti a zobrazí se všechny."
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Zobrazovat kartu knihy kouzel?",
-        "hint": "Zobrazí kartu knihy kouzel NP. Zakázáním přesuneš oddíl knihy kouzel do záložky rysy."
+        "name": "Zobrazovat kartu kouzel?",
+        "hint": "Zobrazí kartu kouzel NP. Zakázáním přesuneš sekci kouzel do záložky rysy."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "Zobrazovat značku aktivního efektu?",
@@ -256,8 +256,8 @@
         "hint": "Zobrazí panel zatížení na denících dopravních prostředků."
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Používat filtr knihy kouzel multipovolání",
-        "hint": "Umožňuje filtrovat kouzla podle povolání na kartě knihy kouzel. Kouzlo musí být přiřazeno k povolání pomocí úpravy kouzla na kartě kouzla."
+        "name": "Používat filtr kouzel multipovolání",
+        "hint": "Umožňuje filtrovat kouzla podle povolání na kartě kouzel. Kouzlo musí být přiřazeno k povolání pomocí úpravy kouzla na kartě kouzla."
     },
     "TIDY5E.Settings.UseSpellClassIcons": {
         "name": "Používat ikonu povolání u kouzel?",
@@ -400,7 +400,8 @@
             "title": "Tvar portrétu typu {typ}",
             "option.round": "Kolo",
             "option.transparent": "Transparentní",
-            "option.square": "Čtverec"
+            "option.square": "Čtverec",
+            "option.token": "Token"
         },
         "RarityColors.title": "Vzácné barvy",
         "SheetTheme.title": "Motiv deníku",
@@ -572,7 +573,8 @@
         "SectionSelectorNewSectionName": "Název nové sekce",
         "SectionSelectorSaveNewSection": "Uložit novou sekci",
         "SectionSelectorChooseActionSectionTooltip": "Zvol sekci Akce",
-        "SectionSelectorCreateNewSection": "Vytvořit novou sekci"
+        "SectionSelectorCreateNewSection": "Vytvořit novou sekci",
+        "SectionSelectorChooseTabSectionTooltip": "Zvol sekci {tabName}"
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Nastavit maximum připravených kouzel",
@@ -888,5 +890,8 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sekce na položku",
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Vzestupně",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Sestupně",
-    "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}."
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}.",
+    "TIDY5E.SheetLock.Empty.Hint": "Začni přidáním povolání a prvních položek. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost „Přidat do záložky deníku“.",
+    "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost ´Oblíbené´, nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
+    "TIDY5E.EmptyTools": "Žádná dovednost s nástroji."
 }
