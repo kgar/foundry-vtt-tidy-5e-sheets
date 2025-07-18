@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Extract column specs for activity tables. 
+- [ ] Extract column specs for activity tables.
   - [ ] Apply data-driven columns to inline activity sections.
   - [ ] Apply data-driven columns to the Activity tab in item sheets.
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
@@ -30,6 +30,7 @@
 #### Carrying over favorites
 
 The essential code for adding favorites during transformation.
+
 ```ts
       const hookId = Hooks.on(
         'dnd5e.transformActorV2',
@@ -68,7 +69,6 @@ I was thinking we could do just a little rearranging and repurposing to make it 
 
 This would accomplish allowing someone to quickly edit the current value without having to retype it. The reframing of this would, I think, make it more immediately understandable, since your current value is always at the top, in the input box, and the input box being the focus allows for establishing settings quickly.
 
-
 ### NPC Sheet
 
 - [ ] Header
@@ -84,7 +84,7 @@ This would accomplish allowing someone to quickly edit the current value without
   - [x] Traits
   - [x] (Collapsed by default) Skills
   - [x] Loyalty tracker
-    - [x] Show when 
+    - [x] Show when
       - [x] `this.actor.system.traits.important` AND
       - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
       - [x] `game.user.isGM`
@@ -154,27 +154,27 @@ This would accomplish allowing someone to quickly edit the current value without
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
-- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? 
+- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`?
 
 ### Module Compatibility
 
 ## hightouch To Do
 
-- [ ] Formula column tidying needed. 
+- [x] Formula column tidying needed.
   - the draft CSS is here in `src/scss/quadrone/tables.scss`, and the component is `src\sheets\quadrone\item\columns\ItemDamageFormulasColumn.svelte`
   - right now, the overflow button is behind truesight
   - to recap: a cell-wide button that encapsulates all the damage labels would require some retrofit styling to get it looking normal again. On the other hand, the overflow button is very small, so I dunno.
 - [x] Fix Bastion Item Sheet, Crafting UI
-- [ ] Weapon Favorite stats cell is missing formatting classes
-- [ ] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
-- [ ] Non-square portraits need some CSS help: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940
+- [x] Weapon Favorite stats cell is missing formatting classes
+- [x] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
+- [ ] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
 - [ ] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
-- [ ] Skill abilities - dark mode - the dropdown background is not dark
+- [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)
 - [ ] Item sheet sidebar background image (low)
 - [ ] Make a generic roll button component
   - [ ] Fix Slot favorite roll icon not appearing
@@ -290,7 +290,7 @@ Limited:
 - [x] Include player color in the available coloris swatches
 - [x] Tools cog always visible. Limit to Edit mode.
 - [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
-- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: https://discord.com/channels/1167985253072257115/1393987856921526353~~ unable to repo.
+- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: <https://discord.com/channels/1167985253072257115/1393987856921526353>~~ unable to repo.
 - [x] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
 - [x] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to selection listboxes.
   - [x] Selection listbox
@@ -298,11 +298,11 @@ Limited:
 - [x] Add Activity uses to inline activities
 - [x] Add damage formula to inline activities
 - [x] ~~Add alignment to header subtitle? Discuss with hightouch~~ was already done
-- [x] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' https://discord.com/channels/1167985253072257115/1394345274402406523
+- [x] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' <https://discord.com/channels/1167985253072257115/1394345274402406523>
 - [x] Custom Section Selector - be able to rename existing section without retyping the whole section title. (see notes below)
 - [x] Item Formula column
   - [x] Show top 2 damages
-  - [x] If > 2 damages, 
+  - [x] If > 2 damages,
     - [x] show "+N", where N the number of damages above 2
     - [x] the entire cell is clickable and opens the item (so use the MessageBus)
   - [x] Truncate damage strings

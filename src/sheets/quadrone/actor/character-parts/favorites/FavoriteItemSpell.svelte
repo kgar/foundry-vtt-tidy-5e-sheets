@@ -43,8 +43,10 @@
   }
 </script>
 
-<li
+<div
   class="list-entry favorite"
+  role="button"
+  tabindex="0"
   data-favorite-type="spell"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
@@ -82,24 +84,24 @@
           </span>
         {/if}
       </span>
-      <span class="secondary">
+      <span class="subtitle secondary font-default-medium">
         {#if range?.value}
           <span class="range">
             {range.value}
             {#if range.long}&sol; {range.long}{/if}
           </span>
-          <span class="units font-default-medium color-text-lighter">
+          <span class="units color-text-lighter">
             {range.units}
           </span>
         {:else if range?.reach}
           <span class="range">
             {range.reach}
           </span>
-          <span class="units font-default-medium color-text-lighter">
+          <span class="units color-text-lighter">
             {range.units}
           </span>
         {/if}
       </span>
     </div>
   {/if}
-</li>
+</div>

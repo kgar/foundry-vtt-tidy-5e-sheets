@@ -26,6 +26,8 @@
 
 <div
   class="list-entry favorite"
+  role="button"
+  tabindex="0"
   data-favorite-type="slot"
   data-tidy-draggable
   data-favorite-id={favorite.id}

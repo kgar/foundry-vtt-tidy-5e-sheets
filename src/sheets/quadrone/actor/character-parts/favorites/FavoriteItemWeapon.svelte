@@ -25,6 +25,8 @@
 
 <div
   class="list-entry favorite"
+  role="button"
+  tabindex="0"
   data-favorite-type="weapon"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
@@ -43,21 +45,18 @@
     name={favorite.item?.name || ''}
     {subtitle}
   />
-  <div class="">
+  <div class="stacked">
     <span class="primary">
       {#if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}
         <span class="modifier">
-          <span class="sign">
-            {mod.sign}
-          </span>
-          <span>
-            {mod.value}
-          </span>
+          <span class="sign font-default-medium color-text-lighter"
+            >{mod.sign}</span
+          ><span class="value font-data-medium">{mod.value}</span>
         </span>
       {/if}
     </span>
-    <span class="secondary">
+    <span class="subtitle secondary font-default-medium">
       {#if range?.value}
         <span class="range">
           {range.value}

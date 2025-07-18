@@ -39,6 +39,8 @@
 
 <div
   class="list-entry favorite"
+  role="button"
+  tabindex="0"
   data-favorite-type="activity"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.activity.item?.id}
@@ -118,23 +120,23 @@
         </span>
       {/if}
     </div>
-    <div class="secondary">
+    <div class="secondary font-default-medium">
       {#if range?.value}
         <span class="range">
-          <span class="value font-data-medium color-text-default">
+          <span class="value color-text-default">
             {range.value}
           </span>
           {#if range.long}&sol; {range.long}{/if}
-          <span class="units font-default-medium color-text-lighter">
+          <span class="units color-text-lighter">
             {range.units}
           </span>
         </span>
       {:else if range?.reach}
         <span class="range">
-          <span class="value font-data-medium color-text-default">
+          <span class="value color-text-default">
             {range.reach}
           </span>
-          <span class="units font-default-medium color-text-lighter">
+          <span class="units color-text-lighter">
             {range.units}
           </span>
         </span>

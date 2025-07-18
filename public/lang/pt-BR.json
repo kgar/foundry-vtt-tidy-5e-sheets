@@ -737,7 +737,8 @@
         "SectionSelectorCreateNewSection": "Criar nova seção",
         "SectionSelectorNewSectionName": "Nome da nova seção",
         "SectionSelectorSaveNewSection": "Salvar nova seção",
-        "SectionSelectorTitle": "{sectionType}: {documentName}"
+        "SectionSelectorTitle": "{sectionType}: {documentName}",
+        "SectionSelectorChooseTabSectionTooltip": "Escolha a Seção {tabName}"
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmar: Usar Padrão",
