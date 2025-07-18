@@ -249,6 +249,15 @@ export class SheetSections {
         key
       );
 
+      let slotsData = {};
+
+      if (usesSlots) {
+        slotsData = {
+          uses: spells.value ?? 0,
+          slots: spells.override ?? spells.max ?? 0,
+        };
+      }
+
       spellbook[key] = {
         label,
         order,
@@ -257,8 +266,6 @@ export class SheetSections {
         canCreate: owner,
         canPrepare: !!config?.prepares,
         spells: [],
-        uses: spells.value ?? 0,
-        slots: spells.override ?? spells.max ?? 0,
         dataset: {
           type: 'spell',
           ['system.level']: level,
@@ -266,6 +273,7 @@ export class SheetSections {
         },
         slot: key,
         editable: context.editable,
+        ...slotsData,
       };
     };
 

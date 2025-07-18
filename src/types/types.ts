@@ -226,8 +226,8 @@ export type SpellbookSectionLegacy = {
   canCreate: boolean;
   canPrepare: boolean;
   spells: Item5e[];
-  uses: number | string;
-  slots: number | string;
+  uses?: number | string;
+  slots?: number | string;
   dataset: {
     type: string;
     ['system.level']: number | undefined;
