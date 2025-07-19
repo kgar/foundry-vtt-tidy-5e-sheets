@@ -33,6 +33,7 @@ Steps:
   - Specifically, use Unprepared, Prepared, and Always. Do Always get clumped together? If so, do a math max of 1 for preparedness and allow alpha sorting after.
 - [ ] Fix classic item table rows for prepared / not prepared
 - [ ] // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
+- [ ] Try to restore the cool drop logic. First, test the default sheets to see if they're doing anything special. Then determine if smart spell drop is still good to do.
 
 ### Class Sheet Details, spellProgression context
 
