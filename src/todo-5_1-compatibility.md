@@ -12,31 +12,30 @@ Steps:
 - [x] Test Finding: Unprepared is showing prepared styles
 - [x] Ensure prepareable icons are tagged as `can-prepare` and `prepared` | `unprepared` | `always`. Unprepared is light and regular. Prepared is default and solid. Always is icon/method color and solid.
   - [x] non-prepareable are `cannot-prepare`. cannot-prepare are icon color and solid.
-- [ ] Character / Actor Sheet: Item Spell Context Preparation has changed. Adapt to the updated version.
-- [ ] Test: Prepared controls
-  - [ ] Classic
-  - [ ] Quadrone
-- [ ] Find and deal `preparation?.mode` and `preparation.mode`
+- [x] Test: Prepared controls
+  - [x] Classic
+  - [x] Quadrone
+- [x] Find and deal `preparation?.mode` and `preparation.mode`
+- [x] Apply types for untyped spellbook section prep code
+- [x] Find out: default sheet spellbook section `id` property, what does it do? Do we need it? If so, add to types and document, and make use.
+- [x] dataset `system.preparation.mode` changed to `system.method`; update all callers so that spellbook drag and drop, etc., work as intended.
+- [x] Renamed spellbooksection.prop to .slot; propagate
+- [x] Update CONSTANTS to use methods instead of spellcasting modes. Observe all callers and how they are using method, looking for potential points to update.
+- [x] research: Are the default sheets
+- [ ] Item Sheet, Prepared toggle, icon needs to match spell method. Share the spell method icon switch in Foundry Adapter or a similar place.
 - [ ] system no longer uses `.spells` for their section 🙌, so why am I? Update accordingly, and simplify.
-- [ ] dataset `system.preparation.mode` changed to `system.method`; update all callers so that spellbook drag and drop, etc., work as intended.
-- [ ] Apply types for untyped spellbook section prep code
-- [ ] Find out: default sheet spellbook section `id` property, what does it do? Do we need it? If so, add to types and document, and make use.
-- [ ] Renamed spellbooksection.prop to .slot; propagate
-- [ ] Update CONSTANTS to use methods instead of spellcasting modes. Observe all callers and how they are using method, looking for potential points to update.
 - [ ] Update `src\components\item-list\v1\ItemTableRow.svelte` spell method class work
 - [ ] Ditto `src\components\spellbook\SpellbookGrid.svelte`
 - [ ] Add read adapter for theme settings V2 flag / import data, to V3. This should happen in ThemeQuadrone whenever reading a theme flag or interpreting an import file. Migration should happen in a standalone static class file that has nothing but migration code.
 - [ ] test Priority sorting; ensure it works in general and that prepared / always prepared spells are being hoisted to the top.
 - [ ] test Prepared sorting `CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED`
   - Specifically, use Unprepared, Prepared, and Always. Do Always get clumped together? If so, do a math max of 1 for preparedness and allow alpha sorting after.
-- [ ] research: Are the default sheets
 - [ ] Fix classic item table rows for prepared / not prepared
 - [ ] // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
 
 ### Stretch goals for later
 
 - [ ] Stretch - how can we leverage the fact that spellcasting modes are all nicely revised and thoroughly data-driven?
-  - [ ] Filters - can we list out all prep modes just by using CONFIG.DND5E.spellcasting?
   - [ ] SpellUtils.ts - are the isAtWill / isInnate / isEtc helper functions really necessary? 
 
 
