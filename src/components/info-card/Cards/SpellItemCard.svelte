@@ -24,10 +24,20 @@
     return null;
   });
 
-  let canPrepare = $derived(FoundryAdapter.canPrepareSpell(item));
-  let toggleTitle = $derived(SpellUtils.getToggleTitle(item));
+  let canPrepare = $derived(item.system.canPrepare);
   let owner = $derived<boolean>(item.actor?.isOwner ?? item.isOwner);
   let linked = $derived<Item5e>(item.system.linkedActivity?.item);
+
+  let preparationMap = FoundryAdapter.getSpellPreparationStatesMap();
+
+  let method = $derived(CONFIG.DND5E.spellcasting[item.system.method]);
+
+  let leftSubtitle = $derived(
+    [
+      item.labels?.school,
+      canPrepare ? preparationMap[item.system.prepared]?.label : undefined,
+    ].filterJoin(', '),
+  );
 </script>
 
 {#await item.getChatData({ secrets: owner }) then chatData}
@@ -42,16 +52,15 @@
   <div class="info-card-content">
     {#if item.labels?.school || (owner && canPrepare)}
       <div class="info-card-states">
-        <span>{item.labels?.school ?? ''}</span>
+        <span>{leftSubtitle ?? ''}</span>
         {#if owner}
-          {#if !canPrepare && item.system.level !== 0}
-            <span>
-              {CONFIG.DND5E.spellcasting[item.system.method]
-                ?.label ?? item.system.method}
-            </span>
-          {:else if canPrepare}
-            <span>{toggleTitle ?? ''}</span>
-          {/if}
+          {@const rightSubtitle = [
+            CONFIG.DND5E.spellcasting[item.system.method]?.getLabel({
+              level: method?.slots ? item.system.level || 0 : 1,
+              format: 'short',
+            }),
+          ].filterJoin(', ')}
+          <span>{rightSubtitle ?? ''}</span>
         {/if}
       </div>
       <HorizontalLineSeparator borderColor="faint" />

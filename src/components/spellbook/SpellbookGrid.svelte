@@ -207,14 +207,14 @@
           border: 0.0625rem solid var(--t5e-primary-accent-color);
         }
 
-        &.preparable {
+        &.can-prepare {
           .spell-image {
             box-shadow: 0 0 0 0.125rem inset var(--t5e-prepareable-color);
             border-radius: 0.3125rem;
           }
         }
 
-        &.prepared {
+        &.method-spell.can-prepare.prepared {
           box-shadow: 0 0 0 0.125rem
             var(--t5e-prepared-item-grid-tile-outline-color);
           background-color: var(--t5e-equipped-background);
@@ -226,7 +226,7 @@
           }
         }
 
-        &.pact {
+        &.method-pact.can-prepare.prepared {
           box-shadow: 0 0 0 0.125rem var(--t5e-pact-outline-color);
           background-color: var(--t5e-pact-background);
 
@@ -237,7 +237,7 @@
           }
         }
 
-        &.at-will {
+        &.method-atwill {
           box-shadow: 0 0 0 0.125rem var(--t5e-atwill-outline-color);
           background-color: var(--t5e-atwill-background);
 
@@ -248,7 +248,7 @@
           }
         }
 
-        &.ritual-only {
+        &.method-ritual {
           box-shadow: 0 0 0 0.125rem var(--t5e-ritual-only-outline-color);
           background-color: var(--t5e-ritual-only-background);
 
@@ -259,7 +259,7 @@
           }
         }
 
-        &.innate {
+        &.method-innate {
           box-shadow: 0 0 0 0.125rem var(--t5e-innate-outline);
           background-color: var(--t5e-innate-background);
 
@@ -269,7 +269,7 @@
           }
         }
 
-        &.always-prepared {
+        &.can-prepare.always {
           box-shadow: 0 0 0 0.125rem var(--t5e-alwaysprepared-outline-color);
           background-color: var(--t5e-alwaysprepared-background);
 

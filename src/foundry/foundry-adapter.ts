@@ -364,8 +364,10 @@ export const FoundryAdapter = {
   getSpellRowClasses(spell: any): string {
     const classes: string[] = [];
 
-    if (FoundryAdapter.canPrepareSpell(spell)) {
-      classes.push('preparable');
+    if (spell.system.canPrepare) {
+      classes.push('can-prepare');
+    } else {
+      classes.push('cannot-prepare');
     }
 
     if (
@@ -376,36 +378,36 @@ export const FoundryAdapter = {
     }
 
     if (
+      spell.system.prepared ===
+      CONFIG.DND5E.spellPreparationStates.unprepared.value
+    ) {
+      classes.push('unprepared');
+    }
+
+    if (
       spell.system.prepared === CONFIG.DND5E.spellPreparationStates.always.value
     ) {
-      classes.push('always-prepared');
+      classes.push('always');
     }
 
-    if (
-      spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
-    ) {
-      classes.push('pact');
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_SPELL) {
+      classes.push('method-spell');
     }
 
-    if (
-      spell.system.method ===
-      CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
-    ) {
-      classes.push('at-will');
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
+      classes.push('method-pact');
     }
 
-    if (
-      spell.system.method ===
-      CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
-    ) {
-      classes.push('ritual-only');
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+      classes.push('method-atwill');
     }
 
-    if (
-      spell.system.method ===
-      CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
-    ) {
-      classes.push('innate');
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL) {
+      classes.push('method-ritual');
+    }
+
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE) {
+      classes.push('method-innate');
     }
 
     return classes.join(' ');
@@ -1481,5 +1483,18 @@ export const FoundryAdapter = {
     let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split('.');
 
     return originId;
+  },
+  getSpellPreparationStatesMap() {
+    return Object.entries(CONFIG.DND5E.spellPreparationStates).reduce<
+      Record<number, { label: string; value: number; key: string }>
+    >((prev, [key, config]) => {
+      prev[config.value] = {
+        key: key,
+        label: config.label,
+        value: config.value,
+      };
+
+      return prev;
+    }, {});
   },
 };

@@ -12,9 +12,6 @@ Steps:
 - [x] Test Finding: Unprepared is showing prepared styles
 - [x] Ensure prepareable icons are tagged as `can-prepare` and `prepared` | `unprepared` | `always`. Unprepared is light and regular. Prepared is default and solid. Always is icon/method color and solid.
   - [x] non-prepareable are `cannot-prepare`. cannot-prepare are icon color and solid.
-- [x] Test: Prepared controls
-  - [x] Classic
-  - [x] Quadrone
 - [x] Find and deal `preparation?.mode` and `preparation.mode`
 - [x] Apply types for untyped spellbook section prep code
 - [x] Find out: default sheet spellbook section `id` property, what does it do? Do we need it? If so, add to types and document, and make use.
@@ -22,6 +19,10 @@ Steps:
 - [x] Renamed spellbooksection.prop to .slot; propagate
 - [x] Update CONSTANTS to use methods instead of spellcasting modes. Observe all callers and how they are using method, looking for potential points to update.
 - [x] research: Are the default sheets
+- [x] Test: Prepared controls
+  - [x] Classic
+  - [x] Quadrone
+- [x] Classic Spellbook styles: highlight pact spells the Pact color when prepared, Always color when always, else standard row color.
 - [ ] Class sheet, details, spell progression dropdown uses different grouping and values, and they toggle some things based on Modern Rules.
 - [ ] Item Sheet, Prepared toggle, icon needs to match spell method. Share the spell method icon switch in Foundry Adapter or a similar place.
 - [ ] system no longer uses `.spells` for their section 🙌, so why am I? Update accordingly, and simplify.
