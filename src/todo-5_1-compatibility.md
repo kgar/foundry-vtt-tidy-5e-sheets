@@ -24,15 +24,15 @@ Steps:
   - [x] Quadrone
 - [x] Classic Spellbook styles: highlight pact spells the Pact color when prepared, Always color when always, else standard row color.
 - [x] Class and Subclass sheets | details | spell progression dropdown uses different grouping and values, and they toggle some things based on Modern Rules.
+- [x] Update `src\components\item-list\v1\ItemTableRow.svelte` spell method class work
+- [x] Ditto `src\components\spellbook\SpellbookGrid.svelte`
+- [x] Fix classic item table rows for prepared / not prepared
 - [ ] Item Sheet, Prepared toggle, icon needs to match spell method. Share the spell method icon switch in Foundry Adapter or a similar place.
 - [ ] system no longer uses `.spells` for their section 🙌, so why am I? Update accordingly, and simplify.
-- [ ] Update `src\components\item-list\v1\ItemTableRow.svelte` spell method class work
-- [ ] Ditto `src\components\spellbook\SpellbookGrid.svelte`
 - [ ] Add read adapter for theme settings V2 flag / import data, to V3. This should happen in ThemeQuadrone whenever reading a theme flag or interpreting an import file. Migration should happen in a standalone static class file that has nothing but migration code.
 - [ ] test Priority sorting; ensure it works in general and that prepared / always prepared spells are being hoisted to the top.
 - [ ] test Prepared sorting `CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED`
   - Specifically, use Unprepared, Prepared, and Always. Do Always get clumped together? If so, do a math max of 1 for preparedness and allow alpha sorting after.
-- [ ] Fix classic item table rows for prepared / not prepared
 - [ ] // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
 - [ ] Try to restore the cool drop logic. First, test the default sheets to see if they're doing anything special. Then determine if smart spell drop is still good to do.
 
