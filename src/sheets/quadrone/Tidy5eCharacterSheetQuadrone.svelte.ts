@@ -263,11 +263,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         src: showToken
           ? effectiveToken?.texture.src ?? this.actor.img
           : this.actor.img,
-        path: showToken
-          ? this.actor.isToken
-            ? ''
-            : 'prototypeToken.texture.src'
-          : 'img',
+        path: showToken ? 'prototypeToken.texture.src' : 'img',
       },
       species: species
         ? {
