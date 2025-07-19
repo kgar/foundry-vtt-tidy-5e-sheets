@@ -37,6 +37,7 @@ import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import { settings } from 'src/settings/settings.svelte';
+import type { SpellProgressionConfig } from 'src/foundry/config.types';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   CONSTANTS.SHEET_TYPE_ITEM,
@@ -357,6 +358,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
           false,
       subtitle: this._getItemSubtitle(),
+      spellProgression: [],
       system: this.document.system,
       tabs: [],
       title: this.title,
@@ -493,6 +495,38 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         a.label.localeCompare(b.label, game.i18n.lang)
       );
     }
+
+    let progressionConfig: Record<string, SpellProgressionConfig> = {
+      ...CONFIG.DND5E.spellProgression,
+    };
+
+    // If using modern rules, do not show redundant artificer progression unless it is already selected.
+    if (
+      game.settings.get('dnd5e', 'rulesVersion') === 'modern' &&
+      this.item.system.spellcasting?.progression !== 'artificer'
+    ) {
+      delete progressionConfig.artificer;
+    }
+
+    context.spellProgression = Object.entries(progressionConfig).map(
+      ([value, config]) => {
+        const group = CONFIG.DND5E.spellcasting[config.type ?? '']?.label ?? '';
+        return { group, value, label: config.label };
+      }
+    );
+    const { progression } = this.item.system.spellcasting ?? {};
+    if (progression && !(progression in CONFIG.DND5E.spellProgression)) {
+      context.spellProgression.push({
+        value: progression,
+        label: progression,
+      });
+    }
+
+    context.spellProgression.sort(
+      (a, b) =>
+        (a.group ?? '')?.localeCompare(b.group ?? '', game.i18n.lang) ||
+        a.label.localeCompare(b.label, game.i18n.lang)
+    );
 
     if (game.user.isGM || this.item.system.identified !== false) {
       context.properties.active.push(

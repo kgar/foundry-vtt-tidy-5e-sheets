@@ -3976,13 +3976,13 @@ export type CONFIG = {
       };
     } & Record<string, any>;
     spellProgression: {
-      none: string;
-      full: string;
-      half: string;
-      third: string;
-      pact: string;
-      artificer: string;
-    } & Record<string, string>;
+      none: SpellProgressionConfig;
+      full: SpellProgressionConfig;
+      half: SpellProgressionConfig;
+      third: SpellProgressionConfig;
+      pact: SpellProgressionConfig;
+      artificer: SpellProgressionConfig;
+    } & Record<string, SpellProgressionConfig>;
     spellLevels: {
       '0': string;
       '1': string;
@@ -5598,4 +5598,11 @@ export type SpellcastingConfigEntry = {
 type LabelValuePair<TValue = string> = {
   label: string;
   value: TValue;
-}
+};
+
+export type SpellProgressionConfig = {
+  label: string;
+  divisor?: number;
+  roundUp?: boolean;
+  type?: string;
+};

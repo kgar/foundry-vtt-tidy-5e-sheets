@@ -10,6 +10,18 @@
 
   let appId = $derived(context.document.id);
 
+  let optionGroups = $derived.by(() => {
+    let groups: Record<string, { label: string; value: string }[]> = {};
+
+    for (let prog of context.spellProgression) {
+      let group = (groups[prog.group ?? ''] ??= []);
+
+      group.push(prog);
+    }
+
+    return Object.entries(groups);
+  });
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -25,10 +37,26 @@
       value={context.source.spellcasting.progression}
       disabled={!context.unlocked}
     >
-      <SelectOptions data={context.config.spellProgression} />
+      {#each optionGroups as group}
+        {#if group[0] !== ''}
+          <optgroup label={group[0]}>
+            {@render options(group[1])}
+          </optgroup>
+        {:else}
+          {@render options(group[1])}
+        {/if}
+      {/each}
     </SelectQuadrone>
   </div>
 </div>
+
+{#snippet options(options: { label: string; value: string }[])}
+  {#each options as option}
+    <option value={option.value}>
+      {option.label}
+    </option>
+  {/each}
+{/snippet}
 
 <div class="form-group">
   <label for="{appId}-spellcasting-ability"

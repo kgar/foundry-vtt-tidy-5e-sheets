@@ -23,7 +23,7 @@ Steps:
   - [x] Classic
   - [x] Quadrone
 - [x] Classic Spellbook styles: highlight pact spells the Pact color when prepared, Always color when always, else standard row color.
-- [ ] Class sheet, details, spell progression dropdown uses different grouping and values, and they toggle some things based on Modern Rules.
+- [x] Class and Subclass sheets | details | spell progression dropdown uses different grouping and values, and they toggle some things based on Modern Rules.
 - [ ] Item Sheet, Prepared toggle, icon needs to match spell method. Share the spell method icon switch in Foundry Adapter or a similar place.
 - [ ] system no longer uses `.spells` for their section 🙌, so why am I? Update accordingly, and simplify.
 - [ ] Update `src\components\item-list\v1\ItemTableRow.svelte` spell method class work
@@ -36,23 +36,10 @@ Steps:
 - [ ] // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
 - [ ] Try to restore the cool drop logic. First, test the default sheets to see if they're doing anything special. Then determine if smart spell drop is still good to do.
 
-### Class Sheet Details, spellProgression context
+### TODOs for the main 5.1 compat branch
 
-From item-sheet.mjs:
-```js
-// If using modern rules, do not show redundant artificer progression unless it is already selected.
-    context.spellProgression = { ...CONFIG.DND5E.spellProgression };
-    if ( (game.settings.get("dnd5e", "rulesVersion") === "modern")
-      && (this.item.system.spellcasting?.progression !== "artificer") ) delete context.spellProgression.artificer;
-    context.spellProgression = Object.entries(context.spellProgression).map(([value, config]) => {
-      const group = CONFIG.DND5E.spellcasting[config.type]?.label ?? "";
-      return { group, value, label: config.label };
-    });
-    const { progression } = this.item.system.spellcasting ?? {};
-    if ( progression && !(progression in CONFIG.DND5E.spellProgression) ) {
-      context.spellProgression.push({ value: progression, label: progression });
-    }
-```
+- [ ] Selecting "Legacy 2014 Rules" causes Tidy sheets to crash completely. The default sheets don't load correctly either.
+
 
 ### Stretch goals for later
 

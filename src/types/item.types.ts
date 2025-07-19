@@ -124,6 +124,11 @@ export type ItemSheetContext = {
     label: string;
     value: string;
   }[];
+  spellProgression: {
+    value: string;
+    label: string;
+    group?: string;
+  }[];
   system: any;
   title: string;
   toggleAdvancementLock: () => Promise<void>;
@@ -237,6 +242,11 @@ export type ItemSheetQuadroneContext = {
   spellcastingMethods: {
     label: string;
     value: string;
+  }[];
+  spellProgression: {
+    value: string;
+    label: string;
+    group?: string;
   }[];
   subtitle?: string;
   system: any;
