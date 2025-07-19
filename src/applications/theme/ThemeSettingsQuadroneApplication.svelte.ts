@@ -4,7 +4,7 @@ import type {
   PortraitShape,
   ThemeColorSetting,
   ThemeSettingsConfigurationOptions,
-  ThemeSettingsV3 as ThemeSettingsV3,
+  ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
