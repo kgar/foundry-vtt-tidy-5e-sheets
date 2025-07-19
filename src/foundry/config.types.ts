@@ -3974,11 +3974,6 @@ export type CONFIG = {
         };
         shortRest?: boolean;
       };
-      pact: {
-        label: string;
-        img: string;
-        shortRest: boolean;
-      };
     } & Record<string, any>;
     spellProgression: {
       none: string;

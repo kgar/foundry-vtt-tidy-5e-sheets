@@ -22,6 +22,7 @@ Steps:
 - [x] Renamed spellbooksection.prop to .slot; propagate
 - [x] Update CONSTANTS to use methods instead of spellcasting modes. Observe all callers and how they are using method, looking for potential points to update.
 - [x] research: Are the default sheets
+- [ ] Class sheet, details, spell progression dropdown uses different grouping and values, and they toggle some things based on Modern Rules.
 - [ ] Item Sheet, Prepared toggle, icon needs to match spell method. Share the spell method icon switch in Foundry Adapter or a similar place.
 - [ ] system no longer uses `.spells` for their section 🙌, so why am I? Update accordingly, and simplify.
 - [ ] Update `src\components\item-list\v1\ItemTableRow.svelte` spell method class work
@@ -32,6 +33,24 @@ Steps:
   - Specifically, use Unprepared, Prepared, and Always. Do Always get clumped together? If so, do a math max of 1 for preparedness and allow alpha sorting after.
 - [ ] Fix classic item table rows for prepared / not prepared
 - [ ] // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
+
+### Class Sheet Details, spellProgression context
+
+From item-sheet.mjs:
+```js
+// If using modern rules, do not show redundant artificer progression unless it is already selected.
+    context.spellProgression = { ...CONFIG.DND5E.spellProgression };
+    if ( (game.settings.get("dnd5e", "rulesVersion") === "modern")
+      && (this.item.system.spellcasting?.progression !== "artificer") ) delete context.spellProgression.artificer;
+    context.spellProgression = Object.entries(context.spellProgression).map(([value, config]) => {
+      const group = CONFIG.DND5E.spellcasting[config.type]?.label ?? "";
+      return { group, value, label: config.label };
+    });
+    const { progression } = this.item.system.spellcasting ?? {};
+    if ( progression && !(progression in CONFIG.DND5E.spellProgression) ) {
+      context.spellProgression.push({ value: progression, label: progression });
+    }
+```
 
 ### Stretch goals for later
 
