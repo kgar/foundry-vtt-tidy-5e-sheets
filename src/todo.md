@@ -2,6 +2,8 @@
 
 ### The Short List
 
+- [ ] When saving blank theme settings, the round portrait will default to square. It needs to not change.
+- [ ] "Assign Spells to Classes" - exclude Item spells / spells with linked activities.
 - [ ] Extract column specs for activity tables.
   - [ ] Apply data-driven columns to inline activity sections.
   - [ ] Apply data-driven columns to the Activity tab in item sheets.
