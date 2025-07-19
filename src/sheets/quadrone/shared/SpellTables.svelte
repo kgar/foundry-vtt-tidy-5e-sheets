@@ -197,6 +197,8 @@
                 rowClass={[
                   {
                     expanded,
+                    ['can-prepare']: item.system.canPrepare,
+                    ['cannot-prepare']: !item.system.canPrepare,
                     prepared:
                       item.system.canPrepare &&
                       item.system.prepared ===

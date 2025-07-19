@@ -10,7 +10,8 @@ Steps:
 - [x] Apply revamped spellbook preparation
 - [x] Test Finding: Always prepared is showing unprepared styles, and the button is toggleable
 - [x] Test Finding: Unprepared is showing prepared styles
-- [ ] Ensure prepareable icons are tagged as `can-prepare` and `prepared` | `unprepared` | `always`. Unprepared is light and regular. Prepared is default and solid. Always is icon/method color and solid.
+- [x] Ensure prepareable icons are tagged as `can-prepare` and `prepared` | `unprepared` | `always`. Unprepared is light and regular. Prepared is default and solid. Always is icon/method color and solid.
+  - [x] non-prepareable are `cannot-prepare`. cannot-prepare are icon color and solid.
 - [ ] Character / Actor Sheet: Item Spell Context Preparation has changed. Adapt to the updated version.
 - [ ] Test: Prepared controls
   - [ ] Classic

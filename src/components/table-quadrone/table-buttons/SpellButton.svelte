@@ -17,6 +17,7 @@
     let classes: ClassValue = [];
 
     if (config?.prepares) {
+      classes.push('can-prepare');
       classes.push(
         doc.system.prepared ===
           CONFIG.DND5E.spellPreparationStates.prepared.value
@@ -26,6 +27,9 @@
             ? 'fa-solid always'
             : 'fa-regular unprepared',
       );
+    }
+    else {
+      classes.push('cannot-prepare', 'fa-solid');
     }
 
     switch (method) {
