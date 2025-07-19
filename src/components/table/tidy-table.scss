@@ -157,27 +157,27 @@
 }
 
 .tidy-table-row-v2 {
-  &.prepared {
+  &.method-spell.can-prepare.prepared {
     --t5e-tidy-table-row-background: var(--t5e-prepared-background);
   }
-
-  &.always-prepared {
-    --t5e-tidy-table-row-background: var(--t5e-alwaysprepared-background);
-  }
-
-  &.pact {
+  
+  &.method-pact.can-prepare.prepared {
     --t5e-tidy-table-row-background: var(--t5e-pact-background);
   }
 
-  &.at-will {
+  &.can-prepare.always {
+    --t5e-tidy-table-row-background: var(--t5e-alwaysprepared-background);
+  }
+
+  &.method-atwill {
     --t5e-tidy-table-row-background: var(--t5e-atwill-background);
   }
 
-  &.ritual-only {
+  &.method-ritual {
     --t5e-tidy-table-row-background: var(--t5e-ritual-only-background);
   }
 
-  &.innate {
+  &.method-innate {
     --t5e-tidy-table-row-background: var(--t5e-innate-background);
   }
 

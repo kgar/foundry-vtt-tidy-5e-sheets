@@ -2,9 +2,10 @@ import { settings } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { ItemUtils } from './ItemUtils';
 import { CONSTANTS } from 'src/constants';
-import { TidyFlags } from "src/foundry/TidyFlags";
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from './data';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class SpellUtils {
   /** Is a cantrip. */
@@ -61,7 +62,8 @@ export class SpellUtils {
   /** Spell is always prepared. */
   static isAlwaysPrepared(item: any): any {
     return (
-      item.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
+      item.system.canPrepare &&
+      item.system.prepared === CONFIG.DND5E.spellPreparationStates.always.value
     );
   }
 
@@ -72,9 +74,7 @@ export class SpellUtils {
 
   /** Is an At-Will spell. */
   static isAtWill(item: any): boolean {
-    return (
-      item.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
-    );
+    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL;
   }
 
   /** Is an Innate spell with no limit on uses. */
@@ -84,46 +84,37 @@ export class SpellUtils {
 
   /** Is an Innate spell. */
   static isInnate(item: any): boolean {
-    return (
-      item.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
-    );
+    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE;
   }
 
   /** Is pact magic. */
   static isPactMagic(item: Item5e) {
-    return (
-      item.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT
-    );
+    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT;
   }
 
   /** Is a spell that requires preparation and is prepared. */
   static isPrepared(item: Item5e) {
     return (
-      item.system.preparation?.mode === 'prepared' &&
-      item.system.preparation?.prepared
+      FoundryAdapter.canPrepareSpell(item) &&
+      item.system.prepared ===
+        CONFIG.DND5E.spellPreparationStates.prepared.value
     );
   }
 
   /** Is a spell that requires preparation but is unprepared. */
   static isUnprepared(item: Item5e) {
     return (
-      item.system.preparation?.mode === 'prepared' &&
-      !item.system.preparation?.prepared
+      FoundryAdapter.canPrepareSpell(item) &&
+      item.system.prepared ===
+        CONFIG.DND5E.spellPreparationStates.unprepared.value
     );
   }
 
   static getToggleTitle(item: Item5e) {
-    const prep = item.system.preparation || {};
-    const isAlways = prep.mode === 'always';
-    const isPrepared = !!prep.prepared;
-
-    if (isAlways) {
-      return CONFIG.DND5E.spellPreparationModes.always.label;
-    } else if (isPrepared) {
-      return CONFIG.DND5E.spellPreparationModes.prepared.label;
-    }
-
-    return game.i18n.localize('DND5E.SpellUnprepared');
+    return (
+      CONFIG.DND5E.spellPreparationStates[item.system.prepared]?.label ??
+      item.system.prepared
+    );
   }
 
   static tryFilterByClass(
@@ -141,9 +132,5 @@ export class SpellUtils {
       (spell) =>
         spell.system.sourceClass?.trim() === selectedClassFilter?.trim()
     );
-  }
-
-  static getSpellPreparationIconColorVariableName(preparationMode: string) {
-    return `--t5e-color-icon-spellcasting-${preparationMode.slugify()}`;
   }
 }

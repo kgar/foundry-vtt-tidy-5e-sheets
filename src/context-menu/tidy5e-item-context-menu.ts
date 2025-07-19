@@ -57,31 +57,6 @@ export function getItemContextOptions(
 
   let options: ContextMenuEntry[] = [];
 
-  let toggleTitle = '';
-  let canToggle = false;
-  let isActive = false;
-  let canPrepare = false;
-
-  if (item.type === 'spell') {
-    const prep = item.system.preparation || {};
-    const isAlways = prep.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS;
-    const isPrepared = !!prep.prepared;
-    isActive = isPrepared;
-    if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
-    else if (isPrepared)
-      toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
-    else toggleTitle = FoundryAdapter.localize('DND5E.SpellUnprepared');
-
-    canPrepare = item.system.level >= 1;
-  } else {
-    isActive = !!item.system.equipped;
-    toggleTitle = FoundryAdapter.localize(
-      isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
-    );
-    canToggle = 'equipped' in item.system;
-
-    canPrepare = item.system.level >= 1;
-  }
 
   // Toggle Attunement State
   if (
@@ -149,21 +124,20 @@ export function getItemContextOptions(
   }
 
   // Toggle Prepared State
-  if (
-    'preparation' in item.system &&
-    FoundryAdapter.canPrepareSpell(item) &&
-    !item.system.linkedActivity
-  ) {
-    const isPrepared = item.system?.preparation?.prepared === true;
+  if (FoundryAdapter.canPrepareSpell(item) && !item.system.linkedActivity) {
+    const isPrepared =
+      item.system?.prepared ===
+      CONFIG.DND5E.spellPreparationStates.prepared.value;
+
+    const newValue = ((item.system?.prepared ?? 0) + 1) % 2;
     options.push({
-      name: isActive
+      name: isPrepared
         ? 'TIDY5E.ContextMenuActionUnprepare'
         : 'TIDY5E.ContextMenuActionPrepare',
-      icon: isActive
+      icon: isPrepared
         ? "<i class='fas fa-book fa-fw'></i>"
         : "<i class='fas fa-book fa-fw'></i>",
-      callback: () =>
-        item.update({ 'system.preparation.prepared': !isPrepared }),
+      callback: () => item.update({ 'system.prepared': newValue }),
       condition: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });

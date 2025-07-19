@@ -16,30 +16,6 @@ import type {
 import { coalesce } from './formatting';
 import { CONSTANTS } from 'src/constants';
 
-export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
-  try {
-    const scaledFormula = spell._scaleCantripDamage(
-      [formula],
-      spell.system.scaling.formula,
-      spell.actor.type === 'character'
-        ? spell.actor.system.details.level ?? 0
-        : spell.system.preparation.mode === 'innate'
-        ? Math.ceil(spell.actor.system.details.cr ?? 0)
-        : spell.actor.system.attributes.spell.level ?? 0,
-      spell.getRollData()
-    );
-
-    return scaledFormula;
-  } catch (e) {
-    error(
-      'An error occurred while scaling cantrip damage. Returning original formula.',
-      false,
-      e
-    );
-    return formula;
-  }
-}
-
 export function simplifyFormula(
   formula: string,
   removeFlavor: boolean = false
