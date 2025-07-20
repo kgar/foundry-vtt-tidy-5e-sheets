@@ -14,9 +14,8 @@
   import FilterToggle from 'src/components/buttons/FilterToggle.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import FilterMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
+  import FilterButtonMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
-  import { isNil } from 'src/utils/data';
   import type { ContainerSheetQuadroneContext } from 'src/types/item.types';
 
   interface Props {
@@ -82,7 +81,7 @@
   {/if}
 
   {#if Object.keys(context.filterData).length}
-    <FilterMenuQuadrone filterData={context.filterData} {tabId} />
+    <FilterButtonMenuQuadrone filterData={context.filterData} {tabId} />
   {/if}
 
   <SortButtonWithMenuQuadrone doc={context.document} {tabId} />
