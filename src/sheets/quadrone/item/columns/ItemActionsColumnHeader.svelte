@@ -44,7 +44,7 @@
   </a>
 {/if}
 
-{#if 'prepMode' in section && section.usesSlots && sheetContext.unlocked}
+{#if 'slots' in section && section.usesSlots && sheetContext.unlocked}
   <a
     aria-label={localize('DND5E.SpellSlotsConfig')}
     class="tidy-table-button"

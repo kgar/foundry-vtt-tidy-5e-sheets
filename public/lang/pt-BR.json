@@ -681,7 +681,7 @@
         "RarityColors.title": "Cores de Raridade",
         "SheetTheme.title": "Tema da Ficha",
         "SheetTheme.hint": "Para melhores resultados, escolha uma cor próxima ao centro da paleta de cores.",
-        "SpellPreparationModeColors.title": "Cores do Modo de Preparação de Magias"
+        "SpellcastingMethodColors.title": "Cores do Modo de Preparação de Magias"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",

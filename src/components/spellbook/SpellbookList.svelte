@@ -70,7 +70,7 @@
   );
 
   let spellEntries = $derived(
-    section.spells.map((s) => ({
+    section.items.map((s) => ({
       spell: s,
       spellImgUrl: FoundryAdapter.getSpellImageUrl(context, s),
       ctx: context.itemContext[s.id],
@@ -89,7 +89,9 @@
           props: ({ item, ctx }) =>
             ({
               item: item,
-              prepared: item.system.preparation.prepared,
+              prepared:
+                item.system.prepared ===
+                CONFIG.DND5E.spellPreparationStates.prepared.value,
               title: ctx?.toggleTitle,
             }) satisfies ComponentProps<typeof SpellPrepareControl>,
           visible: ({ item }) => FoundryAdapter.canPrepareSpell(item),
@@ -154,7 +156,7 @@
   >
     {#snippet header()}
       {@const visibleItemCount = ItemVisibility.countVisibleItems(
-        section.spells,
+        section.items,
         searchResults.uuids,
       )}
       <ItemTableHeaderRow>

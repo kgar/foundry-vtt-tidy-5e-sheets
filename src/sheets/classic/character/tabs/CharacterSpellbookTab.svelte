@@ -65,7 +65,7 @@
   let noSpells = $derived(
     spellbook.reduce(
       (count: number, section: SpellbookSection) =>
-        count + section.spells.length,
+        count + section.items.length,
       0,
     ) === 0,
   );
@@ -154,7 +154,7 @@
     {#each spellbook as section (section.key)}
       {#if section.show}
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
-          section.spells,
+          section.items,
           searchResults.uuids,
         )}
 
