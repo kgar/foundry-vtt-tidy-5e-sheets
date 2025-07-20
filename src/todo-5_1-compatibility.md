@@ -45,13 +45,3 @@ Steps:
 
 - [ ] Stretch - how can we leverage the fact that spellcasting modes are all nicely revised and thoroughly data-driven?
   - [ ] SpellUtils.ts - are the isAtWill / isInnate / isEtc helper functions really necessary? 
-
-
-### Migration notes
-
-`prepared` mode is now `spell` method
-`always` mode is no longer a thing ; have to handle on a case-by-case basis
-
-To check prepared state, use `CONFIG.DND5E.spellPreparationStates[key].value`
-
-`.preparation?.mode` / `.preparation.mode` -> `method`
