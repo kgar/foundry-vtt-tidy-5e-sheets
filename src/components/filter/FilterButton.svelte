@@ -48,13 +48,13 @@
     menuElement="div"
     buttonStyle="transparent-inline-icon"
   >
-    {#each Object.entries(categories) as [category, filters] (category)}
+    {#each Object.entries(categories) as [category, filters]}
       <section class="filter-group">
         <h4 class="filter-group-header">
           {localize(category)}
         </h4>
         <div class="filters">
-          {#each filters as filter (filter.text)}
+          {#each filters as filter}
             <FilterToggleButton filterGroupName={tabId} {filter}>
               {localize(filter.text)}
             </FilterToggleButton>
