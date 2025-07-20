@@ -1,6 +1,7 @@
 <script lang="ts" generics="TFavorite extends FavoriteContextEntry">
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { FavoriteContextEntry } from 'src/types/types';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     favorite: TFavorite;
@@ -38,6 +39,7 @@
   }
 
   let theSubtitle = $state<HTMLElement>();
+  let showSubtitle = $derived(!isNil(subtitle, ''));
 
   let tooltip = $derived(
     useTooltip
@@ -72,7 +74,10 @@
         {name}
       </span>
       <span
-        class="subtitle flexrow color-text-lighter font-default-medium"
+        class={[
+          'subtitle flexrow color-text-lighter font-default-medium',
+          { hidden: !showSubtitle },
+        ]}
         bind:this={theSubtitle}
       >
         {@html subtitle}
