@@ -75,7 +75,7 @@ export class SheetSections {
     const section: SpellbookSection = (spellbook[customSectionName] ??=
       SheetSections.createSpellbookSection(customSectionName, options));
 
-    section.spells.push(spell);
+    section.items.push(spell);
   }
 
   static createSpellbookSection(
@@ -86,7 +86,7 @@ export class SheetSections {
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
-      spells: [],
+      items: [],
       label: customSectionName,
       canCreate: true,
       canPrepare: true,
@@ -265,7 +265,7 @@ export class SheetSections {
         id: method,
         canCreate: owner,
         canPrepare: !!config?.prepares,
-        spells: [],
+        items: [],
         dataset: {
           type: 'spell',
           ['system.level']: level,
@@ -338,7 +338,7 @@ export class SheetSections {
       }
 
       // Add the spell to the relevant heading
-      spellbook[key].spells.push(spell);
+      spellbook[key].items.push(spell);
     });
 
     // Sort the spellbook by section level
@@ -506,14 +506,14 @@ export class SheetSections {
 
       return sections.map(({ ...section }) => {
         // Filter Spellbook by Class Filter, if needed
-        section.spells = SpellUtils.tryFilterByClass(
+        section.items = SpellUtils.tryFilterByClass(
           document,
-          section.spells,
+          section.items,
           spellClassFilter
         );
 
         // Sort Spellbook
-        section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
+        section.items = ItemUtils.getSortedItems(section.items, sortMode);
 
         // Apply visibility from configuration
         section.show =
@@ -595,7 +595,7 @@ export class SheetSections {
 
             // TODO: Filter Favorite Activities?
           } else {
-            let items = 'spells' in section ? section.spells : section.items;
+            let items = section.items;
             // Sort Favorites Items
             if (sortMode === 'm') {
               const getSort = (item: Item5e) =>
@@ -610,7 +610,7 @@ export class SheetSections {
             // TODO: Collocate Favorite Sub Items
 
             if ('spells' in section) {
-              section.spells = items;
+              section.items = items;
             } else {
               section.items = items;
             }

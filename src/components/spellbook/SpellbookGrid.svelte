@@ -33,8 +33,8 @@
   let searchResultContext = getSearchResultsContext();
 
   let spellEntries = $derived(
-    section.spells.map((s) => ({
-      spell: s,
+    section.items.map((s) => ({
+      item: s,
       ctx: context.itemContext[s.id],
       spellImgUrl: FoundryAdapter.getSpellImageUrl(context, s),
     })),
@@ -95,28 +95,28 @@
     {/snippet}
     {#snippet body()}
       <div class="spells">
-        {#each spellEntries as { spell, ctx, spellImgUrl } (spell.id)}
-          {@const hidden = !searchResultContext.show(spell.uuid)}
+        {#each spellEntries as { item, ctx, spellImgUrl } (item.id)}
+          {@const hidden = !searchResultContext.show(item.uuid)}
           <a
-            class="spell {FoundryAdapter.getSpellRowClasses(spell)}"
+            class="spell {FoundryAdapter.getSpellRowClasses(item)}"
             class:hidden
             aria-hidden={hidden}
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-            onclick={(event) => FoundryAdapter.actorTryUseItem(spell, event)}
+            onclick={(event) => FoundryAdapter.actorTryUseItem(item, event)}
             oncontextmenu={(event) =>
-              FoundryAdapter.onActorItemButtonContextMenu(spell, { event })}
+              FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
             onmousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event, spell)}
-            onmouseenter={(ev) => onMouseEnter(ev, spell)}
-            onmouseleave={(ev) => onMouseLeave(ev, spell)}
-            ondragstart={(ev) => handleDragStart(ev, spell)}
+              FoundryAdapter.editOnMiddleClick(event, item)}
+            onmouseenter={(ev) => onMouseEnter(ev, item)}
+            onmouseleave={(ev) => onMouseLeave(ev, item)}
+            ondragstart={(ev) => handleDragStart(ev, item)}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
-            data-item-id={spell.id}
+            data-item-id={item.id}
             tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
             data-tidy-draggable
             data-tidy-grid-item
-            data-info-card={spell ? 'item' : null}
-            data-info-card-entity-uuid={spell?.uuid ?? null}
+            data-info-card={item ? 'item' : null}
+            data-info-card-entity-uuid={item?.uuid ?? null}
           >
             {#if 'favoriteId' in ctx && !!ctx.favoriteId}
               <GridPaneFavoriteIcon />

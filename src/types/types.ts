@@ -225,7 +225,7 @@ export type SpellbookSectionLegacy = {
   slot: string; // replaced prop
   canCreate: boolean;
   canPrepare: boolean;
-  spells: Item5e[];
+  items: Item5e[];
   uses?: number | string;
   slots?: number | string;
   dataset: {
@@ -242,7 +242,7 @@ export type SpellbookSection = {
   canCreate: boolean;
   /* deprecated: item row actions runtime evaluates for each item  */
   canPrepare: boolean;
-  spells: Item5e[];
+  items: Item5e[];
   uses?: number;
   slots?: number;
   override?: number;

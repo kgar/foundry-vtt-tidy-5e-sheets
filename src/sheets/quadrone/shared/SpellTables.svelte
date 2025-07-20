@@ -73,7 +73,7 @@
   });
 
   let totalSpellCount = $derived(
-    sections.reduce((count, s) => count + s.spells.length, 0),
+    sections.reduce((count, s) => count + s.items.length, 0),
   );
 </script>
 
@@ -97,7 +97,7 @@
   {:else}
     {#each sections as section (section.key)}
       {@const hasViewableItems = ItemVisibility.hasViewableItems(
-        section.spells,
+        section.items,
         searchResults.uuids,
       )}
       {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
@@ -143,7 +143,7 @@
                 <h3>
                   {localize(section.label)}
                 </h3>
-                <span class="table-header-count">{section.spells.length}</span>
+                <span class="table-header-count">{section.items.length}</span>
                 {#if section.usesSlots}
                   <div
                     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
@@ -184,7 +184,7 @@
           {/snippet}
 
           {#snippet body()}
-            {@const itemEntries = section.spells.map((item) => ({
+            {@const itemEntries = section.items.map((item) => ({
               item,
               ctx: itemContext[item.id],
             }))}

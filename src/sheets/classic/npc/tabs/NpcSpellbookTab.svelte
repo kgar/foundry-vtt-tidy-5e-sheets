@@ -130,7 +130,7 @@
     {#each spellbook as section (section.key)}
       {#if section.show}
         {@const visibleItemCount = ItemVisibility.countVisibleItems(
-          section.spells,
+          section.items,
           searchResults.uuids,
         )}
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0 || !!section.slots}

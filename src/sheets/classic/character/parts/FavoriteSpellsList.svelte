@@ -33,7 +33,7 @@
   let context = $derived(getCharacterSheetContext());
 
   let spellEntries = $derived(
-    section.spells.map((spell) => ({
+    section.items.map((spell) => ({
       spell,
       ctx: context.itemContext[spell.id],
       spellImgUrl: FoundryAdapter.getSpellImageUrl(context, spell),
@@ -52,7 +52,7 @@
   >
     {#snippet header()}
       {@const visibleItemCount = ItemVisibility.countVisibleItems(
-        section.spells,
+        section.items,
         searchResults.uuids,
       )}
       <ItemTableHeaderRow>

@@ -70,7 +70,7 @@
   );
 
   let spellEntries = $derived(
-    section.spells.map((s) => ({
+    section.items.map((s) => ({
       spell: s,
       spellImgUrl: FoundryAdapter.getSpellImageUrl(context, s),
       ctx: context.itemContext[s.id],
@@ -156,7 +156,7 @@
   >
     {#snippet header()}
       {@const visibleItemCount = ItemVisibility.countVisibleItems(
-        section.spells,
+        section.items,
         searchResults.uuids,
       )}
       <ItemTableHeaderRow>
