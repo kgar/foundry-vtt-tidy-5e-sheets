@@ -22,6 +22,7 @@ import { clamp } from 'src/utils/numbers';
 import { processInputChangeDelta } from 'src/utils/form';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
+import type { ClassValue } from 'svelte/elements';
 
 export const FoundryAdapter = {
   deepClone(obj: any) {
@@ -1496,5 +1497,46 @@ export const FoundryAdapter = {
 
       return prev;
     }, {});
+  },
+  getSpellIcon(item: Item5e): ClassValue {
+    let classes: ClassValue = [];
+
+    if (item.system.canPrepare) {
+      classes.push('can-prepare');
+      classes.push(
+        item.system.prepared ===
+          CONFIG.DND5E.spellPreparationStates.prepared.value
+          ? 'fa-solid prepared'
+          : item.system.prepared ===
+            CONFIG.DND5E.spellPreparationStates.always.value
+          ? 'fa-solid always'
+          : 'fa-regular unprepared'
+      );
+    } else {
+      classes.push('cannot-prepare', 'fa-solid');
+    }
+
+    switch (item.system.method) {
+      case CONSTANTS.SPELL_PREPARATION_METHOD_SPELL:
+        classes.push('fa-book');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL:
+        classes.push('fa-hand-sparkles');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_INNATE:
+        classes.push('fa-hand-holding-magic');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_PACT:
+        classes.push('fa-moon');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL:
+        classes.push('fa-candle-holder');
+        break;
+      default:
+        classes.push('fa-sparkles');
+        break;
+    }
+
+    return classes;
   },
 };

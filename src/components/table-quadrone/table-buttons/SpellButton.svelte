@@ -13,52 +13,9 @@
   let method = $derived(doc.system.method ?? '');
   let config = $derived(CONFIG.DND5E.spellcasting[method]);
 
-  function getIconClasses(): ClassValue {
-    let classes: ClassValue = [];
-
-    if (config?.prepares) {
-      classes.push('can-prepare');
-      classes.push(
-        doc.system.prepared ===
-          CONFIG.DND5E.spellPreparationStates.prepared.value
-          ? 'fa-solid prepared'
-          : doc.system.prepared ===
-              CONFIG.DND5E.spellPreparationStates.always.value
-            ? 'fa-solid always'
-            : 'fa-regular unprepared',
-      );
-    }
-    else {
-      classes.push('cannot-prepare', 'fa-solid');
-    }
-
-    switch (method) {
-      case CONSTANTS.SPELL_PREPARATION_METHOD_SPELL:
-        classes.push('fa-book');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL:
-        classes.push('fa-hand-sparkles');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_INNATE:
-        classes.push('fa-hand-holding-magic');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_PACT:
-        classes.push('fa-moon');
-        break;
-      case CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL:
-        classes.push('fa-candle-holder');
-        break;
-      default:
-        classes.push('fa-sparkles');
-        break;
-    }
-
-    return classes;
-  }
-
   let iconClasses: ClassValue = $derived([
     'spell-row-icon',
-    getIconClasses(),
+    FoundryAdapter.getSpellIcon(doc),
     {
       [`method-${method}`]: !isNil(method, ''),
     },

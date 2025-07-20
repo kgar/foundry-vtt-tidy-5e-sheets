@@ -350,13 +350,13 @@
       </li>
     {/if}
     {#if context.item.actor && FoundryAdapter.canPrepareSpell(context.item)}
-      {@const prepared = context.system.prepared}
+      <!-- {@const prepared = context.system.prepared} -->
+      {@const spellIconClasses = FoundryAdapter.getSpellIcon(context.item)}
       <li>
         <PillSwitch
-          checked={prepared ==
+          checked={context.system.prepared ==
             CONFIG.DND5E.spellPreparationStates.prepared.value}
-          checkedIconClass="fas fa-book fa-fw"
-          uncheckedIconClass="fas fa-book fa-fw"
+          iconClass={spellIconClasses}
           onchange={(ev) => {
             let newValue = ev.currentTarget?.checked
               ? CONFIG.DND5E.spellPreparationStates.prepared.value
@@ -368,7 +368,7 @@
           }}
           disabled={!context.editable}
         >
-          {#if !context.editable && !prepared}
+          {#if !context.editable && !context.system.prepared}
             {localize('DND5E.SpellUnprepared')}
           {:else}
             {localize('DND5E.Prepared')}

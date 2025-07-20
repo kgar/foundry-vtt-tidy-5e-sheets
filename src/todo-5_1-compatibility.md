@@ -27,7 +27,7 @@ Steps:
 - [x] Update `src\components\item-list\v1\ItemTableRow.svelte` spell method class work
 - [x] Ditto `src\components\spellbook\SpellbookGrid.svelte`
 - [x] Fix classic item table rows for prepared / not prepared
-- [ ] Item Sheet, Prepared toggle, icon needs to match spell method. Share the spell method icon switch in Foundry Adapter or a similar place.
+- [x] Q Item Sheet, Prepared toggle, icon needs to match spell method. Share the spell method icon switch in Foundry Adapter or a similar place.
 - [ ] system no longer uses `.spells` for their section 🙌, so why am I? Update accordingly, and simplify.
 - [ ] Add read adapter for theme settings V2 flag / import data, to V3. This should happen in ThemeQuadrone whenever reading a theme flag or interpreting an import file. Migration should happen in a standalone static class file that has nothing but migration code.
 - [ ] test Priority sorting; ensure it works in general and that prepared / always prepared spells are being hoisted to the top.
