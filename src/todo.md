@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [ ] Determine: can we put a special class or attribute on each column and its subsequent cells to uniquely identify the column type. E.g.,`[data-tidy-column-key="price"]`. If so, set up dynamic columns to do this.
 - [ ] When saving blank theme settings, the round portrait will default to square. It needs to not change.
 - [ ] "Assign Spells to Classes" - exclude Item spells / spells with linked activities.
 - [ ] Extract column specs for activity tables.
