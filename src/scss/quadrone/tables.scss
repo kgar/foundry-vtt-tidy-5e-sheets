@@ -45,7 +45,7 @@
 
     &.spell-preparation {
       --t5e-table-header-background-left: oklch(from var(--t5e-mode-color, var(--t5e-theme-color-darkest)) calc(l * 0.75) calc(c * 1.2) h);
-      --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-default));
+      --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-darker));
     }
 
     :is(.tidy-table-cell, .tidy-table-header-cell) {
@@ -856,31 +856,6 @@
       max-width: var(--t5e-field-size-default);
       text-align: right;
       padding-bottom: 0.0625rem;
-    }
-  }
-
-  .pips.spell-pips {
-    padding-block-start: var(--t5e-size-1);
-
-    .pip {
-      --pip-color: var(--t5e-color-text-gold-emphasis);
-      transition: all var(--t5e-transition-default);
-
-      &:hover,
-      &:active,
-      &:focus-within {
-        background-color: var(--t5e-theme-color-lighter);
-        filter: drop-shadow(0 0 0.1875rem oklch(from var(--t5e-theme-color-highlight) l c h));
-      }
-
-      &.active {
-
-        &:hover,
-        &:active,
-        &:focus-within {
-          background-color: var(--t5e-color-text-oninverse-gold-light);
-        }
-      }
     }
   }
 
