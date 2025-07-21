@@ -46,6 +46,11 @@
     &[hidden] {
       display: none;
     }
+
+    >span {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   &.progress,
