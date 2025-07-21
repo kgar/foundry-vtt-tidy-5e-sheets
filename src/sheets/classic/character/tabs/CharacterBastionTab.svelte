@@ -453,9 +453,12 @@
   <!-- Description -->
 
   <RerenderAfterFormSubmission
-    andOnValueChange={context.bastion.description ?? ''}
+    andOnValueChange={context.system.bastion.description ?? ''}
   >
-    <section class="description" use:context.activateEditors>
+    <section
+      class="description"
+      onchange={() => context.actor.sheet.submit()}
+    >
       <h3><i class="fa-solid fa-books"></i> Description</h3>
       <SheetEditorV2
         enriched={context.bastion.description}
@@ -465,7 +468,6 @@
           editable: context.editable,
         }}
         documentUuid={context.actor.uuid}
-        onSave={() => context.actor.sheet.submit()}
         manageSecrets={context.actor.isOwner}
       />
     </section>
