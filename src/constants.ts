@@ -12,7 +12,9 @@ export const CONSTANTS = {
   SYSTEM_SETTING_LEVELING_MODE_XP_BOONS: 'xpBoons',
   SYSTEM_SETTING_DEFAULT_SKILLS: 'defaultSkills',
   COLUMN_SPEC_SECTION_KEY_DEFAULT:
-    'default section key fallback for column specs',
+  'default section key fallback for column specs',
+  COLUMN_SPEC_TAB_KEY_DEFAULT:
+    'default tab key fallback for column specs',
   COLUMN_SPEC_TYPE_KEY_DEFAULT: 'default sheet type fallback for column specs',
   DOCUMENT_NAME_ACTOR: 'Actor',
   DOCUMENT_NAME_ACTIVE_EFFECT: 'ActiveEffect',
@@ -30,6 +32,7 @@ export const CONSTANTS = {
   ADVANCEMENT_LEVEL_ZERO: '0',
   ATTUNEMENT_OPTIONAL: 'optional',
   ATTUNEMENT_REQUIRED: 'required',
+  COLUMN_PRIMARY_MIN_WIDTH_REMS: 12.5,
   FAVORITES_SECTION_TYPE_ACTIVITY: 'activity',
   FAVORITES_SECTION_TYPE_EFFECT: 'effect',
   FAVORITES_SECTION_TYPE_FACILITY: 'facility',

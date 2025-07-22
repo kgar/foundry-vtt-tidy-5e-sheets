@@ -18,7 +18,7 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 

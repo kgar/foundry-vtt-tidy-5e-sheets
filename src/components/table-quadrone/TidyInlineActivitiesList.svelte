@@ -18,7 +18,7 @@
   import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-  import { getDefaultColumns } from 'src/runtime/item/default-item-columns';
+  import { getDefaultItemColumns } from 'src/runtime/tables/default-item-columns';
 
   interface Props {
     item?: Item5e | null;
@@ -52,7 +52,7 @@
     ),
   );
 
-  let actionsColumn = getDefaultColumns().actions;
+  let actionsColumn = getDefaultItemColumns().actions;
 
   let section = $derived({
     ...SheetSections.EMPTY,
@@ -91,19 +91,11 @@
           class="tidy-table-row-use-button"
           onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
         >
-          {#if ctx.activity.img?.endsWith('.svg')}
-            <img
-              class="item-image"
-              src={ctx.activity.img}
-              alt={ctx.activity.name}
-            />
-          {:else}
-            <img
-              class="item-image"
-              alt={ctx.activity.name}
-              src={ctx.activity.img}
-            />
-          {/if}
+          <img
+            class="item-image"
+            alt={ctx.activity.name}
+            src={ctx.activity.img}
+          />
           <span class="roll-prompt">
             <i class="fa fa-dice-d20"></i>
           </span>
