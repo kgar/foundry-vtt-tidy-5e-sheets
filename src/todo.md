@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] When saving blank theme settings, the round portrait will default to square. It needs to not change.
+
 - [ ] "Assign Spells to Classes" - exclude Item spells / spells with linked activities.
 - [ ] Extract column specs for activity tables.
   - [ ] Apply data-driven columns to inline activity sections.
@@ -316,3 +316,4 @@ Limited:
   - [x] Do it for actors
   - [x] ~~Do it manually for containers for now / consider rolling out dynamic container columns~~ the work was already done 💖
   - [x] ~~Refactor: allow regular HTML attributes rather than a secret `attributes` rest prop on `TidyTableCell`.~~ `children` snippet was not compatible with the interface extending HTMLAttributes. Instead, formally add `attributes` prop that is HTMLAttributes.
+- [x] When saving blank theme settings, the round portrait will default to square. It needs to not change.
