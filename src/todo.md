@@ -2,10 +2,10 @@
 
 ### The Short List
 
-
 - [ ] Extract column specs for activity tables.
   - [ ] Apply data-driven columns to inline activity sections.
   - [ ] Apply data-driven columns to the Activity tab in item sheets.
+- [ ] Add dedicated ActivityColumnRuntime and EffectColumnRuntime to their own directories with their own default column function exports.
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.

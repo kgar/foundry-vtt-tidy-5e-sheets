@@ -5,7 +5,7 @@ import type {
   ConfiguredColumnSpecification,
 } from '../types';
 import { CONSTANTS } from 'src/constants';
-import { getDefaultColumns } from './default-item-columns';
+import { getDefaultItemColumns } from './default-item-columns';
 import { foundryCoreSettings } from 'src/settings/settings.svelte';
 import type { ColumnsLoadout } from './ColumnsLoadout.svelte';
 
@@ -24,7 +24,8 @@ class ItemColumnRuntime {
   #minWidthRems = $derived(ENTRY_NAME_MIN_WIDTH_REMS);
 
   initOnReady() {
-    const columns = getDefaultColumns();
+    const columns = getDefaultItemColumns();
+
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
     const standardItemActionsColumn: ColumnSpecification = {
       ...columns.actions,
@@ -208,8 +209,8 @@ class ItemColumnRuntime {
             charges: { ...columns.uses, order: 100, priority: 500 },
             roll: { ...columns.roll, order: 200, priority: 400 },
             formula: { ...columns.formula, order: 300, priority: 600 },
-            range: {...columns.range, order: 400, priority: 300},
-            target: { ...columns.target, order: 500, priority: 200},
+            range: { ...columns.range, order: 400, priority: 300 },
+            target: { ...columns.target, order: 500, priority: 200 },
             actions: { ...columns.actions, order: 1000, priority: 1000 },
           },
         },

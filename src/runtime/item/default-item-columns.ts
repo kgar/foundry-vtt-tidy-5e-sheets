@@ -21,7 +21,7 @@ import ItemDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ItemDamag
 import ItemRecoveryColumn from 'src/sheets/quadrone/item/columns/ItemRecoveryColumn.svelte';
 import ItemFeatureSourceColumn from 'src/sheets/quadrone/item/columns/ItemFeatureSourceColumn.svelte';
 
-export function getDefaultColumns() {
+export function getDefaultItemColumns() {
   return {
     actions: {
       headerClasses: 'header-cell-actions',
