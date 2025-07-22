@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Determine: can we put a special class or attribute on each column and its subsequent cells to uniquely identify the column type. E.g.,`[data-tidy-column-key="price"]`. If so, set up dynamic columns to do this.
 - [ ] When saving blank theme settings, the round portrait will default to square. It needs to not change.
 - [ ] "Assign Spells to Classes" - exclude Item spells / spells with linked activities.
 - [ ] Extract column specs for activity tables.
@@ -313,3 +312,7 @@ Limited:
   - [x] Truncate damage strings
   - [x] Inline Activities - add Formula column and don't truncate
 - [x] Refactor: remove the message bus message for expanding a single item. Use the context API to grant toggleSummary to child components ✅ and update the cell to use it on damages overflow button click.
+- [x] Determine: can we put a special class or attribute on each column and its subsequent cells to uniquely identify the column type. E.g.,`[data-tidy-column-key="price"]`. If so, set up dynamic columns to do this.
+  - [x] Do it for actors
+  - [x] ~~Do it manually for containers for now / consider rolling out dynamic container columns~~ the work was already done 💖
+  - [x] ~~Refactor: allow regular HTML attributes rather than a secret `attributes` rest prop on `TidyTableCell`.~~ `children` snippet was not compatible with the interface extending HTMLAttributes. Instead, formally add `attributes` prop that is HTMLAttributes.

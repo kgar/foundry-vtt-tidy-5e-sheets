@@ -161,6 +161,7 @@
                 <TidyTableHeaderCell
                   class={[column.headerClasses, { hidden }]}
                   columnWidth="{column.widthRems}rem"
+                  data-tidy-column-key={column.key}
                 >
                   {#if !!column.headerContent}
                     {#if column.headerContent.type === 'callback'}
@@ -253,6 +254,7 @@
                     <TidyTableCell
                       columnWidth="{column.widthRems}rem"
                       class={[column.cellClasses, { hidden }]}
+                      attributes={{ ['data-tidy-column-key']: column.key }}
                     >
                       {#if column.cellContent.type === 'callback'}
                         {@html column.cellContent.callback?.(

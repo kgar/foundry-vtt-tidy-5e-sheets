@@ -104,185 +104,186 @@
         <i class="fas fa-plus"></i>
         {localize('DND5E.ItemCreate')}
       </button>
-      
     </div>
   {:else}
-  {#each sections as section (section.key)}
-    {@const hasViewableItems = ItemVisibility.hasViewableItems(
-      section.items,
-      searchResults.uuids,
-    )}
-    {#if section.show && (hasViewableItems || (!container && context.unlocked && searchCriteria.trim() === ''))}
-      {@const columns = new ColumnsLoadout(
-        ItemColumnRuntime.getConfiguredColumnSpecifications(
-          containingDocument.type,
-          effectiveTabId,
-          section.key,
-          {
-            rowActions: section.rowActions,
-          },
-        ),
+    {#each sections as section (section.key)}
+      {@const hasViewableItems = ItemVisibility.hasViewableItems(
+        section.items,
+        searchResults.uuids,
       )}
-      {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
-        sectionsInlineWidth,
-        columns,
-      )}
-      <TidyTable
-        key={section.key}
-        data-custom-section={section.custom ? true : null}
-      >
-        {#snippet header(expanded)}
-          <TidyTableHeaderRow class={{ 'theme-dark': root }}>
-            <TidyTableHeaderCell primary={true} class="header-label-cell">
-              <h3>
-                {localize(section.label)}
-              </h3>
-              <span class="table-header-count">{section.items.length}</span>
-            </TidyTableHeaderCell>
-            {#each columns.ordered as column}
-              {@const hidden = hiddenColumns.has(column.key)}
-
-              <TidyTableHeaderCell
-                class={[
-                  column.headerClasses,
-                  { hidden: (!expanded && !root) || hidden },
-                ]}
-                columnWidth="{column.widthRems}rem"
-              >
-                {#if !!column.headerContent}
-                  {#if column.headerContent.type === 'callback'}
-                    {@html column.headerContent.callback?.(
-                      context.document,
-                      context,
-                    )}
-                  {:else if column.headerContent.type === 'component'}
-                    <column.headerContent.component
-                      sheetContext={context}
-                      sheetDocument={context.document}
-                      {section}
-                    />
-                  {:else if column.headerContent.type === 'html'}
-                    {@html column.headerContent.html}
-                  {/if}
-                {/if}
+      {#if section.show && (hasViewableItems || (!container && context.unlocked && searchCriteria.trim() === ''))}
+        {@const columns = new ColumnsLoadout(
+          ItemColumnRuntime.getConfiguredColumnSpecifications(
+            containingDocument.type,
+            effectiveTabId,
+            section.key,
+            {
+              rowActions: section.rowActions,
+            },
+          ),
+        )}
+        {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
+          sectionsInlineWidth,
+          columns,
+        )}
+        <TidyTable
+          key={section.key}
+          data-custom-section={section.custom ? true : null}
+        >
+          {#snippet header(expanded)}
+            <TidyTableHeaderRow class={{ 'theme-dark': root }}>
+              <TidyTableHeaderCell primary={true} class="header-label-cell">
+                <h3>
+                  {localize(section.label)}
+                </h3>
+                <span class="table-header-count">{section.items.length}</span>
               </TidyTableHeaderCell>
-            {/each}
-          </TidyTableHeaderRow>
-        {/snippet}
+              {#each columns.ordered as column}
+                {@const hidden = hiddenColumns.has(column.key)}
 
-        {#snippet body()}
-          {@const itemEntries = section.items.map((item) => ({
-            item,
-            ctx: itemContext[item.id],
-          }))}
-          {#each itemEntries as { item, ctx }, i (item.id)}
-            {@const expanded = !!containerToggleMap.get(tabId)?.has(item.id)}
-            {@const unidentified = item.system.identified === false}
-
-            <TidyItemTableRow
-              {item}
-              hidden={!searchResults.show(item.uuid)}
-              rowClass={[{ expanded, unidentified }]}
-              contextMenu={{
-                type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                uuid: item.uuid,
-              }}
-            >
-              {#snippet children({ toggleSummary, expanded })}
-                <div class="highlight"></div>
-                <a
-                  class={['tidy-table-row-use-button']}
-                  onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
+                <TidyTableHeaderCell
+                  class={[
+                    column.headerClasses,
+                    { hidden: (!expanded && !root) || hidden },
+                  ]}
+                  columnWidth="{column.widthRems}rem"
+                  data-tidy-column-key={column.key}
                 >
-                  <img class="item-image" alt={item.name} src={item.img} />
-                  <span class="roll-prompt">
-                    <i class="fa fa-dice-d20"></i>
-                  </span>
-                </a>
-                {#if 'containerContents' in ctx && !!ctx.containerContents}
-                  <a
-                    class="container-expander"
-                    onclick={() => inlineToggleService.toggle(tabId, item.id)}
-                  >
-                    <i
-                      class="fa-solid fa-angle-right expand-indicator"
-                      class:expanded={containerToggleMap
-                        .get(tabId)
-                        ?.has(item.id)}
-                    >
-                    </i>
-                  </a>
-                {/if}
-
-                <TidyTableCell primary={true} class="item-label text-cell">
-                  <a
-                    class="item-name"
-                    role="button"
-                    tabindex="0"
-                    onclick={(ev) => toggleSummary()}
-                  >
-                    <span class="cell-text">
-                      <span class="cell-name">{item.name}</span>
-                    </span>
-                    <span class="row-detail-expand-indicator">
-                      <i
-                        class="fa-solid fa-angle-right expand-indicator"
-                        class:expanded
-                      >
-                      </i>
-                    </span>
-                  </a>
-                </TidyTableCell>
-                {#if ctx.attunement}
-                  {@const iconClass = item.system.attuned
-                    ? 'fa-solid fa-sun color-text-highlight highlighted'
-                    : 'fa-regular fa-sun color-text-lighter'}
-
-                  {@const title = localize(ctx.attunement.title)}
-
-                  <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
-                  <i
-                    class={[iconClass, 'item-state-indicator']}
-                    data-tooltip={title}
-                  ></i>
-                {/if}
-                {#each columns.ordered as column}
-                  {@const hidden = hiddenColumns.has(column.key)}
-
-                  <TidyTableCell
-                    columnWidth="{column.widthRems}rem"
-                    class={[column.cellClasses, { hidden }]}
-                  >
-                    {#if column.cellContent.type === 'callback'}
-                      {@html column.cellContent.callback?.(
+                  {#if !!column.headerContent}
+                    {#if column.headerContent.type === 'callback'}
+                      {@html column.headerContent.callback?.(
                         context.document,
                         context,
                       )}
-                    {:else if column.cellContent.type === 'component'}
-                      <column.cellContent.component
-                        rowContext={ctx}
-                        rowDocument={item}
+                    {:else if column.headerContent.type === 'component'}
+                      <column.headerContent.component
+                        sheetContext={context}
+                        sheetDocument={context.document}
                         {section}
                       />
+                    {:else if column.headerContent.type === 'html'}
+                      {@html column.headerContent.html}
                     {/if}
-                  </TidyTableCell>
-                {/each}
-              {/snippet}
-            </TidyItemTableRow>
+                  {/if}
+                </TidyTableHeaderCell>
+              {/each}
+            </TidyTableHeaderRow>
+          {/snippet}
 
-            {#if 'containerContents' in ctx && !!ctx.containerContents}
-              <InlineContainerView
-                container={item}
-                containerContents={ctx.containerContents}
-                {editable}
-                {inlineToggleService}
-                {searchCriteria}
-                {sheetDocument}
-              />
-            {/if}
-          {/each}
-        {/snippet}
-      </TidyTable>
+          {#snippet body()}
+            {@const itemEntries = section.items.map((item) => ({
+              item,
+              ctx: itemContext[item.id],
+            }))}
+            {#each itemEntries as { item, ctx }, i (item.id)}
+              {@const expanded = !!containerToggleMap.get(tabId)?.has(item.id)}
+              {@const unidentified = item.system.identified === false}
+
+              <TidyItemTableRow
+                {item}
+                hidden={!searchResults.show(item.uuid)}
+                rowClass={[{ expanded, unidentified }]}
+                contextMenu={{
+                  type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                  uuid: item.uuid,
+                }}
+              >
+                {#snippet children({ toggleSummary, expanded })}
+                  <div class="highlight"></div>
+                  <a
+                    class={['tidy-table-row-use-button']}
+                    onclick={(ev) => FoundryAdapter.actorTryUseItem(item, ev)}
+                  >
+                    <img class="item-image" alt={item.name} src={item.img} />
+                    <span class="roll-prompt">
+                      <i class="fa fa-dice-d20"></i>
+                    </span>
+                  </a>
+                  {#if 'containerContents' in ctx && !!ctx.containerContents}
+                    <a
+                      class="container-expander"
+                      onclick={() => inlineToggleService.toggle(tabId, item.id)}
+                    >
+                      <i
+                        class="fa-solid fa-angle-right expand-indicator"
+                        class:expanded={containerToggleMap
+                          .get(tabId)
+                          ?.has(item.id)}
+                      >
+                      </i>
+                    </a>
+                  {/if}
+
+                  <TidyTableCell primary={true} class="item-label text-cell">
+                    <a
+                      class="item-name"
+                      role="button"
+                      tabindex="0"
+                      onclick={(ev) => toggleSummary()}
+                    >
+                      <span class="cell-text">
+                        <span class="cell-name">{item.name}</span>
+                      </span>
+                      <span class="row-detail-expand-indicator">
+                        <i
+                          class="fa-solid fa-angle-right expand-indicator"
+                          class:expanded
+                        >
+                        </i>
+                      </span>
+                    </a>
+                  </TidyTableCell>
+                  {#if ctx.attunement}
+                    {@const iconClass = item.system.attuned
+                      ? 'fa-solid fa-sun color-text-highlight highlighted'
+                      : 'fa-regular fa-sun color-text-lighter'}
+
+                    {@const title = localize(ctx.attunement.title)}
+
+                    <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
+                    <i
+                      class={[iconClass, 'item-state-indicator']}
+                      data-tooltip={title}
+                    ></i>
+                  {/if}
+                  {#each columns.ordered as column}
+                    {@const hidden = hiddenColumns.has(column.key)}
+
+                    <TidyTableCell
+                      columnWidth="{column.widthRems}rem"
+                      class={[column.cellClasses, { hidden }]}
+                      attributes={{ ['data-tidy-column-key']: column.key }}
+                    >
+                      {#if column.cellContent.type === 'callback'}
+                        {@html column.cellContent.callback?.(
+                          context.document,
+                          context,
+                        )}
+                      {:else if column.cellContent.type === 'component'}
+                        <column.cellContent.component
+                          rowContext={ctx}
+                          rowDocument={item}
+                          {section}
+                        />
+                      {/if}
+                    </TidyTableCell>
+                  {/each}
+                {/snippet}
+              </TidyItemTableRow>
+
+              {#if 'containerContents' in ctx && !!ctx.containerContents}
+                <InlineContainerView
+                  container={item}
+                  containerContents={ctx.containerContents}
+                  {editable}
+                  {inlineToggleService}
+                  {searchCriteria}
+                  {sheetDocument}
+                />
+              {/if}
+            {/each}
+          {/snippet}
+        </TidyTable>
       {/if}
     {/each}
   {/if}
