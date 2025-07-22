@@ -12,6 +12,8 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { ContainerCapacityContext } from 'src/types/types';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import type { ContainerContentsRowActionsContext } from 'src/runtime/types';
+import { isNil } from 'src/utils/data';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class Container {
   static async getContainerContents(
@@ -73,7 +75,33 @@ export class Container {
     return itemContext;
   }
 
-  static promptCreateInventoryItem(container: Item5e) {
+  static promptCreateInventoryItem(container: Item5e, customSection?: string) {
+    const actor = container.actor;
+
+    const folder = !!actor ? undefined : container.folder;
+
+    const createData: Record<string, any> = {
+      folder: folder,
+      'system.container': container.id,
+    };
+
+    if (!isNil(customSection, '')) {
+      createData[TidyFlags.section.prop] = customSection;
+    }
+
+    if (!TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)) {
+      return;
+    }
+
+    return Item.implementation.createDialog(createData, {
+      parent: actor,
+      pack: container.pack,
+      types: Inventory.getInventoryTypes(),
+      keepId: true,
+    });
+  }
+
+  static createInventoryItem(container: Item5e, type: string) {
     const actor = container.actor;
 
     const folder = !!actor ? undefined : container.folder;
@@ -81,17 +109,21 @@ export class Container {
     const createData = {
       folder: folder,
       'system.container': container.id,
+      type,
+      name: game.i18n.format('DOCUMENT.New', {
+        type: game.i18n.format(CONFIG.Item.typeLabels[type]),
+      }),
     };
 
     if (!TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)) {
       return;
     }
 
-    Item.implementation.createDialog(createData, {
+    return Item.implementation.create(createData, {
       parent: actor,
       pack: container.pack,
-      types: Inventory.getInventoryTypes(),
       keepId: true,
+      renderSheet: true,
     });
   }
 

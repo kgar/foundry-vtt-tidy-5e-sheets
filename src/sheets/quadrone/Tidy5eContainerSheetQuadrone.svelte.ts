@@ -38,6 +38,9 @@ import { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMi
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import { Inventory } from 'src/features/sections/Inventory';
+import { isNil } from 'src/utils/data';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
@@ -669,6 +672,39 @@ export class Tidy5eContainerSheetQuadrone
       pack: this.item.pack,
       parent: this.item.actor,
     });
+  }
+
+  async _addDocument(args: {
+    tabId: string;
+    customSection?: string;
+    creationItemTypes?: string[];
+    data?: Record<string, any>;
+  }) {
+    let { type: datasetType, ...restDataset } = args.data ?? {};
+
+    let customSection = restDataset[TidyFlags.section.prop];
+
+    if (args.tabId === CONSTANTS.TAB_CONTAINER_CONTENTS) {
+      return !isNil(datasetType, '') && isNil(customSection, '')
+        ? await Container.createInventoryItem(this.item, datasetType)
+        : await Container.promptCreateInventoryItem(this.item, customSection);
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Determine the types of items that can be added depending on the current tab.
+   * @param {string} tab  Currently viewed tab.
+   * @returns {string[]}  Types of items to allow to create.
+   */
+  _addDocumentItemTypes(tab: string): string[] {
+    switch (tab) {
+      case CONSTANTS.TAB_CONTAINER_CONTENTS:
+        return Inventory.getInventoryTypes();
+      default:
+        return [];
+    }
   }
 
   /* -------------------------------------------- */

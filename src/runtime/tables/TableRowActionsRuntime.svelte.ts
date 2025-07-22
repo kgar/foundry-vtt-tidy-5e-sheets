@@ -35,26 +35,26 @@ class TableRowActionsRuntime {
         if (context.unlocked) {
           result.push({
             component: EditButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
-            props: (doc: any) => ({
-              doc,
-              deleteFn: () => doc.deleteDialog(),
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => args.data.deleteDialog(),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
           result.push({
             component: EquipButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
             condition: (args) => 'equipped' in args.data.system,
           } satisfies TableAction<typeof EquipButton>);
 
           result.push({
             component: ActionsTabToggleButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof ActionsTabToggleButton>);
         }
       }
@@ -86,20 +86,20 @@ class TableRowActionsRuntime {
         if (context.unlocked) {
           result.push({
             component: EditButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
-            props: (doc: any) => ({
-              doc,
-              deleteFn: () => doc.deleteDialog(),
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => args.data.deleteDialog(),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
           result.push({
             component: ActionsTabToggleButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof ActionsTabToggleButton>);
         }
       }
@@ -131,26 +131,26 @@ class TableRowActionsRuntime {
         if (context.unlocked) {
           result.push({
             component: EditButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof EditButton>);
 
           result.push({
             component: ChooseAButton,
-            props: (doc: any) => ({
-              doc,
+            props: (args) => ({
+              doc: args.data,
               buttons: [
                 {
                   component: DeleteButton,
                   props: {
-                    doc,
-                    deleteFn: () => doc.deleteDialog(),
+                    doc: args.data,
+                    deleteFn: () => args.data.deleteDialog(),
                   },
                   condition: (doc: any) => !doc.system.linkedActivity,
                 },
                 {
                   component: OpenActivityButton,
                   props: {
-                    doc,
+                    doc: args.data,
                   },
                   condition: (doc: any) => !!doc.system.linkedActivity,
                 },
@@ -160,12 +160,12 @@ class TableRowActionsRuntime {
         } else {
           result.push({
             component: SpellButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof SpellButton>);
 
           result.push({
             component: ActionsTabToggleButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof ActionsTabToggleButton>);
         }
       }
@@ -196,20 +196,20 @@ class TableRowActionsRuntime {
       if (context.unlocked) {
         result.push({
           component: EditButton,
-          props: (doc: any) => ({ doc }),
+          props: (args) => ({ doc: args.data }),
         } satisfies TableAction<typeof EditButton>);
 
         result.push({
           component: DeleteButton,
-          props: (doc: any) => ({
-            doc,
-            deleteFn: () => doc.deleteDialog(),
+          props: (args) => ({
+            doc: args.data,
+            deleteFn: () => args.data.deleteDialog(),
           }),
         } satisfies TableAction<typeof DeleteButton>);
       } else if (context.hasActor) {
         result.push({
           component: ActionsTabToggleButton,
-          props: (doc: any) => ({ doc }),
+          props: (args) => ({ doc: args.data }),
         } satisfies TableAction<typeof ActionsTabToggleButton>);
       }
 
@@ -240,14 +240,14 @@ class TableRowActionsRuntime {
         if (unlocked) {
           result.push({
             component: EditButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
-            props: (doc: any) => ({
-              doc,
-              deleteFn: () => doc.deleteDialog(),
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => args.data.deleteDialog(),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
@@ -282,14 +282,14 @@ class TableRowActionsRuntime {
         if (unlocked) {
           result.push({
             component: EditButton,
-            props: (doc: any) => ({ doc }),
+            props: (args) => ({ doc: args.data }),
           } satisfies TableAction<typeof EditButton>);
 
           result.push({
             component: DeleteButton,
-            props: (doc: any) => ({
-              doc,
-              deleteFn: () => doc.deleteDialog(),
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => args.data.deleteDialog(),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }

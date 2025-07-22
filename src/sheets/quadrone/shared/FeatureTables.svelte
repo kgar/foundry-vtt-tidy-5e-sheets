@@ -16,7 +16,7 @@
     NpcSheetQuadroneContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
