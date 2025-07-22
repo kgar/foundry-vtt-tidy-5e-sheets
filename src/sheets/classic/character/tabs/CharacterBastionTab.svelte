@@ -7,7 +7,6 @@
   import FacilityOccupant from 'src/sheets/classic/character/parts/FacilityOccupant.svelte';
   import FacilityRosterOccupant from 'src/sheets/classic/character/parts/FacilityRosterOccupant.svelte';
   import FacilityOrderProgressTracker from '../parts/FacilityOrderProgressTracker.svelte';
-  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { EventHelper } from 'src/utils/events';
   import { isNil } from 'src/utils/data';
@@ -17,6 +16,7 @@
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
 
   let context = $derived(getCharacterSheetContext());
 
@@ -453,14 +453,22 @@
   <!-- Description -->
 
   <RerenderAfterFormSubmission
-    andOnValueChange={context.bastion.description ?? ''}
+    andOnValueChange={context.system.bastion.description ?? ''}
   >
-    <section class="description" use:context.activateEditors>
+    <section
+      class="description"
+      onchange={() => context.actor.sheet.submit()}
+    >
       <h3><i class="fa-solid fa-books"></i> Description</h3>
-      <SheetEditor
-        content={context.bastion.description}
-        target="system.bastion.description"
-        editable={context.editable}
+      <SheetEditorV2
+        enriched={context.bastion.description}
+        content={context.system.bastion.description}
+        field="system.bastion.description"
+        editorOptions={{
+          editable: context.editable,
+        }}
+        documentUuid={context.actor.uuid}
+        manageSecrets={context.actor.isOwner}
       />
     </section>
   </RerenderAfterFormSubmission>

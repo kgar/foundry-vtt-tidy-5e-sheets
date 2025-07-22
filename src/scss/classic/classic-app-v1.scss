@@ -661,5 +661,8 @@
     font-weight: 400;
   }
 
-  // TODO: Extract to shared SCSS file to use with all classic sheets
+  .editor.prosemirror .toggle {
+    background: none;
+    border: none;
+  }
 }
