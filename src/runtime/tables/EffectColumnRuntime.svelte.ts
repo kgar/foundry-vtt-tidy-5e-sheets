@@ -1,5 +1,8 @@
 import { CONSTANTS } from 'src/constants';
-import type { ColumnSpecDocumentTypesToTabs, ColumnSpecificationCalculatedWidthArgs } from '../types';
+import type {
+  ColumnSpecDocumentTypesToTabs,
+  ColumnSpecificationCalculatedWidthArgs,
+} from '../types';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import EffectActionsColumnHeader from 'src/sheets/quadrone/item/columns/EffectActionsColumnHeader.svelte';
@@ -33,9 +36,7 @@ class EffectColumnRuntimeImpl extends TableColumnRuntimeBase {
             duration: {
               headerContent: {
                 type: 'html',
-                html: FoundryAdapter.localize(
-                  'DND5E.SOURCE.FIELDS.source.label'
-                ),
+                html: FoundryAdapter.localize('DND5E.Duration'),
               },
               cellContent: {
                 type: 'component',
@@ -49,6 +50,7 @@ class EffectColumnRuntimeImpl extends TableColumnRuntimeBase {
               headerClasses: 'header-cell-actions',
               headerContent: {
                 type: 'component',
+                // @ts-expect-error - TODO: work on the column runtime types so that more specific types can be used in scenarios where the section type, for example, is known, like effects
                 component: EffectActionsColumnHeader,
               },
               cellClasses: 'tidy-table-actions',

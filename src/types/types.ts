@@ -890,6 +890,11 @@ export type ActiveEffectContext = {
   effect: ActiveEffect5e;
 };
 
+export type ActiveEffectSection = EffectCategory<ActiveEffectContext> &
+  TidySectionBase & {
+    canCreate: boolean;
+  };
+
 export type HTMLElementOrGettable =
   | HTMLElement
   | { get(index: number): HTMLElement };
@@ -957,7 +962,6 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   config: typeof CONFIG.DND5E;
   customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
-  effects: Record<string, EffectCategory<ActiveEffectContext>>;
   elements: unknown;
   enableXp: boolean;
   fields: DataSchema;
@@ -1134,6 +1138,7 @@ export type CharacterSheetQuadroneContext = {
   creatureType: CreatureTypeContext;
   currencies: CurrencyContext[];
   defenders: Actor5e[];
+  effects: ActiveEffectSection[];
   enriched: {
     appearance: string;
     bastion: string;
@@ -1177,6 +1182,7 @@ export type NpcSheetQuadroneContext = {
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
+  effects: ActiveEffectSection[];
   enriched: {
     biography: string;
   };

@@ -1,8 +1,11 @@
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { ContainerSection, Item5e } from 'src/types/item.types';
 import type {
+  ActiveEffect5e,
+  ActiveEffectSection,
   ActorSheetQuadroneContext,
   CharacterSheetQuadroneContext,
+  DocumentSheetQuadroneContext,
   InventorySection,
   SpellbookSection,
   TidySectionBase,
@@ -17,6 +20,8 @@ import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.s
 import type { ContainerContentsRowActionsContext } from '../types';
 import ChooseAButton from 'src/components/table-quadrone/table-buttons/ChooseAButton.svelte';
 import OpenActivityButton from 'src/components/table-quadrone/table-buttons/OpenActivityButton.svelte';
+import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
+import { CONSTANTS } from 'src/constants';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -266,7 +271,50 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getEffectsRowActions() {}
+  getEffectsRowActions(context: DocumentSheetQuadroneContext<any>) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      ActiveEffect5e,
+      ActiveEffectSection
+    >;
+
+    let result: TableAction<any>[] = [];
+
+    result.push({
+      component: EffectToggleButton,
+      props: (args) => ({
+        effect: args.data,
+        doc: context.document,
+      }),
+      condition: (args) =>
+        context.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR ||
+        !args.section.isEnchantment,
+    } satisfies TableAction<typeof EffectToggleButton>);
+
+    if (context.unlocked) {
+      result.push({
+        component: EditButton,
+        props: (args) => ({ doc: args.data }),
+      } satisfies TableAction<typeof EditButton>);
+
+      result.push({
+        component: DeleteButton,
+        props: (args) => ({
+          doc: args.data.effect,
+          deleteFn: () => args.data.deleteDialog(),
+        }),
+      } satisfies TableAction<typeof DeleteButton>);
+    }
+
+    result.push({
+      component: MenuButton,
+      props: () => ({
+        targetSelector: '[data-context-menu]',
+      }),
+    } satisfies TableAction<typeof MenuButton>);
+
+    return result;
+  }
 
   getActivityRowActions(owner: boolean, unlocked: boolean) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<

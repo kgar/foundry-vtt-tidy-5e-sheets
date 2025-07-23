@@ -257,9 +257,6 @@ export function Tidy5eActorSheetQuadroneBase<
         enableXp:
           systemSettings.value.levelingMode !==
           CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
-        effects: dnd5e.applications.components.EffectsElement.prepareCategories(
-          this.actor.allApplicableEffects()
-        ),
         elements: this.options.elements,
         filterData: this.itemFilterService.getFilterData(),
         filterPins:

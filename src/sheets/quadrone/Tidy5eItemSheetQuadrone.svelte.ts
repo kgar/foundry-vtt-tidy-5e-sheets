@@ -175,7 +175,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }
@@ -284,7 +284,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       );
 
     const enhancedEffectsCategories =
-      await ConditionsAndEffects.getEffectsForItem(defaultEffectCategories);
+      await ConditionsAndEffects.getEffectsForItem(
+        documentSheetContext,
+        defaultEffectCategories
+      );
 
     const context: ItemSheetQuadroneContext = {
       activities: (this.document.system.activities ?? [])

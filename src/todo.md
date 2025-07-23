@@ -2,10 +2,10 @@
 
 ### The Short List
 
-- [x] Add dedicated ActivityColumnRuntime and EffectColumnRuntime.
-- [ ] Extract column specs for activity tables.
-  - [ ] Apply data-driven columns to inline activity sections.
-  - [ ] Apply data-driven columns to the Activity tab in item sheets.
+- [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
+  - [ ] Fully remove the short/long rest buttons in the header
+  - [ ] ...
+- [ ] Character Spellbook: Add intersection observer to spellbook content and toggle the expanded boolean or class equivalent.
 - [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to 
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
@@ -25,9 +25,8 @@
     - [ ] toolbar
   - [ ] ...
 - [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
-- [x] SortingListbox - add touch support for drag and drop, if possible~~; and if it works out, remove the arrow buttons.~~
-- [x] Update the readme
 - [ ] Foundry package page: revamp
+- [ ] Add World Setting to disable ruletips in Tidy
 
 
 #### Carrying over favorites
@@ -320,3 +319,9 @@ Limited:
 - [x] When saving blank theme settings, the round portrait will default to square. It needs to not change.
 - [x] "Assign Spells to Classes" - exclude Item spells / spells with linked activities.
 - [x] Fix: when adding an item from the section header in Container sheet, custom section, it should create with the custom section applied.
+- [x] Extract column specs for activity tables.
+  - [x] Apply data-driven columns to inline activity sections.
+  - [x] Apply data-driven columns to the Activity tab in item sheets.
+- [x] Add dedicated ActivityColumnRuntime and EffectColumnRuntime.
+- [x] SortingListbox - add touch support for drag and drop, if possible~~; and if it works out, remove the arrow buttons.~~
+- [x] Update the readme
