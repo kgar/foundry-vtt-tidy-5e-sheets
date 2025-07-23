@@ -2,6 +2,10 @@
 
 ### The Short List
 
+- [ ] Create inline attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
+  - [ ] Propagate it to all locations where relevant. 
+  - [ ] Consider optimizing nested container inline width management at this time, since it's an easy target; it simply involves applying a spacer to the final total for each level of nesting.
+- [ ] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
 - [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
   - [ ] Fully remove the short/long rest buttons in the header
   - [ ] ...
