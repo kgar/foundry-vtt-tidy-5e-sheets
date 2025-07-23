@@ -174,12 +174,26 @@
         }
       }
 
-      &:is([data-favorite-type="activity"]) {
-        .item-use-button {
-          background: var(--t5e-color-text-gold-emphasis);
+      // &:is([data-favorite-type="activity"]) {
+      //   .item-use-button {
+      //     background: var(--t5e-color-text-gold-emphasis);
 
-          img {
-            z-index: 0;
+      //     img {
+      //       background: var(--t5e-color-text-gold-emphasis);
+      //       z-index: 0;
+      //     }
+      //   }
+      // }
+
+      .item-use-button {
+        img {
+          --icon-fill: var(--t5e-color-icon-default);
+          fill: var(--icon-fill);
+          background: var(--t5e-color-palette-gold-56);
+
+          &[src$=".svg"] {
+            fill: var(--t5e-color-icon-default);
+            color: white;
           }
         }
       }
