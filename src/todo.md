@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Add dedicated ActivityColumnRuntime and EffectColumnRuntime to their own directories with their own default column function exports.
+- [x] Add dedicated ActivityColumnRuntime and EffectColumnRuntime.
 - [ ] Extract column specs for activity tables.
   - [ ] Apply data-driven columns to inline activity sections.
   - [ ] Apply data-driven columns to the Activity tab in item sheets.

@@ -19,6 +19,7 @@ import type {
 } from 'src/types/types';
 import type { Component } from 'svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import type { ClassValue } from 'svelte/elements';
 
 export type RegisteredContent<TContext> = {
   content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
@@ -166,8 +167,8 @@ export type ColumnSpecification = {
     | ((section: ColumnSpecificationCalculatedWidthArgs) => number); // default: 5 (rem)
   priority: number;
   order: number;
-  headerClasses?: string;
-  cellClasses?: string;
+  headerClasses?: ClassValue;
+  cellClasses?: ClassValue;
   condition?: <TSection extends TidySectionBase>(
     data: ColumnSpecificationConditionArgs<any, TSection>
   ) => boolean;
