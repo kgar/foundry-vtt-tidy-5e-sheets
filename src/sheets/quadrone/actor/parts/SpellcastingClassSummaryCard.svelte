@@ -44,6 +44,7 @@
     );
   }
 
+  // TODO: kgar to hook up observer for when this turn sticky
   let expanded = true;
 </script>
 
