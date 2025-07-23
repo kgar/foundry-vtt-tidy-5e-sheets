@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [ ] // TODO: kgar to hook up observer for when this turn sticky
 - [ ] Create inline attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
   - [ ] Propagate it to all locations where relevant. 
   - [ ] Consider optimizing nested container inline width management at this time, since it's an easy target; it simply involves applying a spacer to the final total for each level of nesting.
