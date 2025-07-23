@@ -49,11 +49,7 @@
     <span class="primary">
       {#if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}
-        <span class="modifier">
-          <span class="sign font-default-medium color-text-lighter"
-            >{mod.sign}</span
-          ><span class="value font-data-medium">{mod.value}</span>
-        </span>
+        <span class="modifier"><span class="sign font-default-medium color-text-lighter">{mod.sign}</span><span class="value font-data-medium">{mod.value}</span></span>
       {/if}
     </span>
     <span class="subtitle secondary font-default-medium">
