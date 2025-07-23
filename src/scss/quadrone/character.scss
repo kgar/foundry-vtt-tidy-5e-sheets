@@ -1023,6 +1023,16 @@
             color: var(--t5e-color-palette-gold-89);
           }
         }
+
+        &:disabled {
+          box-shadow: none;
+          border-color: var(--t5e-color-palette-gold-56);
+          pointer-events: none;
+
+          i {
+            color: var(--t5e-color-palette-gold-56);
+          }
+        }
       }
     }
 
