@@ -6,7 +6,7 @@
 
 {#each section.rowActions as action}
   {#if action.condition?.({ data: rowDocument, section }) ?? true}
-    {@const props = action.props(rowDocument)}
+    {@const props = action.props({ data: rowDocument, section })}
     <action.component {...props} />
   {/if}
 {/each}

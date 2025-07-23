@@ -1,14 +1,8 @@
 <script lang="ts">
   import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type {
-    ActivityQuadroneContext,
-    ItemSheetQuadroneContext,
-  } from 'src/types/item.types';
-  import type { Component } from 'svelte';
-  import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
-  import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
-  import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
+  import type { ItemSheetQuadroneContext } from 'src/types/item.types';
+  import { getContext, type Component } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -16,6 +10,11 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyActivityTableRow from 'src/components/table-quadrone/TidyActivityTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { ActivityColumnRuntime } from 'src/runtime/tables/ActivityColumnRuntime.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import type { Activity5e } from 'src/foundry/dnd5e.types';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -23,97 +22,148 @@
 
   type TableAction<TComponent extends Component<any>> = TidyTableAction<
     TComponent,
-    ActivityQuadroneContext,
+    Activity5e,
     any
   >;
 
-  let tableActions: TableAction<any>[] = $derived.by(() => {
-    let result: TableAction<any>[] = [];
+  let tableActions: TableAction<any>[] = $derived(
+    TableRowActionsRuntime.getActivityRowActions(
+      context.owner,
+      context.unlocked,
+    ),
+  );
 
-    if (context.unlocked) {
-      result.push({
-        component: EditButton,
-        props: (args) => ({ doc: args.data.doc }),
-      } satisfies TableAction<typeof EditButton>);
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-      result.push({
-        component: DeleteButton,
-        props: (args) => ({
-          doc: args.data.doc,
-          deleteFn: () => args.data.doc.deleteDialog(),
-        }),
-      } satisfies TableAction<typeof DeleteButton>);
-    }
-
-    return result;
+  let section = $derived({
+    ...SheetSections.EMPTY,
+    canCreate: context.editable,
+    rowActions: tableActions,
   });
 
-  let columnSpecs = $derived({
-    actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-size-halfx))`,
-    },
+  let sectionsContainer: HTMLElement;
+  let sectionsInlineWidth: number = $state(0);
+
+  function onResize(entry: ResizeObserverEntry) {
+    sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
+  }
+
+  $effect(() => {
+    const observer = new ResizeObserver(([entry]) => onResize(entry));
+    observer.observe(sectionsContainer);
+
+    return () => {
+      observer.disconnect();
+    };
   });
+
+  let columns = $derived(
+    new ColumnsLoadout(
+      ActivityColumnRuntime.getConfiguredColumnSpecifications(
+        context.item.type,
+        tabId,
+        'activities',
+        {
+          rowActions: tableActions,
+        },
+      ),
+    ),
+  );
+
+  let hiddenColumns = $derived(
+    ActivityColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
+  );
 </script>
 
-<TidyTable key={CONSTANTS.TAB_ITEM_ACTIVITIES}>
-  {#snippet header()}
-    <TidyTableHeaderRow class="theme-dark">
-      <TidyTableHeaderCell primary={true} class="header-label-cell">
-        <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
-        <span class="table-header-count">{context.activities.length}</span>
-      </TidyTableHeaderCell>
-      <TidyTableHeaderCell {...columnSpecs.actions} class="header-cell-actions">
-        <a
-          class="tidy-table-button"
-          title={localize('DND5E.ACTIVITY.Action.Create')}
-          onclick={() => context.item.sheet.addActivity()}
-        >
-          <i class="fas fa-plus"></i>
-        </a>
-      </TidyTableHeaderCell>
-    </TidyTableHeaderRow>
-  {/snippet}
-  {#snippet body()}
-    {#each context.activities as activity (activity.id)}
-      <TidyActivityTableRow {activity}>
-        {#snippet children()}
-          <a
-            class={['tidy-table-row-use-button']}
-            onclick={(ev) => activity.doc.use({ ev })}
+<div bind:this={sectionsContainer}>
+  <TidyTable key={CONSTANTS.TAB_ITEM_ACTIVITIES}>
+    {#snippet header()}
+      <TidyTableHeaderRow class="theme-dark">
+        <TidyTableHeaderCell primary={true} class="header-label-cell">
+          <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
+          <span class="table-header-count">{context.activities.length}</span>
+        </TidyTableHeaderCell>
+        {#each columns.ordered as column}
+          {@const hidden = hiddenColumns.has(column.key)}
+
+          <TidyTableHeaderCell
+            class={[column.headerClasses, { hidden }]}
+            columnWidth="{column.widthRems}rem"
+            data-tidy-column-key={column.key}
           >
-            <img class="item-image" alt="" src={activity.img.src} />
-            <span class="roll-prompt">
-              <i class="fa fa-dice-d20"></i>
-            </span>
-          </a>
-          <TidyTableCell primary={true}>
-            <span class="item-name">
-              <span class="cell-text">
-                <span class="cell-name">{activity.name}</span>
+            {#if !!column.headerContent}
+              {#if column.headerContent.type === 'callback'}
+                {@html column.headerContent.callback?.(
+                  context.document,
+                  context,
+                )}
+              {:else if column.headerContent.type === 'component'}
+                <column.headerContent.component
+                  sheetContext={context}
+                  sheetDocument={context.document}
+                  {section}
+                />
+              {:else if column.headerContent.type === 'html'}
+                {@html column.headerContent.html}
+              {/if}
+            {/if}
+          </TidyTableHeaderCell>
+        {/each}
+      </TidyTableHeaderRow>
+    {/snippet}
+    {#snippet body()}
+      {#each context.activities as ctx (ctx.id)}
+        <TidyActivityTableRow {ctx}>
+          {#snippet children()}
+            <a
+              class={['tidy-table-row-use-button']}
+              onclick={(ev) => ctx.activity.use({ ev })}
+            >
+              <img class="item-image" alt="" src={ctx.activity.img} />
+              <span class="roll-prompt">
+                <i class="fa fa-dice-d20"></i>
               </span>
-              <!-- TODO: Uncomment when we have activity descriptions -->
-              <!-- <span class="row-detail-expand-indicator">
+            </a>
+            <TidyTableCell primary={true}>
+              <span class="item-name">
+                <span class="cell-text">
+                  <span class="cell-name">{ctx.activity.name}</span>
+                </span>
+                <!-- TODO: Uncomment when we have activity descriptions -->
+                <!-- <span class="row-detail-expand-indicator">
                 <i
                   class="fa-solid fa-angle-right expand-indicator"
                   class:expanded
                 >
                 </i>
               </span> -->
-            </span>
-          </TidyTableCell>
-          <TidyTableCell {...columnSpecs.actions} class="tidy-table-actions">
-            {#each tableActions as action}
-              {@const args = { data: activity, section: undefined }}
+              </span>
+            </TidyTableCell>
+            {#each columns.ordered as column}
+              {@const hidden = hiddenColumns.has(column.key)}
 
-              {#if action.condition?.(args) ?? true}
-                {@const props = action.props(args)}
-                <action.component {...props} />
-              {/if}
+              <TidyTableCell
+                columnWidth="{column.widthRems}rem"
+                class={[column.cellClasses, { hidden }]}
+                attributes={{ ['data-tidy-column-key']: column.key }}
+              >
+                {#if column.cellContent.type === 'callback'}
+                  {@html column.cellContent.callback?.(
+                    context.document,
+                    context,
+                  )}
+                {:else if column.cellContent.type === 'component'}
+                  <column.cellContent.component
+                    rowContext={ctx}
+                    rowDocument={ctx.activity}
+                    {section}
+                  />
+                {/if}
+              </TidyTableCell>
             {/each}
-            <MenuButton targetSelector="[data-context-menu]" />
-          </TidyTableCell>
-        {/snippet}
-      </TidyActivityTableRow>
-    {/each}
-  {/snippet}
-</TidyTable>
+          {/snippet}
+        </TidyActivityTableRow>
+      {/each}
+    {/snippet}
+  </TidyTable>
+</div>

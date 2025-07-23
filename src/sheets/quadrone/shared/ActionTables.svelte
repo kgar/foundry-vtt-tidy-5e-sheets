@@ -17,7 +17,7 @@
     VehicleItemContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
@@ -82,7 +82,7 @@
 <div class="tidy-table-container" bind:this={sectionsContainer}>
   {#if totalActionCount === 0}
     <div class="empty-state-container empty-state-description">
-        {localize('TIDY5E.SheetLock.Empty.Hint')}
+      {localize('TIDY5E.SheetLock.Empty.Hint')}
     </div>
   {:else}
     {#each sections as section (section.key)}
@@ -124,6 +124,7 @@
                 <TidyTableHeaderCell
                   class={[column.headerClasses, { hidden }]}
                   columnWidth="{column.widthRems}rem"
+                  data-tidy-column-key={column.key}
                 >
                   {#if !!column.headerContent}
                     {#if column.headerContent.type === 'callback'}
@@ -200,6 +201,7 @@
                     <TidyTableCell
                       columnWidth="{column.widthRems}rem"
                       class={[column.cellClasses, { hidden }]}
+                      attributes={{ ['data-tidy-column-key']: column.key }}
                     >
                       {#if column.cellContent.type === 'callback'}
                         {@html column.cellContent.callback?.(

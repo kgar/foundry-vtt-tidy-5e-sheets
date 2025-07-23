@@ -2,11 +2,11 @@
 
 ### The Short List
 
-- [ ] When saving blank theme settings, the round portrait will default to square. It needs to not change.
-- [ ] "Assign Spells to Classes" - exclude Item spells / spells with linked activities.
+- [ ] Add dedicated ActivityColumnRuntime and EffectColumnRuntime to their own directories with their own default column function exports.
 - [ ] Extract column specs for activity tables.
   - [ ] Apply data-driven columns to inline activity sections.
   - [ ] Apply data-driven columns to the Activity tab in item sheets.
+- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to 
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
@@ -17,7 +17,7 @@
   - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
   - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
 - [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
-- [ ] Determine: When transforming, carry over favorites or not.
+- [ ] When transforming, carry over favorites.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -25,9 +25,10 @@
     - [ ] toolbar
   - [ ] ...
 - [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
-- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
-- [ ] Update the readme
+- [x] SortingListbox - add touch support for drag and drop, if possible~~; and if it works out, remove the arrow buttons.~~
+- [x] Update the readme
 - [ ] Foundry package page: revamp
+
 
 #### Carrying over favorites
 
@@ -312,3 +313,10 @@ Limited:
   - [x] Truncate damage strings
   - [x] Inline Activities - add Formula column and don't truncate
 - [x] Refactor: remove the message bus message for expanding a single item. Use the context API to grant toggleSummary to child components ✅ and update the cell to use it on damages overflow button click.
+- [x] Determine: can we put a special class or attribute on each column and its subsequent cells to uniquely identify the column type. E.g.,`[data-tidy-column-key="price"]`. If so, set up dynamic columns to do this.
+  - [x] Do it for actors
+  - [x] ~~Do it manually for containers for now / consider rolling out dynamic container columns~~ the work was already done 💖
+  - [x] ~~Refactor: allow regular HTML attributes rather than a secret `attributes` rest prop on `TidyTableCell`.~~ `children` snippet was not compatible with the interface extending HTMLAttributes. Instead, formally add `attributes` prop that is HTMLAttributes.
+- [x] When saving blank theme settings, the round portrait will default to square. It needs to not change.
+- [x] "Assign Spells to Classes" - exclude Item spells / spells with linked activities.
+- [x] Fix: when adding an item from the section header in Container sheet, custom section, it should create with the custom section applied.

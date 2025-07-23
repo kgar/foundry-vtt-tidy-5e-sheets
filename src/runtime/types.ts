@@ -227,7 +227,7 @@ export type DefaultColumnSpecTabsToColumns = Record<
   ColumnSpecification[]
 >;
 
-export type DefeaultColumnSpecDocumentTypesToTabs = Record<
+export type DefaultColumnSpecDocumentTypesToTabs = Record<
   string,
   DefaultColumnSpecTabsToColumns
 >;

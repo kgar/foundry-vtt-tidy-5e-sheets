@@ -1,6 +1,8 @@
 import { ItemFilterRuntime } from './item/ItemFilterRuntime.svelte';
 import { ItemSortRuntime } from './item/ItemSortRuntime.svelte';
-import ItemColumnRuntime from './item/ItemColumnRuntime.svelte';
+import { ActivityColumnRuntime } from './tables/ActivityColumnRuntime.svelte';
+import { EffectColumnRuntime } from './tables/EffectColumnRuntime.svelte';
+import { ItemColumnRuntime } from './tables/ItemColumnRuntime.svelte';
 
 /**
  * These runtime features should be initialized at the init hook time in Foundry.
@@ -15,4 +17,6 @@ export function initRuntime() {
  */
 export function initRuntimeOnReady() {
   ItemColumnRuntime.initOnReady();
+  ActivityColumnRuntime.initOnReady();
+  EffectColumnRuntime.initOnReady();
 }

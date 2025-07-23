@@ -1,17 +1,19 @@
 <script lang="ts">
-  import { type OnItemToggledFn } from 'src/types/types';
+  import {
+    type ActivityItemContext,
+    type OnItemToggledFn,
+  } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableRow from '../table-quadrone/TidyTableRow.svelte';
   import TidyActivitySummary from './TidyActivitySummary.svelte';
-  import type { ActivityQuadroneContext } from 'src/types/item.types';
   import { Activities } from 'src/features/activities/activities';
   import { isUserInteractable } from 'src/utils/element';
 
   interface Props {
-    activity: ActivityQuadroneContext;
+    ctx: ActivityItemContext;
     rowClass?: string;
     hidden?: boolean;
     attributes?: Record<string, any>;
@@ -20,7 +22,7 @@
   }
 
   let {
-    activity,
+    ctx,
     rowClass = '',
     hidden = false,
     attributes,
@@ -36,7 +38,7 @@
 
   async function toggleSummary() {
     expanded = !expanded;
-    onActivityToggled?.(activity.id, expanded, location);
+    onActivityToggled?.(ctx.id, expanded, location);
   }
 
   function handleDragStart(event: DragEvent) {
@@ -45,18 +47,18 @@
       return;
     }
 
-    const dragData = activity.doc.toDragData?.();
+    const dragData = ctx.activity.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
     }
   }
 
-  let configurable = $derived(Activities.isConfigurable(activity.doc));
+  let configurable = $derived(Activities.isConfigurable(ctx.activity));
 </script>
 
 <TidyTableRow
   rowContainerAttributes={{
-    ['data-activity-id']: activity?.id,
+    ['data-activity-id']: ctx?.id,
     ['data-configurable']: configurable,
   }}
   rowContainerClass="activity"
@@ -66,16 +68,16 @@
     ['data-tidy-always-draggable']: '',
     ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ACTIVITY_TABLE_ROW,
     ['data-info-card']: 'activity',
-    ['data-info-card-entity-uuid']: activity.uuid,
+    ['data-info-card-entity-uuid']: ctx.activity.uuid,
     ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES,
   }}
   {hidden}
   ondblclick={(event) =>
     event.target instanceof HTMLElement &&
     !isUserInteractable(event.target) &&
-    activity &&
-    FoundryAdapter.editOnMouseEvent(event, activity.doc)}
-  onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, activity.doc)}
+    ctx.activity &&
+    FoundryAdapter.editOnMouseEvent(event, ctx.activity)}
+  onmousedown={(event) => FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
   ondragstart={handleDragStart}
   {...attributes}
 >
@@ -83,7 +85,7 @@
 
   {#snippet afterRow()}
     <ExpandableContainer {expanded}>
-      <TidyActivitySummary {activity} />
+      <TidyActivitySummary activity={ctx.activity} />
     </ExpandableContainer>
   {/snippet}
 </TidyTableRow>

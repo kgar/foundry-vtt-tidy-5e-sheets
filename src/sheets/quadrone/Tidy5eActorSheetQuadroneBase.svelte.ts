@@ -738,7 +738,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }) {
       let { type: datasetType, ...restDataSet } = args.data ?? {};
 
-      if (args.tabId === CONSTANTS.TAB_EFFECTS)
+      if (args.tabId === CONSTANTS.TAB_EFFECTS) {
         return await ActiveEffect.implementation.create(
           {
             name: game.i18n.localize('DND5E.EffectNew'),
@@ -748,6 +748,7 @@ export function Tidy5eActorSheetQuadroneBase<
           },
           { parent: this.actor, renderSheet: true }
         );
+      }
 
       const types = this._addDocumentItemTypes(args.tabId).filter(
         (type) =>
