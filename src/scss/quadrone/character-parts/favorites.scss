@@ -80,7 +80,7 @@
         flex-direction: column;
         flex-wrap: nowrap;
 
-        span {
+        >span {
           display: flex;
           flex: 1;
           flex-wrap: nowrap;
@@ -174,12 +174,15 @@
         }
       }
 
-      &:is([data-favorite-type="activity"]) {
-        .item-use-button {
-          background: var(--t5e-color-text-gold-emphasis);
+      .item-use-button {
+        img {
+          --icon-fill: var(--t5e-color-icon-default);
+          fill: var(--icon-fill);
+          background: var(--t5e-color-palette-gold-56);
 
-          img {
-            z-index: 0;
+          &[src$=".svg"] {
+            fill: var(--t5e-color-icon-default);
+            color: white;
           }
         }
       }
