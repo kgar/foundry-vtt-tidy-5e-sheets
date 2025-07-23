@@ -219,7 +219,7 @@
       >
       <div class="form-fields">
         <!-- Amount -->
-        <div class="form-field label-top">
+        <div class="form-fields label-top">
           <label for="{appId}-target-template-count"
             >{localize('DND5E.Amount')}</label
           >
