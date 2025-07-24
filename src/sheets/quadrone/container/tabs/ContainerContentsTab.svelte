@@ -16,7 +16,6 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ActionBar from '../../shared/ActionBar.svelte';
-  import { visibilityObserver } from 'src/attachments/visibility-observer.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -68,19 +67,6 @@
   root={true}
 />
 
-<hr class="golden-fade" />
-
-<div
-  class="contents-footer-scroll-marker"
-  {@attach footerEl
-    ? visibilityObserver({
-        root: context.item.sheet.windowContent,
-        rootMargin: '-12px',
-        toAffect: [footerEl],
-        trackWhenOffScreen: true,
-      })
-    : null}
-></div>
 <footer bind:this={footerEl} class="contents-footer">
   <!-- Capacity Bar -->
   <CapacityBar container={context.item} capacity={context.capacity} />

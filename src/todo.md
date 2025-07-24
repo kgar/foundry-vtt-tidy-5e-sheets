@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Fix container footer. Just make the whole thing sticky and be done with it :check:
 - [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
   - [ ] Identify all resize observers which can be removed.
   - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
@@ -335,3 +334,4 @@ Limited:
   - [X] When more than one spellcasting card, add the "multi" class to the parent container
   - [X] Add container query for when under a specific width and when the card container has the "multi" class, set the cards to 50% width.
 - [x] Character Spellbook: Add intersection observer to spellbook content and toggle the expanded boolean or class equivalent.
+- [x] Fix container footer. Just make the whole thing sticky and be done with it :check:
