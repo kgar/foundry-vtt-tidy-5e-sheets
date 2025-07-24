@@ -2,78 +2,7 @@
 
 ### The Short List
 
-- [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
-  - [ ] Identify all resize observers which can be removed.
-  - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
-  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
-- [ ] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
-- [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
-  - [ ] Fully remove the short/long rest buttons in the header
-  - [ ] ...
-- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to 
-- [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
-  - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
-    - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
-  - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
-- [ ] Prepared footer macro filter:
-  - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
-  - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
-  - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
-  - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
-- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
-- [ ] When transforming, carry over favorites.
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
-  - [ ] header parts
-  - [ ] sidebar parts
-  - [ ] tab contents
-    - [ ] toolbar
-  - [ ] ...
-- [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
-- [ ] Foundry package page: revamp
-- [ ] Add World Setting to disable ruletips in Tidy
-
-
-#### Carrying over favorites
-
-The essential code for adding favorites during transformation.
-
-```ts
-      const hookId = Hooks.on(
-        'dnd5e.transformActorV2',
-        (
-          originalActor: Actor5e,
-          newActorSource: any,
-          data: any,
-          settings: unknown,
-          options: unknown
-        ) => {
-          if (this.actor.system.favorites) {
-            const favorites = structuredClone(this.actor.system.favorites);
-            foundry.utils.mergeObject(data, {
-              ['system.favorites']: favorites,
-            });
-          }
-        }
-      );
-
-      try {
-        const transformed = await this.actor.transformInto(document, settings);
-
-        return transformed;
-      } finally {
-        Hooks.off('dnd5e.transformActorV2', hookId);
-      }
-```
-
-#### Current Section Name Issue Notes
-
-I was contemplating the Sheet Sections hiccup we ran into with Jake: it is difficult to quickly change the name of a section for a given item when using the section selector.
-I was thinking we could do just a little rearranging and repurposing to make it work.
-
-1. We change "Create a New Section" to instead show the current, chosen section value in the input. Clicking on the input selects all text. "Save New Section" just changes to "Save Changes" or something.
-2. Move this custom value input to the top and have it autofocus on load.
-
-This would accomplish allowing someone to quickly edit the current value without having to retype it. The reframing of this would, I think, make it more immediately understandable, since your current value is always at the top, in the input box, and the input box being the focus allows for establishing settings quickly.
+- [ ] Chase NPC
 
 ### NPC Sheet
 
@@ -110,6 +39,35 @@ This would accomplish allowing someone to quickly edit the current value without
 
 ### (Almost) Everything after the short list
 
+- [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
+  - [ ] Identify all resize observers which can be removed.
+  - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
+  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
+- [ ] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
+- [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
+  - [ ] Fully remove the short/long rest buttons in the header
+  - [ ] ...
+- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to 
+- [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
+  - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
+    - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
+  - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
+- [ ] Prepared footer macro filter:
+  - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
+  - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
+  - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
+  - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
+- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+- [ ] When transforming, carry over favorites.
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+  - [ ] header parts
+  - [ ] sidebar parts
+  - [ ] tab contents
+    - [ ] toolbar
+  - [ ] ...
+- [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
+- [ ] Foundry package page: revamp
+- [ ] Add World Setting to disable ruletips in Tidy
 - [ ] Only show Action tab control when the action tab is in use.
   - This is way more difficult than it has any business being. The ActorSheetRuntime refactor might be needed to make this viable.
 - [ ] Scaffold the Group Sheet
@@ -161,6 +119,40 @@ This would accomplish allowing someone to quickly edit the current value without
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`?
+
+#### Carrying over favorites
+
+The essential code for adding favorites during transformation.
+
+```ts
+      const hookId = Hooks.on(
+        'dnd5e.transformActorV2',
+        (
+          originalActor: Actor5e,
+          newActorSource: any,
+          data: any,
+          settings: unknown,
+          options: unknown
+        ) => {
+          if (this.actor.system.favorites) {
+            const favorites = structuredClone(this.actor.system.favorites);
+            foundry.utils.mergeObject(data, {
+              ['system.favorites']: favorites,
+            });
+          }
+        }
+      );
+
+      try {
+        const transformed = await this.actor.transformInto(document, settings);
+
+        return transformed;
+      } finally {
+        Hooks.off('dnd5e.transformActorV2', hookId);
+      }
+```
+
+
 
 ### Module Compatibility
 
@@ -335,3 +327,15 @@ Limited:
   - [X] Add container query for when under a specific width and when the card container has the "multi" class, set the cards to 50% width.
 - [x] Character Spellbook: Add intersection observer to spellbook content and toggle the expanded boolean or class equivalent.
 - [x] Fix container footer. Just make the whole thing sticky and be done with it :check:
+
+
+
+#### Current Section Name Issue Notes
+
+I was contemplating the Sheet Sections hiccup we ran into with Jake: it is difficult to quickly change the name of a section for a given item when using the section selector.
+I was thinking we could do just a little rearranging and repurposing to make it work.
+
+1. We change "Create a New Section" to instead show the current, chosen section value in the input. Clicking on the input selects all text. "Save New Section" just changes to "Save Changes" or something.
+2. Move this custom value input to the top and have it autofocus on load.
+
+This would accomplish allowing someone to quickly edit the current value without having to retype it. The reframing of this would, I think, make it more immediately understandable, since your current value is always at the top, in the input box, and the input box being the focus allows for establishing settings quickly.
