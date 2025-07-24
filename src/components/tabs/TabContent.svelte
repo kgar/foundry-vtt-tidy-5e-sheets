@@ -6,6 +6,7 @@
   import { error } from 'src/utils/logging';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ClassValue } from 'svelte/elements';
+  import type { Ref } from 'src/features/reactivity/reactivity.types';
 
   interface Props {
     tab: Tab;
@@ -21,10 +22,13 @@
   declareLocation('tab', tab.id);
   setContext(CONSTANTS.SVELTE_CONTEXT.TAB_ID, tab.id);
 
-  let tidyTab: HTMLElement;
+  let tidyTab = $state<Ref<HTMLElement | undefined>>({ value: undefined });
+
+  // TODO: A CONTEXT VARIABLE HAS NO NAME
+  setContext('fred', tidyTab);
 
   onMount(() => {
-    if (tab.content.type !== 'svelte') {
+    if (tab.content.type !== 'svelte' || !tidyTab?.value) {
       return;
     }
 
@@ -33,7 +37,7 @@
       const tabComponentContext =
         tab.content.getContext?.(allContexts) ?? allContexts;
       const svelteTabComponent = mount(tab.content.component, {
-        target: tidyTab,
+        target: tidyTab.value,
         context: tabComponentContext,
         props: props,
       });
@@ -52,5 +56,5 @@
   data-tab-contents-for={tab.id}
   role="tabpanel"
   data-tidy-sheet-part="tab-content"
-  bind:this={tidyTab}
+  bind:this={tidyTab.value}
 ></div>

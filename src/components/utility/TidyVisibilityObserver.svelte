@@ -5,6 +5,7 @@
     toObserve?: HTMLElement[];
     toAffect?: 'self' | HTMLElement[];
     trackWhenOnScreen?: boolean;
+    callback?: (entry: IntersectionObserverEntry) => void;
     onScreenClass?: string;
     trackWhenOffScreen?: boolean;
     offScreenClass?: string;
@@ -17,6 +18,7 @@
     toAffect,
     trackWhenOnScreen = false,
     onScreenClass = 'on-screen',
+    callback,
     trackWhenOffScreen = false,
     offScreenClass = 'off-screen',
   }: Props = $props();
@@ -37,6 +39,8 @@
               el.classList.toggle(onScreenClass, entry.isIntersecting);
             }
           });
+
+          callback?.(entry);
         }
       },
       {

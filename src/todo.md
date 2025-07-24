@@ -2,7 +2,9 @@
 
 ### The Short List
 
-- [ ] // TODO: kgar to hook up observer for when this turn sticky
+- [x] // TODO: kgar to hook up observer for when this turn sticky
+- [ ] When more than one spellcasting card, add the "multi" class to the parent container
+- [ ] Add container query for when under a specific width and when the card container has the "multi" class, set the cards to 50% width.
 - [ ] Create inline attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
   - [ ] Propagate it to all locations where relevant. 
   - [ ] Consider optimizing nested container inline width management at this time, since it's an easy target; it simply involves applying a spacer to the final total for each level of nesting.
