@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [ ] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
 - [ ] Chase NPC
 
 ### NPC Sheet
@@ -43,7 +44,6 @@
   - [ ] Identify all resize observers which can be removed.
   - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
   - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
-- [ ] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
 - [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
   - [ ] Fully remove the short/long rest buttons in the header
   - [ ] ...
