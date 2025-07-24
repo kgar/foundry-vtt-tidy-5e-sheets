@@ -35,7 +35,7 @@
     }
   }
 
-  @container (width < 30rem) {
+  @container action-bar (width < 30rem) {
     .button-toggle {
       &[data-filter-text][data-filter-abbr]:not([data-filter-abbr=""]) {
         &::before {

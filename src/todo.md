@@ -2,17 +2,15 @@
 
 ### The Short List
 
-- [x] // TODO: kgar to hook up observer for when this turn sticky
-- [ ] When more than one spellcasting card, add the "multi" class to the parent container
-- [ ] Add container query for when under a specific width and when the card container has the "multi" class, set the cards to 50% width.
-- [ ] Create inline attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
-  - [ ] Propagate it to all locations where relevant. 
-  - [ ] Consider optimizing nested container inline width management at this time, since it's an easy target; it simply involves applying a spacer to the final total for each level of nesting.
+- [ ] Fix container footer. Just make the whole thing sticky and be done with it :check:
+- [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
+  - [ ] Identify all resize observers which can be removed.
+  - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
+  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
 - [ ] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
 - [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
   - [ ] Fully remove the short/long rest buttons in the header
   - [ ] ...
-- [ ] Character Spellbook: Add intersection observer to spellbook content and toggle the expanded boolean or class equivalent.
 - [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to 
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
@@ -332,3 +330,8 @@ Limited:
 - [x] Add dedicated ActivityColumnRuntime and EffectColumnRuntime.
 - [x] SortingListbox - add touch support for drag and drop, if possible~~; and if it works out, remove the arrow buttons.~~
 - [x] Update the readme
+- [x] // TODO: kgar to hook up observer for when this turn sticky
+- [x] Implement multi-card UI when in compact / multi mode
+  - [X] When more than one spellcasting card, add the "multi" class to the parent container
+  - [X] Add container query for when under a specific width and when the card container has the "multi" class, set the cards to 50% width.
+- [x] Character Spellbook: Add intersection observer to spellbook content and toggle the expanded boolean or class equivalent.

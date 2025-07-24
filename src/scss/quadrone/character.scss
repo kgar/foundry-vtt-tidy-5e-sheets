@@ -176,8 +176,6 @@
         flex: 1;
         overflow-y: auto;
         padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x) var(--t5e-size-4x);
-        position: relative;
-        // container-type: inline-size;
       }
     }
   }
@@ -2069,9 +2067,6 @@
     }
 
     &.attributes {
-      container-name: character-tab;
-      container-type: inline-size;
-
       .columns {
         display: grid;
         grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
@@ -2123,7 +2118,7 @@
     }
   }
 
-  @container character-tab (width < 40rem) {
+  @container tab-content (width < 40rem) {
     .tidy-tab-contents.attributes .columns {
       grid-template-rows: auto 1fr;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2147,7 +2142,7 @@
     }
   }
 
-  @container character-tab (width < 30rem) {
+  @container tab-content (width < 30rem) {
     .tidy-tab-contents.attributes .columns {
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas:
@@ -2255,6 +2250,9 @@
 
   .spellbook-footer {
     align-items: flex-start;
+    min-height: 2.25rem;
+    position: sticky;
+    bottom: 0;
 
     .sheet-footer-right {
       padding-block-start: 0.375rem;
@@ -2297,9 +2295,15 @@
     }
 
     &:has(.compact) {
-      min-height: 2.25rem;
-      position: sticky;
-      bottom: 0;
+      @container tab-content (width > 35rem) { 
+        >.spellcasting-cards.multi {
+          display: grid;
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(18rem, 1fr)
+          );
+        }
+      }
     }
   }
 

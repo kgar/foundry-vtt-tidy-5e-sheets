@@ -6,6 +6,7 @@
   import SpellcastingClassSummaryCard from '../parts/SpellcastingClassSummaryCard.svelte';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import { visibilityObserver } from 'src/attachments/visibility-observer.svelte';
 
   interface Props {
     class?: ClassValue;
@@ -31,29 +32,22 @@
 <div
   role="presentation"
   style="margin-bottom: -1rem"
-  {@attach (element) => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (var entry of entries) {
-          mode = entry.isIntersecting ? 'expanded' : 'compact';
-        }
-      },
-      {
-        root: tabRef.value,
-        rootMargin: '-60px',
-      },
-    );
-
-    observer.observe(element);
-
-    return () => {
-      observer.disconnect();
-    };
-  }}
+  {@attach visibilityObserver({
+    callback: (entry) => {
+      mode = entry.isIntersecting ? 'expanded' : 'compact';
+    },
+    root: tabRef.value,
+    rootMargin: '-30px',
+  })}
 ></div>
 
 <div class={['sheet-footer spellbook-footer flexrow', classValue]}>
-  <div class="sheet-footer-left flexcol">
+  <div
+    class={[
+      'sheet-footer-left spellcasting-cards flexcol',
+      { multi: context.spellcasting.length > 1 },
+    ]}
+  >
     {#each context.spellcasting as info}
       <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} />
     {/each}
