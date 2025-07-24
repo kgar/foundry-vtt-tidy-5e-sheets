@@ -24,8 +24,7 @@
 
   let tidyTab = $state<Ref<HTMLElement | undefined>>({ value: undefined });
 
-  // TODO: A CONTEXT VARIABLE HAS NO NAME
-  setContext('fred', tidyTab);
+  setContext(CONSTANTS.SVELTE_CONTEXT.TAB_CONTENT_ELEMENT_REF, tidyTab);
 
   onMount(() => {
     if (tab.content.type !== 'svelte' || !tidyTab?.value) {

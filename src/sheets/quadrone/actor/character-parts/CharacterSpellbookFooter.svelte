@@ -25,7 +25,9 @@
 
   let multiclass = $derived(context.spellcasting.length > 1);
   let mode: 'expanded' | 'compact' = $state('expanded');
-  let tabRef = getContext<Ref<HTMLElement | undefined>>('fred');
+  let tabRef = getContext<Ref<HTMLElement | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.TAB_CONTENT_ELEMENT_REF,
+  );
 </script>
 
 <!-- TODO: Make an intersection observer factory that allows for registering a callback -->
