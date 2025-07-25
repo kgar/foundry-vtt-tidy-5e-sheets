@@ -8,7 +8,6 @@
   import { CONSTANTS } from 'src/constants';
   import { Tooltip } from 'src/tooltips/Tooltip';
   import type { TidyTableToggleSummaryFunction } from 'src/components/table-quadrone/TidyItemTableRow.svelte';
-  import { settings } from 'src/settings/settings.svelte';
 
   let { rowDocument, rowContext }: ColumnCellProps = $props();
 
@@ -63,7 +62,7 @@
           <Dnd5eIcon src={damageHealingIcon} />
         </span>
       {/if}
-      {#if settings.value.truesight && i === 1 && remainingDamagesCount > 0}
+      {#if i === 1 && remainingDamagesCount > 0}
         <a
           type="button"
           class="button remaining-damages-count"

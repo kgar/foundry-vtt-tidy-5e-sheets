@@ -114,14 +114,16 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     )) as ActorSheetQuadroneContext;
 
     // Effects & Conditions
-    let { conditions, effects: enhancedEffectSections } =
-      await ConditionsAndEffects.getConditionsAndEffectsForActor(
-        this.actor,
-        this.object,
-        actorContext.effects
+    let baseEffects =
+      dnd5e.applications.components.EffectsElement.prepareCategories(
+        this.actor.allApplicableEffects()
       );
-
-    actorContext.effects = enhancedEffectSections;
+    let { conditions, effects: enhancedEffectSections } =
+      await ConditionsAndEffects.getConditionsAndEffectsForActorQuadrone(
+        actorContext,
+        this.object,
+        baseEffects
+      );
 
     const currencies: CurrencyContext[] = [];
 
@@ -149,6 +151,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ),
       conditions: conditions,
       currencies,
+      effects: enhancedEffectSections,
       enriched: {
         biography: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.biography.value,

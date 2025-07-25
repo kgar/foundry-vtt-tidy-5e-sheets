@@ -146,14 +146,16 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     });
 
     // Effects & Conditions
-    let { conditions, effects: enhancedEffectSections } =
-      await ConditionsAndEffects.getConditionsAndEffectsForActor(
-        this.actor,
-        this.object,
-        actorContext.effects
+    let baseEffects =
+      dnd5e.applications.components.EffectsElement.prepareCategories(
+        this.actor.allApplicableEffects()
       );
-
-    actorContext.effects = enhancedEffectSections;
+    let { conditions, effects: enhancedEffectSections } =
+      await ConditionsAndEffects.getConditionsAndEffectsForActorQuadrone(
+        actorContext,
+        this.object,
+        baseEffects
+      );
 
     const currencies: CurrencyContext[] = [];
 
@@ -204,6 +206,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       currencies,
       defenders: [],
       // TODO: Consider deferring enrichment to tab rendering, so tab selection can preclude it.
+      effects: enhancedEffectSections,
       enriched: {
         appearance: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.appearance,

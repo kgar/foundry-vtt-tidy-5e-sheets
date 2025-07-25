@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
+  import { visibilityObserver } from 'src/attachments/visibility-observer.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { coalesce } from 'src/utils/formatting';
   import { untrack } from 'svelte';
@@ -37,27 +37,22 @@
   when the item name input scrolls out of view.
 -->
 
-{#if !!itemNameEl}
-  <TidyVisibilityObserver
-    root={context.item.sheet.windowContent}
-    trackWhenOffScreen={true}
-    toObserve={[itemNameEl]}
-    toAffect="self"
-    rootMargin={headerOffset}
-  />
-{/if}
-
-{#if !!scrollMarkerEl}
-  <TidyVisibilityObserver
-    root={context.item.sheet.windowContent}
-    trackWhenOffScreen={true}
-    toObserve={[scrollMarkerEl]}
-    toAffect="self"
-  />
-{/if}
-
 <div
   bind:this={scrollMarkerEl}
+  {@attach visibilityObserver({
+    root: context.item.sheet.windowContent,
+    trackWhenOffScreen: true,
+    toAffect: 'self',
+  })}
+  {@attach itemNameEl
+    ? visibilityObserver({
+        root: context.item.sheet.windowContent,
+        trackWhenOffScreen: true,
+        toObserve: [itemNameEl],
+        toAffect: 'self',
+        rootMargin: headerOffset,
+      })
+    : null}
   class="item-header-start-scroll-marker"
   role="presentation"
 ></div>

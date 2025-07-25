@@ -20,17 +20,18 @@
       }>(),
     );
 
-  async function toggleMode() {
-    const newMode = context.unlocked
-      ? CONSTANTS.SHEET_MODE_PLAY
-      : CONSTANTS.SHEET_MODE_EDIT;
-
-    unlocked = newMode === CONSTANTS.SHEET_MODE_EDIT;
+  async function toggleMode(
+    ev: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+  ) {
+    const newMode = ev.currentTarget.checked
+      ? CONSTANTS.SHEET_MODE_EDIT
+      : CONSTANTS.SHEET_MODE_PLAY;
 
     await context.document.sheet.changeSheetMode(newMode);
   }
 
-  const localize = FoundryAdapter.localize;
   let unlocked = $derived(context.unlocked);
 </script>
 
@@ -49,7 +50,7 @@
       data-tooltip={unlocked ? 'DND5E.SheetModeEdit' : 'DND5E.SheetModePlay'}
       checked={unlocked}
       thumbIconClass="{unlocked ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
-      onChange={() => toggleMode()}
+      onChange={(ev) => toggleMode(ev)}
     ></TidySwitch>
   </div>
 {/if}

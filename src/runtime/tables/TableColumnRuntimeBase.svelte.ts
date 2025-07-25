@@ -50,8 +50,10 @@ export abstract class TableColumnRuntimeBase {
 
   determineHiddenColumns(
     inlineSizePx: number,
-    schematics: ColumnsLoadout
+    schematics: ColumnsLoadout,
+    minWidthRemsOverride?: number
   ): Set<string> {
+    let minWidthRems = minWidthRemsOverride ?? this.#minWidthRems;
     let availableRems = inlineSizePx / foundryCoreSettings.value.fontSizePx;
 
     let toHide = new Set<string>();
@@ -59,7 +61,7 @@ export abstract class TableColumnRuntimeBase {
     for (const col of schematics.prioritized) {
       availableRems -= col.widthRems;
 
-      if (availableRems < this.#minWidthRems) {
+      if (availableRems < minWidthRems) {
         toHide.add(col.key);
       }
     }

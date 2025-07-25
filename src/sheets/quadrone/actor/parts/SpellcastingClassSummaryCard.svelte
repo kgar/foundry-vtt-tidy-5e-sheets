@@ -17,9 +17,10 @@
     info: SpellcastingContext;
     multiclass: boolean;
     tabId: string;
+    mode: 'expanded' | 'compact';
   }
 
-  let { info, multiclass, tabId }: Props = $props();
+  let { info, multiclass, tabId, mode }: Props = $props();
 
   let itemFilterService = getContext<ItemFilterService>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE,
@@ -43,12 +44,9 @@
       true,
     );
   }
-
-  // TODO: kgar to hook up observer for when this turn sticky
-  let expanded = true;
 </script>
 
-{#if expanded}
+{#if mode === 'expanded'}
   <div
     class={[
       'spellcasting-class-card flexrow',
@@ -134,86 +132,90 @@
     </div>
   </div>
 {:else}
-<div
-class={[
-  'spellcasting-class-card compact flexrow',
-  {
-    primary: info.primary,
-    ['has-max']: info.prepared.max,
-    multiclass,
-  },
-]}
-data-ability={info.ability.key}
->
-<div class="header flexshrink">
-  <span class="name font-title-small">{info.name}</span>
-
-  {#if info.primary}
-    <i
-      data-tooltip="DND5E.SpellAbility"
-      class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"
-    >
-    </i>
-  {:else if context.unlocked}
-    <a
-      data-tooltip="DND5E.SpellAbilitySet"
-      class="button button-borderless button-icon-only"
-      onclick={() =>
-        context.actor.update({
-          'system.attributes.spellcasting': info.ability.key,
-        })}
-    >
-      <i
-        class="fa-regular fa-chess-queen primary-icon color-text-gold-emphasis"
-      ></i>
-    </a>
-  {/if}
-</div>
-<div class="info pills flex1">
-  <div class="ability" data-tooltip={localize('DND5E.Ability') + ': ' + info.ability.label}>
-    <span class="label font-label-medium color-text-gold uppercase"
-      >{info.ability.key}</span>
-    <span class="value">
-      <span class="sign font-label-medium color-text-lightest"
-        >{info.ability.mod.sign}</span
-      ><span class="font-data-medium">{info.ability.mod.value}</span>
-    </span>
-  </div>
-  <div class="divider-dot"></div>
-  <div class="attack">
-    <span class="label font-label-medium color-text-lighter"
-      >{localize('DND5E.Attack')}</span
-    >
-    <span class="value">
-      <span class="sign font-label-medium color-text-lightest"
-        >{info.attack.mod.sign}</span
-      ><span class="font-data-medium">{info.attack.mod.value}</span>
-    </span>
-  </div>
-  <div class="divider-dot"></div>
-  <div class="save" data-tooltip={localize('DND5E.SpellDC')}>
-    <span class="label font-label-medium color-text-lighter"
-      >{localize('DND5E.AbbreviationDC')}</span
-    >
-    <span class="value">
-      <span class="font-data-medium">{info.save}</span>
-    </span>
-  </div>
-  <button
-    class="prepared pill pill-medium interactive"
-    data-tooltip={localize('DND5E.Prepared')}
-    aria-label={localize('DND5E.Prepared')}
-    onclick={() => onPreparedClicked()}
+  <div
+    class={[
+      'spellcasting-class-card compact flexrow',
+      {
+        primary: info.primary,
+        ['has-max']: info.prepared.max,
+        multiclass,
+      },
+    ]}
+    data-ability={info.ability.key}
   >
-    <i class="fa-solid fa-book"></i>
-    <span class="value preparations">
-      <span class="count font-data-medium">{info.prepared.value}</span><span
-        class="separator font-default-medium color-text-gold">/</span
-      ><span class="max font-label-medium color-text-lighter"
-        >{info.prepared.max}</span
+    <div class="header flexshrink">
+      <span class="name font-title-small">{info.name}</span>
+
+      {#if info.primary}
+        <i
+          data-tooltip="DND5E.SpellAbility"
+          class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"
+        >
+        </i>
+      {:else if context.unlocked}
+        <a
+          data-tooltip="DND5E.SpellAbilitySet"
+          class="button button-borderless button-icon-only"
+          onclick={() =>
+            context.actor.update({
+              'system.attributes.spellcasting': info.ability.key,
+            })}
+        >
+          <i
+            class="fa-regular fa-chess-queen primary-icon color-text-gold-emphasis"
+          ></i>
+        </a>
+      {/if}
+    </div>
+    <div class="info pills flex1">
+      <div
+        class="ability"
+        data-tooltip={localize('DND5E.Ability') + ': ' + info.ability.label}
       >
-    </span>
-  </button>
-</div>
-</div>
+        <span class="label font-label-medium color-text-gold uppercase"
+          >{info.ability.key}</span
+        >
+        <span class="value">
+          <span class="sign font-label-medium color-text-lightest"
+            >{info.ability.mod.sign}</span
+          ><span class="font-data-medium">{info.ability.mod.value}</span>
+        </span>
+      </div>
+      <div class="divider-dot"></div>
+      <div class="attack">
+        <span class="label font-label-medium color-text-lighter"
+          >{localize('DND5E.Attack')}</span
+        >
+        <span class="value">
+          <span class="sign font-label-medium color-text-lightest"
+            >{info.attack.mod.sign}</span
+          ><span class="font-data-medium">{info.attack.mod.value}</span>
+        </span>
+      </div>
+      <div class="divider-dot"></div>
+      <div class="save" data-tooltip={localize('DND5E.SpellDC')}>
+        <span class="label font-label-medium color-text-lighter"
+          >{localize('DND5E.AbbreviationDC')}</span
+        >
+        <span class="value">
+          <span class="font-data-medium">{info.save}</span>
+        </span>
+      </div>
+      <button
+        class="prepared pill pill-medium interactive"
+        data-tooltip={localize('DND5E.Prepared')}
+        aria-label={localize('DND5E.Prepared')}
+        onclick={() => onPreparedClicked()}
+      >
+        <i class="fa-solid fa-book"></i>
+        <span class="value preparations">
+          <span class="count font-data-medium">{info.prepared.value}</span><span
+            class="separator font-default-medium color-text-gold">/</span
+          ><span class="max font-label-medium color-text-lighter"
+            >{info.prepared.max}</span
+          >
+        </span>
+      </button>
+    </div>
+  </div>
 {/if}
