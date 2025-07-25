@@ -1059,7 +1059,29 @@ export function Tidy5eActorSheetQuadroneBase<
         settings.toObject()
       );
 
-      return this.actor.transformInto(document, settings);
+      const hookId = Hooks.on(
+        'dnd5e.transformActorV2',
+        (
+          originalActor: Actor5e,
+          newActorSource: any,
+          data: any,
+          settings: unknown,
+          options: unknown
+        ) => {
+          if (this.actor.system.favorites) {
+            const favorites = structuredClone(this.actor.system.favorites);
+            foundry.utils.mergeObject(data, {
+              ['system.favorites']: favorites,
+            });
+          }
+        }
+      );
+
+      try {
+        return await this.actor.transformInto(document, settings);
+      } finally {
+        Hooks.off('dnd5e.transformActorV2', hookId);
+      }
     }
 
     async _onDropItem(

@@ -57,7 +57,6 @@
   - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
   - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
 - [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
-- [ ] When transforming, carry over favorites.
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -119,37 +118,7 @@
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`?
 
-#### Carrying over favorites
 
-The essential code for adding favorites during transformation.
-
-```ts
-      const hookId = Hooks.on(
-        'dnd5e.transformActorV2',
-        (
-          originalActor: Actor5e,
-          newActorSource: any,
-          data: any,
-          settings: unknown,
-          options: unknown
-        ) => {
-          if (this.actor.system.favorites) {
-            const favorites = structuredClone(this.actor.system.favorites);
-            foundry.utils.mergeObject(data, {
-              ['system.favorites']: favorites,
-            });
-          }
-        }
-      );
-
-      try {
-        const transformed = await this.actor.transformInto(document, settings);
-
-        return transformed;
-      } finally {
-        Hooks.off('dnd5e.transformActorV2', hookId);
-      }
-```
 
 
 
@@ -327,7 +296,7 @@ Limited:
 - [x] Character Spellbook: Add intersection observer to spellbook content and toggle the expanded boolean or class equivalent.
 - [x] Fix container footer. Just make the whole thing sticky and be done with it :check:
 - [x] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
-
+- [x] When transforming, carry over favorites.
 
 
 #### Current Section Name Issue Notes
@@ -339,3 +308,35 @@ I was thinking we could do just a little rearranging and repurposing to make it 
 2. Move this custom value input to the top and have it autofocus on load.
 
 This would accomplish allowing someone to quickly edit the current value without having to retype it. The reframing of this would, I think, make it more immediately understandable, since your current value is always at the top, in the input box, and the input box being the focus allows for establishing settings quickly.
+
+#### Carrying over favorites
+
+The essential code for adding favorites during transformation.
+
+```ts
+      const hookId = Hooks.on(
+        'dnd5e.transformActorV2',
+        (
+          originalActor: Actor5e,
+          newActorSource: any,
+          data: any,
+          settings: unknown,
+          options: unknown
+        ) => {
+          if (this.actor.system.favorites) {
+            const favorites = structuredClone(this.actor.system.favorites);
+            foundry.utils.mergeObject(data, {
+              ['system.favorites']: favorites,
+            });
+          }
+        }
+      );
+
+      try {
+        const transformed = await this.actor.transformInto(document, settings);
+
+        return transformed;
+      } finally {
+        Hooks.off('dnd5e.transformActorV2', hookId);
+      }
+```
