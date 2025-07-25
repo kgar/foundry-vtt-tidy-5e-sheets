@@ -16,10 +16,20 @@
   }
 </script>
 
-<a
-  class="tidy-table-button"
-  title={localize('DND5E.EffectCreate')}
-  onclick={(event) => onAddClicked(section)}
->
-  <i class="fas fa-plus"></i>
-</a>
+{#if section.canCreate}
+  <a
+    class="tidy-table-button"
+    title={localize('DND5E.EffectCreate')}
+    onclick={(event) => onAddClicked(section)}
+  >
+    <i class="fas fa-plus"></i>
+  </a>
+{/if}
+{#if section.disabled}
+  <span class="tidy-table-button">
+    <i
+      class="fa-solid fa-info-circle"
+      data-tooltip="DND5E.EffectUnavailableInfo"
+    ></i>
+  </span>
+{/if}

@@ -168,7 +168,8 @@ export class ConditionsAndEffects {
           []
         ),
         key: key,
-        canCreate: context.editable && !category.isEnchantment,
+        canCreate:
+          context.editable && !category.isEnchantment && !category.disabled,
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
