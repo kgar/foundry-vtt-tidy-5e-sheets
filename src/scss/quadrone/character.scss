@@ -2296,7 +2296,7 @@
 
     &:has(.compact) {
       @container tab-content (width > 35rem) { 
-        >.spellcasting-cards.multi {
+        >.spellcasting-cards {
           display: grid;
           grid-template-columns: repeat(
             auto-fit,

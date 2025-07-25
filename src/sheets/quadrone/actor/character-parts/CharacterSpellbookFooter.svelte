@@ -43,12 +43,7 @@
 ></div>
 
 <div class={['sheet-footer spellbook-footer flexrow', classValue]}>
-  <div
-    class={[
-      'sheet-footer-left spellcasting-cards flexcol',
-      { multi: context.spellcasting.length > 1 },
-    ]}
-  >
+  <div class="sheet-footer-left spellcasting-cards flexcol">
     {#each context.spellcasting as info}
       <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} />
     {/each}
