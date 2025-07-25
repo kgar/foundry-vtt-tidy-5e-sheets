@@ -11,6 +11,8 @@
 
 Alternate [D&D 5e](https://github.com/foundryvtt/dnd5e) sheet layouts for [Foundry Virtual Tabletop](https://foundryvtt.com/), focused on a clean UI, usability, flexibility, and extensibility.
 
+[![New Tidy 5e Sheets Trailer](https://img.youtube.com/vi/Rrfd9VPGQNA/0.jpg)](https://www.youtube.com/watch?v=Rrfd9VPGQNA)
+
 Completely rewritten from the ground up, based on the original [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992), and the excellent foundation laid by the 5e system module.
 
 | Helpful links | In this document |
