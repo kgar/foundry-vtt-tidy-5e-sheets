@@ -44,8 +44,11 @@
   <div class={[hide, 'divider-dot']}></div>
 {/snippet}
 
-<div class="character-details-subtitle-row" data-tidy-sheet-part="character-details-row">
-  <div class="character-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
+<div
+  class="actor-details-subtitle-row"
+  data-tidy-sheet-part="actor-details-row"
+>
+  <div class="actor-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
     {#each context.speeds.main as speed}
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
@@ -94,15 +97,33 @@
       <div class="divider-dot {context.enableXp ? '' : 'hide-under-600'}"></div>
     {/if}
     <span
-      class="alignment {context.speeds.secondary.length > 0 ? (context.enableXp ? 'hide-under-500' : 'hide-under-600') : (context.enableXp ? 'hide-under-600' : 'hide-under-700')}"
+      class="alignment {context.speeds.secondary.length > 0
+        ? context.enableXp
+          ? 'hide-under-500'
+          : 'hide-under-600'
+        : context.enableXp
+          ? 'hide-under-600'
+          : 'hide-under-700'}"
     >
       <span class="font-label-medium color-text-gold">{alignment}</span>
     </span>
     <div
-      class="divider-dot {context.speeds.secondary.length > 0 ? (context.enableXp ? 'hide-under-500' : 'hide-under-600') : (context.enableXp ? 'hide-under-600' : 'hide-under-700')}"
+      class="divider-dot {context.speeds.secondary.length > 0
+        ? context.enableXp
+          ? 'hide-under-500'
+          : 'hide-under-600'
+        : context.enableXp
+          ? 'hide-under-600'
+          : 'hide-under-700'}"
     ></div>
     {#each context.classes as entry, i}
-      <span class="class {i > 0 ? (context.enableXp ? 'hide-under-500' : 'hide-under-600') : ''}">
+      <span
+        class="class {i > 0
+          ? context.enableXp
+            ? 'hide-under-500'
+            : 'hide-under-600'
+          : ''}"
+      >
         <span class="color-text-gold font-label-medium">{entry.name}</span>
         <span class="color-text-default font-data-medium">{entry.levels}</span>
         <!-- TODO: Add button to roll a save request to chat here (enricher?) -->
@@ -122,7 +143,11 @@
           <!-- </button> -->
         {/if}
       </span>
-      <div class="divider-dot {context.enableXp ? 'hide-under-500' : 'hide-under-600'}"></div>
+      <div
+        class="divider-dot {context.enableXp
+          ? 'hide-under-500'
+          : 'hide-under-600'}"
+      ></div>
     {/each}
   </div>
   {#if context.enableXp}
@@ -151,16 +176,16 @@
         >
       </div>
       {#if !context.unlocked}
-      <div
-        class="xp-bar xp meter progress"
-        style="--bar-percentage: {context.system.details.xp.pct}%;"
-        data-tidy-sheet-part="xp-bar"
-      >
-        <span
-          class="xp-bar-current"
-          style="width: {context.system.details.xp.pct}%"
-        ></span>
-      </div>
+        <div
+          class="xp-bar xp meter progress"
+          style="--bar-percentage: {context.system.details.xp.pct}%;"
+          data-tidy-sheet-part="xp-bar"
+        >
+          <span
+            class="xp-bar-current"
+            style="width: {context.system.details.xp.pct}%"
+          ></span>
+        </div>
       {/if}
     </div>
   {/if}

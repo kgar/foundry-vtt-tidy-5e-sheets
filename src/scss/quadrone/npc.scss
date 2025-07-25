@@ -1,59 +1,62 @@
 .tidy5e-sheet:where(.quadrone.npc) {
-  --sidebar-expanded-width: 17.25rem;
 
-  .window-content {
-    .sheet-body {
-      display: flex;
-      flex: 1;
-      flex-direction: row;
-      overflow-x: hidden;
-      overflow-y: hidden;
-      position: relative;
-      z-index: 0;
-    }
+  --t5e-sheet-header-bg: url(../../systems/dnd5e/ui/official/banner-npc-dark.webp);
 
-    .main-content {
-      display: flex;
-      flex: 1;
-      flex-direction: row;
-      overflow: hidden;
+  &.actor::before {
+    opacity: 0.2;
+  }
 
-      > .sidebar {
-        flex-basis: var(--sidebar-expanded-width);
-        gap: var(--t5e-size-3x);
-        margin-inline-end: var(--t5e-size-4x);
-        margin-inline-start: calc(
-          (var(--sidebar-expanded-width) + var(--t5e-size-4x)) * -1
-        );
-        overflow-y: auto;
-        transition: margin var(--t5e-transition-default);
+  .sheet-header {
+    .npc-vitals {
+      margin-left: 1.75rem;
+      padding-left: 0rem;
 
-        &.expanded {
-          margin-inline-start: 0;
-          margin-inline-end: 0;
-          padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x)
-            var(--t5e-size-4x);
-          max-width: var(--sidebar-expanded-width);
-        }
+      .roll-hp i {
+        color: var(--t5e-vitals-button-icon-color);
       }
 
-      .sidebar-tab-contents {
-        gap: var(--t5e-size-4x);
-        padding-bottom: var(--t5e-size-6x);
-      }
-
-      .sidebar-tab-strip {
-        .tab-option {
-          flex: 1;
-        }
-      }
-
-      > .tidy-tab {
+      .max-hp {
         flex: 1;
-        overflow-y: auto;
-        padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x)
-          var(--t5e-size-4x);
+        color: var(--t5e-vitals-button-icon-color);
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+        }
       }
     }
+
+    .actor-vitals.npc-vitals {
+      .actor-vitals-row {
+        padding-left: 1.5rem;
+      }
+
+      .hp-row {
+        padding-left: .5rem;
+
+        .meter .label {
+          padding-left: 1.5rem;
+        }
+      }
+
+      .exhaustion-bar {
+        z-index: auto;
+        left: 0;
+        padding-left: 1rem;
+      }
+    }
+
+    .actor-vitals-container .shield {
+      position: absolute;
+      left: -0.6125rem;
+      bottom: -0.5rem;
+      text-align: center;
+      align-items: center;
+      background-image: url(../../modules/tidy5e-sheet/images/badge_ac_dark.webp);
+    }
+  }
+
+  .initiative-container {
+    text-align: center;
+    align-items: center;
   }
 }

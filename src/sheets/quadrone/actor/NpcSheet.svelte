@@ -6,8 +6,8 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import AbilityScore from './character-parts/AbilityScore.svelte';
-  import NpcPortrait from './npc-parts/NpcPortrait.svelte';
-  import NpcExhaustionBar from './npc-parts/NpcExhaustionBar.svelte';
+  import CharacterPortrait from './character-parts/CharacterPortrait.svelte';
+  import CharacterExhaustionBar from './character-parts/CharacterExhaustionBar.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import NpcSidebar from './npc-parts/NpcSidebar.svelte';
@@ -93,21 +93,24 @@
 
 <header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
-    <div class="flexcol">
-      <div class="npc-context-row flexrow">
+    <div class="actor-details-container flexcol">
+      <div class="actor-context-row flexrow">
         <div class="flexcol flex1">
-          <div class="npc-details-name-row">
+          <div class="actor-details-name-row">
             {#if context.unlocked}
               <TextInputQuadrone
                 field="name"
                 document={context.actor}
                 value={context.actor.name}
-                class="npc-name flex1 h2"
+                class="actor-name flex1 h2"
               />
             {:else}
-              <h1 class="npc-name flex1">{context.actor.name}</h1>
+              <h1 class="actor-name flex1">{context.actor.name}</h1>
             {/if}
-            <div class={['sheet-header-actions', 'flexrow']}>
+            <div
+              class={['sheet-header-actions', 'flexrow']}
+              data-tidy-sheet-part="sheet-header-actions-container"
+            >
               <button
                 type="button"
                 class="button button-icon-only short-rest button-gold"
@@ -133,7 +136,7 @@
           <NpcSubtitle />
         </div>
         <div
-          class="challenge-rating"
+          class="level-container challenge-rating flex0 flexrow"
           aria-label={localize('DND5E.CRLabel', {
             cr: context.system.details.cr,
           })}
@@ -168,64 +171,70 @@
           'flexrow',
         ]}
       >
-        <div class="initiative-container flexcol">
-          <div class="initiative score" data-tooltip="DND5E.Initiative">
-            <button
-              type="button"
-              class="initiative-roll-button"
-              onclick={(event) =>
-                context.actor.rollInitiativeDialog({ event: event })}
-            >
-              {localize('DND5E.InitiativeAbbr')}
-            </button>
-            {#if context.unlocked}
+        <div class="abilities-container-inner flexrow">
+          <div class="initiative-container flexcol">
+            <div class="initiative score" data-tooltip="DND5E.Initiative">
               <button
-                aria-label={localize('DND5E.InitiativeConfig')}
-                data-tooltip="DND5E.InitiativeConfig"
                 type="button"
-                class="button button-borderless button-icon-only button-config"
-                onclick={() =>
-                  FoundryAdapter.renderInitiativeConfig(context.actor)}
+                class="initiative-roll-button"
+                onclick={(event) =>
+                  context.actor.rollInitiativeDialog({ event: event })}
               >
-                <i class="fas fa-cog"></i>
+                {localize('DND5E.InitiativeAbbr')}
               </button>
-            {/if}
-            <div class="initiative-bonus flexrow">
-              <span class="modifier color-text-lightest font-label-xlarge">
-                {ini.sign}
-              </span>
-              <span class="bonus color-text-default font-data-xlarge">
-                {ini.value}
-              </span>
+              {#if context.unlocked}
+                <button
+                  aria-label={localize('DND5E.InitiativeConfig')}
+                  data-tooltip="DND5E.InitiativeConfig"
+                  type="button"
+                  class="button button-borderless button-icon-only button-config"
+                  onclick={() =>
+                    FoundryAdapter.renderInitiativeConfig(context.actor)}
+                >
+                  <i class="fas fa-cog"></i>
+                </button>
+              {/if}
+              <div class="initiative-bonus flexrow">
+                <span class="modifier color-text-lightest font-label-xlarge">
+                  {ini.sign}
+                </span>
+                <span class="bonus color-text-default font-data-xlarge">
+                  {ini.value}
+                </span>
+              </div>
+            </div>
+            <div class="ability-labels flexcol">
+              <span class="label font-label-medium color-text-lightest"
+                >Score</span
+              >
+              <span class="divider"></span>
+              <span class="label font-label-medium color-text-lightest"
+                >Save</span
+              >
             </div>
           </div>
-          <div class="ability-labels flexcol">
-            <span class="label font-label-medium color-text-gold">Score</span>
-            <span class="divider"></span>
-            <span class="label font-label-medium color-text-gold">Save</span>
-          </div>
+          {#each context.abilities as ability}
+            <AbilityScore
+              {ability}
+              unlocked={context.unlocked}
+              onScoreChanged={(score) =>
+                context.actor.update({
+                  [`system.abilities.${ability.key}.value`]: score,
+                })}
+              onConfigClicked={(id) =>
+                FoundryAdapter.renderAbilityConfig(context.actor, id)}
+              onRollAbility={(event, key) =>
+                context.actor.rollAbilityCheck({ ability: key, event })}
+              onRollSave={(event, key) =>
+                context.actor.rollSavingThrow({ ability: key, event })}
+            />
+          {/each}
         </div>
-        {#each context.abilities as ability}
-          <AbilityScore
-            {ability}
-            unlocked={context.unlocked}
-            onScoreChanged={(score) =>
-              context.actor.update({
-                [`system.abilities.${ability.key}.value`]: score,
-              })}
-            onConfigClicked={(id) =>
-              FoundryAdapter.renderAbilityConfig(context.actor, id)}
-            onRollAbility={(event, key) =>
-              context.actor.rollAbilityCheck({ ability: key, event })}
-            onRollSave={(event, key) =>
-              context.actor.rollSavingThrow({ ability: key, event })}
-          />
-        {/each}
       </div>
     </div>
-    <div class="npc-vitals-container">
-      <NpcPortrait />
-      <div class="npc-vitals">
+    <div class="actor-vitals-container">
+      <CharacterPortrait />
+      <div class="actor-vitals npc-vitals">
         <div class="hp-row flexrow">
           <div
             class="meter progress hit-points"
@@ -333,9 +342,18 @@
             </button>
           {/if}
         </div>
-        <div class="npc-vitals-row">
+        <div class="actor-vitals-row">
           {#if exhaustionBarFocused}
-            <NpcExhaustionBar />
+            <CharacterExhaustionBar
+              level={exhaustionLevel}
+              total={context.config.conditionTypes.exhaustion.levels}
+              onClose={() => (exhaustionBarFocused = false)}
+              onExhaustionLevelSet={async (level) => {
+                await context.actor.update({
+                  'system.attributes.exhaustion': level,
+                });
+              }}
+            />
           {:else}
             <div class={['exhaustion', { exhausted: exhaustionLevel > 0 }]}>
               <button
@@ -373,9 +391,63 @@
                 </button>
               {/if}
             </div>
-            <div>etc.</div>
+
+            <button
+              type="button"
+              class="max-hp button button-borderless"
+              aria-label={localize('DND5E.HitPointsTempMax')}
+              data-tooltip={'DND5E.HitPointsTempMax'}
+              onclick={() => console.log('TODO: Roll NPC HP')}
+            >
+              Max
+            </button>
+
+            <button
+              type="button"
+              class="roll-hp button button-borderless button-icon-only"
+              aria-label={localize('DND5E.HPFormulaRollMessage')}
+              data-tooltip={'DND5E.HPFormulaRollMessage'}
+              onclick={() => console.log('TODO: Roll NPC HP')}
+            >
+              <i class="fas fa-dice"></i>
+            </button>
+
+            {#if context.unlocked}
+              <button
+                aria-label="Configure NPC"
+                data-tooltip="DND5E.DeathSaveConfigure"
+                type="button"
+                class="button button-borderless button-icon-only button-config"
+                onclick={(ev) =>
+                  FoundryAdapter.renderDeathConfig(context.actor)}
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            {/if}
           {/if}
         </div>
+      </div>
+      <div
+        class="shield"
+        data-attribution="attributes.ac"
+        data-attribution-caption="DND5E.ArmorClass"
+        data-tooltip-direction="DOWN"
+      >
+        <span class="ac-value color-text-default">
+          {context.system.attributes.ac.value}
+        </span>
+        <span class="ac-label font-label-medium color-text-gold">AC</span>
+        {#if context.unlocked}
+          <button
+            aria-label={localize('DND5E.ArmorConfig')}
+            data-tooltip="DND5E.ArmorConfig"
+            type="button"
+            class="button button-borderless button-icon-only button-config"
+            onclick={(ev) => FoundryAdapter.renderArmorConfig(context.actor)}
+          >
+            <i class="fas fa-cog"></i>
+          </button>
+        {/if}
       </div>
     </div>
   </div>
@@ -400,7 +472,7 @@
       {extraTabs}
       tabs={context.tabs}
       sheet={context.actor.sheet}
-      cssClass="character-tabs"
+      cssClass="actor-tabs"
       tabContext={{ context, actor: context.actor }}
     />
   </div>

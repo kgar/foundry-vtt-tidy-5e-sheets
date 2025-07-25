@@ -328,22 +328,22 @@ export type FavoriteEffectContext = {
 
 export type FavoriteSection =
   | (InventorySection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY;
-    })
+    type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY;
+  })
   | (FacilitySection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY;
-    })
+    type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY;
+  })
   | (SpellbookSection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK;
-    })
+    type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK;
+  })
   | (CharacterFeatureSection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE;
-    })
+    type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE;
+  })
   | TypedActivityFavoriteSection
   | TypedEffectFavoriteSection
   | (GenericFavoriteSection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC;
-    });
+    type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC;
+  });
 
 export type LanguageTraitContext = {
   label: string;
@@ -419,8 +419,8 @@ export type CharacterSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
@@ -527,8 +527,8 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
@@ -584,15 +584,15 @@ export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
-      options?: { includeInlineToggles?: boolean };
-    }
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+    options?: { includeInlineToggles?: boolean };
+  }
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
-      options?: { includeInlineToggles?: boolean };
-    };
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+    options?: { includeInlineToggles?: boolean };
+  };
 
 export type Utilities<TContext> = Record<
   string,
@@ -1189,6 +1189,11 @@ export type NpcSheetQuadroneContext = {
   features: NpcAbilitySection[];
   habitats: { label: string }[];
   inventory: InventorySection[];
+  portrait: {
+    src: string;
+    shape: PortraitShape;
+    path: string;
+  };
   showContainerPanel: boolean;
   showDeathSaves: boolean;
   showLairTracker: boolean;
