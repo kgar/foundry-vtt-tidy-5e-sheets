@@ -10,10 +10,9 @@
 </script>
 
 {#if rowContext.effect.source}
-  <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
   <a
-    onclick={async () =>
-      (await fromUuid(rowContext.effect.source.name))?.sheet.render({
+    onclick={() =>
+      rowContext.effect.source?.sheet.render({
         force: true,
       })}
   >
