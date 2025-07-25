@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
 - [ ] Chase NPC
 
 ### NPC Sheet
@@ -327,6 +326,7 @@ Limited:
   - [X] Add container query for when under a specific width and when the card container has the "multi" class, set the cards to 50% width.
 - [x] Character Spellbook: Add intersection observer to spellbook content and toggle the expanded boolean or class equivalent.
 - [x] Fix container footer. Just make the whole thing sticky and be done with it :check:
+- [x] Reduce primary column required width on effects columns so that the min sheet width still shows the controls.
 
 
 

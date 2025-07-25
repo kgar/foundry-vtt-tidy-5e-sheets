@@ -49,6 +49,7 @@
   {@const hiddenColumns = EffectColumnRuntime.determineHiddenColumns(
     inlineWidth,
     columns,
+    10
   )}
   {#if section.show}
     <TidyTable key={section.key}>
