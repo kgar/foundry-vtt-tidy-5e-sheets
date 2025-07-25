@@ -30,7 +30,6 @@
   );
 </script>
 
-<!-- TODO: Make an intersection observer factory that allows for registering a callback -->
 <div
   role="presentation"
   style="margin-bottom: -1rem"
