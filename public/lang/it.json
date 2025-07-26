@@ -747,7 +747,8 @@
         "SectionSelectorExistingSections": "Sezioni Esistenti",
         "SectionSelectorCreateNewSection": "Crea nuova sezione",
         "SectionSelectorNewSectionName": "Nome nuova sezione",
-        "SectionSelectorSaveNewSection": "Salva nuova sezione"
+        "SectionSelectorSaveNewSection": "Salva nuova sezione",
+        "SectionSelectorChooseTabSectionTooltip": "Scegli Sezione {tabName}"
     },
     "TIDY5E.LocalizationTestKey": "Tasto Prova Localizzazione",
     "TIDY5E.UseDefaultDialog": {
