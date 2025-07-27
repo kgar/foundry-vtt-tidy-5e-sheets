@@ -261,10 +261,9 @@
       pointer-events: none;
     }
 
-    // TODO: Figure out how this is going to work, now that mode-prepared no longer exists.
-    // &.spell-preparation:not(.mode-prepared) {
-    //   --filigree-border-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 0.88) h);
-    // }
+    &.spell-method:not(.method-spell) {
+      --filigree-border-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 0.88) h);
+    }
   }
 
   .item-rarity-container {
