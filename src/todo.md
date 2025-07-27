@@ -37,6 +37,46 @@
 - [ ] Background
 - [ ] Journal
 
+#### NPC Statblock Sections notes
+
+**Default sheets setup.**  
+NPC section prep:
+```js
+const sections = Object.entries(CONFIG.DND5E.activityActivationTypes).reduce((obj, [id, config], i) => {
+    const { header: label, passive } = config; // kgar note: the `special` activation type doesn't have "header". It just has "label". Recommend falling back to `label` when `header` is nil.
+    if ( passive ) return obj;
+    obj[id] ??= {
+    id, label, order: (i + 1) * 100, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+    };
+    return obj;
+}, {});
+sections.passive = {
+    id: "passive", label: "DND5E.Features", order: 0, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+};
+context.itemCategories.features?.forEach(i => {
+    const ctx = context.itemContext[i.id];
+    sections[ctx.group]?.items.push(i);
+});
+```
+
+Determining "group" (which for us is simply section key):
+```js
+ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
+```
+
+NPC sheet adds all weapons to the features itemcategory, in addition to their inventory home:
+```js
+  /** @inheritDoc */
+  _assignItemCategories(item) {
+    if ( ["class", "subclass"].includes(item.type) ) return new Set(["classes"]);
+    const categories = super._assignItemCategories(item);
+    if ( item.type === "weapon" ) categories.add("features"); // 👈 there
+    return categories;
+  }
+```
+
 ### (Almost) Everything after the short list
 
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
