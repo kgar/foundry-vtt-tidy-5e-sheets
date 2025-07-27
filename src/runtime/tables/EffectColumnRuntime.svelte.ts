@@ -51,7 +51,7 @@ class EffectColumnRuntimeImpl extends TableColumnRuntimeBase {
               headerContent: {
                 type: 'component',
                 // @ts-ignore
-                component: EffectActionsColumnHeader, //  - TODO: work on the column runtime types so that more specific types can be used in scenarios where the section type, for example, is known, like effects
+                component: EffectActionsColumnHeader, // TODO: work on the column runtime types so that more specific types can be used in scenarios where the section type, for example, is known, like effects
               },
               cellClasses: 'tidy-table-actions',
               cellContent: {
