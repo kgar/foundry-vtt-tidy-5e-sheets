@@ -45,7 +45,7 @@
 
     &.spell-preparation {
       --t5e-table-header-background-left: oklch(from var(--t5e-mode-color, var(--t5e-theme-color-darkest)) calc(l * 0.75) calc(c * 1.2) h);
-      --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-default));
+      --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-darker));
     }
 
     :is(.tidy-table-cell, .tidy-table-header-cell) {
@@ -353,12 +353,6 @@
       font-size: var(--font-size-small);
     }
 
-    // TODO: Look back at sizing to see if it needs to match other context areas.
-    // .cell-context,
-    // .advancement-cell-context {
-    //   // font-size: var(--font-size-small);
-    // }
-
     .cell-name {
       margin-block-end: var(--t5e-size-halfx);
     }
@@ -439,7 +433,6 @@
       text-wrap: nowrap;
       overflow: hidden;
 
-      // TODO: work with hightouch to make it nice
       .remaining-damages-count {
         border: none;
         background: none;
@@ -644,9 +637,8 @@
       bottom: 0;
     }
 
-    // TODO: hightouch, please review this. kgar put this here to support svg images
     dnd5e-icon {
-      --icon-size: calc(1.75rem - 0.125rem);
+      --icon-size: 1.625rem;
       --icon-fill: var(--t5e-color-text-lighter);
     }
 
@@ -661,7 +653,6 @@
         opacity: 0;
       }
 
-      // TODO: hightouch, this was one of the few ways to make an SVG icon go hidden. It doesn't animate, well (or possibly at all).
       dnd5e-icon {
         --icon-fill: transparent;
       }
@@ -719,22 +710,17 @@
   }
 
   /* Inline Containers */
-  // TODO
   .tidy-table-row~.expandable.expanded {
     --t5e-item-row-background: rgba(255, 255, 255, 0.08);
     background: linear-gradient(120deg,
         var(--t5e-component-card-darker) 10%,
         var(--t5e-component-card-default) 120%);
-
-
-    [data-tidy-sheet-part="item-property-list"] .value {}
   }
 
   .empty-container {
     min-height: var(--t5e-size-8x);
     display: flex;
     align-items: center;
-    // background-color: var(--t5e-component-card-default);
     color: var(--t5e-color-text-lightest);
   }
 
@@ -806,8 +792,6 @@
       background: linear-gradient(to right,
           var(--t5e-color-palette-grey-100) 10%,
           rgba(255, 255, 255, 0.24) 60%);
-
-      &.expanded {}
     }
 
     &.spell-preparation:not(.mode-prepared) {
@@ -856,31 +840,6 @@
       max-width: var(--t5e-field-size-default);
       text-align: right;
       padding-bottom: 0.0625rem;
-    }
-  }
-
-  .pips.spell-pips {
-    padding-block-start: var(--t5e-size-1);
-
-    .pip {
-      --pip-color: var(--t5e-color-text-gold-emphasis);
-      transition: all var(--t5e-transition-default);
-
-      &:hover,
-      &:active,
-      &:focus-within {
-        background-color: var(--t5e-theme-color-lighter);
-        filter: drop-shadow(0 0 0.1875rem oklch(from var(--t5e-theme-color-highlight) l c h));
-      }
-
-      &.active {
-
-        &:hover,
-        &:active,
-        &:focus-within {
-          background-color: var(--t5e-color-text-oninverse-gold-light);
-        }
-      }
     }
   }
 

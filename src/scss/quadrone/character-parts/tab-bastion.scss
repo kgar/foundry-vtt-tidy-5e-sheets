@@ -400,6 +400,18 @@
         i {
           font-size: var(--font-size-14);
         }
+
+        .order {
+          overflow: hidden;
+        }
+      }
+
+      .order {
+        gap: 0.25rem;
+      }
+
+      .units {
+        margin-inline-start: 0.25rem;
       }
     }
   }

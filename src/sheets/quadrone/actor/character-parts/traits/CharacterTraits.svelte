@@ -157,7 +157,7 @@
     <CharacterTraitConfigurableListEntry
       label={localize('DND5E.Armor')}
       entries={context.traits.armor}
-      onconfig={() => FoundryAdapter.renderArmorConfig(context.actor)}
+      onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
       icon="fa-solid fa-shield-quartered"
     />
 

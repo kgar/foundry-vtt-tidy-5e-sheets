@@ -1,73 +1,8 @@
-## kgar To Do
+ ## kgar To Do
 
 ### The Short List
 
-- [ ] Extract column specs for activity tables.
-  - [ ] Apply data-driven columns to inline activity sections.
-  - [ ] Apply data-driven columns to the Activity tab in item sheets.
-- [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
-  - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
-    - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
-  - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
-- [ ] Prepared footer macro filter:
-  - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
-  - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
-  - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
-  - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
-- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
-- [ ] Determine: When transforming, carry over favorites or not.
-- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
-  - [ ] header parts
-  - [ ] sidebar parts
-  - [ ] tab contents
-    - [ ] toolbar
-  - [ ] ...
-- [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
-- [ ] SortingListbox - add touch support for drag and drop, if possible; and if it works out, remove the arrow buttons.
-- [ ] Update the readme
-- [ ] Foundry package page: revamp
-
-#### Carrying over favorites
-
-The essential code for adding favorites during transformation.
-
-```ts
-      const hookId = Hooks.on(
-        'dnd5e.transformActorV2',
-        (
-          originalActor: Actor5e,
-          newActorSource: any,
-          data: any,
-          settings: unknown,
-          options: unknown
-        ) => {
-          if (this.actor.system.favorites) {
-            const favorites = structuredClone(this.actor.system.favorites);
-            foundry.utils.mergeObject(data, {
-              ['system.favorites']: favorites,
-            });
-          }
-        }
-      );
-
-      try {
-        const transformed = await this.actor.transformInto(document, settings);
-
-        return transformed;
-      } finally {
-        Hooks.off('dnd5e.transformActorV2', hookId);
-      }
-```
-
-#### Current Section Name Issue Notes
-
-I was contemplating the Sheet Sections hiccup we ran into with Jake: it is difficult to quickly change the name of a section for a given item when using the section selector.
-I was thinking we could do just a little rearranging and repurposing to make it work.
-
-1. We change "Create a New Section" to instead show the current, chosen section value in the input. Clicking on the input selects all text. "Save New Section" just changes to "Save Changes" or something.
-2. Move this custom value input to the top and have it autofocus on load.
-
-This would accomplish allowing someone to quickly edit the current value without having to retype it. The reframing of this would, I think, make it more immediately understandable, since your current value is always at the top, in the input box, and the input box being the focus allows for establishing settings quickly.
+- [ ] Chase NPC
 
 ### NPC Sheet
 
@@ -102,8 +37,76 @@ This would accomplish allowing someone to quickly edit the current value without
 - [ ] Background
 - [ ] Journal
 
+#### NPC Statblock Sections notes
+
+**Default sheets setup.**  
+NPC section prep:
+```js
+const sections = Object.entries(CONFIG.DND5E.activityActivationTypes).reduce((obj, [id, config], i) => {
+    const { header: label, passive } = config; // kgar note: the `special` activation type doesn't have "header". It just has "label". Recommend falling back to `label` when `header` is nil.
+    if ( passive ) return obj;
+    obj[id] ??= {
+    id, label, order: (i + 1) * 100, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+    };
+    return obj;
+}, {});
+sections.passive = {
+    id: "passive", label: "DND5E.Features", order: 0, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+};
+context.itemCategories.features?.forEach(i => {
+    const ctx = context.itemContext[i.id];
+    sections[ctx.group]?.items.push(i);
+});
+```
+
+Determining "group" (which for us is simply section key):
+```js
+ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
+```
+
+NPC sheet adds all weapons to the features itemcategory, in addition to their inventory home:
+```js
+  /** @inheritDoc */
+  _assignItemCategories(item) {
+    if ( ["class", "subclass"].includes(item.type) ) return new Set(["classes"]);
+    const categories = super._assignItemCategories(item);
+    if ( item.type === "weapon" ) categories.add("features"); // 👈 there
+    return categories;
+  }
+```
+
 ### (Almost) Everything after the short list
 
+- [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
+- [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
+  - [ ] Identify all resize observers which can be removed.
+  - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
+  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
+- [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
+  - [ ] Fully remove the short/long rest buttons in the header
+  - [ ] ...
+- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to 
+- [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
+  - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
+    - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
+  - [ ] Container sheet contents - check for the parent actor, resolve to a temp copy of a sheet, and use `isUsingActionsTab()`
+- [ ] Prepared footer macro filter:
+  - [ ] If all relevant filters are unified, decorate the button as Include or Exclude
+  - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
+  - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
+  - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
+- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+- [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
+  - [ ] header parts
+  - [ ] sidebar parts
+  - [ ] tab contents
+    - [ ] toolbar
+  - [ ] ...
+- [ ] Make constants for the sheet parts. Pull sheet part constants into their own file, possibly.
+- [ ] Foundry package page: revamp
+- [ ] Add World Setting to disable ruletips in Tidy
 - [ ] Only show Action tab control when the action tab is in use.
   - This is way more difficult than it has any business being. The ActorSheetRuntime refactor might be needed to make this viable.
 - [ ] Scaffold the Group Sheet
@@ -160,13 +163,8 @@ This would accomplish allowing someone to quickly edit the current value without
 
 ## hightouch To Do
 
-- [x] Formula column tidying needed.
-  - the draft CSS is here in `src/scss/quadrone/tables.scss`, and the component is `src\sheets\quadrone\item\columns\ItemDamageFormulasColumn.svelte`
-  - right now, the overflow button is behind truesight
-  - to recap: a cell-wide button that encapsulates all the damage labels would require some retrofit styling to get it looking normal again. On the other hand, the overflow button is very small, so I dunno.
-- [x] Fix Bastion Item Sheet, Crafting UI
-- [x] Weapon Favorite stats cell is missing formatting classes
-- [x] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
+- [ ] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
+- [ ] kgar question: should we apply any alt header color for the suppressed effect section?
 - [ ] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
 - [ ] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
@@ -174,7 +172,6 @@ This would accomplish allowing someone to quickly edit the current value without
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
-- [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)
 - [ ] Item sheet sidebar background image (low)
 - [ ] Make a generic roll button component
   - [ ] Fix Slot favorite roll icon not appearing
@@ -225,31 +222,6 @@ colorScheme.applications // 'light' | 'dark' | '' | ????
   - all: activation, duration, range, reach, target
   - item is weapon with no overrides: attack: range, reach
 
-### Context Menu items rework
-
-<https://discord.com/channels/@me/1243307347682529423/1353196795378929754>
-
-Here's my recommendation for action order following menu order best practices:
-
-- Most commonly used on the top
-- Destructive actions sunk to the bottom
-- Related content grouped
-
-```
-Edit
-Equip
-Add favorite
-Identify
-Display in chat
-Duplicate
----
-Pin to attributes
-Choose a section
----
-Give to character
-Delete
-```
-
 ### To Include on Actor Phase
 
 - [ ] Effects tab
@@ -285,28 +257,11 @@ Limited:
 
 ### To Do Graveyard
 
-- [x] Release notes: add section on the header
-- [x] Release notes: finish the non-character-sheet notes, like fixes, localization, etc.
-- [x] Include player color in the available coloris swatches
-- [x] Tools cog always visible. Limit to Edit mode.
-- [x] Issue: URL - http/https - backgrounds do not load in the header for theme settings.
-- [x] ~~Fix Harry's issue with an actor and their messed up favorites behavior: <https://discord.com/channels/1167985253072257115/1393987856921526353>~~ unable to repo.
-- [x] Item / Container Sheet - Action section button - change label based on parent sheet type. Fallback to Actions labelling.
-- [x] Suggestion: Add drag/drop functionality (between columns, and reordering within a column) to selection listboxes.
-  - [x] Selection listbox
-- [x] Add alignment to biography `system.details.alignment`, first field!
-- [x] Add Activity uses to inline activities
-- [x] Add damage formula to inline activities
-- [x] ~~Add alignment to header subtitle? Discuss with hightouch~~ was already done
-- [x] Fix: Using context menu's 'Choose an Action Section' updates 'Section' field instead 'Action Section' <https://discord.com/channels/1167985253072257115/1394345274402406523>
-- [x] Custom Section Selector - be able to rename existing section without retyping the whole section title. (see notes below)
-- [x] Item Formula column
-  - [x] Show top 2 damages
-  - [x] If > 2 damages,
-    - [x] show "+N", where N the number of damages above 2
-    - [x] the entire cell is clickable and opens the item (so use the MessageBus)
-  - [x] Truncate damage strings
-- [x] Activity Formula column
-  - [x] Truncate damage strings
-  - [x] Inline Activities - add Formula column and don't truncate
-- [x] Refactor: remove the message bus message for expanding a single item. Use the context API to grant toggleSummary to child components ✅ and update the cell to use it on damages overflow button click.
+- [x] Formula column tidying needed.
+  - the draft CSS is here in `src/scss/quadrone/tables.scss`, and the component is `src\sheets\quadrone\item\columns\ItemDamageFormulasColumn.svelte`
+  - right now, the overflow button is behind truesight
+  - to recap: a cell-wide button that encapsulates all the damage labels would require some retrofit styling to get it looking normal again. On the other hand, the overflow button is very small, so I dunno.
+- [x] Fix Bastion Item Sheet, Crafting UI
+- [x] Weapon Favorite stats cell is missing formatting classes
+- [x] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
+- [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)

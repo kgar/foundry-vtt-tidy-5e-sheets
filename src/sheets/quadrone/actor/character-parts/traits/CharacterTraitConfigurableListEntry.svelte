@@ -41,6 +41,10 @@
   let empty = $derived(entries.length === 0);
 
   const localize = FoundryAdapter.localize;
+
+  let configurationLabel = $derived(
+    localize('DND5E.ProficiencyConfigureTitle', { label }),
+  );
 </script>
 
 {#if context.unlocked || entries.length || !!alwaysShow}
@@ -70,10 +74,10 @@
       {#if context.unlocked}
         <div class="list-controls">
           <button
-            aria-label="Configure {label}"
+            aria-label={configurationLabel}
             type="button"
             class="button button-borderless button-icon-only button-config"
-            data-tooltip={configurationTooltip}
+            data-tooltip={configurationTooltip ?? configurationLabel}
             onclick={(ev) => onconfig(ev)}
           >
             <i class="fa-solid fa-cog"></i>

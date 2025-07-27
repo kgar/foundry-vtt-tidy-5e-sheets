@@ -257,9 +257,6 @@ export function Tidy5eActorSheetQuadroneBase<
         enableXp:
           systemSettings.value.levelingMode !==
           CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
-        effects: dnd5e.applications.components.EffectsElement.prepareCategories(
-          this.actor.allApplicableEffects()
-        ),
         elements: this.options.elements,
         filterData: this.itemFilterService.getFilterData(),
         filterPins:
@@ -738,7 +735,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }) {
       let { type: datasetType, ...restDataSet } = args.data ?? {};
 
-      if (args.tabId === CONSTANTS.TAB_EFFECTS)
+      if (args.tabId === CONSTANTS.TAB_EFFECTS) {
         return await ActiveEffect.implementation.create(
           {
             name: game.i18n.localize('DND5E.EffectNew'),
@@ -748,6 +745,7 @@ export function Tidy5eActorSheetQuadroneBase<
           },
           { parent: this.actor, renderSheet: true }
         );
+      }
 
       const types = this._addDocumentItemTypes(args.tabId).filter(
         (type) =>
@@ -1061,7 +1059,29 @@ export function Tidy5eActorSheetQuadroneBase<
         settings.toObject()
       );
 
-      return this.actor.transformInto(document, settings);
+      const hookId = Hooks.on(
+        'dnd5e.transformActorV2',
+        (
+          originalActor: Actor5e,
+          newActorSource: any,
+          data: any,
+          settings: unknown,
+          options: unknown
+        ) => {
+          if (this.actor.system.favorites) {
+            const favorites = structuredClone(this.actor.system.favorites);
+            foundry.utils.mergeObject(data, {
+              ['system.favorites']: favorites,
+            });
+          }
+        }
+      );
+
+      try {
+        return await this.actor.transformInto(document, settings);
+      } finally {
+        Hooks.off('dnd5e.transformActorV2', hookId);
+      }
     }
 
     async _onDropItem(

@@ -65,14 +65,14 @@
   <div role="presentation" class="scroll-container flex1">
     <TidyTable key="spell-source-class-assignments-matrix" toggleable={false}>
       {#snippet header()}
-        <TidyTableHeaderRow class="unset-header-height">
+        <TidyTableHeaderRow class="unset-header-height theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3
               class="truncate"
               data-tooltip="DND5E.spell"
               style="padding-inline-start: 0.75rem"
             >
-              {localize('DND5E.spell')}
+              {localize('TYPES.Item.spell')}
             </h3>
           </TidyTableHeaderCell>
           {#each classColumns as classColumn}

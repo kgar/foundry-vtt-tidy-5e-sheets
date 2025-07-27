@@ -33,7 +33,7 @@
 >
   <div class="label">
     {#if !chosen.disabled}
-      <span class="order">
+      <span class="order flex1">
         {#if icon?.type === 'fa-icon-class'}
           <i class={icon.className}></i>
         {:else if icon?.type === 'dnd5e-icon'}
@@ -50,12 +50,8 @@
           {/if}
         </span>
       </span>
-      <span class="counter">
-        <span class="value font-data-medium">{chosen.progress.value}</span>
-        <span class="separator">&sol;</span>
-        <span class="max font-data-medium color-text-lighter"
-          >{chosen.progress.max}</span
-        >
+      <span class="counter flexshrink">
+        <span class="value font-data-medium">{chosen.progress.value}</span><span class="separator">&sol;</span><span class="max font-label-medium color-text-lighter">{chosen.progress.max}</span>
         <span class="units font-label-medium color-text-lighter lowercase">{localize('DND5E.TimeDay')}</span>
       </span>
     {:else}

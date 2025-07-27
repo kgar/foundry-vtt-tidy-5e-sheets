@@ -99,7 +99,7 @@
             id="{idPrefix}-actor-portrait-shape"
             bind:value={context.value.portraitShape}
           >
-            <option></option>
+            <option value={undefined}></option>
             {#each portraitShapes as shape}
               <option value={shape}
                 >{localize(

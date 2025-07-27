@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Snippet } from 'svelte';
-  import type { ClassValue } from 'svelte/elements';
+  import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 
   interface Props {
     primary?: boolean;
@@ -10,7 +10,7 @@
     hideUnder?: number;
     children?: Snippet<[any]>;
     class?: ClassValue;
-    [key: string]: any;
+    attributes?: HTMLAttributes<HTMLElement>;
   }
 
   let {
@@ -20,7 +20,7 @@
     hideUnder,
     class: cssClass,
     children,
-    ...rest
+    attributes,
   }: Props = $props();
 
   let hideUnderClass = $derived(!!hideUnder ? `hide-under-${hideUnder}` : '');
@@ -44,7 +44,7 @@
   onmouseenter={mouseEnter}
   onmouseleave={mouseLeave}
   style:--tidy-table-column-width={columnWidth}
-  {...rest.attributes}
+  {...attributes}
 >
   {@render children?.({ isHovering })}
 </div>
