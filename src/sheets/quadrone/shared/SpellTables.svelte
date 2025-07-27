@@ -73,7 +73,7 @@
   });
 
   let totalSpellCount = $derived(
-    sections.reduce((count, s) => count + s.spells.length, 0),
+    sections.reduce((count, s) => count + s.items.length, 0),
   );
 </script>
 
@@ -97,7 +97,7 @@
   {:else}
     {#each sections as section (section.key)}
       {@const hasViewableItems = ItemVisibility.hasViewableItems(
-        section.spells,
+        section.items,
         searchResults.uuids,
       )}
       {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
@@ -121,12 +121,12 @@
           dataset={section.dataset}
         >
           {#snippet header(expanded)}
-            {@const mode = section.prepMode?.slugify()}
+            {@const method = section.method?.slugify()}
             {@const draggableHeaderAttributes = section.usesSlots
               ? {
                   ['data-tidy-draggable']: true,
                   ['data-key']: section.key,
-                  ['data-preparation-mode']: section.prepMode,
+                  ['data-method']: section.method,
                   ['data-level']: section.dataset['system.level'],
                   ['data-slots']: true,
                 }
@@ -134,8 +134,8 @@
             <TidyTableHeaderRow
               class={[
                 'theme-dark',
-                'spell-preparation',
-                { [`mode-${mode}`]: !isNil(mode, '') },
+                'spell-method',
+                { [`method-${method}`]: !isNil(method, '') },
               ]}
               {...draggableHeaderAttributes}
             >
@@ -143,7 +143,7 @@
                 <h3>
                   {localize(section.label)}
                 </h3>
-                <span class="table-header-count">{section.spells.length}</span>
+                <span class="table-header-count">{section.items.length}</span>
                 {#if section.usesSlots}
                   <div
                     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
@@ -185,7 +185,7 @@
           {/snippet}
 
           {#snippet body()}
-            {@const itemEntries = section.spells.map((item) => ({
+            {@const itemEntries = section.items.map((item) => ({
               item,
               ctx: itemContext[item.id],
             }))}
@@ -198,20 +198,21 @@
                 rowClass={[
                   {
                     expanded,
+                    ['can-prepare']: item.system.canPrepare,
+                    ['cannot-prepare']: !item.system.canPrepare,
                     prepared:
-                      (item.system.preparation.mode ===
-                        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-                        item.system.preparation.prepared) ||
-                      item.system.preparation.mode ===
-                        CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
+                      item.system.canPrepare &&
+                      item.system.prepared ===
+                        CONFIG.DND5E.spellPreparationStates.prepared.value,
+                    always:
+                      item.system.canPrepare &&
+                      item.system.prepared ===
+                        CONFIG.DND5E.spellPreparationStates.always.value,
                     unprepared:
                       !item.system.linkedActivity &&
-                      item.system.preparation.mode ===
-                        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-                      !item.system.preparation.prepared,
-                    ['mode-always']:
-                      item.system.preparation.mode ===
-                      CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS,
+                      item.system.canPrepare &&
+                      item.system.prepared ===
+                        CONFIG.DND5E.spellPreparationStates.unprepared.value,
                   },
                 ]}
                 contextMenu={{

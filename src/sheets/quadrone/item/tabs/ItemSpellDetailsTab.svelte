@@ -150,41 +150,57 @@
     </div>
   {/if}
 
-  <!-- Preparation Mode -->
+  <!-- Preparation Method -->
   <div class="form-group">
-    <label for="{appId}-preparation-mode"
-      >{localize('DND5E.SpellPreparation.Mode')}</label
+    <label for="{appId}-method"
+      >{localize('DND5E.SpellPreparation.Method')}</label
     >
     <div class="form-fields">
-      <!-- Prepared -->
-      {#if context.source.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED}
-        <label class="checkbox" for="{appId}-preparation-prepared">
-          <CheckboxQuadrone
-            id="{appId}-preparation-prepared"
-            document={context.item}
-            field="system.preparation.prepared"
-            checked={context.source.preparation.prepared}
-            disabledChecked={context.system.preparation.prepared}
-            title={localize('DND5E.Prepared')}
-            aria-label={localize('DND5E.Prepared')}
-            disabled={!context.unlocked}
-          />
+      <div class="form-group label-top">
+        <!-- Method -->
+        <label for="{appId}-method">
+          {localize('DND5E.Method')}
         </label>
-      {/if}
+        <div class="form-fields">
+          <SelectQuadrone
+            id="{appId}-method"
+            document={context.item}
+            field="system.method"
+            value={context.source.method}
+            disabled={!context.unlocked}
+          >
+            <SelectOptions
+              data={context.spellcastingMethods}
+              labelProp="label"
+              valueProp="value"
+            />
+          </SelectQuadrone>
+        </div>
+      </div>
 
-      <!-- Mode -->
-      <SelectQuadrone
-        id="{appId}-preparation-mode"
-        document={context.item}
-        field="system.preparation.mode"
-        value={context.source.preparation.mode}
-        disabled={!context.unlocked}
-      >
-        <SelectOptions
-          data={context.config.spellPreparationModes}
-          labelProp="label"
-        />
-      </SelectQuadrone>
+      <!-- Preparation -->
+      {#if context.canPrepare}
+        <div class="form-group label-top">
+          <label for="{appId}-prepared">
+            {localize('DND5E.Preparation')}
+          </label>
+          <div class="form-fields">
+            <SelectQuadrone
+              id="{appId}-prepared"
+              document={context.item}
+              field="system.prepared"
+              value={context.source.prepared}
+              disabled={!context.unlocked}
+            >
+              <SelectOptions
+                data={context.config.spellPreparationStates}
+                labelProp="label"
+                valueProp="value"
+              />
+            </SelectQuadrone>
+          </div>
+        </div>
+      {/if}
     </div>
   </div>
 

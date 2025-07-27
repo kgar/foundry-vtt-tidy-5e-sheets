@@ -401,12 +401,10 @@ export class CharacterSheetSections {
         continue;
       }
 
-      const incomingItems =
-        CharacterSheetSections.getItemsFromFavoriteSection(section);
+      const incomingItems = section.items;
 
       if (mappedSection.type !== CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC) {
-        const mappedItems =
-          CharacterSheetSections.getItemsFromFavoriteSection(mappedSection);
+        const mappedItems = mappedSection.items;
 
         sectionsMap[section.key] =
           CharacterSheetSections.createGenericFavoriteSection(section.key, [
@@ -421,17 +419,6 @@ export class CharacterSheetSections {
     }
 
     return Object.values(sectionsMap);
-  }
-
-  static getItemsFromFavoriteSection(
-    section: Exclude<
-      FavoriteSection,
-      TypedEffectFavoriteSection | TypedActivityFavoriteSection
-    >
-  ) {
-    return section.type === CONSTANTS.TAB_ACTOR_SPELLBOOK
-      ? section.spells
-      : section.items;
   }
 
   static createGenericFavoriteSection(

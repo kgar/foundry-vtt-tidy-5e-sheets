@@ -88,12 +88,12 @@ export function getItemContextOptionsQuadrone(
     });
   }
 
-  if (
-    'preparation' in item.system &&
-    FoundryAdapter.canPrepareSpell(item) &&
-    !item.system.linkedActivity
-  ) {
-    const isPrepared = item.system?.preparation?.prepared === true;
+  if (FoundryAdapter.canPrepareSpell(item) && !item.system.linkedActivity) {
+    const isPrepared =
+      item.system?.prepared ===
+      CONFIG.DND5E.spellPreparationStates.prepared.value;
+
+    const newValue = ((item.system?.prepared ?? 0) + 1) % 2;
     options.push({
       name: isPrepared
         ? 'TIDY5E.ContextMenuActionUnprepare'
@@ -102,8 +102,7 @@ export function getItemContextOptionsQuadrone(
         ? "<i class='fas fa-book fa-fw'></i>"
         : "<i class='fas fa-book fa-fw'></i>",
       group: 'common',
-      callback: () =>
-        item.update({ 'system.preparation.prepared': !isPrepared }),
+      callback: () => item.update({ 'system.prepared': newValue }),
       condition: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
     });

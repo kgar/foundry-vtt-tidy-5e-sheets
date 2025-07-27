@@ -22,6 +22,7 @@ import { clamp } from 'src/utils/numbers';
 import { processInputChangeDelta } from 'src/utils/form';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
+import type { ClassValue } from 'svelte/elements';
 
 export const FoundryAdapter = {
   deepClone(obj: any) {
@@ -101,17 +102,17 @@ export const FoundryAdapter = {
       renderSheet: true,
     });
   },
+  /** A spell can be prepared if its method is prepareable and it is not Always Prepared. */
   canPrepareSpell(item: Item5e) {
     return (
-      item.system.preparation?.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_ATWILL &&
-      item.system.preparation?.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_INNATE &&
-      item.system.preparation?.mode !==
-        CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
-      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_PACT &&
-      (item.system.level !== 0 || settings.value.allowCantripsToBePrepared)
+      item.system.canPrepare &&
+      item.system.prepared !== CONFIG.DND5E.spellPreparationStates.always.value
     );
+  },
+  getPreparedLabel(item: Item5e) {
+    return Object.values(CONFIG.DND5E.spellPreparationStates).find(
+      (s) => s.value === item.system.prepared
+    )?.label;
   },
   /**
    *
@@ -364,46 +365,50 @@ export const FoundryAdapter = {
   getSpellRowClasses(spell: any): string {
     const classes: string[] = [];
 
-    if (
-      spell.system.preparation.mode ===
-        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-      (spell.system.level > 0 || settings.value.allowCantripsToBePrepared)
-    ) {
-      classes.push('preparable');
+    if (spell.system.canPrepare) {
+      classes.push('can-prepare');
+    } else {
+      classes.push('cannot-prepare');
     }
 
-    if (spell.system.preparation.prepared) {
+    if (
+      spell.system.prepared ===
+      CONFIG.DND5E.spellPreparationStates.prepared.value
+    ) {
       classes.push('prepared');
     }
 
     if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
+      spell.system.prepared ===
+      CONFIG.DND5E.spellPreparationStates.unprepared.value
     ) {
-      classes.push('always-prepared');
+      classes.push('unprepared');
     }
 
     if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT
+      spell.system.prepared === CONFIG.DND5E.spellPreparationStates.always.value
     ) {
-      classes.push('pact');
+      classes.push('always');
     }
 
-    if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
-    ) {
-      classes.push('at-will');
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_SPELL) {
+      classes.push('method-spell');
     }
 
-    if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_RITUAL
-    ) {
-      classes.push('ritual-only');
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
+      classes.push('method-pact');
     }
 
-    if (
-      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
-    ) {
-      classes.push('innate');
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+      classes.push('method-atwill');
+    }
+
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL) {
+      classes.push('method-ritual');
+    }
+
+    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE) {
+      classes.push('method-innate');
     }
 
     return classes.join(' ');
@@ -838,7 +843,9 @@ export const FoundryAdapter = {
     });
   },
   browseFilePicker(...args: any[]) {
-    return new foundry.applications.apps.FilePicker.implementation(...args).browse();
+    return new foundry.applications.apps.FilePicker.implementation(
+      ...args
+    ).browse();
   },
   renderArmorConfig(document: any) {
     return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
@@ -1024,16 +1031,6 @@ export const FoundryAdapter = {
       debug('Dropdown mapping error troubleshooting info', { abilities });
       return [];
     }
-  },
-  countPreparedSpells(items: Item5e[]) {
-    return items.filter(
-      (item: Item5e) =>
-        item.type === CONSTANTS.ITEM_TYPE_SPELL &&
-        item.system.level > 0 &&
-        item.system.preparation.mode ===
-          CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-        item.system.preparation.prepared
-    ).length;
   },
   concealDetails(item: Item5e | null | undefined) {
     return !game.user.isGM && item?.system?.identified === false;
@@ -1487,5 +1484,59 @@ export const FoundryAdapter = {
     let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split('.');
 
     return originId;
+  },
+  getSpellPreparationStatesMap() {
+    return Object.entries(CONFIG.DND5E.spellPreparationStates).reduce<
+      Record<number, { label: string; value: number; key: string }>
+    >((prev, [key, config]) => {
+      prev[config.value] = {
+        key: key,
+        label: config.label,
+        value: config.value,
+      };
+
+      return prev;
+    }, {});
+  },
+  getSpellIcon(item: Item5e): ClassValue {
+    let classes: ClassValue = [];
+
+    if (item.system.canPrepare) {
+      classes.push('can-prepare');
+      classes.push(
+        item.system.prepared ===
+          CONFIG.DND5E.spellPreparationStates.prepared.value
+          ? 'fa-solid prepared'
+          : item.system.prepared ===
+            CONFIG.DND5E.spellPreparationStates.always.value
+          ? 'fa-solid always'
+          : 'fa-regular unprepared'
+      );
+    } else {
+      classes.push('cannot-prepare', 'fa-solid');
+    }
+
+    switch (item.system.method) {
+      case CONSTANTS.SPELL_PREPARATION_METHOD_SPELL:
+        classes.push('fa-book');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL:
+        classes.push('fa-hand-sparkles');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_INNATE:
+        classes.push('fa-hand-holding-magic');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_PACT:
+        classes.push('fa-moon');
+        break;
+      case CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL:
+        classes.push('fa-candle-holder');
+        break;
+      default:
+        classes.push('fa-sparkles');
+        break;
+    }
+
+    return classes;
   },
 };

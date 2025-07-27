@@ -28,8 +28,8 @@
     context.item.actor?.system.spells.pact?.level?.ordinalString(),
   );
   const isPactSpell = $derived(
-    context.item.system.preparation.mode ===
-      CONSTANTS.SPELL_PREPARATION_MODE_PACT,
+    context.item.system.method ===
+      CONSTANTS.SPELL_PREPARATION_METHOD_PACT,
   );
   const pactCastableLevelText = $derived(
     isPactSpell && !isNil(actorPactLevelOrdinal)

@@ -657,9 +657,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     });
 
     // Section spells
-    // TODO: Take over `_prepareSpellbook` and
-    // - have custom sectioning built right into the process
-    // - set up `key` in the spellbook prep code, just like `prop`
     const spellbook = SheetSections.prepareTidySpellbook(
       context,
       CONSTANTS.TAB_ACTOR_SPELLBOOK,
@@ -1063,9 +1060,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const { key } =
       event.target.closest<HTMLElement>('[data-key]')?.dataset ?? {};
-    // TODO: Make a custom wrapper with specific fields related to spell slot drag
-    const { level, preparationMode } =
-      event.target.closest<HTMLElement>('[data-level]')?.dataset ?? {};
+
     const isSlots = !!event.target.closest('[data-slots]');
 
     let type;

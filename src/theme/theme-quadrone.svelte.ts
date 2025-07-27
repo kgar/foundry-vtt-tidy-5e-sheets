@@ -5,7 +5,7 @@ import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQ
 import type {
   PortraitShape,
   ThemeQuadroneStyleDeclaration,
-  ThemeSettingsV2,
+  ThemeSettingsV3,
   ThemeSettingsConfigurationOptions,
 } from './theme-quadrone.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -39,35 +39,35 @@ export class ThemeQuadrone {
         );
       });
 
-      Object.keys(CONFIG.DND5E.spellPreparationModes).forEach((key) => {
-        let modeIdentifier = key.toLowerCase().slugify();
+      Object.keys(CONFIG.DND5E.spellcasting).forEach((key) => {
+        let methodIdentifier = key.toLowerCase().slugify();
 
         stylesheet.insertRule(
-          `.tidy5e-sheet.quadrone .mode-${modeIdentifier} { --t5e-mode-color: var(--t5e-color-spellcasting-${modeIdentifier}) }`
+          `.tidy5e-sheet.quadrone .method-${methodIdentifier} { --t5e-method-color: var(--t5e-color-spellcasting-${methodIdentifier}) }`
         );
       });
     });
   }
 
-  static getDefaultThemeSettings(): ThemeSettingsV2 {
+  static getDefaultThemeSettings(): ThemeSettingsV3 {
     return {
       accentColor: '',
       actorHeaderBackground: '',
       itemSidebarBackground: '',
       portraitShape: undefined,
       rarityColors: {},
-      spellPreparationModeColors: {},
+      spellPreparationMethodColors: {},
     };
   }
 
-  static getWorldThemeSettings(): ThemeSettingsV2 {
+  static getWorldThemeSettings(): ThemeSettingsV3 {
     return foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
       settings.value.worldThemeSettings
     );
   }
 
-  static saveWorldThemeSettings(settings: ThemeSettingsV2) {
+  static saveWorldThemeSettings(settings: ThemeSettingsV3) {
     const toSave = { ...settings };
 
     return FoundryAdapter.setTidySetting('worldThemeSettings', toSave);
@@ -75,7 +75,7 @@ export class ThemeQuadrone {
 
   static getSheetThemeSettings(
     options: ThemeSettingsConfigurationOptions
-  ): ThemeSettingsV2 {
+  ): ThemeSettingsV3 {
     let defaultSettings = this.getDefaultThemeSettings();
 
     if (options.doc?.parent) {
@@ -93,7 +93,7 @@ export class ThemeQuadrone {
     const preferences = foundry.utils.mergeObject(
       defaultSettings,
       TidyFlags.sheetThemeSettings.get(options.doc)
-    ) as ThemeSettingsV2;
+    ) as ThemeSettingsV3;
 
     if (
       options.doc?.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
@@ -105,7 +105,7 @@ export class ThemeQuadrone {
     return preferences;
   }
 
-  static async saveSheetThemeSettings(doc: any, settings: ThemeSettingsV2) {
+  static async saveSheetThemeSettings(doc: any, settings: ThemeSettingsV3) {
     const toSave = { ...settings };
 
     await TidyFlags.sheetThemeSettings.unset(doc);

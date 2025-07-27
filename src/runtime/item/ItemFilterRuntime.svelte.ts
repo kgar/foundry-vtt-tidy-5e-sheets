@@ -181,7 +181,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.concentration,
           defaultItemFilters.ritual,
         ],
-        'DND5E.SpellPreparation.Mode': [
+        'DND5E.SpellPreparation.Label': [
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],
@@ -399,7 +399,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.concentration,
           defaultItemFilters.ritual,
         ],
-        'DND5E.SpellPreparation.Mode': [
+        'DND5E.SpellPreparation.Label': [
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],

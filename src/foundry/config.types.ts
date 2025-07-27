@@ -1,4 +1,4 @@
-import type { GroupableSelectOption } from 'src/types/types';
+import type { Actor5e, GroupableSelectOption } from 'src/types/types';
 
 type CurrencyItemConfig = {
   label: string;
@@ -3935,80 +3935,19 @@ export type CONFIG = {
       };
     };
     SPELL_SLOT_TABLE: Array<Array<number>>;
-    pactCastingProgression: {
-      '1': {
-        slots: number;
-        level: number;
-      };
-      '2': {
-        slots: number;
-        level: number;
-      };
-      '3': {
-        slots: number;
-        level: number;
-      };
-      '5': {
-        slots: number;
-        level: number;
-      };
-      '7': {
-        slots: number;
-        level: number;
-      };
-      '9': {
-        slots: number;
-        level: number;
-      };
-      '11': {
-        slots: number;
-        level: number;
-      };
-      '17': {
-        slots: number;
-        level: number;
-      };
-    };
-    spellPreparationModes:
-      | {
-          prepared: {
-            label: string;
-            upcast: boolean;
-            prepares: boolean;
-          };
-          pact: {
-            label: string;
-            upcast: boolean;
-            cantrips: boolean;
-            order: number;
-          };
-          always: {
-            label: string;
-            upcast: boolean;
-            prepares: boolean;
-          };
-          atwill: {
-            label: string;
-            order: number;
-          };
-          innate: {
-            label: string;
-            order: number;
-          };
-          ritual: {
-            label: string;
-            order: number;
-          };
-        } & Record<
-          string,
-          {
-            label: string;
-            order?: number;
-            upcast?: boolean;
-            prepares?: boolean;
-            cantrips?: boolean;
-          }
-        >;
+    pactCastingProgression: Record<string, { slots: number; level: number }>;
+    spellPreparationStates: {
+      unprepared: LabelValuePair<number>;
+      prepared: LabelValuePair<number>;
+      always: LabelValuePair<number>;
+    } & Record<string, LabelValuePair<number>>;
+    spellcasting: {
+      atwill: SpellcastingConfigEntry;
+      innate: SpellcastingConfigEntry;
+      ritual: SpellcastingConfigEntry;
+      pact: SpellcastingConfigEntry;
+      spell: SpellcastingConfigEntry;
+    } & Record<string, SpellcastingConfigEntry>;
     spellcastingTypes: {
       leveled: {
         label: string;
@@ -4035,20 +3974,15 @@ export type CONFIG = {
         };
         shortRest?: boolean;
       };
-      pact: {
-        label: string;
-        img: string;
-        shortRest: boolean;
-      };
     } & Record<string, any>;
     spellProgression: {
-      none: string;
-      full: string;
-      half: string;
-      third: string;
-      pact: string;
-      artificer: string;
-    } & Record<string, string>;
+      none: SpellProgressionConfig;
+      full: SpellProgressionConfig;
+      half: SpellProgressionConfig;
+      third: SpellProgressionConfig;
+      pact: SpellProgressionConfig;
+      artificer: SpellProgressionConfig;
+    } & Record<string, SpellProgressionConfig>;
     spellLevels: {
       '0': string;
       '1': string;
@@ -5627,4 +5561,48 @@ export type Dnd5eAbility = {
   defaults?: {
     vehicle: number;
   };
+};
+
+type SpellcastingLevelMapTable = Record<
+  string,
+  { label: string; divisor: number; roundUp: boolean }
+>;
+type SpellcastingLevelArraysTable = number[][];
+type SpellcastingConfigEntryTable =
+  | SpellcastingLevelMapTable
+  | SpellcastingLevelArraysTable;
+
+export type SpellcastingConfigEntry = {
+  label: string;
+  order: number;
+  img: string;
+  type: string;
+  key?: string;
+  cantrips?: boolean;
+  prepares?: boolean;
+  table?: SpellcastingConfigEntryTable;
+  progression?: Record<
+    string,
+    { label: string; divisor: number; roundUp: boolean }
+  >;
+  exclusive?: {
+    slots: boolean;
+    spells: boolean;
+  };
+  slots?: boolean;
+  getAvailableLevels: ((actor: Actor5e) => number[]) | undefined;
+  getSpellSlotKey: ((level: number) => string) | undefined;
+  getLabel: (options?: { level?: number; format?: 'short' | 'long' }) => string;
+};
+
+type LabelValuePair<TValue = string> = {
+  label: string;
+  value: TValue;
+};
+
+export type SpellProgressionConfig = {
+  label: string;
+  divisor?: number;
+  roundUp?: boolean;
+  type?: string;
 };
