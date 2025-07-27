@@ -15,7 +15,8 @@ export class Activities {
 
   static getVisibleActivities(
     item: Item5e,
-    activities: Activity5e[]
+    activities: Activity5e[],
+    forItemSheet: boolean = false
   ): Activity5e[] {
     // To allow the array to be completely swapped during hook calls, contain within an object.
     const visibleActivities = {
@@ -26,7 +27,9 @@ export class Activities {
         ) ?? [],
     };
 
-    TidyHooks.tidy5eSheetsGetActivitiesForPlay(item, visibleActivities);
+    if (!forItemSheet) {
+      TidyHooks.tidy5eSheetsGetActivitiesForPlay(item, visibleActivities);
+    }
 
     return visibleActivities.activities;
   }

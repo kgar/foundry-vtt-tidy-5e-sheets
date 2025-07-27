@@ -176,8 +176,6 @@
         flex: 1;
         overflow-y: auto;
         padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x) var(--t5e-size-4x);
-        position: relative;
-        // container-type: inline-size;
       }
     }
   }
@@ -1021,6 +1019,16 @@
 
           i {
             color: var(--t5e-color-palette-gold-89);
+          }
+        }
+
+        &:disabled {
+          box-shadow: none;
+          border-color: var(--t5e-color-palette-gold-56);
+          pointer-events: none;
+
+          i {
+            color: var(--t5e-color-palette-gold-56);
           }
         }
       }
@@ -2059,9 +2067,6 @@
     }
 
     &.attributes {
-      container-name: character-tab;
-      container-type: inline-size;
-
       .columns {
         display: grid;
         grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
@@ -2113,7 +2118,7 @@
     }
   }
 
-  @container character-tab (width < 40rem) {
+  @container tab-content (width < 40rem) {
     .tidy-tab-contents.attributes .columns {
       grid-template-rows: auto 1fr;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2137,7 +2142,7 @@
     }
   }
 
-  @container character-tab (width < 30rem) {
+  @container tab-content (width < 30rem) {
     .tidy-tab-contents.attributes .columns {
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas:
@@ -2196,25 +2201,6 @@
     .footer-content-right {
       justify-content: flex-end;
     }
-
-    .spellcasting-class-card {
-      border-radius: var(--t5e-size-1x);
-      border: 0.0625rem solid var(--t5e-component-field-border);
-      background: var(--t5e-component-field-background);
-      padding: var(--t5e-size-2x) var(--t5e-size-3x);
-
-      .primary-icon {
-        padding-inline-start: var(--t5e-size-halfx);
-      }
-
-      &:not(.primary) .primary-icon {
-        color: var(--t5e-color-text-lighter);
-      }
-
-      .info {
-        justify-content: flex-end;
-      }
-    }
   }
 
   .inventory-footer {
@@ -2264,9 +2250,60 @@
 
   .spellbook-footer {
     align-items: flex-start;
+    min-height: 2.25rem;
+    position: sticky;
+    bottom: 0;
 
     .sheet-footer-right {
       padding-block-start: 0.375rem;
+    }
+
+    .sheet-footer-left:has(.compact)+.sheet-footer-right {
+      padding-block-start: 0.25rem;
+    }
+
+    .spellcasting-class-card {
+      border-radius: var(--t5e-size-1x);
+      border: 0.0625rem solid var(--t5e-component-field-border);
+      background: var(--t5e-component-field-background);
+      padding: var(--t5e-size-2x) var(--t5e-size-3x);
+
+      .primary-icon {
+        margin-inline-start: 0.375rem;
+      }
+
+      &:not(.primary) .primary-icon {
+        color: var(--t5e-color-text-lighter);
+      }
+
+      .info {
+        justify-content: flex-end;
+      }
+
+      >* {
+        display: flex;
+        align-items: center;
+      }
+
+      &.compact {
+        padding: var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-3x);
+
+        button {
+          margin-inline-start: 0.375rem;
+        }
+      }
+    }
+
+    &:has(.compact) {
+      @container tab-content (width > 35rem) { 
+        >.spellcasting-cards {
+          display: grid;
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(18rem, 1fr)
+          );
+        }
+      }
     }
   }
 

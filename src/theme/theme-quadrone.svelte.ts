@@ -23,6 +23,8 @@ export type ThemeableSheetType =
   | Tidy5eItemSheetQuadrone
   | Tidy5eContainerSheetQuadrone;
 
+const DEFAULT_PORTRAIT_SHAPE: PortraitShape = 'round';
+
 export class ThemeQuadrone {
   static onReady() {
     setTimeout(() => {
@@ -66,10 +68,7 @@ export class ThemeQuadrone {
   }
 
   static saveWorldThemeSettings(settings: ThemeSettingsV3) {
-    const toSave = foundry.utils.mergeObject(
-      this.getDefaultThemeSettings(),
-      settings
-    );
+    const toSave = { ...settings };
 
     return FoundryAdapter.setTidySetting('worldThemeSettings', toSave);
   }
@@ -107,17 +106,12 @@ export class ThemeQuadrone {
   }
 
   static async saveSheetThemeSettings(doc: any, settings: ThemeSettingsV3) {
-    const toSave = foundry.utils.mergeObject(
-      this.getDefaultThemeSettings(),
-      settings
-    );
+    const toSave = { ...settings };
 
     await TidyFlags.sheetThemeSettings.unset(doc);
     const result = await TidyFlags.sheetThemeSettings.set(doc, toSave);
-    await this.syncSystemTokenPortraitSetting(
-      doc,
-      settings.portraitShape ?? 'round'
-    );
+
+    await this.syncSystemTokenPortraitSetting(doc, settings.portraitShape);
     return result;
   }
 
@@ -224,7 +218,7 @@ export class ThemeQuadrone {
     return coalesce(
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
       settings.value.worldThemeSettings?.portraitShape,
-      'round'
+      DEFAULT_PORTRAIT_SHAPE
     ) as PortraitShape;
   }
 
@@ -237,7 +231,7 @@ export class ThemeQuadrone {
 
   static async syncSystemTokenPortraitSetting(
     doc: any,
-    newShape: PortraitShape
+    newShape?: PortraitShape
   ) {
     await doc.update({
       [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:

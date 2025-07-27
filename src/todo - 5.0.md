@@ -11,6 +11,3 @@
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
 - [ ] Make Warning header control its own additional component that is placed on the header. It should show/hide itself and manage everything it needs to manage.
   - Consider even wiring directly into header controls setup.
-
-## Etc.
-- (hightouch) the radio buttons on Foundry 13 are wonky / see container sort longpress menu

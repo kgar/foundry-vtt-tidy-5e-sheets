@@ -11,7 +11,6 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import TidyVisibilityObserver from 'src/components/utility/TidyVisibilityObserver.svelte';
   import { Container } from 'src/features/containers/Container';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
@@ -39,7 +38,6 @@
     });
   });
 
-  let markerEl: HTMLElement | undefined = $state();
   let footerEl: HTMLElement | undefined = $state();
 
   // TODO: Make this a callback to send through to the component for preparing sections properly
@@ -55,16 +53,6 @@
   );
 </script>
 
-{#if !!markerEl && !!footerEl}
-  <TidyVisibilityObserver
-    root={context.item.sheet.windowContent}
-    trackWhenOffScreen={true}
-    toObserve={[markerEl]}
-    toAffect={[footerEl]}
-    rootMargin="-12px"
-  />
-{/if}
-
 <ActionBar bind:searchCriteria sections={configuredContents} {tabId} />
 
 <!-- Tables -->
@@ -79,9 +67,6 @@
   root={true}
 />
 
-<hr class="golden-fade" />
-
-<div bind:this={markerEl} class="contents-footer-scroll-marker"></div>
 <footer bind:this={footerEl} class="contents-footer">
   <!-- Capacity Bar -->
   <CapacityBar container={context.item} capacity={context.capacity} />

@@ -76,20 +76,20 @@ export const FoundryAdapter = {
     return game.i18n.localize(value);
   },
   // TODO: Extract a dedicated ActiveEffectManager or the like
-  addEffect(effectType: string, owner: any) {
-    const isActor = owner instanceof Actor;
+  addEffect(effectType: string, parent: any) {
+    const isActor = parent instanceof Actor;
 
     const effectData = {
-      name: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
-      icon: isActor ? 'icons/svg/aura.svg' : owner.img,
-      origin: owner.uuid,
+      name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
+      icon: isActor ? 'icons/svg/aura.svg' : parent.img,
+      origin: parent.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
       disabled: effectType === 'inactive',
     };
 
     if (
       !TidyHooks.tidy5eSheetsPreCreateActiveEffect(
-        owner,
+        parent,
         effectData,
         game.user.id
       )
@@ -98,7 +98,7 @@ export const FoundryAdapter = {
     }
 
     return ActiveEffect.implementation.create(effectData, {
-      parent: owner,
+      parent: parent,
       renderSheet: true,
     });
   },

@@ -258,6 +258,6 @@ function getUrlValue(path: string) {
       : // This backs the file directory location out of the Tidy module
         '../../';
 
-  const urlValue = `url(${pathPrefix}${path})`;
+  const urlValue = `url("${pathPrefix}${path}")`;
   return urlValue;
 }

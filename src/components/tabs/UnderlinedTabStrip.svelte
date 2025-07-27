@@ -11,7 +11,7 @@
 </script>
 
 <div class="underlined-tab-strip flex-row no-gap {rest.class ?? ''}">
-  {#each tabs as tab (tab)}
+  {#each tabs as tab}
     <button
       type="button"
       class="underlined-tab"

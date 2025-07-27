@@ -176,7 +176,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       layout: CONSTANTS.SHEET_LAYOUT_QUADRONE,
     });
 
-    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_CLASSIC);
+    initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
 
     return component;
   }
@@ -285,24 +285,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       );
 
     const enhancedEffectsCategories =
-      await ConditionsAndEffects.getEffectsForItem(defaultEffectCategories);
+      await ConditionsAndEffects.getEffectsForItem(
+        documentSheetContext,
+        defaultEffectCategories
+      );
 
     const context: ItemSheetQuadroneContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
           return Activities.isConfigurable(a);
         })
-        .map((activity: any) => {
-          let { _id: id, name, img, sort, uuid } = activity;
-          return {
-            id,
-            name,
-            sort,
-            uuid,
-            img: { src: img, svg: img?.endsWith('.svg') },
-            doc: activity,
-          };
-        })
+        ?.map(Activities.getActivityItemContext)
         .sort((a: any, b: any) => a.sort - b.sort),
       affectsPlaceholder: game.i18n.localize(
         `DND5E.TARGET.Count.${target?.template?.type ? 'Every' : 'Any'}`
@@ -1138,6 +1131,33 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     const recovery = this.item.system.toObject().uses.recovery;
     recovery[index][prop] = value;
     return this.submit({ updateData: { 'system.uses.recovery': recovery } });
+  }
+
+  async _addDocument(args: {
+    tabId: string;
+    customSection?: string;
+    creationItemTypes?: string[];
+    data?: Record<string, any>;
+  }): Promise<any> {
+    let { type: datasetType, ...restDataSet } = args.data ?? {};
+
+    if (args.tabId === CONSTANTS.TAB_EFFECTS) {
+      return await ActiveEffect.implementation.create(
+        {
+          name: game.i18n.localize('DND5E.EffectNew'),
+          icon: 'icons/svg/aura.svg',
+          type: datasetType,
+          ...restDataSet,
+        },
+        { parent: this.item, renderSheet: true }
+      );
+    }
+
+    if (args.tabId === CONSTANTS.TAB_ITEM_ACTIVITIES) {
+      return await this.addActivity();
+    }
+
+    return undefined;
   }
 
   /* -------------------------------------------- */

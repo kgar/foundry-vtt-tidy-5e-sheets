@@ -7,91 +7,51 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ActiveEffectContext,
-    ActorSheetQuadroneContext,
-    EffectCategory,
+    CharacterSheetQuadroneContext,
   } from 'src/types/types';
-  import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-  import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
-  import type { Component } from 'svelte';
-  import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
-  import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
-  import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
+  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ItemSheetQuadroneContext } from 'src/types/item.types';
+  import { EffectColumnRuntime } from 'src/runtime/tables/EffectColumnRuntime.svelte';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+
+  interface Props {
+    inlineWidth: number;
+  }
+
+  let { inlineWidth }: Props = $props();
 
   let context =
     $derived(
-      getSheetContext<ActorSheetQuadroneContext | ItemSheetQuadroneContext>(),
+      getSheetContext<
+        CharacterSheetQuadroneContext | ItemSheetQuadroneContext
+      >(),
     );
 
-  let effects = $derived(context.effects);
-
-  let sections = $derived(
-    Object.entries(effects).map(([k, v]) => ({
-      key: k,
-      ...v,
-    })),
-  );
+  let sections = $derived(context.effects);
 
   const localize = FoundryAdapter.localize;
 
-  type TableAction<TComponent extends Component<any>> = TidyTableAction<
-    TComponent,
-    ActiveEffectContext,
-    EffectCategory<ActiveEffectContext>
-  >;
-
-  let tableActions: TableAction<any>[] = $derived.by(() => {
-    let result: TableAction<any>[] = [];
-
-    result.push({
-      component: EffectToggleButton,
-      props: (args) => ({ effect: args.data.effect, doc: context.document }),
-      condition: (args) =>
-        context.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR ||
-        !args.section.isEnchantment,
-    } satisfies TableAction<typeof EffectToggleButton>);
-
-    if (context.unlocked) {
-      result.push({
-        component: EditButton,
-        props: (args) => ({ doc: args.data.effect }),
-      } satisfies TableAction<typeof EditButton>);
-
-      result.push({
-        component: DeleteButton,
-        props: (args) => ({
-          doc: args.data.effect,
-          deleteFn: () => args.data.effect.deleteDialog(),
-        }),
-      } satisfies TableAction<typeof DeleteButton>);
-    }
-
-    return result;
-  });
-
-  let columnSpecs = $derived({
-    source: {
-      columnWidth: '8rem',
-      hideUnder: 450,
-    },
-    duration: {
-      columnWidth: '6rem',
-      hideUnder: 350,
-    },
-    actions: {
-      columnWidth: `calc((var(--t5e-table-button-width) * ${1 + tableActions.length}) + var(--t5e-size-halfx))`,
-    },
-  });
-
-  function onAddClicked(section: EffectCategory<ActiveEffectContext>) {
-    return FoundryAdapter.addEffect(section.type, context.document);
-  }
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 </script>
 
 {#each sections as section (section.key)}
-  {#if !section.hidden}
+  {@const columns = new ColumnsLoadout(
+    EffectColumnRuntime.getConfiguredColumnSpecifications(
+      context.document.type,
+      tabId,
+      section.key,
+      { rowActions: section.rowActions },
+    ),
+  )}
+
+  {@const hiddenColumns = EffectColumnRuntime.determineHiddenColumns(
+    inlineWidth,
+    columns,
+    10
+  )}
+  {#if section.show}
     <TidyTable key={section.key}>
       {#snippet header()}
         <TidyTableHeaderRow class="theme-dark">
@@ -101,26 +61,32 @@
             </h3>
             <span class="table-header-count">{section.effects.length}</span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell {...columnSpecs.source}>
-            {localize('DND5E.SOURCE.FIELDS.source.label')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell {...columnSpecs.duration}>
-            {localize('DND5E.Duration')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            class="header-cell-actions"
-            {...columnSpecs.actions}
-          >
-            {#if context.editable && !section.isEnchantment}
-              <a
-                class="tidy-table-button"
-                title={localize('DND5E.EffectCreate')}
-                onclick={(event) => onAddClicked(section)}
-              >
-                <i class="fas fa-plus"></i>
-              </a>
-            {/if}
-          </TidyTableHeaderCell>
+          {#each columns.ordered as column}
+            {@const hidden = hiddenColumns.has(column.key)}
+
+            <TidyTableHeaderCell
+              class={[column.headerClasses, { hidden }]}
+              columnWidth="{column.widthRems}rem"
+              data-tidy-column-key={column.key}
+            >
+              {#if !!column.headerContent}
+                {#if column.headerContent.type === 'callback'}
+                  {@html column.headerContent.callback?.(
+                    context.document,
+                    context,
+                  )}
+                {:else if column.headerContent.type === 'component'}
+                  <column.headerContent.component
+                    sheetContext={context}
+                    sheetDocument={context.document}
+                    {section}
+                  />
+                {:else if column.headerContent.type === 'html'}
+                  {@html column.headerContent.html}
+                {/if}
+              {/if}
+            </TidyTableHeaderCell>
+          {/each}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
@@ -133,9 +99,7 @@
         {#each effectEntries as effectContext}
           <TidyEffectTableRow effectContext={effectContext.effect}>
             {#snippet children({ toggleSummary, expanded })}
-              <span
-                class="tidy-table-row-use-button disabled"
-              >
+              <span class="tidy-table-row-use-button disabled">
                 <img
                   class="item-image"
                   src={effectContext.effect.img ??
@@ -157,40 +121,28 @@
                   </span>
                 </a>
               </TidyTableCell>
-              <TidyTableCell {...columnSpecs.source}>
-                {#if effectContext.effect.source}
-                  <!-- TODO: this is a stopgap; use dnd5e's more sophisticated action handler for this -->
-                  <a
-                    onclick={async () =>
-                      (
-                        await fromUuid(effectContext.effect.source.name)
-                      )?.sheet.render({
-                        force: true,
-                      })}
-                  >
-                    {effectContext.effect.source.name ?? ''}
-                  </a>
-                {:else}
-                  <span class="color-text-disabled"> &mdash; </span>
-                {/if}
-              </TidyTableCell>
-              <TidyTableCell {...columnSpecs.duration}>
-                {effectContext.effect.effect.duration.label ?? ''}
-              </TidyTableCell>
-              <TidyTableCell
-                {...columnSpecs.actions}
-                class="tidy-table-actions"
-              >
-                {#each tableActions as action}
-                  {@const args = { data: effectContext.effect, section }}
+              {#each columns.ordered as column}
+                {@const hidden = hiddenColumns.has(column.key)}
 
-                  {#if action.condition?.(args) ?? true}
-                    {@const props = action.props(args)}
-                    <action.component {...props} />
+                <TidyTableCell
+                  columnWidth="{column.widthRems}rem"
+                  class={[column.cellClasses, { hidden }]}
+                  attributes={{ ['data-tidy-column-key']: column.key }}
+                >
+                  {#if column.cellContent.type === 'callback'}
+                    {@html column.cellContent.callback?.(
+                      context.document,
+                      context,
+                    )}
+                  {:else if column.cellContent.type === 'component'}
+                    <column.cellContent.component
+                      rowContext={effectContext}
+                      rowDocument={effectContext.effect.effect}
+                      {section}
+                    />
                   {/if}
-                {/each}
-                <MenuButton targetSelector="[data-context-menu]" />
-              </TidyTableCell>
+                </TidyTableCell>
+              {/each}
             {/snippet}
           </TidyEffectTableRow>
         {/each}

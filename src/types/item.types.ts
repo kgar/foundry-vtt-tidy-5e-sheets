@@ -1,6 +1,7 @@
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
   ActiveEffectContext,
+  ActiveEffectSection,
   ActivityItemContext,
   AttunementContext,
   ContainerCapacityContext,
@@ -147,20 +148,8 @@ export type ItemNameContext = {
   field: unknown;
 };
 
-export type ActivityQuadroneContext = {
-  id: string;
-  uuid: string;
-  name: string;
-  sort: number;
-  img: {
-    src: string;
-    svg: boolean;
-  };
-  doc: any;
-};
-
 export type ItemSheetQuadroneContext = {
-  activities: ActivityQuadroneContext[];
+  activities: ActivityItemContext[];
   activationTypes: GroupableSelectOption[];
   advancement: AdvancementsContext;
   affectsPlaceholder: string;
@@ -190,7 +179,7 @@ export type ItemSheetQuadroneContext = {
   document: any;
   durationUnits: GroupableSelectOption[];
   editable: boolean;
-  effects: Record<string, EffectCategory<ActiveEffectContext>>;
+  effects: ActiveEffectSection[];
   enriched: {
     description: string;
     unidentified: string;

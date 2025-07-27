@@ -19,7 +19,7 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import ItemColumnRuntime from 'src/runtime/item/ItemColumnRuntime.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import SpellSlotManagementQuadrone from '../actor/parts/SpellSlotManagementQuadrone.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
@@ -161,6 +161,7 @@
                 <TidyTableHeaderCell
                   class={[column.headerClasses, { hidden }]}
                   columnWidth="{column.widthRems}rem"
+                  data-tidy-column-key={column.key}
                 >
                   {#if !!column.headerContent}
                     {#if column.headerContent.type === 'callback'}
@@ -254,6 +255,7 @@
                     <TidyTableCell
                       columnWidth="{column.widthRems}rem"
                       class={[column.cellClasses, { hidden }]}
+                      attributes={{ ['data-tidy-column-key']: column.key }}
                     >
                       {#if column.cellContent.type === 'callback'}
                         {@html column.cellContent.callback?.(

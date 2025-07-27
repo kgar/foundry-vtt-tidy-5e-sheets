@@ -1,30 +1,15 @@
 import type {
   ColumnSpecDocumentTypesToTabs,
   ColumnSpecification,
-  ColumnSpecificationCalculatedWidthArgs,
-  ConfiguredColumnSpecification,
 } from '../types';
 import { CONSTANTS } from 'src/constants';
-import { getDefaultColumns } from './default-item-columns';
-import { foundryCoreSettings } from 'src/settings/settings.svelte';
-import type { ColumnsLoadout } from './ColumnsLoadout.svelte';
+import { getDefaultItemColumns } from './default-item-columns';
+import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 
-const ENTRY_NAME_MIN_WIDTH_REMS = 12.5;
+class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
+  getDefaultColumns(): ColumnSpecDocumentTypesToTabs {
+    const columns = getDefaultItemColumns();
 
-class ItemColumnRuntime {
-  /**
-   * The global column specifications for all sheet tab sections.
-   * This object should be updated with any world settings for user-defined default section config.
-   * Likewise, any API calls that intend to adjust section column selection
-   * defaults for all eligible content would go here.
-   */
-  _registeredItemColumns: ColumnSpecDocumentTypesToTabs = $state({});
-
-  // TODO: Switch to rems
-  #minWidthRems = $derived(ENTRY_NAME_MIN_WIDTH_REMS);
-
-  initOnReady() {
-    const columns = getDefaultColumns();
     // TODO: Remove the width callback and have the actions column created when we have access to the configured section.
     const standardItemActionsColumn: ColumnSpecification = {
       ...columns.actions,
@@ -170,7 +155,7 @@ class ItemColumnRuntime {
       [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
     };
 
-    this._registeredItemColumns = {
+    return {
       [CONSTANTS.SHEET_TYPE_CONTAINER]: {
         [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
           [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
@@ -208,68 +193,14 @@ class ItemColumnRuntime {
             charges: { ...columns.uses, order: 100, priority: 500 },
             roll: { ...columns.roll, order: 200, priority: 400 },
             formula: { ...columns.formula, order: 300, priority: 600 },
-            range: {...columns.range, order: 400, priority: 300},
-            target: { ...columns.target, order: 500, priority: 200},
+            range: { ...columns.range, order: 400, priority: 300 },
+            target: { ...columns.target, order: 500, priority: 200 },
             actions: { ...columns.actions, order: 1000, priority: 1000 },
           },
         },
       },
     };
   }
-
-  getConfiguredColumnSpecifications(
-    sheetType: string,
-    tabId: string,
-    sectionKey: string,
-    args: ColumnSpecificationCalculatedWidthArgs
-  ): ConfiguredColumnSpecification[] {
-    const specs =
-      // Section-specific specs for the target sheet type
-      this._registeredItemColumns[sheetType]?.[tabId]?.[sectionKey] ??
-      // Default specs for tab for the target sheet type
-      this._registeredItemColumns[sheetType]?.[tabId]?.[
-        CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT
-      ] ??
-      // Section-specific specs for any sheet type
-      this._registeredItemColumns[CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]?.[
-        tabId
-      ]?.[sectionKey] ??
-      // Default specs for tab for any sheet type
-      this._registeredItemColumns[CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]?.[
-        tabId
-      ]?.[CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT] ??
-      [];
-
-    return Object.entries(specs).map(([key, spec]) => ({
-      key,
-      ...spec,
-      widthRems:
-        typeof spec.widthRems === 'number'
-          ? spec.widthRems
-          : spec.widthRems(args),
-    }));
-  }
-
-  determineHiddenColumns(
-    inlineSizePx: number,
-    schematics: ColumnsLoadout
-  ): Set<string> {
-    let availableRems = inlineSizePx / foundryCoreSettings.value.fontSizePx;
-
-    let toHide = new Set<string>();
-
-    for (const col of schematics.prioritized) {
-      availableRems -= col.widthRems;
-
-      if (availableRems < this.#minWidthRems) {
-        toHide.add(col.key);
-      }
-    }
-
-    return toHide;
-  }
 }
 
-const singleton = new ItemColumnRuntime();
-
-export default singleton;
+export const ItemColumnRuntime = new ItemColumnRuntimeImpl();

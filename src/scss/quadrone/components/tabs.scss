@@ -169,6 +169,12 @@
   }
 }
 
+.tidy-tab {
+  container-name: tab-content;
+  container-type: inline-size;
+  position: relative;
+}
+
 
 &.theme-dark,
 .theme-dark {

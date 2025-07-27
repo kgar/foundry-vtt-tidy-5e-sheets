@@ -243,44 +243,46 @@ export function getItemContextOptionsQuadrone(
     },
   });
 
-  const inspirationSourceItem = itemParent.items.get(
-    TidyFlags.inspirationSource.get(itemParent)
-  );
+  if (itemParent) {
+    const inspirationSourceItem = itemParent.items.get(
+      TidyFlags.inspirationSource.get(itemParent)
+    );
 
-  const itemInspirationSourceAvailable =
-    !ActorInspirationRuntime.bankedInspirationConfig?.change &&
-    !ActorInspirationRuntime.bankedInspirationConfig?.getData;
+    const itemInspirationSourceAvailable =
+      !ActorInspirationRuntime.bankedInspirationConfig?.change &&
+      !ActorInspirationRuntime.bankedInspirationConfig?.getData;
 
-  const bankedInspirationIsEnabled =
-    SettingsProvider.settings.enableBankedInspiration.get() &&
-    (!SettingsProvider.settings.bankedInspirationGmOnly.get() ||
-      FoundryAdapter.userIsGm());
+    const bankedInspirationIsEnabled =
+      SettingsProvider.settings.enableBankedInspiration.get() &&
+      (!SettingsProvider.settings.bankedInspirationGmOnly.get() ||
+        FoundryAdapter.userIsGm());
 
-  options.push({
-    name: 'TIDY5E.ContextMenuActionSetAsInspirationSource',
-    icon: '<i class="fa-solid fa-sparkles"></i>',
-    condition: () =>
-      bankedInspirationIsEnabled &&
-      item.isOwner &&
-      itemInspirationSourceAvailable &&
-      item.type === CONSTANTS.ITEM_TYPE_FEAT &&
-      item.system.uses?.max > 0 &&
-      inspirationSourceItem?.id !== item.id,
-    group: 'customize',
-    callback: () => TidyFlags.inspirationSource.set(itemParent, item.id),
-  });
+    options.push({
+      name: 'TIDY5E.ContextMenuActionSetAsInspirationSource',
+      icon: '<i class="fa-solid fa-sparkles"></i>',
+      condition: () =>
+        bankedInspirationIsEnabled &&
+        item.isOwner &&
+        itemInspirationSourceAvailable &&
+        item.type === CONSTANTS.ITEM_TYPE_FEAT &&
+        item.system.uses?.max > 0 &&
+        inspirationSourceItem?.id !== item.id,
+      group: 'customize',
+      callback: () => TidyFlags.inspirationSource.set(itemParent, item.id),
+    });
 
-  options.push({
-    name: 'TIDY5E.ContextMenuActionRemoveAsInspirationSource',
-    icon: '<i class="fa-regular fa-sparkles"></i>',
-    condition: () =>
-      bankedInspirationIsEnabled &&
-      item.isOwner &&
-      itemInspirationSourceAvailable &&
-      inspirationSourceItem?.id === item.id,
-    group: 'customize',
-    callback: () => TidyFlags.inspirationSource.unset(itemParent),
-  });
+    options.push({
+      name: 'TIDY5E.ContextMenuActionRemoveAsInspirationSource',
+      icon: '<i class="fa-regular fa-sparkles"></i>',
+      condition: () =>
+        bankedInspirationIsEnabled &&
+        item.isOwner &&
+        itemInspirationSourceAvailable &&
+        inspirationSourceItem?.id === item.id,
+      group: 'customize',
+      callback: () => TidyFlags.inspirationSource.unset(itemParent),
+    });
+  }
 
   options.push({
     name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
@@ -349,7 +351,10 @@ export function getItemContextOptionsQuadrone(
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'be-careful',
-    callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
+    callback: () =>
+      itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR
+        ? FoundryAdapter.onActorItemDelete(itemParent, item)
+        : item.deleteDialog(),
   });
 
   return options;

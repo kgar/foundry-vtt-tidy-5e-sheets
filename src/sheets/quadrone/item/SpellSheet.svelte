@@ -141,7 +141,11 @@
     {#if !context.unlocked}
       <div class="common-fields">
         {#if spellSchoolConfig}
-          <div class="school" aria-label={context.labels.school}>
+          <div
+            class="school"
+            aria-label={context.labels.school}
+            data-tooltip={context.labels.school}
+          >
             <Dnd5eIcon src={spellSchoolConfig.icon} />
           </div>
         {/if}

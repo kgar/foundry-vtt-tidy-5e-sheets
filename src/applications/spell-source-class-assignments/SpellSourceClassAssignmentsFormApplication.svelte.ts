@@ -73,7 +73,11 @@ export default class SpellSourceClassAssignmentsFormApplication extends Document
     return {
       actor: this.document,
       assignments: this.document.items
-        .filter((item: Item5e) => item.type === CONSTANTS.ITEM_TYPE_SPELL)
+        .filter(
+          (item: Item5e) =>
+            item.type === CONSTANTS.ITEM_TYPE_SPELL &&
+            !item.system.linkedActivity
+        )
         .map((item: Item5e) => ({
           item,
           sourceClass: 'test',
