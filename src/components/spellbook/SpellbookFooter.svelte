@@ -244,7 +244,7 @@
   .spellcasting-level-container :global(.spellcasting-level) {
     width: 1.25rem;
     height: 1.25rem;
-    flex: 0;
+    flex: 0 0 3.5ch;
     text-align: center;
   }
 </style>
