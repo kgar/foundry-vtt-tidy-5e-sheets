@@ -37,6 +37,7 @@ import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentShee
 import { splitSemicolons } from 'src/utils/array';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { getThemeV2 } from 'src/theme/theme';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -367,7 +368,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
-    element.querySelector('.window-header').classList.add('theme-dark');
+    const theme = getThemeV2(this.actor);
+    element.querySelector('.window-header').classList.add(`theme-${theme}`);
 
     return element;
   }

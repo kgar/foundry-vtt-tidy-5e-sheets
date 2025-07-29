@@ -582,17 +582,9 @@
 
   @import './character-parts/tab-bastion.scss';
 
-  @import './character-parts/tab-biography.scss';
 
   &.theme-dark,
   .theme-dark {
-    .tidy-tab.biography {
-      .biography-editor-container {
-        .editor {
-          background: rgba(0, 0, 0, 0.24);
-        }
-      }
-    }
 
     .tidy-tab.bastion {
       .facility:not(.empty) {

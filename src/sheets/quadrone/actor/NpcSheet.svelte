@@ -91,7 +91,7 @@
   let extraTabs = new SvelteSet<string>();
 </script>
 
-<header class="sheet-header flexcol theme-dark">
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div class="actor-context-row flexrow">
@@ -144,7 +144,7 @@
         >
           <label
             for="{context.appId}-system-details-cr"
-            class="challenge-rating-label"
+            class="label font-label-medium color-text-gold-emphasis"
           >
             {localize('DND5E.AbbreviationCR')}
           </label>
@@ -153,14 +153,16 @@
               document={context.actor}
               value={formattedCr}
               field="system.details.cr"
-              class="challenge-rating-input"
+              class="challenge-rating-input font-data-xlarge"
               selectOnFocus={true}
               data-tooltip="DND5E.ChallengeRating"
               id="{context.appId}-system-details-cr"
               onSaveChange={(ev) => calculateSaveCr(ev.currentTarget.value)}
             />
           {:else}
-            <span class="challenge-rating-label">{formattedCr}</span>
+            <span class="value font-data-xlarge color-text-default"
+              >{formattedCr}</span
+            >
           {/if}
         </div>
       </div>
@@ -234,7 +236,7 @@
     </div>
     <div class="actor-vitals-container">
       <CharacterPortrait />
-      <div class="actor-vitals npc-vitals">
+      <div class="actor-vitals npc-vitals theme-dark">
         <div class="hp-row flexrow">
           <div
             class="meter progress hit-points"
@@ -250,13 +252,22 @@
               }}
             >
               <div
-                class="value"
+                class="value {hpTemp > 99 ? 'font-medium' : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsCurrent')}
               >
                 {hpValue}
               </div>
-              <div class="separator">/</div>
-              <div class="max" aria-label={localize('DND5E.HitPointsMax')}>
+              <div
+                class="separator {hpTemp > 99
+                  ? 'font-medium'
+                  : 'font-default-large'}"
+              >
+                /
+              </div>
+              <div
+                class="max {hpTemp > 99 ? 'font-medium' : 'font-data-large'}"
+                aria-label={localize('DND5E.HitPointsMax')}
+              >
                 {hpMax}
               </div>
             </button>
@@ -287,11 +298,15 @@
                   hpTempInput?.selectText();
                 }}
               >
-                <span class="modifier font-label-large color-text-lighter"
-                  >+</span
+                <span
+                  class="modifier {hpTemp > 99
+                    ? 'font-medium font-label-medium'
+                    : 'font-label-large'} color-text-lighter">+</span
                 >
                 <span
-                  class="value font-data-large color-text-default"
+                  class="value {hpTemp > 99
+                    ? 'font-medium font-data-medium'
+                    : 'font-data-large'} color-text-default"
                   data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
                 >
               </div>
@@ -367,6 +382,27 @@
                 <span class="value">{exhaustionLevel}</span>
               </button>
             </div>
+
+            <button
+              type="button"
+              class="max-hp button button-borderless"
+              aria-label={localize('DND5E.HitPointsTempMax')}
+              data-tooltip={'DND5E.HitPointsTempMax'}
+              onclick={() => console.log('TODO: Roll NPC HP')}
+            >
+              Max
+            </button>
+
+            <button
+              type="button"
+              class="roll-hp button button-borderless button-icon-only"
+              aria-label={localize('DND5E.HPFormulaRollMessage')}
+              data-tooltip={'DND5E.HPFormulaRollMessage'}
+              onclick={() => console.log('TODO: Roll NPC HP')}
+            >
+              <i class="fas fa-dice"></i>
+            </button>
+
             <div class={['death-saves', { dying: context.showDeathSaves }]}>
               {#if context.unlocked}
                 <button
@@ -392,27 +428,7 @@
               {/if}
             </div>
 
-            <button
-              type="button"
-              class="max-hp button button-borderless"
-              aria-label={localize('DND5E.HitPointsTempMax')}
-              data-tooltip={'DND5E.HitPointsTempMax'}
-              onclick={() => console.log('TODO: Roll NPC HP')}
-            >
-              Max
-            </button>
-
-            <button
-              type="button"
-              class="roll-hp button button-borderless button-icon-only"
-              aria-label={localize('DND5E.HPFormulaRollMessage')}
-              data-tooltip={'DND5E.HPFormulaRollMessage'}
-              onclick={() => console.log('TODO: Roll NPC HP')}
-            >
-              <i class="fas fa-dice"></i>
-            </button>
-
-            {#if context.unlocked}
+            <!-- {#if context.unlocked}
               <button
                 aria-label="Configure NPC"
                 data-tooltip="DND5E.DeathSaveConfigure"
@@ -423,7 +439,7 @@
               >
                 <i class="fas fa-cog"></i>
               </button>
-            {/if}
+            {/if} -->
           {/if}
         </div>
       </div>
@@ -433,10 +449,10 @@
         data-attribution-caption="DND5E.ArmorClass"
         data-tooltip-direction="DOWN"
       >
+        <span class="ac-label font-label-medium color-text-gold">AC</span>
         <span class="ac-value color-text-default">
           {context.system.attributes.ac.value}
         </span>
-        <span class="ac-label font-label-medium color-text-gold">AC</span>
         {#if context.unlocked}
           <button
             aria-label={localize('DND5E.ArmorConfig')}

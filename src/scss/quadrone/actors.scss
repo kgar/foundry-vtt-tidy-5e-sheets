@@ -14,9 +14,9 @@
     min-width: 43.75rem;
   }
 
-  ::selection {
-    background-color: var(--t5e-theme-color-default);
-  }
+  // ::selection {
+  //   background-color: var(--t5e-theme-color-default);
+  // }
 
   &::before {
     background-image: var(--t5e-sheet-header-bg, url(../../modules/tidy5e-sheet/images/banner-character.webp));
@@ -572,6 +572,7 @@
       background-color: var(--t5e-component-card-dark-darker);
       box-shadow: var(--header-shadow);
       position: absolute;
+      bottom: 0;
       width: 100%;
 
       .meter {
@@ -907,13 +908,15 @@
 
       &.xp-value {
         text-align: right;
-        background-color: rgba(0, 0, 0, 0.40);
+        --t5e-field-background-color: rgba(0, 0, 0, 0.40);
+        background-color: var(--t5e-field-background-color);
       }
 
       &:hover,
       &:focus,
       &:active {
-        background-color: rgba(0, 0, 0, 0.40);
+        --t5e-field-background-color: rgba(0, 0, 0, 0.40);
+        background-color: var(--t5e-field-background-color);
       }
 
       &:focus,
@@ -2957,6 +2960,7 @@
   }
 
   @import './character-parts/tab-effects.scss';
+  @import './character-parts/tab-biography.scss';
 
   &.theme-dark,
   .theme-dark {
@@ -2985,6 +2989,14 @@
 
       i:not(.enabled) {
         color: var(--t5e-color-text-lighter);
+      }
+    }
+
+    .tidy-tab.biography {
+      .biography-editor-container {
+        .editor {
+          background: rgba(0, 0, 0, 0.24);
+        }
       }
     }
 
