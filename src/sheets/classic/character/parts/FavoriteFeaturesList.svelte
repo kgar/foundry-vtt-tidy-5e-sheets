@@ -14,13 +14,12 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import InlineToggleControl from 'src/sheets/classic/shared/InlineToggleControl.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   interface Props {
-    section: CharacterFeatureSection;
+    section: Omit<CharacterFeatureSection, 'type'>;
   }
 
   let { section }: Props = $props();

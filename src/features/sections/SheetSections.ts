@@ -82,6 +82,7 @@ export class SheetSections {
     options: Partial<SpellbookSection>
   ): SpellbookSection {
     return {
+      type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
@@ -166,6 +167,7 @@ export class SheetSections {
       (s: SpellbookSectionLegacy) =>
         ({
           ...s,
+          type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
           uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
           slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
           key: s.prop,

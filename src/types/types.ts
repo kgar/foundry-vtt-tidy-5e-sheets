@@ -143,16 +143,13 @@ export type CustomSectionOptions = {
 };
 
 export type InventorySection = {
+  type: typeof CONSTANTS.SECTION_TYPE_INVENTORY;
   items: Item5e[];
   canCreate: boolean;
 } & TidySectionBase;
 
-export type GenericFavoriteSection = {
-  items: Item5e[];
-  canCreate: false;
-} & TidySectionBase;
-
 export type EffectFavoriteSection = {
+  type: typeof CONSTANTS.SECTION_TYPE_EFFECT;
   effects: FavoriteEffectContext[];
   canCreate: false;
 } & TidySectionBase;
@@ -180,24 +177,24 @@ export type TidySectionBase = {
 };
 
 export type FeatureSection = {
+  type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
   items: Item5e[];
   hasActions?: boolean;
   hasUses?: boolean;
 } & TidySectionBase;
 
 export type FacilitySection = {
+  type: typeof CONSTANTS.SECTION_TYPE_FACILITY;
   items: Item5e[];
 } & TidySectionBase;
 
 export type ActivitySection = {
+  type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
 } & TidySectionBase;
 
-export type TypedActivityFavoriteSection = ActivitySection & {
-  type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY;
-};
-
 export type VehicleCargoSection = {
+  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
   items: Item5e[];
   css?: string;
   editableName?: boolean;
@@ -238,6 +235,7 @@ export type SpellbookSectionLegacy = {
 };
 
 export type SpellbookSection = {
+  type: typeof CONSTANTS.SECTION_TYPE_SPELLBOOK;
   order?: number | string;
   usesSlots: boolean;
   canCreate: boolean;
@@ -306,10 +304,6 @@ export type ActivityItemContext = {
   toHit: number | null;
 };
 
-export type TypedEffectFavoriteSection = EffectFavoriteSection & {
-  type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT;
-};
-
 // TODO: Trim to minimum necessary
 export type FavoriteEffectContext = {
   effect: ActiveEffect5e;
@@ -327,23 +321,12 @@ export type FavoriteEffectContext = {
 };
 
 export type FavoriteSection =
-  | (InventorySection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY;
-    })
-  | (FacilitySection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY;
-    })
-  | (SpellbookSection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK;
-    })
-  | (CharacterFeatureSection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE;
-    })
-  | TypedActivityFavoriteSection
-  | TypedEffectFavoriteSection
-  | (GenericFavoriteSection & {
-      type: typeof CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC;
-    });
+  | InventorySection
+  | FacilitySection
+  | SpellbookSection
+  | CharacterFeatureSection
+  | ActivitySection
+  | EffectFavoriteSection;
 
 export type LanguageTraitContext = {
   label: string;
@@ -1151,7 +1134,7 @@ export type CharacterSheetQuadroneContext = {
   epicBoonsEarned: string | undefined;
   facilities: CharacterFacilitiesContext;
   favorites: FavoriteContextEntry[];
-  features: TidyItemSectionBase[];
+  features: FeatureSection[];
   inspirationSource?: InspirationSource;
   initialSidebarTabId: string;
   inventory: InventorySection[];
@@ -1176,6 +1159,8 @@ export type CharacterSheetQuadroneContext = {
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
+
+export type NpcStatblockSection = FeatureSection | SpellbookSection;
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed

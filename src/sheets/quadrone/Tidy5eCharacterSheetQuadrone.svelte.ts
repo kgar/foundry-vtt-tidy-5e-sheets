@@ -26,6 +26,7 @@ import type {
   LocationToSearchTextMap,
   SpellcastingContext,
   InspirationSource,
+  FeatureSection,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -689,7 +690,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     // Section Features
-    const features: TidyItemSectionBase[] =
+    const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
         context.unlocked,
