@@ -5,6 +5,7 @@ import type {
   ActorSheetQuadroneContext,
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
+  FeatureSection,
   LocationToSearchTextMap,
   NpcHabitat,
   NpcItemContext,
@@ -274,11 +275,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       });
 
     type NpcPartitions = {
-      items: Item5e[];
+      inventoryItems: Item5e[];
     };
 
-    // TODO: Populate any item context.
-    let { items } = Array.from(this.actor.items).reduce(
+    let { inventoryItems } = Array.from(this.actor.items).reduce(
       (obj: NpcPartitions, item: Item5e) => {
         const ctx = (context.itemContext[item.id] ??= {});
 
@@ -288,18 +288,83 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         const isWithinContainer = this.actor.items.has(item.system.container);
 
         if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
-          obj.items.push(item);
+          obj.inventoryItems.push(item);
         }
 
         return obj;
       },
-      { items: [] as Item5e[] }
+      { inventoryItems: [] as Item5e[] }
     );
+
+    const createNewSection = (label: string, id: string): FeatureSection => {
+      return {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
+        label,
+        items: [],
+        key: id,
+        show: true,
+        rowActions: [],
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+        },
+        canCreate: true,
+      };
+    };
+
+    const featureSections = Object.entries(
+      CONFIG.DND5E.activityActivationTypes
+    ).reduce<Record<string, FeatureSection>>((obj, [id, config], i) => {
+      const label = config.header ?? config.label;
+
+      if (!!config.passive) {
+        return obj;
+      }
+
+      obj[id] ??= createNewSection(label, id);
+
+      return obj;
+    }, {});
+
+    featureSections.passive = createNewSection('DND5E.Features', 'passive');
+
+    // TODO: We could loop less by doing all of this in the single pass over items.
+    this.actor.itemTypes.feat
+      .concat(this.actor.itemTypes.weapon)
+      .forEach((item: Item5e) => {
+        const isPassive =
+          item.system.properties?.has('trait') ||
+          CONFIG.DND5E.activityActivationTypes[
+            item.system.activities?.contents[0]?.activation.type
+          ]?.passive;
+        const section = isPassive
+          ? 'passive'
+          : item.system.activities?.contents[0]?.activation.type || 'passive';
+
+        featureSections[section]?.items.push(item);
+      });
+
+    // Remove any default sections that did not receive an item.
+    for (let key of Object.keys(featureSections)) {
+      const section = featureSections[key];
+      if (!section?.items?.length) {
+        delete featureSections[key];
+      }
+    }
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      this.actor,
+      CONSTANTS.TAB_NPC_STATBLOCK
+    ).forEach((sectionName) => {
+      featureSections[sectionName] ??= createNewSection(
+        sectionName,
+        sectionName
+      );
+    });
 
     const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
-    for (let item of items) {
+    for (let item of inventoryItems) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
@@ -328,12 +393,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       }
     );
 
-    // Apply sections to their section lists
-
     context.inventory = Object.values(inventory);
 
     context.spellbook = spellbook;
 
+    context.features = Object.values(featureSections);
     // TODO: Finish
   }
 

@@ -31,6 +31,17 @@
         - [x] 2014
         - [x] Modern
 - [ ] Statblock
+  - [x] Item / section prep
+  - [ ] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
+  - [ ] Row actions (and Header Add Button)
+  - [ ] Column specs
+  - [ ] Filters
+  - [ ] Any special sorting?
+  - [ ] Any missing classes to ensure proper spacing
+  - [ ] Test/confirm section show/hide, section ordering
+  - [ ] Test search
+  - [ ] Test filtering
+  - [ ] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
 - [ ] Inventory
 - [ ] Spellbook
 - [ ] Effects
@@ -63,6 +74,8 @@ context.itemCategories.features?.forEach(i => {
 
 Determining "group" (which for us is simply section key):
 ```js
+const isPassive = item.system.properties?.has("trait")
+  || CONFIG.DND5E.activityActivationTypes[item.system.activities?.contents[0]?.activation.type]?.passive;
 ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
 ```
 

@@ -355,6 +355,7 @@ export class CharacterSheetSections {
       show: true,
       dataset: {},
       custom,
+      canCreate: true,
       ...args.options,
     };
   }

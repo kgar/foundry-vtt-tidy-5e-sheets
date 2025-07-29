@@ -344,6 +344,7 @@ export class Tidy5eVehicleSheet
         ],
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       equipment: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -355,6 +356,7 @@ export class Tidy5eVehicleSheet
         key: 'equipment',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       passive: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -364,6 +366,7 @@ export class Tidy5eVehicleSheet
         key: 'passive',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       reactions: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -373,6 +376,7 @@ export class Tidy5eVehicleSheet
         key: 'reactions',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       weapons: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -384,6 +388,7 @@ export class Tidy5eVehicleSheet
         key: 'weapons',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
     };
 

@@ -181,6 +181,7 @@ export type FeatureSection = {
   items: Item5e[];
   hasActions?: boolean;
   hasUses?: boolean;
+  canCreate: boolean;
 } & TidySectionBase;
 
 export type FacilitySection = {
@@ -1160,8 +1161,6 @@ export type CharacterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
 
-export type NpcStatblockSection = FeatureSection | SpellbookSection;
-
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   conditions: Dnd5eActorCondition[];
@@ -1171,7 +1170,7 @@ export type NpcSheetQuadroneContext = {
   enriched: {
     biography: string;
   };
-  features: NpcAbilitySection[];
+  features: FeatureSection[];
   habitats: { label: string }[];
   inventory: InventorySection[];
   showContainerPanel: boolean;

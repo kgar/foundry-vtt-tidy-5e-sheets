@@ -14,6 +14,7 @@
     CharacterSheetQuadroneContext,
     NpcItemContext,
     NpcSheetQuadroneContext,
+    FeatureSection,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
@@ -24,7 +25,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
 
   interface Props {
-    sections: TidyItemSectionBase[];
+    sections: FeatureSection[];
     itemContext: Record<string, CharacterItemContext | NpcItemContext>;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;

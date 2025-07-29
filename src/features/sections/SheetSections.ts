@@ -443,7 +443,8 @@ export class SheetSections {
     context:
       | CharacterSheetContext
       | NpcSheetContext
-      | CharacterSheetQuadroneContext,
+      | CharacterSheetQuadroneContext
+      | NpcSheetQuadroneContext,
     items: Item5e[]
   ): Item5e[] {
     const itemContext = context.itemContext;
@@ -690,7 +691,8 @@ export class SheetSections {
     context:
       | CharacterSheetContext
       | NpcSheetContext
-      | CharacterSheetQuadroneContext,
+      | CharacterSheetQuadroneContext
+      | NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: SheetPreference,
     sectionConfig?: Record<string, SectionConfig>
