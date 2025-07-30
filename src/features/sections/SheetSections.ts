@@ -681,6 +681,38 @@ export class SheetSections {
     return configuredFavorites;
   }
 
+  static configureStatblock<TSection extends FeatureSection | SpellbookSection>(
+    sections: TSection[],
+    context: NpcSheetQuadroneContext,
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ) {
+    try {
+      sections = SheetSections.sortKeyedSections(sections, sectionConfig);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      return sections.map(({ ...section }) => {
+        // Sort Statblock entries
+        if (section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK) {
+          section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
+        } else {
+          section.items = ItemUtils.getSortedItems(section.items, sortMode);
+        }
+
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+
+        return section;
+      });
+    } catch (e) {
+      error('An error occurred while configuring features', false, e);
+    }
+
+    return sections;
+  }
+
   static configureFeatures<
     TSection extends
       | CharacterFeatureSection

@@ -78,7 +78,7 @@
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
   {#if totalFeatureCount === 0}
-    <div class="spellbook-empty empty-state-container">
+    <div class="features-empty empty-state-container">
       <button
         type="button"
         class="button button-tertiary"

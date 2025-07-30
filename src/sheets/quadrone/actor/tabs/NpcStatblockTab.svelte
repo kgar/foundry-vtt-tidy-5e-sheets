@@ -14,6 +14,8 @@
   import ActionBar from '../../shared/ActionBar.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import StatblockTables from '../../shared/StatblockTables.svelte';
+  import type { FeatureSection, SpellbookSection } from 'src/types/types';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -43,30 +45,37 @@
     } satisfies SectionOptionGroup,
   ]);
 
-  let features = $derived(
-    SheetSections.configureFeatures(
-      context.features,
+  let sections = $derived.by(() => {
+    let sections: (FeatureSection | SpellbookSection)[] =
+      TidyFlags.includeSpellbookInNpcStatblockTab.get(context.actor)
+        ? [...context.features, ...context.spellbook]
+        : context.features;
+
+    SheetSections.configureStatblock(
+      sections,
       context,
       tabId,
       SheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    ),
-  );
+    );
+
+    return sections;
+  });
 
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
       itemContext: context.itemContext,
-      sections: features,
+      sections: sections,
       tabId: tabId,
     });
   });
 </script>
 
-<ActionBar bind:searchCriteria sections={features} {tabId} {tabOptionGroups} />
+<ActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
-<FeatureTables
-  sections={features}
+<StatblockTables
+  {sections}
   {inlineToggleService}
   itemContext={context.itemContext}
   {searchCriteria}
