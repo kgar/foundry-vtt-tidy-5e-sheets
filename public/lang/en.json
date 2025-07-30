@@ -822,6 +822,7 @@
   "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Cast Activity Spell Grouping",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
+  "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Include Spellbook sections in the Statblock tab",
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",

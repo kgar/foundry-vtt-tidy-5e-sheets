@@ -13,6 +13,7 @@
   import { TidyFlags } from 'src/api';
   import ActionBar from '../../shared/ActionBar.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -26,6 +27,21 @@
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
+
+  let tabOptionGroups: SectionOptionGroup[] = $derived([
+    {
+      title: 'TIDY5E.DisplayOptions.Title',
+      settings: [
+        {
+          type: 'boolean',
+          label: 'TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab',
+          doc: context.actor,
+          prop: TidyFlags.includeSpellbookInNpcStatblockTab.prop,
+          default: false,
+        },
+      ],
+    } satisfies SectionOptionGroup,
+  ]);
 
   let features = $derived(
     SheetSections.configureFeatures(
@@ -47,7 +63,7 @@
   });
 </script>
 
-<ActionBar bind:searchCriteria sections={features} {tabId} />
+<ActionBar bind:searchCriteria sections={features} {tabId} {tabOptionGroups} />
 
 <FeatureTables
   sections={features}

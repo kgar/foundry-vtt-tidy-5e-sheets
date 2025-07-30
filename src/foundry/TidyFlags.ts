@@ -348,6 +348,35 @@ export class TidyFlags {
     },
   };
 
+  static includeSpellbookInNpcStatblockTab = {
+    key: 'includeSpellbookInNpcStatblockTab',
+    prop: TidyFlags.getFlagPropertyPath('includeSpellbookInNpcStatblockTab'),
+    /** Gets whether to include spellbook sections in the NPC Statblock tab. */
+    get(document: any): boolean {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          document,
+          TidyFlags.includeSpellbookInNpcStatblockTab.key
+        ) === true
+      );
+    },
+    /** Sets whether to include spellbook sections in the NPC Statblock tab. */
+    set(document: any, value: boolean = true) {
+      return TidyFlags.setFlag(
+        document,
+        TidyFlags.includeSpellbookInNpcStatblockTab.key,
+        value
+      );
+    },
+    /** Clears whether to include spellbook sections in the NPC Statblock tab. */
+    unset(document: any) {
+      return TidyFlags.unsetFlag(
+        document,
+        TidyFlags.includeSpellbookInNpcStatblockTab.key
+      );
+    },
+  };
+
   /**
    * An item ID which denotes an actor-owned item
    * whose uses should be used for the banked
