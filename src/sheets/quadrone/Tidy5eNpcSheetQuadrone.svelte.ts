@@ -331,6 +331,19 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     this.actor.itemTypes.feat
       .concat(this.actor.itemTypes.weapon)
       .forEach((item: Item5e) => {
+        const customSectionName = TidyFlags.section.get(item);
+
+        if (customSectionName) {
+          const section = (featureSections[customSectionName] ??=
+            createNewSection(
+              FoundryAdapter.localize(customSectionName),
+              customSectionName
+            ));
+
+          section.items.push(item);
+          return;
+        }
+
         const isPassive =
           item.system.properties?.has('trait') ||
           CONFIG.DND5E.activityActivationTypes[

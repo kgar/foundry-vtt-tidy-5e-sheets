@@ -32,7 +32,7 @@
         - [x] Modern
 - [ ] Statblock
   - [x] Item / section prep
-  - [ ] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
+  - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
   - [ ] Row actions (and Header Add Button)
   - [ ] Column specs
   - [ ] Filters
@@ -47,6 +47,7 @@
 - [ ] Effects
 - [ ] Background
 - [ ] Journal
+- [ ] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.
 
 #### NPC Statblock Sections notes
 
