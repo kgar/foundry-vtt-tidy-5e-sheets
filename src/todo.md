@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [ ] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
 - [ ] Chase NPC
 
 ### NPC Sheet
