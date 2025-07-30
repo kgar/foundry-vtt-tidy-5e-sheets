@@ -61,10 +61,13 @@ export class TidyFlags {
     unsetProp: TidyFlags.getFlagPropertyPath('-=actionSection'),
     /** Gets the item's Action Section setting. */
     get(item: Item5e): string | undefined {
-      const actionSection = TidyFlags.tryGetFlag<string>(
+      const actionSectionValue = TidyFlags.tryGetFlag(
         item,
         TidyFlags.actionSection.key
-      )?.trim();
+      );
+
+      const actionSection =
+        typeof actionSectionValue === 'string' ? actionSectionValue.trim() : '';
 
       return !isNil(actionSection, '') ? actionSection : undefined;
     },
@@ -829,10 +832,10 @@ export class TidyFlags {
     unsetProp: TidyFlags.getFlagPropertyPath('-=section'),
     /** Gets the custom section name for an item. */
     get(item: Item5e): string | undefined {
-      const section = TidyFlags.tryGetFlag<string>(
-        item,
-        TidyFlags.section.key
-      )?.trim();
+      const sectionValue = TidyFlags.tryGetFlag(item, TidyFlags.section.key);
+
+      const section =
+        typeof sectionValue === 'string' ? sectionValue.trim() : '';
 
       return !isNil(section, '') ? section : undefined;
     },
