@@ -457,7 +457,6 @@ export type NpcAbilitySection = {
 } & FeatureSection;
 
 export type NpcItemContext = {
-  actionSubtitle?: string; // Quadrone only
   activities?: ActivityItemContext[];
   attunement?: AttunementContext;
   availableLevels?: AvailableLevel[];

@@ -563,10 +563,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
-    const inventoryRowActions =
-      TableRowActionsRuntime.getInventoryRowActions(context);
-    // Categorize items as inventory, spellbook, features, and classes
+    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { hasActionsTab: true }
+    );
 
+    // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections({
         rowActions: inventoryRowActions,
@@ -698,7 +700,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         feats,
         {
           canCreate: true,
-          rowActions: TableRowActionsRuntime.getCharacterFeatureRowActions(context),
+          rowActions:
+            TableRowActionsRuntime.getCharacterFeatureRowActions(context),
         }
       );
 
@@ -738,7 +741,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ].filterJoin(' &bull; ');
     } else if (Inventory.isItemInventoryType(item)) {
       const containerName = this.actor.items.get(item.system.container)?.name;
-
       context.actionSubtitle = [containerName].filterJoin(' &bull; ');
     }
 

@@ -12,6 +12,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/api';
   import ActionBar from '../../shared/ActionBar.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -35,6 +36,15 @@
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );
+
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: context.itemContext,
+      sections: features,
+      tabId: tabId,
+    });
+  });
 </script>
 
 <ActionBar bind:searchCriteria sections={features} {tabId} />

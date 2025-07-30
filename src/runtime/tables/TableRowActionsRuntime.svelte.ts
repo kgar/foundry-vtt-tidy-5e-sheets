@@ -29,8 +29,15 @@ import { CONSTANTS } from 'src/constants';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
+type InventoryRowActionConfig = {
+  hasActionsTab: boolean;
+};
+
 class TableRowActionsRuntime {
-  getInventoryRowActions(context: ActorSheetQuadroneContext) {
+  getInventoryRowActions(
+    context: ActorSheetQuadroneContext,
+    config?: InventoryRowActionConfig
+  ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Item5e,
@@ -61,10 +68,12 @@ class TableRowActionsRuntime {
             condition: (args) => 'equipped' in args.data.system,
           } satisfies TableAction<typeof EquipButton>);
 
-          result.push({
-            component: ActionsTabToggleButton,
-            props: (args) => ({ doc: args.data }),
-          } satisfies TableAction<typeof ActionsTabToggleButton>);
+          if (config?.hasActionsTab) {
+            result.push({
+              component: ActionsTabToggleButton,
+              props: (args) => ({ doc: args.data }),
+            } satisfies TableAction<typeof ActionsTabToggleButton>);
+          }
         }
       }
 

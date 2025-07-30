@@ -35,15 +35,25 @@
   - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
   - [x] Row actions (and Header Add Button)
   - [x] Column specs
-  - [ ] Filters
-  - [ ] Any special sorting?
-  - [ ] Any missing classes to ensure proper spacing
-  - [ ] Test/confirm section show/hide, section ordering
-  - [ ] Test search
-  - [ ] Test filtering
+  - [x] Filters
+  - [x] Test/confirm section show/hide, section ordering
+  - [x] Test search
+  - [x] Test filtering
   - [ ] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
 - [ ] Inventory
+  - [ ] Prep
+  - [ ] Filters
+  - [ ] Sorting
+  - [ ] Custom Sections
+  - [ ] Inline containers
 - [ ] Spellbook
+  - [ ] Prep
+  - [ ] Filters
+  - [ ] Sorting
+  - [ ] Custom Sections
+  - [ ] Items with Spells
+    - [ ] Additional Spells
+    - [ ] Section Per Item
 - [ ] Effects
 - [ ] Background
 - [ ] Journal

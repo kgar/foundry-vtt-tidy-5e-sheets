@@ -266,8 +266,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {
-    const inventoryRowActions =
-      TableRowActionsRuntime.getInventoryRowActions(context);
+    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { hasActionsTab: false }
+    );
 
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections({
@@ -296,8 +298,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       { inventoryItems: [] as Item5e[] }
     );
 
-    const statblockRowActions = TableRowActionsRuntime.getStatblockRowActions(context);
-    const createNewStatblockSection = (label: string, id: string): FeatureSection => {
+    const statblockRowActions =
+      TableRowActionsRuntime.getStatblockRowActions(context);
+    const createNewStatblockSection = (
+      label: string,
+      id: string
+    ): FeatureSection => {
       return {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
         label,
@@ -326,7 +332,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return obj;
     }, {});
 
-    featureSections.passive = createNewStatblockSection('DND5E.Features', 'passive');
+    featureSections.passive = createNewStatblockSection(
+      'DND5E.Features',
+      'passive'
+    );
 
     // TODO: We could loop less by doing all of this in the single pass over items.
     this.actor.itemTypes.feat
@@ -415,8 +424,28 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     // TODO: Finish
   }
 
-  protected _prepareItem(item: Item5e, context: NpcItemContext) {
-    // TODO
+  protected _prepareItem(item: Item5e, ctx: NpcItemContext) {
+    ctx.attunement = FoundryAdapter.getAttunementContext(item);
+
+    if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      const linked = item.system.linkedActivity?.item;
+      const prep = item.system.preparation || {};
+
+      if (this._concentration.items.has(item)) {
+        ctx.concentration = true;
+      }
+
+      const vsmcr = game.i18n
+        .getListFormatter({ style: 'narrow' })
+        .format(item.labels.components.all.map((a: any) => a.abbr));
+
+      ctx.subtitle = [
+        linked
+          ? linked.name
+          : this.actor.classes[item.system.sourceClass]?.name,
+        vsmcr,
+      ].filterJoin(' &bull; ');
+    }
   }
 
   /* -------------------------------------------- */
