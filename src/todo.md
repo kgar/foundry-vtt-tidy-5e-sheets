@@ -33,8 +33,8 @@
 - [ ] Statblock
   - [x] Item / section prep
   - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
-  - [ ] Row actions (and Header Add Button)
-  - [ ] Column specs
+  - [x] Row actions (and Header Add Button)
+  - [x] Column specs
   - [ ] Filters
   - [ ] Any special sorting?
   - [ ] Any missing classes to ensure proper spacing
@@ -48,6 +48,7 @@
 - [ ] Background
 - [ ] Journal
 - [ ] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.
+- [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 
 #### NPC Statblock Sections notes
 

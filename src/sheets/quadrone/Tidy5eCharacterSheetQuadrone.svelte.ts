@@ -698,7 +698,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         feats,
         {
           canCreate: true,
-          rowActions: TableRowActionsRuntime.getFeatureRowActions(context),
+          rowActions: TableRowActionsRuntime.getCharacterFeatureRowActions(context),
         }
       );
 

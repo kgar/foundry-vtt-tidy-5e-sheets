@@ -296,14 +296,15 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       { inventoryItems: [] as Item5e[] }
     );
 
-    const createNewSection = (label: string, id: string): FeatureSection => {
+    const statblockRowActions = TableRowActionsRuntime.getStatblockRowActions(context);
+    const createNewStatblockSection = (label: string, id: string): FeatureSection => {
       return {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
         label,
         items: [],
         key: id,
         show: true,
-        rowActions: [],
+        rowActions: statblockRowActions,
         dataset: {
           type: CONSTANTS.ITEM_TYPE_FEAT,
         },
@@ -320,12 +321,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         return obj;
       }
 
-      obj[id] ??= createNewSection(label, id);
+      obj[id] ??= createNewStatblockSection(label, id);
 
       return obj;
     }, {});
 
-    featureSections.passive = createNewSection('DND5E.Features', 'passive');
+    featureSections.passive = createNewStatblockSection('DND5E.Features', 'passive');
 
     // TODO: We could loop less by doing all of this in the single pass over items.
     this.actor.itemTypes.feat
@@ -335,7 +336,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
         if (customSectionName) {
           const section = (featureSections[customSectionName] ??=
-            createNewSection(
+            createNewStatblockSection(
               FoundryAdapter.localize(customSectionName),
               customSectionName
             ));
@@ -368,7 +369,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this.actor,
       CONSTANTS.TAB_NPC_STATBLOCK
     ).forEach((sectionName) => {
-      featureSections[sectionName] ??= createNewSection(
+      featureSections[sectionName] ??= createNewStatblockSection(
         sectionName,
         sectionName
       );

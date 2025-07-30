@@ -4,10 +4,14 @@ import type {
   ActiveEffect5e,
   ActiveEffectSection,
   ActorSheetQuadroneContext,
+  CharacterFeatureSection,
   CharacterSheetQuadroneContext,
   DocumentSheetQuadroneContext,
+  FeatureSection,
   InventorySection,
+  NpcSheetQuadroneContext,
   SpellbookSection,
+  TidyItemSectionBase,
   TidySectionBase,
 } from 'src/types/types';
 import type { Component } from 'svelte';
@@ -77,11 +81,11 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getFeatureRowActions(context: CharacterSheetQuadroneContext) {
+  getCharacterFeatureRowActions(context: CharacterSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Item5e,
-      SpellbookSection
+      CharacterFeatureSection
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -235,7 +239,7 @@ class TableRowActionsRuntime {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Item5e,
-      SpellbookSection
+      TidyItemSectionBase
     >;
 
     let rowActions: TableAction<any>[] = $derived.by(() => {
@@ -328,6 +332,46 @@ class TableRowActionsRuntime {
 
       if (owner) {
         if (unlocked) {
+          result.push({
+            component: EditButton,
+            props: (args) => ({ doc: args.data }),
+          } satisfies TableAction<typeof EditButton>);
+
+          result.push({
+            component: DeleteButton,
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => args.data.deleteDialog(),
+            }),
+          } satisfies TableAction<typeof DeleteButton>);
+        }
+      }
+
+      result.push({
+        component: MenuButton,
+        props: () => ({
+          targetSelector: '[data-context-menu]',
+        }),
+      } satisfies TableAction<typeof MenuButton>);
+
+      return result;
+    });
+
+    return rowActions;
+  }
+
+  getStatblockRowActions(context: NpcSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Item5e,
+      FeatureSection
+    >;
+
+    let rowActions: TableAction<any>[] = $derived.by(() => {
+      let result: TableAction<any>[] = [];
+
+      if (context.owner) {
+        if (context.unlocked) {
           result.push({
             component: EditButton,
             props: (args) => ({ doc: args.data }),
