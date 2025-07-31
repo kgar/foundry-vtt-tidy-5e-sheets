@@ -180,7 +180,7 @@
                     <a class="item-name" onclick={(ev) => toggleSummary()}>
                       <span class="cell-text">
                         <span class="cell-name">{item.name}</span>
-                        {#if ctx.actionSubtitle}
+                        {#if 'actionSubtitle' in ctx && ctx.actionSubtitle}
                           <span class="cell-context"
                             >{@html ctx.actionSubtitle}</span
                           >
