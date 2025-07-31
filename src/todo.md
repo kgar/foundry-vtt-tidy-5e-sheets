@@ -40,12 +40,12 @@
   - [x] Test search
   - [x] Test filtering
   - [x] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
-- [ ] Inventory
-  - [ ] Prep
-  - [ ] Filters
-  - [ ] Sorting
-  - [ ] Custom Sections
-  - [ ] Inline containers
+- [x] Inventory
+  - [x] Prep
+  - [x] Filters
+  - [x] Sorting
+  - [x] Custom Sections
+  - [x] Inline containers
 - [ ] Spellbook
   - [ ] Prep
   - [ ] Filters
