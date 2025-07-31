@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import FeatureTables from '../../shared/FeatureTables.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
@@ -46,20 +45,18 @@
   ]);
 
   let sections = $derived.by(() => {
-    let sections: (FeatureSection | SpellbookSection)[] =
+    let sectionsToConfigure: (FeatureSection | SpellbookSection)[] =
       TidyFlags.includeSpellbookInNpcStatblockTab.get(context.actor)
         ? [...context.features, ...context.spellbook]
         : context.features;
 
-    SheetSections.configureStatblock(
-      sections,
+    return SheetSections.configureStatblock(
+      sectionsToConfigure,
       context,
       tabId,
       SheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     );
-
-    return sections;
   });
 
   $effect(() => {

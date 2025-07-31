@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Make NPC Statblock tab section config work.
+- [x] Make NPC Statblock tab section config work.
 - [ ] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
 - [ ] Chase NPC
 
