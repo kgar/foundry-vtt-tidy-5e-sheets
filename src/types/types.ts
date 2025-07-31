@@ -1177,7 +1177,12 @@ export type NpcSheetQuadroneContext = {
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   enriched: {
+    appearance: string;
     biography: string;
+    bond: string;
+    flaw: string;
+    ideal: string;
+    trait: string;
   };
   features: FeatureSection[];
   habitats: { label: string }[];

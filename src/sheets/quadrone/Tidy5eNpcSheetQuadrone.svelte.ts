@@ -157,8 +157,28 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       currencies,
       effects: enhancedEffectSections,
       enriched: {
+        appearance: await foundry.applications.ux.TextEditor.enrichHTML(
+          TidyFlags.appearance.get(this.actor) ?? '',
+          enrichmentArgs
+        ),
         biography: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.biography.value,
+          enrichmentArgs
+        ),
+        bond: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.bond,
+          enrichmentArgs
+        ),
+        flaw: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.flaw,
+          enrichmentArgs
+        ),
+        ideal: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.ideal,
+          enrichmentArgs
+        ),
+        trait: await foundry.applications.ux.TextEditor.enrichHTML(
+          TidyFlags.trait.get(this.actor) ?? '',
           enrichmentArgs
         ),
       },

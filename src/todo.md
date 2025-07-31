@@ -15,54 +15,13 @@
   - [ ] CR
   - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
   - [ ] abilities
-- [x] Sidebar
-  - [x] Traits
-  - [x] (Collapsed by default) Skills
-  - [x] Loyalty tracker
-    - [x] Show when
-      - [x] `this.actor.system.traits.important` AND
-      - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
-      - [x] `game.user.isGM`
-  - [x] Legendary trackers
-    - [x] Show each when unlocked or when each is eligible
-      - [x] legact - `this.actor.system.resources.legact.max`
-      - [x] legres - `this.actor.system.resources.legres.max`
-      - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
-        - [x] 2014
-        - [x] Modern
-- [x] Statblock
-  - [x] Item / section prep
-  - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
-  - [x] Row actions (and Header Add Button)
-  - [x] Column specs
-  - [x] Filters
-  - [x] Test/confirm section show/hide, section ordering
-  - [x] Test search
-  - [x] Test filtering
-  - [x] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
-- [x] Inventory
-  - [x] Prep
-  - [x] Filters
-  - [x] Sorting
-  - [x] Custom Sections
-  - [x] Inline containers
-- [x] Spellbook
-  - [x] Prep
-  - [x] Filters
-  - [x] Sorting
-  - [x] Custom Sections
-  - [x] Items with Spells
-    - [x] Additional Spells
-    - [x] Section Per Item
-  - [x] Spellbook footer for NPCs without classes
-- [x] Effects
-  - [x] Prep
-  - [x] Basic functionality
-  - [x] Toggling
-  - [x] Conditions
-- [ ] Background
-  - [ ] 
+- [X] ~~Background~~ Biography
+  - [x] Functionality
 - [ ] Journal
+  - [ ] Functionality
+  - [ ] Drag drop
+  - [ ] Context menu
+- [ ] Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 
 #### NPC Statblock Sections notes
@@ -298,3 +257,49 @@ Limited:
 - [x] Make NPC Statblock tab section config work.
 - [x] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
 - [x] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.
+- NPC Sheet Progress
+  - [x] Sidebar
+    - [x] Traits
+    - [x] (Collapsed by default) Skills
+    - [x] Loyalty tracker
+      - [x] Show when
+        - [x] `this.actor.system.traits.important` AND
+        - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
+        - [x] `game.user.isGM`
+    - [x] Legendary trackers
+      - [x] Show each when unlocked or when each is eligible
+        - [x] legact - `this.actor.system.resources.legact.max`
+        - [x] legres - `this.actor.system.resources.legres.max`
+        - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
+          - [x] 2014
+          - [x] Modern
+  - [x] Statblock
+    - [x] Item / section prep
+    - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
+    - [x] Row actions (and Header Add Button)
+    - [x] Column specs
+    - [x] Filters
+    - [x] Test/confirm section show/hide, section ordering
+    - [x] Test search
+    - [x] Test filtering
+    - [x] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
+  - [x] Inventory
+    - [x] Prep
+    - [x] Filters
+    - [x] Sorting
+    - [x] Custom Sections
+    - [x] Inline containers
+  - [x] Spellbook
+    - [x] Prep
+    - [x] Filters
+    - [x] Sorting
+    - [x] Custom Sections
+    - [x] Items with Spells
+      - [x] Additional Spells
+      - [x] Section Per Item
+    - [x] Spellbook footer for NPCs without classes
+  - [x] Effects
+    - [x] Prep
+    - [x] Basic functionality
+    - [x] Toggling
+    - [x] Conditions
