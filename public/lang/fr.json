@@ -68,7 +68,7 @@
     "TIDY5E.Class.Barbarian": "Barbare",
     "TIDY5E.Class.Bard": "Barde",
     "TIDY5E.Class.Cleric": "Clerc",
-    "TIDY5E.Class.Custom": "Sur mesure",
+    "TIDY5E.Class.Custom": "Classe sur mesure",
     "TIDY5E.Class.Druid": "Druide",
     "TIDY5E.Class.Fighter": "Guerrier",
     "TIDY5E.Class.Monk": "Moine",
@@ -377,7 +377,7 @@
         "SheetMenu": {
             "name": "Paramètres Tidy du thème",
             "buttonLabel": "Paramètres du thème",
-            "hint": "Personnalisez les couleurs des feuilles Tidy 5e."
+            "hint": "Personnalisez les couleurs des feuilles Tidy 5e classique uniquement."
         },
         "Sheet": {
             "title": "Paramètres du thème : {userName}",
@@ -391,7 +391,19 @@
             "importSuccess": "Thème importé avec succès !",
             "menuLabel": "Menu",
             "explanation": "Sélectionnez la couleur que vous souhaitez utiliser pour chaque option. La valeur \"#00000000\" équivaut à désactiver la couleur."
-        }
+        },
+        "hint": "Personnalisez votre feuille pour créer une expérience immersive qui complète votre jeu.",
+        "ActorHeaderBackground.title": "Arrière-plan de l'en-tête du personnage",
+        "PortraitShape": {
+            "title": "{type} forme du portrait",
+            "option.round": "Rond",
+            "option.transparent": "Transparent",
+            "option.square": "Carré",
+            "option.token": "Token"
+        },
+        "SheetTheme.title": "Thème de la feuille",
+        "SheetTheme.hint": "Pour obtenir les meilleurs résultats, choisissez une couleur proche du centre de la palette de couleurs.",
+        "SpellPreparationModeColors.title": "Couleurs du mode de préparation des sorts"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Niveau de sort {number}",
     "TIDY5E.ApplyChanges": "Appliquer les changements",
@@ -423,8 +435,8 @@
         "Explanation": "Les onglets que l'utilisateur ou la feuille sont configurés pour ne pas les voir (par exemple, en désactivant le journal dans les paramètres de configuration) n'apparaîtront pas sur la feuille, même s'ils sont sélectionnés.",
         "MenuOptionText": "Onglet de sélection",
         "Title": "Onglet de sélection : {documentName}",
-        "AvailableHeader": "Onglets disponible",
-        "SelectedHeader": "Onglets sélectionnés",
+        "AvailableHeader": "Onglets masqués",
+        "SelectedHeader": "Onglets visible",
         "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
         "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis."
     },
@@ -603,7 +615,10 @@
             "selectionDialogTitle": "Migration : Personnages favoris vers le système",
             "sectionTitle": "Personnages préférés"
         },
-        "chatNotification": "Une nouvelle migration des feuilles Tidy 5e est disponible. Voir Paramètres du jeu Tidy 5e Sheets pour voir les migrations disponibles."
+        "chatNotification": "Une nouvelle migration des feuilles Tidy 5e est disponible. Voir Paramètres du jeu Tidy 5e Sheets pour voir les migrations disponibles.",
+        "Journal": {
+            "explanation1": "La refonte de l'interface utilisateur de Tidy 5e Sheets a permis de réorganiser le journal afin qu'il puisse contenir autant d'entrées que vous le souhaitez. Pour cela, une migration de l'ancienne structure du journal vers la nouvelle structure extensible est nécessaire. Les anciennes données du journal ne seront pas visibles dans la version remaniée de Tidy 5e Sheets."
+        }
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -848,5 +863,47 @@
     "TIDY5E.Hidden": "Caché",
     "TIDY5E.Options.Title": "Options",
     "TIDY5E.ConfigureTab.Title": "Configurer {tabName}",
-    "TIDY5E.DisplayOptions.Title": "Options d'affichage"
+    "TIDY5E.DisplayOptions.Title": "Options d'affichage",
+    "TIDY5E.AddSpecific": "Ajouter{name}",
+    "TIDY5E.JournalEntry.NewTitle": "Entrée de journal {number}",
+    "TIDY5E.SheetLock.Empty.Hint": "Commencez par ajouter une classe et vos premiers éléments. Ensuite, utilisez le menu des éléments ou cliquez avec le bouton droit de la souris et sélectionnez « Ajouter à l'onglet Feuille » pour les ajouter ici.",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Définir comme source d'inspiration",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Supprimer comme source d'inspiration",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Ajouter à l'onglet Feuille",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Supprimer de l'onglet Feuille",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Source d'inspiration",
+    "TIDY5E.EmptyFavorites": "Cliquez avec le bouton droit sur l'élément et ajoutez à vos favoris, ou faites glisser n'importe quel élément de votre feuille ici pour y accéder rapidement.",
+    "TIDY5E.Ability.EditScore.label": "Éditer le score",
+    "TIDY5E.EmptyTools": "Aucune compétence d'outils.",
+    "TIDY5E.SettingsMenu.WorldThemeSettings": {
+        "name": "Paramètres du thème",
+        "label": "Configurer les paramètres du thème",
+        "hint": "Nouvelles feuilles Tidy uniquement : définissez les paramètres de thème par défaut pour votre univers de jeu. Ceux-ci s'appliquent à tous les types de feuilles."
+    },
+    "TIDY5E.SettingsMenu.Homebrew": {
+        "name": "Personalisé",
+        "label": "Configurer le personalisé",
+        "hint": "Activez et configurez les options personalisés fournies par ce module."
+    },
+    "TIDY5E.SettingsMenu.TabConfiguration": {
+        "name": "Onglets de feuille",
+        "label": "Configurer les onglets de la feuille",
+        "hint": "Nouvelles feuilles Tidy uniquement : configurez les onglets visibles pour toutes les feuilles d'acteur et d'élément."
+    },
+    "TIDY5E.Settings.BankedInspiration.title": "Inspiration stocker",
+    "TIDY5E.Settings.EnableBankedInspiration": {
+        "name": "Activer le stockage de l'inspiration",
+        "hint": "Activez cette option pour permettre à l'utilisateur de définir un élément de fonctionnalité comme source d'inspiration. Recherchez cette option dans le menu contextuel des éléments de fonctionnalité ayant des utilisations."
+    },
+    "TIDY5E.Settings.BankedInspirationGmOnly": {
+        "name": "Gestion du stockage de l'inspiration - MJ uniquement",
+        "hint": "Activez cette option pour limiter le stockage des inspirations accumulées au MJ."
+    },
+    "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Suivi des emplacements de sorts",
+    "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Croisant",
+    "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Decroissant",
+    "TIDY5E.HitDice.Abbreviation": "DdV",
+    "TIDY5E.HitDice.Current.Label": "Dès de vie actuel",
+    "TIDY5E.HitDice.Max.Label": "Dès de vie Max",
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Bienvenue dans Tidy 5e Sheets ! Pour commencer, vous devrez remplacer {sheetLinkStart}une feuille{sheetLinkEnd} (ou {allSheetsLinkStart}toutes vos feuilles{allSheetsLinkEnd} !) par la version Tidy. Pour en savoir plus sur ce module et ses fonctionnalités, consultez le {wikiLinkStart}wiki officiel{wikiLinkEnd}."
 }
