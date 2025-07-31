@@ -859,6 +859,9 @@ export class SheetSections {
   static getSectionLabel(item: Item5e) {
     let value = Inventory.isItemInventoryType(item)
       ? 'DND5E.Inventory'
+      : item.parent?.type === CONSTANTS.SHEET_TYPE_NPC &&
+        item.type === CONSTANTS.ITEM_TYPE_FEAT
+      ? 'TIDY5E.StatblockTabName'
       : item.type === CONSTANTS.ITEM_TYPE_FEAT
       ? 'DND5E.Features'
       : item.type === CONSTANTS.ITEM_TYPE_SPELL
@@ -871,8 +874,6 @@ export class SheetSections {
   static getActionSectionLabel(item: Item5e) {
     return item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
       ? FoundryAdapter.localize('Sheet')
-      : item.parent?.type === CONSTANTS.SHEET_TYPE_NPC
-      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 }
