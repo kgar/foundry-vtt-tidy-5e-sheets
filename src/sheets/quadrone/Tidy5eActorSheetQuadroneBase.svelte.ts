@@ -1070,7 +1070,18 @@ export function Tidy5eActorSheetQuadroneBase<
           options: unknown
         ) => {
           if (this.actor.system.favorites) {
-            const favorites = structuredClone(this.actor.system.favorites);
+            const transformTargetFavorites = data.system?.favorites ?? [];
+
+            // Merge favorites, favoring the destination transformation actor's favorites, if any.
+            const favoritesMap = [
+              ...this.actor.system.favorites,
+              ...transformTargetFavorites,
+            ].reduce<Map<string, any>>(
+              (prev, curr) => prev.set(curr.id, curr),
+              new Map<string, any>()
+            );
+            const favorites = Array.from(favoritesMap).map((f) => f[1]);
+
             foundry.utils.mergeObject(data, {
               ['system.favorites']: favorites,
             });
