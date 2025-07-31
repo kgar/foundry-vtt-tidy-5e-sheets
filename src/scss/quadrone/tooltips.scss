@@ -19,7 +19,9 @@
       >li+li {
         margin-top: 0.5rem;
       }
+    }
 
+    >.weight-distribution {
       >li {
         display: flex;
         gap: 1rem;
