@@ -821,10 +821,6 @@
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Inclure les rituels dans la catégorie \"peut lancer\"",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Feuille de groupe Tidy 5e",
     "TIDY5E.InfoCardInspectHint": "{inspectKey} Contrôler",
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Inclure des champs de section dans les feuilles Tidy par défaut",
-        "hint": "Inclut les entrées Tidy Section et section Action dans les feuilles d'articles par défaut."
-    },
     "TIDY5E.ExhaustionLevelTooltip": "Niveau d'épuisement {level}",
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportement d'expansion/réduction",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Basculer sur le menu d'en-tête",

@@ -4,7 +4,6 @@
   import ItemProperties from '../parts/ItemProperties.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
 
@@ -76,5 +75,3 @@
     </div>
   </div>
 </fieldset>
-
-<SectionsFormGroup />

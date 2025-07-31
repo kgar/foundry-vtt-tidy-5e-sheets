@@ -40,10 +40,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar
-  sectionLabel={'TYPES.Item.dnd-tashas-cauldron.tattoo'}
-  includeSidebarProperties={false}
-/>
+<Sidebar includeSidebarProperties={false} />
 
 <main class="item-content">
   <div class="sheet-header">

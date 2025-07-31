@@ -2,8 +2,6 @@
 
 ### The Short List
 
-- [x] Make NPC Statblock tab section config work.
-- [ ] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
 - [ ] Chase NPC
 
 ### NPC Sheet
@@ -292,3 +290,5 @@ Limited:
 - [x] Weapon Favorite stats cell is missing formatting classes
 - [x] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
 - [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)
+- [x] Make NPC Statblock tab section config work.
+- [x] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)

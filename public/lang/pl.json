@@ -761,10 +761,6 @@
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Przełącz blokadę karty",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty.",
     "TIDY5E.NoSpecialSenses": "Brak specjalnych zmysłów",
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Dołącz pola sekcji Tidy do domyślnych kart",
-        "hint": "Dołącza pole sekcja i pole sekcja akcji w domyślnych kartach przedmiotów."
-    },
     "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
     "TIDY5E.Facilities.ContextMenuActionRemove": "Usuń z {facilityName}",
     "TIDY5E.Facilities.Hirelings.Label": "Najemnicy",

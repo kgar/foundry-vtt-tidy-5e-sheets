@@ -444,10 +444,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "உருப்படி"
     },
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "இயல்புநிலை தாள்களில் நேர்த்தியான பிரிவு புலங்களைச் சேர்க்கவும்",
-        "hint": "இயல்புநிலை உருப்படி தாள்களில் நேர்த்தியான பிரிவு மற்றும் செயல் பிரிவு உள்ளீடுகள் அடங்கும்."
-    },
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "hint": "உருப்படிகளை அடையாளம் காண எந்த வகை பயனர் இடைமுகம் கட்டுப்பாடுகளை அணுக முடியும் என்பதை தீர்மானிக்கிறது.",
         "name": "உருப்படி அடையாள இசைவு",

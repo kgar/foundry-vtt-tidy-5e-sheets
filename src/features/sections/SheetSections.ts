@@ -36,6 +36,7 @@ import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import UserPreferencesService from '../user-preferences/UserPreferencesService';
+import { Inventory } from './Inventory';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -853,5 +854,25 @@ export class SheetSections {
         );
       })
       .map((x) => x.section);
+  }
+
+  static getSectionLabel(item: Item5e) {
+    let value = Inventory.isItemInventoryType(item)
+      ? 'DND5E.Inventory'
+      : item.type === CONSTANTS.ITEM_TYPE_FEAT
+      ? 'DND5E.Features'
+      : item.type === CONSTANTS.ITEM_TYPE_SPELL
+      ? 'DND5E.Spellbook'
+      : 'TIDY5E.Section.Label';
+
+    return FoundryAdapter.localize(value);
+  }
+
+  static getActionSectionLabel(item: Item5e) {
+    return item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ? FoundryAdapter.localize('Sheet')
+      : item.parent?.type === CONSTANTS.SHEET_TYPE_NPC
+      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
+      : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 }

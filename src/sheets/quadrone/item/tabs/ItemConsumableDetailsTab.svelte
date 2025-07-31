@@ -9,7 +9,6 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -147,34 +146,33 @@
   {/if}
 </fieldset>
 
-
 {#if context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
-<fieldset>
-  <legend>
-    {localize('DND5E.CONSUMABLE.FIELDS.damage.label')}
-    <tidy-gold-header-underline></tidy-gold-header-underline>
-  </legend>
+  <fieldset>
+    <legend>
+      {localize('DND5E.CONSUMABLE.FIELDS.damage.label')}
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+    </legend>
 
-  <div class="form-group">
-    <label for="{appId}-damage-replace"
-      >{localize('DND5E.CONSUMABLE.FIELDS.damage.replace.label')}</label
-    >
-    <div class="form-fields">
-      <label class="checkbox" for="{appId}-damage-replace">
-        <CheckboxQuadrone
-          id="{appId}-damage-replace"
-          document={context.item}
-          field="system.damage.replace"
-          checked={context.source.damage.replace}
-          disabledChecked={context.system.damage.replace}
-          disabled={!context.unlocked}
-        />
-      </label>
+    <div class="form-group">
+      <label for="{appId}-damage-replace"
+        >{localize('DND5E.CONSUMABLE.FIELDS.damage.replace.label')}</label
+      >
+      <div class="form-fields">
+        <label class="checkbox" for="{appId}-damage-replace">
+          <CheckboxQuadrone
+            id="{appId}-damage-replace"
+            document={context.item}
+            field="system.damage.replace"
+            checked={context.source.damage.replace}
+            disabledChecked={context.system.damage.replace}
+            disabled={!context.unlocked}
+          />
+        </label>
+      </div>
+      <p class="hint">
+        {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}
+      </p>
     </div>
-    <p class="hint">
-      {localize('DND5E.CONSUMABLE.FIELDS.damage.replace.hint')}
-    </p>
-  </div>
     <FieldDamage
       prefix="system.damage.base."
       source={context.source.damage.base}
@@ -182,9 +180,7 @@
       denominationOptions={context.denominationOptions}
       types={context.damageTypes}
     />
-</fieldset>
+  </fieldset>
 {/if}
 
 <FieldUses />
-
-<SectionsFormGroup />
