@@ -57,7 +57,6 @@
 - [ ] Effects
 - [ ] Background
 - [ ] Journal
-- [ ] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 
 #### NPC Statblock Sections notes
@@ -292,3 +291,4 @@ Limited:
 - [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)
 - [x] Make NPC Statblock tab section config work.
 - [x] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
+- [x] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.
