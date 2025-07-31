@@ -669,7 +669,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spells,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context),
+        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
+          hasActionsTab: true,
+        }),
       }
     );
 

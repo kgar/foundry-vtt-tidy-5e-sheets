@@ -412,7 +412,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this.actor.itemTypes.spell,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context),
+        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
+          hasActionsTab: false,
+        }),
       }
     );
 
@@ -421,7 +423,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.spellbook = spellbook;
 
     context.features = Object.values(featureSections);
-    // TODO: Finish
   }
 
   protected _prepareItem(item: Item5e, ctx: NpcItemContext) {

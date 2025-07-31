@@ -31,7 +31,7 @@
       - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
         - [x] 2014
         - [x] Modern
-- [ ] Statblock
+- [x] Statblock
   - [x] Item / section prep
   - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
   - [x] Row actions (and Header Add Button)
@@ -40,7 +40,7 @@
   - [x] Test/confirm section show/hide, section ordering
   - [x] Test search
   - [x] Test filtering
-  - [ ] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
+  - [x] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
 - [ ] Inventory
   - [ ] Prep
   - [ ] Filters

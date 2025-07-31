@@ -12,6 +12,9 @@
     SpellbookSection,
   } from 'src/types/types';
   import { getContext } from 'svelte';
+  import SpellTable from './SpellTable.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import FeatureTable from './FeatureTable.svelte';
 
   interface Props {
     sections: (FeatureSection | SpellbookSection)[];
@@ -46,6 +49,15 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
+  $effect(() => {
+    const observer = new ResizeObserver(([entry]) => onResize(entry));
+    observer.observe(sectionsContainer);
+
+    return () => {
+      observer.disconnect();
+    };
+  });
+
   let totalItemCount = $derived(
     sections.reduce(
       (count, s) =>
@@ -78,10 +90,31 @@
     </div>
   {:else}
     {#each sections as section (section.key)}
-      {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
-        <p>TODO: Spell Table Here</p>
-      {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
-        <p>TODO: Feature Table Here</p>
+      {@const items =
+        section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK
+          ? section.spells
+          : section.items}
+      {@const hasViewableItems = ItemVisibility.hasViewableItems(
+        items,
+        searchResults.uuids,
+      )}
+      {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+        {#if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
+          <FeatureTable
+            {section}
+            {itemToggleMap}
+            {sectionsInlineWidth}
+            {sheetDocument}
+          />
+        {:else if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
+          <SpellTable
+            {section}
+            {itemToggleMap}
+            {sectionsInlineWidth}
+            {sheetDocument}
+            tabId={CONSTANTS.TAB_ACTOR_SPELLBOOK}
+          />
+        {/if}
       {/if}
     {/each}
   {/if}
