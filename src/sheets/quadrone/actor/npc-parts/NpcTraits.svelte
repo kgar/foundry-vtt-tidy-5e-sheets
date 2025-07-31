@@ -9,6 +9,13 @@
   const localize = FoundryAdapter.localize;
 </script>
 
+<!-- {#if context.unlocked}
+<div class="title-container">
+  <h3 class="font-title-small">{localize('DND5E.Traits')}</h3>
+  <tidy-gold-header-underline></tidy-gold-header-underline>
+</div>
+{/if} -->
+
 <div class="list traits">
   <!-- Speed -->
   <CharacterTraitConfigurableListEntry
@@ -113,6 +120,7 @@
   />
 </div>
 
+{#if context.unlocked}
 <!-- Special Traits -->
 <button
   type="button"
@@ -125,3 +133,4 @@
   <i class="fa-solid fa-star"></i>
   {localize('DND5E.SpecialTraits')}
 </button>
+{/if}

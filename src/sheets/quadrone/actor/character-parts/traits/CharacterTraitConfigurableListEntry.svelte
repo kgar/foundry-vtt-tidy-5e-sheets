@@ -49,18 +49,29 @@
 
 {#if context.unlocked || entries.length || !!alwaysShow}
   <div class={['list-entry', { empty: empty && !isCustomTrait }]}>
-    <div class={['list-label']}>
+    <div class={['list-label', 'flexrow']}>
       <h4 class="font-weight-label">
         <i class={icon}></i>
         {label}
       </h4>
+      {#if context.unlocked}
+      <button
+        aria-label={configurationLabel}
+        type="button"
+        class="button button-borderless button-icon-only button-config flexshrink"
+        data-tooltip={configurationTooltip ?? configurationLabel}
+        onclick={(ev) => onconfig(ev)}
+      >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
     </div>
     <div class="list-content">
       <div class="list-values">
         {#if entries.length}
           <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
         {/if}
-        {#if context.unlocked && empty && !isCustomTrait}
+        <!-- {#if context.unlocked && empty && !isCustomTrait}
           <button
             type="button"
             class="button button-tertiary"
@@ -69,21 +80,8 @@
           >
             {localize('CONTROLS.CommonEdit')}
           </button>
-        {/if}
+        {/if} -->
       </div>
-      {#if context.unlocked}
-        <div class="list-controls">
-          <button
-            aria-label={configurationLabel}
-            type="button"
-            class="button button-borderless button-icon-only button-config"
-            data-tooltip={configurationTooltip ?? configurationLabel}
-            onclick={(ev) => onconfig(ev)}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
-        </div>
-      {/if}
     </div>
   </div>
 {/if}
