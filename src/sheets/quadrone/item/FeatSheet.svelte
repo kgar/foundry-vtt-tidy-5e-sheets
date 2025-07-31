@@ -50,7 +50,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar sectionLabel={'DND5E.Features'} />
+<Sidebar />
 
 <main class="item-content">
   <div class="sheet-header">

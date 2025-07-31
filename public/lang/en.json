@@ -236,10 +236,6 @@
   "TIDY5E.WorldSettings.TabItem": {
     "tabLabel": "Item"
   },
-  "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-    "name": "Include Tidy Section Fields in Default Sheets",
-    "hint": "Includes Tidy Section and Action Section inputs in the default item sheets."
-  },
   "TIDY5E.WorldSettings.ItemIdentificationPermission": {
     "name": "Item Identification Permission",
     "hint": "Determines which type of user is able to access the UI controls for identifying items.",
@@ -822,6 +818,7 @@
   "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Cast Activity Spell Grouping",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
+  "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Include Spellbook sections in the Statblock tab",
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",

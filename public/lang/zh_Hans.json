@@ -195,10 +195,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "物品"
     },
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "在默认卡中包含 Tidy 分区字段",
-        "hint": "在默认的物品卡中包含 Tidy 部分和动作部分的输入内容。"
-    },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "锁定卡",
         "header": "锁定选项",

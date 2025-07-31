@@ -1404,22 +1404,6 @@ export function createSettings() {
         },
       },
 
-      includeTidySectionFieldsInDefaultSheets: {
-        options: {
-          name: 'TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets.name',
-          hint: 'TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'includeTidySectionFieldsInDefaultSheets'
-          );
-        },
-      },
-
       itemIdentificationPermission: {
         options: {
           name: 'TIDY5E.WorldSettings.ItemIdentificationPermission.name',

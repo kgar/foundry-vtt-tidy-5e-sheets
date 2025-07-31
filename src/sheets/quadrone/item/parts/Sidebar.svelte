@@ -26,14 +26,12 @@
     aboveCustomSections?: Snippet;
     /** Include the item properties list above the custom sections controls. Default: true */
     includeSidebarProperties?: boolean;
-    sectionLabel?: string;
   }
 
   let {
     belowStateSwitches,
     aboveCustomSections,
     includeSidebarProperties = true,
-    sectionLabel = 'TIDY5E.Section.Label',
   }: Props = $props();
 
   // Rarity
@@ -480,10 +478,8 @@
   <!-- Custom Sections -->
 
   {#if showCustomSections}
-    {@const actionsLabel =
-      context.item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
-        ? 'Sheet'
-        : 'TIDY5E.Actions.TabName'}
+    {@const sectionLabel = SheetSections.getSectionLabel(context.item)}
+    {@const actionSectionLabel = SheetSections.getActionSectionLabel(context.item)}
     {@const sectionType =
       context.item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
         ? 'Sheet'
@@ -504,7 +500,7 @@
             ).render(true)}
         >
           <span class="text-normal">
-            {localize(sectionLabel)}
+            {sectionLabel}
           </span>
           <span class="hyphens-auto">
             {section}
@@ -523,7 +519,7 @@
             ).render(true)}
         >
           <span class="text-normal">
-            {localize(actionsLabel)}
+            {actionSectionLabel}
           </span>
           <span class="hyphens-auto">
             {actionSection}

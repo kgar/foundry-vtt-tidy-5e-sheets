@@ -50,7 +50,7 @@
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
 
-<Sidebar sectionLabel={'DND5E.Inventory'}>
+<Sidebar>
   {#snippet belowStateSwitches()}
     {#if armorPills.length}
       <div>

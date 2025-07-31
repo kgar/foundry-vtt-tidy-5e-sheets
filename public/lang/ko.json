@@ -195,10 +195,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "아이템"
     },
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "기본 시트에 Tidy 섹션 포함하기",
-        "hint": "기본 아이템 시트에 Tidy 섹션과 행동 섹션 입력값 포함하기"
-    },
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "name": "아이템 식별 허가",
         "hint": "아이템 식별을 위한 UI 컨트롤에 접근할 수 있는 사용자 유형을 결정합니다.",

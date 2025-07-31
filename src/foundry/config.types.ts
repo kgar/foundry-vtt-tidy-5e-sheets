@@ -2918,84 +2918,24 @@ export type CONFIG = {
       crew: string;
     };
     activityActivationTypes: {
-      action: {
-        label: string;
-        group: string;
-      };
-      bonus: {
-        label: string;
-        group: string;
-      };
-      reaction: {
-        label: string;
-        group: string;
-      };
-      minute: {
-        label: string;
-        group: string;
-        scalar: boolean;
-      };
-      hour: {
-        label: string;
-        group: string;
-        scalar: boolean;
-      };
-      day: {
-        label: string;
-        group: string;
-        scalar: boolean;
-      };
-      longRest: {
-        label: string;
-        group: string;
-        passive: boolean;
-      };
-      shortRest: {
-        label: string;
-        group: string;
-        passive: boolean;
-      };
-      encounter: {
-        label: string;
-        group: string;
-        passive: boolean;
-      };
-      turnStart: {
-        label: string;
-        group: string;
-        passive: boolean;
-      };
-      turnEnd: {
-        label: string;
-        group: string;
-        passive: boolean;
-      };
-      legendary: {
-        label: string;
-        group: string;
-        scalar: boolean;
-      };
-      mythic: {
-        label: string;
-        group: string;
-        scalar: boolean;
-      };
-      lair: {
-        label: string;
-        group: string;
-      };
-      crew: {
-        label: string;
-        group: string;
-        scalar: boolean;
-      };
-      special: {
-        label: string;
-      };
-    } & Record<
-      string,
-      { label: string; group?: string; scalar?: boolean; passive?: boolean }
-    >;
+      [k in
+        | 'action'
+        | 'bonus'
+        | 'reaction'
+        | 'minute'
+        | 'hour'
+        | 'day'
+        | 'longRest'
+        | 'shortRest'
+        | 'encounter'
+        | 'turnStart'
+        | 'turnEnd'
+        | 'legendary'
+        | 'mythic'
+        | 'lair'
+        | 'crew'
+        | 'special']: ActivityActivationTypeConfig;
+    } & Record<string, ActivityActivationTypeConfig>;
     abilityConsumptionTypes: {
       ammo: string;
       attribute: string;
@@ -5605,4 +5545,12 @@ export type SpellProgressionConfig = {
   divisor?: number;
   roundUp?: boolean;
   type?: string;
+};
+
+export type ActivityActivationTypeConfig = {
+  label: string;
+  group?: string;
+  scalar?: boolean;
+  passive?: boolean;
+  header?: string;
 };

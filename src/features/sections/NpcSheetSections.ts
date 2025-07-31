@@ -40,6 +40,7 @@ export class NpcSheetSections {
     customSectionOptions: Partial<NpcAbilitySection>
   ): NpcAbilitySection {
     return {
+      type: CONSTANTS.SECTION_TYPE_FEATURE,
       label: customSectionName,
       items: [],
       hasActions: true,

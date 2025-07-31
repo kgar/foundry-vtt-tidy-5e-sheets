@@ -747,7 +747,8 @@
         "SectionSelectorExistingSections": "Sezioni Esistenti",
         "SectionSelectorCreateNewSection": "Crea nuova sezione",
         "SectionSelectorNewSectionName": "Nome nuova sezione",
-        "SectionSelectorSaveNewSection": "Salva nuova sezione"
+        "SectionSelectorSaveNewSection": "Salva nuova sezione",
+        "SectionSelectorChooseTabSectionTooltip": "Scegli Sezione {tabName}"
     },
     "TIDY5E.LocalizationTestKey": "Tasto Prova Localizzazione",
     "TIDY5E.UseDefaultDialog": {
@@ -791,10 +792,6 @@
     "TIDY5E.Group.HideMemberTabInfoPanel": "Nascondi Pannello Info",
     "TIDY5E.Tidy5eSettings": "Impostazioni Schede Tidy 5e",
     "TIDY5E.ExhaustionLevelTooltip": "Livello Indebolimento {level}",
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Includi Campi Sezione di Tidy nelle schede predefinite",
-        "hint": "Include gli input della Sezione Tidy e della Sezione Azioni nei nelle schede oggetto predefinite."
-    },
     "TIDY5E.Facilities.Hirelings.Label": "Mercenari",
     "TIDY5E.Facilities.Creatures.Label": "Creature",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",

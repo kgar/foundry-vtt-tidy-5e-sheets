@@ -37,6 +37,7 @@ import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import UserPreferencesService from '../user-preferences/UserPreferencesService';
 import type { SpellcastingConfigEntry } from 'src/foundry/config.types';
+import { Inventory } from './Inventory';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
@@ -83,6 +84,7 @@ export class SheetSections {
     options: Partial<SpellbookSection>
   ): SpellbookSection {
     return {
+      type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
@@ -170,6 +172,7 @@ export class SheetSections {
       (s: SpellbookSectionLegacy) =>
         ({
           ...s,
+          type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
           uses: Number.isNumeric(s.uses) ? +s.uses : undefined,
           slots: Number.isNumeric(s.slots) ? +s.slots : undefined,
           key: s.slot,
@@ -392,7 +395,8 @@ export class SheetSections {
     context:
       | CharacterSheetContext
       | NpcSheetContext
-      | CharacterSheetQuadroneContext,
+      | CharacterSheetQuadroneContext
+      | NpcSheetQuadroneContext,
     items: Item5e[]
   ): Item5e[] {
     const itemContext = context.itemContext;
@@ -629,6 +633,38 @@ export class SheetSections {
     return configuredFavorites;
   }
 
+  static configureStatblock<TSection extends FeatureSection | SpellbookSection>(
+    sections: TSection[],
+    context: NpcSheetQuadroneContext,
+    tabId: string,
+    sheetPreferences: SheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ) {
+    try {
+      sections = SheetSections.sortKeyedSections(sections, sectionConfig);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      return sections.map(({ ...section }) => {
+        // Sort Statblock entries
+        if (section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK) {
+          section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
+        } else {
+          section.items = ItemUtils.getSortedItems(section.items, sortMode);
+        }
+
+        // Apply visibility from configuration
+        section.show = sectionConfig?.[section.key]?.show !== false;
+
+        return section;
+      });
+    } catch (e) {
+      error('An error occurred while configuring features', false, e);
+    }
+
+    return sections;
+  }
+
   static configureFeatures<
     TSection extends
       | CharacterFeatureSection
@@ -639,7 +675,8 @@ export class SheetSections {
     context:
       | CharacterSheetContext
       | NpcSheetContext
-      | CharacterSheetQuadroneContext,
+      | CharacterSheetQuadroneContext
+      | NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: SheetPreference,
     sectionConfig?: Record<string, SectionConfig>
@@ -768,5 +805,25 @@ export class SheetSections {
         );
       })
       .map((x) => x.section);
+  }
+
+  static getSectionLabel(item: Item5e) {
+    let value = Inventory.isItemInventoryType(item)
+      ? 'DND5E.Inventory'
+      : item.type === CONSTANTS.ITEM_TYPE_FEAT
+      ? 'DND5E.Features'
+      : item.type === CONSTANTS.ITEM_TYPE_SPELL
+      ? 'DND5E.Spellbook'
+      : 'TIDY5E.Section.Label';
+
+    return FoundryAdapter.localize(value);
+  }
+
+  static getActionSectionLabel(item: Item5e) {
+    return item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ? FoundryAdapter.localize('Sheet')
+      : item.parent?.type === CONSTANTS.SHEET_TYPE_NPC
+      ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
+      : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 }

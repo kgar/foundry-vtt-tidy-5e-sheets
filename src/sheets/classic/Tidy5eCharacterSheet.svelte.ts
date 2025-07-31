@@ -25,8 +25,8 @@ import {
   type FacilityOccupantContext,
   type FacilitySection,
   type ChosenFacilityContext,
-  type TypedActivityFavoriteSection,
   type AttributePinContext,
+  type ActivitySection,
 } from 'src/types/types';
 import { mount } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
@@ -869,6 +869,7 @@ export class Tidy5eCharacterSheet
     // ------------------------------------------------------------
 
     let effectsSection: EffectFavoriteSection = {
+      type: CONSTANTS.SECTION_TYPE_EFFECT,
       canCreate: false,
       dataset: {},
       effects: [],
@@ -879,7 +880,7 @@ export class Tidy5eCharacterSheet
     };
     const favoriteEffects = (
       this.actor.system.favorites as CharacterFavorite[]
-    ).filter((f) => f.type === 'effect');
+    ).filter((f) => f.type === CONSTANTS.SECTION_TYPE_EFFECT);
 
     // TODO: Do I need to remove active effects from favorites when they are no longer available on the sheet?
     // Or does the system do this?
@@ -909,13 +910,13 @@ export class Tidy5eCharacterSheet
       });
     }
 
-    const activitiesSection: TypedActivityFavoriteSection = {
+    const activitiesSection: ActivitySection = {
       activities: [],
       dataset: {},
       key: 'tidy-favorite-activities',
       label: 'DND5E.ACTIVITY.Title.other',
       show: true,
-      type: CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
+      type: CONSTANTS.SECTION_TYPE_ACTIVITY,
       rowActions: [], // for the UI Overhaul
     };
 
@@ -943,7 +944,7 @@ export class Tidy5eCharacterSheet
     if (effectsSection.effects.length) {
       context.favorites.push({
         ...effectsSection,
-        type: CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT,
+        type: CONSTANTS.SECTION_TYPE_EFFECT,
       });
     }
 
@@ -1193,6 +1194,7 @@ export class Tidy5eCharacterSheet
 
     let favoriteFacilities: FacilitySection[] = [
       {
+        type: CONSTANTS.SECTION_TYPE_FACILITY,
         dataset: {},
         items: favorites.facilities,
         key: 'tidy-favorite-bastion-facilities',
@@ -1215,25 +1217,25 @@ export class Tidy5eCharacterSheet
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.FAVORITES_SECTION_TYPE_INVENTORY,
+          type: CONSTANTS.SECTION_TYPE_INVENTORY,
         })),
       ...Object.values(favoriteFeatures)
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE,
+          type: CONSTANTS.SECTION_TYPE_FEATURE,
         })),
       ...favoriteSpellbook
         .filter((s: SpellbookSection) => s.items.length)
         .map((s: SpellbookSection) => ({
           ...s,
-          type: CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK,
+          type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
         })),
       ...favoriteFacilities
         .filter((i) => i.items.length)
         .map((i) => ({
           ...i,
-          type: CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY,
+          type: CONSTANTS.SECTION_TYPE_FACILITY,
         })),
     ];
   }

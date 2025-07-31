@@ -6,7 +6,6 @@
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import SectionsFormGroup from '../../item/parts/SectionsFormGroup.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -221,5 +220,3 @@
     </div>
   </div>
 </fieldset>
-
-<SectionsFormGroup />

@@ -149,6 +149,11 @@ export class ItemFilterRuntime {
       ]),
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
+      [CONSTANTS.TAB_NPC_STATBLOCK]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
       [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
@@ -410,6 +415,42 @@ export class ItemFilterRuntime {
       },
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
+      [CONSTANTS.TAB_NPC_STATBLOCK]: {
+        'DND5E.ItemActivationCost': [
+          {
+            ...defaultItemFilters.activationCostAction,
+            pinnedFilterClass: 'hide-under-400',
+          },
+          {
+            ...defaultItemFilters.activationCostBonus,
+            pinnedFilterClass: 'hide-under-400',
+          },
+          {
+            ...defaultItemFilters.activationCostReaction,
+            pinnedFilterClass: 'hide-under-400',
+          },
+          defaultItemFilters.activationCostLegendary,
+          defaultItemFilters.activationCostMythic,
+          defaultItemFilters.activationCostLair,
+          defaultItemFilters.activationCostCrew,
+          defaultItemFilters.activationCostSpecial,
+        ],
+        'DND5E.SpellComponents': [
+          defaultItemFilters.verbal,
+          defaultItemFilters.somatic,
+          defaultItemFilters.material,
+          defaultItemFilters.concentration,
+          defaultItemFilters.ritual,
+        ],
+        'DND5E.SpellPreparation.Mode': [
+          defaultItemFilters.prepared,
+          defaultItemFilters.canCastSpell,
+        ],
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          defaultItemFilters.canUse,
+        ],
+      },
       [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         'DND5E.ItemActivationCost': [
           {

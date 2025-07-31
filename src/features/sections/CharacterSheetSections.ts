@@ -8,9 +8,8 @@ import type {
   CharacterItemPartitions,
   FavoriteSection,
   FeatureSection,
-  GenericFavoriteSection,
-  TypedActivityFavoriteSection,
-  TypedEffectFavoriteSection,
+  EffectFavoriteSection,
+  ActivitySection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -32,6 +31,7 @@ export class CharacterSheetSections {
 
     const features: Record<string, CharacterFeatureSection> = {
       race: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: CONFIG.Item.typeLabels.race,
         items: races,
         hasActions: false,
@@ -44,6 +44,7 @@ export class CharacterSheetSections {
         ...options,
       },
       background: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: CONFIG.Item.typeLabels.background,
         items: backgrounds,
         hasActions: false,
@@ -56,6 +57,7 @@ export class CharacterSheetSections {
         ...options,
       },
       classes: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: `${CONFIG.Item.typeLabels.class}Pl`,
         items: classes,
         hasActions: false,
@@ -69,6 +71,7 @@ export class CharacterSheetSections {
         ...options,
       },
       active: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: 'DND5E.FeatureActive',
         items: feats.filter((feat) => !!feat.system.activities?.size),
         hasActions: true,
@@ -86,6 +89,7 @@ export class CharacterSheetSections {
         ...options,
       },
       passive: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: 'DND5E.FeaturePassive',
         items: feats.filter((feat) => !feat.system.activities?.size),
         hasActions: false,
@@ -148,6 +152,7 @@ export class CharacterSheetSections {
     customSectionOptions: Partial<CharacterFeatureSection>
   ): CharacterFeatureSection {
     return {
+      type: CONSTANTS.SECTION_TYPE_FEATURE,
       label: customSectionName,
       items: [],
       hasActions: true,
@@ -177,8 +182,8 @@ export class CharacterSheetSections {
     tabId: string,
     feats: Item5e[],
     options: Partial<CharacterFeatureSection>
-  ): TidyItemSectionBase[] {
-    let featuresMap: Record<string, TidyItemSectionBase> = {};
+  ): FeatureSection[] {
+    let featuresMap: Record<string, FeatureSection> = {};
 
     function buildOriginKey(id: string) {
       return `tidy-feature-section-origin-${id}`;
@@ -333,7 +338,7 @@ export class CharacterSheetSections {
     title: string;
     options: Partial<TidyItemSectionBase>;
     custom?: boolean;
-  }): TidyItemSectionBase {
+  }): FeatureSection {
     let custom = args.custom
       ? {
           creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
@@ -342,6 +347,7 @@ export class CharacterSheetSections {
       : undefined;
 
     return {
+      type: CONSTANTS.SECTION_TYPE_FEATURE,
       key: args.key,
       rowActions: [],
       items: [],
@@ -349,6 +355,7 @@ export class CharacterSheetSections {
       show: true,
       dataset: {},
       custom,
+      canCreate: true,
       ...args.options,
     };
   }
@@ -381,15 +388,12 @@ export class CharacterSheetSections {
   static mergeDuplicateFavoriteSections(sections: FavoriteSection[]) {
     let sectionsMap: Record<
       string,
-      Exclude<
-        FavoriteSection,
-        TypedEffectFavoriteSection | TypedActivityFavoriteSection
-      >
+      Exclude<FavoriteSection, EffectFavoriteSection | ActivitySection>
     > = {};
     for (let section of sections) {
       if (
-        section.type === CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT ||
-        section.type === CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY
+        section.type === CONSTANTS.SECTION_TYPE_EFFECT ||
+        section.type === CONSTANTS.SECTION_TYPE_ACTIVITY
       ) {
         continue;
       }
@@ -403,7 +407,7 @@ export class CharacterSheetSections {
 
       const incomingItems = section.items;
 
-      if (mappedSection.type !== CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC) {
+      if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
         const mappedItems = mappedSection.items;
 
         sectionsMap[section.key] =
@@ -421,11 +425,20 @@ export class CharacterSheetSections {
     return Object.values(sectionsMap);
   }
 
+  static getItemsFromFavoriteSection(
+    section: Exclude<FavoriteSection, EffectFavoriteSection | ActivitySection>
+  ) {
+    return section.type === CONSTANTS.TAB_ACTOR_SPELLBOOK
+      ? section.spells
+      : section.items;
+  }
+
   static createGenericFavoriteSection(
     key: string,
     items: Item5e[]
-  ): GenericFavoriteSection & { type: 'generic' } {
+  ): CharacterFeatureSection {
     return {
+      type: 'feature',
       canCreate: false,
       dataset: [],
       items: items,
@@ -437,7 +450,6 @@ export class CharacterSheetSections {
       },
       isExternal: false,
       show: true,
-      type: 'generic',
       rowActions: [], // for the UI Overhaul
     };
   }

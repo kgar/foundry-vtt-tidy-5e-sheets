@@ -85,12 +85,6 @@
       });
     }
 
-    await tick();
-
-    if (currentTarget.value !== value.toString()) {
-      currentTarget.value = value.toString();
-    }
-
     return result;
   }
 
