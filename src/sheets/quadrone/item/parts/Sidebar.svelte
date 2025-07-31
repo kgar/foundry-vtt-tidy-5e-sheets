@@ -474,7 +474,7 @@
 
   {#if showCustomSections}
     {@const sectionLabel = SheetSections.getSectionLabel(context.item)}
-    {@const actionsLabel = SheetSections.getActionSectionLabel(context.item)}
+    {@const actionSectionLabel = SheetSections.getActionSectionLabel(context.item)}
     {@const sectionType =
       context.item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
         ? 'Sheet'
@@ -514,7 +514,7 @@
             ).render(true)}
         >
           <span class="text-normal">
-            {actionsLabel}
+            {actionSectionLabel}
           </span>
           <span class="hyphens-auto">
             {actionSection}
