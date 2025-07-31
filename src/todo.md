@@ -15,12 +15,6 @@
   - [ ] CR
   - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
   - [ ] abilities
-- [X] ~~Background~~ Biography
-  - [x] Functionality
-- [ ] Journal
-  - [ ] Functionality
-  - [ ] Drag drop
-  - [ ] Context menu
 - [ ] Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 
@@ -303,3 +297,9 @@ Limited:
     - [x] Basic functionality
     - [x] Toggling
     - [x] Conditions
+  - [X] ~~Background~~ Biography
+    - [x] Functionality
+  - [x] Journal
+    - [x] Functionality
+    - [x] Drag drop
+    - [x] Context menu
