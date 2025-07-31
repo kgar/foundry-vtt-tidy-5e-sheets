@@ -96,10 +96,15 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
     } satisfies Record<string, ColumnSpecification>;
 
     const standardSpellColumns = {
+      uses: {
+        ...columns.uses,
+        order: 100,
+        priority: 200,
+      },
       components: {
         ...columns.components,
         order: 100,
-        priority: 300,
+        priority: 400,
       },
       school: {
         ...columns.school,
@@ -109,22 +114,22 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
       time: {
         ...standardInventoryColumns.time,
         order: 300,
-        priority: 400,
+        priority: 500,
       },
       target: {
         ...columns.target,
         order: 400,
-        priority: 200,
+        priority: 300,
       },
       range: {
         ...columns.range,
         order: 500,
-        priority: 500,
+        priority: 600,
       },
       roll: {
         ...standardWeaponColumns.roll,
         order: 600,
-        priority: 600,
+        priority: 700,
       },
       actions: standardItemActionsColumn,
     } satisfies Record<string, ColumnSpecification>;
