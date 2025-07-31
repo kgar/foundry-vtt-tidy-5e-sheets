@@ -1063,12 +1063,12 @@ export type SkillToolFavoriteContextEntry = {
   reference?: string;
 };
 
-export type SpellcastingContext = {
+export type SpellcastingContextBase = {
   name: string;
-  classIdentifier: string;
   ability: {
     key: string;
     label: string;
+    abbreviation: string;
     mod: {
       sign: string;
       value: string;
@@ -1081,12 +1081,22 @@ export type SpellcastingContext = {
     };
   };
   save: number;
+};
+
+export type NpcSpellcastingContext = {
+  type: 'npc';
+  level: number;
+} & SpellcastingContextBase;
+
+export type SpellcastingClassContext = {
+  type: 'class';
+  classIdentifier: string;
   primary: boolean;
   prepared: {
     value: string;
     max?: string;
   };
-};
+} & SpellcastingContextBase;
 
 export type FavoriteContextEntry =
   | ItemFavoriteContextEntry
@@ -1153,7 +1163,7 @@ export type CharacterSheetQuadroneContext = {
   species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
-  spellcasting: SpellcastingContext[];
+  spellcasting: SpellcastingClassContext[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
@@ -1167,7 +1177,12 @@ export type NpcSheetQuadroneContext = {
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   enriched: {
+    appearance: string;
     biography: string;
+    bond: string;
+    flaw: string;
+    ideal: string;
+    trait: string;
   };
   features: FeatureSection[];
   habitats: { label: string }[];
@@ -1183,6 +1198,7 @@ export type NpcSheetQuadroneContext = {
   skills: ActorSkillsToolsContext<SkillData>[];
   speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];
+  spellcasting: (SpellcastingClassContext | NpcSpellcastingContext)[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];

@@ -10,6 +10,8 @@ import type {
   NpcHabitat,
   NpcItemContext,
   NpcSheetQuadroneContext,
+  NpcSpellcastingContext,
+  SpellcastingClassContext,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -36,6 +38,7 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { splitSemicolons } from 'src/utils/array';
+import { getModifierData } from 'src/utils/formatting';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -154,8 +157,28 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       currencies,
       effects: enhancedEffectSections,
       enriched: {
+        appearance: await foundry.applications.ux.TextEditor.enrichHTML(
+          TidyFlags.appearance.get(this.actor) ?? '',
+          enrichmentArgs
+        ),
         biography: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.biography.value,
+          enrichmentArgs
+        ),
+        bond: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.bond,
+          enrichmentArgs
+        ),
+        flaw: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.flaw,
+          enrichmentArgs
+        ),
+        ideal: await foundry.applications.ux.TextEditor.enrichHTML(
+          this.actor.system.details.ideal,
+          enrichmentArgs
+        ),
+        trait: await foundry.applications.ux.TextEditor.enrichHTML(
+          TidyFlags.trait.get(this.actor) ?? '',
           enrichmentArgs
         ),
       },
@@ -190,6 +213,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         game.settings.get('dnd5e', 'loyaltyScore'),
       speeds: super._getMovementSpeeds(),
       spellbook: [],
+      spellcasting: this._prepareSpellcastingContext(actorContext.rollData),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         preferences.spellSlotTrackerMode ??
@@ -447,6 +471,49 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         vsmcr,
       ].filterJoin(' &bull; ');
     }
+  }
+
+  protected _prepareSpellcastingContext(
+    rollData: any
+  ): (SpellcastingClassContext | NpcSpellcastingContext)[] {
+    const classSpellcasting = this._prepareSpellcastingClassContext();
+
+    if (classSpellcasting.length) {
+      return classSpellcasting;
+    }
+
+    const { abilities, attributes, bonuses } = this.actor.system;
+    const msak = dnd5e.utils.simplifyBonus(bonuses.msak.attack, rollData);
+    const rsak = dnd5e.utils.simplifyBonus(bonuses.rsak.attack, rollData);
+    const ability = attributes.spellcasting;
+    const spellAbility = abilities[ability];
+    const abilityModValue = spellAbility?.mod ?? 0;
+    const abilityMod = getModifierData(abilityModValue);
+    const attackBonus = msak === rsak ? msak : 0;
+    const attackMod = getModifierData(
+      abilityModValue + attributes.prof + attackBonus
+    );
+
+    const abilityConfig = CONFIG.DND5E.abilities[ability];
+    const npcSpellcasting: NpcSpellcastingContext = {
+      type: 'npc',
+      name: game.i18n.format('DND5E.SpellcastingClass', {
+        class: game.i18n.format('DND5E.NPC.Label'),
+      }),
+      ability: {
+        key: ability,
+        mod: abilityMod,
+        label: abilityConfig?.label ?? ability,
+        abbreviation: abilityConfig?.abbreviation ?? ability,
+      },
+      attack: {
+        mod: attackMod,
+      },
+      level: attributes.spell.level,
+      save: spellAbility?.dc ?? 0,
+    };
+
+    return [npcSpellcasting];
   }
 
   /* -------------------------------------------- */

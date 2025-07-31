@@ -16,7 +16,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
-  import CharacterSpellbookFooter from '../character-parts/CharacterSpellbookFooter.svelte';
+  import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
 
   let context =
@@ -122,7 +122,4 @@
   {searchCriteria}
 />
 
-<CharacterSpellbookFooter
-  class={{ hidden: tabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
-  {tabId}
-/>
+<ActorSpellbookFooter {tabId} />

@@ -5,7 +5,7 @@ import NpcStatblockTab from 'src/sheets/quadrone/actor/tabs/NpcStatblockTab.svel
 import ActorInventoryTab from 'src/sheets/quadrone/actor/tabs/ActorInventoryTab.svelte';
 import ActorSpellbookTab from 'src/sheets/quadrone/actor/tabs/ActorSpellbookTab.svelte';
 import ActorJournalTab from 'src/sheets/quadrone/actor/tabs/ActorJournalTab.svelte';
-import CharacterBiographyTab from 'src/sheets/quadrone/actor/tabs/CharacterBiographyTab.svelte';
+import NpcBiographyTab from 'src/sheets/quadrone/actor/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 
 export const NpcSheetQuadroneRuntime =
@@ -54,7 +54,7 @@ export const NpcSheetQuadroneRuntime =
       {
         title: 'DND5E.Biography',
         content: {
-          component: CharacterBiographyTab,
+          component: NpcBiographyTab,
           type: 'svelte',
         },
         id: CONSTANTS.TAB_ACTOR_BIOGRAPHY,

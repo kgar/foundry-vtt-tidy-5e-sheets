@@ -1,12 +1,16 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { CharacterSheetQuadroneContext } from 'src/types/types';
+  import type {
+    CharacterSheetQuadroneContext,
+    NpcSheetQuadroneContext,
+  } from 'src/types/types';
   import type { ClassValue } from 'svelte/elements';
-  import SpellcastingClassSummaryCard from '../parts/SpellcastingClassSummaryCard.svelte';
+  import SpellcastingClassSummaryCard from './SpellcastingClassSummaryCard.svelte';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { visibilityObserver } from 'src/attachments/visibility-observer.svelte';
+    import SpellcastingNpcSummaryCard from './SpellcastingNpcSummaryCard.svelte';
 
   interface Props {
     class?: ClassValue;
@@ -15,7 +19,12 @@
 
   let { class: classValue, tabId }: Props = $props();
 
-  let context = $derived(getSheetContext<CharacterSheetQuadroneContext>());
+  let context =
+    $derived(
+      getSheetContext<
+        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
+      >(),
+    );
 
   function onAddClicked() {
     context.actor.sheet._addDocument({
@@ -45,7 +54,11 @@
 <div class={['sheet-footer spellbook-footer flexrow', classValue]}>
   <div class="sheet-footer-left spellcasting-cards flexcol">
     {#each context.spellcasting as info}
-      <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} />
+      {#if info.type === 'class'}
+        <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} />
+      {:else if info.type === 'npc'}
+        <SpellcastingNpcSummaryCard {info} {mode} />
+      {/if}
     {/each}
   </div>
 
