@@ -647,11 +647,7 @@ export class SheetSections {
 
       return sections.map(({ ...section }) => {
         // Sort Statblock entries
-        if (section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK) {
-          section.spells = ItemUtils.getSortedItems(section.spells, sortMode);
-        } else {
-          section.items = ItemUtils.getSortedItems(section.items, sortMode);
-        }
+        section.items = ItemUtils.getSortedItems(section.items, sortMode);
 
         // Apply visibility from configuration
         section.show = sectionConfig?.[section.key]?.show !== false;

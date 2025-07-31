@@ -425,14 +425,6 @@ export class CharacterSheetSections {
     return Object.values(sectionsMap);
   }
 
-  static getItemsFromFavoriteSection(
-    section: Exclude<FavoriteSection, EffectFavoriteSection | ActivitySection>
-  ) {
-    return section.type === CONSTANTS.TAB_ACTOR_SPELLBOOK
-      ? section.spells
-      : section.items;
-  }
-
   static createGenericFavoriteSection(
     key: string,
     items: Item5e[]
