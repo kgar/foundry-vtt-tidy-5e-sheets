@@ -48,16 +48,21 @@
     backdrop-filter: unset;
     -webkit-backdrop-filter: unset;
   }
-}
-
-/* Form Resets */
-
-form {
-  .form-group {
-    .form-fields {
-      input[type="checkbox"] {
-        flex-basis: var(--checkbox-size);
+  
+  /* Form Resets */
+  form {
+    .form-group {
+      .form-fields {
+        input[type="checkbox"] {
+          flex-basis: var(--checkbox-size);
+        }
       }
     }
+  }
+
+  // Tidy uses `.tidy-tab`. Anyone injecting a `.tab` element is likely porting default sheet injections into a `.tidy-tab`.
+  // therefore, make `.tab` use default display.
+  .tidy-tab .tab {
+    display: unset;
   }
 }
