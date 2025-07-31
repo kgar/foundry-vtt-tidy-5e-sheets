@@ -10,6 +10,10 @@
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
+
+  let { showFiligree = true }: { 
+    showFiligree?: boolean
+  } = $props();
 </script>
 
 {#if context.showLegendaryActions}
@@ -23,6 +27,7 @@
     maxPath="system.resources.legact.max"
     maxTooltip="DND5E.LegendaryAction.Max"
     unlocked={context.unlocked}
+    showFiligree={showFiligree}
   />
 {/if}
 
@@ -37,16 +42,25 @@
     maxPath="system.resources.legres.max"
     maxTooltip="DND5E.LegendaryResistance.Max"
     unlocked={context.unlocked}
+    showFiligree={showFiligree}
+    icon="helmet-battle"
   />
 {/if}
 
-{#if context.showLairTracker}
-  <FiligreeCard class="npc-score-tracker lair-tracker">
+{#snippet lairActions()}
+
     {#if context.modernRules && context.unlocked}
       <!-- Checkbox - has lair -->
+      {#if showFiligree}
       <h3>
         {localize('DND5E.LAIR.HasLair')}
       </h3>
+      {:else}
+      <h3 class="font-label-medium bordered">
+        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+        {localize('DND5E.LAIR.HasLair')}
+      </h3>
+      {/if}
       <span class="value">
         <CheckboxQuadrone
           document={context.actor}
@@ -56,9 +70,16 @@
       </span>
     {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
       <!-- Switch - inside lair -->
+      {#if showFiligree}
       <h3>
         {localize('DND5E.LAIR.Inside')}
       </h3>
+      {:else}
+      <h3 class="font-label-medium bordered">
+        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+        {localize('DND5E.LAIR.Inside')}
+      </h3>
+      {/if}
       <FieldToggle
         class="inside-lair-toggle"
         checked={context.system.resources.linear.inside}
@@ -69,9 +90,16 @@
       />
     {:else if !context.modernRules}
       <!-- Lair initiative -->
+      {#if showFiligree}
       <h3>
         {localize('DND5E.LAIR.Action.Label')}
       </h3>
+      {:else}
+      <h3 class="font-label-medium bordered">
+        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+        {localize('DND5E.LAIR.Action.Label')}
+      </h3>
+      {/if}
       <TextInputQuadrone
         document={context.actor}
         field="system.resources.lair.initiative"
@@ -85,5 +113,16 @@
         class="lair-ini-input"
       />
     {/if}
-  </FiligreeCard>
+{/snippet}
+
+{#if context.showLairTracker}
+  {#if showFiligree}
+    <FiligreeCard class="npc-score-tracker lair-tracker">
+      {@render lairActions()}
+    </FiligreeCard>
+  {:else}
+    <div class="npc-score-tracker lair-tracker">
+      {@render lairActions()}
+    </div>
+  {/if}
 {/if}

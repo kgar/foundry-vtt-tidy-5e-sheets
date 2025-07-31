@@ -246,6 +246,21 @@
   .sidebar {
     gap: var(--t5e-size-3x);
 
+    h4,
+    h3 {
+      i {
+        font-size: var(--font-size-12);
+        margin-right: 0.1875rem;
+        color: var(--t5e-color-icon-diminished);
+      }
+    }
+
+    h3.bordered {
+      border-bottom: 0.0625rem solid var(--t5e-color-gold);
+      padding: 0.25rem 0;
+      margin-bottom: 0.25rem;
+    }
+
     .traits {
       gap: 0.5rem;
 
@@ -255,11 +270,9 @@
         gap: 0.1875rem;
 
         &.empty {
-          .list-label i {
-            color: var(--t5e-color-icon-default);
-          }
 
-          &:hover .list-label h4 {
+          &:hover .list-label h4,
+          &:hover .list-label i {
             color: var(--t5e-color-text-default);
           }
         }
@@ -268,13 +281,13 @@
           margin-right: 0;
           max-height: 1rem;
 
-          i {
-            font-size: var(--font-size-12);
-          }
-
           h4 {
             transition: color var(--t5e-transition-default);
             color: var(--t5e-color-text-lighter);
+
+            i {
+              transition: color var(--t5e-transition-default);
+            }
           }
         }
 
@@ -283,6 +296,34 @@
           min-height: auto;
           padding: 0.125rem 0.25rem;
         }
+      }
+    }
+
+    .skills {
+      padding: 0;
+      background: none;
+
+      .skill-expand-button {
+        padding: 0;
+      }
+
+      .skill-list {
+
+        li {
+          width: auto;
+        }
+      }
+    }
+
+    .npc-score-tracker {
+      input {
+        font-size: var(--font-size-16);
+        font-weight: var(--font-weight-bold);
+        text-align: center;
+      }
+
+      .uses {
+        gap: 0.25rem;
       }
     }
   }

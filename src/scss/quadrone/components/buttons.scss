@@ -492,7 +492,7 @@
       background: transparent;
     }
 
-    &:hover {
+    &:hover:not(:disabled) {
       i {
         color: var(--t5e-color-icon-default);
       }
@@ -512,11 +512,11 @@
       }
     }
 
-    &.button-icon-only:hover {
+    &.button-icon-only:not(:disabled):hover {
       text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
     }
 
-    &.button-icon-only.button-borderless {
+    &.button-icon-only.button-borderless:not(:disabled) {
       &:hover {
         background: rgba(0, 0, 0, 1);
       }
@@ -527,7 +527,7 @@
       --icon-fill: var(--t5e-color-icon-disabled);
     }
 
-    &:focus-within:not(.button-toggle) {
+    &:focus-within:not(.button-toggle):not(:disabled) {
       --button-border: var(--t5e-component-field-border-hover);
       --button-background: var(--t5e-component-field-background-hover);
     }
