@@ -148,18 +148,50 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
       actions: standardInventoryColumns.actions,
     } satisfies Record<string, ColumnSpecification>;
 
+    const standardConsumableColumns = {
+      uses: {
+        ...columns.uses,
+        order: 100,
+        priority: 300,
+      },
+      time: {
+        ...columns.time,
+        order: 200,
+        priority: 500,
+      },
+      price: {
+        ...columns.price,
+        order: 300,
+        priority: 200,
+      },
+      quantity: {
+        ...columns.quantity,
+        order: 400,
+        priority: 400,
+      },
+      weight: {
+        ...columns.weight,
+        order: 500,
+        priority: 100,
+      },
+      actions: standardItemActionsColumn,
+    } satisfies Record<string, ColumnSpecification>;
+
     const creatureInventorySections = {
-      [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
+      [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+      [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
       [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
       [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
-      [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+      [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
     };
 
     return {
       [CONSTANTS.SHEET_TYPE_CONTAINER]: {
         [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
-          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
+          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
+          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
         },
       },
       [CONSTANTS.SHEET_TYPE_CHARACTER]: {
