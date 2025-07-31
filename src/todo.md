@@ -46,7 +46,7 @@
   - [x] Sorting
   - [x] Custom Sections
   - [x] Inline containers
-- [ ] Spellbook
+- [x] Spellbook
   - [x] Prep
   - [x] Filters
   - [x] Sorting
@@ -56,7 +56,13 @@
     - [x] Section Per Item
   - [x] Spellbook footer for NPCs without classes
 - [ ] Effects
+  - [ ] Prep
+  - [ ] Basic functionality
+  - [ ] Toggling
+  - [ ] Conditions
+  - [ ] ???
 - [ ] Background
+  - [ ] 
 - [ ] Journal
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 
