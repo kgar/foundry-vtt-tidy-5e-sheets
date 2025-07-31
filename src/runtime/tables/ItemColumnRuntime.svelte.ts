@@ -182,6 +182,18 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
       },
       [CONSTANTS.SHEET_TYPE_NPC]: {
+        [CONSTANTS.TAB_NPC_STATBLOCK]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            recovery: { ...columns.recovery, order: 100, priority: 400 },
+            uses: { ...columns.uses, order: 200, priority: 600 },
+            roll: { ...columns.roll, order: 300, priority: 800 },
+            formula: { ...columns.formula, order: 400, priority: 700 },
+            range: { ...columns.range, order: 500, priority: 300 },
+            target: { ...columns.target, order: 600, priority: 800 },
+            time: { ...columns.time, order: 700, priority: 800 },
+            actions: { ...columns.actions, order: 1000, priority: 1000 },
+          },
+        },
         [CONSTANTS.TAB_ACTOR_INVENTORY]: creatureInventorySections,
         [CONSTANTS.TAB_ACTOR_SPELLBOOK]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,

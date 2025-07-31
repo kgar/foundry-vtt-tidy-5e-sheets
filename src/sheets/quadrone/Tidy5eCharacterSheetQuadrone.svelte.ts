@@ -26,6 +26,7 @@ import type {
   LocationToSearchTextMap,
   SpellcastingContext,
   InspirationSource,
+  FeatureSection,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -562,10 +563,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
-    const inventoryRowActions =
-      TableRowActionsRuntime.getInventoryRowActions(context);
-    // Categorize items as inventory, spellbook, features, and classes
+    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { hasActionsTab: true }
+    );
 
+    // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections({
         rowActions: inventoryRowActions,
@@ -666,7 +669,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spells,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context),
+        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
+          hasActionsTab: true,
+        }),
       }
     );
 
@@ -689,7 +694,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     // Section Features
-    const features: TidyItemSectionBase[] =
+    const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
         context.unlocked,
@@ -697,7 +702,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         feats,
         {
           canCreate: true,
-          rowActions: TableRowActionsRuntime.getFeatureRowActions(context),
+          rowActions:
+            TableRowActionsRuntime.getCharacterFeatureRowActions(context),
         }
       );
 
@@ -737,7 +743,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ].filterJoin(' &bull; ');
     } else if (Inventory.isItemInventoryType(item)) {
       const containerName = this.actor.items.get(item.system.container)?.name;
-
       context.actionSubtitle = [containerName].filterJoin(' &bull; ');
     }
 

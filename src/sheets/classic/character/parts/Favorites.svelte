@@ -33,8 +33,8 @@
   $effect(() => {
     const sections = favorites.filter(
       (x) =>
-        x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT &&
-        x.type !== CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY,
+        x.type !== CONSTANTS.SECTION_TYPE_EFFECT &&
+        x.type !== CONSTANTS.SECTION_TYPE_ACTIVITY,
     );
 
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
@@ -70,23 +70,23 @@
         </InventoryList>
       {/if}
       <!-- TODO: Cut a copy of the Favorite Features component and custom tailor it for the generic section -->
-      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_FEATURE || section.type === CONSTANTS.FAVORITES_SECTION_TYPE_GENERIC}
+      {#if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
         <FavoriteFeaturesList {section} />
       {/if}
-      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_SPELLBOOK}
+      {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
         <FavoriteSpellsList {section} />
       {/if}
-      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_EFFECT}
+      {#if section.type === CONSTANTS.SECTION_TYPE_EFFECT}
         {@const visibleEffectIdSubset = FoundryAdapter.searchEffects(
           searchCriteria,
           section.effects.map((e) => e.effect),
         )}
         <FavoriteEffectsList {section} {visibleEffectIdSubset} />
       {/if}
-      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_FACILITY}
+      {#if section.type === CONSTANTS.SECTION_TYPE_FACILITY}
         <FavoriteFacilitiesList {section} />
       {/if}
-      {#if section.type === CONSTANTS.FAVORITES_SECTION_TYPE_ACTIVITY}
+      {#if section.type === CONSTANTS.SECTION_TYPE_ACTIVITY}
         {@const visibleActivityUuidSubset = FoundryAdapter.searchActivities(
           searchCriteria,
           section.activities,

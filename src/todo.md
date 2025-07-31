@@ -30,12 +30,34 @@
       - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
         - [x] 2014
         - [x] Modern
-- [ ] Statblock
+- [x] Statblock
+  - [x] Item / section prep
+  - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
+  - [x] Row actions (and Header Add Button)
+  - [x] Column specs
+  - [x] Filters
+  - [x] Test/confirm section show/hide, section ordering
+  - [x] Test search
+  - [x] Test filtering
+  - [x] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
 - [ ] Inventory
+  - [ ] Prep
+  - [ ] Filters
+  - [ ] Sorting
+  - [ ] Custom Sections
+  - [ ] Inline containers
 - [ ] Spellbook
+  - [ ] Prep
+  - [ ] Filters
+  - [ ] Sorting
+  - [ ] Custom Sections
+  - [ ] Items with Spells
+    - [ ] Additional Spells
+    - [ ] Section Per Item
 - [ ] Effects
 - [ ] Background
 - [ ] Journal
+- [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 
 #### NPC Statblock Sections notes
 
@@ -63,6 +85,8 @@ context.itemCategories.features?.forEach(i => {
 
 Determining "group" (which for us is simply section key):
 ```js
+const isPassive = item.system.properties?.has("trait")
+  || CONFIG.DND5E.activityActivationTypes[item.system.activities?.contents[0]?.activation.type]?.passive;
 ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
 ```
 
@@ -265,3 +289,6 @@ Limited:
 - [x] Weapon Favorite stats cell is missing formatting classes
 - [x] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
 - [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)
+- [x] Make NPC Statblock tab section config work.
+- [x] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
+- [x] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.

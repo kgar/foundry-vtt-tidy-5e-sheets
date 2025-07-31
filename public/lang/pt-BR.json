@@ -753,10 +753,6 @@
     "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave",
     "TIDY5E.ExhaustionLevelTooltip": "Exaustão Nível {level}",
     "TIDY5E.Tidy5eSettings": "Configurações Tidy 5e Sheets",
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Incluir Campos de Seção do Tidy em Fichas Padrão",
-        "hint": "Inclui entradas de Seção do Tidy e Seção de Ação nas fichas padrão de itens."
-    },
     "TIDY5E.Facilities.Defenders.Label": "Defensores",
     "TIDY5E.Facilities.Creatures.Label": "Criaturas",
     "TIDY5E.Facilities.Hirelings.Label": "Mercenários",

@@ -802,6 +802,7 @@ export function Tidy5eActorSheetQuadroneBase<
     _addDocumentItemTypes(tab: string): string[] {
       switch (tab) {
         case CONSTANTS.TAB_CHARACTER_FEATURES:
+        case CONSTANTS.TAB_NPC_STATBLOCK:
           return ['feat'];
         case CONSTANTS.TAB_ACTOR_INVENTORY:
           return Inventory.getInventoryTypes();
