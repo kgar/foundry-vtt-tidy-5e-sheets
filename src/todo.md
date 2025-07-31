@@ -47,13 +47,14 @@
   - [x] Custom Sections
   - [x] Inline containers
 - [ ] Spellbook
-  - [ ] Prep
-  - [ ] Filters
-  - [ ] Sorting
-  - [ ] Custom Sections
-  - [ ] Items with Spells
-    - [ ] Additional Spells
-    - [ ] Section Per Item
+  - [x] Prep
+  - [x] Filters
+  - [x] Sorting
+  - [x] Custom Sections
+  - [x] Items with Spells
+    - [x] Additional Spells
+    - [x] Section Per Item
+  - [x] Spellbook footer for NPCs without classes
 - [ ] Effects
 - [ ] Background
 - [ ] Journal
