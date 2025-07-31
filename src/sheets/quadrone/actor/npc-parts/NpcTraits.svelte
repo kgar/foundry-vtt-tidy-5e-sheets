@@ -9,7 +9,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="list">
+<div class="list traits">
   <!-- Speed -->
   <CharacterTraitConfigurableListEntry
     label={localize('DND5E.Speed')}

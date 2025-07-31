@@ -2327,28 +2327,9 @@
     }
   }
 
-  // TODO: Move this to a more specific component file
-  .attributes {
 
-    .actor-traits {
-      padding-bottom: var(--t5e-size-12x);
-    }
-
-    .actor-traits-header {
-      align-items: flex-start;
-      gap: var(--t5e-size-2x);
-
-      .actor-traits-title {
-        padding-top: var(--t5e-size-1x);
-      }
-
-      .button {
-        flex: 0;
-        text-wrap: nowrap;
-      }
-    }
-
-    .list {
+  .traits {
+    &.list {
       .trait-item {
         gap: var(--t5e-size-1x);
         margin-right: var(--t5e-size-2x);
@@ -2373,8 +2354,6 @@
 
 
       .list-entry {
-        padding: var(--t5e-size-1x) 0;
-        border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
 
         .item-image-link {
           width: 1.75rem;
@@ -2442,7 +2421,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        flex: 1;
+        flex: 0;
         justify-content: end;
 
         select {
@@ -2466,7 +2445,7 @@
           border-color: var(--t5e-color-palette-orange-40);
 
           i {
-            color: var(--t5e-color-text-oninverse-default);
+            color: var(--t5e-icon-color-light);
           }
         }
       }

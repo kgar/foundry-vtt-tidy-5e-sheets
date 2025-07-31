@@ -243,6 +243,30 @@
     align-items: center;
   }
 
+  .sidebar {
+    gap: var(--t5e-size-3x);
+
+    .traits {
+      gap: 0.5rem;
+
+
+      .list-entry {
+        flex-direction: column;
+        gap: 0.125rem;
+
+        .list-label h4 {
+          color: var(--t5e-color-text-lighter);
+        }
+
+        .pill {
+          justify-content: baseline;
+          min-height: auto;
+          padding: 0.125rem 0.25rem;
+        }
+      }
+    }
+  }
+
   &.theme-dark {
     background: url(../../modules/tidy5e-sheet/images/denim065.png),
       var(--t5e-component-card-dark-darker);
