@@ -55,12 +55,11 @@
     - [x] Additional Spells
     - [x] Section Per Item
   - [x] Spellbook footer for NPCs without classes
-- [ ] Effects
-  - [ ] Prep
-  - [ ] Basic functionality
-  - [ ] Toggling
-  - [ ] Conditions
-  - [ ] ???
+- [x] Effects
+  - [x] Prep
+  - [x] Basic functionality
+  - [x] Toggling
+  - [x] Conditions
 - [ ] Background
   - [ ] 
 - [ ] Journal
