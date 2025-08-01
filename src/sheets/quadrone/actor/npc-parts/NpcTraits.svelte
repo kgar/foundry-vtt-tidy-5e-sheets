@@ -9,7 +9,14 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="list">
+<!-- {#if context.unlocked}
+<div class="title-container">
+  <h3 class="font-title-small">{localize('DND5E.Traits')}</h3>
+  <tidy-gold-header-underline></tidy-gold-header-underline>
+</div>
+{/if} -->
+
+<div class="list traits">
   <!-- Speed -->
   <CharacterTraitConfigurableListEntry
     label={localize('DND5E.Speed')}
@@ -111,10 +118,25 @@
       }).render({ force: true })}
     icon="fa-solid fa-gem"
   />
+
+    <!-- Special Traits -->
+    {#if context.unlocked}
+    <CharacterTraitConfigurableListEntry
+    label={localize('DND5E.SpecialTraits')}
+    entries={[]}
+    configurationTooltip={localize('DND5E.SpecialTraits')}
+    onconfig={() =>
+      new SpecialTraitsApplication({ document: context.actor }).render({
+        force: true,
+      })}
+    icon="fa-solid fa-star"
+  />
+  {/if}
 </div>
 
+{#if context.unlocked}
 <!-- Special Traits -->
-<button
+<!-- <button
   type="button"
   class="button"
   onclick={() =>
@@ -124,4 +146,5 @@
 >
   <i class="fa-solid fa-star"></i>
   {localize('DND5E.SpecialTraits')}
-</button>
+</button> -->
+{/if}

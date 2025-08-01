@@ -68,15 +68,13 @@
 
 <header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
-    <div class="character-details-container flexcol">
+    <div class="actor-details-container flexcol">
       <div
-        class="character-context-row flexrow {context.enableXp
-          ? 'show-xp'
-          : ''}"
+        class="actor-context-row flexrow {context.enableXp ? 'show-xp' : ''}"
       >
         <div class="flexcol flex1">
           <div
-            class="character-details-name-row"
+            class="actor-details-name-row"
             data-tidy-sheet-part="name-header-row"
           >
             {#if context.unlocked}
@@ -84,14 +82,11 @@
                 field="name"
                 document={context.actor}
                 value={context.actor.name}
-                class="character-name flex1 h1"
+                class="actor-name flex1 h1"
                 data-tidy-sheet-part="actor-name"
               />
             {:else}
-              <h1
-                class="character-name flex1"
-                data-tidy-sheet-part="actor-name"
-              >
+              <h1 class="actor-name flex1" data-tidy-sheet-part="actor-name">
                 {context.actor.name}
               </h1>
             {/if}
@@ -293,10 +288,10 @@
         </div>
       </div>
     </div>
-    <div class="character-vitals-container">
+    <div class="actor-vitals-container">
       <!-- TODO: Add switch for size -->
       <CharacterPortrait />
-      <div class="character-vitals">
+      <div class="actor-vitals">
         <div class="hp-row flexrow">
           <div
             class="meter progress hit-points"
@@ -404,7 +399,7 @@
             </button>
           {/if}
         </div>
-        <div class="character-vitals-row">
+        <div class="actor-vitals-row">
           {#if exhaustionBarFocused}
             <CharacterExhaustionBar
               level={exhaustionLevel}
@@ -520,7 +515,7 @@
       {extraTabs}
       tabs={context.tabs}
       sheet={context.actor.sheet}
-      cssClass="character-tabs"
+      cssClass="actor-tabs"
       tabContext={{ context, actor: context.actor }}
     />
   </div>

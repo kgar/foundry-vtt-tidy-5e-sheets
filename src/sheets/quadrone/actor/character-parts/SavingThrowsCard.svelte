@@ -23,12 +23,14 @@
 </script>
 
 <FiligreeCard class="saving-throws card">
-  <div class="use-ability-header flexrow">
-    <i class="fa-solid fa-shield-heart color-text-lightest"></i>
+  <div class="card-header use-ability-header flexrow">
+    <i class="fa-solid fa-shield-heart color-icon-diminished"></i>
     <h3 class="font-label-medium">
       {localize('DND5E.ClassSaves')}
     </h3>
-    <span class="modifier-label color-text-lightest font-default-medium flexshrink">
+    <span
+      class="modifier-label color-text-lightest font-default-medium flexshrink"
+    >
       {localize('DND5E.Modifier')}
     </span>
   </div>
@@ -44,14 +46,14 @@
         {@render savingThrowRow(ability)}
       </li>
     {/each}
-  <!-- </ul> -->
-  <!-- Concentration here -->
-  {#if context.saves.concentration && (context.isConcentrating || context.unlocked)}
-    {@const conc = context.saves.concentration}
-    {@const tooltip = localize('DND5E.AbilityConfigure', {
-      ability: context.saves.concentration.label,
-    })}
-    <!-- <ul class="saving-throws-special-column unlist use-ability-list"> -->
+    <!-- </ul> -->
+    <!-- Concentration here -->
+    {#if context.saves.concentration && (context.isConcentrating || context.unlocked)}
+      {@const conc = context.saves.concentration}
+      {@const tooltip = localize('DND5E.AbilityConfigure', {
+        ability: context.saves.concentration.label,
+      })}
+      <!-- <ul class="saving-throws-special-column unlist use-ability-list"> -->
       <li style="order: 50">
         <i class="fas fa-head-side-brain color-text-gold"></i>
         <button
@@ -83,7 +85,7 @@
           </button>
         {/if}
       </li>
-  {/if}
+    {/if}
   </ul>
 </FiligreeCard>
 
@@ -99,7 +101,9 @@
     disabled={!context.unlocked}
     path="system.abilities.{ability.key}.proficient"
     type="ability"
-    value={context.unlocked ? (ability.source?.proficient ?? 0) : ability.proficient}
+    value={context.unlocked
+      ? (ability.source?.proficient ?? 0)
+      : ability.proficient}
   />
   <button
     type="button"

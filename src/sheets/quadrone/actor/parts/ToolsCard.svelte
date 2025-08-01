@@ -44,7 +44,7 @@
       onclick={() =>
         context.unlocked && FoundryAdapter.renderToolsConfig(context.actor)}
     >
-      <i class="fa-solid fa-hammer color-text-lightest"></i>
+      <i class="fa-solid fa-hammer color-icon-diminished"></i>
       <h3 class="font-label-medium">
         <span>{localize('TYPES.Item.toolPl')}</span>
         {#if context.unlocked}

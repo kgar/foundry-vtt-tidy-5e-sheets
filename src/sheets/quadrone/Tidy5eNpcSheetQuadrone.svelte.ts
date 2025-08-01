@@ -38,6 +38,8 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { splitSemicolons } from 'src/utils/array';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
@@ -65,11 +67,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    position: {
-      width: 740,
-      height: 810,
-    },
-  };
+      position: {
+        width: 740,
+        height: 810,
+      },
+    };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -117,6 +119,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: this.actor,
+    });
+
     // Effects & Conditions
     let baseEffects =
       dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -148,6 +154,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       rollData: actorContext.rollData,
       relativeTo: this.actor,
     };
+    const showToken =
+      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+      true || themeSettings.portraitShape === 'token';
+    const effectiveToken = this.actor.isToken
+      ? this.actor.token
+      : this.actor.prototypeToken;
 
     const context: NpcSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
@@ -185,6 +197,13 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       features: [],
       habitats: [],
       inventory: [],
+      portrait: {
+        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+        src: showToken
+          ? effectiveToken?.texture.src ?? this.actor.img
+          : this.actor.img,
+        path: showToken ? 'prototypeToken.texture.src' : 'img',
+      },
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       senses: super._getSenses(),
@@ -523,7 +542,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _renderFrame(options: TidyDocumentSheetRenderOptions) {
     const element = await super._renderFrame(options);
 
-    element.querySelector('.window-header').classList.add('theme-dark');
+    const theme = getThemeV2(this.actor);
+    element.querySelector('.window-header').classList.add(`theme-${theme}`);
 
     return element;
   }
