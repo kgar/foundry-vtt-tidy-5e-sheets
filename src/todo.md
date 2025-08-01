@@ -2,8 +2,7 @@
 
 ### The Short List
 
-
-- [ ] Investigate: Setting default image shape does not update image shapes for sheets with no settings
+- [ ] Fix: Source is missing in NPC header
 - [ ] (wait for another hightouch PR) Refactor rename and move the following to Actor space and out of Character space
   - [ ] (confirm) CharacterPortrait 
   - [ ] (confirm) CharacterExhaustionBar 
@@ -270,6 +269,7 @@ Limited:
     - [x] Drag drop
     - [x] Context menu
 - [x] Fix: column counts on item sheets is missing
+- [x] Fix: Setting default image shape does not update image shapes for sheets with no settings
 
 
 #### NPC Statblock Sections notes
