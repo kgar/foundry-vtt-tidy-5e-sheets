@@ -180,9 +180,9 @@
               {/if}
             </div>
             <div class="ability-labels flexcol">
-              <span class="label font-label-medium color-text-gold">Score</span>
+              <span class="label font-label-medium color-text-gold">{localize('DND5E.AbilityScoreShort')}</span>
               <span class="divider"></span>
-              <span class="label font-label-medium color-text-gold">Save</span>
+              <span class="label font-label-medium color-text-gold">{localize('DND5E.SavingThrowShort')}</span>
             </div>
           </div>
           {#each context.abilities as ability}
