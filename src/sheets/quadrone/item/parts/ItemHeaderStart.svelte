@@ -1,12 +1,21 @@
 <script lang="ts">
   import ConfigurableSource from '../../shared/ConfigurableSource.svelte';
   import SheetHeaderEditModeToggleV2 from 'src/sheets/classic/shared/SheetHeaderModeToggleV2.svelte';
-  import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type {
+    ContainerSheetQuadroneContext,
+    ItemSheetQuadroneContext,
+  } from 'src/types/item.types';
 
-  const context = $derived(getContainerSheetQuadroneContext());
+  const context =
+    $derived(
+      getSheetContext<
+        ItemSheetQuadroneContext | ContainerSheetQuadroneContext
+      >(),
+    );
 
   let sourceText = $derived(
-    (context.unlocked && !context.system.source?.label)
+    context.unlocked && !context.system.source?.label
       ? game.i18n.localize('DND5E.SOURCE.FIELDS.source.label')
       : context.system.source?.label,
   );

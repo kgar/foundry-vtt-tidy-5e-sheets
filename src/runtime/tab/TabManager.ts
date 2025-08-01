@@ -28,6 +28,7 @@ export class TabManager {
           onRender: sheetTab.onRender,
           content: await getTabContent(context, sheetTab),
           autoHeight: sheetTab.autoHeight,
+          itemCount: sheetTab.itemCount,
         };
 
         tabs.push(tab);

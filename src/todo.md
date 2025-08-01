@@ -2,31 +2,29 @@
 
 ### The Short List
 
-- [ ] Refactor rename and move the following to Actor space and out of Character space
+- [ ] (wait for another hightouch PR) Refactor rename and move the following to Actor space and out of Character space
   - [ ] (confirm) CharacterPortrait 
   - [ ] (confirm) CharacterExhaustionBar 
   - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraitConfigurableListEntry.svelte
   - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraits.svelte
   - [ ] (confirm) src/sheets/quadrone/actor/character-parts/CharacterSubtitle.svelte
   - [ ] (confirm) src/sheets/quadrone/actor/character-parts/SavingThrowsCard.svelte
-- [ ] Chase NPC
-
-### NPC Sheet
-
-- [ ] Header
-  - [ ] Portrait
-  - [ ] AC and Vitals
-  - [ ] Name
-  - [ ] Subtitle
-  - [ ] Sheet header buttons
-  - [ ] CR
-  - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
-  - [ ] abilities
-- [ ] Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.
-- [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
+- [ ] NPC Sheet
+  - [ ] Make loyalty tracker match legendary trackers
+  - [ ] Header
+    - [ ] Portrait
+    - [ ] AC and Vitals
+    - [ ] Name
+    - [ ] Subtitle
+    - [ ] Sheet header buttons
+    - [ ] CR
+    - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
+    - [ ] abilities
 
 ### (Almost) Everything after the short list
 
+- [ ] Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.
+- [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
 - [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
   - [ ] Identify all resize observers which can be removed.
@@ -267,6 +265,10 @@ Limited:
     - [x] Functionality
     - [x] Drag drop
     - [x] Context menu
+- [x] Fix: column counts on item sheets is missing
+- [x] Fix: Setting default image shape does not update image shapes for sheets with no settings
+- [x] Fix: Source is missing in NPC header -- gave the code to hightouch to plug in, since he's working in the area.
+
 
 #### NPC Statblock Sections notes
 
