@@ -208,7 +208,7 @@
       <div class="item-rarity-container">
         {#if context.unlocked}
           <SelectQuadrone
-            id="rarity-{context.item.sheet.id}"
+            id="rarity-{context.sheet.id}"
             document={context.item}
             field="system.rarity"
             class={['item-rarity-selector', 'capitalize', itemColorClasses]}

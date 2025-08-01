@@ -89,7 +89,7 @@
             class="create-recovery-button button-borderless"
             data-tooltip="DND5E.USES.Recovery.Action.Create"
             aria-label={localize('DND5E.USES.Recovery.Action.Create')}
-            onclick={() => context.item.sheet.addRecovery()}
+            onclick={() => context.sheet.addRecovery()}
             disabled={!context.unlocked}
           >
             <i class="fas fa-plus"></i>
@@ -119,7 +119,7 @@
                 ? recovery.data.period
                 : systemRecovery[index].period}
               onchange={(ev) =>
-                context.item.sheet.updateRecovery(
+                context.sheet.updateRecovery(
                   index,
                   'period',
                   ev.currentTarget.value,
@@ -147,7 +147,7 @@
                   ? recovery.data.type
                   : systemRecovery[index].type}
                 onchange={(ev) =>
-                  context.item.sheet.updateRecovery(
+                  context.sheet.updateRecovery(
                     index,
                     'type',
                     ev.currentTarget.value,
@@ -176,7 +176,7 @@
                   id="{appId}-uses-recovery-{index}-formula"
                   data-tidy-field="system.uses.recovery.{index}.formula"
                   onchange={(ev) =>
-                    context.item.sheet.updateRecovery(
+                    context.sheet.updateRecovery(
                       index,
                       'formula',
                       ev.currentTarget.value,
@@ -198,7 +198,7 @@
                   id="{appId}-uses-recovery-{index}-formula"
                   data-tidy-field="system.uses.recovery.{index}.formula"
                   onchange={(ev) =>
-                    context.item.sheet.updateRecovery(
+                    context.sheet.updateRecovery(
                       index,
                       'formula',
                       ev.currentTarget.value,
@@ -219,7 +219,7 @@
               data-action="deleteRecovery"
               title={localize('DND5E.USES.Recovery.Action.Delete')}
               aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
-              onclick={() => context.item.sheet.deleteRecovery(index)}
+              onclick={() => context.sheet.deleteRecovery(index)}
             >
               <i class="fas fa-minus"></i>
             </button>

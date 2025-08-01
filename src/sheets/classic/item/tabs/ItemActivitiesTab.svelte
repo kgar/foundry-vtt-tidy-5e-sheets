@@ -33,7 +33,7 @@
       <button
         type="button"
         class="add-activity-button w-100"
-        onclick={() => context.item.sheet.addActivity()}
+        onclick={() => context.sheet.addActivity()}
         tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>

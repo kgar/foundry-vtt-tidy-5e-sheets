@@ -76,7 +76,7 @@
         class="inline-icon-button create-recovery-button"
         data-tooltip="DND5E.USES.Recovery.Action.Create"
         aria-label={localize('DND5E.USES.Recovery.Action.Create')}
-        onclick={() => context.item.sheet.addRecovery()}
+        onclick={() => context.sheet.addRecovery()}
         tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-plus"></i>
@@ -97,7 +97,7 @@
             data-tidy-field="system.uses.recovery.{index}.period"
             value={recovery.data.period}
             onchange={(ev) =>
-              context.item.sheet.updateRecovery(
+              context.sheet.updateRecovery(
                 index,
                 'period',
                 ev.currentTarget.value,
@@ -123,7 +123,7 @@
               data-tidy-field="system.uses.recovery.{index}.type"
               value={recovery.data.type}
               onchange={(ev) =>
-                context.item.sheet.updateRecovery(
+                context.sheet.updateRecovery(
                   index,
                   'type',
                   ev.currentTarget.value,
@@ -150,7 +150,7 @@
                 id="{appId}-uses-recovery-{index}-formula"
                 data-tidy-field="system.uses.recovery.{index}.formula"
                 onchange={(ev) =>
-                  context.item.sheet.updateRecovery(
+                  context.sheet.updateRecovery(
                     index,
                     'formula',
                     ev.currentTarget.value,
@@ -170,7 +170,7 @@
                 id="{appId}-uses-recovery-{index}-formula"
                 data-tidy-field="system.uses.recovery.{index}.formula"
                 onchange={(ev) =>
-                  context.item.sheet.updateRecovery(
+                  context.sheet.updateRecovery(
                     index,
                     'formula',
                     ev.currentTarget.value,
@@ -189,7 +189,7 @@
             data-action="deleteRecovery"
             title={localize('DND5E.USES.Recovery.Action.Delete')}
             aria-label={localize('DND5E.USES.Recovery.Action.Delete')}
-            onclick={() => context.item.sheet.deleteRecovery(index)}
+            onclick={() => context.sheet.deleteRecovery(index)}
             tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-minus"></i>

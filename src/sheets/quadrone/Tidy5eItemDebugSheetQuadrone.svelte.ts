@@ -22,6 +22,7 @@ export type ItemDebugSheetQuadroneContext = {
   item: Item5e;
   itemDescriptions: ItemDescription[];
   name: ItemNameContext;
+  sheet: Tidy5eItemDebugSheetQuadrone;
   system: any;
   tabs: Tab[];
   unlocked: boolean;
@@ -147,6 +148,7 @@ export class Tidy5eItemDebugSheetQuadrone extends TidyExtensibleDocumentSheetMix
         editable: this.item._source.name,
         field: this.item.schema.getField('name'),
       },
+      sheet: this,
       system: this.document.system,
       tabs: [
         {
