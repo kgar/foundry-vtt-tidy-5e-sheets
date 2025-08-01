@@ -48,8 +48,9 @@
     backdrop-filter: unset;
     -webkit-backdrop-filter: unset;
   }
-  
+
   /* Form Resets */
+  &:is(form),
   form {
     .form-group {
       .form-fields {

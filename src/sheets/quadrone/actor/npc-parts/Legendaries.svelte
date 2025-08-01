@@ -37,7 +37,7 @@
   <NpcScoreTrackerCard
     actor={context.actor}
     label={localize('DND5E.LegendaryResistance.Label')}
-    value={context.system.resources.legact.value}
+    value={context.system.resources.legres.value}
     valuePath="system.resources.legres.value"
     valueTooltip="DND5E.LegendaryResistance.Remaining"
     max={context.system.resources.legres.max}
@@ -65,11 +65,15 @@
       {/if}
     </div>
     <span class="value">
-      <CheckboxQuadrone
-        document={context.actor}
-        field="system.resources.lair.value"
-        checked={context.system.resources.lair.value}
-      />
+      <label class="label hidden" for="lair-has-lair">{localize('DND5E.LAIR.HasLair')}</label>
+      <FieldToggle
+      id="lair-has-lair"
+      checked={context.system.resources.lair.value}
+      onchange={(ev) =>
+        context.actor.update({
+          ['system.resources.lair.value']: ev.currentTarget.checked,
+        })}
+    />
     </span>
   {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
     <!-- Switch - inside lair -->
@@ -85,13 +89,16 @@
         </h3>
       {/if}
     </div>
-    <FieldToggle
-      checked={context.system.resources.lair.inside}
-      onchange={(ev) =>
-        context.actor.update({
-          ['system.resources.lair.inside']: ev.currentTarget.checked,
-        })}
-    />
+    <span class="value">
+      <label class="label hidden" for="lair-inside">{localize('DND5E.LAIR.Inside')}</label>
+      <FieldToggle
+        checked={context.system.resources.lair.inside}
+        onchange={(ev) =>
+          context.actor.update({
+            ['system.resources.lair.inside']: ev.currentTarget.checked,
+          })}
+      />
+    </span>
   {:else if !context.modernRules}
     <!-- Lair initiative -->
     <div class="card-header flexrow">
