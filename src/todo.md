@@ -2,6 +2,13 @@
 
 ### The Short List
 
+- [ ] Refactor rename and move the following to Actor space and out of Character space
+  - [ ] (confirm) CharacterPortrait 
+  - [ ] (confirm) CharacterExhaustionBar 
+  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraitConfigurableListEntry.svelte
+  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraits.svelte
+  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/CharacterSubtitle.svelte
+  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/SavingThrowsCard.svelte
 - [ ] Chase NPC
 
 ### NPC Sheet
@@ -17,48 +24,6 @@
   - [ ] abilities
 - [ ] Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
-
-#### NPC Statblock Sections notes
-
-**Default sheets setup.**  
-NPC section prep:
-```js
-const sections = Object.entries(CONFIG.DND5E.activityActivationTypes).reduce((obj, [id, config], i) => {
-    const { header: label, passive } = config; // kgar note: the `special` activation type doesn't have "header". It just has "label". Recommend falling back to `label` when `header` is nil.
-    if ( passive ) return obj;
-    obj[id] ??= {
-    id, label, order: (i + 1) * 100, items: [], minWidth: 210,
-    columns: ["recovery", "uses", "roll", "formula", "controls"]
-    };
-    return obj;
-}, {});
-sections.passive = {
-    id: "passive", label: "DND5E.Features", order: 0, items: [], minWidth: 210,
-    columns: ["recovery", "uses", "roll", "formula", "controls"]
-};
-context.itemCategories.features?.forEach(i => {
-    const ctx = context.itemContext[i.id];
-    sections[ctx.group]?.items.push(i);
-});
-```
-
-Determining "group" (which for us is simply section key):
-```js
-const isPassive = item.system.properties?.has("trait")
-  || CONFIG.DND5E.activityActivationTypes[item.system.activities?.contents[0]?.activation.type]?.passive;
-ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
-```
-
-NPC sheet adds all weapons to the features itemcategory, in addition to their inventory home:
-```js
-  /** @inheritDoc */
-  _assignItemCategories(item) {
-    if ( ["class", "subclass"].includes(item.type) ) return new Set(["classes"]);
-    const categories = super._assignItemCategories(item);
-    if ( item.type === "weapon" ) categories.add("features"); // 👈 there
-    return categories;
-  }
-```
 
 ### (Almost) Everything after the short list
 
@@ -142,7 +107,6 @@ NPC sheet adds all weapons to the features itemcategory, in addition to their in
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`?
 
-### Module Compatibility
 
 ## hightouch To Do
 
@@ -303,3 +267,45 @@ Limited:
     - [x] Functionality
     - [x] Drag drop
     - [x] Context menu
+
+#### NPC Statblock Sections notes
+
+**Default sheets setup.**  
+NPC section prep:
+```js
+const sections = Object.entries(CONFIG.DND5E.activityActivationTypes).reduce((obj, [id, config], i) => {
+    const { header: label, passive } = config; // kgar note: the `special` activation type doesn't have "header". It just has "label". Recommend falling back to `label` when `header` is nil.
+    if ( passive ) return obj;
+    obj[id] ??= {
+    id, label, order: (i + 1) * 100, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+    };
+    return obj;
+}, {});
+sections.passive = {
+    id: "passive", label: "DND5E.Features", order: 0, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+};
+context.itemCategories.features?.forEach(i => {
+    const ctx = context.itemContext[i.id];
+    sections[ctx.group]?.items.push(i);
+});
+```
+
+Determining "group" (which for us is simply section key):
+```js
+const isPassive = item.system.properties?.has("trait")
+  || CONFIG.DND5E.activityActivationTypes[item.system.activities?.contents[0]?.activation.type]?.passive;
+ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
+```
+
+NPC sheet adds all weapons to the features itemcategory, in addition to their inventory home:
+```js
+  /** @inheritDoc */
+  _assignItemCategories(item) {
+    if ( ["class", "subclass"].includes(item.type) ) return new Set(["classes"]);
+    const categories = super._assignItemCategories(item);
+    if ( item.type === "weapon" ) categories.add("features"); // 👈 there
+    return categories;
+  }
+```
