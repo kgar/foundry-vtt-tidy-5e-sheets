@@ -93,12 +93,16 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
 
   _createComponent(node: HTMLElement): Record<string, any> {
     this._settings = this._getSettings();
+    const placeholders = this.document
+      ? this._mapSettings(ThemeQuadrone.getWorldThemeSettings())
+      : undefined;
 
     const component = mount(ThemeSettingsQuadrone, {
       target: node,
       props: {
         app: this,
         settings: this._settings,
+        placeholders,
       },
     });
 
@@ -118,11 +122,18 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         this.document
           ? ThemeQuadrone.getSheetThemeSettings({
               doc: this.document,
+              applyWorldThemeSetting: false,
             })
           : ThemeQuadrone.getWorldThemeSettings()
       );
 
-    let context: ThemeSettingsContext = {
+    let context: ThemeSettingsContext = this._mapSettings(themeSettings);
+
+    return context;
+  }
+
+  private _mapSettings(themeSettings: ThemeSettingsV2): ThemeSettingsContext {
+    return {
       value: {
         accentColor: themeSettings.accentColor,
         actorHeaderBackground: themeSettings.actorHeaderBackground,
@@ -148,8 +159,6 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         }),
       },
     };
-
-    return context;
   }
 
   /* -------------------------------------------- */

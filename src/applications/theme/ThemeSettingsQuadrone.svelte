@@ -1,5 +1,6 @@
 <script lang="ts">
   import type {
+    ThemeColorSettingConfigEntry,
     ThemeSettingsContext,
     ThemeSettingsQuadroneApplication,
   } from './ThemeSettingsQuadroneApplication.svelte';
@@ -17,15 +18,47 @@
   interface Props {
     app: ThemeSettingsQuadroneApplication;
     settings: ThemeSettingsContext;
+    placeholders: ThemeSettingsContext | undefined;
   }
 
-  let { app, settings: context }: Props = $props();
+  let { app, settings: context, placeholders }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
   let idPrefix = `theme-settings-${foundry.utils.randomID()}`;
 
   let portraitShapes = ThemeQuadrone.getActorPortraitShapes();
+
+  let portraitShapeDefaultValue =
+    placeholders?.value?.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE;
+
+  let portraitShapeDefaultLabel = localize(
+    'TIDY5E.UseSpecificDefaultValue.Label',
+    {
+      value: localize(
+        `TIDY5E.ThemeSettings.PortraitShape.option.${portraitShapeDefaultValue}`,
+      ),
+    },
+  );
+
+  let modeColorPlaceholders = createColorPlaceholderMap(
+    placeholders?.value.spellPreparationModeColors,
+  );
+
+  let rarityColorPlaceholders = createColorPlaceholderMap(
+    placeholders?.value.rarityColors,
+  );
+
+  function createColorPlaceholderMap(colors?: ThemeColorSettingConfigEntry[]) {
+    return (
+      colors?.reduce<Record<string, string>>((prev, curr) => {
+        if (!isNil(curr.value, '')) {
+          prev[curr.key] = curr.value;
+        }
+        return prev;
+      }, {}) ?? {}
+    );
+  }
 
   $effect(() => {
     const liveSettings = app.mapContextToSettings(context);
@@ -82,6 +115,7 @@
       key="accent-color"
       bind:value={context.value.accentColor}
       label={localize('TIDY5E.ThemeSettings.AccentColor.title')}
+      placeholder={placeholders?.value.accentColor}
     />
     <p class="hint">
       {localize('TIDY5E.ThemeSettings.SheetTheme.hint')}
@@ -99,7 +133,7 @@
             id="{idPrefix}-actor-portrait-shape"
             bind:value={context.value.portraitShape}
           >
-            <option value={undefined}></option>
+            <option value={undefined}>{portraitShapeDefaultLabel}</option>
             {#each portraitShapes as shape}
               <option value={shape}
                 >{localize(
@@ -119,6 +153,7 @@
             id="{idPrefix}-actor-header-background"
             type="text"
             bind:value={context.value.actorHeaderBackground}
+            placeholder={placeholders?.value.actorHeaderBackground}
           />
           <ImagePickerButton
             current={context.value.actorHeaderBackground}
@@ -139,6 +174,7 @@
             id="{idPrefix}-item-sidebar-background"
             type="text"
             bind:value={context.value.itemSidebarBackground}
+            placeholder={placeholders?.value.itemSidebarBackground}
           />
           <ImagePickerButton
             current={context.value.itemSidebarBackground}
@@ -160,6 +196,7 @@
         key={color.key}
         bind:value={color.value}
         label={color.label.titleCase()}
+        placeholder={rarityColorPlaceholders[color.key]}
       />
     {/each}
   </fieldset>
@@ -175,6 +212,7 @@
         key={color.key}
         bind:value={color.value}
         label={color.label}
+        placeholder={modeColorPlaceholders[color.key]}
       />
     {/each}
   </fieldset>

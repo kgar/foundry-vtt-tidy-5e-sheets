@@ -7,10 +7,17 @@
     key: string;
     label: string;
     value: string;
+    placeholder?: string;
     colorSelected?: () => void;
   }
 
-  let { label, value = $bindable(), key, colorSelected }: Props = $props();
+  let {
+    label,
+    value = $bindable(),
+    key,
+    colorSelected,
+    placeholder = '#FFFFFF',
+  }: Props = $props();
 
   const eyeDropperEnabled = 'EyeDropper' in window;
 
@@ -68,7 +75,7 @@
       id={inputId}
       {value}
       class="theme-color-textbox"
-      placeholder="#FFFFFF"
+      {placeholder}
       oninput={(ev) => onColorSelected(ev.currentTarget.value)}
     />
 
