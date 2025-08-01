@@ -178,7 +178,7 @@
             <div class="initiative score" data-tooltip="DND5E.Initiative">
               <button
                 type="button"
-                class="initiative-roll-button"
+                class="button-borderless initiative-roll-button"
                 onclick={(event) =>
                   context.actor.rollInitiativeDialog({ event: event })}
               >
