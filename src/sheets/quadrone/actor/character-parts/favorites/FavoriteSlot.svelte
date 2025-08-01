@@ -18,7 +18,7 @@
     [
       game.i18n.localize(`DND5E.SpellLevel${favorite.level}`),
       game.i18n.localize(
-        `DND5E.Abbreviation${CONFIG.DND5E.spellcastingTypes[favorite.id]?.shortRest ? 'SR' : 'LR'}`,
+        `DND5E.Abbreviation${CONFIG.DND5E.spellcasting[favorite.id]?.isSR ? 'SR' : 'LR'}`,
       ),
     ].filterJoin(` <div class="divider-dot"></div> `),
   );

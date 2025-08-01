@@ -3626,12 +3626,13 @@ export type CONFIG = {
       }
     >;
     movementTypes: {
-      burrow: string;
-      climb: string;
-      fly: string;
-      swim: string;
-      walk: string;
-    } & Record<string, string>;
+      [k in
+        | keyof 'burrow'
+        | 'climb'
+        | 'fly'
+        | 'swim'
+        | 'walk']: MovementTypeConfig;
+    } & Record<string, MovementTypeConfig>;
     movementUnits: {
       ft: MovementUnitConfig;
       mi: MovementUnitConfig;
@@ -3888,33 +3889,6 @@ export type CONFIG = {
       pact: SpellcastingConfigEntry;
       spell: SpellcastingConfigEntry;
     } & Record<string, SpellcastingConfigEntry>;
-    spellcastingTypes: {
-      leveled: {
-        label: string;
-        img: string;
-        progression: {
-          full: {
-            label: string;
-            divisor: number;
-          };
-          half: {
-            label: string;
-            divisor: number;
-            roundUp: boolean;
-          };
-          third: {
-            label: string;
-            divisor: number;
-          };
-          artificer: {
-            label: string;
-            divisor: number;
-            roundUp: boolean;
-          };
-        };
-        shortRest?: boolean;
-      };
-    } & Record<string, any>;
     spellProgression: {
       none: SpellProgressionConfig;
       full: SpellProgressionConfig;
@@ -5533,6 +5507,8 @@ export type SpellcastingConfigEntry = {
   getAvailableLevels: ((actor: Actor5e) => number[]) | undefined;
   getSpellSlotKey: ((level: number) => string) | undefined;
   getLabel: (options?: { level?: number; format?: 'short' | 'long' }) => string;
+  get isSR(): boolean;
+  get isLR(): boolean;
 };
 
 type LabelValuePair<TValue = string> = {
@@ -5553,4 +5529,9 @@ export type ActivityActivationTypeConfig = {
   scalar?: boolean;
   passive?: boolean;
   header?: string;
+};
+
+type MovementTypeConfig = {
+  label: string;
+  walkFallback?: boolean;
 };

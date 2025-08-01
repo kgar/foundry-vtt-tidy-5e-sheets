@@ -606,14 +606,14 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
-        .reduce<ActorSpeedSenseEntryContext[]>((acc, [key, label]) => {
+        .reduce<ActorSpeedSenseEntryContext[]>((acc, [key, config]) => {
           if (excludeSpeed(key)) {
             return acc;
           }
 
           acc.push({
             key,
-            label,
+            label: config.label,
             value: Math.round(+systemMovement[key]).toString() ?? '',
             units: systemMovement.units,
           });
@@ -631,7 +631,7 @@ export function Tidy5eActorSheetQuadroneBase<
       if (speeds.length === 0) {
         speeds.push({
           key: 'walk',
-          label: CONFIG.DND5E.movementTypes.walk,
+          label: CONFIG.DND5E.movementTypes.walk.label,
           units: systemMovement.units,
           value: systemMovement.walk?.toString() ?? '0',
         });

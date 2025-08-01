@@ -503,9 +503,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
         const isLeveledSpell = /spell\d+/.test(id);
         let img = !isLeveledSpell
-          ? CONFIG.DND5E.spellcastingTypes[id]?.img ||
-            CONFIG.DND5E.spellcastingTypes.pact.img
-          : CONFIG.DND5E.spellcastingTypes.leveled.img.replace('{id}', id);
+          ? CONFIG.DND5E.spellcasting[id]?.img ||
+            CONFIG.DND5E.spellcasting.pact.img
+          : CONFIG.DND5E.spellcasting.leveled.img.replace('{id}', id);
 
         const plurals = new Intl.PluralRules(game.i18n.lang, {
           type: 'ordinal',
@@ -721,7 +721,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   protected _prepareItem(item: Item5e, context: CharacterItemContext) {
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       const linked = item.system.linkedActivity?.item;
-      const prep = item.system.preparation || {};
 
       if (this._concentration.items.has(item)) {
         context.concentration = true;

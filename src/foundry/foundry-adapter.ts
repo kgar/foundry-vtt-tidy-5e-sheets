@@ -1448,9 +1448,10 @@ export const FoundryAdapter = {
       ];
     return Object.entries(CONFIG.DND5E.movementTypes).reduce<
       Record<string, MovementInfo>
-    >((obj, [k, label]) => {
+    >((obj, [k, config]) => {
       const value = movement[k];
-      if (value) obj[k] = { label, value, unit: units.abbreviation };
+      if (value)
+        obj[k] = { label: config.label, value, unit: units.abbreviation };
       return obj;
     }, {} satisfies Record<string, MovementInfo>);
   },
