@@ -86,7 +86,6 @@
       {/if}
     </div>
     <FieldToggle
-      class="inside-lair-toggle"
       checked={context.system.resources.lair.inside}
       onchange={(ev) =>
         context.actor.update({

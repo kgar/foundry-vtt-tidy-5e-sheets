@@ -58,7 +58,7 @@
 </script>
 
 {#snippet skillsContent()}
-  <div class="card-header use-ability-header flexrow">
+  <div class="use-ability-header flexrow">
     {#if allowToggle}
       <button
         type="button"
