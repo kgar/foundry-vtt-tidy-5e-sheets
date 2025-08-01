@@ -7,14 +7,14 @@
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
-    SpellcastingContext,
+    SpellcastingClassContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
 
   // TODO: Further generalize this so it can be used by a classless NPC.
 
   interface Props {
-    info: SpellcastingContext;
+    info: SpellcastingClassContext;
     multiclass: boolean;
     tabId: string;
     mode: 'expanded' | 'compact';
@@ -173,7 +173,7 @@
         data-tooltip={localize('DND5E.Ability') + ': ' + info.ability.label}
       >
         <span class="label font-label-medium color-text-gold uppercase"
-          >{info.ability.key}</span
+          >{info.ability.abbreviation}</span
         >
         <span class="value">
           <span class="sign font-label-medium color-text-lightest"

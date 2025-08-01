@@ -15,7 +15,7 @@
     "TIDY5E.ShortRest": "Krátký odpočinek",
     "TIDY5E.LongRest": "Důkladný odpočinek",
     "TIDY5E.HitDiceRollAverage": "Pravé tlačítko: Použít průměr",
-    "TIDY5E.JournalTabName": "Deník",
+    "TIDY5E.JournalTabName": "Záznamy",
     "TIDY5E.RestoreOnRest": "Obnovit při odpočinku",
     "TIDY5E.JournalPersonsOfInterest": "Zájmové osoby",
     "TIDY5E.JournalLocationsOfInterest": "Zájmové lokace",
@@ -763,10 +763,6 @@
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
     "TIDY5E.PreviewSheetImageHint": "Levé tlačítko myši: Náhled obrázku",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato volba uzamčení listu.",
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Zařadit sekce Tidy ve výchozích denících?",
-        "hint": "Včetně polí sekcí Tidy a sekcí akcí ve výchozích denících."
-    },
     "TIDY5E.ModuleName": "Deníky Tidy 5E",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "LimitToSpecificSheetsLabel": "Omezení zobrazených sekcí v konkrétním deníku",
@@ -892,6 +888,6 @@
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Sestupně",
     "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}.",
     "TIDY5E.SheetLock.Empty.Hint": "Začni přidáním povolání a prvních položek. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost „Přidat do záložky deníku“.",
-    "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost ´Oblíbené´, nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
+    "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost ´Přidat do oblíbených´, nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
     "TIDY5E.EmptyTools": "Žádná dovednost s nástroji."
 }

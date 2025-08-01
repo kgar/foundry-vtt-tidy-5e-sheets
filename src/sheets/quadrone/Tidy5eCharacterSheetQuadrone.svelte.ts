@@ -11,7 +11,6 @@ import type {
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
   CharacterClassEntryContext,
-  TidyItemSectionBase,
   CharacterItemContext,
   CharacterItemPartitions,
   CharacterSheetQuadroneContext,
@@ -24,8 +23,9 @@ import type {
   FacilityOccupantContext,
   FavoriteContextEntry,
   LocationToSearchTextMap,
-  SpellcastingContext,
+  SpellcastingClassContext,
   InspirationSource,
+  FeatureSection,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -277,7 +277,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         : undefined,
       speeds: this._getCharacterMovementSpeeds(),
       spellbook: [],
-      spellcasting: this._prepareSpellcastingContext(),
+      spellcasting: this._prepareSpellcastingClassContext(),
       spellComponentLabels: FoundryAdapter.getSpellComponentLabels(),
       spellSlotTrackerMode:
         preferences.spellSlotTrackerMode ??
@@ -562,10 +562,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
-    const inventoryRowActions =
-      TableRowActionsRuntime.getInventoryRowActions(context);
-    // Categorize items as inventory, spellbook, features, and classes
+    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { hasActionsTab: true }
+    );
 
+    // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
       Inventory.getDefaultInventorySections({
         rowActions: inventoryRowActions,
@@ -666,7 +668,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spells,
       {
         canCreate: true,
-        rowActions: TableRowActionsRuntime.getSpellRowActions(context),
+        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
+          hasActionsTab: true,
+        }),
       }
     );
 
@@ -689,7 +693,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     // Section Features
-    const features: TidyItemSectionBase[] =
+    const features: FeatureSection[] =
       CharacterSheetSections.buildQuadroneFeatureSections(
         this.actor,
         context.unlocked,
@@ -697,7 +701,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         feats,
         {
           canCreate: true,
-          rowActions: TableRowActionsRuntime.getFeatureRowActions(context),
+          rowActions:
+            TableRowActionsRuntime.getCharacterFeatureRowActions(context),
         }
       );
 
@@ -737,7 +742,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ].filterJoin(' &bull; ');
     } else if (Inventory.isItemInventoryType(item)) {
       const containerName = this.actor.items.get(item.system.container)?.name;
-
       context.actionSubtitle = [containerName].filterJoin(' &bull; ');
     }
 
@@ -932,42 +936,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         };
       })
     );
-  }
-
-  _prepareSpellcastingContext() {
-    let spellcasting: SpellcastingContext[] = [];
-
-    const spellcastingClasses = Object.values<Item5e>(
-      this.actor.spellcastingClasses
-    ).sort((lhs: Item5e, rhs: Item5e) => rhs.system.levels - lhs.system.levels);
-
-    for (const item of spellcastingClasses) {
-      const sc = item.spellcasting;
-      const ability = this.actor.system.abilities[sc.ability];
-      const mod = ability?.mod ?? 0;
-      const name =
-        item.system.spellcasting.progression === sc.progression
-          ? item.name
-          : item.subclass?.name;
-
-      spellcasting.push({
-        name,
-        classIdentifier: item.system.identifier,
-        ability: {
-          key: sc.ability,
-          mod: getModifierData(mod),
-          label: CONFIG.DND5E.abilities[sc.ability]?.label ?? sc.ability,
-        },
-        attack: {
-          mod: getModifierData(sc.attack),
-        },
-        prepared: sc.preparation,
-        primary: this.actor.system.attributes.spellcasting === sc.ability,
-        save: sc.save,
-      });
-    }
-
-    return spellcasting;
   }
 
   /* -------------------------------------------- */

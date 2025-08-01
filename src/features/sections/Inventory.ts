@@ -41,6 +41,7 @@ export class Inventory {
 
     for (const type of inventoryTypes) {
       inventory[type] = {
+        type: CONSTANTS.SECTION_TYPE_INVENTORY,
         canCreate: true,
         dataset: { type },
         items: [],
@@ -88,6 +89,7 @@ export class Inventory {
     customSectionOptions: Partial<InventorySection>
   ): InventorySection {
     return {
+      type: CONSTANTS.SECTION_TYPE_INVENTORY,
       dataset: { [TidyFlags.section.prop]: customSectionName },
       items: [],
       label: customSectionName,

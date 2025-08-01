@@ -4,6 +4,9 @@
   import type { ColumnCellProps } from 'src/runtime/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getUsesRechargeDiceRange } from 'src/utils/formula';
+  import ActivityUsesColumn from './ActivityUsesColumn.svelte';
+  import { Activities } from 'src/features/activities/activities';
+  import { SheetSections } from 'src/features/sections/SheetSections';
 
   let { rowDocument: item }: ColumnCellProps = $props();
 
@@ -61,6 +64,13 @@
     <span class="color-text-gold">/</span>
     <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
   {/if}
+{:else if item.system.linkedActivity}
+  {@const ctx = Activities.getActivityItemContext(item.system.linkedActivity)}
+  <ActivityUsesColumn
+    rowContext={ctx}
+    rowDocument={ctx.activity}
+    section={SheetSections.EMPTY}
+  />
 {:else}
   <span class="color-text-disabled">&mdash;</span>
 {/if}

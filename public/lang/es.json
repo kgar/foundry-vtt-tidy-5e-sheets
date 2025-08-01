@@ -739,10 +739,6 @@
     "TIDY5E.Tidy5eGroupSheetClassic": "Hoja del grupo Tidy 5e Classic",
     "TIDY5E.ExhaustionLevelTooltip": "Nivel de desgaste {nivel}",
     "TIDY5E.Tidy5eSettings": "Ajustes de Tidy 5e Sheets",
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Incluir campos de la sección Tidy en las pestañas predeterminadas",
-        "hint": "Incluyendo campos de la sección Tide y secciones de acción en los diarios predeterminados."
-    },
     "TIDY5E.Facilities.Defenders.Label": "Defensores",
     "TIDY5E.Facilities.Creatures.Label": "Criaturas",
     "TIDY5E.Facilities.ContextMenuActionRemove": "Eliminar de {facilityName}",

@@ -4,7 +4,7 @@
     padding: 0;
     text-align: left;
 
-    li + li {
+    >li+li {
       margin-top: 0.5rem;
     }
   }

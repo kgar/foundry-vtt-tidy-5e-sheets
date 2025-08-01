@@ -839,10 +839,6 @@
         "hint": "Натисніть цю клавішу (наприклад, клавішу «t») під час перегляду інформаційної картки, щоб вивести її на екран."
     },
     "TIDY5E.BrokenLink": "Непрацююче посилання",
-    "TIDY5E.WorldSettings.IncludeTidySectionFieldsInDefaultSheets": {
-        "name": "Включати поля розділів Tidy до аркушів за замовчуванням",
-        "hint": "Включає дані розділів Tidy та розділи дій до аркуша елемента за замовчуванням."
-    },
     "TIDY5E.ContextMenuActionView": "Переглянути",
     "TIDY5E.ContextMenuActionPinToAttributes": "Закріпити на атрибутах",
     "TIDY5E.ContextMenuActionUnpinFromAttributes": "Відкріпити від атрибутів",

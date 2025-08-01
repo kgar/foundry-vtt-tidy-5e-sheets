@@ -12,15 +12,6 @@
 </script>
 
 <div class="settings-form">
-  <CheckboxSetting
-    name={SettingsProvider.settings.includeTidySectionFieldsInDefaultSheets
-      .options.name}
-    hint={SettingsProvider.settings.includeTidySectionFieldsInDefaultSheets
-      .options.hint}
-    bind:value={context.settings.includeTidySectionFieldsInDefaultSheets}
-    id="includeTidySectionFieldsInDefaultSheets"
-  />
-
   <SelectSetting
     options={SettingsProvider.settings.itemIdentificationPermission.options
       .choices}

@@ -328,6 +328,7 @@ export class Tidy5eVehicleSheet
 
     const features: Record<string, VehicleFeatureSection> = {
       actions: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize('DND5E.ActionPl'),
         items: [],
         hasActions: true,
@@ -343,8 +344,10 @@ export class Tidy5eVehicleSheet
         ],
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       equipment: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize(CONFIG.Item.typeLabels.equipment),
         items: [],
         crewable: true,
@@ -353,24 +356,30 @@ export class Tidy5eVehicleSheet
         key: 'equipment',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       passive: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize('DND5E.Features'),
         items: [],
         dataset: { type: 'feat' },
         key: 'passive',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       reactions: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize('DND5E.ReactionPl'),
         items: [],
         dataset: { type: 'feat' },
         key: 'reactions',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
       weapons: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
         items: [],
         crewable: true,
@@ -379,6 +388,7 @@ export class Tidy5eVehicleSheet
         key: 'weapons',
         show: true,
         rowActions: [], // for the UI Overhaul
+        canCreate: true,
       },
     };
 
@@ -388,6 +398,7 @@ export class Tidy5eVehicleSheet
 
     const cargo: Record<string, VehicleCargoSection> = {
       crew: {
+        type: CONSTANTS.SECTION_TYPE_CARGO,
         label: game.i18n.localize('DND5E.VehicleCrew'),
         items: context.actor.system.cargo.crew,
         css: 'cargo-row crew',
@@ -399,6 +410,7 @@ export class Tidy5eVehicleSheet
         rowActions: [], // for the UI Overhaul
       },
       passengers: {
+        type: CONSTANTS.SECTION_TYPE_CARGO,
         label: game.i18n.localize('DND5E.VehiclePassengers'),
         items: context.actor.system.cargo.passengers,
         css: 'cargo-row passengers',
@@ -410,6 +422,7 @@ export class Tidy5eVehicleSheet
         rowActions: [], // for the UI Overhaul
       },
       cargo: {
+        type: CONSTANTS.SECTION_TYPE_CARGO,
         label: game.i18n.localize('DND5E.VehicleCargo'),
         items: [],
         dataset: { type: 'loot' },
@@ -433,7 +446,7 @@ export class Tidy5eVehicleSheet
             editable: 'Number',
           },
         ],
-        key: 'cargo',
+        key: CONSTANTS.SECTION_TYPE_CARGO,
         show: true,
         rowActions: [], // for the UI Overhaul
       },

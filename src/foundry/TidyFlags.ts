@@ -61,10 +61,13 @@ export class TidyFlags {
     unsetProp: TidyFlags.getFlagPropertyPath('-=actionSection'),
     /** Gets the item's Action Section setting. */
     get(item: Item5e): string | undefined {
-      const actionSection = TidyFlags.tryGetFlag<string>(
+      const actionSectionValue = TidyFlags.tryGetFlag(
         item,
         TidyFlags.actionSection.key
-      )?.trim();
+      );
+
+      const actionSection =
+        typeof actionSectionValue === 'string' ? actionSectionValue.trim() : '';
 
       return !isNil(actionSection, '') ? actionSection : undefined;
     },
@@ -341,6 +344,35 @@ export class TidyFlags {
       return TidyFlags.unsetFlag(
         document,
         TidyFlags.includeRitualsInCanCast.key
+      );
+    },
+  };
+
+  static includeSpellbookInNpcStatblockTab = {
+    key: 'includeSpellbookInNpcStatblockTab',
+    prop: TidyFlags.getFlagPropertyPath('includeSpellbookInNpcStatblockTab'),
+    /** Gets whether to include spellbook sections in the NPC Statblock tab. */
+    get(document: any): boolean {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          document,
+          TidyFlags.includeSpellbookInNpcStatblockTab.key
+        ) === true
+      );
+    },
+    /** Sets whether to include spellbook sections in the NPC Statblock tab. */
+    set(document: any, value: boolean = true) {
+      return TidyFlags.setFlag(
+        document,
+        TidyFlags.includeSpellbookInNpcStatblockTab.key,
+        value
+      );
+    },
+    /** Clears whether to include spellbook sections in the NPC Statblock tab. */
+    unset(document: any) {
+      return TidyFlags.unsetFlag(
+        document,
+        TidyFlags.includeSpellbookInNpcStatblockTab.key
       );
     },
   };
@@ -829,10 +861,10 @@ export class TidyFlags {
     unsetProp: TidyFlags.getFlagPropertyPath('-=section'),
     /** Gets the custom section name for an item. */
     get(item: Item5e): string | undefined {
-      const section = TidyFlags.tryGetFlag<string>(
-        item,
-        TidyFlags.section.key
-      )?.trim();
+      const sectionValue = TidyFlags.tryGetFlag(item, TidyFlags.section.key);
+
+      const section =
+        typeof sectionValue === 'string' ? sectionValue.trim() : '';
 
       return !isNil(section, '') ? section : undefined;
     },

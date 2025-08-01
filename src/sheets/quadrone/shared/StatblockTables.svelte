@@ -1,28 +1,27 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
+  import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e } from 'src/types/item.types';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     Actor5e,
-    CharacterItemContext,
-    CharacterSheetQuadroneContext,
+    FeatureSection,
     NpcItemContext,
     NpcSheetQuadroneContext,
     SpellbookSection,
   } from 'src/types/types';
-  import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getContext } from 'svelte';
-  import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SpellTable from './SpellTable.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import FeatureTable from './FeatureTable.svelte';
 
   interface Props {
-    sections: SpellbookSection[];
-    itemContext: Record<string, CharacterItemContext | NpcItemContext>;
+    sections: (FeatureSection | SpellbookSection)[];
+    itemContext: Record<string, NpcItemContext>;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
-    sheetDocument: Actor5e | Item5e;
+    sheetDocument: Actor5e;
   }
 
   let {
@@ -39,12 +38,7 @@
 
   let itemToggleMap = $derived(inlineToggleService.map);
 
-  let context =
-    $derived(
-      getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
-      >(),
-    );
+  let context = $derived(getSheetContext<NpcSheetQuadroneContext>());
 
   const localize = FoundryAdapter.localize;
 
@@ -64,41 +58,63 @@
     };
   });
 
-  let totalSpellCount = $derived(
-    sections.reduce((count, s) => count + s.spells.length, 0),
+  let totalItemCount = $derived(
+    sections.reduce(
+      (count, s) =>
+        count +
+        // TODO: In 5.1, remove the .spells
+        (s.type === CONSTANTS.SECTION_TYPE_SPELLBOOK ? s.spells : s.items)
+          .length,
+      0,
+    ),
   );
 </script>
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
-  {#if totalSpellCount === 0}
-    <div class="spellbook-empty empty-state-container">
+  {#if totalItemCount === 0}
+    <div class="features-empty empty-state-container">
       <button
         type="button"
         class="button button-tertiary"
-        title={localize('DND5E.SpellAdd')}
-        aria-label={localize('DND5E.SpellAdd')}
+        title={localize('DND5E.FeatureAdd')}
+        aria-label={localize('DND5E.FeatureAdd')}
         onclick={() =>
           sheetDocument.sheet._addDocument({
             tabId,
+            creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
           })}
       >
         <i class="fas fa-plus"></i>
-        {localize('DND5E.SpellAdd')}
+        {localize('DND5E.FeatureAdd')}
       </button>
     </div>
   {:else}
     {#each sections as section (section.key)}
+      {@const items =
+        section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK
+          ? section.spells
+          : section.items}
       {@const hasViewableItems = ItemVisibility.hasViewableItems(
-        section.spells,
+        items,
         searchResults.uuids,
       )}
       {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
-        <SpellTable
-          {section}
-          {itemToggleMap}
-          {sectionsInlineWidth}
-          {sheetDocument}
-        />
+        {#if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
+          <FeatureTable
+            {section}
+            {itemToggleMap}
+            {sectionsInlineWidth}
+            {sheetDocument}
+          />
+        {:else if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
+          <SpellTable
+            {section}
+            {itemToggleMap}
+            {sectionsInlineWidth}
+            {sheetDocument}
+            tabId={CONSTANTS.TAB_ACTOR_SPELLBOOK}
+          />
+        {/if}
       {/if}
     {/each}
   {/if}

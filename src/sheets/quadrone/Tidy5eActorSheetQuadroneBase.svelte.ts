@@ -32,6 +32,7 @@ import type {
   ActorTraitContext,
   Folder,
   MessageBus,
+  SpellcastingClassContext,
 } from 'src/types/types';
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
@@ -331,6 +332,47 @@ export function Tidy5eActorSheetQuadroneBase<
      * @protected
      */
     _prepareItems(context: ActorSheetQuadroneContext) {}
+
+    _prepareSpellcastingClassContext(): SpellcastingClassContext[] {
+      let spellcasting: SpellcastingClassContext[] = [];
+
+      const spellcastingClasses = Object.values<Item5e>(
+        this.actor.spellcastingClasses ?? {}
+      ).sort(
+        (lhs: Item5e, rhs: Item5e) => rhs.system.levels - lhs.system.levels
+      );
+
+      for (const item of spellcastingClasses) {
+        const sc = item.spellcasting;
+        const ability = this.actor.system.abilities[sc.ability];
+        const mod = ability?.mod ?? 0;
+        const name =
+          item.system.spellcasting.progression === sc.progression
+            ? item.name
+            : item.subclass?.name;
+
+        const abilityConfig = CONFIG.DND5E.abilities[sc.ability];
+        spellcasting.push({
+          type: 'class',
+          name,
+          classIdentifier: item.system.identifier,
+          ability: {
+            key: sc.ability,
+            mod: getModifierData(mod),
+            label: abilityConfig?.label ?? sc.ability,
+            abbreviation: abilityConfig?.abbreviation ?? sc.ability,
+          },
+          attack: {
+            mod: getModifierData(sc.attack),
+          },
+          prepared: sc.preparation,
+          primary: this.actor.system.attributes.spellcasting === sc.ability,
+          save: sc.save,
+        });
+      }
+
+      return spellcasting;
+    }
 
     /* -------------------------------------------- */
 
@@ -802,6 +844,7 @@ export function Tidy5eActorSheetQuadroneBase<
     _addDocumentItemTypes(tab: string): string[] {
       switch (tab) {
         case CONSTANTS.TAB_CHARACTER_FEATURES:
+        case CONSTANTS.TAB_NPC_STATBLOCK:
           return ['feat'];
         case CONSTANTS.TAB_ACTOR_INVENTORY:
           return Inventory.getInventoryTypes();
@@ -1069,7 +1112,18 @@ export function Tidy5eActorSheetQuadroneBase<
           options: unknown
         ) => {
           if (this.actor.system.favorites) {
-            const favorites = structuredClone(this.actor.system.favorites);
+            const transformTargetFavorites = data.system?.favorites ?? [];
+
+            // Merge favorites, favoring the destination transformation actor's favorites, if any.
+            const favoritesMap = [
+              ...this.actor.system.favorites,
+              ...transformTargetFavorites,
+            ].reduce<Map<string, any>>(
+              (prev, curr) => prev.set(curr.id, curr),
+              new Map<string, any>()
+            );
+            const favorites = Array.from(favoritesMap).map((f) => f[1]);
+
             foundry.utils.mergeObject(data, {
               ['system.favorites']: favorites,
             });

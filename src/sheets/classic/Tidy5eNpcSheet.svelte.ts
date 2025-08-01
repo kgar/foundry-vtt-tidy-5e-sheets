@@ -843,6 +843,7 @@ export class Tidy5eNpcSheet
     // Categorize Items as Features and Spells
     const features: Record<string, NpcAbilitySection> = {
       [CONSTANTS.NPC_ABILITY_SECTION_WEAPONS]: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize('DND5E.AttackPl'),
         items: [],
         hasActions: true,
@@ -856,6 +857,7 @@ export class Tidy5eNpcSheet
         rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_ACTIONS]: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize('DND5E.ActionPl'),
         items: [],
         hasActions: true,
@@ -869,6 +871,7 @@ export class Tidy5eNpcSheet
         rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_PASSIVE]: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize('DND5E.Features'),
         items: [],
         dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
@@ -879,6 +882,7 @@ export class Tidy5eNpcSheet
         rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT]: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: game.i18n.localize('DND5E.Inventory'),
         items: [],
         dataset: { type: CONSTANTS.ITEM_TYPE_LOOT },
@@ -888,6 +892,7 @@ export class Tidy5eNpcSheet
         rowActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_CLASSES]: {
+        type: CONSTANTS.SECTION_TYPE_FEATURE,
         label: `${CONFIG.Item.typeLabels.class}Pl`,
         items: [],
         dataset: { type: CONSTANTS.ITEM_TYPE_CLASS },

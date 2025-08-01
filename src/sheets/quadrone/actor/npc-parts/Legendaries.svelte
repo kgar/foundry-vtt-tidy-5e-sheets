@@ -83,7 +83,7 @@
     {/if}
     <FieldToggle
       class="inside-lair-toggle"
-      checked={context.system.resources.linear.inside}
+      checked={context.system.resources.lair.inside}
       onchange={(ev) =>
         context.actor.update({
           ['system.resources.lair.inside']: ev.currentTarget.checked,

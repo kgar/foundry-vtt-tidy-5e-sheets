@@ -15,27 +15,50 @@
   - [ ] CR
   - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
   - [ ] abilities
-- [x] Sidebar
-  - [x] Traits
-  - [x] (Collapsed by default) Skills
-  - [x] Loyalty tracker
-    - [x] Show when
-      - [x] `this.actor.system.traits.important` AND
-      - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
-      - [x] `game.user.isGM`
-  - [x] Legendary trackers
-    - [x] Show each when unlocked or when each is eligible
-      - [x] legact - `this.actor.system.resources.legact.max`
-      - [x] legres - `this.actor.system.resources.legres.max`
-      - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
-        - [x] 2014
-        - [x] Modern
-- [ ] Statblock
-- [ ] Inventory
-- [ ] Spellbook
-- [ ] Effects
-- [ ] Background
-- [ ] Journal
+- [ ] Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.
+- [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
+
+#### NPC Statblock Sections notes
+
+**Default sheets setup.**  
+NPC section prep:
+```js
+const sections = Object.entries(CONFIG.DND5E.activityActivationTypes).reduce((obj, [id, config], i) => {
+    const { header: label, passive } = config; // kgar note: the `special` activation type doesn't have "header". It just has "label". Recommend falling back to `label` when `header` is nil.
+    if ( passive ) return obj;
+    obj[id] ??= {
+    id, label, order: (i + 1) * 100, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+    };
+    return obj;
+}, {});
+sections.passive = {
+    id: "passive", label: "DND5E.Features", order: 0, items: [], minWidth: 210,
+    columns: ["recovery", "uses", "roll", "formula", "controls"]
+};
+context.itemCategories.features?.forEach(i => {
+    const ctx = context.itemContext[i.id];
+    sections[ctx.group]?.items.push(i);
+});
+```
+
+Determining "group" (which for us is simply section key):
+```js
+const isPassive = item.system.properties?.has("trait")
+  || CONFIG.DND5E.activityActivationTypes[item.system.activities?.contents[0]?.activation.type]?.passive;
+ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
+```
+
+NPC sheet adds all weapons to the features itemcategory, in addition to their inventory home:
+```js
+  /** @inheritDoc */
+  _assignItemCategories(item) {
+    if ( ["class", "subclass"].includes(item.type) ) return new Set(["classes"]);
+    const categories = super._assignItemCategories(item);
+    if ( item.type === "weapon" ) categories.add("features"); // 👈 there
+    return categories;
+  }
+```
 
 ### (Almost) Everything after the short list
 
@@ -225,3 +248,58 @@ Limited:
 - [x] Weapon Favorite stats cell is missing formatting classes
 - [x] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
 - [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)
+- [x] Make NPC Statblock tab section config work.
+- [x] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
+- [x] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.
+- NPC Sheet Progress
+  - [x] Sidebar
+    - [x] Traits
+    - [x] (Collapsed by default) Skills
+    - [x] Loyalty tracker
+      - [x] Show when
+        - [x] `this.actor.system.traits.important` AND
+        - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
+        - [x] `game.user.isGM`
+    - [x] Legendary trackers
+      - [x] Show each when unlocked or when each is eligible
+        - [x] legact - `this.actor.system.resources.legact.max`
+        - [x] legres - `this.actor.system.resources.legres.max`
+        - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
+          - [x] 2014
+          - [x] Modern
+  - [x] Statblock
+    - [x] Item / section prep
+    - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
+    - [x] Row actions (and Header Add Button)
+    - [x] Column specs
+    - [x] Filters
+    - [x] Test/confirm section show/hide, section ordering
+    - [x] Test search
+    - [x] Test filtering
+    - [x] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
+  - [x] Inventory
+    - [x] Prep
+    - [x] Filters
+    - [x] Sorting
+    - [x] Custom Sections
+    - [x] Inline containers
+  - [x] Spellbook
+    - [x] Prep
+    - [x] Filters
+    - [x] Sorting
+    - [x] Custom Sections
+    - [x] Items with Spells
+      - [x] Additional Spells
+      - [x] Section Per Item
+    - [x] Spellbook footer for NPCs without classes
+  - [x] Effects
+    - [x] Prep
+    - [x] Basic functionality
+    - [x] Toggling
+    - [x] Conditions
+  - [X] ~~Background~~ Biography
+    - [x] Functionality
+  - [x] Journal
+    - [x] Functionality
+    - [x] Drag drop
+    - [x] Context menu

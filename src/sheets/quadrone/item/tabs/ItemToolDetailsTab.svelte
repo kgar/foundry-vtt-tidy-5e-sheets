@@ -7,7 +7,6 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import SectionsFormGroup from '../parts/SectionsFormGroup.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
 
@@ -160,5 +159,3 @@
 {/if}
 
 <FieldUses />
-
-<SectionsFormGroup />
