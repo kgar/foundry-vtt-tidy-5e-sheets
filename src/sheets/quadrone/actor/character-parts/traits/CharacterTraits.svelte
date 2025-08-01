@@ -37,7 +37,7 @@
     {/if}
   </div>
 
-  <div class="list">
+  <div class="list traits">
     <CharacterTraitClasses />
 
     <CharacterTraitSpecies />

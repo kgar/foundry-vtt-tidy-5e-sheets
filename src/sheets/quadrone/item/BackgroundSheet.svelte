@@ -66,7 +66,7 @@
     bind:selectedTabId
     tabs={context.tabs}
     cssClass="item-tabs"
-    sheet={context.item.sheet}
+    sheet={context.sheet}
     tabContext={{ context, item: context.item }}
   />
 

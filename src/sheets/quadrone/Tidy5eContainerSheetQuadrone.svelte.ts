@@ -350,6 +350,7 @@ export class Tidy5eContainerSheetQuadrone
         options: [],
       },
       rollData: rollData,
+      sheet: this,
       system: this.document.system,
       tabs: [],
       userPreferences: UserPreferencesService.get(),

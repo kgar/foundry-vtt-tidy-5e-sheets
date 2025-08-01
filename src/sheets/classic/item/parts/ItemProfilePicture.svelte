@@ -16,7 +16,7 @@
       name: 'TIDY5E.ShowItemArt',
       icon: '<i class="fa-solid fa-image fa-fw"></i>',
       callback: () =>
-        context.item.sheet.options.actions.showIcon.call(context.item.sheet),
+        context.sheet.options.actions.showIcon.call(context.sheet),
     },
   ]);
 

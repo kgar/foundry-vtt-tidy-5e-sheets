@@ -18,6 +18,10 @@ import type {
   DocumentFilters,
   RegisteredEquipmentTypeGroup,
 } from 'src/runtime/item/item.types';
+import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
+import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
+import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
+import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
 
 export type PropertyContext = {
   active: string[];
@@ -120,6 +124,7 @@ export type ItemSheetContext = {
   }[];
   rollData: Record<string, any>;
   scalarTarget: boolean;
+  sheet: Tidy5eItemSheetClassic; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
   spellcastingMethods: {
     label: string;
@@ -227,6 +232,7 @@ export type ItemSheetQuadroneContext = {
   }[];
   rollData: Record<string, any>;
   scalarTarget: boolean;
+  sheet: Tidy5eItemSheetQuadrone; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
   spellcastingMethods: {
     label: string;
@@ -330,6 +336,7 @@ export type ContainerSheetClassicContext = {
   owner: boolean;
   properties: PropertyContext;
   rollData: Record<string, any>;
+  sheet: Tidy5eContainerSheetClassic; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
   system: any;
   tabs: Tab[];
@@ -377,6 +384,7 @@ export type ContainerSheetQuadroneContext = {
   owner: boolean;
   properties: PropertyContext;
   rollData: Record<string, any>;
+  sheet: Tidy5eContainerSheetQuadrone; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
   system: any;
   tabs: Tab[];

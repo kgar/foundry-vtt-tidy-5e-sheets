@@ -402,8 +402,8 @@ export type CharacterSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
@@ -509,8 +509,8 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
@@ -566,15 +566,15 @@ export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
-      options?: { includeInlineToggles?: boolean };
-    }
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+    options?: { includeInlineToggles?: boolean };
+  }
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
-      options?: { includeInlineToggles?: boolean };
-    };
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+    options?: { includeInlineToggles?: boolean };
+  };
 
 export type Utilities<TContext> = Record<
   string,
@@ -1062,12 +1062,12 @@ export type SkillToolFavoriteContextEntry = {
   reference?: string;
 };
 
-export type SpellcastingContext = {
+export type SpellcastingContextBase = {
   name: string;
-  classIdentifier: string;
   ability: {
     key: string;
     label: string;
+    abbreviation: string;
     mod: {
       sign: string;
       value: string;
@@ -1080,12 +1080,22 @@ export type SpellcastingContext = {
     };
   };
   save: number;
+};
+
+export type NpcSpellcastingContext = {
+  type: 'npc';
+  level: number;
+} & SpellcastingContextBase;
+
+export type SpellcastingClassContext = {
+  type: 'class';
+  classIdentifier: string;
   primary: boolean;
   prepared: {
     value: string;
     max?: string;
   };
-};
+} & SpellcastingContextBase;
 
 export type FavoriteContextEntry =
   | ItemFavoriteContextEntry
@@ -1152,7 +1162,7 @@ export type CharacterSheetQuadroneContext = {
   species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
-  spellcasting: SpellcastingContext[];
+  spellcasting: SpellcastingClassContext[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
@@ -1166,11 +1176,21 @@ export type NpcSheetQuadroneContext = {
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   enriched: {
+    appearance: string;
     biography: string;
+    bond: string;
+    flaw: string;
+    ideal: string;
+    trait: string;
   };
   features: FeatureSection[];
   habitats: { label: string }[];
   inventory: InventorySection[];
+  portrait: {
+    src: string;
+    shape: PortraitShape;
+    path: string;
+  };
   showContainerPanel: boolean;
   showDeathSaves: boolean;
   showLairTracker: boolean;
@@ -1182,6 +1202,7 @@ export type NpcSheetQuadroneContext = {
   skills: ActorSkillsToolsContext<SkillData>[];
   speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];
+  spellcasting: (SpellcastingClassContext | NpcSpellcastingContext)[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];

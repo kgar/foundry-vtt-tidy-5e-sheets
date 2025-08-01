@@ -10,6 +10,12 @@
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
+
+  let {
+    showFiligree = true,
+  }: {
+    showFiligree?: boolean;
+  } = $props();
 </script>
 
 {#if context.showLegendaryActions}
@@ -23,6 +29,7 @@
     maxPath="system.resources.legact.max"
     maxTooltip="DND5E.LegendaryAction.Max"
     unlocked={context.unlocked}
+    {showFiligree}
   />
 {/if}
 
@@ -37,41 +44,72 @@
     maxPath="system.resources.legres.max"
     maxTooltip="DND5E.LegendaryResistance.Max"
     unlocked={context.unlocked}
+    {showFiligree}
+    icon="helmet-battle"
   />
 {/if}
 
-{#if context.showLairTracker}
-  <FiligreeCard class="npc-score-tracker lair-tracker">
-    {#if context.modernRules && context.unlocked}
-      <!-- Checkbox - has lair -->
-      <h3>
-        {localize('DND5E.LAIR.HasLair')}
-      </h3>
-      <span class="value">
-        <CheckboxQuadrone
-          document={context.actor}
-          field="system.resources.lair.value"
-          checked={context.system.resources.lair.value}
-        />
-      </span>
-    {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
-      <!-- Switch - inside lair -->
-      <h3>
-        {localize('DND5E.LAIR.Inside')}
-      </h3>
-      <FieldToggle
-        class="inside-lair-toggle"
-        checked={context.system.resources.linear.inside}
-        onchange={(ev) =>
-          context.actor.update({
-            ['system.resources.lair.inside']: ev.currentTarget.checked,
-          })}
+{#snippet lairActions()}
+  {#if context.modernRules && context.unlocked}
+    <!-- Checkbox - has lair -->
+    <div class="card-header flexrow">
+      {#if showFiligree}
+        <h3>
+          {localize('DND5E.LAIR.HasLair')}
+        </h3>
+      {:else}
+        <h3 class="font-label-medium bordered">
+          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+          {localize('DND5E.LAIR.HasLair')}
+        </h3>
+      {/if}
+    </div>
+    <span class="value">
+      <CheckboxQuadrone
+        document={context.actor}
+        field="system.resources.lair.value"
+        checked={context.system.resources.lair.value}
       />
-    {:else if !context.modernRules}
-      <!-- Lair initiative -->
-      <h3>
-        {localize('DND5E.LAIR.Action.Label')}
-      </h3>
+    </span>
+  {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
+    <!-- Switch - inside lair -->
+    <div class="card-header flexrow">
+      {#if showFiligree}
+        <h3>
+          {localize('DND5E.LAIR.Inside')}
+        </h3>
+      {:else}
+        <h3 class="font-label-medium bordered">
+          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+          {localize('DND5E.LAIR.Inside')}
+        </h3>
+      {/if}
+    </div>
+    <FieldToggle
+      checked={context.system.resources.lair.inside}
+      onchange={(ev) =>
+        context.actor.update({
+          ['system.resources.lair.inside']: ev.currentTarget.checked,
+        })}
+    />
+  {:else if !context.modernRules}
+    <!-- Lair initiative -->
+    <div class="card-header flexrow">
+      {#if showFiligree}
+        <h3>
+          {localize('DND5E.LAIR.Action.Label')}
+        </h3>
+      {:else}
+        <h3 class="font-label-medium bordered">
+          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+          {localize('DND5E.LAIR.Action.Label')}
+        </h3>
+      {/if}
+    </div>
+    <div class="flexrow lair-initiative">
+      <span class="font-label-medium color-text-lighter flexshrink">
+        {localize('DND5E.Initiative')}
+      </span>
       <TextInputQuadrone
         document={context.actor}
         field="system.resources.lair.initiative"
@@ -82,8 +120,20 @@
         saveEmptyAsNull={true}
         disabled={!context.unlocked}
         data-tooltip={'DND5E.LAIR.Action.Initiative'}
-        class="lair-ini-input"
+        class="lair-ini-input {context.unlocked ? '' : 'uninput'}"
       />
-    {/if}
-  </FiligreeCard>
+    </div>
+  {/if}
+{/snippet}
+
+{#if context.showLairTracker}
+  {#if showFiligree}
+    <FiligreeCard class="npc-score-tracker lair-tracker">
+      {@render lairActions()}
+    </FiligreeCard>
+  {:else}
+    <div class="npc-score-tracker lair-tracker">
+      {@render lairActions()}
+    </div>
+  {/if}
 {/if}

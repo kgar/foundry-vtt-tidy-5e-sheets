@@ -11,6 +11,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/api';
   import ActionBar from '../../shared/ActionBar.svelte';
+  import Legendaries from '../npc-parts/Legendaries.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import StatblockTables from '../../shared/StatblockTables.svelte';
@@ -70,6 +71,10 @@
 </script>
 
 <ActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
+
+<!-- <div class="legendaries flexrow">
+  <Legendaries />
+</div> -->
 
 <StatblockTables
   {sections}

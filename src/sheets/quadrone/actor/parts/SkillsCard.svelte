@@ -18,9 +18,14 @@
   interface Props {
     allowToggle?: boolean;
     defaultExpansionState?: boolean;
+    showFiligree?: boolean;
   }
 
-  let { allowToggle = false, defaultExpansionState = true }: Props = $props();
+  let {
+    allowToggle = false,
+    defaultExpansionState = true,
+    showFiligree = true,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -52,7 +57,7 @@
   );
 </script>
 
-<FiligreeCard class="skills card">
+{#snippet skillsContent()}
   <div class="use-ability-header flexrow">
     {#if allowToggle}
       <button
@@ -76,7 +81,7 @@
     {/if}
 
     {#snippet skillsCardHeaderText()}
-      <i class="fa-solid fa-briefcase color-text-lightest"></i>
+      <i class="fa-solid fa-briefcase color-icon-diminished"></i>
       <h3 class="font-label-medium">
         {localize('DND5E.Skills')}
         {#if allowToggle}
@@ -94,15 +99,19 @@
       {#each skills as skill (skill.key)}
         {@const modifier = getModifierData(skill.total)}
         <li data-reference-tooltip={references[skill.key]}>
-          <ProficiencyCycle
-            actor={context.actor}
-            aria-label={localize(skill.hover)}
-            data-tooltip={skill.hover}
-            disabled={!context.unlocked}
-            path="system.skills.{skill.key}.value"
-            type="skill"
-            value={context.unlocked ? (skill.source?.value ?? 0) : skill.value}
-          />
+          {#if context.unlocked || showFiligree}
+            <ProficiencyCycle
+              actor={context.actor}
+              aria-label={localize(skill.hover)}
+              data-tooltip={skill.hover}
+              disabled={!context.unlocked}
+              path="system.skills.{skill.key}.value"
+              type="skill"
+              value={context.unlocked
+                ? (skill.source?.value ?? 0)
+                : skill.value}
+            />
+          {/if}
           {#if context.unlocked}
             <SelectQuadrone
               document={context.actor}
@@ -144,6 +153,7 @@
           </span>
           {#if context.unlocked}
             <button
+              aria-label={localize('DND5E.SkillConfigure')}
               type="button"
               class="button button-borderless button-icon-only"
               onclick={(ev) =>
@@ -166,4 +176,14 @@
   {:else}
     <!-- Do we want any kind of content for when there are no proficient skills? -->
   {/if}
-</FiligreeCard>
+{/snippet}
+
+{#if showFiligree}
+  <FiligreeCard class="skills card">
+    {@render skillsContent()}
+  </FiligreeCard>
+{:else}
+  <div class="skills card">
+    {@render skillsContent()}
+  </div>
+{/if}

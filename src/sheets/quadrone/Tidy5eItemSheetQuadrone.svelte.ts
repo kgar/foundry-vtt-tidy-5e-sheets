@@ -350,6 +350,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         target?.affects?.type &&
         CONFIG.DND5E.individualTargetTypes[target.affects.type]?.scalar !==
           false,
+      sheet: this,
       subtitle: this._getItemSubtitle(),
       spellProgression: [],
       system: this.document.system,
@@ -1127,7 +1128,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     return this.submit({ updateData: { 'system.uses.recovery': recovery } });
   }
 
-  updateRecovery(index: number, prop: string, value: keyof UsesRecoveryData) {
+  updateRecovery(index: number, prop: string, value: string) {
     const recovery = this.item.system.toObject().uses.recovery;
     recovery[index][prop] = value;
     return this.submit({ updateData: { 'system.uses.recovery': recovery } });

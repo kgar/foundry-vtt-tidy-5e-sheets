@@ -108,6 +108,10 @@
   &.negative {
     color: var(--t5e-color-text-oninverse-default);
     --t5e-color-text-lighter: var(--t5e-color-palette-grey-85);
+
+    i {
+      color: var(--t5e-color-text-oninverse-default);
+    }
   }
 }
 

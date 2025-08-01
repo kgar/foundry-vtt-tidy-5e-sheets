@@ -6,6 +6,6 @@
 </script>
 
 <NpcTraits />
-<SkillsCard allowToggle={true} defaultExpansionState={false} />
+<SkillsCard allowToggle={true} defaultExpansionState={false} showFiligree={false} />
 <LoyaltyTracker />
-<Legendaries />
+<Legendaries showFiligree={false}/>
