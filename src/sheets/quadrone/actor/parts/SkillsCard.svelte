@@ -21,7 +21,11 @@
     showFiligree?: boolean;
   }
 
-  let { allowToggle = false, defaultExpansionState = true, showFiligree = true }: Props = $props();
+  let {
+    allowToggle = false,
+    defaultExpansionState = true,
+    showFiligree = true,
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -54,7 +58,7 @@
 </script>
 
 {#snippet skillsContent()}
-  <div class="use-ability-header flexrow">
+  <div class="card-header use-ability-header flexrow">
     {#if allowToggle}
       <button
         type="button"
@@ -77,7 +81,7 @@
     {/if}
 
     {#snippet skillsCardHeaderText()}
-      <i class="fa-solid fa-briefcase color-icon-disabled"></i>
+      <i class="fa-solid fa-briefcase color-icon-diminished"></i>
       <h3 class="font-label-medium">
         {localize('DND5E.Skills')}
         {#if allowToggle}
@@ -96,15 +100,17 @@
         {@const modifier = getModifierData(skill.total)}
         <li data-reference-tooltip={references[skill.key]}>
           {#if context.unlocked || showFiligree}
-          <ProficiencyCycle
-            actor={context.actor}
-            aria-label={localize(skill.hover)}
-            data-tooltip={skill.hover}
-            disabled={!context.unlocked}
-            path="system.skills.{skill.key}.value"
-            type="skill"
-            value={context.unlocked ? (skill.source?.value ?? 0) : skill.value}
-          />
+            <ProficiencyCycle
+              actor={context.actor}
+              aria-label={localize(skill.hover)}
+              data-tooltip={skill.hover}
+              disabled={!context.unlocked}
+              path="system.skills.{skill.key}.value"
+              type="skill"
+              value={context.unlocked
+                ? (skill.source?.value ?? 0)
+                : skill.value}
+            />
           {/if}
           {#if context.unlocked}
             <SelectQuadrone

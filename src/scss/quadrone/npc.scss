@@ -323,39 +323,41 @@
     }
 
     .npc-score-tracker {
-      input {
-        font-size: var(--font-size-18);
-        font-weight: var(--font-weight-bold);
-
-        &:first-child {
-          text-align: right;
-        }
-
-        &:last-child {
-          text-align: left;
-        }
-      }
-
-      >.flexrow {
-        // gap: 0.25rem;
-      }
 
       .uses {
-        gap: 0.25rem;
 
         .max,
         .value {
           width: 1.5rem;
         }
       }
+    }
+  }
 
-      .lair-initiative {
-        gap: var(--t5e-size-2x);
+  .npc-score-tracker {
+    input {
+      font-size: var(--font-size-18);
+      font-weight: var(--font-weight-bold);
+
+      &:first-child {
+        text-align: right;
       }
 
-      .button i {
-        font-size: var(--font-size-14);
+      &:last-child {
+        text-align: left;
       }
+    }
+
+    .lair-initiative {
+      gap: var(--t5e-size-2x);
+    }
+
+    .button i {
+      font-size: var(--font-size-14);
+    }
+
+    .uses {
+      gap: 0.25rem;
     }
   }
 

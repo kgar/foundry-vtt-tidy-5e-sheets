@@ -16,6 +16,14 @@
         border: 0.0625rem solid var(--t5e-color-gold);
         width: 1.75rem;
         height: 1.75rem;
+
+        i {
+          transition: box-shadow var(--t5e-transition-default);
+        }
+
+        img {
+          background-color: var(--t5e-color-palette-gold-56);
+        }
       }
 
       &:hover,

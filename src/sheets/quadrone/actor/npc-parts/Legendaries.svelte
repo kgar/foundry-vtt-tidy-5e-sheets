@@ -52,16 +52,18 @@
 {#snippet lairActions()}
   {#if context.modernRules && context.unlocked}
     <!-- Checkbox - has lair -->
-    {#if showFiligree}
-      <h3>
-        {localize('DND5E.LAIR.HasLair')}
-      </h3>
-    {:else}
-      <h3 class="font-label-medium bordered">
-        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
-        {localize('DND5E.LAIR.HasLair')}
-      </h3>
-    {/if}
+    <div class="card-header flexrow">
+      {#if showFiligree}
+        <h3>
+          {localize('DND5E.LAIR.HasLair')}
+        </h3>
+      {:else}
+        <h3 class="font-label-medium bordered">
+          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+          {localize('DND5E.LAIR.HasLair')}
+        </h3>
+      {/if}
+    </div>
     <span class="value">
       <CheckboxQuadrone
         document={context.actor}
@@ -71,16 +73,18 @@
     </span>
   {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
     <!-- Switch - inside lair -->
-    {#if showFiligree}
-      <h3>
-        {localize('DND5E.LAIR.Inside')}
-      </h3>
-    {:else}
-      <h3 class="font-label-medium bordered">
-        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
-        {localize('DND5E.LAIR.Inside')}
-      </h3>
-    {/if}
+    <div class="card-header flexrow">
+      {#if showFiligree}
+        <h3>
+          {localize('DND5E.LAIR.Inside')}
+        </h3>
+      {:else}
+        <h3 class="font-label-medium bordered">
+          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+          {localize('DND5E.LAIR.Inside')}
+        </h3>
+      {/if}
+    </div>
     <FieldToggle
       class="inside-lair-toggle"
       checked={context.system.resources.lair.inside}
@@ -91,16 +95,18 @@
     />
   {:else if !context.modernRules}
     <!-- Lair initiative -->
-    {#if showFiligree}
-      <h3>
-        {localize('DND5E.LAIR.Action.Label')}
-      </h3>
-    {:else}
-      <h3 class="font-label-medium bordered">
-        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
-        {localize('DND5E.LAIR.Action.Label')}
-      </h3>
-    {/if}
+    <div class="card-header flexrow">
+      {#if showFiligree}
+        <h3>
+          {localize('DND5E.LAIR.Action.Label')}
+        </h3>
+      {:else}
+        <h3 class="font-label-medium bordered">
+          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+          {localize('DND5E.LAIR.Action.Label')}
+        </h3>
+      {/if}
+    </div>
     <div class="flexrow lair-initiative">
       <span class="font-label-medium color-text-lighter flexshrink">
         {localize('DND5E.Initiative')}

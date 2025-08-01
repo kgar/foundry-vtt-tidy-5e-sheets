@@ -41,10 +41,12 @@
 </script>
 
 {#if showFiligree}
-  <FiligreeCard class="npc-score-tracker">
-    <h3>
-      {label}
-    </h3>
+  <FiligreeCard class="npc-score-tracker card">
+    <div class="card-header flexrow">
+      <h3>
+        {label}
+      </h3>
+    </div>
     <div class="flexrow">
       {#if valuePath}
         <button

@@ -2467,6 +2467,16 @@
     background-color: var(--t5e-component-card-default);
     padding: 0.3125rem 0.875rem 0.5rem;
 
+    .card-header {
+      display: flex;
+      gap: var(--t5e-size-2x);
+      padding: 0 var(--t5e-size-2x);
+      height: var(--t5e-field-size-default);
+
+      i {
+        flex: 0;
+      }
+    }
   }
 
   .use-ability-header {
@@ -2510,8 +2520,8 @@
 
   .saving-throws {
     .use-ability-header {
-      gap: var(--t5e-size-2x);
-      padding: 0 var(--t5e-size-2x);
+      // gap: var(--t5e-size-2x);
+      // padding: 0 var(--t5e-size-2x);
 
       i {
         flex: 0;
