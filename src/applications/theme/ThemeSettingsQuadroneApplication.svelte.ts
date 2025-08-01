@@ -132,7 +132,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return context;
   }
 
-  private _mapSettings(themeSettings: ThemeSettingsV2): ThemeSettingsContext {
+  private _mapSettings(themeSettings: ThemeSettingsV3): ThemeSettingsContext {
     return {
       value: {
         accentColor: themeSettings.accentColor,

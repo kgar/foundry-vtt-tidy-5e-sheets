@@ -41,8 +41,8 @@
     },
   );
 
-  let modeColorPlaceholders = createColorPlaceholderMap(
-    placeholders?.value.spellPreparationModeColors,
+  let methodColorPlaceholders = createColorPlaceholderMap(
+    placeholders?.value.spellPreparationMethodColors,
   );
 
   let rarityColorPlaceholders = createColorPlaceholderMap(
@@ -212,7 +212,7 @@
         key={color.key}
         bind:value={color.value}
         label={color.label}
-        placeholder={modeColorPlaceholders[color.key]}
+        placeholder={methodColorPlaceholders[color.key]}
       />
     {/each}
   </fieldset>
