@@ -11,8 +11,10 @@
 
   const localize = FoundryAdapter.localize;
 
-  let { showFiligree = true }: { 
-    showFiligree?: boolean
+  let {
+    showFiligree = true,
+  }: {
+    showFiligree?: boolean;
   } = $props();
 </script>
 
@@ -27,7 +29,7 @@
     maxPath="system.resources.legact.max"
     maxTooltip="DND5E.LegendaryAction.Max"
     unlocked={context.unlocked}
-    showFiligree={showFiligree}
+    {showFiligree}
   />
 {/if}
 
@@ -42,64 +44,67 @@
     maxPath="system.resources.legres.max"
     maxTooltip="DND5E.LegendaryResistance.Max"
     unlocked={context.unlocked}
-    showFiligree={showFiligree}
+    {showFiligree}
     icon="helmet-battle"
   />
 {/if}
 
 {#snippet lairActions()}
-
-    {#if context.modernRules && context.unlocked}
-      <!-- Checkbox - has lair -->
-      {#if showFiligree}
+  {#if context.modernRules && context.unlocked}
+    <!-- Checkbox - has lair -->
+    {#if showFiligree}
       <h3>
         {localize('DND5E.LAIR.HasLair')}
       </h3>
-      {:else}
+    {:else}
       <h3 class="font-label-medium bordered">
         <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
         {localize('DND5E.LAIR.HasLair')}
       </h3>
-      {/if}
-      <span class="value">
-        <CheckboxQuadrone
-          document={context.actor}
-          field="system.resources.lair.value"
-          checked={context.system.resources.lair.value}
-        />
-      </span>
-    {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
-      <!-- Switch - inside lair -->
-      {#if showFiligree}
-      <h3>
-        {localize('DND5E.LAIR.Inside')}
-      </h3>
-      {:else}
-      <h3 class="font-label-medium bordered">
-        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
-        {localize('DND5E.LAIR.Inside')}
-      </h3>
-      {/if}
-      <FieldToggle
-        class="inside-lair-toggle"
-        checked={context.system.resources.linear.inside}
-        onchange={(ev) =>
-          context.actor.update({
-            ['system.resources.lair.inside']: ev.currentTarget.checked,
-          })}
+    {/if}
+    <span class="value">
+      <CheckboxQuadrone
+        document={context.actor}
+        field="system.resources.lair.value"
+        checked={context.system.resources.lair.value}
       />
-    {:else if !context.modernRules}
-      <!-- Lair initiative -->
-      {#if showFiligree}
+    </span>
+  {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
+    <!-- Switch - inside lair -->
+    {#if showFiligree}
+      <h3>
+        {localize('DND5E.LAIR.Inside')}
+      </h3>
+    {:else}
+      <h3 class="font-label-medium bordered">
+        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+        {localize('DND5E.LAIR.Inside')}
+      </h3>
+    {/if}
+    <FieldToggle
+      class="inside-lair-toggle"
+      checked={context.system.resources.linear.inside}
+      onchange={(ev) =>
+        context.actor.update({
+          ['system.resources.lair.inside']: ev.currentTarget.checked,
+        })}
+    />
+  {:else if !context.modernRules}
+    <!-- Lair initiative -->
+    {#if showFiligree}
       <h3>
         {localize('DND5E.LAIR.Action.Label')}
       </h3>
-      {:else}
+    {:else}
       <h3 class="font-label-medium bordered">
         <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
         {localize('DND5E.LAIR.Action.Label')}
       </h3>
-      {/if}
+    {/if}
+    <div class="flexrow lair-initiative">
+      <span class="font-label-medium color-text-lighter flexshrink">
+        {localize('DND5E.Initiative')}
+      </span>
       <TextInputQuadrone
         document={context.actor}
         field="system.resources.lair.initiative"
@@ -110,9 +115,10 @@
         saveEmptyAsNull={true}
         disabled={!context.unlocked}
         data-tooltip={'DND5E.LAIR.Action.Initiative'}
-        class="lair-ini-input"
+        class="lair-ini-input {context.unlocked ? '' : 'uninput'}"
       />
-    {/if}
+    </div>
+  {/if}
 {/snippet}
 
 {#if context.showLairTracker}

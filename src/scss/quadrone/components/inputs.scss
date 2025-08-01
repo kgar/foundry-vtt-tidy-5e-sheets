@@ -34,7 +34,8 @@ select,
     color: var(--t5e-color-text-disabled);
   }
 
-  &.uninput {
+  &.uninput,
+  &.uninput:disabled {
     border-color: transparent;
     background: transparent;
     background-color: transparent;
@@ -507,34 +508,28 @@ input[type='text']:not(:disabled):not(.uninput) {
   .input-group,
   input[type='text'],
   input[type='number'] {
-    // border-color: var(--t5e-component-field-border);
-    // background-color: var(--t5e-component-field-background);
-    // box-shadow: var(--t5e-drop-shadow-field);
-    // color: var(--t5e-color-text-default);
-    // transition: all var(--t5e-transition-default);
 
     &::placeholder {
       color: var(--t5e-color-text-disabled);
     }
 
-    // &:not(:disabled):not(.uninput) {
+    &:not(.uninput) {
 
-    &:hover,
-    &:focus {
-      background-color: var(--t5e-component-field-background-hover);
-      border-color: var(--t5e-component-field-border-hover);
-    }
+      &:hover,
+      &:focus {
+        background-color: var(--t5e-component-field-background-hover);
+        border-color: var(--t5e-component-field-border-hover);
+      }
 
-    &:focus {
-      outline-color: var(--t5e-component-field-focus);
-    }
+      &:focus {
+        outline-color: var(--t5e-component-field-focus);
+      }
 
-    // }
-
-    &:disabled {
-      background-color: var(--t5e-component-field-background-disabled);
-      border-color: transparent;
-      box-shadow: none;
+      &:disabled {
+        background-color: var(--t5e-component-field-background-disabled);
+        border-color: transparent;
+        box-shadow: none;
+      }
     }
   }
 

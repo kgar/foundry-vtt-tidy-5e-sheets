@@ -244,14 +244,20 @@
   }
 
   .sidebar {
-    gap: var(--t5e-size-3x);
+    gap: var(--t5e-size-2x);
+
+    > :last-child {
+      margin-bottom: var(--t5e-size-8x);
+    }
 
     h4,
     h3 {
+      color: var(--t5e-color-text-lighter);
+
       i {
         font-size: var(--font-size-12);
         margin-right: 0.1875rem;
-        color: var(--t5e-color-icon-diminished);
+        color: var(--t5e-color-icon-disabled);
       }
     }
 
@@ -262,7 +268,7 @@
     }
 
     .traits {
-      gap: 0.5rem;
+      gap: 0.75rem;
 
 
       .list-entry {
@@ -286,6 +292,7 @@
             color: var(--t5e-color-text-lighter);
 
             i {
+              color: var(--t5e-color-icon-disabled);
               transition: color var(--t5e-transition-default);
             }
           }
@@ -317,13 +324,37 @@
 
     .npc-score-tracker {
       input {
-        font-size: var(--font-size-16);
+        font-size: var(--font-size-18);
         font-weight: var(--font-weight-bold);
-        text-align: center;
+
+        &:first-child {
+          text-align: right;
+        }
+
+        &:last-child {
+          text-align: left;
+        }
+      }
+
+      >.flexrow {
+        // gap: 0.25rem;
       }
 
       .uses {
         gap: 0.25rem;
+
+        .max,
+        .value {
+          width: 1.5rem;
+        }
+      }
+
+      .lair-initiative {
+        gap: var(--t5e-size-2x);
+      }
+
+      .button i {
+        font-size: var(--font-size-14);
       }
     }
   }
