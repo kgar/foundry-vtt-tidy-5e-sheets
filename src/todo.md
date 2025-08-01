@@ -10,6 +10,7 @@
   - [ ] (confirm) src/sheets/quadrone/actor/character-parts/CharacterSubtitle.svelte
   - [ ] (confirm) src/sheets/quadrone/actor/character-parts/SavingThrowsCard.svelte
 - [ ] NPC Sheet
+  - [ ] Make loyalty tracker match legendary trackers
   - [ ] Header
     - [ ] Portrait
     - [ ] AC and Vitals
