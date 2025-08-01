@@ -390,7 +390,7 @@
                   type="button"
                   class="button button-borderless button-icon-only"
                   onclick={() =>
-                    context.item.sheet.submit({
+                    context.sheet.submit({
                       updateData: { 'system.craft': null },
                     })}
                   data-tooltip={localize('DND5E.FACILITY.Action.RemoveCraft')}
@@ -404,7 +404,7 @@
             <document-tags
               name="system.craft.item"
               single
-              onchange={async () => await context.item.sheet.submit()}
+              onchange={async () => await context.sheet.submit()}
               disabled={!context.unlocked}
             ></document-tags>
           {/if}

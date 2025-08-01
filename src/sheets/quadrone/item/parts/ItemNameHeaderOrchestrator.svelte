@@ -19,7 +19,7 @@
   const headerOffset = $derived.by(() => {
     return untrack(() => {
       const headerHeight = coalesce(
-        window.getComputedStyle(context.item.sheet.window.header).height,
+        window.getComputedStyle(context.sheet.window.header).height,
         '36',
       );
 
@@ -40,13 +40,13 @@
 <div
   bind:this={scrollMarkerEl}
   {@attach visibilityObserver({
-    root: context.item.sheet.windowContent,
+    root: context.sheet.windowContent,
     trackWhenOffScreen: true,
     toAffect: 'self',
   })}
   {@attach itemNameEl
     ? visibilityObserver({
-        root: context.item.sheet.windowContent,
+        root: context.sheet.windowContent,
         trackWhenOffScreen: true,
         toObserve: [itemNameEl],
         toAffect: 'self',
