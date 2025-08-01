@@ -2,7 +2,6 @@
 
 ### The Short List
 
-- [ ] Fix: Source is missing in NPC header
 - [ ] (wait for another hightouch PR) Refactor rename and move the following to Actor space and out of Character space
   - [ ] (confirm) CharacterPortrait 
   - [ ] (confirm) CharacterExhaustionBar 
@@ -270,6 +269,7 @@ Limited:
     - [x] Context menu
 - [x] Fix: column counts on item sheets is missing
 - [x] Fix: Setting default image shape does not update image shapes for sheets with no settings
+- [x] Fix: Source is missing in NPC header -- gave the code to hightouch to plug in, since he's working in the area.
 
 
 #### NPC Statblock Sections notes
