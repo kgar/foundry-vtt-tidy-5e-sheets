@@ -54,7 +54,7 @@
       {@render speedSenseSummary(
         sense,
         ['sense', 'main-sense'],
-        ['hide-under-500'],
+        ['hide-under-600'],
       )}
     {/each}
     {#if size}
@@ -75,10 +75,10 @@
       <div class="divider-dot"></div>
     {/if}
     {#if species}
-      <span class="species {context.enableXp ? '' : 'hide-under-600'}">
+      <span class="species">
         <span class="font-label-medium color-text-gold">{species}</span>
       </span>
-      <div class="divider-dot {context.enableXp ? '' : 'hide-under-600'}"></div>
+      <div class="divider-dot"></div>
     {/if}
     <span class="alignment">
       <span class="font-label-medium color-text-gold">{alignment}</span>
