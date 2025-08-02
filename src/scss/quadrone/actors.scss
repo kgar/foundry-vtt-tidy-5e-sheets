@@ -1082,7 +1082,8 @@
           }
         }
 
-        &.single {
+        // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
+        &.single.single {
           background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
 
           &::before {
@@ -1123,7 +1124,8 @@
           }
         }
 
-        &.stacked {
+        // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
+        &.stacked.stacked {
           background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
           width: 2.75rem;
           height: 2.75rem;
