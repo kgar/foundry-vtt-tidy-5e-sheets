@@ -33,6 +33,7 @@ import {
 } from 'src/features/sheet-header-controls/header-controls';
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -202,10 +203,20 @@ export function TidyExtensibleDocumentSheetMixin<
     ): Promise<DocumentSheetV2Context> {
       const context = await super._prepareContext(options);
 
-      return {
-        ...context,
+      const sheetModeConfig = {
         unlocked:
           this.sheetMode === CONSTANTS.SHEET_MODE_EDIT && this.isEditable,
+      };
+
+      TidyHooks.tidy5eSheetsSheetModeConfiguring(
+        this,
+        this.element,
+        sheetModeConfig
+      );
+
+      return {
+        ...context,
+        unlocked: sheetModeConfig.unlocked,
       } as DocumentSheetV2Context;
     }
 

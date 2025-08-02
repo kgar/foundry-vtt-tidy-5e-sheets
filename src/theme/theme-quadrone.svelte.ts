@@ -23,9 +23,8 @@ export type ThemeableSheetType =
   | Tidy5eItemSheetQuadrone
   | Tidy5eContainerSheetQuadrone;
 
-const DEFAULT_PORTRAIT_SHAPE: PortraitShape = 'round';
-
 export class ThemeQuadrone {
+  static readonly DEFAULT_PORTRAIT_SHAPE: PortraitShape = 'round';
   static onReady() {
     setTimeout(() => {
       // Establish color mappings for Item Rarity and Spell Prep Mode
@@ -76,7 +75,11 @@ export class ThemeQuadrone {
   static getSheetThemeSettings(
     options: ThemeSettingsConfigurationOptions
   ): ThemeSettingsV2 {
-    let defaultSettings = this.getDefaultThemeSettings();
+    options.applyWorldThemeSetting ??= true;
+
+    let defaultSettings = options.applyWorldThemeSetting
+      ? this.getWorldThemeSettings()
+      : this.getDefaultThemeSettings();
 
     if (options.doc?.parent) {
       let parentSettings = this.getSheetThemeSettings({
@@ -218,7 +221,7 @@ export class ThemeQuadrone {
     return coalesce(
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
       settings.value.worldThemeSettings?.portraitShape,
-      DEFAULT_PORTRAIT_SHAPE
+      this.DEFAULT_PORTRAIT_SHAPE
     ) as PortraitShape;
   }
 
