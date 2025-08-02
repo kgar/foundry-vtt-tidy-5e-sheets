@@ -221,7 +221,7 @@
     .button-config {
       color: var(--t5e-color-icon-button);
 
-      &.button-icon-only.button-borderless:hover {
+      &.button-icon-only.button-borderless:not(:disabled):hover {
         background-color: transparent;
       }
     }
@@ -247,10 +247,6 @@
       position: relative;
       padding-bottom: 2rem;
       max-width: 11.25rem;
-
-      .button {
-        border-radius: 0;
-      }
 
       .actor-image {
         --inset: 0.3125rem;
@@ -574,6 +570,11 @@
       position: absolute;
       bottom: 0;
       width: 100%;
+
+
+      .button {
+        border-radius: 0;
+      }
 
       .meter {
         background-color: var(--t5e-color-component-card-dark-darker);
@@ -998,660 +999,662 @@
         }
       }
     }
+  }
 
-    .sheet-header-actions {
-      margin-right: var(--t5e-size-3x);
-      margin-left: var(--t5e-size-2x);
-      align-items: center;
-      gap: var(--t5e-size-2x);
-      flex: 0 0 fit-content;
+  .sheet-header-actions {
+    margin-right: var(--t5e-size-3x);
+    margin-left: var(--t5e-size-2x);
+    align-items: center;
+    gap: var(--t5e-size-2x);
+    flex: 0 0 fit-content;
 
-      .button-gold {
-        border: 0.125rem solid var(--t5e-color-palette-gold-62);
-        border-radius: 0.1875rem;
-        box-shadow: var(--header-shadow);
+    .button-gold {
+      border: 0.125rem solid var(--t5e-color-palette-gold-62);
+      border-radius: 0.1875rem;
+      box-shadow: var(--header-shadow);
+
+      i {
+        color: var(--t5e-color-palette-gold-75);
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        border-color: var(--t5e-color-palette-gold-89);
 
         i {
-          color: var(--t5e-color-palette-gold-75);
+          color: var(--t5e-color-palette-gold-89);
+        }
+      }
+
+      &:disabled {
+        box-shadow: none;
+        border-color: var(--t5e-color-palette-gold-56);
+        pointer-events: none;
+
+        i {
+          color: var(--t5e-color-palette-gold-56);
+        }
+      }
+    }
+  }
+
+  .actor-details-subtitle-row {
+    container-type: inline-size;
+  }
+
+  .level-container {
+    align-items: center;
+    position: relative;
+    margin-top: calc(var(--t5e-size-2x) + var(--t5e-size-halfx));
+
+    .inspiration-badge {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.stacked {
+        left: -0.25rem;
+      }
+    }
+
+    .inspiration {
+      transition: all var(--t5e-transition-default);
+      outline: none;
+
+      &.button {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:not(.inspired) .level {
+          color: var(--t5e-color-text-lighter);
         }
 
         &:hover,
         &:focus,
         &:active {
-          border-color: var(--t5e-color-palette-gold-89);
+          background-color: var(--t5e-theme-color-highlight);
+        }
+      }
 
-          i {
-            color: var(--t5e-color-palette-gold-89);
-          }
+      // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
+      &.single.single {
+        background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
+
+        &::before {
+          transition: all var(--t5e-transition-default);
+          // TODO: Fix weird hover behavior.
+          box-shadow: 0 0 0.5rem 0.1875rem var(--t5e-theme-color-highlight);
+          display: block;
+          width: 0.75rem;
+          height: 0.75rem;
+          background-color: var(--t5e-color-palette-white);
+          border: 0.0625rem solid var(--t5e-theme-color-highlight);
+          outline: none;
+          transform: translate(-50%, -50%) rotate(45deg);
+          z-index: 0;
+
+          position: absolute;
+          left: 50%;
+          top: 50%;
         }
 
-        &:disabled {
-          box-shadow: none;
-          border-color: var(--t5e-color-palette-gold-56);
-          pointer-events: none;
+        &:hover,
+        &:focus,
+        &:active {
+          background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
+          filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
+        }
 
-          i {
-            color: var(--t5e-color-palette-gold-56);
-          }
+        &.inspired::before {
+          content: '';
+        }
+
+
+        &:hover::before {
+          width: 0.75rem;
+          height: 0.75rem;
+          border-width: 0.0625rem;
+          box-shadow: 0 0 0.75rem 0.1875rem var(--t5e-theme-color-highlight);
+        }
+      }
+
+      // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
+      &.stacked.stacked {
+        background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
+        width: 2.75rem;
+        height: 2.75rem;
+
+
+        .inspiration-level {
+          width: 1.25rem;
+          height: 1.25rem;
+          border-radius: 100%;
+          border: 0.0625rem solid transparent;
+          transition: all var(--t5e-transition-default);
+          outline: none;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+
+        .level {
+          text-align: center;
+          font-size: var(--font-size-16);
+        }
+
+        &.inspired .inspiration-level {
+          box-shadow: 0 0 0.5rem 0.1875rem var(--t5e-theme-color-highlight);
+          content: '';
+          background-color: var(--t5e-color-palette-white);
+          border-color: var(--t5e-theme-color-highlight);
+
+        }
+
+        &:hover,
+        &:focus,
+        &:active {
+          background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
+          filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
         }
       }
     }
 
-    .actor-details-subtitle-row {
-      container-type: inline-size;
+    .inspiration-controls {
+      display: none;
     }
 
-    .level-container {
-      align-items: center;
-      position: relative;
-      margin-top: calc(var(--t5e-size-2x) + var(--t5e-size-halfx));
-
-      .inspiration-badge {
+    .inspiration-badge:hover {
+      .inspiration-controls {
+        display: flex;
         position: absolute;
         left: 0;
-        top: 0;
-        bottom: 0;
+        bottom: 0.25rem;
+        gap: 0.25rem;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
 
-        &.stacked {
-          left: -0.25rem;
-        }
-      }
+        .button.button-borderless {
+          --size: 1.25rem;
+          min-width: var(--size);
+          border-radius: 100%;
+          position: relative;
+          outline: none;
 
-      .inspiration {
-        transition: all var(--t5e-transition-default);
-        outline: none;
-
-        &.button {
-          width: 2.5rem;
-          height: 2.5rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          &:not(.inspired) .level {
-            color: var(--t5e-color-text-lighter);
+          i {
+            font-size: var(--font-size-13);
+            position: relative;
           }
 
-          &:hover,
-          &:focus,
-          &:active {
-            background-color: var(--t5e-theme-color-highlight);
+          &:hover {
+            background-color: transparent;
           }
-        }
-
-        // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
-        &.single.single {
-          background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
 
           &::before {
-            transition: all var(--t5e-transition-default);
-            // TODO: Fix weird hover behavior.
-            box-shadow: 0 0 0.5rem 0.1875rem var(--t5e-theme-color-highlight);
-            display: block;
-            width: 0.75rem;
-            height: 0.75rem;
-            background-color: var(--t5e-color-palette-white);
-            border: 0.0625rem solid var(--t5e-theme-color-highlight);
-            outline: none;
-            transform: translate(-50%, -50%) rotate(45deg);
-            z-index: 0;
-
-            position: absolute;
-            left: 50%;
-            top: 50%;
-          }
-
-          &:hover,
-          &:focus,
-          &:active {
-            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
-            filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
-          }
-
-          &.inspired::before {
             content: '';
-          }
-
-
-          &:hover::before {
-            width: 0.75rem;
-            height: 0.75rem;
-            border-width: 0.0625rem;
-            box-shadow: 0 0 0.75rem 0.1875rem var(--t5e-theme-color-highlight);
-          }
-        }
-
-        // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
-        &.stacked.stacked {
-          background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
-          width: 2.75rem;
-          height: 2.75rem;
-
-
-          .inspiration-level {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            background: rgba(0, 0, 0, 0.32);
             width: 1.25rem;
             height: 1.25rem;
             border-radius: 100%;
-            border: 0.0625rem solid transparent;
-            transition: all var(--t5e-transition-default);
-            outline: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
           }
 
-          .level {
-            text-align: center;
-            font-size: var(--font-size-16);
+          &:not(:disabled):hover::before {
+            width: 1.25rem;
+            height: 1.25rem;
+            background: rgba(0, 0, 0, 0.64);
           }
 
-          &.inspired .inspiration-level {
-            box-shadow: 0 0 0.5rem 0.1875rem var(--t5e-theme-color-highlight);
-            content: '';
-            background-color: var(--t5e-color-palette-white);
-            border-color: var(--t5e-theme-color-highlight);
-
-          }
-
-          &:hover,
-          &:focus,
-          &:active {
-            background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
-            filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
-          }
-        }
-      }
-
-      .inspiration-controls {
-        display: none;
-      }
-
-      .inspiration-badge:hover {
-        .inspiration-controls {
-          display: flex;
-          position: absolute;
-          left: 0;
-          bottom: 0.25rem;
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          .button.button-borderless {
-            --size: 1.5rem;
-            min-width: var(--size);
-            border-radius: 100%;
-            position: relative;
+          &:disabled,
+          &:disabled:hover {
+            background-color: transparent;
 
             i {
-              font-size: var(--font-size-14);
-              position: relative;
-            }
-
-            &:hover {
-              background-color: transparent;
-            }
-
-            &::before {
-              content: '';
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translateY(-50%) translateX(-50%);
-              background: rgba(0, 0, 0, 0.5);
-              width: 1rem;
-              height: 1rem;
-              border-radius: 100%;
-              z-index: -1;
-            }
-
-            &:not(:disabled):hover::before {
-              width: 1rem;
-              height: 1rem;
-              background-color: black;
-            }
-
-            &:disabled,
-            &:disabled:hover {
-              background-color: transparent;
-
-              i {
-                color: var(--t5e-color-icon-disabled);
-                text-shadow: none;
-              }
+              color: var(--t5e-color-icon-disabled);
+              text-shadow: none;
             }
           }
         }
       }
     }
+  }
 
-    .level-block {
-      background: url(../../modules/tidy5e-sheet/images/badge_level_dark.webp) top center / auto no-repeat;
-      background-size: contain;
-      margin-left: 1.1875rem;
-      margin-right: var(--t5e-size-2x);
-      min-width: 4.75rem;
-      min-height: 4.75rem;
+  .level-block {
+    background: url(../../modules/tidy5e-sheet/images/badge_level_dark.webp) top center / auto no-repeat;
+    background-size: contain;
+    margin-left: 1.1875rem;
+    margin-right: var(--t5e-size-2x);
+    min-width: 4.75rem;
+    min-height: 4.75rem;
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-      .level {
-        margin: -0.25rem 0 -0.25rem 0;
-      }
-
-      .proficiency {
-        .label {
-          margin-right: var(--t5e-size-halfx);
-        }
-      }
+    .level {
+      margin: -0.25rem 0 -0.25rem 0;
     }
 
-    .abilities-container {
-      container-name: abilities;
-      container-type: inline-size;
-      display: flex;
-      flex-direction: row;
-      overflow-x: auto;
-      overflow-y: hidden;
-
-      >* {
-        flex: 1 1 auto;
-      }
-
-      .bonus {
-        margin-right: 0.125rem;
-        margin-left: 0.125rem;
-      }
-
-      .save {
-        margin-right: var(--t5e-size-1x);
-      }
-
-      .icon i {
-        font-size: var(--font-size-11);
-        color: var(--t5e-color-gold);
-      }
-    }
-
-
-    .abilities-container-inner {
-      position: relative;
-      min-height: 6.625rem;
-      gap: var(--t5e-size-1x);
-      padding: var(--t5e-size-2x) var(--t5e-size-3x) var(--t5e-size-halfx) 0;
-      margin-left: var(--header-padding);
-      align-items: flex-start;
-      flex-wrap: nowrap;
-    }
-
-
-    &.abilities-overflow .abilities-container-inner {
-      gap: 0;
-      max-width: 100%;
-
-      .initiative {
-        width: 3.25rem;
-        flex-grow: 0;
-      }
-    }
-
-    .shield {
-      background-position: top center;
-      background-size: contain;
-      background-repeat: no-repeat;
-      height: 4.25rem;
-      color: var(--t5e-color-text-light);
-      font-weight: bold;
-      font-size: 1.25rem;
-      position: relative;
-      width: 4rem;
-      transition: height var(--t5e-transition-default), width var(--t5e-transition-default);
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      .ac-value {
-        font-size: var(--font-size-28);
-        letter-spacing: var(--t5e-font-letter-spacing-xlarge);
-        margin: 0.375rem 0.0625rem 0.75rem 0;
-      }
-
-      .ac-label {
-        display: none;
-      }
-    }
-
-    .ability-labels {
-      margin-top: 0.1875rem;
-
+    .proficiency {
       .label {
-        color: var(--t5e-color-text-lightest);
-        text-transform: none;
-      }
-
-      .divider {
-        background-color: var(--t5e-color-gold);
-        opacity: 0.5;
-        width: 100%;
-        height: 0.0625rem;
-        margin: 0.3125rem 0;
+        margin-right: var(--t5e-size-halfx);
       }
     }
+  }
 
-    .ability {
-      max-width: 4.5rem;
+  .abilities-container {
+    container-name: abilities;
+    container-type: inline-size;
+    overflow-x: auto;
+    overflow-y: hidden;
 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-
-      .button-config {
-        position: absolute;
-        bottom: -0.625rem;
-        right: -0.5rem;
-      }
-
-      .bonus-container {
-        aspect-ratio: 1/1.125;
-        background: url(../../modules/tidy5e-sheet/images/badge_ability_dark.webp) top center / auto no-repeat;
-        background-size: contain;
-        padding-top: var(--t5e-size-halfx);
-        position: relative;
-        text-align: center;
-        width: 100%;
-        min-width: 3.625rem;
-        max-width: 4rem;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        &.proficient {
-          background: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp) top center / auto no-repeat;
-          background-size: contain;
-        }
-
-        // 👋 hightouch - POC styles for toggling visibility on mod/value and the score input
-        &:has(.ability-score-input:focus) :where(.modifier, .value) {
-          visibility: hidden;
-        }
-
-        .ability-score-input {
-          position: absolute;
-          inset: 1.75rem 0 0 0;
-          height: calc(100% - 2.5rem);
-          text-align: center;
-          font: var(--t5e-font-data-xlarge);
-          // font-size: 2rem;
-          background: none;
-          opacity: 0;
-
-          &.editing-score {
-            opacity: 1;
-          }
-        }
-
-        .editing-score-label {
-          font: var(--t5e-font-label-medium);
-          position: absolute;
-          top: calc(100% + 0.125rem);
-        }
-      }
-
-      &:has(.button-config) {
-        .ability-score {
-          cursor: pointer;
-
-          &:hover {
-            color: var(--t5e-color-text-default);
-            text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
-          }
-        }
-      }
-
-      .ability-score {
-        background: url(../../modules/tidy5e-sheet/images/badge_score_dark.webp) top center / auto no-repeat;
-        background-size: contain;
-        height: 2rem;
-        margin-top: -0.75rem;
-        position: relative;
-        width: 1.75rem;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        pointer-events: initial;
-      }
-
-      .ability-save {
-        border: none;
-        gap: 0.0625rem;
-        height: 1.75rem;
-        padding: 0;
-        align-items: center;
-        text-shadow: var(--header-shadow);
-
-        .icon {
-          margin-bottom: var(--t5e-size-halfx);
-        }
-
-        i {
-          color: var(--t5e-color-text-gold-emphasis);
-          font-size: var(--font-size-13);
-          line-height: var(--font-size-13);
-        }
-
-        .modifier,
-        .value {
-          font-size: var(--font-size-14);
-        }
-
-        &:hover,
-        &:focus,
-        &:active {
-          text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
-        }
-      }
+    >* {
+      flex: 1 1 auto;
     }
 
-    .ability-roll-button {
-      margin-bottom: -2.25rem;
-      padding: 0 .75rem 2rem;
+    .bonus {
+      margin-right: 0.125rem;
+      margin-left: 0.125rem;
     }
 
-    .initiative-roll-button {
-      margin-top: -2rem;
-      padding: 1.825rem .5rem 0;
+    .save {
+      margin-right: var(--t5e-size-1x);
     }
 
-    .ability-roll-button,
-    .initiative-roll-button {
-      color: var(--t5e-color-text-gold);
-      font: var(--t5e-font-label-medium);
-      height: auto;
-      line-height: normal;
-      min-height: auto;
-      text-transform: uppercase;
-      transition: all var(--t5e-transition-default);
+    .icon i {
+      font-size: var(--font-size-11);
+      color: var(--t5e-color-gold);
+    }
+  }
 
-      ~div span {
-        transition: all var(--t5e-transition-default);
-      }
 
-      +div:not(:has(.ability-score-input)) {
-        pointer-events: none;
-      }
+  .abilities-container-inner {
+    position: relative;
+    min-height: 6.625rem;
+    gap: var(--t5e-size-1x);
+    margin: var(--t5e-size-2x) 0 0 var(--header-padding);
+    align-items: stretch;
+    flex-wrap: nowrap;
+  }
 
-      &:hover,
-      &:active,
-      &:focus,
-      &:focus-within {
-        color: var(--t5e-color-text-gold-light);
 
-        ~* {
-          text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
-        }
-      }
+  &.abilities-overflow .abilities-container-inner {
+    gap: 0;
+    max-width: 100%;
 
-      &:active,
-      &:focus,
-      &:focus-within {
-        border: none;
-        background: none;
-        outline: none;
-        box-shadow: none;
-      }
+    .initiative {
+      width: 3.25rem;
+      flex-grow: 0;
+    }
+  }
+
+  .shield {
+    background-position: top center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 4.25rem;
+    color: var(--t5e-color-text-light);
+    font-weight: bold;
+    font-size: 1.25rem;
+    position: relative;
+    width: 4rem;
+    transition: height var(--t5e-transition-default), width var(--t5e-transition-default);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .ac-value {
+      font-size: var(--font-size-28);
+      letter-spacing: var(--t5e-font-letter-spacing-xlarge);
+      margin: 0.375rem 0.0625rem 0.75rem 0;
     }
 
-    .initiative-container {
-      width: 3rem;
-      max-width: 4rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.325rem;
+    .ac-label {
+      display: none;
+    }
+  }
 
-      .initiative.score {
-        background: url(../../modules/tidy5e-sheet/images/badge_init_dark.webp) top center / auto no-repeat;
-        background-size: contain;
-        border-radius: var(--t5e-size-1x);
-        height: 3.75rem;
-        margin-top: 0.3125rem;
-        padding-top: var(--t5e-size-halfx);
-        width: 3.25rem;
-        position: relative;
+  .ability-labels {
+    margin-top: 0.1875rem;
 
-        display: flex;
-        align-items: center;
-        flex-direction: column-reverse;
-        flex-grow: 0;
-        justify-content: center;
-
-        .initiative-bonus {
-          margin-right: 0.125rem;
-          margin-top: -0.3125rem;
-          margin-bottom: -0.0625rem;
-        }
-
-        .modifier,
-        .bonus {
-          display: inline-block;
-          font-weight: bold;
-          font-size: 1.5rem;
-        }
-
-        .modifier {
-          color: var(--t5e-color-text-lightest);
-        }
-
-        .button-config {
-          position: absolute;
-          bottom: -0.75rem;
-          right: -0.625rem;
-        }
-      }
+    .label {
+      color: var(--t5e-color-text-lightest);
+      text-transform: none;
     }
 
-    .concentration {
+    .divider {
+      background-color: var(--t5e-color-gold);
+      opacity: 0.5;
       width: 100%;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column-reverse;
+      height: 0.0625rem;
+      margin: 0.3125rem 0;
+    }
+  }
+
+  .ability {
+    max-width: 4.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .button-config {
+      position: absolute;
+      bottom: -0.625rem;
+      right: -0.5rem;
+    }
+
+    .bonus-container {
+      aspect-ratio: 1/1.125;
+      background: url(../../modules/tidy5e-sheet/images/badge_ability_dark.webp) top center / auto no-repeat;
+      background-size: contain;
+      padding-top: var(--t5e-size-halfx);
+      position: relative;
+      text-align: center;
+      width: 100%;
+      min-width: 3.625rem;
+      max-width: 4rem;
       overflow: visible;
 
-      span,
-      i {
-        transition: text-shadow var(--t5e-transition-default);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &.proficient {
+        background: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp) top center / auto no-repeat;
+        background-size: contain;
       }
 
-      &:hover,
-      &:focus,
-      &:focus-within,
-      &:active {
-        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+      // 👋 hightouch - POC styles for toggling visibility on mod/value and the score input
+      &:has(.ability-score-input:focus) :where(.modifier, .value) {
+        visibility: hidden;
+      }
 
-        span {
+      .ability-score-input {
+        position: absolute;
+        inset: 1.75rem 0 0 0;
+        height: calc(100% - 2.5rem);
+        text-align: center;
+        font: var(--t5e-font-data-xlarge);
+        // font-size: 2rem;
+        background: none;
+        opacity: 0;
+
+        &.editing-score {
+          opacity: 1;
+        }
+      }
+
+      .editing-score-label {
+        font: var(--t5e-font-label-medium);
+        position: absolute;
+        top: calc(100% + 0.125rem);
+      }
+    }
+
+    &:has(.button-config) {
+      .ability-score {
+        cursor: pointer;
+
+        &:hover {
+          color: var(--t5e-color-text-default);
           text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
         }
       }
+    }
 
-      .concentration-roll-button {
-        height: auto;
-        min-height: auto;
-        margin-bottom: -2rem;
-        padding-bottom: 2.0625rem;
-        margin-left: -0.5rem;
-        margin-right: -0.5rem;
+    .ability-score {
+      background: url(../../modules/tidy5e-sheet/images/badge_score_dark.webp) top center / auto no-repeat;
+      background-size: contain;
+      height: 2rem;
+      margin-top: -0.75rem;
+      position: relative;
+      width: 1.75rem;
 
-        .label {
-          color: var(--t5e-color-text-gold);
-          overflow: hidden;
-          text-overflow: ellipsis;
-          width: 100%;
-          text-align: center;
-          margin-top: var(--t5e-size-2x);
-          text-transform: none;
-        }
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-        &:focus,
-        &:focus-within,
-        &:active {
-          background: transparent;
-          outline: none;
-          box-shadow: none;
-        }
-      }
+      pointer-events: initial;
+    }
 
-      .concentration-bonus {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: var(--t5e-size-1);
-        margin-top: var(--t5e-size-1x);
+    .ability-save {
+      border: none;
+      gap: 0.0625rem;
+      height: 1.75rem;
+      padding: 0;
+      align-items: center;
+      text-shadow: var(--header-shadow);
 
-        >* {
-          flex-grow: 0;
-        }
+      .icon {
+        margin-bottom: var(--t5e-size-halfx);
       }
 
       i {
-        margin-bottom: 0.0625rem;
-        margin-right: 0.1875rem;
+        color: var(--t5e-color-text-gold-emphasis);
+        font-size: var(--font-size-13);
+        line-height: var(--font-size-13);
       }
 
       .modifier,
       .value {
         font-size: var(--font-size-14);
-        line-height: var(--line-height-14);
       }
 
-      .config-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 1rem;
-        height: 1rem;
+      &:hover,
+      &:focus,
+      &:active {
+        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+      }
+    }
+  }
+
+  .ability-roll-button {
+    margin-bottom: -2.25rem;
+    padding: 0 .75rem 2rem;
+  }
+
+  .initiative-roll-button {
+    margin-top: -2rem;
+    padding: 1.825rem .5rem 0;
+  }
+
+  .ability-roll-button,
+  .initiative-roll-button {
+    color: var(--t5e-color-text-gold);
+    font: var(--t5e-font-label-medium);
+    height: auto;
+    line-height: normal;
+    min-height: auto;
+    text-transform: uppercase;
+    transition: all var(--t5e-transition-default);
+
+    ~div span {
+      transition: all var(--t5e-transition-default);
+    }
+
+    +div:not(:has(.ability-score-input)) {
+      pointer-events: none;
+    }
+
+    &:hover,
+    &:active,
+    &:focus,
+    &:focus-within {
+      color: var(--t5e-color-text-gold-light);
+
+      ~* {
+        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+      }
+    }
+
+    &:active,
+    &:focus,
+    &:focus-within {
+      border: none;
+      background: none;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  .initiative-container {
+    width: 3rem;
+    max-width: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.325rem;
+
+    .initiative.score {
+      background: url(../../modules/tidy5e-sheet/images/badge_init_dark.webp) top center / auto no-repeat;
+      background-size: contain;
+      border-radius: var(--t5e-size-1x);
+      height: 3.75rem;
+      margin-top: 0.3125rem;
+      padding-top: var(--t5e-size-halfx);
+      width: 3.25rem;
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      flex-direction: column-reverse;
+      flex-grow: 0;
+      justify-content: center;
+
+      .initiative-bonus {
+        margin-right: 0.125rem;
+        margin-top: -0.3125rem;
+        margin-bottom: -0.0625rem;
+      }
+
+      .modifier,
+      .bonus {
+        display: inline-block;
+        font-size: 1.5rem;
+      }
+
+      .modifier {
+        color: var(--t5e-color-text-lightest);
+      }
+
+      .bonus {
+        font-weight: bold;
       }
 
       .button-config {
-        display: inline-flex;
-        margin-left: var(--t5e-size-1x);
-        position: relative;
-        right: auto;
-        bottom: auto;
+        position: absolute;
+        bottom: -0.75rem;
+        right: -0.625rem;
       }
+    }
+  }
+
+  .concentration {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: visible;
+
+    span,
+    i {
+      transition: text-shadow var(--t5e-transition-default);
+    }
+
+    &:hover,
+    &:focus,
+    &:focus-within,
+    &:active {
+      text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+
+      span {
+        text-shadow: 0 0 0.375rem var(--t5e-color-text-gold);
+      }
+    }
+
+    .concentration-roll-button {
+      height: auto;
+      min-height: auto;
+      margin-bottom: -2rem;
+      padding-bottom: 2.0625rem;
+      margin-left: -0.5rem;
+      margin-right: -0.5rem;
+
+      .label {
+        color: var(--t5e-color-text-gold);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-align: center;
+        margin-top: var(--t5e-size-2x);
+        text-transform: none;
+      }
+
+      &:focus,
+      &:focus-within,
+      &:active {
+        background: transparent;
+        outline: none;
+        box-shadow: none;
+      }
+    }
+
+    .concentration-bonus {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: var(--t5e-size-1);
+      margin-top: var(--t5e-size-1x);
+
+      >* {
+        flex-grow: 0;
+      }
+    }
+
+    i {
+      margin-bottom: 0.0625rem;
+      margin-right: 0.1875rem;
+    }
+
+    .modifier,
+    .value {
+      font-size: var(--font-size-14);
+      line-height: var(--line-height-14);
+    }
+
+    .config-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .button-config {
+      display: inline-flex;
+      margin-left: var(--t5e-size-1x);
+      position: relative;
+      right: auto;
+      bottom: auto;
     }
   }
 
@@ -1674,17 +1677,6 @@
     }
   }
 
-  @container actor-sheet (width < 43.75rem) {
-    .sheet-header .actor-vitals-container {
-      max-width: 10rem;
-
-      .actor-image img {
-        height: 10rem;
-        width: 10rem;
-      }
-    }
-  }
-
   @container subtitle (width < 37.5rem) {
     .hide-under-600 {
       display: none;
@@ -1703,302 +1695,6 @@
     }
   }
 
-  @container character-sheet (width < 43.75rem) {
-    .sheet-header .actor-vitals-container {
-      max-width: 10rem;
-
-      .actor-image img {
-        height: 10rem;
-        width: 10rem;
-      }
-    }
-  }
-
-  @mixin ability-smaller {
-    --collapse-font-medium: 1.4375rem;
-
-    .ac-container,
-    .ability:has(.proficient),
-    .initiative-container {
-      height: 100%;
-      width: auto;
-      flex: 1;
-    }
-
-    .ability .bonus-container,
-    .ability .bonus-container.proficient,
-    .ac-container .shield,
-    .initiative-container .initiative.score {
-      width: 100%;
-      height: auto;
-      min-height: 3.25rem;
-      min-width: auto;
-    }
-
-    .bonus-container,
-    .initiative-bonus {
-
-      .modifier,
-      .bonus {
-        font-size: var(--collapse-font-medium);
-        margin-left: 0;
-      }
-    }
-
-
-    .ac-container .shield,
-    .initiative-container .initiative.score {
-      min-height: 3.75rem;
-    }
-
-    .ac-container {
-      padding-top: 0.25rem;
-
-
-      .ac-value {
-        font-size: var(--collapse-font-medium);
-      }
-    }
-
-    .initiative-container {
-      max-width: 50.375rem;
-    }
-  }
-
-  @mixin collapse-abilities {
-    --collapse-bg-light: rgba(0, 0, 0, 0.20);
-    --collapse-bg-dark: rgba(0, 0, 0, 0.4);
-    --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.16);
-    --collapse-font-medium: 1.25rem;
-    --collapse-font-large: 1.5rem;
-
-    gap: var(--t5e-size-halfx);
-
-    >* {
-      background: var(--collapse-bg-light);
-      outline: var(--collapse-outline);
-      outline-offset: -0.0625rem;
-      border-radius: var(--t5e-size-1x);
-      max-width: initial;
-      width: auto;
-      min-width: 2.5rem;
-      height: 100%;
-    }
-
-    @include ability-smaller;
-
-    .ac-container,
-    .ability:has(.proficient),
-    .initiative-container {
-      background: var(--collapse-bg-dark);
-    }
-
-    .ability .bonus-container,
-    .ability .bonus-container.proficient,
-    .ac-container .shield,
-    .initiative-container .initiative.score {
-      background: none;
-    }
-
-    .ac-container {
-      .shield {
-        .ac-value {
-          font-size: var(--collapse-font-medium);
-          margin-top: 0;
-          margin-bottom: 0;
-        }
-      }
-
-      .ac-label {
-        display: initial;
-        margin-top: -0.125rem;
-      }
-    }
-
-    .ability-labels {
-      margin-top: 0.1875rem;
-
-      .label {
-        color: var(--t5e-color-text-lightest);
-        text-transform: none;
-      }
-
-      .divider {
-        background-color: var(--t5e-color-gold);
-        opacity: 0.5;
-        width: 100%;
-        height: 0.0625rem;
-        margin: 0.3125rem 0;
-      }
-    }
-
-    .ability {
-      .ability-score {
-        margin-top: -0.25rem;
-      }
-
-      .ability-roll-button {
-        margin-bottom: -2.125rem;
-      }
-
-      .bonus-container .ability-score-input {
-        height: calc(100% - 1.5rem);
-        top: 1.375rem;
-        background: var(--t5e-component-field-background-hover);
-      }
-    }
-
-    .initiative-container {
-      gap: 0;
-
-      .initiative.score {
-        padding-top: 0.25rem;
-        margin-top: 0;
-      }
-
-      .concentration-roll-button {
-        margin-bottom: -1rem;
-        padding-bottom: 1rem;
-      }
-    }
-
-    .save {
-      margin-right: var(--t5e-size-halfx);
-    }
-
-    .bonus-container,
-    .initiative-bonus {
-
-      .modifier,
-      .bonus {
-        font-size: var(--collapse-font-medium);
-        margin-left: 0;
-      }
-    }
-
-
-    .concentration {
-      max-width: 3rem;
-      padding: 0 0.25rem;
-
-      .concentration-roll-button {
-        margin-top: 0.5rem;
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-  }
-
-  @container abilities (width < 47.5rem) {
-    .sheet-header .abilities-container .abilities-container-inner {
-      &:has(:nth-child(11)) {
-        @include ability-smaller;
-      }
-    }
-  }
-
-  @container abilities (width < 45rem) {
-    .sheet-header .abilities-container .abilities-container-inner {
-
-      &:has(:nth-child(11)) {
-        @include collapse-abilities;
-        overflow-x: auto;
-        overflow-y: hidden;
-      }
-    }
-  }
-
-  @container abilities (width < 40rem) {
-
-    .sheet-header .abilities-container .abilities-container-inner {
-      margin-left: var(--t5e-size-3x);
-      padding-right: var(--t5e-size-3x);
-
-      &:has(:nth-child(9)) {
-        @include ability-smaller;
-
-        .ability {
-          .button-config {
-            bottom: -4.125rem;
-            right: auto;
-          }
-        }
-
-        .ac-container .shield {
-          min-height: auto;
-        }
-
-        .ac-container .button-config {
-          right: 0;
-          left: 0;
-          bottom: -4.825rem;
-          width: 100%;
-        }
-
-        .initiative-container .initiative.score .button-config {
-          right: 0;
-          left: 0;
-          bottom: -1rem;
-          width: 100%;
-        }
-      }
-
-      &:has(:nth-child(11)) {
-        .ability {
-          .button-config {
-            bottom: -5rem;
-          }
-        }
-
-        .ac-container .button-config {
-          bottom: -5.5rem;
-        }
-
-      }
-    }
-  }
-
-  @container abilities (width < 33.75rem) {
-
-    .sheet-header .abilities-container .abilities-container-inner {
-      &:has(:nth-child(8)):not(:has(:nth-child(9))) {
-        @include ability-smaller;
-
-        .initiative-container .initiative.score {
-          min-height: 3.375rem;
-        }
-      }
-
-      &:has(:nth-child(9)) {
-        @include collapse-abilities;
-
-        .ability {
-          .button-config {
-            bottom: -5rem;
-          }
-        }
-
-        .ac-container .shield {
-          min-height: auto;
-        }
-
-        .ac-container .button-config {
-          bottom: -5.5rem;
-        }
-
-        .concentration .concentration-roll-button {
-          margin-top: 0.375rem;
-        }
-      }
-    }
-
-    &.sheet-mode-edit .sheet-header .abilities-container .abilities-container-inner:has(:nth-child(9)) {
-      >* {
-        padding-bottom: 0.5rem;
-      }
-    }
-  }
-
   @container actor-sheet (width > 50rem) {
     --header-padding: 1.5rem;
   }
@@ -2013,6 +1709,17 @@
       display: none;
     }
 
+  }
+
+  @container actor-sheet (width < 43.75rem) {
+    .sheet-header .actor-vitals-container {
+      max-width: 10rem;
+
+      .actor-image img {
+        height: 10rem;
+        width: 10rem;
+      }
+    }
   }
 
   .tidy-tab-contents {

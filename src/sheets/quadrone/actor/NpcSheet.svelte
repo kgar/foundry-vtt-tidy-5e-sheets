@@ -5,7 +5,7 @@
   import NpcSubtitle from './npc-parts/NpcSubtitle.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getModifierData } from 'src/utils/formatting';
-  import AbilityScore from './character-parts/AbilityScore.svelte';
+  import AbilityScoreNPC from './character-parts/AbilityScoreNPC.svelte';
   import CharacterPortrait from './character-parts/CharacterPortrait.svelte';
   import CharacterExhaustionBar from './character-parts/CharacterExhaustionBar.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
@@ -175,10 +175,10 @@
       >
         <div class="abilities-container-inner flexrow">
           <div class="initiative-container flexcol">
-            <div class="initiative score" data-tooltip="DND5E.Initiative">
+            <div class="initiative score bonus-container" data-tooltip="DND5E.Initiative">
               <button
                 type="button"
-                class="initiative-roll-button"
+                class="button-borderless initiative-roll-button"
                 onclick={(event) =>
                   context.actor.rollInitiativeDialog({ event: event })}
               >
@@ -207,16 +207,16 @@
             </div>
             <div class="ability-labels flexcol">
               <span class="label font-label-medium color-text-lightest"
-                >Score</span
+                >{localize('DND5E.AbilityScoreShort')}</span
               >
               <span class="divider"></span>
               <span class="label font-label-medium color-text-lightest"
-                >Save</span
+                >{localize('DND5E.SavingThrowShort')}</span
               >
             </div>
           </div>
           {#each context.abilities as ability}
-            <AbilityScore
+            <AbilityScoreNPC
               {ability}
               unlocked={context.unlocked}
               onScoreChanged={(score) =>
@@ -252,20 +252,20 @@
               }}
             >
               <div
-                class="value {hpTemp > 99 ? 'font-medium' : 'font-data-large'}"
+                class="value {hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsCurrent')}
               >
                 {hpValue}
               </div>
               <div
-                class="separator {hpTemp > 99
+                class="separator {hpTemp > 99 || hpValue > 999
                   ? 'font-medium'
                   : 'font-default-large'}"
               >
                 /
               </div>
               <div
-                class="max {hpTemp > 99 ? 'font-medium' : 'font-data-large'}"
+                class="max {hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsMax')}
               >
                 {hpMax}
@@ -299,12 +299,12 @@
                 }}
               >
                 <span
-                  class="modifier {hpTemp > 99
+                  class="modifier {hpTemp > 99 || hpValue > 999
                     ? 'font-medium font-label-medium'
                     : 'font-label-large'} color-text-lighter">+</span
                 >
                 <span
-                  class="value {hpTemp > 99
+                  class="value {hpTemp > 99 || hpValue > 999
                     ? 'font-medium font-data-medium'
                     : 'font-data-large'} color-text-default"
                   data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span

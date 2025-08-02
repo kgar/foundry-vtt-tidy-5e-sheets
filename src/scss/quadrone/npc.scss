@@ -58,7 +58,7 @@
       }
 
       .actor-vitals-row {
-        padding-left: 1.25rem;
+        padding-left: 1rem;
       }
 
       .hp-row {
@@ -75,7 +75,7 @@
 
         .meter .label,
         input[type="text"] {
-          padding-left: 1.25rem;
+          padding-left: 1rem;
         }
 
         .temp-hp {
@@ -106,6 +106,7 @@
 
       .shield {
         position: absolute;
+        width: 3.5rem;
         left: -0.5rem;
         bottom: -0.375rem;
         text-align: center;
@@ -115,7 +116,7 @@
         .button-config {
           position: absolute;
           top: 0.125rem;
-          right: 0;
+          left: -0.1875rem;
         }
       }
 
@@ -124,7 +125,7 @@
       }
 
       .ac-value {
-        margin: -0.125rem 0 0.1875rem;
+        margin: -0.125rem 0 0.1875rem -0.125rem;
       }
     }
 
@@ -156,17 +157,21 @@
     }
   }
 
+  .actor-context-row {
+    align-items: flex-start;
+  }
+
   .sheet-header-actions {
     margin-top: 0.25rem;
+    margin-right: var(--t5e-size-2x);
   }
 
   .actor-subtitle {
-
-
     .xp-label {
+      align-content: center;
+      flex-wrap: nowrap;
       gap: 0.25rem;
       max-height: 1rem;
-      align-content: center;
     }
 
     .xp-value {
@@ -176,7 +181,8 @@
 
   .proficiency {
     line-height: 1rem;
-    margin-right: var(--header-padding);
+    margin: 0 var(--t5e-size-2x) 0 var(--t5e-size-1x);
+    align-self: flex-start;
 
     .label {
       margin-right: 0.25rem;
@@ -184,48 +190,25 @@
   }
 
   .challenge-rating {
-    border: 0.0625rem solid var(--t5e-component-field-border);
-    border-radius: 0.125rem;
-    background-color: var(--t5e-component-card-darker);
-    height: 3.5rem;
-    width: 3.5rem;
+    border: 0.125rem solid var(--t5e-color-palette-gold-62);
+    border-radius: 0.1875rem;
+    background-color: var(--t5e-component-card-default);
+    height: 3.25rem;
+    width: 3.25rem;
     flex-basis: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-right: var(--t5e-size-2x);
     gap: 0;
-
-    &::before {
-      position: absolute;
-      content: '';
-      top: 0.0625rem;
-      left: 0.0625rem;
-      bottom: 0.0625rem;
-      right: 0.0625rem;
-      border-radius: 0.0625rem;
-      border: 0.25rem solid var(--t5e-component-card-darker);
-      z-index: 0;
-    }
-
-    &::after {
-      position: absolute;
-      content: '';
-      top: 0.1875rem;
-      left: 0.1875rem;
-      bottom: 0.1875rem;
-      right: 0.1875rem;
-      border-radius: var(--t5e-t5e-space-halfx);
-      border: 0.0625rem solid var(--t5e-component-field-border);
-      z-index: 0;
-    }
 
     >* {
       flex: 0;
     }
 
     .value {
-      margin: -0.125rem 0 -0.25rem;
+      margin: -0.25rem 0 -0.25rem;
     }
 
     input[type="text"].challenge-rating-input {
@@ -234,6 +217,60 @@
 
       &:focus {
         border: 1px solid red;
+      }
+    }
+  }
+
+  .abilities-container {
+    margin: var(--t5e-size-2x) var(--t5e-size-1x) 0 var(--t5e-size-3x);
+  }
+
+  .abilities-container-inner {
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .ability {
+
+    >* {
+      display: flex;
+      position: relative;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ability-bonus-container {
+      min-width: 3.625rem;
+      max-width: 4rem;
+    }
+
+    .ability-score-container {
+      flex-direction: row;
+      height: 2rem;
+      margin-top: -0.75rem;
+
+      .button-config {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: -50%;
+        margin-right: calc(50% - 0.4375rem);
+      }
+    }
+
+    .ability-score {
+      margin-top: auto;
+    }
+
+    .ability-save-container {
+      .ability-save {
+        width: 100%;
+        justify-content: center;
+
+        >* {
+          flex: 0;
+        }
       }
     }
   }
@@ -270,7 +307,6 @@
     .traits {
       gap: 0.75rem;
 
-
       .list-entry {
         flex-direction: column;
         gap: 0.1875rem;
@@ -301,7 +337,7 @@
         .pill {
           justify-content: baseline;
           min-height: auto;
-          padding: 0.125rem 0.25rem;
+          padding: 0.125rem 0.25rem 0.1875rem;
         }
       }
     }
@@ -323,6 +359,10 @@
     }
 
     .npc-score-tracker {
+
+      .card-header h3 {
+        padding-top: 0;
+      }
 
       .uses {
 
@@ -358,6 +398,291 @@
 
     .uses {
       gap: 0.25rem;
+    }
+  }
+
+  @mixin collapse-abilities {
+    --collapse-bg-light: rgba(0, 0, 0, 0.20);
+    --collapse-bg-dark: rgba(0, 0, 0, 0.4);
+    --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.16);
+    --collapse-font-medium: 1.25rem;
+    --collapse-font-large: 1.5rem;
+
+    gap: var(--t5e-size-halfx);
+
+    >* {
+      background: var(--collapse-bg-light);
+      outline: var(--collapse-outline);
+      outline-offset: -0.0625rem;
+      border-radius: var(--t5e-size-1x);
+      max-width: initial;
+      width: auto;
+      min-width: 2.5rem;
+    }
+
+    @include ability-smaller;
+
+    .ability,
+    .initiative-container {
+      background: var(--t5e-component-card-darker);
+    }
+
+    .ability:has(.proficient) {
+      background: var(--t5e-component-card-default);
+      outline-color: var(--t5e-color-palette-gold-62);
+    }
+
+    :is(.quadrone.npc.theme-dark .ability:has(.proficient)) {
+      background: var(--collapse-bg-dark);
+      outline-color: var(--t5e-color-palette-grey-0);
+    }
+
+    .ability .bonus-container,
+    .ability .bonus-container.proficient,
+    .initiative-container .initiative.score {
+      background: none;
+    }
+
+    .ability-labels {
+      margin-top: 0.1875rem;
+
+      .label {
+        color: var(--t5e-color-text-lightest);
+        text-transform: none;
+      }
+
+      .divider {
+        background-color: var(--t5e-color-gold);
+        opacity: 0.5;
+        width: 100%;
+        height: 0.0625rem;
+        margin: 0.3125rem 0;
+      }
+    }
+
+    .initiative-container {
+      gap: 0.375rem;
+
+      .initiative.score {
+        padding-top: 0.125rem;
+        margin-top: 0;
+        min-height: auto;
+
+        .button-config {
+          bottom: -0.875rem;
+          right: calc(50% - 0.875rem);
+        }
+      }
+
+      .concentration-roll-button {
+        margin-bottom: -1rem;
+        padding-bottom: 1rem;
+      }
+    }
+
+
+    .ability {
+      .ability-score {
+        margin-top: -0.25rem;
+      }
+
+      .ability-roll-button {
+        margin-bottom: -2.125rem;
+      }
+
+      .bonus-container .ability-score-input {
+        height: calc(100% - 1.5rem);
+        top: 1.375rem;
+        background: var(--t5e-component-field-background-hover);
+      }
+    }
+
+    .bonus-container {
+      aspect-ratio: 1 / 1;
+    }
+
+    .ability-bonus-container {
+      min-width: auto;
+      max-width: auto;
+    }
+
+    .ability-score-container {
+      height: 2rem;
+      margin: -0.125rem auto 0;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0.5rem;
+        right: 0.5rem;
+        background: var(--t5e-color-gold);
+        height: 0.0625rem;
+        opacity: 0.5;
+      }
+
+      &::before {
+        top: 0;
+      }
+
+      &::after {
+        bottom: 0;
+      }
+
+      .button-config {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        margin: 0 -0.1875rem 0 -0.4375rem;
+      }
+    }
+
+    .ability-save-container {
+      height: 1.75rem;
+    }
+
+    .ability .ability-score {
+      background: none;
+      margin: 0;
+
+      span {
+        font: var(--t5e-font-label-large);
+        color: var(--t5e-color-text-lighter);
+      }
+    }
+
+    .save {
+      margin-right: var(--t5e-size-halfx);
+    }
+
+    .bonus-container,
+    .initiative-bonus {
+
+      .modifier,
+      .bonus {
+        font-size: var(--collapse-font-medium);
+        margin-left: 0;
+      }
+    }
+
+    .concentration {
+      max-width: 3rem;
+      padding: 0 0.25rem;
+
+      .concentration-roll-button {
+        margin-top: 0.5rem;
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+
+
+  @mixin ability-smaller {
+    --collapse-font-medium: 1.4375rem;
+
+    .ability-bonus-container {
+      min-width: auto;
+    }
+
+    .ability .bonus-container,
+    .ability .bonus-container.proficient,
+    .initiative-container .initiative.score {
+      width: 100%;
+      height: auto;
+      min-width: auto;
+    }
+
+    .bonus-container,
+    .initiative-bonus {
+
+      .modifier,
+      .bonus {
+        font-size: var(--collapse-font-medium);
+        margin-left: 0;
+      }
+    }
+
+    .initiative-container .initiative.score {
+      margin: 0.125rem 0;
+      min-height: 3.75rem;
+    }
+  }
+
+  @container abilities (width < 47.5rem) {
+    .sheet-header .abilities-container .abilities-container-inner {
+      &:has(:nth-child(11)) {
+        @include ability-smaller;
+      }
+    }
+  }
+
+  @container abilities (width < 45rem) {
+    .sheet-header .abilities-container .abilities-container-inner {
+
+      &:has(:nth-child(11)) {
+        @include collapse-abilities;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+    }
+  }
+
+  @container abilities (width < 40rem) {
+
+    .sheet-header .abilities-container {
+      margin-right: var(--t5e-size-2x);
+
+      .abilities-container-inner:has(:nth-child(9)) {
+        @include ability-smaller;
+      }
+    }
+  }
+
+  @container abilities (width < 33.75rem) {
+
+    .sheet-header .abilities-container .abilities-container-inner {
+      &:has(:nth-child(8)):not(:has(:nth-child(9))) {
+        @include ability-smaller;
+
+        .initiative-container .initiative.score {
+          min-height: 3.375rem;
+        }
+      }
+
+      &:has(:nth-child(9)) {
+        @include collapse-abilities;
+
+        .concentration .concentration-roll-button {
+          margin-top: 0.375rem;
+        }
+      }
+    }
+  }
+
+  @container actor-sheet (width > 50rem) {
+    --header-padding: 1.5rem;
+  }
+
+  @container actor-sheet (width < 50rem) {
+    .sheet-header-content {
+      flex-wrap: wrap;
+    }
+
+    .hide-10 {
+      display: none;
+    }
+  }
+
+  @container actor-sheet (width < 43.75rem) {
+    .sheet-header .actor-vitals-container {
+      max-width: 10rem;
+
+      .actor-image img {
+        height: 10rem;
+        width: 10rem;
+      }
     }
   }
 
@@ -398,9 +723,6 @@
     .sheet-header {
       .initiative-container .initiative.score {
         background-image: url(../../modules/tidy5e-sheet/images/badge_init_light.webp);
-        background-position: top center;
-        background-size: cover;
-        background-repeat: no-repeat;
 
         .initiative-roll-button {
           &:hover {
@@ -456,9 +778,6 @@
 
       .bonus-container {
         background-image: url(../../modules/tidy5e-sheet/images/badge_ability_light.webp);
-        background-position: top center;
-        background-size: cover;
-        background-repeat: no-repeat;
 
         &.proficient {
           background-image: url(../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp);
