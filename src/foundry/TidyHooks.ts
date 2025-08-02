@@ -478,11 +478,11 @@ export class TidyHooks {
    *
    * @param {any} app The sheet application instance.
    * @param {HTMLElement} element The sheet's HTML element.
-   * @param {object} sheetModeConfig an object that holds the `unlocked` property. Change `unlocked` to `true` for Edit Mode and `false` for Play Mode.
-   * 
+   * @param {object} config an object that holds the `unlocked` property. Change `unlocked` to `true` for Edit Mode and `false` for Play Mode.
+   *
    * @example from Mahakala's Sheet Lock
    * ```js
-   *   Hooks.on('tidy5e-sheet.sheetModeConfiguring', (app, element, context) => {
+   *   Hooks.on('tidy5e-sheet.sheetModeConfiguring', (app, element, config) => {
    *    if (game.user.isGM || app.document.documentName !== 'Actor') {
    *      return;
    *    }
@@ -492,20 +492,20 @@ export class TidyHooks {
    *      playerUnlockedFlagProp
    *    );
    *
-   *    context.unlocked = playerUnlocked && app.isEditable;
+   *    config.unlocked = playerUnlocked && app.isEditable;
    *  });
    * ```
    */
   static tidy5eSheetsSheetModeConfiguring(
     app: any,
     element: HTMLElement,
-    sheetModeConfig: { unlocked: any }
+    config: { unlocked: boolean }
   ) {
     return Hooks.callAll(
       'tidy5e-sheet.sheetModeConfiguring',
       app,
       element,
-      sheetModeConfig
+      config
     );
   }
 
