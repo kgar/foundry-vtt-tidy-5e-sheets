@@ -17,7 +17,7 @@
       <span class="hyphens-auto">
         {CONFIG.DND5E.spellProgression[
           context.item.system.spellcasting.progression
-        ] ?? context.item.system.spellcasting.progression}
+        ]?.label ?? context.item.system.spellcasting.progression}
       </span>
     </span>
   </li>
