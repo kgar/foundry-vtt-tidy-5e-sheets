@@ -474,6 +474,41 @@ export class TidyHooks {
     Hooks.callAll('tidy5e-sheet.selectTab', app, element, newTabId);
   }
 
+  /**
+   *
+   * @param {any} app The sheet application instance.
+   * @param {HTMLElement} element The sheet's HTML element.
+   * @param {object} sheetModeConfig an object that holds the `unlocked` property. Change `unlocked` to `true` for Edit Mode and `false` for Play Mode.
+   * 
+   * @example from Mahakala's Sheet Lock
+   * ```js
+   *   Hooks.on('tidy5e-sheet.sheetModeConfiguring', (app, element, context) => {
+   *    if (game.user.isGM || app.document.documentName !== 'Actor') {
+   *      return;
+   *    }
+   *
+   *    const playerUnlocked = !!foundry.utils.getProperty(
+   *      app.document,
+   *      playerUnlockedFlagProp
+   *    );
+   *
+   *    context.unlocked = playerUnlocked && app.isEditable;
+   *  });
+   * ```
+   */
+  static tidy5eSheetsSheetModeConfiguring(
+    app: any,
+    element: HTMLElement,
+    sheetModeConfig: { unlocked: any }
+  ) {
+    return Hooks.callAll(
+      'tidy5e-sheet.sheetModeConfiguring',
+      app,
+      element,
+      sheetModeConfig
+    );
+  }
+
   static tidy5eSheetsThemeSettingsChangedHook =
     'tidy5e-sheet.themeSettingsChanged';
 
