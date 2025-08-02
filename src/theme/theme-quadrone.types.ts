@@ -5,13 +5,23 @@ export type ThemeColorSetting = {
   value: string;
 };
 
-export type ThemeSettingsV2 = {
+export type ThemeSettingsV2Old = {
   accentColor: string;
   actorHeaderBackground: string;
   itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
   rarityColors: Record<string, string>;
   spellPreparationModeColors: Record<string, string>;
+  // etc. settings here ;)
+};
+
+export type ThemeSettingsV3 = {
+  accentColor: string;
+  actorHeaderBackground: string;
+  itemSidebarBackground: string;
+  portraitShape: PortraitShape | undefined;
+  rarityColors: Record<string, string>;
+  spellPreparationMethodColors: Record<string, string>;
   // etc. settings here ;)
 };
 
@@ -35,7 +45,7 @@ export type ThemeSettingsConfigurationOptions = {
   /**
    * Use these theme settings when applying the appropriate CSS updates.
    */
-  settingsOverride?: ThemeSettingsV2;
+  settingsOverride?: ThemeSettingsV3;
   /**
    * Some applications are related to a document but are
    * a separate dialog. This ID override ensures they receive

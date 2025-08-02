@@ -24,7 +24,7 @@
     let value = isEmpty ? index + 1 : index;
 
     context.actor.update({
-      [`system.spells.${section.prop}.value`]: value,
+      [`system.spells.${section.slot}.value`]: value,
     });
   }
 

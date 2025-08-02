@@ -33,7 +33,7 @@
   let context = $derived(getCharacterSheetContext());
 
   let spellEntries = $derived(
-    section.spells.map((spell) => ({
+    section.items.map((spell) => ({
       spell,
       ctx: context.itemContext[spell.id],
       spellImgUrl: FoundryAdapter.getSpellImageUrl(context, spell),
@@ -52,12 +52,12 @@
   >
     {#snippet header()}
       {@const visibleItemCount = ItemVisibility.countVisibleItems(
-        section.spells,
+        section.items,
         searchResults.uuids,
       )}
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
-          {#if section.dataset['preparation.mode'] === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED && section.dataset.level > 0}
+          {#if CONFIG.DND5E.spellcasting[section.dataset['method']]?.prepares && section.dataset.level > 0}
             {localize('TIDY5E.FavoriteSpellLevelLabel', {
               number: section.dataset.level,
             })}

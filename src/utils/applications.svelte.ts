@@ -2,7 +2,7 @@ import { TidyFlags } from "src/foundry/TidyFlags";
 import { debug } from './logging';
 import { getThemeV2 } from 'src/theme/theme';
 import { settings } from 'src/settings/settings.svelte';
-import type { ThemeSettingsV2 } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 
 export function applyTitleToWindow(title: string, element: HTMLElement) {
   if (!element) {

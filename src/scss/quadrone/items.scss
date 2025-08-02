@@ -261,10 +261,9 @@
       pointer-events: none;
     }
 
-    &.spell-preparation:not(.mode-prepared) {
-      --filigree-border-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 0.88) h);
+    &.spell-method:not(.method-spell) {
+      --filigree-border-color: oklch(from var(--t5e-method-color) calc(l * 1.2) calc(c * 0.88) h);
     }
-
   }
 
   .item-rarity-container {
@@ -294,8 +293,8 @@
     }
   }
 
-  .spell-preparation-text {
-    color: oklch(from var(--t5e-mode-color) calc(l + 0.4) calc(c - 0.05) h);
+  .spell-method-text {
+    color: oklch(from var(--t5e-method-color) calc(l + 0.4) calc(c - 0.05) h);
     font: var(--t5e-font-title-small);
     text-align: center;
   }

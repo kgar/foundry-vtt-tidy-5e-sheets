@@ -59,14 +59,7 @@
   });
 
   let totalItemCount = $derived(
-    sections.reduce(
-      (count, s) =>
-        count +
-        // TODO: In 5.1, remove the .spells
-        (s.type === CONSTANTS.SECTION_TYPE_SPELLBOOK ? s.spells : s.items)
-          .length,
-      0,
-    ),
+    sections.reduce((count, s) => count + s.items.length, 0),
   );
 </script>
 
@@ -90,12 +83,8 @@
     </div>
   {:else}
     {#each sections as section (section.key)}
-      {@const items =
-        section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK
-          ? section.spells
-          : section.items}
       {@const hasViewableItems = ItemVisibility.hasViewableItems(
-        items,
+        section.items,
         searchResults.uuids,
       )}
       {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}

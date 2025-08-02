@@ -1226,7 +1226,7 @@ export class Tidy5eCharacterSheet
           type: CONSTANTS.SECTION_TYPE_FEATURE,
         })),
       ...favoriteSpellbook
-        .filter((s: SpellbookSection) => s.spells.length)
+        .filter((s: SpellbookSection) => s.items.length)
         .map((s: SpellbookSection) => ({
           ...s,
           type: CONSTANTS.SECTION_TYPE_SPELLBOOK,
