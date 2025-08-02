@@ -911,5 +911,6 @@
     "TIDY5E.Notifications.FirstTimeWelcome1": "Вітаємо Вас в \"Tidy 5e Sheets\"! Щоб почати, вам потрібно змінити {sheetLinkStart}лист{sheetLinkEnd} (або {allSheetsLinkStart]всі ваші лісти{allSheets LinkEnd}!) для використання версії Tidy. Дізнайтеся більше про цей модуль і що він може зробити на {wikiLinkStart}офіційному вікі{wikiLinkEnd}.",
     "TIDY5E.SheetLock.Empty.Hint": "Спочатку додайте клас і перші елементи. Потім скористайтеся меню елементів або клацніть правою кнопкою миші та виберіть «Додати до вкладки аркуша», щоб додати їх сюди.",
     "TIDY5E.EmptyFavorites": "Клацніть правою кнопкою миші та додайте до обраного або перетягніть сюди будь-що з аркуша для швидкого доступу.",
-    "TIDY5E.EmptyTools": "Відсутність навичок володіння інструментами."
+    "TIDY5E.EmptyTools": "Відсутність навичок володіння інструментами.",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Додати розділи книги заклинань на вкладку Statblock"
 }
