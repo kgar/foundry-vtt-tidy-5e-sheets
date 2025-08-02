@@ -252,20 +252,20 @@
               }}
             >
               <div
-                class="value {hpTemp > 99 ? 'font-medium' : 'font-data-large'}"
+                class="value {hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsCurrent')}
               >
                 {hpValue}
               </div>
               <div
-                class="separator {hpTemp > 99
+                class="separator {hpTemp > 99 || hpValue > 999
                   ? 'font-medium'
                   : 'font-default-large'}"
               >
                 /
               </div>
               <div
-                class="max {hpTemp > 99 ? 'font-medium' : 'font-data-large'}"
+                class="max {hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsMax')}
               >
                 {hpMax}
@@ -299,12 +299,12 @@
                 }}
               >
                 <span
-                  class="modifier {hpTemp > 99
+                  class="modifier {hpTemp > 99 || hpValue > 999
                     ? 'font-medium font-label-medium'
                     : 'font-label-large'} color-text-lighter">+</span
                 >
                 <span
-                  class="value {hpTemp > 99
+                  class="value {hpTemp > 99 || hpValue > 999
                     ? 'font-medium font-data-medium'
                     : 'font-data-large'} color-text-default"
                   data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span

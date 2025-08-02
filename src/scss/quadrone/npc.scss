@@ -97,11 +97,11 @@
 
     .actor-vitals-container {
       padding-bottom: 1.75rem;
-      max-width: 10.5rem;
+      max-width: 11rem;
 
       .actor-image {
-        max-width: 10.5rem;
-        max-height: 10.5rem;
+        max-width: 11rem;
+        max-height: 11rem;
       }
 
       .shield {
@@ -116,7 +116,7 @@
         .button-config {
           position: absolute;
           top: 0.125rem;
-          right: 0;
+          left: -0.1875rem;
         }
       }
 
@@ -221,6 +221,15 @@
     }
   }
 
+  .abilities-container {
+    margin: var(--t5e-size-2x) var(--t5e-size-1x) 0 var(--t5e-size-3x);
+  }
+
+  .abilities-container-inner {
+    margin: 0;
+    overflow: hidden;
+  }
+
   .ability {
 
     >* {
@@ -245,8 +254,8 @@
         position: absolute;
         top: 0;
         bottom: 0;
-        right: 0;
-        transform: translateX(calc(50% - 0.375rem));
+        right: -50%;
+        margin-right: calc(50% - 0.4375rem);
       }
     }
 
@@ -413,26 +422,19 @@
 
     @include ability-smaller;
 
-    .ability {
+    .ability,
+    .initiative-container {
       background: var(--t5e-component-card-darker);
     }
 
-    .ability:has(.proficient),
-    .initiative-container {
-      background: var(--t5e-component-card-default);
-    }
-
     .ability:has(.proficient) {
-      outline-color: var(--t5e-color-green);
-    }
-
-    :is(.quadrone.npc.theme-dark .initiative-container) {
-      background: var(--collapse-bg-dark);
+      background: var(--t5e-component-card-default);
+      outline-color: var(--t5e-color-palette-gold-62);
     }
 
     :is(.quadrone.npc.theme-dark .ability:has(.proficient)) {
       background: var(--collapse-bg-dark);
-      outline-color: var(--t5e-color-palette-grey-29);
+      outline-color: var(--t5e-color-palette-grey-0);
     }
 
     .ability .bonus-container,
@@ -457,6 +459,27 @@
         margin: 0.3125rem 0;
       }
     }
+
+    .initiative-container {
+      gap: 0.375rem;
+
+      .initiative.score {
+        padding-top: 0.125rem;
+        margin-top: 0;
+        min-height: auto;
+
+        .button-config {
+          bottom: -0.875rem;
+          right: calc(50% - 0.875rem);
+        }
+      }
+
+      .concentration-roll-button {
+        margin-bottom: -1rem;
+        padding-bottom: 1rem;
+      }
+    }
+
 
     .ability {
       .ability-score {
@@ -505,6 +528,14 @@
       &::after {
         bottom: 0;
       }
+
+      .button-config {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        margin: 0 -0.1875rem 0 -0.4375rem;
+      }
     }
 
     .ability-save-container {
@@ -518,21 +549,6 @@
       span {
         font: var(--t5e-font-label-large);
         color: var(--t5e-color-text-lighter);
-      }
-    }
-
-    .initiative-container {
-      gap: 0.375rem;
-
-      .initiative.score {
-        padding-top: 0.125rem;
-        margin-top: 0;
-        min-height: auto;
-      }
-
-      .concentration-roll-button {
-        margin-bottom: -1rem;
-        padding-bottom: 1rem;
       }
     }
 
@@ -643,26 +659,30 @@
         }
       }
     }
-
-    &.sheet-mode-edit .sheet-header .abilities-container .abilities-container-inner:has(:nth-child(9)) {
-      >* {
-        padding-bottom: 0.5rem;
-      }
-    }
   }
 
-  @container character-sheet (width > 50rem) {
+  @container actor-sheet (width > 50rem) {
     --header-padding: 1.5rem;
   }
 
-  @container character-sheet (width < 50rem) {
+  @container actor-sheet (width < 50rem) {
     .sheet-header-content {
-      // flex-direction: column-reverse;
       flex-wrap: wrap;
     }
 
     .hide-10 {
       display: none;
+    }
+  }
+
+  @container actor-sheet (width < 43.75rem) {
+    .sheet-header .actor-vitals-container {
+      max-width: 10rem;
+
+      .actor-image img {
+        height: 10rem;
+        width: 10rem;
+      }
     }
   }
 
