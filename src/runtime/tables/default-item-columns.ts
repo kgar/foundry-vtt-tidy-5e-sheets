@@ -109,7 +109,7 @@ export function getDefaultItemColumns() {
         type: 'component',
         component: ItemQuantityColumn,
       },
-      widthRems: 5,
+      widthRems: 5.5,
     },
     range: {
       headerContent: {
