@@ -6,7 +6,7 @@
     "TIDY5E.Group.HideMemberTabInfoPanel": "Сховати панель інформації",
     "TIDY5E.ShortRest": "Короткий Відпочинок",
     "TIDY5E.Actions": {
-        "TabName": "Дії",
+        "TabName": "Дія",
         "OverriddenSetOverrideTrue": "Додати до списку дій (Shift+Клік, щоб очистити перевизначення)",
         "ResetActionDefault": "Скинути дію за замовчуванням",
         "SetOverrideFalse": "Прибрати зі списку дій",
@@ -138,7 +138,7 @@
         "tabLabel": "НІП"
     },
     "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Транспорт"
+        "tabLabel": "Машина"
     },
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Виснаження"
@@ -210,11 +210,11 @@
         "header": "Аркуші НІП"
     },
     "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Транспорт",
+        "tabLabel": "Машини",
         "header": "Аркуші транспорту"
     },
     "TIDY5E.UserSettings.TabActionsList": {
-        "tabLabel": "Дії"
+        "tabLabel": "Список дій"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "Показувати картки елементів у всіх відображеннях",
@@ -407,7 +407,7 @@
         "name": "Блокування валюти",
         "hint": "Не дозволяє нікому окрім ГМа змінювати кількість валюти персонажа."
     },
-    "TIDY5E.Settings.ActionList.Header": "Дії",
+    "TIDY5E.Settings.ActionList.Header": "Список дії",
     "TIDY5E.Settings.ColorPickerInnate": {
         "name": "Вроджені"
     },
@@ -658,12 +658,12 @@
         "MaintainerParagraph": "Tidy 5e Sheets підтримуються {urlStart}kgar{urlEnd}.",
         "FinancialSupportHeader": "Як підтримати Tidy 5e Sheets",
         "FinancialSupportParagraph": "Якщо вам подобається Tidy 5e Sheets і ви хочете підтримати його фінансово, ось кілька способів це зробити:",
-        "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
+        "BuyMeACoffeeLink": "{urlStart}Купи мені кави{urlEnd}",
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
         "logoAltText": "Щит з чотирма зірками та написом «Tidy 5e» спереду.",
         "GithubParagraph": "У вас є ідея? Щось не так? Створіть {urlStart}Github Issue{urlEnd}.",
         "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: Обговорення ідей щодо нових функцій, допомога від інших та відстежування прогресу у розробці цього модуля.",
-        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Ви локалізуєте веб-контент? Tidy 5e Sheets потрібна ваша допомога! Перейдіть на сайт Weblate, щоб побачити наш прогрес у локалізації різними мовами. Цей модуль приймає нові мовні переклади та зміни до існуючих перекладів. Переклад українською виконаний з дотриманням правил перекладу 5e від спільноти \"Інріум\". Хоч переклад і не машинний, він був виконаний однією людиною та живлений чистим ентузіазмом. Тому якщо ви бачите помилку - не полініться, перейдіть за посиланням, знайдіть рядок з помилкою та виправте! Поширюймо українську разом!",
+        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Ви локалізуєте веб-контент? Tidy 5e Sheets потребує вашої допомоги! Перейдіть на веб-сайт Weblate, щоб переглянути наш прогрес локалізації різними мовами. Цей модуль приймає переклади новими мовами та зміни до існуючих перекладів.",
         "name": "Про нас",
         "PatreonLink": "{urlStart}Patreon{urlEnd}"
     },
@@ -812,7 +812,7 @@
         "hint": "Задає усталений тип кидку, який використовується при кидках рятунку смерті.",
         "name": "Усталений кидок рятунку смерті"
     },
-    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}'",
     "TIDY5E.Facilities.Hirelings.Label": "Найманці",
     "TIDY5E.Facilities.Defenders.Label": "Охоронці",
     "TIDY5E.Activities.Cast.SourceHintText": "З {itemName}",
@@ -912,5 +912,6 @@
     "TIDY5E.SheetLock.Empty.Hint": "Спочатку додайте клас і перші елементи. Потім скористайтеся меню елементів або клацніть правою кнопкою миші та виберіть «Додати до вкладки аркуша», щоб додати їх сюди.",
     "TIDY5E.EmptyFavorites": "Клацніть правою кнопкою миші та додайте до обраного або перетягніть сюди будь-що з аркуша для швидкого доступу.",
     "TIDY5E.EmptyTools": "Відсутність навичок володіння інструментами.",
-    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Додати розділи книги заклинань на вкладку Statblock"
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Додати розділи книги заклинань на вкладку Statblock",
+    "TIDY5E.UseSpecificDefaultValue.Label": "Використовувати значення за замовчуванням ({value})"
 }
