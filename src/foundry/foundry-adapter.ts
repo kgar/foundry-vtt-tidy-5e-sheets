@@ -6,7 +6,7 @@ import type {
   CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
-  HTMLElementOrGettable,
+  LanguageTraitContext,
   NpcSheetContext,
   SpellcastingInfo,
 } from 'src/types/types';
@@ -838,7 +838,9 @@ export const FoundryAdapter = {
     });
   },
   browseFilePicker(...args: any[]) {
-    return new foundry.applications.apps.FilePicker.implementation(...args).browse();
+    return new foundry.applications.apps.FilePicker.implementation(
+      ...args
+    ).browse();
   },
   renderArmorConfig(document: any) {
     return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
@@ -1420,7 +1422,7 @@ export const FoundryAdapter = {
       ? document.system.source?.rules === '2024'
       : game.settings.get('dnd5e', 'rulesVersion') === 'modern';
   },
-  prepareLanguageTrait(actor: any, traits: any) {
+  prepareLanguageTrait(actor: any, traits: Record<string, any>) {
     const languages = actor.system.traits?.languages?.labels;
     traits.languages ??= [];
 
@@ -1439,6 +1441,12 @@ export const FoundryAdapter = {
       }
       traits.languages.push({ label, value: value });
     }
+    traits.languages.sort((a: LanguageTraitContext, b: LanguageTraitContext) =>
+      (a.label ?? a.value ?? '').localeCompare(
+        b.label ?? b.value ?? '',
+        game.i18n.lang
+      )
+    );
   },
   isLockedInCompendium(doc: any) {
     return game.packs.get(doc.pack)?.locked;
