@@ -355,7 +355,10 @@ export class SheetSections {
           castActivitySpellGroupingPreference ===
           CONSTANTS.SPELL_CAST_ACTIVITY_GROUPING_PER_ITEM
         ) {
-          key = spell.system.linkedActivity.item.uuid.slugify();
+          key = spell.system.linkedActivity.item.uuid
+            .slugify()
+            // UUIDs contain dots, and dots cause hierarchical data saving, which messes up section config.
+            .replaceAll('.', '-');
           label = spell.system.linkedActivity.item.name;
         }
 
