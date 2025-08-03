@@ -19,9 +19,10 @@
 
   let { useSenses = true }: Props = $props();
 
-  // TODO: When Tidy takes over all data prep, give typings to tags
   function getTags(obj: any): [key: string, value: string][] {
-    return Object.entries<string>(obj);
+    return Object.entries<string>(obj).toSorted((a, b) =>
+      (a[1] ?? a[0] ?? '').localeCompare(b[1] ?? b[0] ?? '', game.i18n.lang),
+    );
   }
 
   const localize = FoundryAdapter.localize;
