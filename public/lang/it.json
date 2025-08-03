@@ -919,5 +919,7 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Sezione per Elemento",
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Crescente",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Decrescente",
-    "TIDY5E.ItemSheet.FeatureOriginLabel": "Privilegi Origine"
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "Privilegi Origine",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Includi Sezioni Incantesimi nella scheda Statistiche",
+    "TIDY5E.UseSpecificDefaultValue.Label": "Usa predefinito ({value})"
 }

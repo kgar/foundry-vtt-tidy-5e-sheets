@@ -81,7 +81,8 @@
     <button
       type="button"
       onclick={(ev) => onRollAbility?.(ev, ability.key)}
-      class="ability-roll-button label font-label-medium color-text-gold"
+      data-tooltip={localize('DND5E.AbilityPromptTitle', { ability: ability.label })}
+      class="button-borderless ability-roll-button label font-label-medium color-text-gold"
       data-tidy-sheet-part="ability-roller"
     >
       {ability.abbr}
@@ -143,6 +144,7 @@
   </div>
   <label
     class={['ability-score', { invisible: editingScore }]}
+    data-tooltip={localize('DND5E.ABILITY.SECTIONS.Score', { ability: ability.label })}
     for={abilityInputId}
     data-tidy-sheet-part="ability-score"
   >
@@ -150,7 +152,9 @@
   </label>
   <button
     type="button"
-    class={['ability-save flexrow', { invisible: editingScore }]}
+    aria-label={localize('DND5E.SavingThrowRoll', { ability: ability.label })}
+    data-tooltip={localize('DND5E.SavingThrowRoll', { ability: ability.label })}
+    class={['button-borderless ability-save flexrow', { invisible: editingScore }]}
     onclick={(ev) => onRollSave?.(ev, ability.key)}
     data-tidy-sheet-part="ability-save-roller"
   >

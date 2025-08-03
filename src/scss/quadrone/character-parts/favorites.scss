@@ -63,6 +63,7 @@
 
       .ability {
         text-transform: uppercase;
+        margin-inline-end: var(--t5e-size-halfx);
       }
 
       .inline-uses {
@@ -96,6 +97,7 @@
           text-overflow: ellipsis;
           overflow-x: hidden;
           line-height: normal;
+          align-items: center;
         }
 
         .subtitle {

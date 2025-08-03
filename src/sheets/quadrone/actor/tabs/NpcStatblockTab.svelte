@@ -68,13 +68,17 @@
       tabId: tabId,
     });
   });
+
+  let showLegendaries = false;
 </script>
 
 <ActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
-<!-- <div class="legendaries flexrow">
-  <Legendaries />
-</div> -->
+{#if showLegendaries}
+  <div class="legendaries flexrow">
+    <Legendaries />
+  </div>
+{/if}
 
 <StatblockTables
   {sections}
