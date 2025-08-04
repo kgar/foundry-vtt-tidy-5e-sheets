@@ -268,7 +268,13 @@ Limited:
 - [x] Fix: column counts on item sheets is missing
 - [x] Fix: Setting default image shape does not update image shapes for sheets with no settings
 - [x] Fix: Source is missing in NPC header -- gave the code to hightouch to plug in, since he's working in the area.
-
+- [x] (wait for another hightouch PR) Refactor rename and move the following to Actor space and out of Character space
+  - [x] (confirm) CharacterPortrait 
+  - [x] (confirm) CharacterExhaustionBar 
+  - [x] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraitConfigurableListEntry.svelte
+  - [x] ~~(confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraits.svelte~~ Only used by characters.
+  - [x] ~~(confirm) src/sheets/quadrone/actor/character-parts/CharacterSubtitle.svelte~~ Only used by characters.
+  - [x] ~~(confirm) src/sheets/quadrone/actor/character-parts/SavingThrowsCard.svelte~~ Only used by characters.
 
 #### NPC Statblock Sections notes
 
