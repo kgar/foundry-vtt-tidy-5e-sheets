@@ -1,16 +1,24 @@
 <script lang="ts">
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import DeathSavesOverlay from './DeathSavesOverlay.svelte'; // Assuming relative path
-  import { TidyHooks } from 'src/foundry/TidyHooks';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import DeathSavesOverlay from 'src/sheets/quadrone/actor/character-parts/DeathSavesOverlay.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+  import type {
+    CharacterSheetQuadroneContext,
+    NpcSheetQuadroneContext,
+  } from 'src/types/types';
 
-  let context = $derived(getCharacterSheetQuadroneContext());
+  let context =
+    $derived(
+      getSheetContext<
+        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
+      >(),
+    );
 
   let imageUrl = $derived(context.portrait.src);
   let imageAlt = $derived(context.actor.name);
 
-  let characterIsDead = $derived(
+  let actorIsDead = $derived(
     context.system.attributes?.hp?.value === 0 &&
       context.system.attributes?.hp?.max > 0 &&
       context.system.attributes.death.failure >= 3 &&
@@ -61,17 +69,17 @@
 {/if}
 <div
   class={['actor-image', currentPortraitShape]}
-  class:dead={characterIsDead}
+  class:dead={actorIsDead}
   style="position: relative;"
 >
   <img
     src={imageUrl}
     alt={imageAlt}
-    class={['pointer', { dead: characterIsDead }]}
+    class={['pointer', { dead: actorIsDead }]}
     data-action={context.unlocked ? 'editImage' : 'showArtwork'}
     data-edit={context.portrait.path}
   />
-  {#if characterIsDead}
+  {#if actorIsDead}
     <div class="dead-overlay"></div>
   {/if}
 </div>

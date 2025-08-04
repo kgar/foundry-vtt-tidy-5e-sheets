@@ -2,14 +2,14 @@
 
 ### The Short List
 
-- [ ] (wait for another hightouch PR) Refactor rename and move the following to Actor space and out of Character space
-  - [ ] (confirm) CharacterPortrait 
-  - [ ] (confirm) CharacterExhaustionBar 
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraitConfigurableListEntry.svelte
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraits.svelte
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/CharacterSubtitle.svelte
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/SavingThrowsCard.svelte
 - [ ] NPC Sheet
+  - [ ] hightouch punch list from PR #1278
+    - [ ] Legendaries in the statblock tab styling
+    - [ ] Class styling in sidebar (copy from PC sheet Traits tab)
+    - [ ] Display background/subclass/etc in Statblock tab
+    - [ ] Show alignment/species/size in sidebar in Edit Mode, subtitle only in play mode
+    - [ ] Figure out solution for HP > 999
+    - [x] Needs testing: Validate character sheet header styles are still working as expected
   - [ ] Make loyalty tracker match legendary trackers
   - [ ] Header
     - [ ] Portrait

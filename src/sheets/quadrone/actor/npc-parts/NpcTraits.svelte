@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import CharacterTraitConfigurableListEntry from '../character-parts/traits/CharacterTraitConfigurableListEntry.svelte';
+  import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
@@ -18,7 +18,7 @@
 
 <div class="list traits">
   <!-- Speed -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.Speed')}
     entries={context.speeds}
     onconfig={() =>
@@ -27,7 +27,7 @@
   />
 
   <!-- Senses -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.Senses')}
     entries={context.senses}
     onconfig={() =>
@@ -36,7 +36,7 @@
   />
 
   <!-- Resistances -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.Resistances')}
     entries={context.traits.dr}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
@@ -49,7 +49,7 @@
   />
 
   <!-- Damage Immunities -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.TraitDIPlural.other')}
     entries={context.traits.di}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
@@ -62,7 +62,7 @@
   />
 
   <!-- Condition Immunities -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.TraitCIPlural.other')}
     entries={context.traits.ci}
     onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
@@ -71,7 +71,7 @@
   />
 
   <!-- Vulnerabilities -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.Vulnerabilities')}
     entries={context.traits.dv}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
@@ -84,7 +84,7 @@
   />
 
   <!-- Damage Modification -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.DamageModification.Label')}
     entries={context.traits.dm}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
@@ -96,7 +96,7 @@
   />
 
   <!-- Habitat -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.Habitat.Configuration.Label')}
     entries={context.habitats}
     configurationTooltip={localize('DND5E.Habitat.Configuration.Title')}
@@ -108,7 +108,7 @@
   />
 
   <!-- Treasure -->
-  <CharacterTraitConfigurableListEntry
+  <ActorTraitConfigurableListEntry
     label={localize('DND5E.Treasure.Configuration.Label')}
     entries={context.treasures}
     configurationTooltip={localize('DND5E.Treasure.Configuration.Title')}
@@ -121,7 +121,7 @@
 
     <!-- Special Traits -->
     {#if context.unlocked}
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
     label={localize('DND5E.SpecialTraits')}
     entries={[]}
     configurationTooltip={localize('DND5E.SpecialTraits')}
