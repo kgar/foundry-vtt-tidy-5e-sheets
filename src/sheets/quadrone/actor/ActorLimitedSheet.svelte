@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import CharacterPortrait from './character-parts/CharacterPortrait.svelte';
+  import ActorPortrait from './parts/ActorPortrait.svelte';
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
@@ -24,7 +24,7 @@
   <div class="sheet-header-content flexrow">
     <h1 class="character-name flex1">{context.actor.name}</h1>
     <div class="character-vitals-container">
-      <CharacterPortrait />
+      <ActorPortrait />
     </div>
   </div>
 </header>

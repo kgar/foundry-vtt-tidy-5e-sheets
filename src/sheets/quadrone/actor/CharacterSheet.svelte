@@ -5,8 +5,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import CharacterSubtitle from './character-parts/CharacterSubtitle.svelte';
-  import CharacterExhaustionBar from './character-parts/CharacterExhaustionBar.svelte';
-  import CharacterPortrait from './character-parts/CharacterPortrait.svelte';
+  import ActorExhaustionBar from './parts/ActorExhaustionBar.svelte';
+  import ActorPortrait from './parts/ActorPortrait.svelte';
   import AbilityScore from './character-parts/AbilityScore.svelte';
   import InspirationBadge from './character-parts/InspirationBadge.svelte';
   import CharacterSidebar from './character-parts/CharacterSidebar.svelte';
@@ -290,7 +290,7 @@
     </div>
     <div class="actor-vitals-container">
       <!-- TODO: Add switch for size -->
-      <CharacterPortrait />
+      <ActorPortrait />
       <div class="actor-vitals">
         <div class="hp-row flexrow">
           <div
@@ -401,7 +401,7 @@
         </div>
         <div class="actor-vitals-row">
           {#if exhaustionBarFocused}
-            <CharacterExhaustionBar
+            <ActorExhaustionBar
               level={exhaustionLevel}
               total={context.config.conditionTypes.exhaustion.levels}
               onClose={() => (exhaustionBarFocused = false)}

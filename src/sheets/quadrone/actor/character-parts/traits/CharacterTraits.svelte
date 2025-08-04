@@ -6,7 +6,7 @@
   import CharacterTraitClasses from './CharacterTraitClasses.svelte';
   import CharacterTraitSpecies from './CharacterTraitSpecies.svelte';
   import CharacterTraitBackground from './CharacterTraitBackground.svelte';
-  import CharacterTraitConfigurableListEntry from './CharacterTraitConfigurableListEntry.svelte';
+  import ActorTraitConfigurableListEntry from '../../parts/ActorTraitConfigurableListEntry.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -76,7 +76,7 @@
     </div>
 
     <!-- Speed -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.Speed')}
       entries={context.speeds.traitEntries}
       onconfig={() =>
@@ -85,7 +85,7 @@
     />
 
     <!-- Senses -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.Senses')}
       entries={context.senses.traitEntries}
       onconfig={() =>
@@ -94,7 +94,7 @@
     />
 
     <!-- Resistances -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.Resistances')}
       entries={context.traits.dr}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
@@ -107,7 +107,7 @@
     />
 
     <!-- Damage Immunities -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.TraitDIPlural.other')}
       entries={context.traits.di}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
@@ -120,7 +120,7 @@
     />
 
     <!-- Condition Immunities -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.TraitCIPlural.other')}
       entries={context.traits.ci}
       onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
@@ -129,7 +129,7 @@
     />
 
     <!-- Vulnerabilities -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.Vulnerabilities')}
       entries={context.traits.dv}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
@@ -142,7 +142,7 @@
     />
 
     <!-- Damage Modification -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.DamageModification.Label')}
       entries={context.traits.dm}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
@@ -154,7 +154,7 @@
     />
 
     <!-- Armor -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.Armor')}
       entries={context.traits.armor}
       onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
@@ -162,7 +162,7 @@
     />
 
     <!-- Weapons -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('TYPES.Item.weaponPl')}
       entries={context.traits.weapon}
       onconfig={() => FoundryAdapter.renderWeaponsConfig(context.actor)}
@@ -170,7 +170,7 @@
     />
 
     <!-- Languages -->
-    <CharacterTraitConfigurableListEntry
+    <ActorTraitConfigurableListEntry
       label={localize('DND5E.Languages')}
       entries={context.traits.languages}
       onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
@@ -178,7 +178,7 @@
     />
 
     {#each context.customActorTraits as trait}
-      <CharacterTraitConfigurableListEntry
+      <ActorTraitConfigurableListEntry
         label={localize(trait.title)}
         entries={[]}
         onconfig={(ev) =>
