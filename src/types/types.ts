@@ -1199,6 +1199,7 @@ export type NpcSheetQuadroneContext = {
   showLegendaryResistances: boolean;
   showLoyaltyTracker: boolean;
   senses: ActorSpeedSenseEntryContext[];
+  showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   speeds: ActorSpeedSenseEntryContext[];

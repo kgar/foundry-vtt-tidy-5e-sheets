@@ -69,12 +69,11 @@
     });
   });
 
-  let showLegendaries = false;
 </script>
 
 <ActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
-{#if showLegendaries}
+{#if context.showLegendariesOnStatblockTab}
   <div class="legendaries flexrow">
     <Legendaries />
   </div>

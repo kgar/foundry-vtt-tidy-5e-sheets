@@ -24,8 +24,8 @@
 #### Legendaries Tray
 
 - [ ] NPC: Implement Legendaries Tray
-  - [ ] Add User preference "ShowLegendaryTray" / "Show Legendary Actions trackers in Statblock tab"
-  - [ ] Add NPC context variable "showLegendaryTrayInStatblock" and map to preference
+  - [x] Add User preference "ShowLegendaryTray" / "Show Legendary Actions trackers in Statblock tab"
+  - [x] Add NPC context variable "showLegendaryTrayInStatblock" and map to preference
   - [ ] Add legendaries in a flexrow format to the Statblock tab
     - [ ] Apply conditional visibility
       - [ ] If "context.showLegendaryTrayInStatblock",
