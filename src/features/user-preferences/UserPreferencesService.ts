@@ -18,11 +18,12 @@ class UserPreferencesService {
     return {
       expandCollapseBehavior: 'top-level',
 
-      ...FoundryAdapter.getProperty<UserPreferences>(
-        game.user,
-        `flags.${CONSTANTS.MODULE_ID}.userPreferences`
-      ),
+      ...FoundryAdapter.getProperty<UserPreferences>(game.user, this.getProp()),
     };
+  }
+
+  getProp(): string {
+    return `flags.${CONSTANTS.MODULE_ID}.userPreferences`;
   }
 }
 

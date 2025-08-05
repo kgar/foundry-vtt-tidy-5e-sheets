@@ -16,6 +16,7 @@
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import StatblockTables from '../../shared/StatblockTables.svelte';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
+  import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -27,12 +28,26 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
+  const legendariesProp = `${UserPreferencesService.getProp()}.${CONSTANTS.SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE}`;
+
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
   let tabOptionGroups: SectionOptionGroup[] = $derived([
     {
       title: 'TIDY5E.DisplayOptions.Title',
+      settings: [
+        {
+          type: 'boolean',
+          label: 'TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock',
+          doc: game.user,
+          prop: legendariesProp,
+          default: false,
+        },
+      ],
+    } satisfies SectionOptionGroup,
+    {
+      title: '',
       settings: [
         {
           type: 'boolean',
@@ -68,12 +83,11 @@
       tabId: tabId,
     });
   });
-
 </script>
 
 <ActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
-{#if context.showLegendariesOnStatblockTab}
+{#if context.showLegendariesOnStatblockTab && (context.showLegendaryActions || context.showLegendaryResistances || context.showLairTracker)}
   <div class="legendaries flexrow">
     <Legendaries />
   </div>
