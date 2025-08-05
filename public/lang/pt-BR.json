@@ -1,6 +1,6 @@
 {
     "TIDY5E.Tidy5eCharacterSheetClassic": "Ficha de Personagem Clássica Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Ficha de PnJ Clássica Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Ficha de PNJ Clássica Tidy 5e",
     "TIDY5E.Tidy5eItemSheetClassic": "Ficha de Item Clássica Tidy 5e",
     "TIDY5E.Tidy5eContainerSheetClassic": "Ficha de Recipiente Clássica Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetClassic": "Ficha de Veículo Clássica Tidy 5e",
@@ -141,7 +141,7 @@
         "tabLabel": "Personagem"
     },
     "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "PnJ"
+        "tabLabel": "PNJ"
     },
     "TIDY5E.WorldSettings.TabVehicle": {
         "tabLabel": "Veículo"
@@ -150,7 +150,7 @@
         "tabLabel": "Exaustão"
     },
     "TIDY5E.WorldSettings.Exhaustion": {
-        "Header": "Exaustão de Personagem/PnJ",
+        "Header": "Exaustão de Personagem/PNJ",
         "name": "Configuração de Exaustão",
         "hint": "Determina como a exaustão não relacionada a veículos é configurada e apresentada nas fichas de personagem e de PNJs.",
         "options.specific.text": "Níveis Específicos",
@@ -214,8 +214,8 @@
         "header": "Fichas de Personagem de Jogador"
     },
     "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "PnJs",
-        "header": "Fichas de PnJs"
+        "tabLabel": "PNJs",
+        "header": "Fichas de PNJs"
     },
     "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Veículos",
@@ -254,7 +254,7 @@
     },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Mostrar Rótulos de Traços",
-        "hint": "Mostra rótulos para características de PJ, PnJ e Veículo. Desative para mostrar somente os ícones."
+        "hint": "Mostra rótulos para características de PJ, PNJ e Veículo. Desative para mostrar somente os ícones."
     },
     "TIDY5E.Settings.ShowPlayerName": {
         "name": "Mostrar Nome do Jogador",
@@ -306,7 +306,7 @@
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Mostrar Aba de Grimório",
-        "hint": "Mostra uma aba de grimório para PnJs. Desative para mover a seção de grimório para a aba Atributos."
+        "hint": "Mostra uma aba de grimório para PNJs. Desative para mover a seção de grimório para a aba Atributos."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "Mostrar Marcador de Efeitos Ativos",
@@ -325,7 +325,7 @@
         "hint": "Mostra retratos/ícones redondos para atores.",
         "all": "Todos os atores",
         "pc": "PJs",
-        "npc": "PnJs/Veículos",
+        "npc": "PNJs/Veículos",
         "none": "Nenhum"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
@@ -346,15 +346,15 @@
     },
     "TIDY5E.Settings.UseExhaustion": {
         "name": "Use Rastreador de Exaustão",
-        "hint": "Mostra um rastreador de exaustão para personagens, PnJs e veículos."
+        "hint": "Mostra um rastreador de exaustão para personagens, PNJs e veículos."
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Mostrar Descanso do PnJ no Chat",
-        "hint": "Mostra um cartão no chat quando um PnJ descansa."
+        "name": "Mostrar Descanso do PNJ no Chat",
+        "hint": "Mostra um cartão no chat quando um PNJ descansa."
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Marcar PnJs Vinculados/Não Vinculados",
-        "hint": "Adiciona uma borda colorida e um ícone em fichas de PnJs vinculados/não vinculados.",
+        "name": "Marcar PNJs Vinculados/Não Vinculados",
+        "hint": "Adiciona uma borda colorida e um ícone em fichas de PNJs vinculados/não vinculados.",
         "default": "Sem marca de vínculo (padrão)",
         "unlinked": "Destacar tokens não vinculados",
         "linked": "Destacar tokens vinculados",
@@ -380,8 +380,8 @@
         "hint": "Mostra uma barra de carga nas fichas de personagem."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Usar Barra de Carga para PnJ",
-        "hint": "Mostra uma barra de carga nas fichas de PnJs."
+        "name": "Usar Barra de Carga para PNJ",
+        "hint": "Mostra uma barra de carga nas fichas de PNJs."
     },
     "TIDY5E.Settings.UseVehicleEncumbranceBar": {
         "name": "Usar Barra de Carga para Veiculo",
@@ -881,5 +881,6 @@
     "TIDY5E.SheetLock.Empty.Hint": "Comece adicionando uma classe e seus primeiros itens. Em seguida, use o menu de itens ou clique com o botão direito e escolha \"Adicionar à aba Ficha\" para adicioná-los aqui.",
     "TIDY5E.EmptyFavorites": "Clique com o botão direito e adicione aos Favoritos, ou arraste qualquer coisa da sua ficha para cá para acesso rápido.",
     "TIDY5E.EmptyTools": "Sem proficiência em ferramentas.",
-    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Incluir seções do Grimório na aba Bloco de Estatísticas"
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Incluir seções do Grimório na aba Bloco de Estatísticas",
+    "TIDY5E.UseSpecificDefaultValue.Label": "Usar Padrão ({value})"
 }
