@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { settings } from 'src/settings/settings.svelte';
   import type { ItemDebugSheetQuadroneContext } from '../Tidy5eItemDebugSheetQuadrone.svelte';
   import ButtonWithOptionPanel from 'src/components/buttons/ButtonWithOptionPanel.svelte';
   import ToggleButton from 'src/components/buttons/ToggleButton.svelte';
@@ -440,7 +439,7 @@
         Edit Details
       </a>
       Button
-      <button class="active">
+      <button type="button" class="active">
         <i class="fas fa-edit"></i>
         Edit Details
       </button>
@@ -456,7 +455,7 @@
         Edit Details
       </a>
       Button
-      <button>
+      <button type="button">
         <i class="fas fa-edit"></i>
         Edit Details
       </button>
@@ -483,16 +482,16 @@
       </div>
       <div class="vertical-gallery">
         Buttons
-        <button class="button-icon-only">
+        <button type="button" class="button-icon-only">
           <i class="fas fa-hand"></i>
         </button>
-        <button class="button-icon-only active">
+        <button type="button" class="button-icon-only active">
           <i class="fas fa-hand"></i>
         </button>
-        <button class="button-icon-only disabled">
+        <button type="button" class="button-icon-only disabled">
           <i class="fas fa-hand"></i>
         </button>
-        <button class="button-icon-only active disabled">
+        <button type="button" class="button-icon-only active disabled">
           <i class="fas fa-hand"></i>
         </button>
       </div>

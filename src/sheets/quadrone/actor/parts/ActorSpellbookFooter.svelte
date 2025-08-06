@@ -10,7 +10,7 @@
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { visibilityObserver } from 'src/attachments/visibility-observer.svelte';
-    import SpellcastingNpcSummaryCard from './SpellcastingNpcSummaryCard.svelte';
+  import SpellcastingNpcSummaryCard from './SpellcastingNpcSummaryCard.svelte';
 
   interface Props {
     class?: ClassValue;
