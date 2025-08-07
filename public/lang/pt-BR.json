@@ -882,5 +882,6 @@
     "TIDY5E.EmptyFavorites": "Clique com o botão direito e adicione aos Favoritos, ou arraste qualquer coisa da sua ficha para cá para acesso rápido.",
     "TIDY5E.EmptyTools": "Sem proficiência em ferramentas.",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Incluir seções do Grimório na aba Bloco de Estatísticas",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Usar Padrão ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Usar Padrão ({value})",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas"
 }
