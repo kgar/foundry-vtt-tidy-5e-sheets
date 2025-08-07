@@ -403,7 +403,10 @@
         },
         "SheetTheme.title": "Thème de la feuille",
         "SheetTheme.hint": "Pour obtenir les meilleurs résultats, choisissez une couleur proche du centre de la palette de couleurs.",
-        "SpellPreparationModeColors.title": "Couleurs du mode de préparation des sorts"
+        "SpellPreparationModeColors.title": "Couleurs du mode de préparation des sorts",
+        "AccentColor.title": "Couleur de surbrillance",
+        "ItemSidebarBackground.title": "Arrière-plan de la barre latérale des éléments",
+        "RarityColors.title": "Couleurs des raretés"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Niveau de sort {number}",
     "TIDY5E.ApplyChanges": "Appliquer les changements",
@@ -905,5 +908,6 @@
     "TIDY5E.HitDice.Abbreviation": "DdV",
     "TIDY5E.HitDice.Current.Label": "Dès de vie actuel",
     "TIDY5E.HitDice.Max.Label": "Dès de vie Max",
-    "TIDY5E.Notifications.FirstTimeWelcome1": "Bienvenue dans Tidy 5e Sheets ! Pour commencer, vous devrez remplacer {sheetLinkStart}une feuille{sheetLinkEnd} (ou {allSheetsLinkStart}toutes vos feuilles{allSheetsLinkEnd} !) par la version Tidy. Pour en savoir plus sur ce module et ses fonctionnalités, consultez le {wikiLinkStart}wiki officiel{wikiLinkEnd}."
+    "TIDY5E.Notifications.FirstTimeWelcome1": "Bienvenue dans Tidy 5e Sheets ! Pour commencer, vous devrez remplacer {sheetLinkStart}une feuille{sheetLinkEnd} (ou {allSheetsLinkStart}toutes vos feuilles{allSheetsLinkEnd} !) par la version Tidy. Pour en savoir plus sur ce module et ses fonctionnalités, consultez le {wikiLinkStart}wiki officiel{wikiLinkEnd}.",
+    "TIDY5E.StatblockTabName": "Block de stat"
 }
