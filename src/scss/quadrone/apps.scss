@@ -716,58 +716,38 @@
     }
   }
 
-  // .spell-preparation {
-  :where(.mode-atwill) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-atwill);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
+  :where(.spell-method:is(.cannot-prepare, .can-prepare.always)) {
+    --t5e-icon-color: var(--t5e-method-color);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-atwill)) {
-      --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-atwill) calc(l * 1.5) calc(c * .88) h);
+    &:is(.tidy5e-sheet.theme-dark :where(.spell-method:is(.cannot-prepare, .can-prepare.always))) 
+    {
+      --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.5) calc(c * .88) h);
     }
   }
 
-  :where(.mode-always) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-always);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
-
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-always)) {
-      --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-always) calc(l * 1.5) calc(c * .88) h);
-    }
+  :where(.spell-method.can-prepare.unprepared)  {
+    --t5e-icon-color: var(--t5e-color-text-lighter);
   }
 
-  :where(.mode-pact) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-pact);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
-
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-pact)) {
-      --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-pact) calc(l * 1.5) calc(c * .88) h);
-    }
+  :where(.method-atwill) {
+    --t5e-method-color: var(--t5e-color-spellcasting-atwill);
   }
 
-  :where(.mode-innate) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-innate);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
-
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-innate)) {
-      --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-innate) calc(l * 1.5) calc(c * .88) h);
-    }
+  :where(.method-pact) {
+    --t5e-method-color: var(--t5e-color-spellcasting-pact);
   }
 
-  :where(.mode-ritual) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-ritual);
-    --t5e-icon-color: oklch(from var(--t5e-mode-color) calc(l * 1.2) calc(c * 1.15) h);
-
-    &:is(.tidy5e-sheet.theme-dark :where(.mode-ritual)) {
-      --t5e-icon-color: oklch(from var(--t5e-color-spellcasting-ritual) calc(l * 1.5) calc(c * .88) h);
-    }
+  :where(.method-innate) {
+    --t5e-method-color: var(--t5e-color-spellcasting-innate);
   }
 
-  :where(.mode-prepared) {
-    --t5e-mode-color: var(--t5e-color-spellcasting-prepared);
-    --t5e-icon-color: var(--t5e-color-white);
+  :where(.method-ritual) {
+    --t5e-method-color: var(--t5e-color-spellcasting-ritual);
   }
 
-  // }
+  :where(.method-spell) {
+    --t5e-method-color: var(--t5e-color-spellcasting-spell);
+  }
 
   :where(.unidentified) {
     --t5e-item-color: var(--t5e-color-palette-grey-40);

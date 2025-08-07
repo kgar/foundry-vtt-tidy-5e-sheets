@@ -24,7 +24,7 @@
 <div class="spell-slots-detail">
   <TextInput
     document={context.actor}
-    field="system.spells.{section.prop}.value"
+    field="system.spells.{section.slot}.value"
     class={['spell-slot-uses', { ['has-temp-slots']: hasTempSlots }]}
     value={section.uses}
     placeholder="0"
@@ -34,7 +34,7 @@
   />
   <span class="sep"> / </span>
 
-  <span class="spell-max" data-level={section.prop} data-slots={section.slots}>
+  <span class="spell-max" data-level={section.slot} data-slots={section.slots}>
     {section.slots}
   </span>
 </div>

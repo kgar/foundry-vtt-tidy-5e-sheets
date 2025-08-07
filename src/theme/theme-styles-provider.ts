@@ -1,6 +1,6 @@
 import { isNil } from 'src/utils/data';
 import type {
-  ThemeSettingsV2,
+  ThemeSettingsV3,
   ThemeSettingsConfigurationOptions,
   ThemeQuadroneStyleDeclaration,
   ThemeQuadroneStyleRule,
@@ -8,7 +8,7 @@ import type {
 
 export class ThemeStylesProvider {
   static create(
-    settings: ThemeSettingsV2,
+    settings: ThemeSettingsV3,
     options: ThemeSettingsConfigurationOptions
   ): ThemeQuadroneStyleDeclaration[] {
     let { doc, idOverride } = options;
@@ -39,7 +39,7 @@ export class ThemeStylesProvider {
         doc,
         idOverride
       ),
-      ...this.getSpellPreparationModesDeclarations(
+      ...this.getSpellPreparationMethodDeclarations(
         selectorPrefix,
         settings,
         doc,
@@ -53,7 +53,7 @@ export class ThemeStylesProvider {
 
   static getAccentColorDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV2,
+    settings: ThemeSettingsV3,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -83,7 +83,7 @@ export class ThemeStylesProvider {
 
   static getActorHeaderBackgroundDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV2,
+    settings: ThemeSettingsV3,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -116,7 +116,7 @@ export class ThemeStylesProvider {
 
   static getItemSidebarBackgroundDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV2,
+    settings: ThemeSettingsV3,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -149,7 +149,7 @@ export class ThemeStylesProvider {
 
   static getRarityColorsDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV2,
+    settings: ThemeSettingsV3,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
@@ -178,19 +178,19 @@ export class ThemeStylesProvider {
     });
   }
 
-  static getSpellPreparationModesDeclarations(
+  static getSpellPreparationMethodDeclarations(
     selectorPrefix: string,
-    settings: ThemeSettingsV2,
+    settings: ThemeSettingsV3,
     doc: any | undefined,
     idOverride?: string
   ): ThemeQuadroneStyleDeclaration[] {
-    const spellPrepModes = Object.entries(
-      settings.spellPreparationModeColors ?? {}
+    const spellPrepMethods = Object.entries(
+      settings.spellPreparationMethodColors ?? {}
     ).filter(([_, value]) => !isNil(value?.trim(), ''));
 
-    return spellPrepModes.flatMap(([key, value]) => {
+    return spellPrepMethods.flatMap(([key, value]) => {
       const identifierRule = this.getDeclarationKeyRule(
-        `spellPreparationModeColors-${key}`,
+        `spellPreparationMethodColors-${key}`,
         doc,
         idOverride
       );
@@ -209,7 +209,7 @@ export class ThemeStylesProvider {
         },
         // {
         //   identifier: `${identifierRule.property}: "${identifierRule.value}"`,
-        //   selector: `${selectorPrefix} .tidy-table-header-row.spell-preparation`,
+        //   selector: `${selectorPrefix} .tidy-table-header-row.spell-method`,
         //   ruleset: [identifierRule, { property: cssVariable, value: value }],
         // },
       ];

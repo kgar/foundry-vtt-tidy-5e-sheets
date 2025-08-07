@@ -62,10 +62,13 @@ export const defaultItemSortSchemes = {
     label: 'TIDY5E.SortMenu.OptionPriority',
     tooltip: 'SIDEBAR.SortModePriority',
     comparator: (a, b) =>
-      a.linkedName?.localeCompare(b.linkedName, game.i18n.lang) ||
-      a.level - b.level ||
-      a.preparationMode - b.preparationMode ||
-      a.prepared - b.prepared ||
+      a.system.linkedActivity?.item?.name.localeCompare(
+        b.system.linkedActivity?.item?.name,
+        game.i18n.lang
+      ) ||
+      (a.system.level ?? 0) - (b.system.level ?? 0) ||
+      binarize(b.system.prepared) - binarize(a.system.prepared) ||
+      (a.system.method ?? '').compare(b.system.method ?? '') ||
       a.name.localeCompare(b.name, game.i18n.lang),
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED]: {
@@ -99,9 +102,12 @@ export const defaultItemSortSchemes = {
     label: 'DND5E.Prepared',
     tooltip: 'DND5E.Prepared',
     comparator: (a, b) =>
-      b.system.preparation?.prepared - a.system.preparation?.prepared ||
-      +(b.system.preparation.mode === 'always') -
-        +(a.system.preparation.mode === 'always') ||
+      binarize(b.system.prepared) - binarize(a.system.prepared) ||
       a.name.localeCompare(b.name, game.i18n.lang),
   },
 } satisfies Record<string, SortMethodScheme>;
+
+/** Coalesce nil and 0 to 0; reduce numbers greater than 0 to 1. */
+function binarize(value?: number) {
+  return Math.min(value ?? 0, 1);
+}

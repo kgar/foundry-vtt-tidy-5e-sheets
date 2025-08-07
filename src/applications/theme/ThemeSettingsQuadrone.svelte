@@ -41,8 +41,8 @@
     },
   );
 
-  let modeColorPlaceholders = createColorPlaceholderMap(
-    placeholders?.value.spellPreparationModeColors,
+  let methodColorPlaceholders = createColorPlaceholderMap(
+    placeholders?.value.spellPreparationMethodColors,
   );
 
   let rarityColorPlaceholders = createColorPlaceholderMap(
@@ -203,16 +203,16 @@
 
   <fieldset>
     <legend>
-      {localize('TIDY5E.ThemeSettings.SpellPreparationModeColors.title')}
+      {localize('TIDY5E.ThemeSettings.SpellcastingMethodColors.title')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
-    {#each context.value.spellPreparationModeColors as color}
+    {#each context.value.spellPreparationMethodColors as color}
       <ThemeSettingColorFormGroupQuadrone
         key={color.key}
         bind:value={color.value}
         label={color.label}
-        placeholder={modeColorPlaceholders[color.key]}
+        placeholder={methodColorPlaceholders[color.key]}
       />
     {/each}
   </fieldset>
