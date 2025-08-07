@@ -4,9 +4,9 @@
 
 - [ ] NPC Sheet
   - [ ] hightouch punch list from PR #1278
-    - [ ] Legendaries in the statblock tab styling
-    - [ ] Class styling in sidebar (copy from PC sheet Traits tab)
+    - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
     - [ ] Display background/subclass/etc in Statblock tab
+    - [ ] Class styling in sidebar (copy from PC sheet Traits tab)
     - [ ] Show alignment/species/size in sidebar in Edit Mode, subtitle only in play mode
     - [ ] Figure out solution for HP > 999
     - [x] Needs testing: Validate character sheet header styles are still working as expected
@@ -202,3 +202,29 @@ Limited:
 
 
 ### To Do Graveyard
+
+
+#### Legendaries Tray
+
+- [x] NPC: Implement Legendaries Tray functionality
+  - [x] Add User preference "ShowLegendaryTray" / "Show Legendary Actions trackers in Statblock tab"
+  - [x] Add NPC context variable "showLegendaryTrayInStatblock" and map to preference
+  - [x] Add legendaries in a flexrow format to the Statblock tab
+    - [x] Apply conditional visibility
+      - [x] If "context.showLegendaryTrayInStatblock",
+        - [x] If locked
+          - [x] If has legendaries, show
+          - [x] If no legendary, hide
+        - [x] If unlocked
+          - [x] Show
+  - [x] Ensure it is laid out and styled according to hightouch's advice
+
+```scss
+// hightouch: for now on the cards, use this style instead of the filigree
+[whatever-the-selector-is] {
+  background: solid var(--t5e-component-card-darker);
+  border: 0.125rem solid var(--t5e-color-gold);
+  border-radius: 0.1875rem;
+  box-shadow: var(--t5e-drop-shadow-field);
+}
+```

@@ -52,6 +52,7 @@
   />
   {#if value?.trim() !== ''}
     <button
+      type="button"
       class="inline-icon-button search-close-button"
       onclick={() => clearSearch()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_CLEAR}

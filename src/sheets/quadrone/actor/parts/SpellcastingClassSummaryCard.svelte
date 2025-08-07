@@ -86,7 +86,7 @@
       <div class="spellcasting-ability pill pill-medium">
         {info.ability.label}
       </div>
-      <div class="ability pill pill-medium">
+      <div class="pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Ability')}</span
         >
@@ -96,7 +96,7 @@
           ><span class="font-data-medium">{info.ability.mod.value}</span>
         </span>
       </div>
-      <div class="attack pill pill-medium">
+      <div class="pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Attack')}</span
         >
@@ -106,7 +106,7 @@
           ><span class="font-data-medium">{info.attack.mod.value}</span>
         </span>
       </div>
-      <div class="save pill pill-medium">
+      <div class="pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellDC')}</span
         >
@@ -115,7 +115,7 @@
         </span>
       </div>
       <a
-        class="prepared pill pill-medium interactive"
+        class="pill pill-medium interactive"
         onclick={() => onPreparedClicked()}
       >
         <span class="label font-label-medium color-text-lighter"
@@ -168,10 +168,7 @@
       {/if}
     </div>
     <div class="info pills flex1">
-      <div
-        class="ability"
-        data-tooltip={localize('DND5E.Ability') + ': ' + info.ability.label}
-      >
+      <div data-tooltip={localize('DND5E.Ability') + ': ' + info.ability.label}>
         <span class="label font-label-medium color-text-gold uppercase"
           >{info.ability.abbreviation}</span
         >
@@ -182,7 +179,7 @@
         </span>
       </div>
       <div class="divider-dot"></div>
-      <div class="attack">
+      <div>
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Attack')}</span
         >
@@ -193,7 +190,7 @@
         </span>
       </div>
       <div class="divider-dot"></div>
-      <div class="save" data-tooltip={localize('DND5E.SpellDC')}>
+      <div data-tooltip={localize('DND5E.SpellDC')}>
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.AbbreviationDC')}</span
         >
@@ -202,6 +199,7 @@
         </span>
       </div>
       <button
+        type="button"
         class="prepared pill pill-medium interactive"
         data-tooltip={localize('DND5E.Prepared')}
         aria-label={localize('DND5E.Prepared')}

@@ -65,15 +65,17 @@
       {/if}
     </div>
     <span class="value">
-      <label class="label hidden" for="lair-has-lair">{localize('DND5E.LAIR.HasLair')}</label>
+      <label class="label hidden" for="lair-has-lair"
+        >{localize('DND5E.LAIR.HasLair')}</label
+      >
       <FieldToggle
-      id="lair-has-lair"
-      checked={context.system.resources.lair.value}
-      onchange={(ev) =>
-        context.actor.update({
-          ['system.resources.lair.value']: ev.currentTarget.checked,
-        })}
-    />
+        id="lair-has-lair"
+        checked={context.system.resources.lair.value}
+        onchange={(ev) =>
+          context.actor.update({
+            ['system.resources.lair.value']: ev.currentTarget.checked,
+          })}
+      />
     </span>
   {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
     <!-- Switch - inside lair -->
@@ -90,7 +92,9 @@
       {/if}
     </div>
     <span class="value">
-      <label class="label hidden" for="lair-inside">{localize('DND5E.LAIR.Inside')}</label>
+      <label class="label hidden" for="lair-inside"
+        >{localize('DND5E.LAIR.Inside')}</label
+      >
       <FieldToggle
         checked={context.system.resources.lair.inside}
         onchange={(ev) =>
@@ -135,9 +139,9 @@
 
 {#if context.showLairTracker}
   {#if showFiligree}
-    <FiligreeCard class="npc-score-tracker lair-tracker">
+    <div class="npc-score-tracker card lair-tracker">
       {@render lairActions()}
-    </FiligreeCard>
+    </div>
   {:else}
     <div class="npc-score-tracker lair-tracker">
       {@render lairActions()}

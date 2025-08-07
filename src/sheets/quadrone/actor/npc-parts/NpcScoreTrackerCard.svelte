@@ -41,7 +41,7 @@
 </script>
 
 {#if showFiligree}
-  <FiligreeCard class="npc-score-tracker card">
+  <div class="npc-score-tracker card">
     <div class="card-header flexrow">
       <h3>
         {label}
@@ -104,7 +104,7 @@
         </button>
       {/if}
     </div>
-  </FiligreeCard>
+  </div>
 {:else}
   <div class="npc-score-tracker">
     <h3 class="font-label-medium bordered">

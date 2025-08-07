@@ -46,6 +46,7 @@
       <div class="item-controls configuration-mode-control">
         {#if context.editable && context.isEmbedded}
           <button
+            type="button"
             class="inline-icon-button"
             onclick={() => toggleAdvancementLock(context.item)}
             title={localize('DND5E.AdvancementConfigurationActionDisable')}
