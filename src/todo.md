@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Restore Character sheet responsive ability scores with a scripted approach. Bestow a mutually exclusive series of compact classes based on ability container width as compared to the established width of a given ability, times the number of abilities.
+- [ ] Restore Character sheet responsive ability scores with a scripted approach. See Abilities Simplification Initiative (ASI)
 - [ ] NPC Sheet
   - [ ] hightouch punch list from PR #1278
     - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
@@ -21,6 +21,19 @@
     - [ ] CR
     - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
     - [ ] abilities
+
+#### Abilities Simplification Initiative
+
+- [ ] Track application position on the svelte mixin, and lock it to `_updatePosition`; this will be maintained for all use cases by app v2 <3
+- [ ] Feed svelte context with reactive position ref
+- [ ] Retrofit character.scss ability container styles to be
+  - [ ] .ability.ability-smaller - the smaller abilities
+  - [ ] .ability.ability-collapsed - the alternate view of abilities
+- [ ] Update the abilities component to apply `.ability-smaller` at a specific sheet position width, then `.ability-collapsed` for the smallest configuration.
+  - [ ] Determine what that width should be, via trial and error
+  - [ ] Be sure to convert hard width to rems when making our calculations
+  - [ ] Use a constant, multiplied by the number of visible abilities.
+
 
 ### (Almost) Everything after the short list
 
