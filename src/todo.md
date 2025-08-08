@@ -2,6 +2,7 @@
 
 ### The Short List
 
+- [ ] Restore Character sheet responsive ability scores with a scripted approach. Bestow a mutually exclusive series of compact classes based on ability container width as compared to the established width of a given ability, times the number of abilities.
 - [ ] NPC Sheet
   - [ ] hightouch punch list from PR #1278
     - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
