@@ -913,5 +913,6 @@
     "TIDY5E.EmptyFavorites": "Клацніть правою кнопкою миші та додайте до обраного або перетягніть сюди будь-що з аркуша для швидкого доступу.",
     "TIDY5E.EmptyTools": "Відсутність навичок володіння інструментами.",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Додати розділи книги заклинань на вкладку Statblock",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Використовувати значення за замовчуванням ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Використовувати значення за замовчуванням ({value})",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Показувати легендарні/лігвові трекери на вкладці Statblock"
 }
