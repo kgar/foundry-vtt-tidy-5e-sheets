@@ -19,7 +19,9 @@ export function skipSvelte_onclick(
       'click',
       (event) => {
         args.handler?.(
-          event as MouseEvent & { currentTarget: EventTarget & HTMLElement }
+          event as any as MouseEvent & {
+            currentTarget: EventTarget & HTMLElement;
+          }
         );
       },
       {
