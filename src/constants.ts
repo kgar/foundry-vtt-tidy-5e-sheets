@@ -469,6 +469,7 @@ export const CONSTANTS = {
     ON_ITEM_TOGGLED: 'onItemToggled',
     ON_SEARCH: 'onSearch',
     ON_TAB_SELECTED: 'onTabSelected',
+    POSITION_REF: 'positionRef',
     SEARCH_FILTERS: 'searchFilters',
     SEARCH_RESULTS_STATE: 'searchResultsState',
     SECTION_EXPANSION_TRACKER: 'sectionExpansionTracker',
