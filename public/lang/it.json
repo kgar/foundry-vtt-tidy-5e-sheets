@@ -921,5 +921,6 @@
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Decrescente",
     "TIDY5E.ItemSheet.FeatureOriginLabel": "Privilegi Origine",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Includi Sezioni Incantesimi nella scheda Statistiche",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Usa predefinito ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Usa predefinito ({value})",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostra i tracker Leggendari/Tana nella scheda Statistiche"
 }
