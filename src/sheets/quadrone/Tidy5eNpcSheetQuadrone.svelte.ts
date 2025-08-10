@@ -41,6 +41,7 @@ import { splitSemicolons } from 'src/utils/array';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
+import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -67,11 +68,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-      position: {
-        width: 740,
-        height: 810,
-      },
-    };
+    position: {
+      width: 740,
+      height: 810,
+    },
+  };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -99,6 +100,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
           this.sectionExpansionTracker,
         ],
+        [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
         ...this._getActorSvelteContext(),
       ]),
     });
@@ -139,6 +141,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const preferences = SheetPreferencesService.getByType(this.actor.type);
 
+    const userPreferences = UserPreferencesService.get();
+
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
       currencies.push({
         key: key,
@@ -156,7 +160,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
     const showToken =
       this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-      true || themeSettings.portraitShape === 'token';
+        true || themeSettings.portraitShape === 'token';
     const effectiveToken = this.actor.isToken
       ? this.actor.token
       : this.actor.prototypeToken;
@@ -227,6 +231,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         actorContext.unlocked || this.actor.system.resources.legact.max,
       showLegendaryResistances:
         actorContext.unlocked || this.actor.system.resources.legres.max,
+      showLegendariesOnStatblockTab:
+        userPreferences.showLegendariesOnNpcStatblock === true,
       showLoyaltyTracker:
         this.actor.system.traits.important &&
         game.settings.get('dnd5e', 'loyaltyScore'),

@@ -1,15 +1,16 @@
- ## kgar To Do
+## kgar To Do
 
 ### The Short List
 
-- [ ] (wait for another hightouch PR) Refactor rename and move the following to Actor space and out of Character space
-  - [ ] (confirm) CharacterPortrait 
-  - [ ] (confirm) CharacterExhaustionBar 
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraitConfigurableListEntry.svelte
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/traits/CharacterTraits.svelte
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/CharacterSubtitle.svelte
-  - [ ] (confirm) src/sheets/quadrone/actor/character-parts/SavingThrowsCard.svelte
+- [x] Restore Character sheet responsive ability scores with a scripted approach. See Abilities Simplification Initiative (ASI)
 - [ ] NPC Sheet
+  - [ ] hightouch punch list from PR #1278
+    - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
+    - [ ] Display background/subclass/etc in Statblock tab
+    - [ ] Class styling in sidebar (copy from PC sheet Traits tab)
+    - [ ] Show alignment/species/size in sidebar in Edit Mode, subtitle only in play mode
+    - [ ] Figure out solution for HP > 999
+    - [x] Needs testing: Validate character sheet header styles are still working as expected
   - [ ] Make loyalty tracker match legendary trackers
   - [ ] Header
     - [ ] Portrait
@@ -20,6 +21,19 @@
     - [ ] CR
     - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
     - [ ] abilities
+
+#### Abilities Simplification Initiative
+
+- [x] Track application position on the svelte mixin, and lock it to `_updatePosition`; this will be maintained for all use cases by app v2 <3
+- [x] Feed svelte context with reactive position ref
+- [x] Retrofit character.scss ability container styles to be
+  - [x] .ability.ability-smaller - the smaller abilities
+  - [x] .ability.ability-collapsed - the alternate view of abilities
+- [x] Update the abilities component to apply `.ability-smaller` at a specific sheet position width, then `.ability-collapsed` for the smallest configuration.
+  - [x] Determine what that width should be, via trial and error
+  - [x] Be sure to convert hard width to rems when making our calculations
+  - [x] Use a constant, multiplied by the number of visible abilities.
+
 
 ### (Almost) Everything after the short list
 
@@ -200,114 +214,31 @@ Limited:
 
 - Identical to Observer
 
+
 ### To Do Graveyard
 
-- [x] Formula column tidying needed.
-  - the draft CSS is here in `src/scss/quadrone/tables.scss`, and the component is `src\sheets\quadrone\item\columns\ItemDamageFormulasColumn.svelte`
-  - right now, the overflow button is behind truesight
-  - to recap: a cell-wide button that encapsulates all the damage labels would require some retrofit styling to get it looking normal again. On the other hand, the overflow button is very small, so I dunno.
-- [x] Fix Bastion Item Sheet, Crafting UI
-- [x] Weapon Favorite stats cell is missing formatting classes
-- [x] Revisit 2nd line formatting for Favorites stats cells (lower 2nd line size + spacing)
-- [x] Skill abilities - dark mode - the dropdown background is not dark (Cannot fix)
-- [x] Make NPC Statblock tab section config work.
-- [x] Item details - sheet sections component - swap out labels with contextually accurate labels (e.g.: Spellbook, Sheet)
-- [x] Item sheet sidebar: when parent is NPC, use "Statblock" instead of "Features" on the Sections button and input.
-- NPC Sheet Progress
-  - [x] Sidebar
-    - [x] Traits
-    - [x] (Collapsed by default) Skills
-    - [x] Loyalty tracker
-      - [x] Show when
-        - [x] `this.actor.system.traits.important` AND
-        - [x] `game.settings.get('dnd5e', 'loyaltyScore')` AND
-        - [x] `game.user.isGM`
-    - [x] Legendary trackers
-      - [x] Show each when unlocked or when each is eligible
-        - [x] legact - `this.actor.system.resources.legact.max`
-        - [x] legres - `this.actor.system.resources.legres.max`
-        - [x] lair - `(context.modernRules && this.actor.system.resources.lair.value) || (!context.modernRules && this.actor.system.resources.lair.initiative)`
-          - [x] 2014
-          - [x] Modern
-  - [x] Statblock
-    - [x] Item / section prep
-    - [x] Ensure Custom Sections are being respected. The unfortunate side effect will be that weapons' custom section will duplicate across Statblock and Inventory.
-    - [x] Row actions (and Header Add Button)
-    - [x] Column specs
-    - [x] Filters
-    - [x] Test/confirm section show/hide, section ordering
-    - [x] Test search
-    - [x] Test filtering
-    - [x] Upgrade to allow embedding Spellbook; sheet flag setting; full section config integration; fully badass
-  - [x] Inventory
-    - [x] Prep
-    - [x] Filters
-    - [x] Sorting
-    - [x] Custom Sections
-    - [x] Inline containers
-  - [x] Spellbook
-    - [x] Prep
-    - [x] Filters
-    - [x] Sorting
-    - [x] Custom Sections
-    - [x] Items with Spells
-      - [x] Additional Spells
-      - [x] Section Per Item
-    - [x] Spellbook footer for NPCs without classes
-  - [x] Effects
-    - [x] Prep
-    - [x] Basic functionality
-    - [x] Toggling
-    - [x] Conditions
-  - [X] ~~Background~~ Biography
-    - [x] Functionality
-  - [x] Journal
-    - [x] Functionality
-    - [x] Drag drop
-    - [x] Context menu
-- [x] Fix: column counts on item sheets is missing
-- [x] Fix: Setting default image shape does not update image shapes for sheets with no settings
-- [x] Fix: Source is missing in NPC header -- gave the code to hightouch to plug in, since he's working in the area.
 
+#### Legendaries Tray
 
-#### NPC Statblock Sections notes
+- [x] NPC: Implement Legendaries Tray functionality
+  - [x] Add User preference "ShowLegendaryTray" / "Show Legendary Actions trackers in Statblock tab"
+  - [x] Add NPC context variable "showLegendaryTrayInStatblock" and map to preference
+  - [x] Add legendaries in a flexrow format to the Statblock tab
+    - [x] Apply conditional visibility
+      - [x] If "context.showLegendaryTrayInStatblock",
+        - [x] If locked
+          - [x] If has legendaries, show
+          - [x] If no legendary, hide
+        - [x] If unlocked
+          - [x] Show
+  - [x] Ensure it is laid out and styled according to hightouch's advice
 
-**Default sheets setup.**  
-NPC section prep:
-```js
-const sections = Object.entries(CONFIG.DND5E.activityActivationTypes).reduce((obj, [id, config], i) => {
-    const { header: label, passive } = config; // kgar note: the `special` activation type doesn't have "header". It just has "label". Recommend falling back to `label` when `header` is nil.
-    if ( passive ) return obj;
-    obj[id] ??= {
-    id, label, order: (i + 1) * 100, items: [], minWidth: 210,
-    columns: ["recovery", "uses", "roll", "formula", "controls"]
-    };
-    return obj;
-}, {});
-sections.passive = {
-    id: "passive", label: "DND5E.Features", order: 0, items: [], minWidth: 210,
-    columns: ["recovery", "uses", "roll", "formula", "controls"]
-};
-context.itemCategories.features?.forEach(i => {
-    const ctx = context.itemContext[i.id];
-    sections[ctx.group]?.items.push(i);
-});
-```
-
-Determining "group" (which for us is simply section key):
-```js
-const isPassive = item.system.properties?.has("trait")
-  || CONFIG.DND5E.activityActivationTypes[item.system.activities?.contents[0]?.activation.type]?.passive;
-ctx.group = isPassive ? "passive" : item.system.activities?.contents[0]?.activation.type || "passive";
-```
-
-NPC sheet adds all weapons to the features itemcategory, in addition to their inventory home:
-```js
-  /** @inheritDoc */
-  _assignItemCategories(item) {
-    if ( ["class", "subclass"].includes(item.type) ) return new Set(["classes"]);
-    const categories = super._assignItemCategories(item);
-    if ( item.type === "weapon" ) categories.add("features"); // 👈 there
-    return categories;
-  }
+```scss
+// hightouch: for now on the cards, use this style instead of the filigree
+[whatever-the-selector-is] {
+  background: solid var(--t5e-component-card-darker);
+  border: 0.125rem solid var(--t5e-color-gold);
+  border-radius: 0.1875rem;
+  box-shadow: var(--t5e-drop-shadow-field);
+}
 ```

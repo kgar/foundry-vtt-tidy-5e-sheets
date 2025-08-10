@@ -6,8 +6,8 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getModifierData } from 'src/utils/formatting';
   import AbilityScoreNPC from './character-parts/AbilityScoreNPC.svelte';
-  import CharacterPortrait from './character-parts/CharacterPortrait.svelte';
-  import CharacterExhaustionBar from './character-parts/CharacterExhaustionBar.svelte';
+  import ActorPortrait from './parts/ActorPortrait.svelte';
+  import ActorExhaustionBar from './parts/ActorExhaustionBar.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import NpcSidebar from './npc-parts/NpcSidebar.svelte';
@@ -235,7 +235,7 @@
       </div>
     </div>
     <div class="actor-vitals-container">
-      <CharacterPortrait />
+      <ActorPortrait />
       <div class="actor-vitals npc-vitals theme-dark">
         <div class="hp-row flexrow">
           <div
@@ -359,7 +359,7 @@
         </div>
         <div class="actor-vitals-row">
           {#if exhaustionBarFocused}
-            <CharacterExhaustionBar
+            <ActorExhaustionBar
               level={exhaustionLevel}
               total={context.config.conditionTypes.exhaustion.levels}
               onClose={() => (exhaustionBarFocused = false)}

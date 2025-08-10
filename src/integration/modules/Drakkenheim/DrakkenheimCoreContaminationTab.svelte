@@ -2,7 +2,6 @@
   import Pips from 'src/components/pips/Pips.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ActorSheetContextV1,
     ActorSheetClassicContextV2,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
@@ -14,6 +13,8 @@
       getSheetContext<ActorSheetClassicContextV2 | ActorSheetQuadroneContext>(),
     );
 
+  const localize = FoundryAdapter.localize;
+
   let contanimationLevel = $derived(
     FoundryAdapter.getProperty<number | undefined>(
       context.actor,
@@ -21,32 +22,44 @@
     ) ?? 0,
   );
 
-  let levels = $derived(Array.fromRange(6, 1));
+  let levels = Array.fromRange(6, 1);
+
+  let version = FoundryAdapter.getGameSetting(
+    DRAKKENHEIM_CORE_CONSTANTS.MODULE_ID,
+    DRAKKENHEIM_CORE_CONSTANTS.SETTING_VERSION,
+  );
+
+  let enrichedPromises = levels.map((level) =>
+    foundry.applications.ux.TextEditor.enrichHTML(
+      localize(`DRAKKENHEIM.CONTAMINATION.LEVELS.${version}${level}`),
+    ),
+  );
 
   async function onContaminationLevelChanged(level: number): Promise<void> {
     await context.actor.update({
       [DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_LEVEL_FLAG_PROP]: level,
     });
   }
-
-  const localize = FoundryAdapter.localize;
 </script>
 
 <div class="scroll-container">
   <div class="description">
-    {localize('DRAKKENHEIM.ContaminationTable')}
+    {localize('DRAKKENHEIM.CONTAMINATION.TABLE.caption')}
   </div>
   <table class="contamination-table">
-    <thead>
+    <thead class="theme-dark">
       <tr>
-        <th class="symptom">{localize('DRAKKENHEIM.ContaminationSymptoms')}</th>
+        <th class="symptom">{localize('DRAKKENHEIM.CONTAMINATION.TABLE.symptoms')}</th>
       </tr>
     </thead>
     <tbody>
-      {#each levels as level}
+      {#each enrichedPromises as promise, i}
+        {@const level = i + 1}
         <tr class:active={level <= contanimationLevel}>
           <td class="symptom">
-            {localize(`DRAKKENHEIM.ContaminationEffect${level}`)}
+            {#await promise then text}
+              {@html text}
+            {/await}
           </td>
         </tr>
       {/each}

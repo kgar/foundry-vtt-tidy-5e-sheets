@@ -121,6 +121,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
           this.sectionExpansionTracker,
         ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.POSITION_REF,
+          this._position
+        ],
         ...this._getActorSvelteContext(),
       ]),
     });
@@ -726,9 +730,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         context.concentration = true;
       }
 
-      const vsmcr = game.i18n
-        .getListFormatter({ style: 'narrow' })
-        .format(item.labels.components.all.map((a: any) => a.abbr));
+      const vsmcr = game.i18n.getListFormatter({ style: 'narrow' }).format(
+        item.labels.components.all
+          .filter((a: any) => !isNil(a?.abbr)) // a valid use case with Default Sheets is to exclude Abbreviation. Quadrone's design doesn't account for that, so we will exclude any components that don't supply an abbreviation.
+          .map((a: any) => a.abbr)
+      );
 
       context.subtitle = context.actionSubtitle = [
         linked

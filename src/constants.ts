@@ -206,6 +206,7 @@ export const CONSTANTS = {
   SPELL_SLOT_TRACKER_MODE_PREFERENCE: 'spellSlotTrackerMode',
   SPELL_SLOT_TRACKER_MODE_PIPS: 'pips',
   SPELL_SLOT_TRACKER_MODE_VALUE_MAX: 'value-max',
+  SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE: 'showLegendariesOnNpcStatblock',
   CLASS_ACTOR_SHEET_5E: 'ActorSheet5e',
   HTML_DYNAMIC_RENDERING_ATTRIBUTE: 'data-tidy-render-scheme="handlebars"',
   HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR:
@@ -467,6 +468,7 @@ export const CONSTANTS = {
     ON_ITEM_TOGGLED: 'onItemToggled',
     ON_SEARCH: 'onSearch',
     ON_TAB_SELECTED: 'onTabSelected',
+    POSITION_REF: 'positionRef',
     SEARCH_FILTERS: 'searchFilters',
     SEARCH_RESULTS_STATE: 'searchResultsState',
     SECTION_EXPANSION_TRACKER: 'sectionExpansionTracker',

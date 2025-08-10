@@ -1085,7 +1085,7 @@
       }
 
       // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
-      &.single.single {
+      &.single.single.single {
         background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
 
         &::before {
@@ -1127,7 +1127,7 @@
       }
 
       // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
-      &.stacked.stacked {
+      &.stacked.stacked.stacked {
         background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
         width: 2.75rem;
         height: 2.75rem;
@@ -1775,9 +1775,6 @@
     }
 
     &.attributes {
-      container-name: character-tab;
-      container-type: inline-size;
-
       .columns {
         display: grid;
         grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
@@ -1955,6 +1952,9 @@
 
   .spellbook-footer {
     align-items: flex-start;
+    min-height: 2.25rem;
+    position: sticky;
+    bottom: 0;
 
     .sheet-footer-right {
       padding-block-start: 0.375rem;
@@ -1997,9 +1997,15 @@
     }
 
     &:has(.compact) {
-      min-height: 2.25rem;
-      position: sticky;
-      bottom: 0;
+      @container tab-content (width > 35rem) { 
+        >.spellcasting-cards {
+          display: grid;
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(18rem, 1fr)
+          );
+        }
+      }
     }
   }
 

@@ -127,7 +127,7 @@
         <span class="color-text-gold font-label-medium">{entry.name}</span>
         <span class="color-text-default font-data-medium">{entry.levels}</span>
         <!-- TODO: Add button to roll a save request to chat here (enricher?) -->
-        {#if entry.spellcasting}
+        {#if entry.spellcasting?.ability}
           <!-- <button 
             type="button"
             onclick={(ev) => entry.spellcasting && onRollAbility?.(ev, entry.spellcasting.ability, entry.spellcasting.dc)}

@@ -4,6 +4,7 @@ import type {
   ApplicationRenderOptions,
   ApplicationClosingOptions,
   ApplicationConfiguration,
+  ApplicationPosition,
 } from 'src/types/application.types';
 import { unmount } from 'svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
@@ -12,6 +13,7 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 import { CONSTANTS } from 'src/constants';
+import type { Ref } from 'src/features/reactivity/reactivity.types';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -70,6 +72,17 @@ export function SvelteApplicationMixin<
      * and can be retrieved from any child component within.
      */
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
+
+    _position = $state<Ref<ApplicationPosition>>({
+      value: {
+        height: 0,
+        left: 0,
+        scale: 0,
+        top: 0,
+        width: 0,
+        zIndex: 0,
+      },
+    });
 
     /** Creates the component which represents the window content area. */
     _createComponent(
@@ -269,6 +282,15 @@ export function SvelteApplicationMixin<
         controlsDropdown.blur();
         controlsDropdown.tabIndex = -1;
       }
+    }
+
+    // TODO: Find a home for this:
+    _updatePosition(position: ApplicationPosition) {
+      const newPosition = super._updatePosition(position);
+
+      this._position.value = newPosition;
+
+      return newPosition;
     }
   }
 
