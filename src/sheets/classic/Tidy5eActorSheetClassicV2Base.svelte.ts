@@ -911,12 +911,18 @@ export function Tidy5eActorSheetClassicV2Base<
 
         // Handle different data types
         switch (data.type) {
-          case 'Actor':
+          case CONSTANTS.DOCUMENT_NAME_ACTOR:
             return await this._onDropActor(event, data);
-          case 'Item':
+          case CONSTANTS.DOCUMENT_NAME_ITEM:
             return await this._onDropItem(event, data);
-          case 'Folder':
+          case CONSTANTS.DOCUMENT_NAME_FOLDER:
             return await this._onDropFolder(event, data);
+          case CONSTANTS.DOCUMENT_NAME_ACTIVE_EFFECT: {
+            const documentClass = foundry.utils.getDocumentClass(data.type);
+            const document = await documentClass.fromDropData(data);
+
+            return await this._onDropActiveEffect(event, document);
+          }
         }
 
         return await super._onDrop(event);
