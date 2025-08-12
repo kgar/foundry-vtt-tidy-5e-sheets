@@ -45,7 +45,7 @@
           {info.ability.label}
         {/if}
       </div>
-      <div class="ability pill pill-medium">
+      <div class="spellcasting-ability pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Ability')}</span
         >
@@ -108,7 +108,7 @@
     </div>
     <div class="info pills flex1">
       <div
-        class="ability"
+        class="spellcasting-ability"
         data-tooltip={localize('DND5E.Ability') + ': ' + info.ability.label}
       >
         {#if context.unlocked}

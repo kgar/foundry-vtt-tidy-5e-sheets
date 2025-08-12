@@ -13,6 +13,7 @@
   import NpcSidebar from './npc-parts/NpcSidebar.svelte';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { untrack } from 'svelte';
+  import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -166,73 +167,69 @@
           {/if}
         </div>
       </div>
-      <div
-        class={[
-          'abilities-container',
-          { ['abilities-overflow']: context.abilities.length > 6 },
-          'flexrow',
-        ]}
+      <AbilitiesContainer
+        collapsedAbilityThresholdRems={3.5}
+        smallerAbilityThresholdRems={4}
+        constantHorizontalSpaceRems={20.5}
       >
-        <div class="abilities-container-inner flexrow">
-          <div class="initiative-container flexcol">
-            <div class="initiative score bonus-container" data-tooltip="DND5E.Initiative">
-              <button
-                type="button"
-                class="button-borderless initiative-roll-button"
-                onclick={(event) =>
-                  context.actor.rollInitiativeDialog({ event: event })}
-              >
-                {localize('DND5E.InitiativeAbbr')}
-              </button>
-              {#if context.unlocked}
-                <button
-                  aria-label={localize('DND5E.InitiativeConfig')}
-                  data-tooltip="DND5E.InitiativeConfig"
-                  type="button"
-                  class="button button-borderless button-icon-only button-config"
-                  onclick={() =>
-                    FoundryAdapter.renderInitiativeConfig(context.actor)}
-                >
-                  <i class="fas fa-cog"></i>
-                </button>
-              {/if}
-              <div class="initiative-bonus flexrow">
-                <span class="modifier color-text-lightest font-label-xlarge">
-                  {ini.sign}
-                </span>
-                <span class="bonus color-text-default font-data-xlarge">
-                  {ini.value}
-                </span>
-              </div>
-            </div>
-            <div class="ability-labels flexcol">
-              <span class="label font-label-medium color-text-lightest"
-                >{localize('DND5E.AbilityScoreShort')}</span
-              >
-              <span class="divider"></span>
-              <span class="label font-label-medium color-text-lightest"
-                >{localize('DND5E.SavingThrowShort')}</span
-              >
-            </div>
+      <div class="initiative-container flexcol">
+        <div class="initiative score bonus-container" data-tooltip="DND5E.Initiative">
+          <button
+            type="button"
+            class="button-borderless initiative-roll-button"
+            onclick={(event) =>
+              context.actor.rollInitiativeDialog({ event: event })}
+          >
+            {localize('DND5E.InitiativeAbbr')}
+          </button>
+          {#if context.unlocked}
+            <button
+              aria-label={localize('DND5E.InitiativeConfig')}
+              data-tooltip="DND5E.InitiativeConfig"
+              type="button"
+              class="button button-borderless button-icon-only button-config"
+              onclick={() =>
+                FoundryAdapter.renderInitiativeConfig(context.actor)}
+            >
+              <i class="fas fa-cog"></i>
+            </button>
+          {/if}
+          <div class="initiative-bonus flexrow">
+            <span class="modifier color-text-lightest font-label-xlarge">
+              {ini.sign}
+            </span>
+            <span class="bonus color-text-default font-data-xlarge">
+              {ini.value}
+            </span>
           </div>
-          {#each context.abilities as ability}
-            <AbilityScoreNPC
-              {ability}
-              unlocked={context.unlocked}
-              onScoreChanged={(score) =>
-                context.actor.update({
-                  [`system.abilities.${ability.key}.value`]: score,
-                })}
-              onConfigClicked={(id) =>
-                FoundryAdapter.renderAbilityConfig(context.actor, id)}
-              onRollAbility={(event, key) =>
-                context.actor.rollAbilityCheck({ ability: key, event })}
-              onRollSave={(event, key) =>
-                context.actor.rollSavingThrow({ ability: key, event })}
-            />
-          {/each}
+        </div>
+        <div class="ability-labels flexcol">
+          <span class="label font-label-medium color-text-lightest"
+            >{localize('DND5E.AbilityScoreShort')}</span
+          >
+          <span class="divider"></span>
+          <span class="label font-label-medium color-text-lightest"
+            >{localize('DND5E.SavingThrowShort')}</span
+          >
         </div>
       </div>
+      {#each context.abilities as ability}
+        <AbilityScoreNPC
+          {ability}
+          unlocked={context.unlocked}
+          onScoreChanged={(score) =>
+            context.actor.update({
+              [`system.abilities.${ability.key}.value`]: score,
+            })}
+          onConfigClicked={(id) =>
+            FoundryAdapter.renderAbilityConfig(context.actor, id)}
+          onRollAbility={(event, key) =>
+            context.actor.rollAbilityCheck({ ability: key, event })}
+            onRollSave={(event, key) =>
+              context.actor.rollSavingThrow({ ability: key, event })}
+          />
+        {/each}
+      </AbilitiesContainer>
     </div>
     <div class="actor-vitals-container">
       <ActorPortrait />
@@ -252,20 +249,22 @@
               }}
             >
               <div
-                class="value {hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
+                class="value {hpTemp > 999 || hpValue > 999 ? 'font-small' : hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsCurrent')}
               >
                 {hpValue}
               </div>
               <div
-                class="separator {hpTemp > 99 || hpValue > 999
+                class="separator {hpTemp > 999 || hpValue > 999
+                  ? 'font-small'
+                  : hpTemp > 99 || hpValue > 999
                   ? 'font-medium'
                   : 'font-default-large'}"
               >
                 /
               </div>
               <div
-                class="max {hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
+                class="max {hpTemp > 999 || hpValue > 999 ? 'font-small' : hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsMax')}
               >
                 {hpMax}
@@ -292,19 +291,31 @@
               <!-- TODO: Convert to buttons -->
               <div
                 class="temp-hp label pointer"
+                role="button"
+                tabindex="0"
                 hidden={hpTempInputFocused}
                 onclick={async (ev) => {
                   hpTempInputFocused = true;
                   hpTempInput?.selectText();
                 }}
+                onkeydown={async (ev) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                    hpTempInputFocused = true;
+                    hpTempInput?.selectText();
+                  }
+                }}
               >
                 <span
-                  class="modifier {hpTemp > 99 || hpValue > 999
+                  class="modifier {hpTemp > 999 || hpValue > 999
+                    ? 'font-small font-label-medium'
+                    : hpTemp > 99 || hpValue > 999
                     ? 'font-medium font-label-medium'
                     : 'font-label-large'} color-text-lighter">+</span
                 >
                 <span
-                  class="value {hpTemp > 99 || hpValue > 999
+                  class="value {hpTemp > 999 || hpValue > 999
+                    ? 'font-small font-data-medium'
+                    : hpTemp > 99 || hpValue > 999
                     ? 'font-medium font-data-medium'
                     : 'font-data-large'} color-text-default"
                   data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
