@@ -33,7 +33,7 @@ export class SebastianCrowesGuideToDrakkenheimModuleIntegration
         context.set(
           DRAKKENHEIM_CORE_CONSTANTS.SVELTE_CONTEXT.VERSION,
           FoundryAdapter.getGameSetting(
-            DRAKKENHEIM_CORE_CONSTANTS.MODULE_ID,
+            DRAKKENHEIM_CORE_CONSTANTS.SEBASTIAN_CROWE_MODULE_ID,
             DRAKKENHEIM_CORE_CONSTANTS.SETTING_VERSION
           )
         );
