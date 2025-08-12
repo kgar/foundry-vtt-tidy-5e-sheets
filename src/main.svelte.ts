@@ -30,6 +30,7 @@ import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterS
 import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
 import { TidyNotificationsManager } from './features/notifications/TidyNotificationsManager';
+import { Tidy5eEncounterSheetClassic } from './sheets/classic/Tidy5eEncounterSheetClassic.svelte';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
@@ -116,6 +117,16 @@ Hooks.once('init', () => {
     {
       types: [CONSTANTS.SHEET_TYPE_GROUP],
       label: 'TIDY5E.Tidy5eGroupSheetClassic',
+    }
+  );
+
+  documentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eEncounterSheetClassic,
+    {
+      types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
+      label: 'TIDY5E.Tidy5eEncounterSheetClassic',
     }
   );
 

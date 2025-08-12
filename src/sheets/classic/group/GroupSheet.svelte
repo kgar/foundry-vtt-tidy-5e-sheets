@@ -64,25 +64,6 @@
       style="margin-top: 0;"
     >
       <span class="flex-1 fs-sm text-body-secondary">{context.summary}</span>
-      {#if context.unlocked}
-        <Select
-          document={context.actor}
-          value={context.system.type.value}
-          field="system.type.value"
-          blankValue=""
-          class="flex-grow-0 flex-shrink-0 flex-basis-max-content"
-        >
-          <SelectOptions
-            data={context.config.groupTypes}
-            blank={localize('DND5E.Group.TypeGeneric')}
-          />
-        </Select>
-      {:else}
-        <span class="semibold">
-          {context.config.groupTypes[context.system.type.value] ??
-            localize('DND5E.Group.TypeGeneric')}
-        </span>
-      {/if}
     </div>
     <HorizontalLineSeparator class="header-line-margin-left" />
     <div

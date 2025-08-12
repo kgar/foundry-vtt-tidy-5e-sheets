@@ -753,7 +753,6 @@
     "TIDY5E.Tidy5eSettings": "Ustawienia Tidy 5e Sheets",
     "TIDY5E.ExhaustionLevelTooltip": "Poziom Wyczerpania {level}",
     "TIDY5E.Group.NamePlaceholder": "Nazwa grupy",
-    "TIDY5E.Group.RemoveMemberFromGroup": "Usuń członka grupy",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Schowaj panel informacyjny",
     "TIDY5E.Group.EmptyMembersTabHint": "Ta grupa jest pusta. Upuść postać z paska bocznego, żeby dodać członka.",
     "TIDY5E.Tidy5eGroupSheetClassic": "Klasyczna Karta Grupy Tidy 5e",

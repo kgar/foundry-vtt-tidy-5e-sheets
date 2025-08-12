@@ -64,7 +64,7 @@
         {member.name}
       </button>
       {#if context.unlocked}
-        <RemoveMemberControl {member} />
+        <RemoveMemberControl memberId={member.id} />
       {/if}
     </div>
 

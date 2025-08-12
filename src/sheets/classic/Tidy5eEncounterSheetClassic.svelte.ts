@@ -5,7 +5,6 @@ import {
   type ApplicationRenderOptions,
 } from 'src/types/application.types';
 import { mount } from 'svelte';
-import GroupSheet from './group/GroupSheet.svelte';
 import type {
   Actor5e,
   ActorInventoryTypes,
@@ -14,21 +13,19 @@ import type {
 } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
-  Group5e,
-  Group5eMember,
-  Group5eXp,
   GroupItemContext,
   GroupLanguage,
-  GroupMemberContext,
   GroupMemberSection,
   GroupMemberSkillInfo,
-  GroupSheetClassicContext,
   GroupSkill,
+  Encounter5eMember,
+  EncounterMemberContext,
+  EncounterSheetClassicContext,
+  Encounter5e,
 } from 'src/types/group.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
-import { getPercentage } from 'src/utils/numbers';
 import type { Item5e } from 'src/types/item.types';
 import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -39,7 +36,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svel
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { debug, warn } from 'src/utils/logging';
+import { warn } from 'src/utils/logging';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { isNil } from 'src/utils/data';
 import { formatAsModifier } from 'src/utils/formatting';
@@ -54,22 +51,20 @@ import {
   TidyExtensibleDocumentSheetMixin,
   type TidyDocumentSheetRenderOptions,
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+import EncounterSheetClassicRuntime from 'src/runtime/actor/EncounterSheetClassicRuntime.svelte';
 import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
+import EncounterSheet from './encounter/EncounterSheet.svelte';
 
 type MemberStats = {
-  currentHP: number;
-  maxHP: number;
   memberCount: number;
-  vehicleCount: number;
 };
 
-export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
+export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
   TidyExtensibleDocumentSheetMixin(
-    CONSTANTS.SHEET_TYPE_GROUP,
+    CONSTANTS.SHEET_TYPE_ENCOUNTER,
     SvelteApplicationMixin<
       ApplicationConfiguration | undefined,
-      GroupSheetClassicContext
+      EncounterSheetClassicContext
     >(foundry.applications.sheets.ActorSheetV2)
   )
 ) {
@@ -96,7 +91,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       CONSTANTS.MODULE_ID,
       'sheet',
       'actor',
-      CONSTANTS.SHEET_TYPE_GROUP,
+      CONSTANTS.SHEET_TYPE_ENCOUNTER,
       CONSTANTS.SHEET_LAYOUT_CLASSIC,
     ],
     tag: 'form',
@@ -139,7 +134,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   #inlineToggleService = new InlineToggleService();
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    const component = mount(GroupSheet, {
+    const component = mount(EncounterSheet, {
       target: node,
       context: new Map<any, any>([
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
@@ -194,19 +189,19 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   async _prepareContext(
     options: TidyDocumentSheetRenderOptions
-  ): Promise<GroupSheetClassicContext> {
+  ): Promise<EncounterSheetClassicContext> {
     this.itemFilterService.refreshFilters();
 
     const documentSheetContext = (await super._prepareContext(
       options
     )) as DocumentSheetV2Context;
 
-    let xp: Group5eXp | undefined = undefined;
+    let xp: number | undefined = undefined;
     if (
       systemSettings.value.levelingMode !==
       CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP
     ) {
-      xp = this.actor.system.details.xp;
+      xp = await this.actor.system.getXPValue();
     }
 
     const descriptionFullEnrichedHtml =
@@ -225,15 +220,13 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       memberContext,
       groupLanguages,
       groupSkills,
-    } = this.#prepareMembers();
+    } = await this.#prepareMembers();
 
     const source = this.actor.toObject();
 
     const editable = this.isEditable;
 
     const summary = this.#getSummary(stats);
-
-    const movement = this.#prepareMovementSpeed();
 
     const sheetPreferences = SheetPreferencesService.getByType(this.actor.type);
 
@@ -243,7 +236,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     const inventorySortMode =
       sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
 
-    const utilities: Utilities<GroupSheetClassicContext> = {
+    const utilities: Utilities<EncounterSheetClassicContext> = {
       [CONSTANTS.TAB_GROUP_MEMBERS]: {
         utilityToolbarCommands: [
           {
@@ -403,7 +396,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
                 {
                   sections: sections,
                   tabId: CONSTANTS.TAB_ACTOR_INVENTORY,
-                  tabTitle: GroupSheetClassicRuntime.getTabTitle(
+                  tabTitle: EncounterSheetClassicRuntime.getTabTitle(
                     CONSTANTS.TAB_ACTOR_INVENTORY
                   ),
                 },
@@ -452,7 +445,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       );
     });
 
-    let context: GroupSheetClassicContext = {
+    let context: EncounterSheetClassicContext = {
       actor: this.actor,
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -462,7 +455,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         uncontainedItems
       ),
       customContent: [],
-      currentHP: stats.currentHP,
       descriptionFullEnrichedHtml: descriptionFullEnrichedHtml,
       disableExperience:
         systemSettings.value.levelingMode ===
@@ -474,7 +466,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       groupLanguages: groupLanguages,
       groupSkills: groupSkills,
-      healthPercentage: getPercentage(stats.currentHP, stats.maxHP),
+      healthPercentage: 0,
       inventory: Object.values(inventory),
       isGM: game.user.isGM,
       itemContext: {},
@@ -483,11 +475,9 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       lockSensitiveFields:
         (!documentSheetContext.unlocked && settings.value.useTotalSheetLock) ||
         !editable,
-      maxHP: stats.maxHP,
       memberContext: memberContext,
       memberSections: memberSections,
       modernRules: FoundryAdapter.checkIfModernRules(this.actor),
-      movement: movement,
       owner: this.actor.isOwner,
       showContainerPanel:
         TidyFlags.showContainerPanel.get(this.actor) === true &&
@@ -509,11 +499,13 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       ...documentSheetContext,
     };
 
-    context.customContent = await GroupSheetClassicRuntime.getContent(context);
+    context.customContent = await EncounterSheetClassicRuntime.getContent(
+      context
+    );
 
     await this._prepareItems(context);
 
-    let tabs = await GroupSheetClassicRuntime.getTabs(context);
+    let tabs = await EncounterSheetClassicRuntime.getTabs(context);
 
     const selectedTabs = TidyFlags.selectedTabs.get(context.actor);
 
@@ -549,45 +541,24 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         )}`
       );
     }
-    if (stats.vehicleCount) {
-      members.push(
-        `${stats.vehicleCount} ${game.i18n.localize(
-          `DND5E.Group.Vehicle.${rule.select(stats.vehicleCount)}`
-        )}`
-      );
-    }
     if (!members.length) return game.i18n.localize('DND5E.GroupSummaryEmpty');
     return game.i18n.format('DND5E.GroupSummary', {
       members: formatter.format(members),
     });
   }
 
-  #prepareMembers(): {
+  async #prepareMembers(): Promise<{
     sections: GroupMemberSection[];
     stats: MemberStats;
-    memberContext: GroupSheetClassicContext['memberContext'];
+    memberContext: EncounterSheetClassicContext['memberContext'];
     groupLanguages: GroupLanguage[];
     groupSkills: GroupSkill[];
-  } {
+  }> {
     const stats: MemberStats = {
-      currentHP: 0,
-      maxHP: 0,
       memberCount: 0,
-      vehicleCount: 0,
     };
 
     const sections: Record<string, GroupMemberSection> = {
-      character: {
-        label: `${CONFIG.Actor.typeLabels.character}Pl`,
-        members: [],
-        dataset: {},
-        key: 'character',
-        show: true,
-        custom: undefined,
-        isExternal: false,
-        showCrColumn: false,
-        rowActions: [], // for the UI Overhaul
-      },
       npc: {
         label: `${CONFIG.Actor.typeLabels.npc}Pl`,
         members: [],
@@ -599,48 +570,30 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         showCrColumn: true,
         rowActions: [], // for the UI Overhaul
       },
-      vehicle: {
-        label: `${CONFIG.Actor.typeLabels.vehicle}Pl`,
-        members: [],
-        dataset: {},
-        key: 'vehicle',
-        show: true,
-        custom: undefined,
-        isExternal: false,
-        showCrColumn: false,
-        rowActions: [], // for the UI Overhaul
-      },
     };
 
-    const memberContext: GroupSheetClassicContext['memberContext'] = {};
+    const memberContext: EncounterSheetClassicContext['memberContext'] = {};
+
     const groupLanguages: Record<string, GroupLanguage> = {};
     const groupSkills: Record<string, GroupSkill> = {};
     const collectAggregates = FoundryAdapter.userIsGm();
     const configuredSkills = Object.entries(CONFIG.DND5E.skills);
 
     for (const [index, memberData] of this.actor.system.members.entries()) {
-      const ctx: GroupMemberContext = (memberContext[memberData.actor.id] = {
+      const member = await fromUuid(memberData.uuid);
+
+      const ctx: EncounterMemberContext = (memberContext[memberData.uuid] = {
         index: index,
-        canObserve: memberData.actor.testUserPermission(game.user, 'OBSERVER'),
+        quantity: memberData.quantity,
+        canObserve: member.testUserPermission(game.user, 'OBSERVER'),
         senses: [],
         conditionImmunities: [],
         topSkills: [],
       });
 
-      const member = memberData.actor;
-      const hp = member.system.attributes.hp;
+      const multiplier = memberData.quantity.value ?? 1;
 
-      const memberCurrentHp = hp.value + (hp.temp || 0);
-      const memberMaxHp = Math.max(0, hp.effectiveMax);
-
-      stats.currentHP += memberCurrentHp;
-      stats.maxHP += memberMaxHp;
-
-      if (member.type === 'vehicle') {
-        stats.vehicleCount += 1;
-      } else {
-        stats.memberCount += 1;
-      }
+      stats.memberCount += multiplier;
 
       sections[member.type].members.push(member);
 
@@ -789,30 +742,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     };
   }
 
-  #prepareMovementSpeed() {
-    const movement = this.actor.system.attributes.movement;
-    let speeds = [
-      [
-        movement.land,
-        `${game.i18n.localize('DND5E.MovementLand')} ${movement.land}`,
-      ],
-      [
-        movement.water,
-        `${game.i18n.localize('DND5E.MovementWater')} ${movement.water}`,
-      ],
-      [
-        movement.air,
-        `${game.i18n.localize('DND5E.MovementAir')} ${movement.air}`,
-      ],
-    ];
-    speeds = speeds.filter((s) => s[0]).sort((a, b) => b[0] - a[0]);
-    const primary = speeds.shift();
-    return {
-      primary: `${primary ? primary[1] : '0'}`,
-      secondary: speeds.map((s) => s[1]).join(', '),
-    };
-  }
-
   #getSkill(member: Actor5e, key: string): any | null {
     if (key in member.system.skills) {
       return member.system.skills[key];
@@ -821,7 +750,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     return null;
   }
 
-  async _prepareItems(context: GroupSheetClassicContext) {
+  async _prepareItems(context: EncounterSheetClassicContext) {
     for (const item of context.items) {
       if (Inventory.isItemInventoryType(item)) {
         context.itemContext[item.id] ??= await this._prepareItem(item, context);
@@ -842,7 +771,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
   async _prepareItem(
     item: Item5e,
-    context: GroupSheetClassicContext
+    context: EncounterSheetClassicContext
   ): Promise<GroupItemContext> {
     return {
       activities: Activities.getVisibleActivities(
@@ -860,12 +789,13 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   }
 
   async _renderHTML(
-    context: GroupSheetClassicContext,
+    context: EncounterSheetClassicContext,
     options: ApplicationRenderOptions
   ) {
     game.user.apps[this.id] = this;
     for (const member of this.actor.system.members) {
-      member.actor.apps[this.id] = this;
+      const actor = await fromUuid(member.uuid);
+      actor.apps[this.id] = this;
     }
     return await super._renderHTML(context, options);
   }
@@ -873,7 +803,8 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   async close(options: ApplicationClosingOptions = {}) {
     delete game.user.apps[this.id];
     for (const member of this.actor.system.members) {
-      delete member.actor.apps[this.id];
+      const actor = await fromUuid(member.uuid);
+      delete actor.apps[this.id];
     }
     return await super.close(options);
   }
@@ -890,30 +821,37 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       return;
     }
 
-    const memberId = event.currentTarget
-      .closest('[data-tidy-draggable][data-member-id]')
-      ?.getAttribute('data-member-id');
+    const memberUuid = event.currentTarget
+      .closest('[data-tidy-draggable][data-member-uuid]')
+      ?.getAttribute('data-member-uuid');
 
-    if (!memberId) {
+    if (!memberUuid) {
       super._onDragStart(event);
       return;
     }
 
-    const actor = this.#findMemberActor(memberId);
+    const memberEntry = this.#findMember(memberUuid);
+
+    if (!memberEntry) {
+      return;
+    }
+
+    // TODO: Eliminate fromUuidSync usage
+    const actor = fromUuidSync(memberEntry.uuid);
 
     if (!actor) {
       return;
     }
 
     const dragData = actor.toDragData();
-    dragData['groupId'] = this.actor.id;
+    dragData['encounterId'] = this.actor.id;
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 
   async _onDropActiveEffect(
     ..._args: any[]
   ): Promise</*ActiveEffect*/ unknown | boolean> {
-    // Tidy Group Sheet doesn't support active effect drops.
+    // Tidy Encounter Sheet doesn't support active effect drops.
     return false;
   }
 
@@ -931,44 +869,46 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       return;
     }
 
-    const groupId = data['groupId'];
+    const encounterId = data['encounterId'];
 
-    if (groupId !== this.actor.id) {
+    if (encounterId !== this.actor.id) {
       return this.actor.system.addMember(sourceActor);
     }
 
     const dropTarget = event.target?.closest<HTMLElement>(
-      '[data-tidy-draggable][data-member-id]'
+      '[data-tidy-draggable][data-member-uuid]'
     );
-    const targetMemberId = dropTarget?.getAttribute('data-member-id');
+    const memberUuid = dropTarget?.getAttribute('data-member-uuid');
 
-    const targetMemberActor = this.#findMemberActor(targetMemberId);
+    const memberEntry = this.#findMember(memberUuid);
 
-    if (
-      !dropTarget ||
-      !targetMemberActor ||
-      targetMemberId === sourceActor.id
-    ) {
+    if (!memberEntry) {
+      return false;
+    }
+
+    const targetMemberActor = fromUuidSync(memberEntry.uuid);
+
+    if (!dropTarget || !targetMemberActor || memberUuid === sourceActor.id) {
       return false;
     }
 
     return await this._onSortMember(sourceActor, targetMemberActor);
   }
 
-  #findMemberActor(actorId: string | null | undefined): Actor5e | undefined {
+  #findMember(uuid: string | null | undefined): Actor5e | undefined {
     return this.actor.system.members.find(
-      (m: Group5eMember) => m.actor.id === actorId
-    )?.actor;
+      (m: Encounter5eMember) => m.uuid === uuid
+    );
   }
 
   async _onSortMember(sourceActor: Actor5e, targetActor: Actor5e) {
-    const membersCollection: Group5eMember[] =
+    const membersCollection: Encounter5eMember[] =
       this.actor.system.toObject().members;
     const sourceIndex = membersCollection.findIndex(
-      (m) => m.actor === sourceActor.id
+      (m) => m.uuid === sourceActor.uuid
     );
     const targetIndex = membersCollection.findIndex(
-      (m) => m.actor === targetActor.id
+      (m) => m.uuid === targetActor.uuid
     );
 
     const sortBefore = sourceIndex > targetIndex;
@@ -1018,5 +958,65 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       origin: this.actor,
     });
     award.render(true);
+  }
+
+  async updateMemberQuantity(
+    memberUuid: string,
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    }
+  ): Promise<Encounter5e | undefined> {
+    const membersCollection = this.actor.system.toObject().members;
+
+    const index = membersCollection.findIndex(
+      (m: any) => m.uuid === memberUuid
+    );
+
+    const originalValue = membersCollection[index].quantity.value;
+
+    const amount = event.currentTarget.value;
+    const newQuantity =
+      amount?.trim() === ''
+        ? null
+        : processInputChangeDeltaFromValues(amount, originalValue);
+
+    membersCollection[index].quantity.value = newQuantity;
+
+    const result = await this.actor.update({
+      ['system.members']: membersCollection,
+    });
+
+    if (!result) {
+      event.currentTarget.value = originalValue.toString();
+    }
+
+    return result;
+  }
+
+  async updateMemberFormula(
+    memberUuid: string,
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    }
+  ): Promise<Encounter5e | undefined> {
+    const membersCollection = this.actor.system.toObject().members;
+
+    const index = membersCollection.findIndex(
+      (m: any) => m.uuid === memberUuid
+    );
+
+    const originalValue = membersCollection[index].quantity.formula;
+
+    membersCollection[index].quantity.formula = event.currentTarget.value;
+
+    const result = await this.actor.update({
+      ['system.members']: membersCollection,
+    });
+
+    if (!result) {
+      event.currentTarget.value = originalValue;
+    }
+
+    return result;
   }
 }

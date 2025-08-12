@@ -1,15 +1,14 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
-  import GroupMemberList from '../parts/GroupMemberList.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
-  import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { GroupSheetSections } from 'src/features/sections/GroupSheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import GroupLanguages from '../parts/GroupLanguages.svelte';
-  import GroupSkills from '../parts/GroupSkills.svelte';
+  import EncounterMemberList from '../parts/EncounterMemberList.svelte';
+  import GroupLanguages from '../../group/parts/GroupLanguages.svelte';
+  import GroupSkills from '../../group/parts/GroupSkills.svelte';
   import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { getGroupSheetClassicContext } from 'src/sheets/sheet-context.svelte';
@@ -24,21 +23,12 @@
 
   const localize = FoundryAdapter.localize;
 
-  let searchCriteria: string = $state('');
-
   let utilityBarCommands = $derived(
     context.utilities[tabId]?.utilityToolbarCommands ?? [],
   );
 
   let searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
-
-  $effect(() => {
-    searchResults.uuids = FoundryAdapter.searchActors(
-      searchCriteria,
-      context.system.members.map((m) => m.actor),
-    );
-  });
 
   let memberSections = $derived(
     GroupSheetSections.configureMemberSections(
@@ -57,7 +47,6 @@
 </script>
 
 <UtilityToolbar>
-  <Search bind:value={searchCriteria} />
   <!-- Filters? Pinned Filters? Perhaps filters related to senses, immunities, etc. -->
   {#each utilityBarCommands as command (command.id)}
     <UtilityToolbarCommand
@@ -94,7 +83,7 @@
     {/if}
 
     {#each memberSections as section (section.key)}
-      <GroupMemberList {section} />
+      <EncounterMemberList {section} />
     {/each}
   {:else}
     <div class="drop-zone full-height">

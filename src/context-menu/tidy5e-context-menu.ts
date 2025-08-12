@@ -8,6 +8,7 @@ import { configureActivitiesContextMenu } from './tidy5e-activities-context-menu
 import FloatingContextMenu from './FloatingContextMenu';
 import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-context-menu';
 import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu';
+import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -44,6 +45,9 @@ function onDocumentContext(this: any, element: HTMLElement) {
     case CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS:
       configureActiveEffectsContextMenu(element, app);
       break;
+    case CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER:
+      configureEncounterContextMenu(element, app);
+      break;
     case CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS:
       configureFacilityContextMenu(element, app);
       break;
@@ -56,7 +60,7 @@ function onDocumentContext(this: any, element: HTMLElement) {
     case CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE:
       configureKeyedFavoriteContextMenu(element, app);
       break;
-    case CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL: 
+    case CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL:
       configureActorJournalContextMenu(element, app);
       break;
     default:

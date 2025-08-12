@@ -28,7 +28,6 @@
     "TIDY5E.AbbrInitiative": "우선권",
     "TIDY5E.NoSpecialSenses": "특수 감각 없음",
     "TIDY5E.Group.NamePlaceholder": "그룹 이름",
-    "TIDY5E.Group.RemoveMemberFromGroup": "그룹에서 멤버 삭제",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "정보 패널 보이기",
     "TIDY5E.Group.HideMemberTabInfoPanel": "정보 패널 숨기기",
     "TIDY5E.Group.EmptyMembersTabHint": "이 그룹은 비었습니다. 멤버를 추가하려면 사이드바에서 액터를 드래그하세요.",
