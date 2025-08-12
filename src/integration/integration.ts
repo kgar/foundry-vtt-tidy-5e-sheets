@@ -11,6 +11,7 @@ import { DrakkenheimCoreModuleIntegration } from './modules/Drakkenheim/Drakkenh
 import { TidyCustomSectionsInDefaultItemSheetIntegration } from './system/TidyCustomSectionsInDefaultItemSheetIntegration';
 import { ColorisThirdPartyIntegration } from './third-party/Coloris.svelte';
 import { DndTashasCauldronModuleIntegration } from './modules/DndTashasCauldron/DndTashasCauldron';
+import { SebastianCrowesGuideToDrakkenheimModuleIntegration } from './modules/Drakkenheim/SebastianCrowesGuideToDrakkenheim';
 
 export function setupIntegrations(api: Tidy5eSheetsApi) {
   setupSystemIntegrations(api);
@@ -41,6 +42,7 @@ const moduleIntegrations: ModuleIntegrationBase[] = [
   new PopoutModuleIntegration(),
   new CustomCharacterSheetsModuleIntegration(),
   new DrakkenheimCoreModuleIntegration(),
+  new SebastianCrowesGuideToDrakkenheimModuleIntegration(),
   new DndTashasCauldronModuleIntegration(),
   // Add other module integrations here
 ];
@@ -66,7 +68,11 @@ function setupThirdPartyIntegrations(api: Tidy5eSheetsApi) {
     try {
       m.init(api);
     } catch (e) {
-      error(`Module integration failed for third party script ${m.name}`, false, e);
+      error(
+        `Module integration failed for third party script ${m.name}`,
+        false,
+        e
+      );
     }
   });
 }
