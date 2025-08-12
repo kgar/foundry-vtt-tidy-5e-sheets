@@ -889,5 +889,8 @@
     "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}.",
     "TIDY5E.SheetLock.Empty.Hint": "Začni přidáním povolání a prvních položek. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost „Přidat do záložky deníku“.",
     "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost ´Přidat do oblíbených´, nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
-    "TIDY5E.EmptyTools": "Žádná dovednost s nástroji."
+    "TIDY5E.EmptyTools": "Žádná dovednost s nástroji.",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zobrazit legendární akce a akce doupěte v záložce statistik",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Zahrnout sekci Kouzla do záložky statistik",
+    "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})"
 }
