@@ -4,16 +4,18 @@ import DrakkenheimCoreContaminationTab from './DrakkenheimCoreContaminationTab.s
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
 
-export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
+export class SebastianCrowesGuideToDrakkenheimModuleIntegration
+  implements ModuleIntegrationBase
+{
   get moduleId(): string {
-    return DRAKKENHEIM_CORE_CONSTANTS.MODULE_ID;
+    return DRAKKENHEIM_CORE_CONSTANTS.SEBASTIAN_CROWE_MODULE_ID;
   }
 
   init(api: Tidy5eSheetsApi): void {
     // Since the setting requires a reload to toggle, we will simply avoid registering a column if it's disabled.
     if (
       FoundryAdapter.getGameSetting(
-        DRAKKENHEIM_CORE_CONSTANTS.MODULE_ID,
+        DRAKKENHEIM_CORE_CONSTANTS.SEBASTIAN_CROWE_MODULE_ID,
         DRAKKENHEIM_CORE_CONSTANTS.SETTING_DISABLE_TAB
       )
     ) {
