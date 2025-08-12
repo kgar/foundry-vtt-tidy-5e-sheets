@@ -68,6 +68,11 @@
           font-size: 1rem;
         }
 
+        .font-small {
+          font-size: 0.875rem;
+        }
+
+
         .meter .label {
           gap: 0.125rem;
           padding-right: 0.25rem;
@@ -129,6 +134,10 @@
       }
     }
 
+    .actor-name {
+      margin-top: -0.25rem;
+    }
+
     .actor-details-subtitle-row {
       align-items: center;
     }
@@ -162,7 +171,7 @@
   }
 
   .sheet-header-actions {
-    margin-top: 0.25rem;
+    margin-top: 0;
     margin-right: var(--t5e-size-2x);
   }
 
@@ -176,6 +185,12 @@
 
     .xp-value {
       max-width: 4.5rem;
+    }
+
+    .concentration {
+      flex: 0 0 auto;
+      height: var(--font-size-15);
+      align-content: center;
     }
   }
 
@@ -201,6 +216,7 @@
     align-items: center;
     justify-content: center;
     margin-right: var(--t5e-size-2x);
+    margin-top: var(--t5e-size-2x);
     gap: 0;
 
     >* {
@@ -273,11 +289,19 @@
         }
       }
     }
+
+    .ability-labels {
+      bottom: 0.5rem;
+    }
   }
 
   .initiative-container {
     text-align: center;
     align-items: center;
+
+    .ability-labels {
+      bottom: 0.4375rem;
+    }
   }
 
   .sidebar {
@@ -417,11 +441,13 @@
   @mixin collapse-abilities {
     --collapse-bg-light: rgba(0, 0, 0, 0.20);
     --collapse-bg-dark: rgba(0, 0, 0, 0.4);
-    --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.16);
+    --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.24);
     --collapse-font-medium: 1.25rem;
     --collapse-font-large: 1.5rem;
 
     gap: var(--t5e-size-halfx);
+
+    @include ability-smaller;
 
     >* {
       background: var(--collapse-bg-light);
@@ -433,10 +459,7 @@
       min-width: 2.5rem;
     }
 
-    @include ability-smaller;
-
-    .ability,
-    .initiative-container {
+    .ability {
       background: var(--t5e-component-card-darker);
     }
 
@@ -445,32 +468,16 @@
       outline-color: var(--t5e-color-palette-gold-62);
     }
 
-    :is(.quadrone.npc.theme-dark .ability:has(.proficient)) {
+    :is(.quadrone.npc.theme-dark .ability:has(.proficient)),
+    .initiative-container {
       background: var(--collapse-bg-dark);
-      outline-color: var(--t5e-color-palette-grey-0);
+      outline-color: var(--t5e-color-palette-grey-11);
     }
 
     .ability .bonus-container,
     .ability .bonus-container.proficient,
     .initiative-container .initiative.score {
       background: none;
-    }
-
-    .ability-labels {
-      margin-top: 0.1875rem;
-
-      .label {
-        color: var(--t5e-color-text-lightest);
-        text-transform: none;
-      }
-
-      .divider {
-        background-color: var(--t5e-color-gold);
-        opacity: 0.5;
-        width: 100%;
-        height: 0.0625rem;
-        margin: 0.3125rem 0;
-      }
     }
 
     .initiative-container {
@@ -623,56 +630,64 @@
     }
   }
 
-  @container abilities (width < 47.5rem) {
-    .sheet-header .abilities-container .abilities-container-inner {
-      &:has(:nth-child(11)) {
-        @include ability-smaller;
-      }
-    }
+  .sheet-header .abilities-container.ability-smaller .abilities-container-inner {
+    @include ability-smaller;
   }
 
-  @container abilities (width < 45rem) {
-    .sheet-header .abilities-container .abilities-container-inner {
-
-      &:has(:nth-child(11)) {
-        @include collapse-abilities;
-        overflow-x: auto;
-        overflow-y: hidden;
-      }
-    }
+  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
+    @include collapse-abilities;
   }
 
-  @container abilities (width < 40rem) {
+  // @container abilities (width < 47.5rem) {
+  //   .sheet-header .abilities-container .abilities-container-inner {
+  //     &:has(:nth-child(11)) {
+  //       @include ability-smaller;
+  //     }
+  //   }
+  // }
 
-    .sheet-header .abilities-container {
-      margin-right: var(--t5e-size-2x);
+  // @container abilities (width < 45rem) {
+  //   .sheet-header .abilities-container .abilities-container-inner {
 
-      .abilities-container-inner:has(:nth-child(9)) {
-        @include ability-smaller;
-      }
-    }
-  }
+  //     &:has(:nth-child(11)) {
+  //       @include collapse-abilities;
+  //       overflow-x: auto;
+  //       overflow-y: hidden;
+  //     }
+  //   }
+  // }
 
-  @container abilities (width < 33.75rem) {
+  // @container abilities (width < 40rem) {
 
-    .sheet-header .abilities-container .abilities-container-inner {
-      &:has(:nth-child(8)):not(:has(:nth-child(9))) {
-        @include ability-smaller;
+  //   .sheet-header .abilities-container {
+  //     margin-right: var(--t5e-size-2x);
 
-        .initiative-container .initiative.score {
-          min-height: 3.375rem;
-        }
-      }
+  //     .abilities-container-inner:has(:nth-child(9)) {
+  //       @include ability-smaller;
+  //     }
+  //   }
+  // }
 
-      &:has(:nth-child(9)) {
-        @include collapse-abilities;
+  // @container abilities (width < 33.75rem) {
 
-        .concentration .concentration-roll-button {
-          margin-top: 0.375rem;
-        }
-      }
-    }
-  }
+  //   .sheet-header .abilities-container .abilities-container-inner {
+  //     &:has(:nth-child(8)):not(:has(:nth-child(9))) {
+  //       @include ability-smaller;
+
+  //       .initiative-container .initiative.score {
+  //         min-height: 3.375rem;
+  //       }
+  //     }
+
+  //     &:has(:nth-child(9)) {
+  //       @include collapse-abilities;
+
+  //       .concentration .concentration-roll-button {
+  //         margin-top: 0.375rem;
+  //       }
+  //     }
+  //   }
+  // }
 
   @container actor-sheet (width > 50rem) {
     --header-padding: 1.5rem;

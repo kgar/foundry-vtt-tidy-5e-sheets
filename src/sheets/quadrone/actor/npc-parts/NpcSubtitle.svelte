@@ -54,7 +54,7 @@
       {@render speedSenseSummary(
         sense,
         ['sense', 'main-sense'],
-        ['hide-under-600'],
+        // ['hide-under-600'],
       )}
     {/each}
     {#if size}
@@ -83,8 +83,8 @@
     <span class="alignment">
       <span class="font-label-medium color-text-gold">{alignment}</span>
     </span>
-    <div class="divider-dot"></div>
     {#if context.enableXp}
+      <div class="divider-dot"></div>
       <div class="xp-label flexrow">
         <span class="label font-label-medium color-text-gold flexshrink"
           >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
@@ -103,6 +103,64 @@
             {FoundryAdapter.formatNumber(context.system.details.xp.value)}
           </span>
         {/if}
+      </div>
+    {/if}
+    {#if context.saves.concentration}
+      <div class="divider-dot"></div>
+      {@const save = context.saves.concentration}
+      <div class="concentration flexrow">
+        <div class="flexrow concentration-bonus">
+          <button
+            type="button"
+            onclick={(event) =>
+              context.actor.rollConcentration({
+                event,
+                legacy: false,
+              })}
+            class="unbutton concentration-roll-button header-control"
+          >
+          {#if context.isConcentrating}
+            <i
+              class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+              aria-label={localize('DND5E.Concentration')}
+            ></i>
+          {:else}
+            <!-- <i class="fas fa-head-side-brain color-text-gold"></i> -->
+          {/if}
+            <span class="label font-label-medium color-text-gold">
+              {#if context.isConcentrating}
+                {localize('EFFECT.DND5E.StatusConcentrating')}
+              {:else}
+                {localize(save.label)}
+              {/if}
+            </span>
+            <span class="flexrow">
+              <span class="modifier font-label-medium color-text-lightest">
+                {save.sign}
+              </span>
+              <span class="value font-data-medium color-text-default">
+                {save.mod}
+              </span>
+            </span>
+          </button>
+          {#if context.unlocked}
+            {@const tooltip = localize('DND5E.AbilityConfigure', {
+              ability: context.saves.concentration.label,
+            })}
+            <div class="config-container">
+              <button
+                aria-label={tooltip}
+                data-tooltip={tooltip}
+                type="button"
+                class="button button-borderless button-icon-only button-config"
+                onclick={() =>
+                  FoundryAdapter.openConcentrationConfig(context.actor)}
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            </div>
+          {/if}
+        </div>
       </div>
     {/if}
   </div>
