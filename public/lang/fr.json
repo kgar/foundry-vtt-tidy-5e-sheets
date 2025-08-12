@@ -780,7 +780,6 @@
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identifiant de classe source du sort apparaît ici. Pour attribuer un identifiant que le personnage ne possède pas, saisissez l'identifiant de classe dans cette zone de texte.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Afficher uniquement les non assignés",
     "TIDY5E.Group.NamePlaceholder": "Nom du groupe",
-    "TIDY5E.Group.RemoveMemberFromGroup": "Supprimer un membre du groupe",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Cacher le panneau d'information",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Changer le verrouillage de la feuille",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Si une feuille Tidy est la fenêtre active dans l'interface utilisateur, ce raccourci clavier active le verrouillage de la feuille.",

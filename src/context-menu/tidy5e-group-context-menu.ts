@@ -8,7 +8,7 @@ export function configureGroupContextMenu(element: HTMLElement, app: any) {
   const memberId = element.getAttribute('data-member-id');
   const actor = app.document.system.members.find(
     (m: Group5eMember) => m.actor.id === memberId
-  );
+  )?.actor;
 
   if (!actor) return;
 
@@ -32,9 +32,9 @@ function getGroupMemberContextOptions(
 ): ContextMenuEntry[] {
   let options: ContextMenuEntry[] = [
     {
-      name: 'TIDY5E.Group.RemoveMemberFromGroup',
+      name: 'DND5E.Group.Action.Remove',
       icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
-      callback: async () => await group.system.removeMember(actor.id),
+      callback: async () => await group.system.removeMember(actor),
       condition: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
     },

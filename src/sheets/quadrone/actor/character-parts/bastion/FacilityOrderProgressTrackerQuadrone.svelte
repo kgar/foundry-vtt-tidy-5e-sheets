@@ -28,7 +28,7 @@
   }
 
   async function editCraftingItem(itemUuid: string) {
-    const item = await fromUuidSync(itemUuid);
+    const item = await fromUuid(itemUuid);
     item.sheet.render(true);
   }
 </script>

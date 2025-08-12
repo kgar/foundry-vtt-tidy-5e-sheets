@@ -729,7 +729,6 @@
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar",
     "TIDY5E.PreviewSheetImageHint": "Clic izquierdo: vista previa de la imagen",
     "TIDY5E.NoSpecialSenses": "No tiene sentidos especiales",
-    "TIDY5E.Group.RemoveMemberFromGroup": "Eliminar miembro del grupo",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostrar panel informativo",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Ocultar panel informativo",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vacío. Suelte un actor de la barra lateral para añadir un miembro.",

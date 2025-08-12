@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
-import type { GroupSheetClassicContext } from 'src/types/group.types';
+import type { EncounterSheetClassicContext, GroupSheetClassicContext } from 'src/types/group.types';
 import type {
   ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
@@ -44,6 +44,10 @@ export function getVehicleSheetContext(): VehicleSheetContext {
 
 export function getGroupSheetClassicContext(): GroupSheetClassicContext {
   return getSheetContext<GroupSheetClassicContext>();
+}
+
+export function getEncounterSheetClassicContext(): EncounterSheetClassicContext {
+  return getSheetContext<EncounterSheetClassicContext>();
 }
 
 export function getItemSheetContext(): ItemSheetContext {
