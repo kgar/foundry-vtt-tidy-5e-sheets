@@ -6,6 +6,7 @@
 - [ ] NPC Sheet
   - [ ] Header - Wire up Max HP
   - [ ] Header - Wire up HP roll
+  - [ ] Header - Concentration of 2 digits wraps badly
   - [ ] hightouch punch list from PR #1278
     - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
     - [ ] Display background/subclass/etc in Statblock tab
