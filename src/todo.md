@@ -4,6 +4,8 @@
 
 - [x] Restore Character sheet responsive ability scores with a scripted approach. See Abilities Simplification Initiative (ASI)
 - [ ] NPC Sheet
+  - [ ] Header - Wire up Max HP
+  - [ ] Header - Wire up HP roll
   - [ ] hightouch punch list from PR #1278
     - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
     - [ ] Display background/subclass/etc in Statblock tab
@@ -12,15 +14,6 @@
     - [ ] Figure out solution for HP > 999
     - [x] Needs testing: Validate character sheet header styles are still working as expected
   - [ ] Make loyalty tracker match legendary trackers
-  - [ ] Header
-    - [ ] Portrait
-    - [ ] AC and Vitals
-    - [ ] Name
-    - [ ] Subtitle
-    - [ ] Sheet header buttons
-    - [ ] CR
-    - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
-    - [ ] abilities
 
 #### Abilities Simplification Initiative
 
