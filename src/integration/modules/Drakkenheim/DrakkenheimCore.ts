@@ -26,7 +26,15 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
       title: () => FoundryAdapter.localize('DRAKKENHEIM.CONTAMINATION.tab'),
       tabId: 'drakkenheim-contamination-tab',
       component: DrakkenheimCoreContaminationTab,
-      getContext(context) {
+      getContext(context: Map<string, any>) {
+        context ??= new Map<string, any>();
+        context.set(
+          DRAKKENHEIM_CORE_CONSTANTS.SVELTE_CONTEXT.VERSION,
+          FoundryAdapter.getGameSetting(
+            DRAKKENHEIM_CORE_CONSTANTS.MODULE_ID,
+            DRAKKENHEIM_CORE_CONSTANTS.SETTING_VERSION
+          )
+        );
         return context;
       },
       iconClass: 'fa-solid fa-meteor',

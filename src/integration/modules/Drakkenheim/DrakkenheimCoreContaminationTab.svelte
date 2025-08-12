@@ -7,6 +7,7 @@
   } from 'src/types/types';
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getContext } from 'svelte';
 
   const context =
     $derived(
@@ -24,9 +25,8 @@
 
   let levels = Array.fromRange(6, 1);
 
-  let version = FoundryAdapter.getGameSetting(
-    DRAKKENHEIM_CORE_CONSTANTS.MODULE_ID,
-    DRAKKENHEIM_CORE_CONSTANTS.SETTING_VERSION,
+  let version = $derived(
+    getContext<string>(DRAKKENHEIM_CORE_CONSTANTS.SVELTE_CONTEXT.VERSION),
   );
 
   let enrichedPromises = levels.map((level) =>
@@ -49,7 +49,9 @@
   <table class="contamination-table">
     <thead class="theme-dark">
       <tr>
-        <th class="symptom">{localize('DRAKKENHEIM.CONTAMINATION.TABLE.symptoms')}</th>
+        <th class="symptom"
+          >{localize('DRAKKENHEIM.CONTAMINATION.TABLE.symptoms')}</th
+        >
       </tr>
     </thead>
     <tbody>
