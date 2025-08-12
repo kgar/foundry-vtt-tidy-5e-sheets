@@ -30,6 +30,7 @@ import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCha
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type { PortraitShape } from 'src/theme/theme-quadrone.types';
+import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -1159,6 +1160,7 @@ export type CharacterSheetQuadroneContext = {
     path: string;
   };
   size: ActorSizeContext;
+  sheet: Tidy5eCharacterSheetQuadrone;
   skills: ActorSkillsToolsContext<SkillData>[];
   species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
@@ -1199,6 +1201,7 @@ export type NpcSheetQuadroneContext = {
   showLegendaryResistances: boolean;
   showLoyaltyTracker: boolean;
   senses: ActorSpeedSenseEntryContext[];
+  sheet: Tidy5eNpcSheetQuadrone;
   showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];

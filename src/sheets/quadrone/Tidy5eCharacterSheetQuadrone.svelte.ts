@@ -121,10 +121,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
           this.sectionExpansionTracker,
         ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.POSITION_REF,
-          this._position
-        ],
+        [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
         ...this._getActorSvelteContext(),
       ]),
     });
@@ -263,6 +260,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
+      sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       portrait: {
