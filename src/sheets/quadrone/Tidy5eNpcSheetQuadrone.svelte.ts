@@ -243,6 +243,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spellSlotTrackerMode:
         preferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
+      sheet: this,
       tools: [],
       treasures: [],
       type: CONSTANTS.SHEET_TYPE_NPC,
@@ -578,5 +579,15 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   toggleDeathSaves(force?: boolean) {
     this._showDeathSaves = force ?? !this._showDeathSaves;
     this.render();
+  }
+
+  async rollFormula() {
+    try {
+      const roll = await this.document.rollNPCHitPoints();
+      this.actor.update({ 'system.attributes.hp.max': roll.total });
+    } catch (error) {
+      ui.notifications.error('DND5E.HPFormulaError', { localize: true });
+      throw error;
+    }
   }
 }

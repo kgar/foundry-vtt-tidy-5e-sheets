@@ -53,6 +53,9 @@
   let hpTempInput = $state<TextInputQuadrone>();
 
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
+  let effectiveMaxHp = $derived(
+    context.system.attributes?.hp?.effectiveMax ?? 0,
+  );
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
@@ -316,7 +319,7 @@
               </div>
               <div class="separator">/</div>
               <div class="max" aria-label={localize('DND5E.HitPointsMax')}>
-                {hpMax}
+                {effectiveMaxHp}
               </div>
             </button>
             <TextInputQuadrone
@@ -399,6 +402,9 @@
             >
               <i class="fas fa-cog"></i>
             </button>
+          {/if}
+          {#if effectiveMaxHp !== hpMax}
+            <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
           {/if}
         </div>
         <div class="actor-vitals-row">
