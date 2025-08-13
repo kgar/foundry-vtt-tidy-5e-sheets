@@ -4,6 +4,8 @@
 
 - [x] Restore Character sheet responsive ability scores with a scripted approach. See Abilities Simplification Initiative (ASI)
 - [ ] NPC Sheet
+  - [x] Header - Wire up Max HP
+  - [x] Header - Wire up HP roll
   - [ ] hightouch punch list from PR #1278
     - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
     - [ ] Display background/subclass/etc in Statblock tab
@@ -12,15 +14,6 @@
     - [ ] Figure out solution for HP > 999
     - [x] Needs testing: Validate character sheet header styles are still working as expected
   - [ ] Make loyalty tracker match legendary trackers
-  - [ ] Header
-    - [ ] Portrait
-    - [ ] AC and Vitals
-    - [ ] Name
-    - [ ] Subtitle
-    - [ ] Sheet header buttons
-    - [ ] CR
-    - [ ] Image switcher toggle (show on unlocked, left of subtitle contents)
-    - [ ] abilities
 
 #### Abilities Simplification Initiative
 
@@ -122,6 +115,7 @@
 
 ## hightouch To Do
 
+- [ ] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
 - [ ] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
 - [ ] kgar question: should we apply any alt header color for the suppressed effect section?
 - [ ] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>

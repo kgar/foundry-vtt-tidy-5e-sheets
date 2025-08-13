@@ -52,7 +52,12 @@
   let hpTempInput = $state<TextInputQuadrone>();
 
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
+
+  let effectiveMaxHp = $derived(
+    context.system.attributes?.hp?.effectiveMax ?? 0,
+  );
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
+
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
@@ -172,59 +177,62 @@
         smallerAbilityThresholdRems={4}
         constantHorizontalSpaceRems={20.5}
       >
-      <div class="initiative-container flexcol">
-        <div class="initiative score bonus-container" data-tooltip="DND5E.Initiative">
-          <button
-            type="button"
-            class="button-borderless initiative-roll-button"
-            onclick={(event) =>
-              context.actor.rollInitiativeDialog({ event: event })}
+        <div class="initiative-container flexcol">
+          <div
+            class="initiative score bonus-container"
+            data-tooltip="DND5E.Initiative"
           >
-            {localize('DND5E.InitiativeAbbr')}
-          </button>
-          {#if context.unlocked}
             <button
-              aria-label={localize('DND5E.InitiativeConfig')}
-              data-tooltip="DND5E.InitiativeConfig"
               type="button"
-              class="button button-borderless button-icon-only button-config"
-              onclick={() =>
-                FoundryAdapter.renderInitiativeConfig(context.actor)}
+              class="button-borderless initiative-roll-button"
+              onclick={(event) =>
+                context.actor.rollInitiativeDialog({ event: event })}
             >
-              <i class="fas fa-cog"></i>
+              {localize('DND5E.InitiativeAbbr')}
             </button>
-          {/if}
-          <div class="initiative-bonus flexrow">
-            <span class="modifier color-text-lightest font-label-xlarge">
-              {ini.sign}
-            </span>
-            <span class="bonus color-text-default font-data-xlarge">
-              {ini.value}
-            </span>
+            {#if context.unlocked}
+              <button
+                aria-label={localize('DND5E.InitiativeConfig')}
+                data-tooltip="DND5E.InitiativeConfig"
+                type="button"
+                class="button button-borderless button-icon-only button-config"
+                onclick={() =>
+                  FoundryAdapter.renderInitiativeConfig(context.actor)}
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            {/if}
+            <div class="initiative-bonus flexrow">
+              <span class="modifier color-text-lightest font-label-xlarge">
+                {ini.sign}
+              </span>
+              <span class="bonus color-text-default font-data-xlarge">
+                {ini.value}
+              </span>
+            </div>
+          </div>
+          <div class="ability-labels flexcol">
+            <span class="label font-label-medium color-text-lightest"
+              >{localize('DND5E.AbilityScoreShort')}</span
+            >
+            <span class="divider"></span>
+            <span class="label font-label-medium color-text-lightest"
+              >{localize('DND5E.SavingThrowShort')}</span
+            >
           </div>
         </div>
-        <div class="ability-labels flexcol">
-          <span class="label font-label-medium color-text-lightest"
-            >{localize('DND5E.AbilityScoreShort')}</span
-          >
-          <span class="divider"></span>
-          <span class="label font-label-medium color-text-lightest"
-            >{localize('DND5E.SavingThrowShort')}</span
-          >
-        </div>
-      </div>
-      {#each context.abilities as ability}
-        <AbilityScoreNPC
-          {ability}
-          unlocked={context.unlocked}
-          onScoreChanged={(score) =>
-            context.actor.update({
-              [`system.abilities.${ability.key}.value`]: score,
-            })}
-          onConfigClicked={(id) =>
-            FoundryAdapter.renderAbilityConfig(context.actor, id)}
-          onRollAbility={(event, key) =>
-            context.actor.rollAbilityCheck({ ability: key, event })}
+        {#each context.abilities as ability}
+          <AbilityScoreNPC
+            {ability}
+            unlocked={context.unlocked}
+            onScoreChanged={(score) =>
+              context.actor.update({
+                [`system.abilities.${ability.key}.value`]: score,
+              })}
+            onConfigClicked={(id) =>
+              FoundryAdapter.renderAbilityConfig(context.actor, id)}
+            onRollAbility={(event, key) =>
+              context.actor.rollAbilityCheck({ ability: key, event })}
             onRollSave={(event, key) =>
               context.actor.rollSavingThrow({ ability: key, event })}
           />
@@ -249,7 +257,11 @@
               }}
             >
               <div
-                class="value {hpTemp > 999 || hpValue > 999 ? 'font-small' : hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
+                class="value {hpTemp > 999 || hpValue > 999
+                  ? 'font-small'
+                  : hpTemp > 99 || hpValue > 999
+                    ? 'font-medium'
+                    : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsCurrent')}
               >
                 {hpValue}
@@ -258,16 +270,20 @@
                 class="separator {hpTemp > 999 || hpValue > 999
                   ? 'font-small'
                   : hpTemp > 99 || hpValue > 999
-                  ? 'font-medium'
-                  : 'font-default-large'}"
+                    ? 'font-medium'
+                    : 'font-default-large'}"
               >
                 /
               </div>
               <div
-                class="max {hpTemp > 999 || hpValue > 999 ? 'font-small' : hpTemp > 99 || hpValue > 999 ? 'font-medium' : 'font-data-large'}"
+                class="max {hpTemp > 999 || hpValue > 999
+                  ? 'font-small'
+                  : hpTemp > 99 || hpValue > 999
+                    ? 'font-medium'
+                    : 'font-data-large'}"
                 aria-label={localize('DND5E.HitPointsMax')}
               >
-                {hpMax}
+                {effectiveMaxHp}
               </div>
             </button>
             <TextInputQuadrone
@@ -309,15 +325,15 @@
                   class="modifier {hpTemp > 999 || hpValue > 999
                     ? 'font-small font-label-medium'
                     : hpTemp > 99 || hpValue > 999
-                    ? 'font-medium font-label-medium'
-                    : 'font-label-large'} color-text-lighter">+</span
+                      ? 'font-medium font-label-medium'
+                      : 'font-label-large'} color-text-lighter">+</span
                 >
                 <span
                   class="value {hpTemp > 999 || hpValue > 999
                     ? 'font-small font-data-medium'
                     : hpTemp > 99 || hpValue > 999
-                    ? 'font-medium font-data-medium'
-                    : 'font-data-large'} color-text-default"
+                      ? 'font-medium font-data-medium'
+                      : 'font-data-large'} color-text-default"
                   data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
                 >
               </div>
@@ -367,6 +383,10 @@
               <i class="fas fa-cog"></i>
             </button>
           {/if}
+
+          {#if effectiveMaxHp !== hpMax}
+            <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
+          {/if}
         </div>
         <div class="actor-vitals-row">
           {#if exhaustionBarFocused}
@@ -394,22 +414,26 @@
               </button>
             </div>
 
-            <button
-              type="button"
-              class="max-hp button button-borderless"
+            <TextInputQuadrone
+              document={context.actor}
+              field="system.attributes.hp.tempmax"
+              value={context.system.attributes.hp.tempmax}
+              enableDeltaChanges
+              selectOnFocus={true}
+              data-dtype="Number"
+              inputmode="numeric"
+              placeholder="+{localize('DND5E.Max')}"
+              class="max-hp uninput centered"
               aria-label={localize('DND5E.HitPointsTempMax')}
               data-tooltip={'DND5E.HitPointsTempMax'}
-              onclick={() => console.log('TODO: Roll NPC HP')}
-            >
-              Max
-            </button>
+            />
 
             <button
               type="button"
               class="roll-hp button button-borderless button-icon-only"
               aria-label={localize('DND5E.HPFormulaRollMessage')}
               data-tooltip={'DND5E.HPFormulaRollMessage'}
-              onclick={() => console.log('TODO: Roll NPC HP')}
+              onclick={() => context.sheet.rollFormula()}
             >
               <i class="fas fa-dice"></i>
             </button>
