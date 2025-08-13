@@ -886,5 +886,8 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Grupa zaklęć z aktywności Rzucanie",
     "TIDY5E.SheetLock.Empty.Hint": "Zacznij od dodania klasy i pierwszych przedmiotów. Następnie skorzystaj z menu przedmiotu lub kliknij prawym przyciskiem myszy i wybierz „Dodaj do zakładki Karta”, aby dodać je tutaj.",
     "TIDY5E.EmptyFavorites": "Kliknij prawym przyciskiem myszy i Dodaj do ulubionych lub przeciągnij dowolny element z karty tutaj, żeby mieć do nich szybki dostęp.",
-    "TIDY5E.EmptyTools": "Brak biegłości w posługiwaniu się narzędziami."
+    "TIDY5E.EmptyTools": "Brak biegłości w posługiwaniu się narzędziami.",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Pokaż liczniki akcji legendarnych/leża w zakładce statystyk",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Uwzględnij sekcje księgi czarów w zakładce statystyk",
+    "TIDY5E.UseSpecificDefaultValue.Label": "Użyj domyślnej ({value})"
 }

@@ -746,7 +746,8 @@
         "SectionSelectorExistingSections": "Sections existantes",
         "SectionSelectorCreateNewSection": "Créer une nouvelle section",
         "SectionSelectorNewSectionName": "Nouveau nom de section",
-        "SectionSelectorSaveNewSection": "Sauvegarder la nouvelle section"
+        "SectionSelectorSaveNewSection": "Sauvegarder la nouvelle section",
+        "SectionSelectorChooseTabSectionTooltip": "Choisissez la section {tabName}"
     },
     "TIDY5E.Utilities.ConfigureSections": "Configurer les sections",
     "TIDY5E.WorldSettings.TabIcons": {
@@ -908,5 +909,12 @@
     "TIDY5E.HitDice.Current.Label": "Dès de vie actuel",
     "TIDY5E.HitDice.Max.Label": "Dès de vie Max",
     "TIDY5E.Notifications.FirstTimeWelcome1": "Bienvenue dans Tidy 5e Sheets ! Pour commencer, vous devrez remplacer {sheetLinkStart}une feuille{sheetLinkEnd} (ou {allSheetsLinkStart}toutes vos feuilles{allSheetsLinkEnd} !) par la version Tidy. Pour en savoir plus sur ce module et ses fonctionnalités, consultez le {wikiLinkStart}wiki officiel{wikiLinkEnd}.",
-    "TIDY5E.StatblockTabName": "Block de stat"
+    "TIDY5E.StatblockTabName": "Block de stat",
+    "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Activité d'incantation Groupement de sorts",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Section de sorts supplémentaires",
+    "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section par objets",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Afficher les traqueurs légendaires/de repaires dans l'onglet Statblock",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Inclure les sections du livre de sorts dans l'onglet Statblock",
+    "TIDY5E.UseSpecificDefaultValue.Label": "Par défaut ({value})",
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Incanté en {ordinal}"
 }
