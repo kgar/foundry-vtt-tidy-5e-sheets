@@ -500,7 +500,8 @@
   @import '../../sheets/classic/actor/SheetEditModeToggle.scss';
 
   // Sheets
-  &.group {
+  &.group,
+  &.encounter {
     @import '../../sheets/classic/group/GroupSheet.scss';
   }
 
@@ -724,6 +725,10 @@
   }
 
   /* Text utilities */
+  .centered {
+    text-align: center;
+  }
+
   .capitalize {
     text-transform: capitalize;
   }

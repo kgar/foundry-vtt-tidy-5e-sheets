@@ -4,7 +4,7 @@ import type {
   PortraitShape,
   ThemeColorSetting,
   ThemeSettingsConfigurationOptions,
-  ThemeSettingsV2 as ThemeSettingsV2,
+  ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
@@ -30,7 +30,7 @@ export type ThemeSettingsContext = {
     itemSidebarBackground: string;
     portraitShape: PortraitShape | undefined;
     rarityColors: ThemeColorSettingConfigEntry[];
-    spellPreparationModeColors: ThemeColorSettingConfigEntry[];
+    spellPreparationMethodColors: ThemeColorSettingConfigEntry[];
   };
 };
 
@@ -47,7 +47,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       itemSidebarBackground: '',
       portraitShape: undefined,
       rarityColors: [],
-      spellPreparationModeColors: [],
+      spellPreparationMethodColors: [],
     },
   });
 
@@ -115,7 +115,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {};
   }
 
-  _getSettings(settingsOverride?: ThemeSettingsV2) {
+  _getSettings(settingsOverride?: ThemeSettingsV3) {
     let themeSettings =
       settingsOverride ??
       structuredClone(
@@ -132,7 +132,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return context;
   }
 
-  private _mapSettings(themeSettings: ThemeSettingsV2): ThemeSettingsContext {
+  private _mapSettings(themeSettings: ThemeSettingsV3): ThemeSettingsContext {
     return {
       value: {
         accentColor: themeSettings.accentColor,
@@ -148,13 +148,13 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
             };
           }
         ),
-        spellPreparationModeColors: Object.entries(
-          CONFIG.DND5E.spellPreparationModes
+        spellPreparationMethodColors: Object.entries(
+          CONFIG.DND5E.spellcasting
         ).map(([key, config]) => {
           return {
             label: config.label,
             key: key,
-            value: themeSettings.spellPreparationModeColors[key] ?? '',
+            value: themeSettings.spellPreparationMethodColors[key] ?? '',
           };
         }),
       },
@@ -173,7 +173,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   async apply() {
     const context = this._settings;
 
-    let themeSettings: ThemeSettingsV2 = this.mapContextToSettings(context);
+    let themeSettings: ThemeSettingsV3 = this.mapContextToSettings(context);
 
     if (this.document) {
       await ThemeQuadrone.saveSheetThemeSettings(this.document, themeSettings);
@@ -182,7 +182,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     }
   }
 
-  mapContextToSettings(context: ThemeSettingsContext): ThemeSettingsV2 {
+  mapContextToSettings(context: ThemeSettingsContext): ThemeSettingsV3 {
     return {
       accentColor: context.value.accentColor ?? '',
       actorHeaderBackground: context.value.actorHeaderBackground,
@@ -194,7 +194,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
           prev[curr.key] = curr.value;
           return prev;
         }, {}),
-      spellPreparationModeColors: context.value.spellPreparationModeColors
+      spellPreparationMethodColors: context.value.spellPreparationMethodColors
         .filter((t) => !isNil(t.value.trim(), ''))
         .reduce<Record<string, string>>((prev, curr) => {
           prev[curr.key] = curr.value;

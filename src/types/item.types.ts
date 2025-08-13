@@ -126,6 +126,15 @@ export type ItemSheetContext = {
   scalarTarget: boolean;
   sheet: Tidy5eItemSheetClassic; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
+  spellcastingMethods: {
+    label: string;
+    value: string;
+  }[];
+  spellProgression: {
+    value: string;
+    label: string;
+    group?: string;
+  }[];
   system: any;
   title: string;
   toggleAdvancementLock: () => Promise<void>;
@@ -151,6 +160,7 @@ export type ItemSheetQuadroneContext = {
   affectsPlaceholder: string;
   baseItems: Record<string, string>;
   canCraft?: boolean;
+  canPrepare?: boolean;
   concealDetails: boolean;
   config: typeof CONFIG.DND5E;
   coverOptions: { value: string; label: string }[];
@@ -217,13 +227,22 @@ export type ItemSheetQuadroneContext = {
   rangeTypes: GroupableSelectOption[];
   recoveryPeriods: GroupableSelectOption[];
   recoveryTypes: {
-    value: string;
     label: string;
+    value: string;
   }[];
   rollData: Record<string, any>;
   scalarTarget: boolean;
   sheet: Tidy5eItemSheetQuadrone; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
   source: any;
+  spellcastingMethods: {
+    label: string;
+    value: string;
+  }[];
+  spellProgression: {
+    value: string;
+    label: string;
+    group?: string;
+  }[];
   subtitle?: string;
   system: any;
   title: string;

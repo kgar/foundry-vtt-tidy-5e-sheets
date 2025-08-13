@@ -217,23 +217,22 @@ export type SimpleEditableColumn = {
 };
 
 export type SpellbookSectionLegacy = {
-  order: number;
   label: string;
+  order: number;
   usesSlots: boolean;
+  id: string; // replaced prepMode
+  slot: string; // replaced prop
   canCreate: boolean;
   canPrepare: boolean;
-  spells: Item5e[];
-  uses: number | string;
-  slots: number | string;
-  override: number;
+  items: Item5e[];
+  uses?: number | string;
+  slots?: number | string;
   dataset: {
     type: string;
-    ['system.level']: number;
-    ['system.preparation.mode']: string;
+    ['system.level']: number | undefined;
+    ['system.method']: string | undefined;
   };
-  prop: string;
   editable: boolean;
-  prepMode?: string;
 };
 
 export type SpellbookSection = {
@@ -243,12 +242,12 @@ export type SpellbookSection = {
   canCreate: boolean;
   /* deprecated: item row actions runtime evaluates for each item  */
   canPrepare: boolean;
-  spells: Item5e[];
+  items: Item5e[];
   uses?: number;
   slots?: number;
   override?: number;
-  prop?: string;
-  prepMode?: string;
+  slot: string;
+  method: string;
 } & TidySectionBase;
 
 export type AvailableLevel = {

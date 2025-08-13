@@ -43,9 +43,9 @@
     color: var(--t5e-color-text-default);
     max-height: var(--t5e-table-header-row-height);
 
-    &.spell-preparation {
-      --t5e-table-header-background-left: oklch(from var(--t5e-mode-color, var(--t5e-theme-color-darkest)) calc(l * 0.75) calc(c * 1.2) h);
-      --t5e-table-header-background-right: var(--t5e-mode-color, var(--t5e-theme-color-darker));
+    &.spell-method {
+      --t5e-table-header-background-left: oklch(from var(--t5e-method-color, var(--t5e-theme-color-darkest)) calc(l * 0.75) calc(c * 1.2) h);
+      --t5e-table-header-background-right: var(--t5e-method-color, var(--t5e-theme-color-darker));
     }
 
     :is(.tidy-table-cell, .tidy-table-header-cell) {
@@ -777,7 +777,7 @@
       }
     }
 
-    &.spell-preparation:not(.unprepared) {
+    &.spell-method:not(.unprepared) {
 
 
       background: linear-gradient(to right,
@@ -793,30 +793,31 @@
           rgba(255, 255, 255, 0.24) 60%);
     }
 
-    &.spell-preparation:not(.mode-prepared) {
+    &.spell-method:not(.method-spell) {
       .tidy-table-row-use-button {
-        --t5e-use-button-border-color: var(--t5e-mode-color);
+        --t5e-use-button-border-color: var(--t5e-method-color);
       }
     }
 
-    &.mode-always {
+    // TODO: Find a different approach. mode-always no longer exists.
+    // &.mode-always {
 
-      .tidy-table-row-use-button {
-        outline: 0.125rem solid var(--t5e-use-button-border-color);
-        outline-offset: -0.0625rem;
-      }
+    //   .tidy-table-row-use-button {
+    //     outline: 0.125rem solid var(--t5e-use-button-border-color);
+    //     outline-offset: -0.0625rem;
+    //   }
 
-      .highlight {
-        opacity: 0.32;
-        background: linear-gradient(to right,
-            var(--t5e-mode-color) 0%,
-            transparent 28%);
-      }
+    //   .highlight {
+    //     opacity: 0.32;
+    //     background: linear-gradient(to right,
+    //         var(--t5e-method-color) 0%,
+    //         transparent 28%);
+    //   }
 
-      i.mode-always:hover {
-        text-shadow: 0 0 0.25rem oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
-      }
-    }
+    //   i.mode-always:hover {
+    //     text-shadow: 0 0 0.25rem oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
+    //   }
+    // }
   }
 
   .spell-row-icon {
@@ -927,21 +928,23 @@
         }
       }
 
-      &.spell-preparation.mode-always .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-mode-color) l c h / 0.25) 10%, transparent 40%);
-      }
+      // TODO: Find a different approach. mode-always no longer exists.
+      // &.spell-preparation.mode-always .highlight {
+      //   background: linear-gradient(to right, oklch(from var(--t5e-method-color) l c h / 0.25) 10%, transparent 40%);
+      // }
 
       &.rarity .highlight {
         background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 10%, transparent 48%);
       }
 
+      // TODO: Find a different approach. mode-always no longer exists.
       // /* Hide if this is a normally prepared spell. */
       // &.mode-prepared .highlight {
       //   opacity: 0;
       // }
 
       /* If a spell is prepared, use full background gradient. */
-      &.spell-preparation:not(.unprepared) {
+      &.spell-method:not(.unprepared) {
         background: linear-gradient(to right,
             var(--t5e-component-card-default) 5%,
             transparent 64%);
@@ -953,12 +956,13 @@
         background: var(--t5e-component-card-default);
       }
 
-      &.mode-always .highlight {
-        opacity: 1;
-        background: linear-gradient(to right,
-            var(--t5e-theme-color-darkest) -25%,
-            transparent 25%);
-      }
+      // TODO: Find a different approach. mode-always no longer exists.
+      // &.mode-always .highlight {
+      //   opacity: 1;
+      //   background: linear-gradient(to right,
+      //       var(--t5e-theme-color-darkest) -25%,
+      //       transparent 25%);
+      // }
 
       &.advancement-item {
         .tidy-table-row-use-button img {

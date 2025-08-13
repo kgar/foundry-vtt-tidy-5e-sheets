@@ -7,6 +7,7 @@ import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
 import { settings } from 'src/settings/settings.svelte';
 import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
+import EncounterSheetClassicRuntime from 'src/runtime/actor/EncounterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
@@ -76,6 +77,8 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
       return VehicleSheetClassicRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
       return GroupSheetClassicRuntime.getAllRegisteredTabs();
+    } else if (actor.type === CONSTANTS.SHEET_TYPE_ENCOUNTER) {
+      return EncounterSheetClassicRuntime.getAllRegisteredTabs();
     }
 
     error(
@@ -95,6 +98,8 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return settings.value.defaultVehicleSheetTabs;
     } else if (actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
+      return settings.value.defaultGroupSheetTabs;
+    } else if (actor.type === CONSTANTS.SHEET_TYPE_ENCOUNTER) {
       return settings.value.defaultGroupSheetTabs;
     }
 

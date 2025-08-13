@@ -28,11 +28,7 @@ export class ItemVisibility {
   static getItemsToShowAtDepth(args: {
     tabId: string;
     criteria: string;
-    sections: (
-      | { items: Item5e[] }
-      | { spells: Item5e[] }
-      | { actions: ActionItem[] }
-    )[];
+    sections: ({ items: Item5e[] } | { actions: ActionItem[] })[];
     itemContext: Record<string, { containerContents?: ContainerContents }>;
   }) {
     const itemFilterService = getContext<ItemFilterService | undefined>(
@@ -44,11 +40,7 @@ export class ItemVisibility {
 
     // Is there a better way to do this? We are iterating over these items quite a lot.
     const items = args.sections.flatMap((x) =>
-      'items' in x
-        ? x.items
-        : 'spells' in x
-        ? x.spells
-        : x.actions.map((y) => y.item)
+      'items' in x ? x.items : x.actions.map((y) => y.item)
     );
 
     const results = new Set(

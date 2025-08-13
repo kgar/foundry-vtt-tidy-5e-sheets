@@ -612,10 +612,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       },
     };
 
-    const type = this.actor.system.type.value;
-
     const memberContext: GroupSheetClassicContext['memberContext'] = {};
-
     const groupLanguages: Record<string, GroupLanguage> = {};
     const groupSkills: Record<string, GroupSkill> = {};
     const collectAggregates = FoundryAdapter.userIsGm();
@@ -624,7 +621,6 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     for (const [index, memberData] of this.actor.system.members.entries()) {
       const ctx: GroupMemberContext = (memberContext[memberData.actor.id] = {
         index: index,
-        quantity: memberData.quantity,
         canObserve: memberData.actor.testUserPermission(game.user, 'OBSERVER'),
         senses: [],
         conditionImmunities: [],
@@ -633,19 +629,17 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
 
       const member = memberData.actor;
       const hp = member.system.attributes.hp;
-      const multiplier =
-        type === 'encounter' ? memberData.quantity.value ?? 1 : 1;
 
       const memberCurrentHp = hp.value + (hp.temp || 0);
       const memberMaxHp = Math.max(0, hp.effectiveMax);
 
-      stats.currentHP += memberCurrentHp * multiplier;
-      stats.maxHP += memberMaxHp * multiplier;
+      stats.currentHP += memberCurrentHp;
+      stats.maxHP += memberMaxHp;
 
       if (member.type === 'vehicle') {
-        stats.vehicleCount += multiplier;
+        stats.vehicleCount += 1;
       } else {
-        stats.memberCount += multiplier;
+        stats.memberCount += 1;
       }
 
       sections[member.type].members.push(member);
@@ -1024,65 +1018,5 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
       origin: this.actor,
     });
     award.render(true);
-  }
-
-  async updateMemberQuantity(
-    memberActorId: string,
-    event: Event & {
-      currentTarget: EventTarget & HTMLInputElement;
-    }
-  ): Promise<Group5e | undefined> {
-    const membersCollection = this.actor.system.toObject().members;
-
-    const index = membersCollection.findIndex(
-      (m: any) => m.actor === memberActorId
-    );
-
-    const originalValue = membersCollection[index].quantity.value;
-
-    const amount = event.currentTarget.value;
-    const newQuantity =
-      amount?.trim() === ''
-        ? null
-        : processInputChangeDeltaFromValues(amount, originalValue);
-
-    membersCollection[index].quantity.value = newQuantity;
-
-    const result = await this.actor.update({
-      ['system.members']: membersCollection,
-    });
-
-    if (!result) {
-      event.currentTarget.value = originalValue.toString();
-    }
-
-    return result;
-  }
-
-  async updateMemberFormula(
-    memberActorId: string,
-    event: Event & {
-      currentTarget: EventTarget & HTMLInputElement;
-    }
-  ): Promise<Group5e | undefined> {
-    const membersCollection = this.actor.system.toObject().members;
-
-    const index = membersCollection.findIndex(
-      (m: any) => m.actor === memberActorId
-    );
-
-    const originalValue = membersCollection[index].quantity.formula;
-
-    membersCollection[index].quantity.formula = event.currentTarget.value;
-
-    const result = await this.actor.update({
-      ['system.members']: membersCollection,
-    });
-
-    if (!result) {
-      event.currentTarget.value = originalValue;
-    }
-
-    return result;
   }
 }

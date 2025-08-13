@@ -65,7 +65,7 @@
   });
 
   let totalSpellCount = $derived(
-    sections.reduce((count, s) => count + s.spells.length, 0),
+    sections.reduce((count, s) => count + s.items.length, 0),
   );
 </script>
 
@@ -89,7 +89,7 @@
   {:else}
     {#each sections as section (section.key)}
       {@const hasViewableItems = ItemVisibility.hasViewableItems(
-        section.spells,
+        section.items,
         searchResults.uuids,
       )}
       {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}

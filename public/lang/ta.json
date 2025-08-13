@@ -293,7 +293,7 @@
         "RarityColors.title": "அரிதான வண்ணங்கள்",
         "SheetTheme.title": "தாள் கருப்பொருள்",
         "SheetTheme.hint": "சிறந்த முடிவுகளுக்கு, வண்ணத் தட்டின் மையத்திற்கு அருகில் ஒரு வண்ணத்தைத் தேர்வுசெய்க.",
-        "SpellPreparationModeColors.title": "எழுத்துப்பிழை தயாரிப்பு முறை வண்ணங்கள்"
+        "SpellcastingMethodColors.title": "எழுத்துப்பிழை தயாரிப்பு முறை வண்ணங்கள்"
     },
     "TIDY5E.ReminderToBackUp": "உங்கள் உலகத்தை காப்புப் பிரதி எடுக்க எப்போதும் நினைவில் கொள்ளுங்கள்.",
     "TIDY5E.Utilities.ConfigureSections": "பிரிவுகளை உள்ளமைக்கவும்",
@@ -341,7 +341,6 @@
     "TIDY5E.AbbrInitiative": "இனி",
     "TIDY5E.NoSpecialSenses": "சிறப்பு புலன்கள் இல்லை",
     "TIDY5E.Group.NamePlaceholder": "குழு பெயர்",
-    "TIDY5E.Group.RemoveMemberFromGroup": "குழுவிலிருந்து உறுப்பினரை அகற்று",
     "TIDY5E.Group.HideMemberTabInfoPanel": "செய்தி பேனலை மறைக்கவும்",
     "TIDY5E.Group.EmptyMembersTabHint": "இந்த குழு காலியாக உள்ளது. ஒரு உறுப்பினரைச் சேர்க்க பக்கப்பட்டியில் இருந்து ஒரு நடிகரை விடுங்கள்.",
     "TIDY5E.RestHint": "ஓய்வு",

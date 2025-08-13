@@ -6,12 +6,14 @@
   "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e Classic Container Sheet",
   "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Classic Vehicle Sheet",
   "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e Classic Group Sheet",
+  "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e Classic Encounter Sheet",
   "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Character Sheet",
   "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC Sheet",
   "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Container Sheet",
   "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e Item Sheet",
   "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Vehicle Sheet",
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Group Sheet",
+  "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Encounter Sheet",
   "TIDY5E.PlayerName": "Player Name",
   "TIDY5E.EditSheetImageHint": "Left Click: Edit Image",
   "TIDY5E.PreviewSheetImageHint": "Left Click: Preview Image",
@@ -33,7 +35,6 @@
   "TIDY5E.NoSpecialSenses": "No Special Senses",
 
   "TIDY5E.Group.NamePlaceholder": "Group Name",
-  "TIDY5E.Group.RemoveMemberFromGroup": "Remove Member from Group",
   "TIDY5E.Group.ShowMemberTabInfoPanel": "Show Info Panel",
   "TIDY5E.Group.HideMemberTabInfoPanel": "Hide Info Panel",
   "TIDY5E.Group.EmptyMembersTabHint": "This group is empty. Drop an actor from the sidebar to add a member.",
@@ -773,7 +774,7 @@
     "RarityColors.title": "Rarity Colors",
     "SheetTheme.title": "Sheet Theme",
     "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
-    "SpellPreparationModeColors.title": "Spell Preparation Mode Colors"
+    "SpellcastingMethodColors.title": "Spellcasting Method Colors"
   },
   "TIDY5E.FavoriteSpellLevelLabel": "Spell Level {number}",
   "TIDY5E.ApplyChanges": "Apply Changes",

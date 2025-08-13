@@ -16,7 +16,7 @@ import type {
   Item5e,
   ItemSheetQuadroneContext,
 } from 'src/types/item.types';
-import type { Group5e } from 'src/types/group.types';
+import type { Encounter5e, Group5e } from 'src/types/group.types';
 import type { Activity5e } from './dnd5e.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
@@ -204,6 +204,34 @@ export class TidyHooks {
       item,
       occupantType,
       prop
+    );
+  }
+
+  /**
+   * The encounter member context menu has established its options and is about to show.
+   * @param encounter         The affected group document instance.
+   * @param member            The actor which is a member of the encounter.
+   * @param contextOptions    The menu items for this encounter member.
+   *
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getEncounterMemberContextOptions', (encounter, member, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetEncounterMemberContextOptions(
+    encounter: Encounter5e,
+    member: Actor5e,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getEncounterMemberContextOptions',
+      encounter,
+      member,
+      contextOptions
     );
   }
 

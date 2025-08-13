@@ -18,7 +18,6 @@
     "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.NoSpecialSenses": "Sem Sentidos Especiais",
     "TIDY5E.Group.NamePlaceholder": "Nome do Grupo",
-    "TIDY5E.Group.RemoveMemberFromGroup": "Remover Membro do Grupo",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostrar Painel de Info.",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Esconder Painel de Info.",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vazio. Solte um ator da barra lateral para adicionar um membro.",
@@ -681,7 +680,7 @@
         "RarityColors.title": "Cores de Raridade",
         "SheetTheme.title": "Tema da Ficha",
         "SheetTheme.hint": "Para melhores resultados, escolha uma cor próxima ao centro da paleta de cores.",
-        "SpellPreparationModeColors.title": "Cores do Modo de Preparação de Magias"
+        "SpellcastingMethodColors.title": "Cores do Modo de Preparação de Magias"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",

@@ -319,7 +319,7 @@
 
   /* Spellbook */
   /* Base spellcasting colors - these can be overridden globally */
-  --t5e-color-spellcasting-prepared: var(--t5e-theme-color-default);
+  --t5e-color-spellcasting-spell: var(--t5e-theme-color-default);
   --t5e-color-spellcasting-atwill: var(--t5e-color-palette-red-45);
   --t5e-color-spellcasting-always: var(--t5e-theme-color-default);
   --t5e-color-spellcasting-pact: var(--t5e-color-palette-pink-55);

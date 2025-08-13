@@ -12,13 +12,11 @@
   let { item, prepared, title }: Props = $props();
 
   function toggleSpellPreparation() {
-    const value = FoundryAdapter.getProperty(
-      item,
-      'system.preparation.prepared',
-    );
+    let newValue =
+      (FoundryAdapter.getProperty<number>(item, 'system.prepared') ?? 0) + 1;
 
     item.update({
-      'system.preparation.prepared': !value,
+      'system.prepared': newValue % 2,
     });
   }
 </script>

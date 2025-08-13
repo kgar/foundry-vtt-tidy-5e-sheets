@@ -8,7 +8,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { GroupSheetSections } from 'src/features/sections/GroupSheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import EncounterMemberList from '../parts/EncounterMemberList.svelte';
   import GroupLanguages from '../parts/GroupLanguages.svelte';
   import GroupSkills from '../parts/GroupSkills.svelte';
   import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
@@ -94,15 +93,9 @@
       </ExpandableContainer>
     {/if}
 
-    {#if context.actor.system.type.value !== CONSTANTS.GROUP_TYPE_ENCOUNTER}
-      {#each memberSections as section (section.key)}
-        <GroupMemberList {section} />
-      {/each}
-    {:else}
-      {#each memberSections as section (section.key)}
-        <EncounterMemberList {section} />
-      {/each}
-    {/if}
+    {#each memberSections as section (section.key)}
+      <GroupMemberList {section} />
+    {/each}
   {:else}
     <div class="drop-zone full-height">
       {localize('TIDY5E.Group.EmptyMembersTabHint')}

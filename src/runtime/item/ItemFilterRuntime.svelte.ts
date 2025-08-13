@@ -107,6 +107,14 @@ export class ItemFilterRuntime {
         defaultItemFilters.equipped.name,
       ]),
     },
+    [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
+    },
   };
 
   static defaultFilterPinsQuadrone: Record<
@@ -186,7 +194,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.concentration,
           defaultItemFilters.ritual,
         ],
-        'DND5E.SpellPreparation.Mode': [
+        'DND5E.SpellPreparation.Label': [
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],
@@ -283,6 +291,20 @@ export class ItemFilterRuntime {
       },
     },
     [CONSTANTS.SHEET_TYPE_GROUP]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
+      },
+    },
+    [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
       [CONSTANTS.TAB_ACTOR_INVENTORY]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
@@ -404,7 +426,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.concentration,
           defaultItemFilters.ritual,
         ],
-        'DND5E.SpellPreparation.Mode': [
+        'DND5E.SpellPreparation.Label': [
           defaultItemFilters.prepared,
           defaultItemFilters.canCastSpell,
         ],

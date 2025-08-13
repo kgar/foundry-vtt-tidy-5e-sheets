@@ -181,27 +181,27 @@
 
       // TODO: Eliminate the CSS class injection; set the background color CSS variable via an inline style with a color taken from a function, rather than using the classes. Put the variable assignment outside of the item table row so that scripters can set the CSS variable on the row itself.
       --t5e-item-table-row-background: transparent;
-      &.prepared {
+      &.method-spell.can-prepare.prepared {
         --t5e-item-table-row-background: var(--t5e-prepared-background);
       }
 
-      &.always-prepared {
-        --t5e-item-table-row-background: var(--t5e-alwaysprepared-background);
-      }
-
-      &.pact {
+      &.method-pact.can-prepare.prepared {
         --t5e-item-table-row-background: var(--t5e-pact-background);
       }
 
-      &.at-will {
+      &.can-prepare.always {
+        --t5e-item-table-row-background: var(--t5e-alwaysprepared-background);
+      }
+
+      &.method-atwill {
         --t5e-item-table-row-background: var(--t5e-atwill-background);
       }
 
-      &.ritual-only {
+      &.method-ritual {
         --t5e-item-table-row-background: var(--t5e-ritual-only-background);
       }
 
-      &.innate {
+      &.method-innate {
         --t5e-item-table-row-background: var(--t5e-innate-background);
       }
 

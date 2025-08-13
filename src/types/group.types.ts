@@ -14,6 +14,8 @@ import type {
   Utilities,
 } from './types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
+import type { CONSTANTS } from 'src/constants';
+import type { Tidy5eEncounterSheetClassic } from 'src/sheets/classic/Tidy5eEncounterSheetClassic.svelte';
 
 export type GroupSheetClassicContext = {
   config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
@@ -50,6 +52,61 @@ export type GroupSheetClassicContext = {
   xp: Group5eXp | undefined;
 } & ActorSheetClassicContextV2<Group5e>;
 
+export type Encounter5e = {
+  _id: string;
+  _stats: any;
+  effects: any[];
+  flags: any;
+  folder: any;
+  img: string;
+  items: Item5e[];
+  longRest(
+    options: Record<string, any> /* RestConfiguration */
+  ): Promise<unknown /*ResultResult*/>;
+  name: string;
+  ownership: any;
+  prototypeToken: any;
+  sheet: Tidy5eEncounterSheetClassic;
+  shortRest(
+    options: Record<string, any> /* RestConfiguration */
+  ): Promise<unknown /*ResultResult*/>;
+  sort: number;
+  system: Encounter5eSystem;
+  type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
+};
+
+export type EncounterSheetClassicContext = {
+  config: any; // TODO: If possible, convert the full CONFIG (no modules on) to a typescript type.
+  canObserveAll: boolean;
+  containerPanelItems: ContainerPanelItemContext[];
+  customContent: CustomContent[];
+  descriptionFullEnrichedHtml: string;
+  disableExperience: boolean;
+  document: Encounter5e;
+  filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
+  groupLanguages: GroupLanguage[];
+  groupSkills: GroupSkill[];
+  inventory: InventorySection[];
+  isGM: boolean;
+  itemContext: Record<string, GroupItemContext>;
+  limited: boolean;
+  memberContext: Record<string, EncounterMemberContext>;
+  memberSections: GroupMemberSection[];
+  owner: boolean;
+  items: Item5e[];
+  effects: unknown[];
+  showContainerPanel: boolean;
+  showGroupMemberTabInfoPanel: boolean;
+  source: unknown;
+  summary: string;
+  system: Encounter5eSystem;
+  tabs: Tab[];
+  useClassicControls: boolean;
+  utilities: Utilities<EncounterSheetClassicContext>;
+  xp: number | undefined;
+} & ActorSheetClassicContextV2<Encounter5e>;
+
 export interface GroupItemContext {
   activities?: ActivityItemContext[];
   canToggle?: false;
@@ -63,7 +120,16 @@ export interface GroupItemContext {
 
 export interface GroupMemberContext {
   index: number;
-  quantity: Group5eMemberQuantity;
+  canObserve: boolean;
+  senses: string[];
+  conditionImmunities: string[];
+  perception?: GroupMemberSkillInfo;
+  topSkills: GroupMemberSkillInfo[];
+}
+
+export interface EncounterMemberContext {
+  index: number;
+  quantity: Encounter5eMemberQuantity;
   canObserve: boolean;
   senses: string[];
   conditionImmunities: string[];
@@ -104,7 +170,7 @@ export interface Group5e extends ActorV2 {
   ): Promise<unknown /*ResultResult*/>;
   sort: number;
   system: Group5eSystem;
-  type: string;
+  type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 }
 
 export type GroupMemberSection = TidySectionBase & {
@@ -120,8 +186,17 @@ export interface Group5eSystem {
   members: Group5eMember[];
   placeMembers(): Promise<void>;
   removeMember(id: string): Promise<Actor5e>;
+}
+
+export interface Encounter5eSystem {
+  attributes: Group5eAttributes;
+  currency: Group5eCurrency;
+  description: Group5eDescription;
+  details: Group5eDetails;
+  members: Encounter5eMember[];
+  placeMembers(): Promise<void>;
+  removeMember(id: string): Promise<Actor5e>;
   rollQuantities(): Promise<Actor5e>;
-  type: Group5eType;
 }
 
 export interface Group5eCurrency {
@@ -143,10 +218,14 @@ export interface Group5eDescription {
 
 export interface Group5eMember {
   actor: Actor5e;
-  quantity: Group5eMemberQuantity;
 }
 
-export interface Group5eMemberQuantity {
+export interface Encounter5eMember {
+  uuid: string;
+  quantity: Encounter5eMemberQuantity;
+}
+
+export interface Encounter5eMemberQuantity {
   value: number;
   formula: string;
 }

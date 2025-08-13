@@ -42,7 +42,6 @@
     "TIDY5E.OneDnDExhaustion9": "-9 до всіх кидків К20 та КС ряткидків від чарів",
     "TIDY5E.StandardVehicleExhaustion6": "Пункти Здоров'я падають до 0 і транспорт ламається",
     "TIDY5E.NoSpecialSenses": "Без Незвичайних Відчуттів",
-    "TIDY5E.Group.RemoveMemberFromGroup": "Видалити учасника з групи",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Показати панель інформації",
     "TIDY5E.Group.EmptyMembersTabHint": "Ця група порожня. Перетягніть актора з бічної панелі, щоб додати учасника.",
     "TIDY5E.RestHint": "Відпочинок",
@@ -701,7 +700,7 @@
         "RarityColors.UseSaturatedColors.hint": "У деяких випадках Tidy 5e буде десантувати рідкість кольорів для зменшення напруги очей, особливо з текстом. Виберіть цю опцію, щоб використовувати повністю насичений колір рідкості.",
         "SheetTheme.title": "Тема аркуша",
         "SheetTheme.hint": "Для найкращих результатів виберіть колір біля центру кольорової палітри.",
-        "SpellPreparationModeColors.title": "Кольори режиму підготовки заклинань",
+        "SpellcastingMethodColors.title": "Кольори режиму підготовки заклинань",
         "ActorHeaderBackground.title": "Фон заголовка актора",
         "ItemSidebarBackground.title": "Фон бічної панелі елемента"
     },
