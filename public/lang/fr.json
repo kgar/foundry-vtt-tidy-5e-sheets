@@ -916,5 +916,6 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section par objets",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Afficher les traqueurs légendaires/de repaires dans l'onglet Statblock",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Inclure les sections du livre de sorts dans l'onglet Statblock",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Par défaut ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Par défaut ({value})",
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Incanté en {ordinal}"
 }
