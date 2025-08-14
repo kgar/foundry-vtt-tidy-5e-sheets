@@ -64,7 +64,7 @@
         </h3>
       {/if}
     </div>
-    <span class="value">
+    <span class="card-content value">
       <label class="label hidden" for="lair-has-lair"
         >{localize('DND5E.LAIR.HasLair')}</label
       >
@@ -91,7 +91,7 @@
         </h3>
       {/if}
     </div>
-    <span class="value">
+    <span class="card-content value">
       <label class="label hidden" for="lair-inside"
         >{localize('DND5E.LAIR.Inside')}</label
       >
@@ -117,7 +117,7 @@
         </h3>
       {/if}
     </div>
-    <div class="flexrow lair-initiative">
+    <div class="card-content flexrow lair-initiative">
       <span class="font-label-medium color-text-lighter flexshrink">
         {localize('DND5E.Initiative')}
       </span>
