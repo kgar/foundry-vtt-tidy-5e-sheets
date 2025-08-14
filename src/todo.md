@@ -14,6 +14,8 @@
     - [x] Figure out solution for HP > 999
     - [x] Needs testing: Validate character sheet header styles are still working as expected
   - [ ] Make loyalty tracker match legendary trackers
+- [ ] PC and NPC Sheets
+  - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 
 #### Abilities Simplification Initiative
 
