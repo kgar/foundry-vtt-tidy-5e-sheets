@@ -916,7 +916,7 @@ export const FoundryAdapter = {
     }).render(true);
   },
   renderSourceConfig(document: any, keyPath: string) {
-    return new dnd5e.applications.SourceConfig(
+    return new dnd5e.applications.shared.SourceConfig(
       { document: document },
       {
         keyPath,
