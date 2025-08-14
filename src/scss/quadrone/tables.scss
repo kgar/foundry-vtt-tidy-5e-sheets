@@ -701,9 +701,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      align-self: stretch;
       font-size: var(--font-size-12);
       width: var(--t5e-icon-size-7x);
-      height: var(--t5e-icon-size-7x);
 
       i {
         color: var(--t5e-color-icon-disabled);
