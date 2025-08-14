@@ -452,50 +452,6 @@
   }
 
   /* TABS */
-
-  .tidy-tab.statblock {
-    .legendaries {
-      align-items: stretch;
-      gap: var(--t5e-size-2x);
-      flex-wrap: wrap;
-    }
-
-    .npc-score-tracker {
-      background: var(--t5e-component-card-darker);
-      border: 0.0625rem solid var(--t5e-component-field-border);
-      border-radius: 0.25rem;
-      box-shadow: var(--t5e-drop-shadow-field);
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      min-width: 10rem;
-      max-width: calc(50% - var(--t5e-size-1x));
-      padding: 0 0.75rem 0.5rem;
-      transition: box-shadow var(--t5e-transition-default);
-
-      .card-header {
-        text-align: center;
-        padding: 0;
-      }
-
-      .card-content {
-        display: flex;
-        flex: 1;
-        align-items: center;
-        justify-content: center;
-      }
-
-      &:hover,
-      &:focus-within {
-        box-shadow: var(--t5e-drop-shadow-card);
-      }
-
-      >* {
-        gap: var(--t5e-size-1x);
-      }
-    }
-  }
-
   /* ----- */
 
   @mixin collapse-abilities {
