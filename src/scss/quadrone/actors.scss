@@ -470,8 +470,9 @@
           left: 50%;
           transform: translateY(-50%) translateX(-50%);
           text-shadow: 0 0 10.375rem rgba(0, 0, 0, 0.72);
+          transition: opacity var(--t5e-transition-default);
 
-          &:hover {
+          &.button-borderless.button-icon-only:hover {
             background: none;
 
             i {
@@ -1401,7 +1402,6 @@
         background-size: contain;
       }
 
-      // 👋 hightouch - POC styles for toggling visibility on mod/value and the score input
       &:has(.ability-score-input:focus) :where(.modifier, .value) {
         visibility: hidden;
       }
@@ -2171,17 +2171,12 @@
 
   .saving-throws {
     .use-ability-header {
-      // gap: var(--t5e-size-2x);
-      // padding: 0 var(--t5e-size-2x);
-
       i {
         flex: 0;
       }
     }
   }
 
-
-  // 👋 hightouch - I'm not sure the best location for our Skills Card CSS; it's here temporarily
   .use-ability-list {
 
     button.proficiency {

@@ -285,6 +285,11 @@
               >
                 {effectiveMaxHp}
               </div>
+
+              {#if effectiveMaxHp !== hpMax}
+                <i class="fas fa-asterisk max-hp-override-indicator"></i>
+                <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
+              {/if}
             </button>
             <TextInputQuadrone
               bind:this={hpValueInput}
@@ -382,10 +387,6 @@
             >
               <i class="fas fa-cog"></i>
             </button>
-          {/if}
-
-          {#if effectiveMaxHp !== hpMax}
-            <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
           {/if}
         </div>
         <div class="actor-vitals-row">

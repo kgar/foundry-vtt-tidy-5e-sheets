@@ -91,6 +91,15 @@
           padding-left: 0;
           max-width: 3.5rem;
         }
+
+        .hit-points {
+          position: relative;
+
+          .max-hp-override-indicator {
+            font-size: 0.375rem;
+            margin: 0 0 0.5rem -0.0625rem;
+          }
+        }
       }
 
       .exhaustion-bar {
@@ -300,6 +309,10 @@
           flex: 0;
         }
       }
+    }
+
+    .ability-roll-button:active {
+      border: none;
     }
 
     .ability-labels {
@@ -515,10 +528,6 @@
 
       .ability-roll-button {
         margin-bottom: -2.125rem;
-
-        &:active {
-          border: none;
-        }
       }
 
       .bonus-container .ability-score-input {
