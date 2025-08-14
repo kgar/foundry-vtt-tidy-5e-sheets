@@ -184,16 +184,14 @@
         }
       }
 
-      .item-use-button {
-        img {
-          --icon-fill: var(--t5e-color-icon-default);
-          fill: var(--icon-fill);
-          background: var(--t5e-color-palette-gold-56);
+      .item-image {
+        --icon-fill: var(--t5e-color-icon-default);
+        fill: var(--icon-fill);
 
-          &[src$=".svg"] {
-            fill: var(--t5e-color-icon-default);
-            color: white;
-          }
+        &[src$=".svg"] {
+          fill: var(--t5e-color-icon-default);
+          color: white;
+          background: var(--t5e-color-palette-gold-56);
         }
       }
     }
