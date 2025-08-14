@@ -414,19 +414,21 @@
               </button>
             </div>
 
-            <TextInputQuadrone
-              document={context.actor}
-              field="system.attributes.hp.tempmax"
-              value={context.system.attributes.hp.tempmax}
-              enableDeltaChanges
-              selectOnFocus={true}
-              data-dtype="Number"
-              inputmode="numeric"
-              placeholder="+{localize('DND5E.Max')}"
-              class="max-hp uninput centered"
-              aria-label={localize('DND5E.HitPointsTempMax')}
-              data-tooltip={'DND5E.HitPointsTempMax'}
-            />
+            <div class="max-hp-container">
+              <TextInputQuadrone
+                document={context.actor}
+                field="system.attributes.hp.tempmax"
+                value={context.system.attributes.hp.tempmax}
+                enableDeltaChanges
+                selectOnFocus={true}
+                data-dtype="Number"
+                inputmode="numeric"
+                placeholder="+{localize('DND5E.Max')}"
+                class="max-hp uninput centered"
+                aria-label={localize('DND5E.HitPointsTempMax')}
+                data-tooltip={'DND5E.HitPointsTempMax'}
+              />
+            </div>
 
             <button
               type="button"

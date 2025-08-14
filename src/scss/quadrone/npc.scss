@@ -191,6 +191,10 @@
       flex: 0 0 auto;
       height: var(--font-size-15);
       align-content: center;
+
+      .concentration-roll-button>* {
+        flex-wrap: nowrap;
+      }
     }
   }
 
@@ -493,11 +497,6 @@
           right: calc(50% - 0.875rem);
         }
       }
-
-      .concentration-roll-button {
-        margin-bottom: -1rem;
-        padding-bottom: 1rem;
-      }
     }
 
 
@@ -508,6 +507,10 @@
 
       .ability-roll-button {
         margin-bottom: -2.125rem;
+
+        &:active {
+          border: none;
+        }
       }
 
       .bonus-container .ability-score-input {
@@ -572,6 +575,10 @@
       }
     }
 
+    .ability-score-input {
+      font-size: var(--collapse-font-medium);
+    }
+
     .save {
       margin-right: var(--t5e-size-halfx);
     }
@@ -583,17 +590,6 @@
       .bonus {
         font-size: var(--collapse-font-medium);
         margin-left: 0;
-      }
-    }
-
-    .concentration {
-      max-width: 3rem;
-      padding: 0 0.25rem;
-
-      .concentration-roll-button {
-        margin-top: 0.5rem;
-        margin-left: 0;
-        margin-right: 0;
       }
     }
   }
@@ -637,57 +633,6 @@
   .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
     @include collapse-abilities;
   }
-
-  // @container abilities (width < 47.5rem) {
-  //   .sheet-header .abilities-container .abilities-container-inner {
-  //     &:has(:nth-child(11)) {
-  //       @include ability-smaller;
-  //     }
-  //   }
-  // }
-
-  // @container abilities (width < 45rem) {
-  //   .sheet-header .abilities-container .abilities-container-inner {
-
-  //     &:has(:nth-child(11)) {
-  //       @include collapse-abilities;
-  //       overflow-x: auto;
-  //       overflow-y: hidden;
-  //     }
-  //   }
-  // }
-
-  // @container abilities (width < 40rem) {
-
-  //   .sheet-header .abilities-container {
-  //     margin-right: var(--t5e-size-2x);
-
-  //     .abilities-container-inner:has(:nth-child(9)) {
-  //       @include ability-smaller;
-  //     }
-  //   }
-  // }
-
-  // @container abilities (width < 33.75rem) {
-
-  //   .sheet-header .abilities-container .abilities-container-inner {
-  //     &:has(:nth-child(8)):not(:has(:nth-child(9))) {
-  //       @include ability-smaller;
-
-  //       .initiative-container .initiative.score {
-  //         min-height: 3.375rem;
-  //       }
-  //     }
-
-  //     &:has(:nth-child(9)) {
-  //       @include collapse-abilities;
-
-  //       .concentration .concentration-roll-button {
-  //         margin-top: 0.375rem;
-  //       }
-  //     }
-  //   }
-  // }
 
   @container actor-sheet (width > 50rem) {
     --header-padding: 1.5rem;
