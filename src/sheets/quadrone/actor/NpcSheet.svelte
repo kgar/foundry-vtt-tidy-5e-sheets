@@ -285,6 +285,11 @@
               >
                 {effectiveMaxHp}
               </div>
+
+              {#if effectiveMaxHp !== hpMax}
+                <i class="fas fa-asterisk max-hp-override-indicator"></i>
+                <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
+              {/if}
             </button>
             <TextInputQuadrone
               bind:this={hpValueInput}
@@ -383,10 +388,6 @@
               <i class="fas fa-cog"></i>
             </button>
           {/if}
-
-          {#if effectiveMaxHp !== hpMax}
-            <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
-          {/if}
         </div>
         <div class="actor-vitals-row">
           {#if exhaustionBarFocused}
@@ -414,19 +415,21 @@
               </button>
             </div>
 
-            <TextInputQuadrone
-              document={context.actor}
-              field="system.attributes.hp.tempmax"
-              value={context.system.attributes.hp.tempmax}
-              enableDeltaChanges
-              selectOnFocus={true}
-              data-dtype="Number"
-              inputmode="numeric"
-              placeholder="+{localize('DND5E.Max')}"
-              class="max-hp uninput centered"
-              aria-label={localize('DND5E.HitPointsTempMax')}
-              data-tooltip={'DND5E.HitPointsTempMax'}
-            />
+            <div class="max-hp-container">
+              <TextInputQuadrone
+                document={context.actor}
+                field="system.attributes.hp.tempmax"
+                value={context.system.attributes.hp.tempmax}
+                enableDeltaChanges
+                selectOnFocus={true}
+                data-dtype="Number"
+                inputmode="numeric"
+                placeholder="+{localize('DND5E.Max')}"
+                class="max-hp uninput centered"
+                aria-label={localize('DND5E.HitPointsTempMax')}
+                data-tooltip={'DND5E.HitPointsTempMax'}
+              />
+            </div>
 
             <button
               type="button"

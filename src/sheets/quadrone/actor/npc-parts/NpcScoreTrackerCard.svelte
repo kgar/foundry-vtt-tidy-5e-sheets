@@ -47,18 +47,18 @@
         {label}
       </h3>
     </div>
-    <div class="flexrow">
+    <div class="card-content flexrow">
       {#if valuePath}
         <button
           type="button"
-          class="flexshrink decrementer"
+          class="button button-icon-only button-borderless flexshrink decrementer"
           disabled={value <= min}
           onclick={() => change(valuePath, -1)}
         >
           <i class="fa-solid fa-hexagon-minus"></i>
         </button>
       {/if}
-      <span class="uses">
+      <span class="uses flexrow">
         {#if valuePath}
           <NumberInputQuadrone
             document={actor}
@@ -75,7 +75,7 @@
             >{value}</span
           >
         {/if}
-        <span class="separator color-text-lightest">/</span>
+        <span class="separator color-text-lightest flexshrink">/</span>
         {#if maxPath && unlocked}
           <NumberInputQuadrone
             document={actor}
@@ -96,7 +96,7 @@
       {#if valuePath}
         <button
           type="button"
-          class="flexshrink decrementer"
+          class="button button-icon-only button-borderless flexshrink decrementer"
           disabled={!isNil(max) && value >= max}
           onclick={() => change(valuePath, 1)}
         >

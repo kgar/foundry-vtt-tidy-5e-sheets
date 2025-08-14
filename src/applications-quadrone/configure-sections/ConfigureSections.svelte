@@ -41,7 +41,7 @@
           <label for="">
             {localize(group.title)}
           </label>
-          <div class="form-fields">
+          <div class="form-fields vertical">
             {#each group.settings as setting}
               {#if setting.type === 'boolean'}
                 <label class="checkbox">

@@ -44,11 +44,6 @@
           prop: legendariesProp,
           default: false,
         },
-      ],
-    } satisfies SectionOptionGroup,
-    {
-      title: '',
-      settings: [
         {
           type: 'boolean',
           label: 'TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab',
@@ -88,7 +83,7 @@
 <ActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
 {#if context.showLegendariesOnStatblockTab && (context.showLegendaryActions || context.showLegendaryResistances || context.showLairTracker)}
-  <div class="legendaries flexrow">
+  <div class="legendaries cards-container flexrow">
     <Legendaries />
   </div>
 {/if}
