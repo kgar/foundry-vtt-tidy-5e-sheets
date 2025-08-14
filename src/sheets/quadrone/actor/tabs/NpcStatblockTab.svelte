@@ -44,11 +44,6 @@
           prop: legendariesProp,
           default: false,
         },
-      ],
-    } satisfies SectionOptionGroup,
-    {
-      title: '',
-      settings: [
         {
           type: 'boolean',
           label: 'TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab',

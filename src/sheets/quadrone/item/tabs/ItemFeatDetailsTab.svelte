@@ -130,7 +130,7 @@
   </div>
 
   <div class="form-group">
-    <label id="prerequisites-repeatable-{appId}">
+    <label for="prerequisites-repeatable-{appId}">
       {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
     </label>
     <div class="form-fields">
@@ -143,6 +143,7 @@
           disabledChecked={context.system.prerequisites.repeatable}
           disabled={!context.unlocked}
         />
+        &nbsp;
       </label>
     </div>
     <p class="hint">

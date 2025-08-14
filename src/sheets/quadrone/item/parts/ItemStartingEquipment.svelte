@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="form-group">
-    <label></label>
+    <label for="{appId}-starting-equipment"></label>
     <div class="form-fields">
       <div class="editor-rendered-content starting-equipment-list" id="{appId}-starting-equipment">
         {@html coalesce(

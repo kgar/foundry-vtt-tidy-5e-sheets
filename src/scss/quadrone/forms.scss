@@ -222,7 +222,8 @@
       margin-top: calc(var(--font-size-small) + 0.25rem);
     }
 
-    &:has(input[type='radio']) {
+    &:has(input[type='radio']),
+    &:has(.vertical) {
       align-items: flex-start;
 
       >label {
@@ -423,10 +424,14 @@
       align-items: end;
     }
 
-    &:has(input[type='radio']) {
+    &.vertical {
       justify-content: flex-start;
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
+    }
+
+    >*:only-child {
+      flex: 1;
     }
   }
 
