@@ -148,6 +148,10 @@
 
     input[type="text"]:not(:disabled):not(.uninput) {
 
+      &.actor-name {
+        margin-top: -0.25rem;
+      }
+
       &.xp-value,
       &.actor-name {
         --t5e-field-background-color: rgba(0, 0, 0, 0.2);
@@ -220,8 +224,12 @@
     align-items: center;
     justify-content: center;
     margin-right: var(--t5e-size-2x);
-    margin-top: var(--t5e-size-2x);
+    margin-top: 0.4375rem;
     gap: 0;
+
+    &:has(.challenge-rating-input) .label {
+      margin: 0.0625rem 0 0;
+    }
 
     >* {
       flex: 0;
