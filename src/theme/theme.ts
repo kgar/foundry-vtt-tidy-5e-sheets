@@ -9,6 +9,7 @@ import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 const tidyStyleTagId = 'tidy5e-sheet-theme';
 
@@ -172,26 +173,28 @@ export function getInventoryItemThemeBackground(item: Item5e) {
 }
 
 export function getSpellItemThemeBackground(spell: Item5e) {
+  const config = FoundryAdapter.getSpellMethodConfig(spell);
+
   if (
-    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
+    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
   ) {
     return '--t5e-innate-background';
   }
 
   if (
-    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
+    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
   ) {
     return '--t5e-ritual-only-background';
   }
 
   if (
-    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
+    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
   ) {
     return '--t5e-atwill-background';
   }
 
   if (
-    spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
+    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
   ) {
     return '--t5e-pact-background';
   }

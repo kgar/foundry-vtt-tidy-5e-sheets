@@ -68,7 +68,9 @@ export const defaultItemSortSchemes = {
       ) ||
       (a.system.level ?? 0) - (b.system.level ?? 0) ||
       binarize(b.system.prepared) - binarize(a.system.prepared) ||
-      (a.system.method ?? '').compare(b.system.method ?? '') ||
+      (a.system.method ?? CONSTANTS.SPELL_PREPARATION_METHOD_INNATE).compare(
+        b.system.method ?? CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
+      ) ||
       a.name.localeCompare(b.name, game.i18n.lang),
   },
   [CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED]: {

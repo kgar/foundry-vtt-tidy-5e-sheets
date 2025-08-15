@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
   import type { ClassValue } from 'svelte/elements';
@@ -10,8 +9,8 @@
 
   let { doc }: Props = $props();
 
-  let method = $derived(doc.system.method ?? '');
-  let config = $derived(CONFIG.DND5E.spellcasting[method]);
+  let config = $derived(FoundryAdapter.getSpellMethodConfig(doc));
+  let method = $derived(config.key);
 
   let iconClasses: ClassValue = $derived([
     'spell-row-icon',

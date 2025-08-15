@@ -61,11 +61,13 @@
 
   // Spell Preparation
 
+  let config = $derived(FoundryAdapter.getSpellMethodConfig(context.item));
+
   let spellPreparationText = $derived(
-    context.system.method &&
-      context.system.method !== CONSTANTS.SPELL_PREPARATION_METHOD_SPELL
-      ? (CONFIG.DND5E.spellcasting[context.system.method]?.label ??
-          context.system.method)
+    config.key &&
+      config.key !== CONSTANTS.SPELL_PREPARATION_METHOD_SPELL
+      ? (CONFIG.DND5E.spellcasting[config.key]?.label ??
+          config.key)
       : '',
   );
 
@@ -88,8 +90,8 @@
     context.system.identified === false ? 'disabled' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
     coalesce(rarity?.slugify(), 'none'),
-    !isNil(context.system.method) ? 'spell-method' : undefined,
-    'method-' + context.system.method?.slugify(),
+    !isNil(config.key) ? 'spell-method' : undefined,
+    'method-' + config.key?.slugify(),
   ]);
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));

@@ -41,7 +41,6 @@ export class SpellUtils {
         SpellUtils.isUnlimitedAtWill(item) ||
         SpellUtils.isUnlimitedInnate(item) ||
         ItemUtils.hasSufficientLimitedUses(item) ||
-        SpellUtils.isPactMagic(item) ||
         SpellUtils.isRitualSpellForRitualCaster(item))
     );
   }
@@ -74,7 +73,10 @@ export class SpellUtils {
 
   /** Is an At-Will spell. */
   static isAtWill(item: any): boolean {
-    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL;
+    return (
+      FoundryAdapter.getSpellMethodConfig(item).key ===
+      CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
+    );
   }
 
   /** Is an Innate spell with no limit on uses. */
@@ -84,12 +86,18 @@ export class SpellUtils {
 
   /** Is an Innate spell. */
   static isInnate(item: any): boolean {
-    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE;
+    return (
+      FoundryAdapter.getSpellMethodConfig(item).key ===
+      CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
+    );
   }
 
   /** Is pact magic. */
   static isPactMagic(item: Item5e) {
-    return item.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT;
+    return (
+      FoundryAdapter.getSpellMethodConfig(item).key ===
+      CONSTANTS.SPELL_PREPARATION_METHOD_PACT
+    );
   }
 
   /** Is a spell that requires preparation and is prepared. */
