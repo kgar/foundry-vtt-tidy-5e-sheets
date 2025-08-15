@@ -1,8 +1,8 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Scheda Personaggio",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e Scheda PNG",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Scheda Oggetti",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Scheda Veicoli",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Scheda PG Classica Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Scheda PNG Classica Tidy 5e",
+    "TIDY5E.Tidy5eItemSheetClassic": "Scheda Oggetti Classica Tidy 5e",
+    "TIDY5E.Tidy5eVehicleSheetClassic": "Scheda Veicoli Classica Tidy 5e",
     "TIDY5E.PlayerName": "Nome del Giocatore",
     "TIDY5E.EditSheetImageHint": "Tasto Sinistro: Modifica Immagine",
     "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
@@ -377,7 +377,7 @@
         "SheetMenu": {
             "name": "Impostazioni del tema Tidy",
             "buttonLabel": "Impostazioni Tema",
-            "hint": "Solo Classic Tidy Sheets: Personalizza i colori di Tidy 5e Sheets."
+            "hint": "Solo Schede Classiche Tidy: Personalizza i colori delle Schede Tidy 5e."
         },
         "Sheet": {
             "title": "Impostazioni Tema: {userName}",
@@ -704,7 +704,7 @@
         "options.GmOnly": "Solo DM",
         "options.GmAndOwners": "DM e Proprietari Oggetti"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Scheda Contenitore Tidy 5e Classic",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Scheda Contenitore Classica Tidy 5e",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Oggetto"
     },
@@ -781,7 +781,7 @@
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
     "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Scheda gruppo classica Tidy 5e",
+    "TIDY5E.Tidy5eGroupSheetClassic": "Scheda Gruppo Classica Tidy 5e",
     "TIDY5E.NoSpecialSenses": "Nessun senso speciale",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostra Pannello Info",
     "TIDY5E.Group.EmptyMembersTabHint": "Questo gruppo è vuoto. Trascina un personaggio dalla barra laterale per aggiungere un membro.",
@@ -921,5 +921,7 @@
     "TIDY5E.ItemSheet.FeatureOriginLabel": "Privilegi Origine",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Includi Sezioni Incantesimi nella scheda Statistiche",
     "TIDY5E.UseSpecificDefaultValue.Label": "Usa predefinito ({value})",
-    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostra i tracker Leggendari/Tana nella scheda Statistiche"
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostra i tracker Leggendari/Tana nella scheda Statistiche",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Scheda Incontro Classica Tidy 5e",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Scheda Incontro Tidy 5e"
 }
