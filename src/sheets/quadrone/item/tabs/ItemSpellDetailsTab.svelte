@@ -167,7 +167,9 @@
             field="system.method"
             value={context.source.method}
             disabled={!context.unlocked}
+            blankValue={undefined}
           >
+            <option value={undefined}></option>
             <SelectOptions
               data={context.spellcastingMethods}
               labelProp="label"

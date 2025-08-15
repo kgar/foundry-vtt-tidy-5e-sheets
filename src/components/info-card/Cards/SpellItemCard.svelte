@@ -30,7 +30,7 @@
 
   let preparationMap = FoundryAdapter.getSpellPreparationStatesMap();
 
-  let method = $derived(CONFIG.DND5E.spellcasting[item.system.method]);
+  let method = $derived(FoundryAdapter.getSpellMethodConfig(item));
 
   let leftSubtitle = $derived(
     [
@@ -55,7 +55,7 @@
         <span>{leftSubtitle ?? ''}</span>
         {#if owner}
           {@const rightSubtitle = [
-            CONFIG.DND5E.spellcasting[item.system.method]?.getLabel({
+            FoundryAdapter.getSpellMethodConfig(item)?.getLabel({
               level: method?.slots ? item.system.level || 0 : 1,
               format: 'short',
             }),

@@ -364,6 +364,7 @@ export const FoundryAdapter = {
   },
   getSpellRowClasses(spell: any): string {
     const classes: string[] = [];
+    const method = FoundryAdapter.getSpellMethodConfig(spell).key;
 
     if (spell.system.canPrepare) {
       classes.push('can-prepare');
@@ -391,23 +392,23 @@ export const FoundryAdapter = {
       classes.push('always');
     }
 
-    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_SPELL) {
+    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_SPELL) {
       classes.push('method-spell');
     }
 
-    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
+    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
       classes.push('method-pact');
     }
 
-    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
       classes.push('method-atwill');
     }
 
-    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL) {
+    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL) {
       classes.push('method-ritual');
     }
 
-    if (spell.system.method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE) {
+    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE) {
       classes.push('method-innate');
     }
 
@@ -1505,10 +1506,20 @@ export const FoundryAdapter = {
       return prev;
     }, {});
   },
+  getSpellMethodConfig(item: Item5e) {
+    return (
+      CONFIG.DND5E.spellcasting[item.system.method] ??
+      CONFIG.DND5E.spellcasting.innate
+    );
+  },
   getSpellIcon(item: Item5e): ClassValue {
+    const config = FoundryAdapter.getSpellMethodConfig(item);
+
+    const method = config.key;
+
     let classes: ClassValue = [];
 
-    if (item.system.canPrepare) {
+    if (config.prepares) {
       classes.push('can-prepare');
       classes.push(
         item.system.prepared ===
@@ -1523,7 +1534,7 @@ export const FoundryAdapter = {
       classes.push('cannot-prepare', 'fa-solid');
     }
 
-    switch (item.system.method) {
+    switch (method) {
       case CONSTANTS.SPELL_PREPARATION_METHOD_SPELL:
         classes.push('fa-book');
         break;

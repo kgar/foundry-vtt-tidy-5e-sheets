@@ -104,15 +104,18 @@
     }
   }
 
+  const config = $derived(
+    item.type === CONSTANTS.ITEM_TYPE_SPELL
+      ? FoundryAdapter.getSpellMethodConfig(item)
+      : undefined,
+  );
+
   const itemColorClasses = $derived<ClassValue>([
     !isNil(item.system.rarity, '') ? 'rarity' : undefined,
     item.system.rarity?.slugify(),
-    !isNil(item.system.method) ? 'spell-method' : undefined,
+    !isNil(config?.key) ? 'spell-method' : undefined,
     {
-      [`method-${item.system.method?.slugify()}`]: !isNil(
-        item.system.method,
-        '',
-      ),
+      [`method-${config?.key?.slugify()}`]: !isNil(config),
     },
     'equipped' in item.system && item.system.equipped ? 'equipped' : undefined,
   ]);
