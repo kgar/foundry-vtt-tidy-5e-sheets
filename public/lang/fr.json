@@ -406,7 +406,8 @@
         "SpellPreparationModeColors.title": "Couleurs du mode de préparation des sorts",
         "AccentColor.title": "Couleur de surbrillance",
         "ItemSidebarBackground.title": "Arrière-plan de la barre latérale des éléments",
-        "RarityColors.title": "Couleurs des raretés"
+        "RarityColors.title": "Couleurs des raretés",
+        "SpellcastingMethodColors.title": "Couleurs de la méthode d'incantation"
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Niveau de sort {number}",
     "TIDY5E.ApplyChanges": "Appliquer les changements",
@@ -916,5 +917,8 @@
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Afficher les traqueurs légendaires/de repaires dans l'onglet Statblock",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Inclure les sections du livre de sorts dans l'onglet Statblock",
     "TIDY5E.UseSpecificDefaultValue.Label": "Par défaut ({value})",
-    "TIDY5E.ItemSheet.PactLevelCastLabel": "Incanté en {ordinal}"
+    "TIDY5E.ItemSheet.PactLevelCastLabel": "Incanté en {ordinal}",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e feuille de rencontre classique",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Feuille de rencontre",
+    "TIDY5E.CharacterTraits.Title": "Capacités du personnage"
 }

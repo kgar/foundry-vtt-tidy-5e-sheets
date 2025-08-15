@@ -634,10 +634,10 @@
         "name": "Omezit akce na triky?"
     },
     "TIDY5E.Settings.SheetPreferences": {
-        "buttonLabel": "Tidy jako základní deník",
+        "buttonLabel": "Tidy jako základní deníky",
         "hint": "Pokud chceš nastavit deníky Tidy 5e jako výchozí pro jeden nebo více typů dokumentů, ale základní nabídka konfigurace výchozích deníků nefunguje dle očekávání, použij tuto nabídku pro výběr předvoleb.",
         "explanation": "Vyber všechny typy dokumentů, u kterých chceš, aby byly jako výchozí nastaveny deníky Tidy 5e.",
-        "name": "Nastavit Tidy jako základní deník"
+        "name": "Nastavit Tidy jako základní deníky"
     },
     "TIDY5E.Utilities.Tools": "Nástroje",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
@@ -701,7 +701,7 @@
         "name": "Používat ikony škol magie Tidy?"
     },
     "TIDY5E.Commands.HideContainerPanel": "Skrýt panel kontejnerů",
-    "TIDY5E.ItemFilters.CanCast": "Může seslat",
+    "TIDY5E.ItemFilters.CanCast": "Lze seslat",
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
     },
@@ -891,5 +891,7 @@
     "TIDY5E.EmptyTools": "Žádná dovednost s nástroji.",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zobrazit legendární akce a akce doupěte v záložce statistik",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Zahrnout sekci Kouzla do záložky statistik",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí (NP) Tidy 5e",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e"
 }
