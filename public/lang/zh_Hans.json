@@ -469,6 +469,125 @@
         "hint": "在法术上展示所属法术职业图标，而非法术本身的图标。必须通过法术编辑卡上的类别选择器将法术与职业相关联。当玩家角色拥有多个职业时，此功能可一眼看出哪些法术属于哪个职业。"
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
-        "name": "允许准备戏法"
+        "name": "允许准备戏法",
+        "hint": "塔莎的万事坩埚中提出的“戏法公式”可选规则允许法师在长休后重新准备戏法，其运作机制与准备环位法术相同。以此方式准备的戏法不计入每日法术准备数量上限。"
+    },
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e 经典遭遇卡",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e 遭遇卡",
+    "TIDY5E.Settings.LockMoneyChanges": {
+        "name": "锁定货币",
+        "hint": "不允许非GM更改货币。"
+    },
+    "TIDY5E.Settings.LockExpChanges": {
+        "name": "锁定经验值",
+        "hint": "不允许非GM更改经验值。"
+    },
+    "TIDY5E.Settings.LockHpMaxChanges": {
+        "name": "锁定最大生命值变化",
+        "hint": "不允许非GM更改最大生命值。"
+    },
+    "TIDY5E.Settings.LockLevelSelector": {
+        "name": "锁定等级选择器",
+        "hint": "不允许非GM使用角色等级选择器更改玩家等级。"
+    },
+    "TIDY5E.Settings.LockItemQuantity": {
+        "name": "锁定物品数量",
+        "hint": "不允许非GM更改物品数量。"
+    },
+    "TIDY5E.Settings.ActionList.Header": "动作列表",
+    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+        "name": "将动作限制为戏法",
+        "hint": "默认情况下，在\"动作\"选项卡/面板中不再显示所有造成伤害的法术，而是仅限戏法。此设定与 D&DBeyond 平台的默认行为保持一致。"
+    },
+    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "name": "将持续一分钟的法术视为动作",
+        "hint": "默认情况下，在“动作”选项卡/面板中包含持续时间在一分钟或更短（例如 1 轮）且激活时间为 1 动作或 1 附赠动作（例如“祝福术”“灾祸术”“命令术”）的法术。"
+    },
+    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "将具有持续效果的法术视为动作",
+        "hint": "默认情况下，在“动作”选项卡/面板中包含带有持续效果的法术（例如“树肤术”）。"
+    },
+    "TIDY5E.Settings.ActionListIncludeConsumables": {
+        "name": "将消耗品视为动作",
+        "hint": "默认情况下，将具有激活消耗（动作、附赠动作等）的消耗品列入“动作”列表。"
+    },
+    "TIDY5E.Settings.ColorPickerEnabled": {
+        "name": "使用自定义主题颜色",
+        "hint": "显示自定义主题颜色"
+    },
+    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
+        "name": "强调色"
+    },
+    "TIDY5E.Settings.ColorPickerEquipped": {
+        "name": "已装备"
+    },
+    "TIDY5E.Settings.ColorPickerHpBar": {
+        "name": "生命值条"
+    },
+    "TIDY5E.Settings.ColorPickerEquippedOutline": {
+        "name": "已装备轮廓"
+    },
+    "TIDY5E.Settings.ColorPickerEquippedAccent": {
+        "name": "已装备强调色"
+    },
+    "TIDY5E.Settings.ColorPickerPrepared": {
+        "name": "已准备"
+    },
+    "TIDY5E.Settings.ColorPickerPreparedOutline": {
+        "name": "已准备轮廓"
+    },
+    "TIDY5E.Settings.ColorPickerPreparedAccent": {
+        "name": "已准备强调色"
+    },
+    "TIDY5E.Settings.ColorPickerPact": {
+        "name": "契约"
+    },
+    "TIDY5E.Settings.ColorPickerPactOutline": {
+        "name": "契约轮廓"
+    },
+    "TIDY5E.Settings.ColorPickerPactAccent": {
+        "name": "契约强调色"
+    },
+    "TIDY5E.Settings.ColorPickerAtWill": {
+        "name": "随意"
+    },
+    "TIDY5E.Settings.ColorPickerAtWillOutline": {
+        "name": "随意轮廓"
+    },
+    "TIDY5E.Settings.ColorPickerAtWillAccent": {
+        "name": "随意强调色"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "仅仪式"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "仅仪式轮廓"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "仅仪式强调色"
+    },
+    "TIDY5E.Settings.ColorPickerInnate": {
+        "name": "天生"
+    },
+    "TIDY5E.Settings.ColorPickerInnateOutline": {
+        "name": "天生轮廓"
+    },
+    "TIDY5E.Settings.ColorPickerInnateAccent": {
+        "name": "天生强调色"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+        "name": "始终准备"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+        "name": "始终准备轮廓"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+        "name": "始终准备强调色"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": "滚动条滑块"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": "滚动条轨道"
     }
 }

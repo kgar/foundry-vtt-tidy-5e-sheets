@@ -882,5 +882,7 @@
     "TIDY5E.EmptyTools": "Sem proficiência em ferramentas.",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Incluir seções do Grimório na aba Bloco de Estatísticas",
     "TIDY5E.UseSpecificDefaultValue.Label": "Usar Padrão ({value})",
-    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas"
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Ficha de Encontro Clássica Tidy 5e",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Ficha de Encontro Tidy 5e"
 }
