@@ -920,5 +920,6 @@
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Incanté en {ordinal}",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e feuille de rencontre classique",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Feuille de rencontre",
-    "TIDY5E.CharacterTraits.Title": "Capacités du personnage"
+    "TIDY5E.CharacterTraits.Title": "Capacités du personnage",
+    "TIDY5E.ItemSheet.FeatureOriginLabel": "composantes d'origine"
 }
