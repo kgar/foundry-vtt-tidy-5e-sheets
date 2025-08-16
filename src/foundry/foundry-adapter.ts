@@ -253,7 +253,7 @@ export const FoundryAdapter = {
     const dataModel = CONFIG.Item.dataModels[type];
     const singleton = dataModel?.metadata.singleton ?? false;
     if (singleton && actor.itemTypes[type].length) {
-      const error = FoundryAdapter.localize('DND5E.ActorWarningSingleton', {
+      const error = FoundryAdapter.localize('DND5E.ACTOR.Warning.Singleton', {
         itemType: type,
         actorType: actor.type,
       });

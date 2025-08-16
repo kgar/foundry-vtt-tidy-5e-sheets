@@ -22,7 +22,7 @@
     actor,
     label,
     min = 0,
-    value,
+    value = 0,
     valuePath,
     valueTooltip,
     max,

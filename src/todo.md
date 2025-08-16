@@ -2,33 +2,9 @@
 
 ### The Short List
 
-- [x] Restore Character sheet responsive ability scores with a scripted approach. See Abilities Simplification Initiative (ASI)
-- [ ] NPC Sheet
-  - [x] Header - Wire up Max HP
-  - [x] Header - Wire up HP roll
-  - [ ] hightouch punch list from PR #1278
-    - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
-    - [ ] Display background/subclass/etc in Statblock tab
-    - [ ] Class styling in sidebar (copy from PC sheet Traits tab)
-    - [ ] Show alignment/species/size in sidebar in Edit Mode, subtitle only in play mode
-    - [x] Figure out solution for HP > 999
-    - [x] Needs testing: Validate character sheet header styles are still working as expected
-  - [ ] Make loyalty tracker match legendary trackers
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
-
-#### Abilities Simplification Initiative
-
-- [x] Track application position on the svelte mixin, and lock it to `_updatePosition`; this will be maintained for all use cases by app v2 <3
-- [x] Feed svelte context with reactive position ref
-- [x] Retrofit character.scss ability container styles to be
-  - [x] .ability.ability-smaller - the smaller abilities
-  - [x] .ability.ability-collapsed - the alternate view of abilities
-- [x] Update the abilities component to apply `.ability-smaller` at a specific sheet position width, then `.ability-collapsed` for the smallest configuration.
-  - [x] Determine what that width should be, via trial and error
-  - [x] Be sure to convert hard width to rems when making our calculations
-  - [x] Use a constant, multiplied by the number of visible abilities.
-
+- [ ] NPC: (important NPCs only) Add Hit Dice tracker to traits section of sidebar. It is readonly and simply shows value/max hit dice in the style of the traits rows.
 
 ### (Almost) Everything after the short list
 
@@ -213,6 +189,22 @@ Limited:
 
 ### To Do Graveyard
 
+- [x] Restore Character sheet responsive ability scores with a scripted approach. See Abilities Simplification Initiative (ASI)
+- [x] NPC Sheet
+  - [x] Header - Wire up Max HP
+  - [x] Header - Wire up HP roll
+  - [x] hightouch punch list from PR #1278
+    - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
+    - [x] Display background/subclass/etc in Statblock tab
+    - [x] ~~(confirm if needed) Class styling in sidebar (copy from PC sheet Traits tab)~~ Not needed. Already covered.
+    - [x] Show alignment in bio tab
+    - [x] Show species in sidebar in Edit Mode, subtitle only in play mode
+    - [x] Show size in sidebar in Edit Mode, subtitle only in play mode
+    - [x] Figure out solution for HP > 999
+    - [x] Needs testing: Validate character sheet header styles are still working as expected
+  - [x] Make loyalty tracker match legendary trackers
+
+
 
 #### Legendaries Tray
 
@@ -238,3 +230,15 @@ Limited:
   box-shadow: var(--t5e-drop-shadow-field);
 }
 ```
+
+#### Abilities Simplification Initiative
+
+- [x] Track application position on the svelte mixin, and lock it to `_updatePosition`; this will be maintained for all use cases by app v2 <3
+- [x] Feed svelte context with reactive position ref
+- [x] Retrofit character.scss ability container styles to be
+  - [x] .ability.ability-smaller - the smaller abilities
+  - [x] .ability.ability-collapsed - the alternate view of abilities
+- [x] Update the abilities component to apply `.ability-smaller` at a specific sheet position width, then `.ability-collapsed` for the smallest configuration.
+  - [x] Determine what that width should be, via trial and error
+  - [x] Be sure to convert hard width to rems when making our calculations
+  - [x] Use a constant, multiplied by the number of visible abilities.

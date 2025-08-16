@@ -25,11 +25,13 @@ import type {
   ActiveEffect5e,
   Actor5e,
   ActorAbilityContextEntry,
+  ActorClassEntryContext,
   ActorSaves,
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorSpeedSenseEntryContext,
   ActorTraitContext,
+  CreatureTypeContext,
   Folder,
   MessageBus,
   SpellcastingClassContext,
@@ -374,6 +376,61 @@ export function Tidy5eActorSheetQuadroneBase<
       return spellcasting;
     }
 
+    _getClassesAndOrphanedSubclasses(): {
+      classes: ActorClassEntryContext[];
+      orphanedSubclasses: Item5e[];
+    } {
+      const subclasses: Item5e[] = Object.values(this.actor.subclasses);
+      const classes = Object.values(this.actor.classes)
+        .map<ActorClassEntryContext>((cls: Item5e) => {
+          const maxLevelDelta =
+            CONFIG.DND5E.maxLevel - this.actor.system.details.level;
+
+          const spellcasting = cls.system.spellcasting
+            ? {
+                dc: cls.system.spellcasting.save,
+                ability: (
+                  CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
+                    ?.abbreviation ?? cls.system.spellcasting.ability
+                )?.toLocaleUpperCase(),
+              }
+            : undefined;
+
+          const subclass = subclasses.findSplice(
+            (s: Item5e) => s.system.classIdentifier === cls.identifier
+          );
+
+          let needsSubclass = false;
+          if (!subclass) {
+            const subclassAdvancement = cls.advancement.byType.Subclass?.[0];
+            needsSubclass =
+              subclassAdvancement &&
+              subclassAdvancement.level <= cls.system.levels;
+          }
+
+          return {
+            name: cls.name,
+            levels: cls.system.levels,
+            isOriginalClass: cls.system.isOriginalClass,
+            spellcasting,
+            item: cls,
+            img: cls.img,
+            availableLevels: Array.fromRange(CONFIG.DND5E.maxLevel + 1)
+              .slice(1)
+              .map((level) => {
+                const delta = level - cls.system.levels;
+                return { level, delta, disabled: delta > maxLevelDelta };
+              }),
+            uuid: cls.uuid,
+            subclass,
+            needsSubclass,
+          };
+        })
+        .toSorted((left, right) => right.levels - left.levels);
+
+      return { classes, orphanedSubclasses: subclasses };
+    }
+
     /* -------------------------------------------- */
 
     _applyConcentration(context: ActorSheetQuadroneContext) {
@@ -678,6 +735,22 @@ export function Tidy5eActorSheetQuadroneBase<
         );
 
       return senses;
+    }
+
+    _getCreatureType(): CreatureTypeContext {
+      const { details } = this.actor.system;
+
+      return {
+        icon:
+          CONFIG.DND5E.creatureTypes[details.type.value]?.icon ??
+          'icons/svg/mystery-man.svg',
+        title:
+          details.type.value === 'custom'
+            ? details.type.custom
+            : CONFIG.DND5E.creatureTypes[details.type.value]?.label,
+        reference: CONFIG.DND5E.creatureTypes[details.type.value]?.reference,
+        subtitle: details.type.subtype,
+      };
     }
 
     /* -------------------------------------------- */
@@ -1334,7 +1407,7 @@ export function Tidy5eActorSheetQuadroneBase<
         const singleton = dataModel?.metadata.singleton ?? false;
         if (singleton && this.actor.itemTypes[itemData.type].length) {
           ui.notifications.error(
-            game.i18n.format('DND5E.ActorWarningSingleton', {
+            game.i18n.format('DND5E.ACTOR.Warning.Singleton', {
               itemType: game.i18n.localize(
                 CONFIG.Item.typeLabels[itemData.type]
               ),
@@ -1460,6 +1533,60 @@ export function Tidy5eActorSheetQuadroneBase<
       );
 
       return this._onDropItemCreate(droppedItemData, event, this.#dropBehavior);
+    }
+
+    /* -------------------------------------------- */
+    /*  Sheet Actions                               */
+    /* -------------------------------------------- */
+
+    /**
+     * Handle finding an available item of a given type.
+     */
+    async findItem(args: {
+      event: Event;
+      type: string;
+      classIdentifier?: string;
+      facilityType?: string;
+    }) {
+      const { event, classIdentifier, facilityType, type } = args;
+
+      const filters: Record<string, any> = {
+        locked: { types: new Set([type]) },
+      };
+
+      if (classIdentifier) {
+        filters.locked.additional = { class: { [classIdentifier]: 1 } };
+      }
+
+      if (type === 'class') {
+        const existingIdentifiers = new Set(Object.keys(this.actor.classes));
+        filters.locked.arbitrary = [
+          {
+            o: 'NOT',
+            v: { k: 'system.identifier', o: 'in', v: existingIdentifiers },
+          },
+        ];
+      }
+
+      if (type === 'facility' && facilityType) {
+        const otherType = facilityType === 'basic' ? 'special' : 'basic';
+        filters.locked.additional = {
+          type: { [facilityType]: 1, [otherType]: -1 },
+          level: { max: this.actor.system.details.level },
+        };
+      }
+
+      let result = await dnd5e.applications.CompendiumBrowser.selectOne({
+        filters,
+      });
+
+      if (result) {
+        this._onDropItemCreate(
+          game.items.fromCompendium(await fromUuid(result), { keepId: true }),
+          event,
+          'copy'
+        );
+      }
     }
 
     /* -------------------------------------------- */

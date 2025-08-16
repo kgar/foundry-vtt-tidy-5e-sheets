@@ -3,6 +3,7 @@
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
+  import ActorTraitSize from '../parts/ActorTraitSize.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -17,6 +18,11 @@
 {/if} -->
 
 <div class="list traits">
+  <!-- Size -->
+  {#if context.unlocked}
+    <ActorTraitSize />
+  {/if}
+
   <!-- Speed -->
   <ActorTraitConfigurableListEntry
     label={localize('DND5E.Speed')}
@@ -119,32 +125,17 @@
     icon="fa-solid fa-gem"
   />
 
-    <!-- Special Traits -->
-    {#if context.unlocked}
+  <!-- Special Traits -->
+  {#if context.unlocked}
     <ActorTraitConfigurableListEntry
-    label={localize('DND5E.SpecialTraits')}
-    entries={[]}
-    configurationTooltip={localize('DND5E.SpecialTraits')}
-    onconfig={() =>
-      new SpecialTraitsApplication({ document: context.actor }).render({
-        force: true,
-      })}
-    icon="fa-solid fa-star"
-  />
+      label={localize('DND5E.SpecialTraits')}
+      entries={[]}
+      configurationTooltip={localize('DND5E.SpecialTraits')}
+      onconfig={() =>
+        new SpecialTraitsApplication({ document: context.actor }).render({
+          force: true,
+        })}
+      icon="fa-solid fa-star"
+    />
   {/if}
 </div>
-
-{#if context.unlocked}
-<!-- Special Traits -->
-<!-- <button
-  type="button"
-  class="button"
-  onclick={() =>
-    new SpecialTraitsApplication({ document: context.actor }).render({
-      force: true,
-    })}
->
-  <i class="fa-solid fa-star"></i>
-  {localize('DND5E.SpecialTraits')}
-</button> -->
-{/if}
