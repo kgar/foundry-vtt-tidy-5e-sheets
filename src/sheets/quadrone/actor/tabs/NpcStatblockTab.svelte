@@ -17,6 +17,9 @@
   import StatblockTables from '../../shared/StatblockTables.svelte';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
+  import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
+  import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
+  import ActorTraitSpecies from '../parts/ActorTraitSpecies.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -95,3 +98,11 @@
   {searchCriteria}
   sheetDocument={context.actor}
 />
+
+<ActorTraitClasses />
+
+<ActorTraitBackground />
+
+{#if context.unlocked}
+  <ActorTraitSpecies includeCreatureTypeConfig />
+{/if}

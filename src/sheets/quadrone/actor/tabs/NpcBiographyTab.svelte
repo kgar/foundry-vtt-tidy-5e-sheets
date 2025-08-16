@@ -18,6 +18,11 @@
 
   let bioFields: FlagBioField[] = $derived([
     {
+      field: 'system.details.alignment',
+      value: context.system.details.alignment,
+      text: 'DND5E.Alignment',
+    },
+    {
       field: TidyFlags.gender.prop,
       value: TidyFlags.gender.get(context.actor),
       text: 'DND5E.Gender',

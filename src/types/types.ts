@@ -403,8 +403,8 @@ export type CharacterSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
@@ -510,8 +510,8 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
@@ -567,15 +567,15 @@ export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | {
-    tabId: string;
-    message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
-    options?: { includeInlineToggles?: boolean };
-  }
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+      options?: { includeInlineToggles?: boolean };
+    }
   | {
-    tabId: string;
-    message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
-    options?: { includeInlineToggles?: boolean };
-  };
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+      options?: { includeInlineToggles?: boolean };
+    };
 
 export type Utilities<TContext> = Record<
   string,
@@ -993,7 +993,7 @@ export type ActorSpeedSenseEntryContext = {
   units: string;
 } & ActorTraitContext;
 
-export type CharacterClassEntryContext = {
+export type ActorClassEntryContext = {
   uuid: string;
   name: string;
   img: string;
@@ -1125,7 +1125,7 @@ export type ActorTraitItemContext = {
 export type CharacterSheetQuadroneContext = {
   background?: ActorTraitItemContext;
   // TODO: Populate with context data as needed
-  classes: CharacterClassEntryContext[];
+  classes: ActorClassEntryContext[];
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   creatureType: CreatureTypeContext;
@@ -1173,8 +1173,11 @@ export type CharacterSheetQuadroneContext = {
 
 export type NpcSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  background?: ActorTraitItemContext;
+  classes: ActorClassEntryContext[];
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  creatureType: CreatureTypeContext;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   enriched: {
@@ -1188,6 +1191,7 @@ export type NpcSheetQuadroneContext = {
   features: FeatureSection[];
   habitats: { label: string }[];
   inventory: InventorySection[];
+  orphanedSubclasses: Item5e[];
   portrait: {
     src: string;
     shape: PortraitShape;
@@ -1204,6 +1208,7 @@ export type NpcSheetQuadroneContext = {
   showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  species?: ActorTraitItemContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];
   spellcasting: (SpellcastingClassContext | NpcSpellcastingContext)[];

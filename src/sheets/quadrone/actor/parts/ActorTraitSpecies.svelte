@@ -1,10 +1,25 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type {
+    CharacterSheetQuadroneContext,
+    NpcSheetQuadroneContext,
+  } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';
 
-  let context = $derived(getCharacterSheetQuadroneContext());
+  interface Props {
+    includeCreatureTypeConfig?: boolean;
+  }
+
+  let { includeCreatureTypeConfig }: Props = $props();
+
+  let context =
+    $derived(
+      getSheetContext<
+        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
 
@@ -54,7 +69,7 @@
           </span>
         {:else if context.unlocked}
           <button
-            aria-label="Add {localize('TYPES.Item.race')}"
+            aria-label={localize('DND5E.Species.Add')}
             type="button"
             class="button button-primary"
             data-tooltip="DND5E.Species.Add"
@@ -124,7 +139,7 @@
           </span>
         {/if}
       </div>
-      {#if context.unlocked && species}
+      {#if context.unlocked && (species || includeCreatureTypeConfig)}
         <div class="list-controls">
           <button
             aria-label="Edit {localize('DND5E.CreatureType')}"

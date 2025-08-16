@@ -5,6 +5,7 @@
   import type { ActorSpeedSenseEntryContext } from 'src/types/types';
   import type { ClassValue } from 'svelte/elements';
   import { getModifierData } from 'src/utils/formatting';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -63,6 +64,14 @@
       </span>
       <div class="divider-dot"></div>
     {/if}
+    {#if !isNil(context.creatureType?.title, '')}
+      <span class="size">
+        <span class="font-label-medium color-text-gold"
+          >{context.creatureType.title}</span
+        >
+      </span>
+      <div class="divider-dot"></div>
+    {/if}
     {#if context.system.details.creatureType?.title}
       <span class="creature-type">
         <span class="font-label-medium color-text-gold">
@@ -80,9 +89,11 @@
       </span>
       <div class="divider-dot"></div>
     {/if}
-    <span class="alignment">
-      <span class="font-label-medium color-text-gold">{alignment}</span>
-    </span>
+    {#if !isNil(alignment)}
+      <span class="alignment">
+        <span class="font-label-medium color-text-gold">{alignment}</span>
+      </span>
+    {/if}
     {#if context.enableXp}
       <div class="divider-dot"></div>
       <div class="xp-label flexrow">
@@ -119,14 +130,14 @@
               })}
             class="unbutton concentration-roll-button header-control"
           >
-          {#if context.isConcentrating}
-            <i
-              class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
-              aria-label={localize('DND5E.Concentration')}
-            ></i>
-          {:else}
-            <!-- <i class="fas fa-head-side-brain color-text-gold"></i> -->
-          {/if}
+            {#if context.isConcentrating}
+              <i
+                class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                aria-label={localize('DND5E.Concentration')}
+              ></i>
+            {:else}
+              <!-- <i class="fas fa-head-side-brain color-text-gold"></i> -->
+            {/if}
             <span class="label font-label-medium color-text-gold">
               {#if context.isConcentrating}
                 {localize('EFFECT.DND5E.StatusConcentrating')}

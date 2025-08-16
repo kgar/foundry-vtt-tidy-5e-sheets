@@ -21,5 +21,7 @@
     valuePath="system.attributes.loyalty.value"
     max={loyaltyMax}
     unlocked={context.unlocked}
+    showFiligree={false}
+    icon=""
   />
 {/if}

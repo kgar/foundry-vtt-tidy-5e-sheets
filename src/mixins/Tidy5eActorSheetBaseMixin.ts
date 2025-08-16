@@ -345,7 +345,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
         const singleton = dataModel?.metadata.singleton ?? false;
         if (singleton && this.actor.itemTypes[itemData.type].length) {
           ui.notifications.error(
-            game.i18n.format('DND5E.ActorWarningSingleton', {
+            game.i18n.format('DND5E.ACTOR.Warning.Singleton', {
               itemType: game.i18n.localize(
                 CONFIG.Item.typeLabels[
                   itemData.type as keyof typeof CONFIG.Item.typeLabels

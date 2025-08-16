@@ -165,11 +165,22 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ? this.actor.token
       : this.actor.prototypeToken;
 
+    let background = this.actor.itemTypes.background[0];
+    let species = this.actor.itemTypes.race[0];
+
     const context: NpcSheetQuadroneContext = {
+      background: background
+        ? {
+            id: background.id,
+            img: background.img,
+            name: background.name,
+          }
+        : undefined,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
       ),
       conditions: conditions,
+      creatureType: this._getCreatureType(),
       currencies,
       effects: enhancedEffectSections,
       enriched: {
@@ -236,6 +247,13 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showLoyaltyTracker:
         this.actor.system.traits.important &&
         game.settings.get('dnd5e', 'loyaltyScore'),
+      species: species
+        ? {
+            id: species.id,
+            img: species.img,
+            name: species.name,
+          }
+        : undefined,
       speeds: super._getMovementSpeeds(),
       spellbook: [],
       spellcasting: this._prepareSpellcastingContext(actorContext.rollData),
@@ -248,6 +266,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       treasures: [],
       type: CONSTANTS.SHEET_TYPE_NPC,
       ...actorContext,
+      ...this._getClassesAndOrphanedSubclasses(),
     };
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
