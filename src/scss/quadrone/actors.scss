@@ -1747,45 +1747,6 @@
       flex-direction: column;
       gap: var(--t5e-size-3x);
     }
-
-    &.attributes {
-      .columns {
-        display: grid;
-        grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);
-        gap: var(--t5e-size-6x);
-      }
-
-      .attributes-column {
-        display: flex;
-        flex-direction: column;
-        gap: var(--t5e-size-6x);
-        padding-bottom: var(--t5e-size-8x);
-      }
-
-      .skills {
-        grid-area: skills;
-        height: fit-content;
-      }
-
-      .saving-throws {
-        grid-area: saves;
-        height: fit-content;
-      }
-
-      .actor-traits {
-        grid-area: traits;
-        height: fit-content;
-      }
-
-      .tools {
-        grid-area: tools;
-        height: fit-content;
-      }
-
-      .use-ability-list li {
-        width: auto;
-      }
-    }
   }
 
   .tidy-tab {
@@ -2023,8 +1984,6 @@
 
 
       .list-entry {
-        padding: var(--t5e-size-1x) 0;
-        border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
 
         .item-image-link {
           width: 1.75rem;
@@ -2095,8 +2054,12 @@
         flex: 0;
         justify-content: end;
 
+        &:has(.level-selector) {
+          justify-content: start;
+        }
+
         select {
-          flex: 1;
+          flex: 0;
           margin-right: var(--t5e-size-1x);
         }
       }

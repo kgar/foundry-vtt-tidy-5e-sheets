@@ -479,6 +479,13 @@
         height: fit-content;
       }
 
+      .traits.list {
+        .list-entry {
+          padding: var(--t5e-size-1x) 0;
+          border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
+        }
+      }
+
       .tools {
         grid-area: tools;
         height: fit-content;

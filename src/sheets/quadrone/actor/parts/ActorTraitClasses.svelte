@@ -225,8 +225,7 @@
         {/if}
       </div>
       {#if context.unlocked && cls}
-        <div class="flexrow">
-          <div class="list-controls">
+          <div class="list-controls flexrow">
             <LevelUpDropdown
               availableLevels={cls.availableLevels}
               item={cls.item}
@@ -235,7 +234,7 @@
             <button
               aria-label={localize('DND5E.LevelActionIncrease')}
               type="button"
-              class="button button-primary button-level-up"
+              class="button button-primary button-level-up flexshrink"
               data-tooltip="DND5E.LevelActionIncrease"
               disabled={hitLevelCap}
               onclick={() =>
@@ -245,7 +244,6 @@
               {localize('DND5E.LevelActionIncrease')}
             </button>
           </div>
-        </div>
       {/if}
     </div>
   </div>
