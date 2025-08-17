@@ -38,14 +38,14 @@
       </i>
     </div>
     <div class="info pills flex1">
-      <div class="spellcasting-ability pill pill-medium">
+      <div class="spellcasting-ability pill pill-medium {context.unlocked ? 'borderless' : ''}">
         {#if context.unlocked}
           {@render abilitySelector('label')}
         {:else}
           {info.ability.label}
         {/if}
       </div>
-      <div class="spellcasting-ability pill pill-medium">
+      <div class="pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Ability')}</span
         >
@@ -73,7 +73,7 @@
           <span class="font-data-medium">{info.save}</span>
         </span>
       </div>
-      <div class="level pill pill-medium">
+      <div class="level pill pill-medium {context.unlocked ? 'borderless' : ''}">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellcasterLevel')}</span
         >

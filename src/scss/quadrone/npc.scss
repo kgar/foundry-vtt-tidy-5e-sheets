@@ -360,14 +360,6 @@
         flex-direction: column;
         gap: 0.1875rem;
 
-        &.empty {
-
-          &:hover .list-label h4,
-          &:hover .list-label i {
-            color: var(--t5e-color-text-default);
-          }
-        }
-
         .list-label {
           margin-right: 0;
           max-height: 1rem;
@@ -377,9 +369,21 @@
             color: var(--t5e-color-text-lighter);
 
             i {
-              color: var(--t5e-color-icon-disabled);
+              color: var(--t5e-color-icon-default);
               transition: color var(--t5e-transition-default);
             }
+          }
+        }
+
+        &.empty {
+
+          .list-label h4 i {
+            color: var(--t5e-color-icon-disabled);
+          }
+
+          &:hover .list-label h4,
+          &:hover .list-label i {
+            color: var(--t5e-color-text-default);
           }
         }
 
@@ -698,6 +702,30 @@
       .actor-image img {
         height: 10rem;
         width: 10rem;
+      }
+    }
+  }
+
+  .spellbook-footer {
+    .spellcasting-ability {
+      select {
+        height: 1.5rem;
+      }
+    }
+
+    .level {
+      input[type="number"] {
+        height: 1.5rem;
+        max-width: 2.5rem;
+      }
+    }
+
+    .pill.borderless {
+      padding: 0;
+      border: none;
+
+      &.level {
+        padding-left: 0.5rem;
       }
     }
   }
