@@ -90,8 +90,8 @@
     context.system.identified === false ? 'disabled' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
     coalesce(rarity?.slugify(), 'none'),
-    context.itemType.toLowerCase() === CONSTANTS.ITEM_TYPE_SPELL && !isNil(config.key) ? 'spell-method' : undefined,
-    context.itemType.toLowerCase() === CONSTANTS.ITEM_TYPE_SPELL ? 'method-' + config.key?.slugify() : undefined,
+    !isNil(config.key) ? 'spell-method' : undefined,
+    'method-' + config.key?.slugify(),
   ]);
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
