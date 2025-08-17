@@ -110,7 +110,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * Description editor and a header for mechanics/flavor.
    */
   description: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION,
+    id: CONSTANTS.TAB_DESCRIPTION,
     title: 'DND5E.Description',
     content: {
       component: ItemDescriptionTab,
@@ -122,7 +122,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * A sidebar with item inputs and properties, and a description editor.
    */
   descriptionWithSidebar: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION,
+    id: CONSTANTS.TAB_DESCRIPTION,
     title: 'DND5E.Description',
     content: {
       component: ItemDescriptionWithSidebarTab,
@@ -193,7 +193,7 @@ const itemSheetTabs: Record<string, Tab> = {
    * A sidebar with species properties and configuration buttons, and a description editor.
    */
   speciesDescription: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION,
+    id: CONSTANTS.TAB_DESCRIPTION,
     title: 'DND5E.Description',
     content: {
       component: ItemSpeciesDescriptionTab,

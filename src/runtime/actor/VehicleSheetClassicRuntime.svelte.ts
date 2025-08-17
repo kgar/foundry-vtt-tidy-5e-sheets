@@ -46,7 +46,7 @@ const defaultVehicleClassicTabs: RegisteredTab<VehicleSheetContext>[] = [
     layout: 'classic',
   },
   {
-    id: CONSTANTS.TAB_VEHICLE_DESCRIPTION,
+    id: CONSTANTS.TAB_VEHICLE_DESCRIPTION_LEGACY,
     title: 'DND5E.Description',
     content: {
       component: VehicleDescriptionTab,

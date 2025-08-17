@@ -380,7 +380,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       types: new Set<string>([CONSTANTS.ITEM_TYPE_RACE]),
     },
     {
-      id: CONSTANTS.TAB_ITEM_DESCRIPTION,
+      id: CONSTANTS.TAB_DESCRIPTION,
       layout: 'quadrone',
       title: 'DND5E.Description',
       content: {
@@ -432,7 +432,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: BackgroundSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
@@ -443,7 +443,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: ClassSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
@@ -454,7 +454,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: ConsumableSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
@@ -467,7 +467,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         component: ContainerSheet,
         defaultTabs: [
           CONSTANTS.TAB_CONTAINER_CONTENTS,
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
         ],
       },
@@ -477,7 +477,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: EquipmentSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
@@ -489,7 +489,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: FacilitySheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
         ],
@@ -500,7 +500,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: FeatSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
@@ -513,7 +513,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: LootSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
         ],
       },
@@ -523,7 +523,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: SpeciesSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
@@ -534,7 +534,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: SpellSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
@@ -546,7 +546,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: SubclassSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ADVANCEMENT,
         ],
@@ -557,7 +557,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: ToolSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
@@ -569,7 +569,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       {
         component: WeaponSheet,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,

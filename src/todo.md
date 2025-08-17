@@ -2,6 +2,14 @@
 
 ### The Short List
 
+- [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
+  - [x] Registration
+  - [x] Tabs, Runtime
+  - [ ] Stub layout with tab strip
+- [ ] Establish Encounter Quadrone scaffolding so the sheet can be opened. While doing this, extract the common classes for Group and Encounter that work best for them collectively.
+  - [ ] Registration
+  - [ ] Tabs
+  - [ ] Stub layout with tab strip
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 
