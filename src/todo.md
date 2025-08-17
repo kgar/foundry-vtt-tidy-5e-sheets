@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Remove Species / Creature Type from Statblock tab
+- [x] Remove Species / Creature Type from Statblock tab
 - [ ] Add Species as standalone trait to NPC sidebar; show when the NPC has a species or when the sheet is unlocked
 - [ ] Add Creature Type as standalone trait to NPC sidebar; show always
   - [ ] Play mode: Pill

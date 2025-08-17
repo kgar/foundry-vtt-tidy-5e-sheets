@@ -102,7 +102,3 @@
 <ActorTraitClasses />
 
 <ActorTraitBackground />
-
-{#if context.unlocked}
-  <ActorTraitSpecies includeCreatureTypeConfig />
-{/if}
