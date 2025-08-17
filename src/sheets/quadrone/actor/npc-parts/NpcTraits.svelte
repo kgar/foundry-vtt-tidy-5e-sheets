@@ -57,6 +57,7 @@
 
   <!-- Creature Type -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.CreatureType')}
     entries={creatureTypeEntries}
     onconfig={() => FoundryAdapter.renderCreatureTypeConfig(context.actor)}
@@ -65,6 +66,7 @@
 
   <!-- Speed -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.Speed')}
     entries={context.speeds}
     onconfig={() =>
@@ -74,6 +76,7 @@
 
   <!-- Senses -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.Senses')}
     entries={context.senses}
     onconfig={() =>
@@ -83,6 +86,7 @@
 
   <!-- Resistances -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.Resistances')}
     entries={context.traits.dr}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
@@ -96,6 +100,7 @@
 
   <!-- Damage Immunities -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.TraitDIPlural.other')}
     entries={context.traits.di}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
@@ -109,6 +114,7 @@
 
   <!-- Condition Immunities -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.TraitCIPlural.other')}
     entries={context.traits.ci}
     onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
@@ -118,6 +124,7 @@
 
   <!-- Vulnerabilities -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.Vulnerabilities')}
     entries={context.traits.dv}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
@@ -131,6 +138,7 @@
 
   <!-- Damage Modification -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.DamageModification.Label')}
     entries={context.traits.dm}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
@@ -143,6 +151,7 @@
 
   <!-- Habitat -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.Habitat.Configuration.Label')}
     entries={context.habitats}
     configurationTooltip={localize('DND5E.Habitat.Configuration.Title')}
@@ -155,6 +164,7 @@
 
   <!-- Treasure -->
   <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
     label={localize('DND5E.Treasure.Configuration.Label')}
     entries={context.treasures}
     configurationTooltip={localize('DND5E.Treasure.Configuration.Title')}
@@ -168,6 +178,7 @@
   <!-- Special Traits -->
   {#if context.unlocked}
     <ActorTraitConfigurableListEntry
+      configButtonLocation="label"
       label={localize('DND5E.SpecialTraits')}
       entries={[]}
       configurationTooltip={localize('DND5E.SpecialTraits')}
