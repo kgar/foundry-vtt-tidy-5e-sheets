@@ -49,19 +49,19 @@
 
 {#if context.unlocked || entries.length || !!alwaysShow}
   <div class={['list-entry', { empty: empty && !isCustomTrait }]}>
-    <div class={['list-label', 'flexrow']}>
+    <div class="list-label flexrow">
       <h4 class="font-weight-label">
         <i class={icon}></i>
         {label}
       </h4>
       {#if context.unlocked}
-      <button
-        aria-label={configurationLabel}
-        type="button"
-        class="button button-borderless button-icon-only button-config flexshrink"
-        data-tooltip={configurationTooltip ?? configurationLabel}
-        onclick={(ev) => onconfig(ev)}
-      >
+        <button
+          aria-label={configurationLabel}
+          type="button"
+          class="button button-borderless button-icon-only button-config flexshrink"
+          data-tooltip={configurationTooltip ?? configurationLabel}
+          onclick={(ev) => onconfig(ev)}
+        >
           <i class="fa-solid fa-cog"></i>
         </button>
       {/if}

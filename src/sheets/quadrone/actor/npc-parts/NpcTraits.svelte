@@ -31,6 +31,22 @@
 {/if} -->
 
 <div class="list traits">
+  {#if context.actor.system.traits.important}
+    <div class="list-entry">
+      <div class="list-label flexrow">
+        <h4 class="font-weight-label">
+          <i class="fa-solid fa-dice"></i>
+          {localize('DND5E.HitDice')}
+        </h4>
+        <div class="flexshrink">
+          <span class="value">{context.system.attributes.hd.value}</span>
+          <span class="divider">/</span>
+          <span class="max">{context.system.attributes.hd.max}</span>
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <!-- Size -->
   {#if context.unlocked}
     <ActorTraitSize />

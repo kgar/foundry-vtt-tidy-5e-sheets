@@ -9,7 +9,7 @@
   - [x] Edit mode: Pill and config button
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
-- [ ] NPC: (important NPCs only) Add Hit Dice tracker to traits section of sidebar. It is readonly and simply shows value/max hit dice in the style of the traits rows.
+- [x] NPC: (important NPCs only) Add Hit Dice tracker to traits section of sidebar. It is readonly and simply shows value/max hit dice in the style of the traits rows.
 
 ### (Almost) Everything after the short list
 
