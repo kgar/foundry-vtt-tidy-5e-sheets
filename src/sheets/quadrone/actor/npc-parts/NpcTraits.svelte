@@ -4,10 +4,23 @@
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import ActorTraitSize from '../parts/ActorTraitSize.svelte';
+  import { isNil } from 'src/utils/data';
+  import type { ActorTraitContext } from 'src/types/types';
+  import NpcTraitSpecies from './traits/NpcTraitSpecies.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
+
+  let creatureTypeEntries = $derived.by(() => {
+    let result: ActorTraitContext[] = [];
+
+    if (!isNil(context.creatureType?.title, '')) {
+      result.push({ label: context.creatureType?.title });
+    }
+
+    return result;
+  });
 </script>
 
 <!-- {#if context.unlocked}
@@ -18,10 +31,37 @@
 {/if} -->
 
 <div class="list traits">
+  {#if context.actor.system.traits.important}
+    <div class="list-entry">
+      <div class="list-label flexrow">
+        <h4 class="font-weight-label">
+          <i class="fa-solid fa-dice"></i>
+          {localize('DND5E.HitDice')}
+        </h4>
+        <div class="flexshrink">
+          <span class="value">{context.system.attributes.hd.value}</span>
+          <span class="divider">/</span>
+          <span class="max">{context.system.attributes.hd.max}</span>
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <!-- Size -->
   {#if context.unlocked}
     <ActorTraitSize />
   {/if}
+
+  <!-- Species -->
+  <NpcTraitSpecies />
+
+  <!-- Creature Type -->
+  <ActorTraitConfigurableListEntry
+    label={localize('DND5E.CreatureType')}
+    entries={creatureTypeEntries}
+    onconfig={() => FoundryAdapter.renderCreatureTypeConfig(context.actor)}
+    icon=""
+  />
 
   <!-- Speed -->
   <ActorTraitConfigurableListEntry

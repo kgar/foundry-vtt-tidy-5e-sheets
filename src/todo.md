@@ -4,11 +4,9 @@
 
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
-- [ ] NPC: (important NPCs only) Add Hit Dice tracker to traits section of sidebar. It is readonly and simply shows value/max hit dice in the style of the traits rows.
 
 ### (Almost) Everything after the short list
 
-- [ ] Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
 - [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
@@ -189,20 +187,7 @@ Limited:
 
 ### To Do Graveyard
 
-- [x] Restore Character sheet responsive ability scores with a scripted approach. See Abilities Simplification Initiative (ASI)
-- [x] NPC Sheet
-  - [x] Header - Wire up Max HP
-  - [x] Header - Wire up HP roll
-  - [x] hightouch punch list from PR #1278
-    - [x] Legendaries in the statblock tab styling (see "Legendaries Tray" tasks)
-    - [x] Display background/subclass/etc in Statblock tab
-    - [x] ~~(confirm if needed) Class styling in sidebar (copy from PC sheet Traits tab)~~ Not needed. Already covered.
-    - [x] Show alignment in bio tab
-    - [x] Show species in sidebar in Edit Mode, subtitle only in play mode
-    - [x] Show size in sidebar in Edit Mode, subtitle only in play mode
-    - [x] Figure out solution for HP > 999
-    - [x] Needs testing: Validate character sheet header styles are still working as expected
-  - [x] Make loyalty tracker match legendary trackers
+- [x] ~~Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.~~ Nah. We're ok.
 
 
 

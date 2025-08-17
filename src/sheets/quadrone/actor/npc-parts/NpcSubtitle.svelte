@@ -72,17 +72,6 @@
       </span>
       <div class="divider-dot"></div>
     {/if}
-    {#if context.system.details.creatureType?.title}
-      <span class="creature-type">
-        <span class="font-label-medium color-text-gold">
-          {context.system.details.creatureType.title}
-          {#if context.system.details.creatureType.subtitle}
-            ({context.system.details.creatureType.subtitle})
-          {/if}
-        </span>
-      </span>
-      <div class="divider-dot"></div>
-    {/if}
     {#if species}
       <span class="species">
         <span class="font-label-medium color-text-gold">{species}</span>

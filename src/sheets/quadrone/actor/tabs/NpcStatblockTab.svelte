@@ -20,9 +20,7 @@
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
-  import ActorTraitSpecies from '../parts/ActorTraitSpecies.svelte';
-  import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
-  import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
+
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getNpcSheetQuadroneContext());
@@ -103,7 +101,6 @@
   sheetDocument={context.actor}
 />
 
-
 <div class="tidy-table character-traits">
   <div class="tidy-table-header-row theme-dark">
     <h3>{localize('TIDY5E.CharacterTraits.Title')}</h3>
@@ -112,9 +109,5 @@
     <ActorTraitClasses />
 
     <ActorTraitBackground />
-
-    {#if context.unlocked}
-      <ActorTraitSpecies includeCreatureTypeConfig />
-    {/if}
   </div>
 </div>
