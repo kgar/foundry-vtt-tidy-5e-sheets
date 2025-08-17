@@ -61,13 +61,15 @@
 
   // Spell Preparation
 
-  let config = $derived(FoundryAdapter.getSpellMethodConfig(context.item));
+  let config = $derived(
+    context.item.type === CONSTANTS.ITEM_TYPE_SPELL
+      ? FoundryAdapter.getSpellMethodConfig(context.item)
+      : undefined,
+  );
 
   let spellPreparationText = $derived(
-    config.key &&
-      config.key !== CONSTANTS.SPELL_PREPARATION_METHOD_SPELL
-      ? (CONFIG.DND5E.spellcasting[config.key]?.label ??
-          config.key)
+    config?.key && config.key !== CONSTANTS.SPELL_PREPARATION_METHOD_SPELL
+      ? (CONFIG.DND5E.spellcasting[config.key]?.label ?? config.key)
       : '',
   );
 
@@ -90,8 +92,8 @@
     context.system.identified === false ? 'disabled' : undefined,
     !isNil(rarity, '') ? 'rarity' : undefined,
     coalesce(rarity?.slugify(), 'none'),
-    !isNil(config.key) ? 'spell-method' : undefined,
-    'method-' + config.key?.slugify(),
+    !isNil(config?.key) ? 'spell-method' : undefined,
+    !isNil(config?.key) ? 'method-' + config.key.slugify() : undefined,
   ]);
 
   let saveContext = $derived(ItemContext.getItemSaveContext(context.item));
@@ -481,7 +483,9 @@
 
   {#if showCustomSections}
     {@const sectionLabel = SheetSections.getSectionLabel(context.item)}
-    {@const actionSectionLabel = SheetSections.getActionSectionLabel(context.item)}
+    {@const actionSectionLabel = SheetSections.getActionSectionLabel(
+      context.item,
+    )}
     {@const sectionType =
       context.item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
         ? 'Sheet'
