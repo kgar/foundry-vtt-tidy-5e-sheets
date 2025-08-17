@@ -48,6 +48,7 @@
 
     <!-- Speed -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.Speed')}
       entries={context.speeds.traitEntries}
       onconfig={() =>
@@ -57,6 +58,7 @@
 
     <!-- Senses -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.Senses')}
       entries={context.senses.traitEntries}
       onconfig={() =>
@@ -66,6 +68,7 @@
 
     <!-- Resistances -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.Resistances')}
       entries={context.traits.dr}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
@@ -79,6 +82,7 @@
 
     <!-- Damage Immunities -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.TraitDIPlural.other')}
       entries={context.traits.di}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
@@ -92,6 +96,7 @@
 
     <!-- Condition Immunities -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.TraitCIPlural.other')}
       entries={context.traits.ci}
       onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
@@ -101,6 +106,7 @@
 
     <!-- Vulnerabilities -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.Vulnerabilities')}
       entries={context.traits.dv}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
@@ -114,6 +120,7 @@
 
     <!-- Damage Modification -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.DamageModification.Label')}
       entries={context.traits.dm}
       onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
@@ -126,6 +133,7 @@
 
     <!-- Armor -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.Armor')}
       entries={context.traits.armor}
       onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'armor')}
@@ -134,6 +142,7 @@
 
     <!-- Weapons -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('TYPES.Item.weaponPl')}
       entries={context.traits.weapon}
       onconfig={() => FoundryAdapter.renderWeaponsConfig(context.actor)}
@@ -142,6 +151,7 @@
 
     <!-- Languages -->
     <ActorTraitConfigurableListEntry
+      configButtonLocation="end"
       label={localize('DND5E.Languages')}
       entries={context.traits.languages}
       onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
@@ -150,6 +160,7 @@
 
     {#each context.customActorTraits as trait}
       <ActorTraitConfigurableListEntry
+        configButtonLocation="end"
         label={localize(trait.title)}
         entries={[]}
         onconfig={(ev) =>

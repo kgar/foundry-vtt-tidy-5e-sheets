@@ -22,6 +22,7 @@
       pillClass: string;
       iconClass: string;
     };
+    configButtonLocation: 'label' | 'end';
   }
 
   let {
@@ -34,6 +35,7 @@
     alwaysShow,
     isCustomTrait,
     aggregateIcons,
+    configButtonLocation,
   }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -54,7 +56,7 @@
         <i class={icon}></i>
         {label}
       </h4>
-      {#if context.unlocked}
+      {#if context.unlocked && configButtonLocation == 'label'}
         <button
           aria-label={configurationLabel}
           type="button"
@@ -82,6 +84,17 @@
           </button>
         {/if} -->
       </div>
+      {#if context.unlocked && configButtonLocation == 'end'}
+        <button
+          aria-label={configurationLabel}
+          type="button"
+          class="button button-borderless button-icon-only button-config flexshrink"
+          data-tooltip={configurationTooltip ?? configurationLabel}
+          onclick={(ev) => onconfig(ev)}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
     </div>
   </div>
 {/if}
