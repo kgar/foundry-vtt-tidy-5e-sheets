@@ -5,6 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { NpcSpellcastingContext } from 'src/types/types';
+  import { isNil } from 'src/utils/data';
 
   interface Props {
     info: NpcSpellcastingContext;
@@ -38,13 +39,25 @@
       </i>
     </div>
     <div class="info pills flex1">
-      <div class="spellcasting-ability pill pill-medium {context.unlocked ? 'borderless' : ''}">
-        {#if context.unlocked}
+      {#if context.unlocked}
+        <div
+          class={[
+            'spellcasting-ability pill pill-medium',
+            { borderless: context.unlocked },
+          ]}
+        >
           {@render abilitySelector('label')}
-        {:else}
+        </div>
+      {:else if !isNil(context.system.attributes.spellcasting, '')}
+        <div
+          class={[
+            'spellcasting-ability pill pill-medium',
+            { borderless: context.unlocked },
+          ]}
+        >
           {info.ability.label}
-        {/if}
-      </div>
+        </div>
+      {/if}
       <div class="pill pill-medium">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Ability')}</span
@@ -73,7 +86,9 @@
           <span class="font-data-medium">{info.save}</span>
         </span>
       </div>
-      <div class="level pill pill-medium {context.unlocked ? 'borderless' : ''}">
+      <div
+        class="level pill pill-medium {context.unlocked ? 'borderless' : ''}"
+      >
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellcasterLevel')}</span
         >
@@ -115,7 +130,7 @@
           <span class="label uppercase">
             {@render abilitySelector('abbr')}
           </span>
-        {:else}
+        {:else if !isNil(info.ability.abbreviation, '')}
           <span class="label font-label-medium color-text-gold uppercase"
             >{info.ability.abbreviation}</span
           >

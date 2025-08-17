@@ -67,7 +67,7 @@
             placeholder="0"
             min="0"
             step="1"
-            class="value {unlocked ? '' : 'uninput'}"
+            class={['value', { uninput: unlocked }]}
             data-tooltip={valueTooltip}
           />
         {:else}
@@ -84,7 +84,7 @@
             placeholder="0"
             min="0"
             step="1"
-            class="{unlocked ? '' : 'uninput'}"
+            class={{ uninput: unlocked }}
             data-tooltip={maxTooltip}
           />
         {:else}

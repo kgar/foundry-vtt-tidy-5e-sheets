@@ -3,13 +3,14 @@
   import type { ExpansionTrackerToggleProvider } from 'src/features/expand-collapse/ExpansionTracker.svelte';
   import { isUserInteractable } from 'src/utils/element';
   import { getContext, type Snippet } from 'svelte';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     children?: Snippet;
-    class?: string | string[];
+    class?: ClassValue;
   }
 
-  let { children, class: className }: Props = $props();
+  let { children, class: cssClass }: Props = $props();
 
   let toggleable = getContext<ExpansionTrackerToggleProvider>(
     CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
@@ -37,7 +38,7 @@
 </script>
 
 <header
-  class={`tidy-table-header-row ${Array.isArray(className) ? className.join(' ') : (className ?? '')}`}
+  class={[`tidy-table-header-row`, cssClass]}
   class:toggleable={!!toggleable}
   onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_ROW}
