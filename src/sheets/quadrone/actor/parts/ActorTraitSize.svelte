@@ -21,6 +21,7 @@
 <div class="list-entry">
   <div class="list-label">
     <h4 class="font-weight-label">
+      <i class="fas fa-ruler-combined"></i>
       {localize('DND5E.Size')}
     </h4>
   </div>

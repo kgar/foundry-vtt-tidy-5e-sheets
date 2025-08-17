@@ -360,14 +360,6 @@
         flex-direction: column;
         gap: 0.1875rem;
 
-        &.empty {
-
-          &:hover .list-label h4,
-          &:hover .list-label i {
-            color: var(--t5e-color-text-default);
-          }
-        }
-
         .list-label {
           margin-right: 0;
           max-height: 1rem;
@@ -377,9 +369,21 @@
             color: var(--t5e-color-text-lighter);
 
             i {
-              color: var(--t5e-color-icon-disabled);
+              color: var(--t5e-color-icon-default);
               transition: color var(--t5e-transition-default);
             }
+          }
+        }
+
+        &.empty {
+
+          .list-label h4 i {
+            color: var(--t5e-color-icon-disabled);
+          }
+
+          &:hover .list-label h4,
+          &:hover .list-label i {
+            color: var(--t5e-color-text-default);
           }
         }
 
@@ -453,6 +457,41 @@
 
   /* TABS */
   /* ----- */
+
+  .tidy-tab {
+    &.statblock {
+      &:has(.character-traits) {
+        .tidy-table-container {
+          padding-block-end: 0;
+        }
+
+        .character-traits {
+          .tidy-table-header-row {
+            h3 {
+              padding: 0 0 0.125rem 0.5rem;
+            }
+          }
+
+          .list-label {
+            padding-left: 0.5rem;
+            flex: 0.75;
+          }
+        }
+
+        .list-entry {
+          border-radius: 0.125rem;
+          border-width: 0 0 0.0625rem 0;
+          border-style: solid;
+          border-image: var(--t5e-table-row-border-image);
+
+          padding: var(--t5e-size-1x) 0;
+        }
+
+      }
+
+
+    }
+  }
 
   @mixin collapse-abilities {
     --collapse-bg-light: rgba(0, 0, 0, 0.20);
@@ -663,6 +702,30 @@
       .actor-image img {
         height: 10rem;
         width: 10rem;
+      }
+    }
+  }
+
+  .spellbook-footer {
+    .spellcasting-ability {
+      select {
+        height: 1.5rem;
+      }
+    }
+
+    .level {
+      input[type="number"] {
+        height: 1.5rem;
+        max-width: 2.5rem;
+      }
+    }
+
+    .pill.borderless {
+      padding: 0;
+      border: none;
+
+      &.level {
+        padding-left: 0.5rem;
       }
     }
   }
