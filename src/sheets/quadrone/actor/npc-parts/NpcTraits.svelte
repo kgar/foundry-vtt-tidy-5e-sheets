@@ -4,10 +4,23 @@
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import ActorTraitSize from '../parts/ActorTraitSize.svelte';
+  import { isNil } from 'src/utils/data';
+  import type { ActorTraitContext } from 'src/types/types';
+  import NpcTraitSpecies from './traits/NpcTraitSpecies.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
+
+  let creatureTypeEntries = $derived.by(() => {
+    let result: ActorTraitContext[] = [];
+
+    if (!isNil(context.creatureType?.title, '')) {
+      result.push({ label: context.creatureType?.title });
+    }
+
+    return result;
+  });
 </script>
 
 <!-- {#if context.unlocked}
@@ -22,6 +35,17 @@
   {#if context.unlocked}
     <ActorTraitSize />
   {/if}
+
+  <!-- Species -->
+  <NpcTraitSpecies />
+
+  <!-- Creature Type -->
+  <ActorTraitConfigurableListEntry
+    label={localize('DND5E.CreatureType')}
+    entries={creatureTypeEntries}
+    onconfig={() => FoundryAdapter.renderCreatureTypeConfig(context.actor)}
+    icon=""
+  />
 
   <!-- Speed -->
   <ActorTraitConfigurableListEntry

@@ -1,25 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type {
-    CharacterSheetQuadroneContext,
-    NpcSheetQuadroneContext,
-  } from 'src/types/types';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { EventHelper } from 'src/utils/events';
 
-  interface Props {
-    includeCreatureTypeConfig?: boolean;
-  }
-
-  let { includeCreatureTypeConfig }: Props = $props();
-
-  let context =
-    $derived(
-      getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
-      >(),
-    );
+  let context = $derived(getCharacterSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
@@ -35,7 +20,7 @@
   }
 </script>
 
-{#if context.unlocked || species}
+{#if context.unlocked}
   <!-- Species -->
   <div
     class="list-entry"
@@ -112,44 +97,6 @@
               EventHelper.triggerContextMenu(ev, '[data-item-id]')}
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-          </button>
-        </div>
-      {/if}
-    </div>
-  </div>
-
-  <!-- Creature Type -->
-  <div class="list-entry list-sub-entry">
-    <div class="list-label">
-      <h4 class="font-weight-label">
-        {localize('DND5E.CreatureType')}
-      </h4>
-    </div>
-    <div class="list-content">
-      <div class="list-values trait-item">
-        {#if species}
-          <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right"></i>
-        {/if}
-        <span class="trait-name font-label-medium">
-          {context.creatureType.title}
-        </span>
-        {#if context.creatureType.subtitle}
-          <span class="font-body-medium color-text-lighter">
-            {context.creatureType.subtitle}
-          </span>
-        {/if}
-      </div>
-      {#if context.unlocked && (species || includeCreatureTypeConfig)}
-        <div class="list-controls">
-          <button
-            aria-label="Edit {localize('DND5E.CreatureType')}"
-            type="button"
-            class="button button-borderless button-icon-only"
-            data-tooltip="DND5E.ItemEdit"
-            onclick={() =>
-              FoundryAdapter.renderCreatureTypeConfig(context.actor)}
-          >
-            <i class="fa-solid fa-edit"></i>
           </button>
         </div>
       {/if}

@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import ActorTraitClasses from '../../parts/ActorTraitClasses.svelte';
-  import ActorTraitSpecies from '../../parts/ActorTraitSpecies.svelte';
+  import CharacterTraitSpecies from './CharacterTraitSpecies.svelte';
   import ActorTraitBackground from '../../parts/ActorTraitBackground.svelte';
   import ActorTraitConfigurableListEntry from '../../parts/ActorTraitConfigurableListEntry.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
@@ -39,7 +39,7 @@
   <div class="list traits">
     <ActorTraitClasses />
 
-    <ActorTraitSpecies />
+    <CharacterTraitSpecies />
 
     <ActorTraitBackground />
 

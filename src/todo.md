@@ -3,10 +3,10 @@
 ### The Short List
 
 - [x] Remove Species / Creature Type from Statblock tab
-- [ ] Add Species as standalone trait to NPC sidebar; show when the NPC has a species or when the sheet is unlocked
-- [ ] Add Creature Type as standalone trait to NPC sidebar; show always
-  - [ ] Play mode: Pill
-  - [ ] Edit mode: Pill and config button
+- [x] Add Species as standalone trait to NPC sidebar; show when the NPC has a species or when the sheet is unlocked
+- [x] Add Creature Type as standalone trait to NPC sidebar; show always
+  - [x] Play mode: Pill
+  - [x] Edit mode: Pill and config button
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [ ] NPC: (important NPCs only) Add Hit Dice tracker to traits section of sidebar. It is readonly and simply shows value/max hit dice in the style of the traits rows.

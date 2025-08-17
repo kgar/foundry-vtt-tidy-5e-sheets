@@ -19,7 +19,6 @@
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
-  import ActorTraitSpecies from '../parts/ActorTraitSpecies.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
