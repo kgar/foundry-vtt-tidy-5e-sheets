@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
@@ -19,6 +20,8 @@
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
+
+  const localize = FoundryAdapter.localize;
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -98,6 +101,13 @@
   sheetDocument={context.actor}
 />
 
-<ActorTraitClasses />
+<div class="tidy-table character-traits">
+  <div class="tidy-table-header-row theme-dark">
+    <h3>{localize('TIDY5E.CharacterTraits.Title')}</h3>
+  </div>
+  <div class="list traits">
+    <ActorTraitClasses />
 
-<ActorTraitBackground />
+    <ActorTraitBackground />
+  </div>
+</div>

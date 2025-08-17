@@ -6,9 +6,10 @@
 
   interface Props {
     children?: Snippet;
+    class?: string | string[];
   }
 
-  let { children }: Props = $props();
+  let { children, class: className }: Props = $props();
 
   let toggleable = getContext<ExpansionTrackerToggleProvider>(
     CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
@@ -36,7 +37,7 @@
 </script>
 
 <header
-  class="tidy-table-header-row"
+  class={`tidy-table-header-row ${Array.isArray(className) ? className.join(' ') : (className ?? '')}`}
   class:toggleable={!!toggleable}
   onclick={handleHeaderRowClick}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_ROW}
