@@ -450,28 +450,6 @@
   .tidy-tab-contents {
 
     &.attributes {
-      .character-traits {
-        padding-bottom: var(--t5e-size-12x);
-      }
-
-      .character-traits-header {
-        align-items: flex-start;
-        gap: var(--t5e-size-2x);
-
-        .character-traits-title {
-          padding-top: var(--t5e-size-1x);
-        }
-
-        .button {
-          flex: 0;
-          text-wrap: nowrap;
-        }
-      }
-
-      .traits .list-entry {
-        padding: var(--t5e-size-1x) 0;
-        border-bottom: 0.0625rem solid var(--t5e-table-row-divider);
-      }
 
       .columns {
         display: grid;

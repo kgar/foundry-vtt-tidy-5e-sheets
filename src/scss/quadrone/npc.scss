@@ -454,6 +454,39 @@
   /* TABS */
   /* ----- */
 
+  .tidy-tab {
+    &.statblock {
+      &:has(.character-traits) {
+        .tidy-table-container {
+          padding-block-end: 0;
+        }
+
+        .character-traits {
+          .tidy-table-header-row {
+            h3 {
+              padding: 0 0 0.125rem 0.5rem;
+            }
+          }
+
+          .list-label {
+            padding-left: 0.5rem;
+            flex: 0.75;
+          }
+        }
+
+        .list-entry {
+          border-radius: 0.125rem;
+          border-width: 0 0 0.0625rem 0;
+          border-style: solid;
+          border-image: var(--t5e-table-row-border-image);
+        }
+
+      }
+
+
+    }
+  }
+
   @mixin collapse-abilities {
     --collapse-bg-light: rgba(0, 0, 0, 0.20);
     --collapse-bg-dark: rgba(0, 0, 0, 0.4);
