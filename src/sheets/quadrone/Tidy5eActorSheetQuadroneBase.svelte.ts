@@ -646,8 +646,8 @@ export function Tidy5eActorSheetQuadroneBase<
         if (property === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
         return src ?? 'int';
       };
-      return Object.entries(context.system[property] ?? {}).map(
-        ([key, entry]: [string, any]) => ({
+      return Object.entries(context.system[property] ?? {})
+        .map(([key, entry]: [string, any]) => ({
           ...entry,
           key,
           abbreviation: CONFIG.DND5E.abilities[entry.ability]?.abbreviation,
@@ -658,8 +658,10 @@ export function Tidy5eActorSheetQuadroneBase<
               ? CONFIG.DND5E.skills[key]?.label
               : dnd5e.documents.Trait.keyLabel(key, { trait: 'tool' }),
           source: context.source[property]?.[key],
-        })
-      );
+        }))
+        .toSorted((a, b) =>
+          (a.label ?? '').localeCompare(b.label ?? '', game.i18n.lang)
+        );
     }
 
     _getMovementSpeeds(): ActorSpeedSenseEntryContext[] {
