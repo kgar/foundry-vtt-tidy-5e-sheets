@@ -426,24 +426,27 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           });
         continue;
       } else if (type === 'slots') {
-        const { value, max, level } = this.actor.system.spells[id] ?? {};
+        const { value, max, level, type: method } =
+          this.actor.system.spells[id] ?? {};
         const uses = { value, max, field: `system.spells.${id}.value` };
 
-        const isLeveledSpell = /spell\d+/.test(id);
-        let img = !isLeveledSpell
-          ? CONFIG.DND5E.spellcasting[id]?.img ||
-            CONFIG.DND5E.spellcasting.pact.img
-          : CONFIG.DND5E.spellcasting.leveled.img.replace('{id}', id);
+        const model = CONFIG.DND5E.spellcasting[method];
 
         const plurals = new Intl.PluralRules(game.i18n.lang, {
           type: 'ordinal',
         });
 
-        let name = !isLeveledSpell
+        const hasNoModelOrIsSingleLevel = !model || model.isSingleLevel;
+
+        let name = hasNoModelOrIsSingleLevel
           ? game.i18n.localize(`DND5E.SpellSlots${id.capitalize()}`)
           : game.i18n.format(`DND5E.SpellSlotsN.${plurals.select(level)}`, {
               n: level,
             });
+
+        let img = hasNoModelOrIsSingleLevel
+          ? model?.img || CONFIG.DND5E.spellcasting.pact.img
+          : model.img.replace('{id}', id);
 
         entries.push({
           type: 'slots',

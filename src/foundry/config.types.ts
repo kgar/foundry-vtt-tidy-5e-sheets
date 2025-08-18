@@ -5503,6 +5503,7 @@ export type SpellcastingConfigEntry = {
     slots: boolean;
     spells: boolean;
   };
+  isSingleLevel?: boolean;
   slots?: boolean;
   getAvailableLevels: ((actor: Actor5e) => number[]) | undefined;
   getSpellSlotKey: ((level: number) => string) | undefined;
