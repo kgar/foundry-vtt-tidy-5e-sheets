@@ -2,6 +2,8 @@
 
 ### The Short List
 
+- [ ] NPC test Observer user
+- [ ] NPC test Limited user
 - [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
   - [x] Registration
   - [x] Tabs, Runtime
