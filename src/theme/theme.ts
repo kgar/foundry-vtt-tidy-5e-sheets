@@ -24,7 +24,7 @@ export function getThemeV2(doc?: any) {
 
   if (!theme) {
     const { colorScheme } = game.settings.get('core', 'uiConfig');
-    theme = colorScheme.application;
+    theme = colorScheme.applications;
   }
 
   if (!theme) {
