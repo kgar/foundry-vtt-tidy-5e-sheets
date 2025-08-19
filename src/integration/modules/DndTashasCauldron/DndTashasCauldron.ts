@@ -66,14 +66,14 @@ export class DndTashasCauldronModuleIntegration
       {
         component: TattooSheetQuadrone,
         defaultTabs: [
-          CONSTANTS.TAB_ITEM_DESCRIPTION,
+          CONSTANTS.TAB_DESCRIPTION,
           CONSTANTS.TAB_ITEM_DETAILS,
           CONSTANTS.TAB_ITEM_ACTIVITIES,
           CONSTANTS.TAB_EFFECTS,
         ],
       },
       [
-        CONSTANTS.TAB_ITEM_DESCRIPTION,
+        CONSTANTS.TAB_DESCRIPTION,
         CONSTANTS.TAB_ITEM_ACTIVITIES,
         CONSTANTS.TAB_EFFECTS,
       ]

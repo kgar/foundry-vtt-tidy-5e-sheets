@@ -42,6 +42,7 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -369,10 +370,20 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const statblockRowActions =
       TableRowActionsRuntime.getStatblockRowActions(context);
+
     const createNewStatblockSection = (
       label: string,
-      id: string
+      id: string,
+      customSectionName?: string
     ): FeatureSection => {
+      const dataset: Record<string, any> = {
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+      };
+
+      if (!isNil(customSectionName, '')) {
+        dataset[TidyFlags.section.prop] = customSectionName;
+      }
+
       return {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
         label,
@@ -380,9 +391,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         key: id,
         show: true,
         rowActions: statblockRowActions,
-        dataset: {
-          type: CONSTANTS.ITEM_TYPE_FEAT,
-        },
+        dataset: dataset,
         canCreate: true,
       };
     };
@@ -416,6 +425,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           const section = (featureSections[customSectionName] ??=
             createNewStatblockSection(
               FoundryAdapter.localize(customSectionName),
+              customSectionName,
               customSectionName
             ));
 

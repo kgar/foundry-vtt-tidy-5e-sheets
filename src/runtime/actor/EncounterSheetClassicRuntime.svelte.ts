@@ -27,7 +27,7 @@ const defaultEncounterClassicTabs: RegisteredTab<EncounterSheetClassicContext>[]
       layout: 'classic',
     },
     {
-      id: CONSTANTS.TAB_GROUP_DESCRIPTION,
+      id: CONSTANTS.TAB_DESCRIPTION,
       title: 'DND5E.Description',
       content: {
         component: EncounterDescriptionTab,

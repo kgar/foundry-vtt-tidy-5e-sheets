@@ -854,7 +854,7 @@ export function createSettings() {
             CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
             CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
             CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_VEHICLE_DESCRIPTION,
+            CONSTANTS.TAB_VEHICLE_DESCRIPTION_LEGACY,
           ],
         },
         get() {
@@ -932,7 +932,7 @@ export function createSettings() {
           default: [
             CONSTANTS.TAB_GROUP_MEMBERS,
             CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_GROUP_DESCRIPTION,
+            CONSTANTS.TAB_DESCRIPTION,
           ],
         },
         get() {
@@ -952,7 +952,7 @@ export function createSettings() {
           default: [
             CONSTANTS.TAB_GROUP_MEMBERS,
             CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_GROUP_DESCRIPTION,
+            CONSTANTS.TAB_DESCRIPTION,
           ],
         },
         get() {

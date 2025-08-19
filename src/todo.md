@@ -2,6 +2,16 @@
 
 ### The Short List
 
+- [ ] NPC test Observer user
+- [ ] NPC test Limited user
+- [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
+  - [x] Registration
+  - [x] Tabs, Runtime
+  - [ ] Stub layout with tab strip
+- [ ] Establish Encounter Quadrone scaffolding so the sheet can be opened. While doing this, extract the common classes for Group and Encounter that work best for them collectively.
+  - [ ] Registration
+  - [ ] Tabs
+  - [ ] Stub layout with tab strip
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 
@@ -187,43 +197,3 @@ Limited:
 
 ### To Do Graveyard
 
-- [x] ~~Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.~~ Nah. We're ok.
-
-
-
-#### Legendaries Tray
-
-- [x] NPC: Implement Legendaries Tray functionality
-  - [x] Add User preference "ShowLegendaryTray" / "Show Legendary Actions trackers in Statblock tab"
-  - [x] Add NPC context variable "showLegendaryTrayInStatblock" and map to preference
-  - [x] Add legendaries in a flexrow format to the Statblock tab
-    - [x] Apply conditional visibility
-      - [x] If "context.showLegendaryTrayInStatblock",
-        - [x] If locked
-          - [x] If has legendaries, show
-          - [x] If no legendary, hide
-        - [x] If unlocked
-          - [x] Show
-  - [x] Ensure it is laid out and styled according to hightouch's advice
-
-```scss
-// hightouch: for now on the cards, use this style instead of the filigree
-[whatever-the-selector-is] {
-  background: solid var(--t5e-component-card-darker);
-  border: 0.125rem solid var(--t5e-color-gold);
-  border-radius: 0.1875rem;
-  box-shadow: var(--t5e-drop-shadow-field);
-}
-```
-
-#### Abilities Simplification Initiative
-
-- [x] Track application position on the svelte mixin, and lock it to `_updatePosition`; this will be maintained for all use cases by app v2 <3
-- [x] Feed svelte context with reactive position ref
-- [x] Retrofit character.scss ability container styles to be
-  - [x] .ability.ability-smaller - the smaller abilities
-  - [x] .ability.ability-collapsed - the alternate view of abilities
-- [x] Update the abilities component to apply `.ability-smaller` at a specific sheet position width, then `.ability-collapsed` for the smallest configuration.
-  - [x] Determine what that width should be, via trial and error
-  - [x] Be sure to convert hard width to rems when making our calculations
-  - [x] Use a constant, multiplied by the number of visible abilities.
