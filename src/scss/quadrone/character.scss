@@ -497,6 +497,42 @@
     }
   }
 
+  @container tab-content (width < 40rem) {
+    .tidy-tab-contents.attributes .columns {
+      grid-template-rows: auto 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-areas:
+        'skills saves'
+        'skills tools'
+        'traits traits';
+    }
+
+    .saving-throws .use-ability-list {
+      flex-direction: column;
+
+      li {
+        flex: 1;
+        max-width: unset;
+      }
+    }
+
+    .tidy-tab-contents.attributes .attributes-column {
+      display: contents;
+    }
+  }
+
+  @container tab-content (width < 30rem) {
+    .tidy-tab-contents.attributes .columns {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'skills'
+        'saves'
+        'tools'
+        'traits';
+      gap: var(--t5e-size-4x);
+    }
+  }
+
   @import './character-parts/tab-bastion.scss';
 
 

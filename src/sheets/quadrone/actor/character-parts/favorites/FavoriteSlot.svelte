@@ -16,7 +16,9 @@
 
   let subtitle = $derived(
     [
-      game.i18n.localize(`DND5E.SpellLevel${favorite.level}`),
+      favorite.level !== undefined
+        ? game.i18n.localize(`DND5E.SpellLevel${favorite.level}`)
+        : undefined,
       game.i18n.localize(
         `DND5E.Abbreviation${CONFIG.DND5E.spellcasting[favorite.id]?.isSR ? 'SR' : 'LR'}`,
       ),
@@ -66,7 +68,7 @@
         {/if}
         <span class="divider color-text-gold">/</span>
         <span class="uses-max color-text-lighter">
-          {favorite.uses.max}
+          {favorite.uses.max ?? "?"}
         </span>
       </span>
     </span>
