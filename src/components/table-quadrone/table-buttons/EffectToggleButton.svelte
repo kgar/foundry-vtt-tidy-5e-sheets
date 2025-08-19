@@ -47,7 +47,7 @@
   </a>
 {:else}
   <a
-    class="tidy-table-button"
+    class="tidy-table-button tidy-table-toggle"
     data-tooltip={title}
     onclick={() => effect.update({ disabled: !effect.disabled })}
   >

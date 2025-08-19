@@ -23,10 +23,10 @@
   - [ ] Identify all resize observers which can be removed.
   - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
   - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
-- [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. https://discord.com/channels/@me/1243307347682529423/1397418208813650091
+- [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. <https://discord.com/channels/@me/1243307347682529423/1397418208813650091>
   - [ ] Fully remove the short/long rest buttons in the header
   - [ ] ...
-- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to 
+- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
@@ -98,14 +98,13 @@
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`?
 
-
 ## hightouch To Do
 
-- [ ] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
+- [x] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
 - [ ] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
 - [ ] kgar question: should we apply any alt header color for the suppressed effect section?
 - [ ] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
-- [ ] Test Korean language on Mac
+- [x] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
@@ -117,6 +116,28 @@
   - [ ] Add Bastion facility roll icon on hover
   - [ ] Add Character tab roll icon on hover
 - [ ] Figure out what's up with multiclassed spellbook footer padding missing
+- [ ] NPC Header
+  - [ ] Rest buttons - when mouse down, the button borders change size and cause the buttons to shift
+- [ ] Light mode, collapsed view (enable Honor and Sanity)
+  - [ ] Init is very dark
+  - [ ] Ability proficiency decoration is a bit hard to notice
+- [ ] NPC Subtitle
+  - [ ] Do we need to mention Classes / Subclasses?
+  - [ ] Do we need to mention Background?
+  - [ ] Concentration button is vertically offset from the rest of the subtitle slightly
+- [ ] NPC Sidebar
+  - [ ] Species section doesn't have an icon (I couldn't decide on one)
+  - [ ] Creature Type doesn't have an icon (I couldn't decide on one)
+  - [ ] Loyalty tracker doesn't have an icon (I couldn't decide on one)
+- [ ] Edit Mode
+  - [ ] Value input is wider than legendary trackers' value inputs
+- [ ] Statblock tab
+  - [ ] Section add buttons: they can only ever add a Feature to the Features section, unless we also opt to add a default Activity with action economy, which is not really a good option. I don't know if there's a solution for this, but I wanted to point the behavior out.
+- [ ] Pinned Filters
+  - [ ] At smallest width with sidebar open, all buttons are hidden, but the button group border itself is still visible. Wasn't sure if intentional.
+  - [ ] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
+- [ ] Inventory tab
+  - [ ] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
 
 ### Huh?
 
@@ -194,6 +215,4 @@ Limited:
 
 - Identical to Observer
 
-
 ### To Do Graveyard
-

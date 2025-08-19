@@ -1043,7 +1043,7 @@
       &:hover,
       &:focus,
       &:active {
-        border-color: var(--t5e-color-palette-gold-89);
+        border: 0.125rem solid var(--t5e-color-palette-gold-89);
 
         i {
           color: var(--t5e-color-palette-gold-89);
@@ -1937,7 +1937,7 @@
     .window-title {
       visibility: visible;
     }
-    
+
     .configurable-source {
       display: none;
     }

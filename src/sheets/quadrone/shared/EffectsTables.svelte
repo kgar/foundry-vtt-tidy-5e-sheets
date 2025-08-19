@@ -49,12 +49,16 @@
   {@const hiddenColumns = EffectColumnRuntime.determineHiddenColumns(
     inlineWidth,
     columns,
-    10
+    10,
   )}
   {#if section.show}
     <TidyTable key={section.key}>
       {#snippet header()}
-        <TidyTableHeaderRow class="theme-dark">
+        <TidyTableHeaderRow
+          class="theme-dark {section.type === 'suppressed' || section.disabled
+            ? 'diminished'
+            : ''}"
+        >
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}

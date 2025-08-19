@@ -49,6 +49,11 @@
       --t5e-table-header-background-right: var(--t5e-method-color, var(--t5e-theme-color-darker));
     }
 
+    &.diminished {
+      --t5e-table-header-background-left: var(--t5e-color-palette-grey-21);
+      --t5e-table-header-background-right: var(--t5e-color-palette-grey-34);
+    }
+
     :is(.tidy-table-cell, .tidy-table-header-cell) {
       margin-top: var(--t5e-size-1x);
       margin-bottom: var(--t5e-size-1x);
@@ -564,9 +569,14 @@
       width: var(--t5e-size-6x);
     }
 
+    .tidy-table-toggle {
+      i {
+        font-size: var(--font-size-16);
+      }
+    }
+
     .tidy-table-button:hover i {
       background: rgba(0, 0, 0, 0.12);
-
     }
   }
 
