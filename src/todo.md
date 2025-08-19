@@ -101,9 +101,9 @@
 ## hightouch To Do
 
 - [x] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
-- [ ] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
+- [x] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
 - [ ] kgar question: should we apply any alt header color for the suppressed effect section?
-- [ ] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
+- [x] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
 - [x] Test Korean language on Mac
 - [ ] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
@@ -113,11 +113,11 @@
 - [ ] Item sheet sidebar background image (low)
 - [ ] Make a generic roll button component
   - [ ] Fix Slot favorite roll icon not appearing
-  - [ ] Add Bastion facility roll icon on hover
+  - [x] Add Bastion facility roll icon on hover
   - [ ] Add Character tab roll icon on hover
-- [ ] Figure out what's up with multiclassed spellbook footer padding missing
+- [x] Figure out what's up with multiclassed spellbook footer padding missing
 - [ ] NPC Header
-  - [ ] Rest buttons - when mouse down, the button borders change size and cause the buttons to shift
+  - [x] Rest buttons - when mouse down, the button borders change size and cause the buttons to shift
 - [ ] Light mode, collapsed view (enable Honor and Sanity)
   - [ ] Init is very dark
   - [ ] Ability proficiency decoration is a bit hard to notice
@@ -125,6 +125,7 @@
   - [ ] Do we need to mention Classes / Subclasses?
   - [ ] Do we need to mention Background?
   - [ ] Concentration button is vertically offset from the rest of the subtitle slightly
+  - [ ] XP width broken when wrapping in Edit Mode
 - [ ] NPC Sidebar
   - [ ] Species section doesn't have an icon (I couldn't decide on one)
   - [ ] Creature Type doesn't have an icon (I couldn't decide on one)
