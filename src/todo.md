@@ -196,7 +196,9 @@ Limited:
 ### To Do Graveyard
 
 - [x] ~~Refactor: If biography tab stays the same between PC and NPC after NPC is completed, consider extracting and sharing a base component that the bio tabs pass data into, to receive biography content.~~ Nah. We're ok.
-
+- [x] NPC - unlocked - minimized - source is visible
+- [x] NPC - locked - minimized - with source - source is visible
+- [x] NPC Statblock Tab - Custom section - Add button - needs to apply the target custom section when creating the item
 
 
 #### Legendaries Tray
