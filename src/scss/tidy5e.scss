@@ -28,3 +28,8 @@
 
 /* dnd5e integration */
 @import 'shared/dnd5e2-ports.scss';
+
+// TODO: Put this in the right place later
+.tidy5e-sheet.application .tidy-table-row-container {
+    content-visibility: auto;
+}
