@@ -11,6 +11,8 @@
 
   const localize = FoundryAdapter.localize;
 
+  let appId = $derived(context.document.id);
+
   let {
     showFiligree = true,
   }: {
@@ -59,17 +61,19 @@
           </h3>
         </div>
       {:else}
-        <h3 class="font-label-medium bordered">
-          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
-          {localize('DND5E.LAIR.HasLair')}
-        </h3>
+        <label for="{appId}-lair-has-lair">
+          <h3 class="font-label-medium bordered">
+            <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+            {localize('DND5E.LAIR.HasLair')}
+          </h3>
+        </label>
       {/if}
     <span class="card-content value">
       <label class="label hidden" for="lair-has-lair"
         >{localize('DND5E.LAIR.HasLair')}</label
       >
       <FieldToggle
-        id="lair-has-lair"
+        id="{appId}-lair-has-lair"
         checked={context.system.resources.lair.value}
         onchange={(ev) =>
           context.actor.update({
@@ -86,16 +90,17 @@
           </h3>
         </div>
       {:else}
-        <h3 class="font-label-medium bordered">
+        <label for="{appId}-lair-inside" class="h3 font-label-medium bordered">
           <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
           {localize('DND5E.LAIR.Inside')}
-        </h3>
+        </label>
       {/if}
     <span class="card-content value">
       <label class="label hidden" for="lair-inside"
         >{localize('DND5E.LAIR.Inside')}</label
       >
       <FieldToggle
+        id="{appId}-lair-inside"
         checked={context.system.resources.lair.inside}
         onchange={(ev) =>
           context.actor.update({
@@ -112,16 +117,17 @@
           </h3>
         </div>
       {:else}
-        <h3 class="font-label-medium bordered">
+        <label for="{appId}-lair-action" class="h3 font-label-medium bordered">
           <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
           {localize('DND5E.LAIR.Action.Label')}
-        </h3>
+        </label>
       {/if}
     <div class="card-content flexrow lair-initiative">
       <span class="font-label-medium color-text-lighter flexshrink">
         {localize('DND5E.Initiative')}
       </span>
       <TextInputQuadrone
+        id="{appId}-lair-action"
         document={context.actor}
         field="system.resources.lair.initiative"
         value={context.system.resources.lair.initiative ?? ''}

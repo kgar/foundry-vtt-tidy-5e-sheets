@@ -102,10 +102,10 @@
 
 - [x] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
 - [x] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
-- [ ] kgar question: should we apply any alt header color for the suppressed effect section?
+- [x] kgar question: should we apply any alt header color for the suppressed effect section?
 - [x] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
 - [x] Test Korean language on Mac
-- [ ] Item sheet context menu styles - hide initial grouping line if present.
+- [x] Item sheet context menu styles - hide initial grouping line if present.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
@@ -126,10 +126,10 @@
   - [ ] Do we need to mention Background?
   - [ ] Concentration button is vertically offset from the rest of the subtitle slightly
   - [ ] XP width broken when wrapping in Edit Mode
-- [ ] NPC Sidebar
-  - [ ] Species section doesn't have an icon (I couldn't decide on one)
-  - [ ] Creature Type doesn't have an icon (I couldn't decide on one)
-  - [ ] Loyalty tracker doesn't have an icon (I couldn't decide on one)
+- [x] NPC Sidebar
+  - [x] Species section doesn't have an icon (I couldn't decide on one)
+  - [x] Creature Type doesn't have an icon (I couldn't decide on one)
+  - [x] Loyalty tracker doesn't have an icon (I couldn't decide on one)
 - [ ] Edit Mode
   - [ ] Value input is wider than legendary trackers' value inputs
 - [ ] Statblock tab

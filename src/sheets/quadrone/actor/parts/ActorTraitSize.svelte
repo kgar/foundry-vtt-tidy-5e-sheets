@@ -15,20 +15,23 @@
       >(),
     );
 
+  let appId = $derived(context.document.id);
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="list-entry">
   <div class="list-label">
-    <h4 class="font-weight-label">
+    <label for="{appId}-npc-size" class="h4 font-weight-label">
       <i class="fas fa-ruler-combined"></i>
       {localize('DND5E.Size')}
-    </h4>
+    </label>
   </div>
   <div class="list-content">
     <div class="list-values">
       {#if context.unlocked}
         <SelectQuadrone
+          id="{appId}-npc-size"
           document={context.actor}
           field="system.traits.size"
           value={context.system.traits.size}
