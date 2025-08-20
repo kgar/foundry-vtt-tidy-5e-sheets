@@ -20,7 +20,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="list-entry">
+<div class="list-entry trait-size">
   <div class="list-label">
     <label for="{appId}-npc-size" class="h4 font-weight-label">
       <i class="fas fa-ruler-combined"></i>

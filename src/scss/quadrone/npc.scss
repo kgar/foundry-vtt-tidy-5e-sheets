@@ -375,6 +375,10 @@
           }
         }
 
+        .button-config {
+          margin-bottom: -0.0625rem;
+        }
+
         &.empty {
 
           .list-label h4 i {
@@ -392,6 +396,33 @@
           min-height: auto;
           padding: 0.125rem 0.25rem 0.1875rem;
         }
+      }
+    }
+
+    .trait-size {
+      .select-button {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* The real select captures all interactions */
+      .select-button .native-select-overlay {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        /* keep it focusable and clickable */
+        cursor: pointer;
+        -webkit-appearance: menulist;
+        appearance: auto;
+      }
+
+      /* Decorative icon; remove pointer-events if it shouldn't intercept clicks */
+      .select-button .fa-cog {
+        pointer-events: none;
       }
     }
 

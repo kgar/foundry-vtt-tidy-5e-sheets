@@ -4,8 +4,8 @@
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import ActorTraitSize from '../parts/ActorTraitSize.svelte';
-  import NpcTraitSpecies from './traits/NpcTraitSpecies.svelte';
   import NpcTraitCreatureType from './traits/NpcTraitCreatureType.svelte';
+  import NpcTraitSize from './traits/NpcTraitSize.svelte';
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
@@ -57,7 +57,7 @@
 
   <!-- Size -->
   {#if context.unlocked}
-    <ActorTraitSize />
+    <NpcTraitSize />
   {/if}
 
   <!-- Creature Type -->
