@@ -153,6 +153,8 @@
 
     input[type="text"]:not(:disabled):not(.uninput).h2.actor-name {
       font-size: var(--font-size-46);
+      max-height: var(--font-size-46);
+      // margin-bottom: 0.0625rem;
     }
 
     input[type="text"]:not(:disabled):not(.uninput) {
@@ -189,15 +191,62 @@
   }
 
   .actor-subtitle {
-    .xp-label {
-      align-content: center;
+
+    >* {
+      height: 1rem;
+    }
+
+    .xp-label,
+    .xp-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      flex: 0 1 fit-content;
       flex-wrap: nowrap;
-      gap: 0.25rem;
       max-height: 1rem;
     }
 
+    .xp-label {
+      gap: 0.25rem;
+    }
+
+    .xp-container .label {
+      margin-right: 0;
+    }
+
     .xp-value {
+      flex: 0 1 auto;
       max-width: 4.5rem;
+      min-width: 1ch;
+      width: auto;
+    }
+
+    .xp-value:is(:focus, :active) {
+      max-width: 4.5rem;
+    }
+
+    .xp-label-clickable {
+      cursor: pointer;
+      transition: all 0.1s ease;
+      border-radius: 0.125rem;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+
+        .label {
+          color: var(--t5e-color-text-light);
+        }
+      }
+
+      &:focus {
+        outline: 1px solid var(--t5e-color-accent);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &:active {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
     }
 
     .concentration {
@@ -237,7 +286,7 @@
     gap: 0;
 
     &:has(.challenge-rating-input) .label {
-      margin: 0.0625rem 0 0;
+      margin: 0.0625rem 0 -0.0625rem;
     }
 
     >* {

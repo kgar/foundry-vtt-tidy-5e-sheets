@@ -31,7 +31,7 @@
   <div class="list-entry">
     <div class="list-label flexrow">
       <h4 class="font-weight-label">
-        <i class="fa-solid fa-user-alien"></i>
+        <i class="fa-solid fa-paw"></i>
         {localize('DND5E.CreatureType')}
       </h4>
       {#if context.unlocked}
