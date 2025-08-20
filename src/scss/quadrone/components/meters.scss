@@ -25,18 +25,19 @@
   }
 
   .label {
-    inline-size: 100%;
-    block-size: 100%;
-    display: flex;
     align-items: center;
-    gap: 0.25rem;
-    position: relative;
+    block-size: 100%;
     color: var(--t5e-color-text-default);
+    cursor: pointer;
+    display: flex;
     font-size: 0.75rem;
     font-weight: 500;
+    gap: 0.25rem;
+    inline-size: 100%;
     line-height: normal;
     padding-inline-start: 0.5rem;
     padding-inline-end: 0.75rem;
+    position: relative;
 
     i {
       color: var(--t5e-color-text-lighter);
@@ -140,10 +141,6 @@
     --bar-background: linear-gradient(to right,
         var(--t5e-color-palette-gold-62) 0%,
         var(--t5e-color-palette-gold-75) 100%);
-  }
-
-  .label {
-    cursor: pointer;
   }
 
   input {

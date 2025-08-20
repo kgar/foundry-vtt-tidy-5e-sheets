@@ -2392,6 +2392,10 @@
 
   // Encumbrance
   .meter.encumbrance {
+    .label {
+      cursor: auto;
+    }
+
     .breakpoint {
       display: block;
       position: absolute;

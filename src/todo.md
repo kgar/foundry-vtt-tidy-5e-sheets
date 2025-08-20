@@ -122,11 +122,11 @@
 - [x] Light mode, collapsed view (enable Honor and Sanity)
   - [x] Init is very dark
   - [x] Ability proficiency decoration is a bit hard to notice
-- [ ] NPC Subtitle
+- [x] NPC Subtitle
   - [x] Do we need to mention Classes / Subclasses? **Note: Recommending no for now**
   - [x] Do we need to mention Background? **Note: Recommending no for now**
   - [x] Concentration button is vertically offset from the rest of the subtitle slightly
-  - [ ] XP width broken when wrapping in Edit Mode
+  - [x] XP width broken when wrapping in Edit Mode
 - [x] NPC Sidebar
   - [x] Species section doesn't have an icon (I couldn't decide on one)
   - [x] Creature Type doesn't have an icon (I couldn't decide on one)
@@ -138,8 +138,8 @@
 - [x] Pinned Filters
   - [x] At smallest width with sidebar open, all buttons are hidden, but the button group border itself is still visible. Wasn't sure if intentional.
   - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
-- [ ] Inventory tab
-  - [ ] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
+- [x] Inventory tab
+  - [x] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
 
 ### Huh?
 
