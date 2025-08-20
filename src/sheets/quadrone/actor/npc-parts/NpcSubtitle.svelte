@@ -164,7 +164,7 @@
       </div>
     {/if}
   </div>
-  <div class="proficiency flexrow" data-tooltip="DND5E.ProficiencyBonus">
+  <div class="proficiency-bonus flexrow" data-tooltip="DND5E.ProficiencyBonus">
     <span class="label font-label-medium color-text-gold">
       {localize('DND5E.Proficiency')}
     </span>

@@ -211,7 +211,7 @@
     }
   }
 
-  .proficiency {
+  .proficiency-bonus {
     line-height: 1rem;
     margin: 0 var(--t5e-size-2x) 0 var(--t5e-size-1x);
     align-self: flex-start;
@@ -515,19 +515,16 @@
     }
 
     .ability {
-      background: var(--t5e-component-card-darker);
+      background: var(--t5e-component-card-default);
     }
 
-    .ability:has(.proficient) {
-      background: var(--t5e-component-card-default);
+    .ability:has(.proficient),
+    .initiative-container {
+      background: var(--t5e-component-card-lighter);
       outline-color: var(--t5e-color-palette-gold-62);
     }
 
-    :is(.quadrone.npc.theme-dark .ability:has(.proficient)),
-    .initiative-container {
-      background: var(--collapse-bg-dark);
-      outline-color: var(--t5e-color-palette-grey-11);
-    }
+
 
     .ability .bonus-container,
     .ability .bonus-container.proficient,
@@ -755,8 +752,19 @@
 
     }
 
-    .sheet-header .actor-vitals-container .shield {
-      background-image: url(../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg);
+    .sheet-header {
+      .actor-vitals-container .shield {
+        background-image: url(../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg);
+      }
+
+      .abilities-container.ability-collapsed .abilities-container-inner {
+
+        .ability:has(.proficient),
+        .initiative-container {
+          background: var(--collapse-bg-dark);
+          outline-color: var(--t5e-color-palette-grey-11);
+        }
+      }
     }
   }
 

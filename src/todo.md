@@ -122,9 +122,9 @@
   - [ ] Init is very dark
   - [ ] Ability proficiency decoration is a bit hard to notice
 - [ ] NPC Subtitle
-  - [ ] Do we need to mention Classes / Subclasses?
-  - [ ] Do we need to mention Background?
-  - [ ] Concentration button is vertically offset from the rest of the subtitle slightly
+  - [x] Do we need to mention Classes / Subclasses? Recommending no for now
+  - [x] Do we need to mention Background? Recommending no for now
+  - [x] Concentration button is vertically offset from the rest of the subtitle slightly
   - [ ] XP width broken when wrapping in Edit Mode
 - [x] NPC Sidebar
   - [x] Species section doesn't have an icon (I couldn't decide on one)

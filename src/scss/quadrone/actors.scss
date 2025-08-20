@@ -1272,7 +1272,7 @@
       margin: -0.25rem 0 -0.25rem 0;
     }
 
-    .proficiency {
+    .proficiency-bonus {
       .label {
         margin-right: var(--t5e-size-halfx);
       }
@@ -1497,7 +1497,7 @@
 
   .ability-roll-button,
   .initiative-roll-button {
-    color: var(--t5e-color-text-gold);
+    color: var(--t5e-color-text-gold-emphasis);
     font: var(--t5e-font-label-medium);
     height: auto;
     line-height: normal;
@@ -1912,6 +1912,14 @@
       flex: 1;
       min-width: fit-content;
       flex-direction: row;
+
+      .input-group {
+        padding-inline-start: 0.5rem;
+      }
+
+      .currency {
+        display: none;
+      }
     }
 
     .footer-content-left {

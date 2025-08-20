@@ -69,9 +69,6 @@
         </label>
       {/if}
     <span class="card-content value">
-      <label class="label hidden" for="lair-has-lair"
-        >{localize('DND5E.LAIR.HasLair')}</label
-      >
       <FieldToggle
         id="{appId}-lair-has-lair"
         checked={context.system.resources.lair.value}
@@ -117,10 +114,10 @@
           </h3>
         </div>
       {:else}
-        <label for="{appId}-lair-action" class="h3 font-label-medium bordered">
+        <h3 class="font-label-medium bordered">
           <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
           {localize('DND5E.LAIR.Action.Label')}
-        </label>
+        </h3>
       {/if}
     <div class="card-content flexrow lair-initiative">
       <span class="font-label-medium color-text-lighter flexshrink">
