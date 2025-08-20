@@ -2693,5 +2693,9 @@
         }
       }
     }
+
+    .traits.list .pill:is(.physical-bypass) {
+      border-color: var(--t5e-color-palette-orange-70);
+    }
   }
 }
