@@ -494,9 +494,12 @@
       &:has(.character-traits) {
         .tidy-table-container {
           padding-block-end: 0;
+          flex: 0 1 auto;
         }
 
         .character-traits {
+          padding-bottom: var(--t5e-size-4x);
+
           .tidy-table-header-row {
             h3 {
               padding: 0 0 0.125rem 0.5rem;

@@ -116,27 +116,27 @@
   - [x] Add Bastion facility roll icon on hover
   - [ ] Add Character tab roll icon on hover
 - [x] Figure out what's up with multiclassed spellbook footer padding missing
-- [ ] NPC Header
+- [x] NPC Header
   - [x] Rest buttons - when mouse down, the button borders change size and cause the buttons to shift
-- [ ] Light mode, collapsed view (enable Honor and Sanity)
-  - [ ] Init is very dark
-  - [ ] Ability proficiency decoration is a bit hard to notice
+- [x] Light mode, collapsed view (enable Honor and Sanity)
+  - [x] Init is very dark
+  - [x] Ability proficiency decoration is a bit hard to notice
 - [ ] NPC Subtitle
-  - [x] Do we need to mention Classes / Subclasses? Recommending no for now
-  - [x] Do we need to mention Background? Recommending no for now
+  - [x] Do we need to mention Classes / Subclasses? **Note: Recommending no for now**
+  - [x] Do we need to mention Background? **Note: Recommending no for now**
   - [x] Concentration button is vertically offset from the rest of the subtitle slightly
   - [ ] XP width broken when wrapping in Edit Mode
 - [x] NPC Sidebar
   - [x] Species section doesn't have an icon (I couldn't decide on one)
   - [x] Creature Type doesn't have an icon (I couldn't decide on one)
   - [x] Loyalty tracker doesn't have an icon (I couldn't decide on one)
-- [ ] Edit Mode
-  - [ ] Value input is wider than legendary trackers' value inputs
+- [x] Edit Mode
+  - [x] Value input is wider than legendary trackers' value inputs. **Note: on purpose**
 - [ ] Statblock tab
   - [ ] Section add buttons: they can only ever add a Feature to the Features section, unless we also opt to add a default Activity with action economy, which is not really a good option. I don't know if there's a solution for this, but I wanted to point the behavior out.
-- [ ] Pinned Filters
-  - [ ] At smallest width with sidebar open, all buttons are hidden, but the button group border itself is still visible. Wasn't sure if intentional.
-  - [ ] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
+- [x] Pinned Filters
+  - [x] At smallest width with sidebar open, all buttons are hidden, but the button group border itself is still visible. Wasn't sure if intentional.
+  - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
 - [ ] Inventory tab
   - [ ] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
 
