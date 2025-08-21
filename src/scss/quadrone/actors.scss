@@ -781,6 +781,18 @@
           }
         }
 
+        .exhaustion.exhausted,
+        .exhaustion-bar {
+          button.button-icon-only.button-borderless:not(:first-child) {
+
+            &:hover,
+            &:focus,
+            &:active {
+              background-color: var(--t5e-color-palette-orange-55);
+            }
+          }
+        }
+
         .death-saves {
           i {
             color: var(--t5e-vitals-button-icon-color);
