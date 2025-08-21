@@ -65,7 +65,7 @@
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
     {#each context.senses as sense, i}
-      {#if i > 0}
+      {#if i > 0 || context.speeds.length}
         <div class="divider-dot"></div>
       {/if}
       {@render speedSenseSummary(sense, ['sense', 'main-sense'])}
