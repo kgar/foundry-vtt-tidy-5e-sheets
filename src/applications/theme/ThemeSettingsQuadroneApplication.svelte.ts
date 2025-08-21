@@ -40,6 +40,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   foundry.applications.api.ApplicationV2
 ) {
   document?: any;
+  
   _settings: ThemeSettingsContext = $state({
     value: {
       accentColor: '',
@@ -50,6 +51,10 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       spellPreparationMethodColors: [],
     },
   });
+
+  actorHeaderBackgroundSupportedActorTypes = new Set<string>([
+    CONSTANTS.SHEET_TYPE_CHARACTER,
+  ]);
 
   themeConfigOptions(): ThemeSettingsConfigurationOptions {
     return {
