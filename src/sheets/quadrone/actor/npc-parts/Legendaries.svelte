@@ -54,20 +54,20 @@
 {#snippet lairActions()}
   {#if context.modernRules && context.unlocked}
     <!-- Checkbox - has lair -->
-      {#if showFiligree}
-        <div class="card-header flexrow">
-          <h3>
-            {localize('DND5E.LAIR.HasLair')}
-          </h3>
-        </div>
-      {:else}
-        <label for="{appId}-lair-has-lair">
-          <h3 class="font-label-medium bordered">
-            <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
-            {localize('DND5E.LAIR.HasLair')}
-          </h3>
-        </label>
-      {/if}
+    {#if showFiligree}
+      <div class="card-header flexrow">
+        <h3>
+          {localize('DND5E.LAIR.HasLair')}
+        </h3>
+      </div>
+    {:else}
+      <label for="{appId}-lair-has-lair">
+        <h3 class="font-label-medium bordered">
+          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+          {localize('DND5E.LAIR.HasLair')}
+        </h3>
+      </label>
+    {/if}
     <span class="card-content value">
       <FieldToggle
         id="{appId}-lair-has-lair"
@@ -80,18 +80,20 @@
     </span>
   {:else if context.modernRules && !context.unlocked && context.system.resources.lair.value}
     <!-- Switch - inside lair -->
-      {#if showFiligree}
-        <div class="card-header flexrow">
-          <h3>
-            {localize('DND5E.LAIR.Inside')}
-          </h3>
-        </div>
-      {:else}
-        <label for="{appId}-lair-inside" class="h3 font-label-medium bordered">
+    {#if showFiligree}
+      <div class="card-header flexrow">
+        <h3>
+          {localize('DND5E.LAIR.Inside')}
+        </h3>
+      </div>
+    {:else}
+      <label for="{appId}-lair-inside">
+        <h3 class="font-label-medium bordered">
           <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
           {localize('DND5E.LAIR.Inside')}
-        </label>
-      {/if}
+        </h3>
+      </label>
+    {/if}
     <span class="card-content value">
       <label class="label hidden" for="lair-inside"
         >{localize('DND5E.LAIR.Inside')}</label
@@ -107,18 +109,18 @@
     </span>
   {:else if !context.modernRules}
     <!-- Lair initiative -->
-      {#if showFiligree}
-        <div class="card-header flexrow">
-          <h3>
-            {localize('DND5E.LAIR.Action.Label')}
-          </h3>
-        </div>
-      {:else}
-        <h3 class="font-label-medium bordered">
-          <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+    {#if showFiligree}
+      <div class="card-header flexrow">
+        <h3>
           {localize('DND5E.LAIR.Action.Label')}
         </h3>
-      {/if}
+      </div>
+    {:else}
+      <h3 class="font-label-medium bordered">
+        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+        {localize('DND5E.LAIR.Action.Label')}
+      </h3>
+    {/if}
     <div class="card-content flexrow lair-initiative">
       <span class="font-label-medium color-text-lighter flexshrink">
         {localize('DND5E.Initiative')}
@@ -146,7 +148,7 @@
       {@render lairActions()}
     </div>
   {:else}
-    <div class="npc-score-tracker lair-tracker">
+    <div class="npc-score-tracker card lair-tracker">
       {@render lairActions()}
     </div>
   {/if}
