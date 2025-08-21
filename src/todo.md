@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
+- [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
 - [ ] NPC test Observer user
 - [ ] NPC test Limited user
 - [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
