@@ -1,8 +1,4 @@
 <script lang="ts">
-  import type { ItemDescription } from 'src/types/item.types';
-  import CollapsibleEditorSection from './CollapsibleEditorSection.svelte';
-  import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
-
   interface Props {
     image: string;
     name: string;
