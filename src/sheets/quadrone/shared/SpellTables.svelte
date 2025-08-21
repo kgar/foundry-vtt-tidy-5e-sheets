@@ -92,7 +92,7 @@
         section.items,
         searchResults.uuids,
       )}
-      {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === ''))}
+      {#if section.show && (hasViewableItems || (context.unlocked && searchCriteria.trim() === '') || !!section.slots)}
         <SpellTable
           {section}
           {itemToggleMap}
