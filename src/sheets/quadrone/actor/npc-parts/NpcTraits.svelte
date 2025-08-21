@@ -3,33 +3,26 @@
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
-  import ActorTraitSize from '../parts/ActorTraitSize.svelte';
   import NpcTraitCreatureType from './traits/NpcTraitCreatureType.svelte';
   import NpcTraitSize from './traits/NpcTraitSize.svelte';
+
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- {#if context.unlocked}
-<div class="title-container">
-  <h3 class="font-title-small">{localize('DND5E.Traits')}</h3>
-  <tidy-gold-header-underline></tidy-gold-header-underline>
-</div>
-{/if} -->
-
 <div class="list traits">
-  {#if context.actor.system.traits.important}
-    <div class="list-entry">
+  {#if context.actor.system.traits.important || context.classes.length > 0}
+    <div class="list-entry trait-hit-dice">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-dice"></i>
           {localize('DND5E.HitDice')}
         </h4>
-        <div class="flexshrink">
-          <span class="value">{context.system.attributes.hd.value}</span>
-          <span class="divider">/</span>
-          <span class="max">{context.system.attributes.hd.max}</span>
+        <div class="flexshrink hit-dice-container">
+          <span class="value font-label-medium">{context.system.attributes.hd.value}</span>
+          <span class="divider font-body-medium color-text-lightest">/</span>
+          <span class="max font-label-medium">{context.system.attributes.hd.max}</span>
         </div>
       </div>
     </div>

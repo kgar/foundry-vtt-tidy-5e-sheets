@@ -475,6 +475,12 @@
       }
     }
 
+    .trait-hit-dice {
+      .hit-dice-container {
+        padding-right: 0.5rem;
+      }
+    }
+
     .skills {
       padding: 0;
       background: none;
@@ -487,6 +493,11 @@
 
         li {
           width: auto;
+
+          .passive,
+          .modifier {
+            padding-right: 0.25rem;
+          }
         }
       }
     }
@@ -504,6 +515,12 @@
           width: 1.5rem;
         }
       }
+    }
+  }
+
+  &.sheet-mode-edit .sidebar .npc-score-tracker {
+    .uses .max {
+      padding: 0 var(--t5e-size-2x);
     }
   }
 
