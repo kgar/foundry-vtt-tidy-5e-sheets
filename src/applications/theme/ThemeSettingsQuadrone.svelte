@@ -121,7 +121,7 @@
       {localize('TIDY5E.ThemeSettings.SheetTheme.hint')}
     </p>
 
-    {#if isNil(app.document?.documentName, CONSTANTS.DOCUMENT_NAME_ACTOR)}
+    {#if !app.document?.documentName || app.document?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR}
       <div class="form-group">
         <label for="{idPrefix}-actor-portrait-shape">
           {localize('TIDY5E.ThemeSettings.PortraitShape.title', {
@@ -144,6 +144,9 @@
           </select>
         </div>
       </div>
+    {/if}
+
+    {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
       <div class="form-group">
         <label for="{idPrefix}-actor-header-background">
           {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}

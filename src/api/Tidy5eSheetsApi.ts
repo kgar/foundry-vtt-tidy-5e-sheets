@@ -30,6 +30,7 @@ import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.sve
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
+import { TidySvelteApi } from './svelte/TidySvelteApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -1293,6 +1294,13 @@ export class Tidy5eSheetsApi {
       }))
     );
   }
+
+  /**
+   * Svelte-specific integration content. This content is currently experimental
+   * and may be subject to change based on integration efforts of other
+   * svelte-based modules.
+   */
+  svelte = TidySvelteApi;
 
   /**
    * Wraps the provided HTML so that Tidy will remove the content when handling document changes.
