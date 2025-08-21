@@ -724,6 +724,11 @@
     }
   }
 
+  .tidy-table-row-container {
+    // For sheets with hundreds of items
+    content-visibility: auto;
+  }
+
   /* Text utilities */
   .centered {
     text-align: center;
