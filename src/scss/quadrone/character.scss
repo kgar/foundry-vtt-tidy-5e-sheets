@@ -307,7 +307,7 @@
 
   @mixin collapse-abilities {
     --collapse-bg-light: rgba(0, 0, 0, 0.20);
-    --collapse-bg-dark: rgba(0, 0, 0, 0.4);
+    --collapse-bg-dark: rgba(0, 0, 0, 0.56);
     --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.16);
     --collapse-font-medium: 1.25rem;
     --collapse-font-large: 1.5rem;
@@ -335,7 +335,7 @@
 
 
     .ability:has(.proficient) {
-      outline-color: rgba(0, 0, 0, 0.40);
+      outline-color: rgba(0, 0, 0, 0.64);
     }
 
     .ability .bonus-container,

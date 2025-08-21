@@ -246,7 +246,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showLegendariesOnStatblockTab:
         userPreferences.showLegendariesOnNpcStatblock === true,
       showLoyaltyTracker:
-        this.actor.system.traits.important &&
+        // this.actor.system.traits.important &&
         game.settings.get('dnd5e', 'loyaltyScore'),
       species: species
         ? {

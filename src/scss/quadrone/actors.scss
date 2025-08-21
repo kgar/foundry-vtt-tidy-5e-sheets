@@ -1043,7 +1043,7 @@
       &:hover,
       &:focus,
       &:active {
-        border-color: var(--t5e-color-palette-gold-89);
+        border: 0.125rem solid var(--t5e-color-palette-gold-89);
 
         i {
           color: var(--t5e-color-palette-gold-89);
@@ -1272,7 +1272,7 @@
       margin: -0.25rem 0 -0.25rem 0;
     }
 
-    .proficiency {
+    .proficiency-bonus {
       .label {
         margin-right: var(--t5e-size-halfx);
       }
@@ -1497,7 +1497,7 @@
 
   .ability-roll-button,
   .initiative-roll-button {
-    color: var(--t5e-color-text-gold);
+    color: var(--t5e-color-text-gold-emphasis);
     font: var(--t5e-font-label-medium);
     height: auto;
     line-height: normal;
@@ -1912,6 +1912,14 @@
       flex: 1;
       min-width: fit-content;
       flex-direction: row;
+
+      .input-group {
+        padding-inline-start: 0.5rem;
+      }
+
+      .currency {
+        display: none;
+      }
     }
 
     .footer-content-left {
@@ -1937,7 +1945,7 @@
     .window-title {
       visibility: visible;
     }
-    
+
     .configurable-source {
       display: none;
     }
@@ -2384,6 +2392,10 @@
 
   // Encumbrance
   .meter.encumbrance {
+    .label {
+      cursor: auto;
+    }
+
     .breakpoint {
       display: block;
       position: absolute;
@@ -2684,6 +2696,10 @@
           }
         }
       }
+    }
+
+    .traits.list .pill:is(.physical-bypass) {
+      border-color: var(--t5e-color-palette-orange-70);
     }
   }
 }

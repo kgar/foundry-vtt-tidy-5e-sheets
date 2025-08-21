@@ -177,12 +177,11 @@
             }))}
             {#each itemEntries as { item, ctx }, i (item.id)}
               {@const expanded = !!containerToggleMap.get(tabId)?.has(item.id)}
-              {@const unidentified = item.system.identified === false}
 
               <TidyItemTableRow
                 {item}
                 hidden={!searchResults.show(item.uuid)}
-                rowClass={[{ expanded, unidentified }]}
+                rowClass={[{ expanded }]}
                 contextMenu={{
                   type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                   uuid: item.uuid,

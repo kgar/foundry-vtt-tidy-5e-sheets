@@ -714,18 +714,21 @@
     &:where(.artifact) {
       --t5e-item-color: var(--t5e-color-rarity-artifact);
     }
+
+    &.diminished {
+      --t5e-item-color: var(--t5e-color-palette-grey-40);
+    }
   }
 
   :where(.spell-method:is(.cannot-prepare, .can-prepare.always)) {
     --t5e-icon-color: var(--t5e-method-color);
 
-    &:is(.tidy5e-sheet.theme-dark :where(.spell-method:is(.cannot-prepare, .can-prepare.always))) 
-    {
+    &:is(.tidy5e-sheet.theme-dark :where(.spell-method:is(.cannot-prepare, .can-prepare.always))) {
       --t5e-icon-color: oklch(from var(--t5e-method-color) calc(l * 1.5) calc(c * .88) h);
     }
   }
 
-  :where(.spell-method.can-prepare.unprepared)  {
+  :where(.spell-method.diminished) {
     --t5e-icon-color: var(--t5e-color-text-lighter);
   }
 
@@ -749,7 +752,7 @@
     --t5e-method-color: var(--t5e-color-spellcasting-spell);
   }
 
-  :where(.unidentified) {
+  :where(.diminished) {
     --t5e-item-color: var(--t5e-color-palette-grey-40);
   }
 

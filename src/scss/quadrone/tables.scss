@@ -49,6 +49,11 @@
       --t5e-table-header-background-right: var(--t5e-method-color, var(--t5e-theme-color-darker));
     }
 
+    &.diminished {
+      --t5e-table-header-background-left: var(--t5e-color-palette-grey-21);
+      --t5e-table-header-background-right: var(--t5e-color-palette-grey-34);
+    }
+
     :is(.tidy-table-cell, .tidy-table-header-cell) {
       margin-top: var(--t5e-size-1x);
       margin-bottom: var(--t5e-size-1x);
@@ -211,8 +216,13 @@
 
     &.rarity {
 
-      .common {
-        --t5e-item-color: var(--t5e-color-palette-gold-56);
+      &.common {
+        // TODO: Add method for hiding common rarity colors.
+        // --t5e-item-color: var(--t5e-color-text-gold-emphasis);
+      }
+
+      &.diminished {
+        // --t5e-item-color: var(--t5e-color-palette-grey-40);
       }
 
       .highlight {
@@ -260,7 +270,7 @@
 
     // TODO: Finish other unidentified styles. Classes aren't applied yet.
     // Make sure this is last.
-    &.unidentified {
+    &.diminished {
       color: var(--t5e-color-text-lighter);
       background: transparent;
 
@@ -564,9 +574,14 @@
       width: var(--t5e-size-6x);
     }
 
+    .tidy-table-toggle {
+      i {
+        font-size: var(--font-size-16);
+      }
+    }
+
     .tidy-table-button:hover i {
       background: rgba(0, 0, 0, 0.12);
-
     }
   }
 
@@ -761,7 +776,7 @@
         --icon-fill: var(--t5e-color-text-gold-emphasis);
       }
 
-      &.unprepared {
+      &.diminished {
         color: var(--t5e-color-text-lightest);
 
         .item-name,
@@ -781,8 +796,7 @@
       }
     }
 
-    &.spell-method:not(.unprepared) {
-
+    &.spell-method:not(.diminished) {
 
       background: linear-gradient(to right,
           var(--t5e-color-palette-grey-100) 10%,
@@ -950,7 +964,7 @@
       // }
 
       /* If a spell is prepared, use full background gradient. */
-      &.spell-method:not(.unprepared) {
+      &.spell-method:not(.diminished) {
         background: linear-gradient(to right,
             var(--t5e-component-card-default) 5%,
             transparent 64%);

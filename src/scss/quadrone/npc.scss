@@ -153,6 +153,8 @@
 
     input[type="text"]:not(:disabled):not(.uninput).h2.actor-name {
       font-size: var(--font-size-46);
+      max-height: var(--font-size-46);
+      // margin-bottom: 0.0625rem;
     }
 
     input[type="text"]:not(:disabled):not(.uninput) {
@@ -189,15 +191,62 @@
   }
 
   .actor-subtitle {
-    .xp-label {
-      align-content: center;
+
+    >* {
+      height: 1rem;
+    }
+
+    .xp-label,
+    .xp-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      flex: 0 1 fit-content;
       flex-wrap: nowrap;
-      gap: 0.25rem;
       max-height: 1rem;
     }
 
+    .xp-label {
+      gap: 0.25rem;
+    }
+
+    .xp-container .label {
+      margin-right: 0;
+    }
+
     .xp-value {
+      flex: 0 1 auto;
       max-width: 4.5rem;
+      min-width: 1ch;
+      width: auto;
+    }
+
+    .xp-value:is(:focus, :active) {
+      max-width: 4.5rem;
+    }
+
+    .xp-label-clickable {
+      cursor: pointer;
+      transition: all 0.1s ease;
+      border-radius: 0.125rem;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+
+        .label {
+          color: var(--t5e-color-text-light);
+        }
+      }
+
+      &:focus {
+        outline: 1px solid var(--t5e-color-accent);
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      &:active {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
     }
 
     .concentration {
@@ -211,7 +260,7 @@
     }
   }
 
-  .proficiency {
+  .proficiency-bonus {
     line-height: 1rem;
     margin: 0 var(--t5e-size-2x) 0 var(--t5e-size-1x);
     align-self: flex-start;
@@ -237,7 +286,7 @@
     gap: 0;
 
     &:has(.challenge-rating-input) .label {
-      margin: 0.0625rem 0 0;
+      margin: 0.0625rem 0 -0.0625rem;
     }
 
     >* {
@@ -375,6 +424,10 @@
           }
         }
 
+        .button-config {
+          margin-bottom: -0.0625rem;
+        }
+
         &.empty {
 
           .list-label h4 i {
@@ -395,6 +448,39 @@
       }
     }
 
+    .trait-size {
+      .select-button {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* The real select captures all interactions */
+      .select-button .native-select-overlay {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        /* keep it focusable and clickable */
+        cursor: pointer;
+        -webkit-appearance: menulist;
+        appearance: auto;
+      }
+
+      /* Decorative icon; remove pointer-events if it shouldn't intercept clicks */
+      .select-button .fa-cog {
+        pointer-events: none;
+      }
+    }
+
+    .trait-hit-dice {
+      .hit-dice-container {
+        padding-right: 0.5rem;
+      }
+    }
+
     .skills {
       padding: 0;
       background: none;
@@ -407,6 +493,11 @@
 
         li {
           width: auto;
+
+          .passive,
+          .modifier {
+            padding-right: 0.25rem;
+          }
         }
       }
     }
@@ -424,6 +515,12 @@
           width: 1.5rem;
         }
       }
+    }
+  }
+
+  &.sheet-mode-edit .sidebar .npc-score-tracker {
+    .uses .max {
+      padding: 0 var(--t5e-size-2x);
     }
   }
 
@@ -463,9 +560,12 @@
       &:has(.character-traits) {
         .tidy-table-container {
           padding-block-end: 0;
+          flex: 0 1 auto;
         }
 
         .character-traits {
+          padding-bottom: var(--t5e-size-4x);
+
           .tidy-table-header-row {
             h3 {
               padding: 0 0 0.125rem 0.5rem;
@@ -515,19 +615,16 @@
     }
 
     .ability {
-      background: var(--t5e-component-card-darker);
+      background: var(--t5e-component-card-default);
     }
 
-    .ability:has(.proficient) {
-      background: var(--t5e-component-card-default);
+    .ability:has(.proficient),
+    .initiative-container {
+      background: var(--t5e-component-card-lighter);
       outline-color: var(--t5e-color-palette-gold-62);
     }
 
-    :is(.quadrone.npc.theme-dark .ability:has(.proficient)),
-    .initiative-container {
-      background: var(--collapse-bg-dark);
-      outline-color: var(--t5e-color-palette-grey-11);
-    }
+
 
     .ability .bonus-container,
     .ability .bonus-container.proficient,
@@ -755,8 +852,19 @@
 
     }
 
-    .sheet-header .actor-vitals-container .shield {
-      background-image: url(../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg);
+    .sheet-header {
+      .actor-vitals-container .shield {
+        background-image: url(../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg);
+      }
+
+      .abilities-container.ability-collapsed .abilities-container-inner {
+
+        .ability:has(.proficient),
+        .initiative-container {
+          background: var(--collapse-bg-dark);
+          outline-color: var(--t5e-color-palette-grey-11);
+        }
+      }
     }
   }
 

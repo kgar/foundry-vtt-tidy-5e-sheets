@@ -158,7 +158,7 @@
               item.system.canPrepare &&
               item.system.prepared ===
                 CONFIG.DND5E.spellPreparationStates.always.value,
-            unprepared:
+            diminished:
               !item.system.linkedActivity &&
               item.system.canPrepare &&
               item.system.prepared ===

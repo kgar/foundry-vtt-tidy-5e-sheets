@@ -13,7 +13,7 @@
   );
 </script>
 
-{#if context.showLoyaltyTracker}
+{#if context.showLoyaltyTracker && (context.unlocked || (!context.unlocked && loyaltyValue !== null))}
   <NpcScoreTrackerCard
     actor={context.actor}
     label={localize('DND5E.Loyalty')}
@@ -22,6 +22,6 @@
     max={loyaltyMax}
     unlocked={context.unlocked}
     showFiligree={false}
-    icon=""
+    icon="fa-solid fa-dog"
   />
 {/if}

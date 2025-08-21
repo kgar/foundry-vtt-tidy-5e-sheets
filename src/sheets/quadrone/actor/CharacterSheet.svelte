@@ -136,7 +136,7 @@
               {context.system.details.level ?? 0}
             </span>
             <div
-              class="proficiency flexrow"
+              class="proficiency-bonus flexrow"
               data-tooltip="DND5E.ProficiencyBonus"
             >
               <span class="label font-label-medium color-text-gold">

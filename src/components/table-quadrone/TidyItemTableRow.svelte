@@ -110,9 +110,11 @@
       : undefined,
   );
 
+  const diminished = $derived(item.system.identified === false);
+
   const itemColorClasses = $derived<ClassValue>([
     !isNil(item.system.rarity, '') ? 'rarity' : undefined,
-    item.system.rarity?.slugify(),
+    diminished ? 'diminished' : item.system.rarity?.slugify(),
     !isNil(config?.key) ? 'spell-method' : undefined,
     {
       [`method-${config?.key?.slugify()}`]: !isNil(config),
