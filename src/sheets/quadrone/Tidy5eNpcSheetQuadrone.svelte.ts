@@ -169,6 +169,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     let background = this.actor.itemTypes.background[0];
     let species = this.actor.itemTypes.race[0];
 
+    const important =
+      !foundry.utils.isEmpty(this.actor.classes) ||
+      this.actor.system.traits.important;
+
     const context: NpcSheetQuadroneContext = {
       background: background
         ? {
@@ -212,6 +216,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       },
       features: [],
       habitats: [],
+      important,
       inventory: [],
       portrait: {
         shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
@@ -246,8 +251,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showLegendariesOnStatblockTab:
         userPreferences.showLegendariesOnNpcStatblock === true,
       showLoyaltyTracker:
-        // this.actor.system.traits.important &&
-        game.settings.get('dnd5e', 'loyaltyScore'),
+        important &&
+        game.settings.get('dnd5e', 'loyaltyScore') &&
+        game.user.isGM,
       species: species
         ? {
             id: species.id,

@@ -51,7 +51,6 @@
     <span class="color-text-default font-data-medium">{speed.value}</span>
     <span class="color-text-lighter font-label-medium">{speed.units}</span>
   </span>
-  <div class={[hide, 'divider-dot']}></div>
 {/snippet}
 
 <div
@@ -59,37 +58,40 @@
   data-tidy-sheet-part="actor-details-row"
 >
   <div class="actor-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
-    {#each context.speeds as speed}
+    {#each context.speeds as speed, i}
+      {#if i > 0}
+        <div class="divider-dot"></div>
+      {/if}
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
-    {#each context.senses as sense}
-      {@render speedSenseSummary(
-        sense,
-        ['sense', 'main-sense'],
-        // ['hide-under-600'],
-      )}
+    {#each context.senses as sense, i}
+      {#if i > 0}
+        <div class="divider-dot"></div>
+      {/if}
+      {@render speedSenseSummary(sense, ['sense', 'main-sense'])}
     {/each}
     {#if size}
+      <div class="divider-dot"></div>
       <span class="size">
         <span class="font-label-medium color-text-gold">{size}</span>
       </span>
-      <div class="divider-dot"></div>
     {/if}
     {#if !isNil(context.creatureType?.title, '')}
+      <div class="divider-dot"></div>
       <span class="size">
         <span class="font-label-medium color-text-gold"
           >{context.creatureType.title}</span
         >
       </span>
-      <div class="divider-dot"></div>
     {/if}
     {#if species}
+      <div class="divider-dot"></div>
       <span class="species">
         <span class="font-label-medium color-text-gold">{species}</span>
       </span>
-      <div class="divider-dot"></div>
     {/if}
-    {#if !isNil(alignment)}
+    {#if alignment}
+      <div class="divider-dot"></div>
       <span class="alignment">
         <span class="font-label-medium color-text-gold">{alignment}</span>
       </span>
@@ -97,20 +99,20 @@
     {#if context.enableXp}
       <div class="divider-dot"></div>
       {#if context.unlocked && !isEditingXp}
-      <div class="xp-container">
-        <button
-          type="button"
-          class="unbutton xp-label flexrow xp-label-clickable"
-          onclick={() => (isEditingXp = true)}
-        >
-          <span class="label font-label-medium color-text-gold flexshrink"
-            >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
+        <div class="xp-container">
+          <button
+            type="button"
+            class="unbutton xp-label flexrow xp-label-clickable"
+            onclick={() => (isEditingXp = true)}
           >
-          <span class="label font-label-medium color-text-default flexshrink">
-            {FoundryAdapter.formatNumber(context.system.details.xp.value)}
-          </span>
-        </button>
-      </div>
+            <span class="label font-label-medium color-text-gold flexshrink"
+              >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
+            >
+            <span class="label font-label-medium color-text-default flexshrink">
+              {FoundryAdapter.formatNumber(context.system.details.xp.value)}
+            </span>
+          </button>
+        </div>
       {:else}
         <div class="xp-label flexrow">
           <span class="label font-label-medium color-text-gold flexshrink"

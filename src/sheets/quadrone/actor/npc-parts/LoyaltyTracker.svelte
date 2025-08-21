@@ -13,7 +13,7 @@
   );
 </script>
 
-{#if context.showLoyaltyTracker && (context.unlocked || (!context.unlocked && loyaltyValue !== null))}
+{#if context.showLoyaltyTracker && (context.unlocked || loyaltyValue !== null)}
   <NpcScoreTrackerCard
     actor={context.actor}
     label={localize('DND5E.Loyalty')}

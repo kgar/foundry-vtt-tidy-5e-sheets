@@ -1190,6 +1190,7 @@ export type NpcSheetQuadroneContext = {
   };
   features: FeatureSection[];
   habitats: { label: string }[];
+  important: boolean;
   inventory: InventorySection[];
   orphanedSubclasses: Item5e[];
   portrait: {

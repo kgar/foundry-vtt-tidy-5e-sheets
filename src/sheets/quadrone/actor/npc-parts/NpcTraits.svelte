@@ -12,7 +12,7 @@
 </script>
 
 <div class="list traits">
-  {#if context.actor.system.traits.important || context.classes.length > 0}
+  {#if context.important}
     <div class="list-entry trait-hit-dice">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
@@ -20,9 +20,13 @@
           {localize('DND5E.HitDice')}
         </h4>
         <div class="flexshrink hit-dice-container">
-          <span class="value font-label-medium">{context.system.attributes.hd.value}</span>
+          <span class="value font-label-medium"
+            >{context.system.attributes.hd.value}</span
+          >
           <span class="divider font-body-medium color-text-lightest">/</span>
-          <span class="max font-label-medium">{context.system.attributes.hd.max}</span>
+          <span class="max font-label-medium"
+            >{context.system.attributes.hd.max}</span
+          >
         </div>
       </div>
     </div>
