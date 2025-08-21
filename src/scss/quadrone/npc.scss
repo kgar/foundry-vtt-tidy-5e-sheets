@@ -102,6 +102,15 @@
         }
       }
 
+      .exhaustion {
+        transition: all var(--t5e-transition-default);
+      }
+
+      .exhaustion.exhausted {
+        margin-left: -1rem;
+        padding-left: 0.75rem;
+      }
+
       .exhaustion-bar {
         z-index: auto;
         left: 0;
@@ -261,9 +270,13 @@
   }
 
   .proficiency-bonus {
-    line-height: 1rem;
+    height: 1rem;
     margin: 0 var(--t5e-size-2x) 0 var(--t5e-size-1x);
     align-self: flex-start;
+
+    >* {
+      line-height: 1rem;
+    }
 
     .label {
       margin-right: 0.25rem;
@@ -375,6 +388,14 @@
 
     .ability-labels {
       bottom: 0.4375rem;
+    }
+
+    .initiative-bonus {
+      margin-right: 0.25rem;
+
+      >* {
+        letter-spacing: -6%;
+      }
     }
   }
 
