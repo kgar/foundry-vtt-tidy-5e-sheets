@@ -685,6 +685,9 @@
   }
 
   .tidy-table-row-container {
+    // For sheets with hundreds of items
+    content-visibility: auto;
+
     &.context {
       box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent-color) inset;
     }

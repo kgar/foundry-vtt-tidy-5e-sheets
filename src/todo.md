@@ -2,7 +2,7 @@
 
 ### The Short List
 
-- [ ] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
+- [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
 - [ ] NPC test Observer user
 - [ ] NPC test Limited user
 - [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
@@ -18,6 +18,7 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
 - [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
