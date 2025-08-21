@@ -2,6 +2,9 @@ import { getContext, setContext, mount, unmount } from 'svelte';
 import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 
 export const TidySvelteApi = {
+  /**
+   * Svelte resources which are directly tied to Tidy's svelte version / runtime.
+   */
   framework: {
     /**
      * For svelte + svelte Tidy integration.
