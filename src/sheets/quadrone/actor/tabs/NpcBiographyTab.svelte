@@ -190,12 +190,14 @@
       <h3 class="font-title-small flexrow">
         <i class="fa-solid {icon} flexshrink"></i>
         <span class="flex1">{localize(label)}</span>
-        <a
-          class="button button-borderless button-icon-only flexshrink"
-          onclick={(ev) => context.editable && edit(value, enriched, field)}
-        >
-          <i class="fa-solid fa-feather"></i>
-        </a>
+        {#if context.editable}
+          <a
+            class="button button-borderless button-icon-only flexshrink"
+            onclick={() => edit(value, enriched, field)}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
+        {/if}
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>

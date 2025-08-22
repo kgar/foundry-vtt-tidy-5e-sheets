@@ -235,6 +235,7 @@
               context.actor.rollAbilityCheck({ ability: key, event })}
             onRollSave={(event, key) =>
               context.actor.rollSavingThrow({ ability: key, event })}
+            disabled={!context.owner}
           />
         {/each}
       </AbilitiesContainer>
@@ -255,6 +256,7 @@
                 hpValueInputFocused = true;
                 hpValueInput?.selectText();
               }}
+              disabled={!context.editable}
             >
               <div
                 class="value {hpTemp > 999 || hpValue > 999
@@ -366,6 +368,7 @@
                   hpTempInputFocused = true;
                   hpTempInput?.selectText();
                 }}
+                disabled={!context.editable}
               >
                 <i class="fas fa-hand-holding-heart"></i>
               </button>
@@ -409,6 +412,7 @@
                 aria-label={localize('DND5E.Exhaustion')}
                 data-tooltip={'DND5E.Exhaustion'}
                 onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
+                disabled={!context.editable}
               >
                 <i class="fas fa-heart-pulse"></i>
                 <span class="value">{exhaustionLevel}</span>
@@ -428,6 +432,7 @@
                 class="max-hp uninput centered"
                 aria-label={localize('DND5E.HitPointsTempMax')}
                 data-tooltip={'DND5E.HitPointsTempMax'}
+                disabled={!context.editable}
               />
             </div>
 
@@ -437,6 +442,7 @@
               aria-label={localize('DND5E.HPFormulaRollMessage')}
               data-tooltip={'DND5E.HPFormulaRollMessage'}
               onclick={() => context.sheet.rollFormula()}
+              disabled={!context.editable}
             >
               <i class="fas fa-dice"></i>
             </button>
@@ -460,6 +466,7 @@
                   aria-label={localize('DND5E.DeathSave')}
                   data-tooltip="DND5E.DeathSave"
                   onclick={() => context.actor.sheet.toggleDeathSaves()}
+                  disabled={!context.editable}
                 >
                   <i class="fas fa-skull"></i>
                 </button>

@@ -8,6 +8,7 @@
   type Props = {
     ability: ActorAbilityContextEntry;
     unlocked: boolean;
+    disabled: boolean;
     onScoreChanged?: (newValue: number) => Promise<void>;
     onConfigClicked?: (key: string) => void;
     onRollAbility?: (event: MouseEvent, key: string) => void;
@@ -16,6 +17,7 @@
   let {
     ability,
     unlocked,
+    disabled,
     onScoreChanged,
     onConfigClicked,
     onRollAbility,
@@ -86,6 +88,7 @@
       })}
       class="button-borderless ability-roll-button label font-label-medium color-text-gold"
       data-tidy-sheet-part="ability-roller"
+      {disabled}
     >
       {ability.abbr}
     </button>
@@ -164,6 +167,7 @@
     ]}
     onclick={(ev) => onRollSave?.(ev, ability.key)}
     data-tidy-sheet-part="ability-save-roller"
+    {disabled}
   >
     <span class="modifier font-label-medium color-text-lightest"
       >{save.sign}</span

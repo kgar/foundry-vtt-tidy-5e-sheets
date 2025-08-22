@@ -47,9 +47,13 @@
   </a>
 {:else}
   <a
-    class="tidy-table-button tidy-table-toggle"
+    class={[
+      'tidy-table-button tidy-table-toggle',
+      { disabled: !context.editable },
+    ]}
     data-tooltip={title}
-    onclick={() => effect.update({ disabled: !effect.disabled })}
+    onclick={() =>
+      context.owner && effect.update({ disabled: !effect.disabled })}
   >
     <i
       class={[

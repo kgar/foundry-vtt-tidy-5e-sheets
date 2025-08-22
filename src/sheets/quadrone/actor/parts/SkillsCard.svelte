@@ -69,7 +69,9 @@
           expanded = newValue;
           await tick();
 
-          await TidyFlags.skillsExpanded.set(context.actor, newValue);
+          if (context.editable) {
+            await TidyFlags.skillsExpanded.set(context.actor, newValue);
+          }
         }}
       >
         {@render skillsCardHeaderText()}
@@ -140,6 +142,7 @@
             data-key={skill.key}
             data-tidy-draggable
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
+            disabled={!context.owner}
           >
             {skill.label}
           </button>
