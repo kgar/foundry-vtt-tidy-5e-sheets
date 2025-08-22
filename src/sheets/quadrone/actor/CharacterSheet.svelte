@@ -342,7 +342,7 @@
           </div>
 
           {#if !context.unlocked}
-            {#if hpTemp > 0 || hpTempInputFocused}
+            {#if hpTemp > 0}
               <!-- TODO: Convert to buttons -->
               <div
                 class="temp-hp label pointer"
@@ -360,20 +360,6 @@
                   data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
                 >
               </div>
-              <TextInputQuadrone
-                bind:this={hpTempInput}
-                id="{appId}-system-attributes-hp-temp"
-                document={context.actor}
-                field="system.attributes.hp.temp"
-                class="hp-temp-input"
-                value={hpTemp}
-                selectOnFocus={true}
-                enableDeltaChanges={true}
-                onfocus={() => (hpTempInputFocused = true)}
-                onblur={() => (hpTempInputFocused = false)}
-                blurAfterChange={true}
-                hidden={!hpTempInputFocused}
-              />
             {:else}
               <button
                 aria-label={localize('DND5E.HitPointsTemp')}
@@ -385,10 +371,25 @@
                   hpTempInput?.selectText();
                 }}
                 disabled={!context.editable}
+                hidden={hpTempInputFocused}
               >
                 <i class="fas fa-hand-holding-heart"></i>
               </button>
             {/if}
+            <TextInputQuadrone
+              bind:this={hpTempInput}
+              id="{appId}-system-attributes-hp-temp"
+              document={context.actor}
+              field="system.attributes.hp.temp"
+              class="hp-temp-input"
+              value={hpTemp}
+              selectOnFocus={true}
+              enableDeltaChanges={true}
+              onfocus={() => (hpTempInputFocused = true)}
+              onblur={() => (hpTempInputFocused = false)}
+              blurAfterChange={true}
+              hidden={!hpTempInputFocused}
+            />
           {:else}
             <button
               onclick={() =>
