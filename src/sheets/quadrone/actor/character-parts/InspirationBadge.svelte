@@ -74,6 +74,7 @@
           ['system.attributes.inspiration']: !inspired,
         })}
       data-tidy-sheet-part="inspiration-tracker-toggle"
+      disabled={!context.editable}
     >
     </button>
   {/if}

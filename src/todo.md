@@ -3,8 +3,15 @@
 ### The Short List
 
 - [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
-- [ ] NPC test Observer user
+- [ ] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
+- [ ] Tools card header - has cursor hover style without interactivity
+- [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
+- [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
+- [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
+- [ ] Extract and share: TidyTableRowUseButton
+- [x] NPC test Observer user
 - [ ] NPC test Limited user
+- [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
 - [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
   - [x] Registration
   - [x] Tabs, Runtime

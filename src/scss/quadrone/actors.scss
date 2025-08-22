@@ -2329,6 +2329,10 @@
         text-wrap: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
+
+        &[disabled] {
+          color: var(--button-text);
+        }
       }
 
       >* {

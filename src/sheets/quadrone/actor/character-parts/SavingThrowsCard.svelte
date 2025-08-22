@@ -111,6 +111,7 @@
     onclick={(event) =>
       context.actor.rollSavingThrow({ ability: ability.key, event })}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
+    disabled={!context.owner}
   >
     {ability.label}
   </button>

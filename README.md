@@ -81,8 +81,8 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | ✅ Background  | ✅ Character |
 | ✅ Class  | ⬜ NPC |
 | ✅ Consumable  | ⬜ Group  |
-| ✅ Container  | ⬜ Vehicle  |
-| ✅ Equipment | |
+| ✅ Container  | ⬜ Encounter |
+| ✅ Equipment | ⬜ Vehicle |
 | ✅ Facility | |
 | ✅ Feat | |
 | ✅ Loot | |

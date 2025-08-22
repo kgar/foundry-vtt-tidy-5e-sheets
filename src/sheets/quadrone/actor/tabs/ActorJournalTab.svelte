@@ -97,88 +97,90 @@
 </script>
 
 {#if entries.length === 0}
-<div class="journal-empty empty-state-container">
-  <button
-    type="button"
-    class="button button-tertiary"
-    title={localize('JOURNAL.AddPage')}
-    aria-label={localize('JOURNAL.AddPage')}
-    disabled={!context.owner}
-    onclick={async () => {
-      const newId = await JournalQuadrone.add(context.actor);
-      edit(newId);
-    }}
-  >
-  <i class="fa-solid fa-plus"></i>
-  {localize('JOURNAL.AddPage')}
-  </button>
-</div>
-{:else}
-<div class={['journal-entry-selector']}>
-  <VerticalTabs {tabs} bind:selectedTabId includeTabNumber />
-  <div class="action-buttons">
+  <div class="journal-empty empty-state-container">
     <button
       type="button"
-      aria-label={localize('JOURNAL.PrevPage')}
-      class="button button-icon-only"
-      data-tooltip="JOURNAL.PrevPage"
-      disabled={!selected || selectedIndex <= 0}
-      onclick={() => (selectedTabId = entries[selectedIndex - 1]?.id)}
-    >
-      <i class="fa-solid fa-chevron-left"></i>
-    </button>
-    <button
-      type="button"
+      class="button button-tertiary"
+      title={localize('JOURNAL.AddPage')}
       aria-label={localize('JOURNAL.AddPage')}
-      class="button add"
       disabled={!context.owner}
       onclick={async () => {
         const newId = await JournalQuadrone.add(context.actor);
         edit(newId);
       }}
     >
-      <i class="fa-solid fa-file-circle-plus"></i>
+      <i class="fa-solid fa-plus"></i>
       {localize('JOURNAL.AddPage')}
     </button>
-    <button
-      type="button"
-      aria-label={localize('JOURNAL.NextPage')}
-      class="button button-icon-only"
-      data-tooltip="JOURNAL.NextPage"
-      disabled={!selected || selectedIndex >= entries.length - 1}
-      onclick={() => (selectedTabId = entries[selectedIndex + 1]?.id)}
-    >
-      <i class="fa-solid fa-chevron-right"></i>
-    </button>
   </div>
-</div>
-<div class={['journal-entry-viewer']}>
-  {#if selected}
-    {@const title = coalesce(selected.title, getFallbackTitle(selectedIndex))}
-
-    <div class="title-container">
-      <h2 class="title flexrow">
-        <span class="flex1">{title}</span>
-        <a
-          class="button button-borderless button-icon-only edit flexshrink"
-          onclick={() => edit(selected.id)}
-          ><i class="fa-solid fa-feather"></i></a
-        >
-      </h2>
-      <tidy-gold-header-underline></tidy-gold-header-underline>
+{:else}
+  <div class={['journal-entry-selector']}>
+    <VerticalTabs {tabs} bind:selectedTabId includeTabNumber />
+    <div class="action-buttons">
+      <button
+        type="button"
+        aria-label={localize('JOURNAL.PrevPage')}
+        class="button button-icon-only"
+        data-tooltip="JOURNAL.PrevPage"
+        disabled={!selected || selectedIndex <= 0}
+        onclick={() => (selectedTabId = entries[selectedIndex - 1]?.id)}
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button
+        type="button"
+        aria-label={localize('JOURNAL.AddPage')}
+        class="button add"
+        disabled={!context.owner}
+        onclick={async () => {
+          const newId = await JournalQuadrone.add(context.actor);
+          edit(newId);
+        }}
+      >
+        <i class="fa-solid fa-file-circle-plus"></i>
+        {localize('JOURNAL.AddPage')}
+      </button>
+      <button
+        type="button"
+        aria-label={localize('JOURNAL.NextPage')}
+        class="button button-icon-only"
+        data-tooltip="JOURNAL.NextPage"
+        disabled={!selected || selectedIndex >= entries.length - 1}
+        onclick={() => (selectedTabId = entries[selectedIndex + 1]?.id)}
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
     </div>
-    {#await enrichedPromise then enriched}
-      <div class="editor" use:manageSecrets={{ document: context.document }}>
-        <div
-          data-field={selected
-            ? `${TidyFlags.documentJournal.prop}.${selected.id}.value`
-            : ''}
-          class="user-select-text"
-        >
-          {@html enriched}
-        </div>
+  </div>
+  <div class={['journal-entry-viewer']}>
+    {#if selected}
+      {@const title = coalesce(selected.title, getFallbackTitle(selectedIndex))}
+
+      <div class="title-container">
+        <h2 class="title flexrow">
+          <span class="flex1">{title}</span>
+          {#if context.editable}
+            <a
+              class="button button-borderless button-icon-only edit flexshrink"
+              onclick={() => edit(selected.id)}
+              ><i class="fa-solid fa-feather"></i></a
+            >
+          {/if}
+        </h2>
+        <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>
-    {/await}
-  {/if}
-</div>
+      {#await enrichedPromise then enriched}
+        <div class="editor" use:manageSecrets={{ document: context.document }}>
+          <div
+            data-field={selected
+              ? `${TidyFlags.documentJournal.prop}.${selected.id}.value`
+              : ''}
+            class="user-select-text"
+          >
+            {@html enriched}
+          </div>
+        </div>
+      {/await}
+    {/if}
+  </div>
 {/if}

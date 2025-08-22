@@ -88,7 +88,7 @@
           <i class="fa-solid fa-arrow-turn-right flip-y"></i>
         </span>
         <a
-          class="tidy-table-row-use-button"
+          class={['tidy-table-row-use-button', { disabled: !context.editable }]}
           onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
         >
           <img

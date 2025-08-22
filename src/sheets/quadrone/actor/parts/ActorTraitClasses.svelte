@@ -208,14 +208,13 @@
             </button>
           </div>
         {/if}
-        {#if !context.unlocked && cls && !hitLevelCap}
+        {#if !context.unlocked && context.editable && cls && !hitLevelCap}
           <div class="list-controls flexshrink">
             <button
               aria-label={localize('DND5E.LevelActionIncrease')}
               type="button"
               class="button button-borderless button-icon-only"
               data-tooltip="DND5E.LevelActionIncrease"
-              disabled={hitLevelCap}
               onclick={() =>
                 FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
             >
@@ -225,25 +224,25 @@
         {/if}
       </div>
       {#if context.unlocked && cls}
-          <div class="list-controls flexrow">
-            <LevelUpDropdown
-              availableLevels={cls.availableLevels}
-              item={cls.item}
-              class="level-selector flex0"
-            />
-            <button
-              aria-label={localize('DND5E.LevelActionIncrease')}
-              type="button"
-              class="button button-primary button-level-up flexshrink"
-              data-tooltip="DND5E.LevelActionIncrease"
-              disabled={hitLevelCap}
-              onclick={() =>
-                FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
-            >
-              <i class="fa-solid fa-square-up"></i>
-              {localize('DND5E.LevelActionIncrease')}
-            </button>
-          </div>
+        <div class="list-controls flexrow">
+          <LevelUpDropdown
+            availableLevels={cls.availableLevels}
+            item={cls.item}
+            class="level-selector flex0"
+          />
+          <button
+            aria-label={localize('DND5E.LevelActionIncrease')}
+            type="button"
+            class="button button-primary button-level-up flexshrink"
+            data-tooltip="DND5E.LevelActionIncrease"
+            disabled={hitLevelCap}
+            onclick={() =>
+              FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
+          >
+            <i class="fa-solid fa-square-up"></i>
+            {localize('DND5E.LevelActionIncrease')}
+          </button>
+        </div>
       {/if}
     </div>
   </div>
