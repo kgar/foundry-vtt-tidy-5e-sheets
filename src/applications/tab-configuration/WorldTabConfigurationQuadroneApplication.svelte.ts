@@ -5,9 +5,10 @@ import { mount } from 'svelte';
 import WorldTabConfigurationQuadrone from './WorldTabConfigurationQuadrone.svelte';
 import { settings } from 'src/settings/settings.svelte';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
-import { NpcSheetQuadroneRuntime} from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
+import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import type { TabConfiguration } from 'src/settings/settings.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
@@ -78,12 +79,28 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       )
     );
 
+    config.push(
+      getActorTabContext(
+        NpcSheetQuadroneRuntime,
+        CONSTANTS.SHEET_TYPE_NPC,
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC]
+      )
+    );
+
     if (settings.value.truesight) {
       config.push(
         getActorTabContext(
-          NpcSheetQuadroneRuntime,
-          CONSTANTS.SHEET_TYPE_NPC,
-          actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC]
+          GroupSheetQuadroneRuntime,
+          CONSTANTS.SHEET_TYPE_GROUP,
+          actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
+        )
+      );
+
+      config.push(
+        getActorTabContext(
+          EncounterSheetQuadroneRuntime,
+          CONSTANTS.SHEET_TYPE_GROUP,
+          actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
         )
       );
 
@@ -92,14 +109,6 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
           VehicleSheetQuadroneRuntime,
           CONSTANTS.SHEET_TYPE_VEHICLE,
           actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE]
-        )
-      );
-
-      config.push(
-        getActorTabContext(
-          GroupSheetQuadroneRuntime,
-          CONSTANTS.SHEET_TYPE_GROUP,
-          actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
         )
       );
     }
