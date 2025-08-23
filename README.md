@@ -41,6 +41,8 @@ Tidy runs on community feedback! If you like something you see, reach out in the
 
 Join us on the [Tidy 5e Sheets community discord](https://discord.gg/865zzNscRA) to receive insider updates, dream up new features, report bugs more easily than GitHub, and or just say hi.
 
+&nbsp;
+
 ## Installation
 
 We recommend installing this module through Foundry, the Forge Bazaar, or a similar interface for official Foundry packages.
@@ -63,6 +65,8 @@ Or, you can still install Tidy manually via the `module.json` URL:
 
 ![Set up Tidy Sheets](readme-assets/t5e-pick-sheet.webp)
 
+&nbsp;
+
 ## Tidy 5e Sheets UI
 
 ⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, has begun, and we are gradually releasing new sheets into the beta. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
@@ -75,11 +79,10 @@ Or, you can still install Tidy manually via the `module.json` URL:
 > 
 > The community has been generous to me for my efforts with this module. With that said, this next chapter in Tidy's history is, in a large part, thanks to hightouch's willingness to give of himself and work with the community and me to give Tidy an amazing new look while preserving all the functional things that users have come to rely upon.
 
-
 | Item Sheets Progress | Actor Sheets Progress |
 | ---- | ---- |
 | ✅ Background  | ✅ Character |
-| ✅ Class  | ⬜ NPC |
+| ✅ Class  | ✅ NPC |
 | ✅ Consumable  | ⬜ Group  |
 | ✅ Container  | ⬜ Encounter |
 | ✅ Equipment | ⬜ Vehicle |
@@ -93,6 +96,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | ✅ Tool | |
 | ✅ Weapon | |
 
+&nbsp;
 
 ## Character sheets
 Evocative character sheets that give players and DMs more control, with more ways of sorting, filtering, and organizing character details.
@@ -116,7 +120,7 @@ Evocative character sheets that give players and DMs more control, with more way
 | Quick edit with middle click, open with double-click | Expanded context menus |
 | Responsive design | Rarity colors |
 
-
+&nbsp;
 
 ## Item sheets
 
@@ -139,10 +143,13 @@ An alternate view of items that brings more functionality to the surface.
 | Fully themed descriptions including statblocks | Feat origin source selection |
 | Resizable and responsive sheets | |
 
+&nbsp;
 
 ## NPC Sheets
 
-![NPC Sheets](readme-assets/t5e-npc-hero.webp)
+![NPC Sheets](readme-assets/t5e-npc-spellbook.webp)
+![NPC Sheets](readme-assets/t5e-npc-edit-mode.webp)
+![NPC Sheets](readme-assets/t5e-npc-theming.webp)
 
 ### What's unique about Tidy's NPC sheets?
 
@@ -150,20 +157,23 @@ An alternate view of items that brings more functionality to the surface.
 | --- | --- |
 | Sheets closely aligned with character sheet functionality | Tab selection |
 | Detailed tables with drag and drop, sorting, and filtering | Custom sections |
-| Show spells with other NPC features | Quick access to roll HP |
+| Statblock tab with all traits, actions, and spells in one place | NPC journal |
+| HP and vitals in one spot similar to character sheets | Roll HP |
+
+&nbsp;
 
 ## Vehicle Sheets
 
 ![Vehicle Sheet](readme-assets/vehicle-sheet.png)
 
-
-### What's unique about Tidy's NPC sheets?
 ### What's unique about Tidy's Vehicle sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
 | Sheets closely aligned with character sheet functionality | Combined attributes and features |
 | Detailed tables with drag and drop, sorting, and filtering |  |
+
+&nbsp;
 
 ## Group Sheets
 
@@ -177,7 +187,7 @@ An alternate view of items that brings more functionality to the surface.
 | At a glance character stats and skills | Party languages and skills lists |
 | Inventory sorting, filtering, and customization matching other sheets | Hide and reorder sections |
 
-
+&nbsp;
 
 ## Reporting Issues and Requesting Features
 
