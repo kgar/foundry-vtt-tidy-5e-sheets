@@ -111,7 +111,7 @@
         section.items,
         searchResults.uuids,
       )}
-      {#if section.show && (hasViewableItems || (!container && context.unlocked && searchCriteria.trim() === ''))}
+      {#if section.show && hasViewableItems}
         {@const columns = new ColumnsLoadout(
           ItemColumnRuntime.getConfiguredColumnSpecifications(
             containingDocument.type,
