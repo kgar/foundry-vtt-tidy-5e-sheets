@@ -16,6 +16,7 @@ export const EncounterSheetQuadroneRuntime =
           type: 'svelte',
         },
         layout: 'quadrone',
+        iconClass: 'fa-solid fa-people-group',
       },
       {
         id: CONSTANTS.TAB_ACTOR_INVENTORY,
@@ -25,6 +26,7 @@ export const EncounterSheetQuadroneRuntime =
           type: 'svelte',
         },
         layout: 'quadrone',
+        iconClass: 'fa-solid fa-treasure-chest',
       },
       {
         id: CONSTANTS.TAB_DESCRIPTION,
@@ -34,6 +36,7 @@ export const EncounterSheetQuadroneRuntime =
           type: 'svelte',
         },
         layout: 'quadrone',
+        iconClass: 'fa-solid fa-notebook',
       },
     ],
     [

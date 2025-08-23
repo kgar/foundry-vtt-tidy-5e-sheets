@@ -19,6 +19,7 @@ import EncounterSheet from './actor/EncounterSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -112,6 +113,8 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
 
     // etc.
+
+    context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
 
     return context;
   }
