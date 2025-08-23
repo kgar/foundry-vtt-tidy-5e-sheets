@@ -58,8 +58,9 @@ const PSEUDO_BTN_CLICK_KEYS =new Set([' ', 'Enter'])
       return;
     }
 
-    if (PSEUDO_BTN_CLICK_KEYS.has(e.key)) return;
+    if (!PSEUDO_BTN_CLICK_KEYS.has(e.key)) return;
 
+    e.preventDefault()
     e.currentTarget?.click();
   }
 </script>
