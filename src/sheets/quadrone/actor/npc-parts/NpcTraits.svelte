@@ -9,15 +9,16 @@
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
-  const hdPct = $derived(
-    Math.round(
-      context.system.attributes.hd.max > 0
-        ? (context.system.attributes.hd.value /
-            context.system.attributes.hd.max) *
-            100
-        : 0,
-    ),
-  );
+  // TODO: Saved HD info for later.
+  // const hdPct = $derived(
+  //   Math.round(
+  //     context.system.attributes.hd.max > 0
+  //       ? (context.system.attributes.hd.value /
+  //           context.system.attributes.hd.max) *
+  //           100
+  //       : 0,
+  //   ),
+  // );
 </script>
 
 <div class="list traits">
@@ -37,7 +38,7 @@
             >{context.system.attributes.hd.max}</span
           >
         </div>
-        <div class="flexshrink hit-dice-container">
+        <!-- <div class="flexshrink hit-dice-container">
           <div
             class="meter progress hit-die view-only"
             style="--bar-percentage: {hdPct}%"
@@ -67,7 +68,7 @@
               </button>
             {/if}
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   {/if}
