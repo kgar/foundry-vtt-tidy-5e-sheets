@@ -89,7 +89,7 @@
 </script>
 
 <div class={{ ['tidy-table-container']: root }} bind:this={sectionsContainer}>
-  {#if totalItemCount === 0 && root}
+  {#if totalItemCount === 0 && root && context.editable}
     <div class="inventory-empty empty-state-container">
       <button
         type="button"
