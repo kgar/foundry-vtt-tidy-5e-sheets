@@ -504,7 +504,9 @@
         data-attribution-caption="DND5E.ArmorClass"
         data-tooltip-direction="DOWN"
       >
-        <span class="ac-label font-label-medium color-text-gold">AC</span>
+        <span class="ac-label font-label-medium color-text-gold"
+          >{localize('DND5E.AC')}</span
+        >
         <span class="ac-value color-text-default">
           {context.system.attributes.ac.value}
         </span>
