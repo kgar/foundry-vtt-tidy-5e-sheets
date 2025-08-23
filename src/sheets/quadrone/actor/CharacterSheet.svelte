@@ -205,6 +205,7 @@
               context.actor.rollAbilityCheck({ ability: key, event })}
             onRollSave={(event, key) =>
               context.actor.rollSavingThrow({ ability: key, event })}
+            disabled={!context.owner}
           />
         {/each}
         <div class="initiative-container flexcol">
@@ -214,6 +215,7 @@
               class="initiative-roll-button"
               onclick={(event) =>
                 context.actor.rollInitiativeDialog({ event: event })}
+              disabled={!context.owner}
             >
               {localize('DND5E.InitiativeAbbr')}
             </button>
@@ -310,6 +312,7 @@
                 hpValueInputFocused = true;
                 hpValueInput?.selectText();
               }}
+              disabled={!context.editable}
             >
               <div
                 class="value"
@@ -381,6 +384,7 @@
                   hpTempInputFocused = true;
                   hpTempInput?.selectText();
                 }}
+                disabled={!context.editable}
               >
                 <i class="fas fa-hand-holding-heart"></i>
               </button>
@@ -468,6 +472,7 @@
                 aria-label={localize('DND5E.Exhaustion')}
                 data-tooltip={'DND5E.Exhaustion'}
                 onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
+                disabled={!context.editable}
               >
                 <i class="fas fa-heart-pulse"></i>
                 <span class="value">{exhaustionLevel}</span>
@@ -492,6 +497,7 @@
                   aria-label={localize('DND5E.DeathSave')}
                   data-tooltip="DND5E.DeathSave"
                   onclick={() => context.actor.sheet.toggleDeathSaves()}
+                  disabled={!context.editable}
                 >
                   <i class="fas fa-skull"></i>
                 </button>

@@ -182,7 +182,7 @@
       width: var(--t5e-icon-size-7x);
       height: var(--t5e-icon-size-7x);
 
-      &:has([src$=".svg"]) {
+      &[src$=".svg"] {
         background: var(--t5e-color-text-gold-emphasis);
       }
     }
@@ -930,7 +930,7 @@
       // --t5e-item-row-background: rgba(255, 255, 255, 0.08);
 
       .item-image {
-        &:has([src$=".svg"]) {
+        &[src$=".svg"] {
           background-color: var(--t5e-color-palette-gold-56);
         }
       }

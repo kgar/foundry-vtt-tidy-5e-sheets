@@ -100,6 +100,7 @@
             data-key={tool.key}
             data-tidy-draggable
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
+            disabled={!context.owner}
           >
             {tool.label}
           </button>

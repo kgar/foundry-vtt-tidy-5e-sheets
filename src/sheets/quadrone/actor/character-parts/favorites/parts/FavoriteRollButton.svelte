@@ -53,6 +53,7 @@
   class="button button-borderless favorite-button"
   onclick={handleClick}
   data-tooltip={tooltip}
+  disabled={!context.editable}
 >
   <span
     class={[

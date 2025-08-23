@@ -170,18 +170,18 @@ Hooks.once('init', () => {
     }
   );
 
+  documentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eNpcSheetQuadrone,
+    {
+      types: [CONSTANTS.SHEET_TYPE_NPC],
+      label: 'TIDY5E.Tidy5eNpcSheetQuadrone',
+    }
+  );
+
   /* FOR THOSE WITH TRUE SIGHT */
   if (settings.value.truesight) {
-    documentSheetConfig.registerSheet(
-      Actor,
-      CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eNpcSheetQuadrone,
-      {
-        types: [CONSTANTS.SHEET_TYPE_NPC],
-        label: 'TIDY5E.Tidy5eNpcSheetQuadrone',
-      }
-    );
-
     documentSheetConfig.registerSheet(
       Actor,
       CONSTANTS.DND5E_SYSTEM_ID,

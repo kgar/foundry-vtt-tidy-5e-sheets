@@ -140,7 +140,7 @@ export function getItemContextOptionsQuadrone(
         FoundryAdapter.toggleFavoriteItem(item);
       },
       condition: () =>
-        !!itemParent &&
+        !!itemParent?.isOwner &&
         'favorites' in itemParent.system &&
         !FoundryAdapter.isLockedInCompendium(item),
     });
@@ -236,6 +236,7 @@ export function getItemContextOptionsQuadrone(
     condition: () =>
       item.type !== CONSTANTS.ITEM_TYPE_FACILITY &&
       itemParentIsActor &&
+      !!itemParent?.isOwner &&
       isCharacter,
     group: 'customize',
     callback: () => {
