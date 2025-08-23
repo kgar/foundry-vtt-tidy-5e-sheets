@@ -15,7 +15,7 @@ export const GroupSheetQuadroneRuntime =
           component: GroupMembersTab,
           type: 'svelte',
         },
-        id: CONSTANTS.TAB_GROUP_MEMBERS,
+        id: CONSTANTS.TAB_MEMBERS,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-people-group',
       },
@@ -51,7 +51,7 @@ export const GroupSheetQuadroneRuntime =
       },
     ],
     [
-      CONSTANTS.TAB_GROUP_MEMBERS,
+      CONSTANTS.TAB_MEMBERS,
       CONSTANTS.TAB_ACTOR_INVENTORY,
       CONSTANTS.TAB_GROUP_BASTIONS,
       CONSTANTS.TAB_DESCRIPTION,

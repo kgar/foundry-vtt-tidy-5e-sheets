@@ -189,6 +189,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       : this.actor.prototypeToken;
 
     const context: CharacterSheetQuadroneContext = {
+      abilities: this._prepareAbilities(actorContext),
       background: background
         ? {
             id: background.id,

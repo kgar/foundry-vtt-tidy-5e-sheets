@@ -930,7 +930,7 @@ export function createSettings() {
           config: false,
           type: Array,
           default: [
-            CONSTANTS.TAB_GROUP_MEMBERS,
+            CONSTANTS.TAB_MEMBERS,
             CONSTANTS.TAB_ACTOR_INVENTORY,
             CONSTANTS.TAB_DESCRIPTION,
           ],
@@ -950,7 +950,7 @@ export function createSettings() {
           config: false,
           type: Array,
           default: [
-            CONSTANTS.TAB_GROUP_MEMBERS,
+            CONSTANTS.TAB_MEMBERS,
             CONSTANTS.TAB_ACTOR_INVENTORY,
             CONSTANTS.TAB_DESCRIPTION,
           ],

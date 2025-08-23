@@ -39,7 +39,6 @@ import type {
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
-import { firstOfSet } from 'src/utils/set';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
@@ -245,7 +244,6 @@ export function Tidy5eActorSheetQuadroneBase<
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
-        abilities: [],
         actions: await getActorActionSectionsQuadrone(this.actor, {
           rowActions: TableRowActionsRuntime.getActionsRowActions(
             this.actor.isOwner,
@@ -289,8 +287,6 @@ export function Tidy5eActorSheetQuadroneBase<
         ...documentSheetContext,
       };
 
-      context.abilities = this._prepareAbilities(context);
-
       // Prepare owned items
       this._prepareItems(context);
 
@@ -305,10 +301,10 @@ export function Tidy5eActorSheetQuadroneBase<
 
     /**
      * Prepare labels object for the context.
-     * @returns {object}           Object containing various labels.
+     * @returns {Record<string, any>}           Object containing various labels.
      * @protected
      */
-    _getLabels() {
+    _getLabels(): Record<string, any> {
       const labels = { ...this.actor.labels };
 
       // Currency Labels
@@ -320,10 +316,12 @@ export function Tidy5eActorSheetQuadroneBase<
       }, {});
 
       // Proficiency
-      labels.proficiency =
-        game.settings.get('dnd5e', 'proficiencyModifier') === 'dice'
-          ? `d${this.actor.system.attributes.prof * 2}`
-          : `+${this.actor.system.attributes.prof}`;
+      if (this.actor.system.attributes?.prof !== undefined) {
+        labels.proficiency =
+          game.settings.get('dnd5e', 'proficiencyModifier') === 'dice'
+            ? `d${this.actor.system.attributes.prof * 2}`
+            : `+${this.actor.system.attributes.prof}`;
+      }
 
       return labels;
     }

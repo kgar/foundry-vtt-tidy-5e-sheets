@@ -231,13 +231,13 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
     const sheetPreferences = SheetPreferencesService.getByType(this.actor.type);
 
     const membersSortMode =
-      sheetPreferences.tabs?.[CONSTANTS.TAB_GROUP_MEMBERS]?.sort ?? 'm';
+      sheetPreferences.tabs?.[CONSTANTS.TAB_MEMBERS]?.sort ?? 'm';
 
     const inventorySortMode =
       sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_INVENTORY]?.sort ?? 'm';
 
     const utilities: Utilities<EncounterSheetClassicContext> = {
-      [CONSTANTS.TAB_GROUP_MEMBERS]: {
+      [CONSTANTS.TAB_MEMBERS]: {
         utilityToolbarCommands: [
           {
             id: 'sort-mode-alpha',
@@ -246,7 +246,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_GROUP_MEMBERS,
+                CONSTANTS.TAB_MEMBERS,
                 'sort',
                 'm'
               );
@@ -260,7 +260,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
-                CONSTANTS.TAB_GROUP_MEMBERS,
+                CONSTANTS.TAB_MEMBERS,
                 'sort',
                 'a'
               );

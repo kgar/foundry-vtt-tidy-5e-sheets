@@ -9,7 +9,7 @@ import EncounterDescriptionTab from 'src/sheets/classic/encounter/tabs/Encounter
 const defaultEncounterClassicTabs: RegisteredTab<EncounterSheetClassicContext>[] =
   [
     {
-      id: CONSTANTS.TAB_GROUP_MEMBERS,
+      id: CONSTANTS.TAB_MEMBERS,
       title: 'DND5E.Group.Member.other',
       content: {
         component: EncounterMembersTab,
