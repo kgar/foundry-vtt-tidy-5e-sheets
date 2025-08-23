@@ -23,6 +23,9 @@
   - [ ] Stub layout with tab strip
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
+- [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
+- [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
+- [ ] NPC: Add tools section to the sidebar if NPC sheets even supports it
 
 
 ### (Almost) Everything after the short list
