@@ -1871,6 +1871,11 @@
         text-transform: uppercase;
       }
     }
+
+    .input-group:has(input[type='text']:disabled) {
+      border: 0.0625rem solid var(--t5e-component-pill-border);
+      background: var(--t5e-component-pill-background);
+    }
   }
 
   .spellbook-footer {

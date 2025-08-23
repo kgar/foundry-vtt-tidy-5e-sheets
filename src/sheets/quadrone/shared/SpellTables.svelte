@@ -70,7 +70,7 @@
 </script>
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
-  {#if totalSpellCount === 0}
+  {#if totalSpellCount === 0 && context.editable}
     <div class="spellbook-empty empty-state-container">
       <button
         type="button"
