@@ -515,7 +515,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       const linked = item.system.linkedActivity?.item;
-      const prep = item.system.preparation || {};
 
       if (this._concentration.items.has(item)) {
         ctx.concentration = true;

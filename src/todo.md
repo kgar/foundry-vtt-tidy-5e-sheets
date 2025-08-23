@@ -3,7 +3,7 @@
 ### The Short List
 
 - [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
-- [ ] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
+- [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
 - [ ] Tools card header - has cursor hover style without interactivity
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
@@ -12,6 +12,7 @@
 - [x] NPC test Observer user
 - [ ] NPC test Limited user
 - [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
+- [ ] Image blurriness again: https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082
 - [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
   - [x] Registration
   - [x] Tabs, Runtime
@@ -22,6 +23,7 @@
   - [ ] Stub layout with tab strip
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
+
 
 ### (Almost) Everything after the short list
 
