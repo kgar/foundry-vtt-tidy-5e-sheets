@@ -671,7 +671,7 @@
         "ActorHeaderBackground.title": "Fundo do Cabeçalho do Ator",
         "ItemSidebarBackground.title": "Fundo da Lateral do Item",
         "PortraitShape": {
-            "title": "Formato {type} do Retrato",
+            "title": "Formato do Retrato do {type}",
             "option.round": "Redondo",
             "option.transparent": "Transparente",
             "option.square": "Quadrado",
