@@ -3,14 +3,23 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     ActorAbilityContextEntry,
-    ActorSheetQuadroneContext,
+    CharacterSheetQuadroneContext,
+    NpcSheetQuadroneContext,
+    VehicleSheetQuadroneContext,
   } from 'src/types/types';
   import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import ProficiencyCycle from '../parts/ProficiencyCycle.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getModifierData } from 'src/utils/formatting';
 
-  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
+  let context =
+    $derived(
+      getSheetContext<
+        | CharacterSheetQuadroneContext
+        | NpcSheetQuadroneContext
+        | VehicleSheetQuadroneContext
+      >(),
+    );
 
   const localize = FoundryAdapter.localize;
 
