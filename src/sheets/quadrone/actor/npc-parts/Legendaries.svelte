@@ -125,6 +125,7 @@
       <span class="font-label-medium color-text-lighter flexshrink">
         {localize('DND5E.Initiative')}
       </span>
+      {#if context.unlocked}
       <TextInputQuadrone
         id="{appId}-lair-action"
         document={context.actor}
@@ -138,6 +139,11 @@
         data-tooltip={'DND5E.LAIR.Action.Initiative'}
         class="lair-ini-input {context.unlocked ? '' : 'uninput'}"
       />
+      {:else}
+        <span class="font-label-large color-text-default flexshrink">
+          {context.system.resources.lair.initiative ?? ''}
+        </span>
+      {/if}
     </div>
   {/if}
 {/snippet}
