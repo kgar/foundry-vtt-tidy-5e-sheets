@@ -41,6 +41,7 @@
     <button
       type="button"
       class="button button-borderless skill-expand-button"
+      class:view-only={!context.unlocked}
       onclick={() =>
         context.unlocked && FoundryAdapter.renderToolsConfig(context.actor)}
     >
@@ -48,7 +49,7 @@
       <h3 class="font-label-medium">
         <span>{localize('TYPES.Item.toolPl')}</span>
         {#if context.unlocked}
-          <i class="fa-solid fa-cog"></i>
+          <i class="fa-solid fa-cog button-config"></i>
         {/if}
       </h3>
       <span class="modifier-label color-text-lightest font-default-medium">
