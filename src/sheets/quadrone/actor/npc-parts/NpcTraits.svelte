@@ -9,6 +9,16 @@
   let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
+  // TODO: Saved HD info for later.
+  // const hdPct = $derived(
+  //   Math.round(
+  //     context.system.attributes.hd.max > 0
+  //       ? (context.system.attributes.hd.value /
+  //           context.system.attributes.hd.max) *
+  //           100
+  //       : 0,
+  //   ),
+  // );
 </script>
 
 <div class="list traits">
@@ -28,6 +38,37 @@
             >{context.system.attributes.hd.max}</span
           >
         </div>
+        <!-- <div class="flexshrink hit-dice-container">
+          <div
+            class="meter progress hit-die view-only"
+            style="--bar-percentage: {hdPct}%"
+          >
+            <span class="label">
+              <div class="value" data-tooltip="TIDY5E.HitDice.Current.Label">
+                {context.system.attributes.hd.value}
+              </div>
+              <div class="separator">/</div>
+              <div class="max" data-tooltip="TIDY5E.HitDice.Max.Label">
+                {context.system.attributes.hd.max}
+              </div>
+              <div class="hd-label" data-tooltip="DND5E.HitDice">
+                {localize('TIDY5E.HitDice.Abbreviation')}
+              </div>
+            </span>
+            {#if context.unlocked}
+              <button
+                onclick={() =>
+                  FoundryAdapter.renderHitDiceConfig(context.actor)}
+                aria-label={localize('DND5E.HitDiceConfig')}
+                data-tooltip="DND5E.HitDiceConfig"
+                type="button"
+                class="button button-borderless button-icon-only button-config"
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            {/if}
+          </div>
+        </div> -->
       </div>
     </div>
   {/if}

@@ -543,12 +543,14 @@
         <span class="flex1">
           {localize('DND5E.ACTIVITY.FIELDS.description.label')}
         </span>
-        <a
-          class="button button-borderless button-icon-only flexshrink"
-          onclick={() => (editing = context.editable)}
-        >
-          <i class="fa-solid fa-feather"></i>
-        </a>
+        {#if context.editable}
+          <a
+            class="button button-borderless button-icon-only flexshrink"
+            onclick={() => (editing = context.editable)}
+          >
+            <i class="fa-solid fa-feather"></i>
+          </a>
+        {/if}
       </h3>
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
