@@ -858,6 +858,7 @@
         position: relative;
 
         .label {
+          cursor: auto;
           justify-content: flex-start;
           transition: all var(--t5e-transition-default);
 
@@ -1651,6 +1652,11 @@
         max-width: 10rem;
       }
 
+      .actor-image img {
+        max-width: 10rem;
+        max-height: 10rem;
+      }
+
       .actor-name {
         margin-bottom: 1.5rem;
       }
@@ -1763,12 +1769,18 @@
 
   .tidy-tab {
 
-    .tools .tools-empty {
-      padding: var(--t5e-size-3x) var(--t5e-size-2x);
-      color: var(--t5e-color-text-lighter);
+    .tools {
+      // .skill-expand-button.view-only {
+      //   pointer-events: none;
+      // }
 
-      &:hover {
-        color: var(--t5e-color-text-default);
+      .tools-empty {
+        padding: var(--t5e-size-3x) var(--t5e-size-2x);
+        color: var(--t5e-color-text-lighter);
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+        }
       }
     }
   }

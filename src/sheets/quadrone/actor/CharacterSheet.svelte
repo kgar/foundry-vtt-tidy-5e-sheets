@@ -429,7 +429,7 @@
             )}
             <div class="hd-row">
               <div
-                class="meter progress hit-die"
+                class="meter progress hit-die view-only"
                 style="--bar-percentage: {hdPct}%"
               >
                 <span class="label">
