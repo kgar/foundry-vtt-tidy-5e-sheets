@@ -79,7 +79,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | Item Sheets Progress | Actor Sheets Progress |
 | ---- | ---- |
 | ✅ Background  | ✅ Character |
-| ✅ Class  | ⬜ NPC |
+| ✅ Class  | ✅ NPC |
 | ✅ Consumable  | ⬜ Group  |
 | ✅ Container  | ⬜ Encounter |
 | ✅ Equipment | ⬜ Vehicle |
@@ -142,7 +142,9 @@ An alternate view of items that brings more functionality to the surface.
 
 ## NPC Sheets
 
-![NPC Sheets](readme-assets/t5e-npc-hero.webp)
+![NPC Sheets](readme-assets/t5e-npc-spellbook.webp)
+![NPC Sheets](readme-assets/t5e-npc-edit-mode.webp)
+![NPC Sheets](readme-assets/t5e-npc-theming.webp)
 
 ### What's unique about Tidy's NPC sheets?
 
@@ -150,14 +152,13 @@ An alternate view of items that brings more functionality to the surface.
 | --- | --- |
 | Sheets closely aligned with character sheet functionality | Tab selection |
 | Detailed tables with drag and drop, sorting, and filtering | Custom sections |
-| Show spells with other NPC features | Quick access to roll HP |
+| Statblock tab with all traits, actions, and spells in one place | NPC journal |
+| HP and vitals in one spot similar to character sheets | Roll HP |
 
 ## Vehicle Sheets
 
 ![Vehicle Sheet](readme-assets/vehicle-sheet.png)
 
-
-### What's unique about Tidy's NPC sheets?
 ### What's unique about Tidy's Vehicle sheets?
 
 | Core Functionality | Additional Features |
