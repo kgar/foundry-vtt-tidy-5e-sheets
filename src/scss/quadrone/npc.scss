@@ -116,6 +116,10 @@
         left: 0;
         padding-left: 1rem;
       }
+
+      &.view-only {
+        margin-bottom: 0.75rem;
+      }
     }
 
     .actor-vitals-container {

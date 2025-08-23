@@ -96,7 +96,7 @@
   );
 </script>
 
-{#if entries.length === 0}
+{#if entries.length === 0 && context.editable}
   <div class="journal-empty empty-state-container">
     <button
       type="button"
@@ -116,41 +116,43 @@
 {:else}
   <div class={['journal-entry-selector']}>
     <VerticalTabs {tabs} bind:selectedTabId includeTabNumber />
-    <div class="action-buttons">
-      <button
-        type="button"
-        aria-label={localize('JOURNAL.PrevPage')}
-        class="button button-icon-only"
-        data-tooltip="JOURNAL.PrevPage"
-        disabled={!selected || selectedIndex <= 0}
-        onclick={() => (selectedTabId = entries[selectedIndex - 1]?.id)}
-      >
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-      <button
-        type="button"
-        aria-label={localize('JOURNAL.AddPage')}
-        class="button add"
-        disabled={!context.owner}
-        onclick={async () => {
-          const newId = await JournalQuadrone.add(context.actor);
-          edit(newId);
-        }}
-      >
-        <i class="fa-solid fa-file-circle-plus"></i>
-        {localize('JOURNAL.AddPage')}
-      </button>
-      <button
-        type="button"
-        aria-label={localize('JOURNAL.NextPage')}
-        class="button button-icon-only"
-        data-tooltip="JOURNAL.NextPage"
-        disabled={!selected || selectedIndex >= entries.length - 1}
-        onclick={() => (selectedTabId = entries[selectedIndex + 1]?.id)}
-      >
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
-    </div>
+    {#if context.editable}
+      <div class="action-buttons">
+        <button
+          type="button"
+          aria-label={localize('JOURNAL.PrevPage')}
+          class="button button-icon-only"
+          data-tooltip="JOURNAL.PrevPage"
+          disabled={!selected || selectedIndex <= 0}
+          onclick={() => (selectedTabId = entries[selectedIndex - 1]?.id)}
+        >
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button
+          type="button"
+          aria-label={localize('JOURNAL.AddPage')}
+          class="button add"
+          disabled={!context.owner}
+          onclick={async () => {
+            const newId = await JournalQuadrone.add(context.actor);
+            edit(newId);
+          }}
+        >
+          <i class="fa-solid fa-file-circle-plus"></i>
+          {localize('JOURNAL.AddPage')}
+        </button>
+        <button
+          type="button"
+          aria-label={localize('JOURNAL.NextPage')}
+          class="button button-icon-only"
+          data-tooltip="JOURNAL.NextPage"
+          disabled={!selected || selectedIndex >= entries.length - 1}
+          onclick={() => (selectedTabId = entries[selectedIndex + 1]?.id)}
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    {/if}
   </div>
   <div class={['journal-entry-viewer']}>
     {#if selected}

@@ -52,7 +52,6 @@
       tabId,
     ),
   );
-
 </script>
 
 <section
@@ -72,7 +71,9 @@
           class={pinnedFilter.pinnedFilterClass}
           data-tooltip={localize(pinnedFilter.text)}
           data-filter-text={localize(pinnedFilter.text)}
-          data-filter-abbr={pinnedFilter.abbreviation ? localize(pinnedFilter.abbreviation) : ''}
+          data-filter-abbr={pinnedFilter.abbreviation
+            ? localize(pinnedFilter.abbreviation)
+            : ''}
         >
           {localize(pinnedFilter.text)}
         </FilterToggle>
@@ -86,27 +87,28 @@
 
   <SortButtonWithMenuQuadrone doc={context.document} {tabId} />
 
-  <a
-    class="button button-icon-only"
-    class:disabled={!context.editable}
-    title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
-    onclick={() =>
-      context.editable &&
-      new ConfigureSectionsApplication({
-        document: context.document,
-        settings: {
-          tabId,
-          sections: sections,
-          optionsGroups: tabOptionGroups,
-          formTitle: localize('TIDY5E.ConfigureTab.Title', {
-            tabName: tabName,
-          }),
-        },
-        window: {
-          title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabName }),
-        },
-      }).render({ force: true })}
-  >
-    <i class="fas fa-gear"></i>
-  </a>
+  {#if context.editable}
+    <a
+      class="button button-icon-only"
+      title={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
+      onclick={() =>
+        context.editable &&
+        new ConfigureSectionsApplication({
+          document: context.document,
+          settings: {
+            tabId,
+            sections: sections,
+            optionsGroups: tabOptionGroups,
+            formTitle: localize('TIDY5E.ConfigureTab.Title', {
+              tabName: tabName,
+            }),
+          },
+          window: {
+            title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabName }),
+          },
+        }).render({ force: true })}
+    >
+      <i class="fas fa-gear"></i>
+    </a>
+  {/if}
 </section>

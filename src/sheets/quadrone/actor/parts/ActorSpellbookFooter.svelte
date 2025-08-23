@@ -62,14 +62,16 @@
     {/each}
   </div>
 
-  <div class="sheet-footer-right flexshrink">
-    <a
-      data-tooltip="DND5E.ItemCreate"
-      class="button button-icon-only button-primary item-create"
-      class:disabled={!context.editable}
-      onclick={onAddClicked}
-    >
-      <i class="fas fa-plus"></i>
-    </a>
-  </div>
+  {#if context.editable}
+    <div class="sheet-footer-right flexshrink">
+      <a
+        data-tooltip="DND5E.ItemCreate"
+        class="button button-icon-only button-primary item-create"
+        class:disabled={!context.editable}
+        onclick={onAddClicked}
+      >
+        <i class="fas fa-plus"></i>
+      </a>
+    </div>
+  {/if}
 </div>

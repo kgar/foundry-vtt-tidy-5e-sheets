@@ -57,9 +57,7 @@
 />
 
 <!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
-<div
-  class={['sheet-footer', 'flexrow', 'inventory-footer', classValue]}
->
+<div class={['sheet-footer', 'flexrow', 'inventory-footer', classValue]}>
   <div class="footer-content-left flexrow flexshrink">
     <div
       class={[
@@ -123,8 +121,8 @@
     {/each}
   </div>
 
-  <div class="footer-content-right flexrow flexshrink">
-    {#if context.editable}
+  {#if context.editable}
+    <div class="footer-content-right flexrow flexshrink">
       <a
         class="button button-icon-only currency-conversion flexshrink"
         class:disabled={!context.editable}
@@ -137,15 +135,13 @@
       >
         <i class="fas fa-database"></i>
       </a>
-    {/if}
-
-    <a
-      data-tooltip="DND5E.ItemCreate"
-      class="button button-icon-only button-primary item-create flexshrink"
-      class:disabled={!context.editable}
-      onclick={onAddClicked}
-    >
-      <i class="fas fa-plus"></i>
-    </a>
-  </div>
+      <a
+        data-tooltip="DND5E.ItemCreate"
+        class="button button-icon-only button-primary item-create flexshrink"
+        onclick={onAddClicked}
+      >
+        <i class="fas fa-plus"></i>
+      </a>
+    </div>
+  {/if}
 </div>

@@ -94,35 +94,37 @@
                 {context.actor.name}
               </h1>
             {/if}
-            <div
-              class={[
-                'sheet-header-actions',
-                'flexrow',
-                { ['show-xp']: context.enableXp },
-              ]}
-              data-tidy-sheet-part="sheet-header-actions-container"
-            >
-              <button
-                type="button"
-                class="button button-icon-only short-rest button-gold"
-                data-tooltip="DND5E.REST.Short.Label"
-                aria-label={localize('DND5E.REST.Short.Label')}
-                onclick={() => context.actor.shortRest()}
-                disabled={!context.editable}
+            {#if context.editable}
+              <div
+                class={[
+                  'sheet-header-actions',
+                  'flexrow',
+                  { ['show-xp']: context.enableXp },
+                ]}
+                data-tidy-sheet-part="sheet-header-actions-container"
               >
-                <i class="fas fa-utensils"></i>
-              </button>
-              <button
-                type="button"
-                class="button button-icon-only long-rest button-gold"
-                data-tooltip="DND5E.REST.Long.Label"
-                aria-label={localize('DND5E.REST.Long.Label')}
-                onclick={() => context.actor.longRest()}
-                disabled={!context.editable}
-              >
-                <i class="fas fa-campground"></i>
-              </button>
-            </div>
+                <button
+                  type="button"
+                  class="button button-icon-only short-rest button-gold"
+                  data-tooltip="DND5E.REST.Short.Label"
+                  aria-label={localize('DND5E.REST.Short.Label')}
+                  onclick={() => context.actor.shortRest()}
+                  disabled={!context.editable}
+                >
+                  <i class="fas fa-utensils"></i>
+                </button>
+                <button
+                  type="button"
+                  class="button button-icon-only long-rest button-gold"
+                  data-tooltip="DND5E.REST.Long.Label"
+                  aria-label={localize('DND5E.REST.Long.Label')}
+                  onclick={() => context.actor.longRest()}
+                  disabled={!context.editable}
+                >
+                  <i class="fas fa-campground"></i>
+                </button>
+              </div>
+            {/if}
           </div>
           <CharacterSubtitle />
         </div>
@@ -374,7 +376,7 @@
                 blurAfterChange={true}
                 hidden={!hpTempInputFocused}
               />
-            {:else}
+            {:else if context.editable}
               <button
                 aria-label={localize('DND5E.HitPointsTemp')}
                 data-tooltip="DND5E.HitPointsTemp"
@@ -389,7 +391,7 @@
                 <i class="fas fa-hand-holding-heart"></i>
               </button>
             {/if}
-          {:else}
+          {:else if context.editable}
             <button
               onclick={() =>
                 FoundryAdapter.renderHitPointsDialog(context.actor)}
@@ -465,19 +467,21 @@
                 {/if}
               </div>
             </div>
-            <div class={['exhaustion', { exhausted: exhaustionLevel > 0 }]}>
-              <button
-                type="button"
-                class="button button-borderless button-icon-only"
-                aria-label={localize('DND5E.Exhaustion')}
-                data-tooltip={'DND5E.Exhaustion'}
-                onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
-                disabled={!context.editable}
-              >
-                <i class="fas fa-heart-pulse"></i>
-                <span class="value">{exhaustionLevel}</span>
-              </button>
-            </div>
+            {#if context.editable || exhaustionLevel > 0}
+              <div class={['exhaustion', { exhausted: exhaustionLevel > 0 }]}>
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only"
+                  aria-label={localize('DND5E.Exhaustion')}
+                  data-tooltip={'DND5E.Exhaustion'}
+                  onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
+                  disabled={!context.editable}
+                >
+                  <i class="fas fa-heart-pulse"></i>
+                  <span class="value">{exhaustionLevel}</span>
+                </button>
+              </div>
+            {/if}
             <div class={['death-saves', { dying: context.showDeathSaves }]}>
               {#if context.unlocked}
                 <button
@@ -490,7 +494,7 @@
                 >
                   <i class="fas fa-cog"></i>
                 </button>
-              {:else}
+              {:else if context.editable}
                 <button
                   type="button"
                   class="button button-borderless button-icon-only"
