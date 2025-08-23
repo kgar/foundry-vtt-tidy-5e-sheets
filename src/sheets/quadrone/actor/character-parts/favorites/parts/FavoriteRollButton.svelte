@@ -1,3 +1,7 @@
+<script lang="ts" module>
+const PSEUDO_BTN_CLICK_KEYS =new Set([' ', 'Enter'])
+</script>
+
 <script lang="ts" generics="TFavorite extends FavoriteContextEntry">
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { FavoriteContextEntry } from 'src/types/types';
@@ -7,7 +11,7 @@
     favorite: TFavorite;
     img: string | undefined;
     onUse?: (
-      event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
+      event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
       favorite: TFavorite,
     ) => Promise<any>;
     title: string;
@@ -29,7 +33,7 @@
   let context = $derived(getCharacterSheetQuadroneContext());
 
   function handleClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
+    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
   ) {
     if (!context.editable) {
       return;
@@ -46,14 +50,29 @@
       ? `${name} <br /> ${theSubtitle?.innerText.replaceAll('\n', ' • ') ?? ''}`
       : undefined,
   );
+
+  function handleKeyDown(
+    e: KeyboardEvent & { currentTarget: EventTarget & HTMLDivElement },
+  ) {
+    if (!context.editable) {
+      return;
+    }
+
+    if (PSEUDO_BTN_CLICK_KEYS.has(e.key)) return;
+
+    e.currentTarget?.click();
+  }
 </script>
 
-<button
-  type="button"
+<!-- We're not using a button here as firefox has a bug with dragging buttons -->
+<div
+  role="button"
   class="button button-borderless favorite-button"
   onclick={handleClick}
+  onkeydown={handleKeyDown}
+  tabindex="0"
   data-tooltip={tooltip}
-  disabled={!context.editable}
+  aria-disabled={!context.editable}
 >
   <span
     class={[
@@ -85,4 +104,4 @@
       </span>
     </div>
   </div>
-</button>
+</div>
