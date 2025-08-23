@@ -22,8 +22,8 @@
 
 <header class="sheet-header limited-sheet flexcol theme-dark">
   <div class="sheet-header-content flexrow">
-    <h1 class="character-name flex1">{context.actor.name}</h1>
-    <div class="character-vitals-container">
+    <h1 class="actor-name flex1">{context.actor.name}</h1>
+    <div class="actor-vitals-container">
       <ActorPortrait />
     </div>
   </div>
