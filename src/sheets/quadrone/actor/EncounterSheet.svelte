@@ -2,10 +2,10 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SvelteSet } from 'svelte/reactivity';
 
-  let context = $derived(getGroupSheetQuadroneContext());
+  let context = $derived(getEncounterSheetQuadroneContext());
 
   let localize = FoundryAdapter.localize;
 

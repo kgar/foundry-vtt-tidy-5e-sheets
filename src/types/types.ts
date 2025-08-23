@@ -31,6 +31,8 @@ import type { TidyTableAction } from 'src/components/table-quadrone/table-button
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
+import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -938,7 +940,6 @@ export type ActorTraitContext<TValue = unknown> = {
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
-  abilities: ActorAbilityContextEntry[];
   actions: TidyItemSectionBase[];
   actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
@@ -970,6 +971,12 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
 } & DocumentSheetQuadroneContext<Actor5e>;
+
+export type SingleActorContext<TSheet> = {
+  abilities: ActorAbilityContextEntry[];
+} & ActorSheetQuadroneContext<TSheet>;
+
+export type MultiActorContext<TSheet> = {} & ActorSheetQuadroneContext<TSheet>;
 
 export type ActorAbilityContextEntry = Ability & {
   key: string; // For saving
@@ -1169,10 +1176,9 @@ export type CharacterSheetQuadroneContext = {
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
-} & ActorSheetQuadroneContext<Tidy5eCharacterSheetQuadrone>;
+} & SingleActorContext<Tidy5eCharacterSheetQuadrone>;
 
 export type NpcSheetQuadroneContext = {
-  // TODO: Populate with context data as needed
   background?: ActorTraitItemContext;
   classes: ActorClassEntryContext[];
   conditions: Dnd5eActorCondition[];
@@ -1218,12 +1224,17 @@ export type NpcSheetQuadroneContext = {
   tools: ActorSkillsToolsContext<ToolData>[];
   treasures: { label: string }[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
-} & ActorSheetQuadroneContext<any>;
+} & SingleActorContext<Tidy5eNpcSheetQuadrone>;
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
-} & ActorSheetQuadroneContext<unknown>;
+} & MultiActorContext<Tidy5eGroupSheetQuadrone>;
+
+export type EncounterSheetQuadroneContext = {
+  // TODO: Populate with context data as needed
+  type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
+} & MultiActorContext<Tidy5eEncounterSheetQuadrone>;
 
 export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed
@@ -1231,7 +1242,7 @@ export type VehicleSheetQuadroneContext = {
     biography: string;
   };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
-} & ActorSheetQuadroneContext<unknown>;
+} & SingleActorContext<unknown>;
 
 /* Misc - Svelte */
 

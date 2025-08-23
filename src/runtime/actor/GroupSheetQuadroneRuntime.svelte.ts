@@ -5,6 +5,8 @@ import { CONSTANTS } from 'src/constants';
 import GroupInventoryTab from 'src/sheets/quadrone/actor/tabs/GroupInventoryTab.svelte';
 import GroupDescriptionTab from 'src/sheets/quadrone/actor/tabs/GroupDescriptionTab.svelte';
 import GroupBastionsTab from 'src/sheets/quadrone/actor/tabs/GroupBastionsTab.svelte';
+import GroupExplorationTab from 'src/sheets/quadrone/actor/tabs/GroupExplorationTab.svelte';
+import { systemSettings } from 'src/settings/settings.svelte';
 
 export const GroupSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<GroupSheetQuadroneContext>(
@@ -15,7 +17,7 @@ export const GroupSheetQuadroneRuntime =
           component: GroupMembersTab,
           type: 'svelte',
         },
-        id: CONSTANTS.TAB_GROUP_MEMBERS,
+        id: CONSTANTS.TAB_MEMBERS,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-people-group',
       },
@@ -30,10 +32,23 @@ export const GroupSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-treasure-chest',
       },
       {
+        title: 'TIDY5E.ExplorationTab.Title',
+        content: {
+          component: GroupExplorationTab,
+          type: 'svelte',
+        },
+        id: CONSTANTS.TAB_GROUP_EXPLORATION,
+        layout: 'quadrone',
+        iconClass: 'fa-solid fa-compass',
+      },
+      {
         title: 'DND5E.Bastion.Configuration.Name',
         content: {
           component: GroupBastionsTab,
           type: 'svelte',
+        },
+        enabled: (_context) => {
+          return !!systemSettings.value.bastionConfiguration.enabled;
         },
         id: CONSTANTS.TAB_GROUP_BASTIONS,
         layout: 'quadrone',
@@ -51,8 +66,9 @@ export const GroupSheetQuadroneRuntime =
       },
     ],
     [
-      CONSTANTS.TAB_GROUP_MEMBERS,
+      CONSTANTS.TAB_MEMBERS,
       CONSTANTS.TAB_ACTOR_INVENTORY,
+      CONSTANTS.TAB_GROUP_EXPLORATION,
       CONSTANTS.TAB_GROUP_BASTIONS,
       CONSTANTS.TAB_DESCRIPTION,
     ]

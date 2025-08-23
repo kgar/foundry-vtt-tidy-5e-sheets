@@ -8,7 +8,7 @@ import GroupDescriptionTab from 'src/sheets/classic/group/tabs/GroupDescriptionT
 
 const defaultGroupClassicTabs: RegisteredTab<GroupSheetClassicContext>[] = [
   {
-    id: CONSTANTS.TAB_GROUP_MEMBERS,
+    id: CONSTANTS.TAB_MEMBERS,
     title: 'DND5E.Group.Member.other',
     content: {
       component: GroupMembersTab,

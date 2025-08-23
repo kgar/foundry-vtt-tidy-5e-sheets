@@ -114,12 +114,7 @@
 
 ## hightouch To Do
 
-- [x] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
-- [x] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
-- [x] kgar question: should we apply any alt header color for the suppressed effect section?
-- [x] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
-- [x] Test Korean language on Mac
-- [x] Item sheet context menu styles - hide initial grouping line if present.
+
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
@@ -129,31 +124,7 @@
   - [ ] Fix Slot favorite roll icon not appearing
   - [x] Add Bastion facility roll icon on hover
   - [ ] Add Character tab roll icon on hover
-- [x] Figure out what's up with multiclassed spellbook footer padding missing
-- [x] NPC Header
-  - [x] Rest buttons - when mouse down, the button borders change size and cause the buttons to shift
-- [x] Light mode, collapsed view (enable Honor and Sanity)
-  - [x] Init is very dark
-  - [x] Ability proficiency decoration is a bit hard to notice
-- [x] NPC Subtitle
-  - [x] ~~Do we need to mention Classes / Subclasses?~~ **Note: Recommending no for now**
-  - [x] ~~Do we need to mention Background?~~ **Note: Recommending no for now**
-  - [x] Concentration button is vertically offset from the rest of the subtitle slightly
-  - [x] XP width broken when wrapping in Edit Mode
-- [x] NPC Sidebar
-  - [x] Species section doesn't have an icon (I couldn't decide on one)
-  - [x] Creature Type doesn't have an icon (I couldn't decide on one)
-  - [x] Loyalty tracker doesn't have an icon (I couldn't decide on one)
-  - [x] Finish styling hit die
-- [x] Edit Mode
-  - [x] Value input is wider than legendary trackers' value inputs. **Note: on purpose**
-- [x] ~~Statblock tab~~
-  - [x] ~~Section add buttons: they can only ever add a Feature to the Features section, unless we also opt to add a default Activity with action economy, which is not really a good option. I don't know if there's a solution for this, but I wanted to point the behavior out.~~
-- [x] Pinned Filters
-  - [x] At smallest width with sidebar open, all buttons are hidden, but the button group border itself is still visible. Wasn't sure if intentional.
-  - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
-- [x] Inventory tab
-  - [x] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
+- [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
 
 ### Huh?
 
@@ -232,3 +203,37 @@ Limited:
 - Identical to Observer
 
 ### To Do Graveyard
+
+#### hightouch's to-dones
+
+- [x] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
+- [x] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
+- [x] kgar question: should we apply any alt header color for the suppressed effect section?
+- [x] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
+- [x] Test Korean language on Mac
+- [x] Item sheet context menu styles - hide initial grouping line if present.
+- [x] Figure out what's up with multiclassed spellbook footer padding missing
+- [x] NPC Header
+  - [x] Rest buttons - when mouse down, the button borders change size and cause the buttons to shift
+- [x] Light mode, collapsed view (enable Honor and Sanity)
+  - [x] Init is very dark
+  - [x] Ability proficiency decoration is a bit hard to notice
+- [x] NPC Subtitle
+  - [x] ~~Do we need to mention Classes / Subclasses?~~ **Note: Recommending no for now**
+  - [x] ~~Do we need to mention Background?~~ **Note: Recommending no for now**
+  - [x] Concentration button is vertically offset from the rest of the subtitle slightly
+  - [x] XP width broken when wrapping in Edit Mode
+- [x] NPC Sidebar
+  - [x] Species section doesn't have an icon (I couldn't decide on one)
+  - [x] Creature Type doesn't have an icon (I couldn't decide on one)
+  - [x] Loyalty tracker doesn't have an icon (I couldn't decide on one)
+  - [x] Finish styling hit die
+- [x] Edit Mode
+  - [x] Value input is wider than legendary trackers' value inputs. **Note: on purpose**
+- [x] ~~Statblock tab~~
+  - [x] ~~Section add buttons: they can only ever add a Feature to the Features section, unless we also opt to add a default Activity with action economy, which is not really a good option. I don't know if there's a solution for this, but I wanted to point the behavior out.~~
+- [x] Pinned Filters
+  - [x] At smallest width with sidebar open, all buttons are hidden, but the button group border itself is still visible. Wasn't sure if intentional.
+  - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
+- [x] Inventory tab
+  - [x] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?

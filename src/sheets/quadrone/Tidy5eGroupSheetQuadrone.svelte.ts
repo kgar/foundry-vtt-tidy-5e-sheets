@@ -18,26 +18,14 @@ import GroupSheet from './actor/GroupSheet.svelte';
 import { mount } from 'svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
-import {
-  TidyExtensibleDocumentSheetMixin,
-  type TidyDocumentSheetRenderOptions,
-} from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
-import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
-import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
-import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
+import { type TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
+import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 
-export class Tidy5eGroupSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
-  CONSTANTS.SHEET_TYPE_GROUP,
-  SvelteApplicationMixin<
-    ApplicationConfiguration | undefined,
-    GroupSheetQuadroneContext
-  >(foundry.applications.sheets.ActorSheetV2)
+export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
+  CONSTANTS.SHEET_TYPE_GROUP
 ) {
   currentTabId: string;
-  itemFilterService: ItemFilterService;
-  messageBus = $state<MessageBus>({ message: undefined });
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
@@ -47,98 +35,22 @@ export class Tidy5eGroupSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_GROUP_MEMBERS;
+    this.currentTabId = CONSTANTS.TAB_MEMBERS;
 
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
       CONSTANTS.LOCATION_SECTION
     );
-
-    this.itemFilterService = new ItemFilterService(
-      {},
-      this.actor,
-      ItemFilterRuntime.getDocumentFiltersQuadrone
-    );
   }
 
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    classes: [
-      CONSTANTS.MODULE_ID,
-      'sheet',
-      'actor',
-      CONSTANTS.SHEET_TYPE_GROUP,
-      CONSTANTS.SHEET_LAYOUT_QUADRONE,
-    ],
     position: {
       width: 740,
       height: 810,
     },
-    window: {
-      controls: [
-        {
-          action: 'openTabConfiguration',
-          icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabSelection.MenuOptionText',
-          ownership: 'OWNER',
-          visible: function (this: Tidy5eGroupSheetQuadrone) {
-            return this.isEditable;
-          },
-        },
-        {
-          icon: 'fa-solid fa-swatchbook',
-          label: 'TIDY5E.ThemeSettings.SheetMenu.name',
-          action: 'themeSettings',
-          ownership: 'OWNER',
-          visible: function (this: Tidy5eGroupSheetQuadrone) {
-            return this.isEditable;
-          },
-        },
-      ],
-      resizable: true,
-      positioned: true,
-      frame: true,
-    },
-    actions: {
-      openTabConfiguration: async function (this: Tidy5eGroupSheetQuadrone) {
-        new SheetTabConfigurationQuadroneApplication({
-          document: this.document,
-        }).render({ force: true });
-      },
-      showArtwork: async function (this: Tidy5eGroupSheetQuadrone) {
-        const showTokenPortrait =
-          this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT];
-        const token = this.actor.isToken
-          ? this.actor.token
-          : this.actor.prototypeToken;
-        const img = showTokenPortrait ? token.texture.src : this.actor.img;
-        new foundry.applications.apps.ImagePopout({
-          src: img,
-          uuid: this.actor.uuid,
-          window: { title: this.actor.name },
-        }).render({ force: true });
-      },
-      themeSettings: async function (this: Tidy5eGroupSheetQuadrone) {
-        await new ThemeSettingsQuadroneApplication({
-          document: this.document,
-        }).render({
-          force: true,
-        });
-      },
-    },
-    dragDrop: [
-      {
-        dragSelector: `[data-tidy-always-draggable]`,
-        dropSelector: null,
-      },
-      {
-        dragSelector: '[data-tidy-draggable]',
-        dropSelector: null,
-      },
-    ],
-    submitOnClose: true,
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -203,6 +115,8 @@ export class Tidy5eGroupSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
     // etc.
 
+    context.tabs = await GroupSheetQuadroneRuntime.getTabs(context);
+
     return context;
   }
 
@@ -216,13 +130,5 @@ export class Tidy5eGroupSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     element.querySelector('.window-header').classList.add('theme-dark');
 
     return element;
-  }
-
-  /* -------------------------------------------- */
-  /* SheetTabCacheable
-  /* -------------------------------------------- */
-
-  onTabSelected(tabId: string) {
-    this.currentTabId = tabId;
   }
 }

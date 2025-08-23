@@ -174,6 +174,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this.actor.system.traits.important;
 
     const context: NpcSheetQuadroneContext = {
+      abilities: this._prepareAbilities(actorContext),
       background: background
         ? {
             id: background.id,

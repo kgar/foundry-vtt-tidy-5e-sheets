@@ -878,6 +878,7 @@
   "TIDY5E.Visible": "Visible",
   "TIDY5E.Hidden": "Hidden",
   "TIDY5E.Options.Title": "Options",
+  "TIDY5E.ExplorationTab.Title": "Exploration",
   "TIDY5E.ConfigureTab.Title": "Configure {tabName}",
   "TIDY5E.DisplayOptions.Title": "Display Options",
   "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Show container row",
