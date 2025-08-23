@@ -245,9 +245,10 @@
     <div class="actor-vitals-container">
       <ActorPortrait />
       <div
-        class="actor-vitals npc-vitals theme-dark {context.editable
-          ? ''
-          : 'view-only'}"
+        class={[
+          'actor-vitals npc-vitals theme-dark',
+          { 'view-only': !context.editable },
+        ]}
       >
         <div class="hp-row flexrow">
           <div

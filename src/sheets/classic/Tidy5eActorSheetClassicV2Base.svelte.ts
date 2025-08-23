@@ -784,6 +784,7 @@ export function Tidy5eActorSheetClassicV2Base<
       warnings.classList.add('preparation-warnings', 'header-control', 'icon');
       warnings.dataset.tooltip = 'Warnings';
       warnings.setAttribute('aria-label', game.i18n.localize('Warnings'));
+      warnings.setAttribute('type', 'button');
       warnings.innerHTML = '<i class="fas fa-triangle-exclamation"></i>';
       warnings.addEventListener('click', this._onOpenWarnings.bind(this));
 
