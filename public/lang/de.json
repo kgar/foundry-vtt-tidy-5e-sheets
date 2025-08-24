@@ -8,13 +8,13 @@
     "TIDY5E.SheetImageOptionsHint": "Rechtsklick: Charakter-Bilder zeigen",
     "TIDY5E.ShowPortraitArt": "Portrait zeigen",
     "TIDY5E.ShowTokenArt": "Token zeigen",
-    "TIDY5E.ShowItemImage": "Rechtslick: Gegenstands-Bild zeigen",
+    "TIDY5E.ShowItemImage": "Rechtsklick: Gegenstands-Bild zeigen",
     "TIDY5E.ShowItemArt": "Bild zeigen",
     "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.RestHint": "Rasten",
     "TIDY5E.ShortRest": "Kurze Rast",
     "TIDY5E.LongRest": "Lange Rast",
-    "TIDY5E.HitDiceRollAverage": "Rechtsklick: Durchschnitt",
+    "TIDY5E.HitDiceRollAverage": "Rechtsklick: Durchschnitt anwenden",
     "TIDY5E.JournalTabName": "Tagebuch",
     "TIDY5E.RestoreOnRest": "Bei Rast regenerieren",
     "TIDY5E.JournalPersonsOfInterest": "Interessante Personen",
@@ -68,7 +68,7 @@
     "TIDY5E.Class.Barbarian": "Barbar",
     "TIDY5E.Class.Bard": "Barde",
     "TIDY5E.Class.Cleric": "Kleriker",
-    "TIDY5E.Class.Custom": "Eigene",
+    "TIDY5E.Class.Custom": "Eigene Klasse",
     "TIDY5E.Class.Druid": "Druide",
     "TIDY5E.Class.Fighter": "Kämpfer",
     "TIDY5E.Class.Monk": "Mönch",
@@ -421,8 +421,8 @@
     "TIDY5E.RangedSpellAttackMod": "Fernkampf-Zauberangriffs Modifikator",
     "TIDY5E.TabSelection": {
         "MenuOptionText": "Reiter Auswahl",
-        "AvailableHeader": "Verfügbare Reiter",
-        "SelectedHeader": "Ausgewählte Reiter",
+        "AvailableHeader": "Versteckte Reiter",
+        "SelectedHeader": "Sichtbare Reiter",
         "UnsupportedDocumentErrorMessage": "Der Dokumenttyp {documentType} ist derzeit nicht für die Reiterauswahl eingerichtet.",
         "Explanation": "Alle Reiter, für die der Benutzer oder der Bogen so konfiguriert sind, dass sie nicht angezeigt werden (z. B. durch Deaktivieren des Journals in den Konfigurationseinstellungen), werden selbst dann nicht auf dem Bogen angezeigt, wenn sie ausgewählt sind.",
         "Title": "Reiter Auswahl: {documentName}",
@@ -623,18 +623,18 @@
     "TIDY5E.Commands.ExpandAll": "Alle ausklappen",
     "TIDY5E.Commands.CollapseAll": "Alle einklappen",
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
-        "name": "",
-        "hint": "",
-        "options.GmOnly": "",
-        "options.GmAndOwners": ""
+        "name": "Berechtigung für Gegenstandsidentifikation",
+        "hint": "Bestimmt, welche Art von Benutzer auf die UI-Steuerungen zur Identifizierung von Gegenständen zugreifen kann.",
+        "options.GmOnly": "Nur SL",
+        "options.GmAndOwners": "SL und Besitzer des Gegenstands"
     },
     "TIDY5E.RollRecharge.Hint": "",
     "TIDY5E.GenericErrorNotification": "",
-    "TIDY5E.EmptyContainer": "",
+    "TIDY5E.EmptyContainer": "Dieser Behälter ist leer.",
     "TIDY5E.WorldSettings.TabItem": {
-        "tabLabel": ""
+        "tabLabel": "Gegenstand"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "",
+    "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e Klassischer Behälter Bogen",
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "",
         "hint": ""
@@ -643,8 +643,8 @@
         "hint": "",
         "name": ""
     },
-    "TIDY5E.SpellSourceIdentifierSelectText": "",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "",
+    "TIDY5E.SpellSourceIdentifierSelectText": "Klassenkennung: {identifier}",
+    "TIDY5E.SpellSourceIdentifierLabelHint": "Der Akteur er diesen Zauber hat, verfügt nicht über die hier angegebene Ursprungsklasse.",
     "TIDY5E.Utilities.Tools": "",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
@@ -689,7 +689,7 @@
     },
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": ""
+        "tabLabel": "Symbole"
     },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "hint": "",
@@ -709,8 +709,8 @@
     "TIDY5E.ItemFilters.CanCast": "",
     "TIDY5E.LocalizationTestKey": "",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
-        "name": "",
-        "hint": ""
+        "name": "Flags in die Erstellung von Zauberspruchrollen einbeziehen",
+        "hint": "Zaubersprüche können manchmal spezielle Daten von anderen Modulen enthalten, die nützlich sein können, um in eine Zauberrolle zu übertragen. Aktivieren, um alle markenbasierten Daten bei der Erstellung in die Schriftrolle zu kopieren."
     },
     "TIDY5E.Settings.ColorPickerScrollbarThumb": {
         "name": ""
@@ -721,7 +721,48 @@
     "TIDY5E.ItemFilters.CanUse": "",
     "TIDY5E.Utilities.GMTools": "",
     "TIDY5E.Utilities.IdentifyAll": "",
-    "TIDY5E.PortraitTitle": "",
-    "TIDY5E.ItemImageTitle": "",
-    "TIDY5E.SortMode.ActionListDefault": ""
+    "TIDY5E.PortraitTitle": "Porträt: {subject}",
+    "TIDY5E.ItemImageTitle": "Gegenstand: {subject}",
+    "TIDY5E.SortMode.ActionListDefault": "",
+    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e Klassischer Gruppenbogen",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e Klassischer Begegnungsbogen",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Charakterbogen",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC-Bogen",
+    "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Behälterbogen",
+    "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e Gegenstandsbogen",
+    "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Fahrzeugbogen",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Gruppenbogen",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Begegnungsbogen",
+    "TIDY5E.PreviewSheetImageHint": "Linksklick: Vorschaubild",
+    "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Einstellungen",
+    "TIDY5E.AddSpecific": "Hinzufügen {name}",
+    "TIDY5E.ExhaustionLevelTooltip": "Stufe der Erschöpfung {level}",
+    "TIDY5E.NoSpecialSenses": "Keine besonderen Sinne",
+    "TIDY5E.Group.NamePlaceholder": "Gruppenname",
+    "TIDY5E.Group.ShowMemberTabInfoPanel": "Infotafel anzeigen",
+    "TIDY5E.Group.HideMemberTabInfoPanel": "Infotafel verbergen",
+    "TIDY5E.Group.EmptyMembersTabHint": "Diese Gruppe ist leer. Ziehe eine Figur von der Seitenleiste hinein, um ein Mitglied hinzuzufügen.",
+    "TIDY5E.ModuleName": "Tidy 5e Sheets",
+    "TIDY5E.StatblockTabName": "Wertekasten",
+    "TIDY5E.JournalEntry.NewTitle": "Journal Eintrag {number}",
+    "TIDY5E.SheetLock.Empty.Hint": "Beginne, indem du eine Klasse und deine ersten Gegenstände hinzufügst. Dann, verwende das Gegenstands-Menü oder Rechtsklick und wähle „Zu Bogenregistrierkarte hinzufügen“, um sie hier hinzuzufügen.",
+    "TIDY5E.ContextMenuActionView": "Ansicht",
+    "TIDY5E.ContextMenuActionPinToAttributes": "An Attribute anheften",
+    "TIDY5E.ContextMenuActionUnpinFromAttributes": "von Attributen loslösen",
+    "TIDY5E.ContextMenuActionShowLimitedUses": "Begrenzte Nutzungen anzeigen",
+    "TIDY5E.ContextMenuActionShowQuantity": "Menge anzeigen",
+    "TIDY5E.ContextMenuActionSetAsInspirationSource": "Als Inspirationsquelle festlegen",
+    "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Als Inspirationsquelle entfernen",
+    "TIDY5E.ContextMenuActionAddToSheetTab": "Zur Bogenregistrierkarte hinzufügen",
+    "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Von Bogenregistrierkarte entfernen",
+    "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspirationsquelle",
+    "TIDY5E.EmptyFavorites": "Rechtsklick und Favorisieren, oder ziehe etwas aus deinem Bogen hierher, für den Schnellzugriff.",
+    "TIDY5E.Ability.EditScore.label": "Wert bearbeiten",
+    "TIDY5E.EmptyTools": "Keine Werkzeugfachkenntnisse.",
+    "TIDY5E.InfoCardInspectHint": "{inspectKey} Inspizieren",
+    "TIDY5E.WorldSettings.TabCustomSections": {
+        "tabLabel": "Benutzerdefinierte Abschnitte",
+        "CustomizedIndicatorLabel": "Benutzerdefiniert",
+        "ShowWhenEmptyLabel": "Zeige Abschnitt wenn leer"
+    }
 }
