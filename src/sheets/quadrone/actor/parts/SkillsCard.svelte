@@ -97,10 +97,18 @@
     {/snippet}
   </div>
   {#if skills.length}
-    <ul class="skill-list unlist use-ability-list">
+    <ul
+      class="skill-list unlist use-ability-list"
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
+    >
       {#each skills as skill (skill.key)}
         {@const modifier = getModifierData(skill.total)}
-        <li data-reference-tooltip={references[skill.key]}>
+        <li
+          class="skill-list-item"
+          data-reference-tooltip={references[skill.key]}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
+          data-key={skill.key}
+        >
           {#if context.unlocked || showFiligree}
             <ProficiencyCycle
               actor={context.actor}
@@ -139,7 +147,6 @@
             onclick={(event) =>
               context.actor.rollSkill({ skill: skill.key, event })}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
-            data-key={skill.key}
             data-tidy-draggable
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
             disabled={!context.owner}
