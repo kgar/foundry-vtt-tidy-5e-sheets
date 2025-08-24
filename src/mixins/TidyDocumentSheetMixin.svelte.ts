@@ -743,8 +743,8 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Drag and Drop                               */
     /* -------------------------------------------- */
 
-    _allowedDropBehaviors(event: DragEvent, data: any) {
-      if (!data.uuid) {
+    _allowedDropBehaviors(event: DragEvent, data?: { uuid?: string }) {
+      if (!data?.uuid) {
         return new Set<DropEffectValue>(['copy', 'link']);
       }
 
