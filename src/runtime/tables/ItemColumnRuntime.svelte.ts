@@ -236,6 +236,22 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
         },
       },
+      [CONSTANTS.SHEET_TYPE_GROUP]: {
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
+          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
+          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
+        },
+      },
+      [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
+          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
+          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
+        },
+      },
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
         [CONSTANTS.TAB_ACTOR_ACTIONS]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {

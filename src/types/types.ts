@@ -976,7 +976,18 @@ export type SingleActorContext<TSheet> = {
   abilities: ActorAbilityContextEntry[];
 } & ActorSheetQuadroneContext<TSheet>;
 
-export type MultiActorContext<TSheet> = {} & ActorSheetQuadroneContext<TSheet>;
+export type MultiActorContext<TSheet> = {
+  containerPanelItems: ContainerPanelItemContext[];
+  currencies: CurrencyContext[];
+  inventory: InventorySection[];
+  // portrait: {
+  //   src: string;
+  //   shape: PortraitShape;
+  //   path: string;
+  // };
+  sheet: TSheet;
+  showContainerPanel: boolean;
+} & ActorSheetQuadroneContext<TSheet>;
 
 export type ActorAbilityContextEntry = Ability & {
   key: string; // For saving

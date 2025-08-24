@@ -30,7 +30,10 @@ import { CONSTANTS } from 'src/constants';
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
 type RowActionConfig = {
-  hasActionsTab: boolean;
+  /** The caller is configured to include the Actions tab. Default: false */
+  hasActionsTab?: boolean;
+  /** The caller is capable of equipping items. Default: true */
+  canEquip?: boolean;
 };
 
 class TableRowActionsRuntime {
@@ -62,11 +65,13 @@ class TableRowActionsRuntime {
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
-          result.push({
-            component: EquipButton,
-            props: (args) => ({ doc: args.data }),
-            condition: (args) => 'equipped' in args.data.system,
-          } satisfies TableAction<typeof EquipButton>);
+          if (config?.canEquip ?? true) {
+            result.push({
+              component: EquipButton,
+              props: (args) => ({ doc: args.data }),
+              condition: (args) => 'equipped' in args.data.system,
+            } satisfies TableAction<typeof EquipButton>);
+          }
 
           if (config?.hasActionsTab) {
             result.push({
