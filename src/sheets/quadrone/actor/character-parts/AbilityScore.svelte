@@ -72,7 +72,7 @@
   }
 </script>
 
-<div class={['ability', ability.key]}>
+<div class={['ability', ability.key]} data-tidy-sheet-part="ability-container">
   <div
     class={[
       'bonus-container',
