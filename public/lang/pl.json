@@ -889,5 +889,8 @@
     "TIDY5E.EmptyTools": "Brak biegłości w posługiwaniu się narzędziami.",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Pokaż liczniki akcji legendarnych/leża w zakładce statystyk",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Uwzględnij sekcje księgi czarów w zakładce statystyk",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Użyj domyślnej ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Użyj domyślnej ({value})",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasyczna karta spotkań Tidy 5e",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Karta spotkań Tidy 5e",
+    "TIDY5E.ExplorationTab.Title": "Eksploracja"
 }
