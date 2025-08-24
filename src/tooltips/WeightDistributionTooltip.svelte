@@ -12,7 +12,14 @@
 
   let { sheetDocument, fullWeight, currencyWeight }: Props = $props();
 
-  let itemsWeight = $derived((fullWeight - currencyWeight).toNearest(0.1));
+  let itemsWeight = $derived((fullWeight - currencyWeight).toNearest(0.01));
+
+  let unitsAbbreviation = $derived(FoundryAdapter.getWeightUnit());
+
+  function formatWeight(value: number): string {
+    const rounded = Math.round((value ?? 0) * 100) / 100;
+    return rounded.toFixed(2).replace(/\.0+$/, '').replace(/\.$/, '');
+  }
 
   let tooltip: HTMLElement;
 
@@ -45,14 +52,20 @@
           <i class="fa-solid fa-sack"></i>
           <span class="truncate">{localize('DND5E.Items')}</span>
         </span>
-        <span class="value">{itemsWeight}</span>
+        <span class="value">
+          {formatWeight(itemsWeight)}
+          <span class="units color-text-lighter">{unitsAbbreviation}</span>
+        </span>
       </li>
       <li>
         <span class="label">
           <i class="fa-solid fa-coins"></i>
           <span class="truncate">{localize('DND5E.Currency')}</span>
         </span>
-        <span class="value">{currencyWeight}</span>
+        <span class="value">
+          {formatWeight(currencyWeight)}
+          <span class="units color-text-lighter">{unitsAbbreviation}</span>
+        </span>
       </li>
     </ul>
   </div>

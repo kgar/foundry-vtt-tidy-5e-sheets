@@ -13,7 +13,10 @@
 
   let readableValue = $derived(
     container.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
-      ? (capacity.value ?? 0).toFixed(1)
+      ? (() => {
+          const rounded = Math.round((capacity.value ?? 0) * 100) / 100;
+          return rounded.toFixed(2).replace(/\.0+$/, '').replace(/\.$/, '');
+        })()
       : Math.ceil(capacity.value ?? 0).toString(),
   );
 
