@@ -9,6 +9,9 @@
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import type { MessageBus } from 'src/types/types';
   import { Tidy5eContainerSheetQuadrone } from '../../Tidy5eContainerSheetQuadrone.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { TidyFlags } from 'src/api';
 
   interface Props {
     container: Item5e;
@@ -68,6 +71,15 @@
       inlineToggleService.toggle(tabId, container.id, false);
     }
   });
+
+  let inventory = $derived(
+    SheetSections.configureInventory(
+      containerContents.contents,
+      tabId,
+      SheetPreferencesService.getByType(sheetDocument.type),
+      TidyFlags.sectionConfig.get(container)?.[tabId],
+    ),
+  );
 </script>
 
 <ExpandableContainer
@@ -81,7 +93,7 @@
       ondrop={onDrop}
     >
       <InventoryTables
-        sections={containerContents.contents}
+        sections={inventory}
         {container}
         {editable}
         itemContext={containerContents.itemContext}
