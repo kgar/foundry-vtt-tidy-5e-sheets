@@ -915,5 +915,6 @@
     "TIDY5E.UseSpecificDefaultValue.Label": "Використовувати значення за замовчуванням ({value})",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Показувати легендарні/лігвові трекери на вкладці Statblock",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Класичний аркуш зустрічей Tidy 5e",
-    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Охайний аркуш зустрічей 5e"
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Охайний аркуш зустрічей 5e",
+    "TIDY5E.ExplorationTab.Title": "Розвідка"
 }
