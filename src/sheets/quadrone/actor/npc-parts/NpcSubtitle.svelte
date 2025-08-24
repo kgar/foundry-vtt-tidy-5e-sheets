@@ -30,15 +30,6 @@
   });
 
   let pb = $derived(getModifierData(context.system.attributes.prof ?? 0));
-
-  let isEditingXp = $state(false);
-  let xpInputRef: TextInputQuadrone | undefined = $state();
-
-  $effect(() => {
-    if (isEditingXp && xpInputRef) {
-      xpInputRef.selectText();
-    }
-  });
 </script>
 
 {#snippet speedSenseSummary(
@@ -98,52 +89,14 @@
     {/if}
     {#if context.enableXp}
       <div class="divider-dot"></div>
-      {#if context.unlocked && !isEditingXp}
+      {#if context.unlocked}
         <div class="xp-container">
-          <button
-            type="button"
-            class="unbutton xp-label flexrow xp-label-clickable"
-            onclick={() => (isEditingXp = true)}
-          >
-            <span class="label font-label-medium color-text-gold flexshrink"
-              >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
-            >
-            <span class="label font-label-medium color-text-default flexshrink">
-              {FoundryAdapter.formatNumber(context.system.details.xp.value)}
-            </span>
-          </button>
-        </div>
-      {:else}
-        <div class="xp-label flexrow">
           <span class="label font-label-medium color-text-gold flexshrink"
             >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
           >
-          {#if context.unlocked && isEditingXp}
-            <TextInputQuadrone
-              bind:this={xpInputRef}
-              id="{appId}-xp-value"
-              document={context.document}
-              field="system.details.xp.value"
-              value={context.system.details.xp.value}
-              class="xp-value"
-              enableDeltaChanges={true}
-              selectOnFocus={true}
-              onblur={() => {
-                isEditingXp = false;
-                xpInputRef = undefined;
-              }}
-              onkeydown={(event) => {
-                if (event.key === 'Enter' || event.key === 'Escape') {
-                  isEditingXp = false;
-                  xpInputRef = undefined;
-                }
-              }}
-            />
-          {:else}
-            <span class="label font-label-medium color-text-default flexshrink">
-              {FoundryAdapter.formatNumber(context.system.details.xp.value)}
-            </span>
-          {/if}
+          <span class="label font-label-medium color-text-default flexshrink">
+            {FoundryAdapter.formatNumber(context.system.details.xp.value)}
+          </span>
         </div>
       {/if}
     {/if}
