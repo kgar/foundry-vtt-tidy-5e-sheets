@@ -166,6 +166,15 @@
     }}
   />
 
+  <!-- Languages -->
+  <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
+    label={localize('DND5E.Languages')}
+    entries={context.traits.languages}
+    onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
+    icon="fa-solid fa-comments"
+  />
+
   <!-- Habitat -->
   <ActorTraitConfigurableListEntry
     configButtonLocation="label"
