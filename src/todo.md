@@ -110,7 +110,8 @@
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
-- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`?
+- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
+
 
 ## hightouch To Do
 
@@ -125,6 +126,99 @@
   - [x] Add Bastion facility roll icon on hover
   - [ ] Add Character tab roll icon on hover
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
+- [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
+
+
+### Sample Currency Script
+
+Paste this at the bottom of main.svelte.ts for quick testing. Ignore the TS errors, as it will still run and work:
+
+```js
+Hooks.once("init", () => {
+  //Apontamento do Compendium de Itens
+  delete CONFIG.DND5E.currencies.ep;
+  delete CONFIG.DND5E.currencies.pp;
+
+  //Alterando Padrão para Nox
+  CONFIG.DND5E.currencies.cp.abbreviation = "NdB";
+  CONFIG.DND5E.currencies.cp.icon = "modules/compendium-randc/imagens/moedas/nox-de-bronze.png";
+  CONFIG.DND5E.currencies.cp.label = "Nox de Bronze";
+  CONFIG.DND5E.currencies.sp.abbreviation = "NdP";
+  CONFIG.DND5E.currencies.sp.icon = "modules/compendium-randc/imagens/moedas/nox-de-prata.png";
+  CONFIG.DND5E.currencies.sp.label = "Nox de Prata";
+  CONFIG.DND5E.currencies.gp.abbreviation = "NdO";
+  CONFIG.DND5E.currencies.gp.icon = "modules/compendium-randc/imagens/moedas/nox-de-ouro.png";
+  CONFIG.DND5E.currencies.gp.label = "Nox de Ouro";
+
+  //Novas Moedas de Demacia
+  CONFIG.DND5E.currencies.edo = {
+    abbreviation: "EdO",
+    conversion: "1",
+    icon: "systems/dnd5e/icons/currency/gold.webp",
+    label: "Espada de Ouro",
+  };
+  CONFIG.DND5E.currencies.cdp = {
+    abbreviation: "CdP",
+    conversion: "10",
+    icon: "systems/dnd5e/icons/currency/silver.webp",
+    label: "Coroa de Prata",
+  };
+  CONFIG.DND5E.currencies.mdb = {
+    abbreviation: "MdB",
+    conversion: "100",
+    icon: "systems/dnd5e/icons/currency/copper.webp",
+    label: "Martelo de Bronze",
+  };
+
+  //Novas Moedas de Sentina
+  CONFIG.DND5E.currencies.kdo = {
+    abbreviation: "KdO",
+    conversion: "2",
+    icon: "systems/dnd5e/icons/currency/gold.webp",
+    label: "Kraken de Ouro",
+  };
+  CONFIG.DND5E.currencies.sdp = {
+    abbreviation: "SdP",
+    conversion: "20",
+    icon: "systems/dnd5e/icons/currency/silver.webp",
+    label: "Serpente de Prata",
+  };
+  CONFIG.DND5E.currencies.sdb = {
+    abbreviation: "SdB",
+    conversion: "200",
+    icon: "systems/dnd5e/icons/currency/copper.webp",
+    label: "Sardinha de Bronze",
+  };
+
+  //Novas Moedas de Piltover
+  CONFIG.DND5E.currencies.hdo = {
+    abbreviation: "HdO",
+    conversion: "0.5",
+    icon: "systems/dnd5e/icons/currency/gold.webp",
+    label: "Hex de Ouro",
+  };
+  CONFIG.DND5E.currencies.adp = {
+    abbreviation: "AdP",
+    conversion: "5",
+    icon: "systems/dnd5e/icons/currency/silver.webp",
+    label: "Anilha de Prata",
+  };
+  CONFIG.DND5E.currencies.pdb = {
+    abbreviation: "PdB",
+    conversion: "50",
+    icon: "systems/dnd5e/icons/currency/copper.webp",
+    label: "Porca de Bronze",
+  };
+
+  //Novas Moedas de Shurima
+  CONFIG.DND5E.currencies.sc = {
+    abbreviation: "SC",
+    conversion: "1.5",
+    icon: "systems/dnd5e/icons/currency/gold.webp",
+    label: "Securi",
+  };
+});
+```
 
 ### Huh?
 
