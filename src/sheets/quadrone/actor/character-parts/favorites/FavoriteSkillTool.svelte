@@ -27,7 +27,7 @@
   );
 
   async function handleOnUse(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLButtonElement },
+    event: MouseEvent & { currentTarget: EventTarget & HTMLDivElement },
     _favorite: SkillToolFavoriteContextEntry,
   ) {
     if (favorite.type === 'skill') {
