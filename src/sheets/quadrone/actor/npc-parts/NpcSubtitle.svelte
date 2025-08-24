@@ -89,16 +89,14 @@
     {/if}
     {#if context.enableXp}
       <div class="divider-dot"></div>
-      {#if context.unlocked}
-        <div class="xp-container">
-          <span class="label font-label-medium color-text-gold flexshrink"
-            >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
-          >
-          <span class="label font-label-medium color-text-default flexshrink">
-            {FoundryAdapter.formatNumber(context.system.details.xp.value)}
-          </span>
-        </div>
-      {/if}
+      <div class="xp-container">
+        <span class="label font-label-medium color-text-gold flexshrink"
+          >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
+        >
+        <span class="label font-label-medium color-text-default flexshrink">
+          {FoundryAdapter.formatNumber(context.system.details.xp.value)}
+        </span>
+      </div>
     {/if}
     {#if context.saves.concentration}
       <div class="divider-dot"></div>
