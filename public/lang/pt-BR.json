@@ -793,7 +793,7 @@
         "top": "Superior",
         "name": "Posição de Atividades Inline"
     },
-    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+    "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Comporta{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
     "TIDY5E.ContextMenuActionPinToAttributes": "Fixar em Atributos",
     "TIDY5E.ContextMenuActionUnpinFromAttributes": "Desfixar de Atributos",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Mostrar Usos Limitados",
@@ -884,5 +884,6 @@
     "TIDY5E.UseSpecificDefaultValue.Label": "Usar Padrão ({value})",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Ficha de Encontro Clássica Tidy 5e",
-    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Ficha de Encontro Tidy 5e"
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Ficha de Encontro Tidy 5e",
+    "TIDY5E.ExplorationTab.Title": "Exploração"
 }
