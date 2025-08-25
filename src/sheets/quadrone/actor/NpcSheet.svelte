@@ -240,6 +240,7 @@
             disabled={!context.owner}
           />
         {/each}
+
       </AbilitiesContainer>
     </div>
     <div class="actor-vitals-container">
