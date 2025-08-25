@@ -16,6 +16,7 @@
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
 
+
   let context = $derived(getCharacterSheetQuadroneContext());
 
   let appId = $derived(context.actor.uuid.slugify());
@@ -511,6 +512,7 @@
           {/if}
         </div>
       </div>
+      
     </div>
   </div>
   <div class="tabs-row">
