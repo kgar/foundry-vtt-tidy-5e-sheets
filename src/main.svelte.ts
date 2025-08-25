@@ -192,7 +192,7 @@ Hooks.once('init', () => {
         label: 'TIDY5E.Tidy5eGroupSheetQuadrone',
       }
     );
-    
+
     documentSheetConfig.registerSheet(
       Actor,
       CONSTANTS.DND5E_SYSTEM_ID,
@@ -235,6 +235,20 @@ Hooks.once('ready', async () => {
   ThemeQuadrone.onReady();
 
   TidyNotificationsManager.onReady();
+});
+
+Hooks.once('setup', async () => {
+  const style = document.createElement('style');
+  style.id = 'tidy5e-sheet-generated-styles';
+  document.head.append(style);
+
+  // Note: When popout is added to core, this may need to be changed to use .sheet.insertRule
+  style.textContent = Object.entries(CONFIG.DND5E.currencies)
+    .map(
+      ([key, val]) =>
+        `.tidy5e-sheet .currency.${key} { --currency-icon-url: url("${val.icon}"); }`
+    )
+    .join('\n\n');
 });
 
 function handleMigrationNotification() {

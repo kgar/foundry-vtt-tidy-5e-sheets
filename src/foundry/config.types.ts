@@ -4,6 +4,7 @@ type CurrencyItemConfig = {
   label: string;
   abbreviation: string;
   conversion: number;
+  icon: string;
 };
 
 interface MovementUnitConfig {

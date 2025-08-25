@@ -296,26 +296,7 @@
     height: 1em;
     display: inline-block;
     background: transparent no-repeat center / contain;
-
-    &.cp {
-      background-image: url('../../systems/dnd5e/icons/currency/copper.webp');
-    }
-
-    &.sp {
-      background-image: url('../../systems/dnd5e/icons/currency/silver.webp');
-    }
-
-    &.ep {
-      background-image: url('../../systems/dnd5e/icons/currency/electrum.webp');
-    }
-
-    &.gp {
-      background-image: url('../../systems/dnd5e/icons/currency/gold.webp');
-    }
-
-    &.pp {
-      background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
-    }
+    background-image: var(--currency-icon-url);
   }
 
   /* Prose Mirror Editor Customizations */
