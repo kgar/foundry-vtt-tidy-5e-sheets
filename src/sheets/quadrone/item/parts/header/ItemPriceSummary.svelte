@@ -41,7 +41,7 @@
   let conceal = $derived(item.system.identified === false && !gmEditMode);
 </script>
 
-<div {title} class="item-price {cssClass}" {...rest}>
+<div data-tooltip={title} class="item-price {cssClass}" {...rest}>
   <!-- Currency Image -->
   {#if icon}
     <i

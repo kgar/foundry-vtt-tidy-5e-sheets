@@ -2,6 +2,13 @@
 
 ### The Short List
 
+- [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
+- [ ] Stub group members context
+- [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
+  - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
+- [ ] Prep Group description context
+- [ ] Prep Bastions context
+- [ ] Prep Exploration context
 - [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
 - [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
 - [ ] Tools card header - has cursor hover style without interactivity
@@ -26,6 +33,7 @@
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
 - [ ] NPC: Add tools section to the sidebar if NPC sheets even supports it
+- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 
 
 ### (Almost) Everything after the short list

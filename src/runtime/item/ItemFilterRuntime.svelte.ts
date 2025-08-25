@@ -4,17 +4,13 @@ import type {
   DocumentFilters,
   DocumentTypesToFilterTabs,
   FilterTabsToCategories,
-  ItemFilter,
 } from './item.types';
 import {
   defaultItemFilters,
   getActionListFilterCategories,
   getAttunementFilters,
-  getAttunementFiltersAsObject,
   getItemRarityFilters,
-  getItemRarityFiltersAsObject,
   getSourceClassFilters,
-  getSpellSchoolFiltersAsObject,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
 import { debug, error } from 'src/utils/logging';
@@ -174,6 +170,13 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.concentration.name,
         defaultItemFilters.canCastSpell.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_GROUP]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
       ]),
     },
   };
@@ -514,6 +517,34 @@ export class ItemFilterRuntime {
         ],
         ...getStandardSpellSchoolFilterCategories(),
         'DND5E.SpellSourceClass': (document) => getSourceClassFilters(document),
+      },
+    },
+    [CONSTANTS.SHEET_TYPE_GROUP]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
+      },
+    },
+    [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
       },
     },
   };

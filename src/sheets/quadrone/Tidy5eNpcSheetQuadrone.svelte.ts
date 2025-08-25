@@ -138,12 +138,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         baseEffects
       );
 
-    const currencies: CurrencyContext[] = [];
-
     const preferences = SheetPreferencesService.getByType(this.actor.type);
 
     const userPreferences = UserPreferencesService.get();
 
+    const currencies: CurrencyContext[] = [];
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
       currencies.push({
         key: key,

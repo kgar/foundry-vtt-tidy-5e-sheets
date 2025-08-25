@@ -1,13 +1,20 @@
 import { CONSTANTS } from 'src/constants';
 import type {
+  Actor5e,
+  ActorInventoryTypes,
   ActorSheetQuadroneContext,
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
+  GroupMemberPortraitContext,
+  GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
   LocationToSearchTextMap,
-  MessageBus,
 } from 'src/types/types';
-import type { ItemChatData } from 'src/types/item.types';
+import type {
+  CurrencyContext,
+  Item5e,
+  ItemChatData,
+} from 'src/types/item.types';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
@@ -21,6 +28,12 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { type TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
+import { Inventory } from 'src/features/sections/Inventory';
+import { TidyFlags } from 'src/api';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { Container } from 'src/features/containers/Container';
+import type { Group5eMember } from 'src/types/group.types';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -108,16 +121,291 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       doc: this.actor,
     });
 
+    const currencies: CurrencyContext[] = [];
+    Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
+      currencies.push({
+        key: key,
+        value: this.actor.system.currency[key] as number,
+        abbr:
+          CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
+            ?.abbreviation ?? key,
+      })
+    );
+
     const context: GroupSheetQuadroneContext = {
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        actorContext.items
+      ),
+      currencies,
+      inventory: [],
+      members: await this._prepareMembersContext(),
+      sheet: this,
+      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       type: 'group',
       ...actorContext,
     };
 
     // etc.
 
+    for (const panelItem of context.containerPanelItems) {
+      const ctx = context.itemContext[panelItem.container.id];
+      ctx.containerContents = await Container.getContainerContents(
+        panelItem.container,
+        {
+          hasActor: true,
+          unlocked: actorContext.unlocked,
+        }
+      );
+    }
+
     context.tabs = await GroupSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  _prepareItems(context: GroupSheetQuadroneContext) {
+    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { hasActionsTab: false, canEquip: false }
+    );
+
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections({
+        rowActions: inventoryRowActions,
+      });
+
+    let inventoryItems = Array.from(this.actor.items).reduce(
+      (inventoryItems: Item5e[], item: Item5e) => {
+        const ctx = (context.itemContext[item.id] ??= {});
+
+        // Individual item preparation
+        this._prepareItem(item, ctx);
+
+        const isWithinContainer = this.actor.items.has(item.system.container);
+
+        if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
+          inventoryItems.push(item);
+        }
+
+        return inventoryItems;
+      },
+      [] as Item5e[]
+    );
+
+    const inventoryTypes = Inventory.getInventoryTypes();
+    // Organize items
+    // Section the items by type
+    for (let item of inventoryItems) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+        canCreate: true,
+        rowActions: inventoryRowActions,
+      });
+    }
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+        canCreate: true,
+        rowActions: inventoryRowActions,
+      });
+    });
+
+    context.inventory = Object.values(inventory);
+  }
+
+  protected _prepareItem(item: Item5e, ctx: GroupSheetQuadroneContext) {}
+
+  async _prepareMembersContext(): Promise<GroupMembersQuadroneContext> {
+    let sections: GroupMembersQuadroneContext = {
+      character: {
+        members: [],
+        label: 'TYPES.Actor.characterPl',
+      },
+      npc: {
+        members: [],
+        label: 'TYPES.Actor.npcPl',
+      },
+      vehicle: {
+        members: [],
+        label: 'TYPES.Actor.vehiclePl',
+      },
+    };
+
+    for (let { actor } of this.actor.system.members) {
+      if (!actor) {
+        continue;
+      }
+
+      const section = sections[actor.type as SupportedActorType];
+
+      if (!section) {
+        continue;
+      }
+
+      // TODO: Apply any actor-type-specific preparations here.
+
+      section.members.push({
+        actor,
+        portrait: await this._preparePortrait(actor),
+      });
+    }
+
+    return sections;
+  }
+
+  async _preparePortrait(actor: Actor5e): Promise<GroupMemberPortraitContext> {
+    const showTokenPortrait = this.actor.getFlag(
+      CONSTANTS.DND5E_SYSTEM_ID,
+      CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
+    );
+
+    const token = actor.isToken ? actor.token : actor.prototypeToken;
+
+    const defaults = Actor.implementation.getDefaultArtwork(actor._source);
+    let src = showTokenPortrait ? token.texture.src : actor.img;
+
+    if (showTokenPortrait && token?.randomImg) {
+      const images = await actor.getTokenImages();
+      src = images[Math.floor(Math.random() * images.length)];
+    }
+
+    if (!src) {
+      src = showTokenPortrait ? defaults.texture.src : defaults.img;
+    }
+
+    return {
+      src,
+      isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
+    };
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+
+  _onDragStart(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
+  ): void {
+    const memberId = event.currentTarget
+      .closest('[data-tidy-draggable][data-member-id]')
+      ?.getAttribute('data-member-id');
+
+    if (!memberId) {
+      super._onDragStart(event);
+      return;
+    }
+
+    const actor = this.#findMemberActor(memberId);
+
+    if (!actor) {
+      return;
+    }
+
+    const dragData = actor.toDragData();
+    dragData['groupId'] = this.actor.id;
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+  }
+
+  async _onDropActiveEffect(
+    ..._args: any[]
+  ): Promise</*ActiveEffect*/ unknown | boolean> {
+    // Tidy Group Sheet doesn't support active effect drops.
+    return false;
+  }
+
+  async _onDropActor(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: Actor5e
+  ): Promise<object | boolean | undefined> {
+    if (!this.isEditable) {
+      return false;
+    }
+
+    const cls = getDocumentClass('Actor');
+    const sourceActor = await cls.fromDropData(data);
+    if (!sourceActor) {
+      return;
+    }
+
+    const dragEventData =
+      foundry.applications.ux.TextEditor.getDragEventData(event);
+    const groupId = dragEventData['groupId'];
+
+    if (groupId !== this.actor.id) {
+      return this.actor.system.addMember(sourceActor);
+    }
+
+    const dropTarget = event.target?.closest<HTMLElement>(
+      '[data-tidy-draggable][data-member-id]'
+    );
+    const targetMemberId = dropTarget?.getAttribute('data-member-id');
+
+    const targetMemberActor = this.#findMemberActor(targetMemberId);
+
+    if (
+      !dropTarget ||
+      !targetMemberActor ||
+      targetMemberId === sourceActor.id
+    ) {
+      return false;
+    }
+
+    return await this._onSortMember(sourceActor, targetMemberActor);
+  }
+
+  #findMemberActor(actorId: string | null | undefined): Actor5e | undefined {
+    return this.actor.system.members.find(
+      (m: Group5eMember) => m.actor.id === actorId
+    )?.actor;
+  }
+
+  async _onSortMember(sourceActor: Actor5e, targetActor: Actor5e) {
+    const membersCollection: Group5eMember[] =
+      this.actor.system.toObject().members;
+    const sourceIndex = membersCollection.findIndex(
+      (m) => m.actor === sourceActor.id
+    );
+    const targetIndex = membersCollection.findIndex(
+      (m) => m.actor === targetActor.id
+    );
+
+    const sortBefore = sourceIndex > targetIndex;
+
+    if (sortBefore) {
+      const sourceMember = membersCollection.splice(sourceIndex, 1)[0];
+      membersCollection.splice(targetIndex, 0, sourceMember);
+    } else {
+      const sourceMember = membersCollection[sourceIndex];
+      membersCollection.splice(targetIndex + 1, 0, sourceMember);
+      membersCollection.splice(sourceIndex, 1);
+    }
+
+    return await this.actor.update({ 'system.members': membersCollection });
+  }
+
+  async _onDropFolder(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    data: Record<string, any>
+  ) {
+    if (!this.isEditable) {
+      return false;
+    }
+
+    const folder = await Folder.implementation.fromDropData(data);
+
+    if (folder.type === 'Actor') {
+      const results: any[] = [];
+      for (let actor of folder.contents) {
+        results.push(await this.actor.system.addMember(actor));
+      }
+      return results;
+    }
+
+    return await super._onDropFolder(event, data);
   }
 
   /* -------------------------------------------- */
@@ -132,3 +420,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return element;
   }
 }
+
+type SupportedActorType =
+  | typeof CONSTANTS.SHEET_TYPE_CHARACTER
+  | typeof CONSTANTS.SHEET_TYPE_NPC
+  | typeof CONSTANTS.SHEET_TYPE_VEHICLE;
