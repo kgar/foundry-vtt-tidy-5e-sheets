@@ -31,6 +31,11 @@
       units: context.capacity.units ?? '',
     });
   });
+
+  function formatWeight(value: number | undefined): string {
+    const rounded = Math.round((value ?? 0) * 100) / 100;
+    return rounded.toFixed(2).replace(/\.0+$/, '').replace(/\.$/, '');
+  }
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -106,9 +111,10 @@
       <i class="fa-solid fa-scale-unbalanced item-capacity-icon text-label-icon"
       ></i>
       <div class="item-capacity-counter">
-        <span class="capacity-value text-data">{context.capacity.value}</span>
+        <span class="capacity-value text-data">{formatWeight(context.capacity.value)}</span>
         <div class="separator">/</div>
-        <span class="capacity-max text-data">{context.capacity.max}</span>
+        <span class="capacity-max text-data">{formatWeight(context.capacity.max)}</span>
+        <span class="color-text-lighter">{context.capacity.units}</span>
       </div>
     </div>
 
