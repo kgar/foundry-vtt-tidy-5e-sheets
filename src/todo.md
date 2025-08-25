@@ -33,6 +33,7 @@
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
 - [ ] NPC: Add tools section to the sidebar if NPC sheets even supports it
+- [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 
 
 ### (Almost) Everything after the short list

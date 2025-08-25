@@ -1237,8 +1237,30 @@ export type NpcSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & SingleActorContext<Tidy5eNpcSheetQuadrone>;
 
+export type GroupMemberQuadroneContext = {
+  actor: Actor5e;
+  portrait: GroupMemberPortraitContext;
+};
+
+export type GroupMemberPortraitContext = {
+  isVideo: boolean;
+  src: string;
+};
+
+export type GroupMemberSection = {
+  members: GroupMemberQuadroneContext[];
+  label: string;
+};
+
+export type GroupMembersQuadroneContext = {
+  character: GroupMemberSection;
+  npc: GroupMemberSection;
+  vehicle: GroupMemberSection;
+};
+
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  members: GroupMembersQuadroneContext;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorContext<Tidy5eGroupSheetQuadrone>;
 

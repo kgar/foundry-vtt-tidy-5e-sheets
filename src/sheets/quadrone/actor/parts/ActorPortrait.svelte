@@ -68,8 +68,7 @@
   </button>
 {/if}
 <div
-  class={['actor-image', currentPortraitShape]}
-  class:dead={actorIsDead}
+  class={['actor-image', currentPortraitShape, { dead: actorIsDead }]}
   style="position: relative;"
 >
   <img

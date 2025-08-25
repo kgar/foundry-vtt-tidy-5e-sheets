@@ -1,0 +1,14 @@
+.tidy5e-sheet.application:where(.quadrone.group) {
+  .tidy-tab.members {
+    display: flex;
+    flex-direction: row;
+
+    .sidebar {
+      width: var(--group-members-sidebar-width, 12.5rem);
+    }
+
+    .group-members-content {
+      flex: 1;
+    }
+  }
+}
