@@ -58,7 +58,7 @@
             },
           ],
           // TODO: make it so TidyFlags can provide this info.
-          prop: 'flags.tidy5e-sheet.sheetPreferences.character.spellSlotTrackerMode',
+          prop: `flags.tidy5e-sheet.sheetPreferences.${context.actor.type}.spellSlotTrackerMode`,
           doc: game.user,
           default: CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
         },
