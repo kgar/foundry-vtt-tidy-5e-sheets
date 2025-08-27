@@ -7,7 +7,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ClassValue } from 'svelte/elements';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
-  import { readonly, writable, type Readable } from 'svelte/store';
+  import { readonly, writable } from 'svelte/store';
 
   interface Props {
     tab: Tab;
@@ -71,17 +71,7 @@
             $effect(() => {
               store.set(val);
             });
-            // We technically want this to only be readable from outside so we'll create a pseudo readable
-            const readonlyStore = {
-              // don't forget to like and
-              subscribe(
-                this: void,
-                ...args: Parameters<Readable<unknown>['subscribe']>
-              ) {
-                return store.subscribe(...args);
-              },
-            } satisfies Readable<unknown>;
-            return [key, readonlyStore];
+            return [key,  readonly(store)];
           }),
         );
         svelteTabComponent = _mount(component, {
