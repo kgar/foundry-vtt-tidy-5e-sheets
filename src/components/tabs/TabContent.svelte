@@ -7,7 +7,6 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ClassValue } from 'svelte/elements';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
-  import { map } from 'src/utils/iterables';
   import { readonly, writable, type Readable } from 'svelte/store';
 
   interface Props {
