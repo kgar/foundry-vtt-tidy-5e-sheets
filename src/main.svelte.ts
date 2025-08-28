@@ -246,7 +246,7 @@ Hooks.once('setup', async () => {
   style.textContent = Object.entries(CONFIG.DND5E.currencies)
     .map(
       ([key, val]) =>
-        `.tidy5e-sheet .currency.${key} { --currency-icon-url: url("${val.icon}"); }`
+        `.tidy5e-sheet .currency.${key} { --currency-icon-url: url("${val.icon}"), url("../../${val.icon}"); }`
     )
     .join('\n\n');
 });
