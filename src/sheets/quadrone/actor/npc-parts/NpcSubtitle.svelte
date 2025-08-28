@@ -70,9 +70,12 @@
     {#if !isNil(context.creatureType?.title, '')}
       <div class="divider-dot"></div>
       <span class="size">
-        <span class="font-label-medium color-text-gold"
-          >{context.creatureType.title}</span
-        >
+        <span class="font-label-medium color-text-gold">
+          {context.creatureType.title}
+          {#if context.creatureType.subtitle}
+            ({context.creatureType.subtitle})
+          {/if}
+        </span>
       </span>
     {/if}
     {#if species}
