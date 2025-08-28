@@ -121,6 +121,7 @@
         th {
           line-height: 1.25;
           padding: var(--t5e-size-halfx) var(--t5e-size-2x);
+          color: var(--t5e-color-palette-white);
         }
       }
 
@@ -153,7 +154,7 @@
           justify-content: center;
         }
 
-        button.fas {
+        :is(button, .button):is(.fas, .icon) {
           font-family: "Font Awesome 6 Pro";
           padding: 0 0 0.0625rem;
           min-height: var(--t5e-table-button-width);
