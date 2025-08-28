@@ -923,5 +923,6 @@
     "TIDY5E.UseSpecificDefaultValue.Label": "Usa predefinito ({value})",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostra i tracker Leggendari/Tana nella scheda Statistiche",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Scheda Incontro Classica Tidy 5e",
-    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Scheda Incontro Tidy 5e"
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Scheda Incontro Tidy 5e",
+    "TIDY5E.ExplorationTab.Title": "Esplorazione"
 }
