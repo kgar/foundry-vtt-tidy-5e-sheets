@@ -33,6 +33,7 @@ import { TidyNotificationsManager } from './features/notifications/TidyNotificat
 import { Tidy5eEncounterSheetClassic } from './sheets/classic/Tidy5eEncounterSheetClassic.svelte';
 import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
+import { formatResourcePathForCss } from './utils/path';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
@@ -246,7 +247,9 @@ Hooks.once('setup', async () => {
   style.textContent = Object.entries(CONFIG.DND5E.currencies)
     .map(
       ([key, val]) =>
-        `.tidy5e-sheet .currency.${key} { --currency-icon-url: url("${val.icon}"), url("../../${val.icon}"); }`
+        `.tidy5e-sheet .currency.${key} { --currency-icon-url: url("${formatResourcePathForCss(
+          val.icon
+        )}"); }`
     )
     .join('\n\n');
 });

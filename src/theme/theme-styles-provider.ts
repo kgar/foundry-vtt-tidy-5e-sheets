@@ -5,6 +5,7 @@ import type {
   ThemeQuadroneStyleDeclaration,
   ThemeQuadroneStyleRule,
 } from './theme-quadrone.types';
+import { formatResourcePathForCss } from 'src/utils/path';
 
 export class ThemeStylesProvider {
   static create(
@@ -251,13 +252,8 @@ export class ThemeStylesProvider {
 
 /** Creates a URL(...) CSS style value and accounts for content pulled from the web. */
 function getUrlValue(path: string) {
-  const pathPrefix =
-    path.toLowerCase().startsWith('http:') ||
-    path.toLowerCase().startsWith('https:')
-      ? ''
-      : // This backs the file directory location out of the Tidy module
-        '../../';
+  const formattedPath = formatResourcePathForCss(path);
 
-  const urlValue = `url("${pathPrefix}${path}")`;
+  const urlValue = `url("${formattedPath}")`;
   return urlValue;
 }
