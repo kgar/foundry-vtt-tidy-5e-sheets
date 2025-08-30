@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import type { GroupMemberQuadroneContext } from 'src/types/types';
 
   type Props = {
@@ -15,11 +16,13 @@
         (member.actor.system.attributes.death.failure >= 3 &&
           member.actor.system.attributes.death.success < 3)),
   );
+
+  let portraitShape = $derived(ThemeQuadrone.getActorPortraitShape(member.actor));
 </script>
 
 <div class="member-vitals-container">
   <div
-    class={['actor-image', { dead: actorIsDead }]}
+    class={['actor-image', { dead: actorIsDead }, portraitShape, { video: member.portrait.isVideo }]}
     style="position: relative;"
   >
     {#if member.portrait.isVideo}
