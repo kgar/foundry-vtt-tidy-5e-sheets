@@ -1,5 +1,48 @@
 ## kgar To Do
 
+### Group Sheet
+
+- [ ] Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [ ] Traits
+    - [ ] Language
+      - [ ] Stub the context
+      - [ ] Scaffold UI
+      - [ ] Prep the data
+    - [ ] Speed
+      - [ ] Stub the context
+      - [ ] Scaffold UI
+      - [ ] Prep the data
+    - [ ] Senses
+      - [ ] Stub the context
+      - [ ] Scaffold UI
+      - [ ] Prep the data
+  - [ ] Skills
+    - [ ] expandable/collapsible
+    - [ ] skill abbr, skill name (roll button / whatever), High, Low
+      - [ ] Stub the context
+      - [ ] Scaffold UI
+      - [ ] Prep the data
+  - [ ] Special
+    - [ ] Determine if this is even possible, and if so
+      - [ ] Stub the context
+      - [ ] Scaffold UI
+      - [ ] Prep the data
+  - [ ] Tools
+    - [ ] Stub the context
+    - [ ] Scaffold UI
+    - [ ] Prep the data
+- [ ] Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [ ] Tidy tables
+  - [ ] Column spec
+  - [ ] Column components
+    - [ ] GroupMemberInspiration
+    - [ ] GroupActorHp
+    - [ ] GroupActorHd
+    - [ ] GroupActorAc
+    - [ ] GroupActorDt
+    - [ ] GroupActorCargo
+- [ ] Plan the next tab 🚀
+
 ### The Short List
 
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
