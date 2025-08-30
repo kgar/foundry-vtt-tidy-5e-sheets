@@ -5,22 +5,22 @@
 - [ ] Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
   - [ ] Traits
     - [ ] Language
-      - [ ] Stub the context
-      - [ ] Scaffold UI
+      - [x] Stub the context
+      - [x] Scaffold UI
       - [ ] Prep the data
     - [ ] Speed
-      - [ ] Stub the context
-      - [ ] Scaffold UI
+      - [x] Stub the context
+      - [x] Scaffold UI
       - [ ] Prep the data
     - [ ] Senses
-      - [ ] Stub the context
-      - [ ] Scaffold UI
+      - [x] Stub the context
+      - [x] Scaffold UI
       - [ ] Prep the data
   - [ ] Skills
-    - [ ] expandable/collapsible
+    - [x] expandable/collapsible
     - [ ] skill abbr, skill name (roll button / whatever), High, Low
-      - [ ] Stub the context
-      - [ ] Scaffold UI
+      - [x] Stub the context
+      - [x] Scaffold UI
       - [ ] Prep the data
   - [ ] Special
     - [ ] Determine if this is even possible, and if so
@@ -28,8 +28,8 @@
       - [ ] Scaffold UI
       - [ ] Prep the data
   - [ ] Tools
-    - [ ] Stub the context
-    - [ ] Scaffold UI
+    - [x] Stub the context
+    - [x] Scaffold UI
     - [ ] Prep the data
 - [ ] Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
   - [ ] Tidy tables

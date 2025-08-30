@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import GroupMember from '../group-parts/GroupMember.svelte';
+  import GroupTabSidebar from '../group-parts/group-tab-sidebar/GroupTabSidebar.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -12,7 +13,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<aside class="sidebar">sidebar</aside>
+<GroupTabSidebar />
 <section class="group-members-content">
   {#if characters.length}
     <section class="tidy-table character-traits">
