@@ -1,5 +1,92 @@
 .tidy5e-sheet.application:where(.quadrone.group) {
+  --portrait-size: 10rem;
+
+  .sheet-header {
+    gap: 0;
+
+    .actor-vitals-container {
+      padding-bottom: 0;
+      max-width: var(--portrait-size);
+
+      .actor-image {
+        max-width: var(--portrait-size);
+        max-height: var(--portrait-size);
+
+        img {
+          height: var(--portrait-size);
+          width: var(--portrait-size);
+        }
+      }
+    }
+
+    .actor-details-container {
+      margin-right: var(--t5e-size-2x);
+      gap: var(--t5e-size-halfx);
+      padding-bottom: var(--t5e-size-1x);
+    }
+
+    .actor-subtitle {
+      .pill {
+        flex: 0 1 auto;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-right: var(--t5e-size-1x);
+
+        >* {
+          flex: 0 1 auto;
+        }
+      }
+
+
+      .currency {
+        margin-bottom: -0.125rem;
+      }
+
+      .travel-pace {
+        gap: 0;
+        flex: 0 1 auto;
+
+        >* {
+          flex: 0 1 auto;
+        }
+
+        .button.button-icon-only {
+          --size: var(--t5e-field-size-small);
+          margin: -0.25rem 0;
+
+          &:hover,
+          &:focus,
+          &:active {
+            background: none;
+          }
+        }
+
+      }
+
+      &.group-speeds {
+        margin-left: 0.625rem;
+      }
+
+      .xp-pool {
+        align-content: center;
+        flex: 0 1 auto;
+        gap: var(--t5e-size-1x);
+        max-height: 0.9375rem;
+
+        .uninput {
+          field-sizing: content;
+          max-width: 4rem;
+        }
+      }
+    }
+
+    .sheet-header-actions {
+      margin: var(--t5e-size-1x) 0 0 var(--header-padding);
+    }
+  }
+
   .tidy-tab.members {
+    --t5e-table-avatar-size: 3.75rem;
     display: flex;
     flex-direction: row;
 
@@ -10,5 +97,153 @@
     .group-members-content {
       flex: 1;
     }
+
+    .tidy-table-header-row {
+      padding-left: var(--t5e-size-1x);
+    }
+
+
+    .actor-image {
+      --inset: 0.125rem;
+      max-height: var(--t5e-table-avatar-size);
+      max-width: var(--t5e-table-avatar-size);
+      background-position: center;
+      width: 100%;
+      box-shadow: var(--t5e-box-shadow-default);
+      overflow: hidden;
+
+      img {
+        border: none;
+        display: block;
+        height: var(--t5e-table-avatar-size);
+        width: var(--t5e-table-avatar-size);
+        object-fit: cover;
+        object-position: top center;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: var(--inset);
+        left: var(--inset);
+        right: var(--inset);
+        bottom: var(--inset);
+        border-color: var(--t5e-color-gold);
+        border-style: solid;
+        pointer-events: none;
+        transition: border-color var(--t5e-transition-default);
+      }
+
+      &:hover::before {
+        border-color: var(--t5e-color-palette-gold-75);
+      }
+
+
+      &.round {
+        border-radius: 100%;
+        box-shadow: var(--header-shadow);
+        overflow: hidden;
+        position: relative;
+
+        &::before {
+          border-radius: 100%;
+          border: 0.09375rem solid var(--t5e-color-gold);
+        }
+      }
+
+      &.square {
+        padding: var(--t5e-size-1x);
+        --inset: 0.5625rem;
+
+        &::before {
+          border-width: 0.0625rem;
+        }
+
+        img {
+          box-shadow: var(--header-shadow);
+        }
+      }
+
+      &.transparent {
+
+        &::before {
+          border-color: var(--t5e-color-palette-gold-56);
+          border-radius: 100%;
+          border-width: 0.125rem;
+          z-index: -1;
+        }
+
+        &:hover::before {
+          border-color: var(--t5e-color-palette-gold-75);
+        }
+      }
+
+      &.token {
+        img {
+          filter: var(--t5e-filter-drop-shadow-token);
+        }
+
+        &::before {
+          border: none;
+        }
+      }
+
+      &.dead {
+        &:not(.transparent) {
+          background-color: var(--t5e-component-card-dark-darker);
+
+          .dead-overlay {
+            // &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--t5e-color-palette-red-100);
+            opacity: 0.6;
+            mix-blend-mode: multiply;
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: var(--t5e-color-gold);
+              opacity: 0.2;
+              mix-blend-mode: lighten;
+            }
+          }
+        }
+
+        .dead-overlay {
+          pointer-events: none;
+        }
+
+        img {
+          z-index: -1;
+        }
+
+        &.transparent {
+          img {
+            filter: grayscale(1);
+            opacity: 0.75;
+          }
+
+          &::before {
+            border-color: var(--t5e-color-palette-red-60);
+          }
+        }
+
+        &.round {
+          .dead-overlay {
+            border-radius: 100%;
+          }
+        }
+      }
+    }
   }
+
 }

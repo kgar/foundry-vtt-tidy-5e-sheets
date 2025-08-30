@@ -1800,6 +1800,56 @@
     }
   }
 
+
+  .sidebar {
+    .traits {
+      gap: 0.75rem;
+
+      .list-entry {
+        flex-direction: column;
+        gap: 0.1875rem;
+
+        .list-label {
+          margin-right: 0;
+          max-height: 1rem;
+
+          h4 {
+            transition: color var(--t5e-transition-default);
+            color: var(--t5e-color-text-lighter);
+
+            i {
+              color: var(--t5e-color-icon-default);
+              transition: color var(--t5e-transition-default);
+            }
+          }
+        }
+
+        .button-config {
+          margin-bottom: -0.0625rem;
+        }
+
+        &.empty {
+
+          .list-label h4 i {
+            color: var(--t5e-color-icon-disabled);
+          }
+
+          &:hover .list-label h4,
+          &:hover .list-label i {
+            color: var(--t5e-color-text-default);
+          }
+        }
+
+        .pill {
+          justify-content: baseline;
+          min-height: auto;
+          padding: 0.125rem 0.25rem 0.1875rem;
+        }
+      }
+    }
+  }
+
+
   .sheet-footer {
     gap: var(--t5e-size-2x);
 
