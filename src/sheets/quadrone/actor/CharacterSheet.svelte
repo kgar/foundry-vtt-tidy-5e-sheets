@@ -129,7 +129,10 @@
           <CharacterSubtitle />
         </div>
         <div class="level-container flex0 flexrow">
-          <InspirationBadge />
+          <InspirationBadge
+            actor={context.actor}
+            inspirationSource={context.inspirationSource}
+          />
           <div class="level-block">
             <span
               class="level bonus font-data-xlarge color-text-default"

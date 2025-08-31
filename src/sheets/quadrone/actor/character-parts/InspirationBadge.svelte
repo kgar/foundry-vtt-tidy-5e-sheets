@@ -1,14 +1,17 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import type { Actor5e, InspirationSource } from 'src/types/types';
+
+  type Props = {
+    actor: Actor5e;
+    inspirationSource: InspirationSource | undefined;
+  };
+
+  let { actor, inspirationSource }: Props = $props();
 
   let localize = FoundryAdapter.localize;
 
-  let context = $derived(getCharacterSheetQuadroneContext());
-
-  let inspirationSource = $derived(context.inspirationSource);
-
-  let inspired = $derived(context.actor.system.attributes.inspiration);
+  let inspired = $derived(actor.system.attributes.inspiration);
 
   // TODO: Determine if we can use greensock or something to make a sick animation when inspiration toggles on/off.
 </script>
@@ -70,11 +73,11 @@
       aria-label={localize('DND5E.Inspiration')}
       data-tooltip="DND5E.Inspiration"
       onclick={(ev) =>
-        context.actor.update({
+        actor.update({
           ['system.attributes.inspiration']: !inspired,
         })}
       data-tidy-sheet-part="inspiration-tracker-toggle"
-      disabled={!context.editable}
+      disabled={!actor.isOwner}
     >
     </button>
   {/if}

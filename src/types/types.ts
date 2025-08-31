@@ -1240,6 +1240,8 @@ export type NpcSheetQuadroneContext = {
 export type GroupMemberQuadroneContext = {
   actor: Actor5e;
   portrait: GroupMemberPortraitContext;
+  inspirationSource: InspirationSource | undefined;
+  accentColor: string | undefined;
 };
 
 export type GroupMemberPortraitContext = {

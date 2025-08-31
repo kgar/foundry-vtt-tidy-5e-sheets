@@ -18,13 +18,33 @@
           member.actor.system.attributes.death.success < 3)),
   );
 
-  let portraitShape = $derived(ThemeQuadrone.getActorPortraitShape(member.actor));
+  let portraitShape = $derived(
+    ThemeQuadrone.getActorPortraitShape(member.actor),
+  );
+
+  let themeStyle = $derived(
+    member.accentColor ? member.accentColor : undefined,
+  );
+  let themeHighlightStyle = $derived(
+    member.accentColor
+      ? 'oklch(from var(--t5e-theme-color-default) calc(l * 1.4) 60% h)'
+      : undefined,
+  );
 </script>
 
-<div class="tidy-table-row">
+<div
+  class="tidy-table-row quadrone-theme-root"
+  style:--t5e-theme-color-default={themeStyle}
+  style:--t5e-theme-color-highlight={themeHighlightStyle}
+>
   <div class="tidy-table-cell member-vitals-container">
     <div
-      class={['actor-image', { dead: actorIsDead }, portraitShape, { video: member.portrait.isVideo }]}
+      class={[
+        'actor-image',
+        { dead: actorIsDead },
+        portraitShape,
+        { video: member.portrait.isVideo },
+      ]}
       style="position: relative;"
     >
       {#if member.portrait.isVideo}
@@ -56,8 +76,11 @@
       </h4>
       {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
         {#each member.actor.classes as thisClass}
-          <span class="font-label-medium color-text-gold">{thisClass.name}</span>
-          <span class="font-data-medium color-text-default">{thisClass.levels}</span>
+          <span class="font-label-medium color-text-gold">{thisClass.name}</span
+          >
+          <span class="font-data-medium color-text-default"
+            >{thisClass.levels}</span
+          >
         {/each}
       {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
         <p>And more cool stuff here for NPC</p>
@@ -68,42 +91,63 @@
   </div>
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
     <div class="tidy-table-cell inspiration-container">
-      <InspirationBadge />
+      <InspirationBadge
+        actor={member.actor}
+        inspirationSource={member.inspirationSource}
+      />
     </div>
   {/if}
   <div class="tidy-table-cell">
     <div class="meter meter-small progress hit-points"></div>
     <div class="flexrow">
-      <span class="font-data-medium color-text-default">{member.actor.system.attributes.hp.value}</span>
+      <span class="font-data-medium color-text-default"
+        >{member.actor.system.attributes.hp.value}</span
+      >
       <span class="font-body-medium color-text-lightest separator">/</span>
-      <span class="font-label-medium color-text-default">{member.actor.system.attributes.hp.max}</span>
+      <span class="font-label-medium color-text-default"
+        >{member.actor.system.attributes.hp.max}</span
+      >
     </div>
   </div>
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
     <div class="tidy-table-cell">
       <div class="meter meter-small progress hit-die"></div>
       <div class="flexrow">
-        <span class="font-data-medium color-text-default">{member.actor.system.attributes.hd.value}</span>
+        <span class="font-data-medium color-text-default"
+          >{member.actor.system.attributes.hd.value}</span
+        >
         <span class="font-body-medium color-text-lightest separator">/</span>
-        <span class="font-label-medium color-text-default">{member.actor.system.attributes.hd.max}</span>
+        <span class="font-label-medium color-text-default"
+          >{member.actor.system.attributes.hd.max}</span
+        >
       </div>
     </div>
   {/if}
   <div class="tidy-table-cell">
-    <span class="font-data-large color-text-default">{member.actor.system.attributes.ac.value}</span>
+    <span class="font-data-large color-text-default"
+      >{member.actor.system.attributes.ac.value}</span
+    >
   </div>
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
     <div class="tidy-table-cell">
-      <span class="font-data-large color-text-{member.actor.system.attributes.hp.dt ? 'default' : 'lightest'}">{member.actor.system.attributes.hp.dt ?? '—'}</span>
+      <span
+        class="font-data-large color-text-{member.actor.system.attributes.hp.dt
+          ? 'default'
+          : 'lightest'}">{member.actor.system.attributes.hp.dt ?? '—'}</span
+      >
     </div>
   {/if}
   {#if member.actor.type !== CONSTANTS.SHEET_TYPE_VEHICLE}
     <div class="tidy-table-cell">
       {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
         <div class="meter meter-small progress xp"></div>
-        <span class="font-data-medium color-text-default">{member.actor.system.details.xp.value}</span>
+        <span class="font-data-medium color-text-default"
+          >{member.actor.system.details.xp.value}</span
+        >
       {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-        <span class="font-data-large color-text-default">{member.actor.system.details.xp.value}</span>
+        <span class="font-data-large color-text-default"
+          >{member.actor.system.details.xp.value}</span
+        >
       {/if}
     </div>
   {/if}
@@ -111,9 +155,13 @@
     <div class="tidy-table-cell">
       <div class="meter meter-small progress capacity"></div>
       <div class="flexrow">
-        <span class="font-data-large color-text-default">{member.actor.system.attributes.capacity.creature}</span>
+        <span class="font-data-large color-text-default"
+          >{member.actor.system.attributes.capacity.creature}</span
+        >
         <span class="font-body-medium color-text-lightest separator">/</span>
-        <span class="font-label-medium color-text-default">{member.actor.system.attributes.capacity.creature}</span>
+        <span class="font-label-medium color-text-default"
+          >{member.actor.system.attributes.capacity.creature}</span
+        >
       </div>
     </div>
   {/if}
@@ -121,9 +169,13 @@
     <div class="tidy-table-cell">
       <div class="meter meter-small progress capacity"></div>
       <div class="flexrow">
-        <span class="font-data-large color-text-default">{member.actor.system.attributes.capacity.cargo}</span>
+        <span class="font-data-large color-text-default"
+          >{member.actor.system.attributes.capacity.cargo}</span
+        >
         <span class="font-body-medium color-text-lightest separator">/</span>
-        <span class="font-label-medium color-text-default">{member.actor.system.attributes.capacity.cargo}</span>
+        <span class="font-label-medium color-text-default"
+          >{member.actor.system.attributes.capacity.cargo}</span
+        >
       </div>
     </div>
   {/if}

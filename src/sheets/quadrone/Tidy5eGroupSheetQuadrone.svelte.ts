@@ -34,6 +34,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { Container } from 'src/features/containers/Container';
 import type { Group5eMember } from 'src/types/group.types';
+import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -251,6 +252,12 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       section.members.push({
         actor,
         portrait: await this._preparePortrait(actor),
+        inspirationSource:
+          actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+            ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
+            : undefined,
+        accentColor: ThemeQuadrone.getSheetThemeSettings({ doc: actor })
+          .accentColor,
       });
     }
 
