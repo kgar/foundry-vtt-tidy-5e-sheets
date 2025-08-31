@@ -62,7 +62,7 @@ export const GroupSheetQuadroneRuntime =
         },
         id: CONSTANTS.TAB_DESCRIPTION,
         layout: 'quadrone',
-        iconClass: 'fa-solid fa-notebook',
+        iconClass: 'fa-solid fa-feather',
       },
     ],
     [

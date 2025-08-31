@@ -5,6 +5,9 @@
   const context = $derived(getGroupSheetClassicContext());
 </script>
 
+<div class="sidebar">
+</div>
+
 <div class="flex-1 full-height flex-column me-1">
   {#key context.actor.system.description.full}
     <article class="editor-container mt-3">

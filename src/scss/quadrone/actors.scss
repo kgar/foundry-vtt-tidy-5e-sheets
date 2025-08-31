@@ -1086,18 +1086,11 @@
   }
 
   .inspiration-badge {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 
-    &.stacked {
-      left: -0.25rem;
-    }
-    
     .inspiration {
       transition: all var(--t5e-transition-default);
       outline: none;
@@ -1207,7 +1200,7 @@
     .inspiration-controls {
       display: none;
     }
-    
+
     &:hover {
       .inspiration-controls {
         display: flex;

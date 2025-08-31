@@ -111,6 +111,7 @@
     &.active {
       display: flex;
     }
+
     flex-direction: row;
 
     .sidebar {
@@ -118,6 +119,7 @@
     }
 
     .group-members-content {
+      gap: var(--t5e-size-3x);
       flex: 1;
     }
 
@@ -263,6 +265,13 @@
       }
     }
 
+    .item-name {
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+    }
+
     .tidy-table-cell {
       max-width: none;
       flex-direction: column;
@@ -270,10 +279,10 @@
       justify-content: center;
       align-items: center;
       border: none;
-    }
 
-    .primary {
-      align-items: flex-start;
+      &.primary {
+        align-items: flex-start;
+      }
     }
 
     .meter.meter-small {
@@ -287,12 +296,9 @@
     .inspiration-container {
       .inspiration-badge {
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        &.stacked {
-          left: -0.25rem;
+
+        &:hover .inspiration-controls {
+          bottom: -0.375rem;
         }
       }
     }
