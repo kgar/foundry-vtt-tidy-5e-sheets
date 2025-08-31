@@ -30,6 +30,12 @@
       ? 'oklch(from var(--t5e-theme-color-default) calc(l * 1.4) 60% h)'
       : undefined,
   );
+
+  let hpValue = $derived(member.actor.system.attributes?.hp?.value ?? 0);
+
+  let effectiveMaxHp = $derived(
+    member.actor.system.attributes?.hp?.effectiveMax ?? 0,
+  );
 </script>
 
 <div
@@ -100,13 +106,9 @@
   <div class="tidy-table-cell">
     <div class="meter meter-small progress hit-points"></div>
     <div class="flexrow">
-      <span class="font-data-medium color-text-default"
-        >{member.actor.system.attributes.hp.value}</span
-      >
+      <span class="font-data-medium color-text-default">{hpValue}</span>
       <span class="font-body-medium color-text-lightest separator">/</span>
-      <span class="font-label-medium color-text-default"
-        >{member.actor.system.attributes.hp.max}</span
-      >
+      <span class="font-label-medium color-text-default">{effectiveMaxHp}</span>
     </div>
   </div>
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
