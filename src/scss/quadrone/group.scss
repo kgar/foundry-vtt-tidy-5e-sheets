@@ -108,7 +108,9 @@
   }
 
   .tidy-tab.members {
-    display: flex;
+    &.active {
+      display: flex;
+    }
     flex-direction: row;
 
     .sidebar {
