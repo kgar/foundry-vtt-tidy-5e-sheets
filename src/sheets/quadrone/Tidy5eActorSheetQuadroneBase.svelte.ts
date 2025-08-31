@@ -578,20 +578,10 @@ export function Tidy5eActorSheetQuadroneBase<
         if (values.length) traits.dm = values;
       }
 
-      // Prepare languages
-      const languages = this.actor.system.traits?.languages?.labels;
-      if (languages?.languages?.length)
-        traits.languages = languages.languages.map((label: string) => ({
-          label,
-        }));
-      for (const [key, { label }] of Object.entries(
-        CONFIG.DND5E.communicationTypes
-      )) {
-        const data = this.actor.system.traits?.languages?.communication?.[key];
-        if (!data?.value) continue;
-        traits.languages ??= [];
-        traits.languages.push({ label, value: data.value });
-      }
+      traits.languages ??= [];
+      traits.languages.push(
+        ...Tidy5eActorSheetQuadroneBase._getLanguageTraits(this.actor)
+      );
 
       // Display weapon masteries
       for (const key of this.actor.system.traits?.weaponProf?.mastery?.value ??
@@ -623,6 +613,31 @@ export function Tidy5eActorSheetQuadroneBase<
       });
 
       return traits;
+    }
+
+    public static _getLanguageTraits(actor: Actor5e) {
+      let languageTraits: ActorTraitContext<number>[] = [];
+      const languages = actor.system.traits?.languages?.labels;
+
+      if (languages?.languages?.length)
+        languageTraits = languages.languages.map((label: string) => ({
+          label,
+        }));
+
+      for (const [key, { label }] of Object.entries(
+        CONFIG.DND5E.communicationTypes
+      )) {
+        const data = actor.system.traits?.languages?.communication?.[key];
+        if (!data?.value) continue;
+        languageTraits.push({
+          label,
+          value: data.value,
+          units:
+            CONFIG.DND5E.movementUnits[data.units]?.abbreviation ?? data.units,
+        });
+      }
+
+      return languageTraits;
     }
 
     /* -------------------------------------------- */

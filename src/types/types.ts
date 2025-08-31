@@ -1258,7 +1258,10 @@ export type GroupMembersQuadroneContext = {
   character: GroupMemberSection;
   npc: GroupMemberSection;
   vehicle: GroupMemberSection;
+
+  // TODO: These don't belong here. Just sections. This is temporary because the main group member context inherits the existing actor base traits. Probably shouldn't.
   traits: GroupTraits;
+  skills: GroupSkill[];
 };
 
 export type Emphasizable = {
@@ -1274,20 +1277,30 @@ type ValueWithUnits<TValue> = {
   units: string;
 };
 
+export type GroupSkillModContext = {
+  mod: number;
+  value: string;
+  sign: string;
+};
+
 export type GroupSkill = {
   name: string;
   ability: string;
   key: string;
-} & ValuedEmphasizable<
-  ValueWithUnits<{
-    value: number;
-    sign: string;
-  }>
->;
+  proficient: boolean;
+  high: GroupSkillModContext;
+  low: GroupSkillModContext;
+} & ValuedEmphasizable<GroupSkillModContext>;
 
-export type GroupTrait = {
+export type GroupTrait<TValue = string> = {
   label: string;
-} & Emphasizable;
+  value?: TValue;
+  units?: string;
+} & ValuedEmphasizable<{
+  label: string;
+  value?: TValue;
+  units?: string;
+}>;
 
 export type MeasuredGroupTrait = {
   label: string;
@@ -1296,17 +1309,16 @@ export type MeasuredGroupTrait = {
 } & ValuedEmphasizable<ValueWithUnits<number>>;
 
 export type GroupTraits = {
-  languages: GroupTrait[];
-  speeds: MeasuredGroupTrait[];
+  languages: GroupTrait<number>[];
   senses: MeasuredGroupTrait[];
   specials: GroupTrait[];
+  speeds: MeasuredGroupTrait[];
   tools: GroupTrait[];
 };
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   members: GroupMembersQuadroneContext;
-  skills: GroupSkill[];
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorContext<Tidy5eGroupSheetQuadrone>;
 

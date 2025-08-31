@@ -26,30 +26,26 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            <!-- TODO: This is for demonstrative purposes; apply data -->
-            <li class="pill pill-medium" data-tooltip-direction="UP">
-              <span class="label font-label-medium"> Common </span>
-              <span>
-                <!-- This is a count -->
-                6
-              </span>
-            </li>
-            <li class="pill pill-medium">
-              <span class="label font-label-medium"> Elvish </span>
-            </li>
-            <li class="pill pill-medium">
-              <span class="label font-label-medium"> Giant </span>
-              <span> 2 </span>
-            </li>
-            <li class="pill pill-medium">
-              <span class="label font-label-medium"> Goblin </span>
-            </li>
-            <li class="pill pill-medium">
-              <span class="label font-label-medium"> Halfling </span>
-            </li>
-            <li class="pill pill-medium">
-              <span class="label font-label-medium"> Primordial </span>
-            </li>
+            {#each context.members.traits.languages as language}
+              <li class="pill pill-medium" data-tooltip-direction="UP">
+                <span class="label font-label-medium">{language.label}</span>
+                {#if language.identifiers.size > 1}
+                  <span>
+                    {language.identifiers.size}
+                  </span>
+                {/if}
+                {#if language.value && language.units}
+                  <span>
+                    <span class="value font-data-medium">{language.value}</span
+                    ><span class="units font-default-medium color-text-lighter"
+                      >{language.units}</span
+                    >
+                  </span>
+                {:else if language.value}
+                  <span class="value font-data-medium">{language.value}</span>
+                {/if}
+              </li>
+            {/each}
           </ul>
         </div>
       </div>

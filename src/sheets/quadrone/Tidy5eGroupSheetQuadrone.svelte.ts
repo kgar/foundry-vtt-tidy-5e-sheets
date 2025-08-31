@@ -8,7 +8,11 @@ import type {
   GroupMemberPortraitContext,
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
+  GroupSkill,
+  GroupSkillModContext,
+  GroupTrait,
   LocationToSearchTextMap,
+  MeasuredGroupTrait,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -35,6 +39,10 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { Container } from 'src/features/containers/Container';
 import type { Group5eMember } from 'src/types/group.types';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
+import { getModifierData } from 'src/utils/formatting';
+import type { SkillData } from 'src/foundry/dnd5e.types';
+import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -142,7 +150,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       members: await this._prepareMembersContext(),
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
-      skills: [],
       type: 'group',
       ...actorContext,
     };
@@ -235,6 +242,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         members: [],
         label: 'TYPES.Actor.vehiclePl',
       },
+      skills: [],
       traits: {
         languages: [],
         senses: [],
@@ -243,6 +251,37 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         tools: [],
       },
     };
+
+    let skills = new Map<string, GroupSkill>(
+      Object.entries(CONFIG.DND5E.skills).map<[string, GroupSkill]>(
+        ([key, skill]) => [
+          key,
+          {
+            ability: skill.ability,
+            high: {
+              mod: 0,
+              value: '0',
+              sign: '+',
+            },
+            low: {
+              mod: 0,
+              value: '0',
+              sign: '+',
+            },
+            identifiers: new Map<string, GroupSkillModContext>(),
+            key,
+            name: skill.label,
+            proficient: false,
+          },
+        ]
+      )
+    );
+
+    let languages = new Map<string, GroupTrait<number>>();
+    let senses = new Map<string, MeasuredGroupTrait>();
+    let specials = new Map<string, GroupTrait>();
+    let speeds = new Map<string, MeasuredGroupTrait>();
+    let tools = new Map<string, GroupTrait>();
 
     for (let { actor } of this.actor.system.members) {
       if (!actor) {
@@ -255,8 +294,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         continue;
       }
 
-      // TODO: Apply any actor-type-specific preparations here.
-
       section.members.push({
         actor,
         portrait: await this._preparePortrait(actor),
@@ -267,9 +304,121 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         accentColor: ThemeQuadrone.getSheetThemeSettings({ doc: actor })
           .accentColor,
       });
+
+      // Skills
+      Object.entries<SkillData>(
+        actor.system.skills ??
+          {
+            /* Vehicles don't have Skills */
+          }
+      ).forEach(([key, skill]) => {
+        let groupSkill = skills.get(key);
+        if (!groupSkill) {
+          return;
+        }
+
+        const modData = getModifierData(skill.mod);
+
+        if (skill.mod > groupSkill.high.mod) {
+          groupSkill.high = {
+            mod: skill.mod,
+            ...modData,
+          };
+        }
+
+        groupSkill.identifiers.set(actor.uuid, {
+          mod: skill.mod,
+          ...modData,
+        });
+
+        groupSkill.proficient ||= skill.proficient > 0;
+      });
+
+      // Languages
+      this._prepareMemberLanguages(actor, languages);
+
+      // Senses
+
+      // Specials
+
+      // Speeds
+
+      // Tools
     }
 
+    sections.skills = [...skills.values()].toSorted((a, b) =>
+      a.name.localeCompare(b.name, game.i18n.lang)
+    );
+    sections.traits.languages = [...languages.values()].toSorted((a, b) =>
+      a.label.localeCompare(b.label, game.i18n.lang)
+    );
+
     return sections;
+  }
+
+  private _prepareMemberLanguages(
+    actor: any,
+    languages: Map<string, GroupTrait<number>>
+  ) {
+    let memberLanguages =
+      actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+        ? Tidy5eCharacterSheetQuadrone._getLanguageTraits(actor)
+        : actor.type === CONSTANTS.SHEET_TYPE_NPC
+        ? Tidy5eNpcSheetQuadrone._getLanguageTraits(actor)
+        : [];
+
+    memberLanguages.forEach((language) => {
+      const actorLanguageTrait = {
+        label: language.label,
+        units: language.units,
+        value: language.value !== undefined ? language.value : undefined,
+      };
+
+      const groupLanguage =
+        languages.get(language.label) ??
+        languages
+          .set(language.label, {
+            identifiers: new Map<string, GroupTrait<number>>(),
+            ...actorLanguageTrait,
+          })
+          .get(language.label)!;
+
+      groupLanguage.identifiers.set(actor.uuid, actorLanguageTrait);
+
+      const actorLanguageUniversalValue =
+        actorLanguageTrait.value !== undefined &&
+        !isNil(actorLanguageTrait.units, '')
+          ? dnd5e.utils.convertLength(
+              actorLanguageTrait.value,
+              actorLanguageTrait.units,
+              'ft'
+            )
+          : undefined;
+
+      const groupLanguageUniversalValue =
+        groupLanguage.value !== undefined && !isNil(groupLanguage.units, '')
+          ? dnd5e.utils.convertLength(
+              groupLanguage.value,
+              groupLanguage.units,
+              'ft'
+            )
+          : undefined;
+
+      if (
+        actorLanguageUniversalValue &&
+        actorLanguageUniversalValue > (groupLanguageUniversalValue ?? 0)
+      ) {
+        groupLanguage.value = actorLanguageTrait.value;
+        groupLanguage.units = actorLanguageTrait.units;
+      }
+
+      if (
+        actorLanguageTrait.value &&
+        actorLanguageTrait.value > (groupLanguage.value ?? 0)
+      ) {
+        groupLanguage.value = actorLanguageTrait.value;
+      }
+    });
   }
 
   async _preparePortrait(actor: Actor5e): Promise<GroupMemberPortraitContext> {
