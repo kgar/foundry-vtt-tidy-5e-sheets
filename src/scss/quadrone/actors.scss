@@ -1083,21 +1083,21 @@
     align-items: center;
     position: relative;
     margin-top: calc(var(--t5e-size-2x) + var(--t5e-size-halfx));
+  }
 
-    .inspiration-badge {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+  .inspiration-badge {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-      &.stacked {
-        left: -0.25rem;
-      }
+    &.stacked {
+      left: -0.25rem;
     }
-
+    
     .inspiration {
       transition: all var(--t5e-transition-default);
       outline: none;
@@ -1207,8 +1207,8 @@
     .inspiration-controls {
       display: none;
     }
-
-    .inspiration-badge:hover {
+    
+    &:hover {
       .inspiration-controls {
         display: flex;
         position: absolute;
