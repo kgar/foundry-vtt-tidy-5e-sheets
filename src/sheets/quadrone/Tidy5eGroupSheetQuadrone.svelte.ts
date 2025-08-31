@@ -142,6 +142,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       members: await this._prepareMembersContext(),
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
+      skills: [],
       type: 'group',
       ...actorContext,
     };
@@ -233,6 +234,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       vehicle: {
         members: [],
         label: 'TYPES.Actor.vehiclePl',
+      },
+      traits: {
+        languages: [],
+        senses: [],
+        specials: [],
+        speeds: [],
+        tools: [],
       },
     };
 

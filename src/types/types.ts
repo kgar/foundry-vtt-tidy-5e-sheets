@@ -1258,11 +1258,55 @@ export type GroupMembersQuadroneContext = {
   character: GroupMemberSection;
   npc: GroupMemberSection;
   vehicle: GroupMemberSection;
+  traits: GroupTraits;
+};
+
+export type Emphasizable = {
+  identifiers: Set<string>;
+};
+
+export type ValuedEmphasizable<TValue> = {
+  identifiers: Map<string, TValue>;
+};
+
+type ValueWithUnits<TValue> = {
+  value: TValue;
+  units: string;
+};
+
+export type GroupSkill = {
+  name: string;
+  ability: string;
+  key: string;
+} & ValuedEmphasizable<
+  ValueWithUnits<{
+    value: number;
+    sign: string;
+  }>
+>;
+
+export type GroupTrait = {
+  label: string;
+} & Emphasizable;
+
+export type MeasuredGroupTrait = {
+  label: string;
+  value: number;
+  units: string;
+} & ValuedEmphasizable<ValueWithUnits<number>>;
+
+export type GroupTraits = {
+  languages: GroupTrait[];
+  speeds: MeasuredGroupTrait[];
+  senses: MeasuredGroupTrait[];
+  specials: GroupTrait[];
+  tools: GroupTrait[];
 };
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   members: GroupMembersQuadroneContext;
+  skills: GroupSkill[];
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorContext<Tidy5eGroupSheetQuadrone>;
 
