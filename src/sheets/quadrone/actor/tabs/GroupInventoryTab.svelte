@@ -61,7 +61,7 @@
             (member.actor.system.attributes.death.failure >= 3 &&
               member.actor.system.attributes.death.success < 3))}
         {@const portraitShape = ThemeQuadrone.getActorPortraitShape(member.actor)}
-      <div class="member-vitals-container">
+      <div class="member-vitals-container flexshrink">
         <div
           class={['actor-image', { dead: actorIsDead }, portraitShape, { video: member.portrait.isVideo }]}
           style="position: relative;"
@@ -89,12 +89,14 @@
         </div>
       </div>
       <div class="flexcol">
-        <h4>
+        <h4 class="font-title-small color-text-default">
           {member.actor.name}
         </h4>
         {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-          <span class="font-data-medium color-text-default">100</span>
-          <span class="font-label-medium color-text-gold">GP</span>
+        <span class="flexrow">
+          <span class="font-data-medium color-text-default flexshrink">100</span>
+          <span class="font-label-medium color-text-gold flexshrink">GP</span>
+        </span>
           <!-- TODO: Add encumbrance bar -->
           <!-- <ActorEncumbranceBar /> -->
         {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
