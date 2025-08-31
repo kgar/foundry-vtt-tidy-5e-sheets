@@ -1,5 +1,6 @@
 .tidy5e-sheet.application:where(.quadrone.group) {
   --portrait-size: 10rem;
+  --t5e-table-avatar-size: 3.75rem;
 
   .sheet-header {
     gap: 0;
@@ -85,8 +86,28 @@
     }
   }
 
+  .sidebar {
+    width: 13.25rem;
+  }
+
+  .actor-image {
+    max-height: var(--t5e-table-avatar-size);
+    max-width: var(--t5e-table-avatar-size);
+    background-position: center;
+    width: 100%;
+    overflow: hidden;
+
+    img {
+      border: none;
+      display: block;
+      height: var(--t5e-table-avatar-size);
+      width: var(--t5e-table-avatar-size);
+      object-fit: cover;
+      object-position: top center;
+    }
+  }
+
   .tidy-tab.members {
-    --t5e-table-avatar-size: 3.75rem;
     display: flex;
     flex-direction: row;
 
@@ -105,21 +126,6 @@
 
     .actor-image {
       --inset: 0.125rem;
-      max-height: var(--t5e-table-avatar-size);
-      max-width: var(--t5e-table-avatar-size);
-      background-position: center;
-      width: 100%;
-      // box-shadow: var(--t5e-box-shadow-default);
-      overflow: hidden;
-
-      img {
-        border: none;
-        display: block;
-        height: var(--t5e-table-avatar-size);
-        width: var(--t5e-table-avatar-size);
-        object-fit: cover;
-        object-position: top center;
-      }
 
       &::before {
         content: '';
@@ -466,6 +472,10 @@
         }
       }
     }
+  }
+
+  .tidy-tab.inventory {
+    flex-direction: row;
   }
 
 }

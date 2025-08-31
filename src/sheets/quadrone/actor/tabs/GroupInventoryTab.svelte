@@ -14,6 +14,8 @@
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import ContainerPanel from '../../shared/ContainerPanel.svelte';
   import InventoryTables from '../../shared/InventoryTables.svelte';
+  import ActorEncumbranceBar from '../parts/ActorEncumbranceBar.svelte';
+  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -47,6 +49,62 @@
   });
 </script>
 
+
+<aside class="sidebar">
+  {#each context.members.character.members as member}
+    <div class="character-container flexrow">
+      {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+        {@const actorIsDead = 
+          member.actor.system.attributes?.hp?.value === 0 &&
+          member.actor.system.attributes?.hp?.max > 0 &&
+          (member.actor.system.attributes.death === undefined ||
+            (member.actor.system.attributes.death.failure >= 3 &&
+              member.actor.system.attributes.death.success < 3))}
+        {@const portraitShape = ThemeQuadrone.getActorPortraitShape(member.actor)}
+      <div class="member-vitals-container">
+        <div
+          class={['actor-image', { dead: actorIsDead }, portraitShape, { video: member.portrait.isVideo }]}
+          style="position: relative;"
+        >
+          {#if member.portrait.isVideo}
+            <video
+              src={member.portrait.src}
+              autoplay
+              muted
+              playsinline
+              disablepictureinpicture
+              loop
+              class={{ dead: actorIsDead }}
+            ></video>
+          {:else}
+            <img
+              src={member.portrait.src}
+              alt={member.actor.name}
+              class={{ dead: actorIsDead }}
+            />
+          {/if}
+          {#if actorIsDead}
+            <div class="dead-overlay"></div>
+          {/if}
+        </div>
+      </div>
+      <div class="flexcol">
+        <h4>
+          {member.actor.name}
+        </h4>
+        {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+          <span class="font-data-medium color-text-default">100</span>
+          <span class="font-label-medium color-text-gold">GP</span>
+          <!-- TODO: Add encumbrance bar -->
+          <!-- <ActorEncumbranceBar /> -->
+        {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+          <p></p>
+        {/if}
+      </div>
+      {/if}
+    </div>
+  {/each} 
+</aside>
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
