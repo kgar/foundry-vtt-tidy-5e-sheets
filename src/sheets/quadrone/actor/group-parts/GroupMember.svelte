@@ -32,10 +32,12 @@
   );
 
   let hpValue = $derived(member.actor.system.attributes?.hp?.value ?? 0);
-
+  let hpPct = $derived(member.actor.system.attributes?.hp?.pct ?? 0);
   let effectiveMaxHp = $derived(
     member.actor.system.attributes?.hp?.effectiveMax ?? 0,
   );
+
+  let hdPct = $derived(member.actor.system.attributes?.hd?.pct ?? 0);
 </script>
 
 <div
@@ -104,7 +106,10 @@
     </div>
   {/if}
   <div class="tidy-table-cell">
-    <div class="meter meter-small progress hit-points"></div>
+    <div
+      class="meter meter-small progress hit-points"
+      style="--bar-percentage: {hpPct.toFixed(0)}%"
+    ></div>
     <div class="flexrow">
       <span class="font-data-medium color-text-default">{hpValue}</span>
       <span class="font-body-medium color-text-lightest separator">/</span>
@@ -113,7 +118,10 @@
   </div>
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
     <div class="tidy-table-cell">
-      <div class="meter meter-small progress hit-die"></div>
+      <div
+        class="meter meter-small progress hit-die"
+        style="--bar-percentage: {hdPct.toFixed(0)}%"
+      ></div>
       <div class="flexrow">
         <span class="font-data-medium color-text-default"
           >{member.actor.system.attributes.hd.value}</span
@@ -142,7 +150,10 @@
   {#if member.actor.type !== CONSTANTS.SHEET_TYPE_VEHICLE}
     <div class="tidy-table-cell">
       {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
-        <div class="meter meter-small progress xp"></div>
+        <div
+          class="meter meter-small progress xp"
+          style="--bar-percentage: {member.actor.system.details.xp.pct}%;"
+        ></div>
         <span class="font-data-medium color-text-default"
           >{member.actor.system.details.xp.value}</span
         >
