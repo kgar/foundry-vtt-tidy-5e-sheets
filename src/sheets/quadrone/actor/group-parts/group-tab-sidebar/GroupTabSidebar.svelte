@@ -3,14 +3,22 @@
 
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import GroupSkills from './GroupSkillsCard.svelte';
+  import { getContext } from 'svelte';
+  import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
-  let characters = $derived(context.members.character.members);
-  let npcs = $derived(context.members.npc.members);
-
   const localize = FoundryAdapter.localize;
+
+  let emphasizedActorRef = getContext<Ref<string | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
+  );
 </script>
+
+<!-- <p>
+  Hovered actor (example code, intentionally commented | delete when example no longer needed.): {emphasizedActorRef.value}
+</p> -->
 
 <aside class="sidebar">
   <!-- Aggregate Traits -->

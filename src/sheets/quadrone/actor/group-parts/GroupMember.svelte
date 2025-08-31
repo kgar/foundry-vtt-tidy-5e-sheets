@@ -3,18 +3,19 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import type { GroupMemberQuadroneContext } from 'src/types/types';
   import InspirationBadge from '../character-parts/InspirationBadge.svelte';
-  import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getContext } from 'svelte';
+  import type { Ref } from 'src/features/reactivity/reactivity.types';
 
   let localize = FoundryAdapter.localize;
-  
+
   type Props = {
     member: GroupMemberQuadroneContext;
     meterColumnWidth?: string;
     inspirationColumnWidth?: string;
     acColumnWidth?: string;
-    };
+  };
 
   let {
     member,
@@ -52,13 +53,17 @@
 
   let hdPct = $derived(member.actor.system.attributes?.hd?.pct ?? 0);
 
-  
+  let emphasizedActorRef = getContext<Ref<string | undefined>>(
+    CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
+  );
 </script>
 
 <div
   class="tidy-table-row quadrone-theme-root"
   style:--t5e-theme-color-default={themeStyle}
   style:--t5e-theme-color-highlight={themeHighlightStyle}
+  onmouseenter={() => (emphasizedActorRef.value = member.actor.uuid)}
+  onmouseleave={() => (emphasizedActorRef.value = undefined)}
 >
   <div class="tidy-table-cell member-vitals-container">
     <div
@@ -106,30 +111,35 @@
           >
         {/each}
       {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-      <span class="flexrow">
-        <span class="cr">
-          <span class="font-label-medium color-text-gold">CR</span>
-          <span class="font-data-medium color-text-default">5</span>
-        </span>
-        <div class="divider-dot"></div>
-        <span class="size">
-          <span class="font-label-medium color-text-gold">Mediumish</span>
-        </span>
-        <!-- {#if member.actor.creatureType.title} -->
-        <div class="divider-dot"></div>
-        <span class="creature-type">
-          <span class="font-label-medium color-text-gold">
-            TODO
-            <!-- {member.actor.creatureType.title}
+        <span class="flexrow">
+          <span class="cr">
+            <span class="font-label-medium color-text-gold">CR</span>
+            <span class="font-data-medium color-text-default">5</span>
+          </span>
+          <div class="divider-dot"></div>
+          <span class="size">
+            <span class="font-label-medium color-text-gold">Mediumish</span>
+          </span>
+          <!-- {#if member.actor.creatureType.title} -->
+          <div class="divider-dot"></div>
+          <span class="creature-type">
+            <span class="font-label-medium color-text-gold">
+              TODO
+              <!-- {member.actor.creatureType.title}
             {#if member.actor.creatureType.subtitle}
               ({member.actor.creatureType.subtitle})
             {/if} -->
+            </span>
           </span>
         </span>
-      </span>
-      <!-- {/if} -->
+        <!-- {/if} -->
       {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
-        <span class="font-label-medium color-text-gold" title={localize('DND5E.VehicleType')}>{localize('DND5E.VehicleType')} ({member.actor.system.vehicleType})</span>
+        <span
+          class="font-label-medium color-text-gold"
+          title={localize('DND5E.VehicleType')}
+          >{localize('DND5E.VehicleType')} ({member.actor.system
+            .vehicleType})</span
+        >
       {/if}
     </a>
   </div>
@@ -138,18 +148,18 @@
       columnWidth={inspirationColumnWidth}
       attributes={{ ['data-tidy-column-key']: 'inspiration-container' }}
     >
-    <!-- <div class="tidy-table-cell inspiration-container"> -->
+      <!-- <div class="tidy-table-cell inspiration-container"> -->
       <InspirationBadge
         actor={member.actor}
         inspirationSource={member.inspirationSource}
       />
-    <!-- </div> -->
+      <!-- </div> -->
     </TidyTableCell>
   {/if}
   <TidyTableCell
-      columnWidth={meterColumnWidth}
-      attributes={{ ['data-tidy-column-key']: 'hit-points' }}
-    >
+    columnWidth={meterColumnWidth}
+    attributes={{ ['data-tidy-column-key']: 'hit-points' }}
+  >
     <!-- <div class="tidy-table-cell"> -->
     <div
       class="meter meter-small progress hit-points"
@@ -167,7 +177,7 @@
       columnWidth={meterColumnWidth}
       attributes={{ ['data-tidy-column-key']: 'hit-die' }}
     >
-    <!-- <div class="tidy-table-cell"> -->
+      <!-- <div class="tidy-table-cell"> -->
       <div
         class="meter meter-small progress hit-die"
         style="--bar-percentage: {hdPct.toFixed(0)}%"
@@ -181,31 +191,31 @@
           >{member.actor.system.attributes.hd.max}</span
         >
       </div>
-    <!-- </div> -->
+      <!-- </div> -->
     </TidyTableCell>
   {/if}
   <TidyTableCell
-      columnWidth={acColumnWidth}
-      attributes={{ ['data-tidy-column-key']: 'ac' }}
-    >
+    columnWidth={acColumnWidth}
+    attributes={{ ['data-tidy-column-key']: 'ac' }}
+  >
     <!-- <div class="tidy-table-cell"> -->
     <span class="font-data-large color-text-default"
       >{member.actor.system.attributes.ac.value}</span
     >
     <!-- </div> -->
-    </TidyTableCell>
+  </TidyTableCell>
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
     <TidyTableCell
       columnWidth={acColumnWidth}
       attributes={{ ['data-tidy-column-key']: 'dt' }}
     >
-    <!-- <div class="tidy-table-cell"> -->
+      <!-- <div class="tidy-table-cell"> -->
       <span
         class="font-data-large color-text-{member.actor.system.attributes.hp.dt
           ? 'default'
           : 'lightest'}">{member.actor.system.attributes.hp.dt ?? '—'}</span
       >
-    <!-- </div> -->
+      <!-- </div> -->
     </TidyTableCell>
   {/if}
   {#if member.actor.type !== CONSTANTS.SHEET_TYPE_VEHICLE}
@@ -213,7 +223,7 @@
       columnWidth={meterColumnWidth}
       attributes={{ ['data-tidy-column-key']: 'xp' }}
     >
-    <!-- <div class="tidy-table-cell"> -->
+      <!-- <div class="tidy-table-cell"> -->
       {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
         <div
           class="meter meter-small progress xp"
@@ -227,7 +237,7 @@
           >{member.actor.system.details.xp.value}</span
         >
       {/if}
-    <!-- </div> -->
+      <!-- </div> -->
     </TidyTableCell>
   {/if}
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
@@ -243,7 +253,7 @@
       columnWidth={meterColumnWidth}
       attributes={{ ['data-tidy-column-key']: 'crew' }}
     >
-    <!-- <div class="tidy-table-cell"> -->
+      <!-- <div class="tidy-table-cell"> -->
       <div
         class="meter meter-small progress capacity"
         style="--bar-percentage: {crewPct}%;"
@@ -253,7 +263,7 @@
         <span class="font-body-medium color-text-lightest separator">/</span>
         <span class="font-label-medium color-text-default">{crewMax}</span>
       </div>
-    <!-- </div> -->
+      <!-- </div> -->
     </TidyTableCell>
   {/if}
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
@@ -266,7 +276,7 @@
       columnWidth={meterColumnWidth}
       attributes={{ ['data-tidy-column-key']: 'cargo' }}
     >
-    <!-- <div class="tidy-table-cell"> -->
+      <!-- <div class="tidy-table-cell"> -->
       <div
         class="meter meter-small progress capacity"
         style="--bar-percentage: {cargoPct}%;"
@@ -276,22 +286,22 @@
         <span class="font-body-medium color-text-lightest separator">/</span>
         <span class="font-label-medium color-text-default">{cargoMax}</span>
       </div>
-    <!-- </div> -->
+      <!-- </div> -->
     </TidyTableCell>
   {/if}
   <TidyTableCell
-      columnWidth="1.75rem"
-      attributes={{ ['data-tidy-column-key']: 'actions' }}
-    >
+    columnWidth="1.75rem"
+    attributes={{ ['data-tidy-column-key']: 'actions' }}
+  >
     <!-- <div class="tidy-table-cell"> -->
     <!-- TODO: Add context menu -->
     <!-- <MenuButton
       targetSelector={`[data-member-id="${member.actor.id}"]`}
     /> -->
-    
+
     <a class="tidy-table-button">
       <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
     </a>
     <!-- </div> -->
-    </TidyTableCell>
+  </TidyTableCell>
 </div>

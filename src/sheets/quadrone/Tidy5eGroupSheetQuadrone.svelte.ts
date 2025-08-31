@@ -43,6 +43,7 @@ import { getModifierData } from 'src/utils/formatting';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
+import type { Ref } from 'src/features/reactivity/reactivity.types';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -53,6 +54,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   sectionExpansionTracker: ExpansionTracker;
+  emphasizedActorUuid: Ref<string | undefined> = $state({ value: undefined });
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -109,6 +111,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         ],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [
+          CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
+          this.emphasizedActorUuid,
+        ],
       ]),
     });
 
