@@ -165,30 +165,41 @@
     </div>
   {/if}
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+    <!-- TODO: Move this to member data prep. -->
+    {@const crewCount = member.actor.system.cargo.crew.reduce(
+      (total: number, crew: any) => crew.quantity + total,
+      0,
+    )}
+    {@const crewMax = member.actor.system.attributes.capacity.creature}
+    {@const crewPct =
+      crewMax === 0 ? 0 : Math.clamp((crewCount / crewMax) * 100, 0, 100)}
     <div class="tidy-table-cell">
-      <div class="meter meter-small progress capacity"></div>
+      <div
+        class="meter meter-small progress capacity"
+        style="--bar-percentage: {crewPct}%;"
+      ></div>
       <div class="flexrow">
-        <span class="font-data-large color-text-default"
-          >{member.actor.system.attributes.capacity.creature}</span
-        >
+        <span class="font-data-large color-text-default">{crewCount}</span>
         <span class="font-body-medium color-text-lightest separator">/</span>
-        <span class="font-label-medium color-text-default"
-          >{member.actor.system.attributes.capacity.creature}</span
-        >
+        <span class="font-label-medium color-text-default">{crewMax}</span>
       </div>
     </div>
   {/if}
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+    <!-- TODO: Calculate this properly with reusable vehicle sheet calculations in member data prep. -->
+    {@const cargoCount = 75}
+    {@const cargoMax = member.actor.system.attributes.capacity.cargo}
+    {@const cargoPct =
+      cargoMax === 0 ? 0 : Math.clamp((cargoCount / cargoMax) * 100, 0, 100)}
     <div class="tidy-table-cell">
-      <div class="meter meter-small progress capacity"></div>
+      <div
+        class="meter meter-small progress capacity"
+        style="--bar-percentage: {cargoPct}%;"
+      ></div>
       <div class="flexrow">
-        <span class="font-data-large color-text-default"
-          >{member.actor.system.attributes.capacity.cargo}</span
-        >
+        <span class="font-data-large color-text-default">{cargoCount}</span>
         <span class="font-body-medium color-text-lightest separator">/</span>
-        <span class="font-label-medium color-text-default"
-          >{member.actor.system.attributes.capacity.cargo}</span
-        >
+        <span class="font-label-medium color-text-default">{cargoMax}</span>
       </div>
     </div>
   {/if}

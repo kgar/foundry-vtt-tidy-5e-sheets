@@ -120,7 +120,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-              <!-- TODO: Get member.traits.custom for each member! -->
+            <!-- TODO: Get member.traits.custom for each member! -->
             <!-- {#each characters as character}
               {#each Object.values(character.actor.traits) as trait}
                 {#if trait.custom}
@@ -135,7 +135,7 @@
       </div>
     </div>
 
-  <!-- Aggregate Tools -->
+    <!-- Aggregate Tools -->
     <!-- Speed -->
     <div class="list-entry">
       <div class="list-label flexrow">
