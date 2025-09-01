@@ -188,10 +188,28 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            <!-- TODO: This is for demonstrative purposes; apply data -->
-            <li class="pill pill-medium" data-tooltip-direction="UP">
-              <span class="label font-label-medium">Carpenter's Tools</span>
-            </li>
+            {#each context.members.traits.tools as tools}
+              {@const pillState: ClassValue = {
+                emphasized: emphasizedActor !== undefined && tools.identifiers.has(emphasizedActor),
+                diminished: emphasizedActor !== undefined && !tools.identifiers.has(emphasizedActor),
+              }}
+              <li
+                class={['pill pill-medium', pillState]}
+                data-tooltip-direction="UP"
+              >
+                <span class="label font-label-medium">{tools.label}</span>
+                {#if tools.value && tools.units}
+                  <span>
+                    <span class="value font-data-medium">{tools.value}</span
+                    ><span class="units font-default-medium color-text-lighter"
+                      >{tools.units}</span
+                    >
+                  </span>
+                {:else if tools.value}
+                  <span class="value font-data-medium">{tools.value}</span>
+                {/if}
+              </li>
+            {/each}
           </ul>
         </div>
       </div>

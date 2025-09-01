@@ -1301,7 +1301,7 @@ export type GroupSkill = {
   low: GroupSkillModContext;
 } & ValuedEmphasizable<GroupSkillModContext>;
 
-export type GroupTraitBase<TValue> = {
+export type GroupTraitBase<TValue = string> = {
   /** Text that describes the trait. */
   label: string;
   /** A value associated with the trait. */

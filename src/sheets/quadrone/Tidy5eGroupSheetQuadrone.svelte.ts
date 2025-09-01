@@ -352,6 +352,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this._prepareMemberSpeeds(actor, speeds);
 
       // Tools
+      this._prepareMemberTools(actor, tools);
     }
 
     sections.skills = [...skills.values()].toSorted((a, b) =>
@@ -364,6 +365,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       a.label.localeCompare(b.label, game.i18n.lang)
     );
     sections.traits.speeds = [...speeds.values()].toSorted((a, b) =>
+      a.label.localeCompare(b.label, game.i18n.lang)
+    );
+    sections.traits.tools = [...tools.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
 
@@ -590,6 +594,27 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           entry?.identifiers.set(actor.uuid, { label: specialSense });
         });
     }
+  }
+
+  private _prepareMemberTools(actor: any, tools: Map<string, GroupTrait>) {
+    Object.keys(actor.system.tools ?? {}).forEach((key) => {
+      const toolLabel = dnd5e.documents.Trait.keyLabel(key, {
+        trait: 'tool',
+      });
+
+      const groupTool =
+        tools.get(key) ??
+        tools
+          .set(key, {
+            identifiers: new Map<string, GroupTraitBase>(),
+            label: toolLabel,
+          })
+          .get(key)!;
+
+      groupTool.identifiers.set(actor.uuid, {
+        label: toolLabel,
+      });
+    });
   }
 
   async _preparePortrait(actor: Actor5e): Promise<GroupMemberPortraitContext> {

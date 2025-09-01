@@ -28,15 +28,17 @@
       - [x] Scaffold UI
       - [ ] Prep the data
   - [ ] Special
-    - [ ] Determine if this is even possible, and if so
-      - [ ] Stub the context
-      - [ ] Scaffold UI
-      - [ ] Prep the data
-  - [ ] Tools
+    - [ ] Stub the context
+    - [ ] Scaffold UI
+    - [ ] Prep the data
+  - [x] Tools
     - [x] Stub the context
     - [x] Scaffold UI
-    - [ ] Prep the data
+    - [x] Prep the data
 - [ ] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
+- [ ] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
+  - [ ] Tools
+  - [ ] ...?
 - [ ] Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
   - [ ] Tidy tables
   - [ ] Column spec
