@@ -99,15 +99,21 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            <!-- TODO: This is for demonstrative purposes; apply data -->
-            <li class="pill pill-medium" data-tooltip-direction="UP">
-              <span class="label font-label-medium"> Darkivision </span>
-              <span>
-                <span class="value font-data-medium">6000</span><span
-                  class="units font-default-medium color-text-lighter">ft</span
-                >
-              </span>
-            </li>
+            {#each context.members.traits.senses as sense}
+              <li class="pill pill-medium" data-tooltip-direction="UP">
+                <span class="label font-label-medium">{sense.label}</span>
+                {#if sense.value && sense.units}
+                  <span>
+                    <span class="value font-data-medium">{sense.value}</span
+                    ><span class="units font-default-medium color-text-lighter"
+                      >{sense.units}</span
+                    >
+                  </span>
+                {:else if sense.value}
+                  <span class="value font-data-medium">{sense.value}</span>
+                {/if}
+              </li>
+            {/each}
           </ul>
         </div>
       </div>

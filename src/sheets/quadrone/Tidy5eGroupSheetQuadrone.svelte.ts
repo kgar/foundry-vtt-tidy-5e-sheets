@@ -344,6 +344,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this._prepareMemberLanguages(actor, languages);
 
       // Senses
+      this._prepareMemberSenses(actor, senses);
 
       // Specials
 
@@ -357,6 +358,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       a.name.localeCompare(b.name, game.i18n.lang)
     );
     sections.traits.languages = [...languages.values()].toSorted((a, b) =>
+      a.label.localeCompare(b.label, game.i18n.lang)
+    );
+    sections.traits.senses = [...senses.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
     sections.traits.speeds = [...speeds.values()].toSorted((a, b) =>
@@ -423,6 +427,23 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         groupLanguage.units = actorLanguageTrait.units;
         groupLanguage.unitsKey = actorLanguageTrait.unitsKey;
       }
+
+      if (!isNil(actor.system.attributes.languages?.custom, '')) {
+        dnd5e.utils
+          .splitSemicolons(actor.system.attributes.languages.custom?.trim())
+          .forEach((customLanguage: string) => {
+            const entry =
+              languages.get(customLanguage) ??
+              languages
+                .set(customLanguage, {
+                  label: customLanguage,
+                  identifiers: new Map<string, GroupTraitBase<number>>(),
+                })
+                .get(customLanguage)!;
+
+            entry?.identifiers.set(actor.uuid, { label: customLanguage });
+          });
+      }
     });
   }
 
@@ -486,15 +507,89 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           groupSpeed.units = actorSpeedTrait.units;
           groupSpeed.unitsKey = actorSpeedTrait.unitsKey;
         }
+      }
+    );
+  }
+
+  private _prepareMemberSenses(
+    actor: any,
+    senses: Map<string, GroupTrait<number>>
+  ) {
+    let unitsKey = actor.system.attributes.movement.units;
+    let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
+    let units = unitsConfig?.abbreviation ?? unitsKey;
+
+    Object.entries(actor.system.attributes.senses ?? {}).forEach(
+      ([key, sense]) => {
+        const label = CONFIG.DND5E.senses[key];
+        if (typeof sense !== 'number' || sense === 0 || !label) {
+          return;
+        }
+
+        let actorSenseTrait: GroupTraitBase<number> = {
+          label: label,
+          units: units,
+          unitsKey: unitsKey,
+          value: sense,
+        };
+
+        let groupSense =
+          senses.get(key) ??
+          senses
+            .set(key, {
+              identifiers: new Map<string, GroupTrait<number>>(),
+              ...actorSenseTrait,
+            })
+            .get(key)!;
+
+        groupSense.identifiers.set(actor.uuid, actorSenseTrait);
+
+        const actorSenseUniversalValue =
+          actorSenseTrait.value !== undefined &&
+          !isNil(actorSenseTrait.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                actorSenseTrait.value,
+                actorSenseTrait.unitsKey,
+                'ft'
+              )
+            : undefined;
+
+        const groupSenseUniversalValue =
+          groupSense.value !== undefined && !isNil(groupSense.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                groupSense.value,
+                groupSense.unitsKey,
+                'ft'
+              )
+            : undefined;
 
         if (
-          actorSpeedTrait.value &&
-          actorSpeedTrait.value > (groupSpeed.value ?? 0)
+          actorSenseUniversalValue &&
+          actorSenseUniversalValue > (groupSenseUniversalValue ?? 0)
         ) {
-          groupSpeed.value = actorSpeedTrait.value;
+          groupSense.value = actorSenseTrait.value;
+          groupSense.units = actorSenseTrait.units;
+          groupSense.unitsKey = actorSenseTrait.unitsKey;
         }
       }
     );
+
+    if (!isNil(actor.system.attributes.senses?.special, '')) {
+      dnd5e.utils
+        .splitSemicolons(actor.system.attributes.senses.special?.trim())
+        .forEach((specialSense: string) => {
+          const entry =
+            senses.get(specialSense) ??
+            senses
+              .set(specialSense, {
+                label: specialSense,
+                identifiers: new Map<string, GroupTraitBase<number>>(),
+              })
+              .get(specialSense)!;
+
+          entry?.identifiers.set(actor.uuid, { label: specialSense });
+        });
+    }
   }
 
   async _preparePortrait(actor: Actor5e): Promise<GroupMemberPortraitContext> {

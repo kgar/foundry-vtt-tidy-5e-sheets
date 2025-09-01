@@ -1,5 +1,10 @@
 ## kgar To Do
 
+### Critical Bugs and Bug-likes
+
+- [ ] Character: show special senses in Character tab. Check NPCs as well.
+- [ ] Character, NPC, Group, etc.: check units localization in languages, senses, and movement. The system units value is the key, and we have to fetch the localized abbreviation from CONFIG.DND5E.
+
 ### Group Sheet
 
 - [ ] Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
@@ -12,10 +17,10 @@
       - [x] Stub the context
       - [x] Scaffold UI
       - [x] Prep the data
-    - [ ] Senses
+    - [x] Senses
       - [x] Stub the context
       - [x] Scaffold UI
-      - [ ] Prep the data
+      - [x] Prep the data
   - [ ] Skills
     - [x] expandable/collapsible
     - [ ] skill abbr, skill name (roll button / whatever), High, Low
@@ -42,6 +47,8 @@
     - [ ] GroupActorDt
     - [ ] GroupActorCargo
     - [ ] GroupActorCrew
+- [ ] Members tab security
+  - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
 - [ ] Plan the next tab 🚀
 
 ### The Short List
