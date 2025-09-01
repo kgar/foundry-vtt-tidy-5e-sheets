@@ -347,6 +347,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this._prepareMemberSenses(actor, senses);
 
       // Specials
+      this._prepareMemberSpecials(actor, specials);
 
       // Speeds
       this._prepareMemberSpeeds(actor, speeds);
@@ -362,6 +363,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       a.label.localeCompare(b.label, game.i18n.lang)
     );
     sections.traits.senses = [...senses.values()].toSorted((a, b) =>
+      a.label.localeCompare(b.label, game.i18n.lang)
+    );
+    sections.traits.specials = [...specials.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
     sections.traits.speeds = [...speeds.values()].toSorted((a, b) =>
@@ -513,6 +517,31 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         }
       }
     );
+  }
+
+  private _prepareMemberSpecials(
+    actor: any,
+    specials: Map<string, GroupTrait>
+  ) {
+    ['dr', 'di', 'ci', 'dv'].forEach((type) => {
+      const custom = actor.system.traits[type]?.custom?.trim();
+      if (isNil(custom, '')) {
+        return;
+      }
+
+      dnd5e.utils.splitSemicolons(custom).forEach((customEntry: string) => {
+        const groupSpecial =
+          specials.get(customEntry) ??
+          specials
+            .set(customEntry, {
+              label: customEntry,
+              identifiers: new Map<string, GroupTraitBase>(),
+            })
+            .get(customEntry)!;
+
+        groupSpecial.identifiers.set(actor.uuid, { label: customEntry });
+      });
+    });
   }
 
   private _prepareMemberSenses(

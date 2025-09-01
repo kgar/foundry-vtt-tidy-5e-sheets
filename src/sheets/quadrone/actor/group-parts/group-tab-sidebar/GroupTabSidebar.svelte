@@ -162,16 +162,18 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            <!-- TODO: Get member.traits.custom for each member! -->
-            <!-- {#each characters as character}
-              {#each Object.values(character.actor.traits) as trait}
-                {#if trait.custom}
-                  <li class="pill pill-medium" data-tooltip-direction="UP">
-                    <span class="label font-label-medium">{trait.label}</span>
-                  </li>
-                {/if}
-              {/each}
-            {/each} -->
+            {#each context.members.traits.specials as special}
+              {@const pillState: ClassValue = {
+                emphasized: emphasizedActor !== undefined && special.identifiers.has(emphasizedActor),
+                diminished: emphasizedActor !== undefined && !special.identifiers.has(emphasizedActor),
+              }}
+              <li
+                class={['pill pill-medium', pillState]}
+                data-tooltip-direction="UP"
+              >
+                <span class="label font-label-medium">{special.label}</span>
+              </li>
+            {/each}
           </ul>
         </div>
       </div>
@@ -188,26 +190,16 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.tools as tools}
+            {#each context.members.traits.tools as tool}
               {@const pillState: ClassValue = {
-                emphasized: emphasizedActor !== undefined && tools.identifiers.has(emphasizedActor),
-                diminished: emphasizedActor !== undefined && !tools.identifiers.has(emphasizedActor),
+                emphasized: emphasizedActor !== undefined && tool.identifiers.has(emphasizedActor),
+                diminished: emphasizedActor !== undefined && !tool.identifiers.has(emphasizedActor),
               }}
               <li
                 class={['pill pill-medium', pillState]}
                 data-tooltip-direction="UP"
               >
-                <span class="label font-label-medium">{tools.label}</span>
-                {#if tools.value && tools.units}
-                  <span>
-                    <span class="value font-data-medium">{tools.value}</span
-                    ><span class="units font-default-medium color-text-lighter"
-                      >{tools.units}</span
-                    >
-                  </span>
-                {:else if tools.value}
-                  <span class="value font-data-medium">{tools.value}</span>
-                {/if}
+                <span class="label font-label-medium">{tool.label}</span>
               </li>
             {/each}
           </ul>

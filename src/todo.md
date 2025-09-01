@@ -27,10 +27,10 @@
       - [x] Stub the context
       - [x] Scaffold UI
       - [ ] Prep the data
-  - [ ] Special
-    - [ ] Stub the context
-    - [ ] Scaffold UI
-    - [ ] Prep the data
+  - [x] Special
+    - [x] Stub the context
+    - [x] Scaffold UI
+    - [x] Prep the data
   - [x] Tools
     - [x] Stub the context
     - [x] Scaffold UI
