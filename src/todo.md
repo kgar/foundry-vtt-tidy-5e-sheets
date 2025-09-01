@@ -4,14 +4,14 @@
 
 - [ ] Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
   - [ ] Traits
-    - [ ] Language
+    - [x] Language
       - [x] Stub the context
       - [x] Scaffold UI
-      - [ ] Prep the data
-    - [ ] Speed
+      - [x] Prep the data
+    - [x] Speed
       - [x] Stub the context
       - [x] Scaffold UI
-      - [ ] Prep the data
+      - [x] Prep the data
     - [ ] Senses
       - [x] Stub the context
       - [x] Scaffold UI
@@ -41,6 +41,7 @@
     - [ ] GroupActorAc
     - [ ] GroupActorDt
     - [ ] GroupActorCargo
+    - [ ] GroupActorCrew
 - [ ] Plan the next tab 🚀
 
 ### The Short List

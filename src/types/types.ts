@@ -930,12 +930,21 @@ export type ActorSizeContext = {
 };
 
 export type ActorTraitContext<TValue = unknown> = {
+  /** The key that uniquely identifies this trait amongst others like it. */
   key?: string;
+  /** Icons associated with the trait. */
   icons?: { icon: string; label: string }[];
+  /** Text that describes the trait. */
   label: string;
+  /** The number sign (+ or -) for a numeric trait. */
   sign?: string;
+  /** A value associated with the trait. */
   value?: TValue;
+  /** The localized units abbreviation. */
   units?: string;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+  /** Any classes to apply to the resulting trait UI element. */
   cssClass?: ClassValue;
 };
 
@@ -1004,12 +1013,12 @@ export type CharacterSpeedSenseContext = {
   traitEntries: ActorTraitContext[];
 };
 
-export type ActorSpeedSenseEntryContext = {
+export type ActorSpeedSenseEntryContext<TValue = string> = {
   key: string;
   label: string;
-  value: string;
+  value: TValue;
   units: string;
-} & ActorTraitContext;
+} & ActorTraitContext<TValue>;
 
 export type ActorClassEntryContext = {
   uuid: string;
@@ -1292,27 +1301,25 @@ export type GroupSkill = {
   low: GroupSkillModContext;
 } & ValuedEmphasizable<GroupSkillModContext>;
 
-export type GroupTrait<TValue = string> = {
+export type GroupTraitBase<TValue> = {
+  /** Text that describes the trait. */
   label: string;
+  /** A value associated with the trait. */
   value?: TValue;
+  /** The localized units abbreviation. */
   units?: string;
-} & ValuedEmphasizable<{
-  label: string;
-  value?: TValue;
-  units?: string;
-}>;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+};
 
-export type MeasuredGroupTrait = {
-  label: string;
-  value: number;
-  units: string;
-} & ValuedEmphasizable<ValueWithUnits<number>>;
+export type GroupTrait<TValue = string> = GroupTraitBase<TValue> &
+  ValuedEmphasizable<GroupTraitBase<TValue>>;
 
 export type GroupTraits = {
   languages: GroupTrait<number>[];
-  senses: MeasuredGroupTrait[];
+  senses: GroupTrait<number>[];
   specials: GroupTrait[];
-  speeds: MeasuredGroupTrait[];
+  speeds: GroupTrait<number>[];
   tools: GroupTrait[];
 };
 

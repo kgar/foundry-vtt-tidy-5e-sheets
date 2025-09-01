@@ -69,15 +69,21 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            <!-- TODO: This is for demonstrative purposes; apply data -->
-            <li class="pill pill-medium" data-tooltip-direction="UP">
-              <span class="label font-label-medium"> Walk </span>
-              <span>
-                <span class="value font-data-medium">60</span><span
-                  class="units font-default-medium color-text-lighter">ft</span
-                >
-              </span>
-            </li>
+            {#each context.members.traits.speeds as speed}
+              <li class="pill pill-medium" data-tooltip-direction="UP">
+                <span class="label font-label-medium">{speed.label}</span>
+                {#if speed.value && speed.units}
+                  <span>
+                    <span class="value font-data-medium">{speed.value}</span
+                    ><span class="units font-default-medium color-text-lighter"
+                      >{speed.units}</span
+                    >
+                  </span>
+                {:else if speed.value}
+                  <span class="value font-data-medium">{speed.value}</span>
+                {/if}
+              </li>
+            {/each}
           </ul>
         </div>
       </div>

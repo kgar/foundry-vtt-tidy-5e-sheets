@@ -11,8 +11,8 @@ import type {
   GroupSkill,
   GroupSkillModContext,
   GroupTrait,
+  GroupTraitBase,
   LocationToSearchTextMap,
-  MeasuredGroupTrait,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -284,9 +284,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     );
 
     let languages = new Map<string, GroupTrait<number>>();
-    let senses = new Map<string, MeasuredGroupTrait>();
+    let senses = new Map<string, GroupTrait<number>>();
     let specials = new Map<string, GroupTrait>();
-    let speeds = new Map<string, MeasuredGroupTrait>();
+    let speeds = new Map<string, GroupTrait<number>>();
     let tools = new Map<string, GroupTrait>();
 
     for (let { actor } of this.actor.system.members) {
@@ -348,6 +348,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       // Specials
 
       // Speeds
+      this._prepareMemberSpeeds(actor, speeds);
 
       // Tools
     }
@@ -356,6 +357,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       a.name.localeCompare(b.name, game.i18n.lang)
     );
     sections.traits.languages = [...languages.values()].toSorted((a, b) =>
+      a.label.localeCompare(b.label, game.i18n.lang)
+    );
+    sections.traits.speeds = [...speeds.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
 
@@ -377,6 +381,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       const actorLanguageTrait = {
         label: language.label,
         units: language.units,
+        unitsKey: language.unitsKey,
         value: language.value !== undefined ? language.value : undefined,
       };
 
@@ -393,19 +398,19 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
       const actorLanguageUniversalValue =
         actorLanguageTrait.value !== undefined &&
-        !isNil(actorLanguageTrait.units, '')
+        !isNil(actorLanguageTrait.unitsKey, '')
           ? dnd5e.utils.convertLength(
               actorLanguageTrait.value,
-              actorLanguageTrait.units,
+              actorLanguageTrait.unitsKey,
               'ft'
             )
           : undefined;
 
       const groupLanguageUniversalValue =
-        groupLanguage.value !== undefined && !isNil(groupLanguage.units, '')
+        groupLanguage.value !== undefined && !isNil(groupLanguage.unitsKey, '')
           ? dnd5e.utils.convertLength(
               groupLanguage.value,
-              groupLanguage.units,
+              groupLanguage.unitsKey,
               'ft'
             )
           : undefined;
@@ -416,15 +421,80 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ) {
         groupLanguage.value = actorLanguageTrait.value;
         groupLanguage.units = actorLanguageTrait.units;
-      }
-
-      if (
-        actorLanguageTrait.value &&
-        actorLanguageTrait.value > (groupLanguage.value ?? 0)
-      ) {
-        groupLanguage.value = actorLanguageTrait.value;
+        groupLanguage.unitsKey = actorLanguageTrait.unitsKey;
       }
     });
+  }
+
+  private _prepareMemberSpeeds(
+    actor: any,
+    speeds: Map<string, GroupTrait<number>>
+  ) {
+    let unitsKey = actor.system.attributes.movement.units;
+    let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
+    let units = unitsConfig?.abbreviation ?? unitsKey;
+
+    Object.entries<number | unknown>(actor.system.attributes.movement).forEach(
+      ([key, speed]) => {
+        const movementType = CONFIG.DND5E.movementTypes[key];
+        if (typeof speed !== 'number' || speed <= 0 || !movementType) {
+          return;
+        }
+
+        let actorSpeedTrait: GroupTraitBase<number> = {
+          label: movementType.label,
+          units: units,
+          unitsKey: unitsKey,
+          value: speed,
+        };
+
+        let groupSpeed =
+          speeds.get(key) ??
+          speeds
+            .set(key, {
+              identifiers: new Map<string, GroupTrait<number>>(),
+              ...actorSpeedTrait,
+            })
+            .get(key)!;
+
+        groupSpeed.identifiers.set(actor.uuid, actorSpeedTrait);
+
+        const actorSpeedUniversalValue =
+          actorSpeedTrait.value !== undefined &&
+          !isNil(actorSpeedTrait.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                actorSpeedTrait.value,
+                actorSpeedTrait.unitsKey,
+                'ft'
+              )
+            : undefined;
+
+        const groupSpeedUniversalValue =
+          groupSpeed.value !== undefined && !isNil(groupSpeed.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                groupSpeed.value,
+                groupSpeed.unitsKey,
+                'ft'
+              )
+            : undefined;
+
+        if (
+          actorSpeedUniversalValue &&
+          actorSpeedUniversalValue > (groupSpeedUniversalValue ?? 0)
+        ) {
+          groupSpeed.value = actorSpeedTrait.value;
+          groupSpeed.units = actorSpeedTrait.units;
+          groupSpeed.unitsKey = actorSpeedTrait.unitsKey;
+        }
+
+        if (
+          actorSpeedTrait.value &&
+          actorSpeedTrait.value > (groupSpeed.value ?? 0)
+        ) {
+          groupSpeed.value = actorSpeedTrait.value;
+        }
+      }
+    );
   }
 
   async _preparePortrait(actor: Actor5e): Promise<GroupMemberPortraitContext> {
