@@ -6,6 +6,7 @@
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { CONSTANTS } from 'src/constants';
+  import type { ClassValue } from 'svelte/elements';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -14,11 +15,9 @@
   let emphasizedActorRef = getContext<Ref<string | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
   );
-</script>
 
-<!-- <p>
-  Hovered actor (example code, intentionally commented | delete when example no longer needed.): {emphasizedActorRef.value}
-</p> -->
+  let emphasizedActor = $derived(emphasizedActorRef.value);
+</script>
 
 <aside class="sidebar">
   <!-- Aggregate Traits -->
@@ -35,22 +34,32 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.members.traits.languages as language}
-              <li class="pill pill-medium" data-tooltip-direction="UP">
-                <span class="label font-label-medium">{language.label}</span>
+              {@const pillState: ClassValue = {
+                emphasized: emphasizedActor !== undefined && language.identifiers.has(emphasizedActor),
+                diminished: emphasizedActor !== undefined && !language.identifiers.has(emphasizedActor),
+              }}
+              {@const pill =
+                language.identifiers.get(emphasizedActor ?? '') ?? language}
+
+              <li
+                class={['pill pill-medium', pillState]}
+                data-tooltip-direction="UP"
+              >
+                <span class="label font-label-medium">{pill.label}</span>
                 {#if language.identifiers.size > 1}
                   <span>
                     {language.identifiers.size}
                   </span>
                 {/if}
-                {#if language.value && language.units}
+                {#if pill.value && pill.units}
                   <span>
-                    <span class="value font-data-medium">{language.value}</span
+                    <span class="value font-data-medium">{pill.value}</span
                     ><span class="units font-default-medium color-text-lighter"
-                      >{language.units}</span
+                      >{pill.units}</span
                     >
                   </span>
-                {:else if language.value}
-                  <span class="value font-data-medium">{language.value}</span>
+                {:else if pill.value}
+                  <span class="value font-data-medium">{pill.value}</span>
                 {/if}
               </li>
             {/each}
@@ -70,17 +79,26 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.members.traits.speeds as speed}
-              <li class="pill pill-medium" data-tooltip-direction="UP">
-                <span class="label font-label-medium">{speed.label}</span>
-                {#if speed.value && speed.units}
+              {@const pillState: ClassValue = {
+                emphasized: emphasizedActor !== undefined && speed.identifiers.has(emphasizedActor),
+                diminished: emphasizedActor !== undefined && !speed.identifiers.has(emphasizedActor),
+              }}
+              {@const pill =
+                speed.identifiers.get(emphasizedActor ?? '') ?? speed}
+              <li
+                class={['pill pill-medium', pillState]}
+                data-tooltip-direction="UP"
+              >
+                <span class="label font-label-medium">{pill.label}</span>
+                {#if pill.value && pill.units}
                   <span>
-                    <span class="value font-data-medium">{speed.value}</span
+                    <span class="value font-data-medium">{pill.value}</span
                     ><span class="units font-default-medium color-text-lighter"
-                      >{speed.units}</span
+                      >{pill.units}</span
                     >
                   </span>
-                {:else if speed.value}
-                  <span class="value font-data-medium">{speed.value}</span>
+                {:else if pill.value}
+                  <span class="value font-data-medium">{pill.value}</span>
                 {/if}
               </li>
             {/each}
@@ -100,17 +118,26 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.members.traits.senses as sense}
-              <li class="pill pill-medium" data-tooltip-direction="UP">
-                <span class="label font-label-medium">{sense.label}</span>
-                {#if sense.value && sense.units}
+              {@const pillState: ClassValue = {
+                emphasized: emphasizedActor !== undefined && sense.identifiers.has(emphasizedActor),
+                diminished: emphasizedActor !== undefined && !sense.identifiers.has(emphasizedActor),
+              }}
+              {@const pill =
+                sense.identifiers.get(emphasizedActor ?? '') ?? sense}
+              <li
+                class={['pill pill-medium', pillState]}
+                data-tooltip-direction="UP"
+              >
+                <span class="label font-label-medium">{pill.label}</span>
+                {#if pill.value && pill.units}
                   <span>
-                    <span class="value font-data-medium">{sense.value}</span
+                    <span class="value font-data-medium">{pill.value}</span
                     ><span class="units font-default-medium color-text-lighter"
-                      >{sense.units}</span
+                      >{pill.units}</span
                     >
                   </span>
-                {:else if sense.value}
-                  <span class="value font-data-medium">{sense.value}</span>
+                {:else if pill.value}
+                  <span class="value font-data-medium">{pill.value}</span>
                 {/if}
               </li>
             {/each}
@@ -125,7 +152,6 @@
 
   <!-- Aggregate Special -->
   <div class="list traits">
-    <!-- Speed -->
     <div class="list-entry">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
@@ -152,7 +178,6 @@
     </div>
 
     <!-- Aggregate Tools -->
-    <!-- Speed -->
     <div class="list-entry">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">

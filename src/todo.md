@@ -36,6 +36,7 @@
     - [x] Stub the context
     - [x] Scaffold UI
     - [ ] Prep the data
+- [ ] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
 - [ ] Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
   - [ ] Tidy tables
   - [ ] Column spec
