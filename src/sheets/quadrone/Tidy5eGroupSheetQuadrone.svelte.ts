@@ -12,6 +12,7 @@ import type {
   GroupSkillModContext,
   GroupTrait,
   GroupTraitBase,
+  GroupTraits,
   LocationToSearchTextMap,
 } from 'src/types/types';
 import type {
@@ -153,10 +154,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ),
       currencies,
       inventory: [],
-      members: await this._prepareMembersContext(),
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       type: 'group',
+      ...(await this._prepareMemberDependentContext()),
       ...actorContext,
     };
 
@@ -234,7 +235,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   protected _prepareItem(item: Item5e, ctx: GroupSheetQuadroneContext) {}
 
-  async _prepareMembersContext(): Promise<GroupMembersQuadroneContext> {
+  async _prepareMemberDependentContext(): Promise<{
+    members: GroupMembersQuadroneContext;
+    skills: GroupSkill[];
+    traits: GroupTraits;
+  }> {
     let sections: GroupMembersQuadroneContext = {
       character: {
         members: [],
@@ -247,14 +252,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       vehicle: {
         members: [],
         label: 'TYPES.Actor.vehiclePl',
-      },
-      skills: [],
-      traits: {
-        languages: [],
-        senses: [],
-        specials: [],
-        speeds: [],
-        tools: [],
       },
     };
 
@@ -282,6 +279,14 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         ]
       )
     );
+
+    let traits: GroupTraits = {
+      languages: [],
+      senses: [],
+      specials: [],
+      speeds: [],
+      tools: [],
+    };
 
     let languages = new Map<string, GroupTrait<number>>();
     let senses = new Map<string, GroupTrait<number>>();
@@ -356,26 +361,31 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       this._prepareMemberTools(actor, tools);
     }
 
-    sections.skills = [...skills.values()].toSorted((a, b) =>
+    let groupSkills = [...skills.values()].toSorted((a, b) =>
       a.name.localeCompare(b.name, game.i18n.lang)
     );
-    sections.traits.languages = [...languages.values()].toSorted((a, b) =>
+
+    traits.languages = [...languages.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
-    sections.traits.senses = [...senses.values()].toSorted((a, b) =>
+    traits.senses = [...senses.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
-    sections.traits.specials = [...specials.values()].toSorted((a, b) =>
+    traits.specials = [...specials.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
-    sections.traits.speeds = [...speeds.values()].toSorted((a, b) =>
+    traits.speeds = [...speeds.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
-    sections.traits.tools = [...tools.values()].toSorted((a, b) =>
+    traits.tools = [...tools.values()].toSorted((a, b) =>
       a.label.localeCompare(b.label, game.i18n.lang)
     );
 
-    return sections;
+    return {
+      members: sections,
+      skills: groupSkills,
+      traits,
+    };
   }
 
   private _prepareMemberLanguages(

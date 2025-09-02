@@ -56,7 +56,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.languages as language}
+            {#each context.traits.languages as language}
               {@const isEmphasized = emphasizedActor !== undefined && language.identifiers.has(emphasizedActor)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
@@ -103,7 +103,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.speeds as speed}
+            {#each context.traits.speeds as speed}
               {@const isEmphasized = emphasizedActor !== undefined && speed.identifiers.has(emphasizedActor)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
@@ -144,7 +144,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.senses as sense}
+            {#each context.traits.senses as sense}
               {@const isEmphasized = emphasizedActor !== undefined && sense.identifiers.has(emphasizedActor)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
@@ -191,7 +191,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.specials as special}
+            {#each context.traits.specials as special}
               {@const isEmphasized = emphasizedActor !== undefined && special.identifiers.has(emphasizedActor)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
@@ -221,7 +221,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.tools as tool}
+            {#each context.traits.tools as tool}
               {@const isEmphasized = emphasizedActor !== undefined && tool.identifiers.has(emphasizedActor)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,

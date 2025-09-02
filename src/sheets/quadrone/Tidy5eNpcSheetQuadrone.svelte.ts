@@ -270,6 +270,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
       sheet: this,
       tools: [],
+      traits: this._prepareTraits(),
       treasures: [],
       type: CONSTANTS.SHEET_TYPE_NPC,
       ...actorContext,

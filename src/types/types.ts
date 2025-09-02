@@ -976,7 +976,6 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   system: Actor5e['system'];
   tabs: Tab[];
   token: TokenDocument | null;
-  traits: Record<string, ActorTraitContext[]>;
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
 } & DocumentSheetQuadroneContext<Actor5e>;
@@ -1195,6 +1194,7 @@ export type CharacterSheetQuadroneContext = {
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
+  traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & SingleActorContext<Tidy5eCharacterSheetQuadrone>;
 
@@ -1242,6 +1242,7 @@ export type NpcSheetQuadroneContext = {
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
+  traits: Record<string, ActorTraitContext[]>;
   treasures: { label: string }[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & SingleActorContext<Tidy5eNpcSheetQuadrone>;
@@ -1267,10 +1268,6 @@ export type GroupMembersQuadroneContext = {
   character: GroupMemberSection;
   npc: GroupMemberSection;
   vehicle: GroupMemberSection;
-
-  // TODO: These don't belong here. Just sections. This is temporary because the main group member context inherits the existing actor base traits. Probably shouldn't.
-  traits: GroupTraits;
-  skills: GroupSkill[];
 };
 
 export type Emphasizable = {
@@ -1279,11 +1276,6 @@ export type Emphasizable = {
 
 export type ValuedEmphasizable<TValue> = {
   identifiers: Map<string, TValue>;
-};
-
-type ValueWithUnits<TValue> = {
-  value: TValue;
-  units: string;
 };
 
 export type GroupSkillModContext = {
@@ -1325,7 +1317,10 @@ export type GroupTraits = {
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+
   members: GroupMembersQuadroneContext;
+  skills: GroupSkill[];
+  traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorContext<Tidy5eGroupSheetQuadrone>;
 
