@@ -1276,7 +1276,7 @@ export type Emphasizable = {
   identifiers: Set<string>;
 };
 
-export type ValuedEmphasizable<TValue> = {
+export type MeasurableEmphasizable<TValue> = {
   identifiers: Map<string, TValue>;
 };
 
@@ -1299,7 +1299,7 @@ export type GroupSkill = {
   high: GroupSkillModContext;
   low: GroupSkillModContext;
   reference: string | undefined;
-} & ValuedEmphasizable<GroupMemberSkillContext>;
+} & MeasurableEmphasizable<GroupMemberSkillContext>;
 
 export type GroupTraitBase<TValue = string> = {
   /** Text that describes the trait. */
@@ -1312,14 +1312,16 @@ export type GroupTraitBase<TValue = string> = {
   unitsKey?: string;
 };
 
-export type GroupTrait<TValue = string> = GroupTraitBase<TValue> &
-  ValuedEmphasizable<GroupTraitBase<TValue>>;
+export type MeasurableGroupTrait<TValue = string> = GroupTraitBase<TValue> &
+  MeasurableEmphasizable<GroupTraitBase<TValue>>;
+
+export type GroupTrait = GroupTraitBase<never> & Emphasizable;
 
 export type GroupTraits = {
-  languages: GroupTrait<number>[];
-  senses: GroupTrait<number>[];
+  languages: MeasurableGroupTrait<number>[];
+  senses: MeasurableGroupTrait<number>[];
   specials: GroupTrait[];
-  speeds: GroupTrait<number>[];
+  speeds: MeasurableGroupTrait<number>[];
   tools: GroupTrait[];
 };
 

@@ -14,6 +14,7 @@ import type {
   GroupTraitBase,
   GroupTraits,
   LocationToSearchTextMap,
+  MeasurableGroupTrait,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -288,10 +289,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       tools: [],
     };
 
-    let languages = new Map<string, GroupTrait<number>>();
-    let senses = new Map<string, GroupTrait<number>>();
+    let languages = new Map<string, MeasurableGroupTrait<number>>();
+    let senses = new Map<string, MeasurableGroupTrait<number>>();
     let specials = new Map<string, GroupTrait>();
-    let speeds = new Map<string, GroupTrait<number>>();
+    let speeds = new Map<string, MeasurableGroupTrait<number>>();
     let tools = new Map<string, GroupTrait>();
 
     for (let { actor } of this.actor.system.members) {
@@ -405,7 +406,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   private _prepareMemberLanguages(
     actor: any,
-    languages: Map<string, GroupTrait<number>>
+    languages: Map<string, MeasurableGroupTrait<number>>
   ) {
     let memberLanguages =
       actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
@@ -426,7 +427,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         languages.get(language.label) ??
         languages
           .set(language.label, {
-            identifiers: new Map<string, GroupTrait<number>>(),
+            identifiers: new Map<string, MeasurableGroupTrait<number>>(),
             ...actorLanguageTrait,
           })
           .get(language.label)!;
@@ -482,7 +483,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   private _prepareMemberSpeeds(
     actor: any,
-    speeds: Map<string, GroupTrait<number>>
+    speeds: Map<string, MeasurableGroupTrait<number>>
   ) {
     let unitsKey = actor.system.attributes.movement.units;
     let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
@@ -506,7 +507,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           speeds.get(key) ??
           speeds
             .set(key, {
-              identifiers: new Map<string, GroupTrait<number>>(),
+              identifiers: new Map<string, MeasurableGroupTrait<number>>(),
               ...actorSpeedTrait,
             })
             .get(key)!;
@@ -560,18 +561,18 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           specials
             .set(customEntry, {
               label: customEntry,
-              identifiers: new Map<string, GroupTraitBase>(),
+              identifiers: new Set<string>(),
             })
             .get(customEntry)!;
 
-        groupSpecial.identifiers.set(actor.uuid, { label: customEntry });
+        groupSpecial.identifiers.add(actor.uuid);
       });
     });
   }
 
   private _prepareMemberSenses(
     actor: any,
-    senses: Map<string, GroupTrait<number>>
+    senses: Map<string, MeasurableGroupTrait<number>>
   ) {
     let unitsKey = actor.system.attributes.movement.units;
     let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
@@ -595,7 +596,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           senses.get(key) ??
           senses
             .set(key, {
-              identifiers: new Map<string, GroupTrait<number>>(),
+              identifiers: new Map<string, MeasurableGroupTrait<number>>(),
               ...actorSenseTrait,
             })
             .get(key)!;
@@ -660,14 +661,12 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         tools.get(key) ??
         tools
           .set(key, {
-            identifiers: new Map<string, GroupTraitBase>(),
+            identifiers: new Set<string>(),
             label: toolLabel,
           })
           .get(key)!;
 
-      groupTool.identifiers.set(actor.uuid, {
-        label: toolLabel,
-      });
+      groupTool.identifiers.add(actor.uuid);
     });
   }
 
