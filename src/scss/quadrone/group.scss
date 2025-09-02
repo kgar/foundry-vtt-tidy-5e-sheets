@@ -335,4 +335,10 @@
     }
 
   }
+  .skill-list .skill-list-item.member-proficient .skill {
+    color: lime; // 👋 hi hightouch
+  }
+  .skill-list .skill-list-item.member-unproficient .skill {
+    opacity: 0.5;
+  }
 }
