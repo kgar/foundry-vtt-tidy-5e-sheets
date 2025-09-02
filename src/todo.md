@@ -15,19 +15,21 @@
   - [ ] Tidy tables
   - [ ] Column spec
   - [ ] Column components
-    - [ ] GroupMemberInspiration
-    - [ ] GroupActorHp
-    - [ ] GroupActorHd
-    - [ ] GroupActorAc
-    - [ ] GroupActorDt
-    - [ ] GroupActorCargo
-    - [ ] GroupActorCrew
+    - [ ] GroupMemberInspirationColumn
+    - [ ] GroupActorHpColumn
+    - [ ] GroupActorHdColumn
+    - [ ] GroupActorAcColumn
+    - [ ] GroupActorDtColumn
+    - [ ] GroupActorCargoColumn
+    - [ ] GroupActorCrewColumn
+- [ ] Implement Cargo calculations for Vehicle members.
 - [ ] Group Member context menu
   - [ ] View Member
   - [ ] Remove Member
   - [ ] ???
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
+- [ ] Make group sheet refresh on relevant actor changes.
 - [ ] Plan the next tab 🚀
 
 ### The Short List

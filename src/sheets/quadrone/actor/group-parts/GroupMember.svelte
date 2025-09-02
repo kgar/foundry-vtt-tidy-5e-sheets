@@ -59,10 +59,12 @@
 </script>
 
 <div
-  class="tidy-table-row quadrone-theme-root"
+  class="tidy-table-row group-member"
   style:--t5e-theme-color-default={themeStyle}
   style:--t5e-theme-color-highlight={themeHighlightStyle}
   style:--t5e-member-color-hover={themeHighlightStyle}
+  data-tidy-draggable
+  data-member-id={member.actor.id}
 >
   <div class="tidy-table-cell member-vitals-container">
     <div
