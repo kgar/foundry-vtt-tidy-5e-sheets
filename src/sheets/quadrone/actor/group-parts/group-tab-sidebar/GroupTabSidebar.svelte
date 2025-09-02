@@ -8,6 +8,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { ClassValue } from 'svelte/elements';
   import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import GroupTraitPill from '../GroupTraitPill.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -54,33 +55,19 @@
               {@const pill =
                 language.identifiers.get(emphasizedActorUuid) ?? language}
 
-              <li
-                class={['pill pill-medium', pillState]}
-                data-tooltip-direction="UP"
-              >
-                <span class="label font-label-medium">{pill.label}</span>
-                {#if language.identifiers.size > 1}
-                  <span>
-                    {language.identifiers.size}
-                  </span>
-                {/if}
-                {#if pill.value && pill.units}
-                  <span>
-                    <span class="value font-data-medium">{pill.value}</span
-                    ><span class="units font-default-medium color-text-lighter"
-                      >{pill.units}</span
-                    >
-                  </span>
-                {:else if pill.value}
-                  <span class="value font-data-medium">{pill.value}</span>
-                {/if}
-              </li>
+              <GroupTraitPill
+                class={pillState}
+                count={language.identifiers.size}
+                label={pill.label}
+                units={pill.units}
+                value={pill.value}
+              />
             {/each}
           </ul>
         </div>
       </div>
     </div>
-    <!-- Speed -->
+    <!-- Speeds -->
     <div class="list-entry">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
@@ -102,22 +89,13 @@
               }}
               {@const pill =
                 speed.identifiers.get(emphasizedActorUuid) ?? speed}
-              <li
-                class={['pill pill-medium', pillState]}
-                data-tooltip-direction="UP"
-              >
-                <span class="label font-label-medium">{pill.label}</span>
-                {#if pill.value && pill.units}
-                  <span>
-                    <span class="value font-data-medium">{pill.value}</span
-                    ><span class="units font-default-medium color-text-lighter"
-                      >{pill.units}</span
-                    >
-                  </span>
-                {:else if pill.value}
-                  <span class="value font-data-medium">{pill.value}</span>
-                {/if}
-              </li>
+
+              <GroupTraitPill
+                class={pillState}
+                label={pill.label}
+                units={pill.units}
+                value={pill.value}
+              />
             {/each}
           </ul>
         </div>
@@ -145,22 +123,13 @@
               }}
               {@const pill =
                 sense.identifiers.get(emphasizedActorUuid) ?? sense}
-              <li
-                class={['pill pill-medium', pillState]}
-                data-tooltip-direction="UP"
-              >
-                <span class="label font-label-medium">{pill.label}</span>
-                {#if pill.value && pill.units}
-                  <span>
-                    <span class="value font-data-medium">{pill.value}</span
-                    ><span class="units font-default-medium color-text-lighter"
-                      >{pill.units}</span
-                    >
-                  </span>
-                {:else if pill.value}
-                  <span class="value font-data-medium">{pill.value}</span>
-                {/if}
-              </li>
+
+              <GroupTraitPill
+                class={pillState}
+                label={pill.label}
+                units={pill.units}
+                value={pill.value}
+              />
             {/each}
           </ul>
         </div>
@@ -170,7 +139,7 @@
     <!-- Aggregate Skills -->
     <GroupSkills />
 
-    <!-- Aggregate Special -->
+    <!-- Specials -->
     <div class="list-entry">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
@@ -190,19 +159,15 @@
                 'theme-dark': isEmphasized,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
-              <li
-                class={['pill pill-medium', pillState]}
-                data-tooltip-direction="UP"
-              >
-                <span class="label font-label-medium">{special.label}</span>
-              </li>
+
+              <GroupTraitPill class={pillState} label={special.label} />
             {/each}
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Aggregate Tools -->
+    <!-- Tools -->
     <div class="list-entry">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
@@ -222,12 +187,7 @@
                 'theme-dark': isEmphasized,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
-              <li
-                class={['pill pill-medium', pillState]}
-                data-tooltip-direction="UP"
-              >
-                <span class="label font-label-medium">{tool.label}</span>
-              </li>
+              <GroupTraitPill class={pillState} label={tool.label} />
             {/each}
           </ul>
         </div>
