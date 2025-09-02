@@ -2,6 +2,8 @@
   --sidebar-expanded-width: 17.25rem; // I just picked a value for now while prototyping.
   // --header-image: url(../../modules/tidy5e-sheet/images/background-character.webp);
   --header-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.64);
+  --portrait-border-color: var(--t5e-color-gold);
+  --portrait-border-color-hover: var(--t5e-color-palette-gold-75);
 
   background: var(--t5e-theme-color-default);
   display: flex;
@@ -274,14 +276,14 @@
           left: var(--inset);
           right: var(--inset);
           bottom: var(--inset);
-          border-color: var(--t5e-color-gold);
+          border-color: var(--portrait-border-color);
           border-style: solid;
           pointer-events: none;
           transition: border-color var(--t5e-transition-default);
         }
 
         &:hover::before {
-          border-color: var(--t5e-color-palette-gold-75);
+          border-color: var(--portrait-border-color-hover);
         }
 
 
@@ -293,7 +295,7 @@
 
           &::before {
             border-radius: 100%;
-            border: 0.09375rem solid var(--t5e-color-gold);
+            border: 0.09375rem solid var(--portrait-border-color);
           }
         }
 
@@ -313,14 +315,14 @@
         &.transparent {
 
           &::before {
-            border-color: var(--t5e-color-palette-gold-56);
+            // border-color: var(--portrait-border-color);
             border-radius: 100%;
             border-width: 0.125rem;
             z-index: -1;
           }
 
           &:hover::before {
-            border-color: var(--t5e-color-palette-gold-75);
+            border-color: var(--portrait-border-color-hover);
           }
         }
 

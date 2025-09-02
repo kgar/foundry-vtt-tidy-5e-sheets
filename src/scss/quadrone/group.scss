@@ -1,6 +1,7 @@
 .tidy5e-sheet.application:where(.quadrone.group) {
   --portrait-size: 10rem;
   --t5e-table-avatar-size: 3.75rem;
+  --t5e-member-color-hover: var(--t5e-theme-color-highlight);
 
   .sheet-header {
     gap: 0;
@@ -138,14 +139,18 @@
         left: var(--inset);
         right: var(--inset);
         bottom: var(--inset);
-        border-color: var(--t5e-color-gold);
+        border-color: var(--portrait-border-color);
         border-style: solid;
         pointer-events: none;
         transition: border-color var(--t5e-transition-default);
       }
 
-      &:hover::before {
-        border-color: var(--t5e-color-palette-gold-75);
+      &:hover {
+        filter: drop-shadow(0 0 0.375rem oklch(from var(--t5e-member-color-hover) l c h / 0.32));
+
+        &::before {
+          border-color: var(--t5e-member-color-hover);
+        }
       }
 
 
@@ -157,11 +162,11 @@
 
         &::before {
           border-radius: 100%;
-          border: 0.09375rem solid var(--t5e-color-gold);
+          border: 0.09375rem solid var(--portrait-border-color);
         }
 
         &:hover::before {
-          border-color: var(--t5e-color-palette-gold-75);
+          border-color: var(--t5e-member-color-hover);
         }
       }
 
@@ -174,7 +179,7 @@
         }
 
         &:hover::before {
-          border-color: var(--t5e-color-palette-gold-75);
+          border-color: var(--t5e-member-color-hover);
         }
 
         img {
@@ -194,7 +199,7 @@
 
         &:hover::before {
           opacity: 1;
-          border-color: var(--t5e-color-palette-gold-75);
+          border-color: var(--t5e-member-color-hover);
         }
       }
 
@@ -293,7 +298,7 @@
       width: 100%;
     }
 
-    .inspiration-container {
+    .member-container {
       .inspiration-badge {
         position: relative;
 
@@ -313,8 +318,9 @@
   /* --------------------------------------------- */
   .pill {
     &.emphasized {
-      border: 1px solid fuchsia;
+      border: 1px solid var(--t5e-member-color-hover);
     }
+
     &.diminished {
       opacity: 0.5;
     }

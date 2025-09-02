@@ -17,9 +17,33 @@
   );
 
   let emphasizedActor = $derived(emphasizedActorRef.value);
+
+  let highlightColors = $derived.by(() => {
+    const colors = new Map<string, string>();
+    
+    // Loop through all member types and populate highlight colors
+    const allMembers = [
+      ...context.members.character.members,
+      ...context.members.npc.members,
+      ...context.members.vehicle.members,
+    ];
+    
+    for (const member of allMembers) {
+      const highlightColor = member.accentColor
+        ? 'oklch(from ' + member.accentColor + ' calc(l * 1.4) 60% h)'
+        : undefined;
+      
+      if (highlightColor) {
+        colors.set(member.actor.uuid, highlightColor);
+      }
+    }
+    
+    return colors;
+  });
+  
 </script>
 
-<aside class="sidebar">
+<aside class="sidebar" style:--t5e-member-color-hover={highlightColors.get(emphasizedActor ?? '')}>
   <!-- Aggregate Traits -->
   <div class="list traits">
     <!-- Languages -->

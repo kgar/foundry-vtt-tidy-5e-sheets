@@ -33,62 +33,6 @@
 </script>
 
 <GroupTabSidebar />
-<!-- <section class="group-members-content">
-  {#if characters.length}
-    <section class="tidy-table">
-      <div class="tidy-table-header-row theme-dark">
-        <h3>{localize(context.members.character.label)}</h3>
-      </div>
-      <menu class="members">
-        {#each characters as member}
-          <li
-            class="member-container"
-            data-tidy-draggable
-            data-member-id={member.actor.id}
-          >
-            <GroupMember {member} />
-          </li>
-        {/each}
-      </menu>
-    </section>
-  {/if}
-  {#if npcs.length}
-    <section class="tidy-table">
-      <div class="tidy-table-header-row theme-dark">
-        <h3>{localize(context.members.npc.label)}</h3>
-      </div>
-      <menu class="members">
-        {#each npcs as member}
-          <li
-            class="member-container"
-            data-tidy-draggable
-            data-member-id={member.actor.id}
-          >
-            <GroupMember {member} />
-          </li>
-        {/each}
-      </menu>
-    </section>
-  {/if}
-  {#if vehicles.length}
-    <section class="tidy-table">
-      <div class="tidy-table-header-row theme-dark">
-        <h3>{localize(context.members.vehicle.label)}</h3>
-      </div>
-      <menu class="members">
-        {#each vehicles as member}
-          <li
-            class="member-container"
-            data-tidy-draggable
-            data-member-id={member.actor.id}
-          >
-            <GroupMember {member} />
-          </li>
-        {/each}
-      </menu>
-    </section>
-  {/if}
-</section> -->
 
 <section class="group-members-content flexcol">
   {#if characters.length}
