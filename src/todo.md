@@ -7,34 +7,6 @@
 
 ### Group Sheet
 
-- [ ] Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
-  - [ ] Traits
-    - [x] Language
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-    - [x] Speed
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-    - [x] Senses
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-  - [ ] Skills
-    - [x] expandable/collapsible
-    - [ ] skill abbr, skill name (roll button / whatever), High, Low
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [ ] Prep the data
-  - [x] Special
-    - [x] Stub the context
-    - [x] Scaffold UI
-    - [x] Prep the data
-  - [x] Tools
-    - [x] Stub the context
-    - [x] Scaffold UI
-    - [x] Prep the data
 - [ ] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
 - [ ] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
   - [ ] Tools
@@ -397,3 +369,31 @@ Limited:
   - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
 - [x] Inventory tab
   - [x] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
+- [x] Group Sheet: Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [x] Traits
+    - [x] Language
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+    - [x] Speed
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+    - [x] Senses
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+  - [x] Skills
+    - [x] expandable/collapsible
+    - [x] skill abbr, skill name (roll button / whatever), High, Low
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+  - [x] Special
+    - [x] Stub the context
+    - [x] Scaffold UI
+    - [x] Prep the data
+  - [x] Tools
+    - [x] Stub the context
+    - [x] Scaffold UI
+    - [x] Prep the data
