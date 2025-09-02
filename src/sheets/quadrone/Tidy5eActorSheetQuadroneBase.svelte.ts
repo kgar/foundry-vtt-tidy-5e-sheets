@@ -278,7 +278,6 @@ export function Tidy5eActorSheetQuadroneBase<
         system: this.actor.system,
         tabs: [],
         token: this.token,
-        traits: this._prepareTraits(),
         userPreferences: UserPreferencesService.get(),
         warnings:
           foundry.utils

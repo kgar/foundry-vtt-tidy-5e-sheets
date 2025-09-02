@@ -33,7 +33,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.languages as language}
+            {#each context.traits.languages as language}
               {@const pillState: ClassValue = {
                 emphasized: emphasizedActor !== undefined && language.identifiers.has(emphasizedActor),
                 diminished: emphasizedActor !== undefined && !language.identifiers.has(emphasizedActor),
@@ -78,7 +78,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.speeds as speed}
+            {#each context.traits.speeds as speed}
               {@const pillState: ClassValue = {
                 emphasized: emphasizedActor !== undefined && speed.identifiers.has(emphasizedActor),
                 diminished: emphasizedActor !== undefined && !speed.identifiers.has(emphasizedActor),
@@ -117,7 +117,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.senses as sense}
+            {#each context.traits.senses as sense}
               {@const pillState: ClassValue = {
                 emphasized: emphasizedActor !== undefined && sense.identifiers.has(emphasizedActor),
                 diminished: emphasizedActor !== undefined && !sense.identifiers.has(emphasizedActor),
@@ -162,7 +162,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.specials as special}
+            {#each context.traits.specials as special}
               {@const pillState: ClassValue = {
                 emphasized: emphasizedActor !== undefined && special.identifiers.has(emphasizedActor),
                 diminished: emphasizedActor !== undefined && !special.identifiers.has(emphasizedActor),
@@ -190,7 +190,7 @@
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each context.members.traits.tools as tool}
+            {#each context.traits.tools as tool}
               {@const pillState: ClassValue = {
                 emphasized: emphasizedActor !== undefined && tool.identifiers.has(emphasizedActor),
                 diminished: emphasizedActor !== undefined && !tool.identifiers.has(emphasizedActor),

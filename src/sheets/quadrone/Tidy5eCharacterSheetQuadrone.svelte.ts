@@ -282,6 +282,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         preferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
       tools: [],
+      traits: this._prepareTraits(),
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       ...this._getClassesAndOrphanedSubclasses(),
       ...actorContext,
