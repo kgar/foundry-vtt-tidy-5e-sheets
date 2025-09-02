@@ -1298,6 +1298,7 @@ export type GroupSkill = {
   proficient: boolean;
   high: GroupSkillModContext;
   low: GroupSkillModContext;
+  reference: string | undefined;
 } & ValuedEmphasizable<GroupMemberSkillContext>;
 
 export type GroupTraitBase<TValue = string> = {

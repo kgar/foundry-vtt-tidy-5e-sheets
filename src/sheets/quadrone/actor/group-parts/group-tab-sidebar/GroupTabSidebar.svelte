@@ -52,8 +52,7 @@
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
-                language.identifiers.get(emphasizedActorUuid) ??
-                language}
+                language.identifiers.get(emphasizedActorUuid) ?? language}
 
               <li
                 class={['pill pill-medium', pillState]}
@@ -102,8 +101,7 @@
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
-                speed.identifiers.get(emphasizedActorUuid) ??
-                speed}
+                speed.identifiers.get(emphasizedActorUuid) ?? speed}
               <li
                 class={['pill pill-medium', pillState]}
                 data-tooltip-direction="UP"
@@ -146,8 +144,7 @@
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
-                sense.identifiers.get(emphasizedActorUuid) ??
-                sense}
+                sense.identifiers.get(emphasizedActorUuid) ?? sense}
               <li
                 class={['pill pill-medium', pillState]}
                 data-tooltip-direction="UP"
@@ -169,13 +166,11 @@
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Aggregate Skills -->
-  <GroupSkills />
+    <!-- Aggregate Skills -->
+    <GroupSkills />
 
-  <!-- Aggregate Special -->
-  <div class="list traits">
+    <!-- Aggregate Special -->
     <div class="list-entry">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">

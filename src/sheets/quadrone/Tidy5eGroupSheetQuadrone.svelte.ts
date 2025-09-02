@@ -274,6 +274,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             key,
             name: skill.label,
             proficient: false,
+            reference: skill.reference,
           },
         ]
       )
