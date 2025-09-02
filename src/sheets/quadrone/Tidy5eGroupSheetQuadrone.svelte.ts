@@ -6,10 +6,10 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   GroupMemberPortraitContext,
+  GroupMemberSkillContext,
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
   GroupSkill,
-  GroupSkillModContext,
   GroupTrait,
   GroupTraitBase,
   GroupTraits,
@@ -271,7 +271,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
               value: '0',
               sign: '+',
             },
-            identifiers: new Map<string, GroupSkillModContext>(),
+            identifiers: new Map<string, GroupMemberSkillContext>(),
             key,
             name: skill.label,
             proficient: false,
@@ -340,6 +340,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         groupSkill.identifiers.set(actor.uuid, {
           mod: skill.mod,
           ...modData,
+          proficient: skill.proficient,
+          passive: skill.passive,
         });
 
         groupSkill.proficient ||= skill.proficient > 0;

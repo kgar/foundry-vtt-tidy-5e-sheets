@@ -1284,6 +1284,11 @@ export type GroupSkillModContext = {
   sign: string;
 };
 
+export type GroupMemberSkillContext = GroupSkillModContext & {
+  passive: number;
+  proficient: number;
+};
+
 export type GroupSkill = {
   name: string;
   ability: string;
@@ -1291,7 +1296,7 @@ export type GroupSkill = {
   proficient: boolean;
   high: GroupSkillModContext;
   low: GroupSkillModContext;
-} & ValuedEmphasizable<GroupSkillModContext>;
+} & ValuedEmphasizable<GroupMemberSkillContext>;
 
 export type GroupTraitBase<TValue = string> = {
   /** Text that describes the trait. */
