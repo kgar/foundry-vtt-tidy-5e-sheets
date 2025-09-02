@@ -893,5 +893,6 @@
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Zahrnout sekci Kouzla do záložky statistik",
     "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí (NP) Tidy 5e",
-    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e"
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e",
+    "TIDY5E.ExplorationTab.Title": "Průzkum"
 }
