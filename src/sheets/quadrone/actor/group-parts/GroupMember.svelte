@@ -53,9 +53,9 @@
 
   let hdPct = $derived(member.actor.system.attributes?.hd?.pct ?? 0);
 
-  let emphasizedActorRef = getContext<Ref<string | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
-  );
+  let emphasizedActorRef = getContext<
+    Ref<GroupMemberQuadroneContext | undefined>
+  >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
 </script>
 
 <div
@@ -76,8 +76,11 @@
       ]}
       style="position: relative;"
       onclick={() => member.actor.sheet.render(true)}
-      onkeydown={(e) => e.key === 'Enter' || e.key === ' ' ? member.actor.sheet.render(true) : null}
-      onmouseenter={() => (emphasizedActorRef.value = member.actor.uuid)}
+      onkeydown={(e) =>
+        e.key === 'Enter' || e.key === ' '
+          ? member.actor.sheet.render(true)
+          : null}
+      onmouseenter={() => (emphasizedActorRef.value = member)}
       onmouseleave={() => (emphasizedActorRef.value = undefined)}
     >
       {#if member.portrait.isVideo}
@@ -103,13 +106,16 @@
     </div>
   </div>
   <div class="tidy-table-cell text-cell primary item-label flexcol">
-    <div 
+    <div
       class="item-name"
       role="button"
       tabindex={0}
       onclick={() => member.actor.sheet.render(true)}
-      onkeydown={(e) => e.key === 'Enter' || e.key === ' ' ? member.actor.sheet.render(true) : null}
-      onmouseenter={() => (emphasizedActorRef.value = member.actor.uuid)}
+      onkeydown={(e) =>
+        e.key === 'Enter' || e.key === ' '
+          ? member.actor.sheet.render(true)
+          : null}
+      onmouseenter={() => (emphasizedActorRef.value = member)}
       onmouseleave={() => (emphasizedActorRef.value = undefined)}
     >
       <h4>

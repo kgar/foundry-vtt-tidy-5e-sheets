@@ -38,9 +38,9 @@ import { TidyFlags } from 'src/api';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { Container } from 'src/features/containers/Container';
-import type { Group5eMember } from 'src/types/group.types';
+import type { Group5eMember, GroupMemberContext } from 'src/types/group.types';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
-import { getModifierData } from 'src/utils/formatting';
+import { coalesce, getModifierData } from 'src/utils/formatting';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
@@ -55,7 +55,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   sectionExpansionTracker: ExpansionTracker;
-  emphasizedActorUuid: Ref<string | undefined> = $state({ value: undefined });
+  emphasizedMember: Ref<GroupMemberContext | undefined> = $state({
+    value: undefined,
+  });
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -112,10 +114,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         ],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
-        [
-          CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
-          this.emphasizedActorUuid,
-        ],
+        [CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF, this.emphasizedMember],
       ]),
     });
 
@@ -305,6 +304,18 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         continue;
       }
 
+      const accentColor = coalesce(
+        // Use the actor's accent color, if configured
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: actor,
+        }).accentColor,
+        // Else, use the group sheet's accent color, with fallback to world default accent color
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+          applyWorldThemeSetting: true,
+        }).accentColor
+      );
+
       section.members.push({
         actor,
         portrait: await this._preparePortrait(actor),
@@ -312,8 +323,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
-        accentColor: ThemeQuadrone.getSheetThemeSettings({ doc: actor })
-          .accentColor,
+        accentColor: accentColor,
+        backgroundColor: `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`,
+        highlightColor: `oklch(from ${accentColor} calc(l * 1.4) 60% h)`,
       });
 
       // Skills

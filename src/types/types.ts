@@ -1252,6 +1252,8 @@ export type GroupMemberQuadroneContext = {
   portrait: GroupMemberPortraitContext;
   inspirationSource: InspirationSource | undefined;
   accentColor: string | undefined;
+  backgroundColor: string | undefined;
+  highlightColor: string | undefined;
 };
 
 export type GroupMemberPortraitContext = {

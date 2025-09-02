@@ -50,6 +50,10 @@
     - [ ] GroupActorDt
     - [ ] GroupActorCargo
     - [ ] GroupActorCrew
+- [ ] Group Member context menu
+  - [ ] View Member
+  - [ ] Remove Member
+  - [ ] ???
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
 - [ ] Plan the next tab 🚀

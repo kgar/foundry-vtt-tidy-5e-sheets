@@ -7,42 +7,28 @@
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { CONSTANTS } from 'src/constants';
   import type { ClassValue } from 'svelte/elements';
+  import type { GroupMemberQuadroneContext } from 'src/types/types';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
-  let emphasizedActorRef = getContext<Ref<string | undefined>>(
-    CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
+  let emphasizedActorRef = getContext<
+    Ref<GroupMemberQuadroneContext | undefined>
+  >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
+
+  let emphasizedMember = $derived(emphasizedActorRef.value);
+
+  let emphasizedActorUuid = $derived<string>(
+    emphasizedMember?.actor.uuid ?? '',
   );
-
-  let emphasizedActor = $derived(emphasizedActorRef.value);
-
-  let highlightColors = $derived.by(() => {
-    const colors = new Map<string, { highlightColor: string; backgroundColor: string }>();
-    
-    // Loop through all member types and populate highlight colors
-    const allMembers = [
-      ...context.members.character.members,
-      ...context.members.npc.members,
-      ...context.members.vehicle.members,
-    ];
-    
-    for (const member of allMembers) {
-      if (member.accentColor) {
-        const backgroundColor = `oklch(from ${member.accentColor} calc(l * 0.75) calc(c * 1.2) h)`;
-        const highlightColor = `oklch(from ${member.accentColor} calc(l * 1.4) 60% h)`;
-        
-        colors.set(member.actor.uuid, { highlightColor, backgroundColor });
-      }
-    }
-    
-    return colors;
-  });
-  
 </script>
 
-<aside class="sidebar" style:--t5e-member-color-hover={highlightColors.get(emphasizedActor ?? '')?.highlightColor} style:--t5e-member-color-background={highlightColors.get(emphasizedActor ?? '')?.backgroundColor}>
+<aside
+  class="sidebar"
+  style:--t5e-member-color-hover={emphasizedMember?.highlightColor}
+  style:--t5e-member-color-background={emphasizedMember?.backgroundColor}
+>
   <!-- Aggregate Traits -->
   <div class="list traits">
     <!-- Languages -->
@@ -57,14 +43,17 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.languages as language}
-              {@const isEmphasized = emphasizedActor !== undefined && language.identifiers.has(emphasizedActor)}
+              {@const isEmphasized =
+                emphasizedMember !== undefined &&
+                language.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
-                diminished: emphasizedActor !== undefined && !isEmphasized,
+                diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
-                language.identifiers.get(emphasizedActor ?? '') ?? language}
+                language.identifiers.get(emphasizedActorUuid) ??
+                language}
 
               <li
                 class={['pill pill-medium', pillState]}
@@ -104,14 +93,17 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.speeds as speed}
-              {@const isEmphasized = emphasizedActor !== undefined && speed.identifiers.has(emphasizedActor)}
+              {@const isEmphasized =
+                emphasizedMember !== undefined &&
+                speed.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
-                diminished: emphasizedActor !== undefined && !isEmphasized,
+                diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
-                speed.identifiers.get(emphasizedActor ?? '') ?? speed}
+                speed.identifiers.get(emphasizedActorUuid) ??
+                speed}
               <li
                 class={['pill pill-medium', pillState]}
                 data-tooltip-direction="UP"
@@ -145,14 +137,17 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.senses as sense}
-              {@const isEmphasized = emphasizedActor !== undefined && sense.identifiers.has(emphasizedActor)}
+              {@const isEmphasized =
+                emphasizedMember !== undefined &&
+                sense.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
-                diminished: emphasizedActor !== undefined && !isEmphasized,
+                diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
-                sense.identifiers.get(emphasizedActor ?? '') ?? sense}
+                sense.identifiers.get(emphasizedActorUuid) ??
+                sense}
               <li
                 class={['pill pill-medium', pillState]}
                 data-tooltip-direction="UP"
@@ -192,11 +187,13 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.specials as special}
-              {@const isEmphasized = emphasizedActor !== undefined && special.identifiers.has(emphasizedActor)}
+              {@const isEmphasized =
+                emphasizedMember !== undefined &&
+                special.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
-                diminished: emphasizedActor !== undefined && !isEmphasized,
+                diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               <li
                 class={['pill pill-medium', pillState]}
@@ -222,11 +219,13 @@
         <div class="list-values">
           <ul class="pills">
             {#each context.traits.tools as tool}
-              {@const isEmphasized = emphasizedActor !== undefined && tool.identifiers.has(emphasizedActor)}
+              {@const isEmphasized =
+                emphasizedMember !== undefined &&
+                tool.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
-                diminished: emphasizedActor !== undefined && !isEmphasized,
+                diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               <li
                 class={['pill pill-medium', pillState]}
