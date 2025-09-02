@@ -25,16 +25,12 @@
   {#snippet legend()}
     {#if emphasizedMember}
       <span class="skill-measure-header">
-        {localize('DND5E.Modifier')}
-      </span>
-      <span class="skill-measure-header">
+        {localize('DND5E.Modifier')} /
         {localize('DND5E.Passive')}
       </span>
     {:else}
       <span class="skill-measure-header">
-        {localize('TIDY5E.AggregateSkill.HighMeasure')}
-      </span>
-      <span class="skill-measure-header">
+        {localize('TIDY5E.AggregateSkill.HighMeasure')} /
         {localize('TIDY5E.AggregateSkill.LowMeasure')}
       </span>
     {/if}
