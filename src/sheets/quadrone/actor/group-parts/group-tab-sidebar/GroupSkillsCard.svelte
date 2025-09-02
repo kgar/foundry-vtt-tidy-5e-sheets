@@ -21,87 +21,91 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<SkillsCardHeader {expanded}>
-  {#snippet legend()}
-    {#if emphasizedMember}
-      <span class="skill-measure-header">
-        {localize('DND5E.Modifier')} /
-        {localize('DND5E.Passive')}
-      </span>
-    {:else}
-      <span class="skill-measure-header">
-        {localize('TIDY5E.AggregateSkill.HighMeasure')} /
-        {localize('TIDY5E.AggregateSkill.LowMeasure')}
-      </span>
-    {/if}
-  {/snippet}
-</SkillsCardHeader>
-<ul
-  class="skill-list unlist use-ability-list"
-  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
->
-  <!-- TODO: Prepare data and iterate! -->
-  {#each context.skills as skill}
-    {#if expanded || skill.proficient}
-      {@const memberSkill = skill.identifiers.get(
-        emphasizedMember?.actor.uuid ?? '',
-      )}
-      {@const memberProficient = (memberSkill?.proficient ?? 0) > 0}
-
-      <li
-        class={[
-          'skill-list-item',
-          {
-            'member-proficient': memberProficient,
-            'member-unproficient': memberSkill && !memberProficient,
-          },
-        ]}
-        data-reference-tooltip={skill.reference}
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
-        data-key={skill.key}
-      >
-        <span class="skill-ability font-label-medium color-text-gold-emphasis">
-          {skill.ability}
+<div class="skills card">
+  <SkillsCardHeader {expanded}>
+    {#snippet legend()}
+      {#if emphasizedMember}
+        <span class="skill-measure-header">
+          {localize('DND5E.Modifier')} /
+          {localize('DND5E.Passive')}
         </span>
-        <button
-          type="button"
-          class="button button-borderless use-ability-roll-button skill"
-          onclick={(event) =>
-            context.actor.rollSkill({ skill: skill.key, event })}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
-          data-tidy-draggable
-          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
-          disabled={!context.owner}
+      {:else}
+        <span class="skill-measure-header">
+          {localize('TIDY5E.AggregateSkill.HighMeasure')} /
+          {localize('TIDY5E.AggregateSkill.LowMeasure')}
+        </span>
+      {/if}
+    {/snippet}
+  </SkillsCardHeader>
+  <ul
+    class="skill-list unlist use-ability-list"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
+  >
+    <!-- TODO: Prepare data and iterate! -->
+    {#each context.skills as skill}
+      {#if expanded || skill.proficient}
+        {@const memberSkill = skill.identifiers.get(
+          emphasizedMember?.actor.uuid ?? '',
+        )}
+        {@const memberProficient = (memberSkill?.proficient ?? 0) > 0}
+
+        <li
+          class={[
+            'skill-list-item',
+            {
+              'member-proficient': memberProficient,
+              'member-unproficient': memberSkill && !memberProficient,
+            },
+          ]}
+          data-reference-tooltip={skill.reference}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
+          data-key={skill.key}
         >
-          {skill.name}
-        </button>
-        {#if memberSkill}
-          <span class="skill-measure">
-            <span class="color-text-lightest font-label-medium"
-              >{memberSkill.sign}</span
-            >
-            <span class="font-data-medium">{memberSkill.value}</span>
+          <span
+            class="skill-ability font-label-medium color-text-gold-emphasis"
+          >
+            {skill.ability}
           </span>
-          <span class="skill-measure">
-            <span class="color-text-lightest font-label-medium"
-              >{memberSkill.passive}</span
-            >
-          </span>
-        {:else}
-          <span class="skill-measure">
-            <span class="color-text-lightest font-label-medium"
-              >{skill.high.sign}</span
-            >
-            <span class="font-data-medium">{skill.high.value}</span>
-          </span>
-          <span class="skill-measure">
-            <span class="color-text-lightest font-label-medium"
-              >{skill.low.sign}</span
-            >
-            <span class="font-data-medium">{skill.low.value}</span>
-          </span>
-        {/if}
-      </li>
-    {/if}
-  {/each}
-</ul>
+          <button
+            type="button"
+            class="button button-borderless use-ability-roll-button skill"
+            onclick={(event) =>
+              context.actor.rollSkill({ skill: skill.key, event })}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
+            data-tidy-draggable
+            data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
+            disabled={!context.owner}
+          >
+            {skill.name}
+          </button>
+          {#if memberSkill}
+            <span class="skill-measure">
+              <span class="color-text-lightest font-label-medium"
+                >{memberSkill.sign}</span
+              >
+              <span class="font-data-medium">{memberSkill.value}</span>
+            </span>
+            <span class="skill-measure">
+              <span class="color-text-lightest font-label-medium"
+                >{memberSkill.passive}</span
+              >
+            </span>
+          {:else}
+            <span class="skill-measure">
+              <span class="color-text-lightest font-label-medium"
+                >{skill.high.sign}</span
+              >
+              <span class="font-data-medium">{skill.high.value}</span>
+            </span>
+            <span class="skill-measure">
+              <span class="color-text-lightest font-label-medium"
+                >{skill.low.sign}</span
+              >
+              <span class="font-data-medium">{skill.low.value}</span>
+            </span>
+          {/if}
+        </li>
+      {/if}
+    {/each}
+  </ul>
+</div>

@@ -88,10 +88,6 @@
     }
   }
 
-  .sidebar {
-    width: 13.25rem;
-  }
-
   .actor-image {
     max-height: var(--t5e-table-avatar-size);
     max-width: var(--t5e-table-avatar-size);
@@ -117,7 +113,7 @@
     flex-direction: row;
 
     .sidebar {
-      width: var(--group-members-sidebar-width, 12.5rem);
+      width: var(--group-members-sidebar-width, 15rem);
     }
 
     .group-members-content {
@@ -335,6 +331,11 @@
     }
 
   }
+
+  .skill-list, .skill-list .skill-list-item {
+    width: 100%;
+  }
+
   .skill-list .skill-list-item.member-proficient .skill {
     color: lime; // 👋 hi hightouch
   }
