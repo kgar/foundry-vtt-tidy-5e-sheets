@@ -62,11 +62,12 @@
   class="tidy-table-row quadrone-theme-root"
   style:--t5e-theme-color-default={themeStyle}
   style:--t5e-theme-color-highlight={themeHighlightStyle}
-  onmouseenter={() => (emphasizedActorRef.value = member.actor.uuid)}
-  onmouseleave={() => (emphasizedActorRef.value = undefined)}
+  style:--t5e-member-color-hover={themeHighlightStyle}
 >
   <div class="tidy-table-cell member-vitals-container">
     <div
+      role="button"
+      tabindex={0}
       class={[
         'actor-image',
         { dead: actorIsDead },
@@ -74,6 +75,10 @@
         { video: member.portrait.isVideo },
       ]}
       style="position: relative;"
+      onclick={() => member.actor.sheet.render(true)}
+      onkeydown={(e) => e.key === 'Enter' || e.key === ' ' ? member.actor.sheet.render(true) : null}
+      onmouseenter={() => (emphasizedActorRef.value = member.actor.uuid)}
+      onmouseleave={() => (emphasizedActorRef.value = undefined)}
     >
       {#if member.portrait.isVideo}
         <video
@@ -98,7 +103,15 @@
     </div>
   </div>
   <div class="tidy-table-cell text-cell primary item-label flexcol">
-    <a class="item-name">
+    <div 
+      class="item-name"
+      role="button"
+      tabindex={0}
+      onclick={() => member.actor.sheet.render(true)}
+      onkeydown={(e) => e.key === 'Enter' || e.key === ' ' ? member.actor.sheet.render(true) : null}
+      onmouseenter={() => (emphasizedActorRef.value = member.actor.uuid)}
+      onmouseleave={() => (emphasizedActorRef.value = undefined)}
+    >
       <h4>
         {member.actor.name}
       </h4>
@@ -141,11 +154,12 @@
             .vehicleType})</span
         >
       {/if}
-    </a>
+    </div>
   </div>
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
     <TidyTableCell
       columnWidth={inspirationColumnWidth}
+      class="theme-dark"
       attributes={{ ['data-tidy-column-key']: 'inspiration-container' }}
     >
       <!-- <div class="tidy-table-cell inspiration-container"> -->

@@ -38,7 +38,7 @@
   // );
 </script>
 
-<header class="sheet-header flexcol">
+<header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol {context.enableXp ? 'show-xp' : ''}">
       <div
