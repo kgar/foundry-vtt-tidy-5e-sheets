@@ -40,7 +40,7 @@
     <TidyTable key="characters">
       {#snippet header()}
         {@const visibleItemCount = characters.length}
-        <TidyTableHeaderRow>
+        <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
               {localize(context.members.character.label)}
@@ -110,7 +110,7 @@
     <TidyTable key="npcs">
       {#snippet header()}
         {@const visibleItemCount = npcs.length}
-        <TidyTableHeaderRow>
+        <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
               {localize(context.members.npc.label)}
@@ -174,7 +174,7 @@
     <TidyTable key="vehicles">
       {#snippet header()}
         {@const visibleItemCount = vehicles.length}
-        <TidyTableHeaderRow>
+        <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
               {localize(context.members.vehicle.label)}

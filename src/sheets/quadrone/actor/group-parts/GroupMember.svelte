@@ -159,6 +159,7 @@
   {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
     <TidyTableCell
       columnWidth={inspirationColumnWidth}
+      class="theme-dark"
       attributes={{ ['data-tidy-column-key']: 'inspiration-container' }}
     >
       <!-- <div class="tidy-table-cell inspiration-container"> -->
