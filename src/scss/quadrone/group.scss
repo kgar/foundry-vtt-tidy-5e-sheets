@@ -89,8 +89,6 @@
     }
   }
 
-  .sidebar {}
-
   .actor-image {
     max-height: var(--t5e-table-avatar-size);
     max-width: var(--t5e-table-avatar-size);
@@ -164,6 +162,14 @@
         text-align: right;
       }
 
+      .skill-list-item.member-proficient .skill {
+        color: lime; // 👋 hi hightouch
+      }
+
+      .skill-list-item.member-unproficient .skill {
+        opacity: 0.5;
+      }
+
       .group-members-content {
         gap: var(--t5e-size-3x);
         flex: 1;
@@ -232,10 +238,6 @@
 
           &:hover::before {
             border-color: var(--t5e-member-color-hover);
-          }
-
-          img {
-            // box-shadow: var(--header-shadow);
           }
         }
 
