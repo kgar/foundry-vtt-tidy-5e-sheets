@@ -32,21 +32,13 @@
 
   let xpPool = $derived(context.system.details.xp.value);
 
-  // Currency converter - returns total GP value or null if non-standard currencies present
   let totalGold = $derived.by(() => {
     const currency = context.system.currency;
-    const allowedKeys = new Set(['cp', 'ep', 'gp', 'pp', 'sp']);
-    const currencyKeys = Object.keys(currency);
 
-    // Check if currency only contains standard denominations (ep is optional)
-    if (!currencyKeys.every((key) => allowedKeys.has(key))) {
-      return null;
-    }
-
-    // Convert all to GP
-    const rates = { cp: 0.01, ep: 0.02, gp: 1, pp: 10, sp: 0.1 };
-    return currencyKeys.reduce((total, key) => {
-      return total + currency[key] * rates[key as keyof typeof rates];
+    return Object.keys(currency).reduce((total, key) => {
+      return key in CONFIG.DND5E.currencies
+        ? total + currency[key] / CONFIG.DND5E.currencies[key].conversion
+        : total;
     }, 0);
   });
 </script>
