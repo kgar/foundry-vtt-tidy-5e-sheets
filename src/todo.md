@@ -7,26 +7,9 @@
 
 ### Group Sheet
 
-- [x] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
-- [x] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
-  - [x] Tools
-  - [x] Specials
-- [ ] Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
-  - [ ] Tidy tables
-  - [ ] Column spec
-  - [ ] Column components
-    - [ ] GroupMemberInspirationColumn
-    - [ ] GroupActorHpColumn
-    - [ ] GroupActorHdColumn
-    - [ ] GroupActorAcColumn
-    - [ ] GroupActorDtColumn
-    - [ ] GroupActorCargoColumn
-    - [ ] GroupActorCrewColumn
+- [ ] Wire up all header data
+- [ ] Wire up all member tab data
 - [ ] Implement Cargo calculations for Vehicle members.
-- [ ] Group Member context menu
-  - [ ] View Member
-  - [ ] Remove Member
-  - [ ] ???
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
 - [ ] Make group sheet refresh on relevant actor changes.
@@ -399,3 +382,21 @@ Limited:
     - [x] Stub the context
     - [x] Scaffold UI
     - [x] Prep the data
+- [x] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
+- [x] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
+  - [x] Tools
+  - [x] Specials
+- [x] Group Sheet - Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [x] Tidy tables
+  - [x] Column spec
+  - [x] Column components
+    - [x] GroupMemberInspirationColumn
+    - [x] GroupActorHpColumn
+    - [x] GroupActorHdColumn
+    - [x] GroupActorAcColumn
+    - [x] GroupActorDtColumn
+    - [x] GroupActorCargoColumn
+    - [x] GroupActorCrewColumn
+- [x] Group Sheet - Group Member context menu
+  - [x] View Member
+  - [x] Remove Member
