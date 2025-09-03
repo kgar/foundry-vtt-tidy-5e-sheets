@@ -16,7 +16,7 @@
 
 <div
   class="meter meter-small progress hit-points"
-  style="--bar-percentage: {hpPct.toNearest(0)}%"
+  style="--bar-percentage: {hpPct.toFixed(0)}%"
 ></div>
 <div class="flexrow">
   <span class="font-data-medium color-text-default">{hpValue}</span>

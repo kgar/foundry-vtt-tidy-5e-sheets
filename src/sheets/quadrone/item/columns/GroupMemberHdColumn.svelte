@@ -12,7 +12,7 @@
 
 <div
   class="meter meter-small progress hit-die"
-  style="--bar-percentage: {hdPct.toNearest(0)}%"
+  style="--bar-percentage: {hdPct.toFixed(0)}%"
 ></div>
 <div class="flexrow">
   <span class="font-data-medium color-text-default"
