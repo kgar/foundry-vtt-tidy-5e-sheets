@@ -2,6 +2,7 @@ import { ItemFilterRuntime } from './item/ItemFilterRuntime.svelte';
 import { ItemSortRuntime } from './item/ItemSortRuntime.svelte';
 import { ActivityColumnRuntime } from './tables/ActivityColumnRuntime.svelte';
 import { EffectColumnRuntime } from './tables/EffectColumnRuntime.svelte';
+import { GroupMemberColumnRuntime } from './tables/GroupMemberColumnRuntime.svelte';
 import { ItemColumnRuntime } from './tables/ItemColumnRuntime.svelte';
 
 /**
@@ -19,4 +20,5 @@ export function initRuntimeOnReady() {
   ItemColumnRuntime.initOnReady();
   ActivityColumnRuntime.initOnReady();
   EffectColumnRuntime.initOnReady();
+  GroupMemberColumnRuntime.initOnReady();
 }
