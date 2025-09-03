@@ -7,8 +7,11 @@
 
 ### Group Sheet
 
-- [ ] Wire up all header data
-  - [ ] 
+- [x] Wire up all header data
+- [ ] Wire up roll mode to rollSkill via a sheet function
+- [x] Add sample award button with sheet function behind it
+- [ ] Add encumbrance to member prep
+- [ ] Col spec: make XP columns enabled only when XP is enabled
 - [ ] Wire up all member tab data
 - [ ] Implement Cargo calculations for Vehicle members.
 - [ ] Members tab security

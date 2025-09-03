@@ -853,6 +853,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return await super._onDropFolder(event, data);
   }
 
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
   changePace(increment: number) {
     if (Number.isNaN(increment)) return;
     const paces = Object.keys(CONFIG.DND5E.travelPace);
@@ -862,6 +866,15 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const next =
       (((current + increment) % paces.length) + paces.length) % paces.length;
     this.actor.update({ 'system.attributes.movement.pace': paces[next] });
+  }
+
+  award() {
+    new dnd5e.applications.Award({
+      award: {
+        savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+      },
+      origin: this.actor,
+    }).render({ force: true });
   }
 
   /* -------------------------------------------- */

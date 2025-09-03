@@ -40,6 +40,14 @@
         : total;
     }, 0);
   });
+
+  let awardAriaLabel = $derived(
+    localize(
+      context.enableXp
+        ? 'DND5E.Group.Distribute.xp'
+        : 'DND5E.Group.Distribute.noxp',
+    ),
+  );
 </script>
 
 {#snippet speedSenseSummary(
@@ -115,6 +123,18 @@
       {/if}
     </span>
   {/if}
+  <button
+    aria-label={awardAriaLabel}
+    type="button"
+    class={[
+      'button button-borderless button-icon-only button-config flexshrink',
+    ]}
+    data-tooltip
+    onclick={() => context.sheet.award()}
+    data-tidy-sheet-part="ability-configuration-control"
+  >
+    <i class="fas fa-trophy"></i>
+  </button>
 </div>
 
 <div
@@ -205,12 +225,12 @@
     >
   </span>
   {#if context.unlocked}
-    {@const tooltip = localize('DND5E.MovementConfig')}
     <button
-      aria-label={tooltip}
+      aria-label={localize('DND5E.MovementConfig')}
       type="button"
-      class={['button button-borderless button-icon-only button-config flexshrink']}
-      data-tooltip={tooltip}
+      class={[
+        'button button-borderless button-icon-only button-config flexshrink',
+      ]}
       onclick={() =>
         FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
       data-tidy-sheet-part="ability-configuration-control"
