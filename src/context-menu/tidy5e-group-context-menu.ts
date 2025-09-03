@@ -3,6 +3,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Group5eMember } from 'src/types/group.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { getGroupMemberContextOptionsQuadrone } from './tidy5e-group-context-menu-quadrone';
 
 export function configureGroupContextMenu(element: HTMLElement, app: any) {
   const memberId = element.getAttribute('data-member-id');
@@ -12,7 +13,12 @@ export function configureGroupContextMenu(element: HTMLElement, app: any) {
 
   if (!actor) return;
 
-  ui.context.menuItems = getGroupMemberContextOptions(app.document, actor);
+  const isQuadroneSheet = element.closest('.quadrone');
+
+  ui.context.menuItems = isQuadroneSheet
+    ? getGroupMemberContextOptionsQuadrone(app.document, actor)
+    : getGroupMemberContextOptions(app.document, actor);
+
   TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
     app.document,
     actor,
