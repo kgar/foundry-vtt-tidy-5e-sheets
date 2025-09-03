@@ -8,9 +8,9 @@
 ### Group Sheet
 
 - [x] Wire up all header data
-- [ ] Wire up roll mode to rollSkill via a sheet function
+- [x] ~~Wire up roll mode to rollSkill via a sheet function~~ We don't have a mechanism for individual rolls right now.
 - [x] Add sample award button with sheet function behind it
-- [ ] Add encumbrance to member prep
+- [x] Add encumbrance to group member prep
 - [ ] Col spec: make XP columns enabled only when XP is enabled
 - [ ] Wire up all member tab data
 - [ ] Implement Cargo calculations for Vehicle members.

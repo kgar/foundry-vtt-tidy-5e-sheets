@@ -3730,15 +3730,9 @@ export type CONFIG = {
         };
       };
       baseUnits: {
-        default: {
-          imperial: string;
-          metric: string;
-        };
-        vehicle: {
-          imperial: string;
-          metric: string;
-        };
-      };
+        default: BaseUnitsConfig;
+        vehicle: BaseUnitsConfig;
+      } & Record<string, BaseUnitsConfig>;
     };
     individualTargetTypes: {
       self: IndividualTargetTypesConfig;
@@ -5439,7 +5433,7 @@ export type CONFIG = {
     } & Record<string, { label: string; subtypes?: boolean }>;
     travelPace: {
       [k in string]: TravelPaceConfig;
-    }
+    };
     treasure: {
       any: TreasureConfig;
       arcana: TreasureConfig;
@@ -5456,11 +5450,16 @@ export type CONFIG = {
   ux: any;
 };
 
+type BaseUnitsConfig = {
+  imperial: string;
+  metric: string;
+};
+
 export type TravelPaceConfig = {
   label: string;
   multiplier: number;
   standard: number;
-}
+};
 
 type ActivityType = {
   documentClass: any;

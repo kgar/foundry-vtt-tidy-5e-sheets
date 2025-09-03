@@ -1248,13 +1248,20 @@ export type NpcSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & SingleActorContext<Tidy5eNpcSheetQuadrone>;
 
+export type GroupMemberEncumbranceContext = {
+  max: number;
+  pct: number;
+  value: number;
+};
+
 export type GroupMemberQuadroneContext = {
-  actor: Actor5e;
-  portrait: GroupMemberPortraitContext;
-  inspirationSource: InspirationSource | undefined;
   accentColor: string | undefined;
+  actor: Actor5e;
   backgroundColor: string | undefined;
+  encumbrance: GroupMemberEncumbranceContext;
   highlightColor: string | undefined;
+  inspirationSource: InspirationSource | undefined;
+  portrait: GroupMemberPortraitContext;
 };
 
 export type GroupMemberPortraitContext = {
@@ -1263,8 +1270,8 @@ export type GroupMemberPortraitContext = {
 };
 
 export type GroupMemberSection = {
-  members: GroupMemberQuadroneContext[];
   label: string;
+  members: GroupMemberQuadroneContext[];
 };
 
 export type GroupMembersQuadroneContext = {
@@ -1283,8 +1290,8 @@ export type MeasurableEmphasizable<TValue> = {
 
 export type GroupSkillModContext = {
   mod: number;
-  value: string;
   sign: string;
+  value: string;
 };
 
 export type GroupMemberSkillContext = GroupSkillModContext & {

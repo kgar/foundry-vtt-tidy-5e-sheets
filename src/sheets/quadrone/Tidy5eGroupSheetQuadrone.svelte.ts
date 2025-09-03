@@ -347,19 +347,20 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       );
 
       section.members.push({
+        accentColor: !isNil(accentColor, '') ? accentColor : undefined,
         actor,
-        portrait: await this._preparePortrait(actor),
+        backgroundColor: !isNil(accentColor, '')
+          ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
+          : undefined,
+        encumbrance: this._prepareMemberEncumbrance(actor),
+        highlightColor: !isNil(accentColor, '')
+          ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
+          : undefined,
         inspirationSource:
           actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
-        accentColor: !isNil(accentColor, '') ? accentColor : undefined,
-        backgroundColor: !isNil(accentColor, '')
-          ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
-          : undefined,
-        highlightColor: !isNil(accentColor, '')
-          ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
-          : undefined,
+        portrait: await this._preparePortrait(actor),
       });
 
       // Skills
@@ -433,6 +434,29 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       members: sections,
       skills: groupSkills,
       traits,
+    };
+  }
+
+  private _prepareMemberEncumbrance(actor: Actor5e) {
+    const { pct, max, value } = actor.system.attributes.encumbrance;
+    const defaultUnits = CONFIG.DND5E.encumbrance.baseUnits.default;
+    const baseUnits =
+      CONFIG.DND5E.encumbrance.baseUnits[actor.type] ?? defaultUnits;
+    const systemUnits = game.settings.get('dnd5e', 'metricWeightUnits')
+      ? 'metric'
+      : 'imperial';
+    return {
+      pct,
+      max: dnd5e.utils.convertWeight(
+        max,
+        baseUnits[systemUnits],
+        defaultUnits[systemUnits]
+      ),
+      value: dnd5e.utils.convertWeight(
+        value,
+        baseUnits[systemUnits],
+        defaultUnits[systemUnits]
+      ),
     };
   }
 
