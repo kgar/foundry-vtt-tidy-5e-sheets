@@ -3,11 +3,13 @@ import type { ContainerSection, Item5e } from 'src/types/item.types';
 import type {
   ActiveEffect5e,
   ActiveEffectSection,
+  Actor5e,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
   CharacterSheetQuadroneContext,
   DocumentSheetQuadroneContext,
   FeatureSection,
+  GroupSheetQuadroneContext,
   InventorySection,
   NpcSheetQuadroneContext,
   SpellbookSection,
@@ -401,6 +403,41 @@ class TableRowActionsRuntime {
             props: (args) => ({
               doc: args.data,
               deleteFn: () => args.data.deleteDialog(),
+            }),
+          } satisfies TableAction<typeof DeleteButton>);
+        }
+      }
+
+      result.push({
+        component: MenuButton,
+        props: () => ({
+          targetSelector: '[data-context-menu]',
+        }),
+      } satisfies TableAction<typeof MenuButton>);
+
+      return result;
+    });
+
+    return rowActions;
+  }
+
+  getGroupMemberRowActions(context: GroupSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Actor5e,
+      TidySectionBase
+    >;
+
+    let rowActions: TableAction<any>[] = $derived.by(() => {
+      let result: TableAction<any>[] = [];
+
+      if (context.owner) {
+        if (context.unlocked) {
+          result.push({
+            component: DeleteButton,
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => context.actor.removeMember(args.data),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
