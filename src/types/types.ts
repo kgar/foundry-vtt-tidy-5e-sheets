@@ -33,6 +33,7 @@ import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
+import type { TravelPaceConfig } from 'src/foundry/config.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -1325,11 +1326,26 @@ export type GroupTraits = {
   tools: GroupTrait[];
 };
 
+export type TravelPaceConfigEntry = {
+  key: string;
+  config: TravelPaceConfig;
+  index: number;
+};
+
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
 
   members: GroupMembersQuadroneContext;
   skills: GroupSkill[];
+  travel: {
+    currentPace: TravelPaceConfigEntry;
+    paces: TravelPaceConfigEntry[];
+    /** 1 (slow), 2 (normal), or 3 (fast), corresponding to the slowest speed, any speed in between, and the fastest speed, respectively. */
+    speed: number;
+    units: {
+      label: string;
+    };
+  };
   traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorContext<Tidy5eGroupSheetQuadrone>;

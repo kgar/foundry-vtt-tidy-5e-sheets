@@ -5437,6 +5437,9 @@ export type CONFIG = {
         label: string;
       };
     } & Record<string, { label: string; subtypes?: boolean }>;
+    travelPace: {
+      [k in string]: TravelPaceConfig;
+    }
     treasure: {
       any: TreasureConfig;
       arcana: TreasureConfig;
@@ -5452,6 +5455,12 @@ export type CONFIG = {
   };
   ux: any;
 };
+
+export type TravelPaceConfig = {
+  label: string;
+  multiplier: number;
+  standard: number;
+}
 
 type ActivityType = {
   documentClass: any;

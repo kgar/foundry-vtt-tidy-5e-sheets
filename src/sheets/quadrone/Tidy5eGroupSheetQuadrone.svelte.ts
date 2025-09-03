@@ -15,6 +15,7 @@ import type {
   GroupTraits,
   LocationToSearchTextMap,
   MeasurableGroupTrait,
+  TravelPaceConfigEntry,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -149,6 +150,16 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       })
     );
 
+    const paces: TravelPaceConfigEntry[] = Object.entries(
+      CONFIG.DND5E.travelPace
+    )
+      .toSorted((a, b) => a[1].multiplier - b[1].multiplier)
+      .map(([key, config], index) => ({ key, config, index }));
+
+    const currentPace =
+      paces.find(
+        (pace) => pace.key === this.actor.system.attributes.movement.pace
+      ) ?? paces[0];
     const context: GroupSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -157,6 +168,22 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       inventory: [],
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
+      travel: {
+        paces,
+        currentPace,
+        speed:
+          currentPace.index === 0
+            ? 1 // Slow
+            : currentPace.index > 0 && currentPace.index >= paces.length - 1
+            ? 3 // Fast
+            : 2, // Normal
+        units: {
+          label:
+            CONFIG.DND5E.movementUnits[
+              this.actor.system.attributes.movement.units
+            ]?.abbreviation ?? this.actor.system.attributes.movement.units,
+        },
+      },
       type: 'group',
       ...(await this._prepareMemberDependentContext()),
       ...actorContext,
@@ -824,6 +851,17 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     return await super._onDropFolder(event, data);
+  }
+
+  changePace(increment: number) {
+    if (Number.isNaN(increment)) return;
+    const paces = Object.keys(CONFIG.DND5E.travelPace);
+    const current = paces.indexOf(
+      this.actor.system._source.attributes.movement.pace
+    );
+    const next =
+      (((current + increment) % paces.length) + paces.length) % paces.length;
+    this.actor.update({ 'system.attributes.movement.pace': paces[next] });
   }
 
   /* -------------------------------------------- */
