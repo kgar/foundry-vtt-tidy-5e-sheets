@@ -64,7 +64,7 @@
   style:--t5e-theme-color-highlight={themeHighlightStyle}
   style:--t5e-member-color-hover={themeHighlightStyle}
 >
-  <div class="tidy-table-cell member-vitals-container">
+  <div class="tidy-table-cell actor-image-container">
     <div
       role="button"
       tabindex={0}
@@ -104,7 +104,7 @@
   </div>
   <div class="tidy-table-cell text-cell primary item-label flexcol">
     <div 
-      class="item-name"
+      class="item-name actor-name"
       role="button"
       tabindex={0}
       onclick={() => member.actor.sheet.render(true)}
@@ -112,7 +112,7 @@
       onmouseenter={() => (emphasizedActorRef.value = member.actor.uuid)}
       onmouseleave={() => (emphasizedActorRef.value = undefined)}
     >
-      <h4>
+      <h4 class="font-label-medium">
         {member.actor.name}
       </h4>
       {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
@@ -125,6 +125,14 @@
         {/each}
       {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
         <span class="flexrow">
+          {#each member.actor.classes as thisClass}
+            <span class="font-label-medium color-text-gold">{thisClass.name}</span
+            >
+            <span class="font-data-medium color-text-default"
+              >{thisClass.levels}</span
+            >
+            <div class="divider-dot"></div>
+          {/each}
           <span class="cr">
             <span class="font-label-medium color-text-gold">CR</span>
             <span class="font-data-medium color-text-default">5</span>

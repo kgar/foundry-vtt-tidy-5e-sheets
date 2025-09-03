@@ -34,7 +34,7 @@
 
 <GroupTabSidebar />
 
-<section class="group-members-content flexcol">
+<section class="groups-tab-content group-members-content flexcol">
   {#if characters.length}
   <section class="tidy-table">
     <TidyTable key="characters">

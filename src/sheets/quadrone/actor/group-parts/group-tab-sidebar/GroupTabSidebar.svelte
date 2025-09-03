@@ -42,7 +42,7 @@
   
 </script>
 
-<aside class="sidebar" style:--t5e-member-color-hover={highlightColors.get(emphasizedActor ?? '')?.highlightColor} style:--t5e-member-color-background={highlightColors.get(emphasizedActor ?? '')?.backgroundColor}>
+<aside class="sidebar flexcol" style:--t5e-member-color-hover={highlightColors.get(emphasizedActor ?? '')?.highlightColor} style:--t5e-member-color-background={highlightColors.get(emphasizedActor ?? '')?.backgroundColor}>
   <!-- Aggregate Traits -->
   <div class="list traits">
     <!-- Languages -->
