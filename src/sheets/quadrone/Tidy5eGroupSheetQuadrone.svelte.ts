@@ -24,6 +24,7 @@ import type {
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
+  ApplicationClosingOptions,
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
@@ -831,6 +832,25 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     element.querySelector('.window-header').classList.add('theme-dark');
 
     return element;
+  }
+
+  async _renderHTML(
+    context: GroupSheetQuadroneContext,
+    options: ApplicationRenderOptions
+  ) {
+    game.user.apps[this.id] = this;
+    for (const member of this.actor.system.members) {
+      member.actor.apps[this.id] = this;
+    }
+    return await super._renderHTML(context, options);
+  }
+
+  async close(options: ApplicationClosingOptions = {}) {
+    delete game.user.apps[this.id];
+    for (const member of this.actor.system.members) {
+      delete member.actor.apps[this.id];
+    }
+    return await super.close(options);
   }
 }
 
