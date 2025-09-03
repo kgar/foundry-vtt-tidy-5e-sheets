@@ -6,14 +6,16 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   GroupMemberPortraitContext,
+  GroupMemberSkillContext,
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
   GroupSkill,
-  GroupSkillModContext,
   GroupTrait,
   GroupTraitBase,
   GroupTraits,
   LocationToSearchTextMap,
+  MeasurableGroupTrait,
+  TravelPaceConfigEntry,
 } from 'src/types/types';
 import type {
   CurrencyContext,
@@ -23,6 +25,7 @@ import type {
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
+  ApplicationClosingOptions,
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
@@ -38,9 +41,9 @@ import { TidyFlags } from 'src/api';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { Container } from 'src/features/containers/Container';
-import type { Group5eMember } from 'src/types/group.types';
+import type { Group5eMember, GroupMemberContext } from 'src/types/group.types';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
-import { getModifierData } from 'src/utils/formatting';
+import { coalesce, getModifierData } from 'src/utils/formatting';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
@@ -55,7 +58,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   inlineToggleService = new InlineToggleService();
   sectionExpansionTracker: ExpansionTracker;
-  emphasizedActorUuid: Ref<string | undefined> = $state({ value: undefined });
+  emphasizedMember: Ref<GroupMemberContext | undefined> = $state({
+    value: undefined,
+  });
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -112,10 +117,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         ],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
-        [
-          CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_ACTOR_REF,
-          this.emphasizedActorUuid,
-        ],
+        [CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF, this.emphasizedMember],
       ]),
     });
 
@@ -148,6 +150,16 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       })
     );
 
+    const paces: TravelPaceConfigEntry[] = Object.entries(
+      CONFIG.DND5E.travelPace
+    )
+      .toSorted((a, b) => a[1].multiplier - b[1].multiplier)
+      .map(([key, config], index) => ({ key, config, index }));
+
+    const currentPace =
+      paces.find(
+        (pace) => pace.key === this.actor.system.attributes.movement.pace
+      ) ?? paces[0];
     const context: GroupSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -156,6 +168,22 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       inventory: [],
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
+      travel: {
+        paces,
+        currentPace,
+        speed:
+          currentPace.index === 0
+            ? 1 // Slow
+            : currentPace.index > 0 && currentPace.index >= paces.length - 1
+            ? 3 // Fast
+            : 2, // Normal
+        units: {
+          label:
+            CONFIG.DND5E.movementUnits[
+              this.actor.system.attributes.movement.units
+            ]?.abbreviation ?? this.actor.system.attributes.movement.units,
+        },
+      },
       type: 'group',
       ...(await this._prepareMemberDependentContext()),
       ...actorContext,
@@ -271,10 +299,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
               value: '0',
               sign: '+',
             },
-            identifiers: new Map<string, GroupSkillModContext>(),
+            identifiers: new Map<string, GroupMemberSkillContext>(),
             key,
             name: skill.label,
             proficient: false,
+            reference: skill.reference,
           },
         ]
       )
@@ -288,10 +317,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       tools: [],
     };
 
-    let languages = new Map<string, GroupTrait<number>>();
-    let senses = new Map<string, GroupTrait<number>>();
+    let languages = new Map<string, MeasurableGroupTrait<number>>();
+    let senses = new Map<string, MeasurableGroupTrait<number>>();
     let specials = new Map<string, GroupTrait>();
-    let speeds = new Map<string, GroupTrait<number>>();
+    let speeds = new Map<string, MeasurableGroupTrait<number>>();
     let tools = new Map<string, GroupTrait>();
 
     for (let { actor } of this.actor.system.members) {
@@ -305,6 +334,18 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         continue;
       }
 
+      const accentColor = coalesce(
+        // Use the actor's accent color, if configured
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: actor,
+        }).accentColor,
+        // Else, use the group sheet's accent color, with fallback to world default accent color
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+          applyWorldThemeSetting: true,
+        }).accentColor
+      );
+
       section.members.push({
         actor,
         portrait: await this._preparePortrait(actor),
@@ -312,8 +353,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
-        accentColor: ThemeQuadrone.getSheetThemeSettings({ doc: actor })
-          .accentColor,
+        accentColor: !isNil(accentColor, '') ? accentColor : undefined,
+        backgroundColor: !isNil(accentColor, '')
+          ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
+          : undefined,
+        highlightColor: !isNil(accentColor, '')
+          ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
+          : undefined,
       });
 
       // Skills
@@ -340,6 +386,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         groupSkill.identifiers.set(actor.uuid, {
           mod: skill.mod,
           ...modData,
+          proficient: skill.proficient,
+          passive: skill.passive,
         });
 
         groupSkill.proficient ||= skill.proficient > 0;
@@ -390,7 +438,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   private _prepareMemberLanguages(
     actor: any,
-    languages: Map<string, GroupTrait<number>>
+    languages: Map<string, MeasurableGroupTrait<number>>
   ) {
     let memberLanguages =
       actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
@@ -411,7 +459,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         languages.get(language.label) ??
         languages
           .set(language.label, {
-            identifiers: new Map<string, GroupTrait<number>>(),
+            identifiers: new Map<string, MeasurableGroupTrait<number>>(),
             ...actorLanguageTrait,
           })
           .get(language.label)!;
@@ -467,7 +515,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   private _prepareMemberSpeeds(
     actor: any,
-    speeds: Map<string, GroupTrait<number>>
+    speeds: Map<string, MeasurableGroupTrait<number>>
   ) {
     let unitsKey = actor.system.attributes.movement.units;
     let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
@@ -491,7 +539,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           speeds.get(key) ??
           speeds
             .set(key, {
-              identifiers: new Map<string, GroupTrait<number>>(),
+              identifiers: new Map<string, MeasurableGroupTrait<number>>(),
               ...actorSpeedTrait,
             })
             .get(key)!;
@@ -545,18 +593,18 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           specials
             .set(customEntry, {
               label: customEntry,
-              identifiers: new Map<string, GroupTraitBase>(),
+              identifiers: new Set<string>(),
             })
             .get(customEntry)!;
 
-        groupSpecial.identifiers.set(actor.uuid, { label: customEntry });
+        groupSpecial.identifiers.add(actor.uuid);
       });
     });
   }
 
   private _prepareMemberSenses(
     actor: any,
-    senses: Map<string, GroupTrait<number>>
+    senses: Map<string, MeasurableGroupTrait<number>>
   ) {
     let unitsKey = actor.system.attributes.movement.units;
     let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
@@ -580,7 +628,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           senses.get(key) ??
           senses
             .set(key, {
-              identifiers: new Map<string, GroupTrait<number>>(),
+              identifiers: new Map<string, MeasurableGroupTrait<number>>(),
               ...actorSenseTrait,
             })
             .get(key)!;
@@ -645,14 +693,12 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         tools.get(key) ??
         tools
           .set(key, {
-            identifiers: new Map<string, GroupTraitBase>(),
+            identifiers: new Set<string>(),
             label: toolLabel,
           })
           .get(key)!;
 
-      groupTool.identifiers.set(actor.uuid, {
-        label: toolLabel,
-      });
+      groupTool.identifiers.add(actor.uuid);
     });
   }
 
@@ -807,6 +853,17 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return await super._onDropFolder(event, data);
   }
 
+  changePace(increment: number) {
+    if (Number.isNaN(increment)) return;
+    const paces = Object.keys(CONFIG.DND5E.travelPace);
+    const current = paces.indexOf(
+      this.actor.system._source.attributes.movement.pace
+    );
+    const next =
+      (((current + increment) % paces.length) + paces.length) % paces.length;
+    this.actor.update({ 'system.attributes.movement.pace': paces[next] });
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
@@ -817,6 +874,25 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     element.querySelector('.window-header').classList.add('theme-dark');
 
     return element;
+  }
+
+  async _renderHTML(
+    context: GroupSheetQuadroneContext,
+    options: ApplicationRenderOptions
+  ) {
+    game.user.apps[this.id] = this;
+    for (const member of this.actor.system.members) {
+      member.actor.apps[this.id] = this;
+    }
+    return await super._renderHTML(context, options);
+  }
+
+  async close(options: ApplicationClosingOptions = {}) {
+    delete game.user.apps[this.id];
+    for (const member of this.actor.system.members) {
+      delete member.actor.apps[this.id];
+    }
+    return await super.close(options);
   }
 }
 

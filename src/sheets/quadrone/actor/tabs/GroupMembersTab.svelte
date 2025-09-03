@@ -1,13 +1,18 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import GroupMember from '../group-parts/GroupMember.svelte';
   import GroupTabSidebar from '../group-parts/group-tab-sidebar/GroupTabSidebar.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
+  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -17,29 +22,29 @@
 
   const localize = FoundryAdapter.localize;
 
-  interface Props {
-    allowFavorites?: boolean;
-    cssClass?: string | null;
-    meterColumnWidth?: string;
-    inspirationColumnWidth?: string;
-    acColumnWidth?: string;
-  }
-
-  let {
-    meterColumnWidth = '3.75rem',
-    inspirationColumnWidth = '4.5rem',
-    acColumnWidth = '3rem',
-  }: Props = $props();
+  let rowActions: any[] = $derived(
+    TableRowActionsRuntime.getGroupMemberRowActions(context),
+  );
 </script>
 
 <GroupTabSidebar />
 
 <section class="groups-tab-content group-members-content flexcol">
   {#if characters.length}
-  <section class="tidy-table">
+    {@const columns = new ColumnsLoadout(
+      GroupMemberColumnRuntime.getConfiguredColumnSpecifications(
+        CONSTANTS.SHEET_TYPE_GROUP,
+        CONSTANTS.TAB_MEMBERS,
+        CONSTANTS.SHEET_TYPE_CHARACTER,
+        {
+          rowActions: rowActions,
+        },
+      ),
+    )}
+    {@const visibleItemCount = characters.length}
+
     <TidyTable key="characters">
       {#snippet header()}
-        {@const visibleItemCount = characters.length}
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
@@ -47,69 +52,32 @@
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={inspirationColumnWidth}
-            title={localize('DND5E.Inspiration')}
-          >
-            {localize('DND5E.Inspiration')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={meterColumnWidth}
-            title={localize('DND5E.HP')}
-          >
-            {localize('DND5E.HP')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={meterColumnWidth}
-            title={localize('DND5E.HitDie')}
-          >
-            {localize('DND5E.HitDie')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell 
-            columnWidth={acColumnWidth} title={localize('DND5E.AC')}>
-            {localize('DND5E.AC')}
-          </TidyTableHeaderCell>
-          {#if context.enableXp}
-          <TidyTableHeaderCell
-            title={localize('DND5E.XP')}
-            columnWidth={meterColumnWidth}
-          >
-            {localize('DND5E.ExperiencePoints.Abbreviation')}
-          </TidyTableHeaderCell>
-          {/if}
-          <TidyTableHeaderCell columnWidth="1.75rem" >
-            <a class="tidy-table-button"
-              title={localize('TYPES.Actor.character')}>
-              <i class="fas fa-plus"></i>
-            </a>
-          </TidyTableHeaderCell>
+          {@render headerColumns(columns)}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        <menu class="members">
-          {#each characters as member}
-            <li
-              class="member-container"
-              data-tidy-draggable
-              data-member-id={member.actor.id}
-            >
-              <GroupMember {member} />
-            </li>
-          {/each}
-        </menu>
-        <!-- {#each characters as member}
-          <TidyTableRow item={member} />
-        {/each} -->
+        {#each characters as member}
+          {@render tableRow(member, columns)}
+        {/each}
       {/snippet}
     </TidyTable>
-  </section>
   {/if}
 
   {#if npcs.length}
-  <section class="tidy-table">
+    {@const columns = new ColumnsLoadout(
+      GroupMemberColumnRuntime.getConfiguredColumnSpecifications(
+        CONSTANTS.SHEET_TYPE_GROUP,
+        CONSTANTS.TAB_MEMBERS,
+        CONSTANTS.SHEET_TYPE_NPC,
+        {
+          rowActions: rowActions,
+        },
+      ),
+    )}
+    {@const visibleItemCount = npcs.length}
+
     <TidyTable key="npcs">
       {#snippet header()}
-        {@const visibleItemCount = npcs.length}
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
@@ -117,63 +85,32 @@
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={meterColumnWidth}
-            title={localize('DND5E.HP')}
-          >
-            {localize('DND5E.HP')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={meterColumnWidth}
-            title={localize('DND5E.HitDie')}
-          >
-            {localize('DND5E.HitDie')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell 
-            columnWidth={acColumnWidth} title={localize('DND5E.AC')}>
-            {localize('DND5E.AC')}
-          </TidyTableHeaderCell>
-          {#if context.enableXp}
-          <TidyTableHeaderCell
-            title={localize('DND5E.XP')}
-            columnWidth={meterColumnWidth}
-          >
-            {localize('DND5E.ExperiencePoints.Abbreviation')}
-          </TidyTableHeaderCell>
-          {/if}
-          <TidyTableHeaderCell columnWidth="1.75rem" >
-            <a class="tidy-table-button"
-              title={localize('TYPES.Actor.npc')}>
-              <i class="fas fa-plus"></i>
-            </a>
-          </TidyTableHeaderCell>
+          {@render headerColumns(columns)}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        <!-- {#each npcs as member}
-          <TidyTableRow item={member} />
-        {/each} -->
-        <menu class="members">
-          {#each npcs as member}
-            <li
-              class="member-container"
-              data-tidy-draggable
-              data-member-id={member.actor.id}
-            >
-              <GroupMember {member} />
-            </li>
-          {/each}
-        </menu>
+        {#each npcs as member}
+          {@render tableRow(member, columns)}
+        {/each}
       {/snippet}
     </TidyTable>
-  </section>
   {/if}
 
   {#if vehicles.length}
-  <section class="tidy-table">
+    {@const columns = new ColumnsLoadout(
+      GroupMemberColumnRuntime.getConfiguredColumnSpecifications(
+        CONSTANTS.SHEET_TYPE_GROUP,
+        CONSTANTS.TAB_MEMBERS,
+        CONSTANTS.SHEET_TYPE_VEHICLE,
+        {
+          rowActions: rowActions,
+        },
+      ),
+    )}
+    {@const visibleItemCount = vehicles.length}
+
     <TidyTable key="vehicles">
       {#snippet header()}
-        {@const visibleItemCount = vehicles.length}
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
@@ -181,57 +118,75 @@
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={meterColumnWidth}
-            title={localize('DND5E.HP')}
-          >
-            {localize('DND5E.HP')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell 
-            columnWidth={acColumnWidth} title={localize('DND5E.AC')}>
-            {localize('DND5E.AC')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell 
-            columnWidth={acColumnWidth} title={localize('DND5E.HITPOINTS.DT.Abbr')}>
-            {localize('DND5E.HITPOINTS.DT.Abbr')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={meterColumnWidth}
-            title={localize('DND5E.VehicleCrew')}
-          >
-            {localize('DND5E.VehicleCrew')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell
-            columnWidth={meterColumnWidth}
-            title={localize('DND5E.VehicleCargo')}
-          >
-            {localize('DND5E.VehicleCargo')}
-          </TidyTableHeaderCell>
-          <TidyTableHeaderCell columnWidth="1.75rem" >
-            <a class="tidy-table-button"
-              title={localize('TYPES.Actor.vehicle')}>
-              <i class="fas fa-plus"></i>
-            </a>
-          </TidyTableHeaderCell>
+          {@render headerColumns(columns)}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        <!-- {#each vehicles as member}
-          <TidyTableRow item={member} />
-        {/each} -->
-        <menu class="members">
-          {#each vehicles as member}
-            <li
-              class="member-container"
-              data-tidy-draggable
-              data-member-id={member.actor.id}
-            >
-              <GroupMember {member} />
-            </li>
-          {/each}
-        </menu>
+        {#each vehicles as member}
+          {@render tableRow(member, columns)}
+        {/each}
       {/snippet}
     </TidyTable>
-  </section>
   {/if}
 </section>
+
+{#snippet headerColumns(columns: ColumnsLoadout)}
+  {#each columns.ordered as column}
+    <TidyTableHeaderCell
+      class={[column.headerClasses]}
+      columnWidth="{column.widthRems}rem"
+      data-tidy-column-key={column.key}
+    >
+      {#if !!column.headerContent}
+        {#if column.headerContent.type === 'callback'}
+          {@html column.headerContent.callback?.(context.document, context)}
+        {:else if column.headerContent.type === 'component'}
+          <column.headerContent.component
+            sheetContext={context}
+            sheetDocument={context.document}
+            section={{
+              ...SheetSections.EMPTY,
+              rowActions: rowActions,
+            }}
+          />
+        {:else if column.headerContent.type === 'html'}
+          {@html column.headerContent.html}
+        {/if}
+      {/if}
+    </TidyTableHeaderCell>
+  {/each}
+{/snippet}
+
+{#snippet tableRow(member: GroupMemberQuadroneContext, columns: ColumnsLoadout)}
+  <div
+    class="tidy-table-row group-member"
+    style:--t5e-theme-color-default={member.accentColor}
+    style:--t5e-theme-color-highlight={member.highlightColor}
+    style:--t5e-member-color-hover={member.highlightColor}
+    data-tidy-draggable
+    data-member-id={member.actor.id}
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER}
+  >
+    <GroupMemberNameCell {member} />
+    {#each columns.ordered as column}
+      <TidyTableCell
+        columnWidth="{column.widthRems}rem"
+        class={[column.cellClasses]}
+        attributes={{ ['data-tidy-column-key']: column.key }}
+      >
+        {#if column.cellContent.type === 'callback'}
+          {@html column.cellContent.callback?.(context.document, context)}
+        {:else if column.cellContent.type === 'component'}
+          <column.cellContent.component
+            rowContext={member}
+            rowDocument={member.actor}
+            section={{
+              ...SheetSections.EMPTY,
+              rowActions: rowActions,
+            }}
+          />
+        {/if}
+      </TidyTableCell>
+    {/each}
+  </div>
+{/snippet}

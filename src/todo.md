@@ -7,51 +7,13 @@
 
 ### Group Sheet
 
-- [ ] Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
-  - [ ] Traits
-    - [x] Language
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-    - [x] Speed
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-    - [x] Senses
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-  - [ ] Skills
-    - [x] expandable/collapsible
-    - [ ] skill abbr, skill name (roll button / whatever), High, Low
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [ ] Prep the data
-  - [x] Special
-    - [x] Stub the context
-    - [x] Scaffold UI
-    - [x] Prep the data
-  - [x] Tools
-    - [x] Stub the context
-    - [x] Scaffold UI
-    - [x] Prep the data
-- [ ] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
-- [ ] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
-  - [ ] Tools
-  - [ ] ...?
-- [ ] Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
-  - [ ] Tidy tables
-  - [ ] Column spec
-  - [ ] Column components
-    - [ ] GroupMemberInspiration
-    - [ ] GroupActorHp
-    - [ ] GroupActorHd
-    - [ ] GroupActorAc
-    - [ ] GroupActorDt
-    - [ ] GroupActorCargo
-    - [ ] GroupActorCrew
+- [ ] Wire up all header data
+  - [ ] 
+- [ ] Wire up all member tab data
+- [ ] Implement Cargo calculations for Vehicle members.
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
+- [ ] Make group sheet refresh on relevant actor changes.
 - [ ] Plan the next tab 🚀
 
 ### The Short List
@@ -393,3 +355,49 @@ Limited:
   - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
 - [x] Inventory tab
   - [x] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
+- [x] Group Sheet: Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [x] Traits
+    - [x] Language
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+    - [x] Speed
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+    - [x] Senses
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+  - [x] Skills
+    - [x] expandable/collapsible
+    - [x] skill abbr, skill name (roll button / whatever), High, Low
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+  - [x] Special
+    - [x] Stub the context
+    - [x] Scaffold UI
+    - [x] Prep the data
+  - [x] Tools
+    - [x] Stub the context
+    - [x] Scaffold UI
+    - [x] Prep the data
+- [x] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
+- [x] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
+  - [x] Tools
+  - [x] Specials
+- [x] Group Sheet - Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [x] Tidy tables
+  - [x] Column spec
+  - [x] Column components
+    - [x] GroupMemberInspirationColumn
+    - [x] GroupActorHpColumn
+    - [x] GroupActorHdColumn
+    - [x] GroupActorAcColumn
+    - [x] GroupActorDtColumn
+    - [x] GroupActorCargoColumn
+    - [x] GroupActorCrewColumn
+- [x] Group Sheet - Group Member context menu
+  - [x] View Member
+  - [x] Remove Member
