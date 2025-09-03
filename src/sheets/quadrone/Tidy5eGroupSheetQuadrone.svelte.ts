@@ -326,9 +326,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
-        accentColor: accentColor,
-        backgroundColor: `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`,
-        highlightColor: `oklch(from ${accentColor} calc(l * 1.4) 60% h)`,
+        accentColor: !isNil(accentColor, '') ? accentColor : undefined,
+        backgroundColor: !isNil(accentColor, '')
+          ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
+          : undefined,
+        highlightColor: !isNil(accentColor, '')
+          ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
+          : undefined,
       });
 
       // Skills
