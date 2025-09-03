@@ -33,6 +33,7 @@ import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
+import type { TravelPaceConfig } from 'src/foundry/config.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -1252,6 +1253,8 @@ export type GroupMemberQuadroneContext = {
   portrait: GroupMemberPortraitContext;
   inspirationSource: InspirationSource | undefined;
   accentColor: string | undefined;
+  backgroundColor: string | undefined;
+  highlightColor: string | undefined;
 };
 
 export type GroupMemberPortraitContext = {
@@ -1274,7 +1277,7 @@ export type Emphasizable = {
   identifiers: Set<string>;
 };
 
-export type ValuedEmphasizable<TValue> = {
+export type MeasurableEmphasizable<TValue> = {
   identifiers: Map<string, TValue>;
 };
 
@@ -1284,6 +1287,11 @@ export type GroupSkillModContext = {
   sign: string;
 };
 
+export type GroupMemberSkillContext = GroupSkillModContext & {
+  passive: number;
+  proficient: number;
+};
+
 export type GroupSkill = {
   name: string;
   ability: string;
@@ -1291,7 +1299,8 @@ export type GroupSkill = {
   proficient: boolean;
   high: GroupSkillModContext;
   low: GroupSkillModContext;
-} & ValuedEmphasizable<GroupSkillModContext>;
+  reference: string | undefined;
+} & MeasurableEmphasizable<GroupMemberSkillContext>;
 
 export type GroupTraitBase<TValue = string> = {
   /** Text that describes the trait. */
@@ -1304,15 +1313,23 @@ export type GroupTraitBase<TValue = string> = {
   unitsKey?: string;
 };
 
-export type GroupTrait<TValue = string> = GroupTraitBase<TValue> &
-  ValuedEmphasizable<GroupTraitBase<TValue>>;
+export type MeasurableGroupTrait<TValue = string> = GroupTraitBase<TValue> &
+  MeasurableEmphasizable<GroupTraitBase<TValue>>;
+
+export type GroupTrait = GroupTraitBase<never> & Emphasizable;
 
 export type GroupTraits = {
-  languages: GroupTrait<number>[];
-  senses: GroupTrait<number>[];
+  languages: MeasurableGroupTrait<number>[];
+  senses: MeasurableGroupTrait<number>[];
   specials: GroupTrait[];
-  speeds: GroupTrait<number>[];
+  speeds: MeasurableGroupTrait<number>[];
   tools: GroupTrait[];
+};
+
+export type TravelPaceConfigEntry = {
+  key: string;
+  config: TravelPaceConfig;
+  index: number;
 };
 
 export type GroupSheetQuadroneContext = {
@@ -1320,6 +1337,15 @@ export type GroupSheetQuadroneContext = {
 
   members: GroupMembersQuadroneContext;
   skills: GroupSkill[];
+  travel: {
+    currentPace: TravelPaceConfigEntry;
+    paces: TravelPaceConfigEntry[];
+    /** 1 (slow), 2 (normal), or 3 (fast), corresponding to the slowest speed, any speed in between, and the fastest speed, respectively. */
+    speed: number;
+    units: {
+      label: string;
+    };
+  };
   traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorContext<Tidy5eGroupSheetQuadrone>;
