@@ -596,7 +596,7 @@
         "MoveRight": "Přesun doprava (Mezerník)",
         "MoveAllLeft": "Přesunout vše doleva"
     },
-    "TIDY5E.ItemFilters.CanUse": "Lze použít",
+    "TIDY5E.ItemFilters.CanUse": "Může použít",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - útok kouzlem na blízko",
     "TIDY5E.EmptyContainer": "Tento kontejner je prázdný.",
     "TIDY5E.WorldSettings.TabItem": {
