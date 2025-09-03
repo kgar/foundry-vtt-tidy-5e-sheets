@@ -65,7 +65,7 @@
 
 <!-- Group subtitle, member info -->
 <div class="actor-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
-  {#if !charactersOnly}
+  {#if !charactersOnly && context.members.character.members.length > 0}
     <span class="members">
       <span class="color-text-gold font-label-medium"
         >{context.members.character.members.length > 1
