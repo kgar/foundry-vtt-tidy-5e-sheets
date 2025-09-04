@@ -11,7 +11,7 @@
 - [x] ~~Wire up roll mode to rollSkill via a sheet function~~ We don't have a mechanism for individual rolls right now.
 - [x] Add sample award button with sheet function behind it
 - [x] Add encumbrance to group member prep
-- [ ] Col spec: make XP columns enabled only when XP is enabled
+- [x] Col spec: make XP columns enabled only when XP is enabled
 - [ ] Add member tooltips to Members tab sidebar
 - [ ] Wire up all member tab data
 - [ ] Implement Cargo calculations for Vehicle members.
