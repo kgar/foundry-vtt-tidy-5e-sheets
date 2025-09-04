@@ -5,18 +5,21 @@
     disabled?: boolean;
     doc: any;
     deleteFn?: Function;
+    tooltip?: string;
   }
 
   let {
     doc,
     disabled,
     deleteFn = () => FoundryAdapter.onActorItemDelete(doc.actor, doc),
+    tooltip = FoundryAdapter.localize('DND5E.ItemDelete'),
   }: Props = $props();
 </script>
 
 <a
   class="tidy-table-button"
-  data-tooltip={'DND5E.ItemDelete'}
+  aria-label={tooltip}
+  data-tooltip
   onclick={() => !disabled && deleteFn()}
 >
   <i class="fa-solid fa-trash fa-fw"></i>

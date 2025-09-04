@@ -28,6 +28,7 @@ import ChooseAButton from 'src/components/table-quadrone/table-buttons/ChooseABu
 import OpenActivityButton from 'src/components/table-quadrone/table-buttons/OpenActivityButton.svelte';
 import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
 import { CONSTANTS } from 'src/constants';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -437,7 +438,8 @@ class TableRowActionsRuntime {
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => context.actor.removeMember(args.data),
+              deleteFn: () => context.actor.system.removeMember(args.data),
+              tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
