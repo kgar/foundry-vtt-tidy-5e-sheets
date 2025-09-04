@@ -15,7 +15,6 @@ import GroupCharacterXpColumn from 'src/sheets/quadrone/item/columns/GroupCharac
 import GroupNpcXpColumn from 'src/sheets/quadrone/item/columns/GroupNpcXpColumn.svelte';
 import GroupVehicleDtColumn from 'src/sheets/quadrone/item/columns/GroupVehicleDtColumn.svelte';
 import GroupVehicleCrewColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCrewColumn.svelte';
-import GroupVehicleCargoColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCargoColumn.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
@@ -124,18 +123,6 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 3.75,
     };
 
-    const cargoColumn: ColumnSpecificationBase = {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.VehicleCargo'),
-      },
-      cellContent: {
-        type: 'component',
-        component: GroupVehicleCargoColumn,
-      },
-      widthRems: 3.75,
-    };
-
     const actionsColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'html',
@@ -176,7 +163,6 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             ac: { ...acColumn, order: 200, priority: 100 },
             dt: { ...damageThresholdColumn, order: 300, priority: 100 },
             crew: { ...crewColumn, order: 400, priority: 100 },
-            cargo: { ...cargoColumn, order: 500, priority: 100 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },
