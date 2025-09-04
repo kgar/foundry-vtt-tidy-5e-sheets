@@ -83,10 +83,8 @@
       class={['pointer', { dead: actorIsDead }]}
       data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
       data-edit={context.portrait.path}
-      >
-      {imageAlt}
-      </video>
-      <input type="hidden" name={context.portrait.path} value={imageUrl} />
+      title={imageAlt}
+      >{context.portrait.truePath ?? imageUrl}</video>
   {:else}
     <img
       src={imageUrl}
