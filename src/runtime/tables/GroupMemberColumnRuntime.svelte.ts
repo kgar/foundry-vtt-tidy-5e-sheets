@@ -138,6 +138,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: DocumentActionsColumn,
       },
+      cellClasses: 'tidy-table-actions',
       widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
         let paddingX = 0.1875;
         let buttonWidth = 1.5;

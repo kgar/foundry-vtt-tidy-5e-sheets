@@ -65,41 +65,54 @@
             (member.actor.system.attributes.death.failure >= 3 &&
               member.actor.system.attributes.death.success < 3))}
         {@const portraitShape = ThemeQuadrone.getActorPortraitShape(member.actor)}
-      <div class="member-vitals-container flexshrink">
+      <div class="actor-image-container flexshrink">
         <div
-          class={['actor-image', { dead: actorIsDead }, portraitShape, { video: member.portrait.isVideo }]}
-          style="position: relative;"
-        >
-          {#if member.portrait.isVideo}
-            <video
-              src={member.portrait.src}
-              autoplay
-              muted
-              playsinline
-              disablepictureinpicture
-              loop
-              class={{ dead: actorIsDead }}
-            ></video>
-          {:else}
-            <img
-              src={member.portrait.src}
-              alt={member.actor.name}
-              class={{ dead: actorIsDead }}
-            />
-          {/if}
-          {#if actorIsDead}
-            <div class="dead-overlay"></div>
-          {/if}
-        </div>
+        role="button"
+        tabindex={0}
+        class={[
+          'actor-image',
+          { dead: actorIsDead },
+          portraitShape,
+          { video: member.portrait.isVideo },
+        ]}
+        style="position: relative;"
+        onclick={() => member.actor.sheet.render(true)}
+        onkeydown={(e) =>
+          e.key === 'Enter' || e.key === ' '
+            ? member.actor.sheet.render(true)
+            : null}
+      >
+        {#if member.portrait.isVideo}
+          <video
+            src={member.portrait.src}
+            autoplay
+            muted
+            playsinline
+            disablepictureinpicture
+            loop
+            class={{ dead: actorIsDead }}
+          ></video>
+        {:else}
+          <img
+            src={member.portrait.src}
+            alt={member.actor.name}
+            class={{ dead: actorIsDead }}
+          />
+        {/if}
+        {#if actorIsDead}
+          <div class="dead-overlay"></div>
+        {/if}
       </div>
-      <div class="flexcol">
-        <h4 class="font-title-small color-text-default">
+      </div>
+      <div class="actor-name flexcol">
+        <h4 class="font-label-medium">
           {member.actor.name}
         </h4>
         {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-        <span class="flexrow">
-          <span class="font-data-medium color-text-default flexshrink">100</span>
-          <span class="font-label-medium color-text-gold flexshrink">GP</span>
+        <!-- TODO: Add currency -->
+        <span class="actor-currency flexrow">
+          <span class="font-label-medium color-text-default flexshrink">100</span>
+          <span class="font-body-medium color-text-lighter flexshrink">GP</span>
         </span>
         <!-- TODO: Add encumbrance bar -->
         <!-- <ActorEncumbranceBar /> -->

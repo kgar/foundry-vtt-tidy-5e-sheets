@@ -106,6 +106,23 @@
     }
   }
 
+  /* Sidebar traits */
+  .traits.list {
+    .pill {
+      transition: background-color var(--t5e-transition-default), border-color var(--t5e-transition-default), opacity var(--t5e-transition-default);
+
+      &.emphasized {
+        border: 1px solid var(--t5e-member-color-hover);
+        background-color: var(--t5e-member-color-background);
+      }
+
+      &.diminished {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  /* Sidebar skills */
   .skill-list .skill-list-item {
     &.member-proficient .skill-ability {
       color: var(--t5e-member-color-hover);
@@ -120,6 +137,7 @@
     }
   }
 
+  /* Specific tab overrides */
   .window-content .main-content>.tidy-tab {
     flex-direction: row;
     gap: 0;
@@ -143,6 +161,7 @@
     }
   }
 
+  /* Tab-specific styles */
   .tidy-tab {
 
     .actor-name {
@@ -153,6 +172,145 @@
       justify-content: center;
       padding-left: var(--t5e-size-3x);
       text-align: left;
+    }
+
+
+    .actor-image {
+      --inset: 0.125rem;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: var(--inset);
+        left: var(--inset);
+        right: var(--inset);
+        bottom: var(--inset);
+        border-color: var(--portrait-border-color);
+        border-style: solid;
+        pointer-events: none;
+        transition: border-color var(--t5e-transition-default);
+      }
+
+      &:hover {
+        cursor: pointer;
+        filter: drop-shadow(0 0 0.375rem oklch(from var(--t5e-member-color-hover) l c h / 0.32));
+
+        &::before {
+          border-color: var(--t5e-member-color-hover);
+        }
+      }
+
+
+      &.round {
+        border-radius: 100%;
+        // box-shadow: var(--header-shadow);
+        overflow: hidden;
+        position: relative;
+
+        &::before {
+          border-radius: 100%;
+          border: 0.09375rem solid var(--portrait-border-color);
+        }
+
+        &:hover::before {
+          border-color: var(--t5e-member-color-hover);
+        }
+      }
+
+      &.square {
+        padding: var(--t5e-size-1x);
+        --inset: 0.5625rem;
+
+        &::before {
+          border-width: 0.0625rem;
+        }
+
+        &:hover::before {
+          border-color: var(--t5e-member-color-hover);
+        }
+      }
+
+      &.transparent {
+
+        &::before {
+          content: '';
+          border-color: transparent;
+          border-radius: 100%;
+          border-width: 0.0625rem;
+          z-index: -1;
+        }
+
+        &:hover::before {
+          opacity: 1;
+          border-color: var(--t5e-member-color-hover);
+        }
+      }
+
+      &.token {
+        img {
+          filter: var(--t5e-filter-drop-shadow-token);
+        }
+
+        &::before {
+          border: none;
+        }
+      }
+
+      &.dead {
+        &:not(.transparent) {
+          background-color: var(--t5e-component-card-dark-darker);
+
+          .dead-overlay {
+            // &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--t5e-color-palette-red-100);
+            opacity: 0.6;
+            mix-blend-mode: multiply;
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: var(--t5e-color-gold);
+              opacity: 0.2;
+              mix-blend-mode: lighten;
+            }
+          }
+        }
+
+        .dead-overlay {
+          pointer-events: none;
+        }
+
+        img {
+          z-index: -1;
+        }
+
+        &.transparent {
+          img {
+            filter: grayscale(1);
+            opacity: 0.75;
+          }
+
+          &::before {
+            border-color: var(--t5e-color-palette-red-60);
+          }
+        }
+
+        &.round {
+          .dead-overlay {
+            border-radius: 100%;
+          }
+        }
+      }
     }
 
     &.members {
@@ -192,145 +350,6 @@
         --tidy-table-column-width: var(--t5e-table-avatar-size);
         padding-left: 0;
         padding-right: 0;
-      }
-
-
-      .actor-image {
-        --inset: 0.125rem;
-
-        &::before {
-          content: '';
-          position: absolute;
-          top: var(--inset);
-          left: var(--inset);
-          right: var(--inset);
-          bottom: var(--inset);
-          border-color: var(--portrait-border-color);
-          border-style: solid;
-          pointer-events: none;
-          transition: border-color var(--t5e-transition-default);
-        }
-
-        &:hover {
-          cursor: pointer;
-          filter: drop-shadow(0 0 0.375rem oklch(from var(--t5e-member-color-hover) l c h / 0.32));
-
-          &::before {
-            border-color: var(--t5e-member-color-hover);
-          }
-        }
-
-
-        &.round {
-          border-radius: 100%;
-          // box-shadow: var(--header-shadow);
-          overflow: hidden;
-          position: relative;
-
-          &::before {
-            border-radius: 100%;
-            border: 0.09375rem solid var(--portrait-border-color);
-          }
-
-          &:hover::before {
-            border-color: var(--t5e-member-color-hover);
-          }
-        }
-
-        &.square {
-          padding: var(--t5e-size-1x);
-          --inset: 0.5625rem;
-
-          &::before {
-            border-width: 0.0625rem;
-          }
-
-          &:hover::before {
-            border-color: var(--t5e-member-color-hover);
-          }
-        }
-
-        &.transparent {
-
-          &::before {
-            content: '';
-            border-color: transparent;
-            border-radius: 100%;
-            border-width: 0.0625rem;
-            z-index: -1;
-          }
-
-          &:hover::before {
-            opacity: 1;
-            border-color: var(--t5e-member-color-hover);
-          }
-        }
-
-        &.token {
-          img {
-            filter: var(--t5e-filter-drop-shadow-token);
-          }
-
-          &::before {
-            border: none;
-          }
-        }
-
-        &.dead {
-          &:not(.transparent) {
-            background-color: var(--t5e-component-card-dark-darker);
-
-            .dead-overlay {
-              // &::before {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background-color: var(--t5e-color-palette-red-100);
-              opacity: 0.6;
-              mix-blend-mode: multiply;
-
-              &::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: var(--t5e-color-gold);
-                opacity: 0.2;
-                mix-blend-mode: lighten;
-              }
-            }
-          }
-
-          .dead-overlay {
-            pointer-events: none;
-          }
-
-          img {
-            z-index: -1;
-          }
-
-          &.transparent {
-            img {
-              filter: grayscale(1);
-              opacity: 0.75;
-            }
-
-            &::before {
-              border-color: var(--t5e-color-palette-red-60);
-            }
-          }
-
-          &.round {
-            .dead-overlay {
-              border-radius: 100%;
-            }
-          }
-        }
       }
 
       .item-name {
@@ -388,23 +407,21 @@
     }
   }
 
-
-  /* --------------------------------------------- */
-  /* DEBUG STYLES - DELETE WHEN NO LONGER NEEDED   */
-  /* --------------------------------------------- */
-  .traits.list {
-    .pill {
-      transition: background-color var(--t5e-transition-default), border-color var(--t5e-transition-default), opacity var(--t5e-transition-default);
-
-      &.emphasized {
-        border: 1px solid var(--t5e-member-color-hover);
-        background-color: var(--t5e-member-color-background);
-      }
-
-      &.diminished {
-        opacity: 0.5;
+  &.theme-light {
+    .skill-list .skill-list-item {
+      &.member-proficient .skill-ability {
+        color: var(--t5e-member-color-background);
       }
     }
 
+    .tidy-tab.members .actor-image {
+      &:hover {
+        filter: drop-shadow(0 0 0.25rem oklch(from var(--t5e-theme-color-highlight) l c h / 0.5));
+      }
+
+      &.transparent:hover {
+        filter: drop-shadow(0 0 0.5rem oklch(from var(--t5e-theme-color-default) l c h / 0.4));
+      }
+    }
   }
 }

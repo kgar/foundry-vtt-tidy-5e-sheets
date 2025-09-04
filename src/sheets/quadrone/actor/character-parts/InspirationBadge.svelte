@@ -31,7 +31,7 @@
         class:inspired={inspirationSource.value > 0}
         data-tidy-sheet-part="banked-inspiration-value"
       >
-        <span class="inspiration-level">
+        <span class="inspiration-level theme-dark">
           <span class="level font-data-large color-text-inverse">
             {inspirationSource.value}
           </span>
