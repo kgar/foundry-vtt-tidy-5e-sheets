@@ -25,11 +25,13 @@
 
     .actor-details-container {
       margin-right: var(--t5e-size-2x);
-      gap: var(--t5e-size-halfx);
       padding-bottom: var(--t5e-size-1x);
     }
 
     .actor-subtitle {
+      max-height: 1.25rem;
+      min-height: 1.25rem;
+
       .pill {
         flex: 0 1 auto;
         flex-direction: row;
@@ -69,6 +71,7 @@
 
       &.group-speeds {
         margin-left: 0.625rem;
+        margin-bottom: var(--t5e-size-halfx);
       }
 
       .xp-pool {
@@ -174,9 +177,9 @@
       text-align: left;
     }
 
-
     .actor-image {
       --inset: 0.125rem;
+      position: relative;
 
       &::before {
         content: '';
@@ -188,10 +191,11 @@
         border-color: var(--portrait-border-color);
         border-style: solid;
         pointer-events: none;
-        transition: border-color var(--t5e-transition-default);
+        transition: border-color var(--t5e-transition-default), opacity var(--t5e-transition-default), filter var(--t5e-transition-default);
       }
 
-      &:hover {
+      &:hover,
+      &.hovered {
         cursor: pointer;
         filter: drop-shadow(0 0 0.375rem oklch(from var(--t5e-member-color-hover) l c h / 0.32));
 
@@ -212,7 +216,8 @@
           border: 0.09375rem solid var(--portrait-border-color);
         }
 
-        &:hover::before {
+        &:hover::before,
+        &.hovered::before {
           border-color: var(--t5e-member-color-hover);
         }
       }
@@ -225,7 +230,8 @@
           border-width: 0.0625rem;
         }
 
-        &:hover::before {
+        &:hover::before,
+        &.hovered::before {
           border-color: var(--t5e-member-color-hover);
         }
       }
@@ -240,7 +246,8 @@
           z-index: -1;
         }
 
-        &:hover::before {
+        &:hover::before,
+        &.hovered::before {
           opacity: 1;
           border-color: var(--t5e-member-color-hover);
         }
@@ -390,7 +397,14 @@
     }
 
     &.inventory {
+      .sidebar {
+        padding-top: var(--t5e-size-4x);
+      }
+
       .actor-container {
+        --t5e-table-avatar-size: 3.25rem;
+        padding: var(--t5e-size-1x) 0 0 0;
+
         &:hover {
           cursor: pointer;
         }
@@ -402,6 +416,12 @@
         .progress {
           min-height: 1.125rem;
           overflow: unset;
+        }
+      }
+
+      .actor-cargo {
+        .label {
+          margin-right: var(--t5e-size-1x);
         }
       }
     }
