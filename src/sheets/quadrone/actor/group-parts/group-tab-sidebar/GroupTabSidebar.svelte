@@ -6,8 +6,9 @@
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { CONSTANTS } from 'src/constants';
   import type { ClassValue } from 'svelte/elements';
-  import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import type { Actor5e, GroupMemberQuadroneContext } from 'src/types/types';
   import GroupTraitPill from '../GroupTraitPill.svelte';
+  import GroupToolTooltip from 'src/tooltips/GroupToolTooltip.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -21,6 +22,16 @@
 
   let emphasizedActorUuid = $derived<string>(
     emphasizedMember?.actor.uuid ?? '',
+  );
+
+  let toolTooltip = $state<GroupToolTooltip | undefined>();
+
+  let actorMap = $derived(
+    context.system.members.reduce(
+      (map: Map<string, Actor5e>, member: any) =>
+        map.set(member.actor.uuid, member.actor),
+      new Map<string, Actor5e>(),
+    ),
   );
 </script>
 
@@ -166,6 +177,10 @@
       </div>
     </div>
 
+    <GroupToolTooltip
+      bind:this={toolTooltip}
+      sheetDocument={context.document}
+    />
     <!-- Tools -->
     <div class="list-entry">
       <div class="list-label flexrow">
@@ -186,7 +201,20 @@
                 'theme-dark': isEmphasized,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
-              <GroupTraitPill class={pillState} label={tool.label} />
+              <GroupTraitPill
+                class={pillState}
+                label={tool.label}
+                onmouseover={(ev) =>
+                  tool.key
+                    ? toolTooltip?.tryShow(ev, {
+                        key: tool.key,
+                        label: tool.label,
+                        members: [...tool.identifiers].map((uuid) =>
+                          actorMap.get(uuid),
+                        ),
+                      })
+                    : undefined}
+              />
             {/each}
           </ul>
         </div>

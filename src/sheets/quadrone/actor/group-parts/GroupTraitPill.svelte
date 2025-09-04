@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ClassValue } from 'svelte/elements';
+  import type { ClassValue, HTMLLiAttributes } from 'svelte/elements';
 
   type Props = {
     class?: ClassValue;
@@ -7,12 +7,19 @@
     label?: string;
     units?: string;
     value?: number;
-  };
+  } & HTMLLiAttributes;
 
-  let { class: cssClass, label, count, value, units }: Props = $props();
+  let {
+    class: cssClass,
+    label,
+    count,
+    value,
+    units,
+    ...liAttributes
+  }: Props = $props();
 </script>
 
-<li class={['pill pill-medium', cssClass]}>
+<li class={['pill pill-medium', cssClass]} {...liAttributes}>
   {#if label}
     <span class="label font-label-medium">{label}</span>
   {/if}

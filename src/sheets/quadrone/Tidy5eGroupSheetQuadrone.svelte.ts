@@ -738,6 +738,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           .set(key, {
             identifiers: new Set<string>(),
             label: toolLabel,
+            key: key,
           })
           .get(key)!;
 
