@@ -81,7 +81,7 @@
             class="button long-rest button-gold flexshrink"
             data-tooltip="DND5E.REST.Long.Label"
             aria-label={localize('DND5E.Group.PlaceMembers')}
-            onclick={() => context.sheet.placeMembers()}
+            onclick={() => context.actor.system.placeMembers()}
           >
             <i class="fas fa-street-view"></i>
             {localize('DND5E.Group.PlaceMembers')}
