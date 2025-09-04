@@ -1325,7 +1325,7 @@ export const FoundryAdapter = {
     return dnd5e.utils.formatCR(cr);
   },
   formatNumber(num: number) {
-    return dnd5e.utils.formatNumber(num);
+    return dnd5e.utils.formatNumber(num) as string;
   },
   // TODO: Consolidate uses changed to one function
   handleItemUsesChanged(

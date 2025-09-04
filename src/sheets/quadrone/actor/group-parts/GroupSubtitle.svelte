@@ -31,23 +31,7 @@
 
   let xpPool = $derived(context.system.details.xp.value);
 
-  let totalGold = $derived.by(() => {
-    const currency = context.system.currency;
-
-    return Object.keys(currency).reduce((total, key) => {
-      return key in CONFIG.DND5E.currencies
-        ? total + currency[key] / CONFIG.DND5E.currencies[key].conversion
-        : total;
-    }, 0);
-  });
-
-  let awardAriaLabel = $derived(
-    localize(
-      context.enableXp
-        ? 'DND5E.Group.Distribute.xp'
-        : 'DND5E.Group.Distribute.noxp',
-    ),
-  );
+  let totalGold = $derived.by(() => context.sheet.getGpSummary(context.actor));
 </script>
 
 {#snippet speedSenseSummary(

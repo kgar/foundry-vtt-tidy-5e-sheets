@@ -6,6 +6,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     CharacterSheetQuadroneContext,
+    GroupSheetQuadroneContext,
     NpcSheetQuadroneContext,
   } from 'src/types/types';
   import AttunementSummaryTooltip from 'src/tooltips/AttunementSummaryTooltip.svelte';
@@ -14,14 +15,17 @@
 
   interface Props {
     class?: ClassValue;
+    useAttunement: boolean;
   }
 
-  let { class: classValue }: Props = $props();
+  let { class: classValue, useAttunement }: Props = $props();
 
   let context =
     $derived(
       getSheetContext<
-        CharacterSheetQuadroneContext | NpcSheetQuadroneContext
+        | CharacterSheetQuadroneContext
+        | NpcSheetQuadroneContext
+        | GroupSheetQuadroneContext
       >(),
     );
 
@@ -50,54 +54,58 @@
   let attuned = $derived(context.system.attributes.attunement.value > 0);
 </script>
 
-<AttunementSummaryTooltip
-  bind:this={attunementSummaryTooltip}
-  sheetDocument={context.document}
-  {attunedItems}
-/>
+{#if useAttunement}
+  <AttunementSummaryTooltip
+    bind:this={attunementSummaryTooltip}
+    sheetDocument={context.document}
+    {attunedItems}
+  />
+{/if}
 
 <!-- should we use `<footer>`? We'd need to ensure an appropriate ancestor `<section>` -->
 <div class={['sheet-footer', 'flexrow', 'inventory-footer', classValue]}>
-  <div class="footer-content-left flexrow flexshrink">
-    <div
-      class={[
-        'attunement-tracker flexshrink',
-        { overattuned: overattuned },
-        { attuned: attuned },
-        { 'pill pill-medium interactive': !context.unlocked },
-        { flexrow: context.unlocked },
-      ]}
-      role="region"
-      data-tooltip-direction="UP"
-      onmouseover={(ev) => attunementSummaryTooltip.tryShow(ev)}
-      onfocus={(ev) => attunementSummaryTooltip.tryShow(ev)}
-    >
-      <i
-        class={`fa-sun ${attuned ? 'fas highlighted' : 'far color-text-lighter'}`}
-      ></i>
-      <span class="value font-data-medium"
-        >{context.system.attributes.attunement.value}</span
+  {#if useAttunement}
+    <div class="footer-content-left flexrow flexshrink">
+      <div
+        class={[
+          'attunement-tracker flexshrink',
+          { overattuned: overattuned },
+          { attuned: attuned },
+          { 'pill pill-medium interactive': !context.unlocked },
+          { flexrow: context.unlocked },
+        ]}
+        role="region"
+        data-tooltip-direction="UP"
+        onmouseover={(ev) => attunementSummaryTooltip.tryShow(ev)}
+        onfocus={(ev) => attunementSummaryTooltip.tryShow(ev)}
       >
-      <span class="separator">/</span>
-      {#if context.unlocked}
-        <NumberInputQuadrone
-          document={context.actor}
-          field="system.attributes.attunement.max"
-          value={context.system.attributes.attunement.max}
-          class="max"
-          step="1"
-          min="0"
-        />
-      {:else}
-        <span class="max font-label-medium">
-          {context.system.attributes.attunement.max}
+        <i
+          class={`fa-sun ${attuned ? 'fas highlighted' : 'far color-text-lighter'}`}
+        ></i>
+        <span class="value font-data-medium"
+          >{context.system.attributes.attunement.value}</span
+        >
+        <span class="separator">/</span>
+        {#if context.unlocked}
+          <NumberInputQuadrone
+            document={context.actor}
+            field="system.attributes.attunement.max"
+            value={context.system.attributes.attunement.max}
+            class="max"
+            step="1"
+            min="0"
+          />
+        {:else}
+          <span class="max font-label-medium">
+            {context.system.attributes.attunement.max}
+          </span>
+        {/if}
+        <span class="font-label-medium color-text-lighter">
+          {localize('DND5E.Attuned')}
         </span>
-      {/if}
-      <span class="font-label-medium color-text-lighter">
-        {localize('DND5E.Attuned')}
-      </span>
+      </div>
     </div>
-  </div>
+  {/if}
 
   <div class="currency-container flexrow flex1">
     {#each context.currencies as currency (currency.key)}

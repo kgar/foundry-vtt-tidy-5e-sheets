@@ -1262,6 +1262,8 @@ export type GroupMemberQuadroneContext = {
   highlightColor: string | undefined;
   inspirationSource: InspirationSource | undefined;
   portrait: GroupMemberPortraitContext;
+  gold: string;
+  goldAbbreviation: string;
 };
 
 export type GroupMemberPortraitContext = {

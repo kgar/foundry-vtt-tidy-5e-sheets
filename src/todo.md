@@ -7,25 +7,9 @@
 
 ### Group Sheet
 
-- [x] Wire up all header data
-- [x] ~~Wire up roll mode to rollSkill via a sheet function~~ We don't have a mechanism for individual rolls right now.
-- [x] Add sample award button with sheet function behind it
-- [x] Add encumbrance to group member prep
-- [x] Col spec: make XP columns enabled only when XP is enabled
-- [x] Add member tooltips to Members tab sidebar
-  - [x] Languages
-  - [x] Skills
-  - [x] Senses
-  - [x] Specials
-  - [x] Speeds
-  - [x] Tools
-- [x] Wire up all member tab data
-- [x] Make group sheet refresh on relevant actor changes.
-- [x] Make Description tab secrets work.
-- [x] ~~Implement Cargo calculations for Vehicle members.~~ This is encumbrance. Suggest instead that we just remove the cargo column.
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
-- [ ] Plan the next tab 🚀
+- [ ] Plan and task Bastions tab
 
 ### The Short List
 
@@ -410,6 +394,24 @@ Limited:
     - [x] GroupActorDtColumn
     - [x] GroupActorCargoColumn
     - [x] GroupActorCrewColumn
-- [x] Group Sheet - Group Member context menu
-  - [x] View Member
-  - [x] Remove Member
+- [x] Group Sheet
+  - [x] Group Member context menu
+    - [x] View Member
+    - [x] Remove Member
+  - [x] Wire up all header data
+  - [x] ~~Wire up roll mode to rollSkill via a sheet function~~ We don't have a mechanism for individual rolls right now.
+  - [x] Add sample award button with sheet function behind it
+  - [x] Add encumbrance to group member prep
+  - [x] Col spec: make XP columns enabled only when XP is enabled
+  - [x] Add member tooltips to Members tab sidebar
+    - [x] Languages
+    - [x] Skills
+    - [x] Senses
+    - [x] Specials
+    - [x] Speeds
+    - [x] Tools
+  - [x] Wire up all member tab data
+  - [x] Make group sheet refresh on relevant actor changes.
+  - [x] Make Description tab secrets work.
+  - [x] ~~Implement Cargo calculations for Vehicle members.~~ This is encumbrance. Suggest instead that we just remove the cargo column.
+  - [x] Add standard inventory footer to group inventory tab

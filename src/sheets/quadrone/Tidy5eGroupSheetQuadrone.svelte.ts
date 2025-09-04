@@ -48,6 +48,7 @@ import type { SkillData } from 'src/foundry/dnd5e.types';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -380,6 +381,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
         portrait: await this._preparePortrait(actor),
+        gold: FoundryAdapter.formatNumber(this.getGpSummary(actor)),
+        goldAbbreviation: CONFIG.DND5E.currencies.gp?.abbreviation ?? '',
       });
 
       // Skills
@@ -895,6 +898,18 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     return await super._onDropFolder(event, data);
+  }
+
+  getGpSummary(actor: Actor5e) {
+    const currency = actor.system.currency;
+
+    return Math.round(
+      Object.keys(currency).reduce((total, key) => {
+        return key in CONFIG.DND5E.currencies
+          ? total + currency[key] / CONFIG.DND5E.currencies[key].conversion
+          : total;
+      }, 0)
+    );
   }
 
   /* -------------------------------------------- */

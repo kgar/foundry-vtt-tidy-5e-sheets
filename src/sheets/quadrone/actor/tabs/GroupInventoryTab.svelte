@@ -17,6 +17,7 @@
   import InventoryTables from '../../shared/InventoryTables.svelte';
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import ActorEncumbranceBar from '../parts/ActorEncumbranceBar.svelte';
+  import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;
@@ -119,10 +120,10 @@
           <!-- TODO: Add currency -->
           <span class="actor-currency flexrow">
             <span class="font-label-medium color-text-default flexshrink"
-              >100</span
+              >{member.gold}</span
             >
             <span class="font-body-medium color-text-lighter flexshrink"
-              >GP</span
+              >{member.goldAbbreviation}</span
             >
           </span>
           <ActorEncumbranceBar actor={member.actor} />
@@ -163,4 +164,6 @@
     sheetDocument={context.actor}
     root={true}
   />
+
+  <ActorInventoryFooter useAttunement={false} />
 </div>
