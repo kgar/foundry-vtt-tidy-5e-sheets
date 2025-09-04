@@ -202,7 +202,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
     {#key enriched}
-      <div class="editor" use:manageSecrets={{ document }}>
+      <div class="editor" use:manageSecrets={{ document: context.actor }}>
         <div data-field={field} class="user-select-text">
           {@html enriched}
         </div>

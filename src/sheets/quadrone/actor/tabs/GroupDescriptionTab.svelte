@@ -68,7 +68,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
     {#key context.enriched.description.summary}
-      <div class="editor" use:manageSecrets={{ document }}>
+      <div class="editor" use:manageSecrets={{ document: context.actor }}>
         <div data-field="system.description.summary" class="user-select-text">
           {@html context.enriched.description.summary}
         </div>
@@ -97,7 +97,7 @@
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </div>
     {#key context.enriched.description.full}
-      <div class="editor" use:manageSecrets={{ document }}>
+      <div class="editor" use:manageSecrets={{ document: context.actor }}>
         <div data-field="system.description.full" class="user-select-text">
           {@html context.enriched.description.full}
         </div>
