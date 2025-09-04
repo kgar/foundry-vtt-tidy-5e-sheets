@@ -31,6 +31,7 @@
     .actor-subtitle {
       max-height: 1.25rem;
       min-height: 1.25rem;
+      align-content: center;
 
       .pill {
         flex: 0 1 auto;
@@ -368,14 +369,21 @@
 
       .tidy-table-cell {
         max-width: none;
-        flex-direction: column;
         gap: var(--t5e-size-1x);
         justify-content: center;
         align-items: center;
         border: none;
 
+        &:not(.tidy-table-actions) {
+          flex-direction: column;
+        }
+
         &.primary {
           align-items: flex-start;
+        }
+
+        &.tidy-table-actions {
+          padding-left: var(--t5e-size-2x);
         }
       }
 
