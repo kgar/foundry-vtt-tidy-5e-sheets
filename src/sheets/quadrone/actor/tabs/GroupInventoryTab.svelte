@@ -51,8 +51,12 @@
 
 
 <aside class="sidebar">
-  {#each context.members.character.members as member}
-    <div class="character-container flexrow">
+  {#each [
+    ...context.members.character.members,
+    ...context.members.npc.members,
+    ...context.members.vehicle.members,
+  ] as member}
+    <div class="actor-container flexrow">
       {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
         {@const actorIsDead = 
           member.actor.system.attributes?.hp?.value === 0 &&
@@ -97,9 +101,10 @@
           <span class="font-data-medium color-text-default flexshrink">100</span>
           <span class="font-label-medium color-text-gold flexshrink">GP</span>
         </span>
-          <!-- TODO: Add encumbrance bar -->
-          <!-- <ActorEncumbranceBar /> -->
-        {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+        <!-- TODO: Add encumbrance bar -->
+        <!-- <ActorEncumbranceBar /> -->
+         <div class="meter progress encumbrance theme-dark medium" aria-valuemin="0" data-tooltip-direction="UP"  aria-valuenow="59.45833333333333" aria-valuetext="142.7" aria-valuemax="240" style="--bar-percentage: 59%; --encumbrance-low: 33.333333333333336%; --encumbrance-high: 66.66666666666667%;"><div class="label"><i class="fas fa-weight-hanging text-label-icon"></i> <span class="value font-weight-label">142.7</span> <span class="separator">/</span> <span class="max color-text-default">240</span></div> <i class="breakpoint encumbrance-low arrow-up" role="presentation"></i> <i class="breakpoint encumbrance-low arrow-down" role="presentation"></i> <i class="breakpoint encumbrance-high arrow-up" role="presentation"></i> <i class="breakpoint encumbrance-high arrow-down" role="presentation"></i></div>
+      {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
           <p></p>
         {/if}
       </div>
@@ -107,7 +112,7 @@
     </div>
   {/each} 
 </aside>
-<div class="inventory-content">
+<div class="groups-tab-content inventory-content">
   <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
   {#if context.showContainerPanel && !!context.containerPanelItems.length}

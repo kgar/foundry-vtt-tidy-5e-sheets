@@ -36,6 +36,13 @@
   //     ),
   //   }),
   // );
+  let awardAriaLabel = $derived(
+    localize(
+      context.enableXp
+        ? 'DND5E.Group.Distribute.xp'
+        : 'DND5E.Group.Distribute.noxp',
+    ),
+  );
 </script>
 
 <header class="sheet-header flexcol theme-dark">
@@ -74,27 +81,27 @@
             class="button long-rest button-gold flexshrink"
             data-tooltip="DND5E.REST.Long.Label"
             aria-label={localize('DND5E.Group.PlaceMembers')}
-            onclick={() => context.actor.placeMembers()}
+            onclick={() => context.sheet.placeMembers()}
           >
             <i class="fas fa-street-view"></i>
-            Place actors
+            {localize('DND5E.Group.PlaceMembers')}
           </button>
           <button
+            aria-label={awardAriaLabel}
             type="button"
             class="button long-rest button-gold flexshrink"
-            data-tooltip="DND5E.REST.Long.Label"
-            aria-label={localize('DND5E.Award.Action')}
-            onclick={() => context.actor.award()}
+            data-tooltip={awardAriaLabel}
+            onclick={() => context.sheet.award()}
           >
             <i class="fas fa-trophy"></i>
-            Award
+            {localize('DND5E.Award.Title')}
           </button>
           <button
             type="button"
             class="button short-rest button-gold flexshrink"
             data-tooltip="DND5E.REST.Short.Label"
             aria-label={localize('DND5E.REST.Short.Label')}
-            onclick={() => context.actor.shortRest()}
+            onclick={() => context.sheet.shortRest()}
           >
             <i class="fas fa-utensils"></i>
             {localize('DND5E.REST.Short.Label')}
