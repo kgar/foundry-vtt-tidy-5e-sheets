@@ -20,11 +20,11 @@
   - [x] Speeds
   - [x] Tools
 - [x] Wire up all member tab data
-- [ ] Implement Cargo calculations for Vehicle members.
+- [x] Make group sheet refresh on relevant actor changes.
+- [x] Make Description tab secrets work.
+- [ ] ~~Implement Cargo calculations for Vehicle members.~~ This is encumbrance. Suggest instead that we just remove the cargo column.
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
-- [ ] Make group sheet refresh on relevant actor changes.
-- [ ] Make Description tab secrets work.
 - [ ] Plan the next tab 🚀
 
 ### The Short List
