@@ -1310,6 +1310,8 @@ export type GroupSkill = {
 } & MeasurableEmphasizable<GroupMemberSkillContext>;
 
 export type GroupTraitBase<TValue = string> = {
+  /** Optional key for traits that leverage keys. */
+  key?: string;
   /** Text that describes the trait. */
   label: string;
   /** A value associated with the trait. */
