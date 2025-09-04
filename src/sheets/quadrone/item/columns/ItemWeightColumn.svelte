@@ -9,8 +9,14 @@
       rowContext?.totalWeight ?? item.system.weight.value,
     ),
   );
+
+  let unit = $derived(
+    CONFIG.DND5E.weightUnits[item.system.weight.units]?.abbreviation ??
+      item.system.weight.units,
+  );
 </script>
 
 <span>
-  {weight} <span class="color-text-lighter">{item.system.weight.units}</span>
+  {weight}
+  <span class="color-text-lighter">{unit}</span>
 </span>

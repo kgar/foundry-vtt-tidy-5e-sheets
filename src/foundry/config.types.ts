@@ -3657,31 +3657,8 @@ export type CONFIG = {
       any: string;
     };
     weightUnits: {
-      lb: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-      tn: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-      kg: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-      Mg: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-    };
+      [k in 'lb' | 'tn' | 'kg' | 'Mg']: WeightUnitConfig;
+    } & Record<string, WeightUnitConfig>;
     encumbrance: {
       currencyPerWeight: {
         imperial: number;
@@ -5544,4 +5521,11 @@ export type ActivityActivationTypeConfig = {
 type MovementTypeConfig = {
   label: string;
   walkFallback?: boolean;
+};
+
+type WeightUnitConfig = {
+  label: string;
+  abbreviation: string;
+  conversion: number;
+  type: string;
 };

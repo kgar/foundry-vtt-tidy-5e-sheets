@@ -574,9 +574,9 @@ export const FoundryAdapter = {
   },
   getWeightUnit() {
     return FoundryAdapter.localize(
-      `DND5E.Abbreviation${
-        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kg' : 'Lbs'
-      }`
+      `DND5E.UNITS.WEIGHT.${
+        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
+      }.Abbreviation`
     );
   },
   isActiveEffectContextFavorited(context: ActiveEffectContext, actor: Actor5e) {
