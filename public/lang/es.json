@@ -792,7 +792,7 @@
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Hoja de Grupo Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Hoja de Encuentro Tidy 5e",
     "TIDY5E.AddSpecific": "Añadir {name}",
-    "TIDY5E.StatblockTabName": "Bloque de Estadísticas",
+    "TIDY5E.StatblockTabName": "Estadísticas",
     "TIDY5E.JournalEntry.NewTitle": "Entrada de Diario {number}",
     "TIDY5E.SheetLock.Empty.Hint": "Comienza agregando una clase y tus primeros objetos. Después, utiliza el menú de objetos o presiona click derecho y elije \"Agregar a la Pestaña de la Hoja\" para agregarlo aquí.",
     "TIDY5E.ContextMenuActionAddToSheetTab": "Añadir a la Pestaña de la Hoja",
