@@ -12,6 +12,7 @@
 - [x] Add sample award button with sheet function behind it
 - [x] Add encumbrance to group member prep
 - [ ] Col spec: make XP columns enabled only when XP is enabled
+- [ ] Add member tooltips to Members tab sidebar
 - [ ] Wire up all member tab data
 - [ ] Implement Cargo calculations for Vehicle members.
 - [ ] Members tab security
@@ -54,6 +55,7 @@
 - [ ] NPC: Add tools section to the sidebar if NPC sheets even supports it
 - [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 - [ ] Show Currency "item table section" when the user has configured more than 5 currencies. https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876 - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
+
 
 ### (Almost) Everything after the short list
 

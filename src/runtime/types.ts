@@ -164,7 +164,7 @@ export type ColumnSpecification = {
       };
   widthRems:
     | number
-    | ((section: ColumnSpecificationCalculatedWidthArgs) => number); // default: 5 (rem)
+    | ((args: ColumnSpecificationCalculatedWidthArgs) => number); // default: 5 (rem)
   priority: number;
   order: number;
   headerClasses?: ClassValue;
@@ -173,6 +173,14 @@ export type ColumnSpecification = {
     data: ColumnSpecificationConditionArgs<any, TSection>
   ) => boolean;
 };
+
+export type GetConfiguredColumnSpecificationsArgs = {
+  sheetType: string;
+  tabId: string;
+  sectionKey: string;
+  sheetDocument: any;
+  section?: TidySectionBase;
+} & ColumnSpecificationCalculatedWidthArgs;
 
 /** Column specification whose optionally calculable width has been calculated and which has a key for uniquely identifying it. */
 export type ConfiguredColumnSpecification = ColumnSpecification & {

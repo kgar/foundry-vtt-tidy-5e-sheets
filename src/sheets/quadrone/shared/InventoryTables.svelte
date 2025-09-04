@@ -113,14 +113,14 @@
       )}
       {#if section.show && hasViewableItems}
         {@const columns = new ColumnsLoadout(
-          ItemColumnRuntime.getConfiguredColumnSpecifications(
-            containingDocument.type,
-            effectiveTabId,
-            section.key,
-            {
-              rowActions: section.rowActions,
-            },
-          ),
+          ItemColumnRuntime.getConfiguredColumnSpecifications({
+            sheetType: containingDocument.type,
+            tabId: effectiveTabId,
+            sectionKey: section.key,
+            rowActions: section.rowActions,
+            section: section,
+            sheetDocument: containingDocument,
+          }),
         )}
         {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
           sectionsInlineWidth,

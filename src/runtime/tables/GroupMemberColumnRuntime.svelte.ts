@@ -16,6 +16,7 @@ import GroupNpcXpColumn from 'src/sheets/quadrone/item/columns/GroupNpcXpColumn.
 import GroupVehicleDtColumn from 'src/sheets/quadrone/item/columns/GroupVehicleDtColumn.svelte';
 import GroupVehicleCrewColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCrewColumn.svelte';
 import GroupVehicleCargoColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCargoColumn.svelte';
+import { systemSettings } from 'src/settings/settings.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
@@ -78,6 +79,9 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: GroupCharacterXpColumn,
       },
+      condition: () =>
+        systemSettings.value.levelingMode !==
+        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       widthRems: 3.75,
     };
 
@@ -90,6 +94,9 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: GroupNpcXpColumn,
       },
+      condition: () =>
+        systemSettings.value.levelingMode !==
+        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       widthRems: 3.75,
     };
 

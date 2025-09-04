@@ -32,14 +32,14 @@
 <section class="groups-tab-content group-members-content flexcol">
   {#if characters.length}
     {@const columns = new ColumnsLoadout(
-      GroupMemberColumnRuntime.getConfiguredColumnSpecifications(
-        CONSTANTS.SHEET_TYPE_GROUP,
-        CONSTANTS.TAB_MEMBERS,
-        CONSTANTS.SHEET_TYPE_CHARACTER,
-        {
-          rowActions: rowActions,
-        },
-      ),
+      GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: CONSTANTS.SHEET_TYPE_GROUP,
+        tabId: CONSTANTS.TAB_MEMBERS,
+        sectionKey: CONSTANTS.SHEET_TYPE_CHARACTER,
+        rowActions: rowActions,
+        section: { ...SheetSections.EMPTY, rowActions },
+        sheetDocument: context.actor,
+      }),
     )}
     {@const visibleItemCount = characters.length}
 
@@ -65,14 +65,14 @@
 
   {#if npcs.length}
     {@const columns = new ColumnsLoadout(
-      GroupMemberColumnRuntime.getConfiguredColumnSpecifications(
-        CONSTANTS.SHEET_TYPE_GROUP,
-        CONSTANTS.TAB_MEMBERS,
-        CONSTANTS.SHEET_TYPE_NPC,
-        {
-          rowActions: rowActions,
-        },
-      ),
+      GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: CONSTANTS.SHEET_TYPE_GROUP,
+        tabId: CONSTANTS.TAB_MEMBERS,
+        sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+        rowActions: rowActions,
+        section: { ...SheetSections.EMPTY, rowActions },
+        sheetDocument: context.actor,
+      }),
     )}
     {@const visibleItemCount = npcs.length}
 
@@ -98,14 +98,14 @@
 
   {#if vehicles.length}
     {@const columns = new ColumnsLoadout(
-      GroupMemberColumnRuntime.getConfiguredColumnSpecifications(
-        CONSTANTS.SHEET_TYPE_GROUP,
-        CONSTANTS.TAB_MEMBERS,
-        CONSTANTS.SHEET_TYPE_VEHICLE,
-        {
-          rowActions: rowActions,
-        },
-      ),
+      GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: CONSTANTS.SHEET_TYPE_GROUP,
+        tabId: CONSTANTS.TAB_MEMBERS,
+        sectionKey: CONSTANTS.SHEET_TYPE_VEHICLE,
+        rowActions: rowActions,
+        section: { ...SheetSections.EMPTY, rowActions },
+        sheetDocument: context.actor,
+      }),
     )}
     {@const visibleItemCount = vehicles.length}
 
