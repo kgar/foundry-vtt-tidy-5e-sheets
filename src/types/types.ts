@@ -1173,6 +1173,8 @@ export type CharacterSheetQuadroneContext = {
   showDeathSaves: boolean;
   portrait: {
     src: string;
+    isRandom: boolean;
+    truePath?: string;
     shape: PortraitShape;
     path: string;
     isVideo: boolean;
@@ -1213,6 +1215,8 @@ export type NpcSheetQuadroneContext = {
   orphanedSubclasses: Item5e[];
   portrait: {
     src: string;
+    isRandom: boolean;
+    truePath?: string;
     shape: PortraitShape;
     path: string;
     isVideo: boolean;

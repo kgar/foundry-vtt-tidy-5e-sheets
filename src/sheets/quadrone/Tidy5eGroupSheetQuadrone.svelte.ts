@@ -34,6 +34,8 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { Container } from 'src/features/containers/Container';
 import type { Group5eMember } from 'src/types/group.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { randomItem } from 'src/utils/array';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -270,7 +272,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     if (showTokenPortrait && token?.randomImg) {
       const images = await actor.getTokenImages();
-      src = images[Math.floor(Math.random() * images.length)];
+      src = randomItem(images);
     }
 
     if (!src) {
@@ -279,7 +281,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     return {
       src,
-      isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
+      isVideo: FoundryAdapter.hasVideoExtension(src),
     };
   }
 

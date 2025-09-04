@@ -36,3 +36,13 @@ export function splitSemicolons(input: string): string[] {
     .map((t) => t.trim())
     .filter((t) => t);
 }
+
+/**
+ * Returns a random item for a given ArrayLike
+ * @template T Array element
+ * @param {Array<T>} input
+ * @returns {T}
+ */
+export function randomItem<T>(arr: ArrayLike<T>): T {
+  return arr[Math.floor(arr.length * Math.random())];
+}
