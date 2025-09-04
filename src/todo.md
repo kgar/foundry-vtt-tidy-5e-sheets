@@ -18,6 +18,7 @@
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
 - [ ] Make group sheet refresh on relevant actor changes.
+- [ ] Make Description tab secrets work.
 - [ ] Plan the next tab 🚀
 
 ### The Short List

@@ -1341,7 +1341,12 @@ export type TravelPaceConfigEntry = {
 
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
-
+  enriched: {
+    description: {
+      full: string;
+      summary: string;
+    }
+  }
   members: GroupMembersQuadroneContext;
   skills: GroupSkill[];
   travel: {

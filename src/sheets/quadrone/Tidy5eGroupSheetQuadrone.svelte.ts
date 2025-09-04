@@ -160,11 +160,30 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       paces.find(
         (pace) => pace.key === this.actor.system.attributes.movement.pace
       ) ?? paces[0];
+
+    const enrichmentArgs = {
+      secrets: this.actor.isOwner,
+      rollData: actorContext.rollData,
+      relativeTo: this.actor,
+    };
+
     const context: GroupSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
       ),
       currencies,
+      enriched: {
+        description: {
+          full: await foundry.applications.ux.TextEditor.enrichHTML(
+            this.actor.system.description.full,
+            enrichmentArgs
+          ),
+          summary: await foundry.applications.ux.TextEditor.enrichHTML(
+            this.actor.system.description.summary,
+            enrichmentArgs
+          ),
+        },
+      },
       inventory: [],
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
