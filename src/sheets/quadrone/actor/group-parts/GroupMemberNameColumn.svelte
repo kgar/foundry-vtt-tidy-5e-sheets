@@ -31,7 +31,7 @@
   >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
 </script>
 
-<div class="tidy-table-cell member-vitals-container">
+<div class="tidy-table-cell actor-image-container">
   <div
     role="button"
     tabindex={0}
@@ -74,7 +74,7 @@
 </div>
 <div class="tidy-table-cell text-cell primary item-label flexcol">
   <div
-    class="item-name"
+    class="actor-name"
     role="button"
     tabindex={0}
     onclick={() => member.actor.sheet.render(true)}
@@ -85,30 +85,36 @@
     onmouseenter={() => (emphasizedActorRef.value = member)}
     onmouseleave={() => (emphasizedActorRef.value = undefined)}
   >
-    <h4>
+    <h4 class="font-label-medium">
       {member.actor.name}
     </h4>
     {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
       {#each member.actor.classes as thisClass}
-        <span class="font-label-medium color-text-gold">{thisClass.name}</span>
+        <span class="font-label-medium color-text-gold-emphasis">{thisClass.name}</span>
         <span class="font-data-medium color-text-default"
           >{thisClass.levels}</span
         >
       {/each}
     {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
       <span class="flexrow">
+        {#each member.actor.classes as thisClass}
+          <span class="font-label-medium color-text-gold-emphasis">{thisClass.name}</span>
+          <span class="font-data-medium color-text-default"
+            >{thisClass.levels}</span
+          >
+        {/each}
         <span class="cr">
-          <span class="font-label-medium color-text-gold">CR</span>
+          <span class="font-label-medium color-text-gold-emphasis">CR</span>
           <span class="font-data-medium color-text-default">5</span>
         </span>
         <div class="divider-dot"></div>
         <span class="size">
-          <span class="font-label-medium color-text-gold">Mediumish</span>
+          <span class="font-label-medium color-text-gold-emphasis">Mediumish</span>
         </span>
         <!-- {#if member.actor.creatureType.title} -->
         <div class="divider-dot"></div>
         <span class="creature-type">
-          <span class="font-label-medium color-text-gold">
+          <span class="font-label-medium color-text-gold-emphasis">
             TODO
             <!-- {member.actor.creatureType.title}
             {#if member.actor.creatureType.subtitle}
@@ -120,7 +126,7 @@
       <!-- {/if} -->
     {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
       <span
-        class="font-label-medium color-text-gold"
+        class="font-label-medium color-text-gold-emphasis"
         title={localize('DND5E.VehicleType')}
         >{localize('DND5E.VehicleType')} ({member.actor.system
           .vehicleType})</span
