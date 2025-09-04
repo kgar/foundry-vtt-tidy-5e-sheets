@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { GroupMemberQuadroneContext } from 'src/types/types';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import GroupSkillTooltip from 'src/tooltips/GroupSkillTooltip.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -18,8 +19,18 @@
 
   let emphasizedMember = $derived(emphasizedActorRef.value);
 
+  let tooltip = $state<GroupSkillTooltip | undefined>();
+
+  let skilledMembers = $derived(
+    context.system.members
+      .map((m: any) => m.actor)
+      .filter((a: any) => a.system.skills),
+  );
+
   const localize = FoundryAdapter.localize;
 </script>
+
+<GroupSkillTooltip bind:this={tooltip} sheetDocument={context.document} />
 
 <div class="skills card">
   <SkillsCardHeader {expanded}>
@@ -61,9 +72,15 @@
               'member-unproficient': memberSkill && !memberProficient,
             },
           ]}
-          data-reference-tooltip={skill.reference}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
+          data-tooltip-direction="UP"
           data-key={skill.key}
+          onmouseover={(ev) =>
+            tooltip?.tryShow(ev, {
+              key: skill.key,
+              label: skill.name,
+              members: skilledMembers,
+            })}
         >
           <span
             class="skill-ability font-label-medium color-text-gold-emphasis"

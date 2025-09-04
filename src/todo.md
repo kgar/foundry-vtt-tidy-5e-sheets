@@ -13,6 +13,12 @@
 - [x] Add encumbrance to group member prep
 - [x] Col spec: make XP columns enabled only when XP is enabled
 - [ ] Add member tooltips to Members tab sidebar
+  - [ ] Languages
+  - [x] Skills
+  - [ ] Senses
+  - [ ] Specials
+  - [ ] Speeds
+  - [ ] Tools
 - [ ] Wire up all member tab data
 - [ ] Implement Cargo calculations for Vehicle members.
 - [ ] Members tab security

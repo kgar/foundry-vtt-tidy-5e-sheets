@@ -14,16 +14,15 @@
 
   let tooltip: HTMLElement;
 
-  let skill: GroupSkill = $state({
+  let skill: Omit<GroupSkill, 'total'> = $state({
     key: '',
     label: '',
     members: [],
-    total: Number.NEGATIVE_INFINITY,
   });
 
   export async function tryShow(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-    hoveredSkill: GroupSkill,
+    hoveredSkill: Omit<GroupSkill, 'total'>,
   ): Promise<any> {
     if (!hoveredSkill.members.length) {
       return;

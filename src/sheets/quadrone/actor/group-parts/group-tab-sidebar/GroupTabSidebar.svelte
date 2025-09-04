@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import GroupSkills from './GroupSkillsCard.svelte';
   import { getContext } from 'svelte';
