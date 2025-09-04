@@ -94,6 +94,55 @@ export function TidyExtensibleDocumentSheetMixin<
           });
           await fp.browse();
         },
+        editImageVideo: async function (
+          this: TidyDocumentSheet,
+          _event,
+          target
+        ) {
+          if (!['IMG', 'VIDEO'].includes(target.nodeName)) {
+            throw new Error(
+              'The editImageVideo action is available only for IMG and VIDEO elements.'
+            );
+          }
+          const attr = target.dataset.edit ?? '';
+          const current = foundry.utils.getProperty(
+            this.document._source,
+            attr
+          );
+          const defaultArtwork =
+            this.document.constructor.getDefaultArtwork?.(
+              this.document._source
+            ) ?? {};
+          const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
+
+          const schemaTypes =
+            this.document.schema.getField(attr)?.categories ?? [];
+          const acceptsImage = schemaTypes.includes('IMAGE');
+          const acceptsVideo = schemaTypes.includes('VIDEO');
+          const type = [acceptsImage && 'image', acceptsVideo && 'video']
+            .filter(Boolean)
+            .join('');
+          if (!type)
+            throw new Error(
+              `Unsupported Schema type. Received: ${schemaTypes}`
+            );
+
+          const fp = new foundry.applications.apps.FilePicker.implementation({
+            current,
+            type: type,
+            redirectToRoot: defaultImage ? [defaultImage] : [],
+            callback: (path: string) => {
+              this.document.update({
+                [attr]: path,
+              });
+            },
+            position: {
+              top: this.position.top + 40,
+              left: this.position.left + 10,
+            },
+          });
+          await fp.browse();
+        },
       },
     };
 
@@ -633,7 +682,7 @@ export function TidyExtensibleDocumentSheetMixin<
           updatedOptions.document
         );
 
-        /* 
+        /*
           Rather than update the source object, make a new one and spread the actions across.
           Otherwise, it has a chance of updating DEFAULT_OPTIONS.
           For controls, that causes the same control to be added each time the constructor fires.

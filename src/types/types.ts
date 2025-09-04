@@ -980,6 +980,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
     src: string;
     shape: PortraitShape;
     path: string;
+    isVideo: boolean;
   };
   rollData: any;
   saves: ActorSaves;

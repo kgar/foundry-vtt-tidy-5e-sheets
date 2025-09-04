@@ -71,13 +71,31 @@
   class={['actor-image', currentPortraitShape, { dead: actorIsDead }]}
   style="position: relative;"
 >
-  <img
-    src={imageUrl}
-    alt={imageAlt}
-    class={['pointer', { dead: actorIsDead }]}
-    data-action={context.unlocked ? 'editImage' : 'showArtwork'}
-    data-edit={context.portrait.path}
-  />
+  {#if context.portrait.isVideo}
+    <video
+      src={imageUrl}
+      autoplay
+      bind:paused={actorIsDead}
+      loop
+      muted
+      playsinline
+      disablepictureinpicture
+      class={['pointer', { dead: actorIsDead }]}
+      data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
+      data-edit={context.portrait.path}
+      >
+      {imageAlt}
+      </video>
+      <input type="hidden" name={context.portrait.path} value={imageUrl} />
+  {:else}
+    <img
+      src={imageUrl}
+      alt={imageAlt}
+      class={['pointer', { dead: actorIsDead }]}
+      data-action={context.unlocked ? 'editImage' : 'showArtwork'}
+      data-edit={context.portrait.path}
+    />
+  {/if}
   {#if actorIsDead}
     <div class="dead-overlay"></div>
   {/if}
