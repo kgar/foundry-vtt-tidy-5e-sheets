@@ -266,6 +266,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           ? effectiveToken?.texture.src ?? this.actor.img
           : this.actor.img,
         path: showToken ? 'prototypeToken.texture.src' : 'img',
+        isVideo: FoundryAdapter.hasVideoExtension(
+          showToken
+            ? effectiveToken?.texture.src ?? this.actor.img
+            : this.actor.img
+        ),
       },
       species: species
         ? {
@@ -426,8 +431,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           });
         continue;
       } else if (type === 'slots') {
-        const { value, max, level, type: method } =
-          this.actor.system.spells[id] ?? {};
+        const {
+          value,
+          max,
+          level,
+          type: method,
+        } = this.actor.system.spells[id] ?? {};
         const uses = { value, max, field: `system.spells.${id}.value` };
 
         const model = CONFIG.DND5E.spellcasting[method];

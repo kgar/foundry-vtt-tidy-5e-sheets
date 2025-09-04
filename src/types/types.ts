@@ -1175,6 +1175,7 @@ export type CharacterSheetQuadroneContext = {
     src: string;
     shape: PortraitShape;
     path: string;
+    isVideo: boolean;
   };
   size: ActorSizeContext;
   sheet: Tidy5eCharacterSheetQuadrone;
@@ -1214,6 +1215,7 @@ export type NpcSheetQuadroneContext = {
     src: string;
     shape: PortraitShape;
     path: string;
+    isVideo: boolean;
   };
   showContainerPanel: boolean;
   showDeathSaves: boolean;

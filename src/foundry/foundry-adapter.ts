@@ -1557,4 +1557,8 @@ export const FoundryAdapter = {
 
     return classes;
   },
+
+  hasVideoExtension(src: string): boolean {
+    return foundry.helpers.media.VideoHelper.hasVideoExtension(src);
+  },
 };
