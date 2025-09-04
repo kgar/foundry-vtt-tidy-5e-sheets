@@ -37,12 +37,13 @@ import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRunti
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { splitSemicolons } from 'src/utils/array';
+import { randomItem, splitSemicolons } from 'src/utils/array';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -122,10 +123,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-
     // Effects & Conditions
     let baseEffects =
       dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -158,12 +155,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       rollData: actorContext.rollData,
       relativeTo: this.actor,
     };
-    const showToken =
-      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-        true || themeSettings.portraitShape === 'token';
-    const effectiveToken = this.actor.isToken
-      ? this.actor.token
-      : this.actor.prototypeToken;
 
     let background = this.actor.itemTypes.background[0];
     let species = this.actor.itemTypes.race[0];
@@ -218,13 +209,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       habitats: [],
       important,
       inventory: [],
-      portrait: {
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
-        src: showToken
-          ? effectiveToken?.texture.src ?? this.actor.img
-          : this.actor.img,
-        path: showToken ? 'prototypeToken.texture.src' : 'img',
-      },
+      portrait: await this._getPortrait(),
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       senses: super._getSenses(),
@@ -339,6 +324,37 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.tabs = await NpcSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  private async _getPortrait(): Promise<NpcSheetQuadroneContext['portrait']> {
+    const { actor } = this;
+    const defaults = Actor.implementation.getDefaultArtwork(actor._source);
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
+    const showToken =
+      actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] === true ||
+      themeSettings.portraitShape === 'token';
+    const effectiveToken = actor.isToken ? actor.token : actor.prototypeToken;
+    const isRandom = !!effectiveToken?.randomImg;
+    const rawSrc = showToken
+      ? effectiveToken?.texture.src ?? actor.img
+      : actor.img;
+
+    let src = rawSrc;
+    if (showToken && isRandom) src = randomItem(await actor.getTokenImages());
+
+    src = src?.trim();
+    src ||= showToken ? defaults.texture.src : defaults.img;
+
+    const isVideo = FoundryAdapter.hasVideoExtension(src);
+
+    return {
+      src,
+      path: showToken ? 'prototypeToken.texture.src' : 'img',
+      shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+      isVideo,
+      isRandom,
+      truePath: isRandom ? rawSrc : undefined,
+    };
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {

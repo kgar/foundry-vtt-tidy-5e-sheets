@@ -57,6 +57,8 @@ import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { randomItem } from 'src/utils/array';
+import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -138,10 +140,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-
     // Effects & Conditions
     let baseEffects =
       dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -179,13 +177,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     let background = this.actor.system.details.background;
     let species = this.actor.system.details.race;
-
-    const showToken =
-      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-        true || themeSettings.portraitShape === 'token';
-    const effectiveToken = this.actor.isToken
-      ? this.actor.token
-      : this.actor.prototypeToken;
 
     const context: CharacterSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
@@ -260,13 +251,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
-      portrait: {
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
-        src: showToken
-          ? effectiveToken?.texture.src ?? this.actor.img
-          : this.actor.img,
-        path: showToken ? 'prototypeToken.texture.src' : 'img',
-      },
+      portrait: await this._getPortrait(),
       species: species
         ? {
             id: species.id,
@@ -326,6 +311,39 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  private async _getPortrait(): Promise<
+    CharacterSheetQuadroneContext['portrait']
+  > {
+    const { actor } = this;
+    const defaults = Actor.implementation.getDefaultArtwork(actor._source);
+    const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
+    const showToken =
+      actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] === true ||
+      themeSettings.portraitShape === 'token';
+    const effectiveToken = actor.isToken ? actor.token : actor.prototypeToken;
+    const isRandom = !!effectiveToken?.randomImg;
+    const rawSrc = showToken
+      ? effectiveToken?.texture.src ?? actor.img
+      : actor.img;
+
+    let src = rawSrc;
+    if (showToken && isRandom) src = randomItem(await actor.getTokenImages());
+
+    src = src?.trim();
+    src ||= showToken ? defaults.texture.src : defaults.img;
+
+    const isVideo = FoundryAdapter.hasVideoExtension(src);
+
+    return {
+      src,
+      path: showToken ? 'prototypeToken.texture.src' : 'img',
+      shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+      isVideo,
+      isRandom,
+      truePath: isRandom ? rawSrc : undefined,
+    };
   }
 
   private async tryGetInspirationSource(): Promise<
@@ -426,8 +444,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           });
         continue;
       } else if (type === 'slots') {
-        const { value, max, level, type: method } =
-          this.actor.system.spells[id] ?? {};
+        const {
+          value,
+          max,
+          level,
+          type: method,
+        } = this.actor.system.spells[id] ?? {};
         const uses = { value, max, field: `system.spells.${id}.value` };
 
         const model = CONFIG.DND5E.spellcasting[method];
