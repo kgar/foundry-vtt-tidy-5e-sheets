@@ -123,20 +123,6 @@
       {/if}
     </span>
   {/if}
-  {#if context.unlocked}
-    <button
-      aria-label={awardAriaLabel}
-      type="button"
-      class={[
-        'button button-borderless button-icon-only button-config flexshrink',
-      ]}
-      data-tooltip
-      onclick={() => context.sheet.award()}
-      data-tidy-sheet-part="ability-configuration-control"
-    >
-      <i class="fas fa-trophy"></i>
-    </button>
-  {/if}
 </div>
 
 <div
