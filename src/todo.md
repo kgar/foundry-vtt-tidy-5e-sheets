@@ -19,7 +19,7 @@
   - [x] Specials
   - [x] Speeds
   - [x] Tools
-- [ ] Wire up all member tab data
+- [x] Wire up all member tab data
 - [ ] Implement Cargo calculations for Vehicle members.
 - [ ] Members tab security
   - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic

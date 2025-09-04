@@ -5,6 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import type { Item5e } from 'src/types/item.types';
 
   let localize = FoundryAdapter.localize;
 
@@ -89,47 +90,76 @@
       {member.actor.name}
     </h4>
     {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
-      {#each member.actor.classes as thisClass}
-        <span class="font-label-medium color-text-gold-emphasis">{thisClass.name}</span>
+      {@const classes = Object.values<Item5e>(member.actor.classes)}
+
+      {#each classes as thisClass}
+        <span class="font-label-medium color-text-gold-emphasis"
+          >{thisClass.name}</span
+        >
         <span class="font-data-medium color-text-default"
-          >{thisClass.levels}</span
+          >{thisClass.system.levels}</span
         >
       {/each}
     {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+      {@const formattedCr = dnd5e.utils.formatCR(
+        member.actor.system.details.cr,
+      )}
+
+      {@const size =
+        CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
+        member.actor.system.traits.size}
+
+      {@const creatureType =
+        member.actor.system.details.type.value === 'custom'
+          ? member.actor.system.details.type.custom
+          : CONFIG.DND5E.creatureTypes[member.actor.system.details.type.value]
+              ?.label}
+
+      {@const creatureSubtype = member.actor.system.details.type.subtype}
+
+      {@const classes = Object.values<Item5e>(member.actor.classes)}
+
       <span class="flexrow">
-        {#each member.actor.classes as thisClass}
-          <span class="font-label-medium color-text-gold-emphasis">{thisClass.name}</span>
-          <span class="font-data-medium color-text-default"
-            >{thisClass.levels}</span
+        {#each classes as thisClass}
+          <span class="font-label-medium color-text-gold-emphasis"
+            >{thisClass.name}</span
           >
+          <span class="font-data-medium color-text-default"
+            >{thisClass.system.levels}</span
+          >
+        {:else}
+          <span class="cr">
+            <span class="font-label-medium color-text-gold-emphasis"
+              >{localize('DND5E.AbbreviationCR')}</span
+            >
+            <span class="font-data-medium color-text-default"
+              >{formattedCr}</span
+            >
+          </span>
         {/each}
-        <span class="cr">
-          <span class="font-label-medium color-text-gold-emphasis">CR</span>
-          <span class="font-data-medium color-text-default">5</span>
-        </span>
         <div class="divider-dot"></div>
         <span class="size">
-          <span class="font-label-medium color-text-gold-emphasis">Mediumish</span>
+          <span class="font-label-medium color-text-gold-emphasis">{size}</span>
         </span>
-        <!-- {#if member.actor.creatureType.title} -->
-        <div class="divider-dot"></div>
-        <span class="creature-type">
-          <span class="font-label-medium color-text-gold-emphasis">
-            TODO
-            <!-- {member.actor.creatureType.title}
-            {#if member.actor.creatureType.subtitle}
-              ({member.actor.creatureType.subtitle})
-            {/if} -->
+        {#if creatureType}
+          <div class="divider-dot"></div>
+          <span class="creature-type">
+            <span class="font-label-medium color-text-gold-emphasis">
+              {creatureType}
+              {#if creatureSubtype}
+                ({creatureSubtype})
+              {/if}
+            </span>
           </span>
-        </span>
+        {/if}
       </span>
-      <!-- {/if} -->
     {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
-      <span
-        class="font-label-medium color-text-gold-emphasis"
-        title={localize('DND5E.VehicleType')}
-        >{localize('DND5E.VehicleType')} ({member.actor.system
-          .vehicleType})</span
+      {@const vehicleType =
+        CONFIG.DND5E.vehicleTypes[member.actor.system.vehicleType] ??
+        member.actor.system.vehicleType}
+
+      <span class="font-label-medium color-text-gold-emphasis"
+        >{vehicleType}</span
       >
     {/if}
   </div>
