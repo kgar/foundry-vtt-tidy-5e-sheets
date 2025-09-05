@@ -79,6 +79,7 @@
           : null}
       onmouseenter={() => (hoveredMember = member.actor.uuid)}
       onmouseleave={() => (hoveredMember = null)}
+      data-uuid={member.actor.uuid}
     >
       <div class={['actor-image-container flexshrink']}>
         <div

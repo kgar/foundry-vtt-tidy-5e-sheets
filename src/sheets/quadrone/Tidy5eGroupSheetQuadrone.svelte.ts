@@ -49,6 +49,7 @@ import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -934,6 +935,48 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       },
       origin: this.actor,
     }).render({ force: true });
+  }
+
+  /* -------------------------------------------- */
+  /*  Life-Cycle Handlers                         */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _onDropItem(
+    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+    item: Item5e
+  ) {
+    const { uuid } =
+      event.target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+    const target = await fromUuid(uuid);
+    if (target instanceof foundry.documents.Actor)
+      return target.sheet._onDropCreateItems(event, [item]);
+    return super._onDropItem(event, item);
+  }
+
+  /** @inheritDoc */
+  async _onDropCreateItems(
+    event: DragEvent,
+    items: Item5e[],
+    behavior?: DropEffectValue | null
+  ) {
+    let foundNonPhysical = false;
+    items = items.filter((item) => {
+      if (
+        !item.system.constructor._schemaTemplates?.includes(
+          dnd5e.dataModels.item.PhysicalItemTemplate
+        )
+      ) {
+        foundNonPhysical = true;
+        return false;
+      }
+      return true;
+    });
+    if (foundNonPhysical)
+      ui.notifications.warn('DND5E.Group.Warning.PhysicalItemOnly', {
+        localize: true,
+      });
+    return super._onDropCreateItems(event, items, behavior);
   }
 
   /* -------------------------------------------- */

@@ -80,6 +80,7 @@ declare global {
         LocalDocumentField: typeof LocalDocumentField;
         MappingField: typeof MappingField;
       };
+      item: any;
     };
   } & Record<string, any>;
   var Folder: any;

@@ -1063,41 +1063,35 @@ export function Tidy5eActorSheetQuadroneBase<
       super._onDragStart(event);
     }
 
-    #dropBehavior: DropEffectValue | null = null;
-
     async _onDrop(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
     ): Promise<any> {
-      this.#dropBehavior = this._dropBehavior(event);
+      (event as any)._behavior = this._dropBehavior(event);
 
-      try {
-        this._currentDragEvent = event;
-        const data = foundry.applications.ux.TextEditor.getDragEventData(event);
-        const actor = this.actor;
-        const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
-        if (allowed === false) return;
+      this._currentDragEvent = event;
+      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+      const actor = this.actor;
+      const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
+      if (allowed === false) return;
 
-        // Dropped Documents
-        const documentClass = foundry.utils.getDocumentClass(data.type);
-        if (documentClass) {
-          const document = await documentClass.fromDropData(data);
-          return await this._onDropDocument(event, document);
-        }
-
-        // Other Drops
-        switch (data.type) {
-          case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
-            return await this._onDropJournal(event, data);
-          case CONSTANTS.DOCUMENT_NAME_ACTIVITY:
-            // Activity5e can't be found by `.getDocumentClass()`.
-            const document = await fromUuid(data.uuid);
-            return await this._onDropActivity(event, document);
-        }
-
-        return await super._onDrop(event);
-      } finally {
-        this.#dropBehavior = null;
+      // Dropped Documents
+      const documentClass = foundry.utils.getDocumentClass(data.type);
+      if (documentClass) {
+        const document = await documentClass.fromDropData(data);
+        return await this._onDropDocument(event, document);
       }
+
+      // Other Drops
+      switch (data.type) {
+        case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
+          return await this._onDropJournal(event, data);
+        case CONSTANTS.DOCUMENT_NAME_ACTIVITY:
+          // Activity5e can't be found by `.getDocumentClass()`.
+          const document = await fromUuid(data.uuid);
+          return await this._onDropActivity(event, document);
+      }
+
+      return await super._onDrop(event);
     }
 
     async _onDropDocument(
@@ -1244,7 +1238,7 @@ export function Tidy5eActorSheetQuadroneBase<
       event: DragEvent & { currentTarget: HTMLElement },
       document: Item5e
     ): Promise<object | boolean | undefined> {
-      const behavior = this.#dropBehavior;
+      const behavior = (event as any)._behavior;
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
@@ -1307,6 +1301,15 @@ export function Tidy5eActorSheetQuadroneBase<
       behavior?: DropEffectValue | null
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
+      return await this._onDropCreateItems(event, items, behavior);
+    }
+
+    async _onDropCreateItems(
+      event: Event,
+      items: any[],
+      behavior?: DropEffectValue | null
+    ) {
+      behavior ??= (event as any)._behavior;
       const itemsWithoutAdvancement = items.filter(
         (i) => !i.system.advancement?.length
       );
@@ -1342,13 +1345,8 @@ export function Tidy5eActorSheetQuadroneBase<
       });
 
       if (behavior === 'move') {
-        items.forEach((i) =>
-          fromUuid(i.uuid).then((d: Item5e) =>
-            d?.delete({ deleteContents: true })
-          )
-        );
+        items.forEach((i) => i?.delete({ deleteContents: true }));
       }
-
       return created;
     }
 
@@ -1378,9 +1376,10 @@ export function Tidy5eActorSheetQuadroneBase<
         return false;
       }
 
-      const isOnInventoryTab = this.element.matches(
-        `:has([data-tab-id="${CONSTANTS.TAB_ACTOR_INVENTORY}"].active)`
-      );
+      const isOnInventoryTab =
+        this.element?.matches(
+          `:has([data-tab-id="${CONSTANTS.TAB_ACTOR_INVENTORY}"].active)`
+        ) ?? false;
 
       // Create a Consumable spell scroll on the Inventory tab
       if (
@@ -1552,7 +1551,11 @@ export function Tidy5eActorSheetQuadroneBase<
         })
       );
 
-      return this._onDropItemCreate(droppedItemData, event, this.#dropBehavior);
+      return this._onDropItemCreate(
+        droppedItemData,
+        event,
+        (event as any)._behavior
+      );
     }
 
     /* -------------------------------------------- */

@@ -1113,9 +1113,10 @@ export function Tidy5eActorSheetClassicV2Base<
         return false;
       }
 
-      const isOnInventoryTab = this.element.matches(
-        `:has([data-tab-id="${CONSTANTS.TAB_ACTOR_INVENTORY}"].active)`
-      );
+      const isOnInventoryTab =
+        this.element?.matches(
+          `:has([data-tab-id="${CONSTANTS.TAB_ACTOR_INVENTORY}"].active)`
+        ) ?? false;
 
       // Create a Consumable spell scroll on the Inventory tab
       if (
