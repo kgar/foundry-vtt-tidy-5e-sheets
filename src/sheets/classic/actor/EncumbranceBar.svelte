@@ -9,6 +9,14 @@
   let { encumbrance }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  function formatWeight(value: number): string {
+    const rounded = Math.round((value ?? 0) * 100) / 100;
+    return rounded.toFixed(2).replace(/\.0+$/, '').replace(/\.$/, '');
+  }
+
+  let readableValue = $derived(formatWeight(encumbrance.value ?? 0));
+  let unitsAbbreviation = $derived(FoundryAdapter.getWeightUnit());
 </script>
 
 <div
@@ -24,9 +32,10 @@
 >
   <span class="encumbrance-bar" style="width:{encumbrance.pct}%"
   ></span>
-  <span class="encumbrance-label"
-    >{encumbrance.value} / {encumbrance.max}</span
-  >
+  <span class="encumbrance-label">
+    {readableValue} / {encumbrance.max}
+    <span class="color-text-lightest">{unitsAbbreviation}</span>
+  </span>
   <i class="encumbrance-breakpoint encumbrance-low arrow-up"></i>
   <i class="encumbrance-breakpoint encumbrance-low arrow-down"></i>
   <i class="encumbrance-breakpoint encumbrance-high arrow-up"></i>

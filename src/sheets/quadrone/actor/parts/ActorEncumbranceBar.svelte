@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ActorAttributeEncumbrance } from 'src/foundry/dnd5e.types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import WeightDistributionTooltip from 'src/tooltips/WeightDistributionTooltip.svelte';
   import type { ActorSheetQuadroneContext } from 'src/types/types';
 
@@ -20,13 +21,19 @@
         : `low`,
   );
 
-  let readableValue = $derived((encumbrance.value ?? 0).toFixed(1));
+  function formatWeight(value: number): string {
+    const rounded = Math.round((value ?? 0) * 100) / 100;
+    return rounded.toFixed(2).replace(/\.0+$/, '').replace(/\.$/, '');
+  }
+
+  let readableValue = $derived(formatWeight(encumbrance.value ?? 0));
 
   let encumbranceMaxText = $derived(
     encumbrance.max === Infinity ? '∞' : encumbrance.max,
   );
 
   let weightDistributionTooltip: WeightDistributionTooltip;
+  let unitsAbbreviation = $derived(FoundryAdapter.getWeightUnit());
 </script>
 
 <WeightDistributionTooltip
@@ -58,7 +65,7 @@
     <span class="value font-weight-label">{readableValue}</span>
     <span class="separator">/</span>
     <span class="max color-text-default">{encumbranceMaxText}</span>
-    <!-- <span class="units color-text-lightest">{unitsAbbreviation}</span> -->
+    <span class="units color-text-lightest">{unitsAbbreviation}</span>
   </div>
 
   <i class="breakpoint encumbrance-low arrow-up" role="presentation"></i>
