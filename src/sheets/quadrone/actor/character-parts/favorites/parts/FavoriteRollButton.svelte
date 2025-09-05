@@ -74,6 +74,7 @@ const PSEUDO_BTN_CLICK_KEYS =new Set([' ', 'Enter'])
   tabindex="0"
   data-tooltip={tooltip}
   aria-disabled={!context.editable}
+  data-keyboard-focus
 >
   <span
     class={[
