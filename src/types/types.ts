@@ -33,6 +33,7 @@ import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
+import type { TravelPaceConfig } from 'src/foundry/config.types';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -930,12 +931,21 @@ export type ActorSizeContext = {
 };
 
 export type ActorTraitContext<TValue = unknown> = {
+  /** The key that uniquely identifies this trait amongst others like it. */
   key?: string;
+  /** Icons associated with the trait. */
   icons?: { icon: string; label: string }[];
+  /** Text that describes the trait. */
   label: string;
+  /** The number sign (+ or -) for a numeric trait. */
   sign?: string;
+  /** A value associated with the trait. */
   value?: TValue;
+  /** The localized units abbreviation. */
   units?: string;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+  /** Any classes to apply to the resulting trait UI element. */
   cssClass?: ClassValue;
 };
 
@@ -967,7 +977,6 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   system: Actor5e['system'];
   tabs: Tab[];
   token: TokenDocument | null;
-  traits: Record<string, ActorTraitContext[]>;
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
 } & DocumentSheetQuadroneContext<Actor5e>;
@@ -1004,12 +1013,12 @@ export type CharacterSpeedSenseContext = {
   traitEntries: ActorTraitContext[];
 };
 
-export type ActorSpeedSenseEntryContext = {
+export type ActorSpeedSenseEntryContext<TValue = string> = {
   key: string;
   label: string;
-  value: string;
+  value: TValue;
   units: string;
-} & ActorTraitContext;
+} & ActorTraitContext<TValue>;
 
 export type ActorClassEntryContext = {
   uuid: string;
@@ -1186,6 +1195,7 @@ export type CharacterSheetQuadroneContext = {
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
+  traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & SingleActorContext<Tidy5eCharacterSheetQuadrone>;
 
@@ -1233,13 +1243,27 @@ export type NpcSheetQuadroneContext = {
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
   tools: ActorSkillsToolsContext<ToolData>[];
+  traits: Record<string, ActorTraitContext[]>;
   treasures: { label: string }[];
   type: typeof CONSTANTS.SHEET_TYPE_NPC;
 } & SingleActorContext<Tidy5eNpcSheetQuadrone>;
 
+export type GroupMemberEncumbranceContext = {
+  max: number;
+  pct: number;
+  value: number;
+};
+
 export type GroupMemberQuadroneContext = {
+  accentColor: string | undefined;
   actor: Actor5e;
+  backgroundColor: string | undefined;
+  encumbrance: GroupMemberEncumbranceContext;
+  highlightColor: string | undefined;
+  inspirationSource: InspirationSource | undefined;
   portrait: GroupMemberPortraitContext;
+  gold: string;
+  goldAbbreviation: string;
 };
 
 export type GroupMemberPortraitContext = {
@@ -1248,8 +1272,8 @@ export type GroupMemberPortraitContext = {
 };
 
 export type GroupMemberSection = {
-  members: GroupMemberQuadroneContext[];
   label: string;
+  members: GroupMemberQuadroneContext[];
 };
 
 export type GroupMembersQuadroneContext = {
@@ -1258,9 +1282,87 @@ export type GroupMembersQuadroneContext = {
   vehicle: GroupMemberSection;
 };
 
+export type Emphasizable = {
+  identifiers: Set<string>;
+};
+
+export type MeasurableEmphasizable<TValue> = {
+  identifiers: Map<string, TValue>;
+};
+
+export type GroupSkillModContext = {
+  mod: number;
+  sign: string;
+  value: string;
+};
+
+export type GroupMemberSkillContext = GroupSkillModContext & {
+  passive: number;
+  proficient: number;
+};
+
+export type GroupSkill = {
+  name: string;
+  ability: string;
+  key: string;
+  proficient: boolean;
+  high: GroupSkillModContext;
+  low: GroupSkillModContext;
+  reference: string | undefined;
+} & MeasurableEmphasizable<GroupMemberSkillContext>;
+
+export type GroupTraitBase<TValue = string> = {
+  /** Optional key for traits that leverage keys. */
+  key?: string;
+  /** Text that describes the trait. */
+  label: string;
+  /** A value associated with the trait. */
+  value?: TValue;
+  /** The localized units abbreviation. */
+  units?: string;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+};
+
+export type MeasurableGroupTrait<TValue = string> = GroupTraitBase<TValue> &
+  MeasurableEmphasizable<GroupTraitBase<TValue>>;
+
+export type GroupTrait = GroupTraitBase<never> & Emphasizable;
+
+export type GroupTraits = {
+  languages: MeasurableGroupTrait<number>[];
+  senses: MeasurableGroupTrait<number>[];
+  specials: GroupTrait[];
+  speeds: MeasurableGroupTrait<number>[];
+  tools: GroupTrait[];
+};
+
+export type TravelPaceConfigEntry = {
+  key: string;
+  config: TravelPaceConfig;
+  index: number;
+};
+
 export type GroupSheetQuadroneContext = {
   // TODO: Populate with context data as needed
+  enriched: {
+    description: {
+      full: string;
+      summary: string;
+    }
+  }
   members: GroupMembersQuadroneContext;
+  skills: GroupSkill[];
+  travel: {
+    currentPace: TravelPaceConfigEntry;
+    paces: TravelPaceConfigEntry[];
+    /** 1 (slow), 2 (normal), or 3 (fast), corresponding to the slowest speed, any speed in between, and the fastest speed, respectively. */
+    speed: number;
+    units: {
+      label: string;
+    };
+  };
+  traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorContext<Tidy5eGroupSheetQuadrone>;
 

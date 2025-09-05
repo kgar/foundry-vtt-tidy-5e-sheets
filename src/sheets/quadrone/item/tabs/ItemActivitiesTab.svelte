@@ -59,14 +59,14 @@
 
   let columns = $derived(
     new ColumnsLoadout(
-      ActivityColumnRuntime.getConfiguredColumnSpecifications(
-        context.item.type,
-        tabId,
-        'activities',
-        {
-          rowActions: tableActions,
-        },
-      ),
+      ActivityColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: context.item.type,
+        tabId: tabId,
+        sectionKey: 'activities',
+        rowActions: tableActions,
+        section: section,
+        sheetDocument: context.item,
+      }),
     ),
   );
 

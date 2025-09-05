@@ -175,7 +175,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
 
     let inspirationSource: InspirationSource | undefined =
-      await this.tryGetInspirationSource();
+      await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(this.actor);
 
     let background = this.actor.system.details.background;
     let species = this.actor.system.details.race;
@@ -282,6 +282,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         preferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
       tools: [],
+      traits: this._prepareTraits(),
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       ...this._getClassesAndOrphanedSubclasses(),
       ...actorContext,
@@ -328,17 +329,16 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return context;
   }
 
-  private async tryGetInspirationSource(): Promise<
-    InspirationSource | undefined
-  > {
+  public static async tryGetInspirationSource(
+    actor: Actor5e
+  ): Promise<InspirationSource | undefined> {
     let apiConfig = ActorInspirationRuntime.bankedInspirationConfig;
 
     if (!!apiConfig?.change && !!apiConfig?.getData) {
-      let data = await apiConfig.getData(this, this.actor);
+      let data = await apiConfig.getData(this, actor);
 
       return {
-        change: async (delta) =>
-          await apiConfig.change!(this, this.actor, delta),
+        change: async (delta) => await apiConfig.change!(this, actor, delta),
         value: data?.value ?? 0,
         max: data?.max ?? 0,
       };
@@ -348,8 +348,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       return;
     }
 
-    let inspirationSourceId = TidyFlags.inspirationSource.get(this.actor);
-    let inspirationSourceItem = this.actor.items.get(inspirationSourceId);
+    let inspirationSourceId = TidyFlags.inspirationSource.get(actor);
+    let inspirationSourceItem = actor.items.get(inspirationSourceId);
 
     let inspirationSource: InspirationSource | undefined;
 
@@ -426,8 +426,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           });
         continue;
       } else if (type === 'slots') {
-        const { value, max, level, type: method } =
-          this.actor.system.spells[id] ?? {};
+        const {
+          value,
+          max,
+          level,
+          type: method,
+        } = this.actor.system.spells[id] ?? {};
         const uses = { value, max, field: `system.spells.${id}.value` };
 
         const model = CONFIG.DND5E.spellcasting[method];

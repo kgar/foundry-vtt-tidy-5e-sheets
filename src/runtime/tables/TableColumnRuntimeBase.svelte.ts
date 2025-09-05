@@ -2,10 +2,11 @@ import { foundryCoreSettings } from 'src/settings/settings.svelte';
 import type { ColumnsLoadout } from '../item/ColumnsLoadout.svelte';
 import type {
   ColumnSpecDocumentTypesToTabs,
-  ColumnSpecificationCalculatedWidthArgs,
   ConfiguredColumnSpecification,
+  GetConfiguredColumnSpecificationsArgs,
 } from '../types';
 import { CONSTANTS } from 'src/constants';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 export abstract class TableColumnRuntimeBase {
   _registeredColumns: ColumnSpecDocumentTypesToTabs = $state({});
@@ -19,27 +20,33 @@ export abstract class TableColumnRuntimeBase {
   abstract getDefaultColumns(): ColumnSpecDocumentTypesToTabs;
 
   getConfiguredColumnSpecifications(
-    sheetType: string,
-    tabId: string,
-    sectionKey: string,
-    args: ColumnSpecificationCalculatedWidthArgs
+    args: GetConfiguredColumnSpecificationsArgs
   ): ConfiguredColumnSpecification[] {
-    for (let type of [sheetType, CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]) {
-      for (let tab of [tabId, CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]) {
+    for (let type of [args.sheetType, CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]) {
+      for (let tab of [args.tabId, CONSTANTS.COLUMN_SPEC_TAB_KEY_DEFAULT]) {
         for (let section of [
-          sectionKey,
+          args.sectionKey,
           CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT,
         ]) {
           const specs = this._registeredColumns[type]?.[tab]?.[section];
           if (specs) {
-            return Object.entries(specs).map(([key, spec]) => ({
-              key,
-              ...spec,
-              widthRems:
-                typeof spec.widthRems === 'number'
-                  ? spec.widthRems
-                  : spec.widthRems(args),
-            }));
+            return Object.entries(specs)
+              .filter((spec) =>
+                spec[1].condition
+                  ? spec[1].condition({
+                      section: args.section ?? SheetSections.EMPTY,
+                      sheetDocument: args.sheetDocument,
+                    })
+                  : true
+              )
+              .map(([key, spec]) => ({
+                key,
+                ...spec,
+                widthRems:
+                  typeof spec.widthRems === 'number'
+                    ? spec.widthRems
+                    : spec.widthRems(args),
+              }));
           }
         }
       }

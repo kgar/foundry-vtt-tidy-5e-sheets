@@ -14,6 +14,8 @@
 
   let itemsWeight = $derived((fullWeight - currencyWeight).toNearest(0.1));
 
+  let unitsAbbreviation = $derived(FoundryAdapter.getWeightUnit());
+
   let tooltip: HTMLElement;
 
   export function tryShow(
@@ -45,14 +47,20 @@
           <i class="fa-solid fa-sack"></i>
           <span class="truncate">{localize('DND5E.Items')}</span>
         </span>
-        <span class="value">{itemsWeight}</span>
+        <span>
+          <span class="value">{itemsWeight.toNearest(0.01)}</span>
+          <span class="units color-text-lighter">{unitsAbbreviation}</span>
+        </span>
       </li>
       <li>
         <span class="label">
           <i class="fa-solid fa-coins"></i>
           <span class="truncate">{localize('DND5E.Currency')}</span>
         </span>
-        <span class="value">{currencyWeight}</span>
+        <span>
+          <span class="value">{currencyWeight.toNearest(0.01)}</span>
+          <span class="units color-text-lighter">{unitsAbbreviation}</span>
+        </span>
       </li>
     </ul>
   </div>

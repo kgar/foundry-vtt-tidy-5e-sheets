@@ -81,4 +81,4 @@
   />
 </div>
 
-<ActorInventoryFooter />
+<ActorInventoryFooter useAttunement={true} />

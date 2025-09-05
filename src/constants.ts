@@ -455,6 +455,7 @@ export const CONSTANTS = {
     BUTTON_MENU_CONTEXT: 'buttonMenuContext',
     CONFIRM: 'confirm',
     CONTEXT: 'context',
+    EMPHASIZED_MEMBER_REF: 'emphasizedMember',
     EXPANDED_ITEM_DATA: 'expandedItemData',
     EXPANDED_ITEMS: 'expandedItems',
     FUNCTIONS: 'functions',

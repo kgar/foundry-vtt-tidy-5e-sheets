@@ -44,14 +44,14 @@
 
   let columns = $derived(
     new ColumnsLoadout(
-      ItemColumnRuntime.getConfiguredColumnSpecifications(
-        sheetDocument.type,
-        tabId,
-        section.key,
-        {
-          rowActions: section.rowActions,
-        },
-      ),
+      ItemColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: sheetDocument.type,
+        tabId: tabId,
+        sectionKey: section.key,
+        rowActions: section.rowActions,
+        section: section,
+        sheetDocument: context.document,
+      }),
     ),
   );
 

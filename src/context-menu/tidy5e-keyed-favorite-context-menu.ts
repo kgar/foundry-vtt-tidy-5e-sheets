@@ -1,9 +1,6 @@
-import type {
-  CharacterFavorite,
-  CharacterFavoriteType,
-} from 'src/foundry/dnd5e.types';
+import { CONSTANTS } from 'src/constants';
+import type { CharacterFavoriteType } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
 
@@ -11,6 +8,10 @@ export function configureKeyedFavoriteContextMenu(
   element: HTMLElement,
   app: Tidy5eCharacterSheetQuadrone
 ) {
+  if (app.actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
+    return;
+  }
+
   const { key } = element.closest<HTMLElement>('[data-key]')?.dataset ?? {};
   const isSlots = !!element.closest('[data-slots]');
 
@@ -41,7 +42,7 @@ export function configureKeyedFavoriteContextMenu(
     type,
   };
 
-  let hasFavorite = app.actor.system.hasFavorite(favorite.id);
+  let hasFavorite = app.actor.system.hasFavorite?.(favorite.id) ?? false;
 
   ui.context.menuItems = [
     {

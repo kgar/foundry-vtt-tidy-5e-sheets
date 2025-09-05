@@ -278,7 +278,6 @@ export function Tidy5eActorSheetQuadroneBase<
         system: this.actor.system,
         tabs: [],
         token: this.token,
-        traits: this._prepareTraits(),
         userPreferences: UserPreferencesService.get(),
         warnings:
           foundry.utils
@@ -578,20 +577,10 @@ export function Tidy5eActorSheetQuadroneBase<
         if (values.length) traits.dm = values;
       }
 
-      // Prepare languages
-      const languages = this.actor.system.traits?.languages?.labels;
-      if (languages?.languages?.length)
-        traits.languages = languages.languages.map((label: string) => ({
-          label,
-        }));
-      for (const [key, { label }] of Object.entries(
-        CONFIG.DND5E.communicationTypes
-      )) {
-        const data = this.actor.system.traits?.languages?.communication?.[key];
-        if (!data?.value) continue;
-        traits.languages ??= [];
-        traits.languages.push({ label, value: data.value });
-      }
+      traits.languages ??= [];
+      traits.languages.push(
+        ...Tidy5eActorSheetQuadroneBase._getLanguageTraits(this.actor)
+      );
 
       // Display weapon masteries
       for (const key of this.actor.system.traits?.weaponProf?.mastery?.value ??
@@ -623,6 +612,32 @@ export function Tidy5eActorSheetQuadroneBase<
       });
 
       return traits;
+    }
+
+    public static _getLanguageTraits(actor: Actor5e) {
+      let languageTraits: ActorTraitContext<number>[] = [];
+      const languages = actor.system.traits?.languages?.labels;
+
+      if (languages?.languages?.length)
+        languageTraits = languages.languages.map((label: string) => ({
+          label,
+        }));
+
+      for (const [key, { label }] of Object.entries(
+        CONFIG.DND5E.communicationTypes
+      )) {
+        const data = actor.system.traits?.languages?.communication?.[key];
+        if (!data?.value) continue;
+        languageTraits.push({
+          label,
+          value: data.value,
+          units:
+            CONFIG.DND5E.movementUnits[data.units]?.abbreviation ?? data.units,
+          unitsKey: data.units,
+        });
+      }
+
+      return languageTraits;
     }
 
     /* -------------------------------------------- */
@@ -682,6 +697,7 @@ export function Tidy5eActorSheetQuadroneBase<
             label: config.label,
             value: Math.round(+systemMovement[key]).toString() ?? '',
             units: systemMovement.units,
+            unitsKey: key,
           });
 
           return acc;
@@ -698,8 +714,10 @@ export function Tidy5eActorSheetQuadroneBase<
         speeds.push({
           key: 'walk',
           label: CONFIG.DND5E.movementTypes.walk.label,
+          // TODO: Determine if we need to pull the abbreviated units from CONFIG.DND5E
           units: systemMovement.units,
           value: systemMovement.walk?.toString() ?? '0',
+          unitsKey: sourceMovement.units,
         });
       }
 
@@ -721,7 +739,9 @@ export function Tidy5eActorSheetQuadroneBase<
             key,
             label,
             value: Math.round(+value).toString(),
+            // TODO: Determine if we need to pull the abbreviated units from CONFIG.DND5E
             units: senseConfig.units,
+            unitsKey: senseConfig.units,
           });
 
           return acc;
@@ -1043,41 +1063,35 @@ export function Tidy5eActorSheetQuadroneBase<
       super._onDragStart(event);
     }
 
-    #dropBehavior: DropEffectValue | null = null;
-
     async _onDrop(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
     ): Promise<any> {
-      this.#dropBehavior = this._dropBehavior(event);
+      (event as any)._behavior = this._dropBehavior(event);
 
-      try {
-        this._currentDragEvent = event;
-        const data = foundry.applications.ux.TextEditor.getDragEventData(event);
-        const actor = this.actor;
-        const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
-        if (allowed === false) return;
+      this._currentDragEvent = event;
+      const data = foundry.applications.ux.TextEditor.getDragEventData(event);
+      const actor = this.actor;
+      const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
+      if (allowed === false) return;
 
-        // Dropped Documents
-        const documentClass = foundry.utils.getDocumentClass(data.type);
-        if (documentClass) {
-          const document = await documentClass.fromDropData(data);
-          return await this._onDropDocument(event, document);
-        }
-
-        // Other Drops
-        switch (data.type) {
-          case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
-            return await this._onDropJournal(event, data);
-          case CONSTANTS.DOCUMENT_NAME_ACTIVITY:
-            // Activity5e can't be found by `.getDocumentClass()`.
-            const document = await fromUuid(data.uuid);
-            return await this._onDropActivity(event, document);
-        }
-
-        return await super._onDrop(event);
-      } finally {
-        this.#dropBehavior = null;
+      // Dropped Documents
+      const documentClass = foundry.utils.getDocumentClass(data.type);
+      if (documentClass) {
+        const document = await documentClass.fromDropData(data);
+        return await this._onDropDocument(event, document);
       }
+
+      // Other Drops
+      switch (data.type) {
+        case CONSTANTS.FLAG_TYPE_TIDY_JOURNAL:
+          return await this._onDropJournal(event, data);
+        case CONSTANTS.DOCUMENT_NAME_ACTIVITY:
+          // Activity5e can't be found by `.getDocumentClass()`.
+          const document = await fromUuid(data.uuid);
+          return await this._onDropActivity(event, document);
+      }
+
+      return await super._onDrop(event);
     }
 
     async _onDropDocument(
@@ -1224,7 +1238,7 @@ export function Tidy5eActorSheetQuadroneBase<
       event: DragEvent & { currentTarget: HTMLElement },
       document: Item5e
     ): Promise<object | boolean | undefined> {
-      const behavior = this.#dropBehavior;
+      const behavior = (event as any)._behavior;
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
@@ -1287,6 +1301,15 @@ export function Tidy5eActorSheetQuadroneBase<
       behavior?: DropEffectValue | null
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
+      return await this._onDropCreateItems(event, items, behavior);
+    }
+
+    async _onDropCreateItems(
+      event: Event,
+      items: any[],
+      behavior?: DropEffectValue | null
+    ) {
+      behavior ??= (event as any)._behavior;
       const itemsWithoutAdvancement = items.filter(
         (i) => !i.system.advancement?.length
       );
@@ -1322,13 +1345,8 @@ export function Tidy5eActorSheetQuadroneBase<
       });
 
       if (behavior === 'move') {
-        items.forEach((i) =>
-          fromUuid(i.uuid).then((d: Item5e) =>
-            d?.delete({ deleteContents: true })
-          )
-        );
+        items.forEach((i) => i?.delete({ deleteContents: true }));
       }
-
       return created;
     }
 
@@ -1358,9 +1376,10 @@ export function Tidy5eActorSheetQuadroneBase<
         return false;
       }
 
-      const isOnInventoryTab = this.element.matches(
-        `:has([data-tab-id="${CONSTANTS.TAB_ACTOR_INVENTORY}"].active)`
-      );
+      const isOnInventoryTab =
+        this.element?.matches(
+          `:has([data-tab-id="${CONSTANTS.TAB_ACTOR_INVENTORY}"].active)`
+        ) ?? false;
 
       // Create a Consumable spell scroll on the Inventory tab
       if (
@@ -1532,7 +1551,11 @@ export function Tidy5eActorSheetQuadroneBase<
         })
       );
 
-      return this._onDropItemCreate(droppedItemData, event, this.#dropBehavior);
+      return this._onDropItemCreate(
+        droppedItemData,
+        event,
+        (event as any)._behavior
+      );
     }
 
     /* -------------------------------------------- */

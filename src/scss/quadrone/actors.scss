@@ -2,6 +2,8 @@
   --sidebar-expanded-width: 17.25rem; // I just picked a value for now while prototyping.
   // --header-image: url(../../modules/tidy5e-sheet/images/background-character.webp);
   --header-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.64);
+  --portrait-border-color: var(--t5e-color-gold);
+  --portrait-border-color-hover: var(--t5e-color-palette-gold-75);
 
   background: var(--t5e-theme-color-default);
   display: flex;
@@ -274,14 +276,14 @@
           left: var(--inset);
           right: var(--inset);
           bottom: var(--inset);
-          border-color: var(--t5e-color-gold);
+          border-color: var(--portrait-border-color);
           border-style: solid;
           pointer-events: none;
           transition: border-color var(--t5e-transition-default);
         }
 
         &:hover::before {
-          border-color: var(--t5e-color-palette-gold-75);
+          border-color: var(--portrait-border-color-hover);
         }
 
 
@@ -293,7 +295,7 @@
 
           &::before {
             border-radius: 100%;
-            border: 0.09375rem solid var(--t5e-color-gold);
+            border: 0.09375rem solid var(--portrait-border-color);
           }
         }
 
@@ -313,14 +315,14 @@
         &.transparent {
 
           &::before {
-            border-color: var(--t5e-color-palette-gold-56);
+            // border-color: var(--portrait-border-color);
             border-radius: 100%;
             border-width: 0.125rem;
             z-index: -1;
           }
 
           &:hover::before {
-            border-color: var(--t5e-color-palette-gold-75);
+            border-color: var(--portrait-border-color-hover);
           }
         }
 
@@ -1083,20 +1085,13 @@
     align-items: center;
     position: relative;
     margin-top: calc(var(--t5e-size-2x) + var(--t5e-size-halfx));
+  }
 
-    .inspiration-badge {
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &.stacked {
-        left: -0.25rem;
-      }
-    }
+  .inspiration-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 
     .inspiration {
       transition: all var(--t5e-transition-default);
@@ -1208,7 +1203,7 @@
       display: none;
     }
 
-    .inspiration-badge:hover {
+    &:hover {
       .inspiration-controls {
         display: flex;
         position: absolute;
@@ -1799,6 +1794,56 @@
       padding-left: 0.25rem;
     }
   }
+
+
+  .sidebar {
+    .traits {
+      gap: 0.75rem;
+
+      .list-entry {
+        flex-direction: column;
+        gap: 0.1875rem;
+
+        .list-label {
+          margin-right: 0;
+          max-height: 1rem;
+
+          h4 {
+            transition: color var(--t5e-transition-default);
+            color: var(--t5e-color-text-lighter);
+
+            i {
+              color: var(--t5e-color-icon-default);
+              transition: color var(--t5e-transition-default);
+            }
+          }
+        }
+
+        .button-config {
+          margin-bottom: -0.0625rem;
+        }
+
+        &.empty {
+
+          .list-label h4 i {
+            color: var(--t5e-color-icon-disabled);
+          }
+
+          &:hover .list-label h4,
+          &:hover .list-label i {
+            color: var(--t5e-color-text-default);
+          }
+        }
+
+        .pill {
+          justify-content: baseline;
+          min-height: auto;
+          padding: 0.125rem 0.25rem 0.1875rem;
+        }
+      }
+    }
+  }
+
 
   .sheet-footer {
     gap: var(--t5e-size-2x);

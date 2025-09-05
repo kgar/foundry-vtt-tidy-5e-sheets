@@ -1,5 +1,16 @@
 ## kgar To Do
 
+### Critical Bugs and Bug-likes
+
+- [ ] Character: show special senses in Character tab. Check NPCs as well.
+- [ ] Character, NPC, Group, etc.: check units localization in languages, senses, and movement. The system units value is the key, and we have to fetch the localized abbreviation from CONFIG.DND5E.
+
+### Group Sheet
+
+- [ ] Members tab security
+  - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
+- [ ] Plan and task Bastions tab
+
 ### The Short List
 
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
@@ -35,6 +46,7 @@
 - [ ] NPC: Add tools section to the sidebar if NPC sheets even supports it
 - [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
 - [ ] Show Currency "item table section" when the user has configured more than 5 currencies. https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876 - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
+
 
 ### (Almost) Everything after the short list
 
@@ -339,3 +351,67 @@ Limited:
   - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
 - [x] Inventory tab
   - [x] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
+- [x] Group Sheet: Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [x] Traits
+    - [x] Language
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+    - [x] Speed
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+    - [x] Senses
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+  - [x] Skills
+    - [x] expandable/collapsible
+    - [x] skill abbr, skill name (roll button / whatever), High, Low
+      - [x] Stub the context
+      - [x] Scaffold UI
+      - [x] Prep the data
+  - [x] Special
+    - [x] Stub the context
+    - [x] Scaffold UI
+    - [x] Prep the data
+  - [x] Tools
+    - [x] Stub the context
+    - [x] Scaffold UI
+    - [x] Prep the data
+- [x] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
+- [x] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
+  - [x] Tools
+  - [x] Specials
+- [x] Group Sheet - Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
+  - [x] Tidy tables
+  - [x] Column spec
+  - [x] Column components
+    - [x] GroupMemberInspirationColumn
+    - [x] GroupActorHpColumn
+    - [x] GroupActorHdColumn
+    - [x] GroupActorAcColumn
+    - [x] GroupActorDtColumn
+    - [x] GroupActorCargoColumn
+    - [x] GroupActorCrewColumn
+- [x] Group Sheet
+  - [x] Group Member context menu
+    - [x] View Member
+    - [x] Remove Member
+  - [x] Wire up all header data
+  - [x] ~~Wire up roll mode to rollSkill via a sheet function~~ We don't have a mechanism for individual rolls right now.
+  - [x] Add sample award button with sheet function behind it
+  - [x] Add encumbrance to group member prep
+  - [x] Col spec: make XP columns enabled only when XP is enabled
+  - [x] Add member tooltips to Members tab sidebar
+    - [x] Languages
+    - [x] Skills
+    - [x] Senses
+    - [x] Specials
+    - [x] Speeds
+    - [x] Tools
+  - [x] Wire up all member tab data
+  - [x] Make group sheet refresh on relevant actor changes.
+  - [x] Make Description tab secrets work.
+  - [x] ~~Implement Cargo calculations for Vehicle members.~~ This is encumbrance. Suggest instead that we just remove the cargo column.
+  - [x] Add standard inventory footer to group inventory tab

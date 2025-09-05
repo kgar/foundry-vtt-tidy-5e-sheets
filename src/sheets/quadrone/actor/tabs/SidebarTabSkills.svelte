@@ -1,8 +1,8 @@
 <script lang="ts">
-  import SkillsCard from '../parts/SkillsCard.svelte';
+  import SkillsCard from '../parts/skills/SkillsCard.svelte';
   import ToolsCard from '../parts/ToolsCard.svelte';
 </script>
 
-<SkillsCard allowToggle={true} />
+<SkillsCard />
 
 <ToolsCard />

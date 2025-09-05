@@ -574,9 +574,9 @@ export const FoundryAdapter = {
   },
   getWeightUnit() {
     return FoundryAdapter.localize(
-      `DND5E.Abbreviation${
-        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kg' : 'Lbs'
-      }`
+      `DND5E.UNITS.WEIGHT.${
+        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
+      }.Abbreviation`
     );
   },
   isActiveEffectContextFavorited(context: ActiveEffectContext, actor: Actor5e) {
@@ -1325,7 +1325,7 @@ export const FoundryAdapter = {
     return dnd5e.utils.formatCR(cr);
   },
   formatNumber(num: number) {
-    return dnd5e.utils.formatNumber(num);
+    return dnd5e.utils.formatNumber(num) as string;
   },
   // TODO: Consolidate uses changed to one function
   handleItemUsesChanged(

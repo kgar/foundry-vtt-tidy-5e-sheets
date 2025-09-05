@@ -6,26 +6,21 @@
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
   } from 'src/types/types';
-  import ProficiencyCycle from './ProficiencyCycle.svelte';
+  import ProficiencyCycle from '../ProficiencyCycle.svelte';
   import { CONSTANTS } from 'src/constants';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import FiligreeCard from 'src/components/filigree-card/FiligreeCard.svelte';
   import { getModifierData } from 'src/utils/formatting';
-  import { tick } from 'svelte';
   import { isNil } from 'src/utils/data';
+  import SkillsCardHeader from './SkillsCardHeader.svelte';
 
-  interface Props {
-    allowToggle?: boolean;
+  type Props = {
     defaultExpansionState?: boolean;
     showFiligree?: boolean;
-  }
+  };
 
-  let {
-    allowToggle = false,
-    defaultExpansionState = true,
-    showFiligree = true,
-  }: Props = $props();
+  let { defaultExpansionState = true, showFiligree = true }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -41,7 +36,7 @@
   );
 
   let skills = $derived(
-    expanded || !allowToggle
+    expanded
       ? context.skills
       : context.skills.filter((s) => s.proficient !== 0),
   );
@@ -58,44 +53,12 @@
 </script>
 
 {#snippet skillsContent()}
-  <div class="use-ability-header flexrow">
-    {#if allowToggle}
-      <button
-        type="button"
-        disabled={!allowToggle}
-        class={['button button-borderless skill-expand-button']}
-        onclick={async () => {
-          const newValue = !expanded;
-          expanded = newValue;
-          await tick();
-
-          if (context.editable) {
-            await TidyFlags.skillsExpanded.set(context.actor, newValue);
-          }
-        }}
-      >
-        {@render skillsCardHeaderText()}
-      </button>
-    {:else}
-      <div class="button button-borderless skill-expand-button">
-        {@render skillsCardHeaderText()}
-      </div>
-    {/if}
-
-    {#snippet skillsCardHeaderText()}
-      <i class="fa-solid fa-briefcase color-icon-diminished"></i>
-      <h3 class="font-label-medium">
-        {localize('DND5E.Skills')}
-        {#if allowToggle}
-          <i class={['fa-solid', 'fa-angle-right', { expanded }]}></i>
-        {/if}
-      </h3>
-      <span class="modifier-label color-text-lightest font-default-medium">
-        {localize('DND5E.Modifier')} /
-        {localize('DND5E.Passive')}
-      </span>
+  <SkillsCardHeader {expanded}>
+    {#snippet legend()}
+      {localize('DND5E.Modifier')} /
+      {localize('DND5E.Passive')}
     {/snippet}
-  </div>
+  </SkillsCardHeader>
   {#if skills.length}
     <ul
       class="skill-list unlist use-ability-list"

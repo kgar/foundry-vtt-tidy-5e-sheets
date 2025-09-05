@@ -4,12 +4,12 @@ import type {
 } from 'src/types/theme.types';
 import { debug } from 'src/utils/logging';
 import { settings, SettingsProvider } from 'src/settings/settings.svelte';
-import { Colord } from 'colord';
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import chroma from 'chroma-js';
 
 const tidyStyleTagId = 'tidy5e-sheet-theme';
 
@@ -110,16 +110,18 @@ type ProcessedColor = {
   parsed: boolean;
 };
 
-export function colorToHexaString(color: Colord | undefined): string {
-  if (color?.isValid()) {
-    return color.toHex();
+export function colorToHexaString(color: chroma.Color | undefined): string {
+  if (color) {
+    return color.hex('argb');
   }
 
   return '';
 }
 
 export function settingValueToHexaString(value: string): ProcessedColor {
-  const result = colorToHexaString(new Colord(value.toString()));
+  const result = chroma.valid(value)
+    ? colorToHexaString(chroma(value.toString()))
+    : '';
 
   if (result !== '') {
     return {
@@ -175,27 +177,19 @@ export function getInventoryItemThemeBackground(item: Item5e) {
 export function getSpellItemThemeBackground(spell: Item5e) {
   const config = FoundryAdapter.getSpellMethodConfig(spell);
 
-  if (
-    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE
-  ) {
+  if (config.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE) {
     return '--t5e-innate-background';
   }
 
-  if (
-    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL
-  ) {
+  if (config.key === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL) {
     return '--t5e-ritual-only-background';
   }
 
-  if (
-    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
-  ) {
+  if (config.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
     return '--t5e-atwill-background';
   }
 
-  if (
-    config.key === CONSTANTS.SPELL_PREPARATION_METHOD_PACT
-  ) {
+  if (config.key === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
     return '--t5e-pact-background';
   }
 

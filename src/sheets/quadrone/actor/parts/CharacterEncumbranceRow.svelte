@@ -34,5 +34,5 @@
     </span>
   </div>
 
-  <ActorEncumbranceBar />
+  <ActorEncumbranceBar actor={context.actor} />
 </div>

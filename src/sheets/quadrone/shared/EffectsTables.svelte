@@ -38,12 +38,14 @@
 
 {#each sections as section (section.key)}
   {@const columns = new ColumnsLoadout(
-    EffectColumnRuntime.getConfiguredColumnSpecifications(
-      context.document.type,
-      tabId,
-      section.key,
-      { rowActions: section.rowActions },
-    ),
+    EffectColumnRuntime.getConfiguredColumnSpecifications({
+      sheetType: context.document.type,
+      tabId: tabId,
+      sectionKey: section.key,
+      rowActions: section.rowActions,
+      section: section,
+      sheetDocument: context.document,
+    }),
   )}
 
   {@const hiddenColumns = EffectColumnRuntime.determineHiddenColumns(

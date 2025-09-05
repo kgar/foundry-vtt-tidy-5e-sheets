@@ -3657,31 +3657,8 @@ export type CONFIG = {
       any: string;
     };
     weightUnits: {
-      lb: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-      tn: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-      kg: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-      Mg: {
-        label: string;
-        abbreviation: string;
-        conversion: number;
-        type: string;
-      };
-    };
+      [k in 'lb' | 'tn' | 'kg' | 'Mg']: WeightUnitConfig;
+    } & Record<string, WeightUnitConfig>;
     encumbrance: {
       currencyPerWeight: {
         imperial: number;
@@ -3730,15 +3707,9 @@ export type CONFIG = {
         };
       };
       baseUnits: {
-        default: {
-          imperial: string;
-          metric: string;
-        };
-        vehicle: {
-          imperial: string;
-          metric: string;
-        };
-      };
+        default: BaseUnitsConfig;
+        vehicle: BaseUnitsConfig;
+      } & Record<string, BaseUnitsConfig>;
     };
     individualTargetTypes: {
       self: IndividualTargetTypesConfig;
@@ -5437,6 +5408,9 @@ export type CONFIG = {
         label: string;
       };
     } & Record<string, { label: string; subtypes?: boolean }>;
+    travelPace: {
+      [k in string]: TravelPaceConfig;
+    };
     treasure: {
       any: TreasureConfig;
       arcana: TreasureConfig;
@@ -5451,6 +5425,17 @@ export type CONFIG = {
     } & Record<string, VolumeUnitConfig>;
   };
   ux: any;
+};
+
+type BaseUnitsConfig = {
+  imperial: string;
+  metric: string;
+};
+
+export type TravelPaceConfig = {
+  label: string;
+  multiplier: number;
+  standard: number;
 };
 
 type ActivityType = {
@@ -5536,4 +5521,11 @@ export type ActivityActivationTypeConfig = {
 type MovementTypeConfig = {
   label: string;
   walkFallback?: boolean;
+};
+
+type WeightUnitConfig = {
+  label: string;
+  abbreviation: string;
+  conversion: number;
+  type: string;
 };

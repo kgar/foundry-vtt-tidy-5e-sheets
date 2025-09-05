@@ -14,16 +14,22 @@
 
   let tooltip: HTMLElement;
 
-  let skill: GroupSkill = $state({
+  let skill: Omit<GroupSkill, 'total'> = $state({
     key: '',
     label: '',
     members: [],
-    total: Number.NEGATIVE_INFINITY,
   });
+
+  let highestScore = $derived(
+    skill.members.reduce(
+      (prev, curr) => Math.max(prev, curr.system.skills[skill.key]?.total),
+      0,
+    ),
+  );
 
   export async function tryShow(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-    hoveredSkill: GroupSkill,
+    hoveredSkill: Omit<GroupSkill, 'total'>,
   ): Promise<any> {
     if (!hoveredSkill.members.length) {
       return;
@@ -45,6 +51,7 @@
     <hr />
     <ul>
       {#each skill.members as member}
+        {@const score = member.system.skills[skill.key]?.total}
         <li class="group-skill-grid">
           <div
             class="item-image"
@@ -52,12 +59,15 @@
           ></div>
           <div class="item-name truncate">{member.name}</div>
           <div class="text-align-center">
-            {formatAsModifier(member.system.skills[skill.key]?.total)}
+            {formatAsModifier(score)}
           </div>
           <div class="text-align-center">
             ({member.system.skills[skill.key]?.passive})
           </div>
           <div class="text-align-center">
+            {#if score === highestScore}
+              <i class="fa-solid fa-trophy"></i>
+            {/if}
             <i
               class="{FoundryAdapter.getProficiencyIconClass(
                 member.system.skills[skill.key]?.proficient,

@@ -1,13 +1,16 @@
 <script lang="ts">
   import type { ActorAttributeEncumbrance } from 'src/foundry/dnd5e.types';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import WeightDistributionTooltip from 'src/tooltips/WeightDistributionTooltip.svelte';
-  import type { ActorSheetQuadroneContext } from 'src/types/types';
+  import type { Actor5e } from 'src/types/types';
 
-  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
+  type Props = {
+    actor: Actor5e;
+  };
+
+  let { actor }: Props = $props();
 
   let encumbrance = $derived<ActorAttributeEncumbrance>(
-    context.system.attributes.encumbrance,
+    actor.system.attributes.encumbrance,
   );
 
   let percentage = $derived(Math.round(encumbrance.pct));
@@ -31,9 +34,9 @@
 
 <WeightDistributionTooltip
   bind:this={weightDistributionTooltip}
-  sheetDocument={context.actor}
-  fullWeight={context.system.attributes.encumbrance.value}
-  currencyWeight={context.system.currencyWeight}
+  sheetDocument={actor}
+  fullWeight={actor.system.attributes.encumbrance.value}
+  currencyWeight={actor.system.currencyWeight}
 />
 
 <div

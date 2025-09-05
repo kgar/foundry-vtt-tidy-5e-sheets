@@ -60,6 +60,8 @@
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
+  
+  let hdPct = $derived(context.system.attributes?.hd?.pct ?? 0);
 
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
 
@@ -129,7 +131,10 @@
           <CharacterSubtitle />
         </div>
         <div class="level-container flex0 flexrow">
-          <InspirationBadge />
+          <InspirationBadge
+            actor={context.actor}
+            inspirationSource={context.inspirationSource}
+          />
           <div class="level-block">
             <span
               class="level bonus font-data-xlarge color-text-default"
@@ -427,13 +432,6 @@
               }}
             />
           {:else}
-            {@const hdPct = Math.round(
-              context.system.attributes.hd.max > 0
-                ? (context.system.attributes.hd.value /
-                    context.system.attributes.hd.max) *
-                    100
-                : 0,
-            )}
             <div class="hd-row">
               <div
                 class="meter progress hit-die view-only"
