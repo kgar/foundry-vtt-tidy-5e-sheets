@@ -25,6 +25,9 @@ export type ThemeableSheetType =
 
 export class ThemeQuadrone {
   static readonly DEFAULT_PORTRAIT_SHAPE: PortraitShape = 'round';
+  // a collection of stylesheets currently only used for popped out stylesheets
+  private static readonly _externalStylesheets: Set<CSSStyleSheet> = new Set();
+
   static onReady() {
     setTimeout(() => {
       // Establish color mappings for Item Rarity and Spell Prep Mode
@@ -130,28 +133,28 @@ export class ThemeQuadrone {
     doc?: any,
     idOverride?: string
   ) {
-    let stylesheet = this.getTidyStyleSheet();
-
     // identify all relevant styles
-    let identifierKey = doc
+    const identifierKey = doc
       ? ThemeStylesProvider.sheetSettingIdentifierKey(doc, idOverride)
       : ThemeStylesProvider.worldSettingIdentifierKey;
 
-    // remove previous related styles
-    let numberToRemove = Array.from(stylesheet.cssRules).filter(
-      filterToExactIdentifier
-    ).length;
+    const ogStylesheet = this.getTidyStyleSheet();
+    // loop through our main stylesheet then any external ones
+    for (const stylesheet of [ogStylesheet, ...this._externalStylesheets]) {
+      const cssRules = Array.from(stylesheet.cssRules);
 
-    Array.fromRange(numberToRemove).forEach(() => {
-      let index = Array.from(stylesheet.cssRules).findIndex(
-        filterToExactIdentifier
-      );
-      stylesheet.deleteRule(index);
-    });
+      // remove previous related styles
+      const numberToRemove = cssRules.filter(filterToExactIdentifier).length;
 
-    // insert styles
-    for (let declaration of declarations) {
-      stylesheet.insertRule(this.toRuleString(declaration));
+      for (let i = 0; i < numberToRemove; i++) {
+        const index = cssRules.findIndex(filterToExactIdentifier);
+        stylesheet.deleteRule(index);
+      }
+
+      // insert styles
+      for (const declaration of declarations) {
+        stylesheet.insertRule(this.toRuleString(declaration));
+      }
     }
 
     function filterToExactIdentifier(value: CSSRule): boolean {
@@ -240,5 +243,19 @@ export class ThemeQuadrone {
       [`flags.dnd5e.${CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT}`]:
         newShape === 'token',
     });
+  }
+
+  static subscribeStylesheet(stylesheet: CSSStyleSheet) {
+    const ogStylesheet = this.getTidyStyleSheet();
+    stylesheet.replaceSync(
+      Array.from(ogStylesheet.cssRules)
+        .map((rule) => rule.cssText)
+        .join('\n')
+    );
+    this._externalStylesheets.add(stylesheet);
+  }
+
+  static unsubscribeStylesheet(stylesheet: CSSStyleSheet) {
+    this._externalStylesheets.delete(stylesheet);
   }
 }
