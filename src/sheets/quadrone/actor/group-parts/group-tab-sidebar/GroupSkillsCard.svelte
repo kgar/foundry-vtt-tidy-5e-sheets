@@ -21,10 +21,6 @@
 
   let tooltip = $state<GroupSkillTooltip | undefined>();
 
-  let skilledMembers = $derived(
-    [...context.members.all.values()].filter((m) => m.actor.system.skills),
-  );
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -77,7 +73,7 @@
             tooltip?.tryShow(ev, {
               key: skill.key,
               label: skill.name,
-              members: skilledMembers,
+              members: context.members.skilled,
             })}
         >
           <span

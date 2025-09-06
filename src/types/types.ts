@@ -1282,6 +1282,7 @@ export type GroupMembersQuadroneContext = {
   npc: GroupMemberSection;
   vehicle: GroupMemberSection;
   all: Map<string, GroupMemberQuadroneContext>;
+  skilled: GroupMemberQuadroneContext[];
 };
 
 export type Emphasizable = {

@@ -304,6 +304,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         label: 'TYPES.Actor.vehiclePl',
       },
       all: new Map<string, GroupMemberQuadroneContext>(),
+      skilled: [],
     };
 
     let skills = new Map<string, GroupSkill>(
@@ -390,6 +391,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
       section.members.push(groupMemberContext);
       sections.all.set(actor.uuid, groupMemberContext);
+
+      if (actor.system.skills) {
+        sections.skilled.push(groupMemberContext);
+      }
 
       // Skills
       Object.entries<SkillData>(

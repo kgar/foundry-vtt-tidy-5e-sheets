@@ -7,8 +7,13 @@
 
 ### Group Sheet
 
+- [ ] Group sheet header background should work with theme settings
 - [ ] Members tab security
-  - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
+  - [ ] Add world setting "Use Group Sheet Member Security"
+  - [ ] Implement world setting
+    - [ ] no permission: exclude member from prep
+    - [ ] limited: can see name, no columns, no aggregates, no inventory info / encumbrance
+    - [ ] observer or higher: can see all
 - [ ] Plan and task Bastions tab
 
 ### The Short List
