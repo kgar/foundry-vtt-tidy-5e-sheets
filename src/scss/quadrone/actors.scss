@@ -179,7 +179,10 @@
         overflow-y: auto;
         padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x) var(--t5e-size-4x);
         position: relative;
-        // container-type: inline-size;
+
+        &.inventory {
+          padding-top: 0;
+        }
       }
     }
   }
@@ -979,10 +982,6 @@
       >span {
         flex: 0;
         text-wrap: nowrap;
-      }
-
-      >.divider-dot:last-child {
-        display: none;
       }
 
       .dc {
@@ -2570,30 +2569,19 @@
 
   // TODO: @kgar still need to move inventory footer to flex positioned outside rest of content. Here was some of the padding changes
   .window-content .main-content>.tidy-tab.inventory {
-    //   padding: 0;
-
-    //   >* {
-    //     margin-left: var(--t5e-size-4x);
-    //     margin-right: var(--t5e-size-4x);
-    //   }
-
-    //   >:first-child {
-    //     margin-top: var(--t5e-size-3x);
-    //   }
-
-    //   >:last-child {
-    //     margin: 0 var(--t5e-size-3x) var(--t5e-size-3x);
-    //     padding: var(--t5e-size-1x);
-    //   }
 
     row-gap: 0;
     padding-inline-end: 0;
+  }
+
+  .tidy-tab.inventory {
 
     .inventory-content {
       display: flex;
       flex-direction: column;
       flex: 1 1 0;
       overflow: auto;
+      padding-block-start: var(--t5e-size-3x);
       padding-inline-end: var(--t5e-size-4x);
       row-gap: var(--t5e-size-3x);
     }

@@ -47,7 +47,7 @@
 {/snippet}
 
 <!-- Group subtitle, member info -->
-<div class="actor-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
+<div class="actor-subtitle separated-list" data-tidy-sheet-part="subtitle-row">
   {#if !charactersOnly && context.members.character.members.length > 0}
     <span class="members">
       <span class="color-text-gold font-label-medium"
@@ -110,11 +110,11 @@
 </div>
 
 <div
-  class="actor-subtitle flexrow group-speeds"
+  class="actor-subtitle separated-list group-speeds"
   data-tidy-sheet-part="subtitle-row"
 >
   {#if !!context.travel.currentPace}
-    <div class="span flexrow travel-pace">
+    <div class="span separated-list travel-pace">
       <button
         class="button button-borderless button-icon-only"
         onclick={() => context.sheet.changePace(-1)}
@@ -144,22 +144,17 @@
             : 'fa-solid'} fa-forward"
         ></i>
       </button>
-    </div>
-    <span class="travel-pace">
-      <span class="font-label-medium color-text-gold">
-        {localize('DND5E.Travel.Label')}
-      </span>
-      <span class="label font-label-medium color-text-default flexshrink">
-        {context.travel.currentPace.config.label}
-      </span>
-    </span>
+      <div>
+        <span class="font-label-medium color-text-gold">
+          {localize('DND5E.Travel.Label')}
+        </span>
+        <span class="label font-label-medium color-text-default flexshrink">
+          {context.travel.currentPace.config.label}
+        </span>
+      </div>
+  </div>
   {/if}
-  <!-- {#each speeds as speed, i}
-  {#if i > 0}
-    <div class="divider-dot"></div>
-  {/if}
-  {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
-{/each} -->
+  {#if context.actor.system.attributes.movement.paces.land > 0}
   <div class="divider-dot"></div>
   <span class="speed">
     <span class="color-text-gold font-label-medium"
@@ -172,6 +167,8 @@
       >{context.travel.units.label}</span
     >
   </span>
+  {/if}
+  {#if context.actor.system.attributes.movement.paces.air > 0}
   <div class="divider-dot"></div>
   <span class="speed">
     <span class="color-text-gold font-label-medium"
@@ -184,6 +181,8 @@
       >{context.travel.units.label}</span
     >
   </span>
+  {/if}
+  {#if context.actor.system.attributes.movement.paces.water > 0}
   <div class="divider-dot"></div>
   <span class="speed">
     <span class="color-text-gold font-label-medium"
@@ -196,6 +195,7 @@
       >{context.travel.units.label}</span
     >
   </span>
+  {/if}
   {#if context.unlocked}
     <button
       aria-label={localize('DND5E.MovementConfig')}
