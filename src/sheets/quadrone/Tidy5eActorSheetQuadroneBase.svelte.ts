@@ -522,11 +522,16 @@ export function Tidy5eActorSheetQuadroneBase<
             );
           return value;
         });
-        if (data.custom)
+
+        if (data.custom) {
           splitSemicolons(data.custom).forEach((label) =>
             values.push({ label })
           );
-        if (values.length) traits[trait] = values;
+        }
+
+        if (values.length) {
+          traits[trait] = values;
+        }
       }
 
       // If petrified, display "All Damage" instead of all damage types separately
@@ -727,34 +732,45 @@ export function Tidy5eActorSheetQuadroneBase<
     _getSenses(): ActorSpeedSenseEntryContext[] {
       const senseConfig = this.actor.system.attributes.senses;
 
-      const senses = Object.entries(CONFIG.DND5E.senses)
-        .reduce<ActorSpeedSenseEntryContext[]>((acc, [key, label]) => {
-          const value = senseConfig[key];
+      const senses = Object.entries(CONFIG.DND5E.senses).reduce<
+        ActorSpeedSenseEntryContext[]
+      >((acc, [key, label]) => {
+        const value = senseConfig[key];
 
-          if (!value || value === 0) {
-            return acc;
-          }
-
-          acc.push({
-            key,
-            label,
-            value: Math.round(+value).toString(),
-            // TODO: Determine if we need to pull the abbreviated units from CONFIG.DND5E
-            units: senseConfig.units,
-            unitsKey: senseConfig.units,
-          });
-
+        if (!value || value === 0) {
           return acc;
-        }, [])
-        .toSorted((left, right) =>
-          left.key === 'darkvision'
-            ? -1
-            : right.key === 'darkvision'
-            ? 1
-            : +right.value - +left.value
-        );
+        }
 
-      return senses;
+        acc.push({
+          key,
+          label,
+          value: Math.round(+value).toString(),
+          // TODO: Determine if we need to pull the abbreviated units from CONFIG.DND5E
+          units: senseConfig.units,
+          unitsKey: senseConfig.units,
+        });
+
+        return acc;
+      }, []);
+
+      if (!isNil(senseConfig.special, '')) {
+        const specialSenses = dnd5e.utils
+          .splitSemicolons(senseConfig.special)
+          .map((s: string, i: number) => ({
+            key: `custom${i + 1}`,
+            label: s,
+          }));
+
+        senses.push(...specialSenses);
+      }
+
+      return senses.toSorted((left, right) =>
+        left.key === 'darkvision'
+          ? -1
+          : right.key === 'darkvision'
+          ? 1
+          : +right.value - +left.value
+      );
     }
 
     _getCreatureType(): CreatureTypeContext {

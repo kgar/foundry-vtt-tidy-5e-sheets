@@ -2,7 +2,7 @@
 
 ### Critical Bugs and Bug-likes
 
-- [ ] Character: show special senses in Character tab. Check NPCs as well.
+- [x] Character: show special senses in Character tab. Check NPCs as well.
 - [ ] Character, NPC, Group, etc.: check units localization in languages, senses, and movement. The system units value is the key, and we have to fetch the localized abbreviation from CONFIG.DND5E.
 
 ### Group Sheet
