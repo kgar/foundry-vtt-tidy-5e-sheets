@@ -1,10 +1,5 @@
 ## kgar To Do
 
-### Critical Bugs and Bug-likes
-
-- [x] Character: show special senses in Character tab. Check NPCs as well.
-- [x] Character, NPC, Group, etc.: check units localization in languages, senses, and movement. The system units value is the key, and we have to fetch the localized abbreviation from CONFIG.DND5E.
-
 ### Group Sheet
 
 - [ ] // TODO: Change to reduce to avoid TS funny business
@@ -421,3 +416,5 @@ Limited:
       - [x] limited: can see name, no columns, no aggregates, no inventory info / encumbrance
       - [x] observer or higher: can see all
 - [x] Group sheet header background should work with theme settings
+- [x] Character: show special senses in Character tab. Check NPCs as well.
+- [x] Character, NPC, Group, etc.: check units localization in languages, senses, and movement. The system units value is the key, and we have to fetch the localized abbreviation from CONFIG.DND5E.
