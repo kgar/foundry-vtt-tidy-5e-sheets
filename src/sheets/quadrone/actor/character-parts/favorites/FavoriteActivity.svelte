@@ -120,22 +120,26 @@
     </div>
     <div class="secondary font-default-medium">
       {#if range?.value}
+        {@const units =
+          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
         <span class="range">
           <span class="value color-text-default">
             {range.value}
           </span>
           {#if range.long}&sol; {range.long}{/if}
           <span class="units color-text-lighter">
-            {range.units}
+            {units}
           </span>
         </span>
       {:else if range?.reach}
+        {@const units =
+          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
         <span class="range">
           <span class="value color-text-default">
             {range.reach}
           </span>
           <span class="units color-text-lighter">
-            {range.units}
+            {units}
           </span>
         </span>
       {/if}

@@ -621,7 +621,10 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     for (const [index, memberData] of this.actor.system.members.entries()) {
       const ctx: GroupMemberContext = (memberContext[memberData.actor.id] = {
         index: index,
-        canObserve: memberData.actor.testUserPermission(game.user, CONSTANTS.PERMISSION_OBSERVER),
+        canObserve: memberData.actor.testUserPermission(
+          game.user,
+          CONSTANTS.PERMISSION_OBSERVER
+        ),
         senses: [],
         conditionImmunities: [],
         topSkills: [],
@@ -685,7 +688,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
           const v = senses[k] ?? 0;
           if (v === 0) continue;
           tags[k] = `${game.i18n.localize(label)} ${v} ${
-            senses.units ??
+            CONFIG.DND5E.movementUnits[senses.units]?.abbreviation ??
             Object.values(CONFIG.DND5E.movementUnits)[0].abbreviation
           }`;
         }

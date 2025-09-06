@@ -21,7 +21,10 @@
     capacity.max === Infinity ? '∞' : capacity.max,
   );
 
-  let unitsAbbreviation = $derived(container.system.weight.units);
+  let unitsAbbreviation = $derived(
+    CONFIG.DND5E.weightUnits[container.system.capacity.weight.units]?.abbreviation ??
+      container.system.capacity.weight.units,
+  );
 </script>
 
 <div class="label">
