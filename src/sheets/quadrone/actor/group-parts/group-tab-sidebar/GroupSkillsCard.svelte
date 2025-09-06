@@ -22,9 +22,7 @@
   let tooltip = $state<GroupSkillTooltip | undefined>();
 
   let skilledMembers = $derived(
-    context.system.members
-      .map((m: any) => m.actor)
-      .filter((a: any) => a.system.skills),
+    [...context.members.all.values()].filter((m) => m.actor.system.skills),
   );
 
   const localize = FoundryAdapter.localize;

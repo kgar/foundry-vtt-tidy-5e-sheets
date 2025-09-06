@@ -15,10 +15,9 @@
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import ContainerPanel from '../../shared/ContainerPanel.svelte';
   import InventoryTables from '../../shared/InventoryTables.svelte';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import ActorEncumbranceBar from '../parts/ActorEncumbranceBar.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
-    import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
+  import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;
@@ -64,8 +63,6 @@
         (member.actor.system.attributes.death.failure >= 3 &&
           member.actor.system.attributes.death.success < 3))}
 
-    {@const portraitShape = ThemeQuadrone.getActorPortraitShape(member.actor)}
-
     <div
       class="actor-container flexrow"
       style:--t5e-theme-color-default={member.accentColor}
@@ -89,7 +86,7 @@
             'actor-image',
             { hovered: hoveredMember === member.actor.uuid },
             { dead: actorIsDead },
-            portraitShape,
+            member.portrait.shape,
             { video: member.portrait.isVideo },
           ]}
         >
@@ -133,20 +130,20 @@
           </div>
           <ActorEncumbranceBar actor={member.actor} />
         {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
-        <div class="separated-list">
-          <span class="actor-cargo separated-list">
-            <span class="font-body-medium color-text-lighter"
-              >{localize('DND5E.VehicleCargo')}</span
-            >
-            <span class="font-label-medium color-text-default"
-              >{member.encumbrance.value.toNearest(0.01)}</span
-            >
-            <span class="font-body-medium color-text-lightest">/</span>
-            <span class="font-label-medium color-text-lighter"
-              >{member.encumbrance.max}</span
-            >
-          </span>
-        </div>
+          <div class="separated-list">
+            <span class="actor-cargo separated-list">
+              <span class="font-body-medium color-text-lighter"
+                >{localize('DND5E.VehicleCargo')}</span
+              >
+              <span class="font-label-medium color-text-default"
+                >{member.encumbrance.value.toNearest(0.01)}</span
+              >
+              <span class="font-body-medium color-text-lightest">/</span>
+              <span class="font-label-medium color-text-lighter"
+                >{member.encumbrance.max}</span
+              >
+            </span>
+          </div>
         {/if}
       </div>
     </div>

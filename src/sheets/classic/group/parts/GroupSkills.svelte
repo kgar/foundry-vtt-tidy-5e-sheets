@@ -13,7 +13,12 @@
     <span
       class="tag"
       data-tooltip-direction="UP"
-      onmouseover={(ev) => groupSkillTooltip.tryShow(ev, groupSkill)}
+      onmouseover={(ev) =>
+        groupSkillTooltip.tryShow(ev, {
+          key: groupSkill.key,
+          label: groupSkill.label,
+          members: groupSkill.members.map((m) => ({ actor: m })),
+        })}
     >
       {groupSkill.label}
       {formatAsModifier(groupSkill.total)}

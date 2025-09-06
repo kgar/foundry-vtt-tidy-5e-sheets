@@ -4,14 +4,14 @@
   import { tick } from 'svelte';
   import { Tooltip } from './Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
-  import type { Actor5e } from 'src/types/types';
+  import type { GroupMemberQuadroneContext } from 'src/types/types';
 
   const localize = FoundryAdapter.localize;
 
   type GroupTool = {
     key: string;
     label: string;
-    members: Actor5e[];
+    members: GroupMemberQuadroneContext[];
   };
 
   interface Props {
@@ -30,7 +30,7 @@
 
   let highestScore = $derived(
     tool.members.reduce(
-      (prev, curr) => Math.max(prev, curr.system.tools[tool.key]?.total),
+      (prev, curr) => Math.max(prev, curr.actor.system.tools[tool.key]?.total),
       0,
     ),
   );
@@ -61,31 +61,39 @@
       <li class="group-tool-grid group-tooltip-header">
         <div class=""></div>
         <div class=""></div>
-        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.Passive')}</div> 
-        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.Proficiency')}</div>
+        <div class="text-align-right font-label-small color-text-lightest">
+          {localize('DND5E.Passive')}
+        </div>
+        <div class="text-align-right font-label-small color-text-lightest">
+          {localize('DND5E.Proficiency')}
+        </div>
       </li>
       {#each tool.members as member}
-        {@const score = member.system.tools[tool.key]?.total}
+        {@const score = member.actor.system.tools[tool.key]?.total}
         {@const modifier = getModifierData(score)}
         <li class="group-tool-grid">
           <!-- TODO add token shape to class list  -->
           <div
-            class="item-image TOKEN-SHAPE"
-            style="background-image: url('{member.img}')"
+            class={['item-image', member.portrait.shape]}
+            style="background-image: url('{member.actor.img}')"
           ></div>
-          <div class="item-name truncate">{member.name}</div>
+          <div class="item-name truncate">{member.actor.name}</div>
           <div class="text-align-right">
             {#if score === highestScore}
               <i class="fa-solid fa-award highlighted"></i>
               <!-- TODO: Temp placeholder to demonstrate the highest score holder -->
             {/if}
-            <span class="font-body-medium color-text-lighter">{modifier.sign}</span>
-            <span class="font-label-medium color-text-default">{modifier.value}</span>
+            <span class="font-body-medium color-text-lighter"
+              >{modifier.sign}</span
+            >
+            <span class="font-label-medium color-text-default"
+              >{modifier.value}</span
+            >
           </div>
           <div class="text-align-right">
             <i
               class="{FoundryAdapter.getProficiencyIconClass(
-                member.system.tools[tool.key]?.value,
+                member.actor.system.tools[tool.key]?.value,
               )} fa-fw"
             ></i>
           </div>

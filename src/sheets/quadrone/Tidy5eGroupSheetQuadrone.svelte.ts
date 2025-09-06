@@ -6,6 +6,7 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   GroupMemberPortraitContext,
+  GroupMemberQuadroneContext,
   GroupMemberSkillContext,
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
@@ -302,6 +303,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         members: [],
         label: 'TYPES.Actor.vehiclePl',
       },
+      all: new Map<string, GroupMemberQuadroneContext>(),
     };
 
     let skills = new Map<string, GroupSkill>(
@@ -367,7 +369,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         }).accentColor
       );
 
-      section.members.push({
+      const groupMemberContext = {
         accentColor: !isNil(accentColor, '') ? accentColor : undefined,
         actor,
         backgroundColor: !isNil(accentColor, '')
@@ -384,7 +386,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         portrait: await this._preparePortrait(actor),
         gold: FoundryAdapter.formatNumber(this.getGpSummary(actor)),
         goldAbbreviation: CONFIG.DND5E.currencies.gp?.abbreviation ?? '',
-      });
+      };
+
+      section.members.push(groupMemberContext);
+      sections.all.set(actor.uuid, groupMemberContext);
 
       // Skills
       Object.entries<SkillData>(
@@ -773,6 +778,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return {
       src,
       isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
+      shape: ThemeQuadrone.getActorPortraitShape(actor),
     };
   }
 

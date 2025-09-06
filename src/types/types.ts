@@ -1269,6 +1269,7 @@ export type GroupMemberQuadroneContext = {
 export type GroupMemberPortraitContext = {
   isVideo: boolean;
   src: string;
+  shape: PortraitShape;
 };
 
 export type GroupMemberSection = {
@@ -1280,6 +1281,7 @@ export type GroupMembersQuadroneContext = {
   character: GroupMemberSection;
   npc: GroupMemberSection;
   vehicle: GroupMemberSection;
+  all: Map<string, GroupMemberQuadroneContext>;
 };
 
 export type Emphasizable = {
@@ -1349,8 +1351,8 @@ export type GroupSheetQuadroneContext = {
     description: {
       full: string;
       summary: string;
-    }
-  }
+    };
+  };
   members: GroupMembersQuadroneContext;
   skills: GroupSkill[];
   travel: {

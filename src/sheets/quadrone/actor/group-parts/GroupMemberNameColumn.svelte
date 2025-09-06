@@ -23,10 +23,6 @@
           member.actor.system.attributes.death.success < 3)),
   );
 
-  let portraitShape = $derived(
-    ThemeQuadrone.getActorPortraitShape(member.actor),
-  );
-
   let emphasizedActorRef = getContext<
     Ref<GroupMemberQuadroneContext | undefined>
   >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
@@ -39,7 +35,7 @@
     class={[
       'actor-image',
       { dead: actorIsDead },
-      portraitShape,
+      member.portrait.shape,
       { video: member.portrait.isVideo },
     ]}
     style="position: relative;"
