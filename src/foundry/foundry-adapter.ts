@@ -1433,7 +1433,9 @@ export const FoundryAdapter = {
       if (!data?.value) continue;
       let value = data.value;
       if (data.units) {
-        value += ` ${data.units}`;
+        const units =
+          CONFIG.DND5E.movementUnits[data.units]?.abbreviation ?? data.units;
+        value += ` ${units}`;
       }
       traits.languages.push({ label, value: value });
     }

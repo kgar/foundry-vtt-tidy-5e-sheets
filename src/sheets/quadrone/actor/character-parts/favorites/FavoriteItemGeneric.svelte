@@ -89,15 +89,19 @@
       {#if uses?.max && quantity}
         <span class="quantity">&times; {quantity}</span>
       {:else if range?.value}
+        {@const units =
+          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
         <span class="range">
           {range.value}
           {#if range.long}&sol; {range.long}{/if}
-          {range.units}
+          {units}
         </span>
       {:else if range?.reach}
+        {@const units =
+          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
         <span class="range">
           {range.reach}
-          {range.units}
+          {units}
         </span>
       {/if}
     </span>

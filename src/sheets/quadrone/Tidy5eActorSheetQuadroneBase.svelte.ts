@@ -701,7 +701,9 @@ export function Tidy5eActorSheetQuadroneBase<
             key,
             label: config.label,
             value: Math.round(+systemMovement[key]).toString() ?? '',
-            units: systemMovement.units,
+            units:
+              CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
+              systemMovement.units,
             unitsKey: key,
           });
 
@@ -719,8 +721,9 @@ export function Tidy5eActorSheetQuadroneBase<
         speeds.push({
           key: 'walk',
           label: CONFIG.DND5E.movementTypes.walk.label,
-          // TODO: Determine if we need to pull the abbreviated units from CONFIG.DND5E
-          units: systemMovement.units,
+          units:
+            CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
+            systemMovement.units,
           value: systemMovement.walk?.toString() ?? '0',
           unitsKey: sourceMovement.units,
         });
@@ -745,8 +748,9 @@ export function Tidy5eActorSheetQuadroneBase<
           key,
           label,
           value: Math.round(+value).toString(),
-          // TODO: Determine if we need to pull the abbreviated units from CONFIG.DND5E
-          units: senseConfig.units,
+          units:
+            CONFIG.DND5E.movementUnits[senseConfig.units]?.abbreviation ??
+            senseConfig.units,
           unitsKey: senseConfig.units,
         });
 
