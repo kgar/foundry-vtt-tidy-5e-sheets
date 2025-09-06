@@ -1,4 +1,4 @@
-import type { Component } from 'svelte';
+import type { Component, mount, unmount } from 'svelte';
 import type {
   ContainerContents,
   CurrencyContext,
@@ -41,7 +41,10 @@ export type TokenDocument = any;
 
 export type SvelteTabContent = {
   type: 'svelte';
-  component: Component<any>;
+  component:
+    | Component<any>
+    | { component: Component }
+    | { component: Component; mount: typeof mount; unmount: typeof unmount };
   cssClass?: string;
   getProps?: (data: any) => Record<string, any>;
   getContext?: (context: Map<any, any>) => Map<any, any>;
