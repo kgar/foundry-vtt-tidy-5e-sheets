@@ -18,6 +18,7 @@
   import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import ActorEncumbranceBar from '../parts/ActorEncumbranceBar.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
+    import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;
@@ -80,6 +81,7 @@
       onmouseenter={() => (hoveredMember = member.actor.uuid)}
       onmouseleave={() => (hoveredMember = null)}
       data-uuid={member.actor.uuid}
+      {@attach dropzoneClass('hovered', '.actor-image')}
     >
       <div class={['actor-image-container flexshrink']}>
         <div

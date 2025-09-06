@@ -11,7 +11,7 @@
   import { isNil } from 'src/utils/data';
   import type { Item5e } from 'src/types/item.types';
   import { TidyHooks } from 'src/foundry/TidyHooks';
-  import { applyDropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
+  import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -189,7 +189,7 @@
               <div
                 class="facility-occupants"
                 data-prop="system.hirelings"
-                use:applyDropzoneClass={'occupant-dropzone'}
+                {@attach dropzoneClass('occupant-dropzone')}
               >
                 <div class="sub-header">
                   {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
@@ -214,7 +214,7 @@
               <div
                 class="facility-occupants"
                 data-prop="system.defenders"
-                use:applyDropzoneClass={'occupant-dropzone'}
+                {@attach dropzoneClass('occupant-dropzone')}
               >
                 <div class="sub-header">
                   {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
@@ -239,7 +239,7 @@
               <div
                 class="facility-occupants"
                 data-prop="system.trade.creatures"
-                use:applyDropzoneClass={'occupant-dropzone'}
+                {@attach dropzoneClass('occupant-dropzone')}
               >
                 <div class="sub-header">
                   {localize('TIDY5E.Facilities.Creatures.Label')}
