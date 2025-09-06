@@ -6,6 +6,7 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   GroupMemberPortraitContext,
+  GroupMemberQuadroneContext,
   GroupMemberSkillContext,
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
@@ -50,6 +51,7 @@ import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -302,6 +304,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         members: [],
         label: 'TYPES.Actor.vehiclePl',
       },
+      all: new Map<string, GroupMemberQuadroneContext>(),
+      skilled: [],
     };
 
     let skills = new Map<string, GroupSkill>(
@@ -349,6 +353,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         continue;
       }
 
+      if (
+        settings.value.useGroupSheetMemberSecurity &&
+        !actor.testUserPermission(game.user, CONSTANTS.PERMISSION_LIMITED)
+      ) {
+        continue;
+      }
+
       const section = sections[actor.type as SupportedActorType];
 
       if (!section) {
@@ -367,12 +378,17 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         }).accentColor
       );
 
-      section.members.push({
+      const canObserve =
+        !settings.value.useGroupSheetMemberSecurity ||
+        actor.testUserPermission(game.user, CONSTANTS.PERMISSION_OBSERVER);
+
+      const groupMemberContext = {
         accentColor: !isNil(accentColor, '') ? accentColor : undefined,
         actor,
         backgroundColor: !isNil(accentColor, '')
           ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
           : undefined,
+        canObserve,
         encumbrance: this._prepareMemberEncumbrance(actor),
         highlightColor: !isNil(accentColor, '')
           ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
@@ -384,53 +400,34 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         portrait: await this._preparePortrait(actor),
         gold: FoundryAdapter.formatNumber(this.getGpSummary(actor)),
         goldAbbreviation: CONFIG.DND5E.currencies.gp?.abbreviation ?? '',
-      });
+      };
 
-      // Skills
-      Object.entries<SkillData>(
-        actor.system.skills ??
-          {
-            /* Vehicles don't have Skills */
-          }
-      ).forEach(([key, skill]) => {
-        let groupSkill = skills.get(key);
-        if (!groupSkill) {
-          return;
-        }
+      section.members.push(groupMemberContext);
+      sections.all.set(actor.uuid, groupMemberContext);
 
-        const modData = getModifierData(skill.mod);
+      if (actor.system.skills) {
+        sections.skilled.push(groupMemberContext);
+      }
 
-        if (skill.mod > groupSkill.high.mod) {
-          groupSkill.high = {
-            mod: skill.mod,
-            ...modData,
-          };
-        }
+      if (canObserve) {
+        // Skills
+        this._prepareMemberSkills(actor, skills);
 
-        groupSkill.identifiers.set(actor.uuid, {
-          mod: skill.mod,
-          ...modData,
-          proficient: skill.proficient,
-          passive: skill.passive,
-        });
+        // Languages
+        this._prepareMemberLanguages(actor, languages);
 
-        groupSkill.proficient ||= skill.proficient > 0;
-      });
+        // Senses
+        this._prepareMemberSenses(actor, senses);
 
-      // Languages
-      this._prepareMemberLanguages(actor, languages);
+        // Specials
+        this._prepareMemberSpecials(actor, specials);
 
-      // Senses
-      this._prepareMemberSenses(actor, senses);
+        // Speeds
+        this._prepareMemberSpeeds(actor, speeds);
 
-      // Specials
-      this._prepareMemberSpecials(actor, specials);
-
-      // Speeds
-      this._prepareMemberSpeeds(actor, speeds);
-
-      // Tools
-      this._prepareMemberTools(actor, tools);
+        // Tools
+        this._prepareMemberTools(actor, tools);
+      }
     }
 
     let groupSkills = [...skills.values()].toSorted((a, b) =>
@@ -458,6 +455,38 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: groupSkills,
       traits,
     };
+  }
+
+  private _prepareMemberSkills(actor: any, skills: Map<string, GroupSkill>) {
+    Object.entries<SkillData>(
+      actor.system.skills ??
+        {
+          /* Vehicles don't have Skills */
+        }
+    ).forEach(([key, skill]) => {
+      let groupSkill = skills.get(key);
+      if (!groupSkill) {
+        return;
+      }
+
+      const modData = getModifierData(skill.mod);
+
+      if (skill.mod > groupSkill.high.mod) {
+        groupSkill.high = {
+          mod: skill.mod,
+          ...modData,
+        };
+      }
+
+      groupSkill.identifiers.set(actor.uuid, {
+        mod: skill.mod,
+        ...modData,
+        proficient: skill.proficient,
+        passive: skill.passive,
+      });
+
+      groupSkill.proficient ||= skill.proficient > 0;
+    });
   }
 
   private _prepareMemberEncumbrance(actor: Actor5e) {
@@ -773,6 +802,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     return {
       src,
       isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
+      shape: ThemeQuadrone.getActorPortraitShape(actor),
     };
   }
 

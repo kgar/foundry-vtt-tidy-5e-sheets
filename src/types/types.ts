@@ -1258,6 +1258,7 @@ export type GroupMemberQuadroneContext = {
   accentColor: string | undefined;
   actor: Actor5e;
   backgroundColor: string | undefined;
+  canObserve: boolean;
   encumbrance: GroupMemberEncumbranceContext;
   highlightColor: string | undefined;
   inspirationSource: InspirationSource | undefined;
@@ -1269,6 +1270,7 @@ export type GroupMemberQuadroneContext = {
 export type GroupMemberPortraitContext = {
   isVideo: boolean;
   src: string;
+  shape: PortraitShape;
 };
 
 export type GroupMemberSection = {
@@ -1280,6 +1282,8 @@ export type GroupMembersQuadroneContext = {
   character: GroupMemberSection;
   npc: GroupMemberSection;
   vehicle: GroupMemberSection;
+  all: Map<string, GroupMemberQuadroneContext>;
+  skilled: GroupMemberQuadroneContext[];
 };
 
 export type Emphasizable = {
@@ -1349,8 +1353,8 @@ export type GroupSheetQuadroneContext = {
     description: {
       full: string;
       summary: string;
-    }
-  }
+    };
+  };
   members: GroupMembersQuadroneContext;
   skills: GroupSkill[];
   travel: {

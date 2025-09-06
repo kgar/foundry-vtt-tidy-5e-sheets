@@ -32,19 +32,11 @@
   let toolTooltip = $state<GroupToolTooltip | undefined>();
   let traitTooltip = $state<GroupTraitTooltip | undefined>();
 
-  let actorMap = $derived(
-    context.system.members.reduce(
-      (map: Map<string, Actor5e>, member: any) =>
-        map.set(member.actor.uuid, member.actor),
-      new Map<string, Actor5e>(),
-    ),
-  );
-
   function getTooltipMembersFromMeasureableTrait(
     identifiers: Map<string, GroupTraitBase<any>>,
   ) {
     return [...identifiers].map(([uuid, value]) => ({
-      actor: actorMap.get(uuid),
+      context: context.members.all.get(uuid) as GroupMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
       units: value.units,
       value: value.value?.toString(),
     }));
@@ -218,7 +210,9 @@
                   traitTooltip?.tryShow(ev, {
                     label: special.label,
                     members: [...special.identifiers].map((s) => ({
-                      actor: actorMap.get(s),
+                      context: context.members.all.get(
+                        s,
+                      ) as GroupMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
                     })),
                   })}
               />
@@ -252,15 +246,17 @@
                 class={pillState}
                 label={tool.label}
                 onmouseover={(ev) =>
-                  tool.key
-                    ? toolTooltip?.tryShow(ev, {
-                        key: tool.key,
-                        label: tool.label,
-                        members: [...tool.identifiers].map((uuid) =>
-                          actorMap.get(uuid),
-                        ),
-                      })
-                    : undefined}
+                  tool.key &&
+                  toolTooltip?.tryShow(ev, {
+                    key: tool.key,
+                    label: tool.label,
+                    members: [...tool.identifiers].map(
+                      (s) =>
+                        context.members.all.get(
+                          s,
+                        ) as GroupMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
+                    ),
+                  })}
               />
             {/each}
           </ul>

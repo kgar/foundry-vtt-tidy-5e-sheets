@@ -26,6 +26,7 @@
     aria-label={name}
     tabindex="0"
     role="button"
+    data-keyboard-focus
   >
     <img class="item-image" alt={name} src={image} />
     <span class="roll-prompt">

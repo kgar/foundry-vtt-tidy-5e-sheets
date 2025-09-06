@@ -621,7 +621,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     for (const [index, memberData] of this.actor.system.members.entries()) {
       const ctx: GroupMemberContext = (memberContext[memberData.actor.id] = {
         index: index,
-        canObserve: memberData.actor.testUserPermission(game.user, 'OBSERVER'),
+        canObserve: memberData.actor.testUserPermission(game.user, CONSTANTS.PERMISSION_OBSERVER),
         senses: [],
         conditionImmunities: [],
         topSkills: [],

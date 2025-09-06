@@ -7,8 +7,6 @@
 
 ### Group Sheet
 
-- [ ] Members tab security
-  - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
 - [ ] Plan and task Bastions tab
 
 ### The Short List
@@ -415,3 +413,10 @@ Limited:
   - [x] Make Description tab secrets work.
   - [x] ~~Implement Cargo calculations for Vehicle members.~~ This is encumbrance. Suggest instead that we just remove the cargo column.
   - [x] Add standard inventory footer to group inventory tab
+  - [x] Members tab security
+    - [x] Add world setting "Use Group Sheet Member Security"
+    - [x] Implement world setting
+      - [x] no permission: exclude member from prep
+      - [x] limited: can see name, no columns, no aggregates, no inventory info / encumbrance
+      - [x] observer or higher: can see all
+- [x] Group sheet header background should work with theme settings

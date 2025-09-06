@@ -321,6 +321,7 @@
               <div
                 class="temp-hp label pointer"
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
                 hidden={hpTempInputFocused}
                 onclick={async (ev) => {
@@ -352,20 +353,6 @@
                   data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
                 >
               </div>
-              <TextInputQuadrone
-                bind:this={hpTempInput}
-                id="{appId}-system-attributes-hp-temp"
-                document={context.actor}
-                field="system.attributes.hp.temp"
-                class="hp-temp-input"
-                value={hpTemp}
-                selectOnFocus={true}
-                enableDeltaChanges={true}
-                onfocus={() => (hpTempInputFocused = true)}
-                onblur={() => (hpTempInputFocused = false)}
-                blurAfterChange={true}
-                hidden={!hpTempInputFocused}
-              />
             {:else if context.editable}
               <button
                 aria-label={localize('DND5E.HitPointsTemp')}
@@ -381,6 +368,20 @@
                 <i class="fas fa-hand-holding-heart"></i>
               </button>
             {/if}
+            <TextInputQuadrone
+              bind:this={hpTempInput}
+              id="{appId}-system-attributes-hp-temp"
+              document={context.actor}
+              field="system.attributes.hp.temp"
+              class="hp-temp-input"
+              value={hpTemp}
+              selectOnFocus={true}
+              enableDeltaChanges={true}
+              onfocus={() => (hpTempInputFocused = true)}
+              onblur={() => (hpTempInputFocused = false)}
+              blurAfterChange={true}
+              hidden={!hpTempInputFocused}
+            />
           {:else if context.editable}
             <button
               onclick={() =>

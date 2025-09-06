@@ -585,7 +585,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
       const ctx: EncounterMemberContext = (memberContext[memberData.uuid] = {
         index: index,
         quantity: memberData.quantity,
-        canObserve: member.testUserPermission(game.user, 'OBSERVER'),
+        canObserve: member.testUserPermission(game.user, CONSTANTS.PERMISSION_OBSERVER),
         senses: [],
         conditionImmunities: [],
         topSkills: [],
