@@ -121,17 +121,20 @@
         </h4>
         {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
           <!-- TODO: Add currency -->
-          <span class="actor-currency flexrow">
-            <span class="font-label-medium color-text-default flexshrink"
-              >{member.gold}</span
-            >
-            <span class="font-body-medium color-text-lighter flexshrink"
-              >{member.goldAbbreviation}</span
-            >
-          </span>
+          <div class="separated-list">
+            <span class="actor-currency">
+              <span class="font-label-medium color-text-default flexshrink"
+                >{member.gold}</span
+              >
+              <span class="font-body-medium color-text-lighter flexshrink"
+                >{member.goldAbbreviation}</span
+              >
+            </span>
+          </div>
           <ActorEncumbranceBar actor={member.actor} />
         {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
-          <span class="actor-cargo flexrow">
+        <div class="separated-list">
+          <span class="actor-cargo separated-list">
             <span class="font-body-medium color-text-lighter"
               >{localize('DND5E.VehicleCargo')}</span
             >
@@ -143,30 +146,33 @@
               >{member.encumbrance.max}</span
             >
           </span>
+        </div>
         {/if}
       </div>
     </div>
   {/each}
 </aside>
-<div class="groups-tab-content inventory-content">
-  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+<div class="groups-tab-content flexcol">
+  <div class="inventory-content">
+    <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
-  {#if context.showContainerPanel && !!context.containerPanelItems.length}
-    <ContainerPanel
+    {#if context.showContainerPanel && !!context.containerPanelItems.length}
+      <ContainerPanel
+        {searchCriteria}
+        containerPanelItems={context.containerPanelItems}
+      />
+    {/if}
+
+    <InventoryTables
+      sections={inventory}
+      editable={context.editable}
+      itemContext={context.itemContext}
+      {inlineToggleService}
       {searchCriteria}
-      containerPanelItems={context.containerPanelItems}
+      sheetDocument={context.actor}
+      root={true}
     />
-  {/if}
-
-  <InventoryTables
-    sections={inventory}
-    editable={context.editable}
-    itemContext={context.itemContext}
-    {inlineToggleService}
-    {searchCriteria}
-    sheetDocument={context.actor}
-    root={true}
-  />
+  </div>
 
   <ActorInventoryFooter useAttunement={false} />
 </div>

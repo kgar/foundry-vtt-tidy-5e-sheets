@@ -46,21 +46,22 @@
 
 <div class="hidden">
   <div bind:this={tooltip} class="document-list-summary-tooltip">
-    <h3>{trait.label}</h3>
+    <h3 class="font-title-medium color-text-default">{trait.label}</h3>
     <hr />
     <ul>
       {#each trait.members as member}
         <li class="group-trait-grid">
+          <!-- TODO add token shape to class list  -->
           <div
-            class="item-image"
+            class="item-image TOKEN-SHAPE"
             style="background-image: url('{member.actor.img}')"
           ></div>
           <div class="item-name truncate">{member.actor.name}</div>
           {#if member.value}
-            <div class="text-align-center">
-              <span>{member.value}</span>
+            <div class="text-align-right">
+              <span class="font-label-medium color-text-default">{member.value}</span>
               {#if member.units}
-                <span>{member.units}</span>
+                <span class="font-body-medium color-text-lighter">{member.units}</span>
               {/if}
             </div>
           {/if}

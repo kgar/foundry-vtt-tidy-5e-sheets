@@ -1,10 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { GroupSkill } from 'src/types/group.types';
-  import { formatAsModifier } from 'src/utils/formatting';
+  import { formatAsModifier, getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
   import { Tooltip } from './Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
+
+  const localize = FoundryAdapter.localize;
 
   interface Props {
     sheetDocument: any;
@@ -47,27 +49,37 @@
 
 <div class="hidden">
   <div bind:this={tooltip} class="document-list-summary-tooltip">
-    <h3>{skill.label}</h3>
+    <h3 class="font-title-medium color-text-default">{skill.label}</h3>
     <hr />
     <ul>
+      <li class="group-skill-grid group-tooltip-header">
+        <div class=""></div>
+        <div class=""></div>
+        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.AbilityModifierShort')}</div>
+        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.Passive')}</div> 
+        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.Proficiency')}</div>
+      </li>
       {#each skill.members as member}
         {@const score = member.system.skills[skill.key]?.total}
+        {@const modifier = getModifierData(score)}
         <li class="group-skill-grid">
+          <!-- TODO add token shape to class list  -->
           <div
-            class="item-image"
+            class="item-image TOKEN-SHAPE"
             style="background-image: url('{member.img}')"
           ></div>
           <div class="item-name truncate">{member.name}</div>
-          <div class="text-align-center">
-            {formatAsModifier(score)}
-          </div>
-          <div class="text-align-center">
-            ({member.system.skills[skill.key]?.passive})
-          </div>
-          <div class="text-align-center">
+          <div class="text-align-right">
             {#if score === highestScore}
-              <i class="fa-solid fa-trophy"></i>
+              <i class="fa-solid fa-award color-text-gold-emphasis highlighted" style="color: {member.highlightColor}"></i>
             {/if}
+            <span class="font-body-medium color-text-lighter">{modifier.sign}</span>
+            <span class="font-label-medium color-text-default">{modifier.value}</span>
+          </div>
+          <div class="text-align-right">
+            <span class="font-label-medium color-text-lighter">{member.system.skills[skill.key]?.passive}</span>
+          </div>
+          <div class="text-align-right">
             <i
               class="{FoundryAdapter.getProficiencyIconClass(
                 member.system.skills[skill.key]?.proficient,

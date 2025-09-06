@@ -26,6 +26,7 @@
       flex-direction: column;
       flex: 1;
       min-height: 0;
+      padding: 0 1rem 1rem;
 
       h1 {
         font: var(--t5e-font-title-medium);
@@ -66,6 +67,14 @@
         flex: 1;
         text-wrap: none;
       }
+    }
+  }
+
+  &.special-traits,
+  &.tab-configuration,
+  &.tidy-journal-entry {
+    .window-content {
+      padding: 0 1rem 1rem;
     }
   }
 }

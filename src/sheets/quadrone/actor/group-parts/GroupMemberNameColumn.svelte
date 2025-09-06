@@ -91,15 +91,23 @@
     </h4>
     {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
       {@const classes = Object.values<Item5e>(member.actor.classes)}
-
-      {#each classes as thisClass}
-        <span class="font-label-medium color-text-gold-emphasis"
-          >{thisClass.name}</span
-        >
-        <span class="font-data-medium color-text-default"
-          >{thisClass.system.levels}</span
-        >
-      {/each}
+      {#if classes.length > 0}
+        <div class="separated-list">
+          {#each classes as thisClass, index}
+            <div class="class-names">
+              <span class="font-label-medium color-text-gold-emphasis"
+                >{thisClass.name}</span
+              >
+              <span class="font-data-medium color-text-default"
+                >{thisClass.system.levels}</span
+              >
+            </div>
+            {#if index < classes.length - 1}
+              <div class="divider-dot"></div>
+            {/if}
+          {/each}
+        </div>
+      {/if}
     {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
       {@const formattedCr = dnd5e.utils.formatCR(
         member.actor.system.details.cr,
@@ -119,23 +127,31 @@
 
       {@const classes = Object.values<Item5e>(member.actor.classes)}
 
-      <span class="flexrow">
-        {#each classes as thisClass}
-          <span class="font-label-medium color-text-gold-emphasis"
-            >{thisClass.name}</span
-          >
-          <span class="font-data-medium color-text-default"
-            >{thisClass.system.levels}</span
-          >
-          <div class="divider-dot"></div>
+      {#if classes.length > 0}
+      <span class="separated-list">
+        {#each classes as thisClass, index}
+          <div class="class-names">
+            <span class="font-label-medium color-text-gold-emphasis"
+              >{thisClass.name}</span
+            >
+            <span class="font-data-medium color-text-default"
+              >{thisClass.system.levels}</span
+            >
+            {#if index < classes.length - 1}
+              <div class="divider-dot"></div>
+            {/if}
+          </div>
         {/each}
 
-        <span class="cr">
-          <span class="font-label-medium color-text-gold-emphasis"
-            >{localize('DND5E.AbbreviationCR')}</span
-          >
-          <span class="font-data-medium color-text-default">{formattedCr}</span>
-        </span>
+        <div class="divider-dot"></div>
+        <div>
+          <span class="cr">
+            <span class="font-label-medium color-text-gold-emphasis"
+              >{localize('DND5E.AbbreviationCR')}</span
+            >
+            <span class="font-data-medium color-text-default">{formattedCr}</span>
+          </span>
+        </div>
         <div class="divider-dot"></div>
         <span class="size">
           <span class="font-label-medium color-text-gold-emphasis">{size}</span>
@@ -153,6 +169,7 @@
           </span>
         {/if}
       </span>
+      {/if}
     {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
       {@const vehicleType =
         CONFIG.DND5E.vehicleTypes[member.actor.system.vehicleType] ??
