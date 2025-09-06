@@ -539,6 +539,10 @@
     "name": "Lock Item Quantity",
     "hint": "Prevents non-GMs from making changes to item quantity."
   },
+  "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+    "name": "Use Group Sheet Member Security",
+    "hint": "Enables GM control of what group member information a user can see on the group sheet. When the player has no permission to a group member, the group sheet does not show that member or its aggregate information. With Limited permission, the user can see the member's name but no other information. With Observer or greater, the user can see all group sheet information about the member."
+  },
   "TIDY5E.Settings.ActionList.Header": "Actions List",
   "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
     "name": "Limit Actions to Cantrips",

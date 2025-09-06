@@ -1258,6 +1258,7 @@ export type GroupMemberQuadroneContext = {
   accentColor: string | undefined;
   actor: Actor5e;
   backgroundColor: string | undefined;
+  canObserve: boolean;
   encumbrance: GroupMemberEncumbranceContext;
   highlightColor: string | undefined;
   inspirationSource: InspirationSource | undefined;

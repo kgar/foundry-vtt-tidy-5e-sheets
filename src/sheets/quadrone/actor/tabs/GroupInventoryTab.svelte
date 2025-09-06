@@ -116,34 +116,36 @@
         <h4 class="font-label-medium">
           {member.actor.name}
         </h4>
-        {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-          <!-- TODO: Add currency -->
-          <div class="separated-list">
-            <span class="actor-currency">
-              <span class="font-label-medium color-text-default flexshrink"
-                >{member.gold}</span
-              >
-              <span class="font-body-medium color-text-lighter flexshrink"
-                >{member.goldAbbreviation}</span
-              >
-            </span>
-          </div>
-          <ActorEncumbranceBar actor={member.actor} />
-        {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
-          <div class="separated-list">
-            <span class="actor-cargo separated-list">
-              <span class="font-body-medium color-text-lighter"
-                >{localize('DND5E.VehicleCargo')}</span
-              >
-              <span class="font-label-medium color-text-default"
-                >{member.encumbrance.value.toNearest(0.01)}</span
-              >
-              <span class="font-body-medium color-text-lightest">/</span>
-              <span class="font-label-medium color-text-lighter"
-                >{member.encumbrance.max}</span
-              >
-            </span>
-          </div>
+        {#if member.canObserve}
+          {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+            <!-- TODO: Add currency -->
+            <div class="separated-list">
+              <span class="actor-currency">
+                <span class="font-label-medium color-text-default flexshrink"
+                  >{member.gold}</span
+                >
+                <span class="font-body-medium color-text-lighter flexshrink"
+                  >{member.goldAbbreviation}</span
+                >
+              </span>
+            </div>
+            <ActorEncumbranceBar actor={member.actor} />
+          {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+            <div class="separated-list">
+              <span class="actor-cargo separated-list">
+                <span class="font-body-medium color-text-lighter"
+                  >{localize('DND5E.VehicleCargo')}</span
+                >
+                <span class="font-label-medium color-text-default"
+                  >{member.encumbrance.value.toNearest(0.01)}</span
+                >
+                <span class="font-body-medium color-text-lightest">/</span>
+                <span class="font-label-medium color-text-lighter"
+                  >{member.encumbrance.max}</span
+                >
+              </span>
+            </div>
+          {/if}
         {/if}
       </div>
     </div>

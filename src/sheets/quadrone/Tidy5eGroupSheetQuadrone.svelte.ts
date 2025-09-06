@@ -51,6 +51,7 @@ import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -352,6 +353,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         continue;
       }
 
+      if (
+        settings.value.useGroupSheetMemberSecurity &&
+        !actor.testUserPermission(game.user, CONSTANTS.PERMISSION_LIMITED)
+      ) {
+        continue;
+      }
+
       const section = sections[actor.type as SupportedActorType];
 
       if (!section) {
@@ -370,12 +378,17 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         }).accentColor
       );
 
+      const canObserve =
+        !settings.value.useGroupSheetMemberSecurity ||
+        actor.testUserPermission(game.user, CONSTANTS.PERMISSION_OBSERVER);
+
       const groupMemberContext = {
         accentColor: !isNil(accentColor, '') ? accentColor : undefined,
         actor,
         backgroundColor: !isNil(accentColor, '')
           ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
           : undefined,
+        canObserve,
         encumbrance: this._prepareMemberEncumbrance(actor),
         highlightColor: !isNil(accentColor, '')
           ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
@@ -396,51 +409,25 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         sections.skilled.push(groupMemberContext);
       }
 
-      // Skills
-      Object.entries<SkillData>(
-        actor.system.skills ??
-          {
-            /* Vehicles don't have Skills */
-          }
-      ).forEach(([key, skill]) => {
-        let groupSkill = skills.get(key);
-        if (!groupSkill) {
-          return;
-        }
+      if (canObserve) {
+        // Skills
+        this._prepareMemberSkills(actor, skills);
 
-        const modData = getModifierData(skill.mod);
+        // Languages
+        this._prepareMemberLanguages(actor, languages);
 
-        if (skill.mod > groupSkill.high.mod) {
-          groupSkill.high = {
-            mod: skill.mod,
-            ...modData,
-          };
-        }
+        // Senses
+        this._prepareMemberSenses(actor, senses);
 
-        groupSkill.identifiers.set(actor.uuid, {
-          mod: skill.mod,
-          ...modData,
-          proficient: skill.proficient,
-          passive: skill.passive,
-        });
+        // Specials
+        this._prepareMemberSpecials(actor, specials);
 
-        groupSkill.proficient ||= skill.proficient > 0;
-      });
+        // Speeds
+        this._prepareMemberSpeeds(actor, speeds);
 
-      // Languages
-      this._prepareMemberLanguages(actor, languages);
-
-      // Senses
-      this._prepareMemberSenses(actor, senses);
-
-      // Specials
-      this._prepareMemberSpecials(actor, specials);
-
-      // Speeds
-      this._prepareMemberSpeeds(actor, speeds);
-
-      // Tools
-      this._prepareMemberTools(actor, tools);
+        // Tools
+        this._prepareMemberTools(actor, tools);
+      }
     }
 
     let groupSkills = [...skills.values()].toSorted((a, b) =>
@@ -468,6 +455,38 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       skills: groupSkills,
       traits,
     };
+  }
+
+  private _prepareMemberSkills(actor: any, skills: Map<string, GroupSkill>) {
+    Object.entries<SkillData>(
+      actor.system.skills ??
+        {
+          /* Vehicles don't have Skills */
+        }
+    ).forEach(([key, skill]) => {
+      let groupSkill = skills.get(key);
+      if (!groupSkill) {
+        return;
+      }
+
+      const modData = getModifierData(skill.mod);
+
+      if (skill.mod > groupSkill.high.mod) {
+        groupSkill.high = {
+          mod: skill.mod,
+          ...modData,
+        };
+      }
+
+      groupSkill.identifiers.set(actor.uuid, {
+        mod: skill.mod,
+        ...modData,
+        proficient: skill.proficient,
+        passive: skill.passive,
+      });
+
+      groupSkill.proficient ||= skill.proficient > 0;
+    });
   }
 
   private _prepareMemberEncumbrance(actor: Actor5e) {
