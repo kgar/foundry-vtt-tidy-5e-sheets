@@ -37,7 +37,7 @@
 
 <div class="hidden">
   <div bind:this={tooltip} class="document-list-summary-tooltip">
-    <h3>{language}</h3>
+    <h3 class="font-title-medium color-text-default">{language}</h3>
     <hr />
     <ul>
       {#each members as member}

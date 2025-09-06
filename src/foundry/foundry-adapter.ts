@@ -462,10 +462,10 @@ export const FoundryAdapter = {
   },
   getProficiencyIconClass(level: number) {
     const icons: Record<number, string> = {
-      0: 'far fa-circle',
-      0.5: 'fas fa-adjust',
-      1: 'fas fa-check',
-      2: 'fas fa-check-double',
+      0: 'far fa-circle color-text-gold',
+      0.5: 'fas fa-circle-half-stroke color-text-gold-emphasis',
+      1: 'fas fa-circle color-text-gold-emphasis',
+      2: 'fas fa-circle-star color-text-gold-emphasis',
     };
     return icons[level] || icons[0];
   },
