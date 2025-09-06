@@ -321,6 +321,7 @@
               <div
                 class="temp-hp label pointer"
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
                 hidden={hpTempInputFocused}
                 onclick={async (ev) => {
