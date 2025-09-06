@@ -222,6 +222,7 @@
                     <a
                       class="item-name"
                       role="button"
+                      data-keyboard-focus
                       tabindex="0"
                       onclick={(ev) => toggleSummary()}
                     >

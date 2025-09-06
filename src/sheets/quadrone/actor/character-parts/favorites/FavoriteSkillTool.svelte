@@ -45,8 +45,6 @@
 
 <div
   class="list-entry favorite"
-  role="button"
-  tabindex="0"
   data-favorite-type="tool"
   data-reference-tooltip={favorite.reference}
   data-item-id={favorite.id}

@@ -205,6 +205,7 @@
                 onclick={(ev) => context.editable && useFacility(ev, chosen)}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 <!-- <img class="facility-image" src={img} alt={chosen.name} /> -->
@@ -230,6 +231,7 @@
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -325,6 +327,7 @@
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_SPECIAL)}
               onkeydown={onKeydown}
               role="button"
+              data-keyboard-focus
               tabindex="0"
             >
               <i class="fas fa-building-columns"></i>
@@ -392,6 +395,7 @@
                 onclick={(ev) => context.editable && useFacility(ev, chosen)}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 {#if isSvg(img)}
@@ -415,6 +419,7 @@
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -434,6 +439,7 @@
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
               onkeydown={onKeydown}
               role="button"
+              data-keyboard-focus
               tabindex="0"
             >
               {#if available.label.includes('build')}

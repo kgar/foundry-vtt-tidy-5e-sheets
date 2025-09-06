@@ -31,6 +31,7 @@
 <div class="tidy-table-cell actor-image-container">
   <div
     role="button"
+    data-keyboard-focus
     tabindex={0}
     class={[
       'actor-image',
@@ -73,6 +74,7 @@
   <div
     class="actor-name"
     role="button"
+    data-keyboard-focus
     tabindex={0}
     onclick={() => member.actor.sheet.render(true)}
     onkeydown={(e) =>

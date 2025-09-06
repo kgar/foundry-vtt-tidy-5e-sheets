@@ -146,6 +146,8 @@
               aria-label="View {localize('TYPES.Item.class')}"
               class="item-image-link"
               role="button"
+              tabindex="0"
+              data-keyboard-focus
               onclick={() =>
                 cls.item.sheet.render({
                   force: true,
@@ -277,6 +279,7 @@
           aria-label="View {localize('TYPES.Item.subclass')}"
           class="item-image-link"
           role="button"
+          data-keyboard-focus
           onclick={() =>
             subclass.sheet.render({
               force: true,

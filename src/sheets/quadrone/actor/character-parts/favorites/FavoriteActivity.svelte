@@ -39,8 +39,6 @@
 
 <div
   class="list-entry favorite"
-  role="button"
-  tabindex="0"
   data-favorite-type="activity"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
   data-item-id={favorite.activity.item?.id}

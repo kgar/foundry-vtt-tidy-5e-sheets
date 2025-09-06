@@ -69,6 +69,7 @@
       style:--t5e-theme-color-highlight={member.highlightColor}
       style:--t5e-member-color-hover={member.highlightColor}
       role="button"
+      data-keyboard-focus
       tabindex={0}
       onclick={() => member.actor.sheet.render(true)}
       onkeydown={(e) =>
