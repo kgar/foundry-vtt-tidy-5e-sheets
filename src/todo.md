@@ -2,6 +2,7 @@
 
 ### Group Sheet
 
+- [ ] Group sheet - Members tab - Set up column hiding 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] Group Sheet - Inventory tab - Should we have hover styles on the member names?
 - [ ] Plan and task Bastions tab
