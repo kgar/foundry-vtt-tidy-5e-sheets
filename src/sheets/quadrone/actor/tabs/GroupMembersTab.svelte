@@ -128,6 +128,12 @@
       {/snippet}
     </TidyTable>
   {/if}
+
+  {#if !context.system.members.length}
+    <div class="empty-state-container empty-state-description">
+      {localize('TIDY5E.Group.EmptyMembersTabHint')}
+    </div>
+  {/if}
 </section>
 
 {#snippet headerColumns(columns: ColumnsLoadout)}
