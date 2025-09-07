@@ -44,7 +44,7 @@
     <ul class="weight-distribution unlist">
       <li>
         <span class="label">
-          <i class="fa-solid fa-sack"></i>
+          <i class="fa-solid fa-sack color-text-lighter"></i>
           <span class="truncate">{localize('DND5E.Items')}</span>
         </span>
         <span>
@@ -54,7 +54,7 @@
       </li>
       <li>
         <span class="label">
-          <i class="fa-solid fa-coins"></i>
+          <i class="fa-solid fa-coins color-text-lighter"></i>
           <span class="truncate">{localize('DND5E.Currency')}</span>
         </span>
         <span>

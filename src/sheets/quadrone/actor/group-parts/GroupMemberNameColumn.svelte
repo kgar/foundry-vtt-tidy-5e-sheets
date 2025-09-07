@@ -142,23 +142,17 @@
               </div>
             {/each}
 
-            <div class="divider-dot"></div>
-            <div>
-              <span class="cr">
-                <span class="font-label-medium color-text-gold-emphasis"
-                  >{localize('DND5E.AbbreviationCR')}</span
-                >
-                <span class="font-data-medium color-text-default"
-                  >{formattedCr}</span
-                >
-              </span>
-            </div>
-            <div class="divider-dot"></div>
-            <span class="size">
-              <span class="font-label-medium color-text-gold-emphasis"
-                >{size}</span
-              >
-            </span>
+        <div class="divider-dot"></div>
+        <span class="cr">
+          <span class="font-label-medium color-text-gold-emphasis"
+            >{localize('DND5E.AbbreviationCR')}</span
+          >
+          <span class="font-data-medium color-text-default">{formattedCr}</span>
+        </span>
+        <div class="divider-dot"></div>
+        <span class="size">
+          <span class="font-label-medium color-text-gold-emphasis">{size}</span>
+        </span>
 
             {#if creatureType}
               <div class="divider-dot"></div>
