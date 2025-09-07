@@ -84,6 +84,8 @@
         .uninput {
           field-sizing: content;
           max-width: 4rem;
+          background-color: var(--t5e-component-field-background-disabled);
+          border: 0.0625rem solid rgba(159, 146, 117, 0.4);
         }
       }
     }
@@ -401,9 +403,7 @@
           align-items: flex-start;
         }
 
-        &.tidy-table-actions {
-          padding-left: var(--t5e-size-2x);
-        }
+        &.tidy-table-actions {}
       }
 
       .meter.meter-small {
@@ -450,6 +450,18 @@
         .label {
           margin-right: var(--t5e-size-1x);
         }
+      }
+
+      .inventory-footer div:has(.item-create) {
+        order: 1;
+        flex: 1;
+        justify-content: flex-end;
+      }
+    }
+
+    &.description {
+      .group-description-content {
+        padding: var(--t5e-size-3x) var(--t5e-size-4x);
       }
     }
   }

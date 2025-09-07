@@ -8,6 +8,6 @@
   }: ColumnCellProps<any, GroupMemberQuadroneContext> = $props();
 </script>
 
-<span class="font-data-large color-text-default"
+<span class="font-label-large color-text-default"
   >{rowDocument.system.attributes.ac.value}</span
 >
