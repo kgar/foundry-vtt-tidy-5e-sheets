@@ -78,7 +78,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const component = mount(CharacterSheet, {
       target: node,
-      context: new Map<any, any>([...this._getActorSvelteContext()]),
+      context: new Map<any, any>(this._getActorSvelteContext()),
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
