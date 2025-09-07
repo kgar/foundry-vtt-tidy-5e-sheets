@@ -382,7 +382,6 @@ export type CharacterSheetContext = {
     description: string;
   };
   biographyEnrichedHtml: string;
-  publicBiographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
@@ -488,7 +487,6 @@ export type NpcHabitat = {
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
-  publicBiographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
@@ -1168,7 +1166,6 @@ export type CharacterSheetQuadroneContext = {
     bond: string;
     flaw: string;
     ideal: string;
-    publicBiography: string;
     trait: string;
   };
   epicBoonsEarned: string | undefined;
@@ -1383,7 +1380,6 @@ export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   enriched: {
     biography: string;
-    publicBiography: string;
   };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
 } & SingleActorContext<unknown>;
