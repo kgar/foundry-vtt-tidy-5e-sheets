@@ -46,6 +46,7 @@
             aria-label="View {localize('TYPES.Item.subclass')}"
             class="item-image-link"
             role="button"
+            data-keyboard-focus
             tabindex="0"
             onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
             onkeydown={(e) =>

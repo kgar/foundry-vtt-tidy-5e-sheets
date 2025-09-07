@@ -1,23 +1,53 @@
-export function applyDropzoneClass(
-  node: HTMLElement,
-  dropzoneClass: string
-): any {
-  let dragCounter = 0;
+import type { Attachment } from 'svelte/attachments';
 
-  node.addEventListener('dragenter', () => {
-    dragCounter++;
-    node.classList.add(dropzoneClass);
-  });
+/**
+ *
+ * @param dropzoneClass the class to apply to the dropzone
+ * @param selector an optional selector which will put the dropzone class on a child of the attached
+ * @returns
+ */
+export function dropzoneClass(
+  dropzoneClass: string,
+  selector?: string
+): Attachment {
+  return (element) => {
+    let target = selector
+      ? element.querySelector<HTMLElement>(selector) ?? element
+      : element;
+    let dragCounter = 0;
+    let controller = new AbortController();
 
-  node.addEventListener('dragleave', () => {
-    dragCounter--;
-    if (dragCounter === 0) {
-      node.classList.remove(dropzoneClass);
-    }
-  });
+    element.addEventListener(
+      'dragenter',
+      () => {
+        dragCounter++;
+        target.classList.add(dropzoneClass);
+      },
+      { signal: controller.signal }
+    );
 
-  node.addEventListener('drop', () => {
-    dragCounter = 0;
-    node.classList.remove(dropzoneClass);
-  });
+    element.addEventListener(
+      'dragleave',
+      () => {
+        dragCounter--;
+        if (dragCounter === 0) {
+          target.classList.remove(dropzoneClass);
+        }
+      },
+      { signal: controller.signal }
+    );
+
+    element.addEventListener(
+      'drop',
+      () => {
+        dragCounter = 0;
+        target.classList.remove(dropzoneClass);
+      },
+      { signal: controller.signal }
+    );
+
+    return () => {
+      controller.abort();
+    };
+  };
 }

@@ -1,10 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { GroupSkill } from 'src/types/group.types';
   import { formatAsModifier, getModifierData } from 'src/utils/formatting';
   import { tick } from 'svelte';
   import { Tooltip } from './Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
+  import type { Actor5e } from 'src/types/types';
+  import type { PortraitShape } from 'src/theme/theme-quadrone.types';
 
   const localize = FoundryAdapter.localize;
 
@@ -16,7 +17,17 @@
 
   let tooltip: HTMLElement;
 
-  let skill: Omit<GroupSkill, 'total'> = $state({
+  type GroupSkill = {
+    key: string;
+    label: string;
+    members: {
+      actor: Actor5e;
+      portrait?: { shape: PortraitShape };
+      highlightColor?: string;
+    }[];
+  };
+
+  let skill: GroupSkill = $state({
     key: '',
     label: '',
     members: [],
@@ -24,7 +35,8 @@
 
   let highestScore = $derived(
     skill.members.reduce(
-      (prev, curr) => Math.max(prev, curr.system.skills[skill.key]?.total),
+      (prev, curr) =>
+        Math.max(prev, curr.actor.system.skills[skill.key]?.total),
       0,
     ),
   );
@@ -55,34 +67,49 @@
       <li class="group-skill-grid group-tooltip-header">
         <div class=""></div>
         <div class=""></div>
-        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.AbilityModifierShort')}</div>
-        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.Passive')}</div> 
-        <div class="text-align-right font-label-small color-text-lightest">{localize('DND5E.Proficiency')}</div>
+        <div class="text-align-right font-label-small color-text-lightest">
+          {localize('DND5E.AbilityModifierShort')}
+        </div>
+        <div class="text-align-right font-label-small color-text-lightest">
+          {localize('DND5E.Passive')}
+        </div>
+        <div class="text-align-right font-label-small color-text-lightest">
+          {localize('DND5E.Proficiency')}
+        </div>
       </li>
       {#each skill.members as member}
-        {@const score = member.system.skills[skill.key]?.total}
+        {@const score = member.actor.system.skills[skill.key]?.total}
         {@const modifier = getModifierData(score)}
         <li class="group-skill-grid">
           <!-- TODO add token shape to class list  -->
           <div
-            class="item-image TOKEN-SHAPE"
-            style="background-image: url('{member.img}')"
+            class={['item-image', member.portrait?.shape ?? 'round']}
+            style="background-image: url('{member.actor.img}')"
           ></div>
-          <div class="item-name truncate">{member.name}</div>
+          <div class="item-name truncate">{member.actor.name}</div>
           <div class="text-align-right">
             {#if score === highestScore}
-              <i class="fa-solid fa-award color-text-gold-emphasis highlighted" style="color: {member.highlightColor}"></i>
+              <i
+                class="fa-solid fa-award color-text-gold-emphasis highlighted"
+                style:color={member.highlightColor}
+              ></i>
             {/if}
-            <span class="font-body-medium color-text-lighter">{modifier.sign}</span>
-            <span class="font-label-medium color-text-default">{modifier.value}</span>
+            <span class="font-body-medium color-text-lighter"
+              >{modifier.sign}</span
+            >
+            <span class="font-label-medium color-text-default"
+              >{modifier.value}</span
+            >
           </div>
           <div class="text-align-right">
-            <span class="font-label-medium color-text-lighter">{member.system.skills[skill.key]?.passive}</span>
+            <span class="font-label-medium color-text-lighter"
+              >{member.actor.system.skills[skill.key]?.passive}</span
+            >
           </div>
           <div class="text-align-right">
             <i
               class="{FoundryAdapter.getProficiencyIconClass(
-                member.system.skills[skill.key]?.proficient,
+                member.actor.system.skills[skill.key]?.proficient,
               )} fa-fw"
             ></i>
           </div>

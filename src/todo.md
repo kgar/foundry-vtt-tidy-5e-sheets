@@ -1,27 +1,26 @@
 ## kgar To Do
 
-### Critical Bugs and Bug-likes
-
-- [ ] Character: show special senses in Character tab. Check NPCs as well.
-- [ ] Character, NPC, Group, etc.: check units localization in languages, senses, and movement. The system units value is the key, and we have to fetch the localized abbreviation from CONFIG.DND5E.
-
 ### Group Sheet
 
-- [ ] Members tab security
-  - [ ] Hide individual member stats prep and UI elements behind `canObserve` logic
+- [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
+- [ ] Group Sheet - Inventory tab - Should we have hover styles on the member names?
 - [ ] Plan and task Bastions tab
+
+### Encounter Sheet
+
+- [ ] Confirm the big picture requirements
+- [ ] Scaffold encounter sheet tabs
+- [ ] Get the encounter inventory fully functional
+- [ ] Get the encounter description tab fully functional
+- [ ] Scaffold the encounter member context
+- [ ] Plan and implement the rest
 
 ### The Short List
 
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
-- [ ] Stub group members context
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
-- [ ] Prep Group description context
 - [ ] Prep Bastions context
-- [ ] Prep Exploration context
-- [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
-- [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
 - [ ] Tools card header - has cursor hover style without interactivity
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
@@ -149,97 +148,6 @@
 - [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
 
 
-### Sample Currency Script
-
-Paste this at the bottom of main.svelte.ts for quick testing. Ignore the TS errors, as it will still run and work:
-
-```js
-Hooks.once("init", () => {
-  //Apontamento do Compendium de Itens
-  delete CONFIG.DND5E.currencies.ep;
-  delete CONFIG.DND5E.currencies.pp;
-
-  //Alterando Padrão para Nox
-  CONFIG.DND5E.currencies.cp.abbreviation = "NdB";
-  CONFIG.DND5E.currencies.cp.icon = "modules/compendium-randc/imagens/moedas/nox-de-bronze.png";
-  CONFIG.DND5E.currencies.cp.label = "Nox de Bronze";
-  CONFIG.DND5E.currencies.sp.abbreviation = "NdP";
-  CONFIG.DND5E.currencies.sp.icon = "modules/compendium-randc/imagens/moedas/nox-de-prata.png";
-  CONFIG.DND5E.currencies.sp.label = "Nox de Prata";
-  CONFIG.DND5E.currencies.gp.abbreviation = "NdO";
-  CONFIG.DND5E.currencies.gp.icon = "modules/compendium-randc/imagens/moedas/nox-de-ouro.png";
-  CONFIG.DND5E.currencies.gp.label = "Nox de Ouro";
-
-  //Novas Moedas de Demacia
-  CONFIG.DND5E.currencies.edo = {
-    abbreviation: "EdO",
-    conversion: "1",
-    icon: "systems/dnd5e/icons/currency/gold.webp",
-    label: "Espada de Ouro",
-  };
-  CONFIG.DND5E.currencies.cdp = {
-    abbreviation: "CdP",
-    conversion: "10",
-    icon: "systems/dnd5e/icons/currency/silver.webp",
-    label: "Coroa de Prata",
-  };
-  CONFIG.DND5E.currencies.mdb = {
-    abbreviation: "MdB",
-    conversion: "100",
-    icon: "systems/dnd5e/icons/currency/copper.webp",
-    label: "Martelo de Bronze",
-  };
-
-  //Novas Moedas de Sentina
-  CONFIG.DND5E.currencies.kdo = {
-    abbreviation: "KdO",
-    conversion: "2",
-    icon: "systems/dnd5e/icons/currency/gold.webp",
-    label: "Kraken de Ouro",
-  };
-  CONFIG.DND5E.currencies.sdp = {
-    abbreviation: "SdP",
-    conversion: "20",
-    icon: "systems/dnd5e/icons/currency/silver.webp",
-    label: "Serpente de Prata",
-  };
-  CONFIG.DND5E.currencies.sdb = {
-    abbreviation: "SdB",
-    conversion: "200",
-    icon: "systems/dnd5e/icons/currency/copper.webp",
-    label: "Sardinha de Bronze",
-  };
-
-  //Novas Moedas de Piltover
-  CONFIG.DND5E.currencies.hdo = {
-    abbreviation: "HdO",
-    conversion: "0.5",
-    icon: "systems/dnd5e/icons/currency/gold.webp",
-    label: "Hex de Ouro",
-  };
-  CONFIG.DND5E.currencies.adp = {
-    abbreviation: "AdP",
-    conversion: "5",
-    icon: "systems/dnd5e/icons/currency/silver.webp",
-    label: "Anilha de Prata",
-  };
-  CONFIG.DND5E.currencies.pdb = {
-    abbreviation: "PdB",
-    conversion: "50",
-    icon: "systems/dnd5e/icons/currency/copper.webp",
-    label: "Porca de Bronze",
-  };
-
-  //Novas Moedas de Shurima
-  CONFIG.DND5E.currencies.sc = {
-    abbreviation: "SC",
-    conversion: "1.5",
-    icon: "systems/dnd5e/icons/currency/gold.webp",
-    label: "Securi",
-  };
-});
-```
-
 ### Huh?
 
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
@@ -318,100 +226,8 @@ Limited:
 
 ### To Do Graveyard
 
-#### hightouch's to-dones
-
-- [x] NPC Header subtitle - Concentration of 2 digits wraps badly, needs flex-wrap no-wrap
-- [x] kgar idea: unify unprepared spell, unidentified inventory item, and suppressed effect table row styles into a class we can place on a table row to achieve the same look and feel across any of the table rows.
-- [x] kgar question: should we apply any alt header color for the suppressed effect section?
-- [x] Non-square portraits need some CSS help: <https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1218#issuecomment-3067321940>
-- [x] Test Korean language on Mac
-- [x] Item sheet context menu styles - hide initial grouping line if present.
-- [x] Figure out what's up with multiclassed spellbook footer padding missing
-- [x] NPC Header
-  - [x] Rest buttons - when mouse down, the button borders change size and cause the buttons to shift
-- [x] Light mode, collapsed view (enable Honor and Sanity)
-  - [x] Init is very dark
-  - [x] Ability proficiency decoration is a bit hard to notice
-- [x] NPC Subtitle
-  - [x] ~~Do we need to mention Classes / Subclasses?~~ **Note: Recommending no for now**
-  - [x] ~~Do we need to mention Background?~~ **Note: Recommending no for now**
-  - [x] Concentration button is vertically offset from the rest of the subtitle slightly
-  - [x] XP width broken when wrapping in Edit Mode
-- [x] NPC Sidebar
-  - [x] Species section doesn't have an icon (I couldn't decide on one)
-  - [x] Creature Type doesn't have an icon (I couldn't decide on one)
-  - [x] Loyalty tracker doesn't have an icon (I couldn't decide on one)
-  - [x] Finish styling hit die
-- [x] Edit Mode
-  - [x] Value input is wider than legendary trackers' value inputs. **Note: on purpose**
-- [x] ~~Statblock tab~~
-  - [x] ~~Section add buttons: they can only ever add a Feature to the Features section, unless we also opt to add a default Activity with action economy, which is not really a good option. I don't know if there's a solution for this, but I wanted to point the behavior out.~~
-- [x] Pinned Filters
-  - [x] At smallest width with sidebar open, all buttons are hidden, but the button group border itself is still visible. Wasn't sure if intentional.
-  - [x] Given an NPC with a class and background and all sections collapsed, the character traits UI kinda floats a little awkwardly above the bottom of the sheet
-- [x] Inventory tab
-  - [x] The encumbrance bar has a cursor pointer on its label. This is the same for all meters. Is there a specific use case it should be limited to?
-- [x] Group Sheet: Group tab, Sidebar, functionality https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
-  - [x] Traits
-    - [x] Language
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-    - [x] Speed
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-    - [x] Senses
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-  - [x] Skills
-    - [x] expandable/collapsible
-    - [x] skill abbr, skill name (roll button / whatever), High, Low
-      - [x] Stub the context
-      - [x] Scaffold UI
-      - [x] Prep the data
-  - [x] Special
-    - [x] Stub the context
-    - [x] Scaffold UI
-    - [x] Prep the data
-  - [x] Tools
-    - [x] Stub the context
-    - [x] Scaffold UI
-    - [x] Prep the data
-- [x] Refactor: extract the standard group trait pill and share all the way down the members tab sidebar.
-- [x] Refactor: For group traits that don't have the possibility for values or units, switch from a Map to a Set and skip the redundancy.
-  - [x] Tools
-  - [x] Specials
-- [x] Group Sheet - Group tab, Members list https://www.figma.com/design/seCsgsf8Uh82uxfPXIwFAg/Tidy5e-Sheet-Refresh?node-id=4425-31269&t=aVuDZVlzSI6i9QZA-4
-  - [x] Tidy tables
-  - [x] Column spec
-  - [x] Column components
-    - [x] GroupMemberInspirationColumn
-    - [x] GroupActorHpColumn
-    - [x] GroupActorHdColumn
-    - [x] GroupActorAcColumn
-    - [x] GroupActorDtColumn
-    - [x] GroupActorCargoColumn
-    - [x] GroupActorCrewColumn
-- [x] Group Sheet
-  - [x] Group Member context menu
-    - [x] View Member
-    - [x] Remove Member
-  - [x] Wire up all header data
-  - [x] ~~Wire up roll mode to rollSkill via a sheet function~~ We don't have a mechanism for individual rolls right now.
-  - [x] Add sample award button with sheet function behind it
-  - [x] Add encumbrance to group member prep
-  - [x] Col spec: make XP columns enabled only when XP is enabled
-  - [x] Add member tooltips to Members tab sidebar
-    - [x] Languages
-    - [x] Skills
-    - [x] Senses
-    - [x] Specials
-    - [x] Speeds
-    - [x] Tools
-  - [x] Wire up all member tab data
-  - [x] Make group sheet refresh on relevant actor changes.
-  - [x] Make Description tab secrets work.
-  - [x] ~~Implement Cargo calculations for Vehicle members.~~ This is encumbrance. Suggest instead that we just remove the cargo column.
-  - [x] Add standard inventory footer to group inventory tab
+- [x] Stub group members context
+- [x] Prep Group description context
+- [x] ~~Prep Exploration context~~ Shelved.
+- [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
+- [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.

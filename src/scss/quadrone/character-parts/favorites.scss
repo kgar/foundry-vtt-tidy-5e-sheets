@@ -107,6 +107,8 @@
 
       .favorite-button {
         display: flex;
+        flex-direction: row;
+        overflow: visible;
         flex: 5;
         padding-inline-start: 0;
         padding-inline-end: 0;

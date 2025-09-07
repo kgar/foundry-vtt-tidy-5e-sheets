@@ -168,25 +168,27 @@
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER}
   >
     <GroupMemberNameCell {member} />
-    {#each columns.ordered as column}
-      <TidyTableCell
-        columnWidth="{column.widthRems}rem"
-        class={[column.cellClasses]}
-        attributes={{ ['data-tidy-column-key']: column.key }}
-      >
-        {#if column.cellContent.type === 'callback'}
-          {@html column.cellContent.callback?.(context.document, context)}
-        {:else if column.cellContent.type === 'component'}
-          <column.cellContent.component
-            rowContext={member}
-            rowDocument={member.actor}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
-          />
-        {/if}
-      </TidyTableCell>
-    {/each}
+    {#if member.canObserve}
+      {#each columns.ordered as column}
+        <TidyTableCell
+          columnWidth="{column.widthRems}rem"
+          class={[column.cellClasses]}
+          attributes={{ ['data-tidy-column-key']: column.key }}
+        >
+          {#if column.cellContent.type === 'callback'}
+            {@html column.cellContent.callback?.(context.document, context)}
+          {:else if column.cellContent.type === 'component'}
+            <column.cellContent.component
+              rowContext={member}
+              rowDocument={member.actor}
+              section={{
+                ...SheetSections.EMPTY,
+                rowActions: rowActions,
+              }}
+            />
+          {/if}
+        </TidyTableCell>
+      {/each}
+    {/if}
   </div>
 {/snippet}

@@ -25,8 +25,6 @@
 
 <div
   class="list-entry favorite"
-  role="button"
-  tabindex="0"
   data-favorite-type="weapon"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
   data-item-id={favorite.item?.id}
@@ -49,20 +47,28 @@
     <span class="primary">
       {#if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}
-        <span class="modifier"><span class="sign font-default-medium color-text-lighter">{mod.sign}</span><span class="value font-data-medium">{mod.value}</span></span>
+        <span class="modifier"
+          ><span class="sign font-default-medium color-text-lighter"
+            >{mod.sign}</span
+          ><span class="value font-data-medium">{mod.value}</span></span
+        >
       {/if}
     </span>
     <span class="subtitle secondary font-default-medium">
       {#if range?.value}
+        {@const units =
+          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
         <span class="range">
           {range.value}
           {#if range.long}&sol; {range.long}{/if}
-          {range.units || ''}
+          {units}
         </span>
       {:else if range?.reach}
+        {@const units =
+          CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
         <span class="range">
           {range.reach}
-          {range.units || ''}
+          {units}
         </span>
       {/if}
     </span>

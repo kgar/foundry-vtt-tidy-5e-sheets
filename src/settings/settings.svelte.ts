@@ -941,7 +941,23 @@ export function createSettings() {
           );
         },
       },
-      
+
+      useGroupSheetMemberSecurity: {
+        options: {
+          name: 'TIDY5E.Settings.UseGroupSheetMemberSecurity.name',
+          hint: 'TIDY5E.Settings.UseGroupSheetMemberSecurity.hint',
+          scope: 'world',
+          type: Boolean,
+          config: true,
+          default: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useGroupSheetMemberSecurity'
+          );
+        },
+      },
+
       defaultEncounterSheetTabs: {
         options: {
           name: 'TIDY5E.Settings.DefaultSheetTabs.name',

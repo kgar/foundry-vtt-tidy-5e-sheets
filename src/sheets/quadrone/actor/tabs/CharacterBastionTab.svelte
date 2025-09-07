@@ -12,7 +12,7 @@
   import { setContext } from 'svelte';
   import FacilityOrderProgressTrackerQuadrone from '../character-parts/bastion/FacilityOrderProgressTrackerQuadrone.svelte';
   import FacilityOccupantQuadrone from '../character-parts/bastion/FacilityOccupantQuadrone.svelte';
-  import { applyDropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
+  import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
   import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import type { Item5e } from 'src/types/item.types';
   import { EventHelper } from 'src/utils/events';
@@ -205,6 +205,7 @@
                 onclick={(ev) => context.editable && useFacility(ev, chosen)}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 <!-- <img class="facility-image" src={img} alt={chosen.name} /> -->
@@ -230,6 +231,7 @@
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -240,7 +242,7 @@
               <div
                 class="facility-occupants"
                 data-prop="system.hirelings"
-                use:applyDropzoneClass={'occupant-dropzone'}
+                {@attach dropzoneClass('occupant-dropzone')}
               >
                 <div class="sub-header font-label-medium color-text-lighter">
                   {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
@@ -265,7 +267,7 @@
               <div
                 class="facility-occupants"
                 data-prop="system.defenders"
-                use:applyDropzoneClass={'occupant-dropzone'}
+                {@attach dropzoneClass('occupant-dropzone')}
               >
                 <div class="sub-header font-label-medium color-text-lighter">
                   {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
@@ -290,7 +292,7 @@
               <div
                 class="facility-occupants"
                 data-prop="system.trade.creatures"
-                use:applyDropzoneClass={'occupant-dropzone'}
+                {@attach dropzoneClass('occupant-dropzone')}
               >
                 <div class="sub-header font-label-medium color-text-lighter">
                   {localize('TIDY5E.Facilities.Creatures.Label')}
@@ -325,6 +327,7 @@
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_SPECIAL)}
               onkeydown={onKeydown}
               role="button"
+              data-keyboard-focus
               tabindex="0"
             >
               <i class="fas fa-building-columns"></i>
@@ -392,6 +395,7 @@
                 onclick={(ev) => context.editable && useFacility(ev, chosen)}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 {#if isSvg(img)}
@@ -415,6 +419,7 @@
                   EventHelper.triggerContextMenu(ev, '[data-item-id]')}
                 onkeydown={onKeydown}
                 role="button"
+                data-keyboard-focus
                 tabindex="0"
               >
                 <i class="fas fa-ellipsis-vertical"></i>
@@ -434,6 +439,7 @@
                 addFacility(ev, CONSTANTS.FACILITY_TYPE_BASIC)}
               onkeydown={onKeydown}
               role="button"
+              data-keyboard-focus
               tabindex="0"
             >
               {#if available.label.includes('build')}

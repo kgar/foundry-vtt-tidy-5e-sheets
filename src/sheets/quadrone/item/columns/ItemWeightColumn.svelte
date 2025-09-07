@@ -6,7 +6,7 @@
 
   let weight = $derived(
     FoundryAdapter.formatNumber(
-      rowContext?.totalWeight ?? item.system.weight.value,
+      (rowContext?.totalWeight ?? item.system.weight.value)?.toNearest(0.01),
     ),
   );
 

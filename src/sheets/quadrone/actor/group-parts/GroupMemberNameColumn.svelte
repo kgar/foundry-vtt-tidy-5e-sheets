@@ -23,10 +23,6 @@
           member.actor.system.attributes.death.success < 3)),
   );
 
-  let portraitShape = $derived(
-    ThemeQuadrone.getActorPortraitShape(member.actor),
-  );
-
   let emphasizedActorRef = getContext<
     Ref<GroupMemberQuadroneContext | undefined>
   >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
@@ -35,11 +31,12 @@
 <div class="tidy-table-cell actor-image-container">
   <div
     role="button"
+    data-keyboard-focus
     tabindex={0}
     class={[
       'actor-image',
       { dead: actorIsDead },
-      portraitShape,
+      member.portrait.shape,
       { video: member.portrait.isVideo },
     ]}
     style="position: relative;"
@@ -77,6 +74,7 @@
   <div
     class="actor-name"
     role="button"
+    data-keyboard-focus
     tabindex={0}
     onclick={() => member.actor.sheet.render(true)}
     onkeydown={(e) =>
@@ -89,95 +87,101 @@
     <h4 class="font-label-medium">
       {member.actor.name}
     </h4>
-    {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
-      {@const classes = Object.values<Item5e>(member.actor.classes)}
-      {#if classes.length > 0}
-        <div class="separated-list">
-          {#each classes as thisClass, index}
-            <div class="class-names">
-              <span class="font-label-medium color-text-gold-emphasis"
-                >{thisClass.name}</span
-              >
-              <span class="font-data-medium color-text-default"
-                >{thisClass.system.levels}</span
-              >
-            </div>
-            {#if index < classes.length - 1}
-              <div class="divider-dot"></div>
-            {/if}
-          {/each}
-        </div>
-      {/if}
-    {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-      {@const formattedCr = dnd5e.utils.formatCR(
-        member.actor.system.details.cr,
-      )}
-
-      {@const size =
-        CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
-        member.actor.system.traits.size}
-
-      {@const creatureType =
-        member.actor.system.details.type.value === 'custom'
-          ? member.actor.system.details.type.custom
-          : CONFIG.DND5E.creatureTypes[member.actor.system.details.type.value]
-              ?.label}
-
-      {@const creatureSubtype = member.actor.system.details.type.subtype}
-
-      {@const classes = Object.values<Item5e>(member.actor.classes)}
-
-      {#if classes.length > 0}
-      <span class="separated-list">
-        {#each classes as thisClass, index}
-          <div class="class-names">
-            <span class="font-label-medium color-text-gold-emphasis"
-              >{thisClass.name}</span
-            >
-            <span class="font-data-medium color-text-default"
-              >{thisClass.system.levels}</span
-            >
-            {#if index < classes.length - 1}
-              <div class="divider-dot"></div>
-            {/if}
-          </div>
-        {/each}
-
-        <div class="divider-dot"></div>
-        <div>
-          <span class="cr">
-            <span class="font-label-medium color-text-gold-emphasis"
-              >{localize('DND5E.AbbreviationCR')}</span
-            >
-            <span class="font-data-medium color-text-default">{formattedCr}</span>
-          </span>
-        </div>
-        <div class="divider-dot"></div>
-        <span class="size">
-          <span class="font-label-medium color-text-gold-emphasis">{size}</span>
-        </span>
-
-        {#if creatureType}
-          <div class="divider-dot"></div>
-          <span class="creature-type">
-            <span class="font-label-medium color-text-gold-emphasis">
-              {creatureType}
-              {#if creatureSubtype}
-                ({creatureSubtype})
+    {#if member.canObserve}
+      {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+        {@const classes = Object.values<Item5e>(member.actor.classes)}
+        {#if classes.length > 0}
+          <div class="separated-list">
+            {#each classes as thisClass, index}
+              <div class="class-names">
+                <span class="font-label-medium color-text-gold-emphasis"
+                  >{thisClass.name}</span
+                >
+                <span class="font-data-medium color-text-default"
+                  >{thisClass.system.levels}</span
+                >
+              </div>
+              {#if index < classes.length - 1}
+                <div class="divider-dot"></div>
               {/if}
+            {/each}
+          </div>
+        {/if}
+      {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+        {@const formattedCr = dnd5e.utils.formatCR(
+          member.actor.system.details.cr,
+        )}
+
+        {@const size =
+          CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
+          member.actor.system.traits.size}
+
+        {@const creatureType =
+          member.actor.system.details.type.value === 'custom'
+            ? member.actor.system.details.type.custom
+            : CONFIG.DND5E.creatureTypes[member.actor.system.details.type.value]
+                ?.label}
+
+        {@const creatureSubtype = member.actor.system.details.type.subtype}
+
+        {@const classes = Object.values<Item5e>(member.actor.classes)}
+
+        {#if classes.length > 0}
+          <span class="separated-list">
+            {#each classes as thisClass, index}
+              <div class="class-names">
+                <span class="font-label-medium color-text-gold-emphasis"
+                  >{thisClass.name}</span
+                >
+                <span class="font-data-medium color-text-default"
+                  >{thisClass.system.levels}</span
+                >
+                {#if index < classes.length - 1}
+                  <div class="divider-dot"></div>
+                {/if}
+              </div>
+            {/each}
+
+            <div class="divider-dot"></div>
+            <div>
+              <span class="cr">
+                <span class="font-label-medium color-text-gold-emphasis"
+                  >{localize('DND5E.AbbreviationCR')}</span
+                >
+                <span class="font-data-medium color-text-default"
+                  >{formattedCr}</span
+                >
+              </span>
+            </div>
+            <div class="divider-dot"></div>
+            <span class="size">
+              <span class="font-label-medium color-text-gold-emphasis"
+                >{size}</span
+              >
             </span>
+
+            {#if creatureType}
+              <div class="divider-dot"></div>
+              <span class="creature-type">
+                <span class="font-label-medium color-text-gold-emphasis">
+                  {creatureType}
+                  {#if creatureSubtype}
+                    ({creatureSubtype})
+                  {/if}
+                </span>
+              </span>
+            {/if}
           </span>
         {/if}
-      </span>
-      {/if}
-    {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
-      {@const vehicleType =
-        CONFIG.DND5E.vehicleTypes[member.actor.system.vehicleType] ??
-        member.actor.system.vehicleType}
+      {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+        {@const vehicleType =
+          CONFIG.DND5E.vehicleTypes[member.actor.system.vehicleType] ??
+          member.actor.system.vehicleType}
 
-      <span class="font-label-medium color-text-gold-emphasis"
-        >{vehicleType}</span
-      >
+        <span class="font-label-medium color-text-gold-emphasis"
+          >{vehicleType}</span
+        >
+      {/if}
     {/if}
   </div>
 </div>

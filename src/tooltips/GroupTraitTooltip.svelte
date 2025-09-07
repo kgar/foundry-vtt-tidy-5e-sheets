@@ -2,12 +2,12 @@
   import { tick } from 'svelte';
   import { Tooltip } from './Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
-  import type { Actor5e } from 'src/types/types';
+  import type { GroupMemberQuadroneContext } from 'src/types/types';
 
   type GroupTrait = {
     label: string;
     members: {
-      actor: Actor5e;
+      context: GroupMemberQuadroneContext;
       value?: string;
       units?: string;
     }[];
@@ -53,15 +53,19 @@
         <li class="group-trait-grid">
           <!-- TODO add token shape to class list  -->
           <div
-            class="item-image TOKEN-SHAPE"
-            style="background-image: url('{member.actor.img}')"
+            class={['item-image', member.context.portrait.shape]}
+            style="background-image: url('{member.context.actor.img}')"
           ></div>
-          <div class="item-name truncate">{member.actor.name}</div>
+          <div class="item-name truncate">{member.context.actor.name}</div>
           {#if member.value}
             <div class="text-align-right">
-              <span class="font-label-medium color-text-default">{member.value}</span>
+              <span class="font-label-medium color-text-default"
+                >{member.value}</span
+              >
               {#if member.units}
-                <span class="font-body-medium color-text-lighter">{member.units}</span>
+                <span class="font-body-medium color-text-lighter"
+                  >{member.units}</span
+                >
               {/if}
             </div>
           {/if}
