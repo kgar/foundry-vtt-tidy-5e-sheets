@@ -173,8 +173,7 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
         }
 
         let doc = setting.doc ?? this.document;
-        let toSave =
-          documentsToSave.get(doc) ?? documentsToSave.set(doc, {}).get(doc)!;
+        let toSave = documentsToSave.getOrInsert(doc, {});
 
         if (setting.type === 'boolean') {
           toSave[setting.prop] = setting.checked;

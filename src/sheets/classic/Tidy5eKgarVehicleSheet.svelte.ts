@@ -623,9 +623,10 @@ export class Tidy5eVehicleSheet
   /* -------------------------------------------- */
 
   onItemToggled(itemId: string, isVisible: boolean, location: string) {
-    const locationSet =
-      this.expandedItems.get(itemId) ??
-      this.expandedItems.set(itemId, new Set<string>()).get(itemId);
+    const locationSet = this.expandedItems.getOrInsert(
+      itemId,
+      new Set<string>()
+    );
 
     if (isVisible) {
       locationSet?.add(location);

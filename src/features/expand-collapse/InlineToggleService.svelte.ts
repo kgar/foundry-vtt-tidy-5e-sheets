@@ -7,13 +7,7 @@ export class InlineToggleService {
 
   /** Toggle an entity to be expanded or collapsed, based on its current state. */
   toggle(tabId: string, entityId: string, value?: boolean) {
-    // const tabs = this.map;
-
-    if (!this.map.has(tabId)) {
-      this.map.set(tabId, new SvelteSet<string>());
-    }
-
-    const tab = this.map.get(tabId)!;
+    const tab = this.map.getOrInsert(tabId, new SvelteSet<string>())!;
 
     if (value === false) {
       tab.delete(entityId);
