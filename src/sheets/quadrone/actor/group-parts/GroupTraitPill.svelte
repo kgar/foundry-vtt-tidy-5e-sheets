@@ -21,12 +21,7 @@
 
 <li class={['pill pill-medium', cssClass]} {...liAttributes}>
   {#if label}
-    <span class="label font-label-medium">{label}</span>
-  {/if}
-  {#if count && count > 1}
-    <span>
-      {count}
-    </span>
+    <span class="label font-label-medium">{label}{#if count && count > 1}&nbsp;{count}{/if}</span>
   {/if}
   {#if value && units}
     <span>

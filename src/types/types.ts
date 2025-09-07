@@ -1213,6 +1213,7 @@ export type NpcSheetQuadroneContext = {
     bond: string;
     flaw: string;
     ideal: string;
+    publicBiography: string;
     trait: string;
   };
   features: FeatureSection[];
