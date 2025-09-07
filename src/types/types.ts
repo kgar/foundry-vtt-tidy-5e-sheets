@@ -947,6 +947,8 @@ export type ActorTraitContext<TValue = unknown> = {
   unitsKey?: string;
   /** Any classes to apply to the resulting trait UI element. */
   cssClass?: ClassValue;
+  /** Any information that should appear in parentheses after the main trait context info. */
+  parenthetical?: string;
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
@@ -1018,6 +1020,7 @@ export type ActorSpeedSenseEntryContext<TValue = string> = {
   label: string;
   value: TValue;
   units: string;
+  parenthetical?: string;
 } & ActorTraitContext<TValue>;
 
 export type ActorClassEntryContext = {
