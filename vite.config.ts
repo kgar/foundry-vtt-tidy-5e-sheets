@@ -14,7 +14,7 @@ export default defineConfig({
     minifyIdentifiers: false,
     minifySyntax: true,
     minifyWhitespace: true,
-    keepNames: true
+    keepNames: true,
   },
   server: {
     port: 30001,
@@ -55,12 +55,5 @@ export default defineConfig({
     },
     sourcemap: true,
     minify: 'esbuild',
-  },
-  css: {
-    preprocessorOptions: {
-      scss: {
-        api: 'modern-compiler',
-      },
-    },
   },
 });
