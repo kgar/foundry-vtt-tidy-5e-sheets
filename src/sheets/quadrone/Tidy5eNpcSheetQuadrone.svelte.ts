@@ -198,7 +198,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           enrichmentArgs
         ),
         publicBiography: await foundry.applications.ux.TextEditor.enrichHTML(
-          this.actor.system.details.biography.publicBiography,
+          this.actor.system.details.biography.public,
           enrichmentArgs
         ),
         bond: await foundry.applications.ux.TextEditor.enrichHTML(
