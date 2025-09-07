@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import type {
@@ -34,6 +35,10 @@
       {localize('DND5E.Biography')}
     </h3>
     <tidy-gold-header-underline></tidy-gold-header-underline>
-    {@html context.enriched.biography}
+    {#if context.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+      {@html context.enriched.biography}
+    {:else}
+      {@html context.enriched.publicBiography}
+    {/if}
   </div>
 </div>

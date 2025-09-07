@@ -1,12 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditorV2 from 'src/components/editor/SheetEditorV2.svelte';
-  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { TidyFlags } from 'src/api';
 
-  let context = $derived(getCharacterSheetQuadroneContext());
+  let context = $derived(getNpcSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
@@ -169,11 +169,19 @@
     )}
 
     {@render bioEditorEntry(
-      'fa-book-user',
+      'fa-book',
       'DND5E.Biography',
       context.system.details.biography.value,
       context.enriched.biography,
       'system.details.biography.value',
+    )}
+
+    {@render bioEditorEntry(
+      'fa-book-user',
+      'DND5E.BiographyPublic',
+      context.system.details.biography.public,
+      context.enriched.publicBiography,
+      'system.details.biography.public',
     )}
   </div>
 </div>
