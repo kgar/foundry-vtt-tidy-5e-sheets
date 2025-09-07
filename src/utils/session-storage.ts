@@ -16,7 +16,7 @@ export class SessionStorageManager {
     map: Map<Key, Value>
   ) {
     try {
-      const serializedMap = JSON.stringify(Array.from(map.entries()));
+      const serializedMap = JSON.stringify(Array.from(map));
       sessionStorage.setItem(
         SessionStorageManager._createKey(keyParams),
         serializedMap

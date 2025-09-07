@@ -198,7 +198,7 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
 
     thisDocumentData[TidyFlags.sectionConfig.prop] = sectionConfig;
 
-    for (let [doc, toSave] of documentsToSave.entries()) {
+    for (let [doc, toSave] of documentsToSave) {
       await doc.update(toSave);
     }
 

@@ -1054,7 +1054,7 @@ export class Tidy5eNpcSheet
 
   private async setExpandedItemData() {
     this.expandedItemData.clear();
-    for (const [id, locations] of this.expandedItems.entries()) {
+    for (const [id, locations] of this.expandedItems) {
       if (locations.size === 0) {
         continue;
       }
