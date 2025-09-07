@@ -87,15 +87,15 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       )
     );
 
-    if (settings.value.truesight) {
-      config.push(
-        getActorTabContext(
-          GroupSheetQuadroneRuntime,
-          CONSTANTS.SHEET_TYPE_GROUP,
-          actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
-        )
-      );
+    config.push(
+      getActorTabContext(
+        GroupSheetQuadroneRuntime,
+        CONSTANTS.SHEET_TYPE_GROUP,
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
+      )
+    );
 
+    if (settings.value.truesight) {
       config.push(
         getActorTabContext(
           EncounterSheetQuadroneRuntime,
