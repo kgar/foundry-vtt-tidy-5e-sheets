@@ -85,6 +85,11 @@
             >{/if}
         </span>
       {/if}
+      {#if value.parenthetical}
+        <span class="label font-label-medium">
+          ({value.parenthetical})
+        </span>
+      {/if}
     </li>
   {/each}
 </ul>

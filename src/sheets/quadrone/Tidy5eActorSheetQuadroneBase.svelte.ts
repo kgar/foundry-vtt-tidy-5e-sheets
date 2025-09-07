@@ -697,6 +697,11 @@ export function Tidy5eActorSheetQuadroneBase<
             return acc;
           }
 
+          const parenthetical =
+            key === CONSTANTS.MOVEMENT_FLY && systemMovement.hover
+              ? FoundryAdapter.localize('DND5E.MovementHover')
+              : undefined;
+
           acc.push({
             key,
             label: config.label,
@@ -705,21 +710,22 @@ export function Tidy5eActorSheetQuadroneBase<
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,
             unitsKey: key,
+            parenthetical,
           });
 
           return acc;
         }, [])
         .toSorted((left, right) =>
-          left.key === 'walk'
+          left.key === CONSTANTS.MOVEMENT_WALK
             ? -1
-            : right.key === 'walk'
+            : right.key === CONSTANTS.MOVEMENT_WALK
             ? 1
             : +(right.value ?? 0) - +(left.value ?? 0)
         );
 
       if (speeds.length === 0) {
         speeds.push({
-          key: 'walk',
+          key: CONSTANTS.MOVEMENT_WALK,
           label: CONFIG.DND5E.movementTypes.walk.label,
           units:
             CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??

@@ -121,6 +121,8 @@ export const CONSTANTS = {
   GROUP_TYPE_GROUP: '',
   GROUP_TYPE_ENCOUNTER: 'encounter',
   GROUP_TYPE_PARTY: 'party',
+  MOVEMENT_FLY: 'fly',
+  MOVEMENT_WALK: 'walk',
   NPC_ABILITY_SECTION_WEAPONS: 'weapons',
   NPC_ABILITY_SECTION_ACTIONS: 'actions',
   NPC_ABILITY_SECTION_PASSIVE: 'passive',
