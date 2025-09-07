@@ -35,7 +35,7 @@
       {localize('DND5E.Biography')}
     </h3>
     <tidy-gold-header-underline></tidy-gold-header-underline>
-    {#if context.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+    {#if context.type === CONSTANTS.SHEET_TYPE_NPC}
       {@html context.enriched.publicBiography}
     {:else}
       {@html context.enriched.biography}
