@@ -41,6 +41,11 @@
     <span class="color-text-gold font-label-medium">{speed.label}</span>
     <span class="color-text-default font-data-medium">{speed.value}</span>
     <span class="color-text-lighter font-label-medium">{speed.units}</span>
+    {#if speed.parenthetical}
+      <span class="color-text-gold font-label-medium"
+        >({speed.parenthetical})</span
+      >
+    {/if}
   </span>
 {/snippet}
 
