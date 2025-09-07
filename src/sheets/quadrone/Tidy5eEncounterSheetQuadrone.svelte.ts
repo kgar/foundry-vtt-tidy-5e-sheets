@@ -4,17 +4,9 @@ import type {
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
   EncounterSheetQuadroneContext,
-  ExpandedItemData,
-  ExpandedItemIdToLocationsMap,
   GroupSheetQuadroneContext,
-  LocationToSearchTextMap,
 } from 'src/types/types';
-import type {
-  CurrencyContext,
-  Item5e,
-  ItemChatData,
-} from 'src/types/item.types';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
+import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
   ApplicationConfiguration,
@@ -36,11 +28,6 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
 ) {
   currentTabId: string;
-  searchFilters: LocationToSearchTextMap = new Map<string, string>();
-  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
-  expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineToggleService = new InlineToggleService();
-  sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -70,34 +57,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const component = mount(EncounterSheet, {
       target: node,
-      context: new Map<any, any>([
-        [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
-          this.inlineToggleService,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
-        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
-          this.itemFilterService.onFilter.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
-          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
-          this.sectionExpansionTracker,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
-
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
-          this.onTabSelected.bind(this),
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
-      ]),
+      context: new Map<any, any>([...this._getActorSvelteContext()]),
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);

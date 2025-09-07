@@ -20,7 +20,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { settings, systemSettings } from 'src/settings/settings.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import type { Ability } from 'src/types/dnd5e.actor5e.types';
-import type { Item5e } from 'src/types/item.types';
+import type { Item5e, ItemChatData } from 'src/types/item.types';
 import type {
   ActiveEffect5e,
   Actor5e,
@@ -32,7 +32,10 @@ import type {
   ActorSpeedSenseEntryContext,
   ActorTraitContext,
   CreatureTypeContext,
+  ExpandedItemData,
+  ExpandedItemIdToLocationsMap,
   Folder,
+  LocationToSearchTextMap,
   MessageBus,
   SpellcastingClassContext,
 } from 'src/types/types';
@@ -49,6 +52,9 @@ import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSe
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { JournalQuadrone } from 'src/features/journal/JournalQuadrone.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
+import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { SvelteMap } from 'svelte/reactivity';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -64,6 +70,14 @@ export function Tidy5eActorSheetQuadroneBase<
     abstract currentTabId: string;
     itemFilterService: ItemFilterService;
     messageBus = $state<MessageBus>({ message: undefined });
+    searchFilters: LocationToSearchTextMap = new SvelteMap<string, string>();
+    expandedItems: ExpandedItemIdToLocationsMap = new SvelteMap<
+      string,
+      Set<string>
+    >();
+    expandedItemData: ExpandedItemData = new SvelteMap<string, ItemChatData>();
+    inlineToggleService = new InlineToggleService();
+    sectionExpansionTracker: ExpansionTracker;
 
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
 
@@ -82,6 +96,12 @@ export function Tidy5eActorSheetQuadroneBase<
         {},
         this.actor,
         ItemFilterRuntime.getDocumentFiltersQuadrone
+      );
+
+      this.sectionExpansionTracker = new ExpansionTracker(
+        true,
+        this.document,
+        CONSTANTS.LOCATION_SECTION
       );
     }
 
@@ -194,12 +214,37 @@ export function Tidy5eActorSheetQuadroneBase<
 
     _getActorSvelteContext(): [key: string, value: any][] {
       return [
+        [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
         [
           CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
           this.onTabSelected.bind(this),
         ],
         [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
         [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
+        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA, this.expandedItemData],
+        [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, this.expandedItems],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
+          this.onItemToggled.bind(this),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
+        ],
+        [
+          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
+        [
+          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+          this.sectionExpansionTracker,
+        ],
+        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
+        [
+          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+          this.inlineToggleService,
+        ],
       ];
     }
 
@@ -294,6 +339,8 @@ export function Tidy5eActorSheetQuadroneBase<
 
       context.customActorTraits =
         CustomActorTraitsRuntime.getEnabledTraits(context);
+
+      await this.setExpandedItemData();
 
       return context;
     }
@@ -977,6 +1024,22 @@ export function Tidy5eActorSheetQuadroneBase<
       }
     }
 
+    private async setExpandedItemData() {
+      this.expandedItemData.clear();
+      for (const [id, locations] of this.expandedItems.entries()) {
+        if (locations.size === 0) {
+          continue;
+        }
+        const item = this.actor.items.get(id);
+        if (item) {
+          this.expandedItemData.set(
+            id,
+            await item.getChatData({ secrets: this.actor.isOwner })
+          );
+        }
+      }
+    }
+
     /* -------------------------------------------- */
     /*  Drag and Drop
     /* -------------------------------------------- */
@@ -1638,6 +1701,22 @@ export function Tidy5eActorSheetQuadroneBase<
 
     onTabSelected(tabId: string) {
       this.currentTabId = tabId;
+    }
+
+    /* -------------------------------------------- */
+    /* SheetExpandedItemsCacheable
+    /* -------------------------------------------- */
+
+    onItemToggled(itemId: string, isVisible: boolean, location: string) {
+      const locationSet =
+        this.expandedItems.get(itemId) ??
+        this.expandedItems.set(itemId, new Set<string>()).get(itemId);
+
+      if (isVisible) {
+        locationSet?.add(location);
+      } else {
+        locationSet?.delete(location);
+      }
     }
   }
 

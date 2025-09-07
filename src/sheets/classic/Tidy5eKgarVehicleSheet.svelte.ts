@@ -563,7 +563,10 @@ export class Tidy5eVehicleSheet
 
   private async setExpandedItemData() {
     this.expandedItemData.clear();
-    for (const id of this.expandedItems.keys()) {
+    for (const [id, locations] of this.expandedItems.entries()) {
+      if (locations.size === 0) {
+        continue;
+      }
       const item = this.actor.items.get(id);
       if (item) {
         this.expandedItemData.set(

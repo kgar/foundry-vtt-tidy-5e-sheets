@@ -57,11 +57,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
 ) {
   currentTabId: string;
-  searchFilters: LocationToSearchTextMap = new Map<string, string>();
-  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
-  expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineToggleService = new InlineToggleService();
-  sectionExpansionTracker: ExpansionTracker;
   emphasizedMember: Ref<GroupMemberContext | undefined> = $state({
     value: undefined,
   });
@@ -70,12 +65,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     super(options);
 
     this.currentTabId = CONSTANTS.TAB_MEMBERS;
-
-    this.sectionExpansionTracker = new ExpansionTracker(
-      true,
-      this.document,
-      CONSTANTS.LOCATION_SECTION
-    );
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -95,33 +84,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const component = mount(GroupSheet, {
       target: node,
       context: new Map<any, any>([
-        [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
-          this.inlineToggleService,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
-        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
-          this.itemFilterService.onFilter.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
-          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
-          this.sectionExpansionTracker,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
-
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
-          this.onTabSelected.bind(this),
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF, this.emphasizedMember],
+        ...this._getActorSvelteContext(),
       ]),
     });
 

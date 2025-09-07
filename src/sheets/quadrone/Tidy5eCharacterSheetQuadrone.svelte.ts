@@ -16,21 +16,12 @@ import type {
   CharacterSpeedSenseContext,
   ActorSpeedSenseEntryContext,
   ChosenFacilityContext,
-  ExpandedItemData,
-  ExpandedItemIdToLocationsMap,
   FacilityOccupantContext,
   FavoriteContextEntry,
-  LocationToSearchTextMap,
   InspirationSource,
   FeatureSection,
 } from 'src/types/types';
-import type {
-  CurrencyContext,
-  Item5e,
-  ItemChatData,
-} from 'src/types/item.types';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
@@ -63,23 +54,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 ) {
   currentTabId: string;
   currentSidebarTabId: string;
-  searchFilters: LocationToSearchTextMap = new Map<string, string>();
-  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
-  expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineToggleService = new InlineToggleService();
-  sectionExpansionTracker: ExpansionTracker;
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
     this.currentTabId = CONSTANTS.TAB_ACTOR_ACTIONS;
     this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
-
-    this.sectionExpansionTracker = new ExpansionTracker(
-      true,
-      this.document,
-      CONSTANTS.LOCATION_SECTION
-    );
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -98,28 +78,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const component = mount(CharacterSheet, {
       target: node,
-      context: new Map<any, any>([
-        [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
-          this.inlineToggleService,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
-        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
-          this.itemFilterService.onFilter.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
-          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
-          this.sectionExpansionTracker,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
-        ...this._getActorSvelteContext(),
-      ]),
+      context: new Map<any, any>([...this._getActorSvelteContext()]),
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
