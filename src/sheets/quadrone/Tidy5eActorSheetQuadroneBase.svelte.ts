@@ -55,6 +55,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { SvelteMap } from 'svelte/reactivity';
+import { mapGetOrInsert } from 'src/utils/map';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -1714,7 +1715,8 @@ export function Tidy5eActorSheetQuadroneBase<
     /* -------------------------------------------- */
 
     onItemToggled(itemId: string, isVisible: boolean, location: string) {
-      const locationSet = this.expandedItems.getOrInsert(
+      const locationSet = mapGetOrInsert(
+        this.expandedItems,
         itemId,
         new Set<string>()
       );

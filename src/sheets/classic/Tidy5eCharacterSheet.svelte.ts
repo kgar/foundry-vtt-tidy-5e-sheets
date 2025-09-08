@@ -58,6 +58,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { Tidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
+import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eCharacterSheet
   extends Tidy5eActorSheetClassicV2Base<CharacterSheetContext>(
@@ -1773,7 +1774,8 @@ export class Tidy5eCharacterSheet
   /* -------------------------------------------- */
 
   onItemToggled(itemId: string, isVisible: boolean, location: string) {
-    const locationSet = this.expandedItems.getOrInsert(
+    const locationSet = mapGetOrInsert(
+      this.expandedItems,
       itemId,
       new Set<string>()
     );

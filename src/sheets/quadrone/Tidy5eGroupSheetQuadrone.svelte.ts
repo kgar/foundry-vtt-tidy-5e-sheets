@@ -52,6 +52,7 @@ import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { settings } from 'src/settings/settings.svelte';
+import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -495,7 +496,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         value: language.value !== undefined ? language.value : undefined,
       };
 
-      const groupLanguage = languages.getOrInsert(language.label, {
+      const groupLanguage = mapGetOrInsert(languages, language.label, {
         identifiers: new Map<string, MeasurableGroupTrait<number>>(),
         ...actorLanguageTrait,
       });
@@ -534,7 +535,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         dnd5e.utils
           .splitSemicolons(actor.system.attributes.languages.custom?.trim())
           .forEach((customLanguage: string) => {
-            const entry = languages.getOrInsert(customLanguage, {
+            const entry = mapGetOrInsert(languages, customLanguage, {
               label: customLanguage,
               identifiers: new Map<string, GroupTraitBase<number>>(),
             });
@@ -567,7 +568,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           value: speed,
         };
 
-        let groupSpeed = speeds.getOrInsert(key, {
+        let groupSpeed = mapGetOrInsert(speeds, key, {
           identifiers: new Map<string, MeasurableGroupTrait<number>>(),
           ...actorSpeedTrait,
         });
@@ -616,7 +617,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       }
 
       dnd5e.utils.splitSemicolons(custom).forEach((customEntry: string) => {
-        const groupSpecial = specials.getOrInsert(customEntry, {
+        const groupSpecial = mapGetOrInsert(specials, customEntry, {
           label: customEntry,
           identifiers: new Set<string>(),
         });
@@ -648,7 +649,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           value: sense,
         };
 
-        let groupSense = senses.getOrInsert(key, {
+        let groupSense = mapGetOrInsert(senses, key, {
           identifiers: new Map<string, MeasurableGroupTrait<number>>(),
           ...actorSenseTrait,
         });
@@ -689,7 +690,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       dnd5e.utils
         .splitSemicolons(actor.system.attributes.senses.special?.trim())
         .forEach((specialSense: string) => {
-          const entry = senses.getOrInsert(specialSense, {
+          const entry = mapGetOrInsert(senses, specialSense, {
             label: specialSense,
             identifiers: new Map<string, GroupTraitBase<number>>(),
           });
@@ -705,7 +706,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         trait: 'tool',
       });
 
-      const groupTool = tools.getOrInsert(key, {
+      const groupTool = mapGetOrInsert(tools, key, {
         identifiers: new Set<string>(),
         label: toolLabel,
         key: key,

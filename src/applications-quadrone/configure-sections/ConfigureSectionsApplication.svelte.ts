@@ -12,6 +12,7 @@ import { getThemeV2 } from 'src/theme/theme';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { SectionConfig } from 'src/features/sections/sections.types';
 import { DocumentSheetDialog } from '../DocumentSheetDialog.svelte';
+import { mapGetOrInsert } from 'src/utils/map';
 
 export type BooleanSetting = {
   type: 'boolean';
@@ -173,7 +174,7 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
         }
 
         let doc = setting.doc ?? this.document;
-        let toSave = documentsToSave.getOrInsert(doc, {});
+        let toSave = mapGetOrInsert(documentsToSave, doc, {});
 
         if (setting.type === 'boolean') {
           toSave[setting.prop] = setting.checked;

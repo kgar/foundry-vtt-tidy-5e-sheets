@@ -34,7 +34,6 @@ import { Tidy5eEncounterSheetClassic } from './sheets/classic/Tidy5eEncounterShe
 import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import { formatResourcePathForCss } from './utils/path';
-import 'src/polyfills/map.getorinsert.polyfill';
 
 Hooks.once('init', () => {
   const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;

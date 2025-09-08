@@ -1,3 +1,4 @@
+import { mapGetOrInsert } from 'src/utils/map';
 import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 
 /** Service for tracking which inline entities are currently expanded to show their contents. */
@@ -7,7 +8,7 @@ export class InlineToggleService {
 
   /** Toggle an entity to be expanded or collapsed, based on its current state. */
   toggle(tabId: string, entityId: string, value?: boolean) {
-    const tab = this.map.getOrInsert(tabId, new SvelteSet<string>())!;
+    const tab = mapGetOrInsert(this.map, tabId, new SvelteSet<string>());
 
     if (value === false) {
       tab.delete(entityId);
