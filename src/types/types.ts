@@ -980,6 +980,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   };
   rollData: any;
   saves: ActorSaves;
+  sheet: TSheet;
   source: any;
   system: Actor5e['system'];
   tabs: Tab[];
@@ -993,11 +994,10 @@ export type SingleActorContext<TSheet> = {
   abilities: ActorAbilityContextEntry[];
 } & ActorSheetQuadroneContext<TSheet>;
 
-export type MultiActorContext<TSheet> = {
+export type MultiActorQuadroneContext<TSheet> = {
   containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
   inventory: InventorySection[];
-  sheet: TSheet;
   showContainerPanel: boolean;
 } & ActorSheetQuadroneContext<TSheet>;
 
@@ -1185,7 +1185,6 @@ export type CharacterSheetQuadroneContext = {
   showContainerPanel: boolean;
   showDeathSaves: boolean;
   size: ActorSizeContext;
-  sheet: Tidy5eCharacterSheetQuadrone;
   skills: ActorSkillsToolsContext<SkillData>[];
   species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
@@ -1227,7 +1226,6 @@ export type NpcSheetQuadroneContext = {
   showLegendaryResistances: boolean;
   showLoyaltyTracker: boolean;
   senses: ActorSpeedSenseEntryContext[];
-  sheet: Tidy5eNpcSheetQuadrone;
   showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
@@ -1363,12 +1361,12 @@ export type GroupSheetQuadroneContext = {
   };
   traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
-} & MultiActorContext<Tidy5eGroupSheetQuadrone>;
+} & MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
 
 export type EncounterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
-} & MultiActorContext<Tidy5eEncounterSheetQuadrone>;
+} & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
 export type VehicleSheetQuadroneContext = {
   // TODO: Populate with context data as needed

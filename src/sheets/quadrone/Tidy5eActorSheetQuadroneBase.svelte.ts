@@ -341,6 +341,7 @@ export function Tidy5eActorSheetQuadroneBase<
         },
         rollData,
         saves,
+        sheet: this,
         system: this.actor.system,
         tabs: [],
         themeSettings,
