@@ -130,18 +130,18 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
   async _preRender(...args: any[]) {
     super._preRender(...args);
 
-    for (let group of this.optionsGroups) {
-      for (let setting of group.settings) {
+    for (const group of this.optionsGroups) {
+      for (const setting of group.settings) {
         if (setting.type === 'button') {
           return;
         }
 
-        let doc = setting.doc ?? this.document;
+        const doc = setting.doc ?? this.document;
         if (setting.type === 'boolean') {
           setting.checked =
             foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
         } else if (setting.type === 'radio') {
-          let selected =
+          const selected =
             foundry.utils.getProperty(doc, setting.prop) ?? setting.default;
           setting.selected = selected;
         }
@@ -167,14 +167,14 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
       [this.document, thisDocumentData],
     ]);
 
-    for (let group of this.optionsGroups) {
-      for (let setting of group.settings) {
+    for (const group of this.optionsGroups) {
+      for (const setting of group.settings) {
         if (setting.type === 'button') {
           continue;
         }
 
-        let doc = setting.doc ?? this.document;
-        let toSave = mapGetOrInsert(documentsToSave, doc, {});
+        const doc = setting.doc ?? this.document;
+        const toSave = mapGetOrInsert(documentsToSave, doc, {});
 
         if (setting.type === 'boolean') {
           toSave[setting.prop] = setting.checked;
@@ -199,7 +199,7 @@ export class ConfigureSectionsApplication extends DocumentSheetDialog() {
 
     thisDocumentData[TidyFlags.sectionConfig.prop] = sectionConfig;
 
-    for (let [doc, toSave] of documentsToSave) {
+    for (const [doc, toSave] of documentsToSave) {
       await doc.update(toSave);
     }
 
