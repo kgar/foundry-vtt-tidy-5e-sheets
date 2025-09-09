@@ -6,13 +6,13 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { GroupMemberQuadroneContext } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -25,11 +25,31 @@
   let rowActions: any[] = $derived(
     TableRowActionsRuntime.getGroupMemberRowActions(context),
   );
+
+  let sectionsContainer: HTMLElement;
+  let sectionsInlineWidth: number = $state(0);
+
+  function onResize(entry: ResizeObserverEntry) {
+    sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
+  }
+
+  $effect(() => {
+    const observer = new ResizeObserver(([entry]) => onResize(entry));
+    observer.observe(sectionsContainer);
+    console.warn('group resize observer connected!');
+    return () => {
+      observer.disconnect();
+    };
+  });
 </script>
 
 <GroupTabSidebar />
 
-<section class="groups-tab-content group-members-content flexcol">
+<section
+  class="groups-tab-content group-members-content flexcol"
+  bind:this={sectionsContainer}
+>
+  {sectionsInlineWidth}
   {#if characters.length}
     {@const columns = new ColumnsLoadout(
       GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
@@ -42,6 +62,12 @@
       }),
     )}
     {@const visibleItemCount = characters.length}
+    {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth,
+      columns,
+    )}
+
+    {JSON.stringify(hiddenColumns.values())}
 
     <TidyTable key="characters">
       {#snippet header()}
@@ -52,12 +78,12 @@
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
-          {@render headerColumns(columns)}
+          {@render headerColumns(columns, hiddenColumns)}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
         {#each characters as member}
-          {@render tableRow(member, columns)}
+          {@render tableRow(member, columns, hiddenColumns)}
         {/each}
       {/snippet}
     </TidyTable>
@@ -75,6 +101,10 @@
       }),
     )}
     {@const visibleItemCount = npcs.length}
+    {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth,
+      columns,
+    )}
 
     <TidyTable key="npcs">
       {#snippet header()}
@@ -85,12 +115,12 @@
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
-          {@render headerColumns(columns)}
+          {@render headerColumns(columns, hiddenColumns)}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
         {#each npcs as member}
-          {@render tableRow(member, columns)}
+          {@render tableRow(member, columns, hiddenColumns)}
         {/each}
       {/snippet}
     </TidyTable>
@@ -108,6 +138,10 @@
       }),
     )}
     {@const visibleItemCount = vehicles.length}
+    {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth,
+      columns,
+    )}
 
     <TidyTable key="vehicles">
       {#snippet header()}
@@ -118,12 +152,12 @@
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
-          {@render headerColumns(columns)}
+          {@render headerColumns(columns, hiddenColumns)}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
         {#each vehicles as member}
-          {@render tableRow(member, columns)}
+          {@render tableRow(member, columns, hiddenColumns)}
         {/each}
       {/snippet}
     </TidyTable>
@@ -136,10 +170,11 @@
   {/if}
 </section>
 
-{#snippet headerColumns(columns: ColumnsLoadout)}
+{#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
   {#each columns.ordered as column}
+    {@const hidden = hiddenColumns.has(column.key)}
     <TidyTableHeaderCell
-      class={[column.headerClasses]}
+      class={[column.headerClasses, { hidden }]}
       columnWidth="{column.widthRems}rem"
       data-tidy-column-key={column.key}
     >
@@ -163,7 +198,11 @@
   {/each}
 {/snippet}
 
-{#snippet tableRow(member: GroupMemberQuadroneContext, columns: ColumnsLoadout)}
+{#snippet tableRow(
+  member: GroupMemberQuadroneContext,
+  columns: ColumnsLoadout,
+  hiddenColumns: Set<string>,
+)}
   <div
     class="tidy-table-row group-member"
     style:--t5e-theme-color-default={member.accentColor}
@@ -176,9 +215,10 @@
     <GroupMemberNameCell {member} />
     {#if member.canObserve}
       {#each columns.ordered as column}
+        {@const hidden = hiddenColumns.has(column.key)}
         <TidyTableCell
           columnWidth="{column.widthRems}rem"
-          class={[column.cellClasses]}
+          class={[column.cellClasses, { hidden }]}
           attributes={{ ['data-tidy-column-key']: column.key }}
         >
           {#if column.cellContent.type === 'callback'}

@@ -20,6 +20,8 @@ import { systemSettings } from 'src/settings/settings.svelte';
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
 class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
+  _minWidthRems = 15;
+
   getDefaultColumns(): ColumnSpecDocumentTypesToTabs {
     const inspirationColumn: ColumnSpecificationBase = {
       headerContent: {
