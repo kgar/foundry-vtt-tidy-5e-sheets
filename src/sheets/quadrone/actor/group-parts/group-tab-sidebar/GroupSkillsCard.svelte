@@ -19,6 +19,13 @@
 
   let emphasizedMember = $derived(emphasizedActorRef.value);
 
+  let showModAndPassiveValues = $derived(
+    emphasizedMember &&
+      !!context.members.skilled.find(
+        (m) => m.actor.uuid === emphasizedMember?.actor.uuid,
+      ),
+  );
+
   let tooltip = $state<GroupSkillTooltip | undefined>();
 
   const localize = FoundryAdapter.localize;
@@ -29,7 +36,7 @@
 <div class="skills card">
   <SkillsCardHeader {expanded}>
     {#snippet legend()}
-      {#if emphasizedMember}
+      {#if showModAndPassiveValues}
         <span class="skill-measure-header">
           {localize('DND5E.AbilityModifierShort')}
         </span>
