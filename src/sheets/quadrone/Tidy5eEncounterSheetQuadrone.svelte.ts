@@ -15,7 +15,6 @@ import type {
 import { mount } from 'svelte';
 import EncounterSheet from './actor/EncounterSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { Inventory } from 'src/features/sections/Inventory';

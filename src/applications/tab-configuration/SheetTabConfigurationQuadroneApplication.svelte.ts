@@ -18,11 +18,18 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { error } from 'src/utils/logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { settings } from 'src/settings/settings.svelte';
 
 export type SheetTabConfigurationContext = {
   entry: TabConfigContextEntry;
 };
 
+/**
+ * Document-specific tab configuration application.
+ * Available tabs: based on the document's runtime registered tab IDs.
+ * Selected tabs: document flag data ➡️ else world default setting ➡️ else document runtime default.
+ * **Note**: The runtime default is designed to always be available when there are no user-defined settings present.
+ */
 export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialog<
   DocumentSheetApplicationConfiguration,
   SheetTabConfigurationContext
@@ -39,9 +46,15 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       unselected: [],
     },
   });
+  /** When the document has no selected tabs, this is the fallback tab ID list. */
+  _worldDefaultTabIds: string[] = $state([]);
 
   constructor(options: DocumentSheetApplicationConfiguration) {
     super(options);
+    this._worldDefaultTabIds =
+      settings.value.tabConfiguration[options.document.documentName]?.[
+        options.document.type
+      ]?.selected ?? [];
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
@@ -87,6 +100,11 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
   _getConfig() {
     let setting = TidyFlags.tabConfiguration.get(this.document);
+    setting ??= { selected: [] };
+    setting.selected ??= [];
+    if (!setting.selected.length) {
+      setting.selected = this._worldDefaultTabIds ?? [];
+    }
 
     if (this.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(this.document.type);
