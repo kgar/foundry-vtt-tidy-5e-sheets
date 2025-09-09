@@ -31,7 +31,7 @@
   }: Props = $props();
 
   const emptyChatData: ItemChatData = {
-    description: { value: '' },
+    description: '',
     properties: [],
   };
 
@@ -83,7 +83,7 @@
       // Allow for draggables within this containing element to be handled elsewhere.
       return;
     }
-    
+
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }

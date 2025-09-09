@@ -37,6 +37,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { Tidy5eActorSheetClassicV2Base } from './Tidy5eActorSheetClassicV2Base.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
+import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eVehicleSheet
   extends Tidy5eActorSheetClassicV2Base<VehicleSheetContext>(
@@ -563,7 +564,10 @@ export class Tidy5eVehicleSheet
 
   private async setExpandedItemData() {
     this.expandedItemData.clear();
-    for (const id of this.expandedItems.keys()) {
+    for (const [id, locations] of this.expandedItems) {
+      if (locations.size === 0) {
+        continue;
+      }
       const item = this.actor.items.get(id);
       if (item) {
         this.expandedItemData.set(
@@ -620,9 +624,11 @@ export class Tidy5eVehicleSheet
   /* -------------------------------------------- */
 
   onItemToggled(itemId: string, isVisible: boolean, location: string) {
-    const locationSet =
-      this.expandedItems.get(itemId) ??
-      this.expandedItems.set(itemId, new Set<string>()).get(itemId);
+    const locationSet = mapGetOrInsert(
+      this.expandedItems,
+      itemId,
+      new Set<string>()
+    );
 
     if (isVisible) {
       locationSet?.add(location);
