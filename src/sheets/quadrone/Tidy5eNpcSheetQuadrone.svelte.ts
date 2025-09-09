@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import type {
+  Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
   FeatureSection,
@@ -124,12 +125,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ? this.actor.token
       : this.actor.prototypeToken;
 
-    let background = this.actor.itemTypes.background[0];
-    let species = this.actor.itemTypes.race[0];
+    const background = this.actor.itemTypes.background[0];
+    const species = this.actor.itemTypes.race[0];
 
-    const important =
-      !foundry.utils.isEmpty(this.actor.classes) ||
-      this.actor.system.traits.important;
+    const important = this.isImportantNpc(this.actor);
 
     const context: NpcSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
@@ -303,6 +302,14 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.tabs = await NpcSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  static isImportantNpc(actor: Actor5e) {
+    return (
+      (actor.type === CONSTANTS.SHEET_TYPE_NPC &&
+        !foundry.utils.isEmpty(actor.classes)) ||
+      actor.system.traits.important
+    );
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {

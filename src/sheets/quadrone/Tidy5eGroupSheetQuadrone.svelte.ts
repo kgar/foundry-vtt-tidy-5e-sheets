@@ -3,8 +3,6 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  ExpandedItemData,
-  ExpandedItemIdToLocationsMap,
   GroupMemberPortraitContext,
   GroupMemberQuadroneContext,
   GroupMemberSkillContext,
@@ -14,17 +12,10 @@ import type {
   GroupTrait,
   GroupTraitBase,
   GroupTraits,
-  LocationToSearchTextMap,
   MeasurableGroupTrait,
   TravelPaceConfigEntry,
 } from 'src/types/types';
-import type {
-  CurrencyContext,
-  Item5e,
-  ItemChatData,
-} from 'src/types/item.types';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,
@@ -374,7 +365,12 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         sections.skilled.push(groupMemberContext);
       }
 
-      if (canObserve) {
+      const prepareCreatureInformation =
+        canObserve &&
+        (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER ||
+          Tidy5eNpcSheetQuadrone.isImportantNpc(actor));
+
+      if (prepareCreatureInformation) {
         // Skills
         this._prepareMemberSkills(actor, skills);
 
@@ -387,11 +383,17 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         // Specials
         this._prepareMemberSpecials(actor, specials);
 
-        // Speeds
-        this._prepareMemberSpeeds(actor, speeds);
-
         // Tools
         this._prepareMemberTools(actor, tools);
+      }
+
+      const prepareSpeed =
+        prepareCreatureInformation ||
+        actor.type === CONSTANTS.SHEET_TYPE_VEHICLE;
+
+      if (prepareSpeed) {
+        // Speeds
+        this._prepareMemberSpeeds(actor, speeds);
       }
     }
 
