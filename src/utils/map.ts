@@ -17,7 +17,7 @@ export function mapGetOrInsert<K, V>(
  * Gets an entry from a map. If the entry doesn't exist, the value is inserted via a callback function and then returned. 
  * This helper is temporary and is meant to be replaced by Map.prototype.getOrInsert. @see https://github.com/tc39/proposal-upsert
  */
-export function getOrInsertComputed<K, V>(
+export function mapGetOrInsertComputed<K, V>(
   map: Map<K, V>,
   key: K,
   callback: (key: K) => V
