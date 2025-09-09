@@ -204,7 +204,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
-      sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       species: species
