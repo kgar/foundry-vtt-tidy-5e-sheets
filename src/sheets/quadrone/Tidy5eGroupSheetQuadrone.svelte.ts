@@ -52,16 +52,12 @@ import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { settings } from 'src/settings/settings.svelte';
+import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
 ) {
   currentTabId: string;
-  searchFilters: LocationToSearchTextMap = new Map<string, string>();
-  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
-  expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  inlineToggleService = new InlineToggleService();
-  sectionExpansionTracker: ExpansionTracker;
   emphasizedMember: Ref<GroupMemberContext | undefined> = $state({
     value: undefined,
   });
@@ -70,12 +66,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     super(options);
 
     this.currentTabId = CONSTANTS.TAB_MEMBERS;
-
-    this.sectionExpansionTracker = new ExpansionTracker(
-      true,
-      this.document,
-      CONSTANTS.LOCATION_SECTION
-    );
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -95,33 +85,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const component = mount(GroupSheet, {
       target: node,
       context: new Map<any, any>([
-        [
-          CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
-          this.inlineToggleService,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE, this.itemFilterService],
-        [CONSTANTS.SVELTE_CONTEXT.LOCATION, ''],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER,
-          this.itemFilterService.onFilter.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_FILTER_CLEAR_ALL,
-          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
-        ],
-        [
-          CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
-          this.sectionExpansionTracker,
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.POSITION_REF, this._position],
-
-        [
-          CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED,
-          this.onTabSelected.bind(this),
-        ],
-        [CONSTANTS.SVELTE_CONTEXT.CONTEXT, this._context],
-        [CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS, this.messageBus],
         [CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF, this.emphasizedMember],
+        ...this._getActorSvelteContext(),
       ]),
     });
 
@@ -531,14 +496,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         value: language.value !== undefined ? language.value : undefined,
       };
 
-      const groupLanguage =
-        languages.get(language.label) ??
-        languages
-          .set(language.label, {
-            identifiers: new Map<string, MeasurableGroupTrait<number>>(),
-            ...actorLanguageTrait,
-          })
-          .get(language.label)!;
+      const groupLanguage = mapGetOrInsert(languages, language.label, {
+        identifiers: new Map<string, MeasurableGroupTrait<number>>(),
+        ...actorLanguageTrait,
+      });
 
       groupLanguage.identifiers.set(actor.uuid, actorLanguageTrait);
 
@@ -574,14 +535,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         dnd5e.utils
           .splitSemicolons(actor.system.attributes.languages.custom?.trim())
           .forEach((customLanguage: string) => {
-            const entry =
-              languages.get(customLanguage) ??
-              languages
-                .set(customLanguage, {
-                  label: customLanguage,
-                  identifiers: new Map<string, GroupTraitBase<number>>(),
-                })
-                .get(customLanguage)!;
+            const entry = mapGetOrInsert(languages, customLanguage, {
+              label: customLanguage,
+              identifiers: new Map<string, GroupTraitBase<number>>(),
+            });
 
             entry?.identifiers.set(actor.uuid, { label: customLanguage });
           });
@@ -611,14 +568,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           value: speed,
         };
 
-        let groupSpeed =
-          speeds.get(key) ??
-          speeds
-            .set(key, {
-              identifiers: new Map<string, MeasurableGroupTrait<number>>(),
-              ...actorSpeedTrait,
-            })
-            .get(key)!;
+        let groupSpeed = mapGetOrInsert(speeds, key, {
+          identifiers: new Map<string, MeasurableGroupTrait<number>>(),
+          ...actorSpeedTrait,
+        });
 
         groupSpeed.identifiers.set(actor.uuid, actorSpeedTrait);
 
@@ -664,14 +617,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       }
 
       dnd5e.utils.splitSemicolons(custom).forEach((customEntry: string) => {
-        const groupSpecial =
-          specials.get(customEntry) ??
-          specials
-            .set(customEntry, {
-              label: customEntry,
-              identifiers: new Set<string>(),
-            })
-            .get(customEntry)!;
+        const groupSpecial = mapGetOrInsert(specials, customEntry, {
+          label: customEntry,
+          identifiers: new Set<string>(),
+        });
 
         groupSpecial.identifiers.add(actor.uuid);
       });
@@ -700,14 +649,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           value: sense,
         };
 
-        let groupSense =
-          senses.get(key) ??
-          senses
-            .set(key, {
-              identifiers: new Map<string, MeasurableGroupTrait<number>>(),
-              ...actorSenseTrait,
-            })
-            .get(key)!;
+        let groupSense = mapGetOrInsert(senses, key, {
+          identifiers: new Map<string, MeasurableGroupTrait<number>>(),
+          ...actorSenseTrait,
+        });
 
         groupSense.identifiers.set(actor.uuid, actorSenseTrait);
 
@@ -745,14 +690,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       dnd5e.utils
         .splitSemicolons(actor.system.attributes.senses.special?.trim())
         .forEach((specialSense: string) => {
-          const entry =
-            senses.get(specialSense) ??
-            senses
-              .set(specialSense, {
-                label: specialSense,
-                identifiers: new Map<string, GroupTraitBase<number>>(),
-              })
-              .get(specialSense)!;
+          const entry = mapGetOrInsert(senses, specialSense, {
+            label: specialSense,
+            identifiers: new Map<string, GroupTraitBase<number>>(),
+          });
 
           entry?.identifiers.set(actor.uuid, { label: specialSense });
         });
@@ -765,15 +706,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         trait: 'tool',
       });
 
-      const groupTool =
-        tools.get(key) ??
-        tools
-          .set(key, {
-            identifiers: new Set<string>(),
-            label: toolLabel,
-            key: key,
-          })
-          .get(key)!;
+      const groupTool = mapGetOrInsert(tools, key, {
+        identifiers: new Set<string>(),
+        label: toolLabel,
+        key: key,
+      });
 
       groupTool.identifiers.add(actor.uuid);
     });

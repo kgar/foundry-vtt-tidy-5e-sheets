@@ -290,7 +290,7 @@ export type Item5e = any;
 export type Advancement5e = any;
 
 export type ItemChatData = {
-  description: { value: string };
+  description: string;
   properties: string[];
 };
 
