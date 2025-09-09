@@ -395,26 +395,23 @@
 
       .tidy-table-cell {
         max-width: none;
-        gap: var(--t5e-size-1x);
         justify-content: center;
         align-items: center;
         border: none;
 
         &:not(.tidy-table-actions) {
           flex-direction: column;
+          gap: var(--t5e-size-1x);
         }
 
         &.primary {
           align-items: flex-start;
-          min-width: 8rem;
           overflow: hidden;
 
           .separated-list {
             flex-wrap: wrap;
           }
         }
-
-        &.tidy-table-actions {}
       }
 
       .meter.meter-small {

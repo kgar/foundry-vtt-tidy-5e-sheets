@@ -35,7 +35,13 @@
         margin-top: 0.5rem;
       }
 
-      .text-align-right {
+      li:not(.group-tooltip-header) .text-align-right {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      li .text-align-right {
         text-align: right;
       }
     }
