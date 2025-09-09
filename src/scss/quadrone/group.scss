@@ -131,6 +131,18 @@
   }
 
   /* Sidebar skills */
+  .use-ability-header .skill-expand-button {
+    gap: 0.1875rem;
+
+    i {
+      color: var(--t5e-color-icon-default);
+    }
+
+    h3 {
+      color: var(--t5e-color-text-lighter);
+    }
+  }
+
   .skill-list .skill-list-item {
     &.member-proficient .skill-ability {
       color: var(--t5e-member-color-hover);
