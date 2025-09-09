@@ -17,25 +17,26 @@
 
   let extraTabs = new SvelteSet<string>();
 
-  // let currentPortraitShape = $derived(context.portrait.shape);
+  let currentPortraitShape = $derived(context.portrait.shape);
 
-  // const availableShapes = ThemeQuadrone.getActorPortraitShapes();
+  const availableShapes = ThemeQuadrone.getActorPortraitShapes();
 
-  // function cycleShape() {
-  //   const currentIndex = availableShapes.indexOf(currentPortraitShape);
-  //   const nextIndex = (currentIndex + 1) % availableShapes.length;
-  //   let newShape = availableShapes[nextIndex];
+  function cycleShape() {
+    const currentIndex = availableShapes.indexOf(currentPortraitShape);
+    const nextIndex = (currentIndex + 1) % availableShapes.length;
+    let newShape = availableShapes[nextIndex];
 
-  //   ThemeQuadrone.updatePortraitShape(context.actor, newShape);
-  // }
+    ThemeQuadrone.updatePortraitShape(context.actor, newShape);
+  }
 
-  // let cyclerTooltip = $derived(
-  //   localize('TIDY5E.ThemeSettings.PortraitShape.title', {
-  //     type: localize(
-  //       `TIDY5E.ThemeSettings.PortraitShape.option.${currentPortraitShape}`,
-  //     ),
-  //   }),
-  // );
+  let cyclerTooltip = $derived(
+    localize('TIDY5E.ThemeSettings.PortraitShape.title', {
+      type: localize(
+        `TIDY5E.ThemeSettings.PortraitShape.option.${currentPortraitShape}`,
+      ),
+    }),
+  );
+
   let awardAriaLabel = $derived(
     localize(
       context.enableXp
@@ -47,7 +48,11 @@
 
 <header class="sheet-header flexcol theme-dark">
   <div class="sheet-header-content flexrow">
-    <div class="actor-details-container flexcol {context.enableXp ? 'show-xp' : ''}">
+    <div
+      class="actor-details-container flexcol {context.enableXp
+        ? 'show-xp'
+        : ''}"
+    >
       <div
         class="actor-details-name-row"
         data-tidy-sheet-part="name-header-row"
@@ -67,13 +72,10 @@
         {/if}
       </div>
       <GroupSubtitle />
-      
+
       {#if context.editable}
         <div
-          class={[
-            'sheet-header-actions',
-            'flexrow',
-          ]}
+          class={['sheet-header-actions', 'flexrow']}
           data-tidy-sheet-part="sheet-header-actions-container"
         >
           <button
@@ -118,43 +120,41 @@
           </button>
         </div>
       {/if}
-
     </div>
     <div class="actor-vitals-container">
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-borderless button-icon-only button-config"
+          style="position: absolute; top: 0; right: 0; z-index: 10; border: none; font-size: 14px;"
+          onclick={cycleShape}
+          data-tooltip={cyclerTooltip}
+        >
+          {#if currentPortraitShape === 'round'}
+            <i class="fas fa-circle-user"></i>
+          {:else if currentPortraitShape === 'square'}
+            <i class="fas fa-square-user"></i>
+          {:else if currentPortraitShape === 'token'}
+            <i class="fas fa-circle"></i>
+          {:else}
+            <i class="fas fa-user"></i>
+          {/if}
+        </button>
+      {/if}
       <!-- TODO: Fix size and shape selection -->
       <div
-        class={['actor-image transparent' /*, context.actor.portrait.shape*/]}
+        class={['actor-image transparent', currentPortraitShape]}
         style="position: relative;"
       >
         <img
-          src={context.actor.img}
+          src={context.portrait.src}
           alt={context.actor.name}
           class={['pointer']}
           data-action={context.unlocked ? 'editImage' : 'showArtwork'}
-          data-edit={context.actor.img}
+          data-edit={context.portrait.path}
         />
       </div>
     </div>
-    {#if context.unlocked}
-      <!-- TODO: Fix portrait shape selector -->
-      <!-- <button
-        type="button"
-        class="button button-borderless button-icon-only button-config"
-        style="position: absolute; top: 0; right: 0; z-index: 10; border: none; font-size: 14px;"
-        onclick={cycleShape}
-        data-tooltip={cyclerTooltip}
-      >
-        {#if currentPortraitShape === 'round'}
-          <i class="fas fa-circle-user"></i>
-        {:else if currentPortraitShape === 'square'}
-          <i class="fas fa-square-user"></i>
-        {:else if currentPortraitShape === 'token'}
-          <i class="fas fa-circle"></i>
-        {:else}
-          <i class="fas fa-user"></i>
-        {/if}
-      </button> -->
-    {/if}
   </div>
   <div class="tabs-row">
     <Tabs

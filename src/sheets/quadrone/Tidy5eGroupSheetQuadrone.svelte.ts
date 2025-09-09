@@ -127,6 +127,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       relativeTo: this.actor,
     };
 
+    const showToken =
+      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+        true || themeSettings.portraitShape === 'token';
+    const effectiveToken = this.actor.isToken
+      ? this.actor.token
+      : this.actor.prototypeToken;
+
     const context: GroupSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -145,6 +152,14 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         },
       },
       inventory: [],
+      // TODO: pull this back to the actor base level
+      portrait: {
+        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+        src: showToken
+          ? effectiveToken?.texture.src ?? this.actor.img
+          : this.actor.img,
+        path: showToken ? 'prototypeToken.texture.src' : 'img',
+      },
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       travel: {

@@ -1360,6 +1360,11 @@ export type GroupSheetQuadroneContext = {
     };
   };
   members: GroupMembersQuadroneContext;
+  portrait: {
+    src: string;
+    shape: PortraitShape;
+    path: string;
+  };
   skills: GroupSkill[];
   travel: {
     currentPace: TravelPaceConfigEntry;
