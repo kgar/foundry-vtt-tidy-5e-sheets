@@ -79,7 +79,7 @@
           <button
             type="button"
             class="button long-rest button-gold flexshrink"
-            data-tooltip="DND5E.REST.Long.Label"
+            data-tooltip="DND5E.Group.PlaceMembers"
             aria-label={localize('DND5E.Group.PlaceMembers')}
             onclick={() => context.actor.system.placeMembers()}
           >
