@@ -361,10 +361,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       section.members.push(groupMemberContext);
       sections.all.set(actor.uuid, groupMemberContext);
 
-      if (actor.system.skills) {
-        sections.skilled.push(groupMemberContext);
-      }
-
       const prepareCreatureInformation =
         canObserve &&
         (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER ||
@@ -372,6 +368,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
       if (prepareCreatureInformation) {
         // Skills
+        sections.skilled.push(groupMemberContext);
         this._prepareMemberSkills(actor, skills);
 
         // Languages
