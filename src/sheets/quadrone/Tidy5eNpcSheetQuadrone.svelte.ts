@@ -128,7 +128,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const background = this.actor.itemTypes.background[0];
     const species = this.actor.itemTypes.race[0];
 
-    const important = this.isImportantNpc(this.actor);
+    const important = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
     const context: NpcSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
