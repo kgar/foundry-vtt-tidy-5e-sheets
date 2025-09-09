@@ -49,7 +49,6 @@
   class="groups-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
-  {sectionsInlineWidth}
   {#if characters.length}
     {@const columns = new ColumnsLoadout(
       GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
@@ -66,8 +65,6 @@
       sectionsInlineWidth,
       columns,
     )}
-
-    {JSON.stringify(hiddenColumns.values())}
 
     <TidyTable key="characters">
       {#snippet header()}
