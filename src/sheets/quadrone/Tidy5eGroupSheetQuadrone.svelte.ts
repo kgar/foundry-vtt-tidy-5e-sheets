@@ -304,6 +304,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     let speeds = new Map<string, MeasurableGroupTrait<number>>();
     let tools = new Map<string, GroupTrait>();
 
+    let skilled = new Map<string, GroupMemberQuadroneContext[]>([
+      [CONSTANTS.SHEET_TYPE_CHARACTER, []],
+      [CONSTANTS.SHEET_TYPE_NPC, []],
+    ]);
+
     for (let { actor } of this.actor.system.members) {
       if (!actor) {
         continue;
@@ -368,7 +373,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
       if (prepareCreatureInformation) {
         // Skills
-        sections.skilled.push(groupMemberContext);
+        skilled.get(actor.type)?.push(groupMemberContext);
         this._prepareMemberSkills(actor, skills);
 
         // Languages
@@ -393,6 +398,16 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         this._prepareMemberSpeeds(actor, speeds);
       }
     }
+
+    sections.skilled.push(
+      ...skilled.values().reduce((prev, curr) => {
+        return prev.concat(
+          curr.toSorted((a, b) =>
+            a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
+          )
+        );
+      }, [])
+    );
 
     let groupSkills = [...skills.values()].toSorted((a, b) =>
       a.name.localeCompare(b.name, game.i18n.lang)
