@@ -59,8 +59,6 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<EncounterSheetQuadroneContext> {
-    // this._concentration = this.actor.concentration;
-
     const actorContext = (await super._prepareContext(
       options
     )) as MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
