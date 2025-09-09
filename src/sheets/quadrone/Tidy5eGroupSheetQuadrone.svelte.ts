@@ -2,7 +2,6 @@ import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
-  GroupMemberPortraitContext,
   GroupMemberQuadroneContext,
   GroupMemberSkillContext,
   GroupMembersQuadroneContext,
@@ -630,33 +629,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
 
       groupTool.identifiers.add(actor.uuid);
     });
-  }
-
-  async _preparePortrait(actor: Actor5e): Promise<GroupMemberPortraitContext> {
-    const showTokenPortrait = this.actor.getFlag(
-      CONSTANTS.DND5E_SYSTEM_ID,
-      CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
-    );
-
-    const token = actor.isToken ? actor.token : actor.prototypeToken;
-
-    const defaults = Actor.implementation.getDefaultArtwork(actor._source);
-    let src = showTokenPortrait ? token.texture.src : actor.img;
-
-    if (showTokenPortrait && token?.randomImg) {
-      const images = await actor.getTokenImages();
-      src = images[Math.floor(Math.random() * images.length)];
-    }
-
-    if (!src) {
-      src = showTokenPortrait ? defaults.texture.src : defaults.img;
-    }
-
-    return {
-      src,
-      isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
-      shape: ThemeQuadrone.getActorPortraitShape(actor),
-    };
   }
 
   getGpSummary(actor: Actor5e) {

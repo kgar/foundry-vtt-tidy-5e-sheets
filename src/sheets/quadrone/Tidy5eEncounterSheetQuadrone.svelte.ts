@@ -1,5 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type {
+  Actor5e,
+  EncounterMemberQuadroneContext,
   EncounterSheetQuadroneContext,
   MultiActorQuadroneContext,
 } from 'src/types/types';
@@ -14,6 +16,9 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { coalesce } from 'src/utils/formatting';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -63,16 +68,68 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       options
     )) as MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
+    const enrichmentArgs = {
+      secrets: this.actor.isOwner,
+      rollData: actorContext.rollData,
+      relativeTo: this.actor,
+    };
+
     const context: EncounterSheetQuadroneContext = {
+      enriched: {
+        description: {
+          full: await foundry.applications.ux.TextEditor.enrichHTML(
+            this.actor.system.description.full,
+            enrichmentArgs
+          ),
+          summary: await foundry.applications.ux.TextEditor.enrichHTML(
+            this.actor.system.description.summary,
+            enrichmentArgs
+          ),
+        },
+      },
+      members: { npc: [] },
       type: 'encounter',
       ...actorContext,
     };
 
-    // etc.
+    context.members.npc = await this._prepareMembersContext(context);
 
     context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  async _prepareMembersContext(
+    context: EncounterSheetQuadroneContext
+  ): Promise<EncounterMemberQuadroneContext[]> {
+    const members: Actor5e[] = await this.actor.system.getMembers();
+
+    return await Promise.all(
+      members.map(async ({ actor, quantity }) => {
+        const accentColor = coalesce(
+          // Use the actor's accent color, if configured
+          ThemeQuadrone.getSheetThemeSettings({
+            doc: actor,
+            applyWorldThemeSetting: false,
+          }).accentColor,
+          // Else, use the encounter sheet's accent color, with fallback to world default accent color
+          context.themeSettings.accentColor
+        );
+
+        return {
+          actor,
+          quantity,
+          accentColor,
+          backgroundColor: !isNil(accentColor, '')
+            ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
+            : undefined,
+          highlightColor: !isNil(accentColor, '')
+            ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
+            : undefined,
+          portrait: await this._preparePortrait(actor),
+        };
+      })
+    );
   }
 
   /* -------------------------------------------- */

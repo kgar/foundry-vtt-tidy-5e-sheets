@@ -4,6 +4,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  MultiActorMemberPortraitContext,
   MultiActorQuadroneContext,
 } from 'src/types/types';
 import type {
@@ -18,6 +19,7 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { TidyFlags } from 'src/api';
 import type { Group5eMember as MultiActor5eMember } from 'src/types/group.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -123,6 +125,35 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     }
 
     protected _prepareItem(item: Item5e, ctx: TContext) {}
+
+    async _preparePortrait(
+      actor: Actor5e
+    ): Promise<MultiActorMemberPortraitContext> {
+      const showTokenPortrait = this.actor.getFlag(
+        CONSTANTS.DND5E_SYSTEM_ID,
+        CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
+      );
+
+      const token = actor.isToken ? actor.token : actor.prototypeToken;
+
+      const defaults = Actor.implementation.getDefaultArtwork(actor._source);
+      let src = showTokenPortrait ? token.texture.src : actor.img;
+
+      if (showTokenPortrait && token?.randomImg) {
+        const images = await actor.getTokenImages();
+        src = images[Math.floor(Math.random() * images.length)];
+      }
+
+      if (!src) {
+        src = showTokenPortrait ? defaults.texture.src : defaults.img;
+      }
+
+      return {
+        src,
+        isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
+        shape: ThemeQuadrone.getActorPortraitShape(actor),
+      };
+    }
 
     /* -------------------------------------------- */
     /*  Drag and Drop                               */
