@@ -29,7 +29,7 @@ import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
-import type { PortraitShape } from 'src/theme/theme-quadrone.types';
+import type { PortraitShape, ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
@@ -973,11 +973,17 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   limited: boolean;
   modernRules: boolean;
   owner: boolean;
+  portrait: {
+    src: string;
+    shape: PortraitShape;
+    path: string;
+  };
   rollData: any;
   saves: ActorSaves;
   source: any;
   system: Actor5e['system'];
   tabs: Tab[];
+  themeSettings: ThemeSettingsV3;
   token: TokenDocument | null;
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
@@ -991,11 +997,6 @@ export type MultiActorContext<TSheet> = {
   containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
   inventory: InventorySection[];
-  // portrait: {
-  //   src: string;
-  //   shape: PortraitShape;
-  //   path: string;
-  // };
   sheet: TSheet;
   showContainerPanel: boolean;
 } & ActorSheetQuadroneContext<TSheet>;
@@ -1183,11 +1184,6 @@ export type CharacterSheetQuadroneContext = {
   senses: CharacterSpeedSenseContext;
   showContainerPanel: boolean;
   showDeathSaves: boolean;
-  portrait: {
-    src: string;
-    shape: PortraitShape;
-    path: string;
-  };
   size: ActorSizeContext;
   sheet: Tidy5eCharacterSheetQuadrone;
   skills: ActorSkillsToolsContext<SkillData>[];
@@ -1224,11 +1220,6 @@ export type NpcSheetQuadroneContext = {
   important: boolean;
   inventory: InventorySection[];
   orphanedSubclasses: Item5e[];
-  portrait: {
-    src: string;
-    shape: PortraitShape;
-    path: string;
-  };
   showContainerPanel: boolean;
   showDeathSaves: boolean;
   showLairTracker: boolean;
@@ -1360,11 +1351,6 @@ export type GroupSheetQuadroneContext = {
     };
   };
   members: GroupMembersQuadroneContext;
-  portrait: {
-    src: string;
-    shape: PortraitShape;
-    path: string;
-  };
   skills: GroupSkill[];
   travel: {
     currentPace: TravelPaceConfigEntry;

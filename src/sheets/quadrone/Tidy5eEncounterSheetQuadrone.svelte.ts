@@ -74,10 +74,6 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-
     const currencies: CurrencyContext[] = [];
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
       currencies.push({

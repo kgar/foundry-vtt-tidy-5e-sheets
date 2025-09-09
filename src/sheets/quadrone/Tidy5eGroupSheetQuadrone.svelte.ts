@@ -89,15 +89,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetQuadroneContext> {
-    // this._concentration = this.actor.concentration;
-
     const actorContext = (await super._prepareContext(
       options
     )) as ActorSheetQuadroneContext;
-
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
 
     const currencies: CurrencyContext[] = [];
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
@@ -127,13 +121,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       relativeTo: this.actor,
     };
 
-    const showToken =
-      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-        true || themeSettings.portraitShape === 'token';
-    const effectiveToken = this.actor.isToken
-      ? this.actor.token
-      : this.actor.prototypeToken;
-
     const context: GroupSheetQuadroneContext = {
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -152,14 +139,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         },
       },
       inventory: [],
-      // TODO: pull this back to the actor base level
-      portrait: {
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
-        src: showToken
-          ? effectiveToken?.texture.src ?? this.actor.img
-          : this.actor.img,
-        path: showToken ? 'prototypeToken.texture.src' : 'img',
-      },
       sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       travel: {
@@ -179,7 +158,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         },
       },
       type: 'group',
-      ...(await this._prepareMemberDependentContext()),
+      ...(await this._prepareMemberDependentContext(actorContext)),
       ...actorContext,
     };
 
@@ -257,7 +236,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   protected _prepareItem(item: Item5e, ctx: GroupSheetQuadroneContext) {}
 
-  async _prepareMemberDependentContext(): Promise<{
+  async _prepareMemberDependentContext(
+    actorContext: ActorSheetQuadroneContext
+  ): Promise<{
     members: GroupMembersQuadroneContext;
     skills: GroupSkill[];
     traits: GroupTraits;
@@ -346,12 +327,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         // Use the actor's accent color, if configured
         ThemeQuadrone.getSheetThemeSettings({
           doc: actor,
+          applyWorldThemeSetting: false,
         }).accentColor,
         // Else, use the group sheet's accent color, with fallback to world default accent color
-        ThemeQuadrone.getSheetThemeSettings({
-          doc: this.actor,
-          applyWorldThemeSetting: true,
-        }).accentColor
+        actorContext.themeSettings.accentColor
       );
 
       const canObserve =

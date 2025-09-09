@@ -82,10 +82,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-
     // Effects & Conditions
     let baseEffects =
       dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -118,12 +114,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       rollData: actorContext.rollData,
       relativeTo: this.actor,
     };
-    const showToken =
-      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-        true || themeSettings.portraitShape === 'token';
-    const effectiveToken = this.actor.isToken
-      ? this.actor.token
-      : this.actor.prototypeToken;
 
     const background = this.actor.itemTypes.background[0];
     const species = this.actor.itemTypes.race[0];
@@ -180,13 +170,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       habitats: [],
       important,
       inventory: [],
-      portrait: {
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
-        src: showToken
-          ? effectiveToken?.texture.src ?? this.actor.img
-          : this.actor.img,
-        path: showToken ? 'prototypeToken.texture.src' : 'img',
-      },
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       senses: super._getSenses(),
