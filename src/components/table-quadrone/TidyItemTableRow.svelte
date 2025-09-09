@@ -9,7 +9,6 @@
   import type {
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
-    MessageBus,
     OnItemToggledFn,
   } from 'src/types/types';
   import { getContext, setContext, untrack, type Snippet } from 'svelte';
@@ -42,7 +41,7 @@
   }: Props = $props();
 
   const emptyChatData: ItemChatData = {
-    description: { value: '' },
+    description: '',
     properties: [],
   };
 
@@ -95,15 +94,6 @@
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 
-  function restoreItemSummaryIfExpanded() {
-    const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
-
-    if (isExpandedAtThisLocation) {
-      chatData = expandedItemData.get(item.id);
-      expanded = true;
-    }
-  }
-
   const config = $derived(
     item.type === CONSTANTS.ITEM_TYPE_SPELL
       ? FoundryAdapter.getSpellMethodConfig(item)
@@ -122,20 +112,16 @@
     'equipped' in item.system && item.system.equipped ? 'equipped' : undefined,
   ]);
 
-  let first = true;
-
   $effect(() => {
-    (async () => {
-      if (first) {
-        first = false;
-        restoreItemSummaryIfExpanded();
-        return;
-      }
+    const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
+    const data = expandedItemData.get(item.id);
 
-      if (expanded) {
-        chatData = await item.getChatData({ secrets: item.isOwner });
-      }
-    })();
+    if (isExpandedAtThisLocation && data) {
+      untrack(() => {
+        chatData = data;
+        expanded = true;
+      });
+    }
   });
 </script>
 

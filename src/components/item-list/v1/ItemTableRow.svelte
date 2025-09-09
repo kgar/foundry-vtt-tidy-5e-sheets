@@ -41,7 +41,7 @@
   }: Props = $props();
 
   const emptyChatData: ItemChatData = {
-    description: { value: '' },
+    description: '',
     properties: [],
   };
 
