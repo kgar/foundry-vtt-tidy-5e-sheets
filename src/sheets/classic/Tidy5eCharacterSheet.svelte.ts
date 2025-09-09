@@ -1080,7 +1080,7 @@ export class Tidy5eCharacterSheet
     const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
-    for (let item of items) {
+    for (const item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
@@ -1098,7 +1098,7 @@ export class Tidy5eCharacterSheet
     });
 
     // Section favorite items by type
-    for (let item of favorites.items) {
+    for (const item of favorites.items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(
@@ -1395,7 +1395,7 @@ export class Tidy5eCharacterSheet
 
     let pins: AttributePinContext[] = [];
 
-    for (let pin of flagPins) {
+    for (const pin of flagPins) {
       let document = await fromUuid(pin.id, { relative: this.actor });
 
       if (document) {
@@ -1561,7 +1561,7 @@ export class Tidy5eCharacterSheet
     const traits = super._prepareTraits(systemData);
 
     const selectedWeaponProfs = traits.traits?.weaponProf?.selected;
-    for (let key of systemData.traits?.weaponProf?.mastery?.value ?? []) {
+    for (const key of systemData.traits?.weaponProf?.mastery?.value ?? []) {
       if (!Object.hasOwn(selectedWeaponProfs, key)) {
         selectedWeaponProfs[key] =
           dnd5e.documents.Trait.keyLabel(key, { trait: 'weapon' }) ?? key;
@@ -1811,7 +1811,7 @@ export class Tidy5eCharacterSheet
 
 function getActorClassesToImages(actor: Actor5e): Record<string, string> {
   let actorClassesToImages: Record<string, string> = {};
-  for (let item of actor.items) {
+  for (const item of actor.items) {
     if (item.type == CONSTANTS.ITEM_TYPE_CLASS) {
       let className = item.name.toLowerCase();
       let classImg = item.img;
