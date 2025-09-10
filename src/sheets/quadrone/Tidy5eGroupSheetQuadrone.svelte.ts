@@ -174,13 +174,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
           {
             ability: skill.ability,
             high: {
-              total: 0,
-              value: '0',
-              sign: '+',
+              total: -Infinity,
+              value: '∞',
+              sign: '-',
             },
             low: {
-              total: 0,
-              value: '0',
+              total: Infinity,
+              value: '∞',
               sign: '+',
             },
             identifiers: new Map<string, GroupMemberSkillContext>(),
@@ -353,6 +353,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
 
       if (skill.total > groupSkill.high.total) {
         groupSkill.high = {
+          total: skill.total,
+          ...modData,
+        };
+      }
+
+      if (skill.total < groupSkill.low.total) {
+        groupSkill.low = {
           total: skill.total,
           ...modData,
         };
