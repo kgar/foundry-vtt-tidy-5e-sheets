@@ -362,9 +362,7 @@ export function Tidy5eActorSheetQuadroneBase<
       return context;
     }
 
-    private async _preparePortrait(): Promise<
-      ActorSheetQuadroneContext['portrait']
-    > {
+    async _preparePortrait(): Promise<ActorSheetQuadroneContext['portrait']> {
       const { actor } = this;
       const defaults = Actor.implementation.getDefaultArtwork(actor._source);
       const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
