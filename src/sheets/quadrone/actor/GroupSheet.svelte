@@ -122,38 +122,7 @@
       {/if}
     </div>
     <div class="actor-vitals-container">
-      {#if context.unlocked}
-        <button
-          type="button"
-          class="button button-borderless button-icon-only button-config"
-          style="position: absolute; top: 0; right: 0; z-index: 10; border: none; font-size: 14px;"
-          onclick={cycleShape}
-          data-tooltip={cyclerTooltip}
-        >
-          {#if currentPortraitShape === 'round'}
-            <i class="fas fa-circle-user"></i>
-          {:else if currentPortraitShape === 'square'}
-            <i class="fas fa-square-user"></i>
-          {:else if currentPortraitShape === 'token'}
-            <i class="fas fa-circle"></i>
-          {:else}
-            <i class="fas fa-user"></i>
-          {/if}
-        </button>
-      {/if}
-      <!-- TODO: Fix size and shape selection -->
-      <div
-        class={['actor-image transparent', currentPortraitShape]}
-        style="position: relative;"
-      >
-        <img
-          src={context.portrait.src}
-          alt={context.actor.name}
-          class={['pointer']}
-          data-action={context.unlocked ? 'editImage' : 'showArtwork'}
-          data-edit={context.portrait.path}
-        />
-      </div>
+      <ActorPortrait/>
     </div>
   </div>
   <div class="tabs-row">

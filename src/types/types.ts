@@ -978,8 +978,11 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   owner: boolean;
   portrait: {
     src: string;
+    isRandom: boolean;
+    truePath?: string;
     shape: PortraitShape;
     path: string;
+    isVideo: boolean;
   };
   rollData: any;
   saves: ActorSaves;
