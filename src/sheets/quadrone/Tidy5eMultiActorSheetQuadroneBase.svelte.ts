@@ -127,8 +127,8 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     protected _prepareItem(item: Item5e, ctx: TContext) {}
 
     async _preparePortrait(
-      actor: Actor5e
-    ): Promise<MultiActorMemberPortraitContext> {
+      actor: Actor5e = this.actor
+    ): Promise<ActorSheetQuadroneContext['portrait']> {
       const showTokenPortrait = this.actor.getFlag(
         CONSTANTS.DND5E_SYSTEM_ID,
         CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
@@ -152,6 +152,8 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         src,
         isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
         shape: ThemeQuadrone.getActorPortraitShape(actor),
+        isRandom: false,
+        path: src,
       };
     }
 

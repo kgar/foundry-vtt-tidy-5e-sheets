@@ -332,7 +332,7 @@ export function Tidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
-        portrait: await this._getPortrait(),
+        portrait: await this._preparePortrait(),
         rollData,
         saves,
         sheet: this,
@@ -362,7 +362,7 @@ export function Tidy5eActorSheetQuadroneBase<
       return context;
     }
 
-    private async _getPortrait(): Promise<
+    private async _preparePortrait(): Promise<
       ActorSheetQuadroneContext['portrait']
     > {
       const { actor } = this;
