@@ -34,6 +34,7 @@ import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
+import { ItemContext } from 'src/features/item/ItemContext';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -483,6 +484,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         vsmcr,
       ].filterJoin(' &bull; ');
     }
+
+    // Save
+    ctx.save = ItemContext.getItemSaveContext(item);
+
+    // To Hit
+    ctx.toHit = ItemContext.getToHit(item);
   }
 
   protected _prepareSpellcastingContext(
