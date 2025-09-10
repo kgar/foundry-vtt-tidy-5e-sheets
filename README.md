@@ -177,7 +177,7 @@ An alternate view of items that brings more functionality to the surface.
 
 ## Group Sheets
 
-![Group Sheet](readme-assets/t5e-group-sheet.mp4)
+<video src="readme-assets/t5e-group-sheet.webm" width=800/>
 *Adventuring Party commissioned work by [Sar Cousins](https://sarcousins.co.uk/), © Sar Cousins.
 
 ### What's unique about Tidy's Group sheets?
