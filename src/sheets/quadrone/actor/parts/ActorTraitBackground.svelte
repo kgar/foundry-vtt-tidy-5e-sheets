@@ -33,6 +33,7 @@
     class="list-entry"
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
     data-item-id={background?.id}
+    data-tidy-draggable
   >
     <div class="list-label">
       <h4 class="font-weight-label">

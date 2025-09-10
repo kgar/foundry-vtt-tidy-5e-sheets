@@ -62,6 +62,7 @@
       class="list-entry"
       data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
       data-item-id={firstClass?.item?.id}
+      data-tidy-draggable
     >
       <div class="list-label">
         <h4 class="font-weight-label">
@@ -80,6 +81,7 @@
       class="list-entry"
       data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
       data-item-id={cls?.item?.id}
+      data-tidy-draggable
     >
       <div class="list-label"></div>
       {@render classContent(cls)}
@@ -263,6 +265,7 @@
     class="list-entry list-sub-entry"
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
     data-item-id={subclass.id}
+    data-tidy-draggable
   >
     <div class="list-label"></div>
     <div class="list-content">
