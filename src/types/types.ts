@@ -1291,7 +1291,7 @@ export type MeasurableEmphasizable<TValue> = {
 };
 
 export type GroupSkillModContext = {
-  mod: number;
+  total: number;
   sign: string;
   value: string;
 };
