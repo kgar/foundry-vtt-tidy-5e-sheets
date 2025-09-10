@@ -1,16 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
-  import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import NpcTraitCreatureType from '../npc-parts/traits/NpcTraitCreatureType.svelte';
   import NpcTraitSize from '../npc-parts/traits/NpcTraitSize.svelte';
 
-  let context = $derived(getNpcSheetQuadroneContext());
+  let context = $derived(getCharacterSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
-
-  $inspect(context);
 </script>
 
 <div class="list traits">
