@@ -8,6 +8,7 @@ import type {
   CharacterFeatureSection,
   CharacterSheetQuadroneContext,
   DocumentSheetQuadroneContext,
+  EncounterSheetQuadroneContext,
   FeatureSection,
   GroupSheetQuadroneContext,
   InventorySection,
@@ -440,6 +441,42 @@ class TableRowActionsRuntime {
               doc: args.data,
               deleteFn: () => context.actor.system.removeMember(args.data),
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
+            }),
+          } satisfies TableAction<typeof DeleteButton>);
+        }
+      }
+
+      result.push({
+        component: MenuButton,
+        props: () => ({
+          targetSelector: '[data-context-menu]',
+        }),
+      } satisfies TableAction<typeof MenuButton>);
+
+      return result;
+    });
+
+    return rowActions;
+  }
+
+  getEncounterMemberRowActions(context: EncounterSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Actor5e,
+      TidySectionBase
+    >;
+
+    let rowActions: TableAction<any>[] = $derived.by(() => {
+      let result: TableAction<any>[] = [];
+
+      if (context.owner) {
+        if (context.unlocked) {
+          result.push({
+            component: DeleteButton,
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => context.actor.system.removeMember(args.data),
+              tooltip: FoundryAdapter.localize('DND5E.Encounter.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }

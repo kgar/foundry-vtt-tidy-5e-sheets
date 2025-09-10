@@ -1369,6 +1369,7 @@ export type EncounterMemberQuadroneContext = {
   accentColor: string | undefined;
   actor: Actor5e;
   backgroundColor: string | undefined;
+  canObserve: boolean;
   highlightColor: string | undefined;
   portrait: MultiActorMemberPortraitContext;
   quantity: {

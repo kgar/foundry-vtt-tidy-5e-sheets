@@ -1,0 +1,21 @@
+.tidy5e-sheet.application:where(.quadrone.encounter) {
+
+  .sheet-header {
+    .actor-subtitle {
+      margin-bottom: var(--t5e-size-halfx);
+    }
+  }
+
+  /* Tab-specific styles */
+  .tidy-tab {
+
+    &.members {}
+
+    &.inventory {
+      .inventory-footer {
+        justify-content: flex-end;
+        padding-inline-end: 0;
+      }
+    }
+  }
+}
