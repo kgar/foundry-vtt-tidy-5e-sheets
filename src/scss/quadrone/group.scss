@@ -131,6 +131,18 @@
   }
 
   /* Sidebar skills */
+  .use-ability-header .skill-expand-button {
+    gap: 0.1875rem;
+
+    i {
+      color: var(--t5e-color-icon-default);
+    }
+
+    h3 {
+      color: var(--t5e-color-text-lighter);
+    }
+  }
+
   .skill-list .skill-list-item {
     &.member-proficient .skill-ability {
       color: var(--t5e-member-color-hover);
@@ -395,26 +407,23 @@
 
       .tidy-table-cell {
         max-width: none;
-        gap: var(--t5e-size-1x);
         justify-content: center;
         align-items: center;
         border: none;
 
         &:not(.tidy-table-actions) {
           flex-direction: column;
+          gap: var(--t5e-size-1x);
         }
 
         &.primary {
           align-items: flex-start;
-          min-width: 8rem;
           overflow: hidden;
 
           .separated-list {
             flex-wrap: wrap;
           }
         }
-
-        &.tidy-table-actions {}
       }
 
       .meter.meter-small {

@@ -1,11 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
-  ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  ExpandedItemData,
-  ExpandedItemIdToLocationsMap,
-  GroupMemberPortraitContext,
   GroupMemberQuadroneContext,
   GroupMemberSkillContext,
   GroupMembersQuadroneContext,
@@ -14,17 +10,10 @@ import type {
   GroupTrait,
   GroupTraitBase,
   GroupTraits,
-  LocationToSearchTextMap,
   MeasurableGroupTrait,
+  MultiActorQuadroneContext,
   TravelPaceConfigEntry,
 } from 'src/types/types';
-import type {
-  CurrencyContext,
-  Item5e,
-  ItemChatData,
-} from 'src/types/item.types';
-import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
   ApplicationClosingOptions,
   ApplicationConfiguration,
@@ -35,14 +24,8 @@ import { mount } from 'svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { type TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
-import { Inventory } from 'src/features/sections/Inventory';
-import { TidyFlags } from 'src/api';
-import { SheetSections } from 'src/features/sections/SheetSections';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { Container } from 'src/features/containers/Container';
-import type { Group5eMember, GroupMemberContext } from 'src/types/group.types';
+import type { GroupMemberContext } from 'src/types/group.types';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
 import { coalesce, getModifierData } from 'src/utils/formatting';
 import type { SkillData } from 'src/foundry/dnd5e.types';
@@ -50,11 +33,11 @@ import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { settings } from 'src/settings/settings.svelte';
 import { mapGetOrInsert } from 'src/utils/map';
+import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 
-export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
+export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
 ) {
   currentTabId: string;
@@ -98,26 +81,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetQuadroneContext> {
-    // this._concentration = this.actor.concentration;
-
     const actorContext = (await super._prepareContext(
       options
-    )) as ActorSheetQuadroneContext;
-
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-
-    const currencies: CurrencyContext[] = [];
-    Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
-      currencies.push({
-        key: key,
-        value: this.actor.system.currency[key] as number,
-        abbr:
-          CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
-            ?.abbreviation ?? key,
-      })
-    );
+    )) as MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
 
     const paces: TravelPaceConfigEntry[] = Object.entries(
       CONFIG.DND5E.travelPace
@@ -137,10 +103,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     };
 
     const context: GroupSheetQuadroneContext = {
-      containerPanelItems: await Inventory.getContainerPanelItems(
-        actorContext.items
-      ),
-      currencies,
       enriched: {
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -153,9 +115,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           ),
         },
       },
-      inventory: [],
-      sheet: this,
-      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       travel: {
         paces,
         currentPace,
@@ -173,85 +132,20 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         },
       },
       type: 'group',
-      ...(await this._prepareMemberDependentContext()),
+      ...(await this._prepareMemberDependentContext(actorContext)),
       ...actorContext,
     };
 
     // etc.
-
-    for (const panelItem of context.containerPanelItems) {
-      const ctx = context.itemContext[panelItem.container.id];
-      ctx.containerContents = await Container.getContainerContents(
-        panelItem.container,
-        {
-          hasActor: true,
-          unlocked: actorContext.unlocked,
-        }
-      );
-    }
 
     context.tabs = await GroupSheetQuadroneRuntime.getTabs(context);
 
     return context;
   }
 
-  _prepareItems(context: GroupSheetQuadroneContext) {
-    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-      context,
-      { hasActionsTab: false, canEquip: false }
-    );
-
-    const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
-        rowActions: inventoryRowActions,
-      });
-
-    let inventoryItems = Array.from(this.actor.items).reduce(
-      (inventoryItems: Item5e[], item: Item5e) => {
-        const ctx = (context.itemContext[item.id] ??= {});
-
-        // Individual item preparation
-        this._prepareItem(item, ctx);
-
-        const isWithinContainer = this.actor.items.has(item.system.container);
-
-        if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
-          inventoryItems.push(item);
-        }
-
-        return inventoryItems;
-      },
-      [] as Item5e[]
-    );
-
-    const inventoryTypes = Inventory.getInventoryTypes();
-    // Organize items
-    // Section the items by type
-    for (let item of inventoryItems) {
-      const ctx = (context.itemContext[item.id] ??= {});
-      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
-    }
-
-    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      context.actor,
-      CONSTANTS.TAB_ACTOR_INVENTORY
-    ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
-    });
-
-    context.inventory = Object.values(inventory);
-  }
-
-  protected _prepareItem(item: Item5e, ctx: GroupSheetQuadroneContext) {}
-
-  async _prepareMemberDependentContext(): Promise<{
+  async _prepareMemberDependentContext(
+    actorContext: ActorSheetQuadroneContext
+  ): Promise<{
     members: GroupMembersQuadroneContext;
     skills: GroupSkill[];
     traits: GroupTraits;
@@ -313,6 +207,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     let speeds = new Map<string, MeasurableGroupTrait<number>>();
     let tools = new Map<string, GroupTrait>();
 
+    let skilled = new Map<string, GroupMemberQuadroneContext[]>([
+      [CONSTANTS.SHEET_TYPE_CHARACTER, []],
+      [CONSTANTS.SHEET_TYPE_NPC, []],
+    ]);
+
     for (let { actor } of this.actor.system.members) {
       if (!actor) {
         continue;
@@ -335,12 +234,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         // Use the actor's accent color, if configured
         ThemeQuadrone.getSheetThemeSettings({
           doc: actor,
+          applyWorldThemeSetting: false,
         }).accentColor,
         // Else, use the group sheet's accent color, with fallback to world default accent color
-        ThemeQuadrone.getSheetThemeSettings({
-          doc: this.actor,
-          applyWorldThemeSetting: true,
-        }).accentColor
+        actorContext.themeSettings.accentColor
       );
 
       const canObserve =
@@ -370,12 +267,14 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       section.members.push(groupMemberContext);
       sections.all.set(actor.uuid, groupMemberContext);
 
-      if (actor.system.skills) {
-        sections.skilled.push(groupMemberContext);
-      }
+      const prepareCreatureInformation =
+        canObserve &&
+        (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER ||
+          Tidy5eNpcSheetQuadrone.isImportantNpc(actor));
 
-      if (canObserve) {
+      if (prepareCreatureInformation) {
         // Skills
+        skilled.get(actor.type)?.push(groupMemberContext);
         this._prepareMemberSkills(actor, skills);
 
         // Languages
@@ -387,13 +286,29 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         // Specials
         this._prepareMemberSpecials(actor, specials);
 
-        // Speeds
-        this._prepareMemberSpeeds(actor, speeds);
-
         // Tools
         this._prepareMemberTools(actor, tools);
       }
+
+      const prepareSpeed =
+        prepareCreatureInformation ||
+        actor.type === CONSTANTS.SHEET_TYPE_VEHICLE;
+
+      if (prepareSpeed) {
+        // Speeds
+        this._prepareMemberSpeeds(actor, speeds);
+      }
     }
+
+    sections.skilled.push(
+      ...skilled.values().reduce((prev, curr) => {
+        return prev.concat(
+          curr.toSorted((a, b) =>
+            a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
+          )
+        );
+      }, [])
+    );
 
     let groupSkills = [...skills.values()].toSorted((a, b) =>
       a.name.localeCompare(b.name, game.i18n.lang)
@@ -716,158 +631,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     });
   }
 
-  async _preparePortrait(actor: Actor5e): Promise<GroupMemberPortraitContext> {
-    const showTokenPortrait = this.actor.getFlag(
-      CONSTANTS.DND5E_SYSTEM_ID,
-      CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
-    );
-
-    const token = actor.isToken ? actor.token : actor.prototypeToken;
-
-    const defaults = Actor.implementation.getDefaultArtwork(actor._source);
-    let src = showTokenPortrait ? token.texture.src : actor.img;
-
-    if (showTokenPortrait && token?.randomImg) {
-      const images = await actor.getTokenImages();
-      src = images[Math.floor(Math.random() * images.length)];
-    }
-
-    if (!src) {
-      src = showTokenPortrait ? defaults.texture.src : defaults.img;
-    }
-
-    return {
-      src,
-      isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
-      shape: ThemeQuadrone.getActorPortraitShape(actor),
-    };
-  }
-
-  /* -------------------------------------------- */
-  /*  Drag and Drop                               */
-  /* -------------------------------------------- */
-
-  _onDragStart(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement }
-  ): void {
-    const memberId = event.currentTarget
-      .closest('[data-tidy-draggable][data-member-id]')
-      ?.getAttribute('data-member-id');
-
-    if (!memberId) {
-      super._onDragStart(event);
-      return;
-    }
-
-    const actor = this.#findMemberActor(memberId);
-
-    if (!actor) {
-      return;
-    }
-
-    const dragData = actor.toDragData();
-    dragData['groupId'] = this.actor.id;
-    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-  }
-
-  async _onDropActiveEffect(
-    ..._args: any[]
-  ): Promise</*ActiveEffect*/ unknown | boolean> {
-    // Tidy Group Sheet doesn't support active effect drops.
-    return false;
-  }
-
-  async _onDropActor(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: Actor5e
-  ): Promise<object | boolean | undefined> {
-    if (!this.isEditable) {
-      return false;
-    }
-
-    const cls = getDocumentClass('Actor');
-    const sourceActor = await cls.fromDropData(data);
-    if (!sourceActor) {
-      return;
-    }
-
-    const dragEventData =
-      foundry.applications.ux.TextEditor.getDragEventData(event);
-    const groupId = dragEventData['groupId'];
-
-    if (groupId !== this.actor.id) {
-      return this.actor.system.addMember(sourceActor);
-    }
-
-    const dropTarget = event.target?.closest<HTMLElement>(
-      '[data-tidy-draggable][data-member-id]'
-    );
-    const targetMemberId = dropTarget?.getAttribute('data-member-id');
-
-    const targetMemberActor = this.#findMemberActor(targetMemberId);
-
-    if (
-      !dropTarget ||
-      !targetMemberActor ||
-      targetMemberId === sourceActor.id
-    ) {
-      return false;
-    }
-
-    return await this._onSortMember(sourceActor, targetMemberActor);
-  }
-
-  #findMemberActor(actorId: string | null | undefined): Actor5e | undefined {
-    return this.actor.system.members.find(
-      (m: Group5eMember) => m.actor.id === actorId
-    )?.actor;
-  }
-
-  async _onSortMember(sourceActor: Actor5e, targetActor: Actor5e) {
-    const membersCollection: Group5eMember[] =
-      this.actor.system.toObject().members;
-    const sourceIndex = membersCollection.findIndex(
-      (m) => m.actor === sourceActor.id
-    );
-    const targetIndex = membersCollection.findIndex(
-      (m) => m.actor === targetActor.id
-    );
-
-    const sortBefore = sourceIndex > targetIndex;
-
-    if (sortBefore) {
-      const sourceMember = membersCollection.splice(sourceIndex, 1)[0];
-      membersCollection.splice(targetIndex, 0, sourceMember);
-    } else {
-      const sourceMember = membersCollection[sourceIndex];
-      membersCollection.splice(targetIndex + 1, 0, sourceMember);
-      membersCollection.splice(sourceIndex, 1);
-    }
-
-    return await this.actor.update({ 'system.members': membersCollection });
-  }
-
-  async _onDropFolder(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    data: Record<string, any>
-  ) {
-    if (!this.isEditable) {
-      return false;
-    }
-
-    const folder = await Folder.implementation.fromDropData(data);
-
-    if (folder.type === 'Actor') {
-      const results: any[] = [];
-      for (let actor of folder.contents) {
-        results.push(await this.actor.system.addMember(actor));
-      }
-      return results;
-    }
-
-    return await super._onDropFolder(event, data);
-  }
-
   getGpSummary(actor: Actor5e) {
     const currency = actor.system.currency;
 
@@ -902,48 +665,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       },
       origin: this.actor,
     }).render({ force: true });
-  }
-
-  /* -------------------------------------------- */
-  /*  Life-Cycle Handlers                         */
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  async _onDropItem(
-    event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-    item: Item5e
-  ) {
-    const { uuid } =
-      event.target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
-    const target = await fromUuid(uuid);
-    if (target instanceof foundry.documents.Actor)
-      return target.sheet._onDropCreateItems(event, [item]);
-    return super._onDropItem(event, item);
-  }
-
-  /** @inheritDoc */
-  async _onDropCreateItems(
-    event: DragEvent,
-    items: Item5e[],
-    behavior?: DropEffectValue | null
-  ) {
-    let foundNonPhysical = false;
-    items = items.filter((item) => {
-      if (
-        !item.system.constructor._schemaTemplates?.includes(
-          dnd5e.dataModels.item.PhysicalItemTemplate
-        )
-      ) {
-        foundNonPhysical = true;
-        return false;
-      }
-      return true;
-    });
-    if (foundNonPhysical)
-      ui.notifications.warn('DND5E.Group.Warning.PhysicalItemOnly', {
-        localize: true,
-      });
-    return super._onDropCreateItems(event, items, behavior);
   }
 
   /* -------------------------------------------- */

@@ -56,6 +56,7 @@ import { InlineToggleService } from 'src/features/expand-collapse/InlineToggleSe
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import { SvelteMap } from 'svelte/reactivity';
 import { mapGetOrInsert } from 'src/utils/map';
+import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -287,6 +288,18 @@ export function Tidy5eActorSheetQuadroneBase<
         }
       }
 
+      const themeSettings = ThemeQuadrone.getSheetThemeSettings({
+        doc: this.actor,
+      });
+
+      const showToken =
+        this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+          true || themeSettings.portraitShape === 'token';
+
+      const effectiveToken = this.actor.isToken
+        ? this.actor.token
+        : this.actor.prototypeToken;
+
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
@@ -319,10 +332,19 @@ export function Tidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
+        portrait: {
+          shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+          src: showToken
+            ? effectiveToken?.texture.src ?? this.actor.img
+            : this.actor.img,
+          path: showToken ? 'prototypeToken.texture.src' : 'img',
+        },
         rollData,
         saves,
+        sheet: this,
         system: this.actor.system,
         tabs: [],
+        themeSettings,
         token: this.token,
         userPreferences: UserPreferencesService.get(),
         warnings:

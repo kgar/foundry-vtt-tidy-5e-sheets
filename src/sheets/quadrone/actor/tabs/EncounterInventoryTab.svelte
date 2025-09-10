@@ -14,6 +14,7 @@
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import ContainerPanel from '../../shared/ContainerPanel.svelte';
   import InventoryTables from '../../shared/InventoryTables.svelte';
+  import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -66,4 +67,6 @@
     sheetDocument={context.actor}
     root={true}
   />
+
+  <ActorInventoryFooter useAttunement={false} />
 </div>

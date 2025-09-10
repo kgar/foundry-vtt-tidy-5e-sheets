@@ -465,7 +465,7 @@ export const FoundryAdapter = {
       0: 'far fa-circle color-text-gold',
       0.5: 'fas fa-circle-half-stroke color-text-gold-emphasis',
       1: 'fas fa-circle color-text-gold-emphasis',
-      2: 'fas fa-circle-star color-text-gold-emphasis',
+      2: 'fas fa-circle-star color-text-gold-light',
     };
     return icons[level] || icons[0];
   },

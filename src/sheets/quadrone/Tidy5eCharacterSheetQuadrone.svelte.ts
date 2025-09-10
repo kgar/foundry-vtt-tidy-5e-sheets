@@ -47,7 +47,6 @@ import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -97,10 +96,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-
     // Effects & Conditions
     let baseEffects =
       dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -138,13 +133,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     let background = this.actor.system.details.background;
     let species = this.actor.system.details.race;
-
-    const showToken =
-      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-        true || themeSettings.portraitShape === 'token';
-    const effectiveToken = this.actor.isToken
-      ? this.actor.token
-      : this.actor.prototypeToken;
 
     const context: CharacterSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
@@ -216,16 +204,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       skills: [],
-      sheet: this,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
-      portrait: {
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
-        src: showToken
-          ? effectiveToken?.texture.src ?? this.actor.img
-          : this.actor.img,
-        path: showToken ? 'prototypeToken.texture.src' : 'img',
-      },
       species: species
         ? {
             id: species.id,

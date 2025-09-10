@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import type {
+  Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
   FeatureSection,
@@ -29,7 +30,6 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { splitSemicolons } from 'src/utils/array';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
@@ -81,10 +81,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       options
     )) as ActorSheetQuadroneContext;
 
-    const themeSettings = ThemeQuadrone.getSheetThemeSettings({
-      doc: this.actor,
-    });
-
     // Effects & Conditions
     let baseEffects =
       dnd5e.applications.components.EffectsElement.prepareCategories(
@@ -117,19 +113,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       rollData: actorContext.rollData,
       relativeTo: this.actor,
     };
-    const showToken =
-      this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-        true || themeSettings.portraitShape === 'token';
-    const effectiveToken = this.actor.isToken
-      ? this.actor.token
-      : this.actor.prototypeToken;
 
-    let background = this.actor.itemTypes.background[0];
-    let species = this.actor.itemTypes.race[0];
+    const background = this.actor.itemTypes.background[0];
+    const species = this.actor.itemTypes.race[0];
 
-    const important =
-      !foundry.utils.isEmpty(this.actor.classes) ||
-      this.actor.system.traits.important;
+    const important = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
     const context: NpcSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
@@ -181,13 +169,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       habitats: [],
       important,
       inventory: [],
-      portrait: {
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
-        src: showToken
-          ? effectiveToken?.texture.src ?? this.actor.img
-          : this.actor.img,
-        path: showToken ? 'prototypeToken.texture.src' : 'img',
-      },
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       senses: super._getSenses(),
@@ -231,7 +212,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       spellSlotTrackerMode:
         preferences.spellSlotTrackerMode ??
         CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
-      sheet: this,
       tools: [],
       traits: this._prepareTraits(),
       treasures: [],
@@ -303,6 +283,14 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.tabs = await NpcSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  static isImportantNpc(actor: Actor5e) {
+    return (
+      (actor.type === CONSTANTS.SHEET_TYPE_NPC &&
+        !foundry.utils.isEmpty(actor.classes)) ||
+      actor.system.traits.important
+    );
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {

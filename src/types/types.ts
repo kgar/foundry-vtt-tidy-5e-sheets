@@ -29,7 +29,10 @@ import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
-import type { PortraitShape } from 'src/theme/theme-quadrone.types';
+import type {
+  PortraitShape,
+  ThemeSettingsV3,
+} from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
@@ -973,11 +976,18 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   limited: boolean;
   modernRules: boolean;
   owner: boolean;
+  portrait: {
+    src: string;
+    shape: PortraitShape;
+    path: string;
+  };
   rollData: any;
   saves: ActorSaves;
+  sheet: TSheet;
   source: any;
   system: Actor5e['system'];
   tabs: Tab[];
+  themeSettings: ThemeSettingsV3;
   token: TokenDocument | null;
   userPreferences: UserPreferences;
   warnings: DocumentPreparationWarning[];
@@ -987,16 +997,10 @@ export type SingleActorContext<TSheet> = {
   abilities: ActorAbilityContextEntry[];
 } & ActorSheetQuadroneContext<TSheet>;
 
-export type MultiActorContext<TSheet> = {
+export type MultiActorQuadroneContext<TSheet> = {
   containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
   inventory: InventorySection[];
-  // portrait: {
-  //   src: string;
-  //   shape: PortraitShape;
-  //   path: string;
-  // };
-  sheet: TSheet;
   showContainerPanel: boolean;
 } & ActorSheetQuadroneContext<TSheet>;
 
@@ -1183,13 +1187,7 @@ export type CharacterSheetQuadroneContext = {
   senses: CharacterSpeedSenseContext;
   showContainerPanel: boolean;
   showDeathSaves: boolean;
-  portrait: {
-    src: string;
-    shape: PortraitShape;
-    path: string;
-  };
   size: ActorSizeContext;
-  sheet: Tidy5eCharacterSheetQuadrone;
   skills: ActorSkillsToolsContext<SkillData>[];
   species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
@@ -1224,11 +1222,6 @@ export type NpcSheetQuadroneContext = {
   important: boolean;
   inventory: InventorySection[];
   orphanedSubclasses: Item5e[];
-  portrait: {
-    src: string;
-    shape: PortraitShape;
-    path: string;
-  };
   showContainerPanel: boolean;
   showDeathSaves: boolean;
   showLairTracker: boolean;
@@ -1236,7 +1229,6 @@ export type NpcSheetQuadroneContext = {
   showLegendaryResistances: boolean;
   showLoyaltyTracker: boolean;
   senses: ActorSpeedSenseEntryContext[];
-  sheet: Tidy5eNpcSheetQuadrone;
   showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
@@ -1266,12 +1258,12 @@ export type GroupMemberQuadroneContext = {
   encumbrance: GroupMemberEncumbranceContext;
   highlightColor: string | undefined;
   inspirationSource: InspirationSource | undefined;
-  portrait: GroupMemberPortraitContext;
+  portrait: MultiActorMemberPortraitContext;
   gold: string;
   goldAbbreviation: string;
 };
 
-export type GroupMemberPortraitContext = {
+export type MultiActorMemberPortraitContext = {
   isVideo: boolean;
   src: string;
   shape: PortraitShape;
@@ -1352,7 +1344,6 @@ export type TravelPaceConfigEntry = {
 };
 
 export type GroupSheetQuadroneContext = {
-  // TODO: Populate with context data as needed
   enriched: {
     description: {
       full: string;
@@ -1372,15 +1363,36 @@ export type GroupSheetQuadroneContext = {
   };
   traits: GroupTraits;
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
-} & MultiActorContext<Tidy5eGroupSheetQuadrone>;
+} & MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
+
+export type EncounterMemberQuadroneContext = {
+  accentColor: string | undefined;
+  actor: Actor5e;
+  backgroundColor: string | undefined;
+  highlightColor: string | undefined;
+  portrait: MultiActorMemberPortraitContext;
+  quantity: {
+    value: number | undefined;
+    formula: string | undefined;
+  };
+};
+
+export type EncounterMembersQuadroneContext = {
+  npc: EncounterMemberQuadroneContext[];
+};
 
 export type EncounterSheetQuadroneContext = {
-  // TODO: Populate with context data as needed
+  enriched: {
+    description: {
+      full: string;
+      summary: string;
+    };
+  };
+  members: EncounterMembersQuadroneContext;
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
-} & MultiActorContext<Tidy5eEncounterSheetQuadrone>;
+} & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
 export type VehicleSheetQuadroneContext = {
-  // TODO: Populate with context data as needed
   enriched: {
     biography: string;
   };
