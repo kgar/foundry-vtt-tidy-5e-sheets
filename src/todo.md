@@ -3,7 +3,6 @@
 ### Group Sheet
 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
-- [ ] Group Sheet - Inventory tab - Should we have hover styles on the member names?
 - [ ] Plan and task Bastions tab
 
 ### Encounter Sheet
@@ -231,3 +230,5 @@ Limited:
 - [x] ~~Prep Exploration context~~ Shelved.
 - [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
 - [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
+- [x] Group sheet - Members tab - Set up column hiding 
+- [x] ~~Group Sheet - Inventory tab - Should we have hover styles on the member names?~~ Nah, there's feedback there already.

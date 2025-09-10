@@ -83,7 +83,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | ---- | ---- |
 | ✅ Background  | ✅ Character |
 | ✅ Class  | ✅ NPC |
-| ✅ Consumable  | ⬜ Group  |
+| ✅ Consumable  | ✅ Group  |
 | ✅ Container  | ⬜ Encounter |
 | ✅ Equipment | ⬜ Vehicle |
 | ✅ Facility | |
@@ -180,12 +180,16 @@ An alternate view of items that brings more functionality to the surface.
 ![Group Sheet](readme-assets/t5e-group-hero.webp)
 *Adventuring Party commissioned work by [Sar Cousins](https://sarcousins.co.uk/), © Sar Cousins.
 
+![Group Sheet Sidebar](readme-assets/t5e-group-sidebar.webp)
+
 ### What's unique about Tidy's Group sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
-| At a glance character stats and skills | Party languages and skills lists |
+| At a glance party traits, stats, and skills | Party languages and skills lists |
+| Hover states to show and compare individual member abilities | High / Low / Passive stats |
 | Inventory sorting, filtering, and customization matching other sheets | Hide and reorder sections |
+| Group sheet theming | Party inspiration |
 
 &nbsp;
 

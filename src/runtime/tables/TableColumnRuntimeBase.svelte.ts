@@ -11,7 +11,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 export abstract class TableColumnRuntimeBase {
   _registeredColumns: ColumnSpecDocumentTypesToTabs = $state({});
 
-  #minWidthRems = $derived(CONSTANTS.COLUMN_PRIMARY_MIN_WIDTH_REMS);
+  _minWidthRems: number = CONSTANTS.COLUMN_PRIMARY_MIN_WIDTH_REMS;
 
   initOnReady() {
     this._registeredColumns = this.getDefaultColumns();
@@ -60,7 +60,7 @@ export abstract class TableColumnRuntimeBase {
     schematics: ColumnsLoadout,
     minWidthRemsOverride?: number
   ): Set<string> {
-    let minWidthRems = minWidthRemsOverride ?? this.#minWidthRems;
+    let minWidthRems = minWidthRemsOverride ?? this._minWidthRems;
     let availableRems = inlineSizePx / foundryCoreSettings.value.fontSizePx;
 
     let toHide = new Set<string>();

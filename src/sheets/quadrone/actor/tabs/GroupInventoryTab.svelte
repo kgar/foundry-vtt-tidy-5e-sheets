@@ -119,7 +119,6 @@
         </h4>
         {#if member.canObserve}
           {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-            <!-- TODO: Add currency -->
             <div class="separated-list">
               <span class="actor-currency">
                 <span class="font-label-medium color-text-default flexshrink"

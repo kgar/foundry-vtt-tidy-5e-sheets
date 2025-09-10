@@ -1,17 +1,17 @@
 import { mount } from 'svelte';
 import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
-import { Tidy5eCharacterSheet } from 'src/sheets/classic/Tidy5eCharacterSheet.svelte';
-import { Tidy5eNpcSheet } from 'src/sheets/classic/Tidy5eNpcSheet.svelte';
 import { Tidy5eVehicleSheet } from 'src/sheets/classic/Tidy5eKgarVehicleSheet.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { debug, error } from 'src/utils/logging';
-import { Tidy5eGroupSheetClassic } from 'src/sheets/classic/Tidy5eGroupSheetClassic.svelte';
+import { error } from 'src/utils/logging';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import { CONSTANTS } from 'src/constants';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
+import { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
+import { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 
 export type SheetPreferenceOption = {
   label: string;
@@ -23,12 +23,12 @@ export type SheetPreferenceOption = {
 
 // Regrettably manual, but hopefully a temporary arrangement
 const supportedSheetClasses: string[] = [
-  Tidy5eCharacterSheet.name,
-  Tidy5eNpcSheet.name,
+  Tidy5eCharacterSheetQuadrone.name,
+  Tidy5eNpcSheetQuadrone.name,
   Tidy5eVehicleSheet.name,
   Tidy5eItemSheetQuadrone.name,
   Tidy5eContainerSheetQuadrone.name,
-  Tidy5eGroupSheetClassic.name,
+  Tidy5eGroupSheetQuadrone.name,
 ];
 
 export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin<
@@ -86,7 +86,6 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
       }
 
       if (name.startsWith('Base')) {
-        debug('Skipping Base document named ' + name);
         continue;
       }
 
@@ -144,49 +143,32 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
 
         // When selected, simply assign the Tidy class to the appropriate subtype of the appropriate document name
         if (o.selected) {
-          debug(
-            `Tidy Sheet ${o.sheetClassIdentifier} selected; ensuring it is set in settings.`
-          );
           sheetSettings = foundry.utils.mergeObject(sheetSettings, {
             [compositeSettingKey]: o.sheetClassIdentifier,
           });
           return;
         }
 
-        debug(
-          `Tidy Sheet ${o.sheetClassIdentifier} unselected; checking setting.`
-        );
         // When not selected, we want to remove any Tidy
         const currentSetting = foundry.utils.getProperty(
           sheetSettings,
           compositeSettingKey
         );
         if (currentSetting !== o.sheetClassIdentifier) {
-          debug(
-            `Tidy Sheet ${o.sheetClassIdentifier} not currently configured and is unselected; ignoring.`
-          );
           // The option was unselected, and the setting does not reference Tidy. Do not change it.
           return;
         }
 
-        debug(
-          `Tidy Sheet ${o.sheetClassIdentifier} currently configured and is unselected; removing setting.`
-        );
         // The option was unselected, but the setting currently points to Tidy. Clear out this setting.
         delete sheetSettings[o.documentName][o.subType];
 
         // Prune settings where the document name no longer has any subtype properties.
         if (Object.keys(sheetSettings[o.documentName]).length === 0) {
-          debug(
-            `${o.documentName} is now empty. Pruning property from settings.`
-          );
           delete sheetSettings[o.documentName];
         }
       });
 
       await game.settings.set('core', 'sheetClasses', sheetSettings);
-
-      debug('New sheetClasses settings', { sheetClasses: sheetSettings });
 
       this.close();
 
