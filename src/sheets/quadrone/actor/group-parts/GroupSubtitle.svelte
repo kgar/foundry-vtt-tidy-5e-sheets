@@ -82,7 +82,7 @@
   <span class="average-level" 
     role="button"
     tabindex="0"
-    onclick={() => context.sheet.selectTab(CONSTANTS.TAB_ACTOR_CHARACTERS)}
+    onclick={() => context.sheet.selectTab(CONSTANTS.TAB_MEMBERS)}
     >
     <span class="color-text-gold font-label-medium"
       >{localize('DND5E.LevelAvg')}</span
