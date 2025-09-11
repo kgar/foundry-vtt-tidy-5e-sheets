@@ -47,6 +47,7 @@ import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { error } from 'src/utils/logging';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -274,13 +275,24 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     let apiConfig = ActorInspirationRuntime.bankedInspirationConfig;
 
     if (!!apiConfig?.change && !!apiConfig?.getData) {
-      let data = await apiConfig.getData(this, actor);
+      try {
+        let data = await apiConfig.getData(actor.sheet, actor);
 
-      return {
-        change: async (delta) => await apiConfig.change!(this, actor, delta),
-        value: data?.value ?? 0,
-        max: data?.max ?? 0,
-      };
+        return {
+          change: async (delta) => {
+            await apiConfig.change!(actor.sheet, actor, delta);
+            actor.render(); // calling render() on the document itself triggers all subscribing applications to re-render
+          },
+          value: data?.value ?? 0,
+          max: data?.max ?? 0,
+        };
+      } catch (e) {
+        error(
+          'An error occurred while attempting to get data for custom inspiration',
+          false,
+          e
+        );
+      }
     }
 
     if (!SettingsProvider.settings.enableBankedInspiration.get()) {
