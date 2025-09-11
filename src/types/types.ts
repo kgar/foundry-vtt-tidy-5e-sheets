@@ -1343,6 +1343,13 @@ export type TravelPaceConfigEntry = {
   index: number;
 };
 
+export type GroupSkillRollProcessConfiguration = {
+  skill: string;
+  ability: string;
+  event: Event;
+  // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
+}
+
 export type GroupSheetQuadroneContext = {
   enriched: {
     description: {

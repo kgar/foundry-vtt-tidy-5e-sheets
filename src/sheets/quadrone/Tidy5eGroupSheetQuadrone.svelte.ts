@@ -7,6 +7,7 @@ import type {
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
   GroupSkill,
+  GroupSkillRollProcessConfiguration,
   GroupTrait,
   GroupTraitBase,
   GroupTraits,
@@ -36,6 +37,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { settings } from 'src/settings/settings.svelte';
 import { mapGetOrInsert } from 'src/utils/map';
 import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -672,6 +674,16 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
       },
       origin: this.actor,
     }).render({ force: true });
+  }
+
+  onRollSkill(options: Partial<GroupSkillRollProcessConfiguration>) {
+    if (
+      TidyHooks.tidy5eSheetsPrePromptGroupSkillRoll(this, options) === false
+    ) {
+      return;
+    }
+
+    this.actor.rollSkill(options);
   }
 
   /* -------------------------------------------- */
