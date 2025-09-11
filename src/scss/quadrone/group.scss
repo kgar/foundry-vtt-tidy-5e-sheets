@@ -86,6 +86,14 @@
           max-width: 4rem;
           background-color: var(--t5e-component-field-background-disabled);
           border: 0.0625rem solid rgba(159, 146, 117, 0.4);
+          padding: 0.25rem;
+
+          &:hover,
+          &:focus,
+          &:active {
+            background-color: var(--t5e-component-field-background-hover);
+            border-color: var(--t5e-component-field-border-hover);
+          }
         }
       }
     }
