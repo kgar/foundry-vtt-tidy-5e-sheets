@@ -4,6 +4,7 @@
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { ActorSpeedSenseEntryContext } from 'src/types/types';
   import type { ClassValue } from 'svelte/elements';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -49,7 +50,11 @@
 <!-- Group subtitle, member info -->
 <div class="actor-subtitle separated-list" data-tidy-sheet-part="subtitle-row">
   {#if !charactersOnly && context.members.character.members.length > 0}
-    <span class="members">
+    <span class="members" 
+      role="button"
+      tabindex="0"
+      onclick={() => context.sheet.selectTab(CONSTANTS.TAB_MEMBERS)}
+      >
       <span class="color-text-gold font-label-medium"
         >{context.members.character.members.length > 1
           ? localize('TYPES.Actor.characterPl')
@@ -61,7 +66,11 @@
     </span>
     <div class="divider-dot"></div>
   {/if}
-  <span class="members">
+  <span class="members" 
+    role="button"
+    tabindex="0"
+    onclick={() => context.sheet.selectTab(CONSTANTS.TAB_MEMBERS)}
+    >
     <span class="color-text-gold font-label-medium"
       >{memberCount > 1
         ? localize('DND5E.Group.Member.other')
@@ -70,7 +79,11 @@
     <span class="color-text-default font-data-medium">{memberCount}</span>
   </span>
   <div class="divider-dot"></div>
-  <span class="average-level">
+  <span class="average-level" 
+    role="button"
+    tabindex="0"
+    onclick={() => context.sheet.selectTab(CONSTANTS.TAB_ACTOR_CHARACTERS)}
+    >
     <span class="color-text-gold font-label-medium"
       >{localize('DND5E.LevelAvg')}</span
     >
@@ -80,7 +93,11 @@
   </span>
   {#if totalGold !== null}
     <div class="divider-dot"></div>
-    <span class="money">
+    <span class="money" 
+      role="button"
+      tabindex="0"
+      onclick={() => context.sheet.selectTab(CONSTANTS.TAB_ACTOR_INVENTORY)}
+      >
       <i class="currency gp"></i>
       <span class="color-text-default font-data-medium"
         >{FoundryAdapter.formatNumber(Math.round(totalGold))}</span
