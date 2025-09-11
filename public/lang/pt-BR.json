@@ -885,5 +885,11 @@
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Ficha de Encontro Clássica Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Ficha de Encontro Tidy 5e",
-    "TIDY5E.ExplorationTab.Title": "Exploração"
+    "TIDY5E.ExplorationTab.Title": "Exploração",
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "Usar Segurança de Membros da Ficha de Grupo",
+        "hint": "Permite que o Mestre controle quais informações dos membros do grupo um usuário pode ver na ficha do grupo. Quando o jogador não tem permissão para um membro do grupo, a ficha do grupo não mostra esse membro ou suas informações agregadas. Com a permissão Limitada, o usuário pode ver o nome do membro, mas nenhuma outra informação. Com a permissão Observador ou superior, o usuário pode ver todas as informações da ficha do grupo sobre o membro."
+    },
+    "TIDY5E.AggregateSkill.HighMeasure": "Alta",
+    "TIDY5E.AggregateSkill.LowMeasure": "Baixa"
 }
