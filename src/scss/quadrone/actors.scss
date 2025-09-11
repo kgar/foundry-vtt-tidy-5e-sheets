@@ -1646,13 +1646,19 @@
   .limited-sheet {
     &.sheet-header {
       .actor-vitals-container {
-        padding-bottom: 1.5rem;
         max-width: 10rem;
       }
 
-      .actor-image img {
-        max-width: 10rem;
-        max-height: 10rem;
+      .actor-image {
+        position: relative;
+
+        &.square {
+
+          img {
+            height: 9.5rem;
+            width: 9.5rem;
+          }
+        }
       }
 
       .actor-name {

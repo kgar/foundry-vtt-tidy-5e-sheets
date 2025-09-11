@@ -17,7 +17,7 @@
 </script>
 
 <div
-  class="inspiration-badge"
+  class="inspiration-badge theme-dark"
   class:single={!inspirationSource}
   class:stacked={!!inspirationSource}
   data-tidy-sheet-part="inspiration-tracker-container"
