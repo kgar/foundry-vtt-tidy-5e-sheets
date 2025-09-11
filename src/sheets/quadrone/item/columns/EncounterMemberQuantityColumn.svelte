@@ -16,5 +16,5 @@
   /> -->
 <!-- {/if} -->
 <span class="font-label-large color-text-default"
-  >{rowDocument.quantity.value}</span
+  >{rowContext.quantity.value}</span
 >

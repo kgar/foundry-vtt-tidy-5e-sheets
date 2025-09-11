@@ -88,7 +88,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
     };
 
     return {
-      [CONSTANTS.SHEET_TYPE_GROUP]: {
+      [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
         [CONSTANTS.TAB_MEMBERS]: {
           [CONSTANTS.SHEET_TYPE_NPC]: {
             cr: { ...crColumn, order: 100, priority: 500 },

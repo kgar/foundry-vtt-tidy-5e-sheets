@@ -16,7 +16,7 @@
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
-  
+
   const localize = FoundryAdapter.localize;
 
   let rowActions: any[] = $derived(
@@ -25,6 +25,18 @@
 
   let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
+
+  function onResize(entry: ResizeObserverEntry) {
+    sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
+  }
+
+  $effect(() => {
+    const observer = new ResizeObserver(([entry]) => onResize(entry));
+    observer.observe(sectionsContainer);
+    return () => {
+      observer.disconnect();
+    };
+  });
 </script>
 
 <!-- <GroupTabSidebar /> -->
@@ -33,53 +45,45 @@
   class="groups-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
+  {#if npcs.length}
+    {@const columns = new ColumnsLoadout(
+      EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
+        tabId: CONSTANTS.TAB_MEMBERS,
+        sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+        rowActions: rowActions,
+        section: { ...SheetSections.EMPTY, rowActions },
+        sheetDocument: context.actor,
+      }),
+    )}
+    {@const visibleItemCount = npcs.length}
+    {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth,
+      columns,
+    )}
 
-{#each context.members.npc as npc}
-  <p>
-    x{npc.quantity.value} / λ {npc.quantity.formula} | {npc.actor.name} - {npc.portrait.src}
-  </p>
-{/each}
-
-{#if npcs.length}
-  {@const columns = new ColumnsLoadout(
-    EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
-      sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
-      tabId: CONSTANTS.TAB_MEMBERS,
-      sectionKey: CONSTANTS.SHEET_TYPE_NPC,
-      rowActions: rowActions,
-      section: { ...SheetSections.EMPTY, rowActions },
-      sheetDocument: context.actor,
-    }),
-  )}
-  {@const visibleItemCount = npcs.length}
-  {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
-    sectionsInlineWidth,
-    columns,
-  )}
-
-  <div class="meter progress xp-meter">
-    <!-- TODO: Add total XP meter -->
-  </div>
-  <TidyTable key="npcs">
-    {#snippet header()}
-      <TidyTableHeaderRow class="theme-dark">
-        <TidyTableHeaderCell primary={true}>
-          <h3>
-            {localize('DND5E.Encounter.Tab.Members')}
-            <span class="table-header-count">{visibleItemCount}</span>
-          </h3>
-        </TidyTableHeaderCell>
-        {@render headerColumns(columns, hiddenColumns)}
-      </TidyTableHeaderRow>
-    {/snippet}
-    {#snippet body()}
-      {#each npcs as member}
-        {@render tableRow(member, columns, hiddenColumns)}
-      {/each}
-    {/snippet}
-  </TidyTable>
-{/if}
-
+    <div class="meter progress xp-meter">
+      <!-- TODO: Add total XP meter -->
+    </div>
+    <TidyTable key="npcs">
+      {#snippet header()}
+        <TidyTableHeaderRow class="theme-dark">
+          <TidyTableHeaderCell primary={true}>
+            <h3>
+              {localize('DND5E.Encounter.Tab.Members')}
+              <span class="table-header-count">{visibleItemCount}</span>
+            </h3>
+          </TidyTableHeaderCell>
+          {@render headerColumns(columns, hiddenColumns)}
+        </TidyTableHeaderRow>
+      {/snippet}
+      {#snippet body()}
+        {#each npcs as member}
+          {@render tableRow(member, columns, hiddenColumns)}
+        {/each}
+      {/snippet}
+    </TidyTable>
+  {/if}
 </section>
 
 {#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}

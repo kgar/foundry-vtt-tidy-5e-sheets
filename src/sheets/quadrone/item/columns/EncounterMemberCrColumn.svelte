@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/types';
   import type { EncounterMemberQuadroneContext } from 'src/types/types';
 
@@ -9,5 +10,5 @@
 </script>
 
 <span class="font-label-large color-text-default"
-  >{rowDocument.system.attributes.cr.value}</span
+  >{FoundryAdapter.formatCr(rowDocument.system.details.cr)}</span
 >
