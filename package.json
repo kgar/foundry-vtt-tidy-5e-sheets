@@ -6,7 +6,7 @@
   "scripts": {
     "prepare-dev": "node prepare-dist-for-dev.js",
     "dev": "npm run prepare-dev && vite",
-    "build": "vite build",
+    "build": "vite build && npm run check-errors",
     "build-watch": "vite build --watch",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
