@@ -219,7 +219,7 @@
       align-items: flex-start;
       display: flex;
       flex-direction: column;
-      gap: var(--t5e-size-1x);
+      gap: var(--t5e-size-halfx);
       justify-content: center;
       padding-left: var(--t5e-size-3x);
       text-align: left;
@@ -477,6 +477,12 @@
         .progress {
           min-height: 1.125rem;
           overflow: unset;
+        }
+      }
+
+      .actor-name {
+        .meter {
+          margin-top: 0.125rem;
         }
       }
 
