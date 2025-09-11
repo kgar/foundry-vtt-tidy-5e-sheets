@@ -481,6 +481,7 @@
                 </button>
               </div>
             {/if}
+            {#if context.editable || context.unlocked}
             <div class={['death-saves', { dying: context.showDeathSaves }]}>
               {#if context.unlocked}
                 <button
@@ -504,8 +505,9 @@
                 >
                   <i class="fas fa-skull"></i>
                 </button>
-              {/if}
-            </div>
+                {/if}
+              </div>
+            {/if}
           {/if}
         </div>
       </div>

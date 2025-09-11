@@ -1650,6 +1650,8 @@
       }
 
       .actor-image {
+        max-height: 10rem;
+        max-width: 10rem;
         position: relative;
 
         &.square {
