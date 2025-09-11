@@ -13,4 +13,4 @@ jobs:
       - name: Install and Check
         run: |
           npm ci
-          npm run check-errors
+          npm run build

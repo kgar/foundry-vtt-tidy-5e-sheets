@@ -8,6 +8,7 @@ import type {
   NpcSheetContext,
   VehicleSheetContext,
   ActorSheetQuadroneContext,
+  GroupSkillRollProcessConfiguration,
 } from 'src/types/types';
 import type { ContextMenuEntry } from './foundry.types';
 import type {
@@ -419,6 +420,19 @@ export class TidyHooks {
       context,
       event
     );
+  }
+
+  /**
+   * A group skill prompt is about to execute.
+   * @param app The sheet application instance.
+   * @param options Options related to the eventual skill roll.
+   * @returns `true` to allow the prompt to continue, `false` to prevent it.
+   */
+  static tidy5eSheetsPrePromptGroupSkillRoll(
+    app: any,
+    options: Partial<GroupSkillRollProcessConfiguration>
+  ) {
+    return Hooks.call('tidy5e-sheet.prePromptGroupSkillRoll', app, options);
   }
 
   /**

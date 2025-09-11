@@ -191,10 +191,9 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eGroupSheetQuadrone',
     }
   );
-  
+
   /* FOR THOSE WITH TRUE SIGHT */
   if (settings.value.truesight) {
-
     documentSheetConfig.registerSheet(
       Actor,
       CONSTANTS.DND5E_SYSTEM_ID,
