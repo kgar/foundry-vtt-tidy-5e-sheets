@@ -125,28 +125,26 @@
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER}
   >
     <EncounterMemberNameCell {member} />
-    {#if member.canObserve}
-      {#each columns.ordered as column}
-        {@const hidden = hiddenColumns.has(column.key)}
-        <TidyTableCell
-          columnWidth="{column.widthRems}rem"
-          class={[column.cellClasses, { hidden }]}
-          attributes={{ ['data-tidy-column-key']: column.key }}
-        >
-          {#if column.cellContent.type === 'callback'}
-            {@html column.cellContent.callback?.(context.document, context)}
-          {:else if column.cellContent.type === 'component'}
-            <column.cellContent.component
-              rowContext={member}
-              rowDocument={member.actor}
-              section={{
-                ...SheetSections.EMPTY,
-                rowActions: rowActions,
-              }}
-            />
-          {/if}
-        </TidyTableCell>
-      {/each}
-    {/if}
+    {#each columns.ordered as column}
+      {@const hidden = hiddenColumns.has(column.key)}
+      <TidyTableCell
+        columnWidth="{column.widthRems}rem"
+        class={[column.cellClasses, { hidden }]}
+        attributes={{ ['data-tidy-column-key']: column.key }}
+      >
+        {#if column.cellContent.type === 'callback'}
+          {@html column.cellContent.callback?.(context.document, context)}
+        {:else if column.cellContent.type === 'component'}
+          <column.cellContent.component
+            rowContext={member}
+            rowDocument={member.actor}
+            section={{
+              ...SheetSections.EMPTY,
+              rowActions: rowActions,
+            }}
+          />
+        {/if}
+      </TidyTableCell>
+    {/each}
   </div>
 {/snippet}

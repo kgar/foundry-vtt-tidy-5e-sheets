@@ -87,7 +87,7 @@
     <h4 class="font-label-medium">
       {member.actor.name}
     </h4>
-    {#if member.canObserve}
+    {#if member.actor.system.details.cr}
       {@const formattedCr = dnd5e.utils.formatCR(
         member.actor.system.details.cr,
       )}
