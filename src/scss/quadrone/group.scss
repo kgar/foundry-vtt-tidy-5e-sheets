@@ -86,6 +86,14 @@
           max-width: 4rem;
           background-color: var(--t5e-component-field-background-disabled);
           border: 0.0625rem solid rgba(159, 146, 117, 0.4);
+          padding: 0.25rem;
+
+          &:hover,
+          &:focus,
+          &:active {
+            background-color: var(--t5e-component-field-background-hover);
+            border-color: var(--t5e-component-field-border-hover);
+          }
         }
       }
     }
@@ -211,7 +219,7 @@
       align-items: flex-start;
       display: flex;
       flex-direction: column;
-      gap: var(--t5e-size-1x);
+      gap: var(--t5e-size-halfx);
       justify-content: center;
       padding-left: var(--t5e-size-3x);
       text-align: left;
@@ -263,7 +271,8 @@
       }
 
       &.square {
-        padding: var(--t5e-size-1x);
+        --t5e-table-avatar-size: 3.625rem;
+        margin: var(--t5e-size-1);
 
         &::before {
           border-width: 0.0625rem;
@@ -365,8 +374,6 @@
         display: flex;
       }
 
-      .sidebar {}
-
       .use-ability-list li {
         width: auto;
       }
@@ -381,6 +388,13 @@
         width: 2.5rem;
         justify-content: flex-end;
         text-align: right;
+        margin-left: var(--t5e-size-1x);
+      }
+
+      .skill-measure-header {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .group-members-content {
@@ -466,6 +480,12 @@
         }
       }
 
+      .actor-name {
+        .meter {
+          margin-top: 0.125rem;
+        }
+      }
+
       .actor-cargo {
         .label {
           margin-right: var(--t5e-size-1x);
@@ -482,6 +502,7 @@
     .skill-list .skill-list-item {
       &.member-proficient .skill-ability {
         color: var(--t5e-member-color-background);
+        text-shadow: 0 0 0.25rem oklch(from var(--t5e-member-color-hover) l c h / 0.5);
       }
     }
 
