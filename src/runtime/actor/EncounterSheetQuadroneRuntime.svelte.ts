@@ -10,7 +10,7 @@ export const EncounterSheetQuadroneRuntime =
     [
       {
         id: CONSTANTS.TAB_MEMBERS,
-        title: 'DND5E.Group.Member.other',
+        title: 'DND5E.ENCOUNTER.Tab.Members',
         content: {
           component: EncounterMembersTab,
           type: 'svelte',
@@ -20,7 +20,7 @@ export const EncounterSheetQuadroneRuntime =
       },
       {
         id: CONSTANTS.TAB_ACTOR_INVENTORY,
-        title: 'DND5E.Inventory',
+        title: 'DND5E.ENCOUNTER.Tab.Loot',
         content: {
           component: EncounterInventoryTab,
           type: 'svelte',
@@ -30,7 +30,7 @@ export const EncounterSheetQuadroneRuntime =
       },
       {
         id: CONSTANTS.TAB_DESCRIPTION,
-        title: 'DND5E.Description',
+        title: 'DND5E.ENCOUNTER.Tab.Description',
         content: {
           component: EncounterDescriptionTab,
           type: 'svelte',

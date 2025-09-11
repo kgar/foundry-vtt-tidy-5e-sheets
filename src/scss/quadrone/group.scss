@@ -1,4 +1,4 @@
-.tidy5e-sheet.application:where(.quadrone.group) {
+.tidy5e-sheet.application:where(.quadrone.group, .quadrone.encounter) {
   --portrait-size: 10rem;
   --t5e-group-sidebar-width: 14.25rem;
   --t5e-table-avatar-size: 3.75rem;
