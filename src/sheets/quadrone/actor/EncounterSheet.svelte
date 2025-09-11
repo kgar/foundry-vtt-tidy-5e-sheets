@@ -47,11 +47,7 @@
 
 <header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
-    <div
-      class="actor-details-container flexcol {context.enableXp
-        ? 'show-xp'
-        : ''}"
-    >
+    <div class={["actor-details-container flexcol", { 'show-xp': context.enableXp }]}>
       <div
         class="actor-details-name-row"
         data-tidy-sheet-part="name-header-row"

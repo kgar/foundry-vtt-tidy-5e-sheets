@@ -21,9 +21,6 @@
   let memberCount = $derived(
       context.members.npc.length
   );
-
-  let xpPool = $derived(context.system.details.xp.value);
-
   /* TODO: Use getGpSummary from Tidy5eMultiActorSheetQuadroneBase */
   let totalGold = 0; // $derived.by(() => context.sheet.getGpSummary(context.actor));
 </script>
@@ -76,24 +73,5 @@
       >
     </span>
   {/if}
-  {#if context.enableXp && (xpPool > 0 || context.unlocked)}
-    <div class="divider-dot"></div>
-    <span class="xp-pool flexrow">
-      <span class="label font-label-medium color-text-gold flexshrink"
-        >{localize('DND5E.ExperiencePoints.Pool')}</span
-      >
-      {#if context.unlocked}
-        <TextInputQuadrone
-          document={context.document}
-          field="system.details.xp.value"
-          value={context.system.details.xp.value}
-          class="uninput xp-value"
-        />
-      {:else}
-        <span class="label font-label-medium color-text-default flexshrink"
-          >{FoundryAdapter.formatNumber(context.system.details.xp.value)}</span
-        >
-      {/if}
-    </span>
-  {/if}
+  <!-- TODO Figure out how to display total encounter XP up here. -->
 </div>
