@@ -155,7 +155,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
     if (newQuantity !== undefined) {
       foundry.utils.setProperty(member, 'quantity.value', newQuantity);
-      this.actor.update({ 'system.members': members });
+      return await this.actor.update({ 'system.members': members });
     }
   }
 
