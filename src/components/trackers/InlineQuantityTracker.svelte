@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { Item5e } from 'src/types/item.types';
   import type { HTMLInputAttributes } from 'svelte/elements';
   import { processInputChangeDeltaFromValues } from 'src/utils/form';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
@@ -8,8 +7,11 @@
 
   let input: HTMLInputElement;
 
+  let min = $derived(attributes.min ? +attributes.min : -Infinity);
+
   function adjust(delta: string) {
     const newValue = processInputChangeDeltaFromValues(delta, input.value);
+
     if (newValue !== undefined) {
       input.value = newValue.toString();
       const changeEvent = new Event('change', { bubbles: true });
@@ -23,7 +25,8 @@
 >
   <a
     class="command decrementer"
-    onclick={() => !attributes.disabled && adjust('-1')}
+    onclick={() =>
+      attributes.value - 1 >= min && !attributes.disabled && adjust('-1')}
   >
     <i class="fa-solid fa-minus"></i>
   </a>
