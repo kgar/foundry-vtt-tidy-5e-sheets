@@ -26,14 +26,12 @@
   {disabled}
   onchange={async (ev) => {
     const input = ev.currentTarget;
-
     await item.update({
       [field]: processInputChangeDeltaFromValues(
         ev.currentTarget.value,
         quantity,
       ),
     });
-
     input.value = quantity;
   }}
   value={quantity}

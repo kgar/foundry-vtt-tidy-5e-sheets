@@ -16,7 +16,7 @@
 
   let localize = FoundryAdapter.localize;
 
-  let quantity = $derived(rowContext.quantity.value);
+  let quantity = $derived(rowContext.quantity.value?.toString() ?? '');
 </script>
 
 {#if context.unlocked}
@@ -25,11 +25,14 @@
     data-tooltip="DND5E.Quantity"
     min="0"
     value={quantity}
-    onchange={async (ev) =>
+    onchange={async (ev) => {
+      const input = ev.currentTarget;
       await context.sheet.updateMemberQuantity(
         rowDocument.uuid,
         ev.currentTarget.value,
-      )}
+      );
+      input.value = quantity;
+    }}
   />
 {:else}
   <span class="font-label-large color-text-default"
