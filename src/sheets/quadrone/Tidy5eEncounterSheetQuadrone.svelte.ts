@@ -19,6 +19,7 @@ import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadro
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
+import { processInputChangeDeltaFromValues } from 'src/utils/form';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -130,6 +131,32 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         };
       })
     );
+  }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  async updateMemberQuantity(uuid: string, newValue: string | number) {
+    const members: any[] = this.actor.system.toObject().members;
+
+    const index = members.findIndex((m: any, i: number) => m.uuid === uuid);
+
+    if (index < 0) {
+      return;
+    }
+
+    const member = members[index];
+    const currentQuantity = members[index].quantity.value;
+    const newQuantity =
+      typeof newValue === 'number'
+        ? newValue
+        : processInputChangeDeltaFromValues(newValue, currentQuantity);
+
+    if (newQuantity !== undefined) {
+      foundry.utils.setProperty(member, 'quantity.value', newQuantity);
+      this.actor.update({ 'system.members': members });
+    }
   }
 
   /* -------------------------------------------- */
