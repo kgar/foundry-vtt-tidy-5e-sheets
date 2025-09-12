@@ -138,6 +138,7 @@ export const CONSTANTS = {
   TAB_OPTION_CLASS: 'tab-option',
   TAB_ACTOR_ACTIONS: 'actions',
   TAB_ACTOR_BIOGRAPHY: 'biography',
+  TAB_ACTOR_COMBAT: 'combat',
   TAB_ACTOR_INVENTORY: 'inventory',
   TAB_ACTOR_SPECIAL_TRAITS: 'special-traits',
   TAB_ACTOR_SPELLBOOK: 'spellbook',

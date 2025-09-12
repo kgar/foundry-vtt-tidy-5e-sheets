@@ -46,6 +46,7 @@
 
   "TIDY5E.JournalTabName": "Journal",
   "TIDY5E.StatblockTabName": "Statblock",
+  "TIDY5E.CombatTabName": "Combat",
 
   "TIDY5E.Actions": {
     "TabName": "Actions",

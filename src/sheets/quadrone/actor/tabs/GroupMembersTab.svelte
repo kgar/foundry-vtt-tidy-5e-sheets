@@ -36,7 +36,6 @@
   $effect(() => {
     const observer = new ResizeObserver(([entry]) => onResize(entry));
     observer.observe(sectionsContainer);
-    console.warn('group resize observer connected!');
     return () => {
       observer.disconnect();
     };

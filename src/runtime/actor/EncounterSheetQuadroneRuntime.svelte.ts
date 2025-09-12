@@ -4,6 +4,7 @@ import EncounterMembersTab from 'src/sheets/quadrone/actor/tabs/EncounterMembers
 import EncounterInventoryTab from 'src/sheets/quadrone/actor/tabs/EncounterInventoryTab.svelte';
 import EncounterDescriptionTab from 'src/sheets/quadrone/actor/tabs/EncounterDescriptionTab.svelte';
 import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
+import EncounterCombatTab from 'src/sheets/quadrone/actor/tabs/EncounterCombatTab.svelte';
 
 export const EncounterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<EncounterSheetQuadroneContext>(
@@ -29,6 +30,16 @@ export const EncounterSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-treasure-chest',
       },
       {
+        id: CONSTANTS.TAB_ACTOR_COMBAT,
+        title: 'TIDY5E.CombatTabName',
+        content: {
+          component: EncounterCombatTab,
+          type: 'svelte',
+        },
+        layout: 'quadrone',
+        iconClass: 'fa-solid fa-swords',
+      },
+      {
         id: CONSTANTS.TAB_DESCRIPTION,
         title: 'DND5E.ENCOUNTER.Tab.Description',
         content: {
@@ -42,6 +53,7 @@ export const EncounterSheetQuadroneRuntime =
     [
       CONSTANTS.TAB_MEMBERS,
       CONSTANTS.TAB_ACTOR_INVENTORY,
+      CONSTANTS.TAB_ACTOR_COMBAT,
       CONSTANTS.TAB_DESCRIPTION,
     ]
   );

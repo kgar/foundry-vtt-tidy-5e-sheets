@@ -179,6 +179,13 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostReaction.name,
       ]),
     },
+    [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
+      [CONSTANTS.TAB_ACTOR_INVENTORY]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+    },
   };
 
   static _documentTabFilters: DocumentTypesToFilterTabs = {

@@ -1,4 +1,4 @@
-.tidy-inline-item-quantity-tracker {
+.tidy-inline-quantity-tracker {
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -33,12 +33,12 @@
       pointer-events: none;
     }
 
-    .item-quantity-tracker-input {
+    .quantity-tracker-input {
       pointer-events: none;
     }
   }
 
-  .item-quantity-tracker-input {
+  .quantity-tracker-input {
     text-align: center;
     border-radius: 0.125rem;
     border-color: transparent;
