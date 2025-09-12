@@ -70,7 +70,7 @@
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
-              {localize('DND5E.Encounter.Tab.Members')}
+              {localize('DND5E.ENCOUNTER.Tab.Members')}
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
