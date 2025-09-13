@@ -17,7 +17,17 @@
 - [x] Encounter header layout change
   - [x] Left: name, subtitles, button bar
   - [x] Right: difficulty badge
-- [ ] Members tab
+  - [ ] Encounter Sidebar
+    - [ ] Languages
+    - [ ] Speeds
+    - [ ] Senses
+    - [ ] skills 
+    - [ ] DR
+    - [ ] DI
+    - [ ] DV
+    - [ ] CI
+    - [ ] DM
+- [ ] Encounter Members tab
   - [ ] Member list 
     - [ ] locked
       - [ ] Member primary column
@@ -30,16 +40,6 @@
         - [ ] In header: add button opens compendium browser for NPCs only
     - [ ] unlocked
       - [ ] Swap HP with editable Formula column
-  - [ ] Sidebar
-    - [ ] Languages
-    - [ ] Speeds
-    - [ ] Senses
-    - [ ] skills 
-    - [ ] DR
-    - [ ] DI
-    - [ ] DV
-    - [ ] CI
-    - [ ] DM
 - [ ] Plan and implement the rest
 - [ ]  For all pill sections with custom options: Batch non-specials and hoist to top. Non-specials and specials are alphabetized separately (**kgar**: I'm concerned that normal/short special entries in senses, etc., will look confusing if they're batched and sorted below the regular pills. A visual indicator denoting these are custom/special would make more sense of it, but for homebrew senses and other customs/specials, the user is probably expecting to see their custom ones sorted into the regular list of pills)
   - [ ] Group
