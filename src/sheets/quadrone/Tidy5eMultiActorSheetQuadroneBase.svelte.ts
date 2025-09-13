@@ -4,6 +4,8 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  GroupMemberSkillContext,
+  GroupSkill,
   GroupTrait,
   GroupTraitBase,
   MeasurableGroupTrait,
@@ -27,6 +29,8 @@ import { isNil } from 'src/utils/data';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
+import type { SkillData } from 'src/foundry/dnd5e.types';
+import { getModifierData } from 'src/utils/formatting';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -385,12 +389,93 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       }
     }
 
-    _prepareMemberTrait(
-      trait: 'ci' | 'di' | 'dr' | 'dv',
-      actor: Actor5e,
-      map: Map<string, GroupTrait>
-    ) {
-      throw new Error('TODO: prepare traits');
+    _prepareMemberSpecials(actor: any, specials: Map<string, GroupTrait>) {
+      ['dr', 'di', 'ci', 'dv'].forEach((type) => {
+        const custom = actor.system.traits[type]?.custom?.trim();
+        if (isNil(custom, '')) {
+          return;
+        }
+
+        dnd5e.utils.splitSemicolons(custom).forEach((customEntry: string) => {
+          const groupSpecial = mapGetOrInsertComputed(
+            specials,
+            customEntry,
+            () => ({
+              label: customEntry,
+              identifiers: new Set<string>(),
+            })
+          );
+
+          groupSpecial.identifiers.add(actor.uuid);
+        });
+      });
+    }
+
+    _getMemberGroupSkillMap(): Map<string, GroupSkill> {
+      return new Map<string, GroupSkill>(
+        Object.entries(CONFIG.DND5E.skills).map<[string, GroupSkill]>(
+          ([key, skill]) => [
+            key,
+            {
+              ability: skill.ability,
+              high: {
+                total: -Infinity,
+                value: '∞',
+                sign: '-',
+              },
+              low: {
+                total: Infinity,
+                value: '∞',
+                sign: '+',
+              },
+              identifiers: new Map<string, GroupMemberSkillContext>(),
+              key,
+              name: skill.label,
+              passive: -Infinity,
+              proficient: false,
+              reference: skill.reference,
+            },
+          ]
+        )
+      );
+    }
+
+    _prepareMemberSkills(actor: any, skills: Map<string, GroupSkill>) {
+      Object.entries<SkillData>(actor.system.skills ?? {}).forEach(
+        ([key, skill]) => {
+          let groupSkill = skills.get(key);
+          if (!groupSkill) {
+            return;
+          }
+
+          const modData = getModifierData(skill.total);
+
+          if (skill.total > groupSkill.high.total) {
+            groupSkill.high = {
+              total: skill.total,
+              ...modData,
+            };
+          }
+
+          if (skill.total < groupSkill.low.total) {
+            groupSkill.low = {
+              total: skill.total,
+              ...modData,
+            };
+          }
+
+          groupSkill.identifiers.set(actor.uuid, {
+            total: skill.total,
+            ...modData,
+            proficient: skill.proficient,
+            passive: skill.passive,
+          });
+
+          groupSkill.proficient ||= skill.proficient > 0;
+
+          groupSkill.passive = Math.max(groupSkill.passive, skill.passive);
+        }
+      );
     }
 
     /* -------------------------------------------- */

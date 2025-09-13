@@ -1308,6 +1308,7 @@ export type GroupSkill = {
   proficient: boolean;
   high: GroupSkillModContext;
   low: GroupSkillModContext;
+  passive: number;
   reference: string | undefined;
 } & MeasurableEmphasizable<GroupMemberSkillContext>;
 
@@ -1392,15 +1393,13 @@ export type EncounterMemberQuadroneContext = {
 
 export type EncounterMembersQuadroneContext = {
   npc: EncounterMemberQuadroneContext[];
+  all: Map<string, EncounterMemberQuadroneContext>;
 };
 
 export type EncounterTraits = {
-  cis: GroupTrait[];
-  dis: GroupTrait[];
-  drs: GroupTrait[];
-  dvs: GroupTrait[];
   languages: MeasurableGroupTrait<number>[];
   senses: MeasurableGroupTrait<number>[];
+  specials: GroupTrait[];
   speeds: MeasurableGroupTrait<number>[];
 };
 
@@ -1413,8 +1412,9 @@ export type EncounterSheetQuadroneContext = {
       summary: string;
     };
   };
-  totalGold: number;
   members: EncounterMembersQuadroneContext;
+  skills: GroupSkill[];
+  totalGold: number;
   totalXp: number;
   traits: EncounterTraits;
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;

@@ -6,6 +6,7 @@ import type {
   EncounterMemberQuadroneContext,
   EncounterSheetQuadroneContext,
   EncounterTraits,
+  GroupSkill,
   GroupTrait,
   MeasurableGroupTrait,
   MultiActorQuadroneContext,
@@ -27,11 +28,16 @@ import { isNil } from 'src/utils/data';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { Ref } from 'src/features/reactivity/reactivity.types';
+import type { EncounterMemberContext } from 'src/types/group.types';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
 ) {
   currentTabId: string;
+  emphasizedMember: Ref<EncounterMemberContext | undefined> = $state({
+    value: undefined,
+  });
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -54,6 +60,8 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     },
   };
 
+  static _lockedSkillAllowlist = new Set<string>(['ins', 'per']);
+
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
       return this._createLimitedViewComponent(node);
@@ -61,7 +69,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
     const component = mount(EncounterSheet, {
       target: node,
-      context: new Map<any, any>(this._getActorSvelteContext()),
+      context: new Map<any, any>([
+        [CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF, this.emphasizedMember],
+        ...this._getActorSvelteContext(),
+      ]),
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
@@ -103,7 +114,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       totalGold: this.getGpSummary(this.actor),
       totalXp: await this.actor.system.getXPValue(),
       type: 'encounter',
-      ...(await this._prepareMembers(actorContext)),
+      ...(await this._prepareMemberDependentContext(actorContext)),
       ...actorContext,
     };
 
@@ -112,27 +123,27 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     return context;
   }
 
-  async _prepareMembers(context: ActorSheetQuadroneContext): Promise<{
+  async _prepareMemberDependentContext(
+    context: ActorSheetQuadroneContext
+  ): Promise<{
     creatureTypes: EncounterCreatureTypeContext[];
     members: {
       npc: EncounterMemberQuadroneContext[];
+      all: Map<string, EncounterMemberQuadroneContext>;
     };
+    skills: GroupSkill[];
     traits: EncounterTraits;
   }> {
     const members: Actor5e[] = await this.actor.system.getMembers();
 
-    const creatureTypeCountMap = new Map<
-      string,
-      EncounterCreatureTypeContext
-    >();
+    let skills = this._getMemberGroupSkillMap();
 
-    let cis = new Map<string, GroupTrait>();
-    let dis = new Map<string, GroupTrait>();
-    let drs = new Map<string, GroupTrait>();
-    let dvs = new Map<string, GroupTrait>();
-    let languages = new Map<string, MeasurableGroupTrait<number>>();
-    let senses = new Map<string, MeasurableGroupTrait<number>>();
-    let speeds = new Map<string, MeasurableGroupTrait<number>>();
+    const npcMap = new Map<string, EncounterMemberQuadroneContext>();
+    const creatureTypes = new Map<string, EncounterCreatureTypeContext>();
+    const languages = new Map<string, MeasurableGroupTrait<number>>();
+    const senses = new Map<string, MeasurableGroupTrait<number>>();
+    const specials = new Map<string, GroupTrait>();
+    const speeds = new Map<string, MeasurableGroupTrait<number>>();
 
     const memberContexts = await Promise.all(
       members.map(async ({ actor, quantity }) => {
@@ -146,33 +157,14 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           context.themeSettings.accentColor
         );
 
-        // TODO: Extract to preparation method
-        const details = actor.system.details;
-
-        const creatureTypeLabel =
-          details.type.value === 'custom'
-            ? details.type.custom
-            : CONFIG.DND5E.creatureTypes[details.type.value]?.label;
-        const creatureType =
-          details.type.value === 'custom'
-            ? details.type.custom
-            : details.type.value;
-
-        mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
-          type: creatureType,
-          label: creatureTypeLabel,
-          quantity: 0,
-        })).quantity += quantity.value;
-
-        this._prepareMemberTrait('ci', actor, cis);
-        this._prepareMemberTrait('di', actor, dis);
-        this._prepareMemberTrait('dr', actor, drs);
-        this._prepareMemberTrait('dv', actor, dvs);
+        this._prepareMemberSkills(actor, skills);
+        this._prepareMemberCreatureType(actor, creatureTypes, quantity);
         this._prepareMemberLanguages(actor, languages);
         this._prepareMemberSenses(actor, senses);
+        this._prepareMemberSpecials(actor, specials);
         this._prepareMemberSpeeds(actor, speeds);
 
-        return {
+        const memberContext = {
           actor,
           quantity,
           accentColor,
@@ -184,33 +176,32 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
             : undefined,
           portrait: await this._preparePortrait(actor),
         };
+
+        npcMap.set(actor.uuid, memberContext);
+
+        return memberContext;
       })
     );
 
     return {
-      creatureTypes: [...creatureTypeCountMap.values()].toSorted((a, b) =>
+      creatureTypes: [...creatureTypes.values()].toSorted((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
       ),
       members: {
         npc: memberContexts,
+        all: npcMap,
       },
+      skills: [...skills.values()].toSorted((a, b) =>
+        a.name.localeCompare(b.name, game.i18n.lang)
+      ),
       traits: {
-        cis: [...cis.values()].toSorted((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
-        ),
-        dis: [...dis.values()].toSorted((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
-        ),
-        drs: [...drs.values()].toSorted((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
-        ),
-        dvs: [...dvs.values()].toSorted((a, b) =>
-          a.label.localeCompare(b.label, game.i18n.lang)
-        ),
         languages: [...languages.values()].toSorted((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
         senses: [...senses.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        specials: [...specials.values()].toSorted((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
         speeds: [...speeds.values()].toSorted((a, b) =>
@@ -218,6 +209,29 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         ),
       },
     };
+  }
+
+  private _prepareMemberCreatureType(
+    actor: any,
+    creatureTypeCountMap: Map<string, EncounterCreatureTypeContext>,
+    quantity: any
+  ) {
+    const details = actor.system.details;
+
+    const creatureTypeLabel =
+      details.type.value === 'custom'
+        ? details.type.custom
+        : CONFIG.DND5E.creatureTypes[details.type.value]?.label;
+    const creatureType =
+      details.type.value === 'custom'
+        ? details.type.custom
+        : details.type.value;
+
+    mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
+      type: creatureType,
+      label: creatureTypeLabel,
+      quantity: 0,
+    })).quantity += quantity.value;
   }
 
   /* -------------------------------------------- */

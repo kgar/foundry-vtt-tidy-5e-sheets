@@ -169,39 +169,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
       skilled: [],
     };
 
-    let skills = new Map<string, GroupSkill>(
-      Object.entries(CONFIG.DND5E.skills).map<[string, GroupSkill]>(
-        ([key, skill]) => [
-          key,
-          {
-            ability: skill.ability,
-            high: {
-              total: -Infinity,
-              value: '∞',
-              sign: '-',
-            },
-            low: {
-              total: Infinity,
-              value: '∞',
-              sign: '+',
-            },
-            identifiers: new Map<string, GroupMemberSkillContext>(),
-            key,
-            name: skill.label,
-            proficient: false,
-            reference: skill.reference,
-          },
-        ]
-      )
-    );
-
-    let traits: GroupTraits = {
-      languages: [],
-      senses: [],
-      specials: [],
-      speeds: [],
-      tools: [],
-    };
+    let skills = this._getMemberGroupSkillMap();
 
     let languages = new Map<string, MeasurableGroupTrait<number>>();
     let senses = new Map<string, MeasurableGroupTrait<number>>();
@@ -316,66 +284,27 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
       a.name.localeCompare(b.name, game.i18n.lang)
     );
 
-    traits.languages = [...languages.values()].toSorted((a, b) =>
-      a.label.localeCompare(b.label, game.i18n.lang)
-    );
-    traits.senses = [...senses.values()].toSorted((a, b) =>
-      a.label.localeCompare(b.label, game.i18n.lang)
-    );
-    traits.specials = [...specials.values()].toSorted((a, b) =>
-      a.label.localeCompare(b.label, game.i18n.lang)
-    );
-    traits.speeds = [...speeds.values()].toSorted((a, b) =>
-      a.label.localeCompare(b.label, game.i18n.lang)
-    );
-    traits.tools = [...tools.values()].toSorted((a, b) =>
-      a.label.localeCompare(b.label, game.i18n.lang)
-    );
-
     return {
       members: sections,
       skills: groupSkills,
-      traits,
+      traits: {
+        languages: [...languages.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        senses: [...senses.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        specials: [...specials.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        speeds: [...speeds.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        tools: [...tools.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+      },
     };
-  }
-
-  private _prepareMemberSkills(actor: any, skills: Map<string, GroupSkill>) {
-    Object.entries<SkillData>(
-      actor.system.skills ??
-        {
-          /* Vehicles don't have Skills */
-        }
-    ).forEach(([key, skill]) => {
-      let groupSkill = skills.get(key);
-      if (!groupSkill) {
-        return;
-      }
-
-      const modData = getModifierData(skill.total);
-
-      if (skill.total > groupSkill.high.total) {
-        groupSkill.high = {
-          total: skill.total,
-          ...modData,
-        };
-      }
-
-      if (skill.total < groupSkill.low.total) {
-        groupSkill.low = {
-          total: skill.total,
-          ...modData,
-        };
-      }
-
-      groupSkill.identifiers.set(actor.uuid, {
-        total: skill.total,
-        ...modData,
-        proficient: skill.proficient,
-        passive: skill.passive,
-      });
-
-      groupSkill.proficient ||= skill.proficient > 0;
-    });
   }
 
   private _prepareMemberEncumbrance(actor: Actor5e) {
@@ -399,27 +328,6 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
         defaultUnits[systemUnits]
       ),
     };
-  }
-
-  private _prepareMemberSpecials(
-    actor: any,
-    specials: Map<string, GroupTrait>
-  ) {
-    ['dr', 'di', 'ci', 'dv'].forEach((type) => {
-      const custom = actor.system.traits[type]?.custom?.trim();
-      if (isNil(custom, '')) {
-        return;
-      }
-
-      dnd5e.utils.splitSemicolons(custom).forEach((customEntry: string) => {
-        const groupSpecial = mapGetOrInsert(specials, customEntry, {
-          label: customEntry,
-          identifiers: new Set<string>(),
-        });
-
-        groupSpecial.identifiers.add(actor.uuid);
-      });
-    });
   }
 
   private _prepareMemberTools(actor: any, tools: Map<string, GroupTrait>) {

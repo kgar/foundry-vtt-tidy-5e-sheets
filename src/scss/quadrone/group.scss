@@ -155,13 +155,18 @@
     &.member-proficient .skill-ability {
       color: var(--t5e-member-color-hover);
     }
-
+    
     &.member-unproficient {
-
+      
       .skill-ability,
       .skill {
         opacity: 0.5;
       }
+      
+    }
+    
+    .skill {
+      flex: 1 1 auto;
     }
   }
 
