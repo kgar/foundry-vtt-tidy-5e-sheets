@@ -7,6 +7,7 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { setContext, untrack } from 'svelte';
   import { CONSTANTS } from 'src/constants';
+    import SidebarTabTraits from '../tabs/SidebarTabTraits.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -38,6 +39,15 @@
         component: SidebarTabSkills,
       },
       iconClass: 'fa-solid fa-briefcase',
+    } satisfies Tab,
+    {
+      id: 'sidebar-traits',
+      title: 'DND5E.Traits',
+      content: {
+        type: 'svelte',
+        component: SidebarTabTraits,
+      },
+      iconClass: 'fa-solid fa-poo-storm',
     } satisfies Tab,
   ]);
 
