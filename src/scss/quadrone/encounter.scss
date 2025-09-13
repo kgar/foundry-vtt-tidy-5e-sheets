@@ -4,6 +4,17 @@
     .actor-subtitle {
       margin-bottom: var(--t5e-size-halfx);
     }
+
+    .xp {
+      display: flex;
+      align-content: center;
+      flex: 0 1 auto;
+      gap: var(--t5e-size-1x);
+    }
+
+    .difficulty-block {
+      flex: 0 0 auto;
+    }
   }
 
   /* Tab-specific styles */

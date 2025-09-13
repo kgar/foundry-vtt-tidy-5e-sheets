@@ -155,6 +155,18 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       };
     }
 
+    getGpSummary(actor: Actor5e) {
+      const currency = actor.system.currency;
+
+      return Math.round(
+        Object.keys(currency).reduce((total, key) => {
+          return key in CONFIG.DND5E.currencies
+            ? total + currency[key] / CONFIG.DND5E.currencies[key].conversion
+            : total;
+        }, 0)
+      );
+    }
+
     /* -------------------------------------------- */
     /*  Drag and Drop                               */
     /* -------------------------------------------- */

@@ -896,5 +896,6 @@
   "TIDY5E.UseSpecificDefaultValue.Label": "Use Default ({value})",
   "TIDY5E.Notifications.FirstTimeWelcome1": "Welcome to Tidy 5e Sheets! To get started, you'll need to change {sheetLinkStart}a sheet{sheetLinkEnd} (or {allSheetsLinkStart}all your sheets{allSheetsLinkEnd}!) to use the Tidy version. Learn more about this module and what it can do on the {wikiLinkStart}official wiki{wikiLinkEnd}.",
   "TIDY5E.AggregateSkill.HighMeasure": "High",
-  "TIDY5E.AggregateSkill.LowMeasure": "Low"
+  "TIDY5E.AggregateSkill.LowMeasure": "Low",
+  "TIDY5E.Difficulty": "Difficulty"
 }

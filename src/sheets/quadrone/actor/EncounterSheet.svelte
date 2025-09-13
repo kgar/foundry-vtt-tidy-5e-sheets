@@ -15,7 +15,7 @@
   let selectedTabId: string = $derived(context.currentTabId);
 
   let extraTabs = new SvelteSet<string>();
-  
+
   let currentPortraitShape = $derived(context.portrait.shape);
 
   const availableShapes = ThemeQuadrone.getActorPortraitShapes();
@@ -47,7 +47,24 @@
 
 <header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
-    <div class={["actor-details-container flexcol", { 'show-xp': context.enableXp }]}>
+    <div class="difficulty-block">
+      <span class="label font-label-medium color-text-gold">
+        {localize('TIDY5E.Difficulty')}
+      </span>
+      <span class="label difficulty font-label-medium color-text-default">
+        {#if context.difficulty}
+          {context.difficulty}
+        {:else}
+          <span class="color-text-disabled">—</span>
+        {/if}
+      </span>
+    </div>
+    <div
+      class={[
+        'actor-details-container flexcol',
+        { 'show-xp': context.enableXp },
+      ]}
+    >
       <div
         class="actor-details-name-row"
         data-tidy-sheet-part="name-header-row"
@@ -73,7 +90,6 @@
           class={['sheet-header-actions', 'flexrow']}
           data-tidy-sheet-part="sheet-header-actions-container"
         >
-        
           <button
             type="button"
             class="button long-rest button-gold flexshrink"
@@ -104,24 +120,6 @@
             <i class="fas fa-trophy"></i>
             {localize('DND5E.Award.Title')}
           </button>
-          <!-- <button
-            type="button"
-            class="button short-rest button-gold button-icon-only flexshrink"
-            data-tooltip="DND5E.REST.Short.Label"
-            aria-label={localize('DND5E.REST.Short.Label')}
-            onclick={() => context.sheet.shortRest()}
-          >
-            <i class="fas fa-utensils"></i>
-          </button>
-          <button
-            type="button"
-            class="button long-rest button-gold button-icon-only flexshrink"
-            data-tooltip="DND5E.REST.Long.Label"
-            aria-label={localize('DND5E.REST.Long.Label')}
-            onclick={() => context.actor.longRest()}
-          >
-            <i class="fas fa-campground"></i>
-          </button> -->
         </div>
       {/if}
     </div>

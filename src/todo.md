@@ -7,12 +7,43 @@
 
 ### Encounter Sheet
 
-- [ ] Confirm the big picture requirements
-- [ ] Scaffold encounter sheet tabs
-- [ ] Get the encounter inventory fully functional
-- [ ] Get the encounter description tab fully functional
-- [ ] Scaffold the encounter member context
+- [x] Encounter subtitle
+  - [x] Row 1
+    - [x] Creature Type Count row
+  - [x] Row 2
+    - [x] Members count (assuming member quantities sum)
+    - [x] XP
+    - [x] GP summary
+- [x] Encounter header layout change
+  - [x] Left: name, subtitles, button bar
+  - [x] Right: difficulty badge
+- [ ] Members tab
+  - [ ] Member list 
+    - [ ] locked
+      - [ ] Member primary column
+      - [ ] CR
+      - [ ] Quantity
+      - [ ] HP
+        - [ ] Include "Roll HP" button on hover
+      - [ ] XP
+      - [ ] Member row actions
+        - [ ] In header: add button opens compendium browser for NPCs only
+    - [ ] unlocked
+      - [ ] Swap HP with editable Formula column
+  - [ ] Sidebar
+    - [ ] Languages
+    - [ ] Speeds
+    - [ ] Senses
+    - [ ] skills 
+    - [ ] DR
+    - [ ] DI
+    - [ ] DV
+    - [ ] CI
+    - [ ] DM
 - [ ] Plan and implement the rest
+- [ ]  For all pill sections with custom options: Batch non-specials and hoist to top. Non-specials and specials are alphabetized separately (**kgar**: I'm concerned that normal/short special entries in senses, etc., will look confusing if they're batched and sorted below the regular pills. A visual indicator denoting these are custom/special would make more sense of it, but for homebrew senses and other customs/specials, the user is probably expecting to see their custom ones sorted into the regular list of pills)
+  - [ ] Group
+  - [ ] Encounter
 
 ### The Short List
 
@@ -232,3 +263,8 @@ Limited:
 - [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
 - [x] Group sheet - Members tab - Set up column hiding 
 - [x] ~~Group Sheet - Inventory tab - Should we have hover styles on the member names?~~ Nah, there's feedback there already.
+- [x] Confirm the big picture requirements
+- [x] Scaffold encounter sheet tabs
+- [x] Get the encounter inventory fully functional
+- [x] Get the encounter description tab fully functional
+- [x] Scaffold the encounter member context

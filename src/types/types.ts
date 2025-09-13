@@ -1348,7 +1348,7 @@ export type GroupSkillRollProcessConfiguration = {
   ability: string;
   event: Event;
   // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
-}
+};
 
 export type GroupSheetQuadroneContext = {
   enriched: {
@@ -1372,6 +1372,12 @@ export type GroupSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
 
+export type EncounterCreatureTypeContext = {
+  type: string;
+  label: string;
+  quantity: number;
+};
+
 export type EncounterMemberQuadroneContext = {
   accentColor: string | undefined;
   actor: Actor5e;
@@ -1389,13 +1395,17 @@ export type EncounterMembersQuadroneContext = {
 };
 
 export type EncounterSheetQuadroneContext = {
+  creatureTypes: EncounterCreatureTypeContext[];
+  difficulty: string | null;
   enriched: {
     description: {
       full: string;
       summary: string;
     };
   };
+  totalGold: number;
   members: EncounterMembersQuadroneContext;
+  totalXp: number;
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 

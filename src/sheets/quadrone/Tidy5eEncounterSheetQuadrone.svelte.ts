@@ -1,6 +1,8 @@
 import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
+  ActorSheetQuadroneContext,
+  EncounterCreatureTypeContext,
   EncounterMemberQuadroneContext,
   EncounterSheetQuadroneContext,
   MultiActorQuadroneContext,
@@ -20,6 +22,8 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
 import { processInputChangeDeltaFromValues } from 'src/utils/form';
+import { mapGetOrInsertComputed } from 'src/utils/map';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -75,7 +79,15 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       relativeTo: this.actor,
     };
 
+    const { npc, creatureTypes } = await this._prepareMembers(actorContext);
+
+    const difficulty = await this.actor.system.getDifficulty();
+
     const context: EncounterSheetQuadroneContext = {
+      creatureTypes: creatureTypes,
+      difficulty: difficulty
+        ? FoundryAdapter.localize(`DND5E.ENCOUNTER.Difficulty.${difficulty}`)
+        : null,
       enriched: {
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -88,24 +100,30 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           ),
         },
       },
-      members: { npc: [] },
+      members: { npc },
+      totalGold: this.getGpSummary(this.actor),
+      totalXp: await this.actor.system.getXPValue(),
       type: 'encounter',
       ...actorContext,
     };
-
-    context.members.npc = await this._prepareMembersContext(context);
 
     context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
 
     return context;
   }
 
-  async _prepareMembersContext(
-    context: EncounterSheetQuadroneContext
-  ): Promise<EncounterMemberQuadroneContext[]> {
+  async _prepareMembers(context: ActorSheetQuadroneContext): Promise<{
+    npc: EncounterMemberQuadroneContext[];
+    creatureTypes: EncounterCreatureTypeContext[];
+  }> {
     const members: Actor5e[] = await this.actor.system.getMembers();
 
-    return await Promise.all(
+    const creatureTypeCountMap = new Map<
+      string,
+      EncounterCreatureTypeContext
+    >();
+
+    const memberContexts = await Promise.all(
       members.map(async ({ actor, quantity }) => {
         const accentColor = coalesce(
           // Use the actor's accent color, if configured
@@ -116,6 +134,23 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           // Else, use the encounter sheet's accent color, with fallback to world default accent color
           context.themeSettings.accentColor
         );
+
+        const details = actor.system.details;
+
+        const creatureTypeLabel =
+          details.type.value === 'custom'
+            ? details.type.custom
+            : CONFIG.DND5E.creatureTypes[details.type.value]?.label;
+        const creatureType =
+          details.type.value === 'custom'
+            ? details.type.custom
+            : details.type.value;
+
+        mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
+          type: creatureType,
+          label: creatureTypeLabel,
+          quantity: 0,
+        })).quantity += quantity.value;
 
         return {
           actor,
@@ -131,6 +166,13 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         };
       })
     );
+
+    return {
+      npc: memberContexts,
+      creatureTypes: [...creatureTypeCountMap.values()].toSorted((a, b) =>
+        a.label.localeCompare(b.label, game.i18n.lang)
+      ),
+    };
   }
 
   /* -------------------------------------------- */
@@ -157,6 +199,16 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       foundry.utils.setProperty(member, 'quantity.value', newQuantity);
       return await this.actor.update({ 'system.members': members });
     }
+  }
+
+  async award() {
+    new dnd5e.applications.Award({
+      award: {
+        currency: { ...this.actor.system.currency },
+        savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+        xp: await this.actor.system.getXPValue(),
+      },
+    }).render({ force: true });
   }
 
   /* -------------------------------------------- */
