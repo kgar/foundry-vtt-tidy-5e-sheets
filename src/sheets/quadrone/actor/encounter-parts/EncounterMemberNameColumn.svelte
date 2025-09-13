@@ -105,7 +105,6 @@
       {@const creatureSubtype = member.actor.system.details.type.subtype}
 
       <span class="separated-list">
-        <div class="divider-dot"></div>
         <span class="cr">
           <span class="font-label-medium color-text-gold-emphasis"
             >{localize('DND5E.AbbreviationCR')}</span

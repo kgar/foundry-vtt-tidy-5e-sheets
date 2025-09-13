@@ -45,7 +45,7 @@
 <MembersTabSidebar />
 
 <section
-  class="groups-tab-content group-members-content flexcol"
+  class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
   {#if characters.length}

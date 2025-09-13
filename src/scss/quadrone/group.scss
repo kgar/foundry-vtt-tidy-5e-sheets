@@ -199,7 +199,7 @@
       width: var(--t5e-group-sidebar-width);
     }
 
-    .groups-tab-content {
+    .group-tab-content {
       display: flex;
       flex: 1;
       overflow-y: auto;
@@ -373,7 +373,7 @@
       }
     }
 
-    &.members {
+    &.members, &.combat {
 
       &.active {
         display: flex;
@@ -463,7 +463,7 @@
     }
 
     &.inventory {
-      .groups-tab-content {
+      .group-tab-content {
         padding-bottom: var(--t5e-size-3x);
       }
 
@@ -511,7 +511,7 @@
       }
     }
 
-    .tidy-tab.members .actor-image {
+    .tidy-tab:is(.members, .combat) .actor-image {
       &:hover {
         filter: drop-shadow(0 0 0.25rem oklch(from var(--t5e-theme-color-highlight) l c h / 0.5));
       }
