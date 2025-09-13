@@ -1394,6 +1394,16 @@ export type EncounterMembersQuadroneContext = {
   npc: EncounterMemberQuadroneContext[];
 };
 
+export type EncounterTraits = {
+  cis: GroupTrait[];
+  dis: GroupTrait[];
+  drs: GroupTrait[];
+  dvs: GroupTrait[];
+  languages: MeasurableGroupTrait<number>[];
+  senses: MeasurableGroupTrait<number>[];
+  speeds: MeasurableGroupTrait<number>[];
+};
+
 export type EncounterSheetQuadroneContext = {
   creatureTypes: EncounterCreatureTypeContext[];
   difficulty: string | null;
@@ -1406,6 +1416,7 @@ export type EncounterSheetQuadroneContext = {
   totalGold: number;
   members: EncounterMembersQuadroneContext;
   totalXp: number;
+  traits: EncounterTraits;
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 

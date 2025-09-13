@@ -26,7 +26,6 @@
     - [ ] DI
     - [ ] DV
     - [ ] CI
-    - [ ] DM
 - [ ] Encounter Members tab
   - [ ] Member list 
     - [ ] locked

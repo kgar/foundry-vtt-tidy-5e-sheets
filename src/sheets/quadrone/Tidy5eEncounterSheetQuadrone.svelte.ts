@@ -5,6 +5,9 @@ import type {
   EncounterCreatureTypeContext,
   EncounterMemberQuadroneContext,
   EncounterSheetQuadroneContext,
+  EncounterTraits,
+  GroupTrait,
+  MeasurableGroupTrait,
   MultiActorQuadroneContext,
 } from 'src/types/types';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
@@ -79,12 +82,9 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       relativeTo: this.actor,
     };
 
-    const { npc, creatureTypes } = await this._prepareMembers(actorContext);
-
     const difficulty = await this.actor.system.getDifficulty();
 
     const context: EncounterSheetQuadroneContext = {
-      creatureTypes: creatureTypes,
       difficulty: difficulty
         ? FoundryAdapter.localize(`DND5E.ENCOUNTER.Difficulty.${difficulty}`)
         : null,
@@ -100,10 +100,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           ),
         },
       },
-      members: { npc },
       totalGold: this.getGpSummary(this.actor),
       totalXp: await this.actor.system.getXPValue(),
       type: 'encounter',
+      ...(await this._prepareMembers(actorContext)),
       ...actorContext,
     };
 
@@ -113,8 +113,11 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   }
 
   async _prepareMembers(context: ActorSheetQuadroneContext): Promise<{
-    npc: EncounterMemberQuadroneContext[];
     creatureTypes: EncounterCreatureTypeContext[];
+    members: {
+      npc: EncounterMemberQuadroneContext[];
+    };
+    traits: EncounterTraits;
   }> {
     const members: Actor5e[] = await this.actor.system.getMembers();
 
@@ -122,6 +125,14 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       string,
       EncounterCreatureTypeContext
     >();
+
+    let cis = new Map<string, GroupTrait>();
+    let dis = new Map<string, GroupTrait>();
+    let drs = new Map<string, GroupTrait>();
+    let dvs = new Map<string, GroupTrait>();
+    let languages = new Map<string, MeasurableGroupTrait<number>>();
+    let senses = new Map<string, MeasurableGroupTrait<number>>();
+    let speeds = new Map<string, MeasurableGroupTrait<number>>();
 
     const memberContexts = await Promise.all(
       members.map(async ({ actor, quantity }) => {
@@ -135,6 +146,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           context.themeSettings.accentColor
         );
 
+        // TODO: Extract to preparation method
         const details = actor.system.details;
 
         const creatureTypeLabel =
@@ -152,6 +164,14 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           quantity: 0,
         })).quantity += quantity.value;
 
+        this._prepareMemberTrait('ci', actor, cis);
+        this._prepareMemberTrait('di', actor, dis);
+        this._prepareMemberTrait('dr', actor, drs);
+        this._prepareMemberTrait('dv', actor, dvs);
+        this._prepareMemberLanguages(actor, languages);
+        this._prepareMemberSenses(actor, senses);
+        this._prepareMemberSpeeds(actor, speeds);
+
         return {
           actor,
           quantity,
@@ -168,10 +188,35 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     );
 
     return {
-      npc: memberContexts,
       creatureTypes: [...creatureTypeCountMap.values()].toSorted((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
       ),
+      members: {
+        npc: memberContexts,
+      },
+      traits: {
+        cis: [...cis.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        dis: [...dis.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        drs: [...drs.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        dvs: [...dvs.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        languages: [...languages.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        senses: [...senses.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        speeds: [...speeds.values()].toSorted((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+      },
     };
   }
 

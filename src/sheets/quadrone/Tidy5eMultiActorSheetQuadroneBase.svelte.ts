@@ -4,6 +4,9 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  GroupTrait,
+  GroupTraitBase,
+  MeasurableGroupTrait,
   MultiActorMemberPortraitContext,
   MultiActorQuadroneContext,
 } from 'src/types/types';
@@ -20,6 +23,10 @@ import { TidyFlags } from 'src/api';
 import type { Group5eMember as MultiActor5eMember } from 'src/types/group.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { isNil } from 'src/utils/data';
+import { mapGetOrInsertComputed } from 'src/utils/map';
+import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
+import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -165,6 +172,225 @@ export function Tidy5eMultiActorSheetQuadroneBase<
             : total;
         }, 0)
       );
+    }
+
+    _prepareMemberLanguages(
+      actor: any,
+      languages: Map<string, MeasurableGroupTrait<number>>
+    ) {
+      let memberLanguages =
+        actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+          ? Tidy5eCharacterSheetQuadrone._getLanguageTraits(actor)
+          : actor.type === CONSTANTS.SHEET_TYPE_NPC
+          ? Tidy5eNpcSheetQuadrone._getLanguageTraits(actor)
+          : [];
+
+      memberLanguages.forEach((language) => {
+        const actorLanguageTrait = {
+          label: language.label,
+          units: language.units,
+          unitsKey: language.unitsKey,
+          value: language.value !== undefined ? language.value : undefined,
+        };
+
+        const groupLanguage = mapGetOrInsertComputed(
+          languages,
+          language.label,
+          () => ({
+            identifiers: new Map<string, MeasurableGroupTrait<number>>(),
+            ...actorLanguageTrait,
+          })
+        );
+
+        groupLanguage.identifiers.set(actor.uuid, actorLanguageTrait);
+
+        const actorLanguageUniversalValue =
+          actorLanguageTrait.value !== undefined &&
+          !isNil(actorLanguageTrait.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                actorLanguageTrait.value,
+                actorLanguageTrait.unitsKey,
+                'ft'
+              )
+            : undefined;
+
+        const groupLanguageUniversalValue =
+          groupLanguage.value !== undefined &&
+          !isNil(groupLanguage.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                groupLanguage.value,
+                groupLanguage.unitsKey,
+                'ft'
+              )
+            : undefined;
+
+        if (
+          actorLanguageUniversalValue &&
+          actorLanguageUniversalValue > (groupLanguageUniversalValue ?? 0)
+        ) {
+          groupLanguage.value = actorLanguageTrait.value;
+          groupLanguage.units = actorLanguageTrait.units;
+          groupLanguage.unitsKey = actorLanguageTrait.unitsKey;
+        }
+
+        if (!isNil(actor.system.attributes.languages?.custom, '')) {
+          dnd5e.utils
+            .splitSemicolons(actor.system.attributes.languages.custom?.trim())
+            .forEach((customLanguage: string) => {
+              const entry = mapGetOrInsertComputed(
+                languages,
+                customLanguage,
+                () => ({
+                  label: customLanguage,
+                  identifiers: new Map<string, GroupTraitBase<number>>(),
+                })
+              );
+
+              entry?.identifiers.set(actor.uuid, { label: customLanguage });
+            });
+        }
+      });
+    }
+
+    _prepareMemberSpeeds(
+      actor: any,
+      speeds: Map<string, MeasurableGroupTrait<number>>
+    ) {
+      let unitsKey = actor.system.attributes.movement.units;
+      let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
+      let units = unitsConfig?.abbreviation ?? unitsKey;
+
+      Object.entries<number | unknown>(
+        actor.system.attributes.movement
+      ).forEach(([key, speed]) => {
+        const movementType = CONFIG.DND5E.movementTypes[key];
+        if (typeof speed !== 'number' || speed <= 0 || !movementType) {
+          return;
+        }
+
+        let actorSpeedTrait: GroupTraitBase<number> = {
+          label: movementType.label,
+          units: units,
+          unitsKey: unitsKey,
+          value: speed,
+        };
+
+        let groupSpeed = mapGetOrInsertComputed(speeds, key, () => ({
+          identifiers: new Map<string, MeasurableGroupTrait<number>>(),
+          ...actorSpeedTrait,
+        }));
+
+        groupSpeed.identifiers.set(actor.uuid, actorSpeedTrait);
+
+        const actorSpeedUniversalValue =
+          actorSpeedTrait.value !== undefined &&
+          !isNil(actorSpeedTrait.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                actorSpeedTrait.value,
+                actorSpeedTrait.unitsKey,
+                'ft'
+              )
+            : undefined;
+
+        const groupSpeedUniversalValue =
+          groupSpeed.value !== undefined && !isNil(groupSpeed.unitsKey, '')
+            ? dnd5e.utils.convertLength(
+                groupSpeed.value,
+                groupSpeed.unitsKey,
+                'ft'
+              )
+            : undefined;
+
+        if (
+          actorSpeedUniversalValue &&
+          actorSpeedUniversalValue > (groupSpeedUniversalValue ?? 0)
+        ) {
+          groupSpeed.value = actorSpeedTrait.value;
+          groupSpeed.units = actorSpeedTrait.units;
+          groupSpeed.unitsKey = actorSpeedTrait.unitsKey;
+        }
+      });
+    }
+
+    _prepareMemberSenses(
+      actor: any,
+      senses: Map<string, MeasurableGroupTrait<number>>
+    ) {
+      let unitsKey = actor.system.attributes.movement.units;
+      let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
+      let units = unitsConfig?.abbreviation ?? unitsKey;
+
+      Object.entries(actor.system.attributes.senses ?? {}).forEach(
+        ([key, sense]) => {
+          const label = CONFIG.DND5E.senses[key];
+          if (typeof sense !== 'number' || sense === 0 || !label) {
+            return;
+          }
+
+          let actorSenseTrait: GroupTraitBase<number> = {
+            label: label,
+            units: units,
+            unitsKey: unitsKey,
+            value: sense,
+          };
+
+          let groupSense = mapGetOrInsertComputed(senses, key, () => ({
+            identifiers: new Map<string, MeasurableGroupTrait<number>>(),
+            ...actorSenseTrait,
+          }));
+
+          groupSense.identifiers.set(actor.uuid, actorSenseTrait);
+
+          const actorSenseUniversalValue =
+            actorSenseTrait.value !== undefined &&
+            !isNil(actorSenseTrait.unitsKey, '')
+              ? dnd5e.utils.convertLength(
+                  actorSenseTrait.value,
+                  actorSenseTrait.unitsKey,
+                  'ft'
+                )
+              : undefined;
+
+          const groupSenseUniversalValue =
+            groupSense.value !== undefined && !isNil(groupSense.unitsKey, '')
+              ? dnd5e.utils.convertLength(
+                  groupSense.value,
+                  groupSense.unitsKey,
+                  'ft'
+                )
+              : undefined;
+
+          if (
+            actorSenseUniversalValue &&
+            actorSenseUniversalValue > (groupSenseUniversalValue ?? 0)
+          ) {
+            groupSense.value = actorSenseTrait.value;
+            groupSense.units = actorSenseTrait.units;
+            groupSense.unitsKey = actorSenseTrait.unitsKey;
+          }
+        }
+      );
+
+      if (!isNil(actor.system.attributes.senses?.special, '')) {
+        dnd5e.utils
+          .splitSemicolons(actor.system.attributes.senses.special?.trim())
+          .forEach((specialSense: string) => {
+            const entry = mapGetOrInsertComputed(senses, specialSense, () => ({
+              label: specialSense,
+              identifiers: new Map<string, GroupTraitBase<number>>(),
+            }));
+
+            entry?.identifiers.set(actor.uuid, { label: specialSense });
+          });
+      }
+    }
+
+    _prepareMemberTrait(
+      trait: 'ci' | 'di' | 'dr' | 'dv',
+      actor: Actor5e,
+      map: Map<string, GroupTrait>
+    ) {
+      throw new Error('TODO: prepare traits');
     }
 
     /* -------------------------------------------- */
