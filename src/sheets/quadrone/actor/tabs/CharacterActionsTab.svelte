@@ -13,6 +13,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ActionTables from '../../shared/ActionTables.svelte';
+  import ActorSpellSlotsFooter from '../parts/ActorSpellSlotsFooter.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -55,3 +56,5 @@
   {searchCriteria}
   sheetDocument={context.actor}
 />
+
+<ActorSpellSlotsFooter />

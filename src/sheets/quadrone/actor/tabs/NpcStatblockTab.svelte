@@ -21,6 +21,7 @@
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
+  import ActorSpellSlotsFooter from '../parts/ActorSpellSlotsFooter.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -114,3 +115,5 @@
     </div>
   </div>
 {/if}
+
+<ActorSpellSlotsFooter />
