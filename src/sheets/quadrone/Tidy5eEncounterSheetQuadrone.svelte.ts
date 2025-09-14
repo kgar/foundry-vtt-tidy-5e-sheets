@@ -271,7 +271,19 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   }
 
   async _browseAddNpc() {
-    alert('do it');
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters: {
+        locked: {
+          documentClass: CONSTANTS.DOCUMENT_NAME_ACTOR,
+          types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
+        },
+      },
+    });
+
+    if (result) {
+      const actor = await fromUuid(result);
+      this.actor.system.addMember(actor);
+    }
   }
 
   /* -------------------------------------------- */

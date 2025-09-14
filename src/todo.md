@@ -23,6 +23,7 @@
     - [x] Senses
     - [x] skills 
     - [x] Specials
+- [ ] Members context menu scaffolding for Encounter sheet
 - [ ] Encounter Members tab
   - [ ] Member list 
     - [ ] locked
