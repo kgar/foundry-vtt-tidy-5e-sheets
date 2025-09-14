@@ -26,15 +26,15 @@
 - [ ] Members context menu scaffolding for Encounter sheet
 - [ ] Encounter Members tab
   - [ ] Member list 
-    - [ ] locked
-      - [ ] Member primary column
-      - [ ] CR
-      - [ ] Quantity
-      - [ ] HP
-        - [ ] Include "Roll HP" button on hover
-      - [ ] XP
-      - [ ] Member row actions
-        - [ ] In header: add button opens compendium browser for NPCs only
+    - [x] locked
+      - [x] Member primary column
+      - [x] CR
+      - [x] Quantity
+      - [x] HP
+        - [x] Include "Roll HP" button on hover
+      - [x] XP
+      - [x] Member row actions
+        - [x] In header: add button opens compendium browser for NPCs only
     - [ ] unlocked
       - [ ] Swap HP with editable Formula column
 - [ ] Plan and implement the rest

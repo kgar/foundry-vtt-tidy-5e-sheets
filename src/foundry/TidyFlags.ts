@@ -5,12 +5,10 @@ import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
   DocumentJournalEntries,
-  DocumentJournalEntry,
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
 } from './TidyFlags.types';
-import { FoundryAdapter } from './foundry-adapter';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 

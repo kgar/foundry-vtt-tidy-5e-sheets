@@ -30,6 +30,7 @@ import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import type { EncounterMemberContext } from 'src/types/group.types';
+import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -171,6 +172,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           backgroundColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
             : undefined,
+          canEdit: FoundryAdapter.documentIsEditable(actor),
           highlightColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
             : undefined,

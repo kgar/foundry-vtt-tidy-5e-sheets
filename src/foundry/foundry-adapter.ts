@@ -208,6 +208,16 @@ export const FoundryAdapter = {
 
     return action();
   },
+  documentIsEditable(document: any) {
+    if (document.pack) {
+      const pack = game.packs.get(document.pack);
+      if (pack.locked) return false;
+    }
+    return document.testUserPermission(
+      game.user,
+      CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+    );
+  },
   editOnMiddleClick(
     event: MouseEvent,
     entityWithSheet: {
