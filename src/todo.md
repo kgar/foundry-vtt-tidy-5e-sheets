@@ -17,15 +17,12 @@
 - [x] Encounter header layout change
   - [x] Left: name, subtitles, button bar
   - [x] Right: difficulty badge
-  - [ ] Encounter Sidebar
-    - [ ] Languages
-    - [ ] Speeds
-    - [ ] Senses
-    - [ ] skills 
-    - [ ] DR
-    - [ ] DI
-    - [ ] DV
-    - [ ] CI
+  - [x] Encounter Sidebar
+    - [x] Languages
+    - [x] Speeds
+    - [x] Senses
+    - [x] skills 
+    - [x] Specials
 - [ ] Encounter Members tab
   - [ ] Member list 
     - [ ] locked
