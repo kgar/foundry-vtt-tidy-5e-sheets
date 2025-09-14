@@ -7,36 +7,6 @@
 
 ### Encounter Sheet
 
-- [x] Encounter subtitle
-  - [x] Row 1
-    - [x] Creature Type Count row
-  - [x] Row 2
-    - [x] Members count (assuming member quantities sum)
-    - [x] XP
-    - [x] GP summary
-- [x] Encounter header layout change
-  - [x] Left: name, subtitles, button bar
-  - [x] Right: difficulty badge
-  - [x] Encounter Sidebar
-    - [x] Languages
-    - [x] Speeds
-    - [x] Senses
-    - [x] skills 
-    - [x] Specials
-- [ ] Members context menu scaffolding for Encounter sheet
-- [ ] Encounter Members tab
-  - [ ] Member list 
-    - [x] locked
-      - [x] Member primary column
-      - [x] CR
-      - [x] Quantity
-      - [x] HP
-        - [x] Include "Roll HP" button on hover
-      - [x] XP
-      - [x] Member row actions
-        - [x] In header: add button opens compendium browser for NPCs only
-    - [ ] unlocked
-      - [ ] Swap HP with editable Formula column
 - [ ] Plan and implement the rest
 - [ ]  For all pill sections with custom options: Batch non-specials and hoist to top. Non-specials and specials are alphabetized separately (**kgar**: I'm concerned that normal/short special entries in senses, etc., will look confusing if they're batched and sorted below the regular pills. A visual indicator denoting these are custom/special would make more sense of it, but for homebrew senses and other customs/specials, the user is probably expecting to see their custom ones sorted into the regular list of pills)
   - [ ] Group
@@ -265,3 +235,33 @@ Limited:
 - [x] Get the encounter inventory fully functional
 - [x] Get the encounter description tab fully functional
 - [x] Scaffold the encounter member context
+- [x] Encounter subtitle
+  - [x] Row 1
+    - [x] Creature Type Count row
+  - [x] Row 2
+    - [x] Members count (assuming member quantities sum)
+    - [x] XP
+    - [x] GP summary
+- [x] Encounter header layout change
+  - [x] Left: name, subtitles, button bar
+  - [x] Right: difficulty badge
+  - [x] Encounter Sidebar
+    - [x] Languages
+    - [x] Speeds
+    - [x] Senses
+    - [x] skills 
+    - [x] Specials
+- [x] Encounter Members tab
+  - [x] Member list 
+    - [x] locked
+      - [x] Member primary column
+      - [x] CR
+      - [x] Quantity
+      - [x] HP
+        - [x] Include "Roll HP" button on hover
+      - [x] XP
+      - [x] Member row actions
+        - [x] In header: add button opens compendium browser for NPCs only
+    - [x] unlocked
+      - [x] Swap HP with editable Formula column
+- [x] Members context menu for Encounter sheet

@@ -13,6 +13,7 @@ import EncounterMemberCrColumn from 'src/sheets/quadrone/item/columns/EncounterM
 import EncounterMemberQuantityColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQuantityColumn.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
 import MemberActionsColumnHeader from 'src/sheets/quadrone/item/columns/MemberActionsColumnHeader.svelte';
+import EncounterMemberQtyFormulaColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQtyFormulaColumn.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
@@ -65,10 +66,25 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: GroupNpcXpColumn,
       },
-      condition: () =>
+      condition: ({ sheetDocument }) =>
         systemSettings.value.levelingMode !==
-        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
-      widthRems: 3.75,
+          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP &&
+        sheetDocument.sheet.sheetMode === CONSTANTS.SHEET_MODE_PLAY,
+      widthRems: 4,
+    };
+
+    const qtyFormulaColumn: ColumnSpecificationBase = {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.Formula'),
+      },
+      cellContent: {
+        type: 'component',
+        component: EncounterMemberQtyFormulaColumn,
+      },
+      condition: ({ sheetDocument }) =>
+        sheetDocument.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
+      widthRems: 4,
     };
 
     const actionsColumn: ColumnSpecificationBase = {
@@ -96,6 +112,11 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             quantity: { ...quantityColumn, order: 200, priority: 500 },
             hp: { ...hpColumn, order: 300, priority: 200 },
             npcXp: { ...npcXpColumn, order: 400, priority: 100 },
+            qtyFormulaColumn: {
+              ...qtyFormulaColumn,
+              order: 400,
+              priority: 100,
+            },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },

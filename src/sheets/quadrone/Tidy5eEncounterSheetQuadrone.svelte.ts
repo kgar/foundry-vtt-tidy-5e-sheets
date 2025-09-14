@@ -240,7 +240,30 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
 
-  async updateMemberQuantity(uuid: string, newValue: string | number) {
+  async updateMemberQuantity(uuid: string, newValue: string) {
+    return this.updateMember(uuid, (member) => {
+      const currentQuantity = member.quantity.value;
+      const newQuantity =
+        typeof newValue === 'number'
+          ? newValue
+          : processInputChangeDeltaFromValues(newValue, currentQuantity);
+
+      if (newQuantity !== undefined) {
+        foundry.utils.setProperty(member, 'quantity.value', newQuantity);
+      }
+    });
+  }
+
+  async updateMemberFormula(uuid: string, newValue: string | number) {
+    return this.updateMember(uuid, (member) => {
+      foundry.utils.setProperty(member, 'quantity.formula', newValue);
+    });
+  }
+
+  async updateMember(
+    uuid: string,
+    memberUpdateCallback: (member: any) => void
+  ) {
     const members: any[] = this.actor.system.toObject().members;
 
     const index = members.findIndex((m: any, i: number) => m.uuid === uuid);
@@ -250,16 +273,9 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     }
 
     const member = members[index];
-    const currentQuantity = members[index].quantity.value;
-    const newQuantity =
-      typeof newValue === 'number'
-        ? newValue
-        : processInputChangeDeltaFromValues(newValue, currentQuantity);
+    memberUpdateCallback(member);
 
-    if (newQuantity !== undefined) {
-      foundry.utils.setProperty(member, 'quantity.value', newQuantity);
-      return await this.actor.update({ 'system.members': members });
-    }
+    return await this.actor.update({ 'system.members': members });
   }
 
   async award() {
