@@ -1,16 +1,18 @@
 ## kgar To Do
 
-### Group Sheet
-
-- [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
-- [ ] Plan and task Bastions tab
 
 ### Encounter Sheet
 
+- [ ] Encounter Members tab: Wire up XP bar with stops
 - [ ] Plan and implement the rest
 - [ ]  For all pill sections with custom options: Batch non-specials and hoist to top. Non-specials and specials are alphabetized separately (**kgar**: I'm concerned that normal/short special entries in senses, etc., will look confusing if they're batched and sorted below the regular pills. A visual indicator denoting these are custom/special would make more sense of it, but for homebrew senses and other customs/specials, the user is probably expecting to see their custom ones sorted into the regular list of pills)
   - [ ] Group
   - [ ] Encounter
+
+### Group Sheet
+
+- [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
+- [ ] Plan and task Bastions tab
 
 ### The Short List
 
@@ -46,6 +48,8 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] Encounter XP bar with stops: add hook and API for passing in custom calculations. The hook should provide app and members with their quantities
+- [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
@@ -146,10 +150,11 @@
 
 ### Notes on combat integration:
 
-- The actor must be a sidebar actor for this to work.
-- When "Place Members" is called, the Encounter sheet will add all relevant members to the sidebar top level if they aren't already in game.actors.
-- Non-sidebar / non-game.actors NPCs cannot be entered into the tracker as a placeholder. The actor has to be from the sidebar for it to work.
-- The Encounter Sheet retains the original compendium actor, so it's not feasible to add them to the tracker.
+- We can create an encounter if one doesn't exist, upon loading combatants
+- To add placeholders, we can either enter unlinked placeholders directly, including initiative, name, and img (maybe more), or we can do same thing that "Place Members" does. "Place Members" puts copies of the compendium actors into the top-level of the sidebar before allowing placing them on the screen. It apparently has logic to detect whether there are suitable actors on the sidebar, so it doesn't happen every time.
+- We will have to track those row action states directly on the Encounter via flag because locked compendium actors are not editable, meaning it's not viable to track flags on some but not all. That's not bad. But, what are the default states when a member has not been configured by the user? 
+- I'll want to figure out all the edge cases for these buttons and row states, since this will be dealing with the Current Encounter, and the user can change scenes and/or Encounters. There's also the wrinkle of trying to ensure all open Encounter sheets are watching combat tracker activity via hooks. What hooks to track will be an implementation detail, but we essentially want to update our row states when a placeholder leaves the tracker, for example.
+- Love the Lair row (https://discord.com/channels/@me/1243307347682529423/1416763464403255336). Again, we can either load a totally anonymous placeholder with whatever img, name, and initiative we want, or we can load the relevant Lair actor into that spot. In fact, it might be beneficial to show multiple Lair entries so that all lair NPCs are accounted for.
 
 From `actor.mjs`:
 
@@ -180,6 +185,14 @@ if ( createCombatants ) {
     await combat.createEmbeddedDocuments("Combatant", toCreate);
 }
 ```
+
+Experimentation:
+```js
+// Completely actorless / tokenless combatant, with prerolled initiative, name, and img:
+game.combat.createEmbeddedDocuments("Combatant", [{ name: "Fred", img: 'systems/dnd5e/tokens/heroes/ClericDragonborn.webp', initiative: 20}]);
+```
+
+
 
 ### Huh?
 
@@ -301,3 +314,4 @@ Limited:
     - [x] unlocked
       - [x] Swap HP with editable Formula column
 - [x] Members context menu for Encounter sheet
+- [X] Make Formula column a lower-priority, always-shown column

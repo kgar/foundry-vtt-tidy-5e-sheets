@@ -66,10 +66,9 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: GroupNpcXpColumn,
       },
-      condition: ({ sheetDocument }) =>
+      condition: () =>
         systemSettings.value.levelingMode !==
-          CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP &&
-        sheetDocument.sheet.sheetMode === CONSTANTS.SHEET_MODE_PLAY,
+        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
       widthRems: 4,
     };
 
@@ -82,8 +81,6 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: EncounterMemberQtyFormulaColumn,
       },
-      condition: ({ sheetDocument }) =>
-        sheetDocument.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
       widthRems: 4,
     };
 
@@ -109,9 +106,9 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         [CONSTANTS.TAB_MEMBERS]: {
           [CONSTANTS.SHEET_TYPE_NPC]: {
             cr: { ...crColumn, order: 100, priority: 500 },
-            quantity: { ...quantityColumn, order: 200, priority: 500 },
-            hp: { ...hpColumn, order: 300, priority: 200 },
-            npcXp: { ...npcXpColumn, order: 400, priority: 100 },
+            quantity: { ...quantityColumn, order: 400, priority: 500 },
+            hp: { ...hpColumn, order: 300, priority: 300 },
+            npcXp: { ...npcXpColumn, order: 400, priority: 200 },
             qtyFormulaColumn: {
               ...qtyFormulaColumn,
               order: 400,
