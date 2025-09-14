@@ -30,6 +30,7 @@ import OpenActivityButton from 'src/components/table-quadrone/table-buttons/Open
 import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import EncounterCombatMemberToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatMemberToggle.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -479,6 +480,51 @@ class TableRowActionsRuntime {
               tooltip: FoundryAdapter.localize('DND5E.Encounter.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);
+        }
+      }
+
+      result.push({
+        component: MenuButton,
+        props: () => ({
+          targetSelector: '[data-context-menu]',
+        }),
+      } satisfies TableAction<typeof MenuButton>);
+
+      return result;
+    });
+
+    return rowActions;
+  }
+
+  getEncounterCombatRowActions(context: EncounterSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Actor5e,
+      TidySectionBase
+    >;
+
+    let rowActions: TableAction<any>[] = $derived.by(() => {
+      let result: TableAction<any>[] = [];
+
+      if (context.owner) {
+        if (context.unlocked) {
+          result.push({
+            component: DeleteButton,
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => context.actor.system.removeMember(args.data),
+              tooltip: FoundryAdapter.localize('DND5E.Encounter.Action.Remove'),
+            }),
+          } satisfies TableAction<typeof DeleteButton>);
+        } else {
+          result.push({
+            component: EncounterCombatMemberToggle,
+            props: (args) => ({
+              doc: args.data,
+              deleteFn: () => context.actor.system.removeMember(args.data),
+              tooltip: FoundryAdapter.localize('DND5E.Encounter.Action.Remove'),
+            }),
+          } satisfies TableAction<typeof EncounterCombatMemberToggle>);
         }
       }
 

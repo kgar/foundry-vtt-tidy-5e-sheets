@@ -270,6 +270,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     }).render({ force: true });
   }
 
+  async _browseAddNpc() {
+    alert('do it');
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */

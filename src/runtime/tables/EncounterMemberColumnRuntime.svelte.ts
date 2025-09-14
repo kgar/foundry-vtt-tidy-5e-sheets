@@ -12,6 +12,7 @@ import GroupNpcXpColumn from 'src/sheets/quadrone/item/columns/GroupNpcXpColumn.
 import EncounterMemberCrColumn from 'src/sheets/quadrone/item/columns/EncounterMemberCrColumn.svelte';
 import EncounterMemberQuantityColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQuantityColumn.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
+import MemberActionsColumnHeader from 'src/sheets/quadrone/item/columns/MemberActionsColumnHeader.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
@@ -72,8 +73,8 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
 
     const actionsColumn: ColumnSpecificationBase = {
       headerContent: {
-        type: 'html',
-        html: '',
+        type: 'component',
+        component: MemberActionsColumnHeader,
       },
       cellContent: {
         type: 'component',
@@ -98,9 +99,15 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },
+        [CONSTANTS.TAB_ACTOR_COMBAT]: {
+          [CONSTANTS.SHEET_TYPE_NPC]: {
+            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
+          },
+        },
       },
     };
   }
 }
 
-export const EncounterMemberColumnRuntime = new EncounterMemberColumnRuntimeImpl();
+export const EncounterMemberColumnRuntime =
+  new EncounterMemberColumnRuntimeImpl();

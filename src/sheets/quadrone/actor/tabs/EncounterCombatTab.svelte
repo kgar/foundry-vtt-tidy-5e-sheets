@@ -18,7 +18,7 @@
 
   const localize = FoundryAdapter.localize;
   let rowActions: any[] = $derived(
-    TableRowActionsRuntime.getEncounterMemberRowActions(context),
+    TableRowActionsRuntime.getEncounterCombatRowActions(context),
   );
 
   let sectionsContainer: HTMLElement;
