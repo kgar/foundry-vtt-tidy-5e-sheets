@@ -148,7 +148,7 @@
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
 - [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
 
-### Notes on combat integration:
+## Notes on combat integration:
 
 - We can create an encounter if one doesn't exist, upon loading combatants
 - To add placeholders, we can either enter unlinked placeholders directly, including initiative, name, and img (maybe more), or we can do same thing that "Place Members" does. "Place Members" puts copies of the compendium actors into the top-level of the sidebar before allowing placing them on the screen. It apparently has logic to detect whether there are suitable actors on the sidebar, so it doesn't happen every time.
@@ -192,6 +192,19 @@ Experimentation:
 game.combat.createEmbeddedDocuments("Combatant", [{ name: "Fred", img: 'systems/dnd5e/tokens/heroes/ClericDragonborn.webp', initiative: 20}]);
 ```
 
+WIP:
+```mermaid
+flowchart TB;
+  ButtonPress[User clicks ***Add to Combat Tracker***] --> PlaceholderPreferred{Actor has Placeholder row <br />action active?}
+  PlaceholderPreferred --Yes--> PlaceholderAlreadyInTracker{"User is already in <br />combat tracker?"}
+  PlaceholderAlreadyInTracker --"Yes"--> HandlePlaceholderAlreadyInTracker["Skip"]
+  PlaceholderAlreadyInTracker --"No"--> Sideloaded{Is actor loaded into sidebar?}
+  Sideloaded --Yes--> AddPlaceholderCombatant[Add placeholder combatant for sidebar actor]  
+  Sideloaded --No--> SideloadActor[Load actor into sidebar]
+  SideloadActor --> AddPlaceholderCombatant
+  PlaceholderPreferred --No--> ActorOnCanvas{Does the actor have <br />one or more tokens <br />on the canvas?}
+  ActorOnCanvas --Yes--> AddTokenCombatant[Add token combatant]
+```
 
 
 ### Huh?
