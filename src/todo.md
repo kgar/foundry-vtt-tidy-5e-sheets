@@ -144,6 +144,42 @@
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
 - [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
 
+### Notes on combat integration:
+
+- The actor must be a sidebar actor for this to work.
+- When "Place Members" is called, the Encounter sheet will add all relevant members to the sidebar top level if they aren't already in game.actors.
+- Non-sidebar / non-game.actors NPCs cannot be entered into the tracker as a placeholder. The actor has to be from the sidebar for it to work.
+- The Encounter Sheet retains the original compendium actor, so it's not feasible to add them to the tracker.
+
+From `actor.mjs`:
+
+```js
+// Obtain (or create) a combat encounter
+let combat = game.combat;
+if ( !combat ) {
+    if ( game.user.isGM && canvas.scene ) {
+    const cls = getDocumentClass("Combat");
+    combat = await cls.create({scene: canvas.scene.id, active: true});
+    }
+    else {
+    ui.notifications.warn("COMBAT.NoneActive", {localize: true});
+    return null;
+    }
+}
+
+// Create new combatants
+if ( createCombatants ) {
+    const tokens = this.getActiveTokens();
+    const toCreate = [];
+    if ( tokens.length ) {
+    for ( const t of tokens ) {
+        if ( t.inCombat ) continue;
+        toCreate.push({tokenId: t.id, sceneId: t.scene.id, actorId: this.id, hidden: t.document.hidden});
+    }
+    } else toCreate.push({actorId: this.id, hidden: false});
+    await combat.createEmbeddedDocuments("Combatant", toCreate);
+}
+```
 
 ### Huh?
 
