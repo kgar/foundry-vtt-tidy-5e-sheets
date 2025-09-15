@@ -14,6 +14,7 @@ import EncounterMemberQuantityColumn from 'src/sheets/quadrone/item/columns/Enco
 import { systemSettings } from 'src/settings/settings.svelte';
 import MemberActionsColumnHeader from 'src/sheets/quadrone/item/columns/MemberActionsColumnHeader.svelte';
 import EncounterMemberQtyFormulaColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQtyFormulaColumn.svelte';
+import EncounterMemberInitiativeColumn from 'src/sheets/quadrone/item/columns/EncounterMemberInitiativeColumn.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
@@ -101,6 +102,18 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       },
     };
 
+    const initiativeColumn: ColumnSpecificationBase = {
+      headerContent: {
+        type: 'html',
+        html: FoundryAdapter.localize('DND5E.Initiative'),
+      },
+      cellContent: {
+        type: 'component',
+        component: EncounterMemberInitiativeColumn,
+      },
+      widthRems: 4.5,
+    };
+
     return {
       [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
         [CONSTANTS.TAB_MEMBERS]: {
@@ -119,6 +132,9 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
         [CONSTANTS.TAB_ACTOR_COMBAT]: {
           [CONSTANTS.SHEET_TYPE_NPC]: {
+            cr: { ...crColumn, order: 100, priority: 500 },
+            quantity: { ...quantityColumn, order: 400, priority: 500 },
+            initiative: { ...initiativeColumn, order: 300, priority: 100 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },

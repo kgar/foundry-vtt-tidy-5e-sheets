@@ -3,7 +3,6 @@
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { EncounterCombatColumnRuntime } from 'src/runtime/tables/EncounterCombatColumnRuntime.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -12,6 +11,7 @@
   import type { EncounterMemberQuadroneContext } from 'src/types/types';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
@@ -44,11 +44,11 @@
   </button>
   <button class="button">
     <i class="fas fa-swords"></i>
-    Add to Combat Tracker
+    {localize('TIDY5E.Encounter.AddToCombatTracker.Label')}
   </button>
   <button class="button">
     <i class="fas fa-circle-dashed"></i>
-    Add a Placeholder
+    {localize('TIDY5E.Encounter.AddAPlaceholder.Label')}
   </button>
 </aside>
 
@@ -58,7 +58,7 @@
 >
   {#if npcs.length}
     {@const columns = new ColumnsLoadout(
-      EncounterCombatColumnRuntime.getConfiguredColumnSpecifications({
+      EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
         tabId: CONSTANTS.TAB_ACTOR_COMBAT,
         sectionKey: CONSTANTS.SHEET_TYPE_NPC,
@@ -68,7 +68,7 @@
       }),
     )}
     {@const visibleItemCount = npcs.length}
-    {@const hiddenColumns = EncounterCombatColumnRuntime.determineHiddenColumns(
+    {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
       sectionsInlineWidth,
       columns,
     )}
