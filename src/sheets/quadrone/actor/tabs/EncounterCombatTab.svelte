@@ -3,7 +3,7 @@
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
+  import { EncounterCombatColumnRuntime } from 'src/runtime/tables/EncounterCombatColumnRuntime.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
@@ -37,7 +37,20 @@
   });
 </script>
 
-<aside class="sidebar">Bro can we sidebar rq?</aside>
+<aside class="sidebar flexcol">
+  <button class="button">
+    <i class="fas fa-dice-d20"></i>
+    {localize('DND5E.InitiativeRoll')}
+  </button>
+  <button class="button">
+    <i class="fas fa-swords"></i>
+    Add to Combat Tracker
+  </button>
+  <button class="button">
+    <i class="fas fa-circle-dashed"></i>
+    Add a Placeholder
+  </button>
+</aside>
 
 <section
   class="group-tab-content group-members-content flexcol"
@@ -45,7 +58,7 @@
 >
   {#if npcs.length}
     {@const columns = new ColumnsLoadout(
-      EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
+      EncounterCombatColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
         tabId: CONSTANTS.TAB_ACTOR_COMBAT,
         sectionKey: CONSTANTS.SHEET_TYPE_NPC,
@@ -55,7 +68,7 @@
       }),
     )}
     {@const visibleItemCount = npcs.length}
-    {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
+    {@const hiddenColumns = EncounterCombatColumnRuntime.determineHiddenColumns(
       sectionsInlineWidth,
       columns,
     )}

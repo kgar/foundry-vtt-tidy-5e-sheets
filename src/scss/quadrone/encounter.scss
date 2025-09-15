@@ -1,5 +1,10 @@
 .tidy5e-sheet.application:where(.quadrone.encounter) {
 
+  &::before {
+    background-image: var(--t5e-sheet-header-bg, url(../../systems/dnd5e/ui/official/banner-encounter-dark.avif));
+    mix-blend-mode: darken;
+  }
+
   .sheet-header {
     .actor-subtitle {
       margin-bottom: var(--t5e-size-halfx);
@@ -46,7 +51,7 @@
   }
 
   .window-content .main-content>.tidy-tab {
-    .inventory .group-tab-content {
+    &.inventory .group-tab-content {
       padding-left: var(--t5e-size-4x);
     }
   }

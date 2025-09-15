@@ -4,6 +4,7 @@ import { ActivityColumnRuntime } from './tables/ActivityColumnRuntime.svelte';
 import { EffectColumnRuntime } from './tables/EffectColumnRuntime.svelte';
 import { GroupMemberColumnRuntime } from './tables/GroupMemberColumnRuntime.svelte';
 import { EncounterMemberColumnRuntime } from './tables/EncounterMemberColumnRuntime.svelte';
+import { EncounterCombatColumnRuntime } from './tables/EncounterCombatColumnRuntime.svelte';
 import { ItemColumnRuntime } from './tables/ItemColumnRuntime.svelte';
 
 /**
@@ -23,4 +24,5 @@ export function initRuntimeOnReady() {
   EffectColumnRuntime.initOnReady();
   GroupMemberColumnRuntime.initOnReady();
   EncounterMemberColumnRuntime.initOnReady();
+  EncounterCombatColumnRuntime.initOnReady();
 }
