@@ -25,5 +25,5 @@
   onchange={(ev) => handleChange(ev)}
   {@attach InputAttachments.selectOnFocus}
   value={rowContext.quantity.formula}
-  placeholder="1d4+1"
+  placeholder="{context.unlocked ? '1d4+1' : '—'}"
 />

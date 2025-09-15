@@ -47,43 +47,48 @@
 
 <header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
-    <div class="difficulty-block">
-      <span class="label font-label-medium color-text-gold">
-        {localize('TIDY5E.Difficulty')}
-      </span>
-      <span class="label difficulty font-label-medium color-text-default">
-        {#if context.difficulty}
-          {context.difficulty}
-        {:else}
-          <span class="color-text-disabled">—</span>
-        {/if}
-      </span>
-    </div>
-    <div
-      class={[
-        'actor-details-container flexcol',
-        { 'show-xp': context.enableXp },
-      ]}
-    >
-      <div
-        class="actor-details-name-row"
-        data-tidy-sheet-part="name-header-row"
-      >
-        {#if context.unlocked}
-          <TextInputQuadrone
-            field="name"
-            document={context.actor}
-            value={context.actor.name}
-            class="actor-name flex1 h1"
-            data-tidy-sheet-part="actor-name"
-          />
-        {:else}
-          <h1 class="actor-name flex1" data-tidy-sheet-part="actor-name">
-            {context.actor.name}
-          </h1>
-        {/if}
+    <div class="flexcol">
+      <div class="flexrow">
+        <div
+          class={[
+            'actor-details-container flexcol',
+            { 'show-xp': context.enableXp },
+          ]}
+        >
+          <div
+            class="actor-details-name-row"
+            data-tidy-sheet-part="name-header-row"
+          >
+            {#if context.unlocked}
+              <TextInputQuadrone
+                field="name"
+                document={context.actor}
+                value={context.actor.name}
+                class="actor-name flex1 h1"
+                data-tidy-sheet-part="actor-name"
+              />
+            {:else}
+              <h1 class="actor-name flex1" data-tidy-sheet-part="actor-name">
+                {context.actor.name}
+              </h1>
+            {/if}
+          </div>
+          <EncounterSubtitle />
+        </div>
+        
+        <div class="difficulty-block">
+          <!-- <span class="label font-label-medium color-text-gold">
+            {localize('TIDY5E.Difficulty')}
+          </span> -->
+          <span class="label difficulty font-label-medium color-text-default">
+            {#if context.difficulty}
+              {context.difficulty}
+            {:else}
+              <span class="color-text-disabled">—</span>
+            {/if}
+          </span>
+        </div>
       </div>
-      <EncounterSubtitle />
 
       {#if context.editable}
         <div

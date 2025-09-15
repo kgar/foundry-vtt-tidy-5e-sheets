@@ -13,6 +13,7 @@
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
+  import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
@@ -62,9 +63,13 @@
       columns,
     )}
 
-    <div class="meter progress xp-meter">
-      <!-- TODO: Add total XP meter -->
+    <div class="difficulty-row flexrow">
+      <div class="pill pill-medium flexshrink" data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty}">
+        {context.difficulty}
+      </div>
+      <EncounterXPBudgetBar encounter={context.members} />
     </div>
+    
     <TidyTable key="npcs">
       {#snippet header()}
         <TidyTableHeaderRow class="theme-dark">

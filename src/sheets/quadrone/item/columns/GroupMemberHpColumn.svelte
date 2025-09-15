@@ -32,14 +32,14 @@
   style="--bar-percentage: {hpPct.toFixed(0)}%"
 ></div>
 <div class="flexrow">
-  <span class="font-data-medium color-text-default">{hpValue}</span>
+  <span class="font-data-medium color-text-default value">{hpValue}</span>
   <span class="font-body-medium color-text-lightest separator">/</span>
-  <span class="font-label-medium color-text-default">{effectiveMaxHp}</span>
+  <span class="font-label-medium color-text-default max">{effectiveMaxHp}</span>
 </div>
 {#if 'canEdit' in rowContext && rowContext.canEdit}
   <button
     type="button"
-    class="button borderless-button button-icon-only"
+    class="button button-borderless button-icon-only"
     aria-label={localize('DND5E.HPFormulaRollMessage')}
     data-tooltip
     onclick={async () => {

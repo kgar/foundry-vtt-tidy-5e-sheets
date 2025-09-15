@@ -29,7 +29,7 @@
     }
 
     .actor-subtitle {
-      max-height: 1.25rem;
+      // max-height: 1.25rem;
       min-height: 1.25rem;
       align-content: center;
 
@@ -155,16 +155,16 @@
     &.member-proficient .skill-ability {
       color: var(--t5e-member-color-hover);
     }
-    
+
     &.member-unproficient {
-      
+
       .skill-ability,
       .skill {
         opacity: 0.5;
       }
-      
+
     }
-    
+
     .skill {
       flex: 1 1 auto;
     }
@@ -373,7 +373,8 @@
       }
     }
 
-    &.members, &.combat {
+    &.members,
+    &.combat {
 
       &.active {
         display: flex;
