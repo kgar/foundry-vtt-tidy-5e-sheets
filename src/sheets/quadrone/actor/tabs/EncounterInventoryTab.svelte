@@ -68,7 +68,7 @@
       sheetDocument={context.actor}
       root={true}
     />
-
-    <ActorInventoryFooter useAttunement={false} />
   </div>
+
+  <ActorInventoryFooter useAttunement={false} />
 </div>

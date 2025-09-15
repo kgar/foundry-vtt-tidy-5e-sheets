@@ -9,6 +9,6 @@
   }: ColumnCellProps<any, EncounterMemberQuadroneContext> = $props();
 </script>
 
-<span class="font-label-large color-text-default"
+<span class="cr-value font-label-large color-text-default"
   >{FoundryAdapter.formatCr(rowDocument.system.details.cr)}</span
 >

@@ -477,7 +477,7 @@ class TableRowActionsRuntime {
             props: (args) => ({
               doc: args.data,
               deleteFn: () => context.actor.system.removeMember(args.data),
-              tooltip: FoundryAdapter.localize('DND5E.Encounter.Action.Remove'),
+              tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         }
@@ -513,7 +513,7 @@ class TableRowActionsRuntime {
             props: (args) => ({
               doc: args.data,
               deleteFn: () => context.actor.system.removeMember(args.data),
-              tooltip: FoundryAdapter.localize('DND5E.Encounter.Action.Remove'),
+              tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);
         } else {
@@ -522,7 +522,7 @@ class TableRowActionsRuntime {
             props: (args) => ({
               doc: args.data,
               deleteFn: () => context.actor.system.removeMember(args.data),
-              tooltip: FoundryAdapter.localize('DND5E.Encounter.Action.Remove'),
+              tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
           } satisfies TableAction<typeof EncounterCombatMemberToggle>);
         }

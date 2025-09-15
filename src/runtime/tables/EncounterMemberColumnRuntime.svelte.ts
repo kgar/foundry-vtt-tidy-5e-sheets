@@ -42,7 +42,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: EncounterMemberQuantityColumn,
       },
-      widthRems: 4.5,
+      widthRems: 4.75,
     };
 
     const hpColumn: ColumnSpecificationBase = {
@@ -107,12 +107,12 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
           [CONSTANTS.SHEET_TYPE_NPC]: {
             cr: { ...crColumn, order: 100, priority: 500 },
             quantity: { ...quantityColumn, order: 400, priority: 500 },
-            hp: { ...hpColumn, order: 300, priority: 300 },
+            hp: { ...hpColumn, order: 300, priority: 100 },
             npcXp: { ...npcXpColumn, order: 400, priority: 200 },
             qtyFormulaColumn: {
               ...qtyFormulaColumn,
               order: 400,
-              priority: 100,
+              priority: 500,
             },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
