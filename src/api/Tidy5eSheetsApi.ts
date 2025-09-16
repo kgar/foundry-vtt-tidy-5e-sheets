@@ -14,6 +14,8 @@ import type {
   SupportedContent,
   ItemTabRegistrationOptions,
   HeaderControlRegistrationParams,
+  TabIdDocumentItemTypesParams,
+  TabIdDocumentItemTypesOptions,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { HtmlContent } from './content/HtmlContent';
@@ -31,6 +33,7 @@ import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRunti
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { TidySvelteApi } from './svelte/TidySvelteApi';
+import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -1333,5 +1336,26 @@ export class Tidy5eSheetsApi {
    */
   useHandlebarsRendering(html: string): string {
     return `<div style="display: contents;" ${CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE}>${html}</div>`;
+  }
+
+  /**
+   * Registers additional mappings of tab ID to item types, controlling available options when clicking a "create"
+   * button for a given tab.
+   * 
+   * @param params  params for registration (`tabId` and an array of `documentItemTypes`)
+   * @param options options for registration (currently `mode`: 'merge' or 'override')
+   * 
+   * @example Allowing creation of Spells on some newly-registered tab with ID `'my-new-tab'`
+   * ```js
+   * Hooks.on('tidy5e-sheet.ready', (api) => {
+   *   api.registerTabIdDocumentItemTypes({ tabId: 'my-new-tab', documentItemTypes: ['spell'] });
+   * });
+   * ```
+   */
+  registerTabIdDocumentItemTypes(
+    params: TabIdDocumentItemTypesParams,
+    options?: TabIdDocumentItemTypesOptions
+  ) {
+    TabDocumentItemTypesRuntime.registerTypes(params, options);
   }
 }

@@ -15,7 +15,7 @@
 
   let subtitle = $derived(
     [
-      favorite.item.system.type.label ??
+      favorite.item.system.type?.label ??
         game.i18n.localize(CONFIG.Item.typeLabels[favorite.item.type]),
     ].filterJoin(` <div class="divider-dot"></div> `),
   );
@@ -29,8 +29,23 @@
   let modifier = $derived(favorite.item?.labels?.modifier);
 
   let save = $derived(
-    favorite.item?.system?.activities?.getByType?.('save')?.[0]?.save,
+    getSaveData(favorite.item?.system?.activities?.getByType?.('save')?.[0]?.save),
   );
+
+  function getSaveData(save: any) {
+    if (foundry.utils.getType(save?.ability) === 'Set')
+      save = {
+        ...save,
+        ability:
+          save.ability.size > 2
+            ? game.i18n.localize('DND5E.AbbreviationDC')
+            : Array.from<string>(save.ability)
+                .map((k: string) => CONFIG.DND5E.abilities[k]?.abbreviation)
+                .filterJoin(' / '),
+      };
+
+    return save;
+  }
 
   let quantity = $derived(favorite.item?.system?.quantity);
 
@@ -57,7 +72,7 @@
     name={favorite.item?.name || ''}
     {subtitle}
   />
-  <div class="">
+  <div class={uses?.max || !isNil(modifier) || save?.dc?.value || quantity ? "stacked" : ""}>
     <span class="primary">
       {#if uses?.max}
         <FavoriteItemUses {favorite} {uses} />
@@ -72,14 +87,12 @@
           </span>
         </span>
       {:else if save?.dc?.value}
-        <span class="save">
-          <span class="value">
-            {save.dc.value}
-          </span>
-          <span class="ability">
-            {save.ability}
-          </span>
-        </span>
+      <span class="ability font-label-medium color-text-gold-emphasis">
+        {save.ability}
+      </span>
+      <span class="value font-data-medium">
+        {save.dc.value}
+      </span>
       {:else if quantity}
         <span class="sign">&times;</span>
         <span class="value">{quantity}</span>
