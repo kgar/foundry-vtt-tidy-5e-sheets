@@ -138,72 +138,74 @@
   }
 </script>
 
-<div class="strain-values flexrow">
-  <div class="strain-value">
-    <span class="value">{totalStrain}</span>
-    {localize('MCDMCB.TALENT.STRAIN.Total')}
+{#if context.actor.type === 'character'}
+  <div class="strain-values flexrow">
+    <div class="strain-value">
+      <span class="value">{totalStrain}</span>
+      {localize('MCDMCB.TALENT.STRAIN.Total')}
+    </div>
+    <div class="strain-value">
+      <span class="value">{maxStrain}</span>
+      {localize('MCDMCB.TALENT.STRAIN.Max')}
+    </div>
   </div>
-  <div class="strain-value">
-    <span class="value">{maxStrain}</span>
-    {localize('MCDMCB.TALENT.STRAIN.Max')}
-  </div>
-</div>
-<div class="tidy-strain-container" bind:this={sectionsContainer}>
-  <TidyTable key="strain-table">
-    {#snippet header(expanded)}
-      <TidyTableHeaderRow
-        class={[
-          'theme-dark'
-        ]}
-      >
-        <TidyTableHeaderCell columnWidth="5rem" primary={true} class="header-label-cell" data-tidy-column-key="strain-level">
-          <h3>{localize('MCDMCB.TALENT.STRAIN.Label')}</h3>
-        </TidyTableHeaderCell>
-        {#each Object.entries(strainTypes) as [strainKey, strainType]}
-          <TidyTableHeaderCell columnWidth="{dynamicColumnWidth}px" data-tidy-column-key={strainKey}>
-            {strainType.header}
+  <div class="tidy-strain-container" bind:this={sectionsContainer}>
+    <TidyTable key="strain-table">
+      {#snippet header(expanded)}
+        <TidyTableHeaderRow
+          class={[
+            'theme-dark'
+          ]}
+        >
+          <TidyTableHeaderCell columnWidth="5rem" primary={true} class="header-label-cell" data-tidy-column-key="strain-level">
+            <h3>{localize('MCDMCB.TALENT.STRAIN.Label')}</h3>
           </TidyTableHeaderCell>
-        {/each}
-      </TidyTableHeaderRow>
-    {/snippet}
+          {#each Object.entries(strainTypes) as [strainKey, strainType]}
+            <TidyTableHeaderCell columnWidth="{dynamicColumnWidth}px" data-tidy-column-key={strainKey}>
+              {strainType.header}
+            </TidyTableHeaderCell>
+          {/each}
+        </TidyTableHeaderRow>
+      {/snippet}
 
-    {#snippet body()}
-      {#each levels as level}
-        <TidyTableRow>
-          {#snippet children()}
-            <TidyTableCell columnWidth="5rem" attributes={{ ['data-tidy-column-key']: 'strain-level' }}>
-              {level}
-            </TidyTableCell>
-            {#each Object.entries(strainTypes) as [strainKey, strainType]}
-              <TidyTableCell
-                columnWidth="{dynamicColumnWidth}px"
-                class='tidy-mcdm-strain-effects'
-                attributes={{
-                  ['data-tidy-column-key']: strainKey,
-                  ['data-tooltip']: strainType.effects[level].tooltip
-                }}
-              >
-                <input
-                  id="{strainKey}-{level}"
-                  type="radio"
-                  name="{strainKey}"
-                  data-dtype="Number"
-                  value={currentStrain[strainKey]}
-                  checked={currentStrain[strainKey] === level}
-                  disabled={maxStrain - totalStrain < level - currentStrain[strainKey]}
-                  onchange={() => {
-                    onChangeStrain(strainKey, level);
+      {#snippet body()}
+        {#each levels as level}
+          <TidyTableRow>
+            {#snippet children()}
+              <TidyTableCell columnWidth="5rem" attributes={{ ['data-tidy-column-key']: 'strain-level' }}>
+                {level}
+              </TidyTableCell>
+              {#each Object.entries(strainTypes) as [strainKey, strainType]}
+                <TidyTableCell
+                  columnWidth="{dynamicColumnWidth}px"
+                  class='tidy-mcdm-strain-effects'
+                  attributes={{
+                    ['data-tidy-column-key']: strainKey,
+                    ['data-tooltip']: strainType.effects[level].tooltip
                   }}
                 >
-                <label class={currentStrain[strainKey] >= level ? 'selected' : ''} for="{strainKey}-{level}">{strainType.effects[level].label}</label>
-              </TidyTableCell>
-            {/each}
-          {/snippet}
-        </TidyTableRow>
-      {/each}
-    {/snippet}
-  </TidyTable>
-</div>
+                  <input
+                    id="{strainKey}-{level}"
+                    type="radio"
+                    name="{strainKey}"
+                    data-dtype="Number"
+                    value={currentStrain[strainKey]}
+                    checked={currentStrain[strainKey] === level}
+                    disabled={maxStrain - totalStrain < level - currentStrain[strainKey]}
+                    onchange={() => {
+                      onChangeStrain(strainKey, level);
+                    }}
+                  >
+                  <label class={currentStrain[strainKey] >= level ? 'selected' : ''} for="{strainKey}-{level}">{strainType.effects[level].label}</label>
+                </TidyTableCell>
+              {/each}
+            {/snippet}
+          </TidyTableRow>
+        {/each}
+      {/snippet}
+    </TidyTable>
+  </div>
+{/if}
 <ActionBar bind:searchCriteria sections={powerSections} {tabId} />
 <McdmPowersTables sections={powerSections} {searchCriteria} {context} {tabId}/>
 <div class={['sheet-footer flexrow']}>
