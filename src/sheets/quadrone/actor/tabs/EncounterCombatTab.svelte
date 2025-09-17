@@ -39,16 +39,20 @@
 
 <aside class="sidebar flexcol">
   <button class="button">
+    <i class="fas fa-circle-dashed"></i>
+    {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
+  </button>
+  <button class="button">
+    <i class="fas fa-circle-dashed"></i>
+    {localize('TIDY5E.Encounter.AddAllPlaceholders.Label')}
+  </button>
+  <button class="button">
     <i class="fas fa-dice-d20"></i>
-    {localize('DND5E.InitiativeRoll')}
+    {localize('TIDY5E.Encounter.PrerollInitiative')}
   </button>
   <button class="button">
     <i class="fas fa-swords"></i>
     {localize('TIDY5E.Encounter.AddToCombatTracker.Label')}
-  </button>
-  <button class="button">
-    <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.Encounter.AddAPlaceholder.Label')}
   </button>
 </aside>
 
