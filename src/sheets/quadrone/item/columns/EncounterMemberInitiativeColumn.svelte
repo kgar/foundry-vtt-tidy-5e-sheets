@@ -21,7 +21,7 @@
 </script>
 
 {#if context.unlocked}
-  <span class="quantity-tracker-input-wrapper flexrow">
+  <span class="tidy-inline-quantity-tracker quantity-tracker-input-wrapper flexrow">
     <input
       type="text"
       class="quantity-tracker-input"
@@ -36,7 +36,7 @@
         input.value = quantity;
       }}
     />
-    <button class="button button-icon-only button-borderless flexshrink">
+    <button class="button button-roll button-icon-only button-borderless flexshrink">
       <i class="fa-solid fa-dice-d20"></i>
     </button>
   </span>

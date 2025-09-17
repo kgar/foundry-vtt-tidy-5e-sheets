@@ -8,6 +8,7 @@
   .sheet-header {
     .actor-subtitle {
       margin-bottom: var(--t5e-size-halfx);
+      row-gap: var(--t5e-size-halfx);
       flex-wrap: wrap;
     }
 
@@ -22,7 +23,7 @@
       display: flex;
       flex: 0 0 auto;
       flex-direction: column;
-      margin: -0.5rem 0;
+      margin: -0.5rem 0.5rem -0.5rem;
       padding: var(--t5e-size-5x);
       position: relative;
 
@@ -155,23 +156,6 @@
             font-weight: var(--t5e-font-weight-medium);
           }
         }
-
-        &[data-tidy-column-key="qtyFormulaColumn"] {
-          input {
-            text-align: center;
-          }
-        }
-
-        .tidy-inline-quantity-tracker {
-          margin: 0 -0.25rem;
-
-          input {
-            font-size: var(--font-size-18);
-            min-width: 2.25rem;
-            min-height: 2.5rem;
-            margin: 0 -0.25rem;
-          }
-        }
       }
     }
 
@@ -181,19 +165,58 @@
         justify-content: flex-end;
       }
     }
+
+    .tidy-table-cell {
+      &[data-tidy-column-key="qtyFormulaColumn"] {
+        input {
+          margin-top: 0.0625rem;
+          text-align: center;
+        }
+      }
+
+      .tidy-inline-quantity-tracker {
+        margin: 0 -0.25rem;
+
+        input {
+          font-size: var(--font-size-18);
+          min-width: 2.25rem;
+          max-width: 2.25rem;
+          min-height: 2.5rem;
+          margin: 0 -0.25rem;
+        }
+
+        button {
+          display: flex;
+          align-self: center;
+        }
+
+        .button-roll {
+          margin-right: -0.25rem;
+        }
+      }
+    }
   }
 
   &.sheet-mode-play {
-    .tidy-tab.members {
+    .tidy-tab {
       .tidy-table-cell[data-tidy-column-key="qtyFormulaColumn"] {
         input {
           pointer-events: none;
           background: none;
           box-shadow: none;
           border: none;
+          color: var(--t5e-color-text-gold-emphasis);
           padding: 0;
-          margin: 0;
+          text-align: center;
         }
+      }
+    }
+  }
+
+  &.sheet-mode-edit {
+    .tidy-tab.combat {
+      .tidy-table-cell[data-tidy-column-key="initiative"] {
+        padding-left: 0.625rem;
       }
     }
   }

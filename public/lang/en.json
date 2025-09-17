@@ -898,9 +898,13 @@
   "TIDY5E.AggregateSkill.HighMeasure": "High",
   "TIDY5E.AggregateSkill.LowMeasure": "Low",
   "TIDY5E.Difficulty": "Difficulty",
-  "TIDY5E.Encounter.Combat.IncludeInCombat.Tooltip": "Include in combat activities",
-  "TIDY5E.Encounter.Combat.ExcludeFromCombat.Tooltip": "Exclude from combat activities",
-  "TIDY5E.Encounter.AddMember.Label": "Add Member",
-  "TIDY5E.Encounter.AddToCombatTracker.Label": "Add to Combat Tracker",
-  "TIDY5E.Encounter.AddAPlaceholder.Label": "Add a Placeholder"
+  "TIDY5E.Encounter": {
+    "Combat.IncludeInCombat.Tooltip": "Include in combat activities",
+    "Combat.ExcludeFromCombat.Tooltip": "Exclude from combat activities",
+    "AddMember.Label": "Add Member",
+    "AddToCombatTracker.Label": "Add to Active Encounter",
+    "AddPlaceholder.Label": "Add a Placeholder",
+    "AddAllPlaceholders.Label": "Add All as Placeholders",
+    "PrerollInitiative": "Preroll Initiative"
+  }
 }

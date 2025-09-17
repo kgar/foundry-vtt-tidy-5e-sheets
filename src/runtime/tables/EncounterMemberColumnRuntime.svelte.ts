@@ -86,6 +86,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
     };
 
     const actionsColumn: ColumnSpecificationBase = {
+      headerClasses: 'header-cell-actions',
       headerContent: {
         type: 'component',
         component: MemberActionsColumnHeader,
@@ -120,13 +121,13 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
           [CONSTANTS.SHEET_TYPE_NPC]: {
             cr: { ...crColumn, order: 100, priority: 500 },
             quantity: { ...quantityColumn, order: 400, priority: 500 },
-            hp: { ...hpColumn, order: 300, priority: 100 },
-            npcXp: { ...npcXpColumn, order: 400, priority: 200 },
             qtyFormulaColumn: {
               ...qtyFormulaColumn,
               order: 400,
               priority: 500,
             },
+            hp: { ...hpColumn, order: 300, priority: 100 },
+            npcXp: { ...npcXpColumn, order: 400, priority: 200 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },
@@ -134,6 +135,11 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
           [CONSTANTS.SHEET_TYPE_NPC]: {
             cr: { ...crColumn, order: 100, priority: 500 },
             quantity: { ...quantityColumn, order: 400, priority: 500 },
+            qtyFormulaColumn: {
+              ...qtyFormulaColumn,
+              order: 400,
+              priority: 500,
+            },
             initiative: { ...initiativeColumn, order: 300, priority: 100 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
