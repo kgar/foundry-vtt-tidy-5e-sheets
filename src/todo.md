@@ -13,6 +13,11 @@
 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] Plan and task Bastions tab
+- [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
+
+### Character Sheet
+
+- [ ] Character sheet, Character tab : Need weapon master indicators on weapon proficiencies
 
 ### The Short List
 
@@ -192,19 +197,8 @@ Experimentation:
 game.combat.createEmbeddedDocuments("Combatant", [{ name: "Fred", img: 'systems/dnd5e/tokens/heroes/ClericDragonborn.webp', initiative: 20}]);
 ```
 
-WIP:
-```mermaid
-flowchart TB;
-  ButtonPress[User clicks ***Add to Combat Tracker***] --> PlaceholderPreferred{Actor has Placeholder row <br />action active?}
-  PlaceholderPreferred --Yes--> PlaceholderAlreadyInTracker{"User is already in <br />combat tracker?"}
-  PlaceholderAlreadyInTracker --"Yes"--> HandlePlaceholderAlreadyInTracker["Skip"]
-  PlaceholderAlreadyInTracker --"No"--> Sideloaded{Is actor loaded into sidebar?}
-  Sideloaded --Yes--> AddPlaceholderCombatant[Add placeholder combatant for sidebar actor]  
-  Sideloaded --No--> SideloadActor[Load actor into sidebar]
-  SideloadActor --> AddPlaceholderCombatant
-  PlaceholderPreferred --No--> ActorOnCanvas{Does the actor have <br />one or more tokens <br />on the canvas?}
-  ActorOnCanvas --Yes--> AddTokenCombatant[Add token combatant]
-```
+Hooks:
+TODO
 
 
 ### Huh?
