@@ -97,7 +97,7 @@
     const sheetPreferences = SheetPreferencesService.getByType(context.actor.type);
     const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
     const sectionConfig = TidyFlags.sectionConfig.get(context.actor)?.[tabId];
-    const allSections: PowersSection[] = [...Object.entries(orderToPowersMap).map(([order, powers]) => ({
+    const allSections = Object.entries(orderToPowersMap).map<PowersSection>(([order, powers]) => ({
       key: `order${order}`,
       type: 'powers' as 'powers',
       order: sectionConfig?.[`order${order}`]?.order ?? order,
@@ -109,7 +109,7 @@
       canCreate: true,
       rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
       show: sectionConfig?.[`order${order}`]?.show !== false
-    })), ...Object.entries(customSectionToPowersMap).map(([sectionKey, powers]) => ({
+    })).concat(Object.entries(customSectionToPowersMap).map(([sectionKey, powers]) => ({
       key: sectionKey,
       type: 'powers' as 'powers',
       order: sectionConfig?.[sectionKey]?.order ?? 1000,
@@ -121,7 +121,7 @@
       canCreate: true,
       rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
       show: sectionConfig?.[sectionKey]?.show !== false
-    }))]
+    })))
     return SheetSections.sortKeyedSections(allSections, sectionConfig)
   });
 
