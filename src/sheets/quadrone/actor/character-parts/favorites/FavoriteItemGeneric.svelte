@@ -28,24 +28,20 @@
 
   let modifier = $derived(favorite.item?.labels?.modifier);
 
-  let save = $derived(
-    getSaveData(favorite.item?.system?.activities?.getByType?.('save')?.[0]?.save),
-  );
-
-  function getSaveData(save: any) {
-    if (foundry.utils.getType(save?.ability) === 'Set')
-      save = {
-        ...save,
+  let save: any = $derived.by(() => {
+    const saveData = favorite.item?.system?.activities?.getByType?.('save')?.[0]?.save;
+    if (foundry.utils.getType(saveData?.ability) === 'Set')
+      return {
+        ...saveData,
         ability:
-          save.ability.size > 2
+          saveData.ability.size > 2
             ? game.i18n.localize('DND5E.AbbreviationDC')
-            : Array.from<string>(save.ability)
+            : Array.from<string>(saveData.ability)
                 .map((k: string) => CONFIG.DND5E.abilities[k]?.abbreviation)
-                .filterJoin(' / '),
-      };
-
-    return save;
-  }
+                .filterJoin(' / ')
+      }
+    return saveData;
+  });
 
   let quantity = $derived(favorite.item?.system?.quantity);
 
@@ -72,7 +68,7 @@
     name={favorite.item?.name || ''}
     {subtitle}
   />
-  <div class={uses?.max || !isNil(modifier) || save?.dc?.value || quantity ? "stacked" : ""}>
+    <div class={{stacked : uses?.max || !isNil(modifier) || save?.dc?.value || quantity}}>
     <span class="primary">
       {#if uses?.max}
         <FavoriteItemUses {favorite} {uses} />

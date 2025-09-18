@@ -1041,22 +1041,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * @returns {string[]}  Types of items to allow to create.
      */
     _addDocumentItemTypes(tab: string): string[] {
-      const registeredTypes = TabDocumentItemTypesRuntime.getTypes(tab);
-
-      if (registeredTypes) return registeredTypes;
-
-      // TODO: Technically not necessary?
-      switch (tab) {
-        case CONSTANTS.TAB_CHARACTER_FEATURES:
-        case CONSTANTS.TAB_NPC_STATBLOCK:
-          return ['feat'];
-        case CONSTANTS.TAB_ACTOR_INVENTORY:
-          return Inventory.getInventoryTypes();
-        case CONSTANTS.TAB_ACTOR_SPELLBOOK:
-          return ['spell'];
-        default:
-          return [];
-      }
+      return TabDocumentItemTypesRuntime.getTypes(tab);
     }
 
     private async setExpandedItemData() {
