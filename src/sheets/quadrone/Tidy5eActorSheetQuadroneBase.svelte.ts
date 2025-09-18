@@ -57,6 +57,7 @@ import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.
 import { SvelteMap } from 'svelte/reactivity';
 import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
+import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -1040,17 +1041,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * @returns {string[]}  Types of items to allow to create.
      */
     _addDocumentItemTypes(tab: string): string[] {
-      switch (tab) {
-        case CONSTANTS.TAB_CHARACTER_FEATURES:
-        case CONSTANTS.TAB_NPC_STATBLOCK:
-          return ['feat'];
-        case CONSTANTS.TAB_ACTOR_INVENTORY:
-          return Inventory.getInventoryTypes();
-        case CONSTANTS.TAB_ACTOR_SPELLBOOK:
-          return ['spell'];
-        default:
-          return [];
-      }
+      return TabDocumentItemTypesRuntime.getTypes(tab);
     }
 
     private async setExpandedItemData() {
