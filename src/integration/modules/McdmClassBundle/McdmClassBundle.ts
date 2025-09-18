@@ -142,10 +142,13 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
       ],
       'MCDMCB.TALENT.POWERS.SPECIALTIES.Header': powerSpecialtyFilters
     };
+
+    // TODO: expose this via API
     ItemFilterRuntime._documentTabFiltersQuadrone[CONSTANTS.SHEET_TYPE_CHARACTER][this.powersTabId] = filterTabs;
     ItemFilterRuntime._documentTabFiltersQuadrone[CONSTANTS.SHEET_TYPE_NPC][this.powersTabId] = filterTabs;
 
     const filterPins = new Set(filterTabs['DND5E.ItemActivationCost'].map(i => i.name));
+    // TODO: expose this via API
     ItemFilterRuntime.defaultFilterPinsQuadrone[CONSTANTS.SHEET_TYPE_CHARACTER][this.powersTabId] = filterPins;
     ItemFilterRuntime.defaultFilterPinsQuadrone[CONSTANTS.SHEET_TYPE_NPC][this.powersTabId] = filterPins;
   }
