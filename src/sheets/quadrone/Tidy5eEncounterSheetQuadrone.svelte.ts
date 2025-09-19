@@ -240,7 +240,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   /*  Sheet Actions                               */
   /* -------------------------------------------- */
 
-  async updateMemberQuantity(uuid: string, newValue: string) {
+  updateMemberQuantity(uuid: string, newValue: string) {
     return this.updateMember(uuid, (member) => {
       const currentQuantity = member.quantity.value;
       const newQuantity =
@@ -254,16 +254,16 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     });
   }
 
-  async updateMemberFormula(uuid: string, newValue: string | number) {
+  updateMemberFormula(uuid: string, newValue: string | number) {
     return this.updateMember(uuid, (member) => {
       foundry.utils.setProperty(member, 'quantity.formula', newValue);
     });
   }
 
-  async updateMember(
+  updateMember(
     uuid: string,
     memberUpdateCallback: (member: any) => void
-  ) {
+  ): Promise<any> | undefined {
     const members: any[] = this.actor.system.toObject().members;
 
     const member = members.find((m: any) => m.uuid === uuid);
@@ -274,7 +274,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
     memberUpdateCallback(member);
 
-    return await this.actor.update({ 'system.members': members });
+    return this.actor.update({ 'system.members': members });
   }
 
   async award() {

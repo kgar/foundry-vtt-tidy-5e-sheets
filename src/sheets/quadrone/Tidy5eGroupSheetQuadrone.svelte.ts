@@ -288,19 +288,19 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
       members: sections,
       skills: groupSkills,
       traits: {
-        languages: [...languages.values()].toSorted((a, b) =>
+        languages: [...languages.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
-        senses: [...senses.values()].toSorted((a, b) =>
+        senses: [...senses.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
-        specials: [...specials.values()].toSorted((a, b) =>
+        specials: [...specials.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
-        speeds: [...speeds.values()].toSorted((a, b) =>
+        speeds: [...speeds.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
-        tools: [...tools.values()].toSorted((a, b) =>
+        tools: [...tools.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
       },
