@@ -186,27 +186,27 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     );
 
     return {
-      creatureTypes: [...creatureTypes.values()].toSorted((a, b) =>
+      creatureTypes: [...creatureTypes.values()].sort((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
       ),
       members: {
         npc: memberContexts,
         all: npcMap,
       },
-      skills: [...skills.values()].toSorted((a, b) =>
+      skills: [...skills.values()].sort((a, b) =>
         a.name.localeCompare(b.name, game.i18n.lang)
       ),
       traits: {
-        languages: [...languages.values()].toSorted((a, b) =>
+        languages: [...languages.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
-        senses: [...senses.values()].toSorted((a, b) =>
+        senses: [...senses.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
-        specials: [...specials.values()].toSorted((a, b) =>
+        specials: [...specials.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
-        speeds: [...speeds.values()].toSorted((a, b) =>
+        speeds: [...speeds.values()].sort((a, b) =>
           a.label.localeCompare(b.label, game.i18n.lang)
         ),
       },
