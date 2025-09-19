@@ -1385,6 +1385,7 @@ export type EncounterMemberQuadroneContext = {
   backgroundColor: string | undefined;
   canEdit: boolean;
   highlightColor: string | undefined;
+  initiative: number | undefined;
   portrait: MultiActorMemberPortraitContext;
   quantity: {
     value: number | undefined;

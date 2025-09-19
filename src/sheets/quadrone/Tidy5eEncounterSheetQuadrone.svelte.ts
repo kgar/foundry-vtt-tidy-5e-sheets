@@ -30,7 +30,7 @@ import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import type { EncounterMemberContext } from 'src/types/group.types';
-import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
+import { TidyFlags, type EncounterInitiative } from 'src/api';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -136,6 +136,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     traits: EncounterTraits;
   }> {
     const members: Actor5e[] = await this.actor.system.getMembers();
+    const encounterInitiative = TidyFlags.encounterInitiative.get(this.actor);
 
     let skills = this._getMemberGroupSkillMap();
 
@@ -177,6 +178,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
             ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
             : undefined,
           portrait: await this._preparePortrait(actor),
+          initiative: encounterInitiative[actor.uuid.replaceAll('.', '-')],
         };
 
         npcMap.set(actor.uuid, memberContext);
@@ -258,6 +260,50 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     return this.updateMember(uuid, (member) => {
       foundry.utils.setProperty(member, 'quantity.formula', newValue);
     });
+  }
+
+  updateMemberInitiative(uuid: string, initiative: string | number) {
+    const initiatives = TidyFlags.encounterInitiative.get(this.actor);
+
+    const parsedInitiative = Number(initiative);
+
+    if (isNaN(parsedInitiative)) {
+      return;
+    }
+
+    initiatives[uuid.replaceAll('.', '-')] = parsedInitiative;
+
+    return TidyFlags.encounterInitiative.set(this.actor, initiatives);
+  }
+
+  async getPrerolledInitiative(ev: Event, actor: Actor5e) {
+    const keys = FoundryAdapter.getRollModeState(ev);
+    const roll = actor.getInitiativeRoll({ ...keys, event: ev });
+    await roll.evaluate();
+    return roll.total;
+  }
+
+  async prerollInitiative(ev: Event, actor: Actor5e) {
+    const total = await this.getPrerolledInitiative(ev, actor);
+    this.updateMemberInitiative(actor.uuid, total);
+  }
+
+  async prerollAllInitiatives(ev: Event) {
+    const members: { actor: Actor5e }[] = await this.actor.system.getMembers();
+
+    const encounterInitiative = (
+      await Promise.all(
+        members.map(async ({ actor }) => {
+          const total = await this.getPrerolledInitiative(ev, actor);
+          return [actor.uuid.replaceAll('.', '-'), total];
+        })
+      )
+    ).reduce<EncounterInitiative>((prev, [uuid, initiative]) => {
+      prev[uuid] = initiative;
+      return prev;
+    }, {});
+
+    TidyFlags.encounterInitiative.set(this.actor, encounterInitiative);
   }
 
   updateMember(
