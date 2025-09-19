@@ -4,10 +4,28 @@
 ### Encounter Sheet
 
 - [ ] Encounter Members tab: Wire up XP bar with stops
+- [ ] Combat tab
+  - [ ] Implement Placeholder Members
+    - [ ] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string }>`
+  - [ ] Order combatants by initiative, then by name
+  - [ ] Section title - change name to "Combatants" with a count that equals the non-placeholder members
+  - [ ] "Add a Placeholder" button
+    - [ ] Relocalize to "Create a Placeholder Member"
+    - [ ] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "Placeholder"
+  - [ ] "Add All as Placeholders" button
+    - [ ] Change icon to crossed swords
+    - [ ] Take all members and placeholders and add them to the encounter tracker
+      - [ ] Members: 
+        - [ ] I can sooner: add directly as placeholders with img, name, and tracked resource at configured initiative
+        - [ ] I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative (why sideload? so they can be double-clicked to open their details and roll things)
+      - [ ] Placeholders: add directly to tracker at configured initiative
+  - [ ] "Add to Active Encounter" 
+    - [ ] Relocalize to "Add All to Encounter" button and move up to just after "Add All as Placeholders"
+    - [ ] Disable when there is no active encounter
+    - [ ] Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥
+  - [x] "Preroll Initiative" button
+- [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
 - [ ] Plan and implement the rest
-- [ ]  For all pill sections with custom options: Batch non-specials and hoist to top. Non-specials and specials are alphabetized separately (**kgar**: I'm concerned that normal/short special entries in senses, etc., will look confusing if they're batched and sorted below the regular pills. A visual indicator denoting these are custom/special would make more sense of it, but for homebrew senses and other customs/specials, the user is probably expecting to see their custom ones sorted into the regular list of pills)
-  - [ ] Group
-  - [ ] Encounter
 
 ### Group Sheet
 
