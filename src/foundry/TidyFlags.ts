@@ -8,6 +8,7 @@ import type {
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
+  EncounterInitiative,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
@@ -171,6 +172,27 @@ export class TidyFlags {
     /** Sets the actor's Attribute tab pins. */
     set(actor: Actor5e, value: AttributePinFlag[]): Promise<void> {
       return TidyFlags.setFlag(actor, TidyFlags.attributePins.key, value);
+    },
+  };
+
+  /**
+   * A record of encounter member UUIDs to their configured initiatives in the Encounter sheet.
+   */
+  static encounterInitiative = {
+    key: 'encounterInitiative' as const,
+    prop: TidyFlags.getFlagPropertyPath('encounterInitiative'),
+    /** Gets the encounter's initiatives. */
+    get(actor: Actor5e): EncounterInitiative {
+      return (
+        TidyFlags.tryGetFlag<EncounterInitiative>(
+          actor,
+          TidyFlags.encounterInitiative.key
+        ) ?? {}
+      );
+    },
+    /** Sets the encounter's initiatives. */
+    set(actor: Actor5e, value: EncounterInitiative): Promise<void> {
+      return TidyFlags.setFlag(actor, TidyFlags.encounterInitiative.key, value);
     },
   };
 

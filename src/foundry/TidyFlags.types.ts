@@ -35,3 +35,9 @@ export type DocumentJournalEntry = {
 };
 
 export type DocumentJournalEntries = Record<string, DocumentJournalEntry>;
+
+/**
+ * A record of actor member UUIDs to Initiative, for the purpose
+ * of leveraging combat placeholders in encounter sheets.
+ */
+export type EncounterInitiative = Record<string, number | undefined>;
