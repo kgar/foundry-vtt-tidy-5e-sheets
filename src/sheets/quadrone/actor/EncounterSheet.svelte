@@ -75,19 +75,18 @@
           </div>
           <EncounterSubtitle />
         </div>
-        
-        <div class="difficulty-block">
-          <!-- <span class="label font-label-medium color-text-gold">
-            {localize('TIDY5E.Difficulty')}
-          </span> -->
-          <span class="label difficulty font-label-medium color-text-default">
-            {#if context.difficulty}
-              {context.difficulty}
-            {:else}
-              <span class="color-text-disabled">—</span>
-            {/if}
-          </span>
-        </div>
+
+        {#if context.difficulty}
+          <div class="difficulty-block">
+            <span class="label difficulty font-label-medium color-text-default">
+              {#if context.difficulty}
+                {context.difficulty}
+              {:else}
+                <span class="color-text-disabled">—</span>
+              {/if}
+            </span>
+          </div>
+        {/if}
       </div>
 
       {#if context.editable}
