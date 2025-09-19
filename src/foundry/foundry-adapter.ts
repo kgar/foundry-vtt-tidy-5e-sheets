@@ -1569,4 +1569,11 @@ export const FoundryAdapter = {
 
     return classes;
   },
+  getRollModeState(ev: Event) {
+    return {
+      normal: dnd5e.utils.areKeysPressed(ev, 'skipDialogNormal'),
+      advantage: dnd5e.utils.areKeysPressed(ev, 'skipDialogAdvantage'),
+      disadvantage: dnd5e.utils.areKeysPressed(ev, 'skipDialogDisadvantage'),
+    };
+  },
 };
