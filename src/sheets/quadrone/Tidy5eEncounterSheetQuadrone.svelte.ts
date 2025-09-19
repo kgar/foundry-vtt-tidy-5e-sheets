@@ -266,13 +266,12 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   ) {
     const members: any[] = this.actor.system.toObject().members;
 
-    const index = members.findIndex((m: any, i: number) => m.uuid === uuid);
+    const member = members.find((m: any) => m.uuid === uuid);
 
-    if (index < 0) {
+    if (!member) {
       return;
     }
 
-    const member = members[index];
     memberUpdateCallback(member);
 
     return await this.actor.update({ 'system.members': members });
