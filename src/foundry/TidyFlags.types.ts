@@ -58,6 +58,10 @@ export type EncounterPlaceholder = {
    */
   id: string;
   /**
+   * The name of the placeholder.
+   */
+  name: string;
+  /**
    * A note about the placeholder, displayed as a subtitle on the placeholder, 
    * to help remind about the purpose of the placeholder or some other detail.
    */

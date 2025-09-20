@@ -4,6 +4,7 @@
 ### Encounter Sheet
 
 - [x] Encounter Members tab: Wire up XP bar with stops
+- [ ] Encounter sheet: Set up tab selection
 - [ ] Combat tab
   - [ ] Implement Placeholder Members
     - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
