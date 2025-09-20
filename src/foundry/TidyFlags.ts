@@ -9,6 +9,8 @@ import type {
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
   EncounterInitiative,
+  EncounterPlaceholders,
+  EncounterPlaceholder,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
@@ -842,6 +844,38 @@ export class TidyFlags {
           return TidyFlags.unsetFlag(actor, TidyFlags.notes4.members.value.key);
         },
       },
+    },
+  };
+
+  /**
+   * Encounter sheet placeholders which can be managed on the Combat tab
+   * and which can be inserted into the Combat Tracker for the active
+   * encounter.
+   */
+  static placeholders = {
+    key: 'placeholders' as const,
+    prop: TidyFlags.getFlagPropertyPath('placeholders'),
+    /** Gets the placeholders for the specified encounter. */
+    get(actor: Actor5e): EncounterPlaceholders {
+      return (
+        TidyFlags.tryGetFlag<EncounterPlaceholders>(
+          actor,
+          TidyFlags.placeholders.key
+        ) ?? {}
+      );
+    },
+    /** Sets the placeholders for the specified encounter. */
+    set(actor: Actor5e, placeholders: EncounterPlaceholders): Promise<void> {
+      return TidyFlags.setFlag(actor, TidyFlags.placeholders.key, placeholders);
+    },
+    /** Inserts or updates a single entry in the current placeholders for the specified actor */
+    insertOrUpdateEntry(
+      actor: Actor5e,
+      placeholder: EncounterPlaceholder
+    ): Promise<void> {
+      const placeholders = TidyFlags.placeholders.get(actor);
+      placeholders[placeholder.id] = placeholder;
+      return TidyFlags.placeholders.set(actor, placeholders);
     },
   };
 

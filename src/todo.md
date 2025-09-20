@@ -3,10 +3,10 @@
 
 ### Encounter Sheet
 
-- [ ] Encounter Members tab: Wire up XP bar with stops
+- [x] Encounter Members tab: Wire up XP bar with stops
 - [ ] Combat tab
   - [ ] Implement Placeholder Members
-    - [ ] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string }>`
+    - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
   - [ ] Order combatants by initiative, then by name
   - [ ] Section title - change name to "Combatants" with a count that equals the non-placeholder members
   - [ ] "Add a Placeholder" button
