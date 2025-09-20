@@ -8,13 +8,16 @@
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
-  import type { EncounterMemberQuadroneContext } from 'src/types/types';
+  import type {
+    EncounterMemberQuadroneContext,
+    EncounterPlaceholderQuadroneContext,
+  } from 'src/types/types';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
-  let npcs = $derived(context.members.npc);
+  let combatants = $derived(context.combatants);
 
   const localize = FoundryAdapter.localize;
   let rowActions: any[] = $derived(
@@ -64,7 +67,7 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
-  {#if npcs.length}
+  {#if combatants.length}
     {@const columns = new ColumnsLoadout(
       EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
@@ -75,7 +78,7 @@
         sheetDocument: context.actor,
       }),
     )}
-    {@const visibleItemCount = npcs.length}
+    {@const visibleItemCount = combatants.length}
     {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
       sectionsInlineWidth,
       columns,
@@ -94,78 +97,94 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {#each npcs as member}
-          {@render tableRow(member, columns, hiddenColumns)}
+        {#each combatants as member}
+          {#if member.type === 'member'}
+            {@render npcTableRow(member, columns, hiddenColumns)}
+          {:else}
+            {@render placeholderTableRow(member)}
+          {/if}
         {/each}
       {/snippet}
     </TidyTable>
   {/if}
+</section>
 
-  <!-- TODO: Extract a single Members table where you can specify the tab ID and pass a snippet for the primary column cell content. -->
-  {#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
+{#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
+  {#each columns.ordered as column}
+    {@const hidden = hiddenColumns.has(column.key)}
+    <TidyTableHeaderCell
+      class={[column.headerClasses, { hidden }]}
+      columnWidth="{column.widthRems}rem"
+      data-tidy-column-key={column.key}
+    >
+      {#if !!column.headerContent}
+        {#if column.headerContent.type === 'callback'}
+          {@html column.headerContent.callback?.(context.document, context)}
+        {:else if column.headerContent.type === 'component'}
+          <column.headerContent.component
+            sheetContext={context}
+            sheetDocument={context.document}
+            section={{
+              ...SheetSections.EMPTY,
+              rowActions: rowActions,
+            }}
+          />
+        {:else if column.headerContent.type === 'html'}
+          {@html column.headerContent.html}
+        {/if}
+      {/if}
+    </TidyTableHeaderCell>
+  {/each}
+{/snippet}
+
+{#snippet npcTableRow(
+  member: EncounterMemberQuadroneContext,
+  columns: ColumnsLoadout,
+  hiddenColumns: Set<string>,
+)}
+  <div
+    class="tidy-table-row group-member"
+    style:--t5e-theme-color-default={member.accentColor}
+    style:--t5e-theme-color-highlight={member.highlightColor}
+    style:--t5e-member-color-hover={member.highlightColor}
+    data-tidy-draggable
+    data-member-uuid={member.actor.uuid}
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
+  >
+    <EncounterMemberNameCell {member} />
     {#each columns.ordered as column}
       {@const hidden = hiddenColumns.has(column.key)}
-      <TidyTableHeaderCell
-        class={[column.headerClasses, { hidden }]}
+      <TidyTableCell
         columnWidth="{column.widthRems}rem"
-        data-tidy-column-key={column.key}
+        class={[column.cellClasses, { hidden }]}
+        attributes={{ ['data-tidy-column-key']: column.key }}
       >
-        {#if !!column.headerContent}
-          {#if column.headerContent.type === 'callback'}
-            {@html column.headerContent.callback?.(context.document, context)}
-          {:else if column.headerContent.type === 'component'}
-            <column.headerContent.component
-              sheetContext={context}
-              sheetDocument={context.document}
-              section={{
-                ...SheetSections.EMPTY,
-                rowActions: rowActions,
-              }}
-            />
-          {:else if column.headerContent.type === 'html'}
-            {@html column.headerContent.html}
-          {/if}
+        {#if column.cellContent.type === 'callback'}
+          {@html column.cellContent.callback?.(context.document, context)}
+        {:else if column.cellContent.type === 'component'}
+          <column.cellContent.component
+            rowContext={member}
+            rowDocument={member.actor}
+            section={{
+              ...SheetSections.EMPTY,
+              rowActions: rowActions,
+            }}
+          />
         {/if}
-      </TidyTableHeaderCell>
+      </TidyTableCell>
     {/each}
-  {/snippet}
+  </div>
+{/snippet}
 
-  {#snippet tableRow(
-    member: EncounterMemberQuadroneContext,
-    columns: ColumnsLoadout,
-    hiddenColumns: Set<string>,
-  )}
-    <div
-      class="tidy-table-row group-member"
-      style:--t5e-theme-color-default={member.accentColor}
-      style:--t5e-theme-color-highlight={member.highlightColor}
-      style:--t5e-member-color-hover={member.highlightColor}
-      data-tidy-draggable
-      data-member-uuid={member.actor.uuid}
-      data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
-    >
-      <EncounterMemberNameCell {member} />
-      {#each columns.ordered as column}
-        {@const hidden = hiddenColumns.has(column.key)}
-        <TidyTableCell
-          columnWidth="{column.widthRems}rem"
-          class={[column.cellClasses, { hidden }]}
-          attributes={{ ['data-tidy-column-key']: column.key }}
-        >
-          {#if column.cellContent.type === 'callback'}
-            {@html column.cellContent.callback?.(context.document, context)}
-          {:else if column.cellContent.type === 'component'}
-            <column.cellContent.component
-              rowContext={member}
-              rowDocument={member.actor}
-              section={{
-                ...SheetSections.EMPTY,
-                rowActions: rowActions,
-              }}
-            />
-          {/if}
-        </TidyTableCell>
-      {/each}
-    </div>
-  {/snippet}
-</section>
+{#snippet placeholderTableRow(placeholder: EncounterPlaceholderQuadroneContext)}
+  <div
+    class="tidy-table-row group-member"
+    data-member-uuid={placeholder.id}
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
+  >
+    {placeholder.img}
+    {placeholder.name}
+    {placeholder.note}
+    {placeholder.initiative}
+  </div>
+{/snippet}
