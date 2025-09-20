@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
+  EncounterPlaceholderQuadroneContext,
   EncounterCreatureTypeContext,
   EncounterMemberQuadroneContext,
   EncounterSheetQuadroneContext,
@@ -145,6 +146,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   async _prepareMemberDependentContext(
     context: ActorSheetQuadroneContext
   ): Promise<{
+    combatants: (
+      | EncounterMemberQuadroneContext
+      | EncounterPlaceholderQuadroneContext
+    )[];
     creatureTypes: EncounterCreatureTypeContext[];
     members: {
       npc: EncounterMemberQuadroneContext[];
@@ -159,6 +164,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     let skills = this._getMemberGroupSkillMap();
 
     const npcMap = new Map<string, EncounterMemberQuadroneContext>();
+    const combatants: (
+      | EncounterMemberQuadroneContext
+      | EncounterPlaceholderQuadroneContext
+    )[] = [];
     const creatureTypes = new Map<string, EncounterCreatureTypeContext>();
     const languages = new Map<string, MeasurableGroupTrait<number>>();
     const senses = new Map<string, MeasurableGroupTrait<number>>();
@@ -184,7 +193,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         this._prepareMemberSpecials(actor, specials);
         this._prepareMemberSpeeds(actor, speeds);
 
-        const memberContext = {
+        const memberContext: EncounterMemberQuadroneContext = {
           actor,
           quantity,
           accentColor,
@@ -197,15 +206,31 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
             : undefined,
           portrait: await this._preparePortrait(actor),
           initiative: encounterInitiative[actor.uuid.replaceAll('.', '-')],
+          type: 'member',
         };
 
         npcMap.set(actor.uuid, memberContext);
+
+        combatants.push(memberContext);
 
         return memberContext;
       })
     );
 
+    Object.values(TidyFlags.placeholders.get(this.actor)).forEach(
+      (placeholder) => {
+        combatants.push({
+          ...placeholder,
+          type: 'placeholder',
+          initiative: encounterInitiative[placeholder.id],
+        });
+      }
+    );
+
     return {
+      combatants: combatants.sort(
+        (a, b) => (a.initiative ?? 0) - (b.initiative ?? 0)
+      ),
       creatureTypes: [...creatureTypes.values()].sort((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
       ),

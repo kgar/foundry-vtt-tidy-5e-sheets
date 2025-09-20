@@ -22,6 +22,7 @@ import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type {
   DocumentJournalEntries,
   AttributePinFlag,
+  EncounterPlaceholder,
 } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -1391,7 +1392,13 @@ export type EncounterMemberQuadroneContext = {
     value: number | undefined;
     formula: string | undefined;
   };
+  type: 'member';
 };
+
+export type EncounterPlaceholderQuadroneContext = {
+  initiative: number | undefined;
+  type: 'placeholder';
+} & EncounterPlaceholder;
 
 export type EncounterMembersQuadroneContext = {
   npc: EncounterMemberQuadroneContext[];
@@ -1417,6 +1424,10 @@ export type EncounterDifficultyContext = {
 };
 
 export type EncounterSheetQuadroneContext = {
+  combatants: (
+    | EncounterMemberQuadroneContext
+    | EncounterPlaceholderQuadroneContext
+  )[];
   creatureTypes: EncounterCreatureTypeContext[];
   difficulty: EncounterDifficultyContext;
   enriched: {
