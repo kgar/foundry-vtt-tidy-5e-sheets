@@ -76,14 +76,10 @@
           <EncounterSubtitle />
         </div>
 
-        {#if context.difficulty}
+        {#if context.difficulty?.label}
           <div class="difficulty-block">
             <span class="label difficulty font-label-medium color-text-default">
-              {#if context.difficulty}
-                {context.difficulty}
-              {:else}
-                <span class="color-text-disabled">—</span>
-              {/if}
+              {context.difficulty.label}
             </span>
           </div>
         {/if}

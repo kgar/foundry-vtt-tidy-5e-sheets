@@ -1405,9 +1405,20 @@ export type EncounterTraits = {
   speeds: MeasurableGroupTrait<number>[];
 };
 
+export type EncounterDifficultyContext = {
+  label: string | null;
+  value: number | null;
+  max: number;
+  pct: number;
+  stops: {
+    low: number;
+    high: number;
+  };
+};
+
 export type EncounterSheetQuadroneContext = {
   creatureTypes: EncounterCreatureTypeContext[];
-  difficulty: string | null;
+  difficulty: EncounterDifficultyContext;
   enriched: {
     description: {
       full: string;

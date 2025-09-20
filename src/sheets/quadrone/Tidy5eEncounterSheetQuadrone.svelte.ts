@@ -96,10 +96,28 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
     const difficulty = await this.actor.system.getDifficulty();
 
+    const { party } = game.actors;
+    const { creatures, level } = party?.system ?? {};
+
+    const [low, med, high] = (
+      CONFIG.DND5E.ENCOUNTER_DIFFICULTY[level] ?? []
+    ).map((t) => t * creatures.length);
+
+    const xp = await this.actor.system.getXPValue();
+
     const context: EncounterSheetQuadroneContext = {
-      difficulty: difficulty
-        ? FoundryAdapter.localize(`DND5E.ENCOUNTER.Difficulty.${difficulty}`)
-        : null,
+      difficulty: {
+        label: difficulty
+          ? FoundryAdapter.localize(`DND5E.ENCOUNTER.Difficulty.${difficulty}`)
+          : null,
+        value: xp,
+        max: high ?? Infinity,
+        pct: high ? Math.min((xp / high) * 100, 100) : 0,
+        stops: {
+          low: high ? (low / high) * 100 : 0,
+          high: high ? (med / high) * 100 : 0,
+        },
+      },
       enriched: {
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(

@@ -63,17 +63,19 @@
       columns,
     )}
 
-    <div class="difficulty-row flexrow">
-      {#if context.difficulty}
+    {#if context.difficulty?.label}
+      <div class="difficulty-row flexrow">
         <div
           class="pill pill-medium flexshrink"
-          data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty}"
+          data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
+            .label}"
         >
-          {context.difficulty}
+          {context.difficulty.label}
         </div>
-      {/if}
-      <EncounterXPBudgetBar encounter={context.members} />
-    </div>
+
+        <EncounterXPBudgetBar difficulty={context.difficulty} />
+      </div>
+    {/if}
 
     <TidyTable key="npcs">
       {#snippet header()}

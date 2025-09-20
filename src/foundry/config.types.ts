@@ -5423,6 +5423,7 @@ export type CONFIG = {
       cubicFoot: VolumeUnitConfig;
       liter: VolumeUnitConfig;
     } & Record<string, VolumeUnitConfig>;
+    ENCOUNTER_DIFFICULTY: [number, number, number][];
   };
   ux: any;
 };
