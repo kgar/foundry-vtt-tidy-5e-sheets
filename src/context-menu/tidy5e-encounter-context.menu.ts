@@ -3,6 +3,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Encounter5eMember } from 'src/types/group.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { getEncounterMemberContextOptionsQuadrone } from './tidy5e-encounter-context-menu-quadrone';
 
 export function configureEncounterContextMenu(element: HTMLElement, app: any) {
   const memberId = element.getAttribute('data-member-uuid');
@@ -14,10 +15,12 @@ export function configureEncounterContextMenu(element: HTMLElement, app: any) {
 
   if (!memberPromise) return;
 
-  ui.context.menuItems = getEncounterMemberContextOptions(
-    app.document,
-    memberPromise
-  );
+  const isQuadroneSheet = element.closest('.quadrone');
+
+  ui.context.menuItems = isQuadroneSheet
+    ? getEncounterMemberContextOptionsQuadrone(app.document, memberPromise)
+    : getEncounterMemberContextOptions(app.document, memberPromise);
+
   TidyHooks.tidy5eSheetsGetEncounterMemberContextOptions(
     app.document,
     memberPromise,

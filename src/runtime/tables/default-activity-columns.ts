@@ -1,10 +1,13 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { ColumnSpecificationCalculatedWidthArgs, DefaultTableColumns } from '../types';
+import type {
+  ColumnSpecificationCalculatedWidthArgs,
+  DefaultTableColumns,
+} from '../types';
 import ActivityUsesColumn from 'src/sheets/quadrone/item/columns/ActivityUsesColumn.svelte';
 import ActivityTimeColumn from 'src/sheets/quadrone/item/columns/ActivityTimeColumn.svelte';
 import ActivityDamageFormulasColumn from 'src/sheets/quadrone/item/columns/ActivityDamageFormulasColumn.svelte';
-import ItemActionsColumnHeader from 'src/sheets/quadrone/item/columns/ItemActionsColumnHeader.svelte';
 import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
+import ActivityActionsColumnHeader from 'src/sheets/quadrone/item/columns/ActivityActionsColumnHeader.svelte';
 
 export function getDefaultActivityColumns() {
   return {
@@ -12,7 +15,7 @@ export function getDefaultActivityColumns() {
       headerClasses: 'header-cell-actions',
       headerContent: {
         type: 'component',
-        component: ItemActionsColumnHeader,
+        component: ActivityActionsColumnHeader,
       },
       cellClasses: 'tidy-table-actions',
       cellContent: {

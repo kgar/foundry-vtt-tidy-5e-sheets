@@ -45,15 +45,15 @@
     properties: [],
   };
 
-  const expandedItemData = getContext<ExpandedItemData>(
+  const expandedItemData = getContext<ExpandedItemData | undefined>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA,
   );
 
-  const expandedItems = getContext<ExpandedItemIdToLocationsMap>(
+  const expandedItems = getContext<ExpandedItemIdToLocationsMap | undefined>(
     CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS,
   );
 
-  const onItemToggled = getContext<OnItemToggledFn>(
+  const onItemToggled = getContext<OnItemToggledFn | undefined>(
     CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED,
   );
 
@@ -114,7 +114,7 @@
 
   $effect(() => {
     const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
-    const data = expandedItemData.get(item.id);
+    const data = expandedItemData?.get(item.id);
 
     if (isExpandedAtThisLocation && data) {
       untrack(() => {

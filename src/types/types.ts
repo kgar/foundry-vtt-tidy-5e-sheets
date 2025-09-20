@@ -1308,6 +1308,7 @@ export type GroupSkill = {
   proficient: boolean;
   high: GroupSkillModContext;
   low: GroupSkillModContext;
+  passive: number;
   reference: string | undefined;
 } & MeasurableEmphasizable<GroupMemberSkillContext>;
 
@@ -1348,7 +1349,7 @@ export type GroupSkillRollProcessConfiguration = {
   ability: string;
   event: Event;
   // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
-}
+};
 
 export type GroupSheetQuadroneContext = {
   enriched: {
@@ -1372,11 +1373,19 @@ export type GroupSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
 
+export type EncounterCreatureTypeContext = {
+  type: string;
+  label: string;
+  quantity: number;
+};
+
 export type EncounterMemberQuadroneContext = {
   accentColor: string | undefined;
   actor: Actor5e;
   backgroundColor: string | undefined;
+  canEdit: boolean;
   highlightColor: string | undefined;
+  initiative: number | undefined;
   portrait: MultiActorMemberPortraitContext;
   quantity: {
     value: number | undefined;
@@ -1386,9 +1395,30 @@ export type EncounterMemberQuadroneContext = {
 
 export type EncounterMembersQuadroneContext = {
   npc: EncounterMemberQuadroneContext[];
+  all: Map<string, EncounterMemberQuadroneContext>;
+};
+
+export type EncounterTraits = {
+  languages: MeasurableGroupTrait<number>[];
+  senses: MeasurableGroupTrait<number>[];
+  specials: GroupTrait[];
+  speeds: MeasurableGroupTrait<number>[];
+};
+
+export type EncounterDifficultyContext = {
+  label: string | null;
+  value: number | null;
+  max: number;
+  pct: number;
+  stops: {
+    low: number;
+    high: number;
+  };
 };
 
 export type EncounterSheetQuadroneContext = {
+  creatureTypes: EncounterCreatureTypeContext[];
+  difficulty: EncounterDifficultyContext;
   enriched: {
     description: {
       full: string;
@@ -1396,6 +1426,10 @@ export type EncounterSheetQuadroneContext = {
     };
   };
   members: EncounterMembersQuadroneContext;
+  skills: GroupSkill[];
+  totalGold: number;
+  totalXp: number;
+  traits: EncounterTraits;
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 

@@ -5,7 +5,6 @@
   import type {
     Actor5e,
     DocumentSheetQuadroneContext,
-    SpellbookSection,
     TidySectionBase,
   } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -17,7 +16,7 @@
   }: ColumnHeaderProps<
     Actor5e,
     DocumentSheetQuadroneContext<any>,
-    TidySectionBase | SpellbookSection
+    TidySectionBase
   > = $props();
 
   let localize = FoundryAdapter.localize;
@@ -37,21 +36,10 @@
 {#if sheetContext.editable && 'canCreate' in section && !!section.canCreate}
   <a
     class="tidy-table-button"
-    aria-label={localize('DND5E.ItemCreate')}
+    aria-label={localize('DND5E.ACTIVITY.Action.Create')}
     data-tooltip
     onclick={onAddClicked}
   >
     <i class="fas fa-plus"></i>
-  </a>
-{/if}
-
-{#if 'slots' in section && section.usesSlots && sheetContext.unlocked}
-  <a
-    aria-label={localize('DND5E.SpellSlotsConfig')}
-    class="tidy-table-button"
-    data-tooltip="DND5E.SpellSlotsConfig"
-    onclick={() => FoundryAdapter.openSpellSlotsConfig(sheetDocument)}
-  >
-    <i class="fas fa-cog"></i>
   </a>
 {/if}

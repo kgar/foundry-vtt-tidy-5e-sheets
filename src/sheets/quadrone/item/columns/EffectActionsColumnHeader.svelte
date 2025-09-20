@@ -10,7 +10,6 @@
 
   let localize = FoundryAdapter.localize;
 
-  // TODO: Determine if _addDocument can be used and what is needed to make it work
   function onAddClicked(section: ActiveEffectSection) {
     return FoundryAdapter.addEffect(section.type, sheetDocument);
   }
@@ -19,8 +18,9 @@
 {#if section.canCreate}
   <a
     class="tidy-table-button"
-    title={localize('DND5E.EffectCreate')}
-    onclick={(event) => onAddClicked(section)}
+    aria-label={localize('DND5E.EffectCreate')}
+    data-tooltip
+    onclick={() => onAddClicked(section)}
   >
     <i class="fas fa-plus"></i>
   </a>

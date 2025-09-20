@@ -2,12 +2,15 @@
   import { tick } from 'svelte';
   import { Tooltip } from './Tooltip';
   import { getThemeV2 } from 'src/theme/theme';
-  import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import type {
+    EncounterMemberQuadroneContext,
+    GroupMemberQuadroneContext,
+  } from 'src/types/types';
 
   type GroupTrait = {
     label: string;
     members: {
-      context: GroupMemberQuadroneContext;
+      context: GroupMemberQuadroneContext | EncounterMemberQuadroneContext;
       value?: string;
       units?: string;
     }[];

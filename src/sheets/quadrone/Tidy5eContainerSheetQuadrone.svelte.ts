@@ -41,6 +41,7 @@ import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { Inventory } from 'src/features/sections/Inventory';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin(
@@ -188,6 +189,9 @@ export class Tidy5eContainerSheetQuadrone
         this.sectionExpansionTracker,
       ],
       [CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, this.onTabSelected.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEM_DATA, this.expandedItemData],
+      [CONSTANTS.SVELTE_CONTEXT.ON_ITEM_TOGGLED, this.onItemToggled.bind(this)],
+      [CONSTANTS.SVELTE_CONTEXT.EXPANDED_ITEMS, this.expandedItems],
     ]);
 
     const component = mount(ContainerSheet, {
@@ -393,9 +397,27 @@ export class Tidy5eContainerSheetQuadrone
 
     context.tabs = await ItemSheetQuadroneRuntime.getTabs(context);
 
+    await this.setExpandedItemData();
+
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
     return context;
+  }
+
+  private async setExpandedItemData() {
+    this.expandedItemData.clear();
+    for (const [id, locations] of this.expandedItems) {
+      if (locations.size === 0) {
+        continue;
+      }
+      const item = this.item.system.contents.get(id);
+      if (item) {
+        this.expandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.item.isOwner })
+        );
+      }
+    }
   }
 
   /* -------------------------------------------- */
@@ -716,7 +738,21 @@ export class Tidy5eContainerSheetQuadrone
     this.currentTabId = tabId;
   }
 
-  // TODO: Plug in or reimplement
-  // - SheetExpandedItemsCacheable
-  // - SearchFilterCacheable
+  /* -------------------------------------------- */
+  /* SheetExpandedItemsCacheable
+  /* -------------------------------------------- */
+
+  onItemToggled(itemId: string, isVisible: boolean, location: string) {
+    const locationSet = mapGetOrInsert(
+      this.expandedItems,
+      itemId,
+      new Set<string>()
+    );
+
+    if (isVisible) {
+      locationSet?.add(location);
+    } else {
+      locationSet?.delete(location);
+    }
+  }
 }

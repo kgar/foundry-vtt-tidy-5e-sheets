@@ -208,6 +208,16 @@ export const FoundryAdapter = {
 
     return action();
   },
+  documentIsEditable(document: any) {
+    if (document.pack) {
+      const pack = game.packs.get(document.pack);
+      if (pack.locked) return false;
+    }
+    return document.testUserPermission(
+      game.user,
+      CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+    );
+  },
   editOnMiddleClick(
     event: MouseEvent,
     entityWithSheet: {
@@ -1558,5 +1568,12 @@ export const FoundryAdapter = {
     }
 
     return classes;
+  },
+  getRollModeState(ev: Event) {
+    return {
+      normal: dnd5e.utils.areKeysPressed(ev, 'skipDialogNormal'),
+      advantage: dnd5e.utils.areKeysPressed(ev, 'skipDialogAdvantage'),
+      disadvantage: dnd5e.utils.areKeysPressed(ev, 'skipDialogDisadvantage'),
+    };
   },
 };

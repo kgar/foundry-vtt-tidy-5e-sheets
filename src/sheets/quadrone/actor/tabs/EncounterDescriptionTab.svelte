@@ -26,7 +26,7 @@
   }
 </script>
 
-<div class="groups-tab-content group-description-content flexcol">
+<div class="group-tab-content group-description-content flexcol">
   {#if editing}
     {#key contentToEdit}
       <article class="flexible-editor-container singleton">

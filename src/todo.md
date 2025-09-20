@@ -1,18 +1,41 @@
 ## kgar To Do
 
+
+### Encounter Sheet
+
+- [x] Encounter Members tab: Wire up XP bar with stops
+- [ ] Combat tab
+  - [ ] Implement Placeholder Members
+    - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
+  - [ ] Order combatants by initiative, then by name
+  - [ ] Section title - change name to "Combatants" with a count that equals the non-placeholder members
+  - [ ] "Add a Placeholder" button
+    - [ ] Relocalize to "Create a Placeholder Member"
+    - [ ] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "Placeholder"
+  - [ ] "Add All as Placeholders" button
+    - [ ] Change icon to crossed swords
+    - [ ] Take all members and placeholders and add them to the encounter tracker
+      - [ ] Members: 
+        - [ ] I can sooner: add directly as placeholders with img, name, and tracked resource at configured initiative
+        - [ ] I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative (why sideload? so they can be double-clicked to open their details and roll things)
+      - [ ] Placeholders: add directly to tracker at configured initiative
+  - [ ] "Add to Active Encounter" 
+    - [ ] Relocalize to "Add All to Encounter" button and move up to just after "Add All as Placeholders"
+    - [ ] Disable when there is no active encounter
+    - [ ] Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥
+  - [x] "Preroll Initiative" button
+- [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
+- [ ] Plan and implement the rest
+
 ### Group Sheet
 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] Plan and task Bastions tab
+- [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 
-### Encounter Sheet
+### Character Sheet
 
-- [ ] Confirm the big picture requirements
-- [ ] Scaffold encounter sheet tabs
-- [ ] Get the encounter inventory fully functional
-- [ ] Get the encounter description tab fully functional
-- [ ] Scaffold the encounter member context
-- [ ] Plan and implement the rest
+- [ ] Character sheet, Character tab : Need weapon master indicators on weapon proficiencies
 
 ### The Short List
 
@@ -48,6 +71,8 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] Encounter XP bar with stops: add hook and API for passing in custom calculations. The hook should provide app and members with their quantities
+- [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
@@ -146,6 +171,53 @@
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
 - [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
 
+## Notes on combat integration:
+
+- We can create an encounter if one doesn't exist, upon loading combatants
+- To add placeholders, we can either enter unlinked placeholders directly, including initiative, name, and img (maybe more), or we can do same thing that "Place Members" does. "Place Members" puts copies of the compendium actors into the top-level of the sidebar before allowing placing them on the screen. It apparently has logic to detect whether there are suitable actors on the sidebar, so it doesn't happen every time.
+- We will have to track those row action states directly on the Encounter via flag because locked compendium actors are not editable, meaning it's not viable to track flags on some but not all. That's not bad. But, what are the default states when a member has not been configured by the user? 
+- I'll want to figure out all the edge cases for these buttons and row states, since this will be dealing with the Current Encounter, and the user can change scenes and/or Encounters. There's also the wrinkle of trying to ensure all open Encounter sheets are watching combat tracker activity via hooks. What hooks to track will be an implementation detail, but we essentially want to update our row states when a placeholder leaves the tracker, for example.
+- Love the Lair row (https://discord.com/channels/@me/1243307347682529423/1416763464403255336). Again, we can either load a totally anonymous placeholder with whatever img, name, and initiative we want, or we can load the relevant Lair actor into that spot. In fact, it might be beneficial to show multiple Lair entries so that all lair NPCs are accounted for.
+
+From `actor.mjs`:
+
+```js
+// Obtain (or create) a combat encounter
+let combat = game.combat;
+if ( !combat ) {
+    if ( game.user.isGM && canvas.scene ) {
+    const cls = getDocumentClass("Combat");
+    combat = await cls.create({scene: canvas.scene.id, active: true});
+    }
+    else {
+    ui.notifications.warn("COMBAT.NoneActive", {localize: true});
+    return null;
+    }
+}
+
+// Create new combatants
+if ( createCombatants ) {
+    const tokens = this.getActiveTokens();
+    const toCreate = [];
+    if ( tokens.length ) {
+    for ( const t of tokens ) {
+        if ( t.inCombat ) continue;
+        toCreate.push({tokenId: t.id, sceneId: t.scene.id, actorId: this.id, hidden: t.document.hidden});
+    }
+    } else toCreate.push({actorId: this.id, hidden: false});
+    await combat.createEmbeddedDocuments("Combatant", toCreate);
+}
+```
+
+Experimentation:
+```js
+// Completely actorless / tokenless combatant, with prerolled initiative, name, and img:
+game.combat.createEmbeddedDocuments("Combatant", [{ name: "Fred", img: 'systems/dnd5e/tokens/heroes/ClericDragonborn.webp', initiative: 20}]);
+```
+
+Hooks:
+TODO
+
 
 ### Huh?
 
@@ -232,3 +304,39 @@ Limited:
 - [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
 - [x] Group sheet - Members tab - Set up column hiding 
 - [x] ~~Group Sheet - Inventory tab - Should we have hover styles on the member names?~~ Nah, there's feedback there already.
+- [x] Confirm the big picture requirements
+- [x] Scaffold encounter sheet tabs
+- [x] Get the encounter inventory fully functional
+- [x] Get the encounter description tab fully functional
+- [x] Scaffold the encounter member context
+- [x] Encounter subtitle
+  - [x] Row 1
+    - [x] Creature Type Count row
+  - [x] Row 2
+    - [x] Members count (assuming member quantities sum)
+    - [x] XP
+    - [x] GP summary
+- [x] Encounter header layout change
+  - [x] Left: name, subtitles, button bar
+  - [x] Right: difficulty badge
+  - [x] Encounter Sidebar
+    - [x] Languages
+    - [x] Speeds
+    - [x] Senses
+    - [x] skills 
+    - [x] Specials
+- [x] Encounter Members tab
+  - [x] Member list 
+    - [x] locked
+      - [x] Member primary column
+      - [x] CR
+      - [x] Quantity
+      - [x] HP
+        - [x] Include "Roll HP" button on hover
+      - [x] XP
+      - [x] Member row actions
+        - [x] In header: add button opens compendium browser for NPCs only
+    - [x] unlocked
+      - [x] Swap HP with editable Formula column
+- [x] Members context menu for Encounter sheet
+- [X] Make Formula column a lower-priority, always-shown column

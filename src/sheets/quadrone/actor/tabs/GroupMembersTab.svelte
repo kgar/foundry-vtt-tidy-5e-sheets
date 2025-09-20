@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import GroupTabSidebar from '../group-parts/group-tab-sidebar/GroupTabSidebar.svelte';
+  import MembersTabSidebar from '../group-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -36,17 +36,16 @@
   $effect(() => {
     const observer = new ResizeObserver(([entry]) => onResize(entry));
     observer.observe(sectionsContainer);
-    console.warn('group resize observer connected!');
     return () => {
       observer.disconnect();
     };
   });
 </script>
 
-<GroupTabSidebar />
+<MembersTabSidebar />
 
 <section
-  class="groups-tab-content group-members-content flexcol"
+  class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
   {#if characters.length}

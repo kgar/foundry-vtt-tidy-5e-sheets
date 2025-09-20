@@ -1,8 +1,14 @@
 import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
+  ActorSheetQuadroneContext,
+  EncounterCreatureTypeContext,
   EncounterMemberQuadroneContext,
   EncounterSheetQuadroneContext,
+  EncounterTraits,
+  GroupSkill,
+  GroupTrait,
+  MeasurableGroupTrait,
   MultiActorQuadroneContext,
 } from 'src/types/types';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
@@ -19,11 +25,20 @@ import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadro
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { coalesce } from 'src/utils/formatting';
 import { isNil } from 'src/utils/data';
+import { processInputChangeDeltaFromValues } from 'src/utils/form';
+import { mapGetOrInsertComputed } from 'src/utils/map';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { Ref } from 'src/features/reactivity/reactivity.types';
+import type { EncounterMemberContext } from 'src/types/group.types';
+import { TidyFlags, type EncounterInitiative } from 'src/api';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
 ) {
   currentTabId: string;
+  emphasizedMember: Ref<EncounterMemberContext | undefined> = $state({
+    value: undefined,
+  });
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
@@ -46,6 +61,8 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     },
   };
 
+  static _lockedSkillAllowlist = new Set<string>(['ins', 'per']);
+
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
       return this._createLimitedViewComponent(node);
@@ -53,7 +70,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
     const component = mount(EncounterSheet, {
       target: node,
-      context: new Map<any, any>(this._getActorSvelteContext()),
+      context: new Map<any, any>([
+        [CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF, this.emphasizedMember],
+        ...this._getActorSvelteContext(),
+      ]),
     });
 
     initTidy5eContextMenu(this, this.element, CONSTANTS.SHEET_LAYOUT_QUADRONE);
@@ -74,7 +94,30 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       relativeTo: this.actor,
     };
 
+    const difficulty = await this.actor.system.getDifficulty();
+
+    const { party } = game.actors;
+    const { creatures, level } = party?.system ?? {};
+
+    const [low, med, high] = (
+      CONFIG.DND5E.ENCOUNTER_DIFFICULTY[level] ?? []
+    ).map((t) => t * creatures.length);
+
+    const xp = await this.actor.system.getXPValue();
+
     const context: EncounterSheetQuadroneContext = {
+      difficulty: {
+        label: difficulty
+          ? FoundryAdapter.localize(`DND5E.ENCOUNTER.Difficulty.${difficulty}`)
+          : null,
+        value: xp,
+        max: high ?? Infinity,
+        pct: high ? Math.min((xp / high) * 100, 100) : 0,
+        stops: {
+          low: high ? (low / high) * 100 : 0,
+          high: high ? (med / high) * 100 : 0,
+        },
+      },
       enriched: {
         description: {
           full: await foundry.applications.ux.TextEditor.enrichHTML(
@@ -87,24 +130,42 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           ),
         },
       },
-      members: { npc: [] },
+      totalGold: this.getGpSummary(this.actor),
+      totalXp: await this.actor.system.getXPValue(),
       type: 'encounter',
+      ...(await this._prepareMemberDependentContext(actorContext)),
       ...actorContext,
     };
-
-    context.members.npc = await this._prepareMembersContext(context);
 
     context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
 
     return context;
   }
 
-  async _prepareMembersContext(
-    context: EncounterSheetQuadroneContext
-  ): Promise<EncounterMemberQuadroneContext[]> {
+  async _prepareMemberDependentContext(
+    context: ActorSheetQuadroneContext
+  ): Promise<{
+    creatureTypes: EncounterCreatureTypeContext[];
+    members: {
+      npc: EncounterMemberQuadroneContext[];
+      all: Map<string, EncounterMemberQuadroneContext>;
+    };
+    skills: GroupSkill[];
+    traits: EncounterTraits;
+  }> {
     const members: Actor5e[] = await this.actor.system.getMembers();
+    const encounterInitiative = TidyFlags.encounterInitiative.get(this.actor);
 
-    return await Promise.all(
+    let skills = this._getMemberGroupSkillMap();
+
+    const npcMap = new Map<string, EncounterMemberQuadroneContext>();
+    const creatureTypes = new Map<string, EncounterCreatureTypeContext>();
+    const languages = new Map<string, MeasurableGroupTrait<number>>();
+    const senses = new Map<string, MeasurableGroupTrait<number>>();
+    const specials = new Map<string, GroupTrait>();
+    const speeds = new Map<string, MeasurableGroupTrait<number>>();
+
+    const memberContexts = await Promise.all(
       members.map(async ({ actor, quantity }) => {
         const accentColor = coalesce(
           // Use the actor's accent color, if configured
@@ -116,20 +177,194 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           context.themeSettings.accentColor
         );
 
-        return {
+        this._prepareMemberSkills(actor, skills);
+        this._prepareMemberCreatureType(actor, creatureTypes, quantity);
+        this._prepareMemberLanguages(actor, languages);
+        this._prepareMemberSenses(actor, senses);
+        this._prepareMemberSpecials(actor, specials);
+        this._prepareMemberSpeeds(actor, speeds);
+
+        const memberContext = {
           actor,
           quantity,
           accentColor,
           backgroundColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 0.75) calc(c * 1.2) h)`
             : undefined,
+          canEdit: FoundryAdapter.documentIsEditable(actor),
           highlightColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
             : undefined,
           portrait: await this._preparePortrait(actor),
+          initiative: encounterInitiative[actor.uuid.replaceAll('.', '-')],
         };
+
+        npcMap.set(actor.uuid, memberContext);
+
+        return memberContext;
       })
     );
+
+    return {
+      creatureTypes: [...creatureTypes.values()].sort((a, b) =>
+        a.label.localeCompare(b.label, game.i18n.lang)
+      ),
+      members: {
+        npc: memberContexts,
+        all: npcMap,
+      },
+      skills: [...skills.values()].sort((a, b) =>
+        a.name.localeCompare(b.name, game.i18n.lang)
+      ),
+      traits: {
+        languages: [...languages.values()].sort((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        senses: [...senses.values()].sort((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        specials: [...specials.values()].sort((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+        speeds: [...speeds.values()].sort((a, b) =>
+          a.label.localeCompare(b.label, game.i18n.lang)
+        ),
+      },
+    };
+  }
+
+  private _prepareMemberCreatureType(
+    actor: any,
+    creatureTypeCountMap: Map<string, EncounterCreatureTypeContext>,
+    quantity: any
+  ) {
+    const details = actor.system.details;
+
+    const creatureTypeLabel =
+      details.type.value === 'custom'
+        ? details.type.custom
+        : CONFIG.DND5E.creatureTypes[details.type.value]?.label;
+    const creatureType =
+      details.type.value === 'custom'
+        ? details.type.custom
+        : details.type.value;
+
+    mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
+      type: creatureType,
+      label: creatureTypeLabel,
+      quantity: 0,
+    })).quantity += quantity.value;
+  }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  updateMemberQuantity(uuid: string, newValue: string) {
+    return this.updateMember(uuid, (member) => {
+      const currentQuantity = member.quantity.value;
+      const newQuantity =
+        typeof newValue === 'number'
+          ? newValue
+          : processInputChangeDeltaFromValues(newValue, currentQuantity);
+
+      if (newQuantity !== undefined) {
+        foundry.utils.setProperty(member, 'quantity.value', newQuantity);
+      }
+    });
+  }
+
+  updateMemberFormula(uuid: string, newValue: string | number) {
+    return this.updateMember(uuid, (member) => {
+      foundry.utils.setProperty(member, 'quantity.formula', newValue);
+    });
+  }
+
+  updateMemberInitiative(uuid: string, initiative: string | number) {
+    const initiatives = TidyFlags.encounterInitiative.get(this.actor);
+
+    const parsedInitiative = Number(initiative);
+
+    if (isNaN(parsedInitiative)) {
+      return;
+    }
+
+    initiatives[uuid.replaceAll('.', '-')] = parsedInitiative;
+
+    return TidyFlags.encounterInitiative.set(this.actor, initiatives);
+  }
+
+  async getPrerolledInitiative(ev: Event, actor: Actor5e) {
+    const keys = FoundryAdapter.getRollModeState(ev);
+    const roll = actor.getInitiativeRoll({ ...keys, event: ev });
+    await roll.evaluate();
+    return roll.total;
+  }
+
+  async prerollInitiative(ev: Event, actor: Actor5e) {
+    const total = await this.getPrerolledInitiative(ev, actor);
+    this.updateMemberInitiative(actor.uuid, total);
+  }
+
+  async prerollAllInitiatives(ev: Event) {
+    const members: { actor: Actor5e }[] = await this.actor.system.getMembers();
+
+    const encounterInitiative = (
+      await Promise.all(
+        members.map(async ({ actor }) => {
+          const total = await this.getPrerolledInitiative(ev, actor);
+          return [actor.uuid.replaceAll('.', '-'), total];
+        })
+      )
+    ).reduce<EncounterInitiative>((prev, [uuid, initiative]) => {
+      prev[uuid] = initiative;
+      return prev;
+    }, {});
+
+    TidyFlags.encounterInitiative.set(this.actor, encounterInitiative);
+  }
+
+  updateMember(
+    uuid: string,
+    memberUpdateCallback: (member: any) => void
+  ): Promise<any> | undefined {
+    const members: any[] = this.actor.system.toObject().members;
+
+    const member = members.find((m: any) => m.uuid === uuid);
+
+    if (!member) {
+      return;
+    }
+
+    memberUpdateCallback(member);
+
+    return this.actor.update({ 'system.members': members });
+  }
+
+  async award() {
+    new dnd5e.applications.Award({
+      award: {
+        currency: { ...this.actor.system.currency },
+        savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
+        xp: await this.actor.system.getXPValue(),
+      },
+    }).render({ force: true });
+  }
+
+  async _browseAddNpc() {
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
+      filters: {
+        locked: {
+          documentClass: CONSTANTS.DOCUMENT_NAME_ACTOR,
+          types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
+        },
+      },
+    });
+
+    if (result) {
+      const actor = await fromUuid(result);
+      this.actor.system.addMember(actor);
+    }
   }
 
   /* -------------------------------------------- */
