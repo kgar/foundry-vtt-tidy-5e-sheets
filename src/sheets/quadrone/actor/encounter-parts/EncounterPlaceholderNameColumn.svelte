@@ -2,6 +2,7 @@
   import type { EncounterPlaceholderQuadroneContext } from 'src/types/types';
   import type { PortraitShape } from 'src/theme/theme-quadrone.types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { InputAttachments } from 'src/attachments/input-attachments.svelte';
 
   type Props = {
     placeholder: EncounterPlaceholderQuadroneContext;
@@ -38,13 +39,40 @@
 </div>
 <div class="tidy-table-cell text-cell primary item-label flexcol">
   <div class="actor-name">
-    <h4 class="font-label-medium">
-      {placeholder.name}
-    </h4>
-    <span class="separated-list">
-      <span class="font-label-medium color-text-gold-emphasis">
-        {placeholder.note}
+    {#if context.unlocked}
+      <input
+        class="placeholder-name"
+        type="text"
+        onchange={(ev) =>
+          context.sheet.updatePlaceholderField(
+            placeholder,
+            'name',
+            ev.currentTarget.value,
+          )}
+        value={placeholder.name}
+        {@attach InputAttachments.selectOnFocus}
+      />
+      <input
+        class="placeholder-note"
+        type="text"
+        onchange={(ev) =>
+          context.sheet.updatePlaceholderField(
+            placeholder,
+            'note',
+            ev.currentTarget.value,
+          )}
+        value={placeholder.note}
+        {@attach InputAttachments.selectOnFocus}
+      />
+    {:else}
+      <h4 class="font-label-medium">
+        {placeholder.name}
+      </h4>
+      <span class="placeholder-note">
+        <span class="font-label-medium color-text-gold-emphasis">
+          {placeholder.note}
+        </span>
       </span>
-    </span>
+    {/if}
   </div>
 </div>

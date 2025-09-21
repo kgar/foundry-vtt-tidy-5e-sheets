@@ -31,7 +31,11 @@ import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import type { EncounterMemberContext } from 'src/types/group.types';
-import { TidyFlags, type EncounterInitiative } from 'src/api';
+import {
+  TidyFlags,
+  type EncounterInitiative,
+  type EncounterPlaceholder,
+} from 'src/api';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -309,7 +313,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
    * Updates initiative for a given encounter member or placeholder.
    * @param identifier a member UUID or a placeholder ID
    * @param initiative the desired initiative value
-   * @returns 
+   * @returns
    */
   updateInitiative(identifier: string, initiative: string | number) {
     const initiatives = TidyFlags.encounterInitiative.get(this.actor);
@@ -323,6 +327,23 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     initiatives[identifier.replaceAll('.', '-')] = parsedInitiative;
 
     return TidyFlags.encounterInitiative.set(this.actor, initiatives);
+  }
+
+  updatePlaceholderField<K extends keyof EncounterPlaceholder>(
+    placeholder: EncounterPlaceholderQuadroneContext,
+    key: K,
+    value: EncounterPlaceholder[K]
+  ) {
+    const data: EncounterPlaceholder = {
+      id: placeholder.id,
+      img: placeholder.img,
+      name: placeholder.name,
+      note: placeholder.note,
+    };
+
+    data[key] = value;
+
+    return TidyFlags.placeholders.insertOrUpdateEntry(this.actor, data);
   }
 
   async getPrerolledInitiative(ev: Event, actor: Actor5e) {
