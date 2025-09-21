@@ -45,12 +45,15 @@
         input.value = initiative;
       }}
     />
-    <button
-      class="button button-roll button-icon-only button-borderless flexshrink"
-      onclick={(ev) => context.sheet.prerollInitiative(ev, rowDocument)}
-    >
-      <i class="fa-solid fa-dice-d20"></i>
-    </button>
+
+    {#if rowContext.type === 'member'}
+      <button
+        class="button button-roll button-icon-only button-borderless flexshrink"
+        onclick={(ev) => context.sheet.prerollInitiative(ev, rowDocument)}
+      >
+        <i class="fa-solid fa-dice-d20"></i>
+      </button>
+    {/if}
   </span>
 {:else}
   <span class="font-label-large color-text-default"
