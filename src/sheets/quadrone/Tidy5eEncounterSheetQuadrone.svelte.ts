@@ -31,11 +31,17 @@ import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import type { EncounterMemberContext } from 'src/types/group.types';
-import { TidyFlags, type EncounterInitiative } from 'src/api';
+import {
+  TidyFlags,
+  type EncounterInitiative,
+  type EncounterPlaceholder,
+} from 'src/api';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
 ) {
+  static DEFAULT_ENCOUNTER_PLACEHOLDER_ICON = 'icons/svg/mystery-man.svg';
+
   currentTabId: string;
   emphasizedMember: Ref<EncounterMemberContext | undefined> = $state({
     value: undefined,
@@ -158,8 +164,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     skills: GroupSkill[];
     traits: EncounterTraits;
   }> {
-    const members: Actor5e[] = await this.actor.system.getMembers();
-    const encounterInitiative = TidyFlags.encounterInitiative.get(this.actor);
+    const members = await this.getMembers();
+    const initiatives = TidyFlags.encounterInitiative.get(this.actor);
+    const inclusion = TidyFlags.combatInclusion.get(this.actor);
+    const visibility = TidyFlags.combatVisibility.get(this.actor);
 
     let skills = this._getMemberGroupSkillMap();
 
@@ -193,6 +201,8 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         this._prepareMemberSpecials(actor, specials);
         this._prepareMemberSpeeds(actor, speeds);
 
+        const combatSettingIdentifier = actor.uuid.replaceAll('.', '-');
+
         const memberContext: EncounterMemberQuadroneContext = {
           actor,
           quantity,
@@ -204,8 +214,11 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           highlightColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
             : undefined,
+          name: actor.name,
           portrait: await this._preparePortrait(actor),
-          initiative: encounterInitiative[actor.uuid.replaceAll('.', '-')],
+          initiative: initiatives[combatSettingIdentifier],
+          includeInCombat: inclusion[combatSettingIdentifier] ?? true,
+          visible: visibility[combatSettingIdentifier] ?? true,
           type: 'member',
         };
 
@@ -222,14 +235,19 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         combatants.push({
           ...placeholder,
           type: 'placeholder',
-          initiative: encounterInitiative[placeholder.id],
+          initiative: initiatives[placeholder.id],
+          includeInCombat: inclusion[placeholder.id] ?? true,
+          name: placeholder.name,
+          visible: visibility[placeholder.id] ?? true,
         });
       }
     );
 
     return {
       combatants: combatants.sort(
-        (a, b) => (a.initiative ?? 0) - (b.initiative ?? 0)
+        (a, b) =>
+          (b.initiative ?? 0) - (a.initiative ?? 0) ||
+          a.name.localeCompare(b.name, game.i18n.lang)
       ),
       creatureTypes: [...creatureTypes.values()].sort((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
@@ -256,6 +274,12 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         ),
       },
     };
+  }
+
+  private async getMembers(): Promise<
+    { actor: Actor5e; quantity: { value: number; formula: string } }[]
+  > {
+    return await this.actor.system.getMembers();
   }
 
   private _prepareMemberCreatureType(
@@ -305,7 +329,13 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     });
   }
 
-  updateMemberInitiative(uuid: string, initiative: string | number) {
+  /**
+   * Updates initiative for a given encounter member or placeholder.
+   * @param identifier a member UUID or a placeholder ID
+   * @param initiative the desired initiative value
+   * @returns
+   */
+  updateInitiative(identifier: string, initiative: string | number) {
     const initiatives = TidyFlags.encounterInitiative.get(this.actor);
 
     const parsedInitiative = Number(initiative);
@@ -314,9 +344,26 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       return;
     }
 
-    initiatives[uuid.replaceAll('.', '-')] = parsedInitiative;
+    initiatives[identifier.replaceAll('.', '-')] = parsedInitiative;
 
     return TidyFlags.encounterInitiative.set(this.actor, initiatives);
+  }
+
+  updatePlaceholderField<K extends keyof EncounterPlaceholder>(
+    placeholder: EncounterPlaceholderQuadroneContext,
+    key: K,
+    value: EncounterPlaceholder[K]
+  ) {
+    const data: EncounterPlaceholder = {
+      id: placeholder.id,
+      img: placeholder.img,
+      name: placeholder.name,
+      note: placeholder.note,
+    };
+
+    data[key] = value;
+
+    return TidyFlags.placeholders.insertOrUpdateEntry(this.actor, data);
   }
 
   async getPrerolledInitiative(ev: Event, actor: Actor5e) {
@@ -328,11 +375,11 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
   async prerollInitiative(ev: Event, actor: Actor5e) {
     const total = await this.getPrerolledInitiative(ev, actor);
-    this.updateMemberInitiative(actor.uuid, total);
+    this.updateInitiative(actor.uuid, total);
   }
 
   async prerollAllInitiatives(ev: Event) {
-    const members: { actor: Actor5e }[] = await this.actor.system.getMembers();
+    const members = await this.getMembers();
 
     const encounterInitiative = (
       await Promise.all(
@@ -390,6 +437,147 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       const actor = await fromUuid(result);
       this.actor.system.addMember(actor);
     }
+  }
+
+  addNewPlaceholder(): Promise<void> {
+    return TidyFlags.placeholders.insertOrUpdateEntry(this.actor, {
+      id: foundry.utils.randomID(),
+      img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
+      name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
+    });
+  }
+
+  async addAllAsPlaceholders(): Promise<void> {
+    const members = await this.getMembers();
+    const placeholders = TidyFlags.placeholders.get(this.actor);
+    const initiatives = TidyFlags.encounterInitiative.get(this.actor);
+    const inclusion = TidyFlags.combatInclusion.get(this.actor);
+    const visibility = TidyFlags.combatVisibility.get(this.actor);
+
+    return await this._addPlaceholdersToCurrentEncounter([
+      ...members
+        .filter(
+          ({ actor }) => inclusion[actor.uuid?.replaceAll('.', '-')] ?? true
+        )
+        .map(({ actor }) => ({
+          name: actor.name,
+          img: actor.img,
+          initiative: initiatives[actor.uuid.replaceAll('.', '-')],
+          hidden: !(visibility[actor.uuid.replaceAll('.', '-')] ?? true),
+        })),
+      ...Object.values(placeholders)
+        .filter((p) => inclusion[p.id] ?? true)
+        .map((p) => ({
+          name: p.name,
+          img: p.img,
+          initiative: initiatives[p.id],
+          hidden: !(visibility[p.id] ?? true),
+        })),
+    ]);
+  }
+
+  deletePlaceholder(placeholderId: string): Promise<void> {
+    return TidyFlags.placeholders.deleteEntry(this.actor, placeholderId);
+  }
+
+  async onAddPlaceholder(ev: Event & { currentTarget: HTMLElement }) {
+    const type = ev.currentTarget
+      .closest('[data-combatant-type]')
+      ?.getAttribute('data-combatant-type');
+
+    const initiatives = TidyFlags.encounterInitiative.get(this.actor);
+    const inclusion = TidyFlags.combatInclusion.get(this.actor);
+    const visibility = TidyFlags.combatVisibility.get(this.actor);
+
+    if (type === 'member') {
+      const uuid = ev.currentTarget
+        .closest('[data-member-uuid]')
+        ?.getAttribute('data-member-uuid');
+
+      const actorMember = this.actor.system.members.find(
+        (m: any) => m.uuid === uuid
+      );
+
+      const include = inclusion[actorMember.uuid] ?? true;
+      if (actorMember && !include) {
+        return;
+      }
+
+      const actor = await fromUuid(actorMember.uuid);
+
+      // TODO: determine the appropriate image
+      this._addPlaceholdersToCurrentEncounter([
+        {
+          name: actor.name,
+          img: actor.img,
+          initiative: initiatives[actor.uuid.replaceAll('.', '-')],
+          hidden: visibility[actor.uuid.replaceAll('.', '-')],
+        },
+      ]);
+    } else if (type === 'placeholder') {
+      const placeholders = TidyFlags.placeholders.get(this.actor);
+      const placeholderId =
+        ev.currentTarget
+          .closest('[data-placeholder-id]')
+          ?.getAttribute('data-placeholder-id') ?? '';
+      const placeholder = placeholders[placeholderId];
+
+      const include = inclusion[placeholderId] ?? true;
+      if (!include) {
+        return;
+      }
+
+      if (placeholder) {
+        return await this._addPlaceholdersToCurrentEncounter([
+          {
+            img: placeholder.img,
+            initiative: initiatives[placeholderId],
+            name: placeholder.name,
+            hidden: visibility[placeholderId],
+          },
+        ]);
+      }
+    }
+  }
+
+  _addPlaceholdersToCurrentEncounter(
+    combatants: {
+      name: string;
+      img: string;
+      initiative: number | undefined;
+      hidden: boolean;
+    }[]
+  ): Promise<void> | undefined {
+    if (!game.combat) {
+      ui.notifications.warn(
+        FoundryAdapter.localize(
+          'TIDY5E.Encounter.AddCombatants.MustHaveEncounter.Message'
+        )
+      );
+      return;
+    }
+
+    return game.combat.createEmbeddedDocuments('Combatant', combatants);
+  }
+
+  toggleCombatantVisibility(identifier: string) {
+    const visibility = TidyFlags.combatVisibility.get(this.actor);
+
+    const visible = visibility[identifier] ?? true;
+
+    visibility[identifier] = !visible;
+
+    return TidyFlags.combatVisibility.set(this.actor, visibility);
+  }
+
+  toggleCombatantInclusion(identifier: string) {
+    const inclusion = TidyFlags.combatInclusion.get(this.actor);
+
+    const included = inclusion[identifier] ?? true;
+
+    inclusion[identifier] = !included;
+
+    return TidyFlags.combatInclusion.set(this.actor, inclusion);
   }
 
   /* -------------------------------------------- */

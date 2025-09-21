@@ -1,12 +1,9 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import type { EncounterMemberQuadroneContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
-  import type { Item5e } from 'src/types/item.types';
-    import { configureItemContextMenu } from 'src/context-menu/tidy5e-item-context-menu';
 
   let localize = FoundryAdapter.localize;
 

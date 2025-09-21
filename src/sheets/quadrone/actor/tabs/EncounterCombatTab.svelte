@@ -15,6 +15,7 @@
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
+  import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let combatants = $derived(context.combatants);
@@ -41,11 +42,15 @@
 </script>
 
 <aside class="sidebar flexcol">
-  <button type="button" class="button">
+  <button
+    type="button"
+    class="button"
+    onclick={(ev) => context.sheet.addNewPlaceholder()}
+  >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
   </button>
-  <button type="button" class="button">
+  <button type="button" class="button" onclick={ev => context.sheet.addAllAsPlaceholders()}>
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddAllPlaceholders.Label')}
   </button>
@@ -56,10 +61,6 @@
   >
     <i class="fas fa-dice-d20"></i>
     {localize('TIDY5E.Encounter.PrerollInitiative')}
-  </button>
-  <button type="button" class="button">
-    <i class="fas fa-swords"></i>
-    {localize('TIDY5E.Encounter.AddToCombatTracker.Label')}
   </button>
 </aside>
 
@@ -72,6 +73,7 @@
       EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
         tabId: CONSTANTS.TAB_ACTOR_COMBAT,
+        /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
         sectionKey: CONSTANTS.SHEET_TYPE_NPC,
         rowActions: rowActions,
         section: { ...SheetSections.EMPTY, rowActions },
@@ -89,7 +91,7 @@
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
-              {localize('DND5E.ENCOUNTER.Tab.Members')}
+              {localize('TIDY5E.Encounter.CombatantsSection.Title')}
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
@@ -98,11 +100,7 @@
       {/snippet}
       {#snippet body()}
         {#each combatants as member}
-          {#if member.type === 'member'}
-            {@render npcTableRow(member, columns, hiddenColumns)}
-          {:else}
-            {@render placeholderTableRow(member)}
-          {/if}
+          {@render tableRow(member, columns, hiddenColumns)}
         {/each}
       {/snippet}
     </TidyTable>
@@ -137,21 +135,32 @@
   {/each}
 {/snippet}
 
-{#snippet npcTableRow(
-  member: EncounterMemberQuadroneContext,
+{#snippet tableRow(
+  combatant:
+    | EncounterMemberQuadroneContext
+    | EncounterPlaceholderQuadroneContext,
   columns: ColumnsLoadout,
   hiddenColumns: Set<string>,
 )}
+  {@const member = combatant.type === 'member' ? combatant : null}
+  {@const placeholder = combatant.type === 'placeholder' ? combatant : null}
   <div
     class="tidy-table-row group-member"
-    style:--t5e-theme-color-default={member.accentColor}
-    style:--t5e-theme-color-highlight={member.highlightColor}
-    style:--t5e-member-color-hover={member.highlightColor}
-    data-tidy-draggable
-    data-member-uuid={member.actor.uuid}
-    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
+    style:--t5e-theme-color-default={member?.accentColor}
+    style:--t5e-theme-color-highlight={member?.highlightColor}
+    style:--t5e-member-color-hover={member?.highlightColor}
+    data-combatant-type={combatant.type}
+    data-member-uuid={member?.actor.uuid}
+    data-placeholder-id={placeholder?.id}
+    data-context-menu={!!member
+      ? CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER
+      : CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER}
   >
-    <EncounterMemberNameCell {member} />
+    {#if combatant.type === 'placeholder'}
+      <EncounterPlaceholderNameColumn placeholder={combatant} />
+    {:else if member}
+      <EncounterMemberNameCell {member} />
+    {/if}
     {#each columns.ordered as column}
       {@const hidden = hiddenColumns.has(column.key)}
       <TidyTableCell
@@ -163,8 +172,8 @@
           {@html column.cellContent.callback?.(context.document, context)}
         {:else if column.cellContent.type === 'component'}
           <column.cellContent.component
-            rowContext={member}
-            rowDocument={member.actor}
+            rowContext={combatant}
+            rowDocument={member?.actor}
             section={{
               ...SheetSections.EMPTY,
               rowActions: rowActions,

@@ -19,6 +19,7 @@ import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneR
 import { error } from 'src/utils/logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { settings } from 'src/settings/settings.svelte';
+import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 
 export type SheetTabConfigurationContext = {
   entry: TabConfigContextEntry;
@@ -178,5 +179,7 @@ function getActorRuntime(type: string) {
     ? VehicleSheetQuadroneRuntime
     : type === CONSTANTS.SHEET_TYPE_GROUP
     ? GroupSheetQuadroneRuntime
+    : type === CONSTANTS.SHEET_TYPE_ENCOUNTER
+    ? EncounterSheetQuadroneRuntime
     : undefined;
 }

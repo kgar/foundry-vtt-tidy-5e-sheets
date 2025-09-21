@@ -1386,17 +1386,23 @@ export type EncounterMemberQuadroneContext = {
   backgroundColor: string | undefined;
   canEdit: boolean;
   highlightColor: string | undefined;
+  includeInCombat: boolean;
   initiative: number | undefined;
+  name: string;
   portrait: MultiActorMemberPortraitContext;
   quantity: {
     value: number | undefined;
     formula: string | undefined;
   };
+  visible: boolean;
   type: 'member';
 };
 
 export type EncounterPlaceholderQuadroneContext = {
   initiative: number | undefined;
+  includeInCombat: boolean;
+  name: string;
+  visible: boolean;
   type: 'placeholder';
 } & EncounterPlaceholder;
 

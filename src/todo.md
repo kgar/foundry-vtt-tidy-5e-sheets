@@ -3,30 +3,15 @@
 
 ### Encounter Sheet
 
-- [x] Encounter Members tab: Wire up XP bar with stops
-- [ ] Encounter sheet: Set up tab selection
-- [ ] Combat tab
-  - [ ] Implement Placeholder Members
-    - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
-  - [ ] Order combatants by initiative, then by name
-  - [ ] Section title - change name to "Combatants" with a count that equals the non-placeholder members
-  - [ ] "Add a Placeholder" button
-    - [ ] Relocalize to "Create a Placeholder Member"
-    - [ ] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "Placeholder"
-  - [ ] "Add All as Placeholders" button
-    - [ ] Change icon to crossed swords
-    - [ ] Take all members and placeholders and add them to the encounter tracker
-      - [ ] Members: 
-        - [ ] I can sooner: add directly as placeholders with img, name, and tracked resource at configured initiative
-        - [ ] I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative (why sideload? so they can be double-clicked to open their details and roll things)
-      - [ ] Placeholders: add directly to tracker at configured initiative
-  - [ ] "Add to Active Encounter" 
-    - [ ] Relocalize to "Add All to Encounter" button and move up to just after "Add All as Placeholders"
-    - [ ] Disable when there is no active encounter
-    - [ ] Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥
-  - [x] "Preroll Initiative" button
-- [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
-- [ ] Plan and implement the rest
+- [x] Encounter sheet: Set up tab selection
+- [ ] Refactor: Consolidate all combat options to a single model and make that the flag. Likewise, put all combat settings into a combat prop on the Member and Placeholder contexts.
+- [ ] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
+- [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
+- [ ] Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
+- [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
+- [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
+- [ ] Stretch/discuss, post-release, Encounter sheet - Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
+
 
 ### Group Sheet
 
@@ -341,3 +326,28 @@ Limited:
       - [x] Swap HP with editable Formula column
 - [x] Members context menu for Encounter sheet
 - [X] Make Formula column a lower-priority, always-shown column
+- [x] Encounter Members tab: Wire up XP bar with stops
+- [x] Combat tab
+  - [x] Implement Placeholder Members
+    - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
+    - [x] All columns except Initiative should take up space but not present anything for placeholder rows
+    - [X] Implement Initiative handling for placeholders
+      - [x] Input
+    - [x] Portrait
+    - [x] PlaceholderName component
+      - [x] Unlocked - Editable title and editable subtitle
+  - [x] Order combatants by initiative, then by name
+  - [x] Section title - change name to "Combatants" with a count that equals the non-placeholder members
+  - [x] "Add a Placeholder" button
+    - [x] Relocalize to "Create a Placeholder Member"
+    - [x] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "New Placeholder"
+  - [x] "Add All as Placeholders" button
+    - [x] Take all members and placeholders and add them to the encounter tracker
+      - [x] Members: 
+        - [x] I can sooner: add directly as placeholders with img, name, and tracked resource at configured initiative
+      - [x] Placeholders: add directly to tracker at configured initiative
+  - [X] ~~"Add to Active Encounter" ~~ Abandoned. Well-supported by Foundry. Don't bother. Doesn't add enough value.
+    - [x] ~~Relocalize to "Add All Tokens to Encounter" button and move up to just after "Add All as Placeholders"~~
+    - [x] ~~Disable when there is no active encounter~~ A notification warning is more instructive.
+    - [x] ~~Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥~~
+  - [x] "Preroll Initiative" button

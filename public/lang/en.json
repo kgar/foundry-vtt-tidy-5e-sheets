@@ -901,16 +901,20 @@
   "TIDY5E.AggregateSkill.LowMeasure": "Low",
   "TIDY5E.Difficulty": "Difficulty",
   "TIDY5E.Encounter": {
+    "CombatantsSection.Title": "Combatants",
+    "Combat.IncludeInCombat.Tooltip": "Include in combat activities",
+    "Combat.ExcludeFromCombat.Tooltip": "Exclude from combat activities",
     "AddMember.Label": "Add Member",
-    "Combat": {
-      "AddAllPlaceholders.Label": "Add All as Placeholders",
-      "AddPlaceholder.Label": "Add a Placeholder",
-      "AddToCombatTracker.Label": "Add to Active Encounter",
-      "IncludeInCombat.Tooltip": "Include in combat activities",
-      "ExcludeFromCombat.Tooltip": "Exclude from combat activities"
-    },
+    "AddPlaceholderToCombatTracker.Label": "Add to Current Encounter as Placeholder",
+    "AddPlaceholder.Label": "Create Combat Placeholder",
+    "DeletePlaceholder.Label": "Delete Placeholder",
+    "AddAllPlaceholders.Label": "Add All as Placeholders",
     "PrerollInitiative": "Preroll Initiative",
-    "NoActiveEncounter": "Must have an active encounter to add to combat tracker."
+    "NewPlaceholder.Name": "New Placeholder",
+    "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder",
+    "AddCombatants.MustHaveEncounter.Message": "Must have an active encounter selected to add to combat tracker",
+    "CombatVisibility.Hidden.Label": "Hidden from players when added to tracker",
+    "CombatVisibility.Visible.Label": "Visible to players when added to tracker"
   },
   "TIDY5E.Actor.Characteristics": "Characteristics"
 }
