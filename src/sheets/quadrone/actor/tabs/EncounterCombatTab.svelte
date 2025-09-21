@@ -147,20 +147,23 @@
   hiddenColumns: Set<string>,
 )}
   {@const member = combatant.type === 'member' ? combatant : null}
+  {@const placeholder = combatant.type === 'placeholder' ? combatant : null}
   <div
     class="tidy-table-row group-member"
     style:--t5e-theme-color-default={member?.accentColor}
     style:--t5e-theme-color-highlight={member?.highlightColor}
     style:--t5e-member-color-hover={member?.highlightColor}
+    data-combatant-type={combatant.type}
     data-member-uuid={member?.actor.uuid}
+    data-placeholder-id={placeholder?.id}
     data-context-menu={!!member
       ? CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER
       : CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER}
   >
-    {#if member}
-      <EncounterMemberNameCell {member} />
-    {:else}
+    {#if combatant.type === 'placeholder'}
       <EncounterPlaceholderNameColumn placeholder={combatant} />
+    {:else if member}
+      <EncounterMemberNameCell {member} />
     {/if}
     {#each columns.ordered as column}
       {@const hidden = hiddenColumns.has(column.key)}

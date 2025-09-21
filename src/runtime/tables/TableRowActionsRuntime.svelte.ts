@@ -512,10 +512,11 @@ class TableRowActionsRuntime {
         result.push({
           component: EncounterAddCombatPlaceholder,
           props: (args) => ({
-            doc: args.data,
+            args: args,
             disabled: false,
-            addPlaceholderFn: () => alert('TODO: Add a placeholder to the combat tracker.'),
-            tooltip: FoundryAdapter.localize('TIDY5E.Encounter.AddPlaceholder.Label'),
+            tooltip: FoundryAdapter.localize(
+              'TIDY5E.Encounter.AddPlaceholder.Label'
+            ),
           }),
         } satisfies TableAction<typeof EncounterAddCombatPlaceholder>);
         result.push({

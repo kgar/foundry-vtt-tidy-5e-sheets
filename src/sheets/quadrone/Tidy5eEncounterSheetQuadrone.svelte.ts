@@ -40,6 +40,8 @@ import {
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
 ) {
+  static DEFAULT_ENCOUNTER_PLACEHOLDER_ICON = 'icons/svg/mystery-man.svg';
+
   currentTabId: string;
   emphasizedMember: Ref<EncounterMemberContext | undefined> = $state({
     value: undefined,
@@ -422,13 +424,78 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   addNewPlaceholder(): Promise<void> {
     return TidyFlags.placeholders.insertOrUpdateEntry(this.actor, {
       id: foundry.utils.randomID(),
-      img: 'icons/svg/mystery-man.svg',
+      img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
       name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
     });
   }
 
   deletePlaceholder(placeholderId: string): Promise<void> {
     return TidyFlags.placeholders.deleteEntry(this.actor, placeholderId);
+  }
+
+  async onAddPlaceholder(ev: Event & { currentTarget: HTMLElement }) {
+    const type = ev.currentTarget
+      .closest('[data-combatant-type]')
+      ?.getAttribute('data-combatant-type');
+
+    const initiatives = TidyFlags.encounterInitiative.get(this.actor);
+
+    if (type === 'member') {
+      const uuid = ev.currentTarget
+        .closest('[data-member-uuid]')
+        ?.getAttribute('data-member-uuid');
+
+      const actorMember = this.actor.system.members.find(
+        (m: any) => m.uuid === uuid
+      );
+
+      const actor = await fromUuid(actorMember.uuid);
+
+      // TODO: determine the appropriate image
+      this._addPlaceholdersToCurrentEncounter([
+        {
+          name: actor.name,
+          img: actor.img,
+          initiative: initiatives[actor.uuid.replaceAll('.', '-')],
+        },
+      ]);
+    } else if (type === 'placeholder') {
+      const placeholders = TidyFlags.placeholders.get(this.actor);
+      const placeholderId =
+        ev.currentTarget
+          .closest('[data-placeholder-id]')
+          ?.getAttribute('data-placeholder-id') ?? '';
+      const placeholder = placeholders[placeholderId];
+
+      if (placeholder) {
+        return await this._addPlaceholdersToCurrentEncounter([
+          {
+            img: placeholder.img,
+            initiative: initiatives[placeholderId.replaceAll('.', '-')],
+            name: placeholder.name,
+          },
+        ]);
+      }
+    }
+  }
+
+  _addPlaceholdersToCurrentEncounter(
+    combatants: {
+      name: string;
+      img: string;
+      initiative: number | undefined;
+    }[]
+  ): Promise<void> | undefined {
+    if (!game.combat) {
+      ui.notifications.warn(
+        FoundryAdapter.localize(
+          'TIDY5E.Encounter.AddCombatants.MustHaveEncounter.Message'
+        )
+      );
+      return;
+    }
+
+    return game.combat.createEmbeddedDocuments('Combatant', combatants);
   }
 
   /* -------------------------------------------- */

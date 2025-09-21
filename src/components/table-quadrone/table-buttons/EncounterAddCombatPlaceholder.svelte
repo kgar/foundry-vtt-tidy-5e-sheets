@@ -1,27 +1,23 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
-    doc: any;
-    disabled?: boolean;
-    addPlaceholderFn?: Function;
     tooltip?: string;
   }
 
-  let { 
-    doc, 
-    disabled,
-    addPlaceholderFn = () => alert('TODO: Add a placeholder to the combat tracker.'),
+  let {
     tooltip = FoundryAdapter.localize('TIDY5E.Encounter.AddPlaceholder.Label'),
   }: Props = $props();
+
+  let context = $derived(getEncounterSheetQuadroneContext());
 </script>
 
 <a
-  class="tidy-table-button {disabled ?? 'disabled'}"
+  class={['tidy-table-button', { disabled: !context.editable }]}
   aria-label={tooltip}
   data-tooltip
-  onclick={() => !disabled && addPlaceholderFn()}
+  onclick={(ev) => context.editable && context.sheet.onAddPlaceholder(ev)}
 >
   <i class="fa-solid fa-circle-dashed"></i>
 </a>

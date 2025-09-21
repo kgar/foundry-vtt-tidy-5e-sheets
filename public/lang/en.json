@@ -903,10 +903,11 @@
     "Combat.ExcludeFromCombat.Tooltip": "Exclude from combat activities",
     "AddMember.Label": "Add Member",
     "AddToCombatTracker.Label": "Add to Active Encounter",
-    "AddPlaceholder.Label": "Add a Placeholder",
+    "AddPlaceholder.Label": "Create a Combat Placeholder",
     "AddAllPlaceholders.Label": "Add All as Placeholders",
     "PrerollInitiative": "Preroll Initiative",
     "NewPlaceholder.Name": "New Placeholder",
-    "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder"
+    "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder",
+    "AddCombatants.MustHaveEncounter.Message": "TODO: Localize 'Must have encounter selected' message"
   }
 }
