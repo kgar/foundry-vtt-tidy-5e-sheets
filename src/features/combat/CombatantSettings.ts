@@ -11,21 +11,44 @@ import { isNil } from 'src/utils/data';
  * An adapter for managing the `combatantSettings` document flag.
  */
 export class CombatantSettings {
+  /**
+   * Gets the combatant settings with the identifer's hyphens
+   * @param encounter
+   * @returns
+   */
   static get(encounter: Actor5e): EncounterCombatantsSettings {
-    return TidyFlags.combatantSettings.get(encounter);
+    const settingsWithHyphenatedIdentifiers =
+      TidyFlags.combatantSettings.get(encounter);
+
+    const settings: EncounterCombatantsSettings = {};
+    for (const key of Object.keys(settingsWithHyphenatedIdentifiers)) {
+      const originalId = CombatantSettings._revertIdentifier(key);
+      settings[originalId] = {
+        ...settingsWithHyphenatedIdentifiers[key],
+        identifier: originalId,
+      };
+    }
+
+    return settings;
   }
 
   static getEntry(
     encounter: Actor5e,
     identifier: string
-  ): EncounterCombatantSettings | undefined {
+  ): EncounterCombatantSettings {
     identifier = CombatantSettings._prepareIdentifier(identifier);
 
-    return (
-      CombatantSettings.get(encounter)[identifier] ?? {
-        ...CombatantSettings.defaultSettings,
-      }
-    );
+    const entry = CombatantSettings.get(encounter)[identifier] ?? {
+      ...CombatantSettings.defaultSettings,
+    };
+
+    entry.identifier = CombatantSettings._revertIdentifier(entry.identifier);
+
+    return entry;
+  }
+
+  private static _revertIdentifier(identifier: string): string {
+    return identifier.replaceAll('-', '.');
   }
 
   private static _prepareIdentifier(identifier: string): string {
@@ -36,13 +59,24 @@ export class CombatantSettings {
     encounter: Actor5e,
     data: Partial<EncounterCombatantSettings>
   ): Promise<void> {
+    const settings = CombatantSettings.get(encounter);
+
+    CombatantSettings._prepareInsertOrUpdate(settings, data);
+
+    CombatantSettings._trimUnusedSettings(encounter, settings);
+
+    return await TidyFlags.combatantSettings.set(encounter, settings);
+  }
+
+  static _prepareInsertOrUpdate(
+    settings: EncounterCombatantsSettings,
+    data: Partial<EncounterCombatantSettings>
+  ) {
     if (isNil(data.identifier)) {
       return;
     }
 
     data.identifier = CombatantSettings._prepareIdentifier(data.identifier);
-
-    const settings = CombatantSettings.get(encounter);
 
     const toSave = FoundryAdapter.mergeObject(
       settings[data.identifier] ?? { ...CombatantSettings.defaultSettings },
@@ -50,6 +84,17 @@ export class CombatantSettings {
     );
 
     settings[toSave.identifier] = toSave;
+  }
+
+  static async bulkInsertOrUpdate(
+    encounter: Actor5e,
+    data: Record<string, Partial<EncounterCombatantSettings>>
+  ) {
+    const settings = CombatantSettings.get(encounter);
+
+    for (const entry of Object.values(data)) {
+      CombatantSettings._prepareInsertOrUpdate(settings, entry);
+    }
 
     CombatantSettings._trimUnusedSettings(encounter, settings);
 
@@ -77,10 +122,10 @@ export class CombatantSettings {
     }
   }
 
-  static defaultSettings: EncounterCombatantSettings = {
+  static defaultSettings: Readonly<EncounterCombatantSettings> = Object.freeze({
     identifier: '',
     include: true,
     initiative: undefined,
     visible: true,
-  };
+  });
 }

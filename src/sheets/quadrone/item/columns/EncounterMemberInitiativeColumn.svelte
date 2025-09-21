@@ -7,6 +7,8 @@
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { CombatantSettings } from 'src/features/combat/CombatantSettings';
+    import { isNil } from 'src/utils/data';
 
   let {
     rowDocument,
@@ -23,10 +25,17 @@
   let initiative = $derived(rowContext.initiative?.toString() ?? '');
 
   function onInitiativeChange(newValue: string): Promise<void> | undefined {
-    return context.sheet.updateInitiative(
-      rowContext.type === 'member' ? rowContext.actor.uuid : rowContext.id,
-      newValue,
-    );
+    let initiative: number | undefined = +newValue;
+
+    if (isNaN(initiative) || isNil(newValue)) {
+      initiative = undefined;
+    }
+
+    return CombatantSettings.insertOrUpdate(context.actor, {
+      identifier:
+        rowContext.type === 'member' ? rowContext.actor.uuid : rowContext.id,
+      initiative: initiative,
+    });
   }
 </script>
 
