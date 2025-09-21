@@ -81,6 +81,8 @@
     onconfig={() =>
       FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
     icon="fa-solid fa-rabbit-running"
+    traitClass="traits-speeds"
+    pillClass="trait-speed"
   />
 
   <!-- Senses -->
@@ -91,6 +93,8 @@
     onconfig={() =>
       FoundryAdapter.renderMovementSensesConfig(context.actor, 'senses')}
     icon="fa-solid fa-eye"
+    traitClass="traits-senses"
+    pillClass="trait-sense"
   />
 
   <!-- Size -->
@@ -108,7 +112,8 @@
     entries={context.traits.dr}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dr')}
     icon="fa-solid fa-shield-halved"
-    pillClass="positive"
+    traitClass="traits-resistances"
+    pillClass="positive trait-resistance"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
       pillClass: 'physical-bypass',
@@ -122,7 +127,8 @@
     entries={context.traits.di}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'di')}
     icon="fa-solid fa-shield"
-    pillClass="positive"
+    traitClass="traits-damage-immunities"
+    pillClass="positive trait-damage-immunity"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
       pillClass: 'physical-bypass',
@@ -136,7 +142,8 @@
     entries={context.traits.ci}
     onconfig={() => FoundryAdapter.renderTraitsConfig(context.actor, 'ci')}
     icon="fa-solid fa-shield-virus"
-    pillClass="positive"
+    traitClass="traits-condition-immunities"
+    pillClass="positive trait-condition-immunity"
   />
 
   <!-- Vulnerabilities -->
@@ -146,7 +153,8 @@
     entries={context.traits.dv}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dv')}
     icon="fa-solid fa-heart-crack"
-    pillClass="negative"
+    traitClass="traits-vulnerabilities"
+    pillClass="negative trait-vulnerability"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
       pillClass: 'physical-bypass',
@@ -160,6 +168,8 @@
     entries={context.traits.dm}
     onconfig={() => FoundryAdapter.openDamagesConfig(context.actor, 'dm')}
     icon="fa-solid fa-heart-circle-plus"
+    traitClass="traits-damage-modification"
+    pillClass="trait-damage-modification"
     aggregateIcons={{
       iconClass: 'fa-solid fa-shield-exclamation',
       pillClass: 'physical-bypass',
@@ -173,6 +183,8 @@
     entries={context.traits.languages}
     onconfig={() => FoundryAdapter.renderLanguagesConfig(context.actor)}
     icon="fa-solid fa-comments"
+    traitClass="traits-languages"
+    pillClass="trait-language"
   />
 
   <!-- Habitat -->
@@ -186,6 +198,8 @@
         document: context.actor,
       }).render({ force: true })}
     icon="fa-solid fa-mountain-sun"
+    traitClass="traits-habitats"
+    pillClass="trait-habitat"
   />
 
   <!-- Treasure -->
@@ -199,6 +213,8 @@
         document: context.actor,
       }).render({ force: true })}
     icon="fa-solid fa-gem"
+    traitClass="traits-treasures"
+    pillClass="trait-treasure"
   />
 
   <!-- Special Traits -->
@@ -213,6 +229,8 @@
           force: true,
         })}
       icon="fa-solid fa-star"
+      traitClass="traits-specials"
+      pillClass="trait-special"
     />
   {/if}
 </div>

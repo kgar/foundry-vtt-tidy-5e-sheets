@@ -28,7 +28,7 @@
 
 {#if context.unlocked}
   <!-- Species -->
-  <div class="list-entry">
+  <div class="list-entry traits-creature-type">
     <div class="list-label flexrow">
       <h4 class="font-weight-label">
         <i class="fa-solid fa-paw"></i>

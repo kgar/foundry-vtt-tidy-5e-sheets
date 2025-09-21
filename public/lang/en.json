@@ -860,12 +860,14 @@
   "TIDY5E.Keybindings.ToggleSheetLock.Hint": "If a Tidy sheet is the current active window in the UI, this keybinding toggles the sheet lock.",
   "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Toggle Header Menu",
   "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "If a Tidy sheet is the current active window in the UI, this keybinding toggles the sheet header menu.",
-  "TIDY5E.Facilities.Hirelings.Label": "Hirelings",
-  "TIDY5E.Facilities.Defenders.Label": "Defenders",
-  "TIDY5E.Facilities.Creatures.Label": "Creatures",
-  "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
-  "TIDY5E.Facilities.ContextMenuActionRemove": "Remove from {facilityName}",
-  "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
+  "TIDY5E.Facilities": {
+    "Hirelings.Label": "Hirelings",
+    "Defenders.Label": "Defenders",
+    "Creatures.Label": "Creatures",
+    "RosterMember.Label": "{actorName} - {facilityName}",
+    "ContextMenuActionRemove": "Remove from {facilityName}",
+    "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
+  },
   "TIDY5E.LocalizationTestKey": "Localization Test Key",
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
   "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
@@ -910,8 +912,9 @@
     "PrerollInitiative": "Preroll Initiative",
     "NewPlaceholder.Name": "New Placeholder",
     "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder",
-    "AddCombatants.MustHaveEncounter.Message": "TODO: Localize 'Must have encounter selected' message",
+    "AddCombatants.MustHaveEncounter.Message": "Must have an active encounter selected to add to combat tracker",
     "CombatVisibility.Hidden.Label": "Hidden from players when added to tracker",
     "CombatVisibility.Visible.Label": "Visible to players when added to tracker"
-  }
+  },
+  "TIDY5E.Actor.Characteristics": "Characteristics"
 }

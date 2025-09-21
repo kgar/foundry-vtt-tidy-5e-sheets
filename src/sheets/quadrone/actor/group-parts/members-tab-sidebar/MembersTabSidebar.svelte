@@ -55,7 +55,7 @@
   <!-- Aggregate Traits -->
   <div class="list traits">
     <!-- Languages -->
-    <div class="list-entry">
+    <div class="list-entry traits-languages">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-comments"></i>
@@ -72,6 +72,7 @@
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
+                'trait-language': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
@@ -97,7 +98,7 @@
       </div>
     </div>
     <!-- Speeds -->
-    <div class="list-entry">
+    <div class="list-entry traits-speeds">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-rabbit-running"></i>
@@ -114,6 +115,7 @@
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
+                'trait-speed': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
@@ -138,7 +140,7 @@
       </div>
     </div>
     <!-- Senses -->
-    <div class="list-entry">
+    <div class="list-entry traits-senses">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-eye"></i>
@@ -155,6 +157,7 @@
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
+                'trait-sense': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               {@const pill =
@@ -183,7 +186,7 @@
     <GroupSkills />
 
     <!-- Specials -->
-    <div class="list-entry">
+    <div class="list-entry traits-specials">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-star-sharp"></i>
@@ -200,6 +203,7 @@
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
+                'trait-special': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
 
@@ -223,7 +227,7 @@
     </div>
 
     <!-- Tools -->
-    <div class="list-entry">
+    <div class="list-entry traits-tools">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-hammer-brush"></i>
@@ -240,6 +244,7 @@
               {@const pillState: ClassValue = {
                 emphasized: isEmphasized,
                 'theme-dark': isEmphasized,
+                'trait-tool': true,
                 diminished: emphasizedMember !== undefined && !isEmphasized,
               }}
               <GroupTraitPill
