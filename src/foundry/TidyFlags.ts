@@ -877,6 +877,16 @@ export class TidyFlags {
       placeholders[placeholder.id] = placeholder;
       return TidyFlags.placeholders.set(actor, placeholders);
     },
+    deleteEntry(actor: Actor5e, placeholderId: string): Promise<void> {
+      const placeholders = TidyFlags.placeholders.get(actor);
+
+      delete placeholders[placeholderId];
+
+      // @ts-ignore - Foundry delete operation.
+      placeholders[`-=${placeholderId}`] = null;
+
+      return TidyFlags.placeholders.set(actor, placeholders);
+    },
   };
 
   /**

@@ -41,7 +41,11 @@
 </script>
 
 <aside class="sidebar flexcol">
-  <button type="button" class="button">
+  <button
+    type="button"
+    class="button"
+    onclick={(ev) => context.sheet.addNewPlaceholder()}
+  >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
   </button>

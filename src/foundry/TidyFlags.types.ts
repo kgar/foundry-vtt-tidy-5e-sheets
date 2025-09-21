@@ -65,7 +65,7 @@ export type EncounterPlaceholder = {
    * A note about the placeholder, displayed as a subtitle on the placeholder, 
    * to help remind about the purpose of the placeholder or some other detail.
    */
-  note: string;
+  note?: string;
   /**
    * The image to display on the encounter sheet for the placeholder, as well as
    * the combat tracker when the placeholder has been added to the tracker.

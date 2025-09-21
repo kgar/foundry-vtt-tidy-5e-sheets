@@ -8,11 +8,17 @@
 - [ ] Combat tab
   - [ ] Implement Placeholder Members
     - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
+    - [ ] All columns except Initiative should take up space but not present anything for placeholder rows
+    - [ ] Implement Initiative handling for placeholders
+    - [ ] Portrait
+    - [ ] PlaceholderName component
+      - [ ] Unlocked - Editable title and editable subtitle
   - [ ] Order combatants by initiative, then by name
   - [ ] Section title - change name to "Combatants" with a count that equals the non-placeholder members
   - [ ] "Add a Placeholder" button
     - [ ] Relocalize to "Create a Placeholder Member"
-    - [ ] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "Placeholder"
+    - [ ] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "New Placeholder"
+    - [ ] Stretch - show a fancy dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
   - [ ] "Add All as Placeholders" button
     - [ ] Change icon to crossed swords
     - [ ] Take all members and placeholders and add them to the encounter tracker
@@ -21,7 +27,7 @@
         - [ ] I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative (why sideload? so they can be double-clicked to open their details and roll things)
       - [ ] Placeholders: add directly to tracker at configured initiative
   - [ ] "Add to Active Encounter" 
-    - [ ] Relocalize to "Add All to Encounter" button and move up to just after "Add All as Placeholders"
+    - [ ] Relocalize to "Add All Tokens to Encounter" button and move up to just after "Add All as Placeholders"
     - [ ] Disable when there is no active encounter
     - [ ] Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥
   - [x] "Preroll Initiative" button

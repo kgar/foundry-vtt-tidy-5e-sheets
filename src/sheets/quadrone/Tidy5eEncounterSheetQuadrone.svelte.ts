@@ -392,6 +392,18 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     }
   }
 
+  addNewPlaceholder(): Promise<void> {
+    return TidyFlags.placeholders.insertOrUpdateEntry(this.actor, {
+      id: foundry.utils.randomID(),
+      img: 'icons/svg/mystery-man.svg',
+      name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
+    });
+  }
+
+  deletePlaceholder(placeholderId: string): Promise<void> {
+    return TidyFlags.placeholders.deleteEntry(this.actor, placeholderId);
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */

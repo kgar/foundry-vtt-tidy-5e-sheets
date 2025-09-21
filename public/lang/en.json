@@ -905,6 +905,8 @@
     "AddToCombatTracker.Label": "Add to Active Encounter",
     "AddPlaceholder.Label": "Add a Placeholder",
     "AddAllPlaceholders.Label": "Add All as Placeholders",
-    "PrerollInitiative": "Preroll Initiative"
+    "PrerollInitiative": "Preroll Initiative",
+    "NewPlaceholder.Name": "New Placeholder",
+    "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder"
   }
 }
