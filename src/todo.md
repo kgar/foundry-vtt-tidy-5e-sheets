@@ -4,13 +4,13 @@
 ### Encounter Sheet
 
 - [x] Encounter sheet: Set up tab selection
-- [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
 - [ ] Refactor: Consolidate all combat options to a single model and make that the flag. Likewise, put all combat settings into a combat prop on the Member and Placeholder contexts.
 - [ ] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
 - [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
 - [ ] Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
+- [ ] Stretch/discuss, post-release, Encounter sheet - Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
 
 
 ### Group Sheet
