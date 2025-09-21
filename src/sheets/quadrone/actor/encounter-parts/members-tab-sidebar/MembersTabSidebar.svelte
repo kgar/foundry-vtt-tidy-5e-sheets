@@ -49,7 +49,7 @@
 >
   <div class="list traits">
     <!-- Languages -->
-    <div class="list-entry">
+    <div class="list-entry traits-languages">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-comments"></i>
@@ -66,6 +66,7 @@
               {@const pillState: ClassValue = {
                   emphasized: isEmphasized,
                   'theme-dark': isEmphasized,
+                  'trait-language': true,
                   diminished: emphasizedMember !== undefined && !isEmphasized,
                 }}
               {@const pill =
@@ -92,7 +93,7 @@
     </div>
 
     <!-- Speeds -->
-    <div class="list-entry">
+    <div class="list-entry traits-speeds">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-comments"></i>
@@ -109,6 +110,7 @@
               {@const pillState: ClassValue = {
                   emphasized: isEmphasized,
                   'theme-dark': isEmphasized,
+                  'trait-speed': true,
                   diminished: emphasizedMember !== undefined && !isEmphasized,
                 }}
               {@const pill =
@@ -134,7 +136,7 @@
     </div>
 
     <!-- Senses -->
-    <div class="list-entry">
+    <div class="list-entry traits-senses">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-comments"></i>
@@ -151,6 +153,7 @@
               {@const pillState: ClassValue = {
                   emphasized: isEmphasized,
                   'theme-dark': isEmphasized,
+                  'trait-sense': true,
                   diminished: emphasizedMember !== undefined && !isEmphasized,
                 }}
               {@const pill =
@@ -179,7 +182,7 @@
     <EncounterSkills />
 
     <!-- Specials -->
-    <div class="list-entry">
+    <div class="list-entry traits-specials">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-star-sharp"></i>
@@ -196,6 +199,7 @@
               {@const pillState: ClassValue = {
                   emphasized: isEmphasized,
                   'theme-dark': isEmphasized,
+                  'trait-special': true,
                   diminished: emphasizedMember !== undefined && !isEmphasized,
                 }}
 
