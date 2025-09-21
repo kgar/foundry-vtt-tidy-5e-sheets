@@ -163,6 +163,13 @@
       }
     }
 
+    &.combat {
+      .actor-name .separated-list {
+        display: none;
+        visibility: hidden;
+      }
+    }
+
     .tidy-table-cell {
       &[data-tidy-column-key="qtyFormulaColumn"] {
         input {
