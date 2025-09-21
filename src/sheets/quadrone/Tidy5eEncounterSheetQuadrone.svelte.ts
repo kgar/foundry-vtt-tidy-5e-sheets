@@ -204,8 +204,6 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         this._prepareMemberSpecials(actor, specials);
         this._prepareMemberSpeeds(actor, speeds);
 
-        const combatSettingIdentifier = actor.uuid.replaceAll('.', '-');
-
         const memberContext: EncounterMemberQuadroneContext = {
           actor,
           quantity,
