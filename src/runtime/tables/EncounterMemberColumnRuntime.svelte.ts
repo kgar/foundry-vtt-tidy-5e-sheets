@@ -31,7 +31,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: EncounterMemberCrColumn,
       },
-      widthRems: 3.5,
+      widthRems: 2.5,
     };
 
     const quantityColumn: ColumnSpecificationBase = {
@@ -43,7 +43,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: EncounterMemberQuantityColumn,
       },
-      widthRems: 4.75,
+      widthRems: 3.5,
     };
 
     const hpColumn: ColumnSpecificationBase = {
@@ -55,7 +55,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: GroupMemberHpColumn,
       },
-      widthRems: 3.75,
+      widthRems: 2.5,
     };
 
     const npcXpColumn: ColumnSpecificationBase = {
@@ -126,8 +126,8 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
               order: 400,
               priority: 500,
             },
-            hp: { ...hpColumn, order: 300, priority: 100 },
-            npcXp: { ...npcXpColumn, order: 400, priority: 200 },
+            hp: { ...hpColumn, order: 300, priority: 300 },
+            npcXp: { ...npcXpColumn, order: 400, priority: 500 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },

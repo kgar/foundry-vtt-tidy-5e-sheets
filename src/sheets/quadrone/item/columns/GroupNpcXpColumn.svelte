@@ -15,5 +15,5 @@
 </script>
 
 <span class="font-label-large color-text-default"
-  >{rowDocument.system.details.xp.value}</span
+  >{rowDocument.system.details.xp.value.toLocaleString()}</span
 >
