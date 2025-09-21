@@ -133,14 +133,9 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
         [CONSTANTS.TAB_ACTOR_COMBAT]: {
           [CONSTANTS.SHEET_TYPE_NPC]: {
-            cr: { ...crColumn, order: 100, priority: 500 },
-            quantity: { ...quantityColumn, order: 400, priority: 500 },
-            qtyFormulaColumn: {
-              ...qtyFormulaColumn,
-              order: 400,
-              priority: 500,
-            },
-            initiative: { ...initiativeColumn, order: 300, priority: 100 },
+            cr: { ...crColumn, order: 100, priority: 100 },
+            quantity: { ...quantityColumn, order: 400, priority: 200 },
+            initiative: { ...initiativeColumn, order: 300, priority: 300 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },
