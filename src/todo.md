@@ -32,7 +32,7 @@
     - [ ] Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥
   - [x] "Preroll Initiative" button
 - [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
-- [ ] Refactor: Consolidate all combat options to a single model and make that the flag. 
+- [ ] Refactor: Consolidate all combat options to a single model and make that the flag. Likewise, put all combat settings into a combat prop on the Member and Placeholder contexts.
 - [ ] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
 - [ ] Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
