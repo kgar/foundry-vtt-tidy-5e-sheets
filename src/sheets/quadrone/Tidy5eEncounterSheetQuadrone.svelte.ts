@@ -164,7 +164,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     skills: GroupSkill[];
     traits: EncounterTraits;
   }> {
-    const members: Actor5e[] = await this.actor.system.getMembers();
+    const members = await this.getMembers();
     const encounterInitiative = TidyFlags.encounterInitiative.get(this.actor);
 
     let skills = this._getMemberGroupSkillMap();
@@ -264,6 +264,12 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     };
   }
 
+  private async getMembers(): Promise<
+    { actor: Actor5e; quantity: { value: number; formula: string } }[]
+  > {
+    return await this.actor.system.getMembers();
+  }
+
   private _prepareMemberCreatureType(
     actor: any,
     creatureTypeCountMap: Map<string, EncounterCreatureTypeContext>,
@@ -361,7 +367,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   }
 
   async prerollAllInitiatives(ev: Event) {
-    const members: { actor: Actor5e }[] = await this.actor.system.getMembers();
+    const members = await this.getMembers();
 
     const encounterInitiative = (
       await Promise.all(
@@ -427,6 +433,25 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
       name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
     });
+  }
+
+  async addAllAsPlaceholders(): Promise<void> {
+    const members = await this.getMembers();
+    const placeholders = TidyFlags.placeholders.get(this.actor);
+    const initiatives = TidyFlags.encounterInitiative.get(this.actor);
+
+    this._addPlaceholdersToCurrentEncounter([
+      ...members.map(({ actor }) => ({
+        name: actor.name,
+        img: actor.img,
+        initiative: initiatives[actor.uuid.replaceAll('.', '-')],
+      })),
+      ...Object.values(placeholders).map((p) => ({
+        name: p.name,
+        img: p.img,
+        initiative: initiatives[p.id],
+      })),
+    ]);
   }
 
   deletePlaceholder(placeholderId: string): Promise<void> {

@@ -50,7 +50,7 @@
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
   </button>
-  <button type="button" class="button">
+  <button type="button" class="button" onclick={ev => context.sheet.addAllAsPlaceholders()}>
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddAllPlaceholders.Label')}
   </button>

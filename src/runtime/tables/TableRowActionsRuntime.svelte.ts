@@ -31,7 +31,7 @@ import EffectToggleButton from 'src/components/table-quadrone/table-buttons/Effe
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import EncounterCombatMemberToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatMemberToggle.svelte';
-import EncounterAddCombatPlaceholder from 'src/components/table-quadrone/table-buttons/EncounterAddCombatPlaceholder.svelte';
+import EncounterAddAsCombatPlaceholder from 'src/components/table-quadrone/table-buttons/EncounterAddAsCombatPlaceholder.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -508,17 +508,10 @@ class TableRowActionsRuntime {
       let result: TableAction<any>[] = [];
 
       if (context.owner) {
-        /* TODO: Hook up adding placeholder. */
         result.push({
-          component: EncounterAddCombatPlaceholder,
-          props: (args) => ({
-            args: args,
-            disabled: false,
-            tooltip: FoundryAdapter.localize(
-              'TIDY5E.Encounter.AddPlaceholder.Label'
-            ),
-          }),
-        } satisfies TableAction<typeof EncounterAddCombatPlaceholder>);
+          component: EncounterAddAsCombatPlaceholder,
+          props: () => ({}),
+        } satisfies TableAction<typeof EncounterAddAsCombatPlaceholder>);
         result.push({
           component: EncounterCombatMemberToggle,
           props: (args) => ({
