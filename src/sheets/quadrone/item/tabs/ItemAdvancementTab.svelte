@@ -112,7 +112,9 @@
       length = Math.max(
         length,
         tableHeaderActions.filter(
-          (a) => a.condition?.({ data: { key }, section }) ?? 0,
+          (a) =>
+            a.condition?.({ data: { key }, section, rowContext: undefined }) ??
+            0,
         ).length,
       );
     }
@@ -154,9 +156,13 @@
             {...columnSpecs.actions}
           >
             {#each tableHeaderActions as headerAction}
-              {#if headerAction.condition?.( { data: { key }, section: section }, ) ?? true}
+              {#if headerAction.condition?.( { data: { key }, section: section, rowContext: undefined }, ) ?? true}
                 <headerAction.component
-                  {...headerAction.props({ data: { key }, section })}
+                  {...headerAction.props({
+                    data: { key },
+                    section,
+                    rowContext: undefined,
+                  })}
                 />
               {/if}
             {/each}
@@ -225,6 +231,7 @@
                     {@const props = action.props({
                       data: advancement,
                       section,
+                      rowContext: undefined,
                     })}
                     <action.component {...props} />
                   {/each}
