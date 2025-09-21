@@ -3,7 +3,7 @@
 
 ### Encounter Sheet
 
-- [ ] Encounter sheet: Set up tab selection
+- [x] Encounter sheet: Set up tab selection
 - [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
 - [ ] Refactor: Consolidate all combat options to a single model and make that the flag. Likewise, put all combat settings into a combat prop on the Member and Placeholder contexts.
 - [ ] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
