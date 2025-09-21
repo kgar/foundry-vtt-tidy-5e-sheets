@@ -229,7 +229,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
     return {
       combatants: combatants.sort(
-        (a, b) => (a.initiative ?? 0) - (b.initiative ?? 0)
+        (a, b) => (b.initiative ?? 0) - (a.initiative ?? 0)
       ),
       creatureTypes: [...creatureTypes.values()].sort((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
@@ -305,7 +305,13 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     });
   }
 
-  updateMemberInitiative(uuid: string, initiative: string | number) {
+  /**
+   * Updates initiative for a given encounter member or placeholder.
+   * @param identifier a member UUID or a placeholder ID
+   * @param initiative the desired initiative value
+   * @returns 
+   */
+  updateInitiative(identifier: string, initiative: string | number) {
     const initiatives = TidyFlags.encounterInitiative.get(this.actor);
 
     const parsedInitiative = Number(initiative);
@@ -314,7 +320,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       return;
     }
 
-    initiatives[uuid.replaceAll('.', '-')] = parsedInitiative;
+    initiatives[identifier.replaceAll('.', '-')] = parsedInitiative;
 
     return TidyFlags.encounterInitiative.set(this.actor, initiatives);
   }
@@ -328,7 +334,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
   async prerollInitiative(ev: Event, actor: Actor5e) {
     const total = await this.getPrerolledInitiative(ev, actor);
-    this.updateMemberInitiative(actor.uuid, total);
+    this.updateInitiative(actor.uuid, total);
   }
 
   async prerollAllInitiatives(ev: Event) {

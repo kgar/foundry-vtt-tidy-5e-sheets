@@ -15,6 +15,7 @@
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
+  import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let combatants = $derived(context.combatants);
@@ -76,6 +77,7 @@
       EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
         tabId: CONSTANTS.TAB_ACTOR_COMBAT,
+        /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
         sectionKey: CONSTANTS.SHEET_TYPE_NPC,
         rowActions: rowActions,
         section: { ...SheetSections.EMPTY, rowActions },
@@ -102,11 +104,7 @@
       {/snippet}
       {#snippet body()}
         {#each combatants as member}
-          {#if member.type === 'member'}
-            {@render npcTableRow(member, columns, hiddenColumns)}
-          {:else}
-            {@render placeholderTableRow(member)}
-          {/if}
+          {@render tableRow(member, columns, hiddenColumns)}
         {/each}
       {/snippet}
     </TidyTable>
@@ -141,21 +139,29 @@
   {/each}
 {/snippet}
 
-{#snippet npcTableRow(
-  member: EncounterMemberQuadroneContext,
+{#snippet tableRow(
+  combatant:
+    | EncounterMemberQuadroneContext
+    | EncounterPlaceholderQuadroneContext,
   columns: ColumnsLoadout,
   hiddenColumns: Set<string>,
 )}
+  {@const member = combatant.type === 'member' ? combatant : null}
   <div
     class="tidy-table-row group-member"
-    style:--t5e-theme-color-default={member.accentColor}
-    style:--t5e-theme-color-highlight={member.highlightColor}
-    style:--t5e-member-color-hover={member.highlightColor}
-    data-tidy-draggable
-    data-member-uuid={member.actor.uuid}
-    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
+    style:--t5e-theme-color-default={member?.accentColor}
+    style:--t5e-theme-color-highlight={member?.highlightColor}
+    style:--t5e-member-color-hover={member?.highlightColor}
+    data-member-uuid={member?.actor.uuid}
+    data-context-menu={!!member
+      ? CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER
+      : CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER}
   >
-    <EncounterMemberNameCell {member} />
+    {#if member}
+      <EncounterMemberNameCell {member} />
+    {:else}
+      <EncounterPlaceholderNameColumn placeholder={combatant} />
+    {/if}
     {#each columns.ordered as column}
       {@const hidden = hiddenColumns.has(column.key)}
       <TidyTableCell
@@ -167,8 +173,8 @@
           {@html column.cellContent.callback?.(context.document, context)}
         {:else if column.cellContent.type === 'component'}
           <column.cellContent.component
-            rowContext={member}
-            rowDocument={member.actor}
+            rowContext={combatant}
+            rowDocument={member?.actor}
             section={{
               ...SheetSections.EMPTY,
               rowActions: rowActions,

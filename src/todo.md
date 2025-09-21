@@ -8,9 +8,10 @@
 - [ ] Combat tab
   - [ ] Implement Placeholder Members
     - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
-    - [ ] All columns except Initiative should take up space but not present anything for placeholder rows
-    - [ ] Implement Initiative handling for placeholders
-    - [ ] Portrait
+    - [x] All columns except Initiative should take up space but not present anything for placeholder rows
+    - [X] Implement Initiative handling for placeholders
+      - [x] Input
+    - [x] Portrait
     - [ ] PlaceholderName component
       - [ ] Unlocked - Editable title and editable subtitle
   - [ ] Order combatants by initiative, then by name
