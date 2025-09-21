@@ -30,8 +30,10 @@ import OpenActivityButton from 'src/components/table-quadrone/table-buttons/Open
 import EffectToggleButton from 'src/components/table-quadrone/table-buttons/EffectToggleButton.svelte';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import EncounterCombatMemberToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatMemberToggle.svelte';
+import EncounterCombatInclusionToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatInclusionToggle.svelte';
 import EncounterAddAsCombatPlaceholder from 'src/components/table-quadrone/table-buttons/EncounterAddAsCombatPlaceholder.svelte';
+import EncounterCombatVisibilityToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatVisibilityToggle.svelte';
+import DeleteEncounterEntityButton from 'src/components/table-quadrone/table-buttons/DeleteEncounterEntityButton.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -513,22 +515,24 @@ class TableRowActionsRuntime {
           props: () => ({}),
         } satisfies TableAction<typeof EncounterAddAsCombatPlaceholder>);
         result.push({
-          component: EncounterCombatMemberToggle,
+          component: EncounterCombatVisibilityToggle,
           props: (args) => ({
-            doc: args.data,
-            deleteFn: () => context.actor.system.removeMember(args.data),
-            tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
+            rowContext: args.rowContext,
           }),
-        } satisfies TableAction<typeof EncounterCombatMemberToggle>);
+        } satisfies TableAction<typeof EncounterCombatVisibilityToggle>);
+        result.push({
+          component: EncounterCombatInclusionToggle,
+          props: (args) => ({
+            rowContext: args.rowContext,
+          }),
+        } satisfies TableAction<typeof EncounterCombatInclusionToggle>);
         if (context.unlocked) {
           result.push({
-            component: DeleteButton,
+            component: DeleteEncounterEntityButton,
             props: (args) => ({
-              doc: args.data,
-              deleteFn: () => context.actor.system.removeMember(args.data),
-              tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
+              rowContext: args.rowContext,
             }),
-          } satisfies TableAction<typeof DeleteButton>);
+          } satisfies TableAction<typeof DeleteEncounterEntityButton>);
         }
       }
 

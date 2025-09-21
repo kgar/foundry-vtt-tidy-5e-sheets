@@ -86,6 +86,38 @@ export class TidyFlags {
     },
   };
 
+  static combatInclusion = {
+    key: 'combatInclusion' as const,
+    prop: TidyFlags.getFlagPropertyPath('combatInclusion'),
+    get(actor: Actor5e): Record<string, boolean> {
+      return (
+        TidyFlags.tryGetFlag<Record<string, boolean>>(
+          actor,
+          TidyFlags.combatInclusion.key
+        ) ?? {}
+      );
+    },
+    set(actor: Actor5e, value: Record<string, boolean>): Promise<void> {
+      return TidyFlags.setFlag(actor, TidyFlags.combatInclusion.key, value);
+    },
+  };
+
+  static combatVisibility = {
+    key: 'combatVisibility' as const,
+    prop: TidyFlags.getFlagPropertyPath('combatVisibility'),
+    get(actor: Actor5e): Record<string, boolean> {
+      return (
+        TidyFlags.tryGetFlag<Record<string, boolean>>(
+          actor,
+          TidyFlags.combatVisibility.key
+        ) ?? {}
+      );
+    },
+    set(actor: Actor5e, value: Record<string, boolean>): Promise<void> {
+      return TidyFlags.setFlag(actor, TidyFlags.combatVisibility.key, value);
+    },
+  };
+
   /**
    * An array of journal entries with an optional title
    * and an HTML-based journal.

@@ -904,11 +904,14 @@
     "AddMember.Label": "Add Member",
     "AddToCombatTracker.Label": "Add Tokens to Encounter",
     "AddPlaceholderToCombatTracker.Label": "Add to Current Encounter as Placeholder",
-    "AddPlaceholder.Label": "Create a Combat Placeholder",
+    "AddPlaceholder.Label": "Create Combat Placeholder",
+    "DeletePlaceholder.Label": "Delete Placeholder",
     "AddAllPlaceholders.Label": "Add All as Placeholders",
     "PrerollInitiative": "Preroll Initiative",
     "NewPlaceholder.Name": "New Placeholder",
     "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder",
-    "AddCombatants.MustHaveEncounter.Message": "TODO: Localize 'Must have encounter selected' message"
+    "AddCombatants.MustHaveEncounter.Message": "TODO: Localize 'Must have encounter selected' message",
+    "CombatVisibility.Hidden.Label": "Hidden from players when added to tracker",
+    "CombatVisibility.Visible.Label": "Visible to players when added to tracker"
   }
 }

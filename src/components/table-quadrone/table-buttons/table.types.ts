@@ -7,6 +7,7 @@ export type TidyTableActionArgs<
 > = {
   data: TData;
   section: TSection;
+  rowContext: any;
 };
 
 export type TidyTableAction<

@@ -17,22 +17,23 @@
   - [ ] Order combatants by initiative, then by name
   - [ ] Section title - change name to "Combatants" with a count that equals the non-placeholder members
   - [ ] "Add a Placeholder" button
-    - [ ] Relocalize to "Create a Placeholder Member"
-    - [ ] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "New Placeholder"
+    - [x] Relocalize to "Create a Placeholder Member"
+    - [x] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "New Placeholder"
     - [ ] Stretch - show a fancy dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
   - [ ] "Add All as Placeholders" button
-    - [ ] Change icon to crossed swords
-    - [ ] Take all members and placeholders and add them to the encounter tracker
+    - [x] Take all members and placeholders and add them to the encounter tracker
       - [ ] Members: 
         - [ ] I can sooner: add directly as placeholders with img, name, and tracked resource at configured initiative
         - [ ] I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative (why sideload? so they can be double-clicked to open their details and roll things)
       - [ ] Placeholders: add directly to tracker at configured initiative
   - [ ] "Add to Active Encounter" 
-    - [ ] Relocalize to "Add All Tokens to Encounter" button and move up to just after "Add All as Placeholders"
+    - [x] Relocalize to "Add All Tokens to Encounter" button and move up to just after "Add All as Placeholders"
     - [ ] Disable when there is no active encounter
     - [ ] Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥
   - [x] "Preroll Initiative" button
 - [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
+- [ ] Refactor: Consolidate all combat options to a single model and make that the flag. 
+- [ ] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
 - [ ] Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 
