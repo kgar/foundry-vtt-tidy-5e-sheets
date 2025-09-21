@@ -899,10 +899,10 @@
   "TIDY5E.AggregateSkill.LowMeasure": "Low",
   "TIDY5E.Difficulty": "Difficulty",
   "TIDY5E.Encounter": {
+    "CombatantsSection.Title": "Combatants",
     "Combat.IncludeInCombat.Tooltip": "Include in combat activities",
     "Combat.ExcludeFromCombat.Tooltip": "Exclude from combat activities",
     "AddMember.Label": "Add Member",
-    "AddToCombatTracker.Label": "Add Tokens to Encounter",
     "AddPlaceholderToCombatTracker.Label": "Add to Current Encounter as Placeholder",
     "AddPlaceholder.Label": "Create Combat Placeholder",
     "DeletePlaceholder.Label": "Delete Placeholder",

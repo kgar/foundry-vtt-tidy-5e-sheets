@@ -1388,6 +1388,7 @@ export type EncounterMemberQuadroneContext = {
   highlightColor: string | undefined;
   includeInCombat: boolean;
   initiative: number | undefined;
+  name: string;
   portrait: MultiActorMemberPortraitContext;
   quantity: {
     value: number | undefined;
@@ -1400,6 +1401,7 @@ export type EncounterMemberQuadroneContext = {
 export type EncounterPlaceholderQuadroneContext = {
   initiative: number | undefined;
   includeInCombat: boolean;
+  name: string;
   visible: boolean;
   type: 'placeholder';
 } & EncounterPlaceholder;

@@ -62,10 +62,6 @@
     <i class="fas fa-dice-d20"></i>
     {localize('TIDY5E.Encounter.PrerollInitiative')}
   </button>
-  <button type="button" class="button">
-    <i class="fas fa-swords"></i>
-    {localize('TIDY5E.Encounter.AddToCombatTracker.Label')}
-  </button>
 </aside>
 
 <section
@@ -95,7 +91,7 @@
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
-              {localize('DND5E.ENCOUNTER.Tab.Members')}
+              {localize('TIDY5E.Encounter.CombatantsSection.Title')}
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>

@@ -6,16 +6,16 @@
 - [x] Encounter Members tab: Wire up XP bar with stops
 - [ ] Encounter sheet: Set up tab selection
 - [ ] Combat tab
-  - [ ] Implement Placeholder Members
+  - [x] Implement Placeholder Members
     - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
     - [x] All columns except Initiative should take up space but not present anything for placeholder rows
     - [X] Implement Initiative handling for placeholders
       - [x] Input
     - [x] Portrait
-    - [ ] PlaceholderName component
-      - [ ] Unlocked - Editable title and editable subtitle
-  - [ ] Order combatants by initiative, then by name
-  - [ ] Section title - change name to "Combatants" with a count that equals the non-placeholder members
+    - [x] PlaceholderName component
+      - [x] Unlocked - Editable title and editable subtitle
+  - [x] Order combatants by initiative, then by name
+  - [x] Section title - change name to "Combatants" with a count that equals the non-placeholder members
   - [ ] "Add a Placeholder" button
     - [x] Relocalize to "Create a Placeholder Member"
     - [x] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "New Placeholder"

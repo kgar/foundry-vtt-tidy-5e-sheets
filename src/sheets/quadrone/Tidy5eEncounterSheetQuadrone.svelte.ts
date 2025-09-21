@@ -214,6 +214,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           highlightColor: !isNil(accentColor, '')
             ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
             : undefined,
+          name: actor.name,
           portrait: await this._preparePortrait(actor),
           initiative: initiatives[combatSettingIdentifier],
           includeInCombat: inclusion[combatSettingIdentifier] ?? true,
@@ -236,6 +237,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           type: 'placeholder',
           initiative: initiatives[placeholder.id],
           includeInCombat: inclusion[placeholder.id] ?? true,
+          name: placeholder.name,
           visible: visibility[placeholder.id] ?? true,
         });
       }
@@ -243,7 +245,9 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
     return {
       combatants: combatants.sort(
-        (a, b) => (b.initiative ?? 0) - (a.initiative ?? 0)
+        (a, b) =>
+          (b.initiative ?? 0) - (a.initiative ?? 0) ||
+          a.name.localeCompare(b.name, game.i18n.lang)
       ),
       creatureTypes: [...creatureTypes.values()].sort((a, b) =>
         a.label.localeCompare(b.label, game.i18n.lang)
