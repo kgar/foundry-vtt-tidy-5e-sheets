@@ -32,7 +32,9 @@
     - [ ] Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥
   - [x] "Preroll Initiative" button
 - [ ] Float idea with hightouch: Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
-- [ ] Plan and implement the rest
+- [ ] Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
+- [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
+
 
 ### Group Sheet
 
