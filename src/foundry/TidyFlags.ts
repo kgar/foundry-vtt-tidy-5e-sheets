@@ -8,9 +8,10 @@ import type {
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
-  EncounterInitiative,
   EncounterPlaceholders,
   EncounterPlaceholder,
+  EncounterCombatantSettings,
+  EncounterCombatantsSettings,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
@@ -86,35 +87,23 @@ export class TidyFlags {
     },
   };
 
-  static combatInclusion = {
-    key: 'combatInclusion' as const,
-    prop: TidyFlags.getFlagPropertyPath('combatInclusion'),
-    get(actor: Actor5e): Record<string, boolean> {
+  // TODO: document before going to main
+  static combatantSettings = {
+    key: 'combatantSettings' as const,
+    get(encounter: Actor5e): EncounterCombatantsSettings {
       return (
-        TidyFlags.tryGetFlag<Record<string, boolean>>(
-          actor,
-          TidyFlags.combatInclusion.key
+        TidyFlags.tryGetFlag<EncounterCombatantsSettings>(
+          encounter,
+          TidyFlags.combatantSettings.key
         ) ?? {}
       );
     },
-    set(actor: Actor5e, value: Record<string, boolean>): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.combatInclusion.key, value);
-    },
-  };
-
-  static combatVisibility = {
-    key: 'combatVisibility' as const,
-    prop: TidyFlags.getFlagPropertyPath('combatVisibility'),
-    get(actor: Actor5e): Record<string, boolean> {
-      return (
-        TidyFlags.tryGetFlag<Record<string, boolean>>(
-          actor,
-          TidyFlags.combatVisibility.key
-        ) ?? {}
+    set(encounter: Actor5e, settings: EncounterCombatantsSettings) {
+      return TidyFlags.setFlag(
+        encounter,
+        TidyFlags.combatantSettings.key,
+        settings
       );
-    },
-    set(actor: Actor5e, value: Record<string, boolean>): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.combatVisibility.key, value);
     },
   };
 
@@ -206,27 +195,6 @@ export class TidyFlags {
     /** Sets the actor's Attribute tab pins. */
     set(actor: Actor5e, value: AttributePinFlag[]): Promise<void> {
       return TidyFlags.setFlag(actor, TidyFlags.attributePins.key, value);
-    },
-  };
-
-  /**
-   * A record of encounter member UUIDs to their configured initiatives in the Encounter sheet.
-   */
-  static encounterInitiative = {
-    key: 'encounterInitiative' as const,
-    prop: TidyFlags.getFlagPropertyPath('encounterInitiative'),
-    /** Gets the encounter's initiatives. */
-    get(actor: Actor5e): EncounterInitiative {
-      return (
-        TidyFlags.tryGetFlag<EncounterInitiative>(
-          actor,
-          TidyFlags.encounterInitiative.key
-        ) ?? {}
-      );
-    },
-    /** Sets the encounter's initiatives. */
-    set(actor: Actor5e, value: EncounterInitiative): Promise<void> {
-      return TidyFlags.setFlag(actor, TidyFlags.encounterInitiative.key, value);
     },
   };
 

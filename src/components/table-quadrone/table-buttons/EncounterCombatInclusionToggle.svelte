@@ -20,7 +20,7 @@
 
   let identifier = $derived(
     rowContext.type === 'member'
-      ? rowContext.actor.uuid.replaceAll('.', '-')
+      ? rowContext.actor.uuid
       : rowContext.id,
   );
 

@@ -18,9 +18,7 @@
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let identifier = $derived(
-    rowContext.type === 'member'
-      ? rowContext.actor.uuid.replaceAll('.', '-')
-      : rowContext.id,
+    rowContext.type === 'member' ? rowContext.actor.uuid : rowContext.id,
   );
 
   const visible = $derived(rowContext.visible);
