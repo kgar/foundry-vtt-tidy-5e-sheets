@@ -475,13 +475,20 @@
   }
 
   .tidy-table-header-cell {
-    &.primary h3 {
-      flex: 1;
-      max-width: max-content;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    &.primary {
+      h3 {
+        flex: 1;
+        margin-bottom: 0.0625rem;
+        max-width: max-content;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .table-header-count {
+        margin-bottom: 0.0625rem;
+      }
     }
   }
 

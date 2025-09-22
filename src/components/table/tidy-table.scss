@@ -69,16 +69,12 @@
 .tidy-table-row {
   border-radius: 0.3125rem;
 
-  --t5e-tidy-table-row-background-internal: var(
-    --t5e-tidy-table-row-background,
-    transparent
-  );
+  --t5e-tidy-table-row-background-internal: var(--t5e-tidy-table-row-background,
+      transparent);
 
-  background: linear-gradient(
-    to right,
-    var(--t5e-tidy-table-row-background),
-    transparent 120%
-  );
+  background: linear-gradient(to right,
+      var(--t5e-tidy-table-row-background),
+      transparent 120%);
 }
 
 .tidy-table-cell {
@@ -91,6 +87,7 @@
 
   &.primary {
     color: var(--t5e-primary-color);
+
     button {
       justify-content: flex-start;
     }
@@ -116,6 +113,7 @@
     }
 
     &:hover {
+
       &,
       i {
         color: var(--t5e-icon-hover-color);
@@ -160,7 +158,7 @@
   &.method-spell.can-prepare.prepared {
     --t5e-tidy-table-row-background: var(--t5e-prepared-background);
   }
-  
+
   &.method-pact.can-prepare.prepared {
     --t5e-tidy-table-row-background: var(--t5e-pact-background);
   }
