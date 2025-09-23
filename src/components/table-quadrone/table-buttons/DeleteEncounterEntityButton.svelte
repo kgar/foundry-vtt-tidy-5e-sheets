@@ -17,9 +17,11 @@
   let context = $derived(getEncounterSheetQuadroneContext());
 
   let label = $derived(
-    rowContext.type === 'member'
-      ? 'DND5E.Group.Action.Remove'
-      : 'TIDY5E.Encounter.DeletePlaceholder.Label',
+    FoundryAdapter.localize(
+      rowContext.type === 'member'
+        ? 'DND5E.Group.Action.Remove'
+        : 'TIDY5E.Encounter.DeletePlaceholder.Label',
+    ),
   );
 
   function onDelete() {
