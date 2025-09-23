@@ -1,4 +1,4 @@
-import type { CustomHeaderControlsEntry } from 'src/api/api.types';
+import type { CustomHeaderControlsEntry, SheetHeaderControlPosition } from 'src/api/api.types';
 
 /** For use with Tidy applications that apply updates to a document but are not necessarily full-fledged sheets. */
 export type DocumentSheetApplicationConfiguration =
@@ -60,6 +60,8 @@ export interface ApplicationHeaderControlsEntry {
   action: string;
   visible?: boolean | ((this: any) => boolean);
   ownership?: string | number;
+  /** Where the control should be place, whether the header or the menu. Tidy-specific field */
+  position?: SheetHeaderControlPosition;
 }
 
 export interface ApplicationConstructorParams {

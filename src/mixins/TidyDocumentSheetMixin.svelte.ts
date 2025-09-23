@@ -647,6 +647,12 @@ export function TidyExtensibleDocumentSheetMixin<
           ...effectiveControls,
           ...customControls.controls,
         ];
+
+        updatedOptions.window.controls.forEach(c => {
+          if (c.action === 'configureToken' || c.action === 'configurePrototypeToken') {
+            c.position = 'header'
+          }
+        })
       } catch (e) {
         error('An error occurred while setting up custom controls.', false, {
           error: e,
