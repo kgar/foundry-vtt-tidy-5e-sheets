@@ -45,14 +45,9 @@
   }
 }
 
-@container biography-tab (width < 47rem) {
+@container biography-tab (width < 42rem) {
   .tidy-tab.biography {
     transition: all var(--t5e-transition-default);
-
-    .biography-grid {
-      gap: 0 var(--t5e-size-6x);
-      grid-template-columns: 1fr 1fr;
-    }
 
     .biography-entries {
       transition: all var(--t5e-transition-default);
@@ -63,24 +58,14 @@
 
 @container biography-tab (width < 32rem) {
   .tidy-tab.biography {
-    .biography-grid {
-      grid-template-columns: 1fr;
-      gap: 0;
-      grid-template-areas:
-        'top'
-        'left'
-        'right';
-    }
+    .tidy-tab-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--t5e-size-2x);
 
-    // If you need to control the order of left/right sections
-    .biography-left {
-      order: 1; // or 2 if you want it second
-      margin-top: var(--t5e-size-4x);
-      padding-bottom: 0;
-    }
-
-    .biography-right {
-      order: 2; // or 1 if you want it first
+      .tidy-tab-column {
+        flex: 1;
+      }
     }
   }
 }
