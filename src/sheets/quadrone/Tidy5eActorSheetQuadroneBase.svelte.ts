@@ -130,6 +130,7 @@ export function Tidy5eActorSheetQuadroneBase<
             visible: function (this: Tidy5eActorSheetQuadroneBase) {
               return this.isEditable && this.actor.isPolymorphed;
             },
+            position: 'header',
           },
           {
             action: 'openTabConfiguration',
@@ -697,8 +698,7 @@ export function Tidy5eActorSheetQuadroneBase<
         languageTraits = languages.languages.map((label: string) => ({
           label,
         }));
-      }
-      else {
+      } else {
         languageTraits = [{ label: FoundryAdapter.localize('DND5E.None') }];
       }
 
