@@ -98,8 +98,15 @@ export class TidyFlags {
         ) ?? {}
       );
     },
-    set(encounter: Actor5e, settings: EncounterCombatantsSettings) {
-      return TidyFlags.setFlag(
+    /** Fully replaces the combatant settings object, since differentials will result in straggler data remaining behind. */
+    async set(encounter: Actor5e, settings: EncounterCombatantsSettings) {
+      await encounter.update(
+        { [`flags.tidy5e-sheet.combatantSettings`]: null },
+        {
+          render: false,
+        }
+      );
+      return await TidyFlags.setFlag(
         encounter,
         TidyFlags.combatantSettings.key,
         settings

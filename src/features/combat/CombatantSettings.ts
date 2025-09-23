@@ -36,8 +36,6 @@ export class CombatantSettings {
     encounter: Actor5e,
     identifier: string
   ): EncounterCombatantSettings {
-    identifier = CombatantSettings._prepareIdentifier(identifier);
-
     const entry = CombatantSettings.get(encounter)[identifier] ?? {
       ...CombatantSettings.defaultSettings,
     };
@@ -59,7 +57,7 @@ export class CombatantSettings {
     encounter: Actor5e,
     data: Partial<EncounterCombatantSettings>
   ): Promise<void> {
-    const settings = CombatantSettings.get(encounter);
+    const settings = TidyFlags.combatantSettings.get(encounter);
 
     CombatantSettings._prepareInsertOrUpdate(settings, data);
 
@@ -90,7 +88,7 @@ export class CombatantSettings {
     encounter: Actor5e,
     data: Record<string, Partial<EncounterCombatantSettings>>
   ) {
-    const settings = CombatantSettings.get(encounter);
+    const settings = TidyFlags.combatantSettings.get(encounter);
 
     for (const entry of Object.values(data)) {
       CombatantSettings._prepareInsertOrUpdate(settings, entry);
