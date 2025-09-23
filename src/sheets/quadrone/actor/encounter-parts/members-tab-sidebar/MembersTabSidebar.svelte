@@ -96,7 +96,7 @@
     <div class="list-entry traits-speeds">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
-          <i class="fa-solid fa-comments"></i>
+          <i class="fa-solid fa-rabbit-running"></i>
           {localize('DND5E.Speed')}
         </h4>
       </div>
@@ -139,7 +139,7 @@
     <div class="list-entry traits-senses">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
-          <i class="fa-solid fa-comments"></i>
+          <i class="fa-solid fa-eye"></i>
           {localize('DND5E.Senses')}
         </h4>
       </div>
