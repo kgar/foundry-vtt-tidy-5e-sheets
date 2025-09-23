@@ -361,7 +361,11 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
   async prerollInitiative(ev: Event, actor: Actor5e) {
     const total = await this.getPrerolledInitiative(ev, actor);
-    this.updateInitiative(actor.uuid, total);
+    
+    CombatantSettings.insertOrUpdate(this.actor, {
+      identifier: actor.uuid,
+      initiative: total,
+    });
   }
 
   async prerollAllInitiatives(ev: Event) {
