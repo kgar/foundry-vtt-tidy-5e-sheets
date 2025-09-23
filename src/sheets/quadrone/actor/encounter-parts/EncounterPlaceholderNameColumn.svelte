@@ -5,6 +5,7 @@
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
   import { Tidy5eEncounterSheetQuadrone } from '../../Tidy5eEncounterSheetQuadrone.svelte';
   import { TidyFlags } from 'src/api';
+    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type Props = {
     placeholder: EncounterPlaceholderQuadroneContext;
@@ -50,6 +51,8 @@
     }).render(true);
   }
 
+  const localize = FoundryAdapter.localize;
+  
   // TODO: Support video portraits even when not dealing with an actor.
 </script>
 
@@ -81,6 +84,7 @@
           )}
         value={placeholder.name}
         {@attach InputAttachments.selectOnFocus}
+        placeholder={localize('TIDY5E.Encounter.PlaceholderNameField.PlaceholderText')}
       />
       <input
         class="placeholder-note"
@@ -93,6 +97,7 @@
           )}
         value={placeholder.note}
         {@attach InputAttachments.selectOnFocus}
+        placeholder={localize('TIDY5E.Encounter.PlaceholderNotesField.PlaceholderText')}
       />
     {:else}
       <h4 class="font-label-medium">
