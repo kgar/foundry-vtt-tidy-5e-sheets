@@ -142,7 +142,7 @@
           <!-- </button> -->
         {/if}
       </span>
-      {#if context.enableXp || i < context.classes.length - 1}
+      {#if i < context.classes.length - 1}
       <div class="divider-dot"></div>
       {/if}
     {/each}
