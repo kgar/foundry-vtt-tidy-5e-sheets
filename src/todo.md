@@ -144,6 +144,7 @@
 
 
 ## hightouch To Do
+- [ ] Reorganize magic item indicator and attunement to take a single spot back in the actions section?
 - [ ] Fix spellcaster footers on scroll when wrapping.
 - [ ] Activities in the inventory/actions tabs
 - [ ] Drop the Item Sheets activities tab
