@@ -164,9 +164,36 @@
     }
 
     &.combat {
-      .actor-name .separated-list {
-        display: none;
-        visibility: hidden;
+      .actor-name {
+        gap: 0;
+
+        .separated-list {
+          display: none;
+          visibility: hidden;
+        }
+      }
+
+      .include-in-combat {
+        .actor-name h4 {
+          color: var(--t5e-color-text-lighter);
+        }
+      }
+
+      .action-include-in-combat {
+        i.enabled {
+          color: var(--t5e-theme-color-highlight);
+          text-shadow: var(--t5e-drop-shadow-field);
+        }
+
+        i:not(.enabled) {
+          color: var(--t5e-color-text-lighter);
+        }
+      }
+
+      .action-combat-visibility {
+        i.disabled {
+          color: var(--t5e-color-text-disabled);
+        }
       }
     }
 

@@ -44,23 +44,79 @@
 <aside class="sidebar flexcol">
   <button
     type="button"
-    class="button"
+    class="button button-primary button-preroll-initiative"
+    onclick={(ev) => context.sheet.prerollAllInitiatives(ev)}
+  >
+    <i class="fas fa-dice-d20"></i>
+    {localize('TIDY5E.Encounter.PrerollInitiative')}
+  </button>
+  <button
+    type="button"
+    class="button button-add-placeholder"
     onclick={(ev) => context.sheet.addNewPlaceholder()}
   >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
   </button>
-  <button type="button" class="button" onclick={ev => context.sheet.addAllAsPlaceholders()}>
+  <button 
+    type="button" class="button button-add-all-placeholders" 
+    onclick={ev => context.sheet.addAllAsPlaceholders()}
+  >
     <i class="fas fa-circle-dashed"></i>
     {localize('TIDY5E.Encounter.AddAllPlaceholders.Label')}
   </button>
+  <hr />
   <button
     type="button"
-    class="button"
-    onclick={(ev) => context.sheet.prerollAllInitiatives(ev)}
+    class="button button-add-lair"
+    onclick={(ev) => context.sheet.addNewPlaceholder(
+      {
+        name: localize('DND5E.LAIR.Action.Label')
+      },
+      { initiative: 20 }
+    )}
   >
-    <i class="fas fa-dice-d20"></i>
-    {localize('TIDY5E.Encounter.PrerollInitiative')}
+    <i class="fas fa-eye-evil"></i>
+    {localize('DND5E.LAIR.Action.Label')}
+  </button>
+  <button
+    type="button"
+    class="button button-add-init-20"
+    onclick={(ev) => context.sheet.addNewPlaceholder(
+      {
+        name: localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 20 })
+      },
+      { initiative: 20 }
+    )}
+  >
+    <i class="fas fa-circle-dashed"></i>
+    {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 20 })}
+  </button>
+  <button
+    type="button"
+    class="button button-add-init-15"
+    onclick={(ev) => context.sheet.addNewPlaceholder(
+      {
+        name: localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 15 })
+      },
+      { initiative: 15 }
+    )}
+  >
+    <i class="fas fa-circle-dashed"></i>
+    {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 15 })}
+  </button>
+  <button
+    type="button"
+    class="button button-add-init-10"
+    onclick={(ev) => context.sheet.addNewPlaceholder(
+      {
+        name: localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 10 })
+      },
+      { initiative: 10 }
+    )}
+  >
+    <i class="fas fa-circle-dashed"></i>
+    {localize('TIDY5E.Encounter.InitiativeCount.Label', { count: 10 })}
   </button>
 </aside>
 
@@ -145,7 +201,7 @@
   {@const member = combatant.type === 'member' ? combatant : null}
   {@const placeholder = combatant.type === 'placeholder' ? combatant : null}
   <div
-    class="tidy-table-row group-member"
+    class={["tidy-table-row group-member", { "include-in-combat": !combatant.includeInCombat }]}
     style:--t5e-theme-color-default={member?.accentColor}
     style:--t5e-theme-color-highlight={member?.highlightColor}
     style:--t5e-member-color-hover={member?.highlightColor}

@@ -914,7 +914,8 @@
     "NewPlaceholder.SubtitlePlaceholderText": "Note about this placeholder",
     "AddCombatants.MustHaveEncounter.Message": "Must have an active encounter selected to add to combat tracker",
     "CombatVisibility.Hidden.Label": "Hidden from players when added to tracker",
-    "CombatVisibility.Visible.Label": "Visible to players when added to tracker"
+    "CombatVisibility.Visible.Label": "Visible to players when added to tracker",
+    "InitiativeCount.Label": "Add Initiative Count {count}"
   },
   "TIDY5E.Actor.Characteristics": "Characteristics"
 }
