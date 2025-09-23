@@ -1,28 +1,14 @@
 ## kgar To Do
 
-
-### Encounter Sheet
-
-- [x] Encounter sheet: Set up tab selection
-- [x] Refactor: Consolidate all combat options to a single model and make that the flag. Likewise, put all combat settings into a combat prop on the Member and Placeholder contexts.
-- [x] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
-- [x] (hightouch got it) Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
-- [x] Encounter Sheet, Combat tab, unlocked - on placeholder portrait click, open FilePicker with the intent of updating img on the relevant placeholder
-- [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
-- [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
-- [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
-- [ ] Stretch/discuss, post-release, Encounter sheet - Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
-
-
 ### Group Sheet
 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
-- [ ] Plan and task Bastions tab
+- [ ] Group Sheet - Plan and task Bastions tab
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 
 ### Character Sheet
 
-- [ ] Character sheet, Character tab : Need weapon master indicators on weapon proficiencies
+- [ ] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies
 
 ### The Short List
 
@@ -58,6 +44,10 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
+- [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
+- [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
+- [ ] Stretch/discuss, post-release, Encounter sheet - Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
 - [ ] Encounter XP bar with stops: add hook and API for passing in custom calculations. The hook should provide app and members with their quantities
 - [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
@@ -354,3 +344,8 @@ Limited:
     - [x] ~~Disable when there is no active encounter~~ A notification warning is more instructive.
     - [x] ~~Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥~~
   - [x] "Preroll Initiative" button
+- [x] Encounter sheet: Set up tab selection
+- [x] Refactor: Consolidate all combat options to a single model and make that the flag. Likewise, put all combat settings into a combat prop on the Member and Placeholder contexts.
+- [x] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
+- [x] (hightouch got it) Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
+- [x] Encounter Sheet, Combat tab, unlocked - on placeholder portrait click, open FilePicker with the intent of updating img on the relevant placeholder
