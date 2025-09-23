@@ -431,12 +431,33 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     }
   }
 
-  addNewPlaceholder(): Promise<void> {
-    return TidyFlags.placeholders.insertOrUpdateEntry(this.actor, {
-      id: foundry.utils.randomID(),
-      img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
-      name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
-    });
+  async addNewPlaceholder(
+    data?: Partial<EncounterPlaceholder>,
+    combatantSettings?: Partial<EncounterCombatantSettings>
+  ): Promise<void> {
+    data ??= {};
+    const newPlaceholder = FoundryAdapter.mergeObject(
+      {
+        id: foundry.utils.randomID(),
+        img: Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON,
+        name: FoundryAdapter.localize('TIDY5E.Encounter.NewPlaceholder.Name'),
+      },
+      data
+    );
+
+    const result = await TidyFlags.placeholders.insertOrUpdateEntry(
+      this.actor,
+      newPlaceholder
+    );
+
+    if (combatantSettings) {
+      await CombatantSettings.insertOrUpdate(this.actor, {
+        identifier: newPlaceholder.id,
+        ...combatantSettings,
+      });
+    }
+
+    return result;
   }
 
   async addAllAsPlaceholders(): Promise<void> {
