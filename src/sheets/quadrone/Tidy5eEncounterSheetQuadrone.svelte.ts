@@ -11,6 +11,7 @@ import type {
   GroupTrait,
   MeasurableGroupTrait,
   MultiActorQuadroneContext,
+  DifficultyTarget,
 } from 'src/types/types';
 import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
 import type {
@@ -102,10 +103,37 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       relativeTo: this.actor,
     };
 
-    const difficulty = await this.actor.system.getDifficulty();
+    const difficultyTargets: DifficultyTarget[] = (game.actors as Actor5e[])
+      .filter((x: Actor5e) => x.type === 'group')
+      .map(
+        (x: Actor5e) =>
+          ({
+            id: x.id,
+            name: x.name,
+            primary: x.id === game.actors.party?.id,
+          } satisfies DifficultyTarget)
+      );
 
-    const { party } = game.actors;
-    const { creatures, level } = party?.system ?? {};
+    if (!game.actors.party) {
+      difficultyTargets.push({
+        name: FoundryAdapter.localize('TIDY5E.Group.PrimaryParty.Label'),
+        primary: true,
+        id: '',
+      });
+    }
+
+    let difficultyTargetId = TidyFlags.encounterDifficultyTargetGroupId.get(
+      game.user
+    );
+
+    if (!difficultyTargets.find((t) => t.id === difficultyTargetId)) {
+      difficultyTargetId = game.actors.party?.id ?? '';
+    }
+
+    const difficultyTarget = game.actors.get(difficultyTargetId);
+    const difficulty = await this.actor.system.getDifficulty(difficultyTarget);
+
+    const { creatures, level } = difficultyTarget?.system ?? {};
 
     const [low, med, high] = (
       CONFIG.DND5E.ENCOUNTER_DIFFICULTY[level] ?? []
@@ -125,6 +153,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           low: high ? (low / high) * 100 : 0,
           high: high ? (med / high) * 100 : 0,
         },
+        availableTargets: difficultyTargets.sort((a, b) =>
+          a.name.localeCompare(b.name, game.i18n.lang)
+        ),
+        targetId: difficultyTargetId,
       },
       enriched: {
         description: {
@@ -361,7 +393,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
 
   async prerollInitiative(ev: Event, actor: Actor5e) {
     const total = await this.getPrerolledInitiative(ev, actor);
-    
+
     CombatantSettings.insertOrUpdate(this.actor, {
       identifier: actor.uuid,
       initiative: total,
@@ -479,7 +511,11 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
             defaultCombatantSettings.include
         )
         .map(({ actor, quantity }) => ({
-          name: actor.name + (quantity.value && quantity.value > 1 ? ` (${quantity.value})` : ''),
+          name:
+            actor.name +
+            (quantity.value && quantity.value > 1
+              ? ` (${quantity.value})`
+              : ''),
           img: actor.img,
           initiative:
             combatantSettings[actor.uuid]?.initiative ??

@@ -12,6 +12,7 @@
   import GroupTraitTooltip from 'src/tooltips/GroupTraitTooltip.svelte';
   import type { ClassValue } from 'svelte/elements';
   import GroupTraitPill from '../../group-parts/GroupTraitPill.svelte';
+  import { TidyFlags } from 'src/api';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -48,6 +49,38 @@
   style:--t5e-member-color-background={emphasizedMember?.backgroundColor}
 >
   <div class="list traits">
+    <!-- Difficulty Target -->
+    <div class="list-entry traits-languages">
+      <div class="list-label flexrow">
+        <h4 class="font-weight-label">
+          <i class="fa-solid fa-reflect-both"></i>
+          {localize('TIDY5E.Encounter.DifficultyTarget.Label')}
+        </h4>
+      </div>
+      <div class="list-content">
+        <div class="list-values">
+          <select
+            class="combat-difficulty-target"
+            onchange={(ev) =>
+              TidyFlags.encounterDifficultyTargetGroupId.set(
+                game.user,
+                ev.currentTarget.value,
+              )}
+            value={context.difficulty.targetId}
+          >
+            {#each context.difficulty.availableTargets as target}
+              <option value={target.id}>
+                {#if target.primary}
+                  *
+                {/if}
+                {target.name}
+              </option>
+            {/each}
+          </select>
+        </div>
+      </div>
+    </div>
+
     <!-- Languages -->
     <div class="list-entry traits-languages">
       <div class="list-label flexrow">

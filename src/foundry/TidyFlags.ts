@@ -114,6 +114,24 @@ export class TidyFlags {
     },
   };
 
+  // TODO: Document
+  static encounterDifficultyTargetGroupId = {
+    key: 'encounterDifficultyTargetGroupId' as const,
+    get(user: any): string | null | undefined {
+      return TidyFlags.tryGetFlag<string>(
+        user,
+        TidyFlags.encounterDifficultyTargetGroupId.key
+      );
+    },
+    async set(user: any, groupActorId: string) {
+      return TidyFlags.setFlag(
+        user,
+        TidyFlags.encounterDifficultyTargetGroupId.key,
+        groupActorId
+      );
+    },
+  };
+
   /**
    * An array of journal entries with an optional title
    * and an HTML-based journal.

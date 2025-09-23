@@ -1418,6 +1418,16 @@ export type EncounterTraits = {
   speeds: MeasurableGroupTrait<number>[];
 };
 
+/** The group actor by which difficulty should be calculated. */
+export type DifficultyTarget = {
+  /** Optional id to the group actor. When excluded, try target the primary party. */
+  id: string;
+  /** The name of the group actor. */
+  name: string;
+  /** Denotes whether this difficulty target is the primary party. */
+  primary: boolean;
+};
+
 export type EncounterDifficultyContext = {
   label: string | null;
   value: number | null;
@@ -1427,6 +1437,8 @@ export type EncounterDifficultyContext = {
     low: number;
     high: number;
   };
+  availableTargets: DifficultyTarget[];
+  targetId: string | null | undefined;
 };
 
 export type EncounterSheetQuadroneContext = {
