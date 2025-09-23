@@ -3,6 +3,8 @@
   import type { PortraitShape } from 'src/theme/theme-quadrone.types';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
+  import { Tidy5eEncounterSheetQuadrone } from '../../Tidy5eEncounterSheetQuadrone.svelte';
+  import { TidyFlags } from 'src/api';
 
   type Props = {
     placeholder: EncounterPlaceholderQuadroneContext;
@@ -16,8 +18,36 @@
     context.portrait.shape,
   );
 
-  function onPortraitClicked() {
-    alert('TODO: Preview portrait on locked; edit portrait on unlocked');
+  async function onPortraitClicked() {
+    if (context.unlocked) {
+      const fp = new foundry.applications.apps.FilePicker.implementation({
+        current: placeholder.img,
+        type: 'image',
+        redirectToRoot:
+          Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON
+            ? [Tidy5eEncounterSheetQuadrone.DEFAULT_ENCOUNTER_PLACEHOLDER_ICON]
+            : [],
+        callback: (path: string) => {
+          placeholder.img = path;
+          TidyFlags.placeholders.insertOrUpdateEntry(
+            context.actor,
+            placeholder,
+          );
+        },
+        position: {
+          top: context.sheet.position.top + 40,
+          left: context.sheet.position.left + 10,
+        },
+      });
+
+      fp.browse();
+      return;
+    }
+
+    new foundry.applications.apps.ImagePopout({
+      src: placeholder.img,
+      title: placeholder.name,
+    }).render(true);
   }
 
   // TODO: Support video portraits even when not dealing with an actor.

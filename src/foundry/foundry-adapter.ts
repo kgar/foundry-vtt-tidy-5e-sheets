@@ -853,11 +853,6 @@ export const FoundryAdapter = {
       force: true,
     });
   },
-  browseFilePicker(...args: any[]) {
-    return new foundry.applications.apps.FilePicker.implementation(
-      ...args
-    ).browse();
-  },
   renderArmorConfig(document: any) {
     return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
       true
