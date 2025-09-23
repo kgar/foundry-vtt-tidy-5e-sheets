@@ -197,7 +197,7 @@
       }
     }
 
-    .tidy-table-cell {
+    &:not(.inventory).tidy-table-cell {
       &[data-tidy-column-key="qtyFormulaColumn"] {
         input {
           margin-top: 0.0625rem;

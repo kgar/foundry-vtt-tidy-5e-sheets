@@ -90,6 +90,15 @@
     }
 
     .tab-title-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--t5e-theme-color-default);
+      padding: 0.0625rem;
+      margin: -0.0625rem 0;
+      min-width: 1rem;
+      border-radius: 100%;
       color: var(--t5e-color-text-default);
     }
   }

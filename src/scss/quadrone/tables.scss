@@ -367,10 +367,6 @@
       font-size: var(--font-size-small);
     }
 
-    .cell-name {
-      margin-block-end: var(--t5e-size-halfx);
-    }
-
     .advancement-cell-context {
       align-items: flex-start;
       display: flex;
@@ -543,6 +539,7 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
+          gap: var(--t5e-size-halfx);
         }
       }
 
