@@ -38,6 +38,7 @@
   "TIDY5E.Group.ShowMemberTabInfoPanel": "Show Info Panel",
   "TIDY5E.Group.HideMemberTabInfoPanel": "Hide Info Panel",
   "TIDY5E.Group.EmptyMembersTabHint": "This group is empty. Drop an actor from the sidebar to add a member.",
+  "TIDY5E.Group.PrimaryParty.Label": "Primary Party",
 
   "TIDY5E.RestHint": "Rest",
   "TIDY5E.ShortRest": "Short Rest",
@@ -908,6 +909,7 @@
     "AddPlaceholderToCombatTracker.Label": "Add to Current Encounter as Placeholder",
     "AddPlaceholder.Label": "Create Combat Placeholder",
     "DeletePlaceholder.Label": "Delete Placeholder",
+    "DifficultyTarget.Label": "Difficulty Target",
     "AddAllPlaceholders.Label": "Add All as Placeholders",
     "PrerollInitiative": "Preroll Initiative",
     "NewPlaceholder.Name": "New Placeholder",
