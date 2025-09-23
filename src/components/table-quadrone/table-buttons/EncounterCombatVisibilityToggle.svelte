@@ -32,16 +32,23 @@
   );
 
   const iconClass = $derived(
-    visible ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash',
+    visible ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash disabled',
   );
 </script>
 
 <a
-  class={['tidy-table-button', { disabled: !context.editable }]}
+  role="button"
+  tabindex="0"
+  class={['tidy-table-button action-combat-visibility', { disabled: !context.editable }]}
   aria-label={label}
   data-tooltip
   onclick={(ev) =>
     context.editable && context.sheet.toggleCombatantVisibility(identifier)}
+  onkeypress={(ev) => {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      context.editable && context.sheet.toggleCombatantVisibility(identifier);
+    }
+  }}
 >
   <i class={iconClass}></i>
 </a>

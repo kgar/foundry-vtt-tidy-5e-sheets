@@ -478,8 +478,8 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
             combatantSettings[actor.uuid]?.include ??
             defaultCombatantSettings.include
         )
-        .map(({ actor }) => ({
-          name: actor.name,
+        .map(({ actor, quantity }) => ({
+          name: actor.name + (quantity.value && quantity.value > 1 ? ` (${quantity.value})` : ''),
           img: actor.img,
           initiative:
             combatantSettings[actor.uuid]?.initiative ??

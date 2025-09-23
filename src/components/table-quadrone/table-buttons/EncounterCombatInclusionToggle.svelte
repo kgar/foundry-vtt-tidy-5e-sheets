@@ -28,7 +28,9 @@
 </script>
 
 <a
-  class="tidy-table-button tidy-table-toggle"
+  role="button"
+  tabindex="0"
+  class="tidy-table-button tidy-table-toggle action-include-in-combat"
   aria-label={FoundryAdapter.localize(
     include
       ? 'TIDY5E.Encounter.Combat.IncludeInCombat.Tooltip'
@@ -36,6 +38,11 @@
   )}
   data-tooltip
   onclick={() => context.sheet.toggleCombatantInclusion(identifier)}
+  onkeypress={(ev) => {
+    if (ev.key === 'Enter' || ev.key === ' ') {
+      context.sheet.toggleCombatantInclusion(identifier);
+    }
+  }}
 >
   {#if include}
     <i class="fa-solid fa-toggle-large-on enabled"></i>

@@ -43,7 +43,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: EncounterMemberQuantityColumn,
       },
-      widthRems: 3.5,
+      widthRems: 4.75,
     };
 
     const hpColumn: ColumnSpecificationBase = {
