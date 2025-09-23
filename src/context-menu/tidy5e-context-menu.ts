@@ -9,6 +9,7 @@ import FloatingContextMenu from './FloatingContextMenu';
 import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-context-menu';
 import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu';
 import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
+import { configureEncounterPlaceholderContextMenu } from './tidy5e-encounter-placeholder-context-menu';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -47,6 +48,9 @@ function onDocumentContext(this: any, element: HTMLElement) {
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER:
       configureEncounterContextMenu(element, app);
+      break;
+    case CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER:
+      configureEncounterPlaceholderContextMenu(element, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS:
       configureFacilityContextMenu(element, app);
