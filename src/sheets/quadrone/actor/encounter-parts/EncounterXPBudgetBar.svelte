@@ -21,8 +21,6 @@
   );
 
   let currentXp = $derived((difficulty.value ?? 0).toFixed(0));
-
-  let maxXp = $derived(difficulty.max === Infinity ? '∞' : difficulty.max);
 </script>
 
 <div
@@ -45,8 +43,6 @@
       >{localize('DND5E.ExperiencePoints.Abbreviation')}</span
     >
     <span class="value font-weight-label">{currentXp}</span>
-    <span class="separator">/</span>
-    <span class="max color-text-default">{maxXp}</span>
   </div>
 
   <i class="breakpoint encumbrance-low arrow-up" role="presentation"></i>
