@@ -228,6 +228,10 @@
     }
   }
 
+  .combat-difficulty-target {
+    flex: 1;
+  }
+
   &.sheet-mode-play {
     .tidy-tab {
       .tidy-table-cell[data-tidy-column-key="qtyFormulaColumn"] {
