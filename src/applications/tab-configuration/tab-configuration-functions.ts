@@ -8,6 +8,7 @@ import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRu
 import type { RegisteredTab } from 'src/runtime/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export function getItemTabContext(
   type: string,
@@ -15,7 +16,9 @@ export function getItemTabContext(
 ) {
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
 
-  let defaultSelectedIds = ItemSheetQuadroneRuntime.getDefaultTabIds(type);
+  let defaultSelectedIds =
+    getWorldDefaultSelectedTabId(documentName, type) ??
+    ItemSheetQuadroneRuntime.getDefaultTabIds(type);
   let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
 
   return buildContext(
@@ -34,7 +37,9 @@ export function getActorTabContext(
 ): TabConfigContextEntry {
   let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
   const allRegisteredTabs = runtime.getAllRegisteredTabs();
-  let defaultSelectedIds = runtime.getDefaultTabIds();
+  let defaultSelectedIds =
+    getWorldDefaultSelectedTabId(documentName, type) ??
+    runtime.getDefaultTabIds();
 
   return buildContext(
     documentName,
@@ -43,6 +48,12 @@ export function getActorTabContext(
     settings,
     defaultSelectedIds
   );
+}
+
+function getWorldDefaultSelectedTabId(documentName: string, type: string) {
+  return SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[
+    type
+  ]?.selected;
 }
 
 function buildContext(
@@ -69,13 +80,12 @@ function buildContext(
     {}
   );
 
-  const effectiveSelections = settings?.selected.filter((tabId) => allRegisteredTabs.some((t) => t.id === tabId)
-  ) ?? [];
-  
-  let selected = mapTabIdsToOptions(
-    allTabs,
-    effectiveSelections
-  );
+  const effectiveSelections =
+    settings?.selected.filter((tabId) =>
+      allRegisteredTabs.some((t) => t.id === tabId)
+    ) ?? [];
+
+  let selected = mapTabIdsToOptions(allTabs, effectiveSelections);
 
   let defaultSelected = mapTabIdsToOptions(allTabs, defaultSelectedIds);
 
