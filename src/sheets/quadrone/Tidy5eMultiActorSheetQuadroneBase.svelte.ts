@@ -140,7 +140,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     async _preparePortrait(
       actor: Actor5e
     ): Promise<MultiActorMemberPortraitContext> {
-      const showTokenPortrait = this.actor.getFlag(
+      const showTokenPortrait = actor.getFlag(
         CONSTANTS.DND5E_SYSTEM_ID,
         CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
       );

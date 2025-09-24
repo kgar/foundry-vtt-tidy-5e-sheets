@@ -47,7 +47,6 @@
 - [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
-- [ ] Stretch/discuss, post-release, Encounter sheet - Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
 - [ ] Encounter XP bar with stops: add hook and API for passing in custom calculations. The hook should provide app and members with their quantities
 - [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
@@ -134,10 +133,8 @@
 
 
 ## hightouch To Do
-- [ ] Reorganize magic item indicator and attunement to take a single spot back in the actions section?
-- [ ] Fix spellcaster footers on scroll when wrapping.
-- [ ] Activities in the inventory/actions tabs
-- [ ] Drop the Item Sheets activities tab
+
+
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
@@ -349,3 +346,7 @@ Limited:
 - [x] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
 - [x] (hightouch got it) Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
 - [x] Encounter Sheet, Combat tab, unlocked - on placeholder portrait click, open FilePicker with the intent of updating img on the relevant placeholder
+- [x] Stretch/discuss, post-release, Encounter sheet - Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
+- [x] Group Members should not inherit Token view setting from Group/Encounter sheets.
+- [x] Character Inventory Add button reported broken
+- [x] Include Encounter Sheet in the "Set Default Sheets" tidy page.
