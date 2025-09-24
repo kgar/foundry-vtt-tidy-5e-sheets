@@ -237,7 +237,9 @@
   }
 
   .combat-difficulty-target {
-    flex: 1;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
   }
 
   &.sheet-mode-play {
