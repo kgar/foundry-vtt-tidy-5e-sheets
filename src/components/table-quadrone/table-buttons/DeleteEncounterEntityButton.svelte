@@ -26,7 +26,7 @@
 
   function onDelete() {
     if (rowContext.type === 'member') {
-      FoundryAdapter.onActorItemDelete(context.actor, rowContext.actor);
+      context.actor.system.removeMember(rowContext.actor);
     } else {
       context.sheet.deletePlaceholder(rowContext.id);
     }
