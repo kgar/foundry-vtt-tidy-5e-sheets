@@ -52,14 +52,6 @@
   </button>
   <button
     type="button"
-    class="button button-add-placeholder"
-    onclick={(ev) => context.sheet.addNewPlaceholder()}
-  >
-    <i class="fas fa-circle-dashed"></i>
-    {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
-  </button>
-  <button
-    type="button"
     class="button button-add-all-placeholders"
     onclick={(ev) => context.sheet.addAllAsPlaceholders()}
   >
@@ -67,6 +59,14 @@
     {localize('TIDY5E.Encounter.AddAllPlaceholders.Label')}
   </button>
   <hr />
+  <button
+    type="button"
+    class="button button-add-placeholder"
+    onclick={(ev) => context.sheet.addNewPlaceholder()}
+  >
+    <i class="fas fa-circle-dashed"></i>
+    {localize('TIDY5E.Encounter.AddPlaceholder.Label')}
+  </button>
   <button
     type="button"
     class="button button-add-lair"
