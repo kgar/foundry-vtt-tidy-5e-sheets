@@ -50,7 +50,7 @@
 >
   <div class="list traits">
     <!-- Difficulty Target -->
-    <div class="list-entry traits-languages">
+    <div class="list-entry encounter-group-difficulty">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-reflect-both"></i>
@@ -68,12 +68,12 @@
               )}
             value={context.difficulty.targetId}
           >
-            {#each context.difficulty.availableTargets as target}
+            {#each [...context.difficulty.availableTargets].sort((a, b) => Number(b.primary) - Number(a.primary)) as target}
               <option value={target.id}>
-                {#if target.primary}
-                  *
-                {/if}
                 {target.name}
+                {#if target.primary}
+                  ({localize('TIDY5E.Group.PrimaryParty.Label')})
+                {/if}
               </option>
             {/each}
           </select>

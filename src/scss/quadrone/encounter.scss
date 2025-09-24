@@ -1,4 +1,5 @@
 .tidy5e-sheet.application:where(.quadrone.encounter) {
+  --difficulty-diplay-size: 6rem;
 
   &::before {
     background-image: var(--t5e-sheet-header-bg, url(../../systems/dnd5e/ui/official/banner-encounter-dark.avif));
@@ -6,10 +7,17 @@
   }
 
   .sheet-header {
+
+    .actor-details-container {
+      min-height: var(--difficulty-diplay-size);
+      justify-content: center;
+    }
+
     .actor-subtitle {
       margin-bottom: var(--t5e-size-halfx);
       row-gap: var(--t5e-size-halfx);
       flex-wrap: wrap;
+      flex: 0 1 auto;
     }
 
     .xp {
@@ -30,8 +38,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      width: 6rem;
-      height: 6rem;
+      width: var(--difficulty-diplay-size);
+      height: var(--difficulty-diplay-size);
       overflow: hidden;
       text-overflow: ellipsis;
 
