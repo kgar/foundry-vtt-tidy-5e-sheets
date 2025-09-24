@@ -922,5 +922,29 @@
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Використання безпеки учасників групового аркуша",
         "hint": "Дозволяє GM контролювати, яку інформацію про членів групи користувач може бачити в аркуші групи. Якщо гравець не має дозволу на доступ до члена групи, аркуш групи не показує цього члена або його сукупну інформацію. З обмеженим дозволом користувач може бачити ім'я члена, але ніякої іншої інформації. З дозволом «Спостерігач» або вище користувач може бачити всю інформацію аркуша групи про члена."
-    }
+    },
+    "TIDY5E.Group.PrimaryParty.Label": "Основна партія",
+    "TIDY5E.CombatTabName": "Бойові дії",
+    "TIDY5E.Difficulty": "Складність",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "Комбатанти",
+        "Combat.IncludeInCombat.Tooltip": "Включити до бойових дій",
+        "Combat.ExcludeFromCombat.Tooltip": "Виключити з бойових дій",
+        "AddMember.Label": "Додати учасника",
+        "AddPlaceholderToCombatTracker.Label": "Додати до поточної зустрічі як тимчасовий фрагмент",
+        "AddPlaceholder.Label": "Створити бойовий заповнювач",
+        "DeletePlaceholder.Label": "Видалити заповнювач",
+        "DifficultyTarget.Label": "Цільова складність",
+        "AddAllPlaceholders.Label": "Додати всі як заповнювачі",
+        "PrerollInitiative": "Ініціатива перед переглядом",
+        "NewPlaceholder.Name": "Новий заповнювач",
+        "NewPlaceholder.SubtitlePlaceholderText": "Примітка щодо цього заповнювача",
+        "AddCombatants.MustHaveEncounter.Message": "Потрібно вибрати зустріч, щоб додати її до трекера зустрічей",
+        "CombatVisibility.Hidden.Label": "Приховано від гравців після додавання до трекера",
+        "CombatVisibility.Visible.Label": "Видиме для гравців після додавання до трекера",
+        "InitiativeCount.Label": "Додати кількість ініціатив {count}",
+        "PlaceholderNameField.PlaceholderText": "Назва заповнювача",
+        "PlaceholderNotesField.PlaceholderText": "Нотатки"
+    },
+    "TIDY5E.Actor.Characteristics": "Характеристики"
 }

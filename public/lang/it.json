@@ -930,5 +930,29 @@
         "name": "Usa Sicurezza Membro della Scheda Gruppo"
     },
     "TIDY5E.AggregateSkill.HighMeasure": "Alta",
-    "TIDY5E.AggregateSkill.LowMeasure": "Bassa"
+    "TIDY5E.AggregateSkill.LowMeasure": "Bassa",
+    "TIDY5E.Group.PrimaryParty.Label": "Gruppo Principale",
+    "TIDY5E.CombatTabName": "Combattimento",
+    "TIDY5E.Difficulty": "Difficoltà",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "Combattenti",
+        "Combat.IncludeInCombat.Tooltip": "Includi nelle attività di combattimento",
+        "Combat.ExcludeFromCombat.Tooltip": "Escludi dalle attività di combattimento",
+        "AddMember.Label": "Aggiungi Membro",
+        "AddPlaceholderToCombatTracker.Label": "Aggiungi all'Incontro Corrente come Segnaposto",
+        "AddPlaceholder.Label": "Crea Segnaposto Combattimento",
+        "DeletePlaceholder.Label": "Elimina Segnaposto",
+        "DifficultyTarget.Label": "Target Difficoltà",
+        "AddAllPlaceholders.Label": "Aggiungi Tutti come Segnaposto",
+        "PrerollInitiative": "Iniziativa Preroll",
+        "NewPlaceholder.Name": "Nuovo Segnaposto",
+        "NewPlaceholder.SubtitlePlaceholderText": "Nota su questo segnaposto",
+        "AddCombatants.MustHaveEncounter.Message": "È necessario avere un incontro selezionato da aggiungere al tracker degli incontri",
+        "CombatVisibility.Hidden.Label": "Nascosto ai giocatori quando aggiunto al tracker",
+        "CombatVisibility.Visible.Label": "Visibile ai giocatori quando aggiunto al tracker",
+        "InitiativeCount.Label": "Aggiungi Conteggio Iniziativa {count}",
+        "PlaceholderNameField.PlaceholderText": "Nome Segnaposto",
+        "PlaceholderNotesField.PlaceholderText": "Note"
+    },
+    "TIDY5E.Actor.Characteristics": "Connotati"
 }
