@@ -119,7 +119,7 @@
         "hint": "Umožní odepnutí karty z deníku a její zobrazení jako plovoucího rámečku u kurzoru. Je to nejlepší používat s opožděným zobrazením."
     },
     "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Opozdi zobrazení karet položek (v ms)",
+        "name": "Opoždění zobrazení karet položek (v ms)",
         "hint": "Zpozdí zobrazení karet položek o zadané milisekundy (ms). 0 znamená bez zpoždění. Výchozí hodnota: 300."
     },
     "TIDY5E.Settings.UseClassicControls": {
@@ -269,7 +269,7 @@
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Umožnit přípravu triků?",
-        "hint": "Volitelné pravidlo „formule triků“ z knihy Tasha's Cauldron of Everything umožňuje kouzelníkům po důkladném odpočinku připravovat triky stejným způsobem jako u kouzel se stupni. Připravené triky se nezapočítávají do celkového počtu připravených kouzel."
+        "hint": "Volitelné pravidlo 'formule triků' z knihy Tasha's Cauldron of Everything umožňuje kouzelníkům po důkladném odpočinku připravovat triky stejným způsobem jako u kouzel se stupni. Připravené triky se nezapočítávají do celkového počtu připravených kouzel."
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Zamknout mince?",
@@ -361,7 +361,7 @@
     },
     "TIDY5E.Settings.Reset": {
         "name": "Obnovení výchozího nastavení",
-        "hint": "Tímto obnovíš všechna nastavení aktivního herního systému na výchozí hodnoty. Týká se to pouze \"celkového\" nastavení, například PJ voleb.",
+        "hint": "Tímto obnovíš všechna nastavení aktivního herního systému na výchozí hodnoty. Týká se to pouze 'celkového' nastavení, například PJ voleb.",
         "dialogs": {
             "title": "Obnovení základního nastavení modulu",
             "content": "Jsi si jistý(á), že opravdu chceš obnovit všechna nastavení modulu na výchozí hodnoty aktuálního systému? 1<strong>Je to nevratné!</strong>",
@@ -386,11 +386,11 @@
             "useDefaultDarkColors": "Výchozí tmavý motiv",
             "export": "Export",
             "import": "Import",
-            "importDropHint": "Tip: Do tohoto formuláře můžeš přetáhnout „.tidy5e-theme“ a tak jej importovat.",
+            "importDropHint": "Tip: Do tohoto formuláře můžeš přetáhnout '.tidy5e-theme' a tak jej importovat.",
             "importError": "Import motivu se nezdařil. Další podrobnosti nalezneš v konzoli.",
             "importSuccess": "Motiv byl úspěšně importován!",
             "menuLabel": "Nabídka",
-            "explanation": "Vyber barvu, kterou chceš použít pro každou volbu. Hodnota „#00000000“ znamená zákaz barvy."
+            "explanation": "Vyber barvu, kterou chceš použít pro každou volbu. Hodnota '#00000000' znamená zákaz barvy."
         },
         "hint": "Přizpůsob si svůj deník a vytvoř si tak pohlcující zážitek, který doplní tvou hru.",
         "AccentColor.title": "Akcentující barva",
@@ -623,11 +623,11 @@
     "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem na blízko",
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Používat klávesové zkratky?",
-        "hint": "Umožní uživatelům procházet na kartě většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z „Konfigurace ovládacích prvků“ nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
+        "hint": "Umožní uživatelům procházet na kartě většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z 'Konfigurace ovládacích prvků' nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
         "name": "Tabelovat výchozí rysy pomocí tabulátoru na klávesnici?",
-        "hint": "Výchozí deník 5e umožňuje přecházet z jednoho vstupu rysů na druhý pomocí klávesnice tak, že se ovládací prvky kolem nich skryjí z pořadí tabulátoru. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta volba „Používání klávesových zkratek“."
+        "hint": "Výchozí deník 5e umožňuje přecházet z jednoho vstupu rysů na druhý pomocí klávesnice tak, že se ovládací prvky kolem nich skryjí z pořadí tabulátoru. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta volba 'Používání klávesových zkratek'."
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "Místo toho, aby se na kartě/panelu akce ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
@@ -706,7 +706,7 @@
         "tabLabel": "Ikony"
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "Výchozí deník 5e umožňuje tabelovat klávesnicí z aktuálního vstupu bodů výdrže do aktuálního vstupu dočasných bodů výdrže. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta možnost „Používat podporu přístupnosti klávesnicí“.",
+        "hint": "Výchozí deník 5e umožňuje tabelovat klávesnicí z aktuálního vstupu bodů výdrže do aktuálního vstupu dočasných bodů výdrže. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta možnost 'Používat podporu přístupnosti klávesnicí'.",
         "name": "Tabelovat výchozí BV deníku pomocí tabulátoru na klávesnici?"
     },
     "TIDY5E.Settings.ActionList.Header": "Seznam akcí",
@@ -773,7 +773,7 @@
     },
     "TIDY5E.Settings.InfoCardsInspectKey": {
         "name": "Kontrolní klíč informační karty",
-        "hint": "Stisknutím tohoto znaku na klávesnici (například klávesy „t“) při prohlížení informační karty bude karta vysunuta."
+        "hint": "Stisknutím tohoto znaku na klávesnici (například klávesy 't') při prohlížení informační karty bude karta vysunuta."
     },
     "TIDY5E.BrokenLink": "Přerušený odkaz",
     "TIDY5E.Settings.UseEffectCards": {
@@ -798,7 +798,7 @@
         "AddSection": "Přidat sekci",
         "hint": "Celkové nastavení sekcí, které lze konfigurovat pro různé účely. Celkově nastavené sekce budou vždy zahrnuty do výběru sekcí."
     },
-    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Zařadit rituály do výběru „Lze seslat“",
+    "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Zařadit rituály do výběru 'Lze seslat'",
     "TIDY5E.Facilities.Hirelings.Label": "Pracovníci",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato klávesová zkratka záhlaví nabídky deníku.",
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
@@ -873,11 +873,11 @@
     },
     "TIDY5E.Settings.BankedInspiration.title": "Uložená Inspirace",
     "TIDY5E.Settings.EnableBankedInspiration": {
-        "name": "Zapnout ukládání Inspirace",
-        "hint": "Povolením této možnosti bude moci uživatel nastavit odbornost jako zdroj Inspirace. Tuto možnost najdeš jako položku kontextového menu položek odborností s použitím."
+        "name": "Povolit ukládání Inspirace?",
+        "hint": "Po zaškrtnutí této možnosti bude moci uživatel nastavit odbornost jako zdroj Inspirace. Tuto možnost najdeš jako položku kontextového menu položek odborností s použitím."
     },
     "TIDY5E.Settings.BankedInspirationGmOnly": {
-        "name": "Správa ukládání Inspirace (pouze PJ)",
+        "name": "Umožnit správu ukládání Inspirace pouze PJ?",
         "hint": "Zaškrtnutím této možnosti se omezuje správa nahromaděných Inspirací pouze pro PJ."
     },
     "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Seskupení aktivit sesílání kouzla",
@@ -886,13 +886,19 @@
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Vzestupně",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Sestupně",
     "TIDY5E.Notifications.FirstTimeWelcome1": "Vítej v Denících Tidy 5e! Abys mohl/a začít a používat tuto verzi Tidy, musíš změnit {sheetLinkStart}deník{sheetLinkEnd} (nebo {allSheetsLinkStart}všechny deníky{allSheetsLinkEnd}!). Více informací o tomto modulu a jeho funkcích najdeš na {wikiLinkStart}oficiální wiki{wikiLinkEnd}.",
-    "TIDY5E.SheetLock.Empty.Hint": "Začni přidáním povolání a prvních položek. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost „Přidat do záložky deníku“.",
-    "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost ´Přidat do oblíbených´, nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
+    "TIDY5E.SheetLock.Empty.Hint": "Začni přidáním povolání a prvních položek. Poté můžeš použít nabídku položek, nebo pro přidání klikat pravým tlačítkem myši a vybrat možnost 'Přidat do záložky deníku'.",
+    "TIDY5E.EmptyFavorites": "Klikni pravým tlačítkem myši a vyber možnost 'Přidat do oblíbených', nebo sem pro rychlý přístup přetáhni cokoli ze svého deníku.",
     "TIDY5E.EmptyTools": "Žádná dovednost s nástroji.",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zobrazit legendární akce a akce doupěte v záložce statistik",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Zahrnout sekci Kouzla do záložky statistik",
     "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí (NP) Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e",
-    "TIDY5E.ExplorationTab.Title": "Průzkum"
+    "TIDY5E.ExplorationTab.Title": "Průzkum",
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "Použít zabezpečení členů skupiny",
+        "hint": "Umožní PJ kontrolovat, jaké informace o členech skupiny může uživatel vidět na deníku skupiny. Pokud hráč nemá ke členovi skupiny oprávnění, deník skupiny tohoto člena nezobrazí, a ani jeho souhrnné informace. S omezeným oprávněním může uživatel vidět jméno člena, ale žádné další informace. S oprávněním pozorovatele a vyšším může uživatel v deníku skupiny vidět všechny informace o členovi."
+    },
+    "TIDY5E.AggregateSkill.HighMeasure": "Vysoké",
+    "TIDY5E.AggregateSkill.LowMeasure": "Nízké"
 }
