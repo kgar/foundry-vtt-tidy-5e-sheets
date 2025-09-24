@@ -254,16 +254,3 @@
     {/each}
   </div>
 {/snippet}
-
-{#snippet placeholderTableRow(placeholder: EncounterPlaceholderQuadroneContext)}
-  <div
-    class="tidy-table-row group-member"
-    data-member-uuid={placeholder.id}
-    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
-  >
-    {placeholder.img}
-    {placeholder.name}
-    {placeholder.note}
-    {placeholder.initiative}
-  </div>
-{/snippet}
