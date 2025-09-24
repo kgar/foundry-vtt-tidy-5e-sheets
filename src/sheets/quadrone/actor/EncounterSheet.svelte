@@ -15,7 +15,7 @@
   let selectedTabId: string = $derived(context.currentTabId);
 
   let extraTabs = new SvelteSet<string>();
-  
+
   let currentPortraitShape = $derived(context.portrait.shape);
 
   const availableShapes = ThemeQuadrone.getActorPortraitShapes();
@@ -45,35 +45,51 @@
   );
 </script>
 
-<header class="sheet-header flexcol">
+<header class="sheet-header theme-dark flexcol">
   <div class="sheet-header-content flexrow">
-    <div class={["actor-details-container flexcol", { 'show-xp': context.enableXp }]}>
-      <div
-        class="actor-details-name-row"
-        data-tidy-sheet-part="name-header-row"
-      >
-        {#if context.unlocked}
-          <TextInputQuadrone
-            field="name"
-            document={context.actor}
-            value={context.actor.name}
-            class="actor-name flex1 h1"
-            data-tidy-sheet-part="actor-name"
-          />
-        {:else}
-          <h1 class="actor-name flex1" data-tidy-sheet-part="actor-name">
-            {context.actor.name}
-          </h1>
+    <div class="flexcol">
+      <div class="flexrow">
+        <div
+          class={[
+            'actor-details-container flexcol',
+            { 'show-xp': context.enableXp },
+          ]}
+        >
+          <div
+            class="actor-details-name-row"
+            data-tidy-sheet-part="name-header-row"
+          >
+            {#if context.unlocked}
+              <TextInputQuadrone
+                field="name"
+                document={context.actor}
+                value={context.actor.name}
+                class="actor-name flex1 h1"
+                data-tidy-sheet-part="actor-name"
+              />
+            {:else}
+              <h1 class="actor-name flex1" data-tidy-sheet-part="actor-name">
+                {context.actor.name}
+              </h1>
+            {/if}
+          </div>
+          <EncounterSubtitle />
+        </div>
+
+        {#if context.difficulty.label}
+          <div class="difficulty-block">
+            <span class="label difficulty font-label-medium color-text-default">
+              {context.difficulty.label}
+            </span>
+          </div>
         {/if}
       </div>
-      <EncounterSubtitle />
 
       {#if context.editable}
         <div
           class={['sheet-header-actions', 'flexrow']}
           data-tidy-sheet-part="sheet-header-actions-container"
         >
-        
           <button
             type="button"
             class="button long-rest button-gold flexshrink"
@@ -104,24 +120,6 @@
             <i class="fas fa-trophy"></i>
             {localize('DND5E.Award.Title')}
           </button>
-          <!-- <button
-            type="button"
-            class="button short-rest button-gold button-icon-only flexshrink"
-            data-tooltip="DND5E.REST.Short.Label"
-            aria-label={localize('DND5E.REST.Short.Label')}
-            onclick={() => context.sheet.shortRest()}
-          >
-            <i class="fas fa-utensils"></i>
-          </button>
-          <button
-            type="button"
-            class="button long-rest button-gold button-icon-only flexshrink"
-            data-tooltip="DND5E.REST.Long.Label"
-            aria-label={localize('DND5E.REST.Long.Label')}
-            onclick={() => context.actor.longRest()}
-          >
-            <i class="fas fa-campground"></i>
-          </button> -->
         </div>
       {/if}
     </div>

@@ -57,17 +57,17 @@
     {#each context.speeds.main as speed}
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
-    {#each context.senses.main as sense}
-      {@render speedSenseSummary(
-        sense,
-        ['sense', 'main-sense'],
-        ['hide-under-500'],
-      )}
-    {/each}
     {#each context.speeds.secondary as speed}
       {@render speedSenseSummary(
         speed,
         ['speed', 'secondary-speed'],
+        ['hide-under-500'],
+      )}
+    {/each}
+    {#each context.senses.main as sense}
+      {@render speedSenseSummary(
+        sense,
+        ['sense', 'main-sense'],
         ['hide-under-600'],
       )}
     {/each}
@@ -122,13 +122,7 @@
           : 'hide-under-700'}"
     ></div>
     {#each context.classes as entry, i}
-      <span
-        class="class {i > 0
-          ? context.enableXp
-            ? 'hide-under-500'
-            : 'hide-under-600'
-          : ''}"
-      >
+      <span class="class">
         <span class="color-text-gold font-label-medium">{entry.name}</span>
         <span class="color-text-default font-data-medium">{entry.levels}</span>
         <!-- TODO: Add button to roll a save request to chat here (enricher?) -->
@@ -148,11 +142,9 @@
           <!-- </button> -->
         {/if}
       </span>
-      <div
-        class="divider-dot {context.enableXp
-          ? 'hide-under-500'
-          : 'hide-under-600'}"
-      ></div>
+      {#if i < context.classes.length - 1}
+      <div class="divider-dot"></div>
+      {/if}
     {/each}
   </div>
   {#if context.enableXp}

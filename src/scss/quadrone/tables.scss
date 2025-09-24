@@ -367,10 +367,6 @@
       font-size: var(--font-size-small);
     }
 
-    .cell-name {
-      margin-block-end: var(--t5e-size-halfx);
-    }
-
     .advancement-cell-context {
       align-items: flex-start;
       display: flex;
@@ -475,13 +471,20 @@
   }
 
   .tidy-table-header-cell {
-    &.primary h3 {
-      flex: 1;
-      max-width: max-content;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    &.primary {
+      h3 {
+        flex: 1;
+        margin-bottom: 0.0625rem;
+        max-width: max-content;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .table-header-count {
+        margin-bottom: 0.0625rem;
+      }
     }
   }
 
@@ -536,6 +539,7 @@
           display: flex;
           flex-direction: column;
           justify-content: center;
+          gap: var(--t5e-size-halfx);
         }
       }
 

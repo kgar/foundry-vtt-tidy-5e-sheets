@@ -191,18 +191,19 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eGroupSheetQuadrone',
     }
   );
-
+  
+  documentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eEncounterSheetQuadrone,
+    {
+      types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
+      label: 'TIDY5E.Tidy5eEncounterSheetQuadrone',
+    }
+  );
+  
   /* FOR THOSE WITH TRUE SIGHT */
   if (settings.value.truesight) {
-    documentSheetConfig.registerSheet(
-      Actor,
-      CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eEncounterSheetQuadrone,
-      {
-        types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
-        label: 'TIDY5E.Tidy5eEncounterSheetQuadrone',
-      }
-    );
 
     documentSheetConfig.registerSheet(
       Item,

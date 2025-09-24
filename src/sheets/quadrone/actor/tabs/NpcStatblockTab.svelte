@@ -21,6 +21,7 @@
   import ActorTraitClasses from '../parts/ActorTraitClasses.svelte';
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
+  import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -111,6 +112,29 @@
       <ActorTraitClasses />
       <ActorTraitBackground />
       <NpcTraitSpecies />
+      <div class="list-entry">
+        <div class="list-label">
+          <h4 class="font-weight-label">
+            {localize('DND5E.SpecialTraits')}
+          </h4>
+        </div>
+        <div class="list-content">
+          <div class="list-values trait-item">
+            <button 
+              class="button button-secondary"
+              aria-label={localize('DND5E.FlagsTitle')}
+              data-tooltip={localize('DND5E.FlagsTitle')}
+              onclick={() =>
+                new SpecialTraitsApplication({ document: context.actor }).render({
+                  force: true,
+                })}
+              >
+                <i class="fa-solid fa-star"></i>
+                {localize('DND5E.FlagsTitle')}
+              </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 {/if}

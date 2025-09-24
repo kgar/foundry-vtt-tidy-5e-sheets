@@ -464,7 +464,11 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       event: PointerEvent
     ) {
       const { img, name, uuid } = this.actor;
-      new ImagePopout(img, { title: name, uuid: uuid }).render(true);
+      new foundry.applications.apps.ImagePopout({
+        src: img,
+        title: name,
+        uuid: uuid,
+      }).render(true);
     }
 
     /* -------------------------------------------- */
@@ -479,7 +483,8 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       event: PointerEvent
     ) {
       const { prototypeToken, name, uuid } = this.actor;
-      new ImagePopout(prototypeToken.texture.src, {
+      new foundry.applications.apps.ImagePopout({
+        src: prototypeToken.texture.src,
         title: name,
         uuid: uuid,
       }).render(true);

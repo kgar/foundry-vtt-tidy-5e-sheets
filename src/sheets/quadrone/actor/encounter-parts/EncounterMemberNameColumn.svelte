@@ -1,11 +1,9 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
   import type { EncounterMemberQuadroneContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
-  import type { Item5e } from 'src/types/item.types';
 
   let localize = FoundryAdapter.localize;
 
@@ -105,14 +103,13 @@
       {@const creatureSubtype = member.actor.system.details.type.subtype}
 
       <span class="separated-list">
-        <div class="divider-dot"></div>
-        <span class="cr">
+        <!-- <span class="cr">
           <span class="font-label-medium color-text-gold-emphasis"
             >{localize('DND5E.AbbreviationCR')}</span
           >
           <span class="font-data-medium color-text-default">{formattedCr}</span>
         </span>
-        <div class="divider-dot"></div>
+        <div class="divider-dot"></div> -->
         <span class="size">
           <span class="font-label-medium color-text-gold-emphasis">{size}</span>
         </span>

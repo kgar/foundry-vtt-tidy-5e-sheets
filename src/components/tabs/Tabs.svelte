@@ -160,7 +160,7 @@
         <span class="tab-title">{title}</span>
 
         {#if itemCount > 0}
-          <span class="tab-title-count">{itemCount}</span>
+          <span class="tab-title-count font-data-medium theme-dark">{itemCount}</span>
         {/if}
       </a>
     </svelte:boundary>

@@ -22,6 +22,7 @@ import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type {
   DocumentJournalEntries,
   AttributePinFlag,
+  EncounterPlaceholder,
 } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -1308,6 +1309,7 @@ export type GroupSkill = {
   proficient: boolean;
   high: GroupSkillModContext;
   low: GroupSkillModContext;
+  passive: number;
   reference: string | undefined;
 } & MeasurableEmphasizable<GroupMemberSkillContext>;
 
@@ -1348,7 +1350,7 @@ export type GroupSkillRollProcessConfiguration = {
   ability: string;
   event: Event;
   // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
-}
+};
 
 export type GroupSheetQuadroneContext = {
   enriched: {
@@ -1372,23 +1374,80 @@ export type GroupSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_GROUP;
 } & MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
 
+export type EncounterCreatureTypeContext = {
+  type: string;
+  label: string;
+  quantity: number;
+};
+
 export type EncounterMemberQuadroneContext = {
   accentColor: string | undefined;
   actor: Actor5e;
   backgroundColor: string | undefined;
+  canEdit: boolean;
   highlightColor: string | undefined;
+  includeInCombat: boolean;
+  initiative: number | undefined;
+  name: string;
   portrait: MultiActorMemberPortraitContext;
   quantity: {
     value: number | undefined;
     formula: string | undefined;
   };
+  visible: boolean;
+  type: 'member';
 };
+
+export type EncounterPlaceholderQuadroneContext = {
+  initiative: number | undefined;
+  includeInCombat: boolean;
+  name: string;
+  visible: boolean;
+  type: 'placeholder';
+} & EncounterPlaceholder;
 
 export type EncounterMembersQuadroneContext = {
   npc: EncounterMemberQuadroneContext[];
+  all: Map<string, EncounterMemberQuadroneContext>;
+};
+
+export type EncounterTraits = {
+  languages: MeasurableGroupTrait<number>[];
+  senses: MeasurableGroupTrait<number>[];
+  specials: GroupTrait[];
+  speeds: MeasurableGroupTrait<number>[];
+};
+
+/** The group actor by which difficulty should be calculated. */
+export type DifficultyTarget = {
+  /** Optional id to the group actor. When excluded, try target the primary party. */
+  id: string;
+  /** The name of the group actor. */
+  name: string;
+  /** Denotes whether this difficulty target is the primary party. */
+  primary: boolean;
+};
+
+export type EncounterDifficultyContext = {
+  label: string | null;
+  value: number | null;
+  max: number;
+  pct: number;
+  stops: {
+    low: number;
+    high: number;
+  };
+  availableTargets: DifficultyTarget[];
+  targetId: string | null | undefined;
 };
 
 export type EncounterSheetQuadroneContext = {
+  combatants: (
+    | EncounterMemberQuadroneContext
+    | EncounterPlaceholderQuadroneContext
+  )[];
+  creatureTypes: EncounterCreatureTypeContext[];
+  difficulty: EncounterDifficultyContext;
   enriched: {
     description: {
       full: string;
@@ -1396,6 +1455,10 @@ export type EncounterSheetQuadroneContext = {
     };
   };
   members: EncounterMembersQuadroneContext;
+  skills: GroupSkill[];
+  totalGold: number;
+  totalXp: number;
+  traits: EncounterTraits;
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 

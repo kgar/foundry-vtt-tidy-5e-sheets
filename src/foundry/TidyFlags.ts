@@ -5,12 +5,14 @@ import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
   DocumentJournalEntries,
-  DocumentJournalEntry,
   AttributePinFlag,
   TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
+  EncounterPlaceholders,
+  EncounterPlaceholder,
+  EncounterCombatantSettings,
+  EncounterCombatantsSettings,
 } from './TidyFlags.types';
-import { FoundryAdapter } from './foundry-adapter';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 
@@ -82,6 +84,51 @@ export class TidyFlags {
      */
     unset(item: Item5e) {
       return TidyFlags.unsetFlag(item, TidyFlags.actionSection.key);
+    },
+  };
+
+  // TODO: document before going to main
+  static combatantSettings = {
+    key: 'combatantSettings' as const,
+    get(encounter: Actor5e): EncounterCombatantsSettings {
+      return (
+        TidyFlags.tryGetFlag<EncounterCombatantsSettings>(
+          encounter,
+          TidyFlags.combatantSettings.key
+        ) ?? {}
+      );
+    },
+    /** Fully replaces the combatant settings object, since differentials will result in straggler data remaining behind. */
+    async set(encounter: Actor5e, settings: EncounterCombatantsSettings) {
+      await encounter.update(
+        { [`flags.tidy5e-sheet.combatantSettings`]: null },
+        {
+          render: false,
+        }
+      );
+      return await TidyFlags.setFlag(
+        encounter,
+        TidyFlags.combatantSettings.key,
+        settings
+      );
+    },
+  };
+
+  // TODO: Document
+  static encounterDifficultyTargetGroupId = {
+    key: 'encounterDifficultyTargetGroupId' as const,
+    get(user: any): string | null | undefined {
+      return TidyFlags.tryGetFlag<string>(
+        user,
+        TidyFlags.encounterDifficultyTargetGroupId.key
+      );
+    },
+    async set(user: any, groupActorId: string) {
+      return TidyFlags.setFlag(
+        user,
+        TidyFlags.encounterDifficultyTargetGroupId.key,
+        groupActorId
+      );
     },
   };
 
@@ -822,6 +869,48 @@ export class TidyFlags {
           return TidyFlags.unsetFlag(actor, TidyFlags.notes4.members.value.key);
         },
       },
+    },
+  };
+
+  /**
+   * Encounter sheet placeholders which can be managed on the Combat tab
+   * and which can be inserted into the Combat Tracker for the active
+   * encounter.
+   */
+  static placeholders = {
+    key: 'placeholders' as const,
+    prop: TidyFlags.getFlagPropertyPath('placeholders'),
+    /** Gets the placeholders for the specified encounter. */
+    get(actor: Actor5e): EncounterPlaceholders {
+      return (
+        TidyFlags.tryGetFlag<EncounterPlaceholders>(
+          actor,
+          TidyFlags.placeholders.key
+        ) ?? {}
+      );
+    },
+    /** Sets the placeholders for the specified encounter. */
+    set(actor: Actor5e, placeholders: EncounterPlaceholders): Promise<void> {
+      return TidyFlags.setFlag(actor, TidyFlags.placeholders.key, placeholders);
+    },
+    /** Inserts or updates a single entry in the current placeholders for the specified actor */
+    insertOrUpdateEntry(
+      actor: Actor5e,
+      placeholder: EncounterPlaceholder
+    ): Promise<void> {
+      const placeholders = TidyFlags.placeholders.get(actor);
+      placeholders[placeholder.id] = placeholder;
+      return TidyFlags.placeholders.set(actor, placeholders);
+    },
+    deleteEntry(actor: Actor5e, placeholderId: string): Promise<void> {
+      const placeholders = TidyFlags.placeholders.get(actor);
+
+      delete placeholders[placeholderId];
+
+      // @ts-ignore - Foundry delete operation.
+      placeholders[`-=${placeholderId}`] = null;
+
+      return TidyFlags.placeholders.set(actor, placeholders);
     },
   };
 

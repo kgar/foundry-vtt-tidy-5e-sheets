@@ -131,6 +131,7 @@ export function Tidy5eActorSheetQuadroneBase<
             visible: function (this: Tidy5eActorSheetQuadroneBase) {
               return this.isEditable && this.actor.isPolymorphed;
             },
+            position: 'header',
           },
           {
             action: 'openTabConfiguration',
@@ -694,10 +695,13 @@ export function Tidy5eActorSheetQuadroneBase<
       let languageTraits: ActorTraitContext<number>[] = [];
       const languages = actor.system.traits?.languages?.labels;
 
-      if (languages?.languages?.length)
+      if (languages?.languages?.length) {
         languageTraits = languages.languages.map((label: string) => ({
           label,
         }));
+      } else {
+        languageTraits = [{ label: FoundryAdapter.localize('DND5E.None') }];
+      }
 
       for (const [key, { label }] of Object.entries(
         CONFIG.DND5E.communicationTypes

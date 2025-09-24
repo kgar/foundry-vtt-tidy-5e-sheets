@@ -151,7 +151,7 @@
     </div>
   {/each}
 </aside>
-<div class="groups-tab-content flexcol">
+<div class="group-tab-content flexcol">
   <div class="inventory-content">
     <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 

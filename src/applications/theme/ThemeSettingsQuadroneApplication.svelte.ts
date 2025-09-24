@@ -55,6 +55,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   actorHeaderBackgroundSupportedActorTypes = new Set<string>([
     CONSTANTS.SHEET_TYPE_CHARACTER,
     CONSTANTS.SHEET_TYPE_GROUP,
+    CONSTANTS.SHEET_TYPE_ENCOUNTER,
   ]);
 
   themeConfigOptions(): ThemeSettingsConfigurationOptions {
