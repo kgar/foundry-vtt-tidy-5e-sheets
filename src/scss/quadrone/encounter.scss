@@ -2,8 +2,8 @@
   --difficulty-diplay-size: 6rem;
 
   &::before {
-    background-image: var(--t5e-sheet-header-bg, url(../../systems/dnd5e/ui/official/banner-encounter-dark.avif));
-    mix-blend-mode: darken;
+    background-image: var(--t5e-sheet-header-bg, url(../../modules/tidy5e-sheet/images/banner-encounter.jpg));
+    // mix-blend-mode: darken;
   }
 
   .sheet-header {
