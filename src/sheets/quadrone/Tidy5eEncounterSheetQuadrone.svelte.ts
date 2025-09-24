@@ -336,11 +336,13 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         ? details.type.custom
         : details.type.value;
 
-    mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
-      type: creatureType,
-      label: creatureTypeLabel,
-      quantity: 0,
-    })).quantity += quantity.value;
+    if (!isNil(creatureType)) {
+      mapGetOrInsertComputed(creatureTypeCountMap, creatureType, () => ({
+        type: creatureType,
+        label: creatureTypeLabel ?? creatureType,
+        quantity: 0,
+      })).quantity += quantity.value;
+    }
   }
 
   /* -------------------------------------------- */
