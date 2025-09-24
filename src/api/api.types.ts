@@ -466,3 +466,13 @@ export type HeaderControlRegistrationParams = {
    */
   controls: CustomHeaderControlsEntry[];
 };
+
+export type TabIdDocumentItemTypesParams = {
+  tabId: string;
+  documentItemTypes: string[];
+};
+
+export type TabIdDocumentItemTypesOptions = {
+  mode: 'merge' | 'override';
+};
+

@@ -1,0 +1,60 @@
+.tidy5e-sheet:is(.quadrone) {
+  .tidy-table-row[data-tidy-item-type="mcdm-class-bundle.power"] {
+    .power-specialty-icon dnd5e-icon {
+      --icon-size: calc(1.375rem);
+      --icon-fill: var(--t5e-color-text-gold-emphasis);
+    }
+    .concentration-icon {
+      --icon-size: calc(1.375rem);
+      opacity: 0.75;
+      transform: translateY(0.175rem);
+    }
+  }
+  .tidy-mcdm-power-label {
+    align-items: center;
+  }
+  .tidy-table-cell.tidy-mcdm-strain-effects {
+    justify-content: start;
+    input[type=radio] {
+      margin-right: 0.5rem;
+      transform: none;
+      &:disabled + label {
+        color: var(--t5e-color-text-disabled);
+      }
+    }
+    label {
+      width: 100%;
+      text-align: start;
+      &.selected {
+        color: var(--t5e-color-text-gold);
+      }
+    }
+  }
+
+  .mcdm-powers-tab {
+    scrollbar-gutter: stable;
+    .strain-values {
+      .strain-value {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        &::before {
+          background: transparent url("/systems/dnd5e/ui/lozenge.svg") no-repeat top / contain;
+          background-size: cover;
+          content: "";
+          height: 30px;
+          position: absolute;
+          width: 68px;
+          z-index: 0;
+        }
+        .value {
+          font-size: 1.5rem;
+          font-weight: bold;
+          line-height: 30px;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}
