@@ -74,7 +74,11 @@
   </button>
 {/if}
 <div
-  class={['actor-image', currentPortraitShape, { dead: actorIsDead }]}
+  class={[
+    'actor-image',
+    currentPortraitShape,
+    { dead: actorIsDead, transparent: context.portrait.isVideo },
+  ]}
   style="position: relative;"
 >
   {#if context.portrait.isVideo}
