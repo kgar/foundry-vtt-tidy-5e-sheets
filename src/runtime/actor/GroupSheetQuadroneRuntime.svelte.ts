@@ -41,19 +41,19 @@ export const GroupSheetQuadroneRuntime =
       //   layout: 'quadrone',
       //   iconClass: 'fa-solid fa-compass',
       // },
-      {
-        title: 'DND5E.Bastion.Configuration.Name',
-        content: {
-          component: GroupBastionsTab,
-          type: 'svelte',
-        },
-        enabled: (_context) => {
-          return !!systemSettings.value.bastionConfiguration.enabled;
-        },
-        id: CONSTANTS.TAB_GROUP_BASTIONS,
-        layout: 'quadrone',
-        iconClass: 'fa-solid fa-house-turret',
-      },
+      // {
+      //   title: 'DND5E.Bastion.Configuration.Name',
+      //   content: {
+      //     component: GroupBastionsTab,
+      //     type: 'svelte',
+      //   },
+      //   enabled: (_context) => {
+      //     return !!systemSettings.value.bastionConfiguration.enabled;
+      //   },
+      //   id: CONSTANTS.TAB_GROUP_BASTIONS,
+      //   layout: 'quadrone',
+      //   iconClass: 'fa-solid fa-house-turret',
+      // },
       {
         title: 'DND5E.Description',
         content: {
