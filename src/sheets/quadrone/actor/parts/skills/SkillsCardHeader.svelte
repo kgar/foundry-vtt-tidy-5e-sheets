@@ -7,10 +7,11 @@
 
   type Props = {
     expanded?: boolean;
+    inCard?: boolean;
     legend?: Snippet;
   };
 
-  let { expanded = true, legend }: Props = $props();
+  let { expanded = true, inCard = true, legend }: Props = $props();
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -31,7 +32,7 @@
       }
     }}
   >
-    <i class="fa-solid fa-briefcase color-icon-diminished"></i>
+    <i class="fa-solid fa-briefcase {inCard ?? 'color-icon-diminished'}"></i>
     <h3 class="font-label-medium">
       {localize('DND5E.Skills')}
 

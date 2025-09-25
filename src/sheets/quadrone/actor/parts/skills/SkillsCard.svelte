@@ -53,7 +53,7 @@
 </script>
 
 {#snippet skillsContent()}
-  <SkillsCardHeader {expanded}>
+  <SkillsCardHeader {expanded} inCard={showFiligree}>
     {#snippet legend()}
       {localize('DND5E.Modifier')} /
       {localize('DND5E.Passive')}

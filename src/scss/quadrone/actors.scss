@@ -54,11 +54,15 @@
     height: 100%;
   }
 
+  section.window-content {
+    padding: 0.5rem 0 0;
+  }
+
   .window-content {
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 0 0;
     margin-top: -0.75rem;
+
 
     .tabs-row {
       container-name: sheet-tabs;
