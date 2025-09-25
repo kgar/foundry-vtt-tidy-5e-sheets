@@ -980,7 +980,6 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   portrait: {
     src: string;
     isRandom: boolean;
-    truePath?: string;
     shape: PortraitShape;
     path: string;
     isVideo: boolean;

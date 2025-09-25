@@ -391,7 +391,6 @@ export function Tidy5eActorSheetQuadroneBase<
         shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
         isVideo,
         isRandom,
-        truePath: isRandom ? rawSrc : undefined,
       };
     }
 
