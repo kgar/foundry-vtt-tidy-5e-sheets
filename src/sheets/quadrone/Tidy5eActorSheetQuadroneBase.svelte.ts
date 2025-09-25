@@ -334,7 +334,7 @@ export function Tidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
-        portrait: await this._preparePortrait(),
+        portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
         sheet: this,
@@ -364,8 +364,7 @@ export function Tidy5eActorSheetQuadroneBase<
       return context;
     }
 
-    async _preparePortrait(): Promise<ActorSheetQuadroneContext['portrait']> {
-      const { actor } = this;
+    async _preparePortrait(actor: Actor5e): Promise<ActorSheetQuadroneContext['portrait']> {
       const defaults = Actor.implementation.getDefaultArtwork(actor._source);
       const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
       const showToken =

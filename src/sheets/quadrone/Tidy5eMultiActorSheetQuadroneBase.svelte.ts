@@ -137,37 +137,6 @@ export function Tidy5eMultiActorSheetQuadroneBase<
 
     protected _prepareItem(item: Item5e, ctx: TContext) {}
 
-    async _preparePortrait(
-      actor: Actor5e = this.actor
-    ): Promise<ActorSheetQuadroneContext['portrait']> {
-      const showTokenPortrait = actor.getFlag(
-        CONSTANTS.DND5E_SYSTEM_ID,
-        CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT
-      );
-
-      const token = actor.isToken ? actor.token : actor.prototypeToken;
-
-      const defaults = Actor.implementation.getDefaultArtwork(actor._source);
-      let src = showTokenPortrait ? token.texture.src : actor.img;
-
-      if (showTokenPortrait && token?.randomImg) {
-        const images = await actor.getTokenImages();
-        src = images[Math.floor(Math.random() * images.length)];
-      }
-
-      if (!src) {
-        src = showTokenPortrait ? defaults.texture.src : defaults.img;
-      }
-
-      return {
-        src,
-        isVideo: foundry.helpers.media.VideoHelper.hasVideoExtension(src),
-        shape: ThemeQuadrone.getActorPortraitShape(actor),
-        isRandom: false,
-        path: src,
-      };
-    }
-
     getGpSummary(actor: Actor5e) {
       const currency = actor.system.currency;
 
