@@ -57,13 +57,13 @@
       </div>
     </fieldset>
   </div>
-  <div class="flexrow flex0">
-    <button
-      type="button"
-      class="button button-primary save-changes-btn"
-      onclick={() => app.save()}
-    >
-      {localize('TIDY5E.SaveChanges')}
-    </button>
-  </div>
+</div>
+<div class="button-bar">
+  <button
+    type="button"
+    class="button button-primary save-changes-btn"
+    onclick={() => app.save()}
+  >
+    {localize('TIDY5E.SaveChanges')}
+  </button>
 </div>

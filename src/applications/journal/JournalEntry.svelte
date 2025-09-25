@@ -47,6 +47,7 @@
   });
 </script>
 
+<div class="dialog-content-container flexcol">
 {#if entry.data}
   {#if mode === 'edit'}
     <TextInputQuadrone
@@ -83,3 +84,4 @@
     {/await}
   {/if}
 {/if}
+</div>

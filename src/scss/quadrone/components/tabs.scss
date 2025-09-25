@@ -112,7 +112,7 @@
   margin: 0;
   padding: 0;
   list-style-position: inside;
-  gap: var(--t5e-size-halfx);
+  gap: 0;
 
   &:not(.include-numbers) li {
     list-style: none;
@@ -122,13 +122,18 @@
 .vertical-tab {
   position: relative;
   align-content: center;
+  border: 1px solid transparent;
   border-radius: 0.125rem;
   margin: 0;
   padding: var(--t5e-size-1x) var(--t5e-size-2x);
-  min-height: var(--t5e-field-size-default);
+  min-height: calc(var(--t5e-field-size-default) + 0.125rem);
   cursor: pointer;
   overflow: hidden;
   transition: color var(--t5e-transition-default);
+
+  &::marker {
+    color: var(--t5e-color-palette-gold-45);
+  }
 
   &::before {
     content: '';
@@ -138,10 +143,10 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(to right,
-        var(--t5e-component-field-background),
+        oklch(from var(--t5e-color-gold) l c h / 0.64),
         transparent);
     opacity: 0;
-    transition: opacity var(--t5e-transition-default);
+    transition: opacity var(--t5e-transition-default), background var(--t5e-transition-default);
     pointer-events: none;
     z-index: -1;
   }
@@ -150,31 +155,29 @@
     font-weight: 500;
 
     &::before {
+      background: linear-gradient(to right,
+          oklch(from var(--t5e-color-gold) l c h / .64),
+          transparent);
+      opacity: 1;
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    &::before {
+      background: linear-gradient(to right,
+          oklch(from var(--t5e-color-gold) l c h / 0.40),
+          transparent);
       opacity: 1;
     }
 
-    &::marker {
-      color: var(--t5e-color-palette-gold-45);
-    }
-
-    &:hover::before {
+    &.selected::before {
       background: linear-gradient(to right,
-          var(--t5e-component-field-background-hover),
+          oklch(from var(--t5e-color-palette-gold-75) l c h / .64),
           transparent);
+      opacity: 1;
     }
-
-
-  }
-
-  &:hover:not(.selected)::before {
-    background: linear-gradient(to right,
-        var(--t5e-component-field-background-hover),
-        transparent);
-    opacity: 1;
-  }
-
-  &::marker {
-    color: var(--t5e-color-text-gold-emphasis);
   }
 }
 
@@ -195,9 +198,28 @@
     }
   }
 
-  .vertical-tab.selected:hover::before {
-    background: linear-gradient(to right,
-        var(--t5e-component-card-lighter),
-        transparent);
+  .vertical-tab {
+
+    &.selected {
+      &::marker {
+        color: var(--t5e-color-palette-gold-89);
+      }
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+      &::before {
+        background: linear-gradient(to right,
+            oklch(from var(--t5e-color-gold) l c h / 0.40),
+            transparent);
+      }
+
+      &.selected::before {
+        background: linear-gradient(to right,
+            oklch(from var(--t5e-color-gold) l c h / 0.40),
+            transparent);
+      }
+    }
   }
 }
