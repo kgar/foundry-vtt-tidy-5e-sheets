@@ -1,6 +1,6 @@
 <aside class="sidebar">
   Sidebar likely holds group bastion content.
 </aside>
-<div class="groups-tab-content group-bastions-content">
+<div class="group-tab-content group-bastions-content">
   Table has individual player bastion content.
 </div>

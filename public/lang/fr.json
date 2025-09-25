@@ -922,5 +922,11 @@
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Feuille de rencontre",
     "TIDY5E.CharacterTraits.Title": "Capacités du personnage",
     "TIDY5E.ItemSheet.FeatureOriginLabel": "composantes d'origine",
-    "TIDY5E.ExplorationTab.Title": "Exploration"
+    "TIDY5E.ExplorationTab.Title": "Exploration",
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "Utiliser la feuille de membre de groupe sécurisé",
+        "hint": "Permet au MD de contrôler les informations sur les membres du groupe qu'un utilisateur peut voir sur la feuille de groupe. Lorsque le joueur n'a pas la permission d'accéder à un membre du groupe, la feuille de groupe n'affiche pas ce membre ni ses informations globales. Avec une permission limitée, l'utilisateur peut voir le nom du membre mais aucune autre information. Avec la permission Observer ou plus, l'utilisateur peut voir toutes les informations de la fiche de groupe concernant le membre."
+    },
+    "TIDY5E.AggregateSkill.HighMeasure": "Haut",
+    "TIDY5E.AggregateSkill.LowMeasure": "Bas"
 }

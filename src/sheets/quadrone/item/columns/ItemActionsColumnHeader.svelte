@@ -37,7 +37,8 @@
 {#if sheetContext.editable && 'canCreate' in section && !!section.canCreate}
   <a
     class="tidy-table-button"
-    title={localize('DND5E.EffectCreate')}
+    aria-label={localize('DND5E.ItemCreate')}
+    data-tooltip
     onclick={onAddClicked}
   >
     <i class="fas fa-plus"></i>

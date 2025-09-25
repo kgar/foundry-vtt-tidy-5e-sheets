@@ -101,73 +101,8 @@
   {/key}
 {/if}
 
-<div class="biography-grid" class:hidden={editing}>
-  <article style="grid-area: top;">
-    <ul class="biography-entries">
-      {#each bioFields as bioField (bioField.field)}
-        <li class="form-group">
-          <label class="biography-entry-label" for={bioField.field}
-            >{localize(bioField.text)}</label
-          >
-          <div class="form-fields">
-            <TextInputQuadrone
-              id={bioField.field}
-              document={context.actor}
-              field={bioField.field}
-              value={bioField.value}
-              selectOnFocus={true}
-              class="biography-entry-value"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </li>
-      {/each}
-    </ul>
-  </article>
-
-  <div class="biography-left">
-    {@render bioEditorEntry(
-      'fa-puzzle-piece',
-      'DND5E.PersonalityTraits',
-      TidyFlags.trait.get(context.actor) ?? '',
-      context.enriched.trait,
-      TidyFlags.trait.prop,
-    )}
-
-    {@render bioEditorEntry(
-      'fa-seedling',
-      'DND5E.Ideals',
-      context.system.details.ideal,
-      context.enriched.ideal,
-      'system.details.ideal',
-    )}
-
-    {@render bioEditorEntry(
-      'fa-link',
-      'DND5E.Bonds',
-      context.system.details.bond,
-      context.enriched.bond,
-      'system.details.bond',
-    )}
-
-    {@render bioEditorEntry(
-      'fa-heart-crack',
-      'DND5E.Flaws',
-      context.system.details.flaw,
-      context.enriched.flaw,
-      'system.details.flaw',
-    )}
-  </div>
-
-  <div class="biography-right">
-    {@render bioEditorEntry(
-      'fa-image-portrait',
-      'DND5E.Appearance',
-      TidyFlags.appearance.get(context.actor) ?? '',
-      context.enriched.appearance,
-      TidyFlags.appearance.prop,
-    )}
-
+{#if context.enriched.biography !== '' || context.enriched.publicBiography !== '' || context.unlocked}
+  <div class="tidy-tab-column flexcol" class:hidden={editing}>
     {@render bioEditorEntry(
       'fa-book',
       'DND5E.Biography',
@@ -184,6 +119,90 @@
       'system.details.biography.public',
     )}
   </div>
+{/if}
+<div class="tidy-tab-row flexrow" class:hidden={editing}>
+  {#if (context.enriched.appearance !== '' &&
+        context.enriched.trait !== '' &&
+        context.enriched.ideal !== '' &&
+        context.enriched.bond !== '' &&
+        context.enriched.flaw !== ''
+       ) || context.unlocked}
+    <div class="tidy-tab-column flexcol">
+      {@render bioEditorEntry(
+        'fa-head-side',
+        'DND5E.Appearance',
+        TidyFlags.appearance.get(context.actor) ?? '',
+        context.enriched.appearance,
+        TidyFlags.appearance.prop,
+      )}
+
+      {@render bioEditorEntry(
+        'fa-puzzle-piece',
+        'DND5E.PersonalityTraits',
+        TidyFlags.trait.get(context.actor) ?? '',
+        context.enriched.trait,
+        TidyFlags.trait.prop,
+      )}
+
+      {@render bioEditorEntry(
+        'fa-seedling',
+        'DND5E.Ideals',
+        context.system.details.ideal,
+        context.enriched.ideal,
+        'system.details.ideal',
+      )}
+
+      {@render bioEditorEntry(
+        'fa-link',
+        'DND5E.Bonds',
+        context.system.details.bond,
+        context.enriched.bond,
+        'system.details.bond',
+      )}
+
+      {@render bioEditorEntry(
+        'fa-heart-crack',
+        'DND5E.Flaws',
+        context.system.details.flaw,
+        context.enriched.flaw,
+        'system.details.flaw',
+      )}
+    </div>
+  {/if}
+
+  {#if bioFields.some(bioField => bioField.value != null && bioField.value !== '') || context.unlocked}
+    <div class="tidy-tab-column flexcol">
+      <div class="biography-editor-title title-underlined">
+        <h3 class="font-title-small flexrow">
+          <i class="fa-solid fa-address-card flexshrink"></i>
+          <span class="flex1">{localize("TIDY5E.Actor.Characteristics")}</span>
+        </h3>
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </div>
+      <ul class="biography-entries">
+        {#each bioFields as bioField (bioField.field)}
+          {#if bioField.value != null && bioField.value !== '' || context.unlocked}
+            <li class="form-group">
+              <label class="biography-entry-label" for={bioField.field}
+                >{localize(bioField.text)}</label
+              >
+              <div class="form-fields">
+                <TextInputQuadrone
+                  id={bioField.field}
+                  document={context.actor}
+                  field={bioField.field}
+                  value={bioField.value}
+                  selectOnFocus={true}
+                  class="biography-entry-value"
+                  disabled={!context.unlocked}
+                />
+              </div>
+            </li>
+          {/if}
+        {/each}
+      </ul>
+    </div>
+  {/if}
 </div>
 
 {#snippet bioEditorEntry(
@@ -193,28 +212,31 @@
   enriched: string,
   field: string,
 )}
-  <article class="biography-editor-container">
-    <div class="biography-editor-title">
-      <h3 class="font-title-small flexrow">
-        <i class="fa-solid {icon} flexshrink"></i>
-        <span class="flex1">{localize(label)}</span>
-        {#if context.editable}
-          <a
-            class="button button-borderless button-icon-only flexshrink"
-            onclick={() => edit(value, enriched, field)}
-          >
-            <i class="fa-solid fa-feather"></i>
-          </a>
-        {/if}
-      </h3>
-      <tidy-gold-header-underline></tidy-gold-header-underline>
-    </div>
-    {#key enriched}
-      <div class="editor" use:manageSecrets={{ document: context.actor }}>
-        <div data-field={field} class="user-select-text">
-          {@html enriched}
-        </div>
+  {#if enriched !== '' || context.unlocked}
+    <article class="biography-editor-container">
+      <div class="biography-editor-title title-underlined">
+        <h3 class="font-title-small flexrow">
+          <i class="fa-solid {icon} flexshrink"></i>
+          <span class="flex1">{localize(label)}</span>
+          {#if context.editable}
+            <button
+              class="button button-borderless button-icon-only flexshrink"
+              aria-label={localize("TIDY5E.ContextMenuActionEdit")}
+              onclick={() => edit(value, enriched, field)}
+            >
+              <i class="fa-solid fa-feather"></i>
+            </button>
+          {/if}
+        </h3>
+        <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>
-    {/key}
-  </article>
+      {#key enriched}
+        <div class="editor" use:manageSecrets={{ document: context.actor }}>
+          <div data-field={field} class="user-select-text">
+            {@html enriched}
+          </div>
+        </div>
+      {/key}
+    </article>
+  {/if}
 {/snippet}

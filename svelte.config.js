@@ -9,5 +9,10 @@ export default {
       toggleKeyCombo: 'control-alt-shift',
     },
   },
-  customElement: true
+  customElement: true,
+  onwarn: (warning, handler) => {
+    // Unless we're specifically doing work to resolve warnings, 
+    // suppress all warnings during build. 
+    // Every build results in flooding github actions with logs.
+  }
 };

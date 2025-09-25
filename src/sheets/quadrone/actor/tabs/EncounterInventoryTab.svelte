@@ -48,25 +48,27 @@
   });
 </script>
 
-<div class="inventory-content">
-  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+<div class="group-tab-content flexcol">
+  <div class="inventory-content">
+    <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
-  {#if context.showContainerPanel && !!context.containerPanelItems.length}
-    <ContainerPanel
+    {#if context.showContainerPanel && !!context.containerPanelItems.length}
+      <ContainerPanel
+        {searchCriteria}
+        containerPanelItems={context.containerPanelItems}
+      />
+    {/if}
+
+    <InventoryTables
+      sections={inventory}
+      editable={context.editable}
+      itemContext={context.itemContext}
+      {inlineToggleService}
       {searchCriteria}
-      containerPanelItems={context.containerPanelItems}
+      sheetDocument={context.actor}
+      root={true}
     />
-  {/if}
-
-  <InventoryTables
-    sections={inventory}
-    editable={context.editable}
-    itemContext={context.itemContext}
-    {inlineToggleService}
-    {searchCriteria}
-    sheetDocument={context.actor}
-    root={true}
-  />
+  </div>
 
   <ActorInventoryFooter useAttunement={false} />
 </div>

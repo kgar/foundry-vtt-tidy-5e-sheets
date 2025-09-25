@@ -24,12 +24,8 @@
 
   const localize = FoundryAdapter.localize;
 </script>
-
-<h1>{title}</h1>
-<!-- TODO: make some formal styles for this -->
-<div
-  style="display: flex; flex-direction: column; flex: 1; overflow-y: hidden;"
->
+<div class="dialog-content-container flexcol">
+  <h2>{title}</h2>
   {#if optionGroups?.length}
     <fieldset>
       <legend>
@@ -78,10 +74,7 @@
     </fieldset>
   {/if}
   <!-- TODO: make some formal styles for this -->
-  <fieldset
-    class="section-config-container"
-    style="overflow-y: hidden; flex: 1; min-height: 3rem;"
-  >
+  <fieldset class="section-config-container">
     <legend>
       {localize('TIDY5E.Section.LabelPl')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -90,7 +83,6 @@
       bind:items={sections}
       labelProp="label"
       valueProp="key"
-      listboxCssClass="scroll-container"
       selectedItemClasses="theme-dark"
     >
       {#snippet itemTemplate({ item })}
@@ -132,32 +124,31 @@
       {/snippet}
     </SortingListbox>
   </fieldset>
-
-  <div class="button-bar">
-    <button
-      type="button"
-      data-testid="section-config-save-changes"
-      onclick={(ev) => application.saveChanges()}
-      class="button button-primary save-changes-btn"
-    >
-      {localize('TIDY5E.SaveChanges')}
-    </button>
-    <button
-      type="button"
-      class="button button-secondary use-default-btn"
-      data-testid="section-config-use-default"
-      onclick={(ev) => application.useDefault()}
-    >
-      <i class="fas fa-rotate-left"></i>
-      {localize('TIDY5E.UseDefault')}
-    </button>
-    <button
-      type="button"
-      class="button button-secondary apply-changes-btn"
-      data-testid="section-config-apply-changes"
-      onclick={() => application.close()}
-    >
-      {localize('Cancel')}
-    </button>
-  </div>
+</div>
+<div class="button-bar">
+  <button
+    type="button"
+    data-testid="section-config-save-changes"
+    onclick={(ev) => application.saveChanges()}
+    class="button button-primary save-changes-btn"
+  >
+    {localize('TIDY5E.SaveChanges')}
+  </button>
+  <button
+    type="button"
+    class="button button-secondary use-default-btn"
+    data-testid="section-config-use-default"
+    onclick={(ev) => application.useDefault()}
+  >
+    <i class="fas fa-rotate-left"></i>
+    {localize('TIDY5E.UseDefault')}
+  </button>
+  <button
+    type="button"
+    class="button button-secondary apply-changes-btn"
+    data-testid="section-config-apply-changes"
+    onclick={() => application.close()}
+  >
+    {localize('Cancel')}
+  </button>
 </div>

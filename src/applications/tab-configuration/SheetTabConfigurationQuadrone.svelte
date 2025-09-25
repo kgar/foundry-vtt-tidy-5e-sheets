@@ -24,13 +24,11 @@
   );
 </script>
 
-<div class="configuration-tab flexcol">
-  <h2>
-    {title}
-  </h2>
+<div class="dialog-content-container flexcol">
+  <h2>{title}</h2>
   <TabConfigurationEntry bind:entry={config.entry} />
 </div>
-<div class="flexrow flexgap-1">
+<div class="button-bar">
   <button
     type="button"
     class="button button-primary save-changes-btn"

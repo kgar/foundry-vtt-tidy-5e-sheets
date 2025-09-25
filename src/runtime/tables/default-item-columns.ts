@@ -109,7 +109,7 @@ export function getDefaultItemColumns() {
         type: 'component',
         component: ItemQuantityColumn,
       },
-      widthRems: 5.5,
+      widthRems: 5,
     },
     range: {
       headerContent: {
@@ -175,7 +175,7 @@ export function getDefaultItemColumns() {
         type: 'component',
         component: ItemTimeColumn,
       },
-      widthRems: 5,
+      widthRems: 3,
     },
     uses: {
       headerContent: {

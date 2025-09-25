@@ -450,7 +450,7 @@
                 type="button"
                 class="roll-hp button button-borderless button-icon-only"
                 aria-label={localize('DND5E.HPFormulaRollMessage')}
-                data-tooltip={'DND5E.HPFormulaRollMessage'}
+                data-tooltip
                 onclick={() => context.sheet.rollFormula()}
                 disabled={!context.editable}
               >

@@ -1,26 +1,25 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import GroupSkills from './GroupSkillsCard.svelte';
-  import { getContext } from 'svelte';
-  import type { Ref } from 'src/features/reactivity/reactivity.types';
+  import EncounterSkills from './EncounterSkills.svelte';
+  import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type { ClassValue } from 'svelte/elements';
   import type {
-    Actor5e,
-    GroupMemberQuadroneContext,
+    EncounterMemberQuadroneContext,
     GroupTraitBase,
   } from 'src/types/types';
-  import GroupTraitPill from '../GroupTraitPill.svelte';
-  import GroupToolTooltip from 'src/tooltips/GroupToolTooltip.svelte';
+  import { getContext } from 'svelte';
+  import type { Ref } from 'src/features/reactivity/reactivity.types';
   import GroupTraitTooltip from 'src/tooltips/GroupTraitTooltip.svelte';
+  import type { ClassValue } from 'svelte/elements';
+  import GroupTraitPill from '../../group-parts/GroupTraitPill.svelte';
+  import { TidyFlags } from 'src/api';
 
-  let context = $derived(getGroupSheetQuadroneContext());
+  let context = $derived(getEncounterSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
   let emphasizedActorRef = getContext<
-    Ref<GroupMemberQuadroneContext | undefined>
+    Ref<EncounterMemberQuadroneContext | undefined>
   >(CONSTANTS.SVELTE_CONTEXT.EMPHASIZED_MEMBER_REF);
 
   let emphasizedMember = $derived(emphasizedActorRef.value);
@@ -29,14 +28,13 @@
     emphasizedMember?.actor.uuid ?? '',
   );
 
-  let toolTooltip = $state<GroupToolTooltip | undefined>();
   let traitTooltip = $state<GroupTraitTooltip | undefined>();
 
   function getTooltipMembersFromMeasureableTrait(
     identifiers: Map<string, GroupTraitBase<any>>,
   ) {
     return [...identifiers].map(([uuid, value]) => ({
-      context: context.members.all.get(uuid) as GroupMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
+      context: context.members.all.get(uuid) as EncounterMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
       units: value.units,
       value: value.value?.toString(),
     }));
@@ -45,17 +43,46 @@
 
 <GroupTraitTooltip bind:this={traitTooltip} sheetDocument={context.actor} />
 
-<GroupToolTooltip bind:this={toolTooltip} sheetDocument={context.document} />
-
 <aside
   class="sidebar"
   style:--t5e-member-color-hover={emphasizedMember?.highlightColor}
   style:--t5e-member-color-background={emphasizedMember?.backgroundColor}
 >
-  <!-- Aggregate Traits -->
   <div class="list traits">
+    <!-- Difficulty Target -->
+    <div class="list-entry encounter-group-difficulty">
+      <div class="list-label flexrow">
+        <h4 class="font-weight-label">
+          <i class="fa-solid fa-reflect-both"></i>
+          {localize('TIDY5E.Encounter.DifficultyTarget.Label')}
+        </h4>
+      </div>
+      <div class="list-content">
+        <div class="list-values">
+          <select
+            class="combat-difficulty-target"
+            onchange={(ev) =>
+              TidyFlags.encounterDifficultyTargetGroupId.set(
+                game.user,
+                ev.currentTarget.value,
+              )}
+            value={context.difficulty.targetId}
+          >
+            {#each [...context.difficulty.availableTargets].sort((a, b) => Number(b.primary) - Number(a.primary)) as target}
+              <option value={target.id}>
+                {target.name}
+                {#if target.primary}
+                  ({localize('TIDY5E.Group.PrimaryParty.Label')})
+                {/if}
+              </option>
+            {/each}
+          </select>
+        </div>
+      </div>
+    </div>
+
     <!-- Languages -->
-    <div class="list-entry">
+    <div class="list-entry traits-languages">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-comments"></i>
@@ -70,10 +97,11 @@
                 emphasizedMember !== undefined &&
                 language.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
-                emphasized: isEmphasized,
-                'theme-dark': isEmphasized,
-                diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
+                  emphasized: isEmphasized,
+                  'theme-dark': isEmphasized,
+                  'trait-language': true,
+                  diminished: emphasizedMember !== undefined && !isEmphasized,
+                }}
               {@const pill =
                 language.identifiers.get(emphasizedActorUuid) ?? language}
 
@@ -96,8 +124,9 @@
         </div>
       </div>
     </div>
+
     <!-- Speeds -->
-    <div class="list-entry">
+    <div class="list-entry traits-speeds">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-rabbit-running"></i>
@@ -112,10 +141,11 @@
                 emphasizedMember !== undefined &&
                 speed.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
-                emphasized: isEmphasized,
-                'theme-dark': isEmphasized,
-                diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
+                  emphasized: isEmphasized,
+                  'theme-dark': isEmphasized,
+                  'trait-speed': true,
+                  diminished: emphasizedMember !== undefined && !isEmphasized,
+                }}
               {@const pill =
                 speed.identifiers.get(emphasizedActorUuid) ?? speed}
 
@@ -137,8 +167,9 @@
         </div>
       </div>
     </div>
+
     <!-- Senses -->
-    <div class="list-entry">
+    <div class="list-entry traits-senses">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-eye"></i>
@@ -153,10 +184,11 @@
                 emphasizedMember !== undefined &&
                 sense.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
-                emphasized: isEmphasized,
-                'theme-dark': isEmphasized,
-                diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
+                  emphasized: isEmphasized,
+                  'theme-dark': isEmphasized,
+                  'trait-sense': true,
+                  diminished: emphasizedMember !== undefined && !isEmphasized,
+                }}
               {@const pill =
                 sense.identifiers.get(emphasizedActorUuid) ?? sense}
 
@@ -179,11 +211,11 @@
       </div>
     </div>
 
-    <!-- Aggregate Skills -->
-    <GroupSkills />
+    <!-- Skills -->
+    <EncounterSkills />
 
     <!-- Specials -->
-    <div class="list-entry">
+    <div class="list-entry traits-specials">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
           <i class="fa-solid fa-star-sharp"></i>
@@ -198,10 +230,11 @@
                 emphasizedMember !== undefined &&
                 special.identifiers.has(emphasizedActorUuid)}
               {@const pillState: ClassValue = {
-                emphasized: isEmphasized,
-                'theme-dark': isEmphasized,
-                diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
+                  emphasized: isEmphasized,
+                  'theme-dark': isEmphasized,
+                  'trait-special': true,
+                  diminished: emphasizedMember !== undefined && !isEmphasized,
+                }}
 
               <GroupTraitPill
                 class={pillState}
@@ -212,50 +245,8 @@
                     members: [...special.identifiers].map((s) => ({
                       context: context.members.all.get(
                         s,
-                      ) as GroupMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
+                      ) as EncounterMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
                     })),
-                  })}
-              />
-            {/each}
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tools -->
-    <div class="list-entry">
-      <div class="list-label flexrow">
-        <h4 class="font-weight-label">
-          <i class="fa-solid fa-hammer-brush"></i>
-          {localize('TYPES.Item.toolPl')}
-        </h4>
-      </div>
-      <div class="list-content">
-        <div class="list-values">
-          <ul class="pills">
-            {#each context.traits.tools as tool}
-              {@const isEmphasized =
-                emphasizedMember !== undefined &&
-                tool.identifiers.has(emphasizedActorUuid)}
-              {@const pillState: ClassValue = {
-                emphasized: isEmphasized,
-                'theme-dark': isEmphasized,
-                diminished: emphasizedMember !== undefined && !isEmphasized,
-              }}
-              <GroupTraitPill
-                class={pillState}
-                label={tool.label}
-                onmouseover={(ev) =>
-                  tool.key &&
-                  toolTooltip?.tryShow(ev, {
-                    key: tool.key,
-                    label: tool.label,
-                    members: [...tool.identifiers].map(
-                      (s) =>
-                        context.members.all.get(
-                          s,
-                        ) as GroupMemberQuadroneContext, // TODO: Change to reduce to avoid TS funny business
-                    ),
                   })}
               />
             {/each}

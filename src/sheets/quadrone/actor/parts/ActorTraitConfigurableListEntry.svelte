@@ -15,6 +15,7 @@
     configurationTooltip?: string;
     icon?: ClassValue;
     label: string;
+    traitClass?: string;
     pillClass?: ClassValue;
     alwaysShow?: boolean;
     isCustomTrait?: boolean;
@@ -31,6 +32,7 @@
     configurationTooltip,
     icon,
     label,
+    traitClass,
     pillClass,
     alwaysShow,
     isCustomTrait,
@@ -50,7 +52,7 @@
 </script>
 
 {#if context.unlocked || entries.length || !!alwaysShow}
-  <div class={['list-entry', { empty: empty && !isCustomTrait }]}>
+  <div class={['list-entry', { empty: empty && !isCustomTrait }, traitClass]}>
     <div class="list-label flexrow">
       <h4 class="font-weight-label">
         <i class={icon}></i>

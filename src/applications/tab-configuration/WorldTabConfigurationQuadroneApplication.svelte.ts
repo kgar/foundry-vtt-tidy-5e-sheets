@@ -95,15 +95,15 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       )
     );
 
-    if (settings.value.truesight) {
-      config.push(
-        getActorTabContext(
-          EncounterSheetQuadroneRuntime,
-          CONSTANTS.SHEET_TYPE_GROUP,
-          actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
-        )
-      );
+    config.push(
+      getActorTabContext(
+        EncounterSheetQuadroneRuntime,
+        CONSTANTS.SHEET_TYPE_ENCOUNTER,
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_ENCOUNTER]
+      )
+    );
 
+    if (settings.value.truesight) {
       config.push(
         getActorTabContext(
           VehicleSheetQuadroneRuntime,

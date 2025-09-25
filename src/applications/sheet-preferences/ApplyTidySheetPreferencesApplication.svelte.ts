@@ -12,6 +12,7 @@ import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
+import { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 
 export type SheetPreferenceOption = {
   label: string;
@@ -29,6 +30,7 @@ const supportedSheetClasses: string[] = [
   Tidy5eItemSheetQuadrone.name,
   Tidy5eContainerSheetQuadrone.name,
   Tidy5eGroupSheetQuadrone.name,
+  Tidy5eEncounterSheetQuadrone.name,
 ];
 
 export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin<

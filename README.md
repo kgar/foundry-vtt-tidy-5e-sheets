@@ -84,7 +84,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | ✅ Background  | ✅ Character |
 | ✅ Class  | ✅ NPC |
 | ✅ Consumable  | ✅ Group  |
-| ✅ Container  | ⬜ Encounter |
+| ✅ Container  | ✅ Encounter |
 | ✅ Equipment | ⬜ Vehicle |
 | ✅ Facility | |
 | ✅ Feat | |
@@ -190,6 +190,23 @@ An alternate view of items that brings more functionality to the surface.
 | Hover states to show and compare individual member abilities | High / Low / Passive stats |
 | Inventory sorting, filtering, and customization matching other sheets | Hide and reorder sections |
 | Group sheet theming | Party inspiration |
+
+&nbsp;
+
+## Encounter Sheets
+
+![Encounter Sheet](readme-assets/t5e-encounter-hero.webp)
+
+![Encounter Sheet](readme-assets/t5e-encounter-other-states.webp)
+
+
+### What's unique about Tidy's Encounter sheets?
+
+| Core Functionality | Additional Features |
+| --- | --- |
+| Combat tab to pre-build encounters, initiative, and placeholders to start encounters quickly | Create placeholders for groups of creatures |
+| At a glance encounter makeup. Traits, stats, languages, and skills. | Encounter sheet theming |
+| Structure mirroring all other sheets | Total gold calculation |
 
 &nbsp;
 

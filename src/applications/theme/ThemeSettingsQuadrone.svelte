@@ -88,7 +88,10 @@
   }
 </script>
 
-<div class="scrollable flex1" ondrop={onDrop}>
+<div class="dialog-content-container flexcol"
+  ondrop={onDrop}
+  role="region"
+>
   <div class="flexrow flexgap-1">
     <h2>
       {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
@@ -221,7 +224,7 @@
   </fieldset>
 </div>
 
-<div class="flexrow flexgap-1">
+<div class="button-bar">
   <button
     type="button"
     class="button button-primary save-changes-btn"

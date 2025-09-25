@@ -22,7 +22,7 @@
 </script>
 
 {#if context.unlocked}
-  <div class={['list-entry trait-size']}>
+  <div class={['list-entry traits-size']}>
     <div class="list-label flexrow">
       <h4 class="font-weight-label">
         <i class="fas fa-ruler-combined"></i>

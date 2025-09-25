@@ -1,4 +1,4 @@
-.tidy5e-sheet.application:where(.quadrone.group) {
+.tidy5e-sheet.application:where(.quadrone.group, .quadrone.encounter) {
   --portrait-size: 10rem;
   --t5e-group-sidebar-width: 14.25rem;
   --t5e-table-avatar-size: 3.75rem;
@@ -29,7 +29,7 @@
     }
 
     .actor-subtitle {
-      max-height: 1.25rem;
+      // max-height: 1.25rem;
       min-height: 1.25rem;
       align-content: center;
 
@@ -86,6 +86,14 @@
           max-width: 4rem;
           background-color: var(--t5e-component-field-background-disabled);
           border: 0.0625rem solid rgba(159, 146, 117, 0.4);
+          padding: 0.25rem;
+
+          &:hover,
+          &:focus,
+          &:active {
+            background-color: var(--t5e-component-field-background-hover);
+            border-color: var(--t5e-component-field-border-hover);
+          }
         }
       }
     }
@@ -154,6 +162,11 @@
       .skill {
         opacity: 0.5;
       }
+
+    }
+
+    .skill {
+      flex: 1 1 auto;
     }
   }
 
@@ -186,7 +199,7 @@
       width: var(--t5e-group-sidebar-width);
     }
 
-    .groups-tab-content {
+    .group-tab-content {
       display: flex;
       flex: 1;
       overflow-y: auto;
@@ -194,7 +207,7 @@
     }
 
     .group-description-content {
-      padding: var(--t5e-size-3x) var(--t5e-size-4x);
+      padding: var(--t5e-size-2x) var(--t5e-size-4x) var(--t5e-size-3x);
     }
 
     .group-members-content {
@@ -211,7 +224,7 @@
       align-items: flex-start;
       display: flex;
       flex-direction: column;
-      gap: var(--t5e-size-1x);
+      gap: var(--t5e-size-halfx);
       justify-content: center;
       padding-left: var(--t5e-size-3x);
       text-align: left;
@@ -263,7 +276,8 @@
       }
 
       &.square {
-        padding: var(--t5e-size-1x);
+        --t5e-table-avatar-size: 3.625rem;
+        margin: var(--t5e-size-1);
 
         &::before {
           border-width: 0.0625rem;
@@ -359,13 +373,12 @@
       }
     }
 
-    &.members {
+    &.members,
+    &.combat {
 
       &.active {
         display: flex;
       }
-
-      .sidebar {}
 
       .use-ability-list li {
         width: auto;
@@ -381,6 +394,13 @@
         width: 2.5rem;
         justify-content: flex-end;
         text-align: right;
+        margin-left: var(--t5e-size-1x);
+      }
+
+      .skill-measure-header {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .group-members-content {
@@ -444,7 +464,7 @@
     }
 
     &.inventory {
-      .groups-tab-content {
+      .group-tab-content {
         padding-bottom: var(--t5e-size-3x);
       }
 
@@ -466,6 +486,12 @@
         }
       }
 
+      .actor-name {
+        .meter {
+          margin-top: 0.125rem;
+        }
+      }
+
       .actor-cargo {
         .label {
           margin-right: var(--t5e-size-1x);
@@ -482,10 +508,11 @@
     .skill-list .skill-list-item {
       &.member-proficient .skill-ability {
         color: var(--t5e-member-color-background);
+        text-shadow: 0 0 0.25rem oklch(from var(--t5e-member-color-hover) l c h / 0.5);
       }
     }
 
-    .tidy-tab.members .actor-image {
+    .tidy-tab:is(.members, .combat) .actor-image {
       &:hover {
         filter: drop-shadow(0 0 0.25rem oklch(from var(--t5e-theme-color-highlight) l c h / 0.5));
       }
