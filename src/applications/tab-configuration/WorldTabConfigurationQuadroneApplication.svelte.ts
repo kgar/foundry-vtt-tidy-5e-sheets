@@ -132,16 +132,18 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
     let toSave = this._config.reduce<TabConfiguration>((prev, curr) => {
       let docType = (prev[curr.documentName] ??= {});
 
-      // When selected tabs exactly match default selections, save an empty array, which represents taking the default tabs.
+      // When selected tabs exactly match default selections, exclude that sheet type from settings, which represents taking the default tabs.
       let selected =
         curr.defaultSelected.length === curr.selected.length &&
         curr.defaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
-          ? []
+          ? undefined
           : curr.selected;
 
-      docType[curr.documentType] = {
-        selected: selected.map((s) => s.id),
-      };
+      if (selected) {
+        docType[curr.documentType] = {
+          selected: selected.map((s) => s.id),
+        };
+      }
 
       return prev;
     }, {});

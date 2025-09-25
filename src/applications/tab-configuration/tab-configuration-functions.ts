@@ -50,10 +50,17 @@ export function getActorTabContext(
   );
 }
 
-function getWorldDefaultSelectedTabId(documentName: string, type: string) {
-  return SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[
-    type
-  ]?.selected;
+function getWorldDefaultSelectedTabId(
+  documentName: string,
+  type: string
+): string[] | undefined {
+  const selected =
+    SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[type]
+      ?.selected;
+  
+  if (selected?.length > 0) {
+    return selected;
+  }
 }
 
 function buildContext(
