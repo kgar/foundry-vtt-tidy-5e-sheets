@@ -18,7 +18,7 @@
   let imageUrl = $derived(context.portrait.src);
   let imageAlt = $derived(context.actor.name);
 
-  let actorIsDead = $derived(
+  const actorIsDead = $derived(
     context.system.attributes?.hp?.value === 0 &&
       context.system.attributes?.hp?.max > 0 &&
       context.system.attributes.death.failure >= 3 &&
@@ -46,6 +46,12 @@
       ),
     }),
   );
+
+  let paused = $state(false);
+
+  $effect(() => {
+    paused = actorIsDead;
+  });
 </script>
 
 {#if context.unlocked}
@@ -75,7 +81,7 @@
     <video
       src={imageUrl}
       autoplay
-      bind:paused={actorIsDead}
+      bind:paused
       loop
       muted
       playsinline
