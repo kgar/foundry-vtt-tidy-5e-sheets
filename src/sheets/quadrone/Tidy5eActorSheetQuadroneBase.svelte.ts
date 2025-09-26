@@ -364,7 +364,9 @@ export function Tidy5eActorSheetQuadroneBase<
       return context;
     }
 
-    async _preparePortrait(actor: Actor5e): Promise<ActorSheetQuadroneContext['portrait']> {
+    async _preparePortrait(
+      actor: Actor5e
+    ): Promise<ActorSheetQuadroneContext['portrait']> {
       const defaults = Actor.implementation.getDefaultArtwork(actor._source);
       const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
       const showToken =
@@ -390,6 +392,7 @@ export function Tidy5eActorSheetQuadroneBase<
         shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
         isVideo,
         isRandom,
+        truePath: isRandom ? rawSrc : undefined,
       };
     }
 

@@ -92,7 +92,7 @@
       disablepictureinpicture
       class={['pointer', { dead: actorIsDead }]}
       data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
-      data-edit={context.portrait.path}
+      data-edit={context.portrait.truePath ?? context.portrait.path}
       title={imageAlt}>{imageUrl}</video
     >
   {:else}
@@ -101,7 +101,7 @@
       alt={imageAlt}
       class={['pointer', { dead: actorIsDead }]}
       data-action={context.unlocked ? 'editImage' : 'showArtwork'}
-      data-edit={context.portrait.path}
+      data-edit={context.portrait.truePath ?? context.portrait.path}
     />
   {/if}
   {#if actorIsDead}
