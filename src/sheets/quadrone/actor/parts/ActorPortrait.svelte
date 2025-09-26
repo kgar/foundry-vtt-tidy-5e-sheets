@@ -54,6 +54,10 @@
     paused = actorIsDead;
   });
 
+  let hpRemaining = $derived(
+    (context.system.attributes?.hp?.value ?? 0) /
+      (context.system.attributes?.hp?.max ?? 1),
+  );
   let video = $state() as HTMLVideoElement;
   let canvas = $state() as HTMLCanvasElement;
   let ctx = $state() as CanvasRenderingContext2D;
@@ -102,16 +106,25 @@
       const img = bufferContext.getImageData(0, 0, canvas.width, canvas.height);
       const data = img.data;
 
-      for (let i = 0; i < data.length; i += 4) {
-        // data[i] *= 0.75;
-        // data[i + 1] *= 0.3;
-        // data[i + 2] *= 0.3;
-
-        // Grayscale (based on human perception of colours)
-        let g = data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
-        data[i] = g;
-        data[i + 1] = g;
-        data[i + 2] = g;
+      if (hpRemaining === 0) {
+        for (let i = 0; i < data.length; i += 4) {
+          // Grayscale (based on human perception of colours)
+          let g =
+            data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
+          data[i] = g;
+          data[i + 1] = g;
+          data[i + 2] = g;
+        }
+      } else if (hpRemaining <= 0.5) {
+        const TINT_COLOR = 0xbf4d4d
+        const r =  (TINT_COLOR >> 0x10) / 255
+        const g =  (TINT_COLOR >> 0x8 & 0xFF) / 255
+        const b =  (TINT_COLOR & 0xFF) / 255
+        for (let i = 0; i < data.length; i += 4) {
+          data[i] *= r;
+          data[i + 1] *= g;
+          data[i + 2] *= b;
+        }
       }
 
       ctx.putImageData(img, 0, 0);
@@ -127,11 +140,8 @@
   });
 
   let playbackRate = $derived.by(() => {
-    const value = context.system.attributes?.hp?.value ?? 0;
-    const max = context.system.attributes?.hp?.max ?? 1;
-
-    if (value / max <= 0.5) {
-      return value / max / 0.5;
+    if (hpRemaining <= 0.5) {
+      return hpRemaining / 0.5;
     }
     return 1;
   });
