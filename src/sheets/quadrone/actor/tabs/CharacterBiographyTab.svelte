@@ -4,10 +4,20 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { getContext } from 'svelte';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
+
+  const expansionTracker = getContext<ExpansionTracker>(
+    CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TRACKER,
+  );
+  const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+  const location = getContext<string>(CONSTANTS.SVELTE_CONTEXT.LOCATION);
 
   type SystemBioField = { field: string; value: string; text: string };
 
@@ -117,14 +127,8 @@
 {/if}
 
 <div class="tidy-tab-row flexrow" class:hidden={editing}>
-  {#if (context.enriched.appearance !== '' &&
-        context.enriched.trait !== '' &&
-        context.enriched.ideal !== '' &&
-        context.enriched.bond !== '' &&
-        context.enriched.flaw !== ''
-       ) || context.unlocked}
+  {#if (context.enriched.appearance !== '' && context.enriched.trait !== '' && context.enriched.ideal !== '' && context.enriched.bond !== '' && context.enriched.flaw !== '') || context.unlocked}
     <div class="tidy-tab-column flexcol">
-
       {@render bioEditorEntry(
         'fa-puzzle-piece',
         'DND5E.PersonalityTraits',
@@ -159,18 +163,18 @@
     </div>
   {/if}
 
-  {#if bioFields.some(bioField => bioField.value != null && bioField.value !== '') || context.unlocked}
+  {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
     <div class="tidy-tab-column flexcol">
       <div class="biography-editor-title title-underlined">
         <h3 class="font-title-small flexrow">
           <i class="fa-solid fa-address-card flexshrink"></i>
-          <span class="flex1">{localize("TIDY5E.Actor.Characteristics")}</span>
+          <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
         </h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>
       <ul class="biography-entries">
         {#each bioFields as bioField (bioField.field)}
-          {#if bioField.value != null && bioField.value !== '' || context.unlocked}
+          {#if (bioField.value != null && bioField.value !== '') || context.unlocked}
             <li class="form-group">
               <label class="biography-entry-label" for={bioField.field}
                 >{localize(bioField.text)}</label
@@ -202,11 +206,23 @@
   field: string,
 )}
   {#if enriched !== '' || context.unlocked}
-    <article class="biography-editor-container">
+    {@const expanded = expansionTracker.isExpanded(field, tabId, location)}
+    <article class="biography-editor-container collapsible-editor">
       <div class="biography-editor-title">
         <h3 class="font-title-small flexrow">
-          <i class="fa-solid {icon} flexshrink"></i>
-          <span class="flex1">{localize(label)}</span>
+          <a
+            class="title"
+            onclick={() => expansionTracker.toggle(field, tabId, location)}
+          >
+            <i class="fa-solid {icon} flexshrink"></i>
+            <span class="flex1">{localize(label)}</span>
+            {#if enriched}
+              <i
+                class="fas fa-angle-right fa-fw expand-indicator"
+                class:expanded
+              ></i>
+            {/if}
+          </a>
           {#if context.editable}
             <a
               class={['button button-borderless button-icon-only flexshrink']}
@@ -218,13 +234,18 @@
         </h3>
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>
-      {#key enriched}
-        <div class="editor" use:manageSecrets={{ document: context.actor }}>
-          <div data-field={field} class="user-select-text">
-            {@html enriched}
+      <ExpandableContainer {expanded}>
+        {#key enriched}
+          <div
+            class={['editor']}
+            use:manageSecrets={{ document: context.actor }}
+          >
+            <div data-field={field} class="user-select-text">
+              {@html enriched}
+            </div>
           </div>
-        </div>
-      {/key}
+        {/key}
+      </ExpandableContainer>
     </article>
   {/if}
 {/snippet}

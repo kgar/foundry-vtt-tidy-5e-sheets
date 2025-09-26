@@ -73,11 +73,11 @@ export class ExpansionTracker {
   }
 
   toggle(entityId: string, tabId: string, location: string, value?: boolean) {
-    const expansionState = this.#tabs[tabId]?.[location]?.[entityId];
-
-    if (!expansionState) {
-      return;
-    }
+    const expansionState = this.getOrCreateExpansionState(
+      tabId,
+      location,
+      entityId
+    );
 
     expansionState.expanded = value ?? !expansionState.expanded;
 
