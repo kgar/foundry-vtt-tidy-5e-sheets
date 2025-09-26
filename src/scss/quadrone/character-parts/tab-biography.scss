@@ -8,8 +8,15 @@
   gap: var(--t5e-row-gap) var(--t5e-size-8x);
   padding-bottom: var(--t5e-size-4x);
 
-  .collapsible-editor .title span {
-    color: var(--t5e-color-text-default);
+  .collapsible-editor .title {
+    span {
+      color: var(--t5e-color-text-default);
+    }
+  }
+
+  .font-title-small i {
+    color: var(--t5e-color-text-lightest);
+    font-size: var(--font-size-14);
   }
 
   .collapsible-editor:has(.editor) {
