@@ -55,7 +55,7 @@
   });
 
   let hpRemaining = $derived(
-    (context.system.attributes?.hp?.value ?? 0) /
+    (context.system.attributes?.hp?.value ?? 1) /
       (context.system.attributes?.hp?.max ?? 1),
   );
   let video = $state() as HTMLVideoElement;
@@ -187,7 +187,7 @@
       disablepictureinpicture
       {@attach (el) => {
         video = el;
-      }}>{imageUrl}</video
+      }}></video
     >
     <canvas
       style="width:100%; height: 100%; aspect-ratio: 1;"
@@ -196,7 +196,7 @@
       data-edit={context.portrait.path}
       title={imageAlt}
       {@attach attachCanvas}
-    ></canvas>
+    >{imageUrl}</canvas>
   {:else}
     <img
       src={imageUrl}
