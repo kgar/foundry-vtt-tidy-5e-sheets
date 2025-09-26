@@ -1,11 +1,7 @@
 import { CONSTANTS } from 'src/constants';
-import {
-  getActorActionSections,
-  getActorActionSectionsQuadrone,
-} from 'src/features/actions/actions.svelte';
+import { getActorActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
-import { Inventory } from 'src/features/sections/Inventory';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -18,7 +14,10 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { settings, systemSettings } from 'src/settings/settings.svelte';
-import type { ApplicationConfiguration } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  ApplicationRenderOptions,
+} from 'src/types/application.types';
 import type { Ability } from 'src/types/dnd5e.actor5e.types';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import type {
@@ -83,6 +82,9 @@ export function Tidy5eActorSheetQuadroneBase<
     sectionExpansionTracker: ExpansionTracker;
 
     _context = new CoarseReactivityProvider<TContext | undefined>(undefined);
+
+    /** A fixed random number that is tied to the lifetime of an opened sheet. */
+    _fixedRandom = 0;
 
     /**
      * The cached concentration information for the character.
@@ -256,6 +258,14 @@ export function Tidy5eActorSheetQuadroneBase<
     /*  Context Data Preparation                    */
     /* -------------------------------------------- */
 
+    _configureRenderOptions(options: ApplicationRenderOptions) {
+      if (options.isFirstRender) {
+        this._fixedRandom = Math.random();
+      }
+
+      return super._configureRenderOptions(options);
+    }
+
     async _prepareContext(options: any): Promise<ActorSheetQuadroneContext> {
       this.itemFilterService.refreshFilters();
 
@@ -379,7 +389,9 @@ export function Tidy5eActorSheetQuadroneBase<
         : actor.img;
 
       let src = rawSrc;
-      if (showToken && isRandom) src = randomItem(await actor.getTokenImages());
+      if (showToken && isRandom) {
+        src = randomItem(await actor.getTokenImages(), this._fixedRandom);
+      }
 
       src = src?.trim();
       src ||= showToken ? defaults.texture.src : defaults.img;
