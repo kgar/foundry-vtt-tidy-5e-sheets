@@ -7,6 +7,7 @@
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
   } from 'src/types/types';
+  import type { Attachment } from 'svelte/attachments';
 
   let context =
     $derived(
@@ -52,6 +53,88 @@
   $effect(() => {
     paused = actorIsDead;
   });
+
+  let video = $state() as HTMLVideoElement;
+  let canvas = $state() as HTMLCanvasElement;
+  let ctx = $state() as CanvasRenderingContext2D;
+
+  const bufferCanvas = document.createElement('canvas');
+  const bufferContext = bufferCanvas.getContext('2d', {
+    alpha: true,
+    // unsure if necessary
+    // desynchronized: true,
+    willReadFrequently: true,
+  })!;
+  let run = $state(true);
+
+  const attachCanvas: Attachment<HTMLCanvasElement> = (el) => {
+    canvas = el;
+    ctx = el.getContext('2d', { alpha: true })!;
+
+    // We need to give it moment to enter the frame and have a size
+    requestAnimationFrame(() => {
+      const width = el.clientWidth;
+      const height = el.clientHeight;
+      bufferCanvas.width = el.width = width;
+      bufferCanvas.height = el.height = height;
+    });
+  };
+
+  const syncCanvas = () => {
+    if (video && canvas && canvas.width) {
+      bufferContext.clearRect(0, 0, canvas.width, canvas.height);
+
+      let size = Math.min(video.videoWidth, video.videoHeight);
+      const x = (video.videoWidth - size) / 2;
+      const y = (video.videoHeight - size) / 2;
+      bufferContext.drawImage(
+        video,
+        x,
+        y,
+        size,
+        size,
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+
+      const img = bufferContext.getImageData(0, 0, canvas.width, canvas.height);
+      const data = img.data;
+
+      for (let i = 0; i < data.length; i += 4) {
+        // data[i] *= 0.75;
+        // data[i + 1] *= 0.3;
+        // data[i + 2] *= 0.3;
+
+        // Grayscale (based on human perception of colours)
+        let g = data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
+        data[i] = g;
+        data[i + 1] = g;
+        data[i + 2] = g;
+      }
+
+      ctx.putImageData(img, 0, 0);
+    }
+    if (run) requestAnimationFrame(syncCanvas);
+  };
+
+  $effect(() => {
+    requestAnimationFrame(syncCanvas);
+    return () => {
+      run = false;
+    };
+  });
+
+  let playbackRate = $derived.by(() => {
+    const value = context.system.attributes?.hp?.value ?? 0;
+    const max = context.system.attributes?.hp?.max ?? 1;
+
+    if (value / max <= 0.5) {
+      return value / max / 0.5;
+    }
+    return 1;
+  });
 </script>
 
 {#if context.unlocked}
@@ -86,15 +169,24 @@
       src={imageUrl}
       autoplay
       bind:paused
+      bind:playbackRate
       loop
+      style="display:none"
       muted
       playsinline
       disablepictureinpicture
+      {@attach (el) => {
+        video = el;
+      }}>{imageUrl}</video
+    >
+    <canvas
+      style="width:100%; height: 100%; aspect-ratio: 1;"
       class={['pointer', { dead: actorIsDead }]}
       data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
       data-edit={context.portrait.path}
-      title={imageAlt}>{imageUrl}</video
-    >
+      title={imageAlt}
+      {@attach attachCanvas}
+    ></canvas>
   {:else}
     <img
       src={imageUrl}
