@@ -41,8 +41,9 @@ export function splitSemicolons(input: string): string[] {
  * Returns a random item for a given ArrayLike
  * @template T Array element
  * @param {Array<T>} input
+ * @param {number | undefined} random an optional static value to use in place of a random number generation
  * @returns {T}
  */
-export function randomItem<T>(arr: ArrayLike<T>): T {
-  return arr[Math.floor(arr.length * Math.random())];
+export function randomItem<T>(arr: ArrayLike<T>, random?: number): T {
+  return arr[Math.floor(arr.length * (random ?? Math.random()))];
 }

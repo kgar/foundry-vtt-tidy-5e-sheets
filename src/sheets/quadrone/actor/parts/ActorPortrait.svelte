@@ -210,9 +210,10 @@
       style="width:100%; height: 100%; aspect-ratio: 1;"
       class={['pointer', { dead: actorIsDead }]}
       data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
-      data-edit={context.portrait.path}
+      data-edit={context.portrait.truePath ?? context.portrait.path}
       title={imageAlt}
       {@attach attachCanvas}>{imageUrl}</canvas
+
     >
   {:else}
     <img
@@ -220,7 +221,7 @@
       alt={imageAlt}
       class={['pointer', { dead: actorIsDead }]}
       data-action={context.unlocked ? 'editImage' : 'showArtwork'}
-      data-edit={context.portrait.path}
+      data-edit={context.portrait.truePath ?? context.portrait.path}
     />
   {/if}
   {#if actorIsDead}
