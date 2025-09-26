@@ -1571,4 +1571,8 @@ export const FoundryAdapter = {
       disadvantage: dnd5e.utils.areKeysPressed(ev, 'skipDialogDisadvantage'),
     };
   },
+
+  hasVideoExtension(src: string): boolean {
+    return foundry.helpers.media.VideoHelper.hasVideoExtension(src);
+  },
 };

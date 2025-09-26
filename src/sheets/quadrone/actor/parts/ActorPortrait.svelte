@@ -18,7 +18,7 @@
   let imageUrl = $derived(context.portrait.src);
   let imageAlt = $derived(context.actor.name);
 
-  let actorIsDead = $derived(
+  const actorIsDead = $derived(
     context.system.attributes?.hp?.value === 0 &&
       context.system.attributes?.hp?.max > 0 &&
       context.system.attributes.death.failure >= 3 &&
@@ -46,6 +46,12 @@
       ),
     }),
   );
+
+  let paused = $state(false);
+
+  $effect(() => {
+    paused = actorIsDead;
+  });
 </script>
 
 {#if context.unlocked}
@@ -68,16 +74,36 @@
   </button>
 {/if}
 <div
-  class={['actor-image', currentPortraitShape, { dead: actorIsDead }]}
+  class={[
+    'actor-image',
+    currentPortraitShape,
+    { dead: actorIsDead, transparent: context.portrait.isVideo },
+  ]}
   style="position: relative;"
 >
-  <img
-    src={imageUrl}
-    alt={imageAlt}
-    class={['pointer', { dead: actorIsDead }]}
-    data-action={context.unlocked ? 'editImage' : 'showArtwork'}
-    data-edit={context.portrait.path}
-  />
+  {#if context.portrait.isVideo}
+    <video
+      src={imageUrl}
+      autoplay
+      bind:paused
+      loop
+      muted
+      playsinline
+      disablepictureinpicture
+      class={['pointer', { dead: actorIsDead }]}
+      data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
+      data-edit={context.portrait.path}
+      title={imageAlt}>{imageUrl}</video
+    >
+  {:else}
+    <img
+      src={imageUrl}
+      alt={imageAlt}
+      class={['pointer', { dead: actorIsDead }]}
+      data-action={context.unlocked ? 'editImage' : 'showArtwork'}
+      data-edit={context.portrait.path}
+    />
+  {/if}
   {#if actorIsDead}
     <div class="dead-overlay"></div>
   {/if}

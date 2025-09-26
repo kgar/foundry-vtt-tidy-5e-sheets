@@ -39,7 +39,7 @@ import type {
   MessageBus,
   SpellcastingClassContext,
 } from 'src/types/types';
-import { splitSemicolons } from 'src/utils/array';
+import { randomItem, splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
@@ -334,13 +334,7 @@ export function Tidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
-        portrait: {
-          shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
-          src: showToken
-            ? effectiveToken?.texture.src ?? this.actor.img
-            : this.actor.img,
-          path: showToken ? 'prototypeToken.texture.src' : 'img',
-        },
+        portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
         sheet: this,
@@ -368,6 +362,35 @@ export function Tidy5eActorSheetQuadroneBase<
       await this.setExpandedItemData();
 
       return context;
+    }
+
+    async _preparePortrait(actor: Actor5e): Promise<ActorSheetQuadroneContext['portrait']> {
+      const defaults = Actor.implementation.getDefaultArtwork(actor._source);
+      const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
+      const showToken =
+        actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
+          true || themeSettings.portraitShape === 'token';
+      const effectiveToken = actor.isToken ? actor.token : actor.prototypeToken;
+      const isRandom = !!effectiveToken?.randomImg;
+      const rawSrc = showToken
+        ? effectiveToken?.texture.src ?? actor.img
+        : actor.img;
+
+      let src = rawSrc;
+      if (showToken && isRandom) src = randomItem(await actor.getTokenImages());
+
+      src = src?.trim();
+      src ||= showToken ? defaults.texture.src : defaults.img;
+
+      const isVideo = FoundryAdapter.hasVideoExtension(src);
+
+      return {
+        src,
+        path: showToken ? 'prototypeToken.texture.src' : 'img',
+        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+        isVideo,
+        isRandom,
+      };
     }
 
     /**
