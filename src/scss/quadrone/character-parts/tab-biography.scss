@@ -1,9 +1,27 @@
 .tidy-tab.biography {
+  --t5e-row-gap: var(--t5e-size-2x);
+  --t5e-row-gap-small: var(--t5e-size-1x);
+
   container-type: inline-size;
   container-name: biography-tab;
   flex-direction: column;
-  gap: var(--t5e-size-1x) var(--t5e-size-8x);
+  gap: var(--t5e-row-gap) var(--t5e-size-8x);
   padding-bottom: var(--t5e-size-4x);
+
+  .collapsible-editor .title {
+    span {
+      color: var(--t5e-color-text-default);
+    }
+  }
+
+  .font-title-small i {
+    color: var(--t5e-color-text-lightest);
+    font-size: var(--font-size-14);
+  }
+
+  .collapsible-editor:has(.editor) {
+    margin-bottom: var(--t5e-size-1x);
+  }
 
   .tidy-tab-row {
     align-items: flex-start;
@@ -15,7 +33,7 @@
   }
 
   .tidy-tab-column {
-    gap: var(--t5e-size-2x) var(--t5e-size-8x);
+    gap: var(--t5e-row-gap) var(--t5e-size-8x);
     padding-left: 0;
   }
 
@@ -23,7 +41,7 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: var(--t5e-size-2x) var(--t5e-size-8x);
+    gap: var(--t5e-row-gap) var(--t5e-size-8x);
     padding-left: 0;
 
     li {
@@ -36,10 +54,7 @@
     margin-bottom: var(--t5e-size-3x);
 
     .editor {
-      // max-height: 12.5rem;
       overflow-y: auto;
-      background: var(--t5e-component-field-background-disabled);
-      padding: 0 var(--t5e-size-3x);
       border-radius: var(--t5e-size-1x);
     }
   }
@@ -58,14 +73,16 @@
 
 @container biography-tab (width < 32rem) {
   .tidy-tab.biography {
+
+    .tidy-tab-column {
+      flex: 1;
+      gap: var(--t5e-row-gap-small);
+    }
+
     .tidy-tab-row {
       flex-direction: column;
       align-items: stretch;
-      gap: var(--t5e-size-2x);
-
-      .tidy-tab-column {
-        flex: 1;
-      }
+      gap: var(--t5e-row-gap-small);
     }
   }
 }
