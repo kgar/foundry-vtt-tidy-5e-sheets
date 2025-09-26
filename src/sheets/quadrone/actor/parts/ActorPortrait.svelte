@@ -88,7 +88,7 @@
     if (video && canvas && canvas.width) {
       bufferContext.clearRect(0, 0, canvas.width, canvas.height);
 
-      let size = Math.min(video.videoWidth, video.videoHeight);
+      const size = Math.min(video.videoWidth, video.videoHeight);
       const x = (video.videoWidth - size) / 2;
       const y = (video.videoHeight - size) / 2;
       bufferContext.drawImage(
@@ -109,17 +109,17 @@
       if (hpRemaining === 0) {
         for (let i = 0; i < data.length; i += 4) {
           // Grayscale (based on human perception of colours)
-          let g =
+          const g =
             data[i] * 0.2126 + data[i + 1] * 0.7152 + data[i + 2] * 0.0722;
           data[i] = g;
           data[i + 1] = g;
           data[i + 2] = g;
         }
       } else if (hpRemaining <= 0.5) {
-        const TINT_COLOR = 0xbf4d4d
-        const r =  (TINT_COLOR >> 0x10) / 255
-        const g =  (TINT_COLOR >> 0x8 & 0xFF) / 255
-        const b =  (TINT_COLOR & 0xFF) / 255
+        const TINT_COLOR = 0xbf4d4d;
+        const r = (TINT_COLOR >> 0x10) / 255;
+        const g = ((TINT_COLOR >> 0x8) & 0xff) / 255;
+        const b = (TINT_COLOR & 0xff) / 255;
         for (let i = 0; i < data.length; i += 4) {
           data[i] *= r;
           data[i + 1] *= g;
@@ -187,16 +187,16 @@
       disablepictureinpicture
       {@attach (el) => {
         video = el;
-      }}></video
-    >
+      }}
+    ></video>
     <canvas
       style="width:100%; height: 100%; aspect-ratio: 1;"
       class={['pointer', { dead: actorIsDead }]}
       data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
       data-edit={context.portrait.path}
       title={imageAlt}
-      {@attach attachCanvas}
-    >{imageUrl}</canvas>
+      {@attach attachCanvas}>{imageUrl}</canvas
+    >
   {:else}
     <img
       src={imageUrl}
