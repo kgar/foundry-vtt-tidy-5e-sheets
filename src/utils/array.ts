@@ -45,6 +45,5 @@ export function splitSemicolons(input: string): string[] {
  * @returns {T}
  */
 export function randomItem<T>(arr: ArrayLike<T>, random?: number): T {
-  random ??= Math.random();
-  return arr[Math.floor(arr.length * random)];
+  return arr[Math.floor(arr.length * (random ?? Math.random()))];
 }
