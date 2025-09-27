@@ -897,5 +897,35 @@
     "TIDY5E.HitDice.Current.Label": "Dados de Golpe Actuales",
     "TIDY5E.HitDice.Max.Label": "Dados de Golpe Máximos",
     "TIDY5E.CharacterTraits.Title": "Características de Personaje",
-    "TIDY5E.UseSpecificDefaultValue.Label": "Utilizar por Defecto ({value})"
+    "TIDY5E.UseSpecificDefaultValue.Label": "Utilizar por Defecto ({value})",
+    "TIDY5E.Group.PrimaryParty.Label": "Grupo Principal",
+    "TIDY5E.CombatTabName": "Combate",
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "Utiliza Seguridad de Miembros en las Hojas de Grupo",
+        "hint": "Permite al GM controlar que información de cada miembro puede ser vista por un usuario en la hoja de grupo. Cuando el jugador no tiene permisos para un miembro, la hoja no muestra dicho miembro o su información agregada. Con permisos limitados, el usuario puede ver únicamente el nombre del miembro. Con permisos de observador o superior, el usuario puede ver toda la información del miembro disponible en la hoja de grupo."
+    },
+    "TIDY5E.AggregateSkill.HighMeasure": "Alta",
+    "TIDY5E.AggregateSkill.LowMeasure": "Baja",
+    "TIDY5E.Difficulty": "Dificultad",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "Combatientes",
+        "Combat.IncludeInCombat.Tooltip": "Incluir en actividades de combate",
+        "Combat.ExcludeFromCombat.Tooltip": "Excluir de las actividades de combate",
+        "AddMember.Label": "Agregar Miembro",
+        "AddPlaceholderToCombatTracker.Label": "Agregar al Encuentro Actual como Placeholder",
+        "AddPlaceholder.Label": "Crear Placeholder de Combate",
+        "DeletePlaceholder.Label": "Borrar Placeholder",
+        "DifficultyTarget.Label": "Objetivo de Dificultad",
+        "AddAllPlaceholders.Label": "Agregar Todos como Placeholders",
+        "PrerollInitiative": "Pre-tirar Iniciativa",
+        "NewPlaceholder.Name": "Nuevo Placeholder",
+        "NewPlaceholder.SubtitlePlaceholderText": "Anotación sobre este placeholder",
+        "AddCombatants.MustHaveEncounter.Message": "Un encuentro debe estar seleccionado para agregar al indicador de combate",
+        "CombatVisibility.Hidden.Label": "Escondido de los jugadores cuando se agrega al indicador de combate",
+        "CombatVisibility.Visible.Label": "Visible para jugadores cuando se agrega al indicador de combate",
+        "InitiativeCount.Label": "Agregar Contador de Iniciativa {count}",
+        "PlaceholderNameField.PlaceholderText": "Nombre del Placeholder",
+        "PlaceholderNotesField.PlaceholderText": "Anotaciones"
+    },
+    "TIDY5E.Actor.Characteristics": "Características"
 }

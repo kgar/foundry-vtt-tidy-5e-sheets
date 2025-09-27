@@ -891,5 +891,29 @@
         "hint": "Permite que o Mestre controle quais informações dos membros do grupo um usuário pode ver na ficha do grupo. Quando o jogador não tem permissão para um membro do grupo, a ficha do grupo não mostra esse membro ou suas informações agregadas. Com a permissão Limitada, o usuário pode ver o nome do membro, mas nenhuma outra informação. Com a permissão Observador ou superior, o usuário pode ver todas as informações da ficha do grupo sobre o membro."
     },
     "TIDY5E.AggregateSkill.HighMeasure": "Alta",
-    "TIDY5E.AggregateSkill.LowMeasure": "Baixa"
+    "TIDY5E.AggregateSkill.LowMeasure": "Baixa",
+    "TIDY5E.Group.PrimaryParty.Label": "Grupo Primário",
+    "TIDY5E.CombatTabName": "Combate",
+    "TIDY5E.Difficulty": "Dificuldade",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "Lutadores",
+        "Combat.IncludeInCombat.Tooltip": "Incluir em atividades de combate",
+        "Combat.ExcludeFromCombat.Tooltip": "Excluir das atividades de combate",
+        "AddMember.Label": "Adicionar Membro",
+        "AddPlaceholderToCombatTracker.Label": "Adicionar ao Encontro Atual como Reserva",
+        "AddPlaceholder.Label": "Criar Reserva para Combate",
+        "DeletePlaceholder.Label": "Excluir Reserva",
+        "DifficultyTarget.Label": "Dificuldade Alvo",
+        "AddAllPlaceholders.Label": "Adicionar Todos como Reservas",
+        "PrerollInitiative": "Pré-rolar Iniciativa",
+        "NewPlaceholder.Name": "Nova Reserva",
+        "NewPlaceholder.SubtitlePlaceholderText": "Nota sobre esta reserva",
+        "AddCombatants.MustHaveEncounter.Message": "Deve ter um encontro selecionado para adicionar ao rastreador de encontros",
+        "CombatVisibility.Hidden.Label": "Oculto dos jogadores quando adicionado ao rastreador",
+        "CombatVisibility.Visible.Label": "Visível para os jogadores quando adicionado ao rastreador",
+        "InitiativeCount.Label": "Adicionar Contagem de Iniciativa {count}",
+        "PlaceholderNameField.PlaceholderText": "Nome da Reserva",
+        "PlaceholderNotesField.PlaceholderText": "Notas"
+    },
+    "TIDY5E.Actor.Characteristics": "Características"
 }
