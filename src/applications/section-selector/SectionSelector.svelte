@@ -52,67 +52,69 @@
   let isDefault = $derived(isNil(context.data?.currentSection?.trim(), ''));
 </script>
 
-<h2>{localize('TIDY5E.Section.LabelPl')}</h2>
-<form
-  onsubmit={(ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    onOptionSelected(freeText);
-  }}
->
+<div class="dialog-content-container flexcol">
+  <h2>{localize('TIDY5E.Section.LabelPl')}</h2>
+  <form
+    onsubmit={(ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      onOptionSelected(freeText);
+    }}
+  >
+    <fieldset>
+      <legend>
+        {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
+        <tidy-gold-header-underline></tidy-gold-header-underline>
+      </legend>
+      <div class="flexrow button-bar">
+        <input
+          type="text"
+          bind:value={freeText}
+          placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
+          class="flex2"
+          autofocus
+          {@attach InputAttachments.selectOnFocus}
+        />
+        <button type="submit" class="button flex1"
+          >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
+        >
+      </div>
+    </fieldset>
+  </form>
+  
   <fieldset>
     <legend>
-      {localize('TIDY5E.Section.SectionSelectorCreateNewSection')}
+      {localize('TIDY5E.Section.SectionSelectorExistingSections')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
-    <div class="flexrow button-bar">
-      <input
-        type="text"
-        bind:value={freeText}
-        placeholder={localize('TIDY5E.Section.SectionSelectorNewSectionName')}
-        class="flex2"
-        autofocus
-        {@attach InputAttachments.selectOnFocus}
-      />
-      <button type="submit" class="button flex1"
-        >{localize('TIDY5E.Section.SectionSelectorSaveNewSection')}</button
-      >
-    </div>
-  </fieldset>
-</form>
-
-<fieldset>
-  <legend>
-    {localize('TIDY5E.Section.SectionSelectorExistingSections')}
-    <tidy-gold-header-underline></tidy-gold-header-underline>
-  </legend>
-
-  <Search bind:searchCriteria />
-
-  <section class="existing-sections">
-    {#each filteredResults as section (section)}
-      {@const isSelected = context.data?.currentSection === section}
+  
+    <Search bind:searchCriteria />
+  
+    <section class="existing-sections">
+      {#each filteredResults as section (section)}
+        {@const isSelected = context.data?.currentSection === section}
+        <button
+          type="button"
+          onclick={() => onOptionSelected(section)}
+          class="button button-toggle"
+          class:active={isSelected}
+        >
+          {#if isSelected}
+            <i class="fa-solid fa-check"></i>
+          {/if}
+          {localize(section)}
+        </button>
+      {/each}
       <button
         type="button"
-        onclick={() => onOptionSelected(section)}
-        class="button button-toggle"
-        class:active={isSelected}
+        class="button button-toggle {isDefault ? 'button-primary' : ''}"
+        onclick={() => useDefault()}
       >
-        {#if isSelected}
+        {#if isDefault}
           <i class="fa-solid fa-check"></i>
         {/if}
-        {localize(section)}
+        {localize('TIDY5E.UseDefault')}
       </button>
-    {/each}
-    <button
-      type="button"
-      class="button button-toggle {isDefault ? 'button-primary' : ''}"
-      onclick={() => useDefault()}
-    >
-      {#if isDefault}
-        <i class="fa-solid fa-check"></i>
-      {/if}
-      {localize('TIDY5E.UseDefault')}
-    </button>
-  </section>
-</fieldset>
+    </section>
+  </fieldset>
+</div>

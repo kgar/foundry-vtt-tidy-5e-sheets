@@ -40,7 +40,7 @@ export class SpecialTraitsApplication extends DocumentSheetDialog<DocumentSheetA
       contentClasses: [],
     },
     position: {
-      width: 360,
+      width: 400,
       height: 600,
     },
     actions: {},

@@ -422,7 +422,7 @@
       }
     }
 
-    .skills {
+    .skills, .tools {
       padding: 0;
       background: none;
 
@@ -430,7 +430,7 @@
         padding: 0;
       }
 
-      .skill-list {
+      .skill-list, .tool-list {
 
         li {
           width: auto;

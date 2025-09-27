@@ -74,25 +74,8 @@
         text-wrap: none;
       }
     }
-
-    .tidy-vertical-tabs .vertical-tab {
-      &::before {
-        background: linear-gradient(to right,
-            var(--t5e-theme-color-darker),
-            transparent);
-      }
-
-      &:hover,
-      &:focus,
-      &:active {
-        &::before {
-          background: linear-gradient(to right,
-              var(--t5e-theme-color-default),
-              transparent);
-        }
-      }
-    }
   }
+
 
   // Theme Settings
   &.tidy-theme-settings {

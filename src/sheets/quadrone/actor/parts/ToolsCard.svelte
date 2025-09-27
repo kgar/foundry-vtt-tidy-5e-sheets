@@ -13,6 +13,12 @@
   import { getModifierData } from 'src/utils/formatting';
   import { isNil } from 'src/utils/data';
 
+  type Props = {
+    showFiligree?: boolean;
+  };
+
+  let { showFiligree = true }: Props = $props();
+
   const localize = FoundryAdapter.localize;
 
   let context =
@@ -36,7 +42,7 @@
 </script>
 
 <!-- TODO: add tooltips to config buttons -->
-<FiligreeCard class="tools card">
+{#snippet skillsContent()}
   <div class="use-ability-header flexrow">
     <button
       type="button"
@@ -45,7 +51,12 @@
       onclick={() =>
         context.unlocked && FoundryAdapter.renderToolsConfig(context.actor)}
     >
-      <i class="fa-solid fa-hammer color-icon-diminished"></i>
+      <i
+        class={[
+          'fa-solid fa-hammer',
+          { 'color-icon-diminished': !showFiligree },
+        ]}
+      ></i>
       <h3 class="font-label-medium">
         <span>{localize('TYPES.Item.toolPl')}</span>
         {#if context.unlocked}
@@ -63,15 +74,17 @@
         {@const modTotal = getModifierData(tool.total)}
 
         <li data-reference-tooltip={references[tool.key]}>
-          <ProficiencyCycle
-            actor={context.actor}
-            aria-label={localize(tool.hover)}
-            data-tooltip={tool.hover}
-            disabled={!context.unlocked}
-            path="system.tools.{tool.key}.value"
-            type="tool"
-            value={context.unlocked ? (tool.source?.value ?? 0) : tool.value}
-          />
+          {#if context.unlocked || showFiligree}
+            <ProficiencyCycle
+              actor={context.actor}
+              aria-label={localize(tool.hover)}
+              data-tooltip={tool.hover}
+              disabled={!context.unlocked}
+              path="system.tools.{tool.key}.value"
+              type="tool"
+              value={context.unlocked ? (tool.source?.value ?? 0) : tool.value}
+            />
+          {/if}
           {#if context.unlocked}
             <SelectQuadrone
               document={context.actor}
@@ -136,4 +149,14 @@
       {localize('TIDY5E.EmptyTools')}
     </div>
   {/if}
-</FiligreeCard>
+{/snippet}
+
+{#if showFiligree}
+  <FiligreeCard class="tools card">
+    {@render skillsContent()}
+  </FiligreeCard>
+{:else}
+  <div class="tools card">
+    {@render skillsContent()}
+  </div>
+{/if}

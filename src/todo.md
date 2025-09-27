@@ -350,3 +350,4 @@ Limited:
 - [x] Group Members should not inherit Token view setting from Group/Encounter sheets.
 - [x] Character Inventory Add button reported broken
 - [x] Include Encounter Sheet in the "Set Default Sheets" tidy page.
+- [x] Fixed: Special Traits dialog has no padding.
