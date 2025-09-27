@@ -103,7 +103,7 @@
             class="button short-rest button-gold flexshrink"
             data-tooltip="DND5E.REST.Short.Label"
             aria-label={localize('DND5E.REST.Short.Label')}
-            onclick={() => context.sheet.shortRest()}
+            onclick={() => context.actor.shortRest()}
           >
             <i class="fas fa-utensils"></i>
             {localize('DND5E.REST.Short.Label')}

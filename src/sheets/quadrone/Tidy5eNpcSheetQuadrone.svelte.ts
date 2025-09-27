@@ -577,7 +577,19 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async rollFormula() {
     try {
       const roll = await this.document.rollNPCHitPoints();
-      this.actor.update({ 'system.attributes.hp.max': roll.total });
+
+      const updates: Record<string, any> = {
+        'system.attributes.hp.max': roll.total,
+      };
+
+      if (
+        this.actor.system.attributes.hp.value ===
+        this.actor.system.attributes.hp.max
+      ) {
+        updates['actor.system.attributes.hp.value'] = roll.total;
+      }
+
+      this.actor.update(updates);
     } catch (error) {
       ui.notifications.error('DND5E.HPFormulaError', { localize: true });
       throw error;
