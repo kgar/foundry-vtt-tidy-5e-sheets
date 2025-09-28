@@ -130,50 +130,48 @@
     )}
   </div>
 {/if}
-<div class="tidy-tab-row flexrow" class:hidden={editing}>
-  {#if (context.enriched.appearance !== '' && context.enriched.trait !== '' && context.enriched.ideal !== '' && context.enriched.bond !== '' && context.enriched.flaw !== '') || context.unlocked}
-    <div class="tidy-tab-column flexcol">
-      {@render bioEditorEntry(
-        'fa-head-side',
-        'DND5E.Appearance',
-        TidyFlags.appearance.get(context.actor) ?? '',
-        context.enriched.appearance,
-        TidyFlags.appearance.prop,
-      )}
+<div class="tidy-tab-row flexrow" class:hidden={false}>
+  <div class="tidy-tab-column flexcol">
+    {@render bioEditorEntry(
+      'fa-head-side',
+      'DND5E.Appearance',
+      TidyFlags.appearance.get(context.actor) ?? '',
+      context.enriched.appearance,
+      TidyFlags.appearance.prop,
+    )}
 
-      {@render bioEditorEntry(
-        'fa-puzzle-piece',
-        'DND5E.PersonalityTraits',
-        TidyFlags.trait.get(context.actor) ?? '',
-        context.enriched.trait,
-        TidyFlags.trait.prop,
-      )}
+    {@render bioEditorEntry(
+      'fa-puzzle-piece',
+      'DND5E.PersonalityTraits',
+      TidyFlags.trait.get(context.actor) ?? '',
+      context.enriched.trait,
+      TidyFlags.trait.prop,
+    )}
 
-      {@render bioEditorEntry(
-        'fa-seedling',
-        'DND5E.Ideals',
-        context.system.details.ideal,
-        context.enriched.ideal,
-        'system.details.ideal',
-      )}
+    {@render bioEditorEntry(
+      'fa-seedling',
+      'DND5E.Ideals',
+      context.system.details.ideal,
+      context.enriched.ideal,
+      'system.details.ideal',
+    )}
 
-      {@render bioEditorEntry(
-        'fa-link',
-        'DND5E.Bonds',
-        context.system.details.bond,
-        context.enriched.bond,
-        'system.details.bond',
-      )}
+    {@render bioEditorEntry(
+      'fa-link',
+      'DND5E.Bonds',
+      context.system.details.bond,
+      context.enriched.bond,
+      'system.details.bond',
+    )}
 
-      {@render bioEditorEntry(
-        'fa-heart-crack',
-        'DND5E.Flaws',
-        context.system.details.flaw,
-        context.enriched.flaw,
-        'system.details.flaw',
-      )}
-    </div>
-  {/if}
+    {@render bioEditorEntry(
+      'fa-heart-crack',
+      'DND5E.Flaws',
+      context.system.details.flaw,
+      context.enriched.flaw,
+      'system.details.flaw',
+    )}
+  </div>
 
   {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
     <div class="tidy-tab-column flexcol">

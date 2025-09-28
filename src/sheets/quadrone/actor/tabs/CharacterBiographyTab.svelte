@@ -127,41 +127,39 @@
 {/if}
 
 <div class="tidy-tab-row flexrow" class:hidden={editing}>
-  {#if (context.enriched.appearance !== '' && context.enriched.trait !== '' && context.enriched.ideal !== '' && context.enriched.bond !== '' && context.enriched.flaw !== '') || context.unlocked}
-    <div class="tidy-tab-column flexcol">
-      {@render bioEditorEntry(
-        'fa-puzzle-piece',
-        'DND5E.PersonalityTraits',
-        context.system.details.trait,
-        context.enriched.trait,
-        'system.details.trait',
-      )}
+  <div class="tidy-tab-column flexcol">
+    {@render bioEditorEntry(
+      'fa-puzzle-piece',
+      'DND5E.PersonalityTraits',
+      context.system.details.trait,
+      context.enriched.trait,
+      'system.details.trait',
+    )}
 
-      {@render bioEditorEntry(
-        'fa-seedling',
-        'DND5E.Ideals',
-        context.system.details.ideal,
-        context.enriched.ideal,
-        'system.details.ideal',
-      )}
+    {@render bioEditorEntry(
+      'fa-seedling',
+      'DND5E.Ideals',
+      context.system.details.ideal,
+      context.enriched.ideal,
+      'system.details.ideal',
+    )}
 
-      {@render bioEditorEntry(
-        'fa-link',
-        'DND5E.Bonds',
-        context.system.details.bond,
-        context.enriched.bond,
-        'system.details.bond',
-      )}
+    {@render bioEditorEntry(
+      'fa-link',
+      'DND5E.Bonds',
+      context.system.details.bond,
+      context.enriched.bond,
+      'system.details.bond',
+    )}
 
-      {@render bioEditorEntry(
-        'fa-heart-crack',
-        'DND5E.Flaws',
-        context.system.details.flaw,
-        context.enriched.flaw,
-        'system.details.flaw',
-      )}
-    </div>
-  {/if}
+    {@render bioEditorEntry(
+      'fa-heart-crack',
+      'DND5E.Flaws',
+      context.system.details.flaw,
+      context.enriched.flaw,
+      'system.details.flaw',
+    )}
+  </div>
 
   {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
     <div class="tidy-tab-column flexcol">
