@@ -19,7 +19,7 @@ const localize = FoundryAdapter.localize;
   );
 
   let fullLabel = $derived(
-    (inferredActivation?.value ?? '') + localize(abbrOrLabel.label)
+    (inferredActivation?.value ?? '') + ' ' + localize(abbrOrLabel.label)
   );
 </script>
 
