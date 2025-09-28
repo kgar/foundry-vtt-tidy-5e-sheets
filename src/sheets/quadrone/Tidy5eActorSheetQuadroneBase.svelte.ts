@@ -172,14 +172,10 @@ export function Tidy5eActorSheetQuadroneBase<
           }).render({ force: true });
         },
         showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
-          const showTokenPortrait =
-            this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT];
-          const token = this.actor.isToken
-            ? this.actor.token
-            : this.actor.prototypeToken;
-          const img = showTokenPortrait ? token.texture.src : this.actor.img;
+          const { src } = await this._preparePortrait(this.actor);
+
           new foundry.applications.apps.ImagePopout({
-            src: img,
+            src,
             uuid: this.actor.uuid,
             window: { title: this.actor.name },
           }).render({ force: true });
@@ -304,14 +300,6 @@ export function Tidy5eActorSheetQuadroneBase<
         doc: this.actor,
       });
 
-      const showToken =
-        this.actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-          true || themeSettings.portraitShape === 'token';
-
-      const effectiveToken = this.actor.isToken
-        ? this.actor.token
-        : this.actor.prototypeToken;
-
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
@@ -404,7 +392,6 @@ export function Tidy5eActorSheetQuadroneBase<
         shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
         isVideo,
         isRandom,
-        truePath: isRandom ? rawSrc : undefined,
       };
     }
 

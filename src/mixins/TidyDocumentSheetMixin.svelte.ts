@@ -68,7 +68,7 @@ export function TidyExtensibleDocumentSheetMixin<
               'The editImage action is available only for IMG elements.'
             );
           }
-          const attr = target.dataset.edit ?? '';
+          const attr = target.dataset.path ?? '';
           const current = foundry.utils.getProperty(
             this.document._source,
             attr
@@ -104,7 +104,7 @@ export function TidyExtensibleDocumentSheetMixin<
               'The editImageVideo action is available only for IMG and VIDEO elements.'
             );
           }
-          const attr = target.dataset.edit ?? '';
+          const attr = target.dataset.path ?? '';
           const current = foundry.utils.getProperty(
             this.document._source,
             attr
