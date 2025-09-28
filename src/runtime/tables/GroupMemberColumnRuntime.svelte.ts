@@ -122,6 +122,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: GroupVehicleCrewColumn,
       },
+      cellClasses: 'truncate',
       widthRems: 3.75,
     };
 

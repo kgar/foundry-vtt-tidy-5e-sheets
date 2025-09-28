@@ -25,8 +25,8 @@
   class="meter meter-small progress capacity"
   style="--bar-percentage: {crewPct}%;"
 ></div>
-<div class="flexrow">
-  <span class="font-data-large color-text-default">{crewCount}</span>
+<div class="flexrow truncate damage-formula-container" data-tooltip={`${crewCount} / ${crewMax}`}>
+  <span class="font-data-medium color-text-default">{crewCount}</span>
   <span class="font-body-medium color-text-lightest separator">/</span>
   <span class="font-label-medium color-text-default">{crewMax}</span>
 </div>
