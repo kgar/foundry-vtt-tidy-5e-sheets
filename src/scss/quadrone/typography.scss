@@ -105,6 +105,10 @@
     &-disabled {
       color: var(--t5e-color-icon-disabled);
     }
+
+    &-theme {
+      color: var(--t5e-theme-color-default);
+    }
   }
 
   .font {
