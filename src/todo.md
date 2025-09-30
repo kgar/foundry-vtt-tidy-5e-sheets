@@ -1,5 +1,11 @@
 ## kgar To Do
 
+### Short List
+
+- [ ] Resurrect Attribute Pins as Sheet Pins
+  - [ ] Character sheet
+  - [ ] NPC sheet
+
 ### Group Sheet
 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.

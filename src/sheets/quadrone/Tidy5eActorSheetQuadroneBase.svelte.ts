@@ -703,7 +703,7 @@ export function Tidy5eActorSheetQuadroneBase<
           traits.weapon.push(value);
         }
         (value.icons ??= []).push({
-          icon: 'mastery',
+          icon: 'fa-solid fa-circle-star color-icon-theme mastery',
           label: game.i18n.format('DND5E.WEAPON.Mastery.Label'),
         });
       }
