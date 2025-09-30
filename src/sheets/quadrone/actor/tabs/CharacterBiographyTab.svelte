@@ -69,6 +69,45 @@
     },
   ]);
 
+  let personalityEntries: {
+    icon: string;
+    label: string;
+    value: string;
+    enriched: string;
+    field: string;
+  }[] = $derived([
+    {
+      icon: 'fa-puzzle-piece',
+      label: 'DND5E.PersonalityTraits',
+      value: context.system.details.trait,
+      enriched: context.enriched.trait,
+      field: 'system.details.trait',
+    },
+    {
+      icon: 'fa-seedling',
+      label: 'DND5E.Ideals',
+      value: context.system.details.ideal,
+      enriched: context.enriched.ideal,
+      field: 'system.details.ideal',
+    },
+    {
+      icon: 'fa-link',
+      label: 'DND5E.Bonds',
+      value: context.system.details.bond,
+      enriched: context.enriched.bond,
+      field: 'system.details.bond',
+    },
+    {
+      icon: 'fa-heart-crack',
+      label: 'DND5E.Flaws',
+      value: context.system.details.flaw,
+      enriched: context.enriched.flaw,
+      field: 'system.details.flaw',
+    },
+  ]);
+
+  let hasPersonalityEntries = $derived(personalityEntries.some(entry => entry.enriched !== ''));
+
   let editing = $state(false);
   let contentToEdit: string = $state('');
   let enrichedText: string = $state('');
@@ -127,39 +166,19 @@
 {/if}
 
 <div class="tidy-tab-row flexrow" class:hidden={editing}>
-  <div class="tidy-tab-column flexcol">
-    {@render bioEditorEntry(
-      'fa-puzzle-piece',
-      'DND5E.PersonalityTraits',
-      context.system.details.trait,
-      context.enriched.trait,
-      'system.details.trait',
-    )}
-
-    {@render bioEditorEntry(
-      'fa-seedling',
-      'DND5E.Ideals',
-      context.system.details.ideal,
-      context.enriched.ideal,
-      'system.details.ideal',
-    )}
-
-    {@render bioEditorEntry(
-      'fa-link',
-      'DND5E.Bonds',
-      context.system.details.bond,
-      context.enriched.bond,
-      'system.details.bond',
-    )}
-
-    {@render bioEditorEntry(
-      'fa-heart-crack',
-      'DND5E.Flaws',
-      context.system.details.flaw,
-      context.enriched.flaw,
-      'system.details.flaw',
-    )}
-  </div>
+  {#if hasPersonalityEntries || context.unlocked}
+    <div class="tidy-tab-column flexcol">
+      {#each personalityEntries as entry (entry.field)}
+        {@render bioEditorEntry(
+          entry.icon,
+          entry.label,
+          entry.value,
+          entry.enriched,
+          entry.field,
+        )}
+      {/each}
+    </div>
+  {/if}
 
   {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
     <div class="tidy-tab-column flexcol">
