@@ -3,8 +3,11 @@
 ### Short List
 
 - [ ] Resurrect Attribute Pins as Sheet Pins
-  - [ ] Character sheet
-  - [ ] NPC sheet
+  - [x] Do data prep
+  - [ ] Character sheet: Add to Sheet tab
+  - [ ] NPC sheet: Add to Statblock tab
+  - [ ] Group sheet: Add to Members tab
+  - [ ] Hmm 🤔: tab config option to show on any tab that has tab config?
 
 ### Group Sheet
 
