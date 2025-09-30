@@ -175,7 +175,7 @@ export function getDefaultItemColumns() {
         type: 'component',
         component: ItemTimeColumn,
       },
-      widthRems: 3,
+      widthRems: 4,
     },
     uses: {
       headerContent: {

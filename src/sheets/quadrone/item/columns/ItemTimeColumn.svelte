@@ -6,6 +6,8 @@
 
   let { rowDocument: item, rowContext }: ColumnCellProps = $props();
 
+const localize = FoundryAdapter.localize;
+
   let inferredActivation = $derived(
     item.system.activities
       ? firstOfSet<any>(item.system.activities)?.activation
@@ -16,15 +18,19 @@
     FoundryAdapter.getActivationText(inferredActivation?.type),
   );
 
-  const localize = FoundryAdapter.localize;
+  let fullLabel = $derived(
+    (inferredActivation?.value ?? '') + ' ' + localize(abbrOrLabel.label)
+  );
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
-  {inferredActivation?.value ?? ''}<span data-tooltip={abbrOrLabel.label} class="uppercase"
+  {inferredActivation?.value ?? ''}<span data-tooltip={abbrOrLabel.label} class="property-time uppercase"
     >{localize(abbrOrLabel.abbreviation)}</span
   >
 {:else if !isNil(abbrOrLabel.label, '')}
-  {inferredActivation?.value ?? ''} {localize(abbrOrLabel.label)}
+  <span class="truncate property-time" data-tooltip={fullLabel}>
+    {fullLabel}
+  </span>
 {:else}
-  <span class="color-text-disabled">—</span>
+  <span class="property-time color-text-disabled">—</span>
 {/if}
