@@ -900,5 +900,29 @@
         "hint": "Umožní PJ kontrolovat, jaké informace o členech skupiny může uživatel vidět na deníku skupiny. Pokud hráč nemá ke členovi skupiny oprávnění, deník skupiny tohoto člena nezobrazí, a ani jeho souhrnné informace. S omezeným oprávněním může uživatel vidět jméno člena, ale žádné další informace. S oprávněním pozorovatele a vyšším může uživatel v deníku skupiny vidět všechny informace o členovi."
     },
     "TIDY5E.AggregateSkill.HighMeasure": "Vysoké",
-    "TIDY5E.AggregateSkill.LowMeasure": "Nízké"
+    "TIDY5E.AggregateSkill.LowMeasure": "Nízké",
+    "TIDY5E.Group.PrimaryParty.Label": "Hlavní družina",
+    "TIDY5E.CombatTabName": "Boj",
+    "TIDY5E.Difficulty": "Obtížnost",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "Bojovníci",
+        "Combat.IncludeInCombat.Tooltip": "Zahrnout do bojových aktivit",
+        "Combat.ExcludeFromCombat.Tooltip": "Vyloučit z bojových aktivit",
+        "AddMember.Label": "Přidat člena",
+        "AddPlaceholderToCombatTracker.Label": "Přidat do aktuálního střetnutí jako zástupný symbol",
+        "AddPlaceholder.Label": "Vytvořit zástupný symbol pro boj",
+        "DeletePlaceholder.Label": "Odstranit zástupný symbol",
+        "DifficultyTarget.Label": "Obtížný cíl",
+        "AddAllPlaceholders.Label": "Přidat vše jako zástupné symboly",
+        "PrerollInitiative": "Přehodit iniciativu",
+        "NewPlaceholder.Name": "Nový zástupný symbol",
+        "NewPlaceholder.SubtitlePlaceholderText": "Poznámka k tomuto zástupnému symbolu",
+        "AddCombatants.MustHaveEncounter.Message": "Abys mohl střetnutí přidat do sledovače střetnutí, musíš jej mít vybrané",
+        "CombatVisibility.Hidden.Label": "Po přidání do sledovače skryto před hráči",
+        "CombatVisibility.Visible.Label": "Po přidání do sledovače viditelné pro hráče",
+        "InitiativeCount.Label": "Přidat {count} iniciativ",
+        "PlaceholderNameField.PlaceholderText": "Název zástupného symbolu",
+        "PlaceholderNotesField.PlaceholderText": "Poznámky"
+    },
+    "TIDY5E.Actor.Characteristics": "Charakteristiky"
 }
