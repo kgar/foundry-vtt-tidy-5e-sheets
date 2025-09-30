@@ -128,6 +128,11 @@
       column-width: var(--statblock-column-width);
     }
 
+    p {
+      margin: 0;
+      display: inline;
+    }
+
     .statblock-header {
       break-inside: avoid;
 
@@ -241,11 +246,6 @@
     .statblock-content {
       columns: 2;
     }
-  }
-
-  p {
-    margin: 0;
-    display: inline;
   }
 
 
