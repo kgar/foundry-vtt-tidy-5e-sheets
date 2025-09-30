@@ -977,6 +977,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   limited: boolean;
   modernRules: boolean;
   owner: boolean;
+  sheetPins: AttributePinContext[];
   portrait: {
     src: string;
     isRandom: boolean;

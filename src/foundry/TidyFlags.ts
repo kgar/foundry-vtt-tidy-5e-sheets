@@ -1056,6 +1056,27 @@ export class TidyFlags {
   };
 
   /**
+   * Denotes the items and activities which have been pinned to a significant tab on a sheet.
+   */
+  static sheetPins = {
+    key: 'sheetPins' as const,
+    prop: TidyFlags.getFlagPropertyPath('sheetPins'),
+    /** Gets the actor's sheet pins. */
+    get(actor: Actor5e): AttributePinFlag[] {
+      return (
+        TidyFlags.tryGetFlag<AttributePinFlag[]>(
+          actor,
+          TidyFlags.sheetPins.key
+        ) ?? []
+      );
+    },
+    /** Sets the actor's sheet pins. */
+    set(actor: Actor5e, value: AttributePinFlag[]): Promise<void> {
+      return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value);
+    },
+  };
+
+  /**
    * Indicates whether the container panel should be shown for a given actor.
    * This is used to determine whether the container panel is visible
    * in the actor's inventory tab.
