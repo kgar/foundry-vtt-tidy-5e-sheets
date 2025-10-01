@@ -51,7 +51,7 @@
     )}"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE}
     data-action="editImage"
-    data-edit="img"
+    data-path="img"
   />
   <div
     role="presentation"

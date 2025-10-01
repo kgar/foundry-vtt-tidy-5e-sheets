@@ -13,7 +13,7 @@
 <header>
   <div class="profile">
     <div class="portrait" class:rounded>
-      <img src={context.actor.img} alt={context.actor.name} data-edit="img" />
+      <img src={context.actor.img} alt={context.actor.name} data-path="img" />
     </div>
   </div>
   <h1>{context.actor.name}</h1>
