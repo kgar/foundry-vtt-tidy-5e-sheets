@@ -176,7 +176,7 @@
     )}
   </div>
 {/if}
-<div class="tidy-tab-row flexrow" class:hidden={false}>
+<div class="tidy-tab-row flexrow" class:hidden={editing}>
   {#if hasPersonalityEntries || context.unlocked}
     <div class="tidy-tab-column flexcol">
       {#each personalityEntries as entry (entry.field)}
