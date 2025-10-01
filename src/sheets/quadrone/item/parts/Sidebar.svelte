@@ -203,7 +203,7 @@
         src={context.item.img}
         alt={context.item.name}
         data-action={context.unlocked ? 'editImage' : 'showIcon'}
-        data-edit="img"
+        data-path="img"
       />
       <ItemImageBorder />
     </div>
