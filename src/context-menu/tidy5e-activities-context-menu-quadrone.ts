@@ -73,7 +73,7 @@ export function getContextMenuOptionsQuadrone(
   // Customize - These are things Tidy provides above and beyond the system for greater customization of the sheet.
 
   entries.push({
-    name: 'TIDY5E.ContextMenuActionPinAsResource',
+    name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
     callback: async () => await AttributePins.pin(activity, 'activity'),
     condition: () =>
@@ -86,7 +86,7 @@ export function getContextMenuOptionsQuadrone(
   });
 
   entries.push({
-    name: 'TIDY5E.ContextMenuActionUnpinAsResource',
+    name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
     callback: async () => await AttributePins.unpin(activity),
     condition: () =>

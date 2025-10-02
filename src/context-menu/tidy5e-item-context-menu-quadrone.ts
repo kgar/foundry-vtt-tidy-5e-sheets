@@ -344,7 +344,7 @@ export function getItemContextOptionsQuadrone(
   });
 
   options.push({
-    name: 'TIDY5E.ContextMenuActionPinAsResource',
+    name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
     callback: () => AttributePins.pin(item, 'item'),
     condition: () =>
@@ -356,7 +356,7 @@ export function getItemContextOptionsQuadrone(
   });
 
   options.push({
-    name: 'TIDY5E.ContextMenuActionUnpinAsResource',
+    name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
     callback: () => AttributePins.unpin(item),
     condition: () =>
