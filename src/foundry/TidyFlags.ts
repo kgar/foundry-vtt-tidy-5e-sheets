@@ -10,8 +10,8 @@ import type {
   TidyFlagUnnamedNotes,
   EncounterPlaceholders,
   EncounterPlaceholder,
-  EncounterCombatantSettings,
   EncounterCombatantsSettings,
+  SheetPinFlag,
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
@@ -1062,16 +1062,16 @@ export class TidyFlags {
     key: 'sheetPins' as const,
     prop: TidyFlags.getFlagPropertyPath('sheetPins'),
     /** Gets the actor's sheet pins. */
-    get(actor: Actor5e): AttributePinFlag[] {
+    get(actor: Actor5e): SheetPinFlag[] {
       return (
-        TidyFlags.tryGetFlag<AttributePinFlag[]>(
+        TidyFlags.tryGetFlag<SheetPinFlag[]>(
           actor,
           TidyFlags.sheetPins.key
         ) ?? []
       );
     },
     /** Sets the actor's sheet pins. */
-    set(actor: Actor5e, value: AttributePinFlag[]): Promise<void> {
+    set(actor: Actor5e, value: SheetPinFlag[]): Promise<void> {
       return TidyFlags.setFlag(actor, TidyFlags.sheetPins.key, value);
     },
   };

@@ -23,6 +23,7 @@ import type {
   DocumentJournalEntries,
   AttributePinFlag,
   EncounterPlaceholder,
+  SheetPinFlag,
 } from 'src/foundry/TidyFlags.types';
 import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
@@ -353,6 +354,17 @@ export type AttributeActivityPinContext = {
 export type AttributePinContext =
   | AttributeItemPinContext
   | AttributeActivityPinContext;
+
+export type SheetPinItemContext = {
+  document: Item5e;
+  linkedUses?: LinkedUses;
+} & SheetPinFlag & { type: 'item' };
+
+export type SheetPinActivityContext = {
+  document: Activity5e;
+} & SheetPinFlag & { type: 'activity' };
+
+export type SheetPinContext = SheetPinItemContext | SheetPinActivityContext;
 
 export type CharacterFacilitiesContext = {
   basic: {
@@ -977,7 +989,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   limited: boolean;
   modernRules: boolean;
   owner: boolean;
-  sheetPins: AttributePinContext[];
+  sheetPins: SheetPinContext[];
   portrait: {
     src: string;
     isRandom: boolean;

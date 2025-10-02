@@ -30,13 +30,13 @@ import type {
   ActorSkillsToolsContext as ActorSkillsToolsContext,
   ActorSpeedSenseEntryContext,
   ActorTraitContext,
-  AttributePinContext,
   CreatureTypeContext,
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   Folder,
   LocationToSearchTextMap,
   MessageBus,
+  SheetPinContext,
   SpellcastingClassContext,
 } from 'src/types/types';
 import { randomItem, splitSemicolons } from 'src/utils/array';
@@ -59,6 +59,7 @@ import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { debug } from 'src/utils/logging';
+import { Activities } from 'src/features/activities/activities';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -334,7 +335,7 @@ export function Tidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
-        sheetPins: [],
+        sheetPins: await this._getSheetPins(),
         portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
@@ -353,8 +354,6 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Prepare owned items
       this._prepareItems(context);
-
-      await this._prepareSheetPins(context);
 
       this._applyConcentration(context);
 
@@ -903,12 +902,12 @@ export function Tidy5eActorSheetQuadroneBase<
       };
     }
 
-    async _prepareSheetPins(context: ActorSheetQuadroneContext) {
-      let flagPins = TidyFlags.attributePins
+    async _getSheetPins(): Promise<SheetPinContext[]> {
+      let flagPins = TidyFlags.sheetPins
         .get(this.actor)
         .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
 
-      let pins: AttributePinContext[] = [];
+      let pins: SheetPinContext[] = [];
 
       for (const pin of flagPins) {
         let document = await fromUuid(pin.id, { relative: this.actor });
@@ -917,7 +916,7 @@ export function Tidy5eActorSheetQuadroneBase<
           if (pin.type === 'item') {
             pins.push({
               ...pin,
-              linkedUses: context.itemContext[document.id]?.linkedUses,
+              linkedUses: Activities.getLinkedUses(document),
               document,
             });
           } else if (pin.type === 'activity') {
@@ -934,7 +933,7 @@ export function Tidy5eActorSheetQuadroneBase<
         }
       }
 
-      context.sheetPins = pins;
+      return pins;
     }
 
     /* -------------------------------------------- */

@@ -29,14 +29,6 @@
     ThemeQuadrone.updatePortraitShape(context.actor, newShape);
   }
 
-  let cyclerTooltip = $derived(
-    localize('TIDY5E.ThemeSettings.PortraitShape.title', {
-      type: localize(
-        `TIDY5E.ThemeSettings.PortraitShape.option.${currentPortraitShape}`,
-      ),
-    }),
-  );
-
   let awardAriaLabel = $derived(
     localize(
       context.enableXp

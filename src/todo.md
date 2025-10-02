@@ -6,11 +6,11 @@
   - [x] Do data prep
   - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
   - [x] Context menu - Activities: Pin to Sheet, Unpin from Sheet
-  - [ ] Character sheet: Add to Sheet tab
-  - [ ] NPC sheet: Context menu
-  - [ ] NPC sheet: Add to Statblock tab
-  - [ ] Group sheet: Add to Members tab
-  - [ ] Hmm 🤔: tab config option to show on any tab that has tab config?
+  - [x] Character sheet: Add to Sheet tab
+  - [x] NPC sheet: Add to Statblock tab
+  - [x] Group/Encounter sheet: Add to Members tab
+  - [ ] Quad Actor Base: Handle Pin drop
+  - [ ] Quad Actor Base: Handle item/activity drop to Pins
 
 ### Group Sheet
 
