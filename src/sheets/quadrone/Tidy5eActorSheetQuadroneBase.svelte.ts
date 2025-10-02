@@ -36,6 +36,7 @@ import type {
   Folder,
   LocationToSearchTextMap,
   MessageBus,
+  SheetPinContext,
   SpellcastingClassContext,
 } from 'src/types/types';
 import { randomItem, splitSemicolons } from 'src/utils/array';
@@ -57,6 +58,8 @@ import { SvelteMap } from 'svelte/reactivity';
 import { mapGetOrInsert } from 'src/utils/map';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
+import { debug } from 'src/utils/logging';
+import { Activities } from 'src/features/activities/activities';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -332,6 +335,7 @@ export function Tidy5eActorSheetQuadroneBase<
         limited: this.actor.limited,
         modernRules: FoundryAdapter.checkIfModernRules(this.actor),
         owner: this.actor.isOwner,
+        sheetPins: await this._getSheetPins(),
         portrait: await this._preparePortrait(this.actor),
         rollData,
         saves,
@@ -351,7 +355,6 @@ export function Tidy5eActorSheetQuadroneBase<
       // Prepare owned items
       this._prepareItems(context);
 
-      // Concentration
       this._applyConcentration(context);
 
       context.customActorTraits =
@@ -897,6 +900,40 @@ export function Tidy5eActorSheetQuadroneBase<
         reference: CONFIG.DND5E.creatureTypes[details.type.value]?.reference,
         subtitle: details.type.subtype,
       };
+    }
+
+    async _getSheetPins(): Promise<SheetPinContext[]> {
+      let flagPins = TidyFlags.sheetPins
+        .get(this.actor)
+        .toSorted((a, b) => (a.sort || 0) - (b.sort || 0));
+
+      let pins: SheetPinContext[] = [];
+
+      for (const pin of flagPins) {
+        let document = await fromUuid(pin.id, { relative: this.actor });
+
+        if (document) {
+          if (pin.type === 'item') {
+            pins.push({
+              ...pin,
+              linkedUses: Activities.getLinkedUses(document),
+              document,
+            });
+          } else if (pin.type === 'activity') {
+            pins.push({
+              ...pin,
+              document,
+            });
+          }
+        } else {
+          // Orphaned pins may exist until the next pin/unpin action, when the pins will be reset to valid pins only.
+          debug(
+            `Attribute pin item with ID ${pin.id} not found. Excluding from final render.`
+          );
+        }
+      }
+
+      return pins;
     }
 
     /* -------------------------------------------- */

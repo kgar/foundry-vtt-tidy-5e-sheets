@@ -1,6 +1,7 @@
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
+import { SheetPins } from 'src/features/sheet-pins/SheetPins';
 
 export function getContextMenuOptionsQuadrone(
   activity: Activity5e,
@@ -13,6 +14,8 @@ export function getContextMenuOptionsQuadrone(
     !FoundryAdapter.isLockedInCompendium(activity.item);
 
   const isInFavorites = !!element.closest('.favorites');
+
+  // Common - these are standard options, or they're options that Tidy offers which interface with standard foundry behaviors.
 
   const entries: ContextMenuEntry[] = [];
   entries.push({
@@ -66,6 +69,35 @@ export function getContextMenuOptionsQuadrone(
     },
     group: 'common',
   });
+
+  // Customize - These are things Tidy provides above and beyond the system for greater customization of the sheet.
+
+  entries.push({
+    name: 'TIDY5E.ContextMenuActionPin',
+    icon: `<i class="fa-solid fa-thumbtack"></i>`,
+    callback: async () => await SheetPins.pin(activity, 'activity'),
+    condition: () =>
+      app.actor &&
+      activity.item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(activity.item) &&
+      SheetPins.isPinnable(activity, 'activity') &&
+      !SheetPins.isPinned(activity),
+    group: 'pins',
+  });
+
+  entries.push({
+    name: 'TIDY5E.ContextMenuActionUnpin',
+    icon: `<i class="fa-regular fa-thumbtack"></i>`,
+    callback: async () => await SheetPins.unpin(activity),
+    condition: () =>
+      activity.item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(activity.item) &&
+      SheetPins.isPinnable(activity, 'activity') &&
+      SheetPins.isPinned(activity),
+    group: 'pins',
+  });
+
+  // Be Careful - These are the no-going-back changes
 
   entries.push({
     name: 'DND5E.ContextMenuActionDelete',

@@ -22,6 +22,7 @@
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
+    import SheetPins from '../../shared/SheetPins.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -94,6 +95,8 @@
     <Legendaries />
   </div>
 {/if}
+
+<SheetPins />
 
 <StatblockTables
   {sections}

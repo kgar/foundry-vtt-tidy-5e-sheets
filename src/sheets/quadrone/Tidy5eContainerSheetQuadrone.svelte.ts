@@ -288,14 +288,6 @@ export class Tidy5eContainerSheetQuadrone
       itemDescriptions = itemDescriptions.slice(0, 1);
     }
 
-    const containerPreferences = SheetPreferencesService.getByType(
-      this.item.type
-    );
-
-    const contentsSortMethod =
-      containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
-      'm';
-
     const currencies: CurrencyContext[] = [];
 
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>

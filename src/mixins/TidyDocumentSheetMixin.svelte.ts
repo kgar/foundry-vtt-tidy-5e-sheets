@@ -13,7 +13,7 @@ import type {
   DocumentSheetV2Context,
   Tab,
 } from 'src/types/types';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
 import { tick } from 'svelte';
@@ -697,11 +697,14 @@ export function TidyExtensibleDocumentSheetMixin<
           ...customControls.controls,
         ];
 
-        updatedOptions.window.controls.forEach(c => {
-          if (c.action === 'configureToken' || c.action === 'configurePrototypeToken') {
-            c.position = 'header'
+        updatedOptions.window.controls.forEach((c) => {
+          if (
+            c.action === 'configureToken' ||
+            c.action === 'configurePrototypeToken'
+          ) {
+            c.position = 'header';
           }
-        })
+        });
       } catch (e) {
         error('An error occurred while setting up custom controls.', false, {
           error: e,

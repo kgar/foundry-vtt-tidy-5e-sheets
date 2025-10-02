@@ -641,7 +641,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       item.system.activities
     )?.map(Activities.getActivityItemContext);
 
-    Activities.applyLinkedUses(item, this.actor, context);
+    context.linkedUses = Activities.getLinkedUses(item);
   }
 
   /* -------------------------------------------- */

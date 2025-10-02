@@ -3,8 +3,14 @@
 ### Short List
 
 - [ ] Resurrect Attribute Pins as Sheet Pins
-  - [ ] Character sheet
-  - [ ] NPC sheet
+  - [x] Do data prep
+  - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
+  - [x] Context menu - Activities: Pin to Sheet, Unpin from Sheet
+  - [x] Character sheet: Add to Sheet tab
+  - [x] NPC sheet: Add to Statblock tab
+  - [x] Group/Encounter sheet: Add to Members tab
+  - [ ] Quad Actor Base: Handle Pin drop
+  - [ ] Quad Actor Base: Handle item/activity drop to Pins
 
 ### Group Sheet
 
@@ -12,12 +18,9 @@
 - [ ] Group Sheet - Plan and task Bastions tab
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 
-### Character Sheet
-
-- [ ] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies
-
 ### The Short List
 
+- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
@@ -357,3 +360,4 @@ Limited:
 - [x] Character Inventory Add button reported broken
 - [x] Include Encounter Sheet in the "Set Default Sheets" tidy page.
 - [x] Fixed: Special Traits dialog has no padding.
+- [X] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies

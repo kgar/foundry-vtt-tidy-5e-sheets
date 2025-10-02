@@ -13,6 +13,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import ActionTables from '../../shared/ActionTables.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -47,6 +48,8 @@
 </script>
 
 <ActionBar bind:searchCriteria sections={actions} {tabId} />
+
+<SheetPins />
 
 <ActionTables
   sections={actions}

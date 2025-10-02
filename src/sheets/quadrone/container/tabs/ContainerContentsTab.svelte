@@ -16,6 +16,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ActionBar from '../../shared/ActionBar.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -54,6 +55,8 @@
 </script>
 
 <ActionBar bind:searchCriteria sections={configuredContents} {tabId} />
+
+<SheetPins />
 
 <!-- Tables -->
 <InventoryTables
