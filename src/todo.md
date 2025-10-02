@@ -4,7 +4,8 @@
 
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [x] Do data prep
-  - [ ] Character sheet: Context menu - Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
+  - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
+  - [x] Context menu - Activities: Pin to Sheet, Unpin from Sheet
   - [ ] Character sheet: Add to Sheet tab
   - [ ] NPC sheet: Context menu
   - [ ] NPC sheet: Add to Statblock tab

@@ -8,6 +8,8 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
+import { AttributePins } from 'src/features/attribute-pins/AttributePins';
+import { isNil } from 'src/utils/data';
 
 /**
  * Prepare an array of context menu options which are available for owned Item documents.
@@ -340,6 +342,57 @@ export function getItemContextOptionsQuadrone(
         { document: item }
       ).render(true),
   });
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionPinAsResource',
+    icon: `<i class="fa-solid fa-thumbtack"></i>`,
+    callback: () => AttributePins.pin(item, 'item'),
+    condition: () =>
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item) &&
+      AttributePins.isPinnable(item, 'item') &&
+      !AttributePins.isPinned(item),
+    group: 'customize',
+  });
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionUnpinAsResource',
+    icon: `<i class="fa-regular fa-thumbtack"></i>`,
+    callback: () => AttributePins.unpin(item),
+    condition: () =>
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item) &&
+      AttributePins.isPinnable(item, 'item') &&
+      AttributePins.isPinned(item),
+    group: 'customize',
+  });
+
+  const isAttributeItemPin = !!element.closest('[data-pin-id]');
+
+  if (isAttributeItemPin) {
+    options.push({
+      name: 'TIDY5E.ContextMenuActionShowLimitedUses',
+      icon: '<i class="fa-solid fa-fw"></i>',
+      callback: () => AttributePins.setItemResourceType(item, 'limited-uses'),
+      condition: () =>
+        item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        !isNil(item.system.quantity) &&
+        AttributePins.getResourceType(item) !== 'limited-uses',
+      group: 'customize',
+    });
+    options.push({
+      name: 'TIDY5E.ContextMenuActionShowQuantity',
+      icon: '<i class="fa-solid fa-fw"></i>',
+      callback: () => AttributePins.setItemResourceType(item, 'quantity'),
+      condition: () =>
+        item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        !isNil(item.system.quantity) &&
+        AttributePins.getResourceType(item) !== 'quantity',
+      group: 'customize',
+    });
+  }
 
   // Be Careful - These are the no-going-back changes
 
