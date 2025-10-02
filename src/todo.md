@@ -2,12 +2,14 @@
 
 ### .. another check list
 
+- [x] Important NPCs: features and weapons in statblock tab
+- [x] Non-important NPCs: all items in statblock tab
+- [x] When an inventory item is deemed passive, put it in the "items" section.
 - [ ] NPC World Setting - "Show Legendary/Lair trackers in the Statblock tab" - default true
 - [ ] NPC World Setting - "Include Spellbook sections in the Statblock tab" - default true
 - [ ] Ensure that these settings can be disabled from the individual sheet level.
 - [ ] Ensure the unset individual sheet level loads properly based default settings.
 - [ ] Find a place to put these settings.
-- [ ] Stretch: Include the remainder of NPC item types in the Statblock tab.
 
 ### Short List
 

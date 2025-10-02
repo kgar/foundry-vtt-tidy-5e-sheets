@@ -374,35 +374,56 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       'passive'
     );
 
+    featureSections.items = createNewStatblockSection('DND5E.Items', 'items');
+
+    const inventoryTypes = Inventory.getInventoryTypes();
+    const inventoryTypesSet = new Set(inventoryTypes);
+
+    const statblockItems = context.important
+      ? this.actor.itemTypes.feat.concat(this.actor.itemTypes.weapon)
+      : this.actor.items;
+
     // TODO: We could loop less by doing all of this in the single pass over items.
-    this.actor.itemTypes.feat
-      .concat(this.actor.itemTypes.weapon)
-      .forEach((item: Item5e) => {
-        const customSectionName = TidyFlags.section.get(item);
+    statblockItems.forEach((item: Item5e) => {
+      if (
+        !inventoryTypesSet.has(item.type) &&
+        item.type !== CONSTANTS.ITEM_TYPE_FEAT
+      ) {
+        return;
+      }
 
-        if (customSectionName) {
-          const section = (featureSections[customSectionName] ??=
-            createNewStatblockSection(
-              FoundryAdapter.localize(customSectionName),
-              customSectionName,
-              customSectionName
-            ));
+      const customSectionName = TidyFlags.section.get(item);
 
-          section.items.push(item);
-          return;
-        }
+      if (customSectionName) {
+        const section = (featureSections[customSectionName] ??=
+          createNewStatblockSection(
+            FoundryAdapter.localize(customSectionName),
+            customSectionName,
+            customSectionName
+          ));
 
-        const isPassive =
-          item.system.properties?.has('trait') ||
-          CONFIG.DND5E.activityActivationTypes[
-            item.system.activities?.contents[0]?.activation.type
-          ]?.passive;
-        const section = isPassive
+        section.items.push(item);
+        return;
+      }
+      
+      const activationType = item.system.activities?.contents[0]?.activation.type;
+
+      const isPassive =
+        item.system.properties?.has('trait') ||
+        CONFIG.DND5E.activityActivationTypes[
+          activationType
+        ]?.passive;
+
+      const section =
+        isPassive && !inventoryTypesSet.has(item.type)
           ? 'passive'
-          : item.system.activities?.contents[0]?.activation.type || 'passive';
+          : !activationType &&
+            inventoryTypesSet.has(item.type)
+          ? 'items'
+          : activationType || 'passive';
 
-        featureSections[section]?.items.push(item);
-      });
+      featureSections[section]?.items.push(item);
+    });
 
     // Remove any default sections that did not receive an item.
     for (let key of Object.keys(featureSections)) {
@@ -422,7 +443,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       );
     });
 
-    const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
     for (let item of inventoryItems) {
