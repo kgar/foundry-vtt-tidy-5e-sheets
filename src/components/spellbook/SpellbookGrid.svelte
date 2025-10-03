@@ -214,7 +214,7 @@
           }
         }
 
-        &.method-spell.can-prepare.prepared {
+        &.can-prepare.prepared {
           box-shadow: 0 0 0 0.125rem
             var(--t5e-prepared-item-grid-tile-outline-color);
           background-color: var(--t5e-equipped-background);
