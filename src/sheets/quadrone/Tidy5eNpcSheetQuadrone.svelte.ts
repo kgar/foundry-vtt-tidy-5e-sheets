@@ -35,6 +35,7 @@ import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
+import { debug } from 'src/utils/logging';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -405,20 +406,18 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         section.items.push(item);
         return;
       }
-      
-      const activationType = item.system.activities?.contents[0]?.activation.type;
+
+      const activationType =
+        item.system.activities?.contents[0]?.activation.type;
 
       const isPassive =
         item.system.properties?.has('trait') ||
-        CONFIG.DND5E.activityActivationTypes[
-          activationType
-        ]?.passive;
+        CONFIG.DND5E.activityActivationTypes[activationType]?.passive;
 
       const section =
         isPassive && !inventoryTypesSet.has(item.type)
           ? 'passive'
-          : !activationType &&
-            inventoryTypesSet.has(item.type)
+          : !activationType && inventoryTypesSet.has(item.type)
           ? 'items'
           : activationType || 'passive';
 
@@ -614,5 +613,15 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ui.notifications.error('DND5E.HPFormulaError', { localize: true });
       throw error;
     }
+  }
+
+  applyAverageHP() {
+    let formula = this.actor.system.attributes.hp.formula;
+    const average = FoundryAdapter.calculateAverageFromFormula(formula);
+
+    return this.actor.update({
+      ['system.attributes.hp.value']: average,
+      ['system.attributes.hp.max']: average,
+    });
   }
 }
