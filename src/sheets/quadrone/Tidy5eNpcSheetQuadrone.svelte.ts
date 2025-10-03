@@ -170,6 +170,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       features: [],
       habitats: [],
       important,
+      includeSpellbookInStatblockTab:
+        TidyFlags.includeSpellbookInNpcStatblockTab.get(this.actor) ??
+        userPreferences.includeSpellbookInNpcStatblockTab ??
+        true,
       inventory: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
@@ -195,7 +199,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showLegendaryResistances:
         actorContext.unlocked || this.actor.system.resources.legres.max,
       showLegendariesOnStatblockTab:
-        userPreferences.showLegendariesOnNpcStatblock === true,
+        TidyFlags.showLegendariesOnNpcStatblock.get(this.actor) ??
+        userPreferences.showLegendariesOnNpcStatblock ??
+        true,
       showLoyaltyTracker:
         important &&
         game.settings.get('dnd5e', 'loyaltyScore') &&

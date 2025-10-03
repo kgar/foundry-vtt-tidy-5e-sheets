@@ -1223,6 +1223,7 @@ export type NpcSheetQuadroneContext = {
   features: FeatureSection[];
   habitats: { label: string }[];
   important: boolean;
+  includeSpellbookInStatblockTab: boolean;
   inventory: InventorySection[];
   orphanedSubclasses: Item5e[];
   showContainerPanel: boolean;
