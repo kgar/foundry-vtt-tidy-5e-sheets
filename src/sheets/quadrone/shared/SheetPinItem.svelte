@@ -75,10 +75,16 @@
 
   let context = $derived(getCharacterSheetContext());
 
+  let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
+  let spellMethod = $derived(FoundryAdapter.getSpellMethodConfig(ctx.document));
+  let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
+
   let localize = FoundryAdapter.localize;
 </script>
 
 <div
+  role="button"
+  tabindex="0"
   class="sheet-pin"
   data-tidy-draggable
   data-item-id={ctx.document.id}
@@ -89,23 +95,31 @@
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
   ondragstart={onDragStart}
 >
-  <div class="sheet-pin-document-image">
+  <div class="pin-document-image">
     <a
+      role="button"
+      tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(ev) =>
         context.editable && FoundryAdapter.actorTryUseItem(ctx.document, ev)}
+      onkeydown={(ev) =>
+        ev.key === 'Enter' || ev.key === ' ' && context.editable && FoundryAdapter.actorTryUseItem(ctx.document, ev)}
+      aria-label={ctx.document.name}
     >
       <img class="item-image" alt={ctx.document.name} src={ctx.document.img} />
       <span class="roll-prompt">
-        <i class="fa fa-dice-d20"></i>
+        <i class={[isSpell ? spellMethodIcon : "fa fa-dice-d20"]}></i>
       </span>
     </a>
   </div>
-  <div class="sheet-pin-details">
-    <div class="sheet-pin-name-container" title={ctx.document.name}>
+  <!-- TODO: Save alias changes. -->
+  <!-- TODO: Drag and drop to the pins list without removing from sections. -->
+  <!-- TODO: Figure out layout in edit mode. Bigger cards? -->
+  <div class="pin-details">
+    <div class="pin-name-container" title={ctx.document.name}>
       {#if context.unlocked}
         <TextInput
-          class="sheet-pin-name"
+          class="pin-name"
           document={ctx.document}
           field="name"
           value={ctx.alias}
@@ -120,33 +134,53 @@
           <i class="fa-solid fa-pencil"></i>
         {/if}
       {:else}
-        <div class="sheet-pin-name truncate" title={ctx.document.name}>
+        <div class="font-label-medium pin-name truncate" title={ctx.document.name}>
           {coalesce(ctx.alias, ctx.document.name)}
         </div>
       {/if}
     </div>
-    <div class="sheet-counter {ctx.resource}">
+    <!-- TODO: 
+     * Hide if 0 max charges.
+     * Hide if innate/atwill spell slot.
+     * Switch to spell slot uses if spell.
+     * Switch spell slots to pips if active?
+    -->
+    <div class="pin-counter {ctx.resource}">
       {#if ctx.resource === 'limited-uses' && ctx.document.isOnCooldown}
         <RechargeControl document={ctx.document} field={spentProp} {uses} />
       {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
         <span class="charged-text">
           {#if value > 1}
-            <span>{value}</span>
+            <span class="">{value}</span>
           {/if}
           <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
         </span>
+      {:else if isSpell}
+        {#if spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE && spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL}
+        <span class="inline-uses spell-slots">
+          <span class="spell-slots-value">{value}</span>
+            <span class="divider">/</span>
+            <span class="spell-slots-max">{maxText}</span>
+          </span>
+        {/if}
       {:else if ctx.resource === 'limited-uses'}
-        <TextInput
-          document={usesDocument}
-          field={spentProp}
-          {value}
-          onSaveChange={(ev) => saveValueChange(ev)}
-          selectOnFocus={true}
-        />
-        <span class="divider">/</span>
-        <span class="max">{maxText}</span>
+        <span class="inline-uses">
+          <TextInput
+            class={["uninput uses-value", { diminished: value < 1 }, { centered: isSpell }]}
+            document={usesDocument}
+            field={spentProp}
+            {value}
+            onSaveChange={(ev) => saveValueChange(ev)}
+            selectOnFocus={true}
+          />
+          {#if !isSpell}
+            <span class="divider">/</span>
+            <span class="uses-max">{maxText}</span>
+          {/if}
+        </span>
       {:else if ctx.resource === 'quantity'}
         <TextInput
+          class={["uninput uses-value centered", { diminished: value < 1 }]}
           document={ctx.document}
           field={'system.quantity'}
           value={ctx.document.system.quantity}
