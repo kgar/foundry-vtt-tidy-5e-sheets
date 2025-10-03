@@ -121,6 +121,7 @@
         <div class="list-content">
           <div class="list-values trait-item">
             <button 
+              type="button"
               class="button button-secondary"
               aria-label={localize('DND5E.FlagsTitle')}
               data-tooltip={localize('DND5E.FlagsTitle')}
