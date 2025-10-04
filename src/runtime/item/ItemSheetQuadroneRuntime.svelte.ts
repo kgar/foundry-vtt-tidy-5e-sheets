@@ -43,8 +43,9 @@ import SubclassSheet from 'src/sheets/quadrone/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/quadrone/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
-import { TidyFlags } from "src/foundry/TidyFlags";
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
+import type { ItemTabRegistrationOptions } from 'src/api';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -164,8 +165,26 @@ class ItemSheetQuadroneRuntimeImpl {
     this._content.push(registeredContent);
   }
 
-  registerTab(tab: RegisteredTab<ItemSheetQuadroneContext>) {
+  registerTab(
+    tab: RegisteredTab<ItemSheetQuadroneContext>,
+    options: ItemTabRegistrationOptions | undefined
+  ) {
     this._tabs.push(tab);
+    
+    const includeAsDefault = options?.includeAsDefaultTab ?? true;
+    
+    if (!includeAsDefault) {
+      return;
+    }
+
+    const types = tab.types ?? this._sheetMap.keys();
+
+    for (const type of types) {
+      const info = this._sheetMap.get(type);
+      if (info && !info.defaultTabs.includes(tab.id)) {
+        info.defaultTabs.push(tab.id);
+      }
+    }
   }
 
   getCustomItemTabs(context: any) {
@@ -512,10 +531,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       CONSTANTS.ITEM_TYPE_LOOT,
       {
         component: LootSheet,
-        defaultTabs: [
-          CONSTANTS.TAB_DESCRIPTION,
-          CONSTANTS.TAB_ITEM_DETAILS,
-        ],
+        defaultTabs: [CONSTANTS.TAB_DESCRIPTION, CONSTANTS.TAB_ITEM_DETAILS],
       },
     ],
     [
