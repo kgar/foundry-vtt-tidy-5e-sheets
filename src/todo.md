@@ -1,16 +1,5 @@
 ## kgar To Do
 
-### .. another check list
-
-- [x] Important NPCs: features and weapons in statblock tab
-- [x] Non-important NPCs: all items in statblock tab
-- [x] When an inventory item is deemed passive, put it in the "items" section.
-- [ ] NPC World Setting - "Show Legendary/Lair trackers in the Statblock tab" - default true
-- [ ] NPC World Setting - "Include Spellbook sections in the Statblock tab" - default true
-- [ ] Ensure that these settings can be disabled from the individual sheet level.
-- [ ] Ensure the unset individual sheet level loads properly based default settings.
-- [ ] Find a place to put these settings.
-
 ### Short List
 
 - [ ] Resurrect Attribute Pins as Sheet Pins
@@ -368,3 +357,11 @@ Limited:
 - [x] Character Inventory Add button reported broken
 - [x] Include Encounter Sheet in the "Set Default Sheets" tidy page.
 - [x] Fixed: Special Traits dialog has no padding.
+- [x] Important NPCs: features and weapons in statblock tab
+- [x] Non-important NPCs: all items in statblock tab
+- [x] When an inventory item is deemed passive, put it in the "items" section.
+- [x] NPC User Preference - "Show Legendary/Lair trackers in the Statblock tab" - default true
+- [x] NPC User Preference - "Include Spellbook sections in the Statblock tab" - default true
+- [x] Ensure that these settings can be disabled from the individual sheet level.
+- [x] Ensure the unset individual sheet level loads properly based default settings.
+- [x] Find a place to put these settings.

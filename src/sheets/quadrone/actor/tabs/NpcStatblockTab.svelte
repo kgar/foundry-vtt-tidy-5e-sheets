@@ -41,8 +41,7 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  // TODO: clean up before going to main
-  let tabOptionGroups: SectionOptionGroup[] = $derived.by(() => {
+    let tabOptionGroups: SectionOptionGroup[] = $derived.by(() => {
     const preferences = UserPreferencesService.get();
 
     const preferencesProp = UserPreferencesService.getProp();
