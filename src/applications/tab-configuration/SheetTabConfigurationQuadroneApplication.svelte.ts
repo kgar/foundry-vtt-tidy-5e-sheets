@@ -20,10 +20,30 @@ import { error } from 'src/utils/logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { settings } from 'src/settings/settings.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
+import type { SheetTabConfiguration } from 'src/settings/settings.types';
 
 export type SheetTabConfigurationContext = {
   entry: TabConfigContextEntry;
 };
+
+type GetTabConfigFn = (actor: any) => SheetTabConfiguration | null | undefined;
+type SetTabConfigFn = (
+  actor: any,
+  config: SheetTabConfiguration
+) => Promise<void> | undefined;
+type GetTabContextFn = (
+  doc: any,
+  setting: SheetTabConfiguration
+) => TabConfigContextEntry | undefined;
+
+export type SheetTabConfigurationQuadroneApplicationConfiguration =
+  DocumentSheetApplicationConfiguration & {
+    customTabConfigProvider?: {
+      getTabConfig: GetTabConfigFn;
+      setTabsConfig: SetTabConfigFn;
+      getTabContext: GetTabContextFn;
+    };
+  };
 
 /**
  * Document-specific tab configuration application.
@@ -32,7 +52,7 @@ export type SheetTabConfigurationContext = {
  * **Note**: The runtime default is designed to always be available when there are no user-defined settings present.
  */
 export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialog<
-  DocumentSheetApplicationConfiguration,
+  SheetTabConfigurationQuadroneApplicationConfiguration,
   SheetTabConfigurationContext
 >() {
   _config: SheetTabConfigurationContext = $state({
@@ -49,13 +69,26 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
   });
   /** When the document has no selected tabs, this is the fallback tab ID list. */
   _worldDefaultTabIds: string[] = $state([]);
+  _getTabConfig: GetTabConfigFn;
+  _setTabConfig: SetTabConfigFn;
+  _getTabContext: GetTabContextFn;
 
-  constructor(options: DocumentSheetApplicationConfiguration) {
+  constructor(options: SheetTabConfigurationQuadroneApplicationConfiguration) {
     super(options);
     this._worldDefaultTabIds =
       settings.value.tabConfiguration[options.document.documentName]?.[
         options.document.type
       ]?.selected ?? [];
+
+    this._getTabConfig =
+      options.customTabConfigProvider?.getTabConfig ??
+      TidyFlags.tabConfiguration.get;
+    this._setTabConfig =
+      options.customTabConfigProvider?.setTabsConfig ??
+      TidyFlags.tabConfiguration.set;
+    this._getTabContext =
+      options.customTabConfigProvider?.getTabContext ??
+      SheetTabConfigurationQuadroneApplication._getConfigFromRuntime;
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
@@ -100,30 +133,38 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
   }
 
   _getConfig() {
-    let setting = TidyFlags.tabConfiguration.get(this.document);
+    let setting = this._getTabConfig(this.document);
     setting ??= { selected: [] };
     setting.selected ??= [];
     if (!setting.selected.length) {
       setting.selected = this._worldDefaultTabIds ?? [];
     }
 
-    if (this.document.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
-      const runtime = getActorRuntime(this.document.type);
+    const context = this._getTabContext(this.document, setting);
+
+    if (!context) {
+      error(
+        `An error occurred while loading tab configuration for this sheet. The sheet type is not supported. Document Name: ${this.document.documentName} | Document Type: ${this.document.type}`
+      );
+      throw new Error(
+        `Tab Configuration: Sheet type ${this.document.type} not supported`
+      );
+    }
+
+    return context;
+  }
+
+  static _getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
+    if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
+      const runtime = getActorRuntime(doc.type);
       if (runtime) {
-        return getActorTabContext(runtime, this.document.type, setting);
+        return getActorTabContext(runtime, doc.type, setting);
       }
     }
 
-    if (this.document.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
-      return getItemTabContext(this.document.type, setting);
+    if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
+      return getItemTabContext(doc.type, setting);
     }
-
-    error(
-      `An error occurred while loading tab configuration for this sheet. The sheet type is not supported. Document Name: ${this.document.documentName} | Document Type: ${this.document.type}`
-    );
-    throw new Error(
-      `Tab Configuration: Sheet type ${this.document.type} not supported`
-    );
   }
 
   async save() {
@@ -139,7 +180,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
         ? []
         : curr.selected.map((s) => s.id);
 
-    return await TidyFlags.tabConfiguration.set(this.document, {
+    return await this._setTabConfig(this.document, {
       selected: selected,
     });
   }
@@ -158,13 +199,13 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       return;
     }
 
-    let config = TidyFlags.tabConfiguration.get(this.document) ?? {
+    let config = this._getTabConfig(this.document) ?? {
       selected: [],
     };
 
     config.selected = [];
 
-    await TidyFlags.tabConfiguration.set(this.document, config);
+    await this._setTabConfig(this.document, config);
 
     await this.close();
   }
