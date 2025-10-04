@@ -51,7 +51,7 @@
   {/if}
   <span class="item-price-number" class:truncate>
     <!-- Value Text -->
-    <span class="color-text-default font-weight-label">
+    <span class="color-text-default text-data">
       {#if !conceal || gmEditMode}
         {itemValueText}
       {:else}

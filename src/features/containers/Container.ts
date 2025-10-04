@@ -132,9 +132,13 @@ export class Container {
   ): Promise<ContainerCapacityContext> {
     const context = await container.system.computeCapacity();
 
-    if (container.system.capacity.type === 'weight') {
-      context.units = FoundryAdapter.getWeightUnit();
-    }
+    context.units = container.system.capacity.count
+      ? FoundryAdapter.localize('DND5E.Items')
+      : container.system.capacity.weight.value
+      ? CONFIG.DND5E.weightUnits[container.system.capacity.weight.units]
+          ?.abbreviation ?? container.system.capacity.weight.units
+      // TODO: someday deal with volume; currently, the system has no answer for volume tracking. You can set a max volume amount, but no items track how much volume they take up.
+      : undefined;
 
     return context;
   }
