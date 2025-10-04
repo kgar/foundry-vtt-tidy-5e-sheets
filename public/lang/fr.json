@@ -928,5 +928,28 @@
         "hint": "Permet au MD de contrôler les informations sur les membres du groupe qu'un utilisateur peut voir sur la feuille de groupe. Lorsque le joueur n'a pas la permission d'accéder à un membre du groupe, la feuille de groupe n'affiche pas ce membre ni ses informations globales. Avec une permission limitée, l'utilisateur peut voir le nom du membre mais aucune autre information. Avec la permission Observer ou plus, l'utilisateur peut voir toutes les informations de la fiche de groupe concernant le membre."
     },
     "TIDY5E.AggregateSkill.HighMeasure": "Haut",
-    "TIDY5E.AggregateSkill.LowMeasure": "Bas"
+    "TIDY5E.AggregateSkill.LowMeasure": "Bas",
+    "TIDY5E.Group.PrimaryParty.Label": "Parti primaire",
+    "TIDY5E.CombatTabName": "Combat",
+    "TIDY5E.Difficulty": "Difficulté",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "Combatants",
+        "Combat.IncludeInCombat.Tooltip": "Inclure dans les activités de combat",
+        "Combat.ExcludeFromCombat.Tooltip": "Exclure des activités de combat",
+        "AddMember.Label": "Ajouter un membre",
+        "AddPlaceholderToCombatTracker.Label": "Ajouter à la rencontre actuelle en tant qu'emplacement",
+        "AddPlaceholder.Label": "Créer un emplacement de combat",
+        "DeletePlaceholder.Label": "Supprimer l'emplacement",
+        "DifficultyTarget.Label": "Cible de difficulté",
+        "AddAllPlaceholders.Label": "Ajouter tout en tant qu'emplacement",
+        "PrerollInitiative": "Pré-lancer l'initiative",
+        "NewPlaceholder.Name": "Nouvel emplacement",
+        "NewPlaceholder.SubtitlePlaceholderText": "Remarque concernant cet emplacement",
+        "AddCombatants.MustHaveEncounter.Message": "Vous devez avoir sélectionné une rencontre pour l'ajouter au suivi des rencontres",
+        "CombatVisibility.Hidden.Label": "Caché aux joueurs lorsqu'il est ajouté au suivi",
+        "CombatVisibility.Visible.Label": "Visible par les joueurs lorsqu'il est ajouté au suivi",
+        "InitiativeCount.Label": "Ajouter le nombre d'initiatives {count}",
+        "PlaceholderNameField.PlaceholderText": "Nom de L'emplacement",
+        "PlaceholderNotesField.PlaceholderText": "Notes"
+    }
 }
