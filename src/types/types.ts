@@ -1195,6 +1195,7 @@ export type CharacterSheetQuadroneContext = {
   species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
+  specialTraits: ActorTraitContext[];
   spellcasting: SpellcastingClassContext[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;

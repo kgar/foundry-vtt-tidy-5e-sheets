@@ -20,6 +20,7 @@ import type {
   FavoriteContextEntry,
   InspirationSource,
   FeatureSection,
+  ActorTraitContext,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -214,6 +215,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             name: species.name,
           }
         : undefined,
+      specialTraits: this._getSpecialTraits(),
       speeds: this._getCharacterMovementSpeeds(),
       spellbook: [],
       spellcasting: this._prepareSpellcastingClassContext(),
@@ -270,6 +272,18 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  private _getSpecialTraits(): ActorTraitContext[] {
+    const characterFlags = CONFIG.DND5E.characterFlags;
+    const dnd5eFlags = this.actor.flags.dnd5e;
+    return Object.entries(characterFlags)
+      .filter(([name]) => name in dnd5eFlags && dnd5eFlags[name] !== false)
+      .map(([key, val]) => {
+        if ('type' in val && val.type === Number)
+          return { label: val.name, value: dnd5eFlags[key] };
+        return { label: val.name };
+      });
   }
 
   public static async tryGetInspirationSource(
