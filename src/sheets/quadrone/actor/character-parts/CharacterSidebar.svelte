@@ -7,7 +7,10 @@
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { setContext, untrack } from 'svelte';
   import { CONSTANTS } from 'src/constants';
-    import SidebarTabTraits from '../tabs/SidebarTabTraits.svelte';
+  import SidebarTabTraits from '../tabs/SidebarTabTraits.svelte';
+  import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+  import { TidyFlags } from 'src/api';
+  import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -20,7 +23,7 @@
     });
   });
 
-  let tabs: Tab[] = $state([
+  let registeredSidebarTabs: Tab[] = $state([
     {
       id: 'sidebar-favorites',
       title: 'DND5E.Favorites',
@@ -51,6 +54,23 @@
     } satisfies Tab,
   ]);
 
+  let tabs = $derived.by(() => {
+    let tabIds = registeredSidebarTabs.map((tab) => tab.id);
+
+    const selectedTabs =
+      TidyFlags.sidebarTabConfiguration.get(context.actor)?.selected ?? [];
+
+    if (selectedTabs?.length) {
+      tabIds = tabIds
+        .filter((t) => selectedTabs?.includes(t))
+        .sort((a, b) => selectedTabs.indexOf(a) - selectedTabs.indexOf(b));
+    }
+
+    return tabIds
+      .map((tabId) => registeredSidebarTabs.find((tab) => tab.id === tabId))
+      .filter((t) => !!t);
+  });
+
   function onSidebarTabSelected(tabId: string) {
     context.actor.sheet.currentSidebarTabId = tabId;
   }
@@ -59,11 +79,38 @@
 </script>
 
 <div class="sidebar-header" data-tidy-sheet-part="sidebar-header">
-  <Tabs
-    bind:selectedTabId
-    {tabs}
-    cssClass="sidebar-tab-strip button-group"
-    tabCssClass="button button-secondary button-toggle"
-  />
+  <div class="flexrow">
+    <Tabs
+      bind:selectedTabId
+      {tabs}
+      cssClass="sidebar-tab-strip button-group"
+      tabCssClass="button button-secondary button-toggle"
+    ></Tabs>
+    {#if context.unlocked}
+      <button
+        type="button"
+        class="flexshrink button button-borderless button-icon-only button-config"
+        onclick={() =>
+          new SheetTabConfigurationQuadroneApplication({
+            document: context.document,
+            customTabConfigProvider: {
+              getTabConfig: TidyFlags.sidebarTabConfiguration.get,
+              setTabsConfig: TidyFlags.sidebarTabConfiguration.set,
+              getTabContext: (doc, setting) => {
+                return buildTabConfigContextEntry(
+                  doc.documentName,
+                  doc.type,
+                  [...registeredSidebarTabs],
+                  setting,
+                  registeredSidebarTabs.map((x) => x.id),
+                );
+              },
+            },
+          }).render({ force: true })}
+      >
+        <i class="fas fa-cog"></i>
+      </button>
+    {/if}
+  </div>
 </div>
 <TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents flexcol" />

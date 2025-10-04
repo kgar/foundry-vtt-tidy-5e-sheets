@@ -2,6 +2,11 @@
 
 ### Short List
 
+- [x] PC Sidebar Tab Selection - implement POC
+- [ ] PC Sidebar Tab Selection - use custom title "Tab Selection: Player Character Sidebar"
+- [ ] PC Sidebar Tab Selection - create runtime
+- [ ] PC Sidebar Tab Selection - prepare within PC context prep
+- [ ] PC Sidebar Tab Selection - create API surface area
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [ ] Character sheet
   - [ ] NPC sheet

@@ -1261,6 +1261,29 @@ export class TidyFlags {
     },
   };
 
+  // TODO: Document before going to main
+  static sidebarTabConfiguration = {
+    key: 'sidebar-tab-configuration',
+    prop: TidyFlags.getFlagPropertyPath('sidebar-tab-configuration'),
+    get(doc: any): SheetTabConfiguration | null | undefined {
+      return TidyFlags.tryGetFlag<SheetTabConfiguration>(
+        doc,
+        TidyFlags.sidebarTabConfiguration.key
+      );
+    },
+    set(doc: any, config: SheetTabConfiguration) {
+      return TidyFlags.setFlag(
+        doc,
+        TidyFlags.sidebarTabConfiguration.key,
+        config
+      );
+    },
+    unset(doc: any) {
+      return TidyFlags.unsetFlag(doc, TidyFlags.sidebarTabConfiguration.key);
+    },
+  };
+
+  // TODO: Document before going to main
   static tabConfiguration = {
     key: 'tab-configuration',
     prop: TidyFlags.getFlagPropertyPath('tab-configuration'),
