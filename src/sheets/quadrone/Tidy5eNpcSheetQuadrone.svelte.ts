@@ -231,6 +231,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
 
+    // Prepare owned items
+    this._prepareItems(context);
+
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
       ctx.containerContents = await Container.getContainerContents(
@@ -302,6 +305,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {
+    const isImportant = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
+
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: false }
@@ -386,12 +391,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const inventoryTypes = Inventory.getInventoryTypes();
     const inventoryTypesSet = new Set(inventoryTypes);
 
-    const statblockItems = context.important
-      ? this.actor.itemTypes.feat.concat(this.actor.itemTypes.weapon)
-      : this.actor.items;
-
     // TODO: We could loop less by doing all of this in the single pass over items.
-    statblockItems.forEach((item: Item5e) => {
+    this.actor.items.forEach((item: Item5e) => {
       if (
         !inventoryTypesSet.has(item.type) &&
         item.type !== CONSTANTS.ITEM_TYPE_FEAT
@@ -426,6 +427,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           : !activationType && inventoryTypesSet.has(item.type)
           ? 'items'
           : activationType || 'passive';
+
+      if (isImportant && section === 'items') {
+        // Important NPCs are anticipated to have potentially a large number of items.
+        // Exclude non-actionable inventory items from the Important NPC's statblock tab.
+        return;
+      }
 
       featureSections[section]?.items.push(item);
     });

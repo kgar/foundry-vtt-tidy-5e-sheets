@@ -36,7 +36,6 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
-import { settings } from 'src/settings/settings.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 
 export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
