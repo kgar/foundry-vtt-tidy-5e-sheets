@@ -9,7 +9,7 @@ import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { TidyFlags } from "src/foundry/TidyFlags";
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
 
 export class ActorSheetQuadroneRuntime<
@@ -36,7 +36,8 @@ export class ActorSheetQuadroneRuntime<
   async getTabs(context: TSheetContext): Promise<Tab[]> {
     let tabIds = this._tabs.map((x) => x.id);
 
-    const selectedTabs = TidyFlags.tabConfiguration.get(context.actor)?.selected ?? [];
+    const selectedTabs =
+      TidyFlags.tabConfiguration.get(context.actor)?.selected ?? [];
 
     if (selectedTabs?.length) {
       tabIds = tabIds
@@ -104,6 +105,11 @@ export class ActorSheetQuadroneRuntime<
     }
 
     this._tabs.push(tab);
+
+    const includeAsDefault = options?.includeAsDefaultTab ?? true;
+    if (includeAsDefault && !this._defaultTabIds.includes(tab.id)) {
+      this._defaultTabIds.push(tab.id);
+    }
   }
 
   getTabTitle(tabId: string) {

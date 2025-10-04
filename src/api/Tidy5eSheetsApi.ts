@@ -891,7 +891,7 @@ export class Tidy5eSheetsApi {
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
-        ItemSheetQuadroneRuntime.registerTab(registeredTab);
+        ItemSheetQuadroneRuntime.registerTab(registeredTab, options);
       }
     }
   }
