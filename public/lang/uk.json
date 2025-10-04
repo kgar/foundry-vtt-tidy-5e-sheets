@@ -946,5 +946,11 @@
         "PlaceholderNameField.PlaceholderText": "Назва заповнювача",
         "PlaceholderNotesField.PlaceholderText": "Нотатки"
     },
-    "TIDY5E.Actor.Characteristics": "Характеристики"
+    "TIDY5E.Actor.Characteristics": "Характеристики",
+    "TIDY5E.Show": "Показати",
+    "TIDY5E.Hide": "Приховати",
+    "TIDY5E.LegendaryLairToolbar": "Легендарна/Лігво панель інструментів",
+    "TIDY5E.SpellbookSections": "Розділи книги заклинань",
+    "TIDY5E.UserDefaultPrefix": "Користувач за замовчуванням: {value}",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Глобальні параметри відображення за замовчуванням"
 }
