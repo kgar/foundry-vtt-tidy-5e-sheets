@@ -35,6 +35,7 @@ import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
+import { debug } from 'src/utils/logging';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -169,6 +170,10 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       features: [],
       habitats: [],
       important,
+      includeSpellbookInStatblockTab:
+        TidyFlags.includeSpellbookInNpcStatblockTab.get(this.actor) ??
+        userPreferences.includeSpellbookInNpcStatblockTab ??
+        true,
       inventory: [],
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
@@ -194,7 +199,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       showLegendaryResistances:
         actorContext.unlocked || this.actor.system.resources.legres.max,
       showLegendariesOnStatblockTab:
-        userPreferences.showLegendariesOnNpcStatblock === true,
+        TidyFlags.showLegendariesOnNpcStatblock.get(this.actor) ??
+        userPreferences.showLegendariesOnNpcStatblock ??
+        true,
       showLoyaltyTracker:
         important &&
         game.settings.get('dnd5e', 'loyaltyScore') &&
@@ -223,6 +230,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
+
+    // Prepare owned items
+    this._prepareItems(context);
 
     for (const panelItem of context.containerPanelItems) {
       const ctx = context.itemContext[panelItem.container.id];
@@ -295,6 +305,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {
+    const isImportant = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
+
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: false }
@@ -374,35 +386,56 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       'passive'
     );
 
+    featureSections.items = createNewStatblockSection('DND5E.Items', 'items');
+
+    const inventoryTypes = Inventory.getInventoryTypes();
+    const inventoryTypesSet = new Set(inventoryTypes);
+
     // TODO: We could loop less by doing all of this in the single pass over items.
-    this.actor.itemTypes.feat
-      .concat(this.actor.itemTypes.weapon)
-      .forEach((item: Item5e) => {
-        const customSectionName = TidyFlags.section.get(item);
+    this.actor.items.forEach((item: Item5e) => {
+      if (
+        !inventoryTypesSet.has(item.type) &&
+        item.type !== CONSTANTS.ITEM_TYPE_FEAT
+      ) {
+        return;
+      }
 
-        if (customSectionName) {
-          const section = (featureSections[customSectionName] ??=
-            createNewStatblockSection(
-              FoundryAdapter.localize(customSectionName),
-              customSectionName,
-              customSectionName
-            ));
+      const customSectionName = TidyFlags.section.get(item);
 
-          section.items.push(item);
-          return;
-        }
+      if (customSectionName) {
+        const section = (featureSections[customSectionName] ??=
+          createNewStatblockSection(
+            FoundryAdapter.localize(customSectionName),
+            customSectionName,
+            customSectionName
+          ));
 
-        const isPassive =
-          item.system.properties?.has('trait') ||
-          CONFIG.DND5E.activityActivationTypes[
-            item.system.activities?.contents[0]?.activation.type
-          ]?.passive;
-        const section = isPassive
+        section.items.push(item);
+        return;
+      }
+
+      const activationType =
+        item.system.activities?.contents[0]?.activation.type;
+
+      const isPassive =
+        item.system.properties?.has('trait') ||
+        CONFIG.DND5E.activityActivationTypes[activationType]?.passive;
+
+      const section =
+        isPassive && !inventoryTypesSet.has(item.type)
           ? 'passive'
-          : item.system.activities?.contents[0]?.activation.type || 'passive';
+          : !activationType && inventoryTypesSet.has(item.type)
+          ? 'items'
+          : activationType || 'passive';
 
-        featureSections[section]?.items.push(item);
-      });
+      if (isImportant && section === 'items') {
+        // Important NPCs are anticipated to have potentially a large number of items.
+        // Exclude non-actionable inventory items from the Important NPC's statblock tab.
+        return;
+      }
+
+      featureSections[section]?.items.push(item);
+    });
 
     // Remove any default sections that did not receive an item.
     for (let key of Object.keys(featureSections)) {
@@ -422,7 +455,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       );
     });
 
-    const inventoryTypes = Inventory.getInventoryTypes();
     // Organize items
     // Section the items by type
     for (let item of inventoryItems) {
@@ -594,5 +626,15 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       ui.notifications.error('DND5E.HPFormulaError', { localize: true });
       throw error;
     }
+  }
+
+  applyAverageHP() {
+    let formula = this.actor.system.attributes.hp.formula;
+    const average = FoundryAdapter.calculateAverageFromFormula(formula);
+
+    return this.actor.update({
+      ['system.attributes.hp.value']: average,
+      ['system.attributes.hp.max']: average,
+    });
   }
 }

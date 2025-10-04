@@ -244,6 +244,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       );
     }
 
+    // Prepare owned items
+    this._prepareItems(context);
+
     await this._prepareFacilities(context);
 
     context.skills = this._getSkillsToolsContext(context, 'skills');

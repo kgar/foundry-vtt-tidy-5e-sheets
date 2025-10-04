@@ -67,6 +67,9 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         ...actorContext,
       };
 
+      // Prepare owned items
+      this._prepareItems(context);
+
       for (const panelItem of context.containerPanelItems) {
         const ctx = context.itemContext[panelItem.container.id];
         ctx.containerContents = await Container.getContainerContents(
@@ -81,7 +84,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       return context;
     }
 
-    _prepareItems(context: TContext) {
+    _prepareItems(context: MultiActorQuadroneContext<any>) {
       const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
         context,
         { hasActionsTab: false, canEquip: false }

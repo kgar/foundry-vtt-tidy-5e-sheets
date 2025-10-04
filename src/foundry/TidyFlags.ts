@@ -395,16 +395,45 @@ export class TidyFlags {
     },
   };
 
+  static showLegendariesOnNpcStatblock = {
+    key: 'showLegendariesOnNpcStatblock',
+    prop: TidyFlags.getFlagPropertyPath('showLegendariesOnNpcStatblock'),
+    /** Gets whether to show legendary panels in the NPC Statblock tab. */
+    get(document: any): boolean | null {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          document,
+          TidyFlags.showLegendariesOnNpcStatblock.key
+        ) ?? null
+      );
+    },
+    /** Sets whether to show legendary panels in the NPC Statblock tab. */
+    set(document: any, value: boolean = true) {
+      return TidyFlags.setFlag(
+        document,
+        TidyFlags.showLegendariesOnNpcStatblock.key,
+        value
+      );
+    },
+    /** Clears whether to show legendary panels in the NPC Statblock tab. */
+    unset(document: any) {
+      return TidyFlags.unsetFlag(
+        document,
+        TidyFlags.showLegendariesOnNpcStatblock.key
+      );
+    },
+  };
+
   static includeSpellbookInNpcStatblockTab = {
     key: 'includeSpellbookInNpcStatblockTab',
     prop: TidyFlags.getFlagPropertyPath('includeSpellbookInNpcStatblockTab'),
     /** Gets whether to include spellbook sections in the NPC Statblock tab. */
-    get(document: any): boolean {
+    get(document: any): boolean | null {
       return (
         TidyFlags.tryGetFlag<boolean>(
           document,
           TidyFlags.includeSpellbookInNpcStatblockTab.key
-        ) === true
+        ) ?? null
       );
     },
     /** Sets whether to include spellbook sections in the NPC Statblock tab. */

@@ -23,19 +23,19 @@ export type BooleanSetting = {
   default?: boolean;
 };
 
-export type RadioSettingOption = {
+export type RadioSettingOption<TValue> = {
   label: string;
-  value: string;
+  value: TValue;
   checked?: boolean;
 };
 
-export type RadioSetting = {
+export type RadioSetting<TValue> = {
   type: 'radio';
-  options: RadioSettingOption[];
-  selected?: string;
+  options: RadioSettingOption<TValue>[];
+  selected?: TValue;
   prop: string;
   doc?: any;
-  default?: string;
+  default?: TValue;
 };
 
 export type ButtonSetting = {
@@ -45,7 +45,7 @@ export type ButtonSetting = {
   onclick: (ev: MouseEvent & { currentTarget: HTMLElement }, doc: any) => void;
 };
 
-export type SectionSetting = BooleanSetting | RadioSetting | ButtonSetting;
+export type SectionSetting = BooleanSetting | RadioSetting<any> | ButtonSetting;
 
 export type SectionOptionGroup = {
   title: string;

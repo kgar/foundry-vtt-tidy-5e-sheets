@@ -348,9 +348,6 @@ export function Tidy5eActorSheetQuadroneBase<
         ...documentSheetContext,
       };
 
-      // Prepare owned items
-      this._prepareItems(context);
-
       // Concentration
       this._applyConcentration(context);
 
@@ -421,13 +418,6 @@ export function Tidy5eActorSheetQuadroneBase<
 
       return labels;
     }
-
-    /**
-     * Prepare the data structure for items which appear on the actor sheet.
-     * Each subclass overrides this method to implement type-specific logic.
-     * @protected
-     */
-    _prepareItems(context: ActorSheetQuadroneContext) {}
 
     _prepareSpellcastingClassContext(): SpellcastingClassContext[] {
       let spellcasting: SpellcastingClassContext[] = [];
