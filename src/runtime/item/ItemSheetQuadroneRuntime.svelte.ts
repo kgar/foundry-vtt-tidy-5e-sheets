@@ -167,7 +167,7 @@ class ItemSheetQuadroneRuntimeImpl {
 
   registerTab(
     tab: RegisteredTab<ItemSheetQuadroneContext>,
-    options: ItemTabRegistrationOptions | undefined
+    options?: ItemTabRegistrationOptions
   ) {
     this._tabs.push(tab);
     

@@ -86,7 +86,7 @@ export class ActorSheetQuadroneRuntime<
 
   registerTab(
     tab: RegisteredTab<TSheetContext>,
-    options: ActorTabRegistrationOptions | undefined
+    options?: ActorTabRegistrationOptions
   ) {
     const tabExists = this._tabs.some(
       (existingTab) => existingTab.id === tab.id
