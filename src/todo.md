@@ -7,6 +7,7 @@
 - [ ] PC Sidebar Tab Selection - create runtime
 - [ ] PC Sidebar Tab Selection - prepare within PC context prep
 - [ ] PC Sidebar Tab Selection - create API surface area
+- [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [ ] Character sheet
   - [ ] NPC sheet
