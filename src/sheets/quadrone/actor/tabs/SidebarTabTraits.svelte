@@ -3,8 +3,7 @@
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
-  import NpcTraitCreatureType from '../npc-parts/traits/NpcTraitCreatureType.svelte';
-  import NpcTraitSize from '../npc-parts/traits/NpcTraitSize.svelte';
+  import ActorTraitSize from '../parts/ActorTraitSize.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -12,6 +11,11 @@
 </script>
 
 <div class="list traits">
+  <!-- Size -->
+  {#if context.unlocked}
+    <ActorTraitSize />
+  {/if}
+
   <!-- Speed -->
   <ActorTraitConfigurableListEntry
     configButtonLocation="label"
@@ -32,13 +36,7 @@
     icon="fa-solid fa-eye"
   />
 
-  <!-- Size -->
-  {#if context.unlocked}
-    <NpcTraitSize />
-  {/if}
 
-  <!-- Creature Type -->
-  <NpcTraitCreatureType />
 
   <!-- Resistances -->
   <ActorTraitConfigurableListEntry

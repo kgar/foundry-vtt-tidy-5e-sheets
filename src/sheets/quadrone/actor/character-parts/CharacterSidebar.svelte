@@ -47,7 +47,7 @@
         type: 'svelte',
         component: SidebarTabTraits,
       },
-      iconClass: 'fa-solid fa-poo-storm',
+      iconClass: 'fa-solid fa-list-ul',
     } satisfies Tab,
   ]);
 
