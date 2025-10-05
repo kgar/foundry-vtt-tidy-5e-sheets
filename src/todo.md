@@ -9,7 +9,7 @@
 - [X] PC Sidebar Tab Selection - prepare within PC context prep
 - [ ] PC Sidebar Tab Selection - create API surface area
 - [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
-- [ ] PC Sidebar Tab Selection - Add to world tab configuration
+- [x] PC Sidebar Tab Selection - Add to world tab configuration
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [ ] Character sheet
