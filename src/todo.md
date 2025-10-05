@@ -2,14 +2,6 @@
 
 ### Short List
 
-- [x] PC Sidebar Tab Selection - implement POC
-- [x] PC Sidebar Tab Selection - use custom title "Tab Selection: Player Character Sidebar"
-- [x] PC Sidebar Tab Selection - create runtime
-- [x] PC Sidebar Tab Selection - create world setting for default sidebar tabs; plug into runtime construction in sidebar runtime file
-- [X] PC Sidebar Tab Selection - prepare within PC context prep
-- [x] PC Sidebar Tab Selection - create API surface area
-- [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
-- [x] PC Sidebar Tab Selection - Add to world tab configuration
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [ ] Character sheet
@@ -374,3 +366,11 @@ Limited:
 - [x] Ensure that these settings can be disabled from the individual sheet level.
 - [x] Ensure the unset individual sheet level loads properly based default settings.
 - [x] Find a place to put these settings.
+- [x] PC Sidebar Tab Selection - implement POC
+- [x] PC Sidebar Tab Selection - use custom title "Tab Selection: Player Character Sidebar"
+- [x] PC Sidebar Tab Selection - create runtime
+- [x] PC Sidebar Tab Selection - create world setting for default sidebar tabs; plug into runtime construction in sidebar runtime file
+- [X] PC Sidebar Tab Selection - prepare within PC context prep
+- [x] PC Sidebar Tab Selection - create API surface area
+- [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
+- [x] PC Sidebar Tab Selection - Add to world tab configuration
