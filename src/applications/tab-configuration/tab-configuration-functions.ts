@@ -70,7 +70,7 @@ export function buildTabConfigContextEntry(
   allRegisteredTabs: { id: string; title: CustomTabTitle }[],
   settings: SheetTabConfiguration | undefined | null,
   defaultSelectedIds: string[]
-) {
+): TabConfigContextEntry {
   let configSectionTitle = FoundryAdapter.localize(
     `TYPES.${documentName}.${type}`
   );

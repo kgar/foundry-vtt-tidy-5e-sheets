@@ -14,9 +14,6 @@ import { settings } from 'src/settings/settings.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 
 type GetTabConfigFn = (actor: any) => SheetTabConfiguration | null | undefined;
-type GetWorldSelectedDefaultTabsFn<TContext> = (
-  context: TContext
-) => string[] | null | undefined;
 
 export class ActorSheetQuadroneRuntime<
   TSheetContext extends ActorSheetQuadroneContext
@@ -26,14 +23,14 @@ export class ActorSheetQuadroneRuntime<
   private _defaultTabIds = $state<string[]>([]);
 
   private _getTabConfig: GetTabConfigFn;
-  private _getWorldDefaultSelectedTabs: GetWorldSelectedDefaultTabsFn<TSheetContext>;
+  private _docTypeKeyOverride?: string;
 
   constructor(
     nativeTabs: RegisteredTab<TSheetContext>[],
     defaultTabIds: string[],
-    dataSourceFunctions?: {
-      getTabConfig: GetTabConfigFn;
-      getWorldSelectedDefaultTabsFn: GetWorldSelectedDefaultTabsFn<TSheetContext>;
+    overrides?: {
+      getTabConfig?: GetTabConfigFn;
+      docTypeKeyOverride?: string;
     }
   ) {
     this._tabs = [...nativeTabs];
@@ -41,15 +38,9 @@ export class ActorSheetQuadroneRuntime<
     this._defaultTabIds = defaultTabIds;
 
     this._getTabConfig =
-      dataSourceFunctions?.getTabConfig ?? TidyFlags.tabConfiguration.get;
+      overrides?.getTabConfig ?? TidyFlags.tabConfiguration.get;
 
-    this._getWorldDefaultSelectedTabs =
-      dataSourceFunctions?.getWorldSelectedDefaultTabsFn ??
-      ((context) => {
-        return settings.value.tabConfiguration[context.document.documentName]?.[
-          context.document.type
-        ]?.selected;
-      });
+    this._docTypeKeyOverride = overrides?.docTypeKeyOverride;
   }
 
   async getContent(context: TSheetContext): Promise<CustomContent[]> {
@@ -68,7 +59,10 @@ export class ActorSheetQuadroneRuntime<
         .filter((t) => selectedTabs?.includes(t))
         .sort((a, b) => selectedTabs.indexOf(a) - selectedTabs.indexOf(b));
     } else {
-      let defaultTabs = this._getWorldDefaultSelectedTabs(context) ?? [];
+      let defaultTabs =
+        settings.value.tabConfiguration[context.document.documentName]?.[
+          this._docTypeKeyOverride ?? context.document.type
+        ]?.selected ?? [];
 
       if (!defaultTabs.length) {
         defaultTabs = this.getDefaultTabIds();

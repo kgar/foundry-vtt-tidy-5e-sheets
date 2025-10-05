@@ -44,6 +44,6 @@ export const CharacterSheetQuadroneSidebarRuntime =
     [CONSTANTS.TAB_FAVORITES, CONSTANTS.TAB_SKILLS, CONSTANTS.TAB_TRAITS],
     {
       getTabConfig: TidyFlags.sidebarTabConfiguration.get,
-      getWorldSelectedDefaultTabsFn: (document) => []
+      docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
     }
   );

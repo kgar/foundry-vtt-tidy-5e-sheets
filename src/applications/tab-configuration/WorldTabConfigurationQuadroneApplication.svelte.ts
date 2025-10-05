@@ -14,9 +14,11 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import type { TabConfigContextEntry } from './tab-configuration.types';
 import {
+  buildTabConfigContextEntry,
   getActorTabContext,
   getItemTabContext,
 } from './tab-configuration-functions';
+import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 
 export type WorldTabConfigContext = TabConfigContextEntry[];
 
@@ -79,6 +81,23 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       )
     );
 
+    const characterSidebarContext = buildTabConfigContextEntry(
+      CONSTANTS.DOCUMENT_NAME_ACTOR,
+      CONSTANTS.SHEET_TYPE_CHARACTER,
+      CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
+      actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
+      CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+    );
+
+    characterSidebarContext.title = FoundryAdapter.localize(
+      'TIDY5E.Character.Sidebar.Title'
+    );
+
+    characterSidebarContext.docTypeKeyOverride =
+      CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR;
+
+    config.push(characterSidebarContext);
+
     config.push(
       getActorTabContext(
         NpcSheetQuadroneRuntime,
@@ -130,7 +149,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
   async apply() {
     let toSave = this._config.reduce<TabConfiguration>((prev, curr) => {
-      let docType = (prev[curr.documentName] ??= {});
+      let docName = (prev[curr.documentName] ??= {});
 
       // When selected tabs exactly match default selections, exclude that sheet type from settings, which represents taking the default tabs.
       let selected =
@@ -140,7 +159,9 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
           : curr.selected;
 
       if (selected) {
-        docType[curr.documentType] = {
+        const docTypeKey = curr.docTypeKeyOverride ?? curr.documentType;
+
+        docName[docTypeKey] = {
           selected: selected.map((s) => s.id),
         };
       }

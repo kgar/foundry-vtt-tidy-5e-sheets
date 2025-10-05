@@ -50,6 +50,8 @@ import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRunti
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
+import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -70,6 +72,33 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     position: {
       width: 740,
       height: 810,
+    },
+    actions: {
+      openSidebarTabConfiguration: async function (
+        this: Tidy5eCharacterSheetQuadrone
+      ) {
+        new SheetTabConfigurationQuadroneApplication({
+          document: this.document,
+          customTabConfigProvider: {
+            getTabConfig: TidyFlags.sidebarTabConfiguration.get,
+            setTabsConfig: TidyFlags.sidebarTabConfiguration.set,
+            getTabContext: (doc, setting) => {
+              return buildTabConfigContextEntry(
+                doc.documentName,
+                doc.type,
+                CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
+                setting,
+                CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+              );
+            },
+          },
+          title: FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+            documentName: FoundryAdapter.localize(
+              'TIDY5E.Character.Sidebar.Title'
+            ),
+          }),
+        }).render({ force: true });
+      },
     },
   };
 
