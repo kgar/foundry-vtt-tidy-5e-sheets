@@ -15,7 +15,10 @@ import type {
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
-import { CustomContentRendererV2 } from 'src/sheets/CustomContentRendererV2';
+import {
+  CustomContentRendererV2,
+  type RenderedSheetPart,
+} from 'src/sheets/CustomContentRendererV2';
 import { tick } from 'svelte';
 import { applySheetAttributesToWindow } from 'src/utils/applications.svelte';
 import { isNil } from 'src/utils/data';
@@ -161,7 +164,7 @@ export function TidyExtensibleDocumentSheetMixin<
 
     #customHTMLTags: string[] = ['PROSE-MIRROR'];
 
-    #customContentRenderer: CustomContentRendererV2 =
+    _customContentRenderer: CustomContentRendererV2 =
       new CustomContentRendererV2();
 
     #scrollPositions: Record<string, PriorElementScrollPosition[]> = {};
@@ -280,20 +283,31 @@ export function TidyExtensibleDocumentSheetMixin<
 
       try {
         const renderedTabParts = context.tabs
-          ? await this.#customContentRenderer.renderTabContents(
+          ? await this._customContentRenderer.renderTabContents(
               context.tabs,
               context,
               options
             )
           : [];
+
         const renderedContentParts = context.customContent
-          ? await this.#customContentRenderer.renderCustomContent(
+          ? await this._customContentRenderer.renderCustomContent(
               context.customContent,
               context,
               options
             )
           : [];
-        result.customContents = [...renderedTabParts, ...renderedContentParts];
+
+        const implementationCustomContents = await this._getCustomContents(
+          context,
+          options
+        );
+
+        result.customContents = [
+          ...renderedTabParts,
+          ...renderedContentParts,
+          ...implementationCustomContents,
+        ];
       } catch (e) {
         error(
           'An error occurred while rendering custom tabs and content.',
@@ -303,6 +317,20 @@ export function TidyExtensibleDocumentSheetMixin<
       }
 
       return result;
+    }
+
+    /**
+     * An overridable method whose array members will be included 
+     * in the custom content rendering logic.
+     * @param context the document sheet context data
+     * @param options render options for this particular render
+     * @returns 
+     */
+    _getCustomContents(
+      context: TContext,
+      options: TidyDocumentSheetRenderOptions
+    ): Promise<RenderedSheetPart[]> {
+      return Promise.resolve([]);
     }
 
     _toggleDisabled(disabled: boolean) {
@@ -455,7 +483,7 @@ export function TidyExtensibleDocumentSheetMixin<
         this.#saveScrollPositions(content);
         this.#saveInputFocus(content);
 
-        this.#customContentRenderer.replaceCustomContent(
+        this._customContentRenderer.replaceCustomContent(
           result.customContents,
           this,
           result.context,
@@ -697,11 +725,14 @@ export function TidyExtensibleDocumentSheetMixin<
           ...customControls.controls,
         ];
 
-        updatedOptions.window.controls.forEach(c => {
-          if (c.action === 'configureToken' || c.action === 'configurePrototypeToken') {
-            c.position = 'header'
+        updatedOptions.window.controls.forEach((c) => {
+          if (
+            c.action === 'configureToken' ||
+            c.action === 'configurePrototypeToken'
+          ) {
+            c.position = 'header';
           }
-        })
+        });
       } catch (e) {
         error('An error occurred while setting up custom controls.', false, {
           error: e,

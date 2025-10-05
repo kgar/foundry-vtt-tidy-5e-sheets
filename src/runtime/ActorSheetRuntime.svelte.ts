@@ -1,5 +1,5 @@
 import type { CustomContent, Tab } from 'src/types/types';
-import type { RegisteredContent, RegisteredTab, SheetLayout } from './types';
+import type { RegisteredContent, RegisteredTab } from './types';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';

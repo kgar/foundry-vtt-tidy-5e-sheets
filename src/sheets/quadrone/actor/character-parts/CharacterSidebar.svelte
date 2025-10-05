@@ -1,13 +1,9 @@
 <script lang="ts">
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import type { Tab } from 'src/types/types';
-  import SidebarTabSkills from 'src/sheets/quadrone/actor/tabs/SidebarTabSkills.svelte';
-  import SidebarTabFavorites from 'src/sheets/quadrone/actor/tabs/SidebarTabFavorites.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { setContext, untrack } from 'svelte';
   import { CONSTANTS } from 'src/constants';
-    import SidebarTabTraits from '../tabs/SidebarTabTraits.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -20,37 +16,6 @@
     });
   });
 
-  let tabs: Tab[] = $state([
-    {
-      id: 'sidebar-favorites',
-      title: 'DND5E.Favorites',
-      content: {
-        type: 'svelte',
-        component: SidebarTabFavorites,
-        cssClass: 'favorites',
-      },
-      iconClass: 'fa-solid fa-star',
-    } satisfies Tab,
-    {
-      id: 'sidebar-skills',
-      title: 'DND5E.Skills',
-      content: {
-        type: 'svelte',
-        component: SidebarTabSkills,
-      },
-      iconClass: 'fa-solid fa-briefcase',
-    } satisfies Tab,
-    {
-      id: 'sidebar-traits',
-      title: 'DND5E.Traits',
-      content: {
-        type: 'svelte',
-        component: SidebarTabTraits,
-      },
-      iconClass: 'fa-solid fa-list-ul',
-    } satisfies Tab,
-  ]);
-
   function onSidebarTabSelected(tabId: string) {
     context.actor.sheet.currentSidebarTabId = tabId;
   }
@@ -59,11 +24,26 @@
 </script>
 
 <div class="sidebar-header" data-tidy-sheet-part="sidebar-header">
-  <Tabs
-    bind:selectedTabId
-    {tabs}
-    cssClass="sidebar-tab-strip button-group"
-    tabCssClass="button button-secondary button-toggle"
-  />
+  <div class="flexrow">
+    <Tabs
+      bind:selectedTabId
+      tabs={context.sidebarTabs}
+      cssClass="sidebar-tab-strip button-group"
+      tabCssClass="button button-secondary button-toggle"
+    ></Tabs>
+    {#if context.unlocked}
+      <button
+        type="button"
+        class="flexshrink button button-borderless button-icon-only button-config"
+        data-action="openSidebarTabConfiguration"
+      >
+        <i class="fas fa-cog"></i>
+      </button>
+    {/if}
+  </div>
 </div>
-<TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents flexcol" />
+<TabContents
+  {selectedTabId}
+  tabs={context.sidebarTabs}
+  cssClass="sidebar-tab-contents flexcol"
+/>

@@ -23,13 +23,9 @@
     }
   });
 
-  function getTabId(documentName: string, documentType: string) {
-    return `${documentName}-${documentType}`;
-  }
-
   let tabs: TabStripInfo[] = $derived(
     config.map<TabStripInfo>((c) => ({
-      id: getTabId(c.documentName, c.documentType),
+      id: c.title.slugify(),
       title: c.title,
     })),
   );
@@ -43,11 +39,9 @@
   </div>
 
   {#each config as entry, i}
-    {@const tabId = getTabId(entry.documentName, entry.documentType)}
+    {@const tabId = entry.title.slugify()}
     {@const title = localize('TIDY5E.TabSelection.Title', {
-      documentName: localize(
-        `TYPES.${entry.documentName}.${entry.documentType}`,
-      ),
+      documentName: entry.title,
     })}
     <div
       class={[
@@ -55,7 +49,7 @@
         { active: tabId === selectedTabId },
         'flexcol',
         'configuration-tab',
-        'dialog-content'
+        'dialog-content',
       ]}
       data-tab-contents-for={tabId}
       role="tabpanel"
