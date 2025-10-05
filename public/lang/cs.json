@@ -924,5 +924,12 @@
         "PlaceholderNameField.PlaceholderText": "Název zástupného symbolu",
         "PlaceholderNotesField.PlaceholderText": "Poznámky"
     },
-    "TIDY5E.Actor.Characteristics": "Charakteristiky"
+    "TIDY5E.Actor.Characteristics": "Charakteristiky",
+    "TIDY5E.Show": "Zobrazit",
+    "TIDY5E.Hide": "Skrýt",
+    "TIDY5E.LegendaryLairToolbar": "Legendární/doupěte akce",
+    "TIDY5E.SpellbookSections": "Sekce kouzel",
+    "TIDY5E.UserDefaultPrefix": "Výchozí uživatel: {value}",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globální výchozí nastavení zobrazení",
+    "TIDY5E.Character.Sidebar.Title": "Boční panel hráčských postav"
 }
