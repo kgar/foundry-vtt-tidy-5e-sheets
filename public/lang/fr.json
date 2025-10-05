@@ -51,7 +51,7 @@
     "TIDY5E.Favorite": "Favori",
     "TIDY5E.ShowNotProficientSkills": "Indiquer comme non compétent",
     "TIDY5E.HideNotProficientSkills": "cacher comme non compétent",
-    "TIDY5E.Abilities": "Caractéristiques",
+    "TIDY5E.Abilities": "Capacités",
     "TIDY5E.Environment": "Environnement",
     "TIDY5E.Search": "Chercher",
     "TIDY5E.SearchClear": "Vider la recherche",
@@ -815,9 +815,9 @@
         "name": "Afficher les fiches d'information sur les effets actifs"
     },
     "TIDY5E.Settings.InlineActivitiesPosition": {
-        "bottom": "Bas",
+        "bottom": "En bas",
         "name": "Position des Activités en ligne",
-        "top": "Haut",
+        "top": "En haut",
         "hint": "Lorsqu'un élément est développé, les activités relatives à cet élément sont affichées. Ce paramètre permet de déterminer si les activités sont placées en haut, avant la description de l'élément, ou en bas, sous la description de l'élément, les boutons et les étiquettes."
     },
     "TIDY5E.Settings.GlobalCustomSections": {
@@ -836,7 +836,7 @@
         "name": "Jet de sauvegarde de la mort par défaut"
     },
     "TIDY5E.Tidy5eSettings": "Paramètre de la feuille Tidy 5e",
-    "TIDY5E.Utilities.SpellPips": "Souci d'incantation",
+    "TIDY5E.Utilities.SpellPips": "Slots d'incantation",
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Inclure les rituels dans la catégorie \"peut lancer\"",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Feuille de groupe Tidy 5e",
     "TIDY5E.InfoCardInspectHint": "{inspectKey} Contrôler",
@@ -933,7 +933,7 @@
     "TIDY5E.CombatTabName": "Combat",
     "TIDY5E.Difficulty": "Difficulté",
     "TIDY5E.Encounter": {
-        "CombatantsSection.Title": "Combatants",
+        "CombatantsSection.Title": "Combattants",
         "Combat.IncludeInCombat.Tooltip": "Inclure dans les activités de combat",
         "Combat.ExcludeFromCombat.Tooltip": "Exclure des activités de combat",
         "AddMember.Label": "Ajouter un membre",
@@ -951,5 +951,13 @@
         "InitiativeCount.Label": "Ajouter le nombre d'initiatives {count}",
         "PlaceholderNameField.PlaceholderText": "Nom de L'emplacement",
         "PlaceholderNotesField.PlaceholderText": "Notes"
-    }
+    },
+    "TIDY5E.Show": "Montrer",
+    "TIDY5E.Hide": "Cacher",
+    "TIDY5E.LegendaryLairToolbar": "Barre d'outils Légendaire/Repaire",
+    "TIDY5E.SpellbookSections": "Sections livres de sorts",
+    "TIDY5E.UserDefaultPrefix": "Paramètres par défaut de l'utilisateur :{value}",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Options d'affichage globale par défaut",
+    "TIDY5E.Character.Sidebar.Title": "Barre latérale du personnage joueur",
+    "TIDY5E.Actor.Characteristics": "Caractéristiques"
 }
