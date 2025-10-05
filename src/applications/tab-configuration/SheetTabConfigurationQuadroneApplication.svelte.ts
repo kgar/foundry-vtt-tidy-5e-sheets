@@ -43,6 +43,7 @@ export type SheetTabConfigurationQuadroneApplicationConfiguration =
       setTabsConfig: SetTabConfigFn;
       getTabContext: GetTabContextFn;
     };
+    title?: string;
   };
 
 /**
@@ -72,6 +73,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
   _getTabConfig: GetTabConfigFn;
   _setTabConfig: SetTabConfigFn;
   _getTabContext: GetTabContextFn;
+  _title: string;
 
   constructor(options: SheetTabConfigurationQuadroneApplicationConfiguration) {
     super(options);
@@ -83,12 +85,22 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     this._getTabConfig =
       options.customTabConfigProvider?.getTabConfig ??
       TidyFlags.tabConfiguration.get;
+
     this._setTabConfig =
       options.customTabConfigProvider?.setTabsConfig ??
       TidyFlags.tabConfiguration.set;
+
     this._getTabContext =
       options.customTabConfigProvider?.getTabContext ??
       SheetTabConfigurationQuadroneApplication._getConfigFromRuntime;
+
+    this._title =
+      options.title ??
+      FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+        documentName: FoundryAdapter.localize(
+          `TYPES.${options.document.documentName}.${options.document.type}`
+        ),
+      });
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
@@ -126,6 +138,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       props: {
         app: this,
         config: this._config,
+        title: this._title,
       },
     });
 

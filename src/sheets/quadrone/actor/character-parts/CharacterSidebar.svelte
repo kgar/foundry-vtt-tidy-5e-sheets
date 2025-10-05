@@ -11,6 +11,7 @@
   import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
   import { TidyFlags } from 'src/api';
   import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -75,6 +76,10 @@
     context.actor.sheet.currentSidebarTabId = tabId;
   }
 
+  const tabConfigTitle = FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+    documentName: FoundryAdapter.localize('TIDY5E.Character.Sidebar.Title'),
+  });
+
   setContext(CONSTANTS.SVELTE_CONTEXT.ON_TAB_SELECTED, onSidebarTabSelected);
 </script>
 
@@ -106,6 +111,7 @@
                 );
               },
             },
+            title: tabConfigTitle,
           }).render({ force: true })}
       >
         <i class="fas fa-cog"></i>

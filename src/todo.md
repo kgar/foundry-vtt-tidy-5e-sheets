@@ -3,10 +3,12 @@
 ### Short List
 
 - [x] PC Sidebar Tab Selection - implement POC
-- [ ] PC Sidebar Tab Selection - use custom title "Tab Selection: Player Character Sidebar"
+- [x] PC Sidebar Tab Selection - use custom title "Tab Selection: Player Character Sidebar"
 - [ ] PC Sidebar Tab Selection - create runtime
 - [ ] PC Sidebar Tab Selection - prepare within PC context prep
 - [ ] PC Sidebar Tab Selection - create API surface area
+- [ ] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
+- [ ] PC Sidebar Tab Selection - Add to world tab configuration
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [ ] Character sheet
