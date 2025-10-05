@@ -52,6 +52,7 @@ import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
+import type { RenderedSheetPart } from '../CustomContentRendererV2';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -910,6 +911,25 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   toggleDeathSaves(force?: boolean) {
     this._showDeathSaves = force ?? !this._showDeathSaves;
     this.render();
+  }
+
+  /* -------------------------------------------- */
+  /*  Custom Content Rendering                    */
+  /* -------------------------------------------- */
+
+  async _getCustomContents(
+    context: CharacterSheetQuadroneContext,
+    options: TidyDocumentSheetRenderOptions
+  ): Promise<RenderedSheetPart[]> {
+    const renderedTabParts = context.sidebarTabs
+      ? await this._customContentRenderer.renderTabContents(
+          context.sidebarTabs,
+          context,
+          options
+        )
+      : [];
+
+    return renderedTabParts;
   }
 
   /* -------------------------------------------- */
