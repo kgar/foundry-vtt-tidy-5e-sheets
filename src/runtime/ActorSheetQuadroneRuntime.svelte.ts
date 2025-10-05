@@ -3,7 +3,7 @@ import type {
   CustomContent,
   Tab,
 } from 'src/types/types';
-import type { RegisteredContent, RegisteredTab, SheetLayout } from './types';
+import type { RegisteredContent, RegisteredTab } from './types';
 import { debug, error, warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
@@ -11,6 +11,12 @@ import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
+import type { SheetTabConfiguration } from 'src/settings/settings.types';
+
+type GetTabConfigFn = (actor: any) => SheetTabConfiguration | null | undefined;
+type GetWorldSelectedDefaultTabsFn<TContext> = (
+  context: TContext
+) => string[] | null | undefined;
 
 export class ActorSheetQuadroneRuntime<
   TSheetContext extends ActorSheetQuadroneContext
@@ -19,12 +25,31 @@ export class ActorSheetQuadroneRuntime<
   private _tabs = $state<RegisteredTab<TSheetContext>[]>([]);
   private _defaultTabIds = $state<string[]>([]);
 
+  private _getTabConfig: GetTabConfigFn;
+  private _getWorldDefaultSelectedTabs: GetWorldSelectedDefaultTabsFn<TSheetContext>;
+
   constructor(
     nativeTabs: RegisteredTab<TSheetContext>[],
-    defaultTabIds: string[]
+    defaultTabIds: string[],
+    dataSourceFunctions?: {
+      getTabConfig: GetTabConfigFn;
+      getWorldSelectedDefaultTabsFn: GetWorldSelectedDefaultTabsFn<TSheetContext>;
+    }
   ) {
     this._tabs = [...nativeTabs];
+
     this._defaultTabIds = defaultTabIds;
+
+    this._getTabConfig =
+      dataSourceFunctions?.getTabConfig ?? TidyFlags.tabConfiguration.get;
+
+    this._getWorldDefaultSelectedTabs =
+      dataSourceFunctions?.getWorldSelectedDefaultTabsFn ??
+      ((context) => {
+        return settings.value.tabConfiguration[context.document.documentName]?.[
+          context.document.type
+        ]?.selected;
+      });
   }
 
   async getContent(context: TSheetContext): Promise<CustomContent[]> {
@@ -36,18 +61,14 @@ export class ActorSheetQuadroneRuntime<
   async getTabs(context: TSheetContext): Promise<Tab[]> {
     let tabIds = this._tabs.map((x) => x.id);
 
-    const selectedTabs =
-      TidyFlags.tabConfiguration.get(context.actor)?.selected ?? [];
+    const selectedTabs = this._getTabConfig(context.actor)?.selected ?? [];
 
     if (selectedTabs?.length) {
       tabIds = tabIds
         .filter((t) => selectedTabs?.includes(t))
         .sort((a, b) => selectedTabs.indexOf(a) - selectedTabs.indexOf(b));
     } else {
-      let defaultTabs =
-        settings.value.tabConfiguration[context.document.documentName]?.[
-          context.document.type
-        ]?.selected ?? [];
+      let defaultTabs = this._getWorldDefaultSelectedTabs(context) ?? [];
 
       if (!defaultTabs.length) {
         defaultTabs = this.getDefaultTabIds();

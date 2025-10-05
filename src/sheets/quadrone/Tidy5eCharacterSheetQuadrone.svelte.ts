@@ -49,6 +49,7 @@ import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
+import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -195,6 +196,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       inspirationSource,
       inventory: [],
       senses: this._getCharacterSenses(),
+      sidebarTabs: [],
       size: {
         key: this.actor.system.traits.size,
         label:
@@ -266,6 +268,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     }
 
     context.customContent = await CharacterSheetQuadroneRuntime.getContent(
+      context
+    );
+
+    context.sidebarTabs = await CharacterSheetQuadroneSidebarRuntime.getTabs(
       context
     );
 

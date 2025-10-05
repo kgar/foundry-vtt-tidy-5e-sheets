@@ -1,17 +1,14 @@
 <script lang="ts">
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import type { Tab } from 'src/types/types';
-  import SidebarTabSkills from 'src/sheets/quadrone/actor/tabs/SidebarTabSkills.svelte';
-  import SidebarTabFavorites from 'src/sheets/quadrone/actor/tabs/SidebarTabFavorites.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { setContext, untrack } from 'svelte';
   import { CONSTANTS } from 'src/constants';
-  import SidebarTabTraits from '../tabs/SidebarTabTraits.svelte';
   import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
   import { TidyFlags } from 'src/api';
   import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -22,54 +19,6 @@
     untrack(() => {
       selectedTabId = context.initialSidebarTabId;
     });
-  });
-
-  let registeredSidebarTabs: Tab[] = $state([
-    {
-      id: 'sidebar-favorites',
-      title: 'DND5E.Favorites',
-      content: {
-        type: 'svelte',
-        component: SidebarTabFavorites,
-        cssClass: 'favorites',
-      },
-      iconClass: 'fa-solid fa-star',
-    } satisfies Tab,
-    {
-      id: 'sidebar-skills',
-      title: 'DND5E.Skills',
-      content: {
-        type: 'svelte',
-        component: SidebarTabSkills,
-      },
-      iconClass: 'fa-solid fa-briefcase',
-    } satisfies Tab,
-    {
-      id: 'sidebar-traits',
-      title: 'DND5E.Traits',
-      content: {
-        type: 'svelte',
-        component: SidebarTabTraits,
-      },
-      iconClass: 'fa-solid fa-list-ul',
-    } satisfies Tab,
-  ]);
-
-  let tabs = $derived.by(() => {
-    let tabIds = registeredSidebarTabs.map((tab) => tab.id);
-
-    const selectedTabs =
-      TidyFlags.sidebarTabConfiguration.get(context.actor)?.selected ?? [];
-
-    if (selectedTabs?.length) {
-      tabIds = tabIds
-        .filter((t) => selectedTabs?.includes(t))
-        .sort((a, b) => selectedTabs.indexOf(a) - selectedTabs.indexOf(b));
-    }
-
-    return tabIds
-      .map((tabId) => registeredSidebarTabs.find((tab) => tab.id === tabId))
-      .filter((t) => !!t);
   });
 
   function onSidebarTabSelected(tabId: string) {
@@ -87,7 +36,7 @@
   <div class="flexrow">
     <Tabs
       bind:selectedTabId
-      {tabs}
+      tabs={context.sidebarTabs}
       cssClass="sidebar-tab-strip button-group"
       tabCssClass="button button-secondary button-toggle"
     ></Tabs>
@@ -105,9 +54,9 @@
                 return buildTabConfigContextEntry(
                   doc.documentName,
                   doc.type,
-                  [...registeredSidebarTabs],
+                  CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
                   setting,
-                  registeredSidebarTabs.map((x) => x.id),
+                  CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds(),
                 );
               },
             },
@@ -119,4 +68,8 @@
     {/if}
   </div>
 </div>
-<TabContents {selectedTabId} {tabs} cssClass="sidebar-tab-contents flexcol" />
+<TabContents
+  {selectedTabId}
+  tabs={context.sidebarTabs}
+  cssClass="sidebar-tab-contents flexcol"
+/>
