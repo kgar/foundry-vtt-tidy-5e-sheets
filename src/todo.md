@@ -2,6 +2,7 @@
 
 ### Short List
 
+- [ ] NPC Banners - prototype and finalize, if able
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [ ] Character sheet

@@ -56,6 +56,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     CONSTANTS.SHEET_TYPE_CHARACTER,
     CONSTANTS.SHEET_TYPE_GROUP,
     CONSTANTS.SHEET_TYPE_ENCOUNTER,
+    CONSTANTS.SHEET_TYPE_NPC,
   ]);
 
   themeConfigOptions(): ThemeSettingsConfigurationOptions {
