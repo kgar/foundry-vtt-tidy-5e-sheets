@@ -67,7 +67,9 @@
 </script>
 
 <div
-  class="attribute-pin"
+  role="button"
+  tabindex="0"
+  class="sheet-pin attribute-pin"
   data-tidy-draggable
   data-item-id={ctx.document.item.id}
   data-activity-id={ctx.document.id}
@@ -79,8 +81,10 @@
   onmousedown={(ev) => FoundryAdapter.editOnMiddleClick(ev, ctx.document)}
   ondragstart={onDragStart}
 >
-  <div class="attribute-document-image">
+  <div class="pin-document-image">
     <a
+      role="button"
+      tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(event) => context.editable && ctx.document.use({ event })}
     >
@@ -90,14 +94,14 @@
       </span>
     </a>
   </div>
-  <div class="attribute-pin-details">
+  <div class="pin-details">
     <div
-      class="attribute-pin-name-container"
+      class="pin-name-container"
       title="{ctx.document.name} | {ctx.document.item.name}"
     >
       {#if context.unlocked}
         <TextInput
-          class="attribute-pin-name"
+          class="pin-name"
           document={ctx.document}
           field="name"
           value={ctx.alias}
@@ -112,33 +116,37 @@
           <i class="fa-solid fa-pencil"></i>
         {/if}
       {:else}
-        <div class="attribute-pin-name truncate">
+        <div class="font-label-medium pin-name truncate">
           {coalesce(ctx.alias, ctx.document.name)}
         </div>
       {/if}
     </div>
-    <div class="attribute-counter {ctx.resource}">
+    <div class="pin-counter {ctx.resource}">
       {#if ctx.resource === 'limited-uses' && ctx.document.isOnCooldown}
         <RechargeControl document={ctx.document} field={spentProp} {uses} />
       {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
         <span class="charged-text">
           {#if value > 1}
-            <span>{value}</span>
+            <span class="">{value}</span>
           {/if}
           <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
         </span>
       {:else if ctx.resource === 'limited-uses'}
-        <TextInput
-          document={usesDocument}
-          field={spentProp}
-          {value}
-          onSaveChange={(ev) => saveValueChange(ev)}
-          selectOnFocus={true}
-        />
-        <span class="divider">/</span>
-        <span class="max">{maxText}</span>
+        <span class="inline-uses">
+          <TextInput
+            class={["uninput uses-value", { diminished: value < 1 }]}
+            document={usesDocument}
+            field={spentProp}
+            {value}
+            onSaveChange={(ev) => saveValueChange(ev)}
+            selectOnFocus={true}
+          />
+          <span class="divider">/</span>
+          <span class="uses-max">{maxText}</span>
+        </span>
       {:else if ctx.resource === 'quantity'}
         <TextInput
+          class={["uninput uses-value centered", { diminished: value < 1 }]}
           document={ctx.document}
           field={'system.quantity'}
           value={ctx.document.system.quantity}

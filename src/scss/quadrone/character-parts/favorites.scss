@@ -66,24 +66,6 @@
         margin-inline-end: var(--t5e-size-halfx);
       }
 
-      .inline-uses {
-        display: flex;
-        align-items: center;
-
-        .divider {
-          flex: 0 0 auto;
-        }
-
-        .uses-value {
-          flex: 1;
-          text-align: right;
-        }
-
-        .uses-max {
-          flex: 1;
-        }
-      }
-
       .stacked {
         display: flex;
         flex-direction: column;
