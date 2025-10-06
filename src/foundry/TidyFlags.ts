@@ -87,9 +87,12 @@ export class TidyFlags {
     },
   };
 
-  // TODO: document before going to main
+  /**
+   * The combatant settings for encounter member NPCs.
+   */
   static combatantSettings = {
     key: 'combatantSettings' as const,
+    /** Gets encounter member NPC combatant settings. */
     get(encounter: Actor5e): EncounterCombatantsSettings {
       return (
         TidyFlags.tryGetFlag<EncounterCombatantsSettings>(
@@ -98,7 +101,10 @@ export class TidyFlags {
         ) ?? {}
       );
     },
-    /** Fully replaces the combatant settings object, since differentials will result in straggler data remaining behind. */
+    /**
+     * Sets encounter member NPC combatant settings. It fully replaces the combatant settings object,
+     * since differentials will result in straggler data remaining behind.
+     */
     async set(encounter: Actor5e, settings: EncounterCombatantsSettings) {
       await encounter.update(
         { [`flags.tidy5e-sheet.combatantSettings`]: null },
@@ -114,15 +120,20 @@ export class TidyFlags {
     },
   };
 
-  // TODO: Document
+  /**
+   * The ID of the group which should be measured against
+   * when determine an encounter's difficulty.
+   */
   static encounterDifficultyTargetGroupId = {
     key: 'encounterDifficultyTargetGroupId' as const,
+    /** Gets the group ID. */
     get(user: any): string | null | undefined {
       return TidyFlags.tryGetFlag<string>(
         user,
         TidyFlags.encounterDifficultyTargetGroupId.key
       );
     },
+    /** Sets the group ID. */
     async set(user: any, groupActorId: string) {
       return TidyFlags.setFlag(
         user,
@@ -395,16 +406,45 @@ export class TidyFlags {
     },
   };
 
+  static showLegendariesOnNpcStatblock = {
+    key: 'showLegendariesOnNpcStatblock',
+    prop: TidyFlags.getFlagPropertyPath('showLegendariesOnNpcStatblock'),
+    /** Gets whether to show legendary panels in the NPC Statblock tab. */
+    get(document: any): boolean | null {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          document,
+          TidyFlags.showLegendariesOnNpcStatblock.key
+        ) ?? null
+      );
+    },
+    /** Sets whether to show legendary panels in the NPC Statblock tab. */
+    set(document: any, value: boolean = true) {
+      return TidyFlags.setFlag(
+        document,
+        TidyFlags.showLegendariesOnNpcStatblock.key,
+        value
+      );
+    },
+    /** Clears whether to show legendary panels in the NPC Statblock tab. */
+    unset(document: any) {
+      return TidyFlags.unsetFlag(
+        document,
+        TidyFlags.showLegendariesOnNpcStatblock.key
+      );
+    },
+  };
+
   static includeSpellbookInNpcStatblockTab = {
     key: 'includeSpellbookInNpcStatblockTab',
     prop: TidyFlags.getFlagPropertyPath('includeSpellbookInNpcStatblockTab'),
     /** Gets whether to include spellbook sections in the NPC Statblock tab. */
-    get(document: any): boolean {
+    get(document: any): boolean | null {
       return (
         TidyFlags.tryGetFlag<boolean>(
           document,
           TidyFlags.includeSpellbookInNpcStatblockTab.key
-        ) === true
+        ) ?? null
       );
     },
     /** Sets whether to include spellbook sections in the NPC Statblock tab. */
@@ -1253,18 +1293,51 @@ export class TidyFlags {
     },
   };
 
+  /**
+   * Configuration for sheet sidebar tabs. Controls aspects like whether to include tabs.
+   */
+  static sidebarTabConfiguration = {
+    key: 'sidebar-tab-configuration',
+    prop: TidyFlags.getFlagPropertyPath('sidebar-tab-configuration'),
+    /** Gets sidebar tab configuration. */
+    get(doc: any): SheetTabConfiguration | null | undefined {
+      return TidyFlags.tryGetFlag<SheetTabConfiguration>(
+        doc,
+        TidyFlags.sidebarTabConfiguration.key
+      );
+    },
+    /** Sets sidebar tab configuration. */
+    set(doc: any, config: SheetTabConfiguration) {
+      return TidyFlags.setFlag(
+        doc,
+        TidyFlags.sidebarTabConfiguration.key,
+        config
+      );
+    },
+    /** Clears sidebar tab configuration. */
+    unset(doc: any) {
+      return TidyFlags.unsetFlag(doc, TidyFlags.sidebarTabConfiguration.key);
+    },
+  };
+
+  /**
+   * Configuration for sheet tabs. Controls aspects like whether to include tabs.
+   */
   static tabConfiguration = {
     key: 'tab-configuration',
     prop: TidyFlags.getFlagPropertyPath('tab-configuration'),
+    /** Gets tab configuration. */
     get(doc: any): SheetTabConfiguration | null | undefined {
       return TidyFlags.tryGetFlag<SheetTabConfiguration>(
         doc,
         TidyFlags.tabConfiguration.key
       );
     },
+    /** Sets tab configuration. */
     set(doc: any, config: SheetTabConfiguration) {
       return TidyFlags.setFlag(doc, TidyFlags.tabConfiguration.key, config);
     },
+    /** Clears tab configuration. */
     unset(doc: any) {
       return TidyFlags.unsetFlag(doc, TidyFlags.tabConfiguration.key);
     },

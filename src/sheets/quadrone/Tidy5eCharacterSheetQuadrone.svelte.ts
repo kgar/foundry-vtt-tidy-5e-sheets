@@ -20,6 +20,7 @@ import type {
   FavoriteContextEntry,
   InspirationSource,
   FeatureSection,
+  ActorTraitContext,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -48,6 +49,10 @@ import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
+import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
+import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
+import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
+import type { RenderedSheetPart } from '../CustomContentRendererV2';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -68,6 +73,33 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     position: {
       width: 740,
       height: 810,
+    },
+    actions: {
+      openSidebarTabConfiguration: async function (
+        this: Tidy5eCharacterSheetQuadrone
+      ) {
+        new SheetTabConfigurationQuadroneApplication({
+          document: this.document,
+          customTabConfigProvider: {
+            getTabConfig: TidyFlags.sidebarTabConfiguration.get,
+            setTabsConfig: TidyFlags.sidebarTabConfiguration.set,
+            getTabContext: (doc, setting) => {
+              return buildTabConfigContextEntry(
+                doc.documentName,
+                doc.type,
+                CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
+                setting,
+                CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+              );
+            },
+          },
+          title: FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+            documentName: FoundryAdapter.localize(
+              'TIDY5E.Character.Sidebar.Title'
+            ),
+          }),
+        }).render({ force: true });
+      },
     },
   };
 
@@ -194,6 +226,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       inspirationSource,
       inventory: [],
       senses: this._getCharacterSenses(),
+      sidebarTabs: [],
       size: {
         key: this.actor.system.traits.size,
         label:
@@ -214,6 +247,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
             name: species.name,
           }
         : undefined,
+      specialTraits: this._getSpecialTraits(),
       speeds: this._getCharacterMovementSpeeds(),
       spellbook: [],
       spellcasting: this._prepareSpellcastingClassContext(),
@@ -244,6 +278,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       );
     }
 
+    // Prepare owned items
+    this._prepareItems(context);
+
     await this._prepareFacilities(context);
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
@@ -264,9 +301,25 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       context
     );
 
+    context.sidebarTabs = await CharacterSheetQuadroneSidebarRuntime.getTabs(
+      context
+    );
+
     context.tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  private _getSpecialTraits(): ActorTraitContext[] {
+    const characterFlags = CONFIG.DND5E.characterFlags;
+    const dnd5eFlags = this.actor.flags.dnd5e;
+    return Object.entries(characterFlags)
+      .filter(([name]) => name in dnd5eFlags && dnd5eFlags[name] !== false)
+      .map(([key, val]) => {
+        if ('type' in val && val.type === Number)
+          return { label: val.name, value: dnd5eFlags[key] };
+        return { label: val.name };
+      });
   }
 
   public static async tryGetInspirationSource(
@@ -858,6 +911,25 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   toggleDeathSaves(force?: boolean) {
     this._showDeathSaves = force ?? !this._showDeathSaves;
     this.render();
+  }
+
+  /* -------------------------------------------- */
+  /*  Custom Content Rendering                    */
+  /* -------------------------------------------- */
+
+  async _getCustomContents(
+    context: CharacterSheetQuadroneContext,
+    options: TidyDocumentSheetRenderOptions
+  ): Promise<RenderedSheetPart[]> {
+    const renderedTabParts = context.sidebarTabs
+      ? await this._customContentRenderer.renderTabContents(
+          context.sidebarTabs,
+          context,
+          options
+        )
+      : [];
+
+    return renderedTabParts;
   }
 
   /* -------------------------------------------- */

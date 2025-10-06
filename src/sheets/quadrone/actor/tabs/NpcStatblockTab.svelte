@@ -14,7 +14,10 @@
   import ActionBar from '../../shared/ActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import type {
+    RadioSetting,
+    SectionOptionGroup,
+  } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import StatblockTables from '../../shared/StatblockTables.svelte';
   import type { FeatureSection, SpellbookSection } from 'src/types/types';
   import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
@@ -36,36 +39,121 @@
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
 
-  const legendariesProp = `${UserPreferencesService.getProp()}.${CONSTANTS.SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE}`;
-
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  let tabOptionGroups: SectionOptionGroup[] = $derived([
-    {
-      title: 'TIDY5E.DisplayOptions.Title',
-      settings: [
-        {
-          type: 'boolean',
-          label: 'TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock',
-          doc: game.user,
-          prop: legendariesProp,
-          default: false,
-        },
-        {
-          type: 'boolean',
-          label: 'TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab',
-          doc: context.actor,
-          prop: TidyFlags.includeSpellbookInNpcStatblockTab.prop,
-          default: false,
-        },
-      ],
-    } satisfies SectionOptionGroup,
-  ]);
+    let tabOptionGroups: SectionOptionGroup[] = $derived.by(() => {
+    const preferences = UserPreferencesService.get();
+
+    const preferencesProp = UserPreferencesService.getProp();
+
+    const legendariesProp = `${preferencesProp}.${CONSTANTS.SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE}`;
+    const spellbookInStatblockProp = `${UserPreferencesService.getProp()}.${CONSTANTS.INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE}`;
+
+    const legendariesUserPreference =
+      preferences.showLegendariesOnNpcStatblock ?? true;
+    const spellbookInStatblockUserPreference =
+      preferences.includeSpellbookInNpcStatblockTab ?? true;
+
+    const legendariesDefaultTextKey = legendariesUserPreference
+      ? 'TIDY5E.Show'
+      : 'TIDY5E.Hide';
+
+    const spellbookInStatblockDefaultTextKey =
+      spellbookInStatblockUserPreference ? 'TIDY5E.Show' : 'TIDY5E.Hide';
+
+    return [
+      {
+        title: 'TIDY5E.LegendaryLairToolbar',
+        settings: [
+          {
+            type: 'radio',
+            options: [
+              {
+                label: 'TIDY5E.Show',
+                value: true,
+              },
+              {
+                label: 'TIDY5E.Hide',
+                value: false,
+              },
+              {
+                label: FoundryAdapter.localize(
+                  'TIDY5E.UseSpecificDefaultValue.Label',
+                  { value: FoundryAdapter.localize(legendariesDefaultTextKey) },
+                ),
+                value: null,
+              },
+            ],
+            selected: TidyFlags.showLegendariesOnNpcStatblock.get(
+              context.actor,
+            ),
+            prop: TidyFlags.showLegendariesOnNpcStatblock.prop,
+            doc: context.actor,
+            default: null,
+          } satisfies RadioSetting<boolean | null>,
+        ],
+      },
+      {
+        title: 'TIDY5E.SpellbookSections',
+        settings: [
+          {
+            type: 'radio',
+            options: [
+              {
+                label: 'TIDY5E.Show',
+                value: true,
+              },
+              {
+                label: 'TIDY5E.Hide',
+                value: false,
+              },
+              {
+                label: FoundryAdapter.localize(
+                  'TIDY5E.UseSpecificDefaultValue.Label',
+                  {
+                    value: FoundryAdapter.localize(
+                      spellbookInStatblockDefaultTextKey,
+                    ),
+                  },
+                ),
+                value: null,
+              },
+            ],
+            selected: TidyFlags.includeSpellbookInNpcStatblockTab.get(
+              context.actor,
+            ),
+            prop: TidyFlags.includeSpellbookInNpcStatblockTab.prop,
+            doc: context.actor,
+            default: null,
+          } satisfies RadioSetting<boolean | null>,
+        ],
+      },
+      {
+        title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
+        settings: [
+          {
+            type: 'boolean',
+            label: 'TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock',
+            doc: game.user,
+            prop: legendariesProp,
+            default: legendariesUserPreference,
+          },
+          {
+            type: 'boolean',
+            label: 'TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab',
+            doc: game.user,
+            prop: spellbookInStatblockProp,
+            default: spellbookInStatblockUserPreference,
+          },
+        ],
+      } satisfies SectionOptionGroup,
+    ];
+  });
 
   let sections = $derived.by(() => {
     let sectionsToConfigure: (FeatureSection | SpellbookSection)[] =
-      TidyFlags.includeSpellbookInNpcStatblockTab.get(context.actor)
+      context.includeSpellbookInStatblockTab
         ? [...context.features, ...context.spellbook]
         : context.features;
 
@@ -123,18 +211,21 @@
         </div>
         <div class="list-content">
           <div class="list-values trait-item">
-            <button 
+            <button
+              type="button"
               class="button button-secondary"
               aria-label={localize('DND5E.FlagsTitle')}
               data-tooltip={localize('DND5E.FlagsTitle')}
               onclick={() =>
-                new SpecialTraitsApplication({ document: context.actor }).render({
+                new SpecialTraitsApplication({
+                  document: context.actor,
+                }).render({
                   force: true,
                 })}
-              >
-                <i class="fa-solid fa-star"></i>
-                {localize('DND5E.FlagsTitle')}
-              </button>
+            >
+              <i class="fa-solid fa-star"></i>
+              {localize('DND5E.FlagsTitle')}
+            </button>
           </div>
         </div>
       </div>

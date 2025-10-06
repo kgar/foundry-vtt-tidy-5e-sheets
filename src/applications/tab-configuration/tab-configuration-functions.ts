@@ -9,6 +9,7 @@ import type { RegisteredTab } from 'src/runtime/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import type { CustomTabTitle } from 'src/api';
 
 export function getItemTabContext(
   type: string,
@@ -21,7 +22,7 @@ export function getItemTabContext(
     ItemSheetQuadroneRuntime.getDefaultTabIds(type);
   let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
 
-  return buildContext(
+  return buildTabConfigContextEntry(
     documentName,
     type,
     allRegisteredTabs,
@@ -41,7 +42,7 @@ export function getActorTabContext(
     getWorldDefaultSelectedTabId(documentName, type) ??
     runtime.getDefaultTabIds();
 
-  return buildContext(
+  return buildTabConfigContextEntry(
     documentName,
     type,
     allRegisteredTabs,
@@ -57,19 +58,19 @@ function getWorldDefaultSelectedTabId(
   const selected =
     SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[type]
       ?.selected;
-  
+
   if (selected?.length > 0) {
     return selected;
   }
 }
 
-function buildContext(
+export function buildTabConfigContextEntry(
   documentName: string,
   type: string,
-  allRegisteredTabs: RegisteredTab<any>[],
+  allRegisteredTabs: { id: string; title: CustomTabTitle }[],
   settings: SheetTabConfiguration | undefined | null,
   defaultSelectedIds: string[]
-) {
+): TabConfigContextEntry {
   let configSectionTitle = FoundryAdapter.localize(
     `TYPES.${documentName}.${type}`
   );

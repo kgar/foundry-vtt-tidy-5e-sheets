@@ -155,8 +155,7 @@ export class SheetSections {
     context:
       | CharacterSheetContext
       | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+      | ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {}

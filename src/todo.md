@@ -2,6 +2,7 @@
 
 ### Short List
 
+- [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
 - [ ] Resurrect Attribute Pins as Sheet Pins
   - [x] Do data prep
   - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
@@ -360,4 +361,19 @@ Limited:
 - [x] Character Inventory Add button reported broken
 - [x] Include Encounter Sheet in the "Set Default Sheets" tidy page.
 - [x] Fixed: Special Traits dialog has no padding.
-- [X] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies
+- [x] Important NPCs: features and weapons in statblock tab
+- [x] Non-important NPCs: all items in statblock tab
+- [x] When an inventory item is deemed passive, put it in the "items" section.
+- [x] NPC User Preference - "Show Legendary/Lair trackers in the Statblock tab" - default true
+- [x] NPC User Preference - "Include Spellbook sections in the Statblock tab" - default true
+- [x] Ensure that these settings can be disabled from the individual sheet level.
+- [x] Ensure the unset individual sheet level loads properly based default settings.
+- [x] Find a place to put these settings.
+- [x] PC Sidebar Tab Selection - implement POC
+- [x] PC Sidebar Tab Selection - use custom title "Tab Selection: Player Character Sidebar"
+- [x] PC Sidebar Tab Selection - create runtime
+- [x] PC Sidebar Tab Selection - create world setting for default sidebar tabs; plug into runtime construction in sidebar runtime file
+- [X] PC Sidebar Tab Selection - prepare within PC context prep
+- [x] PC Sidebar Tab Selection - create API surface area
+- [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
+- [x] PC Sidebar Tab Selection - Add to world tab configuration- [X] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies

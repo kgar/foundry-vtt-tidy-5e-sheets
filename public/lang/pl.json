@@ -892,5 +892,26 @@
     "TIDY5E.UseSpecificDefaultValue.Label": "Użyj domyślnej ({value})",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Klasyczna karta spotkań Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Karta spotkań Tidy 5e",
-    "TIDY5E.ExplorationTab.Title": "Eksploracja"
+    "TIDY5E.ExplorationTab.Title": "Eksploracja",
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "Użyj zabezpieczeń Karty Grupy",
+        "hint": "Umożliwia Mistrzowi Gry kontrolę nad tym, jakie informacje o członkach grupy użytkownik może zobaczyć na karcie grupy. Gdy gracz nie ma żadnych uprawnień do członka grupy, karta grupy nie wyświetla tego członka ani powiązanych z nim informacji zbiorczych. Z uprawnieniami Ograniczonymi użytkownik widzi tylko imię członka, ale żadnych innych informacji. Z uprawnieniami Obserwatora lub wyższymi użytkownik widzi wszystkie informacje o tym członku na karcie grupy."
+    },
+    "TIDY5E.AggregateSkill.HighMeasure": "Wysokie",
+    "TIDY5E.AggregateSkill.LowMeasure": "Niskie",
+    "TIDY5E.Encounter": {
+        "AddMember.Label": "Dodaj członka",
+        "DifficultyTarget.Label": "Trudność dla drużyny",
+        "PrerollInitiative": "Wstępny rzut inicjatywy",
+        "AddCombatants.MustHaveEncounter.Message": "Musisz mieć wybrane spotkanie, aby dodać do śledzenia spotkań",
+        "CombatVisibility.Hidden.Label": "Ukryte dla graczy po dodaniu do śledzenia",
+        "CombatVisibility.Visible.Label": "Widoczne dla graczy po dodaniu do śledzenia",
+        "CombatantsSection.Title": "Walczący",
+        "Combat.IncludeInCombat.Tooltip": "Uwzględnij w walce",
+        "Combat.ExcludeFromCombat.Tooltip": "Nie uwzględniaj w walce"
+    },
+    "TIDY5E.Group.PrimaryParty.Label": "Główna drużyna",
+    "TIDY5E.CombatTabName": "Starcie",
+    "TIDY5E.Difficulty": "Poziom trudności",
+    "TIDY5E.Actor.Characteristics": "Charakterystyka"
 }

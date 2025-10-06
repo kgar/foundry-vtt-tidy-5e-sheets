@@ -11,7 +11,7 @@
   import ItemName from '../item/parts/header/ItemName.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
-  let context = $derived(getContainerSheetQuadroneContext());
+  const context = $derived(getContainerSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
 
@@ -24,13 +24,23 @@
       holdsElementStart: '<span class="color-text-lighter fw-normal">',
       holdsElementEnd: '</span>',
       numberElementStart: '<span>',
+      number: FoundryAdapter.formatNumber(context.capacity.max),
       numberElementEnd: '</span>',
-      number: context.capacity.max,
       unitsElementStart: '<span class="color-text-lighter fw-normal">',
-      unitsElementEnd: '</span>',
       units: context.capacity.units ?? '',
+      unitsElementEnd: '</span>',
     });
   });
+
+  const value = $derived(
+    FoundryAdapter.formatNumber(context.capacity.value.toNearest(0.01)),
+  );
+
+  const max = $derived(
+    context.capacity.max === Infinity
+      ? '∞'
+      : FoundryAdapter.formatNumber(context.capacity.max.toNearest(0.01)),
+  );
 </script>
 
 <ItemNameHeaderOrchestrator {itemNameEl} />
@@ -106,9 +116,14 @@
       <i class="fa-solid fa-scale-unbalanced item-capacity-icon text-label-icon"
       ></i>
       <div class="item-capacity-counter">
-        <span class="capacity-value text-data">{context.capacity.value}</span>
+        <span class="capacity-value text-data">{value}</span>
         <div class="separator">/</div>
-        <span class="capacity-max text-data">{context.capacity.max}</span>
+        <span class="capacity-max text-data">{max}</span>
+        {#if context.capacity.units}
+          <span class="capacity-units color-text-lighter">
+            {context.capacity.units}
+          </span>
+        {/if}
       </div>
     </div>
 

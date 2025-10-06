@@ -9,19 +9,12 @@
   interface Props {
     app: SheetTabConfigurationQuadroneApplication;
     config: SheetTabConfigurationContext;
+    title: string;
   }
 
-  let { config, app }: Props = $props();
+  let { config, app, title }: Props = $props();
 
   const localize = FoundryAdapter.localize;
-
-  let title = $derived(
-    localize('TIDY5E.TabSelection.Title', {
-      documentName: localize(
-        `TYPES.${config.entry.documentName}.${config.entry.documentType}`,
-      ),
-    }),
-  );
 </script>
 
 <div class="dialog-content-container flexcol">
