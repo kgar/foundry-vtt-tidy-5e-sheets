@@ -687,14 +687,29 @@
     display: flex;
     align-items: center;
 
+    &:focus-within {
+      .divider {
+        opacity: 0.24;
+      }
+    }
+
     input[type="text"]:disabled {
       background: none;
     }
 
-    >.uses-value {
-      color: var(--t5e-color-text-default);
+    >input[type="text"].uses-value {
+      // color: var(--t5e-color-text-default);
       text-align: right;
       flex: 1;
+      padding-right: 0.125rem;
+      margin-right: -0.125rem;
+
+      &:hover,
+      &:focus-within,
+      &:active {
+        background-color: var(--t5e-component-field-background-hover-emphasis);
+        border: 0.0625rem solid oklch(from var(--t5e-component-field-border-hover) l c h / 64%);
+      }
     }
 
     >.divider {
@@ -702,7 +717,7 @@
     }
 
     >.uses-max {
-      color: var(--t5e-color-text-lighter);
+      // color: var(--t5e-color-text-lighter);
       text-align: left;
       flex: 1;
     }

@@ -17,6 +17,8 @@
 
   let { ctx }: Props = $props();
 
+  let isEditing = $state(false);
+
   let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
     $derived.by(() => {
       if (ctx.linkedUses) {
@@ -76,10 +78,42 @@
   let context = $derived(getCharacterSheetContext());
 
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
-  let spellMethod = $derived(FoundryAdapter.getSpellMethodConfig(ctx.document));
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
 
   let localize = FoundryAdapter.localize;
+
+  function getType() {
+    console.log(ctx.resource);
+    console.log(ctx.document);
+    if (isSpell) {
+      let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
+      console.log(spellMethod);
+      console.log(ctx.document.parent.system.spells.pact)
+
+      if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE || spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+        return 'none';
+      }
+      if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
+        return 'spell-slots-pact';
+      }
+      return 'spell-slots';
+    }
+    if (ctx.resource === 'limited-uses' && ctx.document.isOnCooldown) {
+        return 'limited-uses-recharging';
+    }
+    if (ctx.resource === 'limited-uses' && ctx.document.hasRecharge) {
+      return 'limited-uses-recharged';
+    }
+    if (ctx.resource === 'quantity') {
+      return 'quantity';
+    }
+    if (ctx.document.hasLimitedUses === true) {
+      return 'limited-uses';
+    }
+    return 'none';
+  }
+  let pinType = $derived(getType());
+
 </script>
 
 <div
@@ -116,8 +150,11 @@
   <!-- TODO: Drag and drop to the pins list without removing from sections. -->
   <!-- TODO: Figure out layout in edit mode. Bigger cards? -->
   <div class="pin-details">
-    <div class="pin-name-container" title={ctx.document.name}>
-      {#if context.unlocked}
+    {#if context.unlocked && isEditing}
+      <div
+        class="pin-name-container flexrow"
+        title={ctx.document.name}
+      >
         <TextInput
           class="pin-name"
           document={ctx.document}
@@ -130,68 +167,105 @@
             return false;
           }}
         />
-        {#if !isNil(ctx.alias?.trim(), '')}
-          <i class="fa-solid fa-pencil"></i>
-        {/if}
-      {:else}
-        <div class="font-label-medium pin-name truncate" title={ctx.document.name}>
-          {coalesce(ctx.alias, ctx.document.name)}
-        </div>
-      {/if}
-    </div>
-    <!-- TODO: 
-     * Hide if 0 max charges.
-     * Hide if innate/atwill spell slot.
-     * Switch to spell slot uses if spell.
-     * Switch spell slots to pips if active?
-    -->
-    <div class="pin-counter {ctx.resource}">
-      {#if ctx.resource === 'limited-uses' && ctx.document.isOnCooldown}
-        <RechargeControl document={ctx.document} field={spentProp} {uses} />
-      {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
-        <span class="charged-text">
-          {#if value > 1}
-            <span class="">{value}</span>
-          {/if}
-          <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
-        </span>
-      {:else if isSpell}
-        {#if spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE && spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL}
-        <span class="inline-uses spell-slots">
-          <span class="spell-slots-value">{value}</span>
-            <span class="divider">/</span>
-            <span class="spell-slots-max">{maxText}</span>
+        <button
+          class="button button-icon-only flexshrink save-name-button"
+          aria-label="Save Alias"
+          onclick={(ev) => {
+            const input = ev.currentTarget.previousElementSibling?.querySelector('input');
+            if (input) {
+              AttributePins.setAlias(ctx.document, input.value);
+            }
+            isEditing = false;
+            return false;
+          }}
+        >
+          <i class="fa-solid fa-save"></i>
+        </button>
+      </div>
+    {:else}
+      <div class="pin-name-container flexrow" title={ctx.document.name}>
+        {#if context.unlocked}
+          <span class="font-label-medium pin-name truncate flex1">
+            {coalesce(ctx.alias, ctx.document.name)}
+          </span>
+          <button
+            aria-label="Edit Alias"
+            class="button button-borderless button-icon-only flexshrink edit-name-button"
+            onclick={(ev) => {
+              isEditing = true;
+              return false;
+            }}
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+        {:else}
+          <span class="font-label-medium pin-name truncate" title={ctx.document.name}>
+            {coalesce(ctx.alias, ctx.document.name)}
           </span>
         {/if}
-      {:else if ctx.resource === 'limited-uses'}
-        <span class="inline-uses">
-          <TextInput
-            class={["uninput uses-value", { diminished: value < 1 }, { centered: isSpell }]}
-            document={usesDocument}
-            field={spentProp}
-            {value}
-            onSaveChange={(ev) => saveValueChange(ev)}
-            selectOnFocus={true}
-          />
-          {#if !isSpell}
-            <span class="divider">/</span>
-            <span class="uses-max">{maxText}</span>
+      </div>
+      <!-- TODO: 
+      * Hide if 0 max charges.
+      * Hide if innate/atwill spell slot.
+      * Switch to spell slot uses if spell.
+      * Switch spell slots to pips if active?
+      -->
+      {#if pinType !== 'none'}
+        <div class="pin-counter {ctx.resource}">
+          {#if pinType === 'limited-uses-recharging'}
+            <RechargeControl document={ctx.document} field={spentProp} {uses} />
+          {:else if pinType === 'limited-uses-recharged'}
+            <span class="charged-text">
+              {#if value > 1}
+                <span class="">{value}</span>
+              {/if}
+              <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+            </span>
+          {:else if pinType === 'spell-slots'}
+            <span class="inline-uses spell-slots">
+              <span class="spell-slots-value">{ctx.document.parent.system.spells['spell' + ctx.document.system.level]?.value}</span>
+              <span class="divider">/</span>
+              <span class="spell-slots-max">{ctx.document.parent.system.spells['spell' + ctx.document.system.level]?.max}</span>
+            </span>
+          {:else if pinType === 'spell-slots-pact'}
+            <span class="inline-uses spell-slots-pact">
+              <span class="spell-slots-pact-value">{ctx.document.parent.system.spells['pact'].value}</span>
+              <span class="divider">/</span>
+              <span class="spell-slots-pact-max">{ctx.document.parent.system.spells['pact'].max}</span>
+            </span>
+          {:else if pinType === 'limited-uses'}
+            <span class="inline-uses color-text-default">
+              <TextInput
+                class={["uninput uses-value", { diminished: value < 1 }]}
+                document={usesDocument}
+                field={spentProp}
+                {value}
+                onSaveChange={(ev) => saveValueChange(ev)}
+                selectOnFocus={true}
+              />
+              <span class="divider color-text-gold-emphasis">/</span>
+              <span class="uses-max">{maxText}</span>
+            </span>
+          {:else if pinType === 'quantity'}
+            <TextInput
+              class={["uninput uses-value centered", { diminished: value < 1 }]}
+              document={ctx.document}
+              field={'system.quantity'}
+              value={ctx.document.system.quantity}
+              selectOnFocus={true}
+            />
           {/if}
-        </span>
-      {:else if ctx.resource === 'quantity'}
-        <TextInput
-          class={["uninput uses-value centered", { diminished: value < 1 }]}
-          document={ctx.document}
-          field={'system.quantity'}
-          value={ctx.document.system.quantity}
-          selectOnFocus={true}
-        />
+        </div>
+      {:else if ctx.document.system.activities.size > 0}
+      <div class="pin-counter {ctx.resource}">
+        <span class="subtitle font-default-medium color-text-lighter">{ctx.document.system.activities.size} {localize(ctx.document.system.activities.size === 1 ? 'DND5E.ACTIVITY.Title.one' : 'DND5E.ACTIVITY.Title.other')}</span>
+      </div>
       {/if}
-    </div>
+    {/if}
   </div>
-  {#if context.unlocked}
+  {#if context.unlocked && !isEditing}
     <a
-      class="sheet-pins-menu highlight-on-hover"
+      class="button button-icon-only button-borderless highlight-on-hover"
       onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
     >
       <i class="fas fa-ellipsis-vertical"></i>
