@@ -1203,11 +1203,13 @@ export type CharacterSheetQuadroneContext = {
   senses: CharacterSpeedSenseContext;
   showContainerPanel: boolean;
   showDeathSaves: boolean;
+  sidebarTabs: Tab[];
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
   species?: ActorTraitItemContext;
   speeds: CharacterSpeedSenseContext;
   spellbook: SpellbookSection[];
+  specialTraits: ActorTraitContext[];
   spellcasting: SpellcastingClassContext[];
   spellComponentLabels: Record<string, string>;
   spellSlotTrackerMode: string;
@@ -1236,6 +1238,7 @@ export type NpcSheetQuadroneContext = {
   features: FeatureSection[];
   habitats: { label: string }[];
   important: boolean;
+  includeSpellbookInStatblockTab: boolean;
   inventory: InventorySection[];
   orphanedSubclasses: Item5e[];
   showContainerPanel: boolean;

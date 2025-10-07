@@ -12,4 +12,6 @@ export type TabConfigContextEntry = {
   defaultUnselected: ConfigTabInfo[];
   selected: ConfigTabInfo[];
   unselected: ConfigTabInfo[];
+  /** Replaces the document type as a property when saving world tab configuration info. */
+  docTypeKeyOverride?: string;
 };

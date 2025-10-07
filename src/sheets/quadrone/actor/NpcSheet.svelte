@@ -449,9 +449,12 @@
               <button
                 type="button"
                 class="roll-hp button button-borderless button-icon-only"
-                aria-label={localize('DND5E.HPFormulaRollMessage')}
+                aria-label="{localize('DND5E.HitDiceRoll')} / {localize(
+                  'TIDY5E.HitDiceRollAverage',
+                )}"
                 data-tooltip
                 onclick={() => context.sheet.rollFormula()}
+                oncontextmenu={() => context.sheet.applyAverageHP()}
                 disabled={!context.editable}
               >
                 <i class="fas fa-dice"></i>

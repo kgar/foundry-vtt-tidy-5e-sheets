@@ -69,6 +69,11 @@ export interface ItemTabRegistrationOptions {
    * Omitting this field means the tab should show in all item sheets, if `enabled` is also true or omitted.
    */
   types?: string | string[];
+  /**
+   * Includes the registered tab whenever the target sheet has indicated "Use Default" in tab selection settings.
+   * Default: `true`
+   */
+  includeAsDefaultTab?: boolean;
 }
 
 /**
@@ -85,6 +90,11 @@ export interface ActorTabRegistrationOptions {
    * Useful for replacing core Tidy 5e Sheet tabs.
    */
   overrideExisting?: boolean;
+  /**
+   * Includes the registered tab whenever the target sheet has indicated "Use Default" in tab selection settings.
+   * Default: `true`
+   */
+  includeAsDefaultTab?: boolean;
 }
 
 /**

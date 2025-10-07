@@ -34,6 +34,7 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { TidySvelteApi } from './svelte/TidySvelteApi';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
+import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -241,6 +242,63 @@ export class Tidy5eSheetsApi {
     this.registerGroupTab(tab, options);
     this.registerNpcTab(tab, options);
     this.registerVehicleTab(tab, options);
+  }
+
+  /**
+   * Adds a tab to the available Character sheet sidebar tabs.
+   * @param tab the information necessary to render a tab
+   * @param options sheet registration options
+   * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
+   * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
+   * @returns void
+   *
+   * @example Registering a handlebars-based character sheet tab
+   * ```js
+   * Hooks.on('tidy5e-sheet.ready', (api) => {
+   *   api.registerCharacterSidebarTab(
+   *     new api.models.HtmlTab({
+   *       title: 'My Tab',
+   *       iconClass: 'fa-solid fa-spaghetti-monster-flying',
+   *       html: `
+   *         <h1>Hello, world!</h1>
+   *         <p>
+   *           Behold my sidebar tab, forged in the fires of Mt. Doom and registered in the API via a script in a hook.
+   *           The eldritch power of this JavaScript allows you to fire 4 beams which each deal 1d10 force damage.
+   *         </p>
+   *       `,
+   *       tabId: 'my-module-id-registered-character-tab',
+   *     })
+   *   );
+   * });
+   * ```
+   *
+   */
+  registerCharacterSidebarTab(
+    tab: SupportedTab,
+    options?: ActorTabRegistrationOptions
+  ): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+
+    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
+
+    if (!registeredTabs) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    for (let registeredTab of registeredTabs) {
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        CharacterSheetQuadroneSidebarRuntime.registerTab(
+          registeredTab,
+          options
+        );
+      }
+    }
   }
 
   /**
@@ -891,7 +949,7 @@ export class Tidy5eSheetsApi {
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
-        ItemSheetQuadroneRuntime.registerTab(registeredTab);
+        ItemSheetQuadroneRuntime.registerTab(registeredTab, options);
       }
     }
   }
@@ -1341,10 +1399,10 @@ export class Tidy5eSheetsApi {
   /**
    * Registers additional mappings of tab ID to item types, controlling available options when clicking a "create"
    * button for a given tab.
-   * 
+   *
    * @param params  params for registration (`tabId` and an array of `documentItemTypes`)
    * @param options options for registration (currently `mode`: 'merge' or 'override')
-   * 
+   *
    * @example Allowing creation of Spells on some newly-registered tab with ID `'my-new-tab'`
    * ```js
    * Hooks.on('tidy5e-sheet.ready', (api) => {

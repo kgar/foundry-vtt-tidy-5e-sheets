@@ -181,7 +181,7 @@
 
       // TODO: Eliminate the CSS class injection; set the background color CSS variable via an inline style with a color taken from a function, rather than using the classes. Put the variable assignment outside of the item table row so that scripters can set the CSS variable on the row itself.
       --t5e-item-table-row-background: transparent;
-      &.method-spell.can-prepare.prepared {
+      &.can-prepare.prepared {
         --t5e-item-table-row-background: var(--t5e-prepared-background);
       }
 

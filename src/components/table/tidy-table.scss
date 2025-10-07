@@ -155,7 +155,7 @@
 }
 
 .tidy-table-row-v2 {
-  &.method-spell.can-prepare.prepared {
+  &.can-prepare.prepared {
     --t5e-tidy-table-row-background: var(--t5e-prepared-background);
   }
 

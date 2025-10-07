@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import ActorTraitPills from 'src/sheets/quadrone/actor/parts/ActorTraitPills.svelte';
-  import { EventHelper } from 'src/utils/events';
   import { isNil } from 'src/utils/data';
   import type { ActorTraitContext } from 'src/types/types';
 
