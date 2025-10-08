@@ -954,5 +954,12 @@
         "PlaceholderNameField.PlaceholderText": "Nome Segnaposto",
         "PlaceholderNotesField.PlaceholderText": "Note"
     },
-    "TIDY5E.Actor.Characteristics": "Connotati"
+    "TIDY5E.Actor.Characteristics": "Connotati",
+    "TIDY5E.Show": "Mostra",
+    "TIDY5E.Hide": "Nascondi",
+    "TIDY5E.LegendaryLairToolbar": "Barra Strumenti Leggendaria/Tana",
+    "TIDY5E.SpellbookSections": "Sezioni Libro Incantesimi",
+    "TIDY5E.UserDefaultPrefix": "Predefinito utente: {value}",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opzioni Visualizzazione Predefinite Globali",
+    "TIDY5E.Character.Sidebar.Title": "Barra laterale PG"
 }

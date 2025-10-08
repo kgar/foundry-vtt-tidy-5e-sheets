@@ -908,10 +908,21 @@
         "CombatVisibility.Visible.Label": "Widoczne dla graczy po dodaniu do śledzenia",
         "CombatantsSection.Title": "Walczący",
         "Combat.IncludeInCombat.Tooltip": "Uwzględnij w walce",
-        "Combat.ExcludeFromCombat.Tooltip": "Nie uwzględniaj w walce"
+        "Combat.ExcludeFromCombat.Tooltip": "Nie uwzględniaj w walce",
+        "AddPlaceholderToCombatTracker.Label": "Dodaj do aktualnego spotkania jako zastępnik",
+        "AddPlaceholder.Label": "Utwórz zastępnika dla walki",
+        "DeletePlaceholder.Label": "Usuń zastępnika",
+        "AddAllPlaceholders.Label": "Dodaj wszystkich jako zastępniki",
+        "NewPlaceholder.Name": "Nowy zastępnik",
+        "NewPlaceholder.SubtitlePlaceholderText": "Notatka o tym zastępniku",
+        "InitiativeCount.Label": "Dodaj inicjatywę {count}",
+        "PlaceholderNameField.PlaceholderText": "Nazwa zastępnika",
+        "PlaceholderNotesField.PlaceholderText": "Notatki"
     },
     "TIDY5E.Group.PrimaryParty.Label": "Główna drużyna",
     "TIDY5E.CombatTabName": "Starcie",
     "TIDY5E.Difficulty": "Poziom trudności",
-    "TIDY5E.Actor.Characteristics": "Charakterystyka"
+    "TIDY5E.Actor.Characteristics": "Charakterystyka",
+    "TIDY5E.Show": "Pokaż",
+    "TIDY5E.Hide": "Ukryj"
 }
