@@ -377,6 +377,12 @@ export function createSettings() {
                       blank: false,
                     })
                   ),
+                  visibilityLevels: new foundry.data.fields.TypedObjectField(
+                    new foundry.data.fields.NumberField({
+                      required: true,
+                      nullable: true,
+                    })
+                  ),
                 },
                 { initial: [] },
                 { name: 'Tab Configuration' }

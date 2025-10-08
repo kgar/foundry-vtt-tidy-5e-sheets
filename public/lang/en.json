@@ -194,6 +194,7 @@
 
   "TIDY5E.TabSelection": {
     "Title": "Tab Selection: {documentName}",
+    "VisibilityLevels.Title": "Tab Visibility Levels: {documentName}",
     "MenuOptionText": "Tab Selection",
     "AvailableHeader": "Hidden Tabs",
     "SelectedHeader": "Visible Tabs",

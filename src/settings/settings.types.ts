@@ -19,11 +19,11 @@ export interface GlobalCustomSectionsetting {
 
 export type SheetTabConfiguration = {
   selected: string[];
+  visibilityLevels: Record<string, number>;
 };
 
 export type TabConfiguration = {
   [documentName: string]: {
-    [documentType: string]: SheetTabConfiguration
-  }
-}
-
+    [documentType: string]: SheetTabConfiguration;
+  };
+};

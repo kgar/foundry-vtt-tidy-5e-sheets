@@ -1,6 +1,7 @@
 export type ConfigTabInfo = {
   id: string;
   title: string;
+  visibilityLevel: number;
 };
 
 export type TabConfigContextEntry = {
