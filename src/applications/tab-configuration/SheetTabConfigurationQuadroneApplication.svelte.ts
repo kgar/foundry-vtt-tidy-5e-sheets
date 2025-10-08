@@ -73,7 +73,8 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
   _getTabConfig: GetTabConfigFn;
   _setTabConfig: SetTabConfigFn;
   _getTabContext: GetTabContextFn;
-  _title: string;
+  _inclusionTabTitle: string;
+  _visibilityTabTitle: string;
 
   constructor(options: SheetTabConfigurationQuadroneApplicationConfiguration) {
     super(options);
@@ -94,13 +95,15 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       options.customTabConfigProvider?.getTabContext ??
       SheetTabConfigurationQuadroneApplication._getConfigFromRuntime;
 
-    this._title =
+    this._inclusionTabTitle =
       options.title ??
       FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
         documentName: FoundryAdapter.localize(
           `TYPES.${options.document.documentName}.${options.document.type}`
         ),
       });
+
+    this._visibilityTabTitle = 'TODO';
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
@@ -138,7 +141,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       props: {
         app: this,
         config: this._config,
-        title: this._title,
+        title: this._inclusionTabTitle,
       },
     });
 
@@ -147,8 +150,10 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
   _getConfig() {
     let setting = this._getTabConfig(this.document);
-    setting ??= { selected: [] };
+    setting ??= { selected: [], visibilityLevels: {} };
     setting.selected ??= [];
+    setting.visibilityLevels ??= {};
+
     if (!setting.selected.length) {
       setting.selected = this._worldDefaultTabIds ?? [];
     }
@@ -195,6 +200,13 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
     return await this._setTabConfig(this.document, {
       selected: selected,
+      visibilityLevels: Object.entries(this._config.entry.allTabs).reduce(
+        (prev, curr) => {
+          prev[curr[0]] = curr[1]?.visibilityLevel;
+          return prev;
+        },
+        {} as Record<string, number>
+      ),
     });
   }
 
@@ -214,9 +226,11 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
     let config = this._getTabConfig(this.document) ?? {
       selected: [],
+      visibilityLevels: {}
     };
 
     config.selected = [];
+    config.visibilityLevels = {};
 
     await this._setTabConfig(this.document, config);
 
