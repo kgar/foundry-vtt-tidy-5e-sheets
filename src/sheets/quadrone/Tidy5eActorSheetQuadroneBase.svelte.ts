@@ -60,6 +60,8 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
+import { SheetPins } from 'src/features/sheet-pins/SheetPins';
+import type { SheetPinFlag } from 'src/api';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -1234,6 +1236,14 @@ export function Tidy5eActorSheetQuadroneBase<
       const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
       if (allowed === false) return;
 
+      // Sheet Pins
+      const doc = await fromUuid(data.uuid);
+      let relativeUuid = SheetPins.getRelativeUUID(doc);
+
+      if (event.target.closest('[data-tidy-sheet-part="sheet-pins"]')) {
+        return await this._onDropPin(event, { id: relativeUuid, doc });
+      }
+
       // Dropped Documents
       const documentClass = foundry.utils.getDocumentClass(data.type);
       if (documentClass) {
@@ -1252,6 +1262,80 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       return await super._onDrop(event);
+    }
+
+    async _onDropPin(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      data: { id: string; doc: any }
+    ) {
+      // If not pinned, then pin it
+      const currentPins = TidyFlags.sheetPins.get(this.actor);
+
+      const pinType: SheetPinFlag['type'] | undefined =
+        data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
+          ? 'item'
+          : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
+          ? 'activity'
+          : undefined;
+
+      if (!pinType) {
+        return;
+      }
+
+      if (!currentPins.find((x) => x.id === data.id)) {
+        await SheetPins.pin(data.doc, pinType);
+      }
+
+      return await this._onSortPins(event, data.id);
+    }
+
+    async _onSortPins(
+      event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
+      srcId: string
+    ) {
+      const targetId = event.target
+        ?.closest('[data-pin-id]')
+        ?.getAttribute('data-pin-id');
+
+      if (!targetId || srcId === targetId) {
+        return;
+      }
+
+      let source;
+      let target;
+
+      const siblings = TidyFlags.sheetPins
+        .get(this.actor)
+        .filter((f: SheetPinFlag) => {
+          if (f.id === targetId) target = f;
+          else if (f.id === srcId) source = f;
+          return f.id !== srcId;
+        });
+
+      const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+        target,
+        siblings,
+      });
+
+      const pins = TidyFlags.sheetPins
+        .get(this.actor)
+        .reduce(
+          (map: Map<string, SheetPinFlag>, f: SheetPinFlag) =>
+            map.set(f.id, { ...f }),
+          new Map<string, SheetPinFlag>()
+        );
+
+      for (const { target, update } of updates) {
+        const pin = pins.get(target.id);
+        if (pin && update) {
+          foundry.utils.mergeObject(pin, update);
+        }
+      }
+
+      return await TidyFlags.sheetPins.set(
+        this.actor,
+        Array.from(pins.values())
+      );
     }
 
     async _onDropDocument(
