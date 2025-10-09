@@ -89,7 +89,6 @@
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_IMAGE}
       data-action={context.unlocked ? 'editImage' : 'showPortraitArtwork'}
       data-edit={context.unlocked ? 'img' : null}
-      data-type={context.unlocked ? 'image' : null}
     />
   </div>
 </div>

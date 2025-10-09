@@ -101,7 +101,6 @@
       class={['pointer', { dead: actorIsDead }]}
       data-action={action}
       data-edit={context.unlocked ? context.portrait.path : null}
-      data-type={context.unlocked ? context.portrait.type : null}
       title={imageAlt}>{imageUrl}</video
     >
   {:else}
@@ -111,7 +110,6 @@
       class={['pointer', { dead: actorIsDead }]}
       data-action={action}
       data-edit={context.unlocked ? context.portrait.path : null}
-      data-type={context.unlocked ? context.portrait.type : null}
     />
   {/if}
   {#if actorIsDead}

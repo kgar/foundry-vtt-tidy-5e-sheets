@@ -984,7 +984,6 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
     path: string;
     isVideo: boolean;
     token: boolean;
-    type: string;
   };
   rollData: any;
   saves: ActorSaves;

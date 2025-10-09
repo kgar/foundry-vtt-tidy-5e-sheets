@@ -52,7 +52,6 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE}
     data-action="editImage"
     data-edit={context.unlocked ? 'img' : null}
-    data-type={context.unlocked ? 'image' : null}
   />
   <div
     role="presentation"

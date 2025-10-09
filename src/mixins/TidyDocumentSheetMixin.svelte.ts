@@ -84,9 +84,21 @@ export function TidyExtensibleDocumentSheetMixin<
 
           const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
 
+          const schemaTypes =
+            this.document.schema.getField(attr)?.categories ?? [];
+          const acceptsImage = schemaTypes.includes('IMAGE');
+          const acceptsVideo = schemaTypes.includes('VIDEO');
+          const type = [acceptsImage && 'image', acceptsVideo && 'video']
+            .filter(Boolean)
+            .join('');
+          if (!type)
+            throw new Error(
+              `Unsupported Schema type. Received: ${schemaTypes}`
+            );
+
           const fp = new CONFIG.ux.FilePicker({
             current,
-            type: target.dataset.type,
+            type: type,
             redirectToRoot: defaultImage ? [defaultImage] : [],
             callback: (path: string) => {
               if (

@@ -204,7 +204,6 @@
         alt={context.item.name}
         data-action={context.unlocked ? 'editImage' : 'showIcon'}
         data-edit={context.unlocked ? 'img' : null}
-        data-type={context.unlocked ? 'image' : null}
       />
       <ItemImageBorder />
     </div>
