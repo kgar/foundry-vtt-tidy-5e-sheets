@@ -2,7 +2,7 @@
 
 ### Feature - Tab Visibility Levels
 
-Visibility Level refers to the minimum level of access required to view a tab. Levels include Observer 2, Owner 3, and GM Only (an astronomically high number). A GM always succeeds the check, else users' access to the document is tested during document prep. Invalid tabs are filtered from the tabs array. Likewise, when the user is conducting Sheet Tab Config, access level is enforced there, too. Essentially, the invisible tabs should remain untouched in how they're set up.
+Tab Visibility Level refers to the minimum level of document ownership required to view a tab on a sheet. Eligible levels include Observer 2, Owner 3, and GM Only (an astronomically high number). A GM always succeeds the check, else users' access to the document is tested during document prep. Invalid tabs are filtered out and not shown on the sheet. When the user is conducting Sheet Tab Config, access level is enforced there, too. Essentially, the invisible tabs should remain untouched in how they're set up while the sheet owner can further refine visibility on the tabs they can see.
 
 - [ ] Update Tab Configuration setting schema to accept an object `Record<string, number>` where string is tab ID and number is visibility level.
 - [ ] Ditto for Sheet Tab Configuration flag.
