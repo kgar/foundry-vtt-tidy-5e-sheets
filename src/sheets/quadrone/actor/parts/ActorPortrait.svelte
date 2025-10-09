@@ -39,6 +39,14 @@
 
   const localize = FoundryAdapter.localize;
 
+  let editAction = $derived(
+    context.portrait.token && context.portrait.isRandom
+      ? 'configurePrototypeToken'
+      : 'editImage',
+  );
+
+  let action = $derived(context.unlocked ? editAction : 'showArtwork');
+
   let cyclerTooltip = $derived(
     localize('TIDY5E.ThemeSettings.PortraitShape.title', {
       type: localize(
@@ -91,8 +99,8 @@
       playsinline
       disablepictureinpicture
       class={['pointer', { dead: actorIsDead }]}
-      data-action={context.unlocked ? 'editImageVideo' : 'showArtwork'}
-      data-path={context.portrait.path}
+      data-action={action}
+      data-edit={context.unlocked ? context.portrait.path : null}
       title={imageAlt}>{imageUrl}</video
     >
   {:else}
@@ -100,8 +108,8 @@
       src={imageUrl}
       alt={imageAlt}
       class={['pointer', { dead: actorIsDead }]}
-      data-action={context.unlocked ? 'editImage' : 'showArtwork'}
-      data-path={context.portrait.path}
+      data-action={action}
+      data-edit={context.unlocked ? context.portrait.path : null}
     />
   {/if}
   {#if actorIsDead}

@@ -66,56 +66,22 @@ export function TidyExtensibleDocumentSheetMixin<
       },
       actions: {
         editImage: async function (this: TidyDocumentSheet, _event, target) {
-          if (target.nodeName !== 'IMG') {
-            throw new Error(
-              'The editImage action is available only for IMG elements.'
-            );
+          const attr = target.dataset.edit;
+
+          if (!attr) {
+            return;
           }
-          const attr = target.dataset.path ?? '';
+
           const current = foundry.utils.getProperty(
             this.document._source,
             attr
           );
+
           const defaultArtwork =
             this.document.constructor.getDefaultArtwork?.(
               this.document._source
             ) ?? {};
-          const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
-          const fp = new foundry.applications.apps.FilePicker.implementation({
-            current,
-            type: 'image',
-            redirectToRoot: defaultImage ? [defaultImage] : [],
-            callback: (path: string) => {
-              this.document.update({
-                [attr]: path,
-              });
-            },
-            position: {
-              top: this.position.top + 40,
-              left: this.position.left + 10,
-            },
-          });
-          await fp.browse();
-        },
-        editImageVideo: async function (
-          this: TidyDocumentSheet,
-          _event,
-          target
-        ) {
-          if (!['IMG', 'VIDEO'].includes(target.nodeName)) {
-            throw new Error(
-              'The editImageVideo action is available only for IMG and VIDEO elements.'
-            );
-          }
-          const attr = target.dataset.path ?? '';
-          const current = foundry.utils.getProperty(
-            this.document._source,
-            attr
-          );
-          const defaultArtwork =
-            this.document.constructor.getDefaultArtwork?.(
-              this.document._source
-            ) ?? {};
+
           const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
 
           const schemaTypes =
@@ -130,14 +96,18 @@ export function TidyExtensibleDocumentSheetMixin<
               `Unsupported Schema type. Received: ${schemaTypes}`
             );
 
-          const fp = new foundry.applications.apps.FilePicker.implementation({
+          const fp = new CONFIG.ux.FilePicker({
             current,
             type: type,
             redirectToRoot: defaultImage ? [defaultImage] : [],
             callback: (path: string) => {
-              this.document.update({
-                [attr]: path,
-              });
+              if (
+                target instanceof HTMLVideoElement ||
+                target instanceof HTMLImageElement
+              ) {
+                target.src = path;
+              }
+              this._onEditPortrait(attr, path);
             },
             position: {
               top: this.position.top + 40,
@@ -320,11 +290,11 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     /**
-     * An overridable method whose array members will be included 
+     * An overridable method whose array members will be included
      * in the custom content rendering logic.
      * @param context the document sheet context data
      * @param options render options for this particular render
-     * @returns 
+     * @returns
      */
     _getCustomContents(
       context: TContext,
@@ -824,6 +794,61 @@ export function TidyExtensibleDocumentSheetMixin<
       creationItemTypes?: string[];
       data?: Record<string, any>;
     }): Promise<any> {}
+
+    /* -------------------------------------------- */
+    /*  Form Handling                               */
+    /* -------------------------------------------- */
+
+    /**
+     * Customize how form data is extracted into an expanded object.
+     * @param event              The originating form submission event
+     * @param form                The form element that was submitted
+     * @param formData           Processed data for the submitted form
+     * @returns {object}                            An expanded object of processed form data
+     * @throws {Error}                              Subclasses may throw validation errors here to prevent form submission
+     * @protected
+     */
+    _processFormData(
+      event: SubmitEvent | null,
+      form: HTMLFormElement,
+      formData: /*FormDataExtended*/ unknown
+    ) {
+      const submitData = super._processFormData(event, form, formData);
+
+      // Correctly process data-edit video elements.
+      form
+        .querySelectorAll<HTMLVideoElement>('video[data-edit]')
+        .forEach((v) => {
+          foundry.utils.setProperty(submitData, v.dataset.edit, v.src);
+        });
+
+      // Prevent wildcard textures from being clobbered.
+      const proto = submitData.prototypeToken;
+      if (proto) {
+        const randomImg =
+          proto.randomImg ?? this.actor.prototypeToken.randomImg;
+        if (randomImg) delete submitData.prototypeToken;
+      }
+
+      return submitData;
+    }
+
+    /* -------------------------------------------- */
+
+    /**
+     * Handle editing the portrait.
+     * @param target  The target property being edited.
+     * @param path    The image or video path.
+     * @protected
+     */
+    async _onEditPortrait(target: string, path: string) {
+      if (target.startsWith('token.'))
+        await this.token.update({ [target.slice(6)]: path });
+      else {
+        const submit = new Event('submit', { cancelable: true });
+        this.form.dispatchEvent(submit);
+      }
+    }
 
     /* -------------------------------------------- */
     /*  Drag and Drop                               */

@@ -385,6 +385,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       return {
         src,
+        token: showToken,
         path: showToken ? 'prototypeToken.texture.src' : 'img',
         shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
         isVideo,
