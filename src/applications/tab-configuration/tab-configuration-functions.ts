@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   ConfigTabInfo,
   TabConfigContextEntry,
+  VisibilityLevelConfig,
 } from './tab-configuration.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
@@ -101,6 +102,14 @@ export function buildTabConfigContextEntry(
     selected = [...defaultSelected];
   }
 
+  const visibilityLevels: VisibilityLevelConfig[] = Object.values(allTabs).map(
+    (t) => ({
+      id: t.id,
+      title: t.title,
+      visibilityLevel: settings?.visibilityLevels[t.id] ?? null,
+    })
+  );
+
   return {
     documentName: documentName,
     documentType: type,
@@ -110,6 +119,7 @@ export function buildTabConfigContextEntry(
     defaultUnselected: getUnselectedTabs(allTabs, defaultSelected),
     selected: selected,
     unselected: getUnselectedTabs(allTabs, selected),
+    visibilityLevels,
   };
 }
 

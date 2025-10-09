@@ -4,14 +4,15 @@
 
 Tab Visibility Level refers to the minimum level of document ownership required to view a tab on a sheet. Eligible levels include Observer 2, Owner 3, and GM Only (an astronomically high number). A GM always succeeds the check, else users' access to the document is tested during document prep. Invalid tabs are filtered out and not shown on the sheet. When the user is conducting Sheet Tab Config, access level is enforced there, too. Essentially, the invisible tabs should remain untouched in how they're set up while the sheet owner can further refine visibility on the tabs they can see.
 
-- [ ] Update Tab Configuration setting schema to accept an object `Record<string, number>` where string is tab ID and number is visibility level.
-- [ ] Ditto for Sheet Tab Configuration flag.
-- [ ] Visibility levels are - CONST.DOCUMENT_OWNERSHIP_LEVELS - OBSERVER: 2, OWNER: 3 | GM Only -> Number.MAX_SAFE_INTEGER.
-- [ ] Set up World tab config to collect visibility levels for all tabs.
-- [ ] Ditto for Sheet tab config.
+- [x] Update Tab Configuration setting schema to accept an object `Record<string, number>` where string is tab ID and number is visibility level.
+- [x] Ditto for Sheet Tab Configuration flag.
+- [x] Visibility levels are - CONST.DOCUMENT_OWNERSHIP_LEVELS - OBSERVER: 2, OWNER: 3 | GM Only -> Number.MAX_SAFE_INTEGER.
+- [x] Set up World tab config to collect visibility levels for all tabs.
+- [x] Ditto for Sheet tab config.
+- [ ] Alphabetize tabs by localized title for the target lang
 - [ ] Update Tab preparation for all sheets to honor the max value between world and sheet setting.
 - [ ] Update Sheet Tab Config to hide tabs from the Owner that are GM Only, ensuring their settings are untouched when saving changes.
-- [ ] Stretch: Update Sheet Tab Config flag to use the same data schema objects as the setting.
+- [x] Stretch: Update Sheet Tab Config flag to use the same data schema objects as the setting.
 
 ### Short List
 

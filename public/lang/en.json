@@ -819,6 +819,7 @@
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
   "TIDY5E.ItemFilters.Filter.Other": "Other",
+  "TIDY5E.GMOnly.Title": "GM Only",
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
   "TIDY5E.Utilities.Tools": "Tools",

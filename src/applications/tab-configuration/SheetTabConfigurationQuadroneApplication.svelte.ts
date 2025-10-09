@@ -66,6 +66,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       selected: [],
       title: '',
       unselected: [],
+      visibilityLevels: [],
     },
   });
   /** When the document has no selected tabs, this is the fallback tab ID list. */
@@ -200,12 +201,12 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
     return await this._setTabConfig(this.document, {
       selected: selected,
-      visibilityLevels: Object.entries(this._config.entry.allTabs).reduce(
+      visibilityLevels: this._config.entry.visibilityLevels.reduce(
         (prev, curr) => {
-          prev[curr[0]] = curr[1]?.visibilityLevel;
+          prev[curr.id] = curr.visibilityLevel ;
           return prev;
         },
-        {} as Record<string, number>
+        {} as Record<string, number | null>
       ),
     });
   }
@@ -226,7 +227,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
     let config = this._getTabConfig(this.document) ?? {
       selected: [],
-      visibilityLevels: {}
+      visibilityLevels: {},
     };
 
     config.selected = [];

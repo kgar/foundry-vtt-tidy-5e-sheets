@@ -25,6 +25,7 @@ import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSe
 import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
 import { HomebrewSettingsApplication } from 'src/applications/homebrew-settings/HomebrewSettingsApplication.svelte';
 import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
+import { TabConfigurationSchema } from './settings-data-models';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -368,25 +369,7 @@ export function createSettings() {
           config: false,
           type: new foundry.data.fields.TypedObjectField(
             new foundry.data.fields.TypedObjectField(
-              new foundry.data.fields.SchemaField(
-                {
-                  selected: new foundry.data.fields.ArrayField(
-                    new foundry.data.fields.StringField({
-                      required: true,
-                      nullable: false,
-                      blank: false,
-                    })
-                  ),
-                  visibilityLevels: new foundry.data.fields.TypedObjectField(
-                    new foundry.data.fields.NumberField({
-                      required: true,
-                      nullable: true,
-                    })
-                  ),
-                },
-                { initial: [] },
-                { name: 'Tab Configuration' }
-              ),
+              TabConfigurationSchema,
               { initial: {} },
               {
                 name: 'Document Type to Tab Configuration Object',

@@ -5,8 +5,8 @@
   } from './WorldTabConfigurationQuadroneApplication.svelte';
   import type { TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TabConfigurationEntry from './parts/TabConfigurationEntry.svelte';
   import VerticalTabs from 'src/components/tabs/VerticalTabs.svelte';
+  import TabbedTabConfig from './parts/TabbedTabConfig.svelte';
 
   interface Props {
     app: WorldTabConfigurationQuadroneApplication;
@@ -54,10 +54,7 @@
       data-tab-contents-for={tabId}
       role="tabpanel"
     >
-      <h2>
-        {title}
-      </h2>
-      <TabConfigurationEntry bind:entry={config[i]} />
+      <TabbedTabConfig {entry} />
     </div>
   {/each}
 </div>
