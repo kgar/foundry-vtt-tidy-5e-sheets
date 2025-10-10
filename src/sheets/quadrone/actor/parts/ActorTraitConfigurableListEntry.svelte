@@ -7,7 +7,7 @@
 
   interface Props {
     entries: ActorTraitContext[];
-    onconfig: (
+    onconfig?: (
       ev: MouseEvent & {
         currentTarget: EventTarget & HTMLButtonElement;
       },
@@ -58,7 +58,7 @@
         <i class={icon}></i>
         {label}
       </h4>
-      {#if context.unlocked && configButtonLocation == 'label'}
+      {#if context.unlocked && configButtonLocation == 'label' && onconfig}
         <button
           aria-label={configurationLabel}
           type="button"
@@ -70,33 +70,25 @@
         </button>
       {/if}
     </div>
-    <div class="list-content">
-      <div class="list-values">
-        {#if entries.length}
-          <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
-        {/if}
-        <!-- {#if context.unlocked && empty && !isCustomTrait}
+    {#if entries.length}
+      <div class="list-content">
+        <div class="list-values">
+          {#if entries.length}
+            <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
+          {/if}
+        </div>
+        {#if context.unlocked && configButtonLocation == 'end' && onconfig}
           <button
+            aria-label={configurationLabel}
             type="button"
-            class="button button-tertiary"
-            data-tooltip={configurationTooltip}
+            class="button button-borderless button-icon-only button-config flexshrink"
+            data-tooltip={configurationTooltip ?? configurationLabel}
             onclick={(ev) => onconfig(ev)}
           >
-            {localize('CONTROLS.CommonEdit')}
+            <i class="fa-solid fa-cog"></i>
           </button>
-        {/if} -->
+        {/if}
       </div>
-      {#if context.unlocked && configButtonLocation == 'end'}
-        <button
-          aria-label={configurationLabel}
-          type="button"
-          class="button button-borderless button-icon-only button-config flexshrink"
-          data-tooltip={configurationTooltip ?? configurationLabel}
-          onclick={(ev) => onconfig(ev)}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
-      {/if}
-    </div>
+    {/if}
   </div>
 {/if}

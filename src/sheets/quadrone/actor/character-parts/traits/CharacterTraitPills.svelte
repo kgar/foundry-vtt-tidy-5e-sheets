@@ -4,6 +4,7 @@
   import ActorTraitSize from '../../parts/ActorTraitSize.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { Snippet } from 'svelte';
+  import ActorCustomTraitListEntries from '../../parts/ActorCustomTraitListEntries.svelte';
 
   type Prop = {
     configButtonLocation: 'end' | 'label';
@@ -134,20 +135,4 @@
 
 {@render preCustomTraits?.()}
 
-{#each context.customActorTraits as trait}
-  <ActorTraitConfigurableListEntry
-    {configButtonLocation}
-    label={localize(trait.title)}
-    entries={[]}
-    onconfig={(ev) =>
-      trait.openConfiguration?.({
-        app: context.document.sheet,
-        data: context,
-        element: context.document.sheet.element,
-        event: ev,
-      })}
-    configurationTooltip={trait.openConfigurationTooltip}
-    icon={trait.iconClass}
-    isCustomTrait={true}
-  />
-{/each}
+<ActorCustomTraitListEntries {configButtonLocation} />
