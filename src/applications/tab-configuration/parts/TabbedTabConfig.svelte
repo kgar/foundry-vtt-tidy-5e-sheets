@@ -8,9 +8,10 @@
 
   interface Props {
     entry: TabConfigContextEntry;
+    selectedTabId: string;
   }
 
-  let { entry = $bindable() }: Props = $props();
+  let { entry = $bindable(), selectedTabId = $bindable() }: Props = $props();
 
   let tabs: Tab[] = [
     {
@@ -40,8 +41,6 @@
       },
     },
   ];
-
-  let selectedTabId: string = $state('');
 </script>
 
 <div class="tabs-row">

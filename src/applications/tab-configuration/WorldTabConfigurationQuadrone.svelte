@@ -15,11 +15,12 @@
 
   let { config = $bindable(), app }: Props = $props();
 
+  let selectedSidebarTabId = $state('');
   let selectedTabId = $state('');
 
   $effect(() => {
-    if (selectedTabId === '' && tabs.length) {
-      selectedTabId = tabs[0].id;
+    if (selectedSidebarTabId === '' && tabs.length) {
+      selectedSidebarTabId = tabs[0].id;
     }
   });
 
@@ -35,7 +36,7 @@
 
 <div class="dialog-content-container flexrow">
   <div class="flexcol noflex">
-    <VerticalTabs bind:selectedTabId {tabs} class="flex1" />
+    <VerticalTabs bind:selectedTabId={selectedSidebarTabId} {tabs} class="flex1" />
   </div>
 
   {#each config as entry, i}
@@ -46,7 +47,7 @@
     <div
       class={[
         'tidy-tab',
-        { active: tabId === selectedTabId },
+        { active: tabId === selectedSidebarTabId },
         'flexcol',
         'configuration-tab',
         'dialog-content',
@@ -55,7 +56,7 @@
       role="tabpanel"
     >
       <h2>{title}</h2>
-      <TabbedTabConfig {entry} />
+      <TabbedTabConfig {entry} bind:selectedTabId />
     </div>
   {/each}
 </div>

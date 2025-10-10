@@ -98,11 +98,7 @@ class ItemSheetQuadroneRuntimeImpl {
   async getTabs(
     context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
   ) {
-    const type = context.item.type;
-
-    let tabsForType = this._tabs.filter((x) => !x.types || x.types.has(type));
-
-    let tabIds = tabsForType.map((t) => t.id);
+    let tabIds = this._getVisibleTabIds(context);
 
     const selectedTabs =
       TidyFlags.tabConfiguration.get(context.item)?.selected ?? [];
@@ -128,6 +124,8 @@ class ItemSheetQuadroneRuntimeImpl {
         .sort((a, b) => defaultTabs.indexOf(a) - defaultTabs.indexOf(b));
     }
 
+    let tabsForType = this._tabs.filter((t) => tabIds.includes(t.id));
+
     let tabsToPrepare = tabIds
       .map((tabId) => tabsForType.find((tab) => tab.id === tabId))
       .filter((t) => !!t);
@@ -135,6 +133,38 @@ class ItemSheetQuadroneRuntimeImpl {
     let tabs = await TabManager.prepareTabsForRender(context, tabsToPrepare);
 
     return tabs.filter((t) => !t.condition || t.condition(context.document));
+  }
+
+  private _getVisibleTabIds(
+    context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
+  ) {
+    const tabIds = Iterator.from(this._tabs)
+      .filter((x) => !x.types || x.types.has(context.document.type))
+      .map((t) => t.id);
+
+    if (FoundryAdapter.userIsGm()) {
+      return [...tabIds];
+    }
+
+    const worldTabConfig =
+      settings.value.tabConfiguration[context.document.documentName]?.[
+        context.document.type
+      ]?.visibilityLevels ?? {};
+
+    const sheetTabConfig =
+      TidyFlags.tabConfiguration.get(context.document)?.visibilityLevels ?? {};
+
+    const documentOwnershipLevel = context.document.getUserLevel(game.user);
+
+    return [
+      ...tabIds.filter((tabId) => {
+        const minOwnershipLevel = Math.max(
+          worldTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
+          sheetTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
+        );
+        return documentOwnershipLevel >= minOwnershipLevel;
+      }),
+    ];
   }
 
   getAllRegisteredTabs(
@@ -170,9 +200,9 @@ class ItemSheetQuadroneRuntimeImpl {
     options?: ItemTabRegistrationOptions
   ) {
     this._tabs.push(tab);
-    
+
     const includeAsDefault = options?.includeAsDefaultTab ?? true;
-    
+
     if (!includeAsDefault) {
       return;
     }

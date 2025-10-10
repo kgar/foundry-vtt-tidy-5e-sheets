@@ -6,7 +6,6 @@ import type {
 } from './tab-configuration.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
-import type { RegisteredTab } from 'src/runtime/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';

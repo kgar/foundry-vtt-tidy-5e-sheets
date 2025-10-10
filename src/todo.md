@@ -1,23 +1,5 @@
 ## kgar To Do
 
-### Feature - Tab Visibility Levels
-
-Tab Visibility Level refers to the minimum level of document ownership required to view a tab on a sheet. Eligible levels include Observer 2, Owner 3, and GM Only (an astronomically high number). A GM always succeeds the check, else users' access to the document is tested during document prep. Invalid tabs are filtered out and not shown on the sheet. When the user is conducting Sheet Tab Config, access level is enforced there, too. Essentially, the invisible tabs should remain untouched in how they're set up while the sheet owner can further refine visibility on the tabs they can see.
-
-- [x] Update Tab Configuration setting schema to accept an object `Record<string, number>` where string is tab ID and number is visibility level.
-- [x] Ditto for Sheet Tab Configuration flag.
-- [x] Visibility levels are - CONST.DOCUMENT_OWNERSHIP_LEVELS - OBSERVER: 2, OWNER: 3 | GM Only -> Number.MAX_SAFE_INTEGER.
-- [x] Set up World tab config to collect visibility levels for all tabs.
-- [x] Ditto for Sheet tab config.
-- [x] Alphabetize tabs by localized title for the target lang
-- [x] Stretch: Update Sheet Tab Config flag to use the same data schema objects as the setting.
-- [x] Finish todos on settings forms
-- [ ] Update Tab preparation for all sheets to honor the max value between world and sheet setting.
-- [ ] Update Sheet Tab Config to hide tabs from the Owner that are GM Only, ensuring their settings are untouched when saving changes.
-- [x] Just Hide ™️ tabs that are GM Only from non-GMs on the sheet tab configuration UI
-  - [x] Tab Visibility
-  - [x] ~~Tab Selection~~ Nah. This is something players and GMs should work out. GMs need to be able to order the hidden tabs where they need them, and that may mean players also need to be aware of their existence.
-
 ### Short List
 
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
@@ -155,7 +137,7 @@ Tab Visibility Level refers to the minimum level of document ownership required 
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
-
+- [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
 
 ## hightouch To Do
 
@@ -296,6 +278,23 @@ Limited:
 
 - Identical to Observer
 
+### Feature - Tab Visibility Levels
+
+Tab Visibility Level refers to the minimum level of document ownership required to view a tab on a sheet. Eligible levels include Observer 2, Owner 3, and GM Only (an astronomically high number). A GM always succeeds the check, else users' access to the document is tested during document prep. Invalid tabs are filtered out and not shown on the sheet. When the user is conducting Sheet Tab Config, access level is enforced there, too. Essentially, the invisible tabs should remain untouched in how they're set up while the sheet owner can further refine visibility on the tabs they can see.
+
+- [x] Update Tab Configuration setting schema to accept an object `Record<string, number>` where string is tab ID and number is visibility level.
+- [x] Ditto for Sheet Tab Configuration flag.
+- [x] Visibility levels are - CONST.DOCUMENT_OWNERSHIP_LEVELS - OBSERVER: 2, OWNER: 3 | GM Only -> Number.MAX_SAFE_INTEGER.
+- [x] Set up World tab config to collect visibility levels for all tabs.
+- [x] Ditto for Sheet tab config.
+- [x] Alphabetize tabs by localized title for the target lang
+- [x] Stretch: Update Sheet Tab Config flag to use the same data schema objects as the setting.
+- [x] Finish todos on settings forms
+- [x] Update Tab preparation for all sheets to honor the max value between world and sheet setting.
+- [x] Just Hide ™️ tabs that are GM Only from non-GMs on the sheet tab configuration UI
+  - [x] Tab Visibility
+  - [x] ~~Tab Selection~~ Nah. This is something players and GMs should work out. GMs need to be able to order the hidden tabs where they need them, and that may mean players also need to be aware of their existence.
+
 ### To Do Graveyard
 
 - [x] Stub group members context
@@ -392,3 +391,4 @@ Limited:
 - [x] PC Sidebar Tab Selection - create API surface area
 - [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
 - [x] PC Sidebar Tab Selection - Add to world tab configuration
+
