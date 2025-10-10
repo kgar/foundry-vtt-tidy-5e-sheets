@@ -8,10 +8,10 @@
 
   interface Props {
     entry: TabConfigContextEntry;
-    selectedTabId: string;
+    selectedTabId?: string;
   }
 
-  let { entry = $bindable(), selectedTabId = $bindable() }: Props = $props();
+  let { entry = $bindable(), selectedTabId = $bindable('') }: Props = $props();
 
   let tabs: Tab[] = [
     {
