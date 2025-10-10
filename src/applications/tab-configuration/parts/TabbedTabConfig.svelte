@@ -15,7 +15,7 @@
   let tabs: Tab[] = [
     {
       id: 'inclusion',
-      title: 'TODO: Inclusion',
+      title: 'TIDY5E.TabConfiguration.SelectionTab.Title',
       content: {
         type: 'svelte',
         component: TabInclusion,
@@ -28,7 +28,7 @@
     },
     {
       id: 'visibility',
-      title: 'TODO: Visibility',
+      title: 'TIDY5E.TabConfiguration.VisibilityTab.Title',
       content: {
         type: 'svelte',
         component: TabVisibilityLevels,
@@ -45,6 +45,6 @@
 </script>
 
 <div class="tabs-row">
-  <Tabs bind:selectedTabId {tabs} cssClass="actor-tabs" />
+  <Tabs bind:selectedTabId {tabs} cssClass="item-tabs" />
 </div>
 <TabContents {selectedTabId} {tabs} />

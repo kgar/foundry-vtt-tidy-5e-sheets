@@ -108,7 +108,7 @@ export function buildTabConfigContextEntry(
       title: t.title,
       visibilityLevel: settings?.visibilityLevels[t.id] ?? null,
     })
-  );
+  ).sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
 
   return {
     documentName: documentName,

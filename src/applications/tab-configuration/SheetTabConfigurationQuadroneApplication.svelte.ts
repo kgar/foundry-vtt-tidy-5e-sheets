@@ -98,7 +98,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
     this._inclusionTabTitle =
       options.title ??
-      FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+      FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
         documentName: FoundryAdapter.localize(
           `TYPES.${options.document.documentName}.${options.document.type}`
         ),

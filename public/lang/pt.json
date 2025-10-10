@@ -145,7 +145,7 @@
         "ButtonTooltip": "Configurar Máximo de Magias Preparadas",
         "MoreFormulas": "Mais Fórmulas"
     },
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Title": "Seleção de Guia: {documentName}",
         "MenuOptionText": "Seleção de Guia",
         "AvailableHeader": "Guias Ocultas",

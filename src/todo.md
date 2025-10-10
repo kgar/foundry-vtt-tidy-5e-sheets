@@ -9,10 +9,14 @@ Tab Visibility Level refers to the minimum level of document ownership required 
 - [x] Visibility levels are - CONST.DOCUMENT_OWNERSHIP_LEVELS - OBSERVER: 2, OWNER: 3 | GM Only -> Number.MAX_SAFE_INTEGER.
 - [x] Set up World tab config to collect visibility levels for all tabs.
 - [x] Ditto for Sheet tab config.
-- [ ] Alphabetize tabs by localized title for the target lang
+- [x] Alphabetize tabs by localized title for the target lang
+- [x] Stretch: Update Sheet Tab Config flag to use the same data schema objects as the setting.
+- [x] Finish todos on settings forms
 - [ ] Update Tab preparation for all sheets to honor the max value between world and sheet setting.
 - [ ] Update Sheet Tab Config to hide tabs from the Owner that are GM Only, ensuring their settings are untouched when saving changes.
-- [x] Stretch: Update Sheet Tab Config flag to use the same data schema objects as the setting.
+- [x] Just Hide ™️ tabs that are GM Only from non-GMs on the sheet tab configuration UI
+  - [x] Tab Visibility
+  - [x] ~~Tab Selection~~ Nah. This is something players and GMs should work out. GMs need to be able to order the hidden tabs where they need them, and that may mean players also need to be aware of their existence.
 
 ### Short List
 

@@ -45,7 +45,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       contentClasses: ['flexcol'],
     },
     position: {
-      width: 600,
+      width: 750,
       height: 600,
     },
     actions: {},

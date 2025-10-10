@@ -18,6 +18,7 @@
 </script>
 
 <div class="dialog-content-container flexcol">
+  <h2>{title}</h2>
   <TabbedTabConfig entry={config.entry} />
 </div>
 <div class="button-bar">

@@ -76,7 +76,7 @@ export function Tidy5eActorSheetClassicV2Base<
           {
             action: 'openTabSelection',
             icon: 'fas fa-file-invoice',
-            label: 'TIDY5E.TabSelection.MenuOptionText',
+            label: 'TIDY5E.TabConfiguration.MenuOptionText',
             visible: function (this: Tidy5eActorSheetClassicV2Base) {
               return this.isEditable;
             },

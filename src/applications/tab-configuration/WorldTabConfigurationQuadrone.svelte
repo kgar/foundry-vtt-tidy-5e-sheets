@@ -40,7 +40,7 @@
 
   {#each config as entry, i}
     {@const tabId = entry.title.slugify()}
-    {@const title = localize('TIDY5E.TabSelection.Title', {
+    {@const title = localize('TIDY5E.TabConfiguration.Title', {
       documentName: entry.title,
     })}
     <div
@@ -54,6 +54,7 @@
       data-tab-contents-for={tabId}
       role="tabpanel"
     >
+      <h2>{title}</h2>
       <TabbedTabConfig {entry} />
     </div>
   {/each}
