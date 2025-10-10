@@ -13,6 +13,7 @@
   import type { ClassValue } from 'svelte/elements';
   import GroupTraitPill from '../../group-parts/GroupTraitPill.svelte';
   import { TidyFlags } from 'src/api';
+  import ActorCustomTraitListEntries from '../../parts/ActorCustomTraitListEntries.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -210,6 +211,8 @@
         </div>
       </div>
     </div>
+
+    <ActorCustomTraitListEntries configButtonLocation="label" />
 
     <!-- Skills -->
     <EncounterSkills />

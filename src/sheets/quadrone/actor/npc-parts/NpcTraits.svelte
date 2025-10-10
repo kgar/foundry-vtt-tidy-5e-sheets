@@ -5,6 +5,7 @@
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import NpcTraitCreatureType from './traits/NpcTraitCreatureType.svelte';
   import NpcTraitSize from './traits/NpcTraitSize.svelte';
+  import ActorCustomTraitListEntries from '../parts/ActorCustomTraitListEntries.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
 
@@ -216,6 +217,8 @@
     traitClass="traits-treasures"
     pillClass="trait-treasure"
   />
+
+  <ActorCustomTraitListEntries configButtonLocation="label" />
 
   <!-- Special Traits -->
   {#if context.unlocked}
