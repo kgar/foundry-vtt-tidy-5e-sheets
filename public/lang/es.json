@@ -883,7 +883,6 @@
     "TIDY5E.Visible": "Visible",
     "TIDY5E.Hidden": "Oculto",
     "TIDY5E.Options.Title": "Opciones",
-    "TIDY5E.ExplorationTab.Title": "Exploración",
     "TIDY5E.ConfigureTab.Title": "Configurar {tabName}",
     "TIDY5E.DisplayOptions.Title": "Opciones de Visualización",
     "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Muestra la fila del contenedor",

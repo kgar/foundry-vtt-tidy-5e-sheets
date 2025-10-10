@@ -32,16 +32,6 @@ export const GroupSheetQuadroneRuntime =
       },
       // TODO: Determine, do we really need it?
       // {
-      //   title: 'TIDY5E.ExplorationTab.Title',
-      //   content: {
-      //     component: GroupExplorationTab,
-      //     type: 'svelte',
-      //   },
-      //   id: CONSTANTS.TAB_GROUP_EXPLORATION,
-      //   layout: 'quadrone',
-      //   iconClass: 'fa-solid fa-compass',
-      // },
-      // {
       //   title: 'DND5E.Bastion.Configuration.Name',
       //   content: {
       //     component: GroupBastionsTab,
@@ -68,7 +58,6 @@ export const GroupSheetQuadroneRuntime =
     [
       CONSTANTS.TAB_MEMBERS,
       CONSTANTS.TAB_ACTOR_INVENTORY,
-      // CONSTANTS.TAB_GROUP_EXPLORATION,
       // CONSTANTS.TAB_GROUP_BASTIONS,
       CONSTANTS.TAB_DESCRIPTION,
     ]

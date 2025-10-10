@@ -177,6 +177,8 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       ...actorContext,
     };
 
+    context.customContent = await EncounterSheetQuadroneRuntime.getContent(context);
+
     context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
 
     return context;

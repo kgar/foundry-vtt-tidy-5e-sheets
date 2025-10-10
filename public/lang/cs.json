@@ -894,7 +894,6 @@
     "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí (NP) Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e",
-    "TIDY5E.ExplorationTab.Title": "Průzkum",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Použít zabezpečení členů skupiny",
         "hint": "Umožní PJ kontrolovat, jaké informace o členech skupiny může uživatel vidět na deníku skupiny. Pokud hráč nemá ke členovi skupiny oprávnění, deník skupiny tohoto člena nezobrazí, a ani jeho souhrnné informace. S omezeným oprávněním může uživatel vidět jméno člena, ale žádné další informace. S oprávněním pozorovatele a vyšším může uživatel v deníku skupiny vidět všechny informace o členovi."

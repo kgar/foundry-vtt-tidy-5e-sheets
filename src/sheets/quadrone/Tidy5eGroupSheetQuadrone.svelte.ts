@@ -139,6 +139,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
     };
 
     // etc.
+    context.customContent = await GroupSheetQuadroneRuntime.getContent(context);
 
     context.tabs = await GroupSheetQuadroneRuntime.getTabs(context);
 

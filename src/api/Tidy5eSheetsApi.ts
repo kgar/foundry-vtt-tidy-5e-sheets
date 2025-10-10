@@ -35,6 +35,8 @@ import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRun
 import { TidySvelteApi } from './svelte/TidySvelteApi';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
+import EncounterSheetClassicRuntime from 'src/runtime/actor/EncounterSheetClassicRuntime.svelte';
+import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -239,6 +241,7 @@ export class Tidy5eSheetsApi {
    */
   registerActorTab(tab: SupportedTab, options?: ActorTabRegistrationOptions) {
     this.registerCharacterTab(tab, options);
+    this.registerEncounterTab(tab, options);
     this.registerGroupTab(tab, options);
     this.registerNpcTab(tab, options);
     this.registerVehicleTab(tab, options);
@@ -389,6 +392,38 @@ export class Tidy5eSheetsApi {
     }
   }
 
+  registerEncounterTab(
+    tab: SupportedTab,
+    options?: ActorTabRegistrationOptions
+  ): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+
+    const registeredTabs = TabManager.mapToRegisteredTabs(tab, options?.layout);
+
+    if (!registeredTabs) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    for (let registeredTab of registeredTabs) {
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        EncounterSheetClassicRuntime.registerTab(registeredTab, options);
+      }
+
+      if (
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        EncounterSheetQuadroneRuntime.registerTab(registeredTab, options);
+      }
+    }
+  }
+
   /**
    * Adds a tab to the available Group sheet tabs.
    * @param {SupportedTab} tab the information necessary to render a tab
@@ -528,9 +563,10 @@ export class Tidy5eSheetsApi {
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
         CharacterSheetClassicRuntime.registerContent(registeredContent);
+        EncounterSheetClassicRuntime.registerContent(registeredContent);
+        GroupSheetClassicRuntime.registerContent(registeredContent);
         NpcSheetClassicRuntime.registerContent(registeredContent);
         VehicleSheetClassicRuntime.registerContent(registeredContent);
-        GroupSheetClassicRuntime.registerContent(registeredContent);
       }
 
       if (
@@ -538,9 +574,10 @@ export class Tidy5eSheetsApi {
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
         CharacterSheetQuadroneRuntime.registerContent(registeredContent);
+        EncounterSheetQuadroneRuntime.registerContent(registeredContent);
+        GroupSheetQuadroneRuntime.registerContent(registeredContent);
         NpcSheetQuadroneRuntime.registerContent(registeredContent);
         VehicleSheetQuadroneRuntime.registerContent(registeredContent);
-        GroupSheetQuadroneRuntime.registerContent(registeredContent);
       }
     }
   }
@@ -603,6 +640,37 @@ export class Tidy5eSheetsApi {
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
         CharacterSheetQuadroneRuntime.registerContent(registeredContent);
+      }
+    }
+  }
+
+  registerEncounterContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
+  ) {
+    const registeredContents = CustomContentManager.mapToRegisteredContents(
+      content,
+      options?.layout
+    );
+
+    if (!registeredContents) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    for (let registeredContent of registeredContents) {
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        EncounterSheetClassicRuntime.registerContent(registeredContent);
+      }
+
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        EncounterSheetQuadroneRuntime.registerContent(registeredContent);
       }
     }
   }
@@ -1185,6 +1253,16 @@ export class Tidy5eSheetsApi {
         ...c,
         supportedDocuments: ['Actor'],
         documentTypes: [CONSTANTS.SHEET_TYPE_CHARACTER],
+      }))
+    );
+  }
+
+  registerEncounterHeaderControls(params: HeaderControlRegistrationParams) {
+    HeaderControlsRuntime.registerHeaderControls(
+      params.controls.map((c) => ({
+        ...c,
+        supportedDocuments: ['Actor'],
+        documentTypes: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
       }))
     );
   }
