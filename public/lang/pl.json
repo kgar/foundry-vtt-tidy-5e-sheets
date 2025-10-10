@@ -892,7 +892,6 @@
     "TIDY5E.UseSpecificDefaultValue.Label": "Użyj domyślnej ({value})",
     "TIDY5E.Tidy5eEncounterSheetClassic": "Klasyczna karta spotkań Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Karta spotkań Tidy 5e",
-    "TIDY5E.ExplorationTab.Title": "Eksploracja",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Użyj zabezpieczeń Karty Grupy",
         "hint": "Umożliwia Mistrzowi Gry kontrolę nad tym, jakie informacje o członkach grupy użytkownik może zobaczyć na karcie grupy. Gdy gracz nie ma żadnych uprawnień do członka grupy, karta grupy nie wyświetla tego członka ani powiązanych z nim informacji zbiorczych. Z uprawnieniami Ograniczonymi użytkownik widzi tylko imię członka, ale żadnych innych informacji. Z uprawnieniami Obserwatora lub wyższymi użytkownik widzi wszystkie informacje o tym członku na karcie grupy."

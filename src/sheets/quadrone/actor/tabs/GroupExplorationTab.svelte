@@ -1,1 +1,0 @@
-Hello exploration! You may or may not see the light of day, because Member tab sidebar is so dope!

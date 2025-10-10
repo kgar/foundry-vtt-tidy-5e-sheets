@@ -7,13 +7,13 @@
   import { CONSTANTS } from 'src/constants';
   import type { ClassValue } from 'svelte/elements';
   import type {
-    Actor5e,
     GroupMemberQuadroneContext,
     GroupTraitBase,
   } from 'src/types/types';
   import GroupTraitPill from '../GroupTraitPill.svelte';
   import GroupToolTooltip from 'src/tooltips/GroupToolTooltip.svelte';
   import GroupTraitTooltip from 'src/tooltips/GroupTraitTooltip.svelte';
+  import ActorCustomTraitListEntries from '../../parts/ActorCustomTraitListEntries.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -181,6 +181,8 @@
         </div>
       </div>
     </div>
+
+    <ActorCustomTraitListEntries configButtonLocation="label" />
 
     <!-- Aggregate Skills -->
     <GroupSkills />
