@@ -715,7 +715,19 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      ItemSheetRuntime.registerContent(registeredContent);
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        ItemSheetRuntime.registerContent(registeredContent);
+      }
+
+      if (
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
+        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
+      ) {
+        ItemSheetQuadroneRuntime.registerContent(registeredContent);
+      }
     }
   }
 
