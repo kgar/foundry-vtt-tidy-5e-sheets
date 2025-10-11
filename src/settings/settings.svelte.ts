@@ -215,7 +215,7 @@ export function createSettings() {
           name: `TIDY5E.SettingsMenu.HeaderControlConfiguration.name`,
           label: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.label',
           hint: `TIDY5E.SettingsMenu.HeaderControlConfiguration.hint`,
-          icon: 'fa-solid fa-border-top',
+          icon: 'fa-solid fa-up-to-dotted-line',
           type: WorldHeaderControlConfigurationQuadroneApplication,
           restricted: true,
         },

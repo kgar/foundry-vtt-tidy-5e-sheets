@@ -5,6 +5,9 @@
     WorldHeaderControlConfigurationQuadroneApplication,
   } from './WorldHeaderControlConfigurationQuadroneApplication.svelte';
   import { settings } from 'src/settings/settings.svelte';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import type { Tab } from 'src/types/types';
+  import VerticalTabs from 'src/components/tabs/VerticalTabs.svelte';
 
   interface Props {
     app: WorldHeaderControlConfigurationQuadroneApplication;
@@ -21,50 +24,120 @@
   const headerOptionText = localize(
     'TIDY5E.HeaderControlConfiguration.LocationHeader',
   );
+
+  let tabs = $derived(
+    context.map((config) => ({
+      id: `${config.documentName}-${config.documentType}`,
+      title: config.title,
+      content: {
+        type: 'template' as const,
+        html: '',
+      },
+    }))
+  );
+
+  let selectedTabId = $state('');
+  
+  $effect(() => {
+    if (!selectedTabId && tabs[0]) {
+      selectedTabId = tabs[0].id;
+    }
+  });
+
+  let selectedConfig = $derived(
+    context.find(
+      (c) => `${c.documentName}-${c.documentType}` === selectedTabId
+    )
+  );
 </script>
 
-<div class="dialog-content-container flexcol">
-  {#each context as config}
-    <h2>{config.title}</h2>
+<div class="dialog-content-container flexrow">
+  <div class="flexcol noflex">
+    <VerticalTabs {tabs} bind:selectedTabId class="flex1" />
+  </div>
 
-    <fieldset>
-      {#each config.controlSettings as setting, i}
-        {@const formControlId = `${app.id}-${setting.title.slugify()}`}
+  {#if selectedConfig}
+    <div
+      class={[
+        'tidy-tab', 
+        selectedTabId, 
+        'flexcol',
+        'configuration-tab',
+        'dialog-content',
+        { active: true },
+      ]}
+      data-tab-contents-for={selectedTabId}
+      role="tabpanel"
+    >
+      <h2>{selectedConfig.title}</h2>
+      <tidy-gold-header-underline style="margin-bottom: 0.5rem;"></tidy-gold-header-underline>
+      <fieldset>
+        {#each selectedConfig.controlSettings as setting, i}
+          {@const formControlId = `${app.id}-${setting.title.slugify()}`}
+          <div class="form-group">
+            <label for={formControlId}>
+              <i class={setting.icon}></i>
+              {setting.title}
+            </label>
+            <div
+              class="form-fields"
+              style="flex-start; gap: 1.5rem; flex-grow: 0;"
+            >
+              <label class="radio">
+                <input
+                  type="radio"
+                  checked={setting.location === 'menu'}
+                  onclick={(ev) => {
+                    setting.location = 'menu';
+                  }}
+                />
+                {menuOptionText}
+              </label>
+              <label class="radio">
+                <input
+                  type="radio"
+                  checked={setting.location === 'header'}
+                  onclick={(ev) => {
+                    setting.location = 'header';
+                  }}
+                />
+                {headerOptionText}
+              </label>
+            </div>
+          </div>
+        {/each}
         <div class="form-group">
-          <label for={formControlId}>
-            <i class={setting.icon}></i>
-            {setting.title}
+          <label for={`${app.id}-save-changes-btn`} class="flex-end">
+            <i class="fas fa-list-check"></i>
+            Update All
           </label>
           <div
-            class="form-fields"
-            style="flex-start; gap: 1.5rem; flex-grow: 0;"
+            class="form-fields flexshrink"
+            style="gap: 0.5rem; margin-top: 1rem; "
           >
-            <label class="radio">
-              <input
-                type="radio"
-                checked={setting.location === 'menu'}
-                onclick={(ev) => {
+            <button type="button" class="button button-secondary" onclick={() => {
+                selectedConfig.controlSettings.forEach(setting => {
                   setting.location = 'menu';
-                }}
-              />
-              {menuOptionText}
-            </label>
-            <label class="radio">
-              <input
-                type="radio"
-                checked={setting.location === 'header'}
-                onclick={(ev) => {
+                });
+              }}>
+              <i class="fas fa-square-list"></i>
+              Menu
+            </button>
+            <button type="button" class="button button-secondary" onclick={() => {
+                selectedConfig.controlSettings.forEach(setting => {
                   setting.location = 'header';
-                }}
-              />
-              {headerOptionText}
-            </label>
+                });
+              }}>
+              <i class="fas fa-ellipsis"></i>
+              Header
+            </button>
           </div>
         </div>
-      {/each}
-    </fieldset>
-  {/each}
+      </fieldset>
+    </div>
+  {/if}
 </div>
+
 <div class="button-bar">
   <button
     type="button"
