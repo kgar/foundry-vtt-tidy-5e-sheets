@@ -1,5 +1,23 @@
 ## kgar To Do
 
+- [x] Finish Character header control tracer bullet
+- [ ] Refactor the code to allow an array of objects to produce the appropriate context
+- [ ] Propagate settings out to remaining sheets.
+  - [ ] Character
+  - [ ] NPC
+  - [ ] Group
+  - [ ] Encounter
+  - [ ] Container
+  - [ ] All Item Types
+- [ ] Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.
+- [ ] Test 
+  - [ ] Character
+  - [ ] NPC
+  - [ ] Group
+  - [ ] Encounter
+  - [ ] Container
+  - [ ] All Item Types
+
 ### Short List
 
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.

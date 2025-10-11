@@ -30,7 +30,6 @@ export type TabConfiguration = {
 
 export type SheetHeaderControlConfiguration = {
   header: string[];
-  menu: string[];
 };
 
 export type HeaderControlConfiguration = {

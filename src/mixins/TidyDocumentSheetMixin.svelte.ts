@@ -7,6 +7,7 @@ import type {
   ApplicationHeaderControlsEntry,
   ApplicationPosition,
   ApplicationRenderOptions,
+  DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import type {
   CustomContent,
@@ -37,6 +38,7 @@ import {
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -655,10 +657,10 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Application Initialization                  */
     /* -------------------------------------------- */
 
-    _initializeApplicationOptions(options: ApplicationConfiguration) {
+    _initializeApplicationOptions(options: DocumentSheetConfiguration) {
       const updatedOptions = super._initializeApplicationOptions(
         options
-      ) as ApplicationConfiguration;
+      ) as DocumentSheetConfiguration;
 
       const effectiveControls = [...(updatedOptions.window?.controls ?? [])];
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
@@ -695,7 +697,18 @@ export function TidyExtensibleDocumentSheetMixin<
           ...customControls.controls,
         ];
 
+        const headerPositionSettings = new Set(
+          SettingsProvider.settings.headerControlConfiguration.get()?.[
+            options.document.documentName
+          ]?.[options.document.type]?.header ?? []
+        );
+
         updatedOptions.window.controls.forEach((c) => {
+          if (headerPositionSettings.has(c.label)) {
+            c.position = 'header';
+            return;
+          }
+
           if (
             c.action === 'configureToken' ||
             c.action === 'configurePrototypeToken'
@@ -718,7 +731,10 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Header Control Management                   */
     /* -------------------------------------------- */
 
-    _getCustomHeaderControls(document: any): { controls: any[]; actions: any } {
+    _getCustomHeaderControls(document: any): {
+      controls: ApplicationHeaderControlsEntry[];
+      actions: any;
+    } {
       const controls: ApplicationHeaderControlsEntry[] = [];
       const actions: Record<
         string,
@@ -751,6 +767,10 @@ export function TidyExtensibleDocumentSheetMixin<
         controls,
         actions,
       };
+    }
+
+    getAllHeaderControls() {
+      return this.options.window.controls?.slice() ?? [];
     }
 
     /**

@@ -193,7 +193,6 @@
   },
 
   "TIDY5E.HeaderControlConfiguration": {
-    "Title": "Header Control Configuration: {documentName}",
     "LocationMenu": "Menu",
     "LocationHeader": "Header"
   },

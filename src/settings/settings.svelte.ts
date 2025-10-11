@@ -391,13 +391,13 @@ export function createSettings() {
               }
             ),
             { initial: {} },
-            { name: 'Document Names to Document Type Tab Configuration Object' }
+            { name: 'Document Names to Document Type Header Control Configuration Object' }
           ),
           default: {},
         },
         get() {
           return FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
-            'tabConfiguration'
+            'headerControlConfiguration'
           );
         },
       },

@@ -1,23 +1,29 @@
 import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
-import type { ApplicationConfiguration } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  ApplicationHeaderControlsEntry,
+} from 'src/types/application.types';
 import { mount } from 'svelte';
 import WorldHeaderControlConfigurationQuadrone from './WorldHeaderControlConfigurationQuadrone.svelte';
+import { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { SheetHeaderControlPosition } from 'src/api';
+import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 
-export type ConfigHeaderControlInfo = {
+export type ConfigHeaderControlSetting = {
   id: string;
+  icon: string;
   title: string;
+  location?: SheetHeaderControlPosition;
 };
 
 export type WorldHeaderControlConfigContext = {
   documentName: string;
   documentType: string;
   title: string;
-  allControls: [];
-  defaultMenuControls: [];
-  defaultHeaderControls: [];
-  menuControls: [];
-  headerControls: [];
+  controlSettings: ConfigHeaderControlSetting[];
 }[];
 
 export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteApplicationMixin<
@@ -57,7 +63,7 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
       target: node,
       props: {
         app: this,
-        config: this._config,
+        context: this._config,
       },
     });
 
@@ -65,9 +71,48 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
   }
 
   _getConfig(): WorldHeaderControlConfigContext {
+    const headerControlSettings = settings.value.headerControlConfiguration;
+
     const config: WorldHeaderControlConfigContext = [];
-    // Map all supported sheet classes to context entries
-    
+
+    const characterSheet = new Tidy5eCharacterSheetQuadrone({
+      document: new dnd5e.documents.Actor5e({
+        name: 'hello 👋',
+        type: 'character',
+      }),
+    });
+
+    const characterControls = [...characterSheet.getAllHeaderControls()];
+
+    const headerSet = new Set(
+      (
+        headerControlSettings[characterSheet.document.documentName]?.[
+          characterSheet.document.type
+        ] ?? { header: [] }
+      ).header
+    );
+
+    const controlSettings: ConfigHeaderControlSetting[] = [];
+
+    characterControls.forEach((control) => {
+      const id = control.label;
+
+      controlSettings.push({
+        id,
+        icon: control.icon,
+        title: FoundryAdapter.localize(control.label),
+        location: headerSet.has(id) ? 'header' : control.position ?? 'menu',
+      });
+    });
+
+    config.push({
+      documentName: characterSheet.document.documentName,
+      documentType: characterSheet.document.type,
+      controlSettings: controlSettings,
+      title: FoundryAdapter.localize(
+        `TYPES.${characterSheet.document.documentName}.${characterSheet.document.type}`
+      ),
+    });
 
     return config;
   }
@@ -77,7 +122,18 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
     await this.close();
   }
 
-  async apply() {}
+  async apply() {
+    const toSave = this._config.reduce((prev, curr) => {
+      prev[curr.documentName] ??= {};
+      prev[curr.documentName][curr.documentType] ??= { header: [] };
+      prev[curr.documentName][curr.documentType].header =
+        curr.controlSettings.map((s) => s.id);
+
+      return prev;
+    }, {} as HeaderControlConfiguration);
+
+    await FoundryAdapter.setTidySetting('headerControlConfiguration', toSave);
+  }
 
   async useDefault() {
     await this.close();
