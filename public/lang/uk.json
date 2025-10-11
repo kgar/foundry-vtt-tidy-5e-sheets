@@ -952,5 +952,7 @@
     "TIDY5E.SpellbookSections": "Розділи книги заклинань",
     "TIDY5E.UserDefaultPrefix": "Користувач за замовчуванням: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Глобальні параметри відображення за замовчуванням",
-    "TIDY5E.Character.Sidebar.Title": "Бічна панель персонажа гравця"
+    "TIDY5E.Character.Sidebar.Title": "Бічна панель персонажа гравця",
+    "TIDY5E.ContextMenuActionPin": "Закріпити вгорі",
+    "TIDY5E.ContextMenuActionUnpin": "Відкріпити зверху"
 }
