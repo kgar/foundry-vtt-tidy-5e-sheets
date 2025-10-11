@@ -1,13 +1,11 @@
 import type { UserPreferences } from 'src/features/user-preferences/user-preferences.types';
 import type {
-  ActiveEffectContext,
   ActiveEffectSection,
   ActivityItemContext,
   AttunementContext,
   ContainerCapacityContext,
   CustomContent,
   DocumentSheetV2Context,
-  EffectCategory,
   GroupableSelectOption,
   InventorySection,
   Tab,

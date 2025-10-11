@@ -592,6 +592,13 @@
     box-shadow: var(--t5e-drop-shadow-card);
   }
 
+  .sheet-pins {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11.625rem, 1fr));
+    gap: 0.125rem;
+
+    // TODO: Implement Sheet pin styles
+  }
 
 
   &:where(.theme-dark) {

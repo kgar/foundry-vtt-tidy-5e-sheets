@@ -60,6 +60,7 @@
     border-radius: 0;
     color: var(--t5e-color-text-lighter);
     box-shadow: none;
+    text-wrap: nowrap;
     transition: color, box-shadow, background-image, background-size,
       text-shadow var(--t5e-transition-default);
 

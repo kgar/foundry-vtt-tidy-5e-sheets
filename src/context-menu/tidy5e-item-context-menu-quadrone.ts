@@ -8,6 +8,8 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
+import { SheetPins } from 'src/features/sheet-pins/SheetPins';
+import { isNil } from 'src/utils/data';
 
 /**
  * Prepare an array of context menu options which are available for owned Item documents.
@@ -340,6 +342,57 @@ export function getItemContextOptionsQuadrone(
         { document: item }
       ).render(true),
   });
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionPin',
+    icon: `<i class="fa-solid fa-thumbtack"></i>`,
+    callback: () => SheetPins.pin(item, 'item'),
+    condition: () =>
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item) &&
+      SheetPins.isPinnable(item, 'item') &&
+      !SheetPins.isPinned(item),
+    group: 'customize',
+  });
+
+  options.push({
+    name: 'TIDY5E.ContextMenuActionUnpin',
+    icon: `<i class="fa-regular fa-thumbtack"></i>`,
+    callback: () => SheetPins.unpin(item),
+    condition: () =>
+      item.isOwner &&
+      !FoundryAdapter.isLockedInCompendium(item) &&
+      SheetPins.isPinnable(item, 'item') &&
+      SheetPins.isPinned(item),
+    group: 'customize',
+  });
+
+  const isAttributeItemPin = !!element.closest('[data-pin-id]');
+
+  if (isAttributeItemPin) {
+    options.push({
+      name: 'TIDY5E.ContextMenuActionShowLimitedUses',
+      icon: '<i class="fa-solid fa-fw"></i>',
+      callback: () => SheetPins.setItemResourceType(item, 'limited-uses'),
+      condition: () =>
+        item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        !isNil(item.system.quantity) &&
+        SheetPins.getResourceType(item) !== 'limited-uses',
+      group: 'customize',
+    });
+    options.push({
+      name: 'TIDY5E.ContextMenuActionShowQuantity',
+      icon: '<i class="fa-solid fa-fw"></i>',
+      callback: () => SheetPins.setItemResourceType(item, 'quantity'),
+      condition: () =>
+        item.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(item) &&
+        !isNil(item.system.quantity) &&
+        SheetPins.getResourceType(item) !== 'quantity',
+      group: 'customize',
+    });
+  }
 
   // Be Careful - These are the no-going-back changes
 

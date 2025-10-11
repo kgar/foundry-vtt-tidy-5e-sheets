@@ -614,30 +614,22 @@
     }
   }
 
-
   .tidy-table-row-use-button {
     --t5e-use-button-border-color: var(--t5e-color-gold);
     align-items: center;
     align-self: center;
     border-radius: 0.125rem;
-    outline: 0.0625rem solid var(--t5e-use-button-border-color);
-    // outline-offset: -0.0625rem;
     cursor: pointer;
-    display: grid;
-    grid-template-columns: 1fr;
-    height: var(--t5e-icon-size-7x);
-    width: var(--t5e-icon-size-7x);
+    display: flex;
     justify-content: center;
     margin: 0.0625rem 0 0.0625rem 0.0625rem;
+    outline: 0.0625rem solid var(--t5e-use-button-border-color);
     overflow: hidden;
     position: relative;
     transition: all var(--t5e-transition-default);
 
-    img {
-      border: 0;
-      position: relative;
-      z-index: -1;
-    }
+    height: var(--t5e-icon-size-7x);
+    width: var(--t5e-icon-size-7x);
 
     i {
       grid-column: 1;
@@ -686,6 +678,48 @@
       }
 
       background: transparent;
+    }
+  }
+
+
+  // Charges / Item Uses
+  .inline-uses {
+    display: flex;
+    align-items: center;
+
+    &:focus-within {
+      .divider {
+        opacity: 0.24;
+      }
+    }
+
+    input[type="text"]:disabled {
+      background: none;
+    }
+
+    >input[type="text"].uses-value {
+      // color: var(--t5e-color-text-default);
+      text-align: right;
+      flex: 1;
+      padding-right: 0.125rem;
+      margin-right: -0.125rem;
+
+      &:hover,
+      &:focus-within,
+      &:active {
+        background-color: var(--t5e-component-field-background-hover-emphasis);
+        border: 0.0625rem solid oklch(from var(--t5e-component-field-border-hover) l c h / 64%);
+      }
+    }
+
+    >.divider {
+      flex: 0 0 auto;
+    }
+
+    >.uses-max {
+      // color: var(--t5e-color-text-lighter);
+      text-align: left;
+      flex: 1;
     }
   }
 
@@ -824,26 +858,6 @@
         --t5e-use-button-border-color: var(--t5e-method-color);
       }
     }
-
-    // TODO: Find a different approach. mode-always no longer exists.
-    // &.mode-always {
-
-    //   .tidy-table-row-use-button {
-    //     outline: 0.125rem solid var(--t5e-use-button-border-color);
-    //     outline-offset: -0.0625rem;
-    //   }
-
-    //   .highlight {
-    //     opacity: 0.32;
-    //     background: linear-gradient(to right,
-    //         var(--t5e-method-color) 0%,
-    //         transparent 28%);
-    //   }
-
-    //   i.mode-always:hover {
-    //     text-shadow: 0 0 0.25rem oklch(from var(--t5e-theme-color-lighter) l c h / 0.5);
-    //   }
-    // }
   }
 
   .spell-row-icon {

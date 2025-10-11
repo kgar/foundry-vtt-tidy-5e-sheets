@@ -13,6 +13,7 @@
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
+    import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -48,6 +49,8 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
+  <SheetPins />
+
   {#if characters.length}
     {@const columns = new ColumnsLoadout(
       GroupMemberColumnRuntime.getConfiguredColumnSpecifications({

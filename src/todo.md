@@ -3,9 +3,6 @@
 ### Short List
 
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
-- [ ] Resurrect Attribute Pins as Sheet Pins
-  - [ ] Character sheet
-  - [ ] NPC sheet
 
 ### Group Sheet
 
@@ -13,12 +10,9 @@
 - [ ] Group Sheet - Plan and task Bastions tab
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 
-### Character Sheet
-
-- [ ] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies
-
 ### The Short List
 
+- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
@@ -373,4 +367,13 @@ Limited:
 - [X] PC Sidebar Tab Selection - prepare within PC context prep
 - [x] PC Sidebar Tab Selection - create API surface area
 - [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
-- [x] PC Sidebar Tab Selection - Add to world tab configuration
+- [x] PC Sidebar Tab Selection - Add to world tab configuration- [X] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies
+- [X] Resurrect Attribute Pins as Sheet Pins
+  - [x] Do data prep
+  - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
+  - [x] Context menu - Activities: Pin to Sheet, Unpin from Sheet
+  - [x] Character sheet: Add to Sheet tab
+  - [x] NPC sheet: Add to Statblock tab
+  - [x] Group/Encounter sheet: Add to Members tab
+  - [x] Quad Actor Base: Handle Pin drop to sort
+  - [x] Quad Actor Base: Handle item/activity drop to Pins to add
