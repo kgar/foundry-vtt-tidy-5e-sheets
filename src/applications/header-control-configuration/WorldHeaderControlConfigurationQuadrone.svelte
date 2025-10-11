@@ -69,7 +69,28 @@
       data-tab-contents-for={selectedTabId}
       role="tabpanel"
     >
-      <h2>{selectedConfig.title}</h2>
+      <div class="flexrow">
+        <h2>{localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.label')}: {selectedConfig.title}</h2>
+      </div>
+      <div class="flexrow flex1" style="gap: 0.75rem; justify-content: end; margin-top: 0.5rem;">
+        <h3 class="flex1">{localize('TIDY5E.SettingsMenu.HeaderControlConfiguration.name')}</h3>
+        <button type="button" class="button button-borderless flexshrink" style="padding: 0;" onclick={() => {
+            selectedConfig.controlSettings.forEach(setting => {
+              setting.location = 'menu';
+            });
+          }}>
+          <i class="fas fa-square-list"></i>
+          {localize('TIDY5E.Listbox.MoveAllLeft')}
+        </button>
+        <button type="button" class="button button-borderless flexshrink" style="padding: 0;" onclick={() => {
+            selectedConfig.controlSettings.forEach(setting => {
+              setting.location = 'header';
+            });
+          }}>
+          <i class="fas fa-ellipsis"></i>
+          {localize('TIDY5E.Listbox.MoveAllRight')}
+        </button>
+      </div>
       <tidy-gold-header-underline style="margin-bottom: 0.5rem;"></tidy-gold-header-underline>
       <fieldset>
         {#each selectedConfig.controlSettings as setting, i}
@@ -106,33 +127,6 @@
             </div>
           </div>
         {/each}
-        <div class="form-group">
-          <label for={`${app.id}-save-changes-btn`} class="flex-end">
-            <i class="fas fa-list-check"></i>
-            Update All
-          </label>
-          <div
-            class="form-fields flexshrink"
-            style="gap: 0.5rem; margin-top: 1rem; "
-          >
-            <button type="button" class="button button-secondary" onclick={() => {
-                selectedConfig.controlSettings.forEach(setting => {
-                  setting.location = 'menu';
-                });
-              }}>
-              <i class="fas fa-square-list"></i>
-              Menu
-            </button>
-            <button type="button" class="button button-secondary" onclick={() => {
-                selectedConfig.controlSettings.forEach(setting => {
-                  setting.location = 'header';
-                });
-              }}>
-              <i class="fas fa-ellipsis"></i>
-              Header
-            </button>
-          </div>
-        </div>
       </fieldset>
     </div>
   {/if}
