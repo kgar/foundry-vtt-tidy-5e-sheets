@@ -14,6 +14,7 @@ import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-pre
 import { getDefaultExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 import type {
   GlobalCustomSectionsetting,
+  HeaderControlConfiguration,
   TabConfiguration,
 } from './settings.types';
 import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
@@ -25,7 +26,11 @@ import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSe
 import { WorldTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/WorldTabConfigurationQuadroneApplication.svelte';
 import { HomebrewSettingsApplication } from 'src/applications/homebrew-settings/HomebrewSettingsApplication.svelte';
 import type { TrackedTabs } from 'src/features/expand-collapse/ExpansionTracker.svelte';
-import { TabConfigurationSchema } from './settings-data-models';
+import {
+  HeaderControlConfigurationSchema,
+  TabConfigurationSchema,
+} from './settings-data-models';
+import { WorldHeaderControlConfigurationQuadroneApplication } from 'src/applications/header-control-configuration/WorldHeaderControlConfigurationQuadroneApplication.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -205,6 +210,16 @@ export function createSettings() {
           restricted: true,
         },
       },
+      headerControlConfigurationMenu: {
+        options: {
+          name: `TIDY5E.SettingsMenu.HeaderControlConfiguration.name`,
+          label: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.label',
+          hint: `TIDY5E.SettingsMenu.HeaderControlConfiguration.hint`,
+          icon: 'fa-solid fa-border-top',
+          type: WorldHeaderControlConfigurationQuadroneApplication,
+          restricted: true,
+        },
+      },
       tabConfigurationMenu: {
         options: {
           name: `TIDY5E.SettingsMenu.TabConfiguration.name`,
@@ -357,6 +372,32 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<string[]>(
             'defaultCharacterSheetTabs'
+          );
+        },
+      },
+
+      headerControlConfiguration: {
+        options: {
+          name: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.name',
+          hint: 'TIDY5E.SettingsMenu.HeaderControlConfiguration.hint',
+          scope: 'world',
+          config: false,
+          type: new foundry.data.fields.TypedObjectField(
+            new foundry.data.fields.TypedObjectField(
+              HeaderControlConfigurationSchema,
+              { initial: {} },
+              {
+                name: 'Document Type to Header Control Configuration Object',
+              }
+            ),
+            { initial: {} },
+            { name: 'Document Names to Document Type Tab Configuration Object' }
+          ),
+          default: {},
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<HeaderControlConfiguration>(
+            'tabConfiguration'
           );
         },
       },

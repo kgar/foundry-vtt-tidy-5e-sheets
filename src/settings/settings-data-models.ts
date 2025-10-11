@@ -19,3 +19,23 @@ export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
   { initial: {} },
   { name: 'Tab Configuration' }
 );
+
+export const HeaderControlConfigurationSchema =
+  new foundry.data.fields.SchemaField({
+    menu: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.StringField({
+        required: true,
+        nullable: false,
+        blank: false,
+      }),
+      { initial: [] }
+    ),
+    header: new foundry.data.fields.ArrayField(
+      new foundry.data.fields.StringField({
+        required: true,
+        nullable: false,
+        blank: false,
+      }),
+      { initial: [] }
+    ),
+  });

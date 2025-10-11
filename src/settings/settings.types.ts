@@ -27,3 +27,14 @@ export type TabConfiguration = {
     [documentType: string]: SheetTabConfiguration;
   };
 };
+
+export type SheetHeaderControlConfiguration = {
+  header: string[];
+  menu: string[];
+};
+
+export type HeaderControlConfiguration = {
+  [documentName: string]: {
+    [documentType: string]: SheetHeaderControlConfiguration;
+  };
+};

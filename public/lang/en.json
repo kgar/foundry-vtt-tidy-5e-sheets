@@ -192,6 +192,12 @@
     "MoreFormulas": "More formulas"
   },
 
+  "TIDY5E.HeaderControlConfiguration": {
+    "Title": "Header Control Configuration: {documentName}",
+    "LocationMenu": "Menu",
+    "LocationHeader": "Header"
+  },
+
   "TIDY5E.TabConfiguration": {
     "Title": "Tab Configuration: {documentName}",
     "MenuOptionText": "Tab Configuration",
@@ -293,6 +299,12 @@
     "name": "Homebrew",
     "label": "Configure Homebrew",
     "hint": "Enable and configure homebrew options provided by this module."
+  },
+
+  "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+    "name": "Header Controls",
+    "label": "Configure Header Controls",
+    "hint": "New Tidy Sheets Only: Configure the location of sheet header controls."
   },
 
   "TIDY5E.SettingsMenu.TabConfiguration": {
