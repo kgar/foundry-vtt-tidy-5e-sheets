@@ -737,6 +737,10 @@ export function TidyExtensibleDocumentSheetMixin<
           document.documentName
         ]?.[document.type];
 
+      if (!settings) {
+        return new Map();
+      }
+
       return new Map<string, SheetHeaderControlPosition>([
         ...settings.header.map((s) => [s, 'header'] as const),
         ...settings.menu.map((s) => [s, 'menu'] as const),
@@ -802,12 +806,15 @@ export function TidyExtensibleDocumentSheetMixin<
       const controls = super._getHeaderControls();
       return controls.filter((c: CustomHeaderControlsEntry) => {
         try {
-          return (
-            ((typeof c.visible !== 'function' || c.visible.call(this)) &&
-              this._headerControlSettings.get(c.label) === position) ||
+          const visible =
+            typeof c.visible !== 'function' || c.visible.call(this);
+
+          const configuredForThisPosition =
+            this._headerControlSettings.get(c.label) === position ||
             (!this._headerControlSettings.has(c.label) &&
-              coalesce(c.position, 'menu') === position)
-          );
+              coalesce(c.position, 'menu') === position);
+
+          return visible && configuredForThisPosition;
         } catch (e) {
           error('Failed to get custom control', false, {
             control: c,
