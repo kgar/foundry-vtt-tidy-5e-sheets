@@ -16,6 +16,8 @@
 
   let { ctx }: Props = $props();
 
+  let isEditing = $state(false);
+
   // If the activity is using its default icon, fall back to the item's image instead.
   let img = $derived(
     ctx.document.img ===
@@ -63,6 +65,29 @@
 
   let context = $derived(getCharacterSheetContext());
 
+  
+  let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
+  let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
+
+
+  function getType() {
+    console.log(ctx.resource);
+    console.log(ctx.document);
+    if (isSpell) {
+      let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
+
+      if (spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE && spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+        return 'spell-slots';
+      }
+      return 'none';
+    }
+    if (ctx.document.uses.max) {
+      return 'limited-uses';
+    }
+    return 'none';
+  }
+  let pinType = $derived(getType());
+
   let localize = FoundryAdapter.localize;
 </script>
 
@@ -95,11 +120,11 @@
     </a>
   </div>
   <div class="pin-details">
-    <div
-      class="pin-name-container"
-      title="{ctx.document.name} | {ctx.document.item.name}"
-    >
-      {#if context.unlocked}
+    {#if context.unlocked && isEditing}
+      <div
+        class="pin-name-container flexrow"
+        title="{ctx.document.name} | {ctx.document.item.name}"
+      >
         <TextInput
           class="pin-name"
           document={ctx.document}
@@ -112,26 +137,47 @@
             return false;
           }}
         />
-        {#if !isNil(ctx.alias?.trim(), '')}
-          <i class="fa-solid fa-pencil"></i>
-        {/if}
-      {:else}
-        <div class="font-label-medium pin-name truncate">
+        <button
+          class="button button-icon-only flexshrink save-name-button"
+          aria-label="Save Alias"
+          onclick={(ev) => {
+            const input = ev.currentTarget.previousElementSibling?.querySelector('input');
+            if (input) {
+              SheetPins.setAlias(ctx.document, input.value);
+            }
+            isEditing = false;
+            return false;
+          }}
+        >
+          <i class="fa-solid fa-save"></i>
+        </button>
+      </div>
+    {:else}
+    <div
+      class="pin-name-container flexrow"
+      title="{ctx.document.name} | {ctx.document.item.name}"
+    >
+      {#if context.unlocked}
+        <span class="font-label-medium pin-name truncate flex1">
           {coalesce(ctx.alias, ctx.document.name)}
-        </div>
+        </span>
+        <button
+          class="button button-borderless button-icon-only flexshrink edit-name-button"
+          onclick={(ev) => {
+            isEditing = true;
+            return false;
+          }}
+        >
+          <i class="fa-solid fa-pencil"></i>
+        </button>
+      {:else}
+        <span class="font-label-medium pin-name truncate">
+          {coalesce(ctx.alias, ctx.document.name)}
+        </span>
       {/if}
     </div>
-    <div class="pin-counter {ctx.resource}">
-      {#if ctx.resource === 'limited-uses' && ctx.document.isOnCooldown}
-        <RechargeControl document={ctx.document} field={spentProp} {uses} />
-      {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
-        <span class="charged-text">
-          {#if value > 1}
-            <span class="">{value}</span>
-          {/if}
-          <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
-        </span>
-      {:else if ctx.resource === 'limited-uses'}
+    <div class="pin-context {ctx.resource}">
+      {#if pinType === 'limited-uses'}
         <span class="inline-uses">
           <TextInput
             class={["uninput uses-value", { diminished: value < 1 }]}
@@ -144,7 +190,7 @@
           <span class="divider">/</span>
           <span class="uses-max">{maxText}</span>
         </span>
-      {:else if ctx.resource === 'quantity'}
+      {:else if pinType === 'quantity'}
         <TextInput
           class={["uninput uses-value centered", { diminished: value < 1 }]}
           document={ctx.document}
@@ -152,12 +198,15 @@
           value={ctx.document.system.quantity}
           selectOnFocus={true}
         />
+      {:else if pinType === 'none'}
+        <span class="subtitle font-default-medium color-text-lighter">{ctx.document.parent.parent.name}</span>
       {/if}
     </div>
+    {/if}
   </div>
-  {#if context.unlocked}
+  {#if context.unlocked && !isEditing}
     <a
-      class="attribute-pins-menu highlight-on-hover"
+      class="button button-icon-only button-borderless"
       onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-activity-id]')}
     >
       <i class="fas fa-ellipsis-vertical"></i>
