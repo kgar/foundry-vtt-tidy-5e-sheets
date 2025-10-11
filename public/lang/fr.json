@@ -435,7 +435,7 @@
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Attaque de sort à distance",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Attaque de sort",
     "TIDY5E.ActorSpellAttackFlavorText": "Attaque de sort",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Explanation": "Les onglets que l'utilisateur ou la feuille sont configurés pour ne pas les voir (par exemple, en désactivant le journal dans les paramètres de configuration) n'apparaîtront pas sur la feuille, même s'ils sont sélectionnés.",
         "MenuOptionText": "Onglet de sélection",
         "Title": "Onglet de sélection : {documentName}",

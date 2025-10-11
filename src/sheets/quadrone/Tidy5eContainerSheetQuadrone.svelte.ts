@@ -100,7 +100,7 @@ export class Tidy5eContainerSheetQuadrone
         {
           action: 'openTabConfiguration',
           icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabSelection.MenuOptionText',
+          label: 'TIDY5E.TabConfiguration.MenuOptionText',
           ownership: 'OWNER',
           visible: function (this: Tidy5eContainerSheetQuadrone) {
             return this.isEditable;

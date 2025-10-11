@@ -310,7 +310,7 @@ declare module 'foundry.data.fields' {
     static get _defaults(): DataFieldOptions;
     get fieldPath(): string;
     apply(fn: string | Function, value: any, options: Record<string, any> = {});
-    clean(value: any, options: { partial: boolean; source: object } = {}): void;
+    clean(value: any, options: { partial: boolean; source: object } = {}): any;
     getInitialValue(data: any): any;
     toObject(value: any): any;
     validate(

@@ -5,8 +5,8 @@
   } from './WorldTabConfigurationQuadroneApplication.svelte';
   import type { TabStripInfo } from 'src/components/tabs/Tabs.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TabConfigurationEntry from './parts/TabConfigurationEntry.svelte';
   import VerticalTabs from 'src/components/tabs/VerticalTabs.svelte';
+  import TabbedTabConfig from './parts/TabbedTabConfig.svelte';
 
   interface Props {
     app: WorldTabConfigurationQuadroneApplication;
@@ -15,11 +15,12 @@
 
   let { config = $bindable(), app }: Props = $props();
 
+  let selectedSidebarTabId = $state('');
   let selectedTabId = $state('');
 
   $effect(() => {
-    if (selectedTabId === '' && tabs.length) {
-      selectedTabId = tabs[0].id;
+    if (selectedSidebarTabId === '' && tabs.length) {
+      selectedSidebarTabId = tabs[0].id;
     }
   });
 
@@ -35,18 +36,18 @@
 
 <div class="dialog-content-container flexrow">
   <div class="flexcol noflex">
-    <VerticalTabs bind:selectedTabId {tabs} class="flex1" />
+    <VerticalTabs bind:selectedTabId={selectedSidebarTabId} {tabs} class="flex1" />
   </div>
 
   {#each config as entry, i}
     {@const tabId = entry.title.slugify()}
-    {@const title = localize('TIDY5E.TabSelection.Title', {
+    {@const title = localize('TIDY5E.TabConfiguration.Title', {
       documentName: entry.title,
     })}
     <div
       class={[
         'tidy-tab',
-        { active: tabId === selectedTabId },
+        { active: tabId === selectedSidebarTabId },
         'flexcol',
         'configuration-tab',
         'dialog-content',
@@ -54,10 +55,8 @@
       data-tab-contents-for={tabId}
       role="tabpanel"
     >
-      <h2>
-        {title}
-      </h2>
-      <TabConfigurationEntry bind:entry={config[i]} />
+      <h2>{title}</h2>
+      <TabbedTabConfig {entry} bind:selectedTabId />
     </div>
   {/each}
 </div>

@@ -142,7 +142,7 @@
         "ButtonTooltip": "주문 준비 수 최대값 설정",
         "MoreFormulas": "추가 공식"
     },
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Title": "탭 선택: {documentName}",
         "MenuOptionText": "탭 선택",
         "AvailableHeader": "사용가능한 탭",

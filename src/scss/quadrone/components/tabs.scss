@@ -111,12 +111,17 @@
 
 .tidy-vertical-tabs {
   margin: 0;
+  min-width: 9rem;
   padding: 0;
   list-style-position: inside;
   gap: 0;
 
   &:not(.include-numbers) li {
     list-style: none;
+    text-wrap: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 

@@ -7,6 +7,7 @@ import type {
   ApplicationHeaderControlsEntry,
   ApplicationPosition,
   ApplicationRenderOptions,
+  DocumentSheetConfiguration,
 } from 'src/types/application.types';
 import type {
   CustomContent,
@@ -37,6 +38,7 @@ import {
 import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -55,6 +57,7 @@ export function TidyExtensibleDocumentSheetMixin<
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
     _mode = $state<number | undefined>();
+    _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
 
     constructor(options: TConstructorArgs) {
       super(options);
@@ -357,6 +360,11 @@ export function TidyExtensibleDocumentSheetMixin<
     _updateFrame(options: TidyDocumentSheetRenderOptions) {
       options ??= {};
 
+      // Update header control position settings
+      this._headerControlSettings = this._getHeaderControlSettings(
+        this.document
+      );
+
       // Remove header bar controls
       removeTidyHeaderButtons(this.window.header);
 
@@ -655,10 +663,10 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Application Initialization                  */
     /* -------------------------------------------- */
 
-    _initializeApplicationOptions(options: ApplicationConfiguration) {
+    _initializeApplicationOptions(options: DocumentSheetConfiguration) {
       const updatedOptions = super._initializeApplicationOptions(
         options
-      ) as ApplicationConfiguration;
+      ) as DocumentSheetConfiguration;
 
       const effectiveControls = [...(updatedOptions.window?.controls ?? [])];
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
@@ -695,7 +703,16 @@ export function TidyExtensibleDocumentSheetMixin<
           ...customControls.controls,
         ];
 
+        this._headerControlSettings = this._getHeaderControlSettings(
+          options.document
+        );
+
         updatedOptions.window.controls.forEach((c) => {
+          if (this._headerControlSettings.has(c.label)) {
+            c.position = this._headerControlSettings.get(c.label);
+            return;
+          }
+
           if (
             c.action === 'configureToken' ||
             c.action === 'configurePrototypeToken'
@@ -714,11 +731,30 @@ export function TidyExtensibleDocumentSheetMixin<
       return updatedOptions;
     }
 
+    private _getHeaderControlSettings(document: any) {
+      const settings =
+        SettingsProvider.settings.headerControlConfiguration.get()?.[
+          document.documentName
+        ]?.[document.type];
+
+      if (!settings) {
+        return new Map();
+      }
+
+      return new Map<string, SheetHeaderControlPosition>([
+        ...settings.header.map((s) => [s, 'header'] as const),
+        ...settings.menu.map((s) => [s, 'menu'] as const),
+      ]);
+    }
+
     /* -------------------------------------------- */
     /*  Header Control Management                   */
     /* -------------------------------------------- */
 
-    _getCustomHeaderControls(document: any): { controls: any[]; actions: any } {
+    _getCustomHeaderControls(document: any): {
+      controls: ApplicationHeaderControlsEntry[];
+      actions: any;
+    } {
       const controls: ApplicationHeaderControlsEntry[] = [];
       const actions: Record<
         string,
@@ -753,6 +789,10 @@ export function TidyExtensibleDocumentSheetMixin<
       };
     }
 
+    getAllHeaderControls() {
+      return this.options.window.controls?.slice() ?? [];
+    }
+
     /**
      * Configure the array of header control menu options
      */
@@ -766,10 +806,15 @@ export function TidyExtensibleDocumentSheetMixin<
       const controls = super._getHeaderControls();
       return controls.filter((c: CustomHeaderControlsEntry) => {
         try {
-          return (
-            (typeof c.visible !== 'function' || c.visible.call(this)) &&
-            coalesce(c.position, 'menu') === position
-          );
+          const visible =
+            typeof c.visible !== 'function' || c.visible.call(this);
+
+          const configuredForThisPosition =
+            this._headerControlSettings.get(c.label) === position ||
+            (!this._headerControlSettings.has(c.label) &&
+              coalesce(c.position, 'menu') === position);
+
+          return visible && configuredForThisPosition;
         } catch (e) {
           error('Failed to get custom control', false, {
             control: c,

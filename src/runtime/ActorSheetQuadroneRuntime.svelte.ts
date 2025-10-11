@@ -50,7 +50,7 @@ export class ActorSheetQuadroneRuntime<
   }
 
   async getTabs(context: TSheetContext): Promise<Tab[]> {
-    let tabIds = this._tabs.map((x) => x.id);
+    let tabIds = this._getVisibleTabIds(context);
 
     const selectedTabs = this._getTabConfig(context.actor)?.selected ?? [];
 
@@ -85,6 +85,34 @@ export class ActorSheetQuadroneRuntime<
     return renderableTabs.filter(
       (t) => !t.condition || t.condition(context.document)
     );
+  }
+
+  _getVisibleTabIds(context: TSheetContext) {
+    const tabIds = Iterator.from(this._tabs).map((t) => t.id);
+
+    if (FoundryAdapter.userIsGm()) {
+      return [...tabIds];
+    }
+
+    const worldTabConfig =
+      settings.value.tabConfiguration[context.document.documentName]?.[
+        context.document.type
+      ]?.visibilityLevels ?? {};
+
+    const sheetTabConfig =
+      TidyFlags.tabConfiguration.get(context.document)?.visibilityLevels ?? {};
+
+    const documentOwnershipLevel = context.document.getUserLevel(game.user);
+
+    return [
+      ...tabIds.filter((tabId) => {
+        const minOwnershipLevel = Math.max(
+          worldTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
+          sheetTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
+        );
+        return documentOwnershipLevel >= minOwnershipLevel;
+      }),
+    ];
   }
 
   getAllRegisteredTabs(): RegisteredTab<TSheetContext>[] {

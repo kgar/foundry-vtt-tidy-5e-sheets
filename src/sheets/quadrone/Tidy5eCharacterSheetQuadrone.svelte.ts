@@ -93,7 +93,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
               );
             },
           },
-          title: FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+          title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
             documentName: FoundryAdapter.localize(
               'TIDY5E.Character.Sidebar.Title'
             ),

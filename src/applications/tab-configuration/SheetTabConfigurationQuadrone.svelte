@@ -4,7 +4,7 @@
     SheetTabConfigurationContext,
     SheetTabConfigurationQuadroneApplication,
   } from './SheetTabConfigurationQuadroneApplication.svelte';
-  import TabConfigurationEntry from './parts/TabConfigurationEntry.svelte';
+  import TabbedTabConfig from './parts/TabbedTabConfig.svelte';
 
   interface Props {
     app: SheetTabConfigurationQuadroneApplication;
@@ -19,7 +19,7 @@
 
 <div class="dialog-content-container flexcol">
   <h2>{title}</h2>
-  <TabConfigurationEntry bind:entry={config.entry} />
+  <TabbedTabConfig entry={config.entry} />
 </div>
 <div class="button-bar">
   <button

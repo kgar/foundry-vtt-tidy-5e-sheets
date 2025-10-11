@@ -126,8 +126,8 @@
 
   &.sheet-tab-configuration,
   &.world-tab-configuration {
-    h2 {
-      margin-block-end: var(--t5e-size-3x);
+    .tabs-row {
+      margin-block-end: var(--t5e-size-4x);
     }
   }
 

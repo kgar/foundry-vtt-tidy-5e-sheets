@@ -21,7 +21,7 @@
     "TIDY5E.Class.Rogue": "முரட்டு",
     "TIDY5E.Class.Sorcerer": "சூனியக்காரர்",
     "TIDY5E.Class.Warlock": "வார்லாக்",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "MenuOptionText": "தாவல் தேர்வு",
         "AvailableHeader": "மறைக்கப்பட்ட தாவல்கள்",
         "AtLeastOneRequiredErrorMessage": "குறைந்தது ஒரு தாவல் தேவை.",

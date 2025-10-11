@@ -430,7 +430,7 @@
     },
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ItemFilters.Filter.Other": "Další",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "SelectedHeader": "Viditelné karty",
         "Explanation": "Jakékoli karty, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
         "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není aktuálně nastaven pro výběr karty.",

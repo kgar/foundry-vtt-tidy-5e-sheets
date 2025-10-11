@@ -118,7 +118,7 @@
         "ButtonTooltip": "Configurar Máximo de Magias Preparadas",
         "MoreFormulas": "Mais Fórmulas"
     },
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Title": "Seleção de Aba: {documentName}",
         "MenuOptionText": "Seleção de Aba",
         "AvailableHeader": "Abas Ocultas",

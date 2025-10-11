@@ -112,7 +112,7 @@
         "ButtonTooltip": "Конфігурація макс. к-сті підготовлених чар",
         "MoreFormulas": "Більше формул"
     },
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Title": "Вибір вкладки: {documentName}",
         "MenuOptionText": "Вибір вкладки",
         "AvailableHeader": "Приховані вкладки",

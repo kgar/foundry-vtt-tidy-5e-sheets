@@ -132,7 +132,7 @@
     "TIDY5E.Class.Rogue": "游荡者",
     "TIDY5E.Class.Sorcerer": "术士",
     "TIDY5E.OriginSummaryConfig": "起源摘要配置：{actorName}",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Title": "选项卡选择：{documentName}",
         "MenuOptionText": "选项卡选择",
         "AvailableHeader": "隐藏选项卡",

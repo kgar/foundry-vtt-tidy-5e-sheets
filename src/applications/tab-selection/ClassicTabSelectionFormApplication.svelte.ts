@@ -63,7 +63,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
   }
 
   get title() {
-    return FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
+    return FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
       documentName: this.actor.name,
     });
   }
@@ -83,7 +83,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
 
     error(
       FoundryAdapter.localize(
-        'TIDY5E.TabSelection.UnsupportedDocumentErrorMessage',
+        'TIDY5E.TabConfiguration.UnsupportedDocumentErrorMessage',
         { documentType: this.actor.type }
       )
     );
@@ -105,7 +105,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
 
     error(
       FoundryAdapter.localize(
-        'TIDY5E.TabSelection.UnsupportedDocumentErrorMessage',
+        'TIDY5E.TabConfiguration.UnsupportedDocumentErrorMessage',
         { documentType: this.actor.type }
       )
     );
@@ -167,7 +167,7 @@ export default class ClassicTabSelectionFormApplication extends SvelteApplicatio
     if (context.selected.length === 0) {
       error(
         FoundryAdapter.localize(
-          'TIDY5E.TabSelection.AtLeastOneRequiredErrorMessage'
+          'TIDY5E.TabConfiguration.AtLeastOneRequiredErrorMessage'
         ),
         true
       );

@@ -439,7 +439,7 @@
         "ButtonTooltip": "Configura Massimi Incantesimi Preparati",
         "MoreFormulas": "Più formule"
     },
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "SelectedHeader": "Schede Visibili",
         "MenuOptionText": "Selezione Scheda",
         "AvailableHeader": "Schede Nascoste",

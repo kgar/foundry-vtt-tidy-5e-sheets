@@ -143,7 +143,7 @@ export function Tidy5eActorSheetQuadroneBase<
           {
             action: 'openTabConfiguration',
             icon: 'fas fa-file-invoice',
-            label: 'TIDY5E.TabSelection.MenuOptionText',
+            label: 'TIDY5E.TabConfiguration.MenuOptionText',
             ownership: 'OWNER',
             visible: function (this: Tidy5eActorSheetQuadroneBase) {
               return this.isEditable;

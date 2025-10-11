@@ -19,11 +19,22 @@ export interface GlobalCustomSectionsetting {
 
 export type SheetTabConfiguration = {
   selected: string[];
+  visibilityLevels: Record<string, number | null>;
 };
 
 export type TabConfiguration = {
   [documentName: string]: {
-    [documentType: string]: SheetTabConfiguration
-  }
-}
+    [documentType: string]: SheetTabConfiguration;
+  };
+};
 
+export type SheetHeaderControlConfiguration = {
+  header: string[];
+  menu: string[];
+};
+
+export type HeaderControlConfiguration = {
+  [documentName: string]: {
+    [documentType: string]: SheetHeaderControlConfiguration;
+  };
+};

@@ -76,7 +76,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
         {
           action: 'openTabConfiguration',
           icon: 'fas fa-file-invoice',
-          label: 'TIDY5E.TabSelection.MenuOptionText',
+          label: 'TIDY5E.TabConfiguration.MenuOptionText',
           ownership: 'OWNER',
           visible: function (this: Tidy5eItemSheetQuadrone) {
             return this.isEditable;

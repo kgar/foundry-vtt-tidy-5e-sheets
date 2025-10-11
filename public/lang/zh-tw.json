@@ -585,7 +585,7 @@
     "TIDY5E.AttackMod": "",
     "TIDY5E.ActorRangedSpellAttackTitle": "",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Title": "",
         "MenuOptionText": "",
         "UnsupportedDocumentErrorMessage": "",

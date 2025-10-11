@@ -10,7 +10,7 @@
     "TIDY5E.Tidy5eItemSheetClassic": "Klasyczna Karta Przedmiotu Tidy 5e",
     "TIDY5E.PlayerName": "Nazwa gracza",
     "TIDY5E.ShowPortraitArt": "Pokaż portret",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
         "Title": "Wybór zakładki dla {documentName}",
         "MenuOptionText": "Wybór zakładki",

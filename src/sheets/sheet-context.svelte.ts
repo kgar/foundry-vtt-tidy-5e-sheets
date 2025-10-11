@@ -21,6 +21,12 @@ import type {
 } from 'src/types/types';
 import { getContext } from 'svelte';
 
+export function tryGetSheetContext<TContext = any>(): TContext | undefined {
+  return getContext<CoarseReactivityProvider<TContext>>(
+    CONSTANTS.SVELTE_CONTEXT.CONTEXT
+  )?.data;
+}
+
 export function getSheetContext<TContext = any>(): TContext {
   return getContext<CoarseReactivityProvider<TContext>>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT

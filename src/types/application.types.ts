@@ -60,7 +60,7 @@ export interface ApplicationHeaderControlsEntry {
   action: string;
   visible?: boolean | ((this: any) => boolean);
   ownership?: string | number;
-  /** Where the control should be place, whether the header or the menu. Tidy-specific field */
+  /** Where the control should be placed, whether the header or the menu. Tidy-specific field */
   position?: SheetHeaderControlPosition;
 }
 
