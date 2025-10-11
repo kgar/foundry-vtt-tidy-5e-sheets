@@ -84,10 +84,7 @@
 
   let localize = FoundryAdapter.localize;
 
-  function getType() {
-    console.log(ctx.resource);
-    console.log(ctx.document);
-    
+  function getType() {    
     // Check for limited uses with recharge first (applies to any item type including spells)
     if (ctx.resource === 'limited-uses' && ctx.document.isOnCooldown) {
       return 'limited-uses-recharging';
@@ -99,8 +96,6 @@
     // Then handle spell-specific slot tracking
     if (isSpell) {
       let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
-      console.log(spellMethod);
-      console.log(ctx.document.parent.system.spells.pact)
 
       if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE || spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
         // If innate/at-will has limited uses, show them
@@ -125,9 +120,6 @@
     return 'none';
   }
   let pinType = $derived(getType());
-  console.log(pinType);
-  console.log(spellSlotTrackerMode);
-  console.log(spellcastingSection);
 
   function onPipClick(index: number, section: any, slotKey: string) {
     if (!section) return;
@@ -214,6 +206,7 @@
           }}
         />
         <button
+          type="button"
           class="button button-icon-only flexshrink save-name-button"
           aria-label="Save Alias"
           onclick={(ev) => {

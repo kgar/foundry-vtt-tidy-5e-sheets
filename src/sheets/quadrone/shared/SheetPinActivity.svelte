@@ -71,8 +71,6 @@
 
 
   function getType() {
-    console.log(ctx.resource);
-    console.log(ctx.document);
     if (isSpell) {
       let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
 
@@ -138,6 +136,7 @@
           }}
         />
         <button
+          type="button"
           class="button button-icon-only flexshrink save-name-button"
           aria-label="Save Alias"
           onclick={(ev) => {
