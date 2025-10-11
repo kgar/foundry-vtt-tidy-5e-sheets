@@ -1,15 +1,15 @@
 ## kgar To Do
 
 - [x] Finish Character header control tracer bullet
-- [ ] Refactor the code to allow an array of objects to produce the appropriate context
-- [ ] Propagate settings out to remaining sheets.
-  - [ ] Character
-  - [ ] NPC
-  - [ ] Group
-  - [ ] Encounter
-  - [ ] Container
-  - [ ] All Item Types
-- [ ] Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.
+- [x] Refactor the code to allow an array of objects to produce the appropriate context
+- [x] Propagate settings out to remaining sheets.
+  - [x] Character
+  - [x] NPC
+  - [x] Group
+  - [x] Encounter
+  - [x] Container
+  - [x] All Item Types
+- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
 - [ ] Test 
   - [ ] Character
   - [ ] NPC
@@ -17,6 +17,7 @@
   - [ ] Encounter
   - [ ] Container
   - [ ] All Item Types
+- [ ] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
 
 ### Short List
 
