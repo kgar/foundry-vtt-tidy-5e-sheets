@@ -1,0 +1,149 @@
+.sheet-pins {
+  flex-direction: row;
+  gap: 0.375rem;
+}
+
+.sheet-pin {
+  border-radius: 0.3125rem;
+  border: 1px solid var(--t5e-component-card-lighter);
+  background-color: var(--t5e-component-card-darker);
+  box-shadow: var(--t5e-drop-shadow-field);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--t5e-transition-default);
+}
+
+.sheet-pin:hover {
+  box-shadow: 0 0 4px 0 var(--t5e-theme-color-default);
+}
+
+.sheet-pin .tidy-table-row-use-button {
+  border-radius: 0.25rem;
+  margin: 0.25rem;
+  height: var(--t5e-icon-size-10x);
+  width: var(--t5e-icon-size-10x);
+}
+
+.sheet-pin .tidy-table-row-use-button i {
+  font-size: 1.5rem;
+}
+
+.sheet-pin .pin-details {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.125rem;
+  justify-content: center;
+  margin-right: 0.5rem;
+  padding: 0.25rem 0;
+}
+
+.sheet-pin .pin-details {
+  padding: 0;
+  margin: 0 0 0.125rem 0;
+  gap: 0;
+}
+
+&.sheet-mode-play .sheet-pin .pin-details {
+  margin-right: 0.5rem;
+}
+
+&.sheet-mode-edit .sheet-pin .pin-details {
+  margin-left: 0.25rem;
+}
+
+.sheet-pin .pin-name {
+  line-height: 1.25rem;
+}
+
+.sheet-pin .pin-details>div {
+  height: 1.25rem;
+  max-height: 1.25rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+}
+
+.sheet-pin .pin-details button.edit-name-button {
+  margin: 0 -0.5rem 0 0;
+}
+
+&.sheet-mode-edit .sheet-pin .pin-details:has(.save-name-button) {
+  margin-left: 0.25rem;
+  margin-right: 0.5rem;
+
+  .pin-name-container {
+    gap: 0.25rem;
+  }
+}
+
+.sheet-pin .inline-uses:not(:has(.divider)) input {
+  text-align: center;
+}
+
+.sheet-pin .inline-uses:not(:is(.sheet-mode-edit .sheet-pin .inline-uses)) {
+  height: var(--t5e-size-6x);
+}
+
+.sheet-pin .inline-uses * {
+  font-size: var(--font-size-16);
+  padding-left: 0.125rem;
+  padding-right: 0.125rem;
+}
+
+.sheet-pin .pin-counter input[type="text"].uses-value {
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-label);
+}
+
+.sheet-pin .pin-counter input[type="text"].uses-value:hover,
+.sheet-pin .pin-counter input[type="text"].uses-value:focus-within,
+.sheet-pin .pin-counter input[type="text"].uses-value:active {
+  background-color: var(--t5e-component-field-background-hover-emphasis);
+  border: 0.0625rem solid oklch(from var(--t5e-component-field-border-hover) l c h/64%);
+}
+
+.sheet-pin .inline-uses .diminished {
+  color: var(--t5e-color-text-lightest);
+}
+
+.sheet-pin .limited-uses .charged-text,
+.sheet-pin .limited-uses .item-list-button {
+  font-size: var(--font-size-16);
+}
+
+.sheet-pin .limited-uses .charged-text i,
+.sheet-pin .limited-uses .item-list-button i {
+  color: var(--t5e-color-text-gold-emphasis);
+}
+
+.sheet-pin .limited-uses .charged-text .uses-max {
+  flex: 0;
+}
+
+.sheet-pin .limited-uses .charged-text i {
+  margin-top: -0.0625rem;
+  flex: 1;
+}
+
+.sheet-pin .pips.spell-pips {
+  gap: 0.1875rem;
+  --pip-color: var(--t5e-color-text-gold);
+  --pip-border-color: var(--t5e-color-text-gold-emphasis);
+  --pip-border-hover-color: var(--t5e-color-text-gold-emphasis);
+  --pip-hover-color: var(--t5e-color-text-gold-light);
+  --pip-active-color: var(--t5e-color-text-gold);
+  --pip-active-hover-color: var(--t5e-color-text-gold-emphasis);
+}
+
+
+&.theme-dark {
+  .sheet-pin:hover {
+    box-shadow: 0 0 4px 0 var(--t5e-theme-color-highlight);
+  }
+}

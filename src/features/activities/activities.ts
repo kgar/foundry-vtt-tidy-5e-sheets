@@ -5,6 +5,7 @@ import type {
   ActivityItemContext,
   Actor5e,
   CharacterItemContext,
+  LinkedUses,
   NpcItemContext,
 } from 'src/types/types';
 
@@ -81,15 +82,11 @@ export class Activities {
     };
   }
 
-  static applyLinkedUses(
-    item: Item5e,
-    actor: Actor5e,
-    context: CharacterItemContext | NpcItemContext
-  ) {
+  static getLinkedUses(item: Item5e): LinkedUses | undefined {
     const linkedActivity = item.system.linkedActivity;
 
     if (linkedActivity) {
-      context.linkedUses = linkedActivity.consumption?.targets.find(
+      return linkedActivity.consumption?.targets.find(
         (t: any) => t.type === 'activityUses'
       )
         ? {
@@ -109,7 +106,7 @@ export class Activities {
             maxProp: 'system.uses.max',
             doc: linkedActivity.item,
           }
-        : null;
+        : undefined;
     }
   }
 }

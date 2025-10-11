@@ -61,7 +61,7 @@
       class="uninput uses-value color-text-default"
       disabled={!context.editable}
     />
-    <span class="color-text-gold">/</span>
+    <span class="divider color-text-gold">/</span>
     <span class="uses-max color-text-lighter">{item.system.uses.max}</span>
   {/if}
 {:else if item.system.linkedActivity}

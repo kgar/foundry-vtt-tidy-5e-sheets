@@ -14,7 +14,7 @@ import type {
   DocumentSheetV2Context,
   Tab,
 } from 'src/types/types';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import {
   CustomContentRendererV2,

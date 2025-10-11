@@ -14,6 +14,7 @@
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
@@ -46,6 +47,8 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
+  <SheetPins />
+
   {#if npcs.length}
     {@const columns = new ColumnsLoadout(
       EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({

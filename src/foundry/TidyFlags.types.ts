@@ -27,6 +27,26 @@ export type AttributeActivityPinFlag = AttributePinBase & {
 
 export type AttributePinFlag = AttributeItemPinFlag | AttributeActivityPinFlag;
 
+type SheetPinBase = {
+  /** The Item UUID, generally relative to the owning character */
+  id: string;
+  /** The sort value */
+  sort: number;
+  alias?: string;
+};
+
+export type SheetItemPinFlag = SheetPinBase & {
+  type: 'item';
+  resource: 'limited-uses' | 'quantity';
+};
+
+export type SheetActivityPinFlag = SheetPinBase & {
+  type: 'activity';
+  resource: 'limited-uses';
+};
+
+export type SheetPinFlag = SheetItemPinFlag | SheetActivityPinFlag;
+
 export type DocumentJournalEntry = {
   id: string;
   title: string;

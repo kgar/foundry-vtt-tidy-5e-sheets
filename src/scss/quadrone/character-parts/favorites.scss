@@ -34,11 +34,6 @@
           box-shadow: 0 0 0.375rem var(--t5e-color-text-gold-emphasis);
         }
 
-        input.uses-value {
-          border-color: transparent; //var(--t5e-component-field-border);
-          background-color: var(--t5e-component-field-background-hover-emphasis);
-          box-shadow: 0.25rem 0 0 0 var(--t5e-component-field-background-hover-emphasis);
-        }
       }
 
       >div {
@@ -64,24 +59,6 @@
       .ability {
         text-transform: uppercase;
         margin-inline-end: var(--t5e-size-halfx);
-      }
-
-      .inline-uses {
-        display: flex;
-        align-items: center;
-
-        .divider {
-          flex: 0 0 auto;
-        }
-
-        .uses-value {
-          flex: 1;
-          text-align: right;
-        }
-
-        .uses-max {
-          flex: 1;
-        }
       }
 
       .stacked {

@@ -1457,7 +1457,7 @@ export class Tidy5eCharacterSheet
       item.system.activities
     )?.map(Activities.getActivityItemContext);
 
-    Activities.applyLinkedUses(item, this.actor, context);
+    context.linkedUses = Activities.getLinkedUses(item);
   }
 
   private async setExpandedItemData() {
