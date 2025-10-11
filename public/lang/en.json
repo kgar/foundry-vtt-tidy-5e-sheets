@@ -194,11 +194,18 @@
     "MoreFormulas": "More formulas"
   },
 
-  "TIDY5E.TabSelection": {
-    "Title": "Tab Selection: {documentName}",
-    "MenuOptionText": "Tab Selection",
+  "TIDY5E.HeaderControlConfiguration": {
+    "LocationMenu": "Menu",
+    "LocationHeader": "Header"
+  },
+
+  "TIDY5E.TabConfiguration": {
+    "Title": "Tab Configuration: {documentName}",
+    "MenuOptionText": "Tab Configuration",
+    "SelectionTab.Title": "Tab Selection",
     "AvailableHeader": "Hidden Tabs",
     "SelectedHeader": "Visible Tabs",
+    "VisibilityTab.Title": "Tab Visibility",
     "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
@@ -293,6 +300,12 @@
     "name": "Homebrew",
     "label": "Configure Homebrew",
     "hint": "Enable and configure homebrew options provided by this module."
+  },
+
+  "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+    "name": "Header Controls",
+    "label": "Configure Header Controls",
+    "hint": "New Tidy Sheets Only: Configure the location of sheet header controls."
   },
 
   "TIDY5E.SettingsMenu.TabConfiguration": {
@@ -820,6 +833,7 @@
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
   "TIDY5E.ItemFilters.Filter.Other": "Other",
+  "TIDY5E.GMOnly.Title": "GM Only",
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
   "TIDY5E.Utilities.Tools": "Tools",

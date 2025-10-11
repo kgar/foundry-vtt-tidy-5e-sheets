@@ -492,7 +492,7 @@
         "SetOverrideTrue": "Añadir a la Lista de Acciones"
     },
     "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Explanation": "Cualquier pestaña que el usuario o la hoja hayan configurado para no ver (por ejemplo, deshabilitar el diario en la configuración) seguirán sin aparecer en la hoja, incluso si están seleccionadas.",
         "Title": "Selección de Pestaña: {documentName}",
         "MenuOptionText": "Selección de Pestaña",

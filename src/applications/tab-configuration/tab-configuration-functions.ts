@@ -2,10 +2,10 @@ import { CONSTANTS } from 'src/constants';
 import type {
   ConfigTabInfo,
   TabConfigContextEntry,
+  VisibilityLevelConfig,
 } from './tab-configuration.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
-import type { RegisteredTab } from 'src/runtime/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
@@ -101,6 +101,14 @@ export function buildTabConfigContextEntry(
     selected = [...defaultSelected];
   }
 
+  const visibilityLevels: VisibilityLevelConfig[] = Object.values(allTabs).map(
+    (t) => ({
+      id: t.id,
+      title: t.title,
+      visibilityLevel: settings?.visibilityLevels[t.id] ?? null,
+    })
+  ).sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
+
   return {
     documentName: documentName,
     documentType: type,
@@ -110,6 +118,7 @@ export function buildTabConfigContextEntry(
     defaultUnselected: getUnselectedTabs(allTabs, defaultSelected),
     selected: selected,
     unselected: getUnselectedTabs(allTabs, selected),
+    visibilityLevels,
   };
 }
 

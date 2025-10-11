@@ -109,7 +109,7 @@
         "ButtonTooltip": "Configure Max Prepared Spells",
         "MoreFormulas": "More formulas"
     },
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "Title": "Tab Selection: {documentName}",
         "MenuOptionText": "Tab Selection",
         "AvailableHeader": "Available Tabs",

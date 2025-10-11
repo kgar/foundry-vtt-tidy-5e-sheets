@@ -419,7 +419,7 @@
     "TIDY5E.AttackMod": "Angriffsmodifikator",
     "TIDY5E.MeleeSpellAttackMod": "Nahkampf-Zauberangriffs Modifikator",
     "TIDY5E.RangedSpellAttackMod": "Fernkampf-Zauberangriffs Modifikator",
-    "TIDY5E.TabSelection": {
+    "TIDY5E.TabConfiguration": {
         "MenuOptionText": "Reiter Auswahl",
         "AvailableHeader": "Versteckte Reiter",
         "SelectedHeader": "Sichtbare Reiter",

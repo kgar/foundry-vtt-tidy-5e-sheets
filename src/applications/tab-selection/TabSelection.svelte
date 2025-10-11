@@ -34,12 +34,12 @@
   >
     {#snippet leftHeader()}
       <h2 class="minimal">
-        {localize('TIDY5E.TabSelection.SelectedHeader')}
+        {localize('TIDY5E.TabConfiguration.SelectedHeader')}
       </h2>
     {/snippet}
     {#snippet rightHeader()}
       <h2 class="minimal">
-        {localize('TIDY5E.TabSelection.AvailableHeader')}
+        {localize('TIDY5E.TabConfiguration.AvailableHeader')}
       </h2>
     {/snippet}
   </SelectionListbox>
@@ -47,7 +47,7 @@
     <span class="extra-info-icon-container"
       ><i class="fas fa-info-circle"></i></span
     >
-    <span>{localize('TIDY5E.TabSelection.Explanation')}</span>
+    <span>{localize('TIDY5E.TabConfiguration.Explanation')}</span>
   </p>
   <div class="button-bar flex-row small-gap">
     <button

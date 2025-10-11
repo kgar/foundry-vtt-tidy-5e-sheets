@@ -4,7 +4,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getAllContexts, mount, onMount, setContext, unmount } from 'svelte';
   import { error } from 'src/utils/logging';
-  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { tryGetSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { ClassValue } from 'svelte/elements';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
 
@@ -16,7 +16,7 @@
 
   let { tab, active, cssClass = '' }: Props = $props();
 
-  const context = $derived(getSheetContext());
+  const context = $derived(tryGetSheetContext<unknown | undefined>());
   const allContexts = getAllContexts();
 
   declareLocation('tab', tab.id);

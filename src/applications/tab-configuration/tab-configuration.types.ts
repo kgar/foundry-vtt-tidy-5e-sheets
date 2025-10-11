@@ -3,6 +3,10 @@ export type ConfigTabInfo = {
   title: string;
 };
 
+export type VisibilityLevelConfig = ConfigTabInfo & {
+  visibilityLevel: number | null;
+};
+
 export type TabConfigContextEntry = {
   documentName: string;
   documentType: string;
@@ -12,6 +16,7 @@ export type TabConfigContextEntry = {
   defaultUnselected: ConfigTabInfo[];
   selected: ConfigTabInfo[];
   unselected: ConfigTabInfo[];
+  visibilityLevels: VisibilityLevelConfig[];
   /** Replaces the document type as a property when saving world tab configuration info. */
   docTypeKeyOverride?: string;
 };

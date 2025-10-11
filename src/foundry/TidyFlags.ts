@@ -15,6 +15,7 @@ import type {
 } from './TidyFlags.types';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import { TabConfigurationSchema } from 'src/settings/settings-data-models';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -1301,17 +1302,28 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('sidebar-tab-configuration'),
     /** Gets sidebar tab configuration. */
     get(doc: any): SheetTabConfiguration | null | undefined {
-      return TidyFlags.tryGetFlag<SheetTabConfiguration>(
+      let config = TidyFlags.tryGetFlag<SheetTabConfiguration>(
         doc,
         TidyFlags.sidebarTabConfiguration.key
       );
+
+      if (!config) {
+        return null;
+      }
+
+      config = TabConfigurationSchema.clean(config);
+      TabConfigurationSchema.validate(config, { fallback: true });
+      return config;
     },
     /** Sets sidebar tab configuration. */
     set(doc: any, config: SheetTabConfiguration) {
+      const toSave = TabConfigurationSchema.clean(config);
+      TabConfigurationSchema.validate(toSave, { fallback: true });
+
       return TidyFlags.setFlag(
         doc,
         TidyFlags.sidebarTabConfiguration.key,
-        config
+        toSave
       );
     },
     /** Clears sidebar tab configuration. */
@@ -1328,14 +1340,25 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('tab-configuration'),
     /** Gets tab configuration. */
     get(doc: any): SheetTabConfiguration | null | undefined {
-      return TidyFlags.tryGetFlag<SheetTabConfiguration>(
+      let config = TidyFlags.tryGetFlag<SheetTabConfiguration>(
         doc,
         TidyFlags.tabConfiguration.key
       );
+
+      if (!config) {
+        return null;
+      }
+
+      config = TabConfigurationSchema.clean(config);
+      TabConfigurationSchema.validate(config, { fallback: true });
+      return config;
     },
     /** Sets tab configuration. */
     set(doc: any, config: SheetTabConfiguration) {
-      return TidyFlags.setFlag(doc, TidyFlags.tabConfiguration.key, config);
+      const toSave = TabConfigurationSchema.clean(config);
+      TabConfigurationSchema.validate(toSave, { fallback: true });
+
+      return TidyFlags.setFlag(doc, TidyFlags.tabConfiguration.key, toSave);
     },
     /** Clears tab configuration. */
     unset(doc: any) {

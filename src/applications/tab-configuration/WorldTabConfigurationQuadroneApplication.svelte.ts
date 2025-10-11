@@ -45,7 +45,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       contentClasses: ['flexcol'],
     },
     position: {
-      width: 600,
+      width: 750,
       height: 600,
     },
     actions: {},
@@ -158,11 +158,15 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
           ? undefined
           : curr.selected;
 
-      if (selected) {
+      if (selected || curr.visibilityLevels.some((l) => !!l)) {
         const docTypeKey = curr.docTypeKeyOverride ?? curr.documentType;
 
         docName[docTypeKey] = {
-          selected: selected.map((s) => s.id),
+          selected: selected?.map((s) => s.id) ?? [],
+          visibilityLevels: curr.visibilityLevels.reduce((levels, level) => {
+            levels[level.id] = level.visibilityLevel;
+            return levels;
+          }, {} as Record<string, number | null>),
         };
       }
 
