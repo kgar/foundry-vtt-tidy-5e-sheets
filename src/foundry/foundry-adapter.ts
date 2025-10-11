@@ -1639,7 +1639,7 @@ export const FoundryAdapter = {
           CONFIG[documentName]?.documentClass;
 
         const isDefault =
-          tidyClass ===
+          className ===
           foundry.utils.getProperty(setting, `${documentName}.${subType}`);
 
         result.push({

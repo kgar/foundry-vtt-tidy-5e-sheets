@@ -22,17 +22,6 @@ export type SheetPreferenceOption = {
   selected: boolean;
 };
 
-// Regrettably manual, but hopefully a temporary arrangement
-const supportedSheetClasses: string[] = [
-  Tidy5eCharacterSheetQuadrone.name,
-  Tidy5eNpcSheetQuadrone.name,
-  Tidy5eVehicleSheet.name,
-  Tidy5eItemSheetQuadrone.name,
-  Tidy5eContainerSheetQuadrone.name,
-  Tidy5eGroupSheetQuadrone.name,
-  Tidy5eEncounterSheetQuadrone.name,
-];
-
 export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin<
   Partial<ApplicationConfiguration> | undefined,
   {}
@@ -74,64 +63,15 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
   }
 
   getTidySheetPreferenceOptions(): SheetPreferenceOption[] {
-    const sheetClassOptions = [];
-    const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
-
-    const setting = game.settings.get('core', 'sheetClasses');
-
-    for (const { name, documentName, hasTypeData } of Object.values<any>(
-      foundry.documents
-    )) {
-      // documentName -> e.g., "Actor", "Item", ...
-      if (!hasTypeData) {
-        continue;
-      }
-
-      if (name.startsWith('Base')) {
-        continue;
-      }
-
-      // e.g., "character", "npc", "vehicle" for "Actor"
-      const subTypes = game.documentTypes[documentName].filter(
-        (t: string) => t !== CONST.BASE_DOCUMENT_TYPE
-      );
-
-      if (!subTypes.length) {
-        continue;
-      }
-
-      for (let subType of subTypes) {
-        const { defaultClasses } =
-          documentSheetConfig.getSheetClassesForSubType(documentName, subType);
-
-        const tidySheetClass = Object.keys(defaultClasses).find((c: string) =>
-          supportedSheetClasses.includes(c.split('.').at(-1) ?? 'Not Found')
-        );
-
-        if (!tidySheetClass) {
-          continue;
-        }
-
-        const typeLabel = FoundryAdapter.localize(
-          // @ts-ignore
-          CONFIG[documentName].typeLabels?.[subType]
-        );
-
-        const isDefault =
-          tidySheetClass ===
-          foundry.utils.getProperty(setting, `${documentName}.${subType}`);
-
-        sheetClassOptions.push({
-          label: typeLabel,
-          documentName,
-          subType,
-          sheetClassIdentifier: tidySheetClass,
-          selected: isDefault,
-        });
-      }
-    }
-
-    return sheetClassOptions;
+    return FoundryAdapter.getAllTidySheetClassMetadata()
+      .map((m) => ({
+        documentName: m.documentName,
+        label: m.typeLabel,
+        selected: m.isDefault,
+        sheetClassIdentifier: m.sheetClassIdentifier,
+        subType: m.documentSubtype,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang));
   }
 
   private async _onConfirm(): Promise<void> {
