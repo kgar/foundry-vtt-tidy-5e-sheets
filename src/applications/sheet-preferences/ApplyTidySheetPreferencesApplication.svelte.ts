@@ -1,18 +1,11 @@
 import { mount } from 'svelte';
 import ApplyTidySheetPreferences from './ApplyTidySheetPreferences.svelte';
-import { Tidy5eVehicleSheet } from 'src/sheets/classic/Tidy5eKgarVehicleSheet.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
-import { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
-import { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import { CONSTANTS } from 'src/constants';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
-import { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
-import { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
-import { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
-import { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 
 export type SheetPreferenceOption = {
   label: string;
@@ -32,8 +25,8 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
     classes: [
       CONSTANTS.MODULE_ID,
       'tidy5e-sheet-preferences',
-      'application-shell',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'sheet',
+      'quadrone',
     ],
     id: 'tidy5e-sheet-preferences',
     tag: 'div',
@@ -43,6 +36,7 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
       resizable: true,
       controls: [],
       title: 'TIDY5E.Settings.SheetPreferences.name',
+      contentClasses: ['flexcol'],
     },
     position: {
       width: 650,

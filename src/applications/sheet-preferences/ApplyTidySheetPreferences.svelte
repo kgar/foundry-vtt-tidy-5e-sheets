@@ -2,13 +2,11 @@
   import { type SheetPreferenceOption } from './ApplyTidySheetPreferencesApplication.svelte';
   import { ApplyTidySheetPreferencesApplication } from './ApplyTidySheetPreferencesApplication.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TidyTable, {
-    type TidyTableColumns,
-  } from 'src/components/table/TidyTable.svelte';
-  import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
-  import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
-  import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
-  import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
+  import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
 
   interface Props {
     options: SheetPreferenceOption[];
@@ -19,7 +17,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  const gridTemplateColumns: TidyTableColumns = [
+  const gridTemplateColumns = [
     {
       name: 'Select',
       width: '2.5rem',
@@ -43,19 +41,15 @@
   }
 </script>
 
-<div class="sheet-preferences-container">
+<div class="dialog-content-container flexcol">
   <div>
     {localize('TIDY5E.Settings.SheetPreferences.explanation')}
   </div>
   <div class="scroll-container">
-    <TidyTable
-      key="default-sheet-preferences"
-      toggleable={false}
-      {gridTemplateColumns}
-    >
+    <TidyTable key="default-sheet-preferences" toggleable={false}>
       {#snippet header()}
-        <TidyTableHeaderRow>
-          <TidyTableHeaderCell>
+        <TidyTableHeaderRow class="theme-dark">
+          <TidyTableHeaderCell primary={true} class="header-label-cell">
             <input
               type="checkbox"
               checked={allSelected}
@@ -64,80 +58,43 @@
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
               )}
             />
+            <!-- TODO: eliminate inline style -->
+            <span style="margin-inline-start: 0.5rem">
+              {localize('Sheet')}
+            </span>
           </TidyTableHeaderCell>
-          <TidyTableHeaderCell primary={true}
-            >{localize('Sheet')}</TidyTableHeaderCell
-          >
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
         {#each options as option}
           {@const checkboxId = getRandomId()}
           <TidyTableRow>
-            <TidyTableCell
-              ><input
+            <TidyTableCell primary={true}>
+              <input
                 type="checkbox"
                 id={checkboxId}
                 bind:checked={option.selected}
-              /></TidyTableCell
-            >
-            <TidyTableCell primary={true}
-              ><label for={checkboxId}>{option.label}</label></TidyTableCell
+              />
+              <label for={checkboxId} class="item-name">{option.label}</label
+              ></TidyTableCell
             >
           </TidyTableRow>
         {/each}
       {/snippet}
     </TidyTable>
   </div>
-  <footer>
-    <p>
-      {localize('TIDY5E.Settings.Migrations.Selection.TotalSelectedLabel', {
-        total: totalSelected,
-      })}
-    </p>
-    <button class="confirm" type="button" onclick={() => onConfirm()}
-      >{localize('TIDY5E.ButtonConfirm.Text')}</button
-    >
-  </footer>
 </div>
-
-<style lang="scss">
-  .sheet-preferences-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    > .scroll-container {
-      flex: 1;
-    }
-  }
-
-  footer {
-    margin-left: -0.5rem;
-    margin-right: -0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    border-top: 0.0625rem solid var(--t5e-faint-color);
-  }
-
-  input[type='checkbox'] {
-    flex-basis: 0.75rem;
-    width: auto;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    line-height: 0.75rem;
-  }
-
-  label {
-    flex: 1;
-    padding: 0.25rem 0;
-  }
-
-  button.confirm {
-    --button-size: 1.5rem;
-    width: 100%;
-  
-  }
-</style>
+<div class="button-bar">
+  <p>
+    {localize('TIDY5E.Settings.Migrations.Selection.TotalSelectedLabel', {
+      total: totalSelected,
+    })}
+  </p>
+  <button
+    type="button"
+    class="button button-secondary use-default-btn"
+    onclick={() => onConfirm()}
+  >
+    {localize('TIDY5E.ButtonConfirm.Text')}
+  </button>
+</div>
