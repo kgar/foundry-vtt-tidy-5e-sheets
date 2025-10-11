@@ -203,9 +203,17 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
   async apply() {
     const toSave = this._configs.reduce((prev, curr) => {
       prev[curr.documentName] ??= {};
-      prev[curr.documentName][curr.documentType] ??= { header: [] };
-      prev[curr.documentName][curr.documentType].header =
-        curr.controlSettings.map((s) => s.id);
+      prev[curr.documentName][curr.documentType] ??= { header: [], menu: [] };
+      prev[curr.documentName][curr.documentType].header = [
+        ...Iterator.from(curr.controlSettings)
+          .filter((s) => s.location === 'header')
+          .map((s) => s.id),
+      ];
+      prev[curr.documentName][curr.documentType].menu = [
+        ...Iterator.from(curr.controlSettings)
+          .filter((s) => s.location === 'menu')
+          .map((s) => s.id),
+      ];
 
       return prev;
     }, {} as HeaderControlConfiguration);
@@ -214,6 +222,21 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
   }
 
   async useDefault() {
+    const proceed = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      },
+      content: `<p>${FoundryAdapter.localize(
+        'TIDY5E.UseDefaultDialog.text'
+      )}</p>`,
+    });
+
+    if (!proceed) {
+      return;
+    }
+
+    await FoundryAdapter.setTidySetting('headerControlConfiguration', {});
+
     await this.close();
   }
 }
