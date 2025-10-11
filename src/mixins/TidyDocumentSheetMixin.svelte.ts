@@ -57,6 +57,7 @@ export function TidyExtensibleDocumentSheetMixin<
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
     _mode = $state<number | undefined>();
+    _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
 
     constructor(options: TConstructorArgs) {
       super(options);
@@ -358,6 +359,11 @@ export function TidyExtensibleDocumentSheetMixin<
 
     _updateFrame(options: TidyDocumentSheetRenderOptions) {
       options ??= {};
+
+      // Update header control position settings
+      this._headerControlSettings = this._getHeaderControlSettings(
+        this.document
+      );
 
       // Remove header bar controls
       removeTidyHeaderButtons(this.window.header);
@@ -697,15 +703,13 @@ export function TidyExtensibleDocumentSheetMixin<
           ...customControls.controls,
         ];
 
-        const headerPositionSettings = new Set(
-          SettingsProvider.settings.headerControlConfiguration.get()?.[
-            options.document.documentName
-          ]?.[options.document.type]?.header ?? []
+        this._headerControlSettings = this._getHeaderControlSettings(
+          options.document
         );
 
         updatedOptions.window.controls.forEach((c) => {
-          if (headerPositionSettings.has(c.label)) {
-            c.position = 'header';
+          if (this._headerControlSettings.has(c.label)) {
+            c.position = this._headerControlSettings.get(c.label);
             return;
           }
 
@@ -725,6 +729,18 @@ export function TidyExtensibleDocumentSheetMixin<
       }
 
       return updatedOptions;
+    }
+
+    private _getHeaderControlSettings(document: any) {
+      const settings =
+        SettingsProvider.settings.headerControlConfiguration.get()?.[
+          document.documentName
+        ]?.[document.type];
+
+      return new Map<string, SheetHeaderControlPosition>([
+        ...settings.header.map((s) => [s, 'header'] as const),
+        ...settings.menu.map((s) => [s, 'menu'] as const),
+      ]);
     }
 
     /* -------------------------------------------- */
@@ -787,8 +803,10 @@ export function TidyExtensibleDocumentSheetMixin<
       return controls.filter((c: CustomHeaderControlsEntry) => {
         try {
           return (
-            (typeof c.visible !== 'function' || c.visible.call(this)) &&
-            coalesce(c.position, 'menu') === position
+            ((typeof c.visible !== 'function' || c.visible.call(this)) &&
+              this._headerControlSettings.get(c.label) === position) ||
+            (!this._headerControlSettings.has(c.label) &&
+              coalesce(c.position, 'menu') === position)
           );
         } catch (e) {
           error('Failed to get custom control', false, {
