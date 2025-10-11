@@ -1823,7 +1823,8 @@
           margin-right: 0;
           max-height: 1rem;
 
-          h4 {
+          h4,
+          .h4 {
             transition: color var(--t5e-transition-default);
             color: var(--t5e-color-text-lighter);
 

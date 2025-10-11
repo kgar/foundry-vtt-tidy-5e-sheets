@@ -143,7 +143,7 @@
           onclick={(ev) => {
             const input = ev.currentTarget.previousElementSibling?.querySelector('input');
             if (input) {
-              AttributePins.setAlias(ctx.document, input.value);
+              SheetPins.setAlias(ctx.document, input.value);
             }
             isEditing = false;
             return false;

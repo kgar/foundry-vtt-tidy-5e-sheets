@@ -38,7 +38,7 @@
   class:disabled
   title={rechargeLabel}
   onclick={(ev) => !disabled && onRechargeClicked(ev)}
-  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
+  tabindex=0
 >
   <i class="fas fa-dice-six"></i>
   {recovery?.formula}{#if recovery?.value !== 6}+{/if}

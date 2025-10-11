@@ -9,6 +9,7 @@
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
   import { coalesce } from 'src/utils/formatting';
+  import SpellPip from 'src/components/pips/SpellPip.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -78,18 +79,34 @@
 
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
+  let spellSlotTrackerMode = $derived((context.spellSlotTrackerMode) === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS ? 'spell-slots-pips' : 'spell-slots');
+  let spellcastingSection = $derived(ctx.document.parent.system.spells['spell' + ctx.document.system.level]);
 
   let localize = FoundryAdapter.localize;
 
   function getType() {
     console.log(ctx.resource);
     console.log(ctx.document);
+    
+    // Check for limited uses with recharge first (applies to any item type including spells)
+    if (ctx.resource === 'limited-uses' && ctx.document.isOnCooldown) {
+      return 'limited-uses-recharging';
+    }
+    if (ctx.resource === 'limited-uses' && ctx.document.hasRecharge) {
+      return 'limited-uses-recharged';
+    }
+    
+    // Then handle spell-specific slot tracking
     if (isSpell) {
       let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
       console.log(spellMethod);
       console.log(ctx.document.parent.system.spells.pact)
 
       if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE || spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+        // If innate/at-will has limited uses, show them
+        if (ctx.document.hasLimitedUses === true) {
+          return 'limited-uses';
+        }
         return 'none';
       }
       if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
@@ -97,12 +114,8 @@
       }
       return 'spell-slots';
     }
-    if (ctx.resource === 'limited-uses' && ctx.document.isOnCooldown) {
-        return 'limited-uses-recharging';
-    }
-    if (ctx.resource === 'limited-uses' && ctx.document.hasRecharge) {
-      return 'limited-uses-recharged';
-    }
+    
+    // Handle other item types
     if (ctx.resource === 'quantity') {
       return 'quantity';
     }
@@ -112,8 +125,42 @@
     return 'none';
   }
   let pinType = $derived(getType());
+  console.log(pinType);
+  console.log(spellSlotTrackerMode);
+  console.log(spellcastingSection);
 
+  function onPipClick(index: number, section: any, slotKey: string) {
+    if (!section) return;
+
+    let isEmpty = index >= (section?.value ?? 0);
+    let value = isEmpty ? index + 1 : index;
+
+    context.actor.update({
+      [`system.spells.${slotKey}.value`]: value,
+    });
+  }
 </script>
+
+{#snippet spellSlots(section: any, slotKey: string, cssClass: string)}
+  {#if spellSlotTrackerMode === 'spell-slots'}
+    <span class="inline-uses {cssClass}">
+      <span class="{cssClass}-value">{section?.value}</span>
+      <span class="divider">/</span>
+      <span class="{cssClass}-max">{section?.max}</span>
+    </span>
+  {:else if spellSlotTrackerMode === 'spell-slots-pips'}
+    <div class="pips spell-pips">
+      {#each { length: section?.max ?? 0 }, index}
+        <SpellPip
+          uses={section?.value ?? 0}
+          {index}
+          temp={index >= section?.max}
+          onclick={() => context.editable && onPipClick(index, section, slotKey)}
+        />
+      {/each}
+    </div>
+  {/if}
+{/snippet}
 
 <div
   role="button"
@@ -172,7 +219,7 @@
           onclick={(ev) => {
             const input = ev.currentTarget.previousElementSibling?.querySelector('input');
             if (input) {
-              AttributePins.setAlias(ctx.document, input.value);
+              SheetPins.setAlias(ctx.document, input.value);
             }
             isEditing = false;
             return false;
@@ -213,25 +260,24 @@
         <div class="pin-counter {ctx.resource}">
           {#if pinType === 'limited-uses-recharging'}
             <RechargeControl document={ctx.document} field={spentProp} {uses} />
-          {:else if pinType === 'limited-uses-recharged'}
-            <span class="charged-text">
-              {#if value > 1}
-                <span class="">{value}</span>
-              {/if}
+          {:else if pinType === 'limited-uses-recharged'}            
+            <span class="inline-uses color-text-default charged-text">
+              <TextInput
+                class={["uninput uses-value", { diminished: value < 1 }]}
+                document={usesDocument}
+                field={spentProp}
+                {value}
+                onSaveChange={(ev) => saveValueChange(ev)}
+                selectOnFocus={true}
+              />
+              <span class="divider color-text-gold-emphasis">/</span>
+              <span class="uses-max">{maxText}</span>
               <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
             </span>
           {:else if pinType === 'spell-slots'}
-            <span class="inline-uses spell-slots">
-              <span class="spell-slots-value">{ctx.document.parent.system.spells['spell' + ctx.document.system.level]?.value}</span>
-              <span class="divider">/</span>
-              <span class="spell-slots-max">{ctx.document.parent.system.spells['spell' + ctx.document.system.level]?.max}</span>
-            </span>
+            {@render spellSlots(spellcastingSection, `spell${ctx.document.system.level}`, 'spell-slots')}
           {:else if pinType === 'spell-slots-pact'}
-            <span class="inline-uses spell-slots-pact">
-              <span class="spell-slots-pact-value">{ctx.document.parent.system.spells['pact'].value}</span>
-              <span class="divider">/</span>
-              <span class="spell-slots-pact-max">{ctx.document.parent.system.spells['pact'].max}</span>
-            </span>
+            {@render spellSlots(ctx.document.parent.system.spells['pact'], 'pact', 'spell-slots-pact')}
           {:else if pinType === 'limited-uses'}
             <span class="inline-uses color-text-default">
               <TextInput

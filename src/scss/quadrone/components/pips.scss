@@ -1,27 +1,34 @@
 .pips.spell-pips {
   --pip-color: var(--t5e-color-palette-gold-89);
+  --pip-border-color: var(--t5e-color-palette-gold-89);
+  --pip-hover-color: var(--t5e-theme-color-lighter);
+  --pip-border-hover-color: var(--t5e-color-palette-gold-94);
+  --pip-active-color: var(--t5e-color-palette-gold-89);
+  --pip-active-hover-color: var(--t5e-color-text-oninverse-gold-light);
+  --pip-shadow-color: var(--t5e-theme-color-highlight);
+
   display: flex;
   gap: 0.125rem;
   margin-inline-start: 0.375rem;
   padding-block-start: var(--t5e-size-1);
 
   .pip {
-    border: 0.09375rem solid var(--pip-color);
+    border: 0.09375rem solid var(--pip-border-color);
     border-radius: 50%;
     width: 0.75rem;
     height: 0.75rem;
     transition: all var(--t5e-transition-default);
 
     &.active {
-      background: var(--pip-color);
+      background: var(--pip-active-color);
     }
 
     &:hover,
     &:active,
     &:focus-within {
-      border: 0.09375rem solid var(--t5e-color-palette-gold-94);
-      background-color: var(--t5e-theme-color-lighter);
-      filter: drop-shadow(0 0 0.1875rem oklch(from var(--t5e-theme-color-highlight) l c h));
+      border: 0.09375rem solid var(--pip-border-hover-color);
+      background-color: var(--pip-hover-color);
+      filter: drop-shadow(0 0 0.1875rem oklch(from var(--pip-shadow-color) l c h));
     }
 
     &.active {
@@ -29,7 +36,7 @@
       &:hover,
       &:active,
       &:focus-within {
-        background-color: var(--t5e-color-text-oninverse-gold-light);
+        background-color: var(--pip-active-hover-color);
       }
     }
   }
