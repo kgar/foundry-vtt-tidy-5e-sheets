@@ -3,15 +3,6 @@
 ### Short List
 
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
-- [ ] Resurrect Attribute Pins as Sheet Pins
-  - [x] Do data prep
-  - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
-  - [x] Context menu - Activities: Pin to Sheet, Unpin from Sheet
-  - [x] Character sheet: Add to Sheet tab
-  - [x] NPC sheet: Add to Statblock tab
-  - [x] Group/Encounter sheet: Add to Members tab
-  - [ ] Quad Actor Base: Handle Pin drop
-  - [ ] Quad Actor Base: Handle item/activity drop to Pins
 
 ### Group Sheet
 
@@ -377,3 +368,12 @@ Limited:
 - [x] PC Sidebar Tab Selection - create API surface area
 - [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
 - [x] PC Sidebar Tab Selection - Add to world tab configuration- [X] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies
+- [X] Resurrect Attribute Pins as Sheet Pins
+  - [x] Do data prep
+  - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
+  - [x] Context menu - Activities: Pin to Sheet, Unpin from Sheet
+  - [x] Character sheet: Add to Sheet tab
+  - [x] NPC sheet: Add to Statblock tab
+  - [x] Group/Encounter sheet: Add to Members tab
+  - [x] Quad Actor Base: Handle Pin drop to sort
+  - [x] Quad Actor Base: Handle item/activity drop to Pins to add

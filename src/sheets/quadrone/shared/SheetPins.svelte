@@ -14,11 +14,11 @@
 </script>
 
 {#if context.sheetPins.length}
-  <div class="sheet-pins">
+  <div class="sheet-pins" data-tidy-sheet-part="sheet-pins">
     {#each context.sheetPins as ctx (ctx.id)}
       <svelte:boundary
         onerror={(e) =>
-          error('An error occurred while rendering an attribute pin', false, e)}
+          error('An error occurred while rendering a sheet pin', false, e)}
       >
         {#if ctx.type === 'item'}
           <SheetPinItem {ctx} />

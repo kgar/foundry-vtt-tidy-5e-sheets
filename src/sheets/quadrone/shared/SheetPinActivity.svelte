@@ -2,16 +2,16 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { AttributePins } from 'src/features/attribute-pins/AttributePins';
+  import { SheetPins } from 'src/features/sheet-pins/SheetPins';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { AttributeActivityPinContext } from 'src/types/types';
+  import type { SheetPinActivityContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
   import { coalesce } from 'src/utils/formatting';
 
   interface Props {
-    ctx: AttributeActivityPinContext;
+    ctx: SheetPinActivityContext;
   }
 
   let { ctx }: Props = $props();
@@ -133,7 +133,7 @@
           selectOnFocus={true}
           placeholder={ctx.document.name}
           onSaveChange={(ev) => {
-            AttributePins.setAlias(ctx.document, ev.currentTarget.value);
+            SheetPins.setAlias(ctx.document, ev.currentTarget.value);
             return false;
           }}
         />
