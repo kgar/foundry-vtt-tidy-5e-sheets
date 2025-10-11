@@ -23,6 +23,21 @@ import { processInputChangeDelta } from 'src/utils/form';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
 import type { ClassValue } from 'svelte/elements';
+import type { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+
+const quadroneSheetRegex = /Tidy.*Quadrone/;
+export type DocumentSheetConstructor = new (...args: any[]) => InstanceType<
+  ReturnType<typeof TidyExtensibleDocumentSheetMixin>
+>;
+export type TidySheetClassMetadata = {
+  documentClass: any;
+  documentName: string;
+  documentSubtype: string;
+  isDefault: boolean;
+  sheetClass: DocumentSheetConstructor;
+  sheetClassIdentifier: string;
+  typeLabel: string;
+};
 
 export const FoundryAdapter = {
   deepClone(obj: any) {
@@ -1574,5 +1589,74 @@ export const FoundryAdapter = {
 
   hasVideoExtension(src: string): boolean {
     return foundry.helpers.media.VideoHelper.hasVideoExtension(src);
+  },
+
+  getAllTidySheetClassMetadata(): TidySheetClassMetadata[] {
+    const result: TidySheetClassMetadata[] = [];
+
+    const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
+
+    const setting = game.settings.get('core', 'sheetClasses');
+
+    for (const { name, documentName, hasTypeData } of Object.values<any>(
+      foundry.documents
+    )) {
+      // documentName -> e.g., "Actor", "Item", ...
+      if (!hasTypeData) {
+        continue;
+      }
+
+      if (name.startsWith('Base')) {
+        continue;
+      }
+
+      const subTypes = game.documentTypes[documentName].filter(
+        (t: string) => t !== CONST.BASE_DOCUMENT_TYPE
+      );
+
+      if (!subTypes.length) {
+        continue;
+      }
+
+      for (let subType of subTypes) {
+        const { defaultClasses } =
+          documentSheetConfig.getSheetClassesForSubType(documentName, subType);
+
+        const className = Object.keys(defaultClasses).find((c: string) =>
+          quadroneSheetRegex.test(c)
+        );
+
+        if (!className) {
+          continue;
+        }
+
+        const tidyClass =
+          // @ts-expect-error - todo: make this somehow work with TS
+          CONFIG[documentName]?.sheetClasses[subType]?.[className]?.cls;
+
+        const documentClass =
+          // @ts-expect-error - todo: make this somehow work with TS
+          CONFIG[documentName]?.documentClass;
+
+        const isDefault =
+          tidyClass ===
+          foundry.utils.getProperty(setting, `${documentName}.${subType}`);
+
+        result.push({
+          documentClass,
+          documentName,
+          documentSubtype: subType,
+          isDefault,
+          sheetClass: tidyClass,
+          sheetClassIdentifier: tidyClass,
+          typeLabel: FoundryAdapter.localize(
+            // @ts-ignore
+            CONFIG[documentName].typeLabels?.[subType]
+          ),
+        });
+      }
+    }
+
+    return result;
   },
 };

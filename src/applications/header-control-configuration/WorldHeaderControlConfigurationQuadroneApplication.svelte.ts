@@ -4,21 +4,17 @@ import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import WorldHeaderControlConfigurationQuadrone from './WorldHeaderControlConfigurationQuadrone.svelte';
 import { settings } from 'src/settings/settings.svelte';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import {
+  FoundryAdapter,
+  type DocumentSheetConstructor,
+} from 'src/foundry/foundry-adapter';
 import type { SheetHeaderControlPosition } from 'src/api';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
-import type { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
-
-const quadroneSheetRegex = /Tidy.*Quadrone/;
-
-type DocumentSheetConstructor = new (...args: any[]) => InstanceType<
-  ReturnType<typeof TidyExtensibleDocumentSheetMixin>
->;
 
 type HeaderControlConfigMember = {
   sheetClass: DocumentSheetConstructor;
   documentClass: any;
-  type: string;
+  documentSubtype: string;
 };
 
 export type ConfigHeaderControlSetting = {
@@ -82,7 +78,8 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
   }
 
   _getConfigs(): WorldHeaderControlConfigContext {
-    const members: HeaderControlConfigMember[] = this._getMembers();
+    const members: HeaderControlConfigMember[] =
+      FoundryAdapter.getAllTidySheetClassMetadata();
 
     const headerControlSettings = settings.value.headerControlConfiguration;
 
@@ -95,62 +92,6 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
     );
   }
 
-  _getMembers(): HeaderControlConfigMember[] {
-    const members: HeaderControlConfigMember[] = [];
-
-    const documentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
-
-    for (const { name, documentName, hasTypeData } of Object.values<any>(
-      foundry.documents
-    )) {
-      // documentName -> e.g., "Actor", "Item", ...
-      if (!hasTypeData) {
-        continue;
-      }
-
-      if (name.startsWith('Base')) {
-        continue;
-      }
-
-      const subTypes = game.documentTypes[documentName].filter(
-        (t: string) => t !== CONST.BASE_DOCUMENT_TYPE
-      );
-
-      if (!subTypes.length) {
-        continue;
-      }
-
-      for (let subType of subTypes) {
-        const { defaultClasses } =
-          documentSheetConfig.getSheetClassesForSubType(documentName, subType);
-
-        const className = Object.keys(defaultClasses).find((c: string) =>
-          quadroneSheetRegex.test(c)
-        );
-
-        if (!className) {
-          continue;
-        }
-
-        const tidyClass =
-          // @ts-expect-error - todo: make this somehow work with TS
-          CONFIG[documentName]?.sheetClasses[subType]?.[className]?.cls;
-
-        const documentClass =
-          // @ts-expect-error - todo: make this somehow work with TS
-          CONFIG[documentName]?.documentClass;
-
-        members.push({
-          sheetClass: tidyClass,
-          documentClass,
-          type: subType,
-        });
-      }
-    }
-
-    return members;
-  }
-
   _getConfig(
     member: HeaderControlConfigMember,
     headerControlSettings: HeaderControlConfiguration
@@ -158,7 +99,7 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
     const sheet = new member.sheetClass({
       document: new member.documentClass({
         name: 'hello 👋',
-        type: member.type,
+        type: member.documentSubtype,
       }),
     });
 
