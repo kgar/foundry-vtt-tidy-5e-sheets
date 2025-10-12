@@ -311,8 +311,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   }
 
   private _getSpecialTraits(): ActorTraitContext[] {
-    const characterFlags = CONFIG.DND5E.characterFlags;
     const dnd5eFlags = this.actor.flags.dnd5e;
+
+    if (!dnd5eFlags) {
+      return [];
+    }
+
+    const characterFlags = CONFIG.DND5E.characterFlags;
+
     return Object.entries(characterFlags)
       .filter(([name]) => name in dnd5eFlags && dnd5eFlags[name] !== false)
       .map(([key, val]) => {
