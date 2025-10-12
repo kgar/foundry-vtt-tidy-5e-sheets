@@ -1,23 +1,16 @@
 ## kgar To Do
 
-- [x] Finish Character header control tracer bullet
-- [x] Refactor the code to allow an array of objects to produce the appropriate context
-- [x] Propagate settings out to remaining sheets.
-  - [x] Character
-  - [x] NPC
-  - [x] Group
-  - [x] Encounter
-  - [x] Container
-  - [x] All Item Types
-- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
-- [ ] Test 
-  - [ ] Character
-  - [ ] NPC
-  - [ ] Group
-  - [ ] Encounter
-  - [ ] Container
-  - [ ] All Item Types
-- [ ] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
+- [ ] Evolve insertAdjacentHTML to a DOMParser or range/DocumentFragment approach; eliminate the arbitrary parent container; bestow the render scheme to all top-level elements in the rendered HTML before placing them; simulate adjacent HTML placement
+- [ ] Test all InsertPositions
+  - [ ] "afterbegin" - Just inside the element, before its first child.
+  - [ ] "afterend" - After the element. Only valid if the element is in the DOM tree and has a parent element.
+  - [ ] "beforebegin" - Before the element. Only valid if the element is in the DOM tree and has a parent element. 
+  - [ ] "beforeend" - Just inside the element, after its last child.
+- [ ] Update API to include array of inserted nodes to onRender
+- [ ] Update API to allow an array of Elements
+- [ ] Consider: can you store the injected nodes in an array and have them remove themselves and clear the array during render, eliminating the render scheme attribute requirement. (Some things could go wrong if someone is injecting rote content outside of this...)
+- [ ] Provide compatibility prop `useParentContainer`, optional, assumed false when absent
+- [ ] Ensure PR has Breaking Change notification on it.
 
 ### Short List
 
@@ -413,4 +406,21 @@ Tab Visibility Level refers to the minimum level of document ownership required 
   - [x] Group/Encounter sheet: Add to Members tab
   - [x] Quad Actor Base: Handle Pin drop to sort
   - [x] Quad Actor Base: Handle item/activity drop to Pins to add
-
+- [x] Finish Character header control tracer bullet
+- [x] Refactor the code to allow an array of objects to produce the appropriate context
+- [x] Propagate settings out to remaining sheets.
+  - [x] Character
+  - [x] NPC
+  - [x] Group
+  - [x] Encounter
+  - [x] Container
+  - [x] All Item Types
+- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
+- [x] Test 
+  - [x] Character
+  - [x] NPC
+  - [x] Group
+  - [x] Encounter
+  - [x] Container
+  - [x] All Item Types
+- [x] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
