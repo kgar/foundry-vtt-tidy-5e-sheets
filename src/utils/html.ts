@@ -1,4 +1,4 @@
-export function insertAdjacentHTML(
+export function injectHTMLAndReturnNodes(
   target: Element,
   position: InsertPosition,
   html: string,

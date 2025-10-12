@@ -8,7 +8,7 @@ import type { ApplicationRenderOptions } from 'src/types/application.types';
 import type { CustomContent, Tab } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
-import { insertAdjacentHTML } from 'src/utils/html';
+import { injectHTMLAndReturnNodes } from 'src/utils/html';
 
 export type RenderedSheetPart = {
   position?: string;
@@ -162,7 +162,7 @@ export class CustomContentRendererV2 {
         } else {
           for (let el of anchorElements) {
             insertedNodes.push(
-              ...insertAdjacentHTML(
+              ...injectHTMLAndReturnNodes(
                 el,
                 part.position as InsertPosition,
                 part.content,

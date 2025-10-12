@@ -1,13 +1,12 @@
 ## kgar To Do
 
-- [ ] Evolve insertAdjacentHTML to a DOMParser or range/DocumentFragment approach; eliminate the arbitrary parent container; bestow the render scheme to all top-level elements in the rendered HTML before placing them; simulate adjacent HTML placement
-- [ ] Test all InsertPositions
-  - [ ] "afterbegin" - Just inside the element, before its first child.
-  - [ ] "afterend" - After the element. Only valid if the element is in the DOM tree and has a parent element.
-  - [ ] "beforebegin" - Before the element. Only valid if the element is in the DOM tree and has a parent element. 
-  - [ ] "beforeend" - Just inside the element, after its last child.
-- [ ] Update API to include array of inserted nodes to onRender
-- [ ] Update API to allow an array of Elements
+- [x] Evolve insertAdjacentHTML to a DOMParser or range/DocumentFragment approach; eliminate the arbitrary parent container; bestow the render scheme to all top-level elements in the rendered HTML before placing them; simulate adjacent HTML placement
+- [x] Test all InsertPositions
+  - [x] "afterbegin" - Just inside the element, before its first child.
+  - [x] "afterend" - After the element. Only valid if the element is in the DOM tree and has a parent element.
+  - [x] "beforebegin" - Before the element. Only valid if the element is in the DOM tree and has a parent element. 
+  - [x] "beforeend" - Just inside the element, after its last child.
+- [x] Update API to include array of inserted nodes to onRender
 - [ ] Consider: can you store the injected nodes in an array and have them remove themselves and clear the array during render, eliminating the render scheme attribute requirement. (Some things could go wrong if someone is injecting rote content outside of this...)
 - [ ] Provide compatibility prop `useParentContainer`, optional, assumed false when absent
 - [ ] Ensure PR has Breaking Change notification on it.
@@ -144,6 +143,8 @@
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
+- [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
+
 
 ## hightouch To Do
 
