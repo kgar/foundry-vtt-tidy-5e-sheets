@@ -1,6 +1,5 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import CapacityBar from 'src/sheets/quadrone/container/parts/CapacityBar.svelte';
   import InventoryTables from 'src/sheets/quadrone/shared/InventoryTables.svelte';
@@ -16,7 +15,6 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ActionBar from '../../shared/ActionBar.svelte';
-  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -55,8 +53,6 @@
 </script>
 
 <ActionBar bind:searchCriteria sections={configuredContents} {tabId} />
-
-<SheetPins />
 
 <!-- Tables -->
 <InventoryTables
