@@ -1239,9 +1239,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // Sheet Pins
       const doc = await fromUuid(data.uuid);
-      let relativeUuid = SheetPins.getRelativeUUID(doc);
 
-      if (event.target.closest('[data-tidy-sheet-part="sheet-pins"]')) {
+      if (
+        doc.actor === this.actor &&
+        event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
+      ) {
+        let relativeUuid = SheetPins.getRelativeUUID(doc);
         return await this._onDropPin(event, { id: relativeUuid, doc });
       }
 
