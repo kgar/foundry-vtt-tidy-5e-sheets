@@ -5,8 +5,6 @@ import type {
 } from 'src/api/api.types';
 import { CONSTANTS } from 'src/constants';
 import type { ApplicationRenderOptions } from 'src/types/application.types';
-import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
-import type { RegisteredContent } from 'src/runtime/types';
 import type { CustomContent, Tab } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
@@ -55,31 +53,6 @@ export class CustomContentRendererV2 {
     }
 
     return parts;
-  }
-
-  async #prepareContentForRendering(
-    context: unknown,
-    registeredContent: RegisteredContent<any>[],
-    options: ApplicationRenderOptions
-  ) {
-    let customContents: CustomContent[] = [];
-    try {
-      customContents = await CustomContentManager.prepareContentForRender(
-        context,
-        registeredContent
-      );
-    } catch (e) {
-      error(
-        'An error occurred while preparing custom content for render',
-        false,
-        {
-          error: e,
-          context,
-          options,
-        }
-      );
-    }
-    return customContents;
   }
 
   async renderTabContents(
@@ -216,13 +189,5 @@ export class CustomContentRendererV2 {
         );
       }
     }
-  }
-
-  #wrapCustomHtmlForRendering(html: string, renderScheme: RenderScheme) {
-    const renderingAttribute =
-      renderScheme === 'handlebars'
-        ? ` ${CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE}`
-        : '';
-    return `<div style="display: contents;"${renderingAttribute}>${html}</div>`;
   }
 }
