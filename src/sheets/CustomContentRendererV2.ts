@@ -140,7 +140,7 @@ export class CustomContentRendererV2 {
 
       const canInsertHtml = !isNil(part.position) && !isNil(part.selector);
 
-      const insertedNodes: Node[] = [];
+      const injectedNodes: Node[] = [];
 
       if (canInsertHtml) {
         const anchorElements = Array.from<HTMLElement>(
@@ -148,11 +148,13 @@ export class CustomContentRendererV2 {
         );
 
         if (part.tabSelector && part.renderScheme === 'handlebars') {
+          // Handlebars tab content
           const tabContentsElement = sheet.element.querySelector(
             part.tabSelector
           );
           tabContentsElement.innerHTML = part.content;
         } else if (part.tabSelector) {
+          // Forced tab content
           for (let el of anchorElements) {
             el.insertAdjacentHTML(
               part.position as InsertPosition,
@@ -160,15 +162,16 @@ export class CustomContentRendererV2 {
             );
           }
         } else {
+          // Content Injection
           for (let el of anchorElements) {
-            insertedNodes.push(
-              ...injectHTMLAndReturnNodes(
-                el,
-                part.position as InsertPosition,
-                part.content,
-                part.renderScheme
-              )
+            const injectedNodes = injectHTMLAndReturnNodes(
+              el,
+              part.position as InsertPosition,
+              part.content,
+              part.renderScheme
             );
+
+            injectedNodes.push(...injectedNodes);
           }
         }
       }
@@ -179,7 +182,7 @@ export class CustomContentRendererV2 {
           data: context,
           element: sheet.element,
           isFullRender: !!options.isFirstRender,
-          nodes: insertedNodes ?? [],
+          nodes: injectedNodes ?? [],
         });
       } catch (e) {
         error(

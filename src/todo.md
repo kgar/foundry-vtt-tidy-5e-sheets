@@ -1,15 +1,75 @@
 ## kgar To Do
 
-- [x] Evolve insertAdjacentHTML to a DOMParser or range/DocumentFragment approach; eliminate the arbitrary parent container; bestow the render scheme to all top-level elements in the rendered HTML before placing them; simulate adjacent HTML placement
-- [x] Test all InsertPositions
-  - [x] "afterbegin" - Just inside the element, before its first child.
-  - [x] "afterend" - After the element. Only valid if the element is in the DOM tree and has a parent element.
-  - [x] "beforebegin" - Before the element. Only valid if the element is in the DOM tree and has a parent element. 
-  - [x] "beforeend" - Just inside the element, after its last child.
-- [x] Update API to include array of inserted nodes to onRender
-- [ ] Consider: can you store the injected nodes in an array and have them remove themselves and clear the array during render, eliminating the render scheme attribute requirement. (Some things could go wrong if someone is injecting rote content outside of this...)
-- [ ] Provide compatibility prop `useParentContainer`, optional, assumed false when absent
-- [ ] Ensure PR has Breaking Change notification on it.
+- [ ] Support Custom Actor Trait HTML content
+- [ ] Support Custom Actor Trait pills
+
+### Custom Actor Trait Notes
+
+```ts
+type RegisteredCustomActorTrait = {
+  title: string;
+  alwaysShow?: boolean;
+  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
+  openConfigurationTooltip?: string;
+  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
+  iconClass?: string;
+  /** 
+   * Callback for providing pills to include with the custom trait section.
+   * Parameters: 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  pills?: (app, document, context) => CustomTraitPill[];
+  /** 
+   * Callback for providing custom HTML content, to render below any pills. 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  content?: (app, document, context) => string;
+};
+
+type CustomTraitPill = {
+  /** An HTML ID to put on the pill. */
+  id?: string;
+  /** 
+   * An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. 
+   * Parameters: 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  onClick?: (app, document, context) => void;
+  /** Icons associated with the trait. */
+  icons?: { icon: string; label: string }[];
+  /** 
+    Custom HTML content, to appear to the right of any specified icons and before any other content.
+    This content is specifically rendered as HTML, unlike the more specific building blocks.
+   */
+  content?: string;
+
+  /* -------------------------------------------- */
+  /*  Curated pill content                        */
+  /* -------------------------------------------- */
+  /* The below content is assembled with Tidy-specific markup and classes to form common pills. */
+
+  /** Text that describes the trait. */
+  label: string;
+  /** The number sign (+ or -) for a numeric trait. */
+  sign?: string;
+  /** A value associated with the trait. */
+  value?: TValue;
+  /** The localized units abbreviation. */
+  units?: string;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+  /** Any classes to apply to the resulting trait UI element. */
+  cssClass?: ClassValue;
+  /** Any information that should appear in parentheses after the main trait context info. */
+  parenthetical?: string;
+}
+```
 
 ### Short List
 
@@ -425,3 +485,13 @@ Tab Visibility Level refers to the minimum level of document ownership required 
   - [x] Container
   - [x] All Item Types
 - [x] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
+- [x] Evolve insertAdjacentHTML to a DOMParser or range/DocumentFragment approach; eliminate the arbitrary parent container; bestow the render scheme to all top-level elements in the rendered HTML before placing them; simulate adjacent HTML placement
+- [x] Test all InsertPositions
+  - [x] "afterbegin" - Just inside the element, before its first child.
+  - [x] "afterend" - After the element. Only valid if the element is in the DOM tree and has a parent element.
+  - [x] "beforebegin" - Before the element. Only valid if the element is in the DOM tree and has a parent element. 
+  - [x] "beforeend" - Just inside the element, after its last child.
+- [x] Update API to include array of inserted nodes to onRender
+- [x] ~~Consider: can you store the injected nodes in an array and have them remove themselves and clear the array during render, eliminating the render scheme attribute requirement. (Some things could go wrong if someone is injecting rote content outside of this...)~~ It seems like a nice thought, but I'd need to support the render scheme attribute regardless, so it really wouldn't do me that much good while also adding more maintenance burden.
+- [x] ~~Provide compatibility prop `useParentContainer`, optional, assumed false when absent~~ I don't really see value in doing this.
+- [x] Ensure PR has Breaking Change notification on it.

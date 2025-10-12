@@ -1481,8 +1481,16 @@ export class Tidy5eSheetsApi {
    *   actorNameElement?.insertAdjacentHTML('afterend', iconHtml);
    * });
    * ```
+   *
+   * @deprecated
+   * Tidy is no longer going to use `div[style="display: contents"]` wrappers around your HTML.
+   * If you wish to have your content remove and re-render on each render cycle, put
+   * `data-tidy-render-scheme="handlebars"` on the top-level elements of your HTML to inject.
    */
   useHandlebarsRendering(html: string): string {
+    warn(
+      'api.useHandlebarsRendering is deprecated and will be removed in Tidy V13. For handlebars rendering, use `data-tidy-render-scheme="handlebars" on top-level elements when injecting outside of the content registration system.`'
+    );
     return `<div style="display: contents;" ${CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE}>${html}</div>`;
   }
 
