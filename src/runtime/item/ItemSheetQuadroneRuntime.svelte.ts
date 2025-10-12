@@ -98,7 +98,8 @@ class ItemSheetQuadroneRuntimeImpl {
   async getTabs(
     context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
   ) {
-    let tabIds = this._getVisibleTabIds(context);
+    let tabsForType = this._getVisibleTabs(context);
+    let tabIds = tabsForType.map((t) => t.id);
 
     const selectedTabs =
       TidyFlags.tabConfiguration.get(context.item)?.selected ?? [];
@@ -124,8 +125,6 @@ class ItemSheetQuadroneRuntimeImpl {
         .sort((a, b) => defaultTabs.indexOf(a) - defaultTabs.indexOf(b));
     }
 
-    let tabsForType = this._tabs.filter((t) => tabIds.includes(t.id));
-
     let tabsToPrepare = tabIds
       .map((tabId) => tabsForType.find((tab) => tab.id === tabId))
       .filter((t) => !!t);
@@ -135,15 +134,15 @@ class ItemSheetQuadroneRuntimeImpl {
     return tabs.filter((t) => !t.condition || t.condition(context.document));
   }
 
-  private _getVisibleTabIds(
+  private _getVisibleTabs(
     context: ItemSheetQuadroneContext | ContainerSheetQuadroneContext
   ) {
-    const tabIds = Iterator.from(this._tabs)
-      .filter((x) => !x.types || x.types.has(context.document.type))
-      .map((t) => t.id);
+    const tabs = Iterator.from(this._tabs).filter(
+      (x) => !x.types || x.types.has(context.document.type)
+    );
 
     if (FoundryAdapter.userIsGm()) {
-      return [...tabIds];
+      return [...tabs];
     }
 
     const worldTabConfig =
@@ -157,10 +156,10 @@ class ItemSheetQuadroneRuntimeImpl {
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
     return [
-      ...tabIds.filter((tabId) => {
+      ...tabs.filter((tab) => {
         const minOwnershipLevel = Math.max(
-          worldTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-          sheetTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
+          worldTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
+          sheetTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
         );
         return documentOwnershipLevel >= minOwnershipLevel;
       }),
