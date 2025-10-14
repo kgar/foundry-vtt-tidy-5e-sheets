@@ -44,6 +44,10 @@ export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
 };
 
+export type TidyExtensibleDocumentSheetMixinInstance = InstanceType<
+  ReturnType<typeof TidyExtensibleDocumentSheetMixin>
+>;
+
 /**
  * A mixin which fills in the extensibility and common functionality
  * for Tidy actor and item sheets.
@@ -366,13 +370,13 @@ export function TidyExtensibleDocumentSheetMixin<
       );
 
       // Remove header bar controls
-      removeTidyHeaderButtons(this.window.header);
+      removeTidyHeaderButtons(this.element);
 
       // Add header bar controls
       this._getVisibleHeaderControlsForPosition('header').forEach((x) =>
         insertHeaderButton(
           this,
-          this.window.header,
+          this.element,
           createHeaderButton(x.label, x.action ?? '', x.icon)
         )
       );
