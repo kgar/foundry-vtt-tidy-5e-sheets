@@ -364,7 +364,12 @@ export type SheetPinActivityContext = {
   document: Activity5e;
 } & SheetPinFlag & { type: 'activity' };
 
-export type SheetPinContext = SheetPinItemContext | SheetPinActivityContext;
+export type SheetPinContext = (
+  | SheetPinItemContext
+  | SheetPinActivityContext
+) & {
+  tabIds: Set<string>;
+};
 
 export type CharacterFacilitiesContext = {
   basic: {

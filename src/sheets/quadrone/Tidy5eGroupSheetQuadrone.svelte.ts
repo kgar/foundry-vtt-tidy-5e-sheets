@@ -38,6 +38,8 @@ import { settings } from 'src/settings/settings.svelte';
 import { mapGetOrInsert } from 'src/utils/map';
 import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import type { Item5e } from 'src/types/item.types';
+import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -345,6 +347,16 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
 
       groupTool.identifiers.add(actor.uuid);
     });
+  }
+
+  protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
+    const tabIds: string[] = [CONSTANTS.TAB_MEMBERS];
+
+    if (Inventory.isItemInventoryType(sheetPin)) {
+      tabIds.push(CONSTANTS.TAB_ACTOR_INVENTORY);
+    }
+
+    return tabIds;
   }
 
   /* -------------------------------------------- */

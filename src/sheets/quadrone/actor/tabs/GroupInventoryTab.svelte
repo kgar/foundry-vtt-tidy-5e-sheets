@@ -18,6 +18,7 @@
   import ActorEncumbranceBar from '../parts/ActorEncumbranceBar.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;
@@ -154,6 +155,8 @@
 <div class="group-tab-content flexcol">
   <div class="inventory-content">
     <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+
+    <SheetPins />
 
     {#if context.showContainerPanel && !!context.containerPanelItems.length}
       <ContainerPanel

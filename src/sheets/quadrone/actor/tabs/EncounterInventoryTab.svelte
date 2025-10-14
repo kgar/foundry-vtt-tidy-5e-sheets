@@ -15,6 +15,7 @@
   import ContainerPanel from '../../shared/ContainerPanel.svelte';
   import InventoryTables from '../../shared/InventoryTables.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -51,6 +52,8 @@
 <div class="group-tab-content flexcol">
   <div class="inventory-content">
     <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+
+    <SheetPins />
 
     {#if context.showContainerPanel && !!context.containerPanelItems.length}
       <ContainerPanel

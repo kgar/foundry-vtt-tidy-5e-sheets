@@ -881,6 +881,24 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     );
   }
 
+  protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
+    const tabIds: string[] = [CONSTANTS.TAB_ACTOR_ACTIONS];
+    
+    const originTab = Inventory.isItemInventoryType(sheetPin)
+      ? CONSTANTS.TAB_ACTOR_INVENTORY
+      : sheetPin.type === CONSTANTS.ITEM_TYPE_SPELL
+      ? CONSTANTS.TAB_ACTOR_SPELLBOOK
+      : sheetPin.type === CONSTANTS.ITEM_TYPE_FEAT
+      ? CONSTANTS.TAB_CHARACTER_FEATURES
+      : null;
+
+    if (originTab) {
+      tabIds.push(originTab);
+    }
+
+    return tabIds;
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */

@@ -18,6 +18,7 @@
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context =
     $derived(
@@ -113,6 +114,8 @@
 </script>
 
 <ActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
+
+<SheetPins />
 
 <SpellTables
   sections={spellbook}

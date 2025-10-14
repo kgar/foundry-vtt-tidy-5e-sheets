@@ -1,58 +1,30 @@
 ## kgar To Do
 
-- [x] Finish Character header control tracer bullet
-- [x] Refactor the code to allow an array of objects to produce the appropriate context
-- [x] Propagate settings out to remaining sheets.
-  - [x] Character
-  - [x] NPC
-  - [x] Group
-  - [x] Encounter
-  - [x] Container
-  - [x] All Item Types
-- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
-- [ ] Test 
-  - [ ] Character
-  - [ ] NPC
-  - [ ] Group
-  - [ ] Encounter
-  - [ ] Container
-  - [ ] All Item Types
-- [ ] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
-
 ### Short List
 
+- [ ] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
+- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
+- [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
+  - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
+- [ ] Tools card header - has cursor hover style without interactivity
+- [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
+- [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
+- [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
 
 ### Group Sheet
 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] Group Sheet - Plan and task Bastions tab
+  - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 
 ### The Short List
 
-- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
-- [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
-  - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
-- [ ] Prep Bastions context
-- [ ] Tools card header - has cursor hover style without interactivity
-- [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
-- [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
-- [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
 - [ ] Extract and share: TidyTableRowUseButton
-- [x] NPC test Observer user
-- [ ] NPC test Limited user
 - [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
 - [ ] Image blurriness again: https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082
-- [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
-  - [x] Registration
-  - [x] Tabs, Runtime
-  - [ ] Stub layout with tab strip
-- [ ] Establish Encounter Quadrone scaffolding so the sheet can be opened. While doing this, extract the common classes for Group and Encounter that work best for them collectively.
-  - [ ] Registration
-  - [ ] Tabs
-  - [ ] Stub layout with tab strip
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
@@ -308,6 +280,29 @@ Tab Visibility Level refers to the minimum level of document ownership required 
   - [x] Tab Visibility
   - [x] ~~Tab Selection~~ Nah. This is something players and GMs should work out. GMs need to be able to order the hidden tabs where they need them, and that may mean players also need to be aware of their existence.
 
+### More Sheet Pins
+
+- [x] More Sheet Pins
+  - [x] Add `tabIds: Set<string>` to the individual sheet pin context item type
+  - [x] Add `protected abstract _getSheetPinTabIds(sheetPin: Item5e | Activity5e): string[]` to the actor base class
+  - [x] Have each sheet implement it
+    - [x] Character
+      - [x] Inventory, Spellbook, Features | Sheet
+    - [x] NPC
+      - [x] Inventory, Spellbook | Statblock
+    - [x] Group
+      - [x] Inventory | Members
+    - [x] Encounter
+      - [X] Inventory | Members
+  - [x] Plug in sheet pins to
+    - [x] Inventory (all of em)
+    - [x] Spellbook
+    - [x] Character features
+    - [x] Sheet
+    - [x] Statblock
+    - [x] Group Members
+    - [x] Encounter Members
+
 ### To Do Graveyard
 
 - [x] Stub group members context
@@ -413,4 +408,31 @@ Tab Visibility Level refers to the minimum level of document ownership required 
   - [x] Group/Encounter sheet: Add to Members tab
   - [x] Quad Actor Base: Handle Pin drop to sort
   - [x] Quad Actor Base: Handle item/activity drop to Pins to add
-
+- [x] Finish Character header control tracer bullet
+- [x] Refactor the code to allow an array of objects to produce the appropriate context
+- [x] Propagate settings out to remaining sheets.
+  - [x] Character
+  - [x] NPC
+  - [x] Group
+  - [x] Encounter
+  - [x] Container
+  - [x] All Item Types
+- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
+- [x] Test 
+  - [x] Character
+  - [x] NPC
+  - [x] Group
+  - [x] Encounter
+  - [x] Container
+  - [x] All Item Types
+- [x] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
+- [x] NPC test Observer user
+- [x] NPC test Limited user
+- [x] Establish Group Quadrone scaffolding so the sheet can be opened.
+  - [x] Registration
+  - [x] Tabs, Runtime
+  - [x] Stub layout with tab strip
+- [x] Establish Encounter Quadrone scaffolding so the sheet can be opened. While doing this, extract the common classes for Group and Encounter that work best for them collectively.
+  - [x] Registration
+  - [x] Tabs
+  - [x] Stub layout with tab strip

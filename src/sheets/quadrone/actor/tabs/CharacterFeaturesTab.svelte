@@ -12,7 +12,8 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-    import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -48,6 +49,8 @@
 </script>
 
 <ActionBar bind:searchCriteria sections={features} {tabId} />
+
+<SheetPins />
 
 <FeatureTables
   sections={features}

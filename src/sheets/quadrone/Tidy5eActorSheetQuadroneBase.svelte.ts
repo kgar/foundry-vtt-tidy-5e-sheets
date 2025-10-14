@@ -896,6 +896,8 @@ export function Tidy5eActorSheetQuadroneBase<
       };
     }
 
+    protected abstract _getSheetPinTabIdsForItem(sheetPin: Item5e): string[];
+
     async _getSheetPins(): Promise<SheetPinContext[]> {
       let flagPins = TidyFlags.sheetPins
         .get(this.actor)
@@ -912,11 +914,13 @@ export function Tidy5eActorSheetQuadroneBase<
               ...pin,
               linkedUses: Activities.getLinkedUses(document),
               document,
+              tabIds: new Set(this._getSheetPinTabIdsForItem(document)),
             });
           } else if (pin.type === 'activity') {
             pins.push({
               ...pin,
               document,
+              tabIds: new Set(this._getSheetPinTabIdsForItem(document.item)),
             });
           }
         } else {

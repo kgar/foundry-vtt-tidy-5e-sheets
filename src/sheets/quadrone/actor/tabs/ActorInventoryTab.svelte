@@ -20,6 +20,7 @@
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
   import ContainerPanel from 'src/sheets/quadrone/shared/ContainerPanel.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context =
     $derived(
@@ -60,6 +61,8 @@
 
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+
+  <SheetPins />
 
   <CharacterEncumbranceRow />
 
