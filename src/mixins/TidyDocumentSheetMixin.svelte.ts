@@ -44,6 +44,10 @@ export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
 };
 
+export type TidyExtensibleDocumentSheetMixinInstance = InstanceType<
+  ReturnType<typeof TidyExtensibleDocumentSheetMixin>
+>;
+
 /**
  * A mixin which fills in the extensibility and common functionality
  * for Tidy actor and item sheets.
