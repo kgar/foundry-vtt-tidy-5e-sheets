@@ -5,11 +5,10 @@ import type {
 } from 'src/api/api.types';
 import { CONSTANTS } from 'src/constants';
 import type { ApplicationRenderOptions } from 'src/types/application.types';
-import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
-import type { RegisteredContent } from 'src/runtime/types';
 import type { CustomContent, Tab } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
+import { injectHTMLAndReturnNodes } from 'src/utils/html';
 
 export type RenderedSheetPart = {
   position?: string;
@@ -56,31 +55,6 @@ export class CustomContentRendererV2 {
     return parts;
   }
 
-  async #prepareContentForRendering(
-    context: unknown,
-    registeredContent: RegisteredContent<any>[],
-    options: ApplicationRenderOptions
-  ) {
-    let customContents: CustomContent[] = [];
-    try {
-      customContents = await CustomContentManager.prepareContentForRender(
-        context,
-        registeredContent
-      );
-    } catch (e) {
-      error(
-        'An error occurred while preparing custom content for render',
-        false,
-        {
-          error: e,
-          context,
-          options,
-        }
-      );
-    }
-    return customContents;
-  }
-
   async renderTabContents(
     tabs: Tab[],
     context: unknown,
@@ -118,6 +92,7 @@ export class CustomContentRendererV2 {
                 isFullRender: params.isFullRender,
                 tabContentsElement:
                   params.element.querySelector<HTMLElement>(selector)!,
+                nodes: [],
               }),
             tabSelector: selector,
           } satisfies RenderedSheetPart;
@@ -165,26 +140,38 @@ export class CustomContentRendererV2 {
 
       const canInsertHtml = !isNil(part.position) && !isNil(part.selector);
 
+      const injectedNodes: Node[] = [];
+
       if (canInsertHtml) {
         const anchorElements = Array.from<HTMLElement>(
           sheet.element.querySelectorAll(part.selector)
         );
 
         if (part.tabSelector && part.renderScheme === 'handlebars') {
+          // Handlebars tab content
           const tabContentsElement = sheet.element.querySelector(
             part.tabSelector
           );
           tabContentsElement.innerHTML = part.content;
-        } else {
-          const wrappedContent = part.tabSelector
-            ? part.content
-            : this.#wrapCustomHtmlForRendering(part.content, part.renderScheme);
-
+        } else if (part.tabSelector) {
+          // Forced tab content
           for (let el of anchorElements) {
             el.insertAdjacentHTML(
               part.position as InsertPosition,
-              wrappedContent
+              part.content
             );
+          }
+        } else {
+          // Content Injection
+          for (let el of anchorElements) {
+            const injectedNodes = injectHTMLAndReturnNodes(
+              el,
+              part.position as InsertPosition,
+              part.content,
+              part.renderScheme
+            );
+
+            injectedNodes.push(...injectedNodes);
           }
         }
       }
@@ -195,6 +182,7 @@ export class CustomContentRendererV2 {
           data: context,
           element: sheet.element,
           isFullRender: !!options.isFirstRender,
+          nodes: injectedNodes ?? [],
         });
       } catch (e) {
         error(
@@ -204,13 +192,5 @@ export class CustomContentRendererV2 {
         );
       }
     }
-  }
-
-  #wrapCustomHtmlForRendering(html: string, renderScheme: RenderScheme) {
-    const renderingAttribute =
-      renderScheme === 'handlebars'
-        ? ` ${CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE}`
-        : '';
-    return `<div style="display: contents;"${renderingAttribute}>${html}</div>`;
   }
 }

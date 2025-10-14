@@ -10,11 +10,27 @@ import type { Actor5e } from 'src/types/types';
  * Data provided after custom content has been prepared for rendering.
  */
 /** @category Content */
-export interface OnContentReadyParams extends OnRenderParams {
+export interface OnContentReadyParams {
   /**
    * An HTML string that is ready to be rendered to the sheet.
    */
   content: string;
+  /**
+   * The sheet application instance.
+   */
+  app: any;
+  /**
+   * The document sheet application element. This is the entire application window, including the header.
+   */
+  element: HTMLElement;
+  /**
+   * The item sheet context which is typically passed to the handlebars template
+   */
+  data: any;
+  /**
+   * Denotes whether this is a full/forced render or a change detection cycle. For non-svelte content, this field allows content to react to partial re-rendering.
+   */
+  isFullRender: boolean;
 }
 
 /**
@@ -38,6 +54,10 @@ export interface OnRenderParams {
    * Denotes whether this is a full/forced render or a change detection cycle. For non-svelte content, this field allows content to react to partial re-rendering.
    */
   isFullRender: boolean;
+  /**
+   * All elements that were inserted during rendering for this registered content.
+   */
+  nodes: Node[];
 }
 
 /**
@@ -485,4 +505,3 @@ export type TabIdDocumentItemTypesParams = {
 export type TabIdDocumentItemTypesOptions = {
   mode: 'merge' | 'override';
 };
-

@@ -24,6 +24,7 @@
       iconClass: string;
     };
     configButtonLocation: 'label' | 'end';
+    contentHtml?: string;
   }
 
   let {
@@ -38,6 +39,7 @@
     isCustomTrait,
     aggregateIcons,
     configButtonLocation,
+    contentHtml,
   }: Props = $props();
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -91,4 +93,5 @@
       </div>
     {/if}
   </div>
+  {@html contentHtml}
 {/if}

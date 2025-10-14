@@ -49,9 +49,7 @@ const ApiConstants = {
    *       "afterbegin",
    *       // here's my content
    *       // pro tip: `data-tidy-render-scheme="handlebars"` causes this content to re-render on every Tidy render, full or partial
-   *       `<div style="display: contents;" data-tidy-render-scheme="handlebars">
-   *           <h2 type="button" style="width: 100%;"><i class="fa-solid fa-star"></i></h2>
-   *         </div>`
+   *       `<h2 type="button" style="width: 100%;" data-tidy-render-scheme="handlebars"><i class="fa-solid fa-star"></i></h2>`
    *     );
    * });
    * ```

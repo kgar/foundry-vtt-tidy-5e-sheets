@@ -17,11 +17,22 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#each context.customActorTraits as trait}
+{#each context.customActorTraits as trait, i}
+  {@const pills =
+    trait.pills?.({
+      app: context.sheet,
+      element: context.sheet.element,
+      data: context,
+    }) ?? []}
+  {@const contentHtml = trait.content?.({
+    app: context.sheet,
+    element: context.sheet.element,
+    data: context,
+  })}
   <ActorTraitConfigurableListEntry
     {configButtonLocation}
     label={localize(trait.title)}
-    entries={[]}
+    entries={pills}
     onconfig={trait.openConfiguration
       ? (ev) =>
           trait.openConfiguration?.({
@@ -35,5 +46,6 @@
     icon={trait.iconClass}
     isCustomTrait={true}
     alwaysShow={trait.alwaysShow}
+    {contentHtml}
   />
 {/each}

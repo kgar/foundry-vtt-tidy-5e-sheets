@@ -1,24 +1,5 @@
 ## kgar To Do
 
-- [x] Finish Character header control tracer bullet
-- [x] Refactor the code to allow an array of objects to produce the appropriate context
-- [x] Propagate settings out to remaining sheets.
-  - [x] Character
-  - [x] NPC
-  - [x] Group
-  - [x] Encounter
-  - [x] Container
-  - [x] All Item Types
-- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
-- [ ] Test 
-  - [ ] Character
-  - [ ] NPC
-  - [ ] Group
-  - [ ] Encounter
-  - [ ] Container
-  - [ ] All Item Types
-- [ ] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
-
 ### Short List
 
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
@@ -151,6 +132,8 @@
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
+- [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
+
 
 ## hightouch To Do
 
@@ -308,6 +291,75 @@ Tab Visibility Level refers to the minimum level of document ownership required 
   - [x] Tab Visibility
   - [x] ~~Tab Selection~~ Nah. This is something players and GMs should work out. GMs need to be able to order the hidden tabs where they need them, and that may mean players also need to be aware of their existence.
 
+### Feature Custom Actor Traits API expansion pack
+
+- [x] Support Custom Actor Trait HTML content
+- [x] Support Custom Actor Trait pills
+
+```ts
+type RegisteredCustomActorTrait = {
+  title: string;
+  alwaysShow?: boolean;
+  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
+  openConfigurationTooltip?: string;
+  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
+  iconClass?: string;
+  /** 
+   * Callback for providing pills to include with the custom trait section.
+   * Parameters: 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  pills?: (app, document, context) => CustomTraitPill[];
+  /** 
+   * Callback for providing custom HTML content, to render below any pills. 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  content?: (app, document, context) => string;
+};
+
+type CustomTrait = {
+  /** 
+   * An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. 
+   * Parameters: 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  onClick?: (app, document, context) => void;
+  /** 
+    Custom HTML content, to appear to the right of any specified icons and before any other content.
+    This content is specifically rendered as HTML, unlike the more specific building blocks.
+   */
+  content?: string;
+
+  /* -------------------------------------------- */
+  /*  Curated pill content                        */
+  /* -------------------------------------------- */
+  /* The below content is assembled with Tidy-specific markup and classes to form common pills. */
+
+  /** Icons associated with the trait. */
+  icons?: { icon: string; label: string }[];
+  /** Text that describes the trait. */
+  label: string;
+  /** The number sign (+ or -) for a numeric trait. */
+  sign?: string;
+  /** A value associated with the trait. */
+  value?: TValue;
+  /** The localized units abbreviation. */
+  units?: string;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+  /** Any classes to apply to the resulting trait UI element. */
+  cssClass?: ClassValue;
+  /** Any information that should appear in parentheses after the main trait context info. */
+  parenthetical?: string;
+}
+```
+
 ### To Do Graveyard
 
 - [x] Stub group members context
@@ -413,4 +465,31 @@ Tab Visibility Level refers to the minimum level of document ownership required 
   - [x] Group/Encounter sheet: Add to Members tab
   - [x] Quad Actor Base: Handle Pin drop to sort
   - [x] Quad Actor Base: Handle item/activity drop to Pins to add
-
+- [x] Finish Character header control tracer bullet
+- [x] Refactor the code to allow an array of objects to produce the appropriate context
+- [x] Propagate settings out to remaining sheets.
+  - [x] Character
+  - [x] NPC
+  - [x] Group
+  - [x] Encounter
+  - [x] Container
+  - [x] All Item Types
+- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
+- [x] Test 
+  - [x] Character
+  - [x] NPC
+  - [x] Group
+  - [x] Encounter
+  - [x] Container
+  - [x] All Item Types
+- [x] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
+- [x] Evolve insertAdjacentHTML to a DOMParser or range/DocumentFragment approach; eliminate the arbitrary parent container; bestow the render scheme to all top-level elements in the rendered HTML before placing them; simulate adjacent HTML placement
+- [x] Test all InsertPositions
+  - [x] "afterbegin" - Just inside the element, before its first child.
+  - [x] "afterend" - After the element. Only valid if the element is in the DOM tree and has a parent element.
+  - [x] "beforebegin" - Before the element. Only valid if the element is in the DOM tree and has a parent element. 
+  - [x] "beforeend" - Just inside the element, after its last child.
+- [x] Update API to include array of inserted nodes to onRender
+- [x] ~~Consider: can you store the injected nodes in an array and have them remove themselves and clear the array during render, eliminating the render scheme attribute requirement. (Some things could go wrong if someone is injecting rote content outside of this...)~~ It seems like a nice thought, but I'd need to support the render scheme attribute regardless, so it really wouldn't do me that much good while also adding more maintenance burden.
+- [x] ~~Provide compatibility prop `useParentContainer`, optional, assumed false when absent~~ I don't really see value in doing this.
+- [x] Ensure PR has Breaking Change notification on it.
