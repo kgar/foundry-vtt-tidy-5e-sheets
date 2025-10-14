@@ -923,5 +923,7 @@
     "TIDY5E.Difficulty": "Poziom trudności",
     "TIDY5E.Actor.Characteristics": "Charakterystyka",
     "TIDY5E.Show": "Pokaż",
-    "TIDY5E.Hide": "Ukryj"
+    "TIDY5E.Hide": "Ukryj",
+    "TIDY5E.LegendaryLairToolbar": "Pasek akcji legendarnych / leża",
+    "TIDY5E.SpellbookSections": "Sekcje Księgi czarów"
 }
