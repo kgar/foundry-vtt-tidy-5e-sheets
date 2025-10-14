@@ -1,74 +1,5 @@
 ## kgar To Do
 
-- [ ] Support Custom Actor Trait HTML content
-- [x] Support Custom Actor Trait pills
-
-### Custom Actor Trait Notes
-
-```ts
-type RegisteredCustomActorTrait = {
-  title: string;
-  alwaysShow?: boolean;
-  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
-  openConfigurationTooltip?: string;
-  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
-  iconClass?: string;
-  /** 
-   * Callback for providing pills to include with the custom trait section.
-   * Parameters: 
-   *   - app - the sheet instance.
-   *   - document - the relevant Foundry document.
-   *   - context - the Tidy prepared context data. Use as your own risk.
-   */
-  pills?: (app, document, context) => CustomTraitPill[];
-  /** 
-   * Callback for providing custom HTML content, to render below any pills. 
-   *   - app - the sheet instance.
-   *   - document - the relevant Foundry document.
-   *   - context - the Tidy prepared context data. Use as your own risk.
-   */
-  content?: (app, document, context) => string;
-};
-
-type CustomTrait = {
-  /** 
-   * An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. 
-   * Parameters: 
-   *   - app - the sheet instance.
-   *   - document - the relevant Foundry document.
-   *   - context - the Tidy prepared context data. Use as your own risk.
-   */
-  onClick?: (app, document, context) => void;
-  /** 
-    Custom HTML content, to appear to the right of any specified icons and before any other content.
-    This content is specifically rendered as HTML, unlike the more specific building blocks.
-   */
-  content?: string;
-
-  /* -------------------------------------------- */
-  /*  Curated pill content                        */
-  /* -------------------------------------------- */
-  /* The below content is assembled with Tidy-specific markup and classes to form common pills. */
-
-  /** Icons associated with the trait. */
-  icons?: { icon: string; label: string }[];
-  /** Text that describes the trait. */
-  label: string;
-  /** The number sign (+ or -) for a numeric trait. */
-  sign?: string;
-  /** A value associated with the trait. */
-  value?: TValue;
-  /** The localized units abbreviation. */
-  units?: string;
-  /** The units key for CONFIG.DND5E purposes. */
-  unitsKey?: string;
-  /** Any classes to apply to the resulting trait UI element. */
-  cssClass?: ClassValue;
-  /** Any information that should appear in parentheses after the main trait context info. */
-  parenthetical?: string;
-}
-```
-
 ### Short List
 
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
@@ -359,6 +290,75 @@ Tab Visibility Level refers to the minimum level of document ownership required 
 - [x] Just Hide ™️ tabs that are GM Only from non-GMs on the sheet tab configuration UI
   - [x] Tab Visibility
   - [x] ~~Tab Selection~~ Nah. This is something players and GMs should work out. GMs need to be able to order the hidden tabs where they need them, and that may mean players also need to be aware of their existence.
+
+### Feature Custom Actor Traits API expansion pack
+
+- [x] Support Custom Actor Trait HTML content
+- [x] Support Custom Actor Trait pills
+
+```ts
+type RegisteredCustomActorTrait = {
+  title: string;
+  alwaysShow?: boolean;
+  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
+  openConfigurationTooltip?: string;
+  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
+  iconClass?: string;
+  /** 
+   * Callback for providing pills to include with the custom trait section.
+   * Parameters: 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  pills?: (app, document, context) => CustomTraitPill[];
+  /** 
+   * Callback for providing custom HTML content, to render below any pills. 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  content?: (app, document, context) => string;
+};
+
+type CustomTrait = {
+  /** 
+   * An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. 
+   * Parameters: 
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  onClick?: (app, document, context) => void;
+  /** 
+    Custom HTML content, to appear to the right of any specified icons and before any other content.
+    This content is specifically rendered as HTML, unlike the more specific building blocks.
+   */
+  content?: string;
+
+  /* -------------------------------------------- */
+  /*  Curated pill content                        */
+  /* -------------------------------------------- */
+  /* The below content is assembled with Tidy-specific markup and classes to form common pills. */
+
+  /** Icons associated with the trait. */
+  icons?: { icon: string; label: string }[];
+  /** Text that describes the trait. */
+  label: string;
+  /** The number sign (+ or -) for a numeric trait. */
+  sign?: string;
+  /** A value associated with the trait. */
+  value?: TValue;
+  /** The localized units abbreviation. */
+  units?: string;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+  /** Any classes to apply to the resulting trait UI element. */
+  cssClass?: ClassValue;
+  /** Any information that should appear in parentheses after the main trait context info. */
+  parenthetical?: string;
+}
+```
 
 ### To Do Graveyard
 

@@ -24,6 +24,11 @@
       element: context.sheet.element,
       data: context,
     }) ?? []}
+  {@const contentHtml = trait.content?.({
+    app: context.sheet,
+    element: context.sheet.element,
+    data: context,
+  })}
   <ActorTraitConfigurableListEntry
     {configButtonLocation}
     label={localize(trait.title)}
@@ -41,5 +46,6 @@
     icon={trait.iconClass}
     isCustomTrait={true}
     alwaysShow={trait.alwaysShow}
+    {contentHtml}
   />
 {/each}
