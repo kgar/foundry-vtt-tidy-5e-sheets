@@ -203,7 +203,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       selected: selected,
       visibilityLevels: this._config.entry.visibilityLevels.reduce(
         (prev, curr) => {
-          prev[curr.id] = curr.visibilityLevel ;
+          prev[curr.id] = curr.visibilityLevel;
           return prev;
         },
         {} as Record<string, number | null>
@@ -231,7 +231,10 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     };
 
     config.selected = [];
-    config.visibilityLevels = {};
+
+    Object.keys(config.visibilityLevels).forEach((key) => {
+      config.visibilityLevels[key] = null;
+    });
 
     await this._setTabConfig(this.document, config);
 
