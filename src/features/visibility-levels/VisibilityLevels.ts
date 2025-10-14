@@ -44,14 +44,7 @@ export class VisibilityLevels {
       options.push(levels.limited);
     }
 
-    let observer = levels.observer;
-
-    if (documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
-    }
-
-    options.push(observer);
-
-    options.push(levels.owner);
+    options.push(levels.observer, levels.owner);
 
     if (FoundryAdapter.userIsGm()) {
       options.push(levels.gmOnly);
