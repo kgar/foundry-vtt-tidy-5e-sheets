@@ -10,12 +10,12 @@ export function createHeaderButton(
 
 export function insertHeaderButton(
   app: any,
-  header: HTMLElement,
+  sheetElement: HTMLElement,
   html: string
 ) {
   let anchor =
-    header.querySelector('[data-action="copyUuid"]') ??
-    header.querySelector('[data-action="configureSheet"]') ??
+    sheetElement.querySelector('.window-header [data-action="copyUuid"]') ??
+    sheetElement.querySelector('.window-header [data-action="configureSheet"]') ??
     app.window.close;
 
   if (anchor) {
@@ -23,8 +23,8 @@ export function insertHeaderButton(
   }
 }
 
-export function removeTidyHeaderButtons(header: HTMLElement) {
-  header
-    .querySelectorAll<HTMLElement>(`[${tidyHeaderAttribute}]`)
+export function removeTidyHeaderButtons(sheetElement: HTMLElement) {
+  sheetElement
+    .querySelectorAll<HTMLElement>(`.window-header [${tidyHeaderAttribute}]`)
     .forEach((el: HTMLElement) => el.remove());
 }
