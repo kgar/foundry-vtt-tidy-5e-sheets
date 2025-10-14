@@ -20,6 +20,10 @@ export type RenderResult<TContext> = {
   context: TContext;
 };
 
+export type SvelteApplicationMixinInstance = InstanceType<
+  ReturnType<typeof SvelteApplicationMixin>
+>;
+
 const HEADER_CONTROLS_DROPDOWN_SELECTOR = '.controls-dropdown';
 const HEADER_CONTROLS_DROPDOWN_EXPANDED_SELECTOR = '.expanded';
 const HEADER_CONTROLS_DROPDOWN_TOGGLE_SELECTOR =
