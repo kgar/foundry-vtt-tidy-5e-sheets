@@ -158,8 +158,8 @@ class ItemSheetQuadroneRuntimeImpl {
     return [
       ...tabs.filter((tab) => {
         const minOwnershipLevel = Math.max(
-          worldTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-          sheetTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
+          worldTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED,
+          sheetTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED
         );
         return documentOwnershipLevel >= minOwnershipLevel;
       }),
