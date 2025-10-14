@@ -12,6 +12,8 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
+import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+import { CONSTANTS } from 'src/constants';
 
 type GetTabConfigFn = (actor: any) => SheetTabConfiguration | null | undefined;
 
@@ -104,11 +106,15 @@ export class ActorSheetQuadroneRuntime<
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
+    const defaultVisibilityLevel = VisibilityLevels.getDefaultLevelValue(
+      CONSTANTS.DOCUMENT_NAME_ACTOR
+    );
+
     return [
       ...tabIds.filter((tabId) => {
         const minOwnershipLevel = Math.max(
-          worldTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-          sheetTabConfig[tabId] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
+          worldTabConfig[tabId] ?? defaultVisibilityLevel,
+          sheetTabConfig[tabId] ?? defaultVisibilityLevel
         );
         return documentOwnershipLevel >= minOwnershipLevel;
       }),

@@ -8,7 +8,7 @@ export type VisibilityLevelOption = {
 };
 
 export class VisibilityLevels {
-  static get levels() {
+  static getLevels() {
     return {
       limited: {
         key: 'limited',
@@ -34,22 +34,19 @@ export class VisibilityLevels {
   }
 
   static getOptions(documentName: string): VisibilityLevelOption[] {
-    const levels = VisibilityLevels.levels;
-    const defaultValue = null;
+    const levels = VisibilityLevels.getLevels();
+
+    levels[VisibilityLevels.getDefaultLevelKey(documentName)].value = null;
 
     let options = [];
 
     if (documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
-      options.push({
-        ...levels.limited,
-        value: defaultValue,
-      });      
+      options.push(levels.limited);
     }
 
     let observer = levels.observer;
 
     if (documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
-      observer.value = defaultValue;
     }
 
     options.push(observer);
@@ -57,9 +54,23 @@ export class VisibilityLevels {
     options.push(levels.owner);
 
     if (FoundryAdapter.userIsGm()) {
-      options.push(this.levels.gmOnly);
+      options.push(levels.gmOnly);
     }
 
     return options;
+  }
+
+  static getDefaultLevelKey(
+    documentName: string
+  ): keyof ReturnType<(typeof VisibilityLevels)['getLevels']> {
+    return documentName === CONSTANTS.DOCUMENT_NAME_ITEM
+      ? 'limited'
+      : 'observer';
+  }
+
+  static getDefaultLevelValue(documentName: string) {
+    return VisibilityLevels.getLevels()[
+      VisibilityLevels.getDefaultLevelKey(documentName)
+    ].value;
   }
 }
