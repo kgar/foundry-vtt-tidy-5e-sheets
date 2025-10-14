@@ -96,11 +96,11 @@ export class ActorSheetQuadroneRuntime<
 
     const worldTabConfig =
       settings.value.tabConfiguration[context.document.documentName]?.[
-        context.document.type
+        this._docTypeKeyOverride ?? context.document.type
       ]?.visibilityLevels ?? {};
 
     const sheetTabConfig =
-      TidyFlags.tabConfiguration.get(context.document)?.visibilityLevels ?? {};
+      this._getTabConfig(context.document)?.visibilityLevels ?? {};
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
