@@ -46,6 +46,7 @@ import { error } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
 import type { ItemTabRegistrationOptions } from 'src/api';
+import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -155,11 +156,15 @@ class ItemSheetQuadroneRuntimeImpl {
 
     const documentOwnershipLevel = context.document.getUserLevel(game.user);
 
+    const defaultVisibilityLevel = VisibilityLevels.getDefaultLevelValue(
+      CONSTANTS.DOCUMENT_NAME_ITEM
+    );
+
     return [
       ...tabs.filter((tab) => {
         const minOwnershipLevel = Math.max(
-          worldTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-          sheetTabConfig[tab.id] ?? CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER
+          worldTabConfig[tab.id] ?? defaultVisibilityLevel,
+          sheetTabConfig[tab.id] ?? defaultVisibilityLevel
         );
         return documentOwnershipLevel >= minOwnershipLevel;
       }),

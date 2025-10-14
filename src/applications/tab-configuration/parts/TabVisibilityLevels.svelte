@@ -10,7 +10,7 @@
 
   let { entry = $bindable() }: Props = $props();
 
-  let visibilityLevelOptions = VisibilityLevels.getOptions();
+  let visibilityLevelOptions = VisibilityLevels.getOptions(entry.documentName);
 
   let userIsGm = FoundryAdapter.userIsGm();
 </script>
