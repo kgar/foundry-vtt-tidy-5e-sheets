@@ -1,7 +1,7 @@
 ## kgar To Do
 
 - [ ] Support Custom Actor Trait HTML content
-- [ ] Support Custom Actor Trait pills
+- [x] Support Custom Actor Trait pills
 
 ### Custom Actor Trait Notes
 
@@ -30,9 +30,7 @@ type RegisteredCustomActorTrait = {
   content?: (app, document, context) => string;
 };
 
-type CustomTraitPill = {
-  /** An HTML ID to put on the pill. */
-  id?: string;
+type CustomTrait = {
   /** 
    * An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. 
    * Parameters: 
@@ -41,8 +39,6 @@ type CustomTraitPill = {
    *   - context - the Tidy prepared context data. Use as your own risk.
    */
   onClick?: (app, document, context) => void;
-  /** Icons associated with the trait. */
-  icons?: { icon: string; label: string }[];
   /** 
     Custom HTML content, to appear to the right of any specified icons and before any other content.
     This content is specifically rendered as HTML, unlike the more specific building blocks.
@@ -54,6 +50,8 @@ type CustomTraitPill = {
   /* -------------------------------------------- */
   /* The below content is assembled with Tidy-specific markup and classes to form common pills. */
 
+  /** Icons associated with the trait. */
+  icons?: { icon: string; label: string }[];
   /** Text that describes the trait. */
   label: string;
   /** The number sign (+ or -) for a numeric trait. */

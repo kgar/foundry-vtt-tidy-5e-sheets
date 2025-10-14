@@ -245,8 +245,11 @@ export class Tidy5eVehicleSheet
 
     context.useClassicControls = settings.value.useClassicControlsForVehicle;
 
-    context.customActorTraits =
-      CustomActorTraitsRuntime.getEnabledTraits(context);
+    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits({
+      context,
+      app: this,
+      element: this.element,
+    });
 
     context.customContent = await VehicleSheetClassicRuntime.getContent(
       context
