@@ -441,12 +441,14 @@
     },
     "TIDY5E.TabConfiguration": {
         "SelectedHeader": "Schede Visibili",
-        "MenuOptionText": "Selezione Scheda",
+        "MenuOptionText": "Configurazione Scheda",
         "AvailableHeader": "Schede Nascoste",
         "AtLeastOneRequiredErrorMessage": "Almeno una scheda è richiesta.",
-        "Title": "Selezione Scheda: {documentName}",
+        "Title": "Configurazione Scheda: {documentName}",
         "UnsupportedDocumentErrorMessage": "Il tipo di documento {documentType} non è attualmente impostato per la selezione della scheda.",
-        "Explanation": "Qualsiasi scheda che è configurata per non essere vista (ad esempio, disabilitando il diario nelle impostazioni di configurazione) non verrà comunque visualizzata sul foglio, anche se selezionata."
+        "Explanation": "Qualsiasi scheda che è configurata per non essere vista (ad esempio, disabilitando il diario nelle impostazioni di configurazione) non verrà comunque visualizzata sul foglio, anche se selezionata.",
+        "SelectionTab.Title": "Selezione Scheda",
+        "VisibilityTab.Title": "Visibilità Scheda"
     },
     "TIDY5E.Listbox": {
         "MoveDown": "Muovi Giù (Alt + Freccia Giù)",
@@ -960,5 +962,17 @@
     "TIDY5E.SpellbookSections": "Sezioni Libro Incantesimi",
     "TIDY5E.UserDefaultPrefix": "Predefinito utente: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opzioni Visualizzazione Predefinite Globali",
-    "TIDY5E.Character.Sidebar.Title": "Barra laterale PG"
+    "TIDY5E.Character.Sidebar.Title": "Barra laterale PG",
+    "TIDY5E.ContextMenuActionPin": "Fissa in Alto",
+    "TIDY5E.ContextMenuActionUnpin": "Sblocca dall'Alto",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "Menu",
+        "LocationHeader": "Intestazione"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "Controlli Intestazione",
+        "label": "Configura Controlli Intestazione",
+        "hint": "Solo per nuova Tidy Sheets: Configura la posizione dei controlli dell'intestazione scheda."
+    },
+    "TIDY5E.GMOnly.Title": "Solo DM"
 }
