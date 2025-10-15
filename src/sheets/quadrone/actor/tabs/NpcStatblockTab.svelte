@@ -25,7 +25,7 @@
   import ActorTraitBackground from '../parts/ActorTraitBackground.svelte';
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
-    import SheetPins from '../../shared/SheetPins.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -42,13 +42,13 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-    let tabOptionGroups: SectionOptionGroup[] = $derived.by(() => {
+  let tabOptionGroups: SectionOptionGroup[] = $derived.by(() => {
     const preferences = UserPreferencesService.get();
 
     const preferencesProp = UserPreferencesService.getProp();
 
     const legendariesProp = `${preferencesProp}.${CONSTANTS.SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE}`;
-    const spellbookInStatblockProp = `${UserPreferencesService.getProp()}.${CONSTANTS.INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE}`;
+    const spellbookInStatblockProp = `${preferencesProp}.${CONSTANTS.INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE}`;
 
     const legendariesUserPreference =
       preferences.showLegendariesOnNpcStatblock ?? true;
