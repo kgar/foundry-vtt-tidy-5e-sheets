@@ -8,19 +8,20 @@
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type { GroupMemberQuadroneContext } from 'src/types/types';
+  import type {
+    GroupMemberQuadroneContext,
+    TidySectionBase,
+  } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import ActionBar from '../../shared/ActionBar.svelte';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 
   let context = $derived(getGroupSheetQuadroneContext());
-
-  let characters = $derived(context.members.character.members);
-  let npcs = $derived(context.members.npc.members);
-  let vehicles = $derived(context.members.vehicle.members);
 
   const localize = FoundryAdapter.localize;
 
@@ -35,13 +36,29 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  let showSheetPin = $derived(
+  const showSheetPin = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       CONSTANTS.TAB_MEMBERS,
       'showSheetPins',
     ) ?? true,
   );
+
+  let searchCriteria = $state('');
+
+  let sections: TidySectionBase[] = $state([]);
+
+  const tabOptionGroups = $derived([
+    {
+      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
+      settings: [
+        SheetPinsProvider.getGlobalSectionSetting(
+          context.document.type,
+          CONSTANTS.TAB_MEMBERS,
+        ),
+      ],
+    },
+  ]);
 
   $effect(() => {
     const observer = new ResizeObserver(([entry]) => onResize(entry));
@@ -58,22 +75,29 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
+  <ActionBar
+    bind:searchCriteria
+    {sections}
+    tabId={CONSTANTS.TAB_MEMBERS}
+    {tabOptionGroups}
+  />
+
   {#if showSheetPin}
     <SheetPins />
   {/if}
 
-  {#if characters.length}
+  {#each context.members.sections as section (section.type)}
     {@const columns = new ColumnsLoadout(
       GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: CONSTANTS.SHEET_TYPE_GROUP,
         tabId: CONSTANTS.TAB_MEMBERS,
-        sectionKey: CONSTANTS.SHEET_TYPE_CHARACTER,
+        sectionKey: section.type,
         rowActions: rowActions,
         section: { ...SheetSections.EMPTY, rowActions },
         sheetDocument: context.actor,
       }),
     )}
-    {@const visibleItemCount = characters.length}
+    {@const visibleItemCount = section.members.length}
     {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
       sectionsInlineWidth,
       columns,
@@ -84,7 +108,7 @@
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true}>
             <h3>
-              {localize(context.members.character.label)}
+              {localize(section.label)}
               <span class="table-header-count">{visibleItemCount}</span>
             </h3>
           </TidyTableHeaderCell>
@@ -92,86 +116,12 @@
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
-        {#each characters as member}
+        {#each section.members as member}
           {@render tableRow(member, columns, hiddenColumns)}
         {/each}
       {/snippet}
     </TidyTable>
-  {/if}
-
-  {#if npcs.length}
-    {@const columns = new ColumnsLoadout(
-      GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: CONSTANTS.SHEET_TYPE_GROUP,
-        tabId: CONSTANTS.TAB_MEMBERS,
-        sectionKey: CONSTANTS.SHEET_TYPE_NPC,
-        rowActions: rowActions,
-        section: { ...SheetSections.EMPTY, rowActions },
-        sheetDocument: context.actor,
-      }),
-    )}
-    {@const visibleItemCount = npcs.length}
-    {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth,
-      columns,
-    )}
-
-    <TidyTable key="npcs">
-      {#snippet header()}
-        <TidyTableHeaderRow class="theme-dark">
-          <TidyTableHeaderCell primary={true}>
-            <h3>
-              {localize(context.members.npc.label)}
-              <span class="table-header-count">{visibleItemCount}</span>
-            </h3>
-          </TidyTableHeaderCell>
-          {@render headerColumns(columns, hiddenColumns)}
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each npcs as member}
-          {@render tableRow(member, columns, hiddenColumns)}
-        {/each}
-      {/snippet}
-    </TidyTable>
-  {/if}
-
-  {#if vehicles.length}
-    {@const columns = new ColumnsLoadout(
-      GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: CONSTANTS.SHEET_TYPE_GROUP,
-        tabId: CONSTANTS.TAB_MEMBERS,
-        sectionKey: CONSTANTS.SHEET_TYPE_VEHICLE,
-        rowActions: rowActions,
-        section: { ...SheetSections.EMPTY, rowActions },
-        sheetDocument: context.actor,
-      }),
-    )}
-    {@const visibleItemCount = vehicles.length}
-    {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth,
-      columns,
-    )}
-
-    <TidyTable key="vehicles">
-      {#snippet header()}
-        <TidyTableHeaderRow class="theme-dark">
-          <TidyTableHeaderCell primary={true}>
-            <h3>
-              {localize(context.members.vehicle.label)}
-              <span class="table-header-count">{visibleItemCount}</span>
-            </h3>
-          </TidyTableHeaderCell>
-          {@render headerColumns(columns, hiddenColumns)}
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each vehicles as member}
-          {@render tableRow(member, columns, hiddenColumns)}
-        {/each}
-      {/snippet}
-    </TidyTable>
-  {/if}
+  {/each}
 
   {#if !context.system.members.length}
     <div class="empty-state-container empty-state-description">

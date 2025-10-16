@@ -81,7 +81,7 @@
     </div>
   {/if}
 
-  {#if Object.keys(context.filterData).length}
+  {#if Object.keys(context.filterData?.[tabId] ?? {}).length}
     <FilterButtonMenuQuadrone filterData={context.filterData} {tabId} />
   {/if}
 

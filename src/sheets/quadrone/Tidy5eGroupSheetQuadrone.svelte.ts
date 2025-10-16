@@ -3,6 +3,7 @@ import type {
   Actor5e,
   ActorSheetQuadroneContext,
   GroupMemberQuadroneContext,
+  GroupMemberSection,
   GroupMemberSkillContext,
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
@@ -35,11 +36,12 @@ import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { settings } from 'src/settings/settings.svelte';
-import { mapGetOrInsert } from 'src/utils/map';
+import { mapGetOrInsert, mapGetOrInsertComputed } from 'src/utils/map';
 import { Tidy5eMultiActorSheetQuadroneBase } from './Tidy5eMultiActorSheetQuadroneBase.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
+import { TidyFlags } from 'src/api';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -155,19 +157,38 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
     skills: GroupSkill[];
     traits: GroupTraits;
   }> {
-    let sections: GroupMembersQuadroneContext = {
-      character: {
-        members: [],
-        label: 'TYPES.Actor.characterPl',
-      },
-      npc: {
-        members: [],
-        label: 'TYPES.Actor.npcPl',
-      },
-      vehicle: {
-        members: [],
-        label: 'TYPES.Actor.vehiclePl',
-      },
+    let customSections = TidyFlags.sections.get(this.actor);
+
+    let sections = new Map<string, GroupMemberSection>([
+      [
+        CONSTANTS.SHEET_TYPE_CHARACTER,
+        {
+          members: [],
+          label: 'TYPES.Actor.characterPl',
+          type: CONSTANTS.SHEET_TYPE_CHARACTER,
+        },
+      ],
+      [
+        CONSTANTS.SHEET_TYPE_NPC,
+        {
+          members: [],
+          label: 'TYPES.Actor.npcPl',
+          type: CONSTANTS.SHEET_TYPE_NPC,
+        },
+      ],
+      [
+        CONSTANTS.SHEET_TYPE_VEHICLE,
+        {
+          members: [],
+          label: 'TYPES.Actor.vehiclePl',
+          type: CONSTANTS.SHEET_TYPE_VEHICLE,
+        },
+      ],
+    ]);
+
+    let membersContext: GroupMembersQuadroneContext = {
+      sections: [],
+      character: [],
       all: new Map<string, GroupMemberQuadroneContext>(),
       skilled: [],
     };
@@ -197,11 +218,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
         continue;
       }
 
-      const section = sections[actor.type as SupportedActorType];
+      let sectionKey = customSections[actor.uuid] ?? actor.type;
 
-      if (!section) {
-        continue;
-      }
+      let section = mapGetOrInsertComputed(sections, sectionKey, (key) => ({
+        label: FoundryAdapter.localize(sectionKey),
+        members: [],
+        type: sectionKey,
+      }));
 
       const accentColor = coalesce(
         // Use the actor's accent color, if configured
@@ -238,7 +261,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
       };
 
       section.members.push(groupMemberContext);
-      sections.all.set(actor.uuid, groupMemberContext);
+      membersContext.all.set(actor.uuid, groupMemberContext);
+      if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+        membersContext.character.push(actor);
+      }
 
       const prepareCreatureInformation =
         canObserve &&
@@ -273,7 +299,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
       }
     }
 
-    sections.skilled.push(
+    membersContext.skilled.push(
       ...skilled.values().reduce((prev, curr) => {
         return prev.concat(
           curr.toSorted((a, b) =>
@@ -287,8 +313,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
       a.name.localeCompare(b.name, game.i18n.lang)
     );
 
+    membersContext.sections = [...sections.values()];
+
     return {
-      members: sections,
+      members: membersContext,
       skills: groupSkills,
       traits: {
         languages: [...languages.values()].sort((a, b) =>

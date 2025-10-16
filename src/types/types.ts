@@ -1297,12 +1297,12 @@ export type MultiActorMemberPortraitContext = {
 export type GroupMemberSection = {
   label: string;
   members: GroupMemberQuadroneContext[];
+  type: string;
 };
 
 export type GroupMembersQuadroneContext = {
-  character: GroupMemberSection;
-  npc: GroupMemberSection;
-  vehicle: GroupMemberSection;
+  sections: GroupMemberSection[];
+  character: GroupMemberQuadroneContext[];
   all: Map<string, GroupMemberQuadroneContext>;
   skilled: GroupMemberQuadroneContext[];
 };

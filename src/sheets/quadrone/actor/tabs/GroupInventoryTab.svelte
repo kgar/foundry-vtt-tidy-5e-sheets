@@ -61,10 +61,12 @@
   });
 
   let hoveredMember = $state<string | null>(null);
+
+  let members = $derived(context.members.sections.flatMap((s) => s.members));
 </script>
 
 <aside class="sidebar">
-  {#each [...context.members.character.members, ...context.members.npc.members, ...context.members.vehicle.members] as member}
+  {#each members as member}
     {@const actorIsDead =
       member.actor.system.attributes?.hp?.value === 0 &&
       member.actor.system.attributes?.hp?.max > 0 &&
