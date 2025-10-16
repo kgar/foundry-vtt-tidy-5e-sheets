@@ -12,9 +12,14 @@
 - [x] Update all sheet pin component references to honor user setting value.
 - [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
 - [ ] Stretch: Sheet Pins / Multi-actor Members tab upgrade
-  - [ ] Add action bar with search, sort, and config
-  - [ ] Add tab config settings with just Show Sheet Pins option
-  - [ ] Enable custom sections for members tabs and add settings to config dialog
+  - [x] Add action bar with search, sort, and config
+  - [x] Enable custom sections for members tabs
+  - [ ] Add Custom Sections to dialog and ensure section sorting and visibility work
+  - [ ] Add Context menu "Choose a section" (or whatever)
+  - [ ] Enable Search
+  - [ ] Enable Sorting
+  - [ ] Implement Show Sheet Pins option
+  - [ ] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
 
 
 ### Short List
