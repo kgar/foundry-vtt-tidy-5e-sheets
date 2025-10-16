@@ -1295,10 +1295,8 @@ export type MultiActorMemberPortraitContext = {
 };
 
 export type GroupMemberSection = {
-  label: string;
   members: GroupMemberQuadroneContext[];
-  type: string;
-};
+} & TidySectionBase;
 
 export type GroupMembersQuadroneContext = {
   sections: GroupMemberSection[];

@@ -4,13 +4,11 @@ import type {
   ActorSheetQuadroneContext,
   GroupMemberQuadroneContext,
   GroupMemberSection,
-  GroupMemberSkillContext,
   GroupMembersQuadroneContext,
   GroupSheetQuadroneContext,
   GroupSkill,
   GroupSkillRollProcessConfiguration,
   GroupTrait,
-  GroupTraitBase,
   GroupTraits,
   MeasurableGroupTrait,
   MultiActorQuadroneContext,
@@ -29,8 +27,7 @@ import { type TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentShee
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import type { GroupMemberContext } from 'src/types/group.types';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
-import { coalesce, getModifierData } from 'src/utils/formatting';
-import type { SkillData } from 'src/foundry/dnd5e.types';
+import { coalesce } from 'src/utils/formatting';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import { isNil } from 'src/utils/data';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
@@ -42,6 +39,7 @@ import { TidyHooks } from 'src/foundry/TidyHooks';
 import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -159,13 +157,19 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   }> {
     let customSections = TidyFlags.sections.get(this.actor);
 
+    let rowActions =
+      TableRowActionsRuntime.getGroupMemberRowActions(actorContext);
+
     let sections = new Map<string, GroupMemberSection>([
       [
         CONSTANTS.SHEET_TYPE_CHARACTER,
         {
           members: [],
           label: 'TYPES.Actor.characterPl',
-          type: CONSTANTS.SHEET_TYPE_CHARACTER,
+          key: CONSTANTS.SHEET_TYPE_CHARACTER,
+          show: true,
+          dataset: {},
+          rowActions,
         },
       ],
       [
@@ -173,7 +177,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
         {
           members: [],
           label: 'TYPES.Actor.npcPl',
-          type: CONSTANTS.SHEET_TYPE_NPC,
+          key: CONSTANTS.SHEET_TYPE_NPC,
+          show: true,
+          dataset: {},
+          rowActions,
         },
       ],
       [
@@ -181,7 +188,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
         {
           members: [],
           label: 'TYPES.Actor.vehiclePl',
-          type: CONSTANTS.SHEET_TYPE_VEHICLE,
+          key: CONSTANTS.SHEET_TYPE_VEHICLE,
+          show: true,
+          dataset: {},
+          rowActions,
         },
       ],
     ]);
@@ -220,11 +230,22 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
 
       let sectionKey = customSections[actor.uuid] ?? actor.type;
 
-      let section = mapGetOrInsertComputed(sections, sectionKey, (key) => ({
-        label: FoundryAdapter.localize(sectionKey),
-        members: [],
-        type: sectionKey,
-      }));
+      let section: GroupMemberSection = mapGetOrInsertComputed(
+        sections,
+        sectionKey,
+        (key) => ({
+          label: FoundryAdapter.localize(key),
+          members: [],
+          key: key,
+          show: true,
+          dataset: {},
+          custom: {
+            section: key,
+            creationItemTypes: [],
+          },
+          rowActions,
+        })
+      );
 
       const accentColor = coalesce(
         // Use the actor's accent color, if configured

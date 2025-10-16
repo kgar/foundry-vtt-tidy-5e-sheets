@@ -14,11 +14,11 @@
 - [ ] Stretch: Sheet Pins / Multi-actor Members tab upgrade
   - [x] Add action bar with search, sort, and config
   - [x] Enable custom sections for members tabs
-  - [ ] Add Custom Sections to dialog and ensure section sorting and visibility work
+  - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
   - [ ] Add Context menu "Choose a section" (or whatever)
   - [ ] Enable Search
   - [ ] Enable Sorting
-  - [ ] Implement Show Sheet Pins option
+  - [x] Implement Show Sheet Pins option
   - [ ] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
 
 

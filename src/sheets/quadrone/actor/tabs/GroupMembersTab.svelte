@@ -10,7 +10,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type {
     GroupMemberQuadroneContext,
-    TidySectionBase,
+    GroupMemberSection,
   } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
@@ -20,6 +20,7 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ActionBar from '../../shared/ActionBar.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -46,7 +47,14 @@
 
   let searchCriteria = $state('');
 
-  let sections: TidySectionBase[] = $state([]);
+  let sections: GroupMemberSection[] = $derived(
+    SheetSections.configureGroupMembers(
+      context.members.sections,
+      CONSTANTS.TAB_MEMBERS,
+      UserSheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_MEMBERS],
+    ),
+  );
 
   const tabOptionGroups = $derived([
     {
@@ -86,41 +94,43 @@
     <SheetPins />
   {/if}
 
-  {#each context.members.sections as section (section.type)}
-    {@const columns = new ColumnsLoadout(
-      GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: CONSTANTS.SHEET_TYPE_GROUP,
-        tabId: CONSTANTS.TAB_MEMBERS,
-        sectionKey: section.type,
-        rowActions: rowActions,
-        section: { ...SheetSections.EMPTY, rowActions },
-        sheetDocument: context.actor,
-      }),
-    )}
-    {@const visibleItemCount = section.members.length}
-    {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth,
-      columns,
-    )}
+  {#each sections as section (section.key)}
+    {#if section.show}
+      {@const columns = new ColumnsLoadout(
+        GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
+          sheetType: CONSTANTS.SHEET_TYPE_GROUP,
+          tabId: CONSTANTS.TAB_MEMBERS,
+          sectionKey: section.key,
+          rowActions: rowActions,
+          section: { ...SheetSections.EMPTY, rowActions },
+          sheetDocument: context.actor,
+        }),
+      )}
+      {@const visibleItemCount = section.members.length}
+      {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
+        sectionsInlineWidth,
+        columns,
+      )}
 
-    <TidyTable key="characters">
-      {#snippet header()}
-        <TidyTableHeaderRow class="theme-dark">
-          <TidyTableHeaderCell primary={true}>
-            <h3>
-              {localize(section.label)}
-              <span class="table-header-count">{visibleItemCount}</span>
-            </h3>
-          </TidyTableHeaderCell>
-          {@render headerColumns(columns, hiddenColumns)}
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each section.members as member}
-          {@render tableRow(member, columns, hiddenColumns)}
-        {/each}
-      {/snippet}
-    </TidyTable>
+      <TidyTable key={section.key}>
+        {#snippet header()}
+          <TidyTableHeaderRow class="theme-dark">
+            <TidyTableHeaderCell primary={true}>
+              <h3>
+                {localize(section.label)}
+                <span class="table-header-count">{visibleItemCount}</span>
+              </h3>
+            </TidyTableHeaderCell>
+            {@render headerColumns(columns, hiddenColumns)}
+          </TidyTableHeaderRow>
+        {/snippet}
+        {#snippet body()}
+          {#each section.members as member}
+            {@render tableRow(member, columns, hiddenColumns)}
+          {/each}
+        {/snippet}
+      </TidyTable>
+    {/if}
   {/each}
 
   {#if !context.system.members.length}
