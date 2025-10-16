@@ -1,19 +1,24 @@
 ## kgar To Do
 
+### More Sheet Pins
+
+- [x] Set up the Show Sheet Pins per tab as a Global User Preference. No sheet-local override.
+- [x] Propagate UI for saving sheet pin visibility (local and global) to the relevant tabs.
+  - [x] Inventory (all of em)
+  - [x] Spellbook
+  - [x] Features
+  - [x] Statblock
+  - [x] Sheet
+- [x] Update all sheet pin component references to honor user setting value.
+- [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
+- [ ] Stretch: Sheet Pins / Multi-actor Members tab upgrade
+  - [ ] Add action bar with search, sort, and config
+  - [ ] Add tab config settings with just Show Sheet Pins option
+  - [ ] Enable custom sections for members tabs and add settings to config dialog
+
+
 ### Short List
 
-- [ ] Add set of tab IDs for showing sheet pins to context at actor base context level. It should reconcile "sheet setting" falls back to "world setting" falls back to "show".
-- [ ] Pilot the method of saving this info. Try the tab config menu, since show/hide stuff is usually there.
-- [ ] Propagate UI for saving sheet pin visibility (local and global) to the relevant tabs.
-  - [ ] Inventory (all of em)
-  - [ ] Spellbook
-  - [ ] Features
-  - [ ] Statblock
-  - [ ] Members
-  - [ ] Sheet
-- [ ] Update sheet pin component references to check for 
-- [ ] Prototype sheet-local and global user preference option for Show Sheet Pins
-- [ ] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
 - [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code

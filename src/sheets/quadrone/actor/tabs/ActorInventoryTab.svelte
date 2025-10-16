@@ -7,7 +7,7 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import InventoryTables from 'src/sheets/quadrone/shared/InventoryTables.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
@@ -44,9 +44,17 @@
     SheetSections.configureInventory(
       context.inventory,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
+  );
+
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
   );
 
   $effect(() => {
@@ -62,7 +70,9 @@
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
-  <SheetPins />
+  {#if showSheetPin}
+    <SheetPins />
+  {/if}
 
   <CharacterEncumbranceRow />
 

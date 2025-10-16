@@ -26,7 +26,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -201,7 +201,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
       label: FoundryAdapter.localize('DND5E.DescriptionChat'),
     });
 
-    const containerPreferences = SheetPreferencesService.getByType(
+    const containerPreferences = UserSheetPreferencesService.getByType(
       this.item.type
     );
 
@@ -218,7 +218,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.item.type,
                 CONSTANTS.TAB_CONTAINER_CONTENTS,
                 'sort',
@@ -233,7 +233,7 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.item.type,
                 CONSTANTS.TAB_CONTAINER_CONTENTS,
                 'sort',

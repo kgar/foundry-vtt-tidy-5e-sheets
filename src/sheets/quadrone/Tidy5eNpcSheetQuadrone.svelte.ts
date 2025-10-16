@@ -20,7 +20,7 @@ import { mount } from 'svelte';
 import NpcSheet from './actor/NpcSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
-import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -95,7 +95,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         baseEffects
       );
 
-    const preferences = SheetPreferencesService.getByType(this.actor.type);
+    const preferences = UserSheetPreferencesService.getByType(this.actor.type);
 
     const userPreferences = UserPreferencesService.get();
 

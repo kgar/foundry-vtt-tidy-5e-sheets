@@ -4,7 +4,7 @@
   import type { SortMethodOption } from 'src/types/sort.types';
   import { tick } from 'svelte';
   import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   interface Props {
     doc: any;
@@ -14,7 +14,7 @@
   let { doc, tabId }: Props = $props();
 
   let currentMethodKey = $derived(
-    SheetPreferencesService.getByType(doc.type).tabs?.[tabId]?.sort ?? 'm',
+    UserSheetPreferencesService.getByType(doc.type).tabs?.[tabId]?.sort ?? 'm',
   );
 
   let methods = $derived(

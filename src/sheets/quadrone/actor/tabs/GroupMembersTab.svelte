@@ -13,7 +13,8 @@
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
-    import SheetPins from '../../shared/SheetPins.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -34,6 +35,14 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      CONSTANTS.TAB_MEMBERS,
+      'showSheetPins',
+    ) ?? true,
+  );
+
   $effect(() => {
     const observer = new ResizeObserver(([entry]) => onResize(entry));
     observer.observe(sectionsContainer);
@@ -49,7 +58,9 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
-  <SheetPins />
+  {#if showSheetPin}
+    <SheetPins />
+  {/if}
 
   {#if characters.length}
     {@const columns = new ColumnsLoadout(

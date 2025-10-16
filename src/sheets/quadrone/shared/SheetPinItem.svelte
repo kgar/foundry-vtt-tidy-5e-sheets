@@ -2,7 +2,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { SheetPins } from 'src/features/sheet-pins/SheetPins';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinItemContext } from 'src/types/types';
@@ -201,7 +201,7 @@
           selectOnFocus={true}
           placeholder={ctx.document.name}
           onSaveChange={(ev) => {
-            SheetPins.setAlias(ctx.document, ev.currentTarget.value);
+            SheetPinsProvider.setAlias(ctx.document, ev.currentTarget.value);
             return false;
           }}
         />
@@ -212,7 +212,7 @@
           onclick={(ev) => {
             const input = ev.currentTarget.previousElementSibling?.querySelector('input');
             if (input) {
-              SheetPins.setAlias(ctx.document, input.value);
+              SheetPinsProvider.setAlias(ctx.document, input.value);
             }
             isEditing = false;
             return false;

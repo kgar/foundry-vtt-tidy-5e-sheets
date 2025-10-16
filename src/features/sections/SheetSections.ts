@@ -24,8 +24,8 @@ import type {
 import { isNil } from 'src/utils/data';
 import type { SectionConfig } from './sections.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
-import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { SheetPreference } from '../user-preferences/user-preferences.types';
+import { UserSheetPreferencesService } from '../user-preferences/SheetPreferencesService';
+import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import {
@@ -467,7 +467,7 @@ export class SheetSections {
   static configureInventory(
     sections: InventorySection[],
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
     try {
@@ -504,7 +504,7 @@ export class SheetSections {
         sectionConfigs?.[tabId]
       );
 
-      const characterPreferences = SheetPreferencesService.getByType(
+      const characterPreferences = UserSheetPreferencesService.getByType(
         document.type
       );
 
@@ -539,7 +539,7 @@ export class SheetSections {
     favoriteSections: FavoriteSection[],
     actor: Actor5e,
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
     let configuredFavorites: FavoriteSection[] = [];
@@ -639,7 +639,7 @@ export class SheetSections {
     sections: TSection[],
     context: NpcSheetQuadroneContext,
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
     try {
@@ -676,7 +676,7 @@ export class SheetSections {
       | CharacterSheetQuadroneContext
       | NpcSheetQuadroneContext,
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ): TSection[] {
     try {
@@ -706,7 +706,7 @@ export class SheetSections {
   static configureActions(
     sections: ActionSectionClassic[],
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
   ) {
     try {
@@ -731,7 +731,7 @@ export class SheetSections {
   static configureActionsQuadrone(
     sections: TidyItemSectionBase[],
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
   ) {
     try {

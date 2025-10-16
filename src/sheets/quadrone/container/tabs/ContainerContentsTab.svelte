@@ -13,7 +13,7 @@
   import { Container } from 'src/features/containers/Container';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import ActionBar from '../../shared/ActionBar.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
@@ -44,7 +44,7 @@
     SheetSections.configureInventory(
       context.containerContents.contents,
       tabId,
-      SheetPreferencesService.getByType(context.item.type),
+      UserSheetPreferencesService.getByType(context.item.type),
       TidyFlags.sectionConfig.get(context.item)?.[
         CONSTANTS.TAB_CONTAINER_CONTENTS
       ],

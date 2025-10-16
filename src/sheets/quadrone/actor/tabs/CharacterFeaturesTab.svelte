@@ -10,10 +10,12 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -33,9 +35,26 @@
       context.features,
       context,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
+  );
+
+  let tabOptionGroups: SectionOptionGroup[] = $derived([
+    {
+      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
+      settings: [
+        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
+      ],
+    },
+  ]);
+
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
   );
 
   $effect(() => {
@@ -48,9 +67,11 @@
   });
 </script>
 
-<ActionBar bind:searchCriteria sections={features} {tabId} />
+<ActionBar bind:searchCriteria sections={features} {tabId} {tabOptionGroups} />
 
-<SheetPins />
+{#if showSheetPin}
+  <SheetPins />
+{/if}
 
 <FeatureTables
   sections={features}

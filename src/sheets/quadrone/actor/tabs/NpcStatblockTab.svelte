@@ -9,7 +9,7 @@
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/api';
   import ActionBar from '../../shared/ActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
@@ -26,6 +26,7 @@
   import NpcTraitSpecies from '../npc-parts/traits/NpcTraitSpecies.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 
   const localize = FoundryAdapter.localize;
 
@@ -45,10 +46,8 @@
   let tabOptionGroups: SectionOptionGroup[] = $derived.by(() => {
     const preferences = UserPreferencesService.get();
 
-    const preferencesProp = UserPreferencesService.getProp();
-
-    const legendariesProp = `${preferencesProp}.${CONSTANTS.SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE}`;
-    const spellbookInStatblockProp = `${preferencesProp}.${CONSTANTS.INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE}`;
+    const legendariesProp = `${UserPreferencesService.prop}.${CONSTANTS.SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE}`;
+    const spellbookInStatblockProp = `${UserPreferencesService.prop}.${CONSTANTS.INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE}`;
 
     const legendariesUserPreference =
       preferences.showLegendariesOnNpcStatblock ?? true;
@@ -146,6 +145,10 @@
             prop: spellbookInStatblockProp,
             default: spellbookInStatblockUserPreference,
           },
+          SheetPinsProvider.getGlobalSectionSetting(
+            context.document.type,
+            tabId,
+          ),
         ],
       } satisfies SectionOptionGroup,
     ];
@@ -161,10 +164,18 @@
       sectionsToConfigure,
       context,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     );
   });
+
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
+  );
 
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
@@ -184,7 +195,9 @@
   </div>
 {/if}
 
-<SheetPins />
+{#if showSheetPin}
+  <SheetPins />
+{/if}
 
 <StatblockTables
   {sections}

@@ -8,7 +8,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
-import { SheetPins } from 'src/features/sheet-pins/SheetPins';
+import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { isNil } from 'src/utils/data';
 
 /**
@@ -346,24 +346,24 @@ export function getItemContextOptionsQuadrone(
   options.push({
     name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: () => SheetPins.pin(item, 'item'),
+    callback: () => SheetPinsProvider.pin(item, 'item'),
     condition: () =>
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item) &&
-      SheetPins.isPinnable(item, 'item') &&
-      !SheetPins.isPinned(item),
+      SheetPinsProvider.isPinnable(item, 'item') &&
+      !SheetPinsProvider.isPinned(item),
     group: 'customize',
   });
 
   options.push({
     name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: () => SheetPins.unpin(item),
+    callback: () => SheetPinsProvider.unpin(item),
     condition: () =>
       item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(item) &&
-      SheetPins.isPinnable(item, 'item') &&
-      SheetPins.isPinned(item),
+      SheetPinsProvider.isPinnable(item, 'item') &&
+      SheetPinsProvider.isPinned(item),
     group: 'customize',
   });
 
@@ -373,23 +373,23 @@ export function getItemContextOptionsQuadrone(
     options.push({
       name: 'TIDY5E.ContextMenuActionShowLimitedUses',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () => SheetPins.setItemResourceType(item, 'limited-uses'),
+      callback: () => SheetPinsProvider.setItemResourceType(item, 'limited-uses'),
       condition: () =>
         item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         !isNil(item.system.quantity) &&
-        SheetPins.getResourceType(item) !== 'limited-uses',
+        SheetPinsProvider.getResourceType(item) !== 'limited-uses',
       group: 'customize',
     });
     options.push({
       name: 'TIDY5E.ContextMenuActionShowQuantity',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () => SheetPins.setItemResourceType(item, 'quantity'),
+      callback: () => SheetPinsProvider.setItemResourceType(item, 'quantity'),
       condition: () =>
         item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(item) &&
         !isNil(item.system.quantity) &&
-        SheetPins.getResourceType(item) !== 'quantity',
+        SheetPinsProvider.getResourceType(item) !== 'quantity',
       group: 'customize',
     });
   }

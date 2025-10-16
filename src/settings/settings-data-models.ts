@@ -15,13 +15,6 @@ export const TabConfigurationSchema = new foundry.data.fields.SchemaField(
       }),
       { initial: {} }
     ),
-    sheetPinVisibility: new foundry.data.fields.TypedObjectField( // note to self: 1 - Show, 2 - Hide, null - Show
-      new foundry.data.fields.NumberField({
-        required: true,
-        nullable: true,
-      }),
-      { initial: {} }
-    ),
   },
   { initial: {} },
   { name: 'Tab Configuration' }

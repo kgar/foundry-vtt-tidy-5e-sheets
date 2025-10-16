@@ -19,6 +19,8 @@
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context =
     $derived(
@@ -88,6 +90,12 @@
       ],
     },
     {
+      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
+      settings: [
+        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
+      ],
+    },
+    {
       title: 'TIDY5E.Utilities.Tools',
       settings: [
         {
@@ -103,6 +111,14 @@
     },
   ]);
 
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
+  );
+
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
@@ -115,7 +131,9 @@
 
 <ActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
 
-<SheetPins />
+{#if showSheetPin}
+  <SheetPins />
+{/if}
 
 <SpellTables
   sections={spellbook}

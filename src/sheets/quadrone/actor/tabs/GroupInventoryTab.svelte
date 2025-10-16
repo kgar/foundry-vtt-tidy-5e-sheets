@@ -9,7 +9,7 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
@@ -38,9 +38,17 @@
     SheetSections.configureInventory(
       context.inventory,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
+  );
+
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
   );
 
   $effect(() => {
@@ -156,7 +164,9 @@
   <div class="inventory-content">
     <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
-    <SheetPins />
+    {#if showSheetPin}
+      <SheetPins />
+    {/if}
 
     {#if context.showContainerPanel && !!context.containerPanelItems.length}
       <ContainerPanel

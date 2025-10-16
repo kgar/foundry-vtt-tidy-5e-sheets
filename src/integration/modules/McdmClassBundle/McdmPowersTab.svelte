@@ -16,7 +16,7 @@
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/api';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Item5e } from 'src/types/item.types';
@@ -94,7 +94,7 @@
     const orderToPowersMap = Object.groupBy<any, any>(normalPowers, p => p.system.order);
     const customSectionToPowersMap = Object.groupBy<any, any>(customSectionPowers, p => TidyFlags.section.get(p));
     
-    const sheetPreferences = SheetPreferencesService.getByType(context.actor.type);
+    const sheetPreferences = UserSheetPreferencesService.getByType(context.actor.type);
     const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
     const sectionConfig = TidyFlags.sectionConfig.get(context.actor)?.[tabId];
     const allSections = Object.entries(orderToPowersMap).map<PowersSection>(([order, powers]) => ({
