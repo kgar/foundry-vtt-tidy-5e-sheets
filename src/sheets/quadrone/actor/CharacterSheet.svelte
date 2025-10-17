@@ -223,6 +223,7 @@
               onclick={(event) =>
                 context.actor.rollInitiativeDialog({ event: event })}
               disabled={!context.owner}
+              data-has-roll-modes
             >
               {localize('DND5E.InitiativeAbbr')}
             </button>
