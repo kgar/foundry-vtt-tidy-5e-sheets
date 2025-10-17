@@ -120,11 +120,11 @@
           <a
             class={[
               'tidy-table-row-use-button',
-              'item-use-button',
               { disabled: !context.editable },
             ]}
             onclick={(ev) =>
               context.editable && FoundryAdapter.actorTryUseItem(item, ev)}
+            data-has-roll-modes
           >
             <img class="item-image" alt={item.name} src={item.img} />
             <span class="roll-prompt">

@@ -181,11 +181,7 @@
     <a
       role="button"
       tabindex="0"
-      class={[
-        'tidy-table-row-use-button',
-        'item-use-button',
-        { disabled: !context.editable },
-      ]}
+      class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(ev) =>
         context.editable && FoundryAdapter.actorTryUseItem(ctx.document, ev)}
       onkeydown={(ev) =>
@@ -193,6 +189,7 @@
         (ev.key === ' ' &&
           context.editable &&
           FoundryAdapter.actorTryUseItem(ctx.document, ev))}
+      data-has-roll-modes
       aria-label={ctx.document.name}
     >
       <img class="item-image" alt={ctx.document.name} src={ctx.document.img} />

@@ -10,15 +10,11 @@
 
   let diminished = $state(false);
   let disabled = $state(false);
-
 </script>
 
 {#if !disabled}
   <a
-    class={[
-      'tidy-table-row-use-button',
-      { diminished, 'item-use-button': roll },
-    ]}
+    class={['tidy-table-row-use-button', { diminished }]}
     {onclick}
     onkeydown={(ev) =>
       (ev.key === 'Enter' || ev.key === ' ') &&

@@ -109,12 +109,9 @@
     <a
       role="button"
       tabindex="0"
-      class={[
-        'tidy-table-row-use-button',
-        'item-use-button',
-        { disabled: !context.editable },
-      ]}
+      class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(event) => context.editable && ctx.document.use({ event })}
+      data-has-roll-modes
     >
       <img class="item-image" alt={ctx.document.name} src={img} />
       <span class="roll-prompt">

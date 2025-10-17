@@ -113,6 +113,7 @@
             data-key={tool.key}
             data-tidy-draggable
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
+            data-has-roll-modes
             disabled={!context.owner}
           >
             {tool.label}
