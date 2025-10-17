@@ -228,7 +228,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
         continue;
       }
 
-      let sectionKey = customSections[actor.uuid] ?? actor.type;
+      let sectionKey = customSections[actor.id] ?? actor.type;
 
       let section: GroupMemberSection = mapGetOrInsertComputed(
         sections,

@@ -523,6 +523,17 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         return false;
       }
 
+      const sections = TidyFlags.sections.get(this.actor);
+      const sourceSection = sections[sourceActor.id] ?? null;
+      const targetSection = sections[targetMemberActor.id] ?? null;
+
+      if (sourceSection !== targetSection) {
+        sections[sourceActor.id] = targetSection;
+        await this.actor.update({
+          [`${TidyFlags.sections.prop}.${sourceActor.id}`]: targetSection,
+        });
+      }
+
       return await this._onSortMember(sourceActor, targetMemberActor);
     }
 
