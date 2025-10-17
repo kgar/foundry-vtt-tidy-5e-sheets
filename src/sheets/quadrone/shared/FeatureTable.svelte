@@ -120,6 +120,7 @@
           <a
             class={[
               'tidy-table-row-use-button',
+              'item-use-button',
               { disabled: !context.editable },
             ]}
             onclick={(ev) =>

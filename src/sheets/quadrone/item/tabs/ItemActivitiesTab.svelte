@@ -116,7 +116,7 @@
         <TidyActivityTableRow {ctx}>
           {#snippet children()}
             <a
-              class={['tidy-table-row-use-button']}
+              class={['tidy-table-row-use-button', 'item-use-button']}
               onclick={(ev) => ctx.activity.use({ ev })}
             >
               <img class="item-image" alt="" src={ctx.activity.img} />
