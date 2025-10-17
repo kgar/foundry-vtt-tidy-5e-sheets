@@ -17,7 +17,7 @@
   - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
   - [x] Add Context menu "Choose a section" (or whatever)
   - [x] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
-  - [ ] Enable Search
+  - [x] Enable Search
   - [ ] Enable Sorting - need custom impls for the basic 3 sorts in the group member sheet.
   - [x] Implement Show Sheet Pins option
   - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.

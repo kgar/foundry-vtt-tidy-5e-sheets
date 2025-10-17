@@ -9,6 +9,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type {
+    Actor5e,
     GroupMemberQuadroneContext,
     GroupMemberSection,
   } from 'src/types/types';
@@ -21,6 +22,8 @@
   import ActionBar from '../../shared/ActionBar.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { createSearchResultsState } from 'src/features/search/search.svelte';
+  import { isNil } from 'src/utils/data';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -46,6 +49,8 @@
   );
 
   let searchCriteria = $state('');
+
+  const searchResults = createSearchResultsState();
 
   let sections: GroupMemberSection[] = $derived(
     SheetSections.configureGroupMembers(
@@ -75,6 +80,18 @@
       observer.disconnect();
     };
   });
+
+  $effect(() => {
+    searchResults.uuids = !isNil(searchCriteria)
+      ? new Set(
+          context.system.members
+            .filter((m: Actor5e) =>
+              m.actor.name.toLowerCase().includes(searchCriteria),
+            )
+            .map((m: Actor5e) => m.actor.uuid),
+        )
+      : undefined;
+  });
 </script>
 
 <MembersTabSidebar />
@@ -95,7 +112,10 @@
   {/if}
 
   {#each sections as section (section.key)}
-    {#if section.show}
+    {@const hasViewableItems =
+      !searchResults.uuids ||
+      section.members.some((m) => searchResults.uuids?.has(m.actor.uuid))}
+    {#if section.show && hasViewableItems}
       {@const columns = new ColumnsLoadout(
         GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
           sheetType: CONSTANTS.SHEET_TYPE_GROUP,
@@ -174,7 +194,12 @@
   hiddenColumns: Set<string>,
 )}
   <div
-    class="tidy-table-row group-member"
+    class={[
+      'tidy-table-row group-member',
+      {
+        hidden: searchResults.uuids && !searchResults.show(member.actor.uuid),
+      },
+    ]}
     style:--t5e-theme-color-default={member.accentColor}
     style:--t5e-theme-color-highlight={member.highlightColor}
     style:--t5e-member-color-hover={member.highlightColor}
