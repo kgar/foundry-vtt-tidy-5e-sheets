@@ -189,6 +189,7 @@
               class="button-borderless initiative-roll-button"
               onclick={(event) =>
                 context.actor.rollInitiativeDialog({ event: event })}
+              data-has-roll-modes
             >
               {localize('DND5E.InitiativeAbbr')}
             </button>
