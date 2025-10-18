@@ -125,7 +125,9 @@
         "SelectedHeader": "Abas Visíveis",
         "UnsupportedDocumentErrorMessage": "O tipo de documento {documentType} não está atualmente configurado para seleção de aba.",
         "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma aba.",
-        "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada."
+        "Explanation": "Qualquer aba que o usuário ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada.",
+        "SelectionTab.Title": "Seleção de Abas",
+        "VisibilityTab.Title": "Visibilidade de Abas"
     },
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Listbox": {
@@ -914,5 +916,24 @@
         "PlaceholderNameField.PlaceholderText": "Nome da Reserva",
         "PlaceholderNotesField.PlaceholderText": "Notas"
     },
-    "TIDY5E.Actor.Characteristics": "Características"
+    "TIDY5E.Actor.Characteristics": "Características",
+    "TIDY5E.Show": "Exibir",
+    "TIDY5E.Hide": "Ocultar",
+    "TIDY5E.LegendaryLairToolbar": "Barra Lendária/Covil",
+    "TIDY5E.SpellbookSections": "Seções do Grimório",
+    "TIDY5E.UserDefaultPrefix": "Padrão do Usuário: {value}",
+    "TIDY5E.ContextMenuActionPin": "Fixar no topo",
+    "TIDY5E.ContextMenuActionUnpin": "Desfixar do topo",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "Menu",
+        "LocationHeader": "Cabeçalho"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "Controles de Cabeçalho",
+        "label": "Configurar Controles de Cabeçalho",
+        "hint": "Apenas Novas Fichas Tidy: Configurar a localização dos controles do cabeçalho da ficha."
+    },
+    "TIDY5E.GMOnly.Title": "Apenas Mestre",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opções Globais de Exibição Padrão",
+    "TIDY5E.Character.Sidebar.Title": "Barra Lateral do Personagem de Jogador"
 }

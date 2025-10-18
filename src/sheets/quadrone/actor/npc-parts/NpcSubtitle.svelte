@@ -119,6 +119,7 @@
                 legacy: false,
               })}
             class="unbutton concentration-roll-button header-control"
+            data-has-roll-modes
           >
             {#if context.isConcentrating}
               <i

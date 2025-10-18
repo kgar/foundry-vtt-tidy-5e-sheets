@@ -112,6 +112,7 @@
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
             data-tidy-draggable
             data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_KEYED_FAVORITE}
+            data-has-roll-modes
             disabled={!context.owner}
           >
             {skill.label}

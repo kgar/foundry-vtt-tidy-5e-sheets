@@ -60,7 +60,7 @@
   let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
-  
+
   let hdPct = $derived(context.system.attributes?.hd?.pct ?? 0);
 
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
@@ -223,6 +223,7 @@
               onclick={(event) =>
                 context.actor.rollInitiativeDialog({ event: event })}
               disabled={!context.owner}
+              data-has-roll-modes
             >
               {localize('DND5E.InitiativeAbbr')}
             </button>
@@ -292,6 +293,7 @@
                     legacy: false,
                   })}
                 class="unbutton concentration-roll-button"
+                data-has-roll-modes
               >
                 <span class="label font-label-medium color-text-gold"
                   >{localize(save.label)}</span
@@ -482,29 +484,29 @@
               </div>
             {/if}
             {#if context.editable || context.unlocked}
-            <div class={['death-saves', { dying: context.showDeathSaves }]}>
-              {#if context.unlocked}
-                <button
-                  aria-label={localize('DND5E.DeathSaveConfigure')}
-                  data-tooltip="DND5E.DeathSaveConfigure"
-                  type="button"
-                  class="button button-borderless button-icon-only button-config"
-                  onclick={(ev) =>
-                    FoundryAdapter.renderDeathConfig(context.actor)}
-                >
-                  <i class="fas fa-cog"></i>
-                </button>
-              {:else if context.editable}
-                <button
-                  type="button"
-                  class="button button-borderless button-icon-only"
-                  aria-label={localize('DND5E.DeathSave')}
-                  data-tooltip="DND5E.DeathSave"
-                  onclick={() => context.actor.sheet.toggleDeathSaves()}
-                  disabled={!context.editable}
-                >
-                  <i class="fas fa-skull"></i>
-                </button>
+              <div class={['death-saves', { dying: context.showDeathSaves }]}>
+                {#if context.unlocked}
+                  <button
+                    aria-label={localize('DND5E.DeathSaveConfigure')}
+                    data-tooltip="DND5E.DeathSaveConfigure"
+                    type="button"
+                    class="button button-borderless button-icon-only button-config"
+                    onclick={(ev) =>
+                      FoundryAdapter.renderDeathConfig(context.actor)}
+                  >
+                    <i class="fas fa-cog"></i>
+                  </button>
+                {:else if context.editable}
+                  <button
+                    type="button"
+                    class="button button-borderless button-icon-only"
+                    aria-label={localize('DND5E.DeathSave')}
+                    data-tooltip="DND5E.DeathSave"
+                    onclick={() => context.actor.sheet.toggleDeathSaves()}
+                    disabled={!context.editable}
+                  >
+                    <i class="fas fa-skull"></i>
+                  </button>
                 {/if}
               </div>
             {/if}
