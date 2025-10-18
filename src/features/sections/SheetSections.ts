@@ -845,7 +845,7 @@ export class SheetSections {
           // TODO: This doesn't work because of the member data shape.
           // Will need to find a way to punch through the item for comparison 
           // while still sorting the main entry.
-          section.members = ItemUtils.getSortedItems(section.members, sortMode);
+          // section.members = ItemUtils.getSortedItems(section.members, sortMode);
         }
 
         // Apply visibility from configuration
