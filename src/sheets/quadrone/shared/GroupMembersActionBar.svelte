@@ -6,13 +6,12 @@
   import { CONSTANTS } from 'src/constants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
-    ActorSheetQuadroneContext,
+    GroupSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
   import ExpandCollapseButton from './ExpandCollapseButton.svelte';
   import Search from 'src/sheets/quadrone/shared/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerSheetQuadroneContext } from 'src/types/item.types';
 
   interface Props {
     searchCriteria: string;
@@ -30,12 +29,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context =
-    $derived(
-      getSheetContext<
-        ActorSheetQuadroneContext | ContainerSheetQuadroneContext
-      >(),
-    );
+  let context = $derived(getSheetContext<GroupSheetQuadroneContext>());
 
   let tab = $derived(context.tabs.find((t) => t.id === tabId));
 
