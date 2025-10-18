@@ -65,16 +65,17 @@
 
   let context = $derived(getCharacterSheetContext());
 
-  
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
-
 
   function getType() {
     if (isSpell) {
       let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
 
-      if (spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE && spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+      if (
+        spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_INNATE &&
+        spellMethod.key !== CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
+      ) {
         return 'spell-slots';
       }
       return 'none';
@@ -110,6 +111,7 @@
       tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(event) => context.editable && ctx.document.use({ event })}
+      data-has-roll-modes
     >
       <img class="item-image" alt={ctx.document.name} src={img} />
       <span class="roll-prompt">
@@ -140,7 +142,8 @@
           class="button button-icon-only flexshrink save-name-button"
           aria-label="Save Alias"
           onclick={(ev) => {
-            const input = ev.currentTarget.previousElementSibling?.querySelector('input');
+            const input =
+              ev.currentTarget.previousElementSibling?.querySelector('input');
             if (input) {
               SheetPins.setAlias(ctx.document, input.value);
             }
@@ -152,55 +155,57 @@
         </button>
       </div>
     {:else}
-    <div
-      class="pin-name-container flexrow"
-      title="{ctx.document.name} | {ctx.document.item.name}"
-    >
-      {#if context.unlocked}
-        <span class="font-label-medium pin-name truncate flex1">
-          {coalesce(ctx.alias, ctx.document.name)}
-        </span>
-        <button
-          class="button button-borderless button-icon-only flexshrink edit-name-button"
-          onclick={(ev) => {
-            isEditing = true;
-            return false;
-          }}
-        >
-          <i class="fa-solid fa-pencil"></i>
-        </button>
-      {:else}
-        <span class="font-label-medium pin-name truncate">
-          {coalesce(ctx.alias, ctx.document.name)}
-        </span>
-      {/if}
-    </div>
-    <div class="pin-context {ctx.resource}">
-      {#if pinType === 'limited-uses'}
-        <span class="inline-uses">
+      <div
+        class="pin-name-container flexrow"
+        title="{ctx.document.name} | {ctx.document.item.name}"
+      >
+        {#if context.unlocked}
+          <span class="font-label-medium pin-name truncate flex1">
+            {coalesce(ctx.alias, ctx.document.name)}
+          </span>
+          <button
+            class="button button-borderless button-icon-only flexshrink edit-name-button"
+            onclick={(ev) => {
+              isEditing = true;
+              return false;
+            }}
+          >
+            <i class="fa-solid fa-pencil"></i>
+          </button>
+        {:else}
+          <span class="font-label-medium pin-name truncate">
+            {coalesce(ctx.alias, ctx.document.name)}
+          </span>
+        {/if}
+      </div>
+      <div class="pin-context {ctx.resource}">
+        {#if pinType === 'limited-uses'}
+          <span class="inline-uses">
+            <TextInput
+              class={['uninput uses-value', { diminished: value < 1 }]}
+              document={usesDocument}
+              field={spentProp}
+              {value}
+              onSaveChange={(ev) => saveValueChange(ev)}
+              selectOnFocus={true}
+            />
+            <span class="divider">/</span>
+            <span class="uses-max">{maxText}</span>
+          </span>
+        {:else if pinType === 'quantity'}
           <TextInput
-            class={["uninput uses-value", { diminished: value < 1 }]}
-            document={usesDocument}
-            field={spentProp}
-            {value}
-            onSaveChange={(ev) => saveValueChange(ev)}
+            class={['uninput uses-value centered', { diminished: value < 1 }]}
+            document={ctx.document}
+            field={'system.quantity'}
+            value={ctx.document.system.quantity}
             selectOnFocus={true}
           />
-          <span class="divider">/</span>
-          <span class="uses-max">{maxText}</span>
-        </span>
-      {:else if pinType === 'quantity'}
-        <TextInput
-          class={["uninput uses-value centered", { diminished: value < 1 }]}
-          document={ctx.document}
-          field={'system.quantity'}
-          value={ctx.document.system.quantity}
-          selectOnFocus={true}
-        />
-      {:else if pinType === 'none'}
-        <span class="subtitle font-default-medium color-text-lighter">{ctx.document.parent.parent.name}</span>
-      {/if}
-    </div>
+        {:else if pinType === 'none'}
+          <span class="subtitle font-default-medium color-text-lighter"
+            >{ctx.document.parent.parent.name}</span
+          >
+        {/if}
+      </div>
     {/if}
   </div>
   {#if context.unlocked && !isEditing}
