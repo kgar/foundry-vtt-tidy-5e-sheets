@@ -13,11 +13,13 @@
     "TIDY5E.TabConfiguration": {
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
         "Title": "Wybór zakładki dla {documentName}",
-        "MenuOptionText": "Wybór zakładki",
+        "MenuOptionText": "Ustawienia zakładki",
         "AvailableHeader": "Ukryte zakładki",
         "SelectedHeader": "Widoczne zakładki",
         "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
-        "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone."
+        "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone.",
+        "SelectionTab.Title": "Wybór zakładki",
+        "VisibilityTab.Title": "Widoczność zakładki"
     },
     "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Pojazdy",
@@ -853,13 +855,13 @@
     },
     "TIDY5E.SettingsMenu.Homebrew": {
         "name": "Zasady domowe",
-        "label": "Konfigurowanie zasad domowych",
+        "label": "Konfiguruj zasady domowe",
         "hint": "Włącz i skonfiguruj opcje zasad domowych udostępnianych przez ten moduł."
     },
     "TIDY5E.SettingsMenu.TabConfiguration": {
         "name": "Zakładki karty",
-        "label": "Konfigurowanie zakładek karty",
-        "hint": "Tylko Nowe Karty Tidy: skonfiguruj, które zakładki będą widoczne dla wszystkich kart aktorów i przedmiotów."
+        "label": "Konfiguruj zakładki karty",
+        "hint": "Tylko Nowe Karty Tidy: Skonfiguruj, które zakładki będą widoczne dla wszystkich kart aktorów i przedmiotów."
     },
     "TIDY5E.Settings.BankedInspiration.title": "Gromadzona inspiracja",
     "TIDY5E.Settings.EnableBankedInspiration": {
@@ -925,5 +927,17 @@
     "TIDY5E.Show": "Pokaż",
     "TIDY5E.Hide": "Ukryj",
     "TIDY5E.LegendaryLairToolbar": "Pasek akcji legendarnych / leża",
-    "TIDY5E.SpellbookSections": "Sekcje Księgi czarów"
+    "TIDY5E.SpellbookSections": "Sekcje Księgi czarów",
+    "TIDY5E.ContextMenuActionPin": "Przypnij u góry",
+    "TIDY5E.ContextMenuActionUnpin": "Odepnij z góry",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "Menu",
+        "LocationHeader": "Nagłówek"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "Przyciski nagłówka",
+        "label": "Konfiguruj przyciski nagłówka",
+        "hint": "Tylko Nowe Karty Tidy: Skonfiguruj położenie przycisków nagłówka karty."
+    },
+    "TIDY5E.GMOnly.Title": "Tylko MG"
 }
