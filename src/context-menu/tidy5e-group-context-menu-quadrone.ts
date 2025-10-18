@@ -29,12 +29,12 @@ export function getGroupMemberContextOptionsQuadrone(
       condition: () => group.isOwner,
       group: 'customize',
       callback: () =>
-        new SectionSelectorApplication(
-          `${TidyFlags.sections.prop}.${actor.id}`,
-          FoundryAdapter.localize('TIDY5E.Section.Label'),
-          group,
-          { document: group }
-        ).render(true),
+        new SectionSelectorApplication({
+          flag: `${TidyFlags.sections.prop}.${actor.id}`,
+          sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+          callingDocument: group,
+          document: group,
+        }).render(true),
     },
     {
       name: 'DND5E.Group.Action.Remove',

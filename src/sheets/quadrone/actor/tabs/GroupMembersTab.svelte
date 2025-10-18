@@ -132,9 +132,12 @@
         columns,
       )}
 
-      <TidyTable key={section.key}>
+      <TidyTable key={section.key} data-custom-section={section.custom}>
         {#snippet header()}
-          <TidyTableHeaderRow class="theme-dark">
+          <TidyTableHeaderRow
+            class="theme-dark"
+            data-context-menu="group-section"
+          >
             <TidyTableHeaderCell primary={true}>
               <h3>
                 {localize(section.label)}

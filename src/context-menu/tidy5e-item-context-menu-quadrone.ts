@@ -297,12 +297,12 @@ export function getItemContextOptionsQuadrone(
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
     callback: () =>
-      new SectionSelectorApplication(
-        TidyFlags.section.prop,
-        FoundryAdapter.localize('TIDY5E.Section.Label'),
-        itemParent ?? item,
-        { document: item }
-      ).render(true),
+      new SectionSelectorApplication({
+        flag: TidyFlags.section.prop,
+        sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+        callingDocument: itemParent ?? item,
+        document: item,
+      }).render(true),
   });
 
   let actionSectionContextName =
@@ -335,12 +335,12 @@ export function getItemContextOptionsQuadrone(
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'customize',
     callback: () =>
-      new SectionSelectorApplication(
-        TidyFlags.actionSection.prop,
-        actionSectionConfigTitle,
-        itemParent ?? item,
-        { document: item }
-      ).render(true),
+      new SectionSelectorApplication({
+        flag: TidyFlags.actionSection.prop,
+        sectionType: actionSectionConfigTitle,
+        callingDocument: itemParent ?? item,
+        document: item,
+      }).render(true),
   });
 
   options.push({
@@ -373,7 +373,8 @@ export function getItemContextOptionsQuadrone(
     options.push({
       name: 'TIDY5E.ContextMenuActionShowLimitedUses',
       icon: '<i class="fa-solid fa-fw"></i>',
-      callback: () => SheetPinsProvider.setItemResourceType(item, 'limited-uses'),
+      callback: () =>
+        SheetPinsProvider.setItemResourceType(item, 'limited-uses'),
       condition: () =>
         item.isOwner &&
         !FoundryAdapter.isLockedInCompendium(item) &&

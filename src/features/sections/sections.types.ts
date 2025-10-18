@@ -13,4 +13,4 @@ export type SheetTabSectionConfigs = {
 };
 
 /** A record of document UUIDs to Section Keys/Names */
-export type DocumentSectionAssignments = Record<string, string>;
+export type DocumentSectionAssignments = Record<string, string | null>;
