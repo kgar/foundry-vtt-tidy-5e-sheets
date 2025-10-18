@@ -129,6 +129,36 @@
     </p>
   </div>
 
+  <!-- TODO: Unleash form submission in the core document sheet mixin. -->
+  <div class="form-group">
+    <label for="{appId}-prerequisites-items"
+      >{localize(
+        context.system.schema.fields.prerequisites.fields.items.label,
+      )}</label
+    >
+    <div
+      class="form-fields"
+      {@attach (el) => {
+        const element: HTMLElement =
+          context.system.schema.fields.prerequisites.fields.items.toInput({
+            disabled: !context.unlocked,
+            value: context.source.prerequisites.items,
+            id: `${appId}-prerequisites-items`,
+          });
+
+        el.appendChild(element);
+
+        return () => {
+          element.remove();
+        };
+      }}
+    ></div>
+
+    <p class="hint">
+      {localize(context.system.schema.fields.prerequisites.fields.items.hint)}
+    </p>
+  </div>
+
   <div class="form-group">
     <label for="prerequisites-repeatable-{appId}">
       {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
