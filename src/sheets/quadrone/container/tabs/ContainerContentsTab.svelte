@@ -14,7 +14,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import ActionBar from '../../shared/ActionBar.svelte';
+  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
@@ -52,7 +52,7 @@
   );
 </script>
 
-<ActionBar bind:searchCriteria sections={configuredContents} {tabId} />
+<ItemsActionBar bind:searchCriteria sections={configuredContents} {tabId} />
 
 <!-- Tables -->
 <InventoryTables

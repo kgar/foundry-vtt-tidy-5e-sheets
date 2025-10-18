@@ -19,11 +19,11 @@
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import ActionBar from '../../shared/ActionBar.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { createSearchResultsState } from 'src/features/search/search.svelte';
   import { isNil } from 'src/utils/data';
+  import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -100,7 +100,7 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
-  <ActionBar
+  <GroupMembersActionBar
     bind:searchCriteria
     {sections}
     tabId={CONSTANTS.TAB_MEMBERS}

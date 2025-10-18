@@ -17,6 +17,7 @@
   import FilterButtonMenuQuadrone from 'src/components/action-bar/FilterButtonMenuQuadrone.svelte';
   import SortButtonWithMenuQuadrone from 'src/components/action-bar/SortButtonWithMenuQuadrone.svelte';
   import type { ContainerSheetQuadroneContext } from 'src/types/item.types';
+  import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
 
   interface Props {
     searchCriteria: string;
@@ -52,6 +53,11 @@
       tabId,
     ),
   );
+
+  let methods = $derived(
+    ItemSortRuntime.getDocumentSortMethodsQuadrone(context.document, tabId) ??
+      [],
+  );
 </script>
 
 <section
@@ -85,7 +91,7 @@
     <FilterButtonMenuQuadrone filterData={context.filterData} {tabId} />
   {/if}
 
-  <SortButtonWithMenuQuadrone doc={context.document} {tabId} />
+  <SortButtonWithMenuQuadrone doc={context.document} {tabId} {methods} />
 
   {#if context.editable}
     <a

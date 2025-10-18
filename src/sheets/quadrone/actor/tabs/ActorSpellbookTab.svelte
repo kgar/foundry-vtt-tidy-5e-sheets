@@ -8,7 +8,7 @@
     NpcSheetQuadroneContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import ActionBar from '../../shared/ActionBar.svelte';
+  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import SpellTables from '../../shared/SpellTables.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import {
@@ -129,7 +129,7 @@
   });
 </script>
 
-<ActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
+<ItemsActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
 
 {#if showSheetPin}
   <SheetPins />

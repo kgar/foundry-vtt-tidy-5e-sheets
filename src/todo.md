@@ -11,17 +11,18 @@
   - [x] Sheet
 - [x] Update all sheet pin component references to honor user setting value.
 - [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
-- [ ] Stretch: Sheet Pins / Multi-actor Members tab upgrade
+- [x] Stretch: Sheet Pins / Multi-actor Members tab upgrade
   - [x] Add action bar with search, sort, and config
   - [x] Enable custom sections for members tabs
   - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
   - [x] Add Context menu "Choose a section" (or whatever)
   - [x] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
   - [x] Enable Search
-  - [ ] Enable Sorting - need custom impls for the basic 3 sorts in the group member sheet.
   - [x] Implement Show Sheet Pins option
   - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
-- [ ] Stretch: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
+  - [ ] Make custom action bar for Group Members to exclude filters and sorting.
+- [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
+- [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
 
 
 ### Short List

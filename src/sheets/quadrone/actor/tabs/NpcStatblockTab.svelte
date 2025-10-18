@@ -11,7 +11,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/api';
-  import ActionBar from '../../shared/ActionBar.svelte';
+  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import type {
@@ -187,7 +187,7 @@
   });
 </script>
 
-<ActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
+<ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
 {#if context.showLegendariesOnStatblockTab && (context.showLegendaryActions || context.showLegendaryResistances || context.showLairTracker)}
   <div class="legendaries cards-container flexrow">
