@@ -62,7 +62,9 @@
 
   let hoveredMember = $state<string | null>(null);
 
-  let members = $derived(context.members.sections.flatMap((s) => s.members));
+  let members = $derived(
+    context.members.sections.filter((s) => s.show).flatMap((s) => s.members),
+  );
 </script>
 
 <aside class="sidebar">
