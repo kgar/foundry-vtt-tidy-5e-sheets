@@ -1,26 +1,5 @@
 ## kgar To Do
 
-### More Sheet Pins
-
-- [x] Set up the Show Sheet Pins per tab as a Global User Preference. No sheet-local override.
-- [x] Propagate UI for saving sheet pin visibility (local and global) to the relevant tabs.
-  - [x] Inventory (all of em)
-  - [x] Spellbook
-  - [x] Features
-  - [x] Statblock
-  - [x] Sheet
-- [x] Update all sheet pin component references to honor user setting value.
-- [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
-- [x] Stretch: Sheet Pins / Multi-actor Members tab upgrade
-  - [x] Add action bar with search, sort, and config
-  - [x] Enable custom sections for members tabs
-  - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
-  - [x] Add Context menu "Choose a section" (or whatever)
-  - [x] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
-  - [x] Enable Search
-  - [x] Implement Show Sheet Pins option
-  - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
-  - [x] Make custom action bar for Group Members to exclude filters and sorting.
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
 - [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
 
@@ -199,3 +178,25 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 ### Stretch
 
 - [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
+
+### More Sheet Pins
+
+- [x] Set up the Show Sheet Pins per tab as a Global User Preference. No sheet-local override.
+- [x] Propagate UI for saving sheet pin visibility (local and global) to the relevant tabs.
+  - [x] Inventory (all of em)
+  - [x] Spellbook
+  - [x] Features
+  - [x] Statblock
+  - [x] Sheet
+- [x] Update all sheet pin component references to honor user setting value.
+- [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
+- [x] Stretch: Sheet Pins / Multi-actor Members tab upgrade
+  - [x] Add action bar with search, sort, and config
+  - [x] Enable custom sections for members tabs
+  - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
+  - [x] Add Context menu "Choose a section" (or whatever)
+  - [x] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
+  - [x] Enable Search
+  - [x] Implement Show Sheet Pins option
+  - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
+  - [x] Make custom action bar for Group Members to exclude filters and sorting.
