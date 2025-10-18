@@ -10,7 +10,7 @@
   import type { MessageBus } from 'src/types/types';
   import { Tidy5eContainerSheetQuadrone } from '../../Tidy5eContainerSheetQuadrone.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/api';
 
   interface Props {
@@ -76,7 +76,7 @@
     SheetSections.configureInventory(
       containerContents.contents,
       tabId,
-      SheetPreferencesService.getByType(sheetDocument.type),
+      UserSheetPreferencesService.getByType(sheetDocument.type),
       TidyFlags.sectionConfig.get(container)?.[tabId],
     ),
   );

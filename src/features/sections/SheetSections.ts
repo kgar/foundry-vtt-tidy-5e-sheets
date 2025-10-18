@@ -12,6 +12,7 @@ import type {
   CustomSectionOptions,
   FavoriteSection,
   FeatureSection,
+  GroupMemberSection,
   InventorySection,
   NpcAbilitySection,
   NpcSheetContext,
@@ -24,8 +25,8 @@ import type {
 import { isNil } from 'src/utils/data';
 import type { SectionConfig } from './sections.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
-import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
-import type { SheetPreference } from '../user-preferences/user-preferences.types';
+import { UserSheetPreferencesService } from '../user-preferences/SheetPreferencesService';
+import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import {
@@ -467,7 +468,7 @@ export class SheetSections {
   static configureInventory(
     sections: InventorySection[],
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
     try {
@@ -504,7 +505,7 @@ export class SheetSections {
         sectionConfigs?.[tabId]
       );
 
-      const characterPreferences = SheetPreferencesService.getByType(
+      const characterPreferences = UserSheetPreferencesService.getByType(
         document.type
       );
 
@@ -539,7 +540,7 @@ export class SheetSections {
     favoriteSections: FavoriteSection[],
     actor: Actor5e,
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
     let configuredFavorites: FavoriteSection[] = [];
@@ -639,7 +640,7 @@ export class SheetSections {
     sections: TSection[],
     context: NpcSheetQuadroneContext,
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ) {
     try {
@@ -676,7 +677,7 @@ export class SheetSections {
       | CharacterSheetQuadroneContext
       | NpcSheetQuadroneContext,
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
   ): TSection[] {
     try {
@@ -706,7 +707,7 @@ export class SheetSections {
   static configureActions(
     sections: ActionSectionClassic[],
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
   ) {
     try {
@@ -731,7 +732,7 @@ export class SheetSections {
   static configureActionsQuadrone(
     sections: TidyItemSectionBase[],
     tabId: string,
-    sheetPreferences: SheetPreference,
+    sheetPreferences: UserSheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
   ) {
     try {
@@ -824,5 +825,38 @@ export class SheetSections {
     return item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
       ? FoundryAdapter.localize('Sheet')
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
+  }
+
+  // TODO: Consider just moving this to the sheet class now that there's no classic sheet equivalent.
+  static configureGroupMembers(
+    sections: GroupMemberSection[],
+    tabId: string,
+    sheetPreferences: UserSheetPreference,
+    sectionConfigs: Record<string, SectionConfig> | undefined
+  ) {
+    try {
+      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      return sections.map(({ ...section }) => {
+        // Sort - Group members are natively manually sorted
+        if (sortMode !== 'm') {
+          // TODO: This doesn't work because of the member data shape.
+          // Will need to find a way to punch through the item for comparison 
+          // while still sorting the main entry.
+          // section.members = ItemUtils.getSortedItems(section.members, sortMode);
+        }
+
+        // Apply visibility from configuration
+        section.show = sectionConfigs?.[section.key]?.show !== false;
+
+        return section;
+      });
+    } catch (e) {
+      error('An error occurred while configuring group members', false, e);
+    }
+
+    return sections;
   }
 }

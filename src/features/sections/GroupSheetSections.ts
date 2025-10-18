@@ -1,5 +1,5 @@
 import type { GroupMemberSection } from 'src/types/group.types';
-import type { SheetPreference } from '../user-preferences/user-preferences.types';
+import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { error } from 'src/utils/logging';
 
@@ -7,7 +7,7 @@ export class GroupSheetSections {
   static configureMemberSections(
     sections: GroupMemberSection[],
     tabId: string,
-    sheetPreferences: SheetPreference
+    sheetPreferences: UserSheetPreference
     /* TODO: sectionConfig?: Record<string, SectionConfig> */
   ) {
     try {

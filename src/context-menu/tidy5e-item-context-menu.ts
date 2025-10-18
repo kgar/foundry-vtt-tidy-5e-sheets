@@ -57,7 +57,6 @@ export function getItemContextOptions(
 
   let options: ContextMenuEntry[] = [];
 
-
   // Toggle Attunement State
   if (
     !!CONFIG.DND5E.attunementTypes[
@@ -357,12 +356,12 @@ export function getItemContextOptions(
     name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
     icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
-      new SectionSelectorApplication(
-        TidyFlags.section.prop,
-        FoundryAdapter.localize('TIDY5E.Section.Label'),
-        itemParent ?? item,
-        { document: item }
-      ).render(true),
+      new SectionSelectorApplication({
+        flag: TidyFlags.section.prop,
+        sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+        callingDocument: itemParent ?? item,
+        document: item,
+      }).render(true),
     condition: () =>
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&
@@ -375,12 +374,12 @@ export function getItemContextOptions(
     name: 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
     icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
-      new SectionSelectorApplication(
-        TidyFlags.actionSection.prop,
-        FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
-        itemParent ?? item,
-        { document: item }
-      ).render(true),
+      new SectionSelectorApplication({
+        flag: TidyFlags.actionSection.prop,
+        sectionType: FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
+        callingDocument: itemParent ?? item,
+        document: item,
+      }).render(true),
     condition: () =>
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&

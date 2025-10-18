@@ -1,7 +1,7 @@
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
-import { SheetPins } from 'src/features/sheet-pins/SheetPins';
+import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 
 export function getContextMenuOptionsQuadrone(
   activity: Activity5e,
@@ -75,25 +75,25 @@ export function getContextMenuOptionsQuadrone(
   entries.push({
     name: 'TIDY5E.ContextMenuActionPin',
     icon: `<i class="fa-solid fa-thumbtack"></i>`,
-    callback: async () => await SheetPins.pin(activity, 'activity'),
+    callback: async () => await SheetPinsProvider.pin(activity, 'activity'),
     condition: () =>
       app.actor &&
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
-      SheetPins.isPinnable(activity, 'activity') &&
-      !SheetPins.isPinned(activity),
+      SheetPinsProvider.isPinnable(activity, 'activity') &&
+      !SheetPinsProvider.isPinned(activity),
     group: 'pins',
   });
 
   entries.push({
     name: 'TIDY5E.ContextMenuActionUnpin',
     icon: `<i class="fa-regular fa-thumbtack"></i>`,
-    callback: async () => await SheetPins.unpin(activity),
+    callback: async () => await SheetPinsProvider.unpin(activity),
     condition: () =>
       activity.item.isOwner &&
       !FoundryAdapter.isLockedInCompendium(activity.item) &&
-      SheetPins.isPinnable(activity, 'activity') &&
-      SheetPins.isPinned(activity),
+      SheetPinsProvider.isPinnable(activity, 'activity') &&
+      SheetPinsProvider.isPinned(activity),
     group: 'pins',
   });
 

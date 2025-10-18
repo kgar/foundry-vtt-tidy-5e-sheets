@@ -28,6 +28,11 @@
 
   "TIDY5E.AddSpecific": "Add {name}",
 
+  "TIDY5E.SheetPin": {
+    "Label": "Sheet Pin",
+    "LabelPl": "Sheet Pins"
+  },
+
   "TIDY5E.Show": "Show",
   "TIDY5E.Hide": "Hide",
 
@@ -849,6 +854,7 @@
   "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "Cast Activity Spell Grouping",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
+  "TIDY5E.Utilities.ShowSheetPins": "Show Sheet Pins",
   "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Show Legendary/Lair trackers in the Statblock tab",
   "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Include Spellbook sections in the Statblock tab",
   "TIDY5E.Section": {

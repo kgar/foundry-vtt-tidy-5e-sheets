@@ -28,7 +28,7 @@ import { settings, systemSettings } from 'src/settings/settings.svelte';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import type { Item5e } from 'src/types/item.types';
 import { Tidy5eActorSheetBaseMixin } from 'src/mixins/Tidy5eActorSheetBaseMixin';
-import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -228,7 +228,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
 
     const summary = this.#getSummary(stats);
 
-    const sheetPreferences = SheetPreferencesService.getByType(this.actor.type);
+    const sheetPreferences = UserSheetPreferencesService.getByType(this.actor.type);
 
     const membersSortMode =
       sheetPreferences.tabs?.[CONSTANTS.TAB_MEMBERS]?.sort ?? 'm';
@@ -244,7 +244,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_MEMBERS,
                 'sort',
@@ -258,7 +258,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_MEMBERS,
                 'sort',
@@ -302,7 +302,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',
@@ -316,7 +316,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_INVENTORY,
                 'sort',

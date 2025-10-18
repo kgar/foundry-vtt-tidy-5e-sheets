@@ -9,7 +9,7 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
@@ -18,6 +18,7 @@
   import ActorEncumbranceBar from '../parts/ActorEncumbranceBar.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import { dropzoneClass } from 'src/features/drag-and-drop/drag-and-drop';
+  import SheetPins from '../../shared/SheetPins.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
   let localize = FoundryAdapter.localize;
@@ -37,9 +38,17 @@
     SheetSections.configureInventory(
       context.inventory,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
+  );
+
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
   );
 
   $effect(() => {
@@ -52,10 +61,14 @@
   });
 
   let hoveredMember = $state<string | null>(null);
+
+  let members = $derived(
+    context.members.sections.flatMap((s) => s.members),
+  );
 </script>
 
 <aside class="sidebar">
-  {#each [...context.members.character.members, ...context.members.npc.members, ...context.members.vehicle.members] as member}
+  {#each members as member}
     {@const actorIsDead =
       member.actor.system.attributes?.hp?.value === 0 &&
       member.actor.system.attributes?.hp?.max > 0 &&
@@ -154,6 +167,10 @@
 <div class="group-tab-content flexcol">
   <div class="inventory-content">
     <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+
+    {#if showSheetPin}
+      <SheetPins />
+    {/if}
 
     {#if context.showContainerPanel && !!context.containerPanelItems.length}
       <ContainerPanel

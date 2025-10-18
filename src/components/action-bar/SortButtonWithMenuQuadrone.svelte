@@ -1,24 +1,23 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ButtonWithOptionPanel from '../buttons/ButtonWithOptionPanel.svelte';
-  import type { SortMethodOption } from 'src/types/sort.types';
+  import type {
+    SortMethodOption,
+    SortMethodScheme,
+  } from 'src/types/sort.types';
   import { tick } from 'svelte';
-  import { ItemSortRuntime } from 'src/runtime/item/ItemSortRuntime.svelte';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   interface Props {
     doc: any;
     tabId: string;
+    methods: SortMethodScheme[];
   }
 
-  let { doc, tabId }: Props = $props();
+  let { doc, tabId, methods }: Props = $props();
 
   let currentMethodKey = $derived(
-    SheetPreferencesService.getByType(doc.type).tabs?.[tabId]?.sort ?? 'm',
-  );
-
-  let methods = $derived(
-    ItemSortRuntime.getDocumentSortMethodsQuadrone(doc, tabId) ?? [],
+    UserSheetPreferencesService.getByType(doc.type).tabs?.[tabId]?.sort ?? 'm',
   );
 
   let expanded = $state(false);

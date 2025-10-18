@@ -1,6 +1,8 @@
 import type { Actor5e } from 'src/types/types';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
+import { TidyFlags } from 'src/api';
 
 /**
  * Prepare an array of context menu options which are available for a member of a group.
@@ -19,6 +21,20 @@ export function getGroupMemberContextOptionsQuadrone(
       callback: async () => (await fromUuid(actor.uuid))?.sheet.render(true),
       condition: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
+      group: 'common',
+    },
+    {
+      name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+      icon: '<i class="fa fa-diagram-cells"></i>',
+      condition: () => group.isOwner,
+      group: 'customize',
+      callback: () =>
+        new SectionSelectorApplication({
+          flag: `${TidyFlags.sections.prop}.${actor.id}`,
+          sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+          callingDocument: group,
+          document: group,
+        }).render(true),
     },
     {
       name: 'DND5E.Group.Action.Remove',
@@ -26,6 +42,7 @@ export function getGroupMemberContextOptionsQuadrone(
       callback: async () => await group.system.removeMember(actor),
       condition: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
+      group: 'be-careful',
     },
   ];
 

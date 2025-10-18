@@ -13,7 +13,7 @@
   } from 'src/features/search/search.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -33,7 +33,7 @@
     SheetSections.configureInventory(
       context.inventory,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );

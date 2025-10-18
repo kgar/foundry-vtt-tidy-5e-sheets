@@ -427,7 +427,7 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getGroupMemberRowActions(context: GroupSheetQuadroneContext) {
+  getGroupMemberRowActions(context: ActorSheetQuadroneContext) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Actor5e,

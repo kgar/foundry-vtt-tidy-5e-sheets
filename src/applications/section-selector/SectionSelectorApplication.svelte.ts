@@ -20,29 +20,49 @@ export type SectionSelectorContext = {
   tabs: Tab[];
 };
 
+export type SectionSelectorApplicationConfiguration =
+  DocumentSheetApplicationConfiguration & {
+    flag: string;
+    sectionType: string;
+    callingDocument: any;
+    onSave?: (section: string | null) => Promise<any>;
+  };
+
 export class SectionSelectorApplication extends DocumentSheetDialog<
   DocumentSheetApplicationConfiguration,
   SectionSelectorContext
 >() {
+  /**
+   * The property on the document to check for the current section and to save changes.
+   */
   _prop: string;
+  /**
+   * A label to clarify the type of section being set. E.g., an Action Section.
+   */
   _sectionType: string;
   /**
    * The document that requested this application, not necessarily the document
    * to be edited. This is used to determine the theme of this application.
    */
   _callingDocument: any;
+  /**
+   * Optional save override for scenarios where the section affiliation is being handled differently.
+   */
+  _onSave?: (section: string | null) => Promise<any>;
 
-  constructor(
-    flag: string,
-    sectionType: string,
-    callingDocument: any,
-    options: DocumentSheetApplicationConfiguration
-  ) {
+  constructor({
+    flag,
+    sectionType,
+    callingDocument,
+    onSave,
+    ...options
+  }: SectionSelectorApplicationConfiguration) {
     super(options);
 
     this._prop = flag;
     this._sectionType = sectionType;
     this._callingDocument = callingDocument;
+    this._onSave = onSave;
   }
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
@@ -129,12 +149,22 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
   }
 
   async selectSection(name: string) {
+    if (this._onSave) {
+      await this._onSave(name);
+      return;
+    }
+
     await this.document.update({
       [this._prop]: name,
     });
   }
 
   async useDefaultSection() {
+    if (this._onSave) {
+      await this._onSave(null);
+      return;
+    }
+
     await this.document.update({
       [this._prop]: null,
     });

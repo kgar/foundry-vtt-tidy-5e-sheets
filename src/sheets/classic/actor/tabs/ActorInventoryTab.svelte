@@ -24,7 +24,7 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import AttunementTracker from '../AttunementTracker.svelte';
   import {
@@ -46,7 +46,7 @@
     SheetSections.configureInventory(
       context.inventory,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );

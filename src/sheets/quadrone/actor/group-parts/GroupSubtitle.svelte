@@ -19,15 +19,9 @@
     }
   });
 
-  let memberCount = $derived(
-    context.members.character.members.length +
-      context.members.npc.members.length +
-      context.members.vehicle.members.length,
-  );
+  let memberCount = $derived(context.system.members.length);
   let charactersOnly = $derived(
-    context.members.npc.members.length +
-      context.members.vehicle.members.length ===
-      0,
+    context.members.character.length === context.system.members.length,
   );
 
   let xpPool = $derived(context.system.details.xp.value);
@@ -49,28 +43,30 @@
 
 <!-- Group subtitle, member info -->
 <div class="actor-subtitle separated-list" data-tidy-sheet-part="subtitle-row">
-  {#if !charactersOnly && context.members.character.members.length > 0}
-    <span class="members" 
+  {#if !charactersOnly && context.members.character.length > 0}
+    <span
+      class="members"
       role="button"
       tabindex="0"
       onclick={() => context.sheet.selectTab(CONSTANTS.TAB_MEMBERS)}
-      >
+    >
       <span class="color-text-gold font-label-medium"
-        >{context.members.character.members.length > 1
+        >{context.members.character.length > 1
           ? localize('TYPES.Actor.characterPl')
           : localize('TYPES.Actor.character')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.members.character.members.length}</span
+        >{context.members.character.length}</span
       >
     </span>
     <div class="divider-dot"></div>
   {/if}
-  <span class="members" 
+  <span
+    class="members"
     role="button"
     tabindex="0"
     onclick={() => context.sheet.selectTab(CONSTANTS.TAB_MEMBERS)}
-    >
+  >
     <span class="color-text-gold font-label-medium"
       >{memberCount > 1
         ? localize('DND5E.Group.Member.other')
@@ -79,11 +75,12 @@
     <span class="color-text-default font-data-medium">{memberCount}</span>
   </span>
   <div class="divider-dot"></div>
-  <span class="average-level" 
+  <span
+    class="average-level"
     role="button"
     tabindex="0"
     onclick={() => context.sheet.selectTab(CONSTANTS.TAB_MEMBERS)}
-    >
+  >
     <span class="color-text-gold font-label-medium"
       >{localize('DND5E.LevelAvg')}</span
     >
@@ -93,11 +90,12 @@
   </span>
   {#if totalGold !== null}
     <div class="divider-dot"></div>
-    <span class="money" 
+    <span
+      class="money"
       role="button"
       tabindex="0"
       onclick={() => context.sheet.selectTab(CONSTANTS.TAB_ACTOR_INVENTORY)}
-      >
+    >
       <i class="currency gp"></i>
       <span class="color-text-default font-data-medium"
         >{FoundryAdapter.formatNumber(Math.round(totalGold))}</span
@@ -169,49 +167,49 @@
           {context.travel.currentPace.config.label}
         </span>
       </div>
-  </div>
+    </div>
   {/if}
   {#if context.actor.system.attributes.movement.paces.land > 0}
-  <div class="divider-dot"></div>
-  <span class="speed">
-    <span class="color-text-gold font-label-medium"
-      >{localize('DND5E.MovementLand')}</span
-    >
-    <span class="color-text-default font-data-medium"
-      >{context.actor.system.attributes.movement.paces.land}</span
-    >
-    <span class="color-text-lighter font-label-medium"
-      >{context.travel.units.label}</span
-    >
-  </span>
+    <div class="divider-dot"></div>
+    <span class="speed">
+      <span class="color-text-gold font-label-medium"
+        >{localize('DND5E.MovementLand')}</span
+      >
+      <span class="color-text-default font-data-medium"
+        >{context.actor.system.attributes.movement.paces.land}</span
+      >
+      <span class="color-text-lighter font-label-medium"
+        >{context.travel.units.label}</span
+      >
+    </span>
   {/if}
   {#if context.actor.system.attributes.movement.paces.air > 0}
-  <div class="divider-dot"></div>
-  <span class="speed">
-    <span class="color-text-gold font-label-medium"
-      >{localize('DND5E.MovementAir')}</span
-    >
-    <span class="color-text-default font-data-medium"
-      >{context.actor.system.attributes.movement.paces.air}</span
-    >
-    <span class="color-text-lighter font-label-medium"
-      >{context.travel.units.label}</span
-    >
-  </span>
+    <div class="divider-dot"></div>
+    <span class="speed">
+      <span class="color-text-gold font-label-medium"
+        >{localize('DND5E.MovementAir')}</span
+      >
+      <span class="color-text-default font-data-medium"
+        >{context.actor.system.attributes.movement.paces.air}</span
+      >
+      <span class="color-text-lighter font-label-medium"
+        >{context.travel.units.label}</span
+      >
+    </span>
   {/if}
   {#if context.actor.system.attributes.movement.paces.water > 0}
-  <div class="divider-dot"></div>
-  <span class="speed">
-    <span class="color-text-gold font-label-medium"
-      >{localize('DND5E.MovementWater')}</span
-    >
-    <span class="color-text-default font-data-medium"
-      >{context.actor.system.attributes.movement.paces.water}</span
-    >
-    <span class="color-text-lighter font-label-medium"
-      >{context.travel.units.label}</span
-    >
-  </span>
+    <div class="divider-dot"></div>
+    <span class="speed">
+      <span class="color-text-gold font-label-medium"
+        >{localize('DND5E.MovementWater')}</span
+      >
+      <span class="color-text-default font-data-medium"
+        >{context.actor.system.attributes.movement.paces.water}</span
+      >
+      <span class="color-text-lighter font-label-medium"
+        >{context.travel.units.label}</span
+      >
+    </span>
   {/if}
   {#if context.unlocked}
     <button

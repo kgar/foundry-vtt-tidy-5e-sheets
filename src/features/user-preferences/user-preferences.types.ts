@@ -1,13 +1,14 @@
 import type { CONSTANTS } from 'src/constants';
 
-export type SheetTypeTabPreferences = {
+export type UserSheetTypeTabPreferences = {
   sort?: string;
   sidebarExpanded?: boolean;
+  showSheetPins?: boolean;
 };
 
-export type SheetPreference = {
+export type UserSheetPreference = {
   tabs?: {
-    [tabId: string]: SheetTypeTabPreferences;
+    [tabId: string]: UserSheetTypeTabPreferences;
   };
   width?: number | 'auto';
   height?: number | 'auto';
@@ -16,8 +17,8 @@ export type SheetPreference = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
 };
 
-export type SheetPreferences = {
-  [sheetType: string]: SheetPreference;
+export type UserSheetPreferences = {
+  [sheetType: string]: UserSheetPreference;
 };
 
 export type ExpandCollapseBehavior = 'top-level' | 'all';

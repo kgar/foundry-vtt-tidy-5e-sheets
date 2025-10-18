@@ -21,7 +21,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { getContext, type Component } from 'svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import InlineContainerView from './InlineContainerView.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
@@ -56,7 +56,7 @@
     SheetSections.configureInventory(
       contents.filter((i) => i.items.length),
       tabId,
-      SheetPreferencesService.getByType(sheetDocument.type),
+      UserSheetPreferencesService.getByType(sheetDocument.type),
       TidyFlags.sectionConfig.get(container)?.[
         CONSTANTS.TAB_CONTAINER_CONTENTS
       ],

@@ -13,7 +13,7 @@
   import { getModifierData } from 'src/utils/formatting';
   import { SvelteSet } from 'svelte/reactivity';
   import { untrack } from 'svelte';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -31,13 +31,13 @@
     const type = untrack(() => context.actor.type);
 
     sidebarExpanded =
-      SheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
+      UserSheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
         ?.sidebarExpanded ?? true;
   });
 
   // When the user expands or collapses the sidebar, remember their preference for this tab.
   $effect(() => {
-    SheetPreferencesService.setDocumentTypeTabPreference(
+    UserSheetPreferencesService.setDocumentTypeTabPreference(
       untrack(() => context.actor.type),
       untrack(() => selectedTabId),
       'sidebarExpanded',

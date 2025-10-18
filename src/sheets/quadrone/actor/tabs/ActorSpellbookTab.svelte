@@ -8,7 +8,7 @@
     NpcSheetQuadroneContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
-  import ActionBar from '../../shared/ActionBar.svelte';
+  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import SpellTables from '../../shared/SpellTables.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import {
@@ -18,6 +18,9 @@
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
   import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context =
     $derived(
@@ -87,6 +90,12 @@
       ],
     },
     {
+      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
+      settings: [
+        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
+      ],
+    },
+    {
       title: 'TIDY5E.Utilities.Tools',
       settings: [
         {
@@ -102,6 +111,14 @@
     },
   ]);
 
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
+  );
+
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
       criteria: searchCriteria,
@@ -112,7 +129,11 @@
   });
 </script>
 
-<ActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
+<ItemsActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
+
+{#if showSheetPin}
+  <SheetPins />
+{/if}
 
 <SpellTables
   sections={spellbook}

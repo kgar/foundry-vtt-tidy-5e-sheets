@@ -8,13 +8,13 @@ import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
 import GroupMemberHpColumn from 'src/sheets/quadrone/item/columns/GroupMemberHpColumn.svelte';
-import GroupNpcXpColumn from 'src/sheets/quadrone/item/columns/GroupNpcXpColumn.svelte';
 import EncounterMemberCrColumn from 'src/sheets/quadrone/item/columns/EncounterMemberCrColumn.svelte';
 import EncounterMemberQuantityColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQuantityColumn.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
 import MemberActionsColumnHeader from 'src/sheets/quadrone/item/columns/MemberActionsColumnHeader.svelte';
 import EncounterMemberQtyFormulaColumn from 'src/sheets/quadrone/item/columns/EncounterMemberQtyFormulaColumn.svelte';
 import EncounterMemberInitiativeColumn from 'src/sheets/quadrone/item/columns/EncounterMemberInitiativeColumn.svelte';
+import GroupXpColumn from 'src/sheets/quadrone/item/columns/GroupXpColumn.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
@@ -65,7 +65,7 @@ class EncounterMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       },
       cellContent: {
         type: 'component',
-        component: GroupNpcXpColumn,
+        component: GroupXpColumn,
       },
       condition: () =>
         systemSettings.value.levelingMode !==

@@ -7,7 +7,7 @@
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { GroupSheetSections } from 'src/features/sections/GroupSheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import GroupLanguages from '../parts/GroupLanguages.svelte';
   import GroupSkills from '../parts/GroupSkills.svelte';
   import UnderlinedTabStrip from 'src/components/tabs/UnderlinedTabStrip.svelte';
@@ -44,7 +44,7 @@
     GroupSheetSections.configureMemberSections(
       context.memberSections,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
     ),
   );
 

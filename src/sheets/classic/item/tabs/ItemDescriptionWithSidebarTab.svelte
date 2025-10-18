@@ -187,12 +187,12 @@
             )}
             class="inline-icon-button"
             onclick={() =>
-              new SectionSelectorApplication(
-                TidyFlags.section.prop,
-                localize('TIDY5E.Section.Label'),
-                context.item,
-                { document: context.item },
-              ).render(true)}
+              new SectionSelectorApplication({
+                flag: TidyFlags.section.prop,
+                sectionType: localize('TIDY5E.Section.Label'),
+                callingDocument: context.item,
+                document: context.item,
+              }).render(true)}
           >
             <i class="fa-solid fa-search"></i>
           </a>
@@ -221,12 +221,12 @@
             )}
             class="inline-icon-button"
             onclick={() =>
-              new SectionSelectorApplication(
-                TidyFlags.actionSection.prop,
-                localize('TIDY5E.Section.ActionLabel'),
-                context.item,
-                { document: context.item },
-              ).render(true)}
+              new SectionSelectorApplication({
+                flag: TidyFlags.actionSection.prop,
+                sectionType: localize('TIDY5E.Section.ActionLabel'),
+                callingDocument: context.item,
+                document: context.item,
+              }).render(true)}
           >
             <i class="fa-solid fa-search"></i>
           </a>

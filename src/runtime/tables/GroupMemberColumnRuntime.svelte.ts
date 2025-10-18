@@ -11,8 +11,7 @@ import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActi
 import GroupMemberHpColumn from 'src/sheets/quadrone/item/columns/GroupMemberHpColumn.svelte';
 import GroupMemberHdColumn from 'src/sheets/quadrone/item/columns/GroupMemberHdColumn.svelte';
 import GroupMemberAcColumn from 'src/sheets/quadrone/item/columns/GroupMemberAcColumn.svelte';
-import GroupCharacterXpColumn from 'src/sheets/quadrone/item/columns/GroupCharacterXpColumn.svelte';
-import GroupNpcXpColumn from 'src/sheets/quadrone/item/columns/GroupNpcXpColumn.svelte';
+import GroupCharacterXpColumn from 'src/sheets/quadrone/item/columns/GroupXpColumn.svelte';
 import GroupVehicleDtColumn from 'src/sheets/quadrone/item/columns/GroupVehicleDtColumn.svelte';
 import GroupVehicleCrewColumn from 'src/sheets/quadrone/item/columns/GroupVehicleCrewColumn.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
@@ -71,7 +70,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       widthRems: 3,
     };
 
-    const characterXpColumn: ColumnSpecificationBase = {
+    const xpColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'html',
         html: FoundryAdapter.localize('DND5E.ExperiencePoints.Abbreviation'),
@@ -79,21 +78,6 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       cellContent: {
         type: 'component',
         component: GroupCharacterXpColumn,
-      },
-      condition: () =>
-        systemSettings.value.levelingMode !==
-        CONSTANTS.SYSTEM_SETTING_LEVELING_MODE_NO_XP,
-      widthRems: 3.75,
-    };
-
-    const npcXpColumn: ColumnSpecificationBase = {
-      headerContent: {
-        type: 'html',
-        html: FoundryAdapter.localize('DND5E.ExperiencePoints.Abbreviation'),
-      },
-      cellContent: {
-        type: 'component',
-        component: GroupNpcXpColumn,
       },
       condition: () =>
         systemSettings.value.levelingMode !==
@@ -151,14 +135,14 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             hp: { ...hpColumn, order: 200, priority: 500 },
             hd: { ...hdColumn, order: 300, priority: 100 },
             ac: { ...acColumn, order: 400, priority: 200 },
-            characterXp: { ...characterXpColumn, order: 500, priority: 300 },
+            characterXp: { ...xpColumn, order: 500, priority: 300 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
           [CONSTANTS.SHEET_TYPE_NPC]: {
             hp: { ...hpColumn, order: 100, priority: 400 },
             hd: { ...hdColumn, order: 200, priority: 100 },
             ac: { ...acColumn, order: 300, priority: 200 },
-            npcXp: { ...npcXpColumn, order: 400, priority: 300 },
+            npcXp: { ...xpColumn, order: 400, priority: 300 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
           [CONSTANTS.SHEET_TYPE_VEHICLE]: {
@@ -166,6 +150,14 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
             ac: { ...acColumn, order: 200, priority: 300 },
             dt: { ...damageThresholdColumn, order: 300, priority: 200 },
             crew: { ...crewColumn, order: 400, priority: 100 },
+            actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
+          },
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            inspiration: { ...inspirationColumn, order: 100, priority: 400 },
+            hp: { ...hpColumn, order: 200, priority: 500 },
+            hd: { ...hdColumn, order: 300, priority: 100 },
+            ac: { ...acColumn, order: 400, priority: 200 },
+            characterXp: { ...xpColumn, order: 500, priority: 300 },
             actionsColumn: { ...actionsColumn, order: 1000, priority: 1000 },
           },
         },

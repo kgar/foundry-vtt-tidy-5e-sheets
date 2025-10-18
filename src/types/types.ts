@@ -364,7 +364,12 @@ export type SheetPinActivityContext = {
   document: Activity5e;
 } & SheetPinFlag & { type: 'activity' };
 
-export type SheetPinContext = SheetPinItemContext | SheetPinActivityContext;
+export type SheetPinContext = (
+  | SheetPinItemContext
+  | SheetPinActivityContext
+) & {
+  tabIds: Set<string>;
+};
 
 export type CharacterFacilitiesContext = {
   basic: {
@@ -1290,14 +1295,12 @@ export type MultiActorMemberPortraitContext = {
 };
 
 export type GroupMemberSection = {
-  label: string;
   members: GroupMemberQuadroneContext[];
-};
+} & TidySectionBase;
 
 export type GroupMembersQuadroneContext = {
-  character: GroupMemberSection;
-  npc: GroupMemberSection;
-  vehicle: GroupMemberSection;
+  sections: GroupMemberSection[];
+  character: GroupMemberQuadroneContext[];
   all: Map<string, GroupMemberQuadroneContext>;
   skilled: GroupMemberQuadroneContext[];
 };

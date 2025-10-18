@@ -7,8 +7,10 @@ import type {
 } from 'src/foundry/TidyFlags.types';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { CONSTANTS } from 'src/constants';
+import { UserSheetPreferencesService } from '../user-preferences/SheetPreferencesService';
+import type { BooleanSetting } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
 
-export class SheetPins {
+export class SheetPinsProvider {
   static isPinnable(
     doc: Item5e | Activity5e,
     type: SheetPinFlag['type']
@@ -149,5 +151,28 @@ export class SheetPins {
     return TidyFlags.sheetPins
       .get(doc.actor)
       ?.find((x) => x.id === relativeUuid)?.resource;
+  }
+
+  static getGlobalSectionSetting(
+    documentType: string,
+    tabId: string
+  ): BooleanSetting {
+    return {
+      type: 'boolean',
+      label: 'TIDY5E.Utilities.ShowSheetPins',
+      doc: game.user,
+      prop: UserSheetPreferencesService.getTabProp(
+        documentType,
+        tabId,
+        'showSheetPins',
+        true
+      ),
+      default: true,
+      checked: UserSheetPreferencesService.getDocumentTypeTabPreference(
+        documentType,
+        tabId,
+        'showSheetPins'
+      ),
+    };
   }
 }

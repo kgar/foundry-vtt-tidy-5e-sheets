@@ -15,6 +15,7 @@
   import MembersTabSidebar from '../encounter-parts/members-tab-sidebar/MembersTabSidebar.svelte';
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
@@ -32,6 +33,14 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      CONSTANTS.TAB_MEMBERS,
+      'showSheetPins',
+    ) ?? true,
+  );
+
   $effect(() => {
     const observer = new ResizeObserver(([entry]) => onResize(entry));
     observer.observe(sectionsContainer);
@@ -47,7 +56,9 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
-  <SheetPins />
+  {#if showSheetPin}
+    <SheetPins />
+  {/if}
 
   {#if npcs.length}
     {@const columns = new ColumnsLoadout(
