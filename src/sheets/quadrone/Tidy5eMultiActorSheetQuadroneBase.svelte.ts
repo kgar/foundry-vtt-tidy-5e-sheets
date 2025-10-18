@@ -523,6 +523,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         return false;
       }
 
+      // Section Transfer
       const sections = TidyFlags.sections.get(this.actor);
       const sourceSection = sections[sourceActor.id] ?? null;
       const targetSection = sections[targetMemberActor.id] ?? null;
@@ -534,6 +535,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         });
       }
 
+      // Member Sorting
       return await this._onSortMember(sourceActor, targetMemberActor);
     }
 
