@@ -1,5 +1,8 @@
 import type { Item5e } from 'src/types/item.types';
-import type { SheetTabSectionConfigs } from 'src/features/sections/sections.types';
+import type {
+  DocumentSectionAssignments,
+  SheetTabSectionConfigs,
+} from 'src/features/sections/sections.types';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
@@ -1071,6 +1074,31 @@ export class TidyFlags {
   };
 
   /**
+   * A map of UUIDs to section keys for sheets with sub-documents that cannot house their own section assignments.
+   */
+  static sections = {
+    key: 'sections' as const,
+    prop: TidyFlags.getFlagPropertyPath('sections'),
+    /** Gets the document's sub-document section assignments. */
+    get(document: any): DocumentSectionAssignments {
+      return (
+        TidyFlags.tryGetFlag<DocumentSectionAssignments>(
+          document,
+          TidyFlags.sections.key
+        ) ?? {}
+      );
+    },
+    /** Sets the document's sub-document section assignments. */
+    set(document: any, value: DocumentSectionAssignments): Promise<void> {
+      return TidyFlags.setFlag(document, TidyFlags.sections.key, value);
+    },
+    /** Clears the document's sub-document section assignments. */
+    unset(document: any) {
+      return TidyFlags.unsetFlag(document, TidyFlags.sections.key);
+    },
+  };
+
+  /**
    * The tabs that are currently selected for a given document.
    * This is used to determine which tabs are visible
    * in the document's sheet.
@@ -1105,10 +1133,8 @@ export class TidyFlags {
     /** Gets the actor's sheet pins. */
     get(actor: Actor5e): SheetPinFlag[] {
       return (
-        TidyFlags.tryGetFlag<SheetPinFlag[]>(
-          actor,
-          TidyFlags.sheetPins.key
-        ) ?? []
+        TidyFlags.tryGetFlag<SheetPinFlag[]>(actor, TidyFlags.sheetPins.key) ??
+        []
       );
     },
     /** Sets the actor's sheet pins. */

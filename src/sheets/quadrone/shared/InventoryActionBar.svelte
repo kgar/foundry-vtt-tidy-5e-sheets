@@ -5,7 +5,7 @@
     TidySectionBase,
   } from 'src/types/types';
   import { TidyFlags } from 'src/foundry/TidyFlags';
-  import ActionBar from './ActionBar.svelte';
+  import ItemsActionBar from './ItemsActionBar.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 
@@ -47,7 +47,7 @@
   ]);
 </script>
 
-<ActionBar
+<ItemsActionBar
   bind:searchCriteria
   {tabId}
   {sections}

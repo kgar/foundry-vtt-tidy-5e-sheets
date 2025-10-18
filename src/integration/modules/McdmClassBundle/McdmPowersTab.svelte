@@ -7,7 +7,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
-  import ActionBar from 'src/sheets/quadrone/shared/ActionBar.svelte';
+  import ItemsActionBar from 'src/sheets/quadrone/shared/ItemsActionBar.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import McdmPowersTables from './McdmPowersTables.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -206,7 +206,7 @@
     </TidyTable>
   </div>
 {/if}
-<ActionBar bind:searchCriteria sections={powerSections} {tabId} />
+<ItemsActionBar bind:searchCriteria sections={powerSections} {tabId} />
 <McdmPowersTables sections={powerSections} {searchCriteria} {context} {tabId}/>
 <div class={['sheet-footer flexrow']}>
   <div></div>

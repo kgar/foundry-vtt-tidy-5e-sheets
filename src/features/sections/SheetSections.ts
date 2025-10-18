@@ -12,6 +12,7 @@ import type {
   CustomSectionOptions,
   FavoriteSection,
   FeatureSection,
+  GroupMemberSection,
   InventorySection,
   NpcAbilitySection,
   NpcSheetContext,
@@ -824,5 +825,38 @@ export class SheetSections {
     return item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
       ? FoundryAdapter.localize('Sheet')
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
+  }
+
+  // TODO: Consider just moving this to the sheet class now that there's no classic sheet equivalent.
+  static configureGroupMembers(
+    sections: GroupMemberSection[],
+    tabId: string,
+    sheetPreferences: UserSheetPreference,
+    sectionConfigs: Record<string, SectionConfig> | undefined
+  ) {
+    try {
+      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
+
+      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+      return sections.map(({ ...section }) => {
+        // Sort - Group members are natively manually sorted
+        if (sortMode !== 'm') {
+          // TODO: This doesn't work because of the member data shape.
+          // Will need to find a way to punch through the item for comparison 
+          // while still sorting the main entry.
+          // section.members = ItemUtils.getSortedItems(section.members, sortMode);
+        }
+
+        // Apply visibility from configuration
+        section.show = sectionConfigs?.[section.key]?.show !== false;
+
+        return section;
+      });
+    } catch (e) {
+      error('An error occurred while configuring group members', false, e);
+    }
+
+    return sections;
   }
 }

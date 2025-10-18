@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import ActionBar from '../../shared/ActionBar.svelte';
+  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import FeatureTables from '../../shared/FeatureTables.svelte';
@@ -67,7 +67,7 @@
   });
 </script>
 
-<ActionBar bind:searchCriteria sections={features} {tabId} {tabOptionGroups} />
+<ItemsActionBar bind:searchCriteria sections={features} {tabId} {tabOptionGroups} />
 
 {#if showSheetPin}
   <SheetPins />
