@@ -46,6 +46,7 @@
     type="button"
     class="button button-primary button-preroll-initiative"
     onclick={(ev) => context.sheet.prerollAllInitiatives(ev)}
+    data-has-roll-modes
   >
     <i class="fas fa-dice-d20"></i>
     {localize('TIDY5E.Encounter.PrerollInitiative')}
