@@ -20,7 +20,7 @@
   - [x] Enable Search
   - [x] Implement Show Sheet Pins option
   - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
-  - [ ] Make custom action bar for Group Members to exclude filters and sorting.
+  - [x] Make custom action bar for Group Members to exclude filters and sorting.
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
 - [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
 
