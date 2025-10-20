@@ -30,7 +30,6 @@ export const GroupSheetQuadroneRuntime =
         layout: 'quadrone',
         iconClass: 'fa-solid fa-treasure-chest',
       },
-      // TODO: Determine, do we really need it?
       // {
       //   title: 'DND5E.Bastion.Configuration.Name',
       //   content: {
