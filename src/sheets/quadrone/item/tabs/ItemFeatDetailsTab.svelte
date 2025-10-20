@@ -146,6 +146,21 @@
             id: `${appId}-prerequisites-items`,
           });
 
+        element.addEventListener('change', async (ev) => {
+          ev.preventDefault();
+          ev.stopPropagation();
+
+          try {
+            await context.sheet.submit();
+          } catch (e: any) {
+            Object.values(e.getAllFailures()).forEach((failure: any) =>
+              ui.notifications.error(failure.message),
+            );
+
+            context.sheet.render();
+          }
+        });
+
         el.appendChild(element);
 
         return () => {
