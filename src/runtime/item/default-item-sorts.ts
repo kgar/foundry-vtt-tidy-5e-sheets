@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { SortMethodScheme } from 'src/types/sort.types';
 
 export const defaultItemSortSchemes = {
@@ -7,7 +7,7 @@ export const defaultItemSortSchemes = {
     key: CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING,
     icon: 'fa-solid fa-arrow-down-a-z',
     onClick: async (doc, currentTabId) => {
-      await SheetPreferencesService.setDocumentTypeTabPreference(
+      await UserSheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
@@ -22,7 +22,7 @@ export const defaultItemSortSchemes = {
     key: CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING,
     icon: 'fa-solid fa-arrow-up-z-a',
     onClick: async (doc, currentTabId) => {
-      await SheetPreferencesService.setDocumentTypeTabPreference(
+      await UserSheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
@@ -37,7 +37,7 @@ export const defaultItemSortSchemes = {
     key: CONSTANTS.ITEM_SORT_METHOD_KEY_MANUAL,
     icon: 'fa-solid fa-arrow-down-short-wide',
     onClick: async (doc, currentTabId) => {
-      await SheetPreferencesService.setDocumentTypeTabPreference(
+      await UserSheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
@@ -52,7 +52,7 @@ export const defaultItemSortSchemes = {
     key: CONSTANTS.ITEM_SORT_METHOD_KEY_PRIORITY,
     icon: 'fa-solid fa-arrow-down-1-9',
     onClick: async (doc, currentTabId) => {
-      await SheetPreferencesService.setDocumentTypeTabPreference(
+      await UserSheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
@@ -77,7 +77,7 @@ export const defaultItemSortSchemes = {
     key: CONSTANTS.ITEM_SORT_METHOD_KEY_EQUIPPED,
     icon: 'fa-solid fa-hand-fist equip-icon',
     onClick: async (doc, currentTabId) => {
-      await SheetPreferencesService.setDocumentTypeTabPreference(
+      await UserSheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',
@@ -94,7 +94,7 @@ export const defaultItemSortSchemes = {
     key: CONSTANTS.ITEM_SORT_METHOD_KEY_PREPARED,
     icon: 'fa-solid fa-book',
     onClick: async (doc, currentTabId) => {
-      await SheetPreferencesService.setDocumentTypeTabPreference(
+      await UserSheetPreferencesService.setDocumentTypeTabPreference(
         doc.type,
         currentTabId,
         'sort',

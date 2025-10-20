@@ -23,7 +23,7 @@ import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
-import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -149,7 +149,7 @@ export class Tidy5eVehicleSheet
   async _prepareContext(options = {}) {
     const defaultDocumentContext = await super._prepareContext(options);
 
-    const vehiclePreferences = SheetPreferencesService.getByType(
+    const vehiclePreferences = UserSheetPreferencesService.getByType(
       this.actor.type
     );
 
@@ -164,7 +164,7 @@ export class Tidy5eVehicleSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
@@ -178,7 +178,7 @@ export class Tidy5eVehicleSheet
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
             iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
-              await SheetPreferencesService.setDocumentTypeTabPreference(
+              await UserSheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',

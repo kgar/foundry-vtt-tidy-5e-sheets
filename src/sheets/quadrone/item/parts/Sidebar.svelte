@@ -498,12 +498,12 @@
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
           onclick={() =>
-            new SectionSelectorApplication(
-              TidyFlags.section.prop,
-              localize(sectionType),
-              context.item,
-              { document: context.item },
-            ).render(true)}
+            new SectionSelectorApplication({
+              flag: TidyFlags.section.prop,
+              sectionType: localize(sectionType),
+              callingDocument: context.item,
+              document: context.item,
+            }).render(true)}
         >
           <span class="text-normal">
             {sectionLabel}
@@ -517,12 +517,12 @@
           class:disabled={!context.editable}
           data-tooltip="TIDY5E.Section.SectionSelectorChooseActionSectionTooltip"
           onclick={() =>
-            new SectionSelectorApplication(
-              TidyFlags.actionSection.prop,
-              localize('TIDY5E.Section.ActionLabel'),
-              context.item,
-              { document: context.item },
-            ).render(true)}
+            new SectionSelectorApplication({
+              flag: TidyFlags.actionSection.prop,
+              sectionType: localize('TIDY5E.Section.ActionLabel'),
+              callingDocument: context.item,
+              document: context.item,
+            }).render(true)}
         >
           <span class="text-normal">
             {actionSectionLabel}
