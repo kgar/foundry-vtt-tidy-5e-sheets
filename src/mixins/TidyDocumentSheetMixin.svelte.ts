@@ -328,25 +328,36 @@ export function TidyExtensibleDocumentSheetMixin<
 
         this._applySheetModeClass(element);
 
+        // Can we just get rid of this and copy the data-name?
         // Support injected named inputs
         element.addEventListener(
           'change',
           async (ev: InputEvent & { target: HTMLInputElement }) => {
-            if (
-              ev.target.matches('input[name], textarea[name], select[name]') &&
-              // Supports radio button group opt-out of this feature
-              !ev.target.hasAttribute('data-skip-submit')
-            ) {
-              await this.submit();
-              return;
-            }
+            try {
+              if (
+                ev.target.matches(
+                  'input[name], textarea[name], select[name], string-tags[name], document-tags[name]'
+                ) &&
+                // Supports radio button group opt-out of this feature
+                !ev.target.hasAttribute('data-skip-submit')
+              ) {
+                await this.submit();
+                return;
+              }
 
-            if (
-              ev.target.matches(
-                'input[data-name], textarea[data-name], select[data-name]'
-              )
-            ) {
-              await this._submitEmbeddedDocumentChange(ev);
+              if (
+                ev.target.matches(
+                  'input[data-name], textarea[data-name], select[data-name], string-tags[data-name], document-tags[data-name]'
+                )
+              ) {
+                await this._submitEmbeddedDocumentChange(ev);
+              }
+            } catch (e: any) {
+              'getAllFailures' in e &&
+                Object.values(e.getAllFailures()).forEach((failure: any) =>
+                  ui.notifications.error(failure.message)
+                );
+              this.render();
             }
           }
         );
@@ -676,7 +687,8 @@ export function TidyExtensibleDocumentSheetMixin<
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
 
       try {
-        const { width, height } = UserSheetPreferencesService.getByType(sheetType);
+        const { width, height } =
+          UserSheetPreferencesService.getByType(sheetType);
 
         const position = (updatedOptions.position ??= {});
 

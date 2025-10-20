@@ -1,5 +1,14 @@
 ## kgar To Do
 
+- [ ] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
+- [ ] Ditto for document-tags: check on Facility details document-tags usage.
+- [ ] Evolve the hands-free data field input to its own component that uses the HTMLElement adapter approach.
+- [ ] Evolve hands-free data field input to favor Tidy controls where able and then to fall back to Foundry core controls otherwise.
+  - Reason: Tidy does incremental updates and does not remove/re-add elements on each render cycle, while the core controls will be fully removed/re-added.
+- [ ] Create document-tags svelte control
+- [ ] Create string-tags svelte control
+- [ ] Determine other controls which should have a svelte equivalent
+- [ ] Ensure the form group component is leveraging the hands-free data field to svelte control thingy
 - [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
 - [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
 
