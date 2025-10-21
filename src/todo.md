@@ -2,7 +2,8 @@
 
 - [x] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
 - [x] Ditto for document-tags: check on Facility details document-tags usage.
-- [ ] Evolve the hands-free data field input to its own component that uses the HTMLElement adapter approach.
+- [x] Evolve the hands-free data field input to its own component that uses the ~~HTMLElement adapter~~ outerHTML approach. 
+  - Like Foundry, we can simply slam down outerHTML and call it a day, because the form will handle form submission.
 - [ ] Evolve hands-free data field input to favor Tidy controls where able and then to fall back to Foundry core controls otherwise.
   - Reason: Tidy does incremental updates and does not remove/re-add elements on each render cycle, while the core controls will be fully removed/re-added.
 - [ ] Create document-tags svelte control

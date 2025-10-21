@@ -7,6 +7,7 @@
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import FoundryFormInput from 'src/components/form-group/FoundryFormInput.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -382,10 +383,12 @@
               </div>
             </div>
           {:else}
-            <document-tags
-              name="system.craft.item"
-              single
-            ></document-tags>
+            <FoundryFormInput
+              field={context.system.schema.fields.craft.fields.item}
+              options={{
+                value: context.source.craft.item,
+              }}
+            />
           {/if}
         </li>
       </ul>

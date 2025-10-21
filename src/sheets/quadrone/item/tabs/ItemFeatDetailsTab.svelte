@@ -10,6 +10,7 @@
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import FeatureOriginFormGroup from '../parts/FeatureOriginFormGroup.svelte';
+  import FoundryFormInput from 'src/components/form-group/FoundryFormInput.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -135,23 +136,16 @@
         context.system.schema.fields.prerequisites.fields.items.label,
       )}</label
     >
-    <div
-      class="form-fields"
-      {@attach (el) => {
-        const input: HTMLElement =
-          context.system.schema.fields.prerequisites.fields.items.toInput({
-            disabled: !context.unlocked,
-            value: [...context.source.prerequisites.items],
-            id: `${appId}-prerequisites-items`,
-          });
-
-        el.appendChild(input);
-
-        return () => {
-          input.remove();
-        };
-      }}
-    ></div>
+    <div class="form-fields">
+      <FoundryFormInput
+        field={context.system.schema.fields.prerequisites.fields.items}
+        options={{
+          disabled: !context.unlocked,
+          value: [...context.source.prerequisites.items],
+          id: `${appId}-prerequisites-items`,
+        }}
+      />
+    </div>
 
     <p class="hint">
       {localize(context.system.schema.fields.prerequisites.fields.items.hint)}

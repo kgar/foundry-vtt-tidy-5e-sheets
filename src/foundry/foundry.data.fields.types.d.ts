@@ -44,7 +44,7 @@ declare module 'foundry.data.fields' {
    * @template [FormInputValue=unknown]
    */
   interface FormInputConfig {
-    name: string;
+    name?: string;
     value?: FormInputValue;
     id?: string;
     required?: boolean;

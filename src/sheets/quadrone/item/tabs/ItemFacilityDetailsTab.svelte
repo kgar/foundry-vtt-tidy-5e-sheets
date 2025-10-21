@@ -6,6 +6,7 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import FoundryFormInput from 'src/components/form-group/FoundryFormInput.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -401,11 +402,13 @@
               </div>
             </div>
           {:else}
-            <document-tags
-              name="system.craft.item"
-              single
-              disabled={!context.unlocked}
-            ></document-tags>
+            <FoundryFormInput
+              field={context.system.schema.fields.craft.fields.item}
+              options={{
+                disabled: !context.unlocked,
+                value: context.source.craft.item,
+              }}
+            />
           {/if}
         </li>
       </ul>
