@@ -404,7 +404,6 @@
             <document-tags
               name="system.craft.item"
               single
-              onchange={async () => await context.sheet.submit()}
               disabled={!context.unlocked}
             ></document-tags>
           {/if}
