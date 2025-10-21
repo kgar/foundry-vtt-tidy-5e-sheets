@@ -72,14 +72,11 @@
         <span class="font-label-medium color-text-gold">{size}</span>
       </span>
     {/if}
-    {#if !isNil(context.creatureType?.title, '')}
+    {#if !isNil(context.system.details.type.label, '')}
       <div class="divider-dot"></div>
       <span class="creature-type">
         <span class="font-label-medium color-text-gold">
-          {context.creatureType.title}
-          {#if context.creatureType.subtitle}
-            ({context.creatureType.subtitle})
-          {/if}
+          {context.system.details.type.label}
         </span>
       </span>
     {/if}
@@ -119,6 +116,7 @@
                 legacy: false,
               })}
             class="unbutton concentration-roll-button header-control"
+            data-has-roll-modes
           >
             {#if context.isConcentrating}
               <i

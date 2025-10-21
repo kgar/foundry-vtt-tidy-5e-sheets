@@ -43,7 +43,7 @@ import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
@@ -143,7 +143,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
     const currencies: CurrencyContext[] = [];
 
-    const preferences = SheetPreferencesService.getByType(this.actor.type);
+    const preferences = UserSheetPreferencesService.getByType(this.actor.type);
 
     Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
       currencies.push({
@@ -879,6 +879,24 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         };
       })
     );
+  }
+
+  protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
+    const tabIds: string[] = [CONSTANTS.TAB_ACTOR_ACTIONS];
+    
+    const originTab = Inventory.isItemInventoryType(sheetPin)
+      ? CONSTANTS.TAB_ACTOR_INVENTORY
+      : sheetPin.type === CONSTANTS.ITEM_TYPE_SPELL
+      ? CONSTANTS.TAB_ACTOR_SPELLBOOK
+      : sheetPin.type === CONSTANTS.ITEM_TYPE_FEAT
+      ? CONSTANTS.TAB_CHARACTER_FEATURES
+      : null;
+
+    if (originTab) {
+      tabIds.push(originTab);
+    }
+
+    return tabIds;
   }
 
   /* -------------------------------------------- */

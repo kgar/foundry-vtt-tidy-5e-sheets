@@ -437,7 +437,9 @@
         "Title": "Výběr karty: {documentName}",
         "MenuOptionText": "Výběr karet",
         "AtLeastOneRequiredErrorMessage": "Je vyžadována alespoň jedna karta.",
-        "AvailableHeader": "Skryté karty"
+        "AvailableHeader": "Skryté karty",
+        "SelectionTab.Title": "Výběr záložky",
+        "VisibilityTab.Title": "Viditelnost záložky"
     },
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identifikátor zdrojového povolání",
     "TIDY5E.Settings.Migrations": {
@@ -930,5 +932,17 @@
     "TIDY5E.SpellbookSections": "Sekce kouzel",
     "TIDY5E.UserDefaultPrefix": "Výchozí uživatel: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globální výchozí nastavení zobrazení",
-    "TIDY5E.Character.Sidebar.Title": "Boční panel hráčských postav"
+    "TIDY5E.Character.Sidebar.Title": "Boční panel hráčských postav",
+    "TIDY5E.ContextMenuActionPin": "Připnout navrch",
+    "TIDY5E.ContextMenuActionUnpin": "Odpojit z vrchu",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "Menu",
+        "LocationHeader": "Záhlaví"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "Ovládací prvky záhlaví",
+        "label": "Nastavení ovládacích prvků záhlaví",
+        "hint": "Pouze nové deníky Tidy: Nastavení umístění ovládacích prvků záhlaví deníku."
+    },
+    "TIDY5E.GMOnly.Title": "Pouze PJ"
 }

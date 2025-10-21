@@ -1,4 +1,4 @@
-import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   ApplicationClickAction,
@@ -184,10 +184,10 @@ export function TidyExtensibleDocumentSheetMixin<
       const { width, height } = position;
 
       const { width: configuredWidth, height: configuredHeight } =
-        SheetPreferencesService.getByType(sheetType);
+        UserSheetPreferencesService.getByType(sheetType);
 
       if (width !== configuredWidth) {
-        await SheetPreferencesService.setDocumentTypePreference(
+        await UserSheetPreferencesService.setDocumentTypePreference(
           sheetType,
           'width',
           width
@@ -195,7 +195,7 @@ export function TidyExtensibleDocumentSheetMixin<
       }
 
       if (height !== configuredHeight) {
-        await SheetPreferencesService.setDocumentTypePreference(
+        await UserSheetPreferencesService.setDocumentTypePreference(
           sheetType,
           'height',
           height
@@ -676,7 +676,7 @@ export function TidyExtensibleDocumentSheetMixin<
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
 
       try {
-        const { width, height } = SheetPreferencesService.getByType(sheetType);
+        const { width, height } = UserSheetPreferencesService.getByType(sheetType);
 
         const position = (updatedOptions.position ??= {});
 

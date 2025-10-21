@@ -88,6 +88,7 @@
       })}
       class="button-borderless ability-roll-button label font-label-medium color-text-gold"
       data-tidy-sheet-part="ability-roller"
+      data-has-roll-modes
       {disabled}
     >
       {ability.abbr}
@@ -167,6 +168,7 @@
     ]}
     onclick={(ev) => onRollSave?.(ev, ability.key)}
     data-tidy-sheet-part="ability-save-roller"
+    data-has-roll-modes
     {disabled}
   >
     <span class="modifier font-label-medium color-text-lightest"

@@ -14,7 +14,7 @@
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import AttributeItemPin from '../parts/AttributeItemPin.svelte';
   import AttributeActivityPin from '../parts/AttributeActivityPin.svelte';
@@ -35,7 +35,7 @@
       context.favorites,
       context.actor,
       tabId,
-      SheetPreferencesService.getByType(context.actor.type),
+      UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
     ),
   );

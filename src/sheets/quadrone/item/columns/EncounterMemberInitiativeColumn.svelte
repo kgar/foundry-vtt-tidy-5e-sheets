@@ -59,6 +59,7 @@
       <button
         class="button button-roll button-icon-only button-borderless flexshrink"
         onclick={(ev) => context.sheet.prerollInitiative(ev, rowDocument)}
+        data-has-roll-modes
       >
         <i class="fa-solid fa-dice-d20"></i>
       </button>

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-const PSEUDO_BTN_CLICK_KEYS =new Set([' ', 'Enter'])
+  const PSEUDO_BTN_CLICK_KEYS = new Set([' ', 'Enter']);
 </script>
 
 <script lang="ts" generics="TFavorite extends FavoriteContextEntry">
@@ -60,7 +60,7 @@ const PSEUDO_BTN_CLICK_KEYS =new Set([' ', 'Enter'])
 
     if (!PSEUDO_BTN_CLICK_KEYS.has(e.key)) return;
 
-    e.preventDefault()
+    e.preventDefault();
     e.currentTarget?.click();
   }
 </script>
@@ -75,6 +75,7 @@ const PSEUDO_BTN_CLICK_KEYS =new Set([' ', 'Enter'])
   data-tooltip={tooltip}
   aria-disabled={!context.editable}
   data-keyboard-focus
+  data-has-roll-modes
 >
   <span
     class={[

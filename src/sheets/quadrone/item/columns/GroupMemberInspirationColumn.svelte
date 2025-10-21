@@ -9,7 +9,9 @@
   }: ColumnCellProps<any, GroupMemberQuadroneContext> = $props();
 </script>
 
-<InspirationBadge
-  actor={rowDocument}
-  inspirationSource={rowContext.inspirationSource}
-/>
+{#if 'inspiration' in rowDocument.system.attributes}
+  <InspirationBadge
+    actor={rowDocument}
+    inspirationSource={rowContext.inspirationSource}
+  />
+{/if}

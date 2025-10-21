@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type VisibilityLevelOption = {
@@ -7,12 +8,17 @@ export type VisibilityLevelOption = {
 };
 
 export class VisibilityLevels {
-  static get levels() {
+  static getLevels() {
     return {
+      limited: {
+        key: 'limited',
+        label: FoundryAdapter.localize('OWNERSHIP.LIMITED'),
+        value: CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED,
+      },
       observer: {
         key: 'observer',
         label: FoundryAdapter.localize('OWNERSHIP.OBSERVER'),
-        value: null,
+        value: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
       },
       owner: {
         key: 'owner',
@@ -27,13 +33,37 @@ export class VisibilityLevels {
     } satisfies Record<string, VisibilityLevelOption>;
   }
 
-  static getOptions(): VisibilityLevelOption[] {
-    let options = [this.levels.observer, this.levels.owner];
+  static getOptions(documentName: string): VisibilityLevelOption[] {
+    const levels = VisibilityLevels.getLevels();
+
+    levels[VisibilityLevels.getDefaultLevelKey(documentName)].value = null;
+
+    let options = [];
+
+    if (documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
+      options.push(levels.limited);
+    }
+
+    options.push(levels.observer, levels.owner);
 
     if (FoundryAdapter.userIsGm()) {
-      options.push(this.levels.gmOnly);
+      options.push(levels.gmOnly);
     }
 
     return options;
+  }
+
+  static getDefaultLevelKey(
+    documentName: string
+  ): keyof ReturnType<(typeof VisibilityLevels)['getLevels']> {
+    return documentName === CONSTANTS.DOCUMENT_NAME_ITEM
+      ? 'limited'
+      : 'observer';
+  }
+
+  static getDefaultLevelValue(documentName: string) {
+    return VisibilityLevels.getLevels()[
+      VisibilityLevels.getDefaultLevelKey(documentName)
+    ].value;
   }
 }

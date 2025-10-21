@@ -2,7 +2,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { SheetPins } from 'src/features/sheet-pins/SheetPins';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinItemContext } from 'src/types/types';
@@ -79,12 +79,18 @@
 
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
-  let spellSlotTrackerMode = $derived((context.spellSlotTrackerMode) === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS ? 'spell-slots-pips' : 'spell-slots');
-  let spellcastingSection = $derived(ctx.document.parent.system.spells['spell' + ctx.document.system.level]);
+  let spellSlotTrackerMode = $derived(
+    context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+      ? 'spell-slots-pips'
+      : 'spell-slots',
+  );
+  let spellcastingSection = $derived(
+    ctx.document.parent.system.spells['spell' + ctx.document.system.level],
+  );
 
   let localize = FoundryAdapter.localize;
 
-  function getType() {    
+  function getType() {
     // Check for limited uses with recharge first (applies to any item type including spells)
     if (ctx.resource === 'limited-uses' && ctx.document.isOnCooldown) {
       return 'limited-uses-recharging';
@@ -92,12 +98,15 @@
     if (ctx.resource === 'limited-uses' && ctx.document.hasRecharge) {
       return 'limited-uses-recharged';
     }
-    
+
     // Then handle spell-specific slot tracking
     if (isSpell) {
       let spellMethod = FoundryAdapter.getSpellMethodConfig(ctx.document);
 
-      if (spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE || spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
+      if (
+        spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE ||
+        spellMethod.key === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL
+      ) {
         // If innate/at-will has limited uses, show them
         if (ctx.document.hasLimitedUses === true) {
           return 'limited-uses';
@@ -109,7 +118,7 @@
       }
       return 'spell-slots';
     }
-    
+
     // Handle other item types
     if (ctx.resource === 'quantity') {
       return 'quantity';
@@ -147,7 +156,8 @@
           uses={section?.value ?? 0}
           {index}
           temp={index >= section?.max}
-          onclick={() => context.editable && onPipClick(index, section, slotKey)}
+          onclick={() =>
+            context.editable && onPipClick(index, section, slotKey)}
         />
       {/each}
     </div>
@@ -175,12 +185,16 @@
       onclick={(ev) =>
         context.editable && FoundryAdapter.actorTryUseItem(ctx.document, ev)}
       onkeydown={(ev) =>
-        ev.key === 'Enter' || ev.key === ' ' && context.editable && FoundryAdapter.actorTryUseItem(ctx.document, ev)}
+        ev.key === 'Enter' ||
+        (ev.key === ' ' &&
+          context.editable &&
+          FoundryAdapter.actorTryUseItem(ctx.document, ev))}
+      data-has-roll-modes
       aria-label={ctx.document.name}
     >
       <img class="item-image" alt={ctx.document.name} src={ctx.document.img} />
       <span class="roll-prompt">
-        <i class={[isSpell ? spellMethodIcon : "fa fa-dice-d20"]}></i>
+        <i class={[isSpell ? spellMethodIcon : 'fa fa-dice-d20']}></i>
       </span>
     </a>
   </div>
@@ -189,10 +203,7 @@
   <!-- TODO: Figure out layout in edit mode. Bigger cards? -->
   <div class="pin-details">
     {#if context.unlocked && isEditing}
-      <div
-        class="pin-name-container flexrow"
-        title={ctx.document.name}
-      >
+      <div class="pin-name-container flexrow" title={ctx.document.name}>
         <TextInput
           class="pin-name"
           document={ctx.document}
@@ -201,7 +212,7 @@
           selectOnFocus={true}
           placeholder={ctx.document.name}
           onSaveChange={(ev) => {
-            SheetPins.setAlias(ctx.document, ev.currentTarget.value);
+            SheetPinsProvider.setAlias(ctx.document, ev.currentTarget.value);
             return false;
           }}
         />
@@ -210,9 +221,10 @@
           class="button button-icon-only flexshrink save-name-button"
           aria-label="Save Alias"
           onclick={(ev) => {
-            const input = ev.currentTarget.previousElementSibling?.querySelector('input');
+            const input =
+              ev.currentTarget.previousElementSibling?.querySelector('input');
             if (input) {
-              SheetPins.setAlias(ctx.document, input.value);
+              SheetPinsProvider.setAlias(ctx.document, input.value);
             }
             isEditing = false;
             return false;
@@ -238,12 +250,15 @@
             <i class="fa-solid fa-pencil"></i>
           </button>
         {:else}
-          <span class="font-label-medium pin-name truncate" title={ctx.document.name}>
+          <span
+            class="font-label-medium pin-name truncate"
+            title={ctx.document.name}
+          >
             {coalesce(ctx.alias, ctx.document.name)}
           </span>
         {/if}
       </div>
-      <!-- TODO: 
+      <!-- TODO:
       * Hide if 0 max charges.
       * Hide if innate/atwill spell slot.
       * Switch to spell slot uses if spell.
@@ -253,10 +268,10 @@
         <div class="pin-counter {ctx.resource}">
           {#if pinType === 'limited-uses-recharging'}
             <RechargeControl document={ctx.document} field={spentProp} {uses} />
-          {:else if pinType === 'limited-uses-recharged'}            
+          {:else if pinType === 'limited-uses-recharged'}
             <span class="inline-uses color-text-default charged-text">
               <TextInput
-                class={["uninput uses-value", { diminished: value < 1 }]}
+                class={['uninput uses-value', { diminished: value < 1 }]}
                 document={usesDocument}
                 field={spentProp}
                 {value}
@@ -268,13 +283,21 @@
               <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
             </span>
           {:else if pinType === 'spell-slots'}
-            {@render spellSlots(spellcastingSection, `spell${ctx.document.system.level}`, 'spell-slots')}
+            {@render spellSlots(
+              spellcastingSection,
+              `spell${ctx.document.system.level}`,
+              'spell-slots',
+            )}
           {:else if pinType === 'spell-slots-pact'}
-            {@render spellSlots(ctx.document.parent.system.spells['pact'], 'pact', 'spell-slots-pact')}
+            {@render spellSlots(
+              ctx.document.parent.system.spells['pact'],
+              'pact',
+              'spell-slots-pact',
+            )}
           {:else if pinType === 'limited-uses'}
             <span class="inline-uses color-text-default">
               <TextInput
-                class={["uninput uses-value", { diminished: value < 1 }]}
+                class={['uninput uses-value', { diminished: value < 1 }]}
                 document={usesDocument}
                 field={spentProp}
                 {value}
@@ -286,7 +309,7 @@
             </span>
           {:else if pinType === 'quantity'}
             <TextInput
-              class={["uninput uses-value centered", { diminished: value < 1 }]}
+              class={['uninput uses-value centered', { diminished: value < 1 }]}
               document={ctx.document}
               field={'system.quantity'}
               value={ctx.document.system.quantity}
@@ -295,9 +318,16 @@
           {/if}
         </div>
       {:else if ctx.document.system.activities.size > 0}
-      <div class="pin-counter {ctx.resource}">
-        <span class="subtitle font-default-medium color-text-lighter">{ctx.document.system.activities.size} {localize(ctx.document.system.activities.size === 1 ? 'DND5E.ACTIVITY.Title.one' : 'DND5E.ACTIVITY.Title.other')}</span>
-      </div>
+        <div class="pin-counter {ctx.resource}">
+          <span class="subtitle font-default-medium color-text-lighter"
+            >{ctx.document.system.activities.size}
+            {localize(
+              ctx.document.system.activities.size === 1
+                ? 'DND5E.ACTIVITY.Title.one'
+                : 'DND5E.ACTIVITY.Title.other',
+            )}</span
+          >
+        </div>
       {/if}
     {/if}
   </div>

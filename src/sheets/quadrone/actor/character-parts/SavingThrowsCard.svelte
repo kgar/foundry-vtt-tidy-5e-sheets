@@ -71,6 +71,7 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
           onclick={(ev) =>
             context.actor.rollConcentration({ event: ev, legacy: false })}
+          data-has-roll-modes
         >
           {conc.label}
         </button>
@@ -120,6 +121,7 @@
     onclick={(event) =>
       context.actor.rollSavingThrow({ ability: ability.key, event })}
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
+    data-has-roll-modes
     disabled={!context.owner}
   >
     {ability.label}

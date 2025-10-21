@@ -60,7 +60,7 @@ import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
-import { SheetPins } from 'src/features/sheet-pins/SheetPins';
+import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
@@ -899,6 +899,8 @@ export function Tidy5eActorSheetQuadroneBase<
       };
     }
 
+    protected abstract _getSheetPinTabIdsForItem(sheetPin: Item5e): string[];
+
     async _getSheetPins(): Promise<SheetPinContext[]> {
       let flagPins = TidyFlags.sheetPins
         .get(this.actor)
@@ -915,11 +917,13 @@ export function Tidy5eActorSheetQuadroneBase<
               ...pin,
               linkedUses: Activities.getLinkedUses(document),
               document,
+              tabIds: new Set(this._getSheetPinTabIdsForItem(document)),
             });
           } else if (pin.type === 'activity') {
             pins.push({
               ...pin,
               document,
+              tabIds: new Set(this._getSheetPinTabIdsForItem(document.item)),
             });
           }
         } else {
@@ -1247,7 +1251,7 @@ export function Tidy5eActorSheetQuadroneBase<
         doc.actor === this.actor &&
         event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
       ) {
-        let relativeUuid = SheetPins.getRelativeUUID(doc);
+        let relativeUuid = SheetPinsProvider.getRelativeUUID(doc);
         return await this._onDropPin(event, { id: relativeUuid, doc });
       }
 
@@ -1290,7 +1294,7 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       if (!currentPins.find((x) => x.id === data.id)) {
-        await SheetPins.pin(data.doc, pinType);
+        await SheetPinsProvider.pin(data.doc, pinType);
       }
 
       return await this._onSortPins(event, data.id);

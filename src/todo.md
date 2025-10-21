@@ -1,39 +1,33 @@
 ## kgar To Do
 
+- [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
+- [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
+
+
 ### Short List
 
+- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
+- [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
+  - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
+- [ ] Tools card header - has cursor hover style without interactivity
+- [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
+- [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
+- [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
 
 ### Group Sheet
 
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] Group Sheet - Plan and task Bastions tab
+  - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 
 ### The Short List
 
-- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
-- [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
-  - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
-- [ ] Prep Bastions context
-- [ ] Tools card header - has cursor hover style without interactivity
-- [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
-- [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
-- [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
 - [ ] Extract and share: TidyTableRowUseButton
-- [x] NPC test Observer user
-- [ ] NPC test Limited user
 - [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
 - [ ] Image blurriness again: https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082
-- [ ] Establish Group Quadrone scaffolding so the sheet can be opened.
-  - [x] Registration
-  - [x] Tabs, Runtime
-  - [ ] Stub layout with tab strip
-- [ ] Establish Encounter Quadrone scaffolding so the sheet can be opened. While doing this, extract the common classes for Group and Encounter that work best for them collectively.
-  - [ ] Registration
-  - [ ] Tabs
-  - [ ] Stub layout with tab strip
 - [ ] PC and NPC Sheets
   - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
@@ -150,54 +144,6 @@
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
 - [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
 
-## Notes on combat integration:
-
-- We can create an encounter if one doesn't exist, upon loading combatants
-- To add placeholders, we can either enter unlinked placeholders directly, including initiative, name, and img (maybe more), or we can do same thing that "Place Members" does. "Place Members" puts copies of the compendium actors into the top-level of the sidebar before allowing placing them on the screen. It apparently has logic to detect whether there are suitable actors on the sidebar, so it doesn't happen every time.
-- We will have to track those row action states directly on the Encounter via flag because locked compendium actors are not editable, meaning it's not viable to track flags on some but not all. That's not bad. But, what are the default states when a member has not been configured by the user? 
-- I'll want to figure out all the edge cases for these buttons and row states, since this will be dealing with the Current Encounter, and the user can change scenes and/or Encounters. There's also the wrinkle of trying to ensure all open Encounter sheets are watching combat tracker activity via hooks. What hooks to track will be an implementation detail, but we essentially want to update our row states when a placeholder leaves the tracker, for example.
-- Love the Lair row (https://discord.com/channels/@me/1243307347682529423/1416763464403255336). Again, we can either load a totally anonymous placeholder with whatever img, name, and initiative we want, or we can load the relevant Lair actor into that spot. In fact, it might be beneficial to show multiple Lair entries so that all lair NPCs are accounted for.
-
-From `actor.mjs`:
-
-```js
-// Obtain (or create) a combat encounter
-let combat = game.combat;
-if ( !combat ) {
-    if ( game.user.isGM && canvas.scene ) {
-    const cls = getDocumentClass("Combat");
-    combat = await cls.create({scene: canvas.scene.id, active: true});
-    }
-    else {
-    ui.notifications.warn("COMBAT.NoneActive", {localize: true});
-    return null;
-    }
-}
-
-// Create new combatants
-if ( createCombatants ) {
-    const tokens = this.getActiveTokens();
-    const toCreate = [];
-    if ( tokens.length ) {
-    for ( const t of tokens ) {
-        if ( t.inCombat ) continue;
-        toCreate.push({tokenId: t.id, sceneId: t.scene.id, actorId: this.id, hidden: t.document.hidden});
-    }
-    } else toCreate.push({actorId: this.id, hidden: false});
-    await combat.createEmbeddedDocuments("Combatant", toCreate);
-}
-```
-
-Experimentation:
-```js
-// Completely actorless / tokenless combatant, with prerolled initiative, name, and img:
-game.combat.createEmbeddedDocuments("Combatant", [{ name: "Fred", img: 'systems/dnd5e/tokens/heroes/ClericDragonborn.webp', initiative: 20}]);
-```
-
-Hooks:
-TODO
-
-
 ### Huh?
 
 - [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
@@ -218,22 +164,6 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 <https://discord.com/channels/@me/1243307347682529423/1363003038482038836>
 > The issue was that there's a Damages label that is empty with the absorbing tattoo. It is possibly just a weird setup. The fix I did for now was to filter out damage labels that are null/undefined/empty.
 
-### Scratch - Finding the effective theme for a sheet
-
-```js
-// Get document sheet config theme
-const theme = foundry.applications.apps.DocumentSheetConfig.getSheetThemeForDocument(options.document);
-theme // 'light' | 'dark' | '' | ???
-
-// Getting top-level application default theme
-const { colorScheme } = game.settings.get("core", "uiConfig");
-colorScheme.applications // 'light' | 'dark' | '' | ????
-
-// Getting browser default
-    let browserDefault;
-    if ( matchMedia("(prefers-color-scheme: dark)").matches ) browserDefault = "theme-dark";
-    else if ( matchMedia("(prefers-color-scheme: light)").matches ) browserDefault = "theme-light";
-```
 
 ### Bonus
 
@@ -251,245 +181,24 @@ colorScheme.applications // 'light' | 'dark' | '' | ????
 
 - [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 
-### Observer and Limited permissions for container sheets
+### More Sheet Pins
 
-Observer:
-
-- Cannot
-  - Change item quantities
-  - Use item
-  - Add item / see add button at all
-  - edit currencies
-  - edit anything in details
-  - see or toggle mode; stays in Play Mode
-  - Change sheet type
-  - Identify
-  - Equip
-- Context menu
-  - View Item
-  - Display in Chat
-- Can only see main description
-
-Limited:
-
-- Identical to Observer
-
-### Feature - Tab Visibility Levels
-
-Tab Visibility Level refers to the minimum level of document ownership required to view a tab on a sheet. Eligible levels include Observer 2, Owner 3, and GM Only (an astronomically high number). A GM always succeeds the check, else users' access to the document is tested during document prep. Invalid tabs are filtered out and not shown on the sheet. When the user is conducting Sheet Tab Config, access level is enforced there, too. Essentially, the invisible tabs should remain untouched in how they're set up while the sheet owner can further refine visibility on the tabs they can see.
-
-- [x] Update Tab Configuration setting schema to accept an object `Record<string, number>` where string is tab ID and number is visibility level.
-- [x] Ditto for Sheet Tab Configuration flag.
-- [x] Visibility levels are - CONST.DOCUMENT_OWNERSHIP_LEVELS - OBSERVER: 2, OWNER: 3 | GM Only -> Number.MAX_SAFE_INTEGER.
-- [x] Set up World tab config to collect visibility levels for all tabs.
-- [x] Ditto for Sheet tab config.
-- [x] Alphabetize tabs by localized title for the target lang
-- [x] Stretch: Update Sheet Tab Config flag to use the same data schema objects as the setting.
-- [x] Finish todos on settings forms
-- [x] Update Tab preparation for all sheets to honor the max value between world and sheet setting.
-- [x] Just Hide ™️ tabs that are GM Only from non-GMs on the sheet tab configuration UI
-  - [x] Tab Visibility
-  - [x] ~~Tab Selection~~ Nah. This is something players and GMs should work out. GMs need to be able to order the hidden tabs where they need them, and that may mean players also need to be aware of their existence.
-
-### Feature Custom Actor Traits API expansion pack
-
-- [x] Support Custom Actor Trait HTML content
-- [x] Support Custom Actor Trait pills
-
-```ts
-type RegisteredCustomActorTrait = {
-  title: string;
-  alwaysShow?: boolean;
-  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
-  openConfigurationTooltip?: string;
-  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
-  iconClass?: string;
-  /** 
-   * Callback for providing pills to include with the custom trait section.
-   * Parameters: 
-   *   - app - the sheet instance.
-   *   - document - the relevant Foundry document.
-   *   - context - the Tidy prepared context data. Use as your own risk.
-   */
-  pills?: (app, document, context) => CustomTraitPill[];
-  /** 
-   * Callback for providing custom HTML content, to render below any pills. 
-   *   - app - the sheet instance.
-   *   - document - the relevant Foundry document.
-   *   - context - the Tidy prepared context data. Use as your own risk.
-   */
-  content?: (app, document, context) => string;
-};
-
-type CustomTrait = {
-  /** 
-   * An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. 
-   * Parameters: 
-   *   - app - the sheet instance.
-   *   - document - the relevant Foundry document.
-   *   - context - the Tidy prepared context data. Use as your own risk.
-   */
-  onClick?: (app, document, context) => void;
-  /** 
-    Custom HTML content, to appear to the right of any specified icons and before any other content.
-    This content is specifically rendered as HTML, unlike the more specific building blocks.
-   */
-  content?: string;
-
-  /* -------------------------------------------- */
-  /*  Curated pill content                        */
-  /* -------------------------------------------- */
-  /* The below content is assembled with Tidy-specific markup and classes to form common pills. */
-
-  /** Icons associated with the trait. */
-  icons?: { icon: string; label: string }[];
-  /** Text that describes the trait. */
-  label: string;
-  /** The number sign (+ or -) for a numeric trait. */
-  sign?: string;
-  /** A value associated with the trait. */
-  value?: TValue;
-  /** The localized units abbreviation. */
-  units?: string;
-  /** The units key for CONFIG.DND5E purposes. */
-  unitsKey?: string;
-  /** Any classes to apply to the resulting trait UI element. */
-  cssClass?: ClassValue;
-  /** Any information that should appear in parentheses after the main trait context info. */
-  parenthetical?: string;
-}
-```
-
-### To Do Graveyard
-
-- [x] Stub group members context
-- [x] Prep Group description context
-- [x] ~~Prep Exploration context~~ Shelved.
-- [x] Character - show all sections with slots even when locked and empty. Otherwise, the player can't know their spell slots without favoriting them.
-- [x] PC, NPC: Temp HP is behaving weirdly. When clicking on it, it does not capture focus. When clicking away, it does not dismiss, unless you click again and apply input focus and then blur away.
-- [x] Group sheet - Members tab - Set up column hiding 
-- [x] ~~Group Sheet - Inventory tab - Should we have hover styles on the member names?~~ Nah, there's feedback there already.
-- [x] Confirm the big picture requirements
-- [x] Scaffold encounter sheet tabs
-- [x] Get the encounter inventory fully functional
-- [x] Get the encounter description tab fully functional
-- [x] Scaffold the encounter member context
-- [x] Encounter subtitle
-  - [x] Row 1
-    - [x] Creature Type Count row
-  - [x] Row 2
-    - [x] Members count (assuming member quantities sum)
-    - [x] XP
-    - [x] GP summary
-- [x] Encounter header layout change
-  - [x] Left: name, subtitles, button bar
-  - [x] Right: difficulty badge
-  - [x] Encounter Sidebar
-    - [x] Languages
-    - [x] Speeds
-    - [x] Senses
-    - [x] skills 
-    - [x] Specials
-- [x] Encounter Members tab
-  - [x] Member list 
-    - [x] locked
-      - [x] Member primary column
-      - [x] CR
-      - [x] Quantity
-      - [x] HP
-        - [x] Include "Roll HP" button on hover
-      - [x] XP
-      - [x] Member row actions
-        - [x] In header: add button opens compendium browser for NPCs only
-    - [x] unlocked
-      - [x] Swap HP with editable Formula column
-- [x] Members context menu for Encounter sheet
-- [X] Make Formula column a lower-priority, always-shown column
-- [x] Encounter Members tab: Wire up XP bar with stops
-- [x] Combat tab
-  - [x] Implement Placeholder Members
-    - [x] Flag, `placeholders`, which is `Record<string, { initiative: number, note: string, img: string }>`
-    - [x] All columns except Initiative should take up space but not present anything for placeholder rows
-    - [X] Implement Initiative handling for placeholders
-      - [x] Input
-    - [x] Portrait
-    - [x] PlaceholderName component
-      - [x] Unlocked - Editable title and editable subtitle
-  - [x] Order combatants by initiative, then by name
-  - [x] Section title - change name to "Combatants" with a count that equals the non-placeholder members
-  - [x] "Add a Placeholder" button
-    - [x] Relocalize to "Create a Placeholder Member"
-    - [x] Add a Placeholder Member to the placeholders flag with a default mystery man face and the name "New Placeholder"
-  - [x] "Add All as Placeholders" button
-    - [x] Take all members and placeholders and add them to the encounter tracker
-      - [x] Members: 
-        - [x] I can sooner: add directly as placeholders with img, name, and tracked resource at configured initiative
-      - [x] Placeholders: add directly to tracker at configured initiative
-  - [X] ~~"Add to Active Encounter" ~~ Abandoned. Well-supported by Foundry. Don't bother. Doesn't add enough value.
-    - [x] ~~Relocalize to "Add All Tokens to Encounter" button and move up to just after "Add All as Placeholders"~~
-    - [x] ~~Disable when there is no active encounter~~ A notification warning is more instructive.
-    - [x] ~~Find all tokens on the current scene who are represented by the encounter sheet, ensure they are added to initiative. There's existing dnd5e / Foundry code that does this. Steal or somehow hook into that 🔥~~
-  - [x] "Preroll Initiative" button
-- [x] Encounter sheet: Set up tab selection
-- [x] Refactor: Consolidate all combat options to a single model and make that the flag. Likewise, put all combat settings into a combat prop on the Member and Placeholder contexts.
-- [x] Refactor: ensure all encounter combat data flag updates also trim away nonexistent members/placeholders every time there's an update.
-- [x] (hightouch got it) Stretch, post-release, Encounter sheet - quick access placeholders that are commonly known in D&D, such as Lair. 
-- [x] Encounter Sheet, Combat tab, unlocked - on placeholder portrait click, open FilePicker with the intent of updating img on the relevant placeholder
-- [x] Stretch/discuss, post-release, Encounter sheet - Dropdown or other selector to allow choosing Difficulty target. That is, Primary Party Name Here is chosen by default, but you can calculate difficulty against other groups.
-- [x] Group Members should not inherit Token view setting from Group/Encounter sheets.
-- [x] Character Inventory Add button reported broken
-- [x] Include Encounter Sheet in the "Set Default Sheets" tidy page.
-- [x] Fixed: Special Traits dialog has no padding.
-- [x] Important NPCs: features and weapons in statblock tab
-- [x] Non-important NPCs: all items in statblock tab
-- [x] When an inventory item is deemed passive, put it in the "items" section.
-- [x] NPC User Preference - "Show Legendary/Lair trackers in the Statblock tab" - default true
-- [x] NPC User Preference - "Include Spellbook sections in the Statblock tab" - default true
-- [x] Ensure that these settings can be disabled from the individual sheet level.
-- [x] Ensure the unset individual sheet level loads properly based default settings.
-- [x] Find a place to put these settings.
-- [x] PC Sidebar Tab Selection - implement POC
-- [x] PC Sidebar Tab Selection - use custom title "Tab Selection: Player Character Sidebar"
-- [x] PC Sidebar Tab Selection - create runtime
-- [x] PC Sidebar Tab Selection - create world setting for default sidebar tabs; plug into runtime construction in sidebar runtime file
-- [X] PC Sidebar Tab Selection - prepare within PC context prep
-- [x] PC Sidebar Tab Selection - create API surface area
-- [x] PC Sidebar Tab Selection - pull the CharacterSidebar code for the title and the opening of the sidebar tab config to the sheet itself. Macros can call into it thereafter 🧠
-- [x] PC Sidebar Tab Selection - Add to world tab configuration- [X] Character sheet, Character tab : Need weapon mastery indicators on weapon proficiencies
-- [X] Resurrect Attribute Pins as Sheet Pins
-  - [x] Do data prep
-  - [x] Context menu - Items: Pin to Sheet, Unpin from Sheet, Show Limited Uses, Show Quantity
-  - [x] Context menu - Activities: Pin to Sheet, Unpin from Sheet
-  - [x] Character sheet: Add to Sheet tab
-  - [x] NPC sheet: Add to Statblock tab
-  - [x] Group/Encounter sheet: Add to Members tab
-  - [x] Quad Actor Base: Handle Pin drop to sort
-  - [x] Quad Actor Base: Handle item/activity drop to Pins to add
-- [x] Finish Character header control tracer bullet
-- [x] Refactor the code to allow an array of objects to produce the appropriate context
-- [x] Propagate settings out to remaining sheets.
-  - [x] Character
-  - [x] NPC
-  - [x] Group
-  - [x] Encounter
-  - [x] Container
-  - [x] All Item Types
-- [x] ~~Consider: adding some shared code for determining the ID of a header control. This may not be complex enough to worry about.~~
-- [x] Test 
-  - [x] Character
-  - [x] NPC
-  - [x] Group
-  - [x] Encounter
-  - [x] Container
-  - [x] All Item Types
-- [x] Extract _getMembers() metadata code so that it is available to use for any callers that require the ability to configure Tidy sheets in general.
-- [x] Evolve insertAdjacentHTML to a DOMParser or range/DocumentFragment approach; eliminate the arbitrary parent container; bestow the render scheme to all top-level elements in the rendered HTML before placing them; simulate adjacent HTML placement
-- [x] Test all InsertPositions
-  - [x] "afterbegin" - Just inside the element, before its first child.
-  - [x] "afterend" - After the element. Only valid if the element is in the DOM tree and has a parent element.
-  - [x] "beforebegin" - Before the element. Only valid if the element is in the DOM tree and has a parent element. 
-  - [x] "beforeend" - Just inside the element, after its last child.
-- [x] Update API to include array of inserted nodes to onRender
-- [x] ~~Consider: can you store the injected nodes in an array and have them remove themselves and clear the array during render, eliminating the render scheme attribute requirement. (Some things could go wrong if someone is injecting rote content outside of this...)~~ It seems like a nice thought, but I'd need to support the render scheme attribute regardless, so it really wouldn't do me that much good while also adding more maintenance burden.
-- [x] ~~Provide compatibility prop `useParentContainer`, optional, assumed false when absent~~ I don't really see value in doing this.
-- [x] Ensure PR has Breaking Change notification on it.
+- [x] Set up the Show Sheet Pins per tab as a Global User Preference. No sheet-local override.
+- [x] Propagate UI for saving sheet pin visibility (local and global) to the relevant tabs.
+  - [x] Inventory (all of em)
+  - [x] Spellbook
+  - [x] Features
+  - [x] Statblock
+  - [x] Sheet
+- [x] Update all sheet pin component references to honor user setting value.
+- [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
+- [x] Stretch: Sheet Pins / Multi-actor Members tab upgrade
+  - [x] Add action bar with search, sort, and config
+  - [x] Enable custom sections for members tabs
+  - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
+  - [x] Add Context menu "Choose a section" (or whatever)
+  - [x] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
+  - [x] Enable Search
+  - [x] Implement Show Sheet Pins option
+  - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
+  - [x] Make custom action bar for Group Members to exclude filters and sorting.

@@ -38,6 +38,8 @@ import {
   type EncounterPlaceholder,
 } from 'src/api';
 import { CombatantSettings } from 'src/features/combat/CombatantSettings';
+import { Inventory } from 'src/features/sections/Inventory';
+import type { Item5e } from 'src/types/item.types';
 
 export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
@@ -177,7 +179,9 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
       ...actorContext,
     };
 
-    context.customContent = await EncounterSheetQuadroneRuntime.getContent(context);
+    context.customContent = await EncounterSheetQuadroneRuntime.getContent(
+      context
+    );
 
     context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
 
@@ -345,6 +349,16 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
         quantity: 0,
       })).quantity += quantity.value;
     }
+  }
+
+  protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
+    const tabIds: string[] = [CONSTANTS.TAB_MEMBERS];
+
+    if (Inventory.isItemInventoryType(sheetPin)) {
+      tabIds.push(CONSTANTS.TAB_ACTOR_INVENTORY);
+    }
+
+    return tabIds;
   }
 
   /* -------------------------------------------- */

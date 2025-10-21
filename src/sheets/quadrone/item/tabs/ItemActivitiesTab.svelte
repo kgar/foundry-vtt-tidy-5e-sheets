@@ -118,6 +118,7 @@
             <a
               class={['tidy-table-row-use-button']}
               onclick={(ev) => ctx.activity.use({ ev })}
+              data-has-roll-modes
             >
               <img class="item-image" alt="" src={ctx.activity.img} />
               <span class="roll-prompt">
