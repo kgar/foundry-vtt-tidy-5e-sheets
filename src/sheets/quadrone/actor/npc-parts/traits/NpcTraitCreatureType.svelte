@@ -15,8 +15,8 @@
   let creatureTypeEntries = $derived.by(() => {
     let result: ActorTraitContext[] = [];
 
-    if (!isNil(context.creatureType?.title, '')) {
-      result.push({ label: context.creatureType?.title });
+    if (!isNil(context.system.details.type.label, '')) {
+      result.push({ label: context.system.details.type.label });
     }
 
     return result;
