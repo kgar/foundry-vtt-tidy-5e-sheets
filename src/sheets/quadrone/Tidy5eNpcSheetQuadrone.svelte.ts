@@ -134,7 +134,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         actorContext.items
       ),
       conditions: conditions,
-      creatureType: this._getCreatureType(),
       currencies,
       effects: enhancedEffectSections,
       enriched: {
