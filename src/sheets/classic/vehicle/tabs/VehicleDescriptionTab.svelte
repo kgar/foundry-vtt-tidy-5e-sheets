@@ -7,7 +7,6 @@
   let editing = $state(false);
 
   async function stopEditing() {
-    await context.actor.sheet.submit();
     editing = false;
   }
 </script>

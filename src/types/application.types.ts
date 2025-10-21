@@ -49,9 +49,9 @@ export interface ApplicationWindowConfiguration {
 }
 
 export interface ApplicationFormConfiguration {
-  handler: ApplicationFormSubmission;
-  submitOnChange: boolean;
-  closeOnSubmit: boolean;
+  handler?: ApplicationFormSubmission;
+  submitOnChange?: boolean;
+  closeOnSubmit?: boolean;
 }
 
 export interface ApplicationHeaderControlsEntry {

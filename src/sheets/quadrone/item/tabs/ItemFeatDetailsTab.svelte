@@ -129,7 +129,6 @@
     </p>
   </div>
 
-  <!-- TODO: Unleash form submission in the core document sheet mixin. -->
   <div class="form-group">
     <label for="{appId}-prerequisites-items"
       >{localize(
@@ -139,17 +138,17 @@
     <div
       class="form-fields"
       {@attach (el) => {
-        const element: HTMLElement =
+        const input: HTMLElement =
           context.system.schema.fields.prerequisites.fields.items.toInput({
             disabled: !context.unlocked,
-            value: context.source.prerequisites.items,
+            value: [...context.source.prerequisites.items],
             id: `${appId}-prerequisites-items`,
           });
 
-        el.appendChild(element);
+        el.appendChild(input);
 
         return () => {
-          element.remove();
+          input.remove();
         };
       }}
     ></div>

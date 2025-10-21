@@ -1,6 +1,6 @@
 ## kgar To Do
 
-- [ ] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
+- [x] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
 - [ ] Ditto for document-tags: check on Facility details document-tags usage.
 - [ ] Evolve the hands-free data field input to its own component that uses the HTMLElement adapter approach.
 - [ ] Evolve hands-free data field input to favor Tidy controls where able and then to fall back to Foundry core controls otherwise.
@@ -23,16 +23,10 @@
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
-
-### Group Sheet
-
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] Group Sheet - Plan and task Bastions tab
   - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
-
-### The Short List
-
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
 - [ ] Extract and share: TidyTableRowUseButton
 - [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
