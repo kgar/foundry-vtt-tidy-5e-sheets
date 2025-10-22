@@ -2682,10 +2682,8 @@
 
 
 
-  .actor-warnings-control {
-    &::before {
-      color: var(--t5e-color-yellow);
-    }
+  .actor-warnings-control::before {
+    color: var(--t5e-color-palette-orange-70);
   }
 
   dialog.warnings {
@@ -2696,7 +2694,7 @@
     margin: 0;
     outline: none;
     padding: 0.25rem 0.5rem;
-    color: var(--t5e-primary-font-color);
+    color: var(--t5e-color-text-default);
     background: var(--t5e-component-field-background);
     border: 0.0625rem solid var(--t5e-component-field-border);
     border-radius: 0.25rem;
@@ -2729,7 +2727,7 @@
         &.error::before {
           font-family: var(--font-awesome);
           font-weight: bold;
-          color: var(--t5e-color-yellow);
+          color: var(--t5e-color-orange);
           margin-right: 0.5rem;
         }
 
@@ -2751,6 +2749,11 @@
   &.theme-dark,
   .theme-dark {
     --t5e-color-gold: var(--t5e-color-palette-gold-45);
+
+    .actor-warnings-control::before,
+    dialog.warnings .warning::before {
+      color: var(--t5e-color-yellow);
+    }
 
     .sheet-body {
       background: url(../../modules/tidy5e-sheet/images/denim065.png) top center / auto repeat,
