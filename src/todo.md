@@ -4,10 +4,26 @@
 - [x] Ditto for document-tags: check on Facility details document-tags usage.
 - [x] Evolve the hands-free data field input to its own component that uses the ~~HTMLElement adapter~~ outerHTML approach. 
   - Like Foundry, we can simply slam down outerHTML and call it a day, because the form will handle form submission.
-- [ ] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
-- [ ] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
-- [ ] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
+- [x] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
+- [x] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
+- [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
 - [ ] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
+  - [ ] Convert Item Sheet Details tabs to vet this out
+    - [ ] Background
+    - [ ] Class
+    - [ ] Consumable
+    - [ ] Equipment
+    - [ ] Facility
+    - [ ] Feat
+    - [ ] Loot
+    - [ ] Species
+    - [ ] Spell
+    - [ ] Subclass
+    - [ ] Tool
+    - [ ] Weapon
+    - [ ] Tattoo
+    - [ ] MCDM Power?
+    - [ ] ...other?
 
 ### Short List
 
