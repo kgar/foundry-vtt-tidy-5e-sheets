@@ -266,6 +266,19 @@
   gap: 0;
   height: var(--t5e-field-size-default);
 
+  &.wrap {
+    height: auto;
+    flex-wrap: wrap;
+    background-color: var(--t5e-color-gold);
+    gap: 0.0625rem;
+
+    .tab-option {
+      border: none;
+      border-radius: 0.0625rem;
+      flex: 1 1 auto;
+    }
+  }
+
   &:hover:not(:disabled) {
     box-shadow: var(--t5e-drop-shadow-field-hover);
   }

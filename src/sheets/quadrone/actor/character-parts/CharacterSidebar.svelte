@@ -28,7 +28,7 @@
     <Tabs
       bind:selectedTabId
       tabs={context.sidebarTabs}
-      cssClass="sidebar-tab-strip button-group"
+      cssClass="sidebar-tab-strip button-group wrap"
       tabCssClass="button button-secondary button-toggle"
     ></Tabs>
     {#if context.unlocked}
