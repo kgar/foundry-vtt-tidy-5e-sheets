@@ -33,7 +33,7 @@
         rest.groupClasses /* TODO: do we append more classes or is this just a bonus? */,
       hidden: rest.hidden,
       hint: rest.hint ?? field?.hint,
-      localize: !!rest.localize,
+      localize: rest.localize ?? true,
     };
 
     return props;
@@ -42,7 +42,13 @@
 
 <FormGroupBuilder {...builderProps}>
   {#if field && config}
-    <TidyFormInput {field} {config} {document} {disableOverriddenInputs} {name} />
+    <TidyFormInput
+      {field}
+      {config}
+      {document}
+      {disableOverriddenInputs}
+      {name}
+    />
   {/if}
   {@render children?.()}
 </FormGroupBuilder>

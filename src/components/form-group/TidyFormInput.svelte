@@ -53,11 +53,7 @@
       ? FoundryAdapter.localize('DND5E.ActiveEffectOverrideWarning')
       : undefined;
 
-    if (
-      (field instanceof foundry.data.fields.StringField ||
-        field instanceof dnd5e.dataModels.fields.FormulaField) &&
-      field.choices
-    ) {
+    if (field instanceof foundry.data.fields.StringField && field.choices) {
       return componentWithProps(SelectQuadrone, {
         document: document,
         field: effectiveFieldPath,
@@ -69,11 +65,7 @@
       });
     }
 
-    if (
-      (field instanceof foundry.data.fields.StringField ||
-        field instanceof dnd5e.dataModels.fields.FormulaField) &&
-      !field.choices
-    ) {
+    if (field instanceof foundry.data.fields.StringField && !field.choices) {
       return componentWithProps(TextInputQuadrone, {
         document: document,
         field: effectiveFieldPath,
@@ -82,6 +74,7 @@
         selectOnFocus: true,
         disabled,
         ['data-tooltip']: tooltip,
+        placeholder: config.placeholder,
       });
     }
 
@@ -106,6 +99,7 @@
         value: config.value,
         disabled,
         ['data-tooltip']: tooltip,
+        placeholder: config.placeholder,
       });
     }
 
