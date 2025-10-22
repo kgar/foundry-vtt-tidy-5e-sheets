@@ -24,6 +24,9 @@
     - [ ] Tattoo
     - [ ] MCDM Power?
     - [ ] ...other?
+- [ ] Determine what special attributes, if any, are needed
+  - [ ] FormulaField
+
 
 ### Short List
 
