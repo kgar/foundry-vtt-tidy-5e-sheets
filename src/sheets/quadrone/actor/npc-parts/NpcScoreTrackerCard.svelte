@@ -107,11 +107,11 @@
     </div>
   </div>
 {:else}
-  <div class="npc-score-tracker">
-    <h3 class="font-label-medium bordered">
-      <i class={`fa-solid fa-${icon} color-icon-disabled`}></i>
+  <div class="npc-score-tracker list-entry">
+    <h4 class="font-label-medium bordered">
+      <i class={`fa-solid fa-${icon} color-icon-button`}></i>
       {label}
-    </h3>
+    </h4>
     <div class="flexrow">
       {#if valuePath}
         <button

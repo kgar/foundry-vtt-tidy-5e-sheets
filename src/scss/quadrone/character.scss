@@ -484,6 +484,11 @@
         height: fit-content;
       }
 
+      .filigree-card .use-ability-header .skill-expand-button {
+        gap: 0.375rem;
+      }
+
+
       .saving-throws {
         grid-area: saves;
         height: fit-content;

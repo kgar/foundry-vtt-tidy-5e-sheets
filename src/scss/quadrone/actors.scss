@@ -180,6 +180,15 @@
           padding-top: 0;
         }
       }
+
+      /* Sidebar skills */
+      .use-ability-header .skill-expand-button {
+        gap: 0.1875rem;
+
+        h3 {
+          color: var(--t5e-color-text-lighter);
+        }
+      }
     }
   }
 
@@ -1823,7 +1832,6 @@
             color: var(--t5e-color-text-lighter);
 
             i {
-              color: var(--t5e-color-icon-default);
               transition: color var(--t5e-transition-default);
             }
           }
@@ -2069,10 +2077,6 @@
       .list-label {
         flex: 1;
         margin-right: var(--t5e-size-4x);
-
-        i {
-          color: var(--t5e-color-icon-diminished);
-        }
       }
 
       // TODO: Fix responsive behavior to handle small screens in edit mode.
