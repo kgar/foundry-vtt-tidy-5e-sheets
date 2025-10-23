@@ -1,35 +1,38 @@
 <script lang="ts">
-  import type { DataField, FormInputConfig } from 'foundry.data.fields';
-  import type { Snippet } from 'svelte';
+  import type { ComponentProps, Snippet } from 'svelte';
   import type { ClassValue } from 'svelte/elements';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyFormInput from './TidyFormInput.svelte';
 
-  type Props = {
+  type FormInputOptions = Omit<
+    ComponentProps<typeof TidyFormInput>,
+    'document'
+  >;
+
+  type Props = Partial<FormInputOptions> & {
     children?: Snippet;
-    choices?: any[] | object | Function;
-    config?: FormInputConfig;
-    disableOverriddenInputs?: boolean;
     document?: any;
-    field?: DataField;
+    fields?: FormInputOptions[];
     groupClasses?: ClassValue;
     hidden?: boolean | 'until-found';
     hint?: string;
     label?: string;
     labelFor?: string;
     localize?: boolean;
-    name?: string;
     stacked?: boolean;
     units?: string;
   };
 
   let {
+    blank,
     children,
     choices,
     config,
+    disabledValue,
     disableOverriddenInputs,
     document,
     field,
+    fields = [],
     groupClasses,
     hidden,
     hint,
@@ -38,6 +41,7 @@
     localize = true,
     name,
     stacked,
+    tooltip,
     units,
   }: Props = $props();
 
@@ -69,15 +73,20 @@
   </label>
   <div class="form-fields">
     {#if field}
-      <TidyFormInput
-        {field}
-        {config}
-        {document}
-        {disableOverriddenInputs}
-        {name}
-        {choices}
-      />
+      {@render FormInput({
+        blank,
+        choices,
+        config,
+        disabledValue,
+        disableOverriddenInputs,
+        field,
+        name,
+        tooltip,
+      })}
     {/if}
+    {#each fields as options}
+      {@render FormInput(options)}
+    {/each}
     {@render children?.()}
   </div>
   {#if effectiveHint}
@@ -86,3 +95,28 @@
     </p>
   {/if}
 </div>
+
+{#snippet FormInput({
+  blank,
+  choices,
+  config,
+  disabledValue,
+  disableOverriddenInputs,
+  field,
+  name,
+  tooltip,
+}: FormInputOptions)}
+  {#if field}
+    <TidyFormInput
+      {blank}
+      {choices}
+      {config}
+      {disabledValue}
+      {disableOverriddenInputs}
+      {document}
+      {field}
+      {name}
+      {tooltip}
+    />
+  {/if}
+{/snippet}

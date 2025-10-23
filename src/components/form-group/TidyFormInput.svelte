@@ -1,5 +1,9 @@
 <script lang="ts">
-  import { type DataField, type FormInputConfig } from 'foundry.data.fields';
+  import {
+    type DataField,
+    type FormInputConfig,
+    type NumberFieldOptions,
+  } from 'foundry.data.fields';
   import {
     componentWithProps,
     type ComponentWithProps,
@@ -14,25 +18,34 @@
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ComponentProps } from 'svelte';
+  import { buildDataset } from 'src/utils/data';
 
   type Choices<T = any> = T[] | object | Function;
 
   type Props = {
-    field: DataField;
-    config?: FormInputConfig;
-    document: any;
-    disableOverriddenInputs?: boolean;
-    name?: string;
+    blank?: string;
     choices?: Choices;
+    condition?: boolean;
+    config?: FormInputConfig;
+    disabledValue?: any;
+    disableOverriddenInputs?: boolean;
+    document: any;
+    field: DataField;
+    name?: string;
+    tooltip?: string;
   };
 
   let {
-    field,
-    config = {},
-    document,
-    disableOverriddenInputs,
-    name,
+    blank,
     choices,
+    condition = true,
+    config = {},
+    disableOverriddenInputs,
+    disabledValue,
+    document,
+    field,
+    name,
+    tooltip,
   }: Props = $props();
 
   function getInputComponent(
@@ -54,9 +67,25 @@
 
     const disabled = disabledViaEffect || config.disabled;
 
-    const tooltip = disabledViaEffect
+    const attributes: Record<string, string> = {};
+
+    if (config.dataset) {
+      Object.assign(attributes, buildDataset(config.dataset));
+    }
+
+    if (config.aria) {
+      for (const [k, v] of Object.entries(config.aria)) {
+        attributes[`aria-${k}`] = v;
+      }
+    }
+
+    const effectiveTooltip = disabledViaEffect
       ? FoundryAdapter.localize('DND5E.ActiveEffectOverrideWarning')
-      : undefined;
+      : tooltip;
+
+    if (effectiveTooltip) {
+      attributes['data-tooltip'] = effectiveTooltip;
+    }
 
     if (
       field instanceof foundry.data.fields.StringField &&
@@ -69,7 +98,7 @@
           id: config.id,
           value: config.value,
           disabled,
-          ['data-tooltip']: tooltip,
+          ...attributes,
         }),
         childrenArgs: [],
       };
@@ -83,7 +112,7 @@
         value: config.value,
         selectOnFocus: true,
         disabled,
-        ['data-tooltip']: tooltip,
+        ...attributes,
         placeholder: config.placeholder,
       };
 
@@ -101,20 +130,24 @@
         id: config.id,
         value: config.value,
         disabled,
-        ['data-tooltip']: tooltip,
+        ...attributes,
       });
     }
 
     if (field instanceof foundry.data.fields.NumberField && !field.choices) {
+      let numberConfig = config as FormInputConfig & NumberFieldOptions;
       return componentWithProps(NumberInputQuadrone, {
         document: document,
         field: effectiveFieldPath,
-        id: config.id,
+        id: numberConfig.id,
         selectOnFocus: true,
-        value: config.value,
+        value: numberConfig.value,
         disabled,
-        ['data-tooltip']: tooltip,
-        placeholder: config.placeholder,
+        placeholder: numberConfig.placeholder,
+        min: numberConfig.min ?? field.min,
+        max: numberConfig.max ?? field.max,
+        step: numberConfig.step ?? field.step,
+        ...attributes,
       });
     }
 
@@ -125,7 +158,8 @@
         id: config.id,
         checked: !!config.value,
         disabled,
-        ['data-tooltip']: tooltip,
+        disabledChecked: disabledValue,
+        ...attributes,
       });
     }
 
@@ -211,18 +245,21 @@
   });
 </script>
 
-<tidyInput.component {...tidyInput.props}>
-  {#if stringChoices}
-    {@render StringChoices(stringChoices)}
-  {:else if numberChoices}
-    {@render NumberChoices(numberChoices)}
-  {/if}
-</tidyInput.component>
+{#if condition}
+  <tidyInput.component {...tidyInput.props}>
+    {#if stringChoices}
+      {@render StringChoices(stringChoices)}
+    {:else if numberChoices}
+      {@render NumberChoices(numberChoices)}
+    {/if}
+  </tidyInput.component>
+{/if}
 
 {#snippet StringChoices(stringChoices: Choices<string>)}
   {@const options = enumerateChoices(stringChoices)}
+  {@const blankValue = 'blank' in field && field.blank ? (blank ?? '') : null}
   <SelectOptions
-    blank={'blank' in field && field.blank ? '' : null}
+    blank={blankValue}
     labelProp="label"
     valueProp="value"
     data={options}
