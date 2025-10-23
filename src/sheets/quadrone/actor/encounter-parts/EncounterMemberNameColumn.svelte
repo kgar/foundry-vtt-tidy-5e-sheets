@@ -94,13 +94,7 @@
         CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
         member.actor.system.traits.size}
 
-      {@const creatureType =
-        member.actor.system.details.type.value === 'custom'
-          ? member.actor.system.details.type.custom
-          : CONFIG.DND5E.creatureTypes[member.actor.system.details.type.value]
-              ?.label}
-
-      {@const creatureSubtype = member.actor.system.details.type.subtype}
+      {@const creatureType = member.actor.system.details.type.label}
 
       <span class="separated-list">
         <!-- <span class="cr">
@@ -118,9 +112,6 @@
           <span class="creature-type">
             <span class="font-label-medium color-text-gold-emphasis">
               {creatureType}
-              {#if creatureSubtype}
-                ({creatureSubtype})
-              {/if}
             </span>
           </span>
         {/if}

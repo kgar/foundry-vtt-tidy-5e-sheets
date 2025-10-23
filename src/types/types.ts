@@ -1229,7 +1229,6 @@ export type NpcSheetQuadroneContext = {
   classes: ActorClassEntryContext[];
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
-  creatureType: CreatureTypeContext;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   enriched: {

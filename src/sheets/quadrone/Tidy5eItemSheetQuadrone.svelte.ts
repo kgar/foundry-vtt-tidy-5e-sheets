@@ -835,6 +835,17 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
     return undefined;
   }
 
+  static ShouldShowAc(item: Item5e) {
+    return (
+      item.system.armor?.value &&
+      (item.system.isArmor || item.system.type.value === 'shield')
+    );
+  }
+
+  _shouldShowAc() {
+    return Tidy5eItemSheetQuadrone.ShouldShowAc(this.item);
+  }
+
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */

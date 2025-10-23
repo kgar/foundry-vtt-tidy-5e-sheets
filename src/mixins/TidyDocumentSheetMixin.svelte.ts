@@ -60,6 +60,8 @@ export function TidyExtensibleDocumentSheetMixin<
   }>
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
+    // TODO: Remove _fixedMode when classic sheets are gone
+    _fixedMode: number | undefined;
     _mode = $state<number | undefined>();
     _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
 
@@ -127,7 +129,14 @@ export function TidyExtensibleDocumentSheetMixin<
     };
 
     get sheetMode() {
-      return this._mode;
+      return this._fixedMode ?? this._mode;
+    }
+
+    set sheetMode(value) {
+      if (this._fixedMode !== undefined) {
+        return;
+      }
+      this._mode = value;
     }
 
     /**
@@ -224,7 +233,7 @@ export function TidyExtensibleDocumentSheetMixin<
         mode = CONSTANTS.SHEET_MODE_EDIT;
       }
 
-      this._mode = mode ?? this._mode ?? CONSTANTS.SHEET_MODE_PLAY;
+      this.sheetMode = mode ?? this.sheetMode ?? CONSTANTS.SHEET_MODE_PLAY;
     }
 
     async _prepareContext(
@@ -502,7 +511,7 @@ export function TidyExtensibleDocumentSheetMixin<
      * @protected
      */
     async changeSheetMode(mode: number) {
-      this._mode = mode;
+      this.sheetMode = mode;
       await this.submit();
       this._applySheetModeClass(this.element);
       await this.render();
@@ -514,7 +523,7 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     async toggleSheetMode() {
       const newMode =
-        this._mode === CONSTANTS.SHEET_MODE_PLAY
+        this.sheetMode === CONSTANTS.SHEET_MODE_PLAY
           ? CONSTANTS.SHEET_MODE_EDIT
           : CONSTANTS.SHEET_MODE_PLAY;
 
