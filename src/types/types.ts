@@ -665,7 +665,8 @@ export type DocumentSheetV2Context = {
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
-  fields: Record<string, SchemaField>;
+  /** The data schema of the document. */
+  fields: DataSchema;
   rootId: string;
   source: Record<string, any>;
   /**

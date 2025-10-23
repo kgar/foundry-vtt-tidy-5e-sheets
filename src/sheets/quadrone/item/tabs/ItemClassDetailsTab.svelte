@@ -8,6 +8,7 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -24,6 +25,19 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
+  <FormGroup
+    field={context.fields.identifier}
+    document={context.item}
+    config={{
+      id: `${appId}-identifier`,
+      disabled: !context.unlocked,
+      placeholder: context.item.identifier,
+      value: context.source.identifier,
+    }}
+    hint="{localize('DND5E.ClassIdentifierHint', {
+      identifier: context.item.identifier,
+    })} {localize('DND5E.IdentifierError')}"
+  />
   <div class="form-group">
     <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
     <div class="form-fields">
@@ -44,6 +58,7 @@
     </p>
   </div>
 
+  
   <div class="form-group split-group">
     <label for="{appId}-hit-dice"
       >{localize('DND5E.CLASS.FIELDS.hd.label')}</label

@@ -457,6 +457,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       ...documentSheetContext,
     };
 
+    context.fields = this.item.system.schema.fields;
+
     // Physical items
     context.baseItems = await this._getItemBaseTypes(context);
 

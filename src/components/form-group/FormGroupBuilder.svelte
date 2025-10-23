@@ -14,7 +14,6 @@
     groupClasses?: ClassValue;
     stacked?: boolean;
     hidden?: boolean | 'until-found';
-    // widget?: ComponentWithProps<any>[];
     localize?: boolean;
     children?: Snippet;
   }
@@ -46,7 +45,7 @@
   </div>
   {#if props.hint}
     <p class="hint">
-      {props.localize ? localize(props.hint) : props.hint}
+      {@html props.localize ? localize(props.hint) : props.hint}
     </p>
   {/if}
 </div>
