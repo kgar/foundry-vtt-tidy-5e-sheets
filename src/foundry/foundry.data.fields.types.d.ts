@@ -294,7 +294,7 @@ declare module 'foundry.data.fields' {
     asHTML(): string;
   }
 
-  declare type DataSchema = Record<string, SchemaField>;
+  declare type DataSchema = Record<string, DataField>;
 
   declare class DataField {
     constructor(

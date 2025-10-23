@@ -56,7 +56,6 @@
       {#each section.fields as fieldContext}
         {@const isCheckbox = fieldContext instanceof foundry.data.fields.BooleanField}
         <FormGroup
-          rootId={idPrefix}
           document={context.actor}
           field={fieldContext.field}
           config={{

@@ -20,7 +20,6 @@ import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemShee
 import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
 import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
-import type { DataSchema } from 'foundry.data.fields';
 
 export type PropertyContext = {
   active: string[];
@@ -192,7 +191,7 @@ export type ItemSheetQuadroneContext = {
   equipmentTypes: GroupableSelectOption[];
   facilitySubtypes?: Record<string, string>;
   /** The data schema of document.system. */
-  fields: DataSchema;
+  fields: any; // One day, maybe we can have types for all the various items. Doesn't seem within reach right now.
   hasDexModifier: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
