@@ -33,6 +33,8 @@
     field: DataField;
     name?: string;
     tooltip?: string;
+    labelAttr?: string;
+    valueAttr?: string;
   };
 
   let {
@@ -44,8 +46,10 @@
     disabledValue,
     document,
     field,
+    labelAttr,
     name,
     tooltip,
+    valueAttr,
   }: Props = $props();
 
   function getInputComponent(
@@ -98,6 +102,7 @@
           id: config.id,
           value: config.value,
           disabled,
+          class: config.classes,
           ...attributes,
         }),
         childrenArgs: [],
@@ -112,8 +117,9 @@
         value: config.value,
         selectOnFocus: true,
         disabled,
-        ...attributes,
+        class: config.classes,
         placeholder: config.placeholder,
+        ...attributes,
       };
 
       if (field.constructor.name === 'FormulaField') {
@@ -130,6 +136,7 @@
         id: config.id,
         value: config.value,
         disabled,
+        class: config.classes,
         ...attributes,
       });
     }
@@ -147,6 +154,7 @@
         min: numberConfig.min ?? field.min,
         max: numberConfig.max ?? field.max,
         step: numberConfig.step ?? field.step,
+        class: config.classes,
         ...attributes,
       });
     }
@@ -159,6 +167,7 @@
         checked: !!config.value,
         disabled,
         disabledChecked: disabledValue,
+        class: config.classes,
         ...attributes,
       });
     }
@@ -191,8 +200,8 @@
 
     if (Array.isArray(choices) && typeof choices[0] === 'object') {
       return choices.map((c) => ({
-        label: c.label,
-        value: c.value,
+        label: labelAttr ? c[labelAttr] : c.label,
+        value: valueAttr ? c[valueAttr] : c.value,
         group: c.group,
       }));
     }
@@ -209,7 +218,8 @@
 
       let getLabel =
         typeof entries[0]?.[1] === 'object'
-          ? (objValue: any) => objValue.label
+          ? (objValue: any) =>
+              labelAttr ? objValue[labelAttr] : objValue.label
           : (objValue: any) => objValue;
 
       return entries.map(([value, label]) => ({

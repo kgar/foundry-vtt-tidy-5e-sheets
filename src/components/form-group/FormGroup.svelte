@@ -27,6 +27,7 @@
     blank,
     children,
     choices,
+    condition,
     config,
     disabledValue,
     disableOverriddenInputs,
@@ -37,12 +38,14 @@
     hidden,
     hint,
     label,
+    labelAttr,
     labelFor,
     localize = true,
     name,
     stacked,
     tooltip,
     units,
+    valueAttr,
   }: Props = $props();
 
   let effectiveLabel = $derived(label ?? field?.label ?? field?.fieldPath);
@@ -82,6 +85,9 @@
         field,
         name,
         tooltip,
+        labelAttr,
+        valueAttr,
+        condition,
       })}
     {/if}
     {#each fields as options}
@@ -105,6 +111,9 @@
   field,
   name,
   tooltip,
+  labelAttr,
+  valueAttr,
+  condition,
 }: FormInputOptions)}
   {#if field}
     <TidyFormInput
@@ -117,6 +126,9 @@
       {field}
       {name}
       {tooltip}
+      {labelAttr}
+      {valueAttr}
+      {condition}
     />
   {/if}
 {/snippet}

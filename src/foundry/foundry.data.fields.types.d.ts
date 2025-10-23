@@ -86,7 +86,7 @@ declare module 'foundry.data.fields' {
   interface _NumberFieldOptions {
     min?: number;
     max?: number;
-    step?: number;
+    step?: number | 'any';
     integer?: boolean;
     positive?: boolean;
     choices?: number[] | object | Function;
