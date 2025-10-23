@@ -1,57 +1,88 @@
 <script lang="ts">
   import type { DataField, FormInputConfig } from 'foundry.data.fields';
+  import type { Snippet } from 'svelte';
+  import type { ClassValue } from 'svelte/elements';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyFormInput from './TidyFormInput.svelte';
-  import type { ComponentProps, Snippet } from 'svelte';
-  import FormGroupBuilder from './FormGroupBuilder.svelte';
 
-  type PartialBuilderProps = Partial<ComponentProps<typeof FormGroupBuilder>>;
-
-  type Props = PartialBuilderProps & {
-    field?: DataField;
-    config?: FormInputConfig;
-    document: any;
-    disableOverriddenInputs?: boolean;
-    name?: string;
-    choices?: any[] | object | Function;
+  type Props = {
     children?: Snippet;
+    choices?: any[] | object | Function;
+    config?: FormInputConfig;
+    disableOverriddenInputs?: boolean;
+    document?: any;
+    field?: DataField;
+    groupClasses?: ClassValue;
+    hidden?: boolean | 'until-found';
+    hint?: string;
+    label?: string;
+    labelFor?: string;
+    localize?: boolean;
+    name?: string;
+    stacked?: boolean;
+    units?: string;
   };
 
   let {
-    field,
-    config,
-    document,
-    disableOverriddenInputs,
-    name,
-    choices,
     children,
-    ...rest
+    choices,
+    config,
+    disableOverriddenInputs,
+    document,
+    field,
+    groupClasses,
+    hidden,
+    hint,
+    label,
+    labelFor,
+    localize = true,
+    name,
+    stacked,
+    units,
   }: Props = $props();
 
-  let builderProps = $derived.by(() => {
-    let props: PartialBuilderProps = {
-      ...rest,
-      label: rest.label ?? field?.label ?? field?.fieldPath,
-      groupClasses:
-        rest.groupClasses /* TODO: do we append more classes or is this just a bonus? */,
-      hidden: rest.hidden,
-      hint: rest.hint ?? field?.hint,
-      localize: rest.localize ?? true,
-    };
+  let effectiveLabel = $derived(label ?? field?.label ?? field?.fieldPath);
 
-    return props;
-  });
+  let effectiveHint = $derived(hint ?? field?.hint);
+
+  let fieldPathSlug = $derived(field?.fieldPath);
 </script>
 
-<FormGroupBuilder {...builderProps}>
-  {#if field && config}
-    <TidyFormInput
-      {field}
-      {config}
-      {document}
-      {disableOverriddenInputs}
-      {name}
-      {choices}
-    />
+<div
+  class={[
+    'form-group',
+    {
+      stacked: stacked,
+      hidden: hidden,
+    },
+    groupClasses,
+  ]}
+  data-field-path={fieldPathSlug}
+>
+  <label for={labelFor}>
+    {#if effectiveLabel}
+      {localize ? FoundryAdapter.localize(effectiveLabel) : effectiveLabel}
+    {/if}
+    {#if units}
+      <span class="units">{FoundryAdapter.localize(units)}</span>
+    {/if}
+  </label>
+  <div class="form-fields">
+    {#if field}
+      <TidyFormInput
+        {field}
+        {config}
+        {document}
+        {disableOverriddenInputs}
+        {name}
+        {choices}
+      />
+    {/if}
+    {@render children?.()}
+  </div>
+  {#if effectiveHint}
+    <p class="hint">
+      {@html localize ? FoundryAdapter.localize(effectiveHint) : effectiveHint}
+    </p>
   {/if}
-  {@render children?.()}
-</FormGroupBuilder>
+</div>

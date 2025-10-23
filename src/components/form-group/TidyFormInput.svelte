@@ -13,12 +13,13 @@
   import { debug } from 'src/utils/logging';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { ComponentProps } from 'svelte';
 
   type Choices<T = any> = T[] | object | Function;
 
   type Props = {
     field: DataField;
-    config: FormInputConfig;
+    config?: FormInputConfig;
     document: any;
     disableOverriddenInputs?: boolean;
     name?: string;
@@ -27,7 +28,7 @@
 
   let {
     field,
-    config,
+    config = {},
     document,
     disableOverriddenInputs,
     name,
@@ -75,7 +76,7 @@
     }
 
     if (field instanceof foundry.data.fields.StringField && !field.choices) {
-      return componentWithProps(TextInputQuadrone, {
+      const props: ComponentProps<typeof TextInputQuadrone> = {
         document: document,
         field: effectiveFieldPath,
         id: config.id,
@@ -84,7 +85,13 @@
         disabled,
         ['data-tooltip']: tooltip,
         placeholder: config.placeholder,
-      });
+      };
+
+      if (field.constructor.name === 'FormulaField') {
+        props['data-formula-editor'] = '';
+      }
+
+      return componentWithProps(TextInputQuadrone, props);
     }
 
     if (field instanceof foundry.data.fields.NumberField && field.choices) {
@@ -139,12 +146,20 @@
   );
 
   function enumerateChoices(
-    choices: string[] | object | Function | null | undefined,
+    choices: string[] | object[] | object | Function | null | undefined,
   ): { label: string; value: string }[] {
-    if (Array.isArray(choices)) {
+    if (Array.isArray(choices) && typeof choices[0] === 'string') {
       return choices.map((c) => ({
         label: c,
         value: c,
+      }));
+    }
+
+    if (Array.isArray(choices) && typeof choices[0] === 'object') {
+      return choices.map((c) => ({
+        label: c.label,
+        value: c.value,
+        group: c.group,
       }));
     }
 
@@ -156,8 +171,15 @@
     }
 
     if (typeof choices === 'object' && choices) {
-      return Object.entries(choices).map(([value, label]) => ({
-        label,
+      const entries = Object.entries(choices);
+
+      let getLabel =
+        typeof entries[0]?.[1] === 'object'
+          ? (objValue: any) => objValue.label
+          : (objValue: any) => objValue;
+
+      return entries.map(([value, label]) => ({
+        label: getLabel(label),
         value,
       }));
     }

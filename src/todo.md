@@ -11,8 +11,8 @@
   - [ ] Convert Item Sheet Details tabs to vet this out
     - [x] Background
     - [x] Class
-    - [ ] .. DetailsSpellcasting
-    - [ ] .. ItemStartingEquipment
+    - [x] .. DetailsSpellcasting
+    - [x] .. ItemStartingEquipment
     - [ ] Consumable
     - [ ] Equipment
     - [ ] Facility

@@ -3,7 +3,7 @@
 
   type Props = {
     field: DataField;
-    options: FormInputConfig;
+    options?: FormInputConfig;
   };
 
   let { field, options }: Props = $props();
