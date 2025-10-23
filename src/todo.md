@@ -15,7 +15,7 @@
     - [x] .. ItemStartingEquipment
     - [x] Consumable
     - [x] .. QuantityWeightPriceFormGroups
-    - [ ] .. FieldDamage
+    - [x] .. FieldDamage
     - [ ] .. FieldUses
     - [ ] Equipment
     - [ ] Facility
