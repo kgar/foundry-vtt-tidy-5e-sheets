@@ -14,7 +14,7 @@
     - [x] .. DetailsSpellcasting
     - [x] .. ItemStartingEquipment
     - [x] Consumable
-    - [ ] .. QuantityWeightPriceFormGroups
+    - [x] .. QuantityWeightPriceFormGroups
     - [ ] .. FieldDamage
     - [ ] .. FieldUses
     - [ ] Equipment
