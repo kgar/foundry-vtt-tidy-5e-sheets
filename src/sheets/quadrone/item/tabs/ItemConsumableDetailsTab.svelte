@@ -164,6 +164,7 @@
     <FieldDamage
       prefix="system.damage.base."
       source={context.source.damage.base}
+      fields={context.fields.damage.fields.base.fields}
       system={context.system.damage.base}
       denominationOptions={context.denominationOptions}
       types={context.damageTypes}

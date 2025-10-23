@@ -109,7 +109,10 @@
       };
     }
 
-    if (field instanceof foundry.data.fields.StringField && !field.choices) {
+    if (
+      field instanceof foundry.data.fields.StringField &&
+      !(choices ?? field.choices)
+    ) {
       const props: ComponentProps<typeof TextInputQuadrone> = {
         document: document,
         field: effectiveFieldPath,
@@ -129,7 +132,10 @@
       return componentWithProps(TextInputQuadrone, props);
     }
 
-    if (field instanceof foundry.data.fields.NumberField && field.choices) {
+    if (
+      field instanceof foundry.data.fields.NumberField &&
+      (choices ?? field.choices)
+    ) {
       return componentWithProps(SelectQuadrone, {
         document: document,
         field: effectiveFieldPath,
@@ -141,7 +147,10 @@
       });
     }
 
-    if (field instanceof foundry.data.fields.NumberField && !field.choices) {
+    if (
+      field instanceof foundry.data.fields.NumberField &&
+      !(choices ?? field.choices)
+    ) {
       let numberConfig = config as FormInputConfig & NumberFieldOptions;
       return componentWithProps(NumberInputQuadrone, {
         document: document,
@@ -203,6 +212,7 @@
         label: labelAttr ? c[labelAttr] : c.label,
         value: valueAttr ? c[valueAttr] : c.value,
         group: c.group,
+        rule: c.rule
       }));
     }
 
