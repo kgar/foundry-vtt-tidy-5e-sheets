@@ -13,7 +13,10 @@
     - [x] Class
     - [x] .. DetailsSpellcasting
     - [x] .. ItemStartingEquipment
-    - [ ] Consumable
+    - [x] Consumable
+    - [ ] .. QuantityWeightPriceFormGroups
+    - [ ] .. FieldDamage
+    - [ ] .. FieldUses
     - [ ] Equipment
     - [ ] Facility
     - [ ] Feat
