@@ -1,10 +1,5 @@
 <script lang="ts">
-  import type {
-    DataField,
-    FormInputConfig,
-    NumberField,
-    StringField,
-  } from 'foundry.data.fields';
+  import { type DataField, type FormInputConfig } from 'foundry.data.fields';
   import {
     componentWithProps,
     type ComponentWithProps,
@@ -19,16 +14,25 @@
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
+  type Choices<T = any> = T[] | object | Function;
+
   type Props = {
     field: DataField;
     config: FormInputConfig;
     document: any;
     disableOverriddenInputs?: boolean;
     name?: string;
+    choices?: Choices;
   };
 
-  let { field, config, document, disableOverriddenInputs, name }: Props =
-    $props();
+  let {
+    field,
+    config,
+    document,
+    disableOverriddenInputs,
+    name,
+    choices,
+  }: Props = $props();
 
   function getInputComponent(
     field: DataField,
@@ -53,16 +57,21 @@
       ? FoundryAdapter.localize('DND5E.ActiveEffectOverrideWarning')
       : undefined;
 
-    if (field instanceof foundry.data.fields.StringField && field.choices) {
-      return componentWithProps(SelectQuadrone, {
-        document: document,
-        field: effectiveFieldPath,
-        id: config.id,
-        value: config.value,
-        children: () => StringChoices(field),
-        disabled,
-        ['data-tooltip']: tooltip,
-      });
+    if (
+      field instanceof foundry.data.fields.StringField &&
+      (choices ?? field.choices)
+    ) {
+      return {
+        ...componentWithProps(SelectQuadrone, {
+          document: document,
+          field: effectiveFieldPath,
+          id: config.id,
+          value: config.value,
+          disabled,
+          ['data-tooltip']: tooltip,
+        }),
+        childrenArgs: [],
+      };
     }
 
     if (field instanceof foundry.data.fields.StringField && !field.choices) {
@@ -84,7 +93,6 @@
         field: effectiveFieldPath,
         id: config.id,
         value: config.value,
-        children: () => NumberChoices(field),
         disabled,
         ['data-tooltip']: tooltip,
       });
@@ -131,7 +139,7 @@
   );
 
   function enumerateChoices(
-    choices: string[] | object | Function,
+    choices: string[] | object | Function | null | undefined,
   ): { label: string; value: string }[] {
     if (Array.isArray(choices)) {
       return choices.map((c) => ({
@@ -147,7 +155,7 @@
       }));
     }
 
-    if (typeof choices === 'object') {
+    if (typeof choices === 'object' && choices) {
       return Object.entries(choices).map(([value, label]) => ({
         label,
         value,
@@ -156,21 +164,52 @@
 
     return [];
   }
+
+  // There has to be a better way.
+  let stringChoices = $derived.by(() => {
+    if (
+      'choices' in field &&
+      field instanceof foundry.data.fields.StringField
+    ) {
+      return choices ?? field.choices;
+    }
+
+    return null;
+  });
+
+  let numberChoices = $derived.by(() => {
+    if (
+      'choices' in field &&
+      field instanceof foundry.data.fields.NumberField
+    ) {
+      return choices ?? field.choices;
+    }
+
+    return null;
+  });
 </script>
 
-<tidyInput.component {...tidyInput.props} />
+<tidyInput.component {...tidyInput.props}>
+  {#if stringChoices}
+    {@render StringChoices(stringChoices)}
+  {:else if numberChoices}
+    {@render NumberChoices(numberChoices)}
+  {/if}
+</tidyInput.component>
 
-{#snippet StringChoices(field: StringField)}
-  {@const options = enumerateChoices(field.choices!)}
+{#snippet StringChoices(stringChoices: Choices<string>)}
+  {@const options = enumerateChoices(stringChoices)}
   <SelectOptions
-    blank={field.blank ? '' : null}
+    blank={'blank' in field && field.blank ? '' : null}
     labelProp="label"
     valueProp="value"
     data={options}
   />
 {/snippet}
 
-{#snippet NumberChoices(field: NumberField)}
-  {@const options = enumerateChoices(field.choices!)}
-  <SelectOptions labelProp="label" valueProp="value" data={options} />
+{#snippet NumberChoices(numberChoices: Choices<number>)}
+  {#if numberChoices}
+    {@const options = enumerateChoices(numberChoices)}
+    <SelectOptions labelProp="label" valueProp="value" data={options} />
+  {/if}
 {/snippet}

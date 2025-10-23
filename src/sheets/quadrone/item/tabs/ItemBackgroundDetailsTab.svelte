@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';

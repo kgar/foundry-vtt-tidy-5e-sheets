@@ -12,6 +12,7 @@
     document: any;
     disableOverriddenInputs?: boolean;
     name?: string;
+    choices?: any[] | object | Function;
     children?: Snippet;
   };
 
@@ -21,6 +22,7 @@
     document,
     disableOverriddenInputs,
     name,
+    choices,
     children,
     ...rest
   }: Props = $props();
@@ -48,6 +50,7 @@
       {document}
       {disableOverriddenInputs}
       {name}
+      {choices}
     />
   {/if}
   {@render children?.()}

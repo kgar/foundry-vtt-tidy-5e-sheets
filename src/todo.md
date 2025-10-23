@@ -9,8 +9,10 @@
 - [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
 - [ ] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
   - [ ] Convert Item Sheet Details tabs to vet this out
-    - [x] (convert to using context.fields) Background
-    - [ ] Class
+    - [x] Background
+    - [x] Class
+    - [ ] .. DetailsSpellcasting
+    - [ ] .. ItemStartingEquipment
     - [ ] Consumable
     - [ ] Equipment
     - [ ] Facility

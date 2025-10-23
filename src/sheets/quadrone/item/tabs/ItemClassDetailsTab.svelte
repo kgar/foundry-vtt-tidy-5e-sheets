@@ -2,13 +2,13 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
-  import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties-quadrone';
+  import {
+    mapMulticlassingAbilitiesToSave,
+  } from 'src/utils/system-properties-quadrone';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -26,6 +26,7 @@
   </legend>
 
   <FormGroup
+    labelFor="{appId}-identifier"
     field={context.fields.identifier}
     document={context.item}
     config={{
@@ -38,80 +39,61 @@
       identifier: context.item.identifier,
     })} {localize('DND5E.IdentifierError')}"
   />
-  <div class="form-group">
-    <label for="{appId}-identifier">{localize('DND5E.Identifier')}</label>
-    <div class="form-fields">
-      <TextInputQuadrone
-        id="{appId}-identifier"
-        document={context.item}
-        field="system.identifier"
-        value={context.source.identifier}
-        placeholder={context.item.identifier}
-        disabled={!context.unlocked}
-      />
-    </div>
-    <p class="hint">
-      {@html localize('DND5E.ClassIdentifierHint', {
-        identifier: context.item.identifier,
-      })}
-      {localize('DND5E.IdentifierError')}
-    </p>
-  </div>
 
-  
-  <div class="form-group split-group">
-    <label for="{appId}-hit-dice"
-      >{localize('DND5E.CLASS.FIELDS.hd.label')}</label
-    >
-    <div class="form-fields">
-      <div class="form-group label-top">
-        <label for="{appId}-hit-dice">{localize('DND5E.Denomination')}</label>
-        <div class="form-fields">
-          <SelectQuadrone
-            id="{appId}-hit-dice"
-            document={context.item}
-            field="system.hd.denomination"
-            value={context.source.hd.denomination}
-            disabled={!context.unlocked}
-          >
-            {#each context.config.hitDieTypes as type}
-              <option value={type}>{type}</option>
-            {/each}
-          </SelectQuadrone>
-        </div>
-      </div>
+  <FormGroup
+    labelFor="{appId}-hit-dice"
+    label={localize('DND5E.CLASS.FIELDS.hd.label')}
+    document={context.item}
+    groupClasses="split-group"
+  >
+    <FormGroup
+      label="DND5E.Denomination"
+      localize={true}
+      labelFor="{appId}-hit-dice"
+      document={context.item}
+      groupClasses="label-top"
+      field={context.fields.hd.fields.denomination}
+      config={{
+        id: `${appId}-hit-dice`,
+        value: context.source.hd.denomination,
+        disabled: !context.unlocked,
+      }}
+      choices={context.config.hitDieTypes}
+    ></FormGroup>
+    <FormGroup
+      label="DND5E.Spent"
+      localize={true}
+      labelFor="{appId}-hit-dice-spent"
+      document={context.item}
+      groupClasses="label-top"
+      field={context.fields.hd.fields.spent}
+      config={{
+        id: `${appId}-hit-dice-spent`,
+        value: context.source.hd.spent,
+        disabled: !context.unlocked,
+        placeholder: '0',
+      }}
+    ></FormGroup>
+  </FormGroup>
 
-      <div class="form-group label-top">
-        <label for="{appId}-hit-dice-spent"
-          >{localize('DND5E.CLASS.FIELDS.hd.spent.label')}</label
-        >
-        <div class="form-fields">
-          <NumberInputQuadrone
-            id="{appId}-hitDiceUsed"
-            document={context.item}
-            field="system.hd.spent"
-            value={context.source.hd.spent}
-            placeholder="0"
-            disabled={!context.unlocked}
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  <FormGroup
+    label="DND5E.CLASS.FIELDS.hd.additional.label"
+    localize={true}
+    labelFor="{appId}-hit-dice-additional"
+    document={context.item}
+    field={context.fields.hd.fields.additional}
+    config={{
+      id: `${appId}-hit-dice-additional`,
+      value: context.source.hd.additional,
+      disabled: !context.unlocked,
+    }}
+  ></FormGroup>
 
-  <div class="form-group">
-    <label>{localize('DND5E.CLASS.FIELDS.hd.additional.label')}</label>
+  <div class="form-group stacked class-properties checkbox-grid">
+    <label for="">{localize(context.fields.properties.label ?? '')}</label>
     <div class="form-fields">
-      <TextInputQuadrone
-        document={context.item}
-        field="system.hd.additional"
-        value={context.source.hd.additional}
-        disabled={!context.unlocked}
-      />
+      <ItemProperties />
     </div>
-    <p class="hint">
-      {localize('DND5E.CLASS.FIELDS.hd.additional.hint')}
-    </p>
   </div>
 </fieldset>
 
