@@ -19,7 +19,7 @@
   </legend>
   <FormGroup
     labelFor="{appId}-identifier"
-    field={context.system.schema.fields.identifier}
+    field={context.fields.identifier}
     config={{
       value: context.source.identifier,
       placeholder: context.item.identifier,
