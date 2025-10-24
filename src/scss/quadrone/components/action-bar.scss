@@ -25,6 +25,8 @@
 
       &.exclude,
       &.disabled {
+        background-color: var(--t5e-component-card-darker);
+
         &::before {
           --icon-fill: var(--t5e-color-text-lightest);
           font-style: italic;

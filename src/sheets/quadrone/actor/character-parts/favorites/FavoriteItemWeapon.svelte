@@ -43,7 +43,7 @@
     name={favorite.item?.name || ''}
     {subtitle}
   />
-  <div class="stacked">
+  <div class="favorite-context stacked">
     <span class="primary">
       {#if !isNil(modifier)}
         {@const mod = getModifierData(modifier)}

@@ -44,6 +44,8 @@
 </script>
 
 <div
+  role="button"
+  tabindex="0"
   class="list-entry favorite"
   data-favorite-type="spell"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
@@ -64,7 +66,7 @@
     {subtitle}
   />
   {#if !isNil(modifier) || !isNil(save?.dc?.value) || !isNil(range?.value)}
-    <div class="stacked">
+    <div class="favorite-context stacked">
       {#if !isNil(modifier) || !isNil(save?.dc?.value)}
         <span class="primary">
           {#if !isNil(modifier)}

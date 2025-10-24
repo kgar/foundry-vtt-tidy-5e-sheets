@@ -41,7 +41,9 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
-
+    
+    this._fixedMode = CONSTANTS.SHEET_MODE_EDIT;
+    
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
