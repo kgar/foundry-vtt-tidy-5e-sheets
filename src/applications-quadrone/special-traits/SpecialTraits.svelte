@@ -54,15 +54,19 @@
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       {#each section.fields as fieldContext}
-        {@const isCheckbox = fieldContext instanceof foundry.data.fields.BooleanField}
+        {@const isCheckbox =
+          fieldContext instanceof foundry.data.fields.BooleanField}
+        {@const id = `${context.actor.id}-${fieldContext.name.slugify().replaceAll('.', '-')}`}
         <FormGroup
+          labelFor={id}
           document={context.actor}
           field={fieldContext.field}
           config={{
-            value: fieldContext.value
+            id,
+            value: fieldContext.value,
+            name: fieldContext.name,
           }}
           localize={true}
-          name={fieldContext.name}
           groupClasses={{ slim: isCheckbox }}
           disableOverriddenInputs
         />

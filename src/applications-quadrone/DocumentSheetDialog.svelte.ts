@@ -2,6 +2,7 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 import type {
   ApplicationClosingOptions,
+  ApplicationConfiguration,
   DocumentSheetApplicationConfiguration,
   DocumentSheetConfiguration,
 } from 'src/types/application.types';
@@ -19,11 +20,18 @@ export function DocumentSheetDialog<
       super(options);
     }
 
-    #customHTMLTags: string[] = ['PROSE-MIRROR'];
+    static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+      form: {
+        submitOnChange: true,
+      },
+      tag: 'form',
+      window: {
+        controls: [],
+      },
+      submitOnClose: true,
+    };
 
-    _onChangeForm(formConfig: unknown, event: any) {
-      super._onChangeForm(formConfig, event);
-
+    async _onChangeForm(formConfig: unknown, event: any) {
       if (event.type !== 'change') {
         return;
       }
@@ -37,12 +45,18 @@ export function DocumentSheetDialog<
         return;
       }
 
-      if (!this.#customHTMLTags.includes(target.tagName)) {
-        return;
-      }
+      try {
+        const isSelfSufficientInput = !event.target.name;
+        if (isSelfSufficientInput) {
+          return;
+        }
 
-      const value = target._getValue();
-      this.document.update({ [target.name]: value });
+        super._onChangeForm(formConfig, event);
+      } catch (e: any) {
+        Object.values(e.getAllFailures()).forEach((failure: any) =>
+          ui.notifications.error(failure.message)
+        );
+      }
     }
 
     /* -------------------------------------------- */
