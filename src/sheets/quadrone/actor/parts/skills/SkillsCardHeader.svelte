@@ -32,7 +32,7 @@
       }
     }}
   >
-    <i class={['fa-solid fa-briefcase', { ['color-icon-diminished']: !inCard }]}
+    <i class={['fa-solid fa-briefcase']}
     ></i>
     <h3 class="font-label-medium">
       {localize('DND5E.Skills')}

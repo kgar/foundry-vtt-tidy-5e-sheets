@@ -65,6 +65,7 @@
         display: flex;
         flex-direction: column;
         flex-wrap: nowrap;
+        overflow: hidden;
 
         >span {
           display: flex;
@@ -72,13 +73,28 @@
           flex-wrap: nowrap;
           text-wrap: nowrap;
           text-overflow: ellipsis;
-          overflow-x: hidden;
+          overflow: hidden;
           line-height: normal;
           align-items: center;
         }
 
+        >span>span {
+          display: inline-flex;
+        }
+
         .subtitle {
           margin-block-start: -0.125rem;
+        }
+      }
+
+      .stacked.favorite-context {
+        >span {
+          justify-content: center;
+        }
+
+        .primary,
+        .secondary {
+          width: 100%;
         }
       }
 
