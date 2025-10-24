@@ -11,6 +11,7 @@
 
   type Props = Partial<FormInputOptions> & {
     children?: Snippet;
+    beforeGroupEnd?: Snippet;
     document?: any;
     fields?: FormInputOptions[];
     groupClasses?: ClassValue;
@@ -26,6 +27,7 @@
   let {
     blank,
     children,
+    beforeGroupEnd,
     choices,
     condition,
     config,
@@ -93,6 +95,7 @@
     {/each}
     {@render children?.()}
   </div>
+  {@render beforeGroupEnd?.()}
   {#if effectiveHint}
     <p class="hint">
       {@html localize ? FoundryAdapter.localize(effectiveHint) : effectiveHint}

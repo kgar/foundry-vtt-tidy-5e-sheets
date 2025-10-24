@@ -35,7 +35,7 @@
       value: context.source.type.value,
       disabled: !context.unlocked,
     }}
-    choices={context.config.equipmentTypes}
+    choices={context.equipmentTypes}
   />
 
   <!-- Equipment Base -->
@@ -80,6 +80,7 @@
           id: `${appId}-armor-value`,
           value: context.source.armor.value,
           disabled: !context.unlocked,
+          step: 1,
         }}
         groupClasses="label-top"
       />

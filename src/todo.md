@@ -18,7 +18,7 @@
     - [x] .. FieldDamage
     - [x] .. FieldUses
     - [x] Equipment
-    - [ ] .. DetailsMountable
+    - [x] .. DetailsMountable
     - [ ] Facility
     - [ ] Feat
     - [ ] Loot
