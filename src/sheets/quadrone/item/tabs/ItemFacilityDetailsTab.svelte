@@ -7,6 +7,7 @@
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import FoundryFormInput from 'src/components/form-group/FoundryFormInput.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -22,6 +23,19 @@
   </legend>
 
   <!-- Type -->
+  <FormGroup
+    labelFor="{appId}-type"
+    document={context.document}
+    field={context.fields.type.fields.value}
+    config={{
+      id: `${appId}-type`,
+      value: context.source.type.value,
+      disabled: !context.unlocked,
+      blank: false,
+    }}
+    choices={context.config.facilities.types}
+  />
+
   <div class="form-group">
     <label for="{appId}-system-type-value">
       {localize('DND5E.FACILITY.FIELDS.type.value.label')}
@@ -45,6 +59,18 @@
   </div>
 
   <!-- Sub-Type -->
+  <FormGroup
+    labelFor="{appId}-type-subtype"
+    document={context.document}
+    field={context.fields.type.fields.subtype}
+    config={{
+      id: `${appId}-type-subtype`,
+      value: context.source.type.subtype,
+      disabled: !context.unlocked,
+    }}
+    choices={context.facilitySubtypes}
+  />
+
   <div class="form-group">
     <label for="{appId}-system-type-subtype">
       {localize('DND5E.FACILITY.FIELDS.type.subtype.label')}
@@ -68,6 +94,18 @@
   </div>
 
   <!-- Size -->
+  <FormGroup
+    labelFor="{appId}-size"
+    document={context.document}
+    field={context.fields.size}
+    config={{
+      id: `${appId}-size`,
+      value: context.source.size,
+      disabled: !context.unlocked,
+    }}
+    choices={context.config.facilities.sizes}
+  />
+
   <div class="form-group">
     <label for="{appId}-system-size">
       {localize('DND5E.FACILITY.FIELDS.size.label')}
@@ -87,7 +125,18 @@
   </div>
 
   <!-- Level -->
+
   {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_BASIC}
+    <FormGroup
+      labelFor="{appId}-level"
+      document={context.document}
+      field={context.fields.level}
+      config={{
+        id: `${appId}-level`,
+        value: context.source.level,
+        disabled: !context.unlocked,
+      }}
+    />
     <div class="form-group">
       <label for="{appId}-system-level">
         {localize('DND5E.FACILITY.FIELDS.level.label')}
@@ -108,6 +157,36 @@
   {/if}
 
   {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL}
+    <!-- Properties -->
+    <FormGroup label="DND5E.FACILITY.Properties" groupClasses="split-group">
+      <!-- Level -->
+      <FormGroup
+        label="DND5E.Level"
+        labelFor="{appId}-level"
+        document={context.document}
+        field={context.fields.level}
+        config={{
+          id: `${appId}-level`,
+          value: context.source.level,
+          disabled: !context.unlocked,
+        }}
+        groupClasses="label-top"
+      />
+      <!-- Order -->
+      <FormGroup
+        labelFor="{appId}-order"
+        document={context.document}
+        field={context.fields.order}
+        config={{
+          id: `${appId}-order`,
+          value: context.source.order,
+          disabled: !context.unlocked,
+        }}
+        choices={context.orders?.available ?? []}
+        groupClasses="label-top"
+      />
+    </FormGroup>
+
     <!-- Properties -->
     <div class="form-group split-group">
       <label for="{appId}-system-level">
@@ -159,6 +238,35 @@
     </div>
 
     <!-- Occupants -->
+    <FormGroup label="DND5E.FACILITY.Occupants" groupClasses="split-group">
+      <!-- Hirelings -->
+      <FormGroup
+        labelFor="{appId}-hirelings-max"
+        document={context.document}
+        field={context.fields.hirelings.fields.max}
+        config={{
+          id: `${appId}-hirelings-max`,
+          value: context.source.hirelings.max,
+          disabled: !context.unlocked,
+          placeholder: '—',
+        }}
+        groupClasses="label-top"
+      />
+      <!-- Defenders -->
+      <FormGroup
+        labelFor="{appId}-defenders-max"
+        document={context.document}
+        field={context.fields.defenders.fields.max}
+        config={{
+          id: `${appId}-defenders-max`,
+          value: context.source.defenders.max,
+          disabled: !context.unlocked,
+          placeholder: '—',
+        }}
+        groupClasses="label-top"
+      />
+    </FormGroup>
+
     <div class="form-group split-group">
       <label for="{appId}-system-hirelings-max">
         {localize('DND5E.FACILITY.Occupants')}
