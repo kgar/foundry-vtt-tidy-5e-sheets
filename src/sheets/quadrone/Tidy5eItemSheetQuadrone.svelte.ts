@@ -199,6 +199,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   ): Promise<ItemSheetQuadroneContext> {
     const documentSheetContext = await super._prepareContext(options);
 
+    documentSheetContext.fields = this.item.system.schema.fields;
+
     const rollData = this.document.getRollData();
 
     // Enrich HTML description
@@ -440,10 +442,13 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       ],
 
       usesRecovery: (this.document.system.uses?.recovery ?? []).map(
-        (data: UsesRecoveryData) => ({
+        (data: UsesRecoveryData, index: number) => ({
           data,
           formulaOptions:
             data.period === 'recharge' ? data.recharge?.options : null,
+          fields: this.item.system.schema.fields.uses.fields.recovery.element.fields,
+          prefix: `system.uses.recovery.${index}.`,
+          source: systemSource.uses.recovery[index] ?? data,
         })
       ),
 
@@ -456,8 +461,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
 
       ...documentSheetContext,
     };
-
-    context.fields = this.item.system.schema.fields;
 
     // Physical items
     context.baseItems = await this._getItemBaseTypes(context);

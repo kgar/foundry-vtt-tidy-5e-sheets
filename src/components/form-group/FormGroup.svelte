@@ -41,7 +41,6 @@
     labelAttr,
     labelFor,
     localize = true,
-    name,
     stacked,
     tooltip,
     units,
@@ -83,7 +82,6 @@
         disabledValue,
         disableOverriddenInputs,
         field,
-        name,
         tooltip,
         labelAttr,
         valueAttr,
@@ -109,7 +107,6 @@
   disabledValue,
   disableOverriddenInputs,
   field,
-  name,
   tooltip,
   labelAttr,
   valueAttr,
@@ -124,7 +121,6 @@
       {disableOverriddenInputs}
       {document}
       {field}
-      {name}
       {tooltip}
       {labelAttr}
       {valueAttr}

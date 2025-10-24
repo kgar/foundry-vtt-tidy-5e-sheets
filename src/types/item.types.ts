@@ -251,6 +251,9 @@ export type ItemSheetQuadroneContext = {
   usesRecovery: {
     data: UsesRecoveryData;
     formulaOptions: { label: string; value: string }[] | null;
+    source: any;
+    fields: any;
+    prefix: string;
   }[];
   tabs: Tab[];
 } & DocumentSheetV2Context;

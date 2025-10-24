@@ -22,6 +22,10 @@
       currentTarget: EventTarget & HTMLInputElement;
     },
   ) {
+    if (rest.name) {
+      return;
+    }
+
     let data: any = onDataPreparing?.(event) ?? {
       [field]: event.currentTarget.checked,
     };

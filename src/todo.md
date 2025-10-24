@@ -16,7 +16,7 @@
     - [x] Consumable
     - [x] .. QuantityWeightPriceFormGroups
     - [x] .. FieldDamage
-    - [ ] .. FieldUses
+    - [x] .. FieldUses
     - [ ] Equipment
     - [ ] Facility
     - [ ] Feat

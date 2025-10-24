@@ -25,6 +25,10 @@
       currentTarget: EventTarget & HTMLInputElement;
     },
   ) {
+    if (rest.name) {
+      return;
+    }
+
     const proposedValueToSave = parseFloat(event.currentTarget.value);
 
     const parsedValueToSave = !isNaN(proposedValueToSave)

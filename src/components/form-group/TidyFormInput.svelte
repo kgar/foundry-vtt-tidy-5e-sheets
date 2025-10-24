@@ -24,14 +24,13 @@
 
   type Props = {
     blank?: string;
-    choices?: Choices;
+    choices?: Choices | null;
     condition?: boolean;
     config?: FormInputConfig;
     disabledValue?: any;
     disableOverriddenInputs?: boolean;
     document: any;
     field: DataField;
-    name?: string;
     tooltip?: string;
     labelAttr?: string;
     valueAttr?: string;
@@ -47,7 +46,6 @@
     document,
     field,
     labelAttr,
-    name,
     tooltip,
     valueAttr,
   }: Props = $props();
@@ -60,7 +58,7 @@
   ) {
     // TODO: Hook here, allow supplying an HTML input and props (if only Svelte could work this way...)
 
-    const effectiveFieldPath = name ?? field.fieldPath;
+    const effectiveFieldPath = config.name ?? field.fieldPath;
 
     const disabledViaEffect =
       disableOverriddenInputs &&
@@ -102,6 +100,7 @@
           id: config.id,
           value: config.value,
           disabled,
+          name: config.name,
           class: config.classes,
           ...attributes,
         }),
@@ -120,6 +119,7 @@
         value: config.value,
         selectOnFocus: true,
         disabled,
+        name: config.name,
         class: config.classes,
         placeholder: config.placeholder,
         ...attributes,
@@ -143,6 +143,7 @@
         value: config.value,
         disabled,
         class: config.classes,
+        name: config.name,
         ...attributes,
       });
     }
@@ -164,6 +165,7 @@
         max: numberConfig.max ?? field.max,
         step: numberConfig.step ?? field.step,
         class: config.classes,
+        name: config.name,
         ...attributes,
       });
     }
@@ -177,6 +179,7 @@
         disabled,
         disabledChecked: disabledValue,
         class: config.classes,
+        name: config.name,
         ...attributes,
       });
     }
@@ -212,7 +215,7 @@
         label: labelAttr ? c[labelAttr] : c.label,
         value: valueAttr ? c[valueAttr] : c.value,
         group: c.group,
-        rule: c.rule
+        rule: c.rule,
       }));
     }
 
@@ -277,7 +280,9 @@
 
 {#snippet StringChoices(stringChoices: Choices<string>)}
   {@const options = enumerateChoices(stringChoices)}
-  {@const blankValue = 'blank' in field && field.blank ? (blank ?? '') : null}
+  {@const usesBlank =
+    'blank' in config ? config.blank : 'blank' in field ? field.blank : false}
+  {@const blankValue = usesBlank ? (blank ?? '') : null}
   <SelectOptions
     blank={blankValue}
     labelProp="label"
