@@ -248,10 +248,6 @@
       flex: none;
     }
 
-    &:has(input[type="checkbox"]:only-child) {
-      justify-content: flex-start;
-    }
-
     // Labels
     >label {
       transition: color var(--t5e-transition-default);
@@ -417,6 +413,10 @@
 
     input[type='checkbox'] {
       --checkbox-size: 1rem;
+    }
+
+    &:has(input[type="checkbox"]:only-child) {
+      justify-content: flex-start;
     }
 
     &.flexcol {
