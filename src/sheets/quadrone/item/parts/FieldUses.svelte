@@ -1,8 +1,4 @@
 <script lang="ts">
-  import type {
-    FormInputConfig,
-    StringFieldOptions,
-  } from 'foundry.data.fields';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
@@ -150,7 +146,7 @@
                 disabled,
                 name: `${recovery.prefix}formula`,
                 blank: false,
-              } satisfies FormInputConfig & StringFieldOptions as any}
+              }}
               choices={recovery.formulaOptions}
               groupClasses="label-top"
             />

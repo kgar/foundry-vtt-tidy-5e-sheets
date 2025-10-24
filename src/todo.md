@@ -17,7 +17,8 @@
     - [x] .. QuantityWeightPriceFormGroups
     - [x] .. FieldDamage
     - [x] .. FieldUses
-    - [ ] Equipment
+    - [x] Equipment
+    - [ ] .. DetailsMountable
     - [ ] Facility
     - [ ] Feat
     - [ ] Loot

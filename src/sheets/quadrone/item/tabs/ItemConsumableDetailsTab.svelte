@@ -5,13 +5,8 @@
   import FieldDamage from '../parts/FieldDamage.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
-  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
-  import type {
-    NumberFieldOptions,
-    FormInputConfig,
-  } from 'foundry.data.fields';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -122,19 +117,18 @@
       />
 
       {#if context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
-        <!-- TODO: Find a better way to specify specific field type overrides through config -->
         <FormGroup
           label="DND5E.Bonus"
           labelFor="{appId}-magical-bonus"
           document={context.document}
-          groupClasses="label-top no-gap"
+          groupClasses="label-top"
           config={{
             id: `${appId}-magical-bonus`,
             value: context.source.magicalBonus,
             disabled: !context.unlocked,
             placeholder: '0',
             step: 1,
-          } satisfies FormInputConfig & NumberFieldOptions as any}
+          }}
           field={context.fields.magicalBonus}
         />
       {/if}

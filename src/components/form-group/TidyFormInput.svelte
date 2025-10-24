@@ -266,6 +266,12 @@
 
     return null;
   });
+
+  function getBlankValue() {
+    const usesBlank =
+      'blank' in config ? config.blank : 'blank' in field ? field.blank : false;
+    return usesBlank ? (blank ?? '') : null;
+  }
 </script>
 
 {#if condition}
@@ -280,9 +286,7 @@
 
 {#snippet StringChoices(stringChoices: Choices<string>)}
   {@const options = enumerateChoices(stringChoices)}
-  {@const usesBlank =
-    'blank' in config ? config.blank : 'blank' in field ? field.blank : false}
-  {@const blankValue = usesBlank ? (blank ?? '') : null}
+  {@const blankValue = getBlankValue()}
   <SelectOptions
     blank={blankValue}
     labelProp="label"
@@ -294,6 +298,12 @@
 {#snippet NumberChoices(numberChoices: Choices<number>)}
   {#if numberChoices}
     {@const options = enumerateChoices(numberChoices)}
-    <SelectOptions labelProp="label" valueProp="value" data={options} />
+    {@const blankValue = getBlankValue()}
+    <SelectOptions
+      blank={blankValue}
+      labelProp="label"
+      valueProp="value"
+      data={options}
+    />
   {/if}
 {/snippet}

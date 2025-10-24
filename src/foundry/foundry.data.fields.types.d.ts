@@ -43,7 +43,7 @@ declare module 'foundry.data.fields' {
   /**
    * @template [FormInputValue=unknown]
    */
-  interface FormInputConfig {
+  type FormInputConfig = {
     name?: string;
     value?: FormInputValue;
     id?: string;
@@ -57,11 +57,19 @@ declare module 'foundry.data.fields' {
     placeholder?: string;
     classes?: string;
     input?: CustomFormInput;
-  }
+  } & AnyFieldOptions;
 
-  interface StringFieldInputConfig {
+  type AnyFieldOptions =
+    | NumberFieldOptions
+    | StringFieldOptions
+    | ArrayFieldOptions
+    | DocumentUUIDFieldOptions
+    | FilePathFieldOptions
+    | JavaScriptFieldOptions;
+
+  type StringFieldInputConfig = {
     elementType?: 'input' | 'textarea' | 'prose-mirror' | 'code-mirror';
-  }
+  };
 
   type CodeMirrorLanguage =
     | 'javascript'

@@ -1,8 +1,4 @@
 <script lang="ts">
-  import type {
-    FormInputConfig,
-    NumberFieldOptions,
-  } from 'foundry.data.fields';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
@@ -23,7 +19,7 @@
     disabled: !context.unlocked,
     id: `${appId}-quantity`,
     step: 1,
-  } satisfies FormInputConfig & NumberFieldOptions as any}
+  }}
 />
 
 <FormGroup
@@ -38,7 +34,7 @@
         disabled: !context.unlocked,
         id: `${appId}-weight-value`,
         step: 'any',
-      } satisfies FormInputConfig & NumberFieldOptions as any,
+      },
     },
     {
       field: context.fields.weight.fields.units,
@@ -66,7 +62,7 @@
         id: `${appId}-price-value`,
         step: 'any',
         classes: 'large-value',
-      } satisfies FormInputConfig & NumberFieldOptions as any,
+      },
     },
     {
       field: context.fields.weight.fields.units,

@@ -5,10 +5,6 @@
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
-  import type {
-    FormInputConfig,
-    NumberFieldOptions,
-  } from 'foundry.data.fields';
 
   interface Props {
     source: any;
@@ -84,7 +80,7 @@
         disabled: !context.unlocked,
         placeholder: numberPlaceholder,
         step: 1,
-      } satisfies FormInputConfig & NumberFieldOptions as any}
+      }}
       groupClasses="label-top"
     />
     <FormGroup
