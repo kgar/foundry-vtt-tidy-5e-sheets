@@ -6,8 +6,8 @@
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import FoundryFormInput from 'src/components/form-group/FoundryFormInput.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import TidyFormInput from 'src/components/form-group/TidyFormInput.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -315,6 +315,17 @@
     </div>
 
     <!-- Free Facility -->
+    <FormGroup
+      labelFor="{appId}-system-free"
+      document={context.document}
+      field={context.fields.free}
+      config={{
+        id: `${appId}-system-free`,
+        value: context.source.free,
+        disabled: !context.unlocked,
+      }}
+    />
+
     <div class="form-group">
       <label for="{appId}-system-free">
         {localize('DND5E.FACILITY.FIELDS.free.label')}
@@ -335,6 +346,17 @@
     </div>
 
     <!-- Enlargeable -->
+    <FormGroup
+      labelFor="{appId}-system-enlargeable"
+      document={context.document}
+      field={context.fields.enlargeable}
+      config={{
+        id: `${appId}-system-enlargeable`,
+        value: context.source.enlargeable,
+        disabled: !context.unlocked,
+      }}
+    />
+
     <div class="form-group">
       <label for="{appId}-system-enlargeable">
         {localize('DND5E.FACILITY.FIELDS.enlargeable.label')}
@@ -355,6 +377,17 @@
     </div>
 
     <!-- Disabled -->
+    <FormGroup
+      labelFor="{appId}-system-disabled"
+      document={context.document}
+      field={context.fields.disabled}
+      config={{
+        id: `${appId}-system-disabled`,
+        value: context.source.disabled,
+        disabled: !context.unlocked,
+      }}
+    />
+
     <div class="form-group">
       <label for="{appId}-system-disabled">
         {localize('DND5E.FACILITY.FIELDS.disabled.label')}
@@ -375,6 +408,17 @@
     </div>
   {:else}
     <!-- Built -->
+    <FormGroup
+      labelFor="{appId}-system-building-built"
+      document={context.document}
+      field={context.fields.building.fields.built}
+      config={{
+        id: `${appId}-system-building-built`,
+        value: context.source.building.built,
+        disabled: !context.unlocked,
+      }}
+    />
+
     <div class="form-group">
       <label for="{appId}-system-building-built">
         {localize('DND5E.FACILITY.FIELDS.building.built.label')}
@@ -403,6 +447,18 @@
   </legend>
 
   <!-- Executing -->
+  <FormGroup
+    labelFor="{appId}-progress-order"
+    document={context.document}
+    field={context.fields.progress.fields.order}
+    config={{
+      id: `${appId}-progress-order`,
+      value: context.source.progress.order,
+      disabled: !context.unlocked,
+    }}
+    choices={context.orders?.executable ?? []}
+  />
+
   <div class="form-group">
     <label for="{appId}-system-progress-order">
       {localize('DND5E.FACILITY.FIELDS.progress.order.label')}
@@ -426,6 +482,34 @@
   </div>
 
   <!-- Progress -->
+  <FormGroup label="DND5E.FACILITY.Progress" groupClasses="split-group">
+    <!-- Current -->
+    <FormGroup
+      labelFor="{appId}-system-progress-value"
+      document={context.document}
+      field={context.fields.progress.fields.value}
+      config={{
+        id: `${appId}-system-progress-value`,
+        value: context.source.progress.value,
+        disabled: !context.unlocked,
+      }}
+      groupClasses="label-top"
+    />
+    <!-- Total -->
+    <FormGroup
+      labelFor="{appId}-system-progress-max"
+      document={context.document}
+      field={context.fields.progress.fields.max}
+      config={{
+        id: `${appId}-system-progress-max`,
+        value: context.source.progress.max,
+        disabled: !context.unlocked,
+        placeholder: '—',
+      }}
+      groupClasses="label-top"
+    />
+  </FormGroup>
+
   <div class="form-group split-group">
     <label for="{appId}-system-progress-value">
       {localize('DND5E.FACILITY.Progress')}
@@ -510,9 +594,11 @@
               </div>
             </div>
           {:else}
-            <FoundryFormInput
+            <TidyFormInput
+              document={context.document}
               field={context.system.schema.fields.craft.fields.item}
-              options={{
+              config={{
+                id: `${appId}-craft-item`,
                 disabled: !context.unlocked,
                 value: context.source.craft.item,
               }}
@@ -523,6 +609,15 @@
       {#if context.isHarvesting}
         <div class="quantity">
           <span class="separator">&times;</span>
+          <TidyFormInput
+            document={context.document}
+            field={context.fields.craft.fields.quantity}
+            config={{
+              id: `${appId}-craft-quantity`,
+              value: context.source.craft.quantity,
+              disabled: !context.unlocked,
+            }}
+          />
           <NumberInputQuadrone
             id="{appId}-system-craft-quantity"
             document={context.document}
@@ -545,6 +640,17 @@
     </legend>
 
     <!-- Stocked -->
+    <FormGroup
+      document={context.document}
+      labelFor="{appId}-system-trade-stock-stocked"
+      field={context.fields.trade.fields.stock.fields.stocked}
+      config={{
+        id: `${appId}-system-trade-stock-stocked`,
+        value: context.source.trade.stock.stocked,
+        disabled: !context.unlocked,
+      }}
+    />
+
     <div class="form-group">
       <label for="{appId}-system-trade-stock-stocked">
         {localize('DND5E.FACILITY.FIELDS.trade.stock.stocked.label')}
@@ -562,6 +668,34 @@
     </div>
 
     <!-- Goods -->
+    <FormGroup label="DND5E.FACILITY.Goods" groupClasses="split-group">
+      <!-- Value -->
+      <FormGroup
+        document={context.document}
+        labelFor="{appId}-system-trade-stock-value"
+        field={context.fields.trade.fields.stock.fields.value}
+        config={{
+          id: `${appId}-system-trade-stock-value`,
+          value: context.source.trade.stock.value,
+          disabled: !context.unlocked,
+          placeholder: '—',
+        }}
+      />
+
+      <!-- Max -->
+      <FormGroup
+        document={context.document}
+        labelFor="{appId}-system-trade-stock-max"
+        field={context.fields.trade.fields.stock.fields.max}
+        config={{
+          id: `${appId}-system-trade-stock-max`,
+          value: context.source.trade.stock.max,
+          disabled: !context.unlocked,
+          placeholder: '—',
+        }}
+      />
+    </FormGroup>
+
     <div class="form-group split-group">
       <label for="{appId}-">
         {localize('DND5E.FACILITY.Goods')}
@@ -610,6 +744,17 @@
     </div>
 
     <!-- Creatures -->
+    <FormGroup
+      labelFor="{appId}-trade-creatures-max"
+      document={context.document}
+      field={context.fields.trade.fields.creatures.fields.max}
+      config={{
+        id: `${appId}-trade-creatures-max`,
+        value: context.source.trade.creatures.max,
+        disabled: !context.unlocked,
+        placeholder: '—',
+      }}
+    />
     <div class="form-group">
       <label for="{appId}-system-trade-creatures-max">
         {localize('DND5E.FACILITY.FIELDS.trade.creatures.max.label')}
@@ -630,6 +775,23 @@
     </div>
 
     <!-- Profit Factor -->
+    <FormGroup
+      label="DND5E.FACILITY.FIELDS.trade.profit.label"
+      labelFor="{appId}-system-trade-profit"
+    >
+      <TidyFormInput
+        document={context.document}
+        field={context.fields.trade.fields.profit}
+        config={{
+          id: `${appId}-system-trade-profit`,
+          value: context.source.trade.profit,
+          disabled: !context.unlocked,
+          placeholder: '—',
+        }}
+      />
+      <span class="sep unit">&percnt;</span>
+    </FormGroup>
+
     <div class="form-group">
       <label for="{appId}-system-trade-profit">
         {localize('DND5E.FACILITY.FIELDS.trade.profit.label')}
