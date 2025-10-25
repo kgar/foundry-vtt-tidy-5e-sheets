@@ -24,39 +24,17 @@
 
   <!-- Type -->
   <FormGroup
-    labelFor="{appId}-type"
+    labelFor="{appId}-type-value"
     document={context.document}
     field={context.fields.type.fields.value}
     config={{
-      id: `${appId}-type`,
+      id: `${appId}-type-value`,
       value: context.source.type.value,
       disabled: !context.unlocked,
       blank: false,
     }}
     choices={context.config.facilities.types}
   />
-
-  <div class="form-group">
-    <label for="{appId}-system-type-value">
-      {localize('DND5E.FACILITY.FIELDS.type.value.label')}
-    </label>
-    <div class="form-fields">
-      <SelectQuadrone
-        document={context.document}
-        field="system.type.value"
-        value={context.source.type.value}
-        id="{appId}-system-type-value"
-        blankValue={null}
-        disabled={!context.unlocked}
-      >
-        <SelectOptions
-          data={context.config.facilities.types}
-          labelProp="label"
-          valueProp="value"
-        ></SelectOptions>
-      </SelectQuadrone>
-    </div>
-  </div>
 
   <!-- Sub-Type -->
   <FormGroup
@@ -71,28 +49,6 @@
     choices={context.facilitySubtypes}
   />
 
-  <div class="form-group">
-    <label for="{appId}-system-type-subtype">
-      {localize('DND5E.FACILITY.FIELDS.type.subtype.label')}
-    </label>
-    <div class="form-fields">
-      <SelectQuadrone
-        document={context.document}
-        field="system.type.subtype"
-        value={context.source.type.subtype}
-        id="{appId}-system-type-subtype"
-        disabled={!context.unlocked}
-      >
-        <SelectOptions
-          data={context.facilitySubtypes ?? {}}
-          labelProp="label"
-          valueProp="value"
-          blank=""
-        ></SelectOptions>
-      </SelectQuadrone>
-    </div>
-  </div>
-
   <!-- Size -->
   <FormGroup
     labelFor="{appId}-size"
@@ -106,26 +62,7 @@
     choices={context.config.facilities.sizes}
   />
 
-  <div class="form-group">
-    <label for="{appId}-system-size">
-      {localize('DND5E.FACILITY.FIELDS.size.label')}
-    </label>
-    <div class="form-fields">
-      <SelectQuadrone
-        document={context.document}
-        field="system.size"
-        value={context.source.size}
-        id="{appId}-system-size"
-        disabled={!context.unlocked}
-      >
-        <SelectOptions data={context.config.facilities.sizes} labelProp="label"
-        ></SelectOptions>
-      </SelectQuadrone>
-    </div>
-  </div>
-
   <!-- Level -->
-
   {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_BASIC}
     <FormGroup
       labelFor="{appId}-level"
@@ -135,25 +72,10 @@
         id: `${appId}-level`,
         value: context.source.level,
         disabled: !context.unlocked,
+        min: 1,
+        step: 1,
       }}
     />
-    <div class="form-group">
-      <label for="{appId}-system-level">
-        {localize('DND5E.FACILITY.FIELDS.level.label')}
-      </label>
-      <div class="form-fields">
-        <NumberInputQuadrone
-          id="{appId}-system-level"
-          document={context.document}
-          field="system.level"
-          value={context.source.level}
-          selectOnFocus={true}
-          min="1"
-          step="1"
-          disabled={!context.unlocked}
-        />
-      </div>
-    </div>
   {/if}
 
   {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL}
@@ -187,56 +109,6 @@
       />
     </FormGroup>
 
-    <!-- Properties -->
-    <div class="form-group split-group">
-      <label for="{appId}-system-level">
-        {localize('DND5E.FACILITY.Properties')}
-      </label>
-      <div class="form-fields">
-        <!-- Level -->
-        <div class="form-group label-top">
-          <label for="{appId}-system-level">
-            {localize('DND5E.FACILITY.FIELDS.level.label')}
-          </label>
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-system-level"
-              document={context.document}
-              field="system.level"
-              value={context.source.level}
-              selectOnFocus={true}
-              min="1"
-              step="1"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-
-        <!-- Order -->
-        <div class="form-group label-top">
-          <label for="{appId}-system-order">
-            {localize('DND5E.FACILITY.FIELDS.order.label')}
-          </label>
-          <div class="form-fields">
-            <SelectQuadrone
-              document={context.document}
-              field="system.order"
-              value={context.source.order}
-              id="{appId}-system-order"
-              disabled={!context.unlocked}
-            >
-              <SelectOptions
-                data={context.orders?.available ?? []}
-                blank=""
-                labelProp="label"
-                valueProp="value"
-              ></SelectOptions>
-            </SelectQuadrone>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Occupants -->
     <FormGroup label="DND5E.FACILITY.Occupants" groupClasses="split-group">
       <!-- Hirelings -->
@@ -267,53 +139,6 @@
       />
     </FormGroup>
 
-    <div class="form-group split-group">
-      <label for="{appId}-system-hirelings-max">
-        {localize('DND5E.FACILITY.Occupants')}
-      </label>
-      <div class="form-fields">
-        <!-- Hirelings -->
-        <div class="form-group label-top">
-          <label for="{appId}-system-hirelings-max">
-            {localize('DND5E.FACILITY.FIELDS.hirelings.max.label')}
-          </label>
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-system-hirelings-max"
-              document={context.document}
-              field="system.hirelings.max"
-              value={context.source.hirelings.max}
-              selectOnFocus={true}
-              min="1"
-              step="1"
-              placeholder="—"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-
-        <!-- Defenders -->
-        <div class="form-group label-top">
-          <label for="{appId}-system-defenders-max">
-            {localize('DND5E.FACILITY.FIELDS.defenders.max.label')}
-          </label>
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-system-defenders-max"
-              document={context.document}
-              field="system.defenders.max"
-              value={context.source.defenders.max}
-              selectOnFocus={true}
-              min="1"
-              step="1"
-              placeholder="—"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Free Facility -->
     <FormGroup
       labelFor="{appId}-system-free"
@@ -326,94 +151,37 @@
       }}
     />
 
-    <div class="form-group">
-      <label for="{appId}-system-free">
-        {localize('DND5E.FACILITY.FIELDS.free.label')}
-      </label>
-      <div class="form-fields">
-        <CheckboxQuadrone
-          id="{appId}-system-free"
-          document={context.document}
-          field="system.free"
-          checked={context.source.free}
-          disabledChecked={context.system.free}
-          disabled={!context.unlocked}
-        />
-      </div>
-      <p class="hint">
-        {localize('DND5E.FACILITY.FIELDS.free.hint')}
-      </p>
-    </div>
-
     <!-- Enlargeable -->
     <FormGroup
-      labelFor="{appId}-system-enlargeable"
+      labelFor="{appId}-enlargeable"
       document={context.document}
       field={context.fields.enlargeable}
       config={{
-        id: `${appId}-system-enlargeable`,
+        id: `${appId}-enlargeable`,
         value: context.source.enlargeable,
         disabled: !context.unlocked,
       }}
     />
 
-    <div class="form-group">
-      <label for="{appId}-system-enlargeable">
-        {localize('DND5E.FACILITY.FIELDS.enlargeable.label')}
-      </label>
-      <div class="form-fields">
-        <CheckboxQuadrone
-          id="{appId}-system-enlargeable"
-          document={context.document}
-          field="system.enlargeable"
-          checked={context.source.enlargeable}
-          disabledChecked={context.system.enlargeable}
-          disabled={!context.unlocked}
-        />
-      </div>
-      <p class="hint">
-        {localize('DND5E.FACILITY.FIELDS.enlargeable.hint')}
-      </p>
-    </div>
-
     <!-- Disabled -->
     <FormGroup
-      labelFor="{appId}-system-disabled"
+      labelFor="{appId}-disabled"
       document={context.document}
       field={context.fields.disabled}
       config={{
-        id: `${appId}-system-disabled`,
+        id: `${appId}-disabled`,
         value: context.source.disabled,
         disabled: !context.unlocked,
       }}
     />
-
-    <div class="form-group">
-      <label for="{appId}-system-disabled">
-        {localize('DND5E.FACILITY.FIELDS.disabled.label')}
-      </label>
-      <div class="form-fields">
-        <CheckboxQuadrone
-          id="{appId}-system-disabled"
-          document={context.document}
-          field="system.disabled"
-          checked={context.source.disabled}
-          disabledChecked={context.system.disabled}
-          disabled={!context.unlocked}
-        />
-      </div>
-      <p class="hint">
-        {localize('DND5E.FACILITY.FIELDS.disabled.hint')}
-      </p>
-    </div>
   {:else}
     <!-- Built -->
     <FormGroup
-      labelFor="{appId}-system-building-built"
+      labelFor="{appId}-building-built"
       document={context.document}
       field={context.fields.building.fields.built}
       config={{
-        id: `${appId}-system-building-built`,
+        id: `${appId}-building-built`,
         value: context.source.building.built,
         disabled: !context.unlocked,
       }}
@@ -485,11 +253,11 @@
   <FormGroup label="DND5E.FACILITY.Progress" groupClasses="split-group">
     <!-- Current -->
     <FormGroup
-      labelFor="{appId}-system-progress-value"
+      labelFor="{appId}-progress-value"
       document={context.document}
       field={context.fields.progress.fields.value}
       config={{
-        id: `${appId}-system-progress-value`,
+        id: `${appId}-progress-value`,
         value: context.source.progress.value,
         disabled: !context.unlocked,
       }}
@@ -497,11 +265,11 @@
     />
     <!-- Total -->
     <FormGroup
-      labelFor="{appId}-system-progress-max"
+      labelFor="{appId}-progress-max"
       document={context.document}
       field={context.fields.progress.fields.max}
       config={{
-        id: `${appId}-system-progress-max`,
+        id: `${appId}-progress-max`,
         value: context.source.progress.max,
         disabled: !context.unlocked,
         placeholder: '—',

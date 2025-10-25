@@ -30,6 +30,7 @@
     - [ ] Tattoo
     - [ ] MCDM Power?
     - [ ] ...other?
+  - [ ] Find out why `context.fields.hirelings.fields.max` is not automaticlly using step=1 min=1; it's not being specified in the default sheets and works fine for it
 - [ ] Determine what special attributes, if any, are needed
   - [ ] FormulaField
 
