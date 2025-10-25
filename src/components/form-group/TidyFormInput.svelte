@@ -89,6 +89,14 @@
       attributes['data-tooltip'] = effectiveTooltip;
     }
 
+    // TODO: Create Tidy DocumentUUIDField control
+    if (field instanceof foundry.data.fields.DocumentUUIDField) {
+      return componentWithProps(FoundryFormInput, {
+        field: field,
+        options: config,
+      });
+    }
+
     if (
       field instanceof foundry.data.fields.StringField &&
       (choices ?? field.choices)
