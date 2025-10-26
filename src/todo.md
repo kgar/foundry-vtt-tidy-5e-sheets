@@ -30,7 +30,7 @@
     - [ ] Tattoo
     - [ ] MCDM Power?
     - [ ] ...other?
-  - [ ] Find out why `context.fields.hirelings.fields.max` is not automaticlly using step=1 min=1; it's not being specified in the default sheets and works fine for it
+  - [x] Find out why `context.fields.hirelings.fields.max` is not automaticlly using step=1 min=1; it's not being specified in the default sheets and works fine for it
   - [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
 - [ ] Determine what special attributes, if any, are needed
   - [ ] FormulaField

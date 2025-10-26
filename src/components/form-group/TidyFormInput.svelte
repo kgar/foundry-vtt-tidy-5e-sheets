@@ -161,6 +161,16 @@
       !(choices ?? field.choices)
     ) {
       let numberConfig = config as FormInputConfig & NumberFieldOptions;
+      
+      if (field.integer) {
+        numberConfig.step ??= 1;
+      }
+
+      if (field.positive && Number.isFinite(numberConfig.step)) {
+        numberConfig.min ??=
+          numberConfig.step !== 'any' ? numberConfig.step : 1;
+      }
+
       return componentWithProps(NumberInputQuadrone, {
         document: document,
         field: effectiveFieldPath,
