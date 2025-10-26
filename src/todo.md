@@ -21,7 +21,7 @@
     - [x] .. DetailsMountable
     - [x] Facility
     - [x] Feat
-    - [ ] Loot
+    - [x] Loot
     - [ ] Species
     - [ ] Spell
     - [ ] Subclass
