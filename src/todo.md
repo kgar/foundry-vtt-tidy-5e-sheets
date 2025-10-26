@@ -20,7 +20,7 @@
     - [x] Equipment
     - [x] .. DetailsMountable
     - [x] Facility
-    - [ ] Feat
+    - [x] Feat
     - [ ] Loot
     - [ ] Species
     - [ ] Spell
