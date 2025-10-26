@@ -22,7 +22,7 @@
     - [x] Facility
     - [x] Feat
     - [x] Loot
-    - [ ] Species
+    - [x] Species
     - [ ] Spell
     - [ ] Subclass
     - [ ] Tool
