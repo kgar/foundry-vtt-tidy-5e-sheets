@@ -10,6 +10,7 @@
   >;
 
   type Props = Partial<FormInputOptions> & {
+    formLabel?: Snippet;
     children?: Snippet;
     beforeGroupEnd?: Snippet;
     document?: any;
@@ -26,6 +27,7 @@
 
   let {
     blank,
+    formLabel,
     children,
     beforeGroupEnd,
     choices,
@@ -67,14 +69,18 @@
   ]}
   data-field-path={fieldPathSlug}
 >
-  <label for={labelFor}>
-    {#if effectiveLabel}
-      {localize ? FoundryAdapter.localize(effectiveLabel) : effectiveLabel}
-    {/if}
-    {#if units}
-      <span class="units">{FoundryAdapter.localize(units)}</span>
-    {/if}
-  </label>
+  {#if formLabel}
+    {@render formLabel()}
+  {:else}
+    <label for={labelFor}>
+      {#if effectiveLabel}
+        {localize ? FoundryAdapter.localize(effectiveLabel) : effectiveLabel}
+      {/if}
+      {#if units}
+        <span class="units">{FoundryAdapter.localize(units)}</span>
+      {/if}
+    </label>
+  {/if}
   <div class="form-fields">
     {#if field}
       {@render FormInput({

@@ -110,6 +110,7 @@
           disabled,
           name: config.name,
           class: config.classes,
+          blankValue: field.nullable ? null : '',
           ...attributes,
         }),
         childrenArgs: [],
@@ -152,6 +153,7 @@
         disabled,
         class: config.classes,
         name: config.name,
+        blankValue: field.nullable ? null : '',
         ...attributes,
       });
     }
@@ -161,7 +163,7 @@
       !(choices ?? field.choices)
     ) {
       let numberConfig = config as FormInputConfig & NumberFieldOptions;
-      
+
       if (field.integer) {
         numberConfig.step ??= 1;
       }
@@ -249,13 +251,12 @@
 
       let getLabel =
         typeof entries[0]?.[1] === 'object'
-          ? (objValue: any) =>
-              labelAttr ? objValue[labelAttr] : objValue.label
-          : (objValue: any) => objValue;
+          ? (value: any) => (labelAttr ? value[labelAttr] : value.label)
+          : (value: any) => value;
 
-      return entries.map(([value, label]) => ({
-        label: getLabel(label),
-        value,
+      return entries.map(([key, value]) => ({
+        label: getLabel(value),
+        value: valueAttr ? value[valueAttr] : key,
       }));
     }
 
@@ -304,9 +305,10 @@
 
 {#snippet StringChoices(stringChoices: Choices<string>)}
   {@const options = enumerateChoices(stringChoices)}
-  {@const blankValue = getBlankValue()}
+  {@const blankLabel = getBlankValue()}
+  {console.log({ blankValue: blankLabel })}
   <SelectOptions
-    blank={blankValue}
+    blank={blankLabel}
     labelProp="label"
     valueProp="value"
     data={options}
@@ -316,9 +318,9 @@
 {#snippet NumberChoices(numberChoices: Choices<number>)}
   {#if numberChoices}
     {@const options = enumerateChoices(numberChoices)}
-    {@const blankValue = getBlankValue()}
+    {@const blankLabel = getBlankValue()}
     <SelectOptions
-      blank={blankValue}
+      blank={blankLabel}
       labelProp="label"
       valueProp="value"
       data={options}

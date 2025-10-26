@@ -1,7 +1,5 @@
 <script lang="ts">
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
   import FieldTargets from '../parts/FieldTargets.svelte';
@@ -9,10 +7,8 @@
   import FieldRange from '../parts/FieldRange.svelte';
   import FieldDuration from '../parts/FieldDuration.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import TidyFormInput from 'src/components/form-group/TidyFormInput.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -27,41 +23,31 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <!-- Spell Level -->
-  <div class="form-group">
-    <label for="{appId}-level">{localize('DND5E.SpellLevel')}</label>
-    <div class="form-fields">
-      <SelectQuadrone
-        id="{appId}-level"
-        document={context.item}
-        field="system.level"
-        value={context.source.level}
-        disabled={!context.unlocked}
-      >
-        <SelectOptions data={context.config.spellLevels} />
-      </SelectQuadrone>
-    </div>
-  </div>
+  <!--Spell Level -->
+  <FormGroup
+    labelFor="{appId}-level"
+    document={context.document}
+    field={context.fields.level}
+    config={{
+      id: `${appId}-level`,
+      value: context.source.level,
+      disabled: !context.unlocked,
+    }}
+    choices={context.config.spellLevels}
+  />
 
   <!-- Spell School -->
-  <div class="form-group">
-    <label for="{appId}-school">{localize('DND5E.SpellSchool')}</label>
-    <div class="form-fields">
-      <SelectQuadrone
-        id="{appId}-school"
-        document={context.item}
-        field="system.school"
-        value={context.source.school}
-        disabled={!context.unlocked}
-      >
-        <SelectOptions
-          data={context.config.spellSchools}
-          labelProp="label"
-          blank=""
-        />
-      </SelectQuadrone>
-    </div>
-  </div>
+  <FormGroup
+    labelFor="{appId}-school"
+    document={context.document}
+    field={context.fields.school}
+    config={{
+      id: `${appId}-school`,
+      value: context.source.school,
+      disabled: !context.unlocked,
+    }}
+    choices={context.config.spellSchools}
+  />
 
   <!-- Spell Components -->
   <div class="form-group spell-components stacked checkbox-grid">
@@ -75,29 +61,33 @@
 
   <!-- Material Components -->
   {#if context.properties.object.material}
-    <div class="form-group split-group">
-      <label for="">{localize('DND5E.SpellMaterials')}</label>
-
-      <div class="form-fields">
-        <!-- Material Supply -->
-        <div class="form-group label-top">
-          <label for="{appId}-materials-supply"
-            >{localize('DND5E.Supply')}</label
-          >
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-materials-supply"
-              document={context.item}
-              field="system.materials.supply"
-              value={context.source.materials.supply}
-              min="0"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-
-        <!-- Material Cost -->
-        <div class="form-group label-top">
+    <FormGroup label="DND5E.SpellMaterials" groupClasses="split-group">
+      <!-- Material Supply -->
+      <FormGroup
+        label="DND5E.Supply"
+        labelFor="{appId}-materials-supply"
+        document={context.document}
+        field={context.fields.materials.fields.supply}
+        config={{
+          id: `${appId}-materials-supply`,
+          value: context.source.materials.supply,
+          disabled: !context.unlocked,
+        }}
+        groupClasses="label-top"
+      />
+      <!-- Material Cost -->
+      <FormGroup
+        document={context.document}
+        field={context.fields.materials.fields.cost}
+        config={{
+          id: `${appId}-materials-cost`,
+          value: context.source.materials.cost,
+          disabled: !context.unlocked,
+          placeholder: '—',
+        }}
+        groupClasses="label-top"
+      >
+        {#snippet formLabel()}
           <label
             for="{appId}-materials-cost"
             class="label-icon currency gp"
@@ -105,164 +95,113 @@
           >
             {localize('DND5E.Cost')}
           </label>
+        {/snippet}
+      </FormGroup>
 
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-materials-cost"
-              document={context.item}
-              field="system.materials.cost"
-              value={context.source.materials.cost}
-              min="0"
-              placeholder="—"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-
-        <!-- Material Consumption -->
-        <div class="form-group checkbox">
-          <label for="{appId}-materials-consumed" class="checkbox"
-            >{localize('DND5E.Consumed')}
-            <div class="form-fields">
-              <CheckboxQuadrone
-                id="{appId}-materials-consumed"
-                document={context.item}
-                field="system.materials.consumed"
-                checked={context.source.materials.consumed}
-                disabledChecked={context.system.materials.consumed}
-                disabled={!context.unlocked}
-              />
-            </div>
-          </label>
-        </div>
+      <!-- Material Consumption -->
+      <div class="form-group checkbox">
+        <label for="{appId}-materials-consumed" class="checkbox">
+          {localize('DND5E.Consumed')}
+          <TidyFormInput
+            document={context.document}
+            field={context.fields.materials.fields.consumed}
+            config={{
+              id: `${appId}-materials-consumed`,
+              value: context.source.materials.consumed,
+              disabled: !context.unlocked,
+            }}
+          />
+        </label>
       </div>
 
-      <!-- Material Description -->
-      <TextInputQuadrone
-        id="{appId}-materials-value"
-        document={context.item}
-        field="system.materials.value"
-        value={context.source.materials.value}
-        class="full-width"
-        disabled={!context.unlocked}
-      />
-    </div>
+      {#snippet beforeGroupEnd()}
+        <TidyFormInput
+          document={context.document}
+          field={context.fields.materials.fields.value}
+          config={{
+            id: `${appId}-materials-value`,
+            value: context.source.materials.value,
+            disabled: !context.unlocked,
+            classes: 'full-width',
+          }}
+        />
+      {/snippet}
+    </FormGroup>
   {/if}
 
   <!-- Preparation Method -->
-  <div class="form-group">
-    <label for="{appId}-method"
-      >{localize('DND5E.SpellPreparation.Method')}</label
-    >
-    <div class="form-fields">
-      <div class="form-group label-top">
-        <!-- Method -->
-        <label for="{appId}-method">
-          {localize('DND5E.Method')}
-        </label>
-        <div class="form-fields">
-          <SelectQuadrone
-            id="{appId}-method"
-            document={context.item}
-            field="system.method"
-            value={context.source.method}
-            disabled={!context.unlocked}
-            blankValue={undefined}
-          >
-            <option value={undefined}></option>
-            <SelectOptions
-              data={context.spellcastingMethods}
-              labelProp="label"
-              valueProp="value"
-            />
-          </SelectQuadrone>
-        </div>
-      </div>
-
+  <FormGroup label="DND5E.SpellPreparation.Method">
+    <!-- Method -->
+    <FormGroup
+      label="DND5E.Method"
+      labelFor="{appId}-method"
+      document={context.document}
+      field={context.fields.method}
+      config={{
+        id: `${appId}-method`,
+        value: context.source.method,
+        disabled: !context.unlocked,
+      }}
+      choices={context.spellcastingMethods}
+      groupClasses="label-top"
+    />
+    {#if context.canPrepare}
       <!-- Preparation -->
-      {#if context.canPrepare}
-        <div class="form-group label-top">
-          <label for="{appId}-prepared">
-            {localize('DND5E.Preparation')}
-          </label>
-          <div class="form-fields">
-            <SelectQuadrone
-              id="{appId}-prepared"
-              document={context.item}
-              field="system.prepared"
-              value={context.source.prepared}
-              disabled={!context.unlocked}
-            >
-              <SelectOptions
-                data={context.config.spellPreparationStates}
-                labelProp="label"
-                valueProp="value"
-              />
-            </SelectQuadrone>
-          </div>
-        </div>
-      {/if}
-    </div>
-  </div>
+      <FormGroup
+        label="DND5E.Preparation"
+        labelFor="{appId}-prepared"
+        document={context.document}
+        field={context.fields.prepared}
+        config={{
+          id: `${appId}-prepared`,
+          value: context.source.prepared,
+          disabled: !context.unlocked,
+        }}
+        choices={context.config.spellPreparationStates}
+        groupClasses="label-top"
+        valueAttr="value"
+      />
+    {/if}
+  </FormGroup>
 
   <!-- Source Class -->
   {#if context.isEmbedded}
-    <div class="form-group">
-      <label for="{appId}-sourceClass"
-        >{localize('DND5E.SpellSourceClass')}</label
-      >
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-sourceClass"
-          document={context.item}
-          field="system.sourceClass"
-          value={context.source.sourceClass}
-          disabled={!context.unlocked}
-          blankValue=""
-        >
-          <SelectOptions
-            data={context.document.parent.spellcastingClasses}
-            labelProp="name"
-            blank=""
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      labelFor="{appId}-sourceClass"
+      document={context.document}
+      field={context.fields.sourceClass}
+      config={{
+        id: `${appId}-sourceClass`,
+        value: context.source.sourceClass,
+        disabled: !context.unlocked,
+      }}
+      labelAttr="name"
+      choices={context.document.parent.spellcastingClasses}
+    />
 
-    <div class="form-group">
-      <label for="{appId}-ability">{localize('DND5E.SpellAbility')}</label>
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-ability"
-          document={context.item}
-          field="system.ability"
-          value={context.source.ability}
-          disabled={!context.unlocked}
-          blankValue=""
-        >
-          <SelectOptions
-            data={context.config.abilities}
-            labelProp="label"
-            blank={context.defaultAbility}
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      labelFor="{appId}-ability"
+      document={context.document}
+      field={context.fields.ability}
+      config={{
+        id: `${appId}-ability`,
+        value: context.source.ability,
+        disabled: !context.unlocked,
+      }}
+      blank={context.defaultAbility}
+      choices={context.config.abilities}
+    />
   {:else}
-    <div class="form-group">
-      <label for="{appId}-sourceClass"
-        >{localize('DND5E.SpellSourceClass')}</label
-      >
-      <div class="form-fields">
-        <TextInputQuadrone
-          id="{appId}-sourceClass"
-          document={context.item}
-          field="system.sourceClass"
-          value={context.source.sourceClass}
-          disabled={!context.unlocked}
-        />
-      </div>
-    </div>
+    <FormGroup
+      labelFor="{appId}-sourceClass"
+      document={context.document}
+      field={context.fields.sourceClass}
+      config={{
+        id: `${appId}-sourceClass`,
+        value: context.source.sourceClass,
+        disabled: !context.unlocked,
+      }}
+    />
   {/if}
 </fieldset>
 

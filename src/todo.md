@@ -23,17 +23,28 @@
     - [x] Feat
     - [x] Loot
     - [x] Species
-    - [ ] Spell
+    - [x] Spell
+    - [ ] .. FieldActivation
+    - [ ] .. FieldRange
+    - [ ] .. FieldDuration
+    - [ ] .. FieldTargets
     - [ ] Subclass
     - [ ] Tool
     - [ ] Weapon
     - [ ] Tattoo
     - [ ] MCDM Power?
     - [ ] ...other?
-  - [x] Find out why `context.fields.hirelings.fields.max` is not automaticlly using step=1 min=1; it's not being specified in the default sheets and works fine for it
-  - [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
-- [ ] Determine what special attributes, if any, are needed
-  - [ ] FormulaField
+  - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
+- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
+- [ ] Create string-tags replacement
+  - [ ] Plug in to Required Items
+- [ ] Create document-tags replacement
+  - [ ] Support single tag
+    - [ ] Plug into Facility details
+  - [ ] Support multiple tags
+- [ ] Create multi-select replacement
+  - [ ] Plug into Weapon Details damage types
+  - [ ] Determine where else could benefit, namely limited checkbox lists
 
 
 ### Short List
