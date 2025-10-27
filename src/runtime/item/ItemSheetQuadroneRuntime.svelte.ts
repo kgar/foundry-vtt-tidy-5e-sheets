@@ -224,6 +224,44 @@ class ItemSheetQuadroneRuntimeImpl {
   getCustomItemTabs(context: any) {
     return this._tabs;
   }
+
+  associateExistingTab(
+    subtype: string,
+    tabId: string,
+    options?: {
+      includeAsDefault?: boolean;
+      tabCondition?: {
+        predicate: (context: any) => boolean;
+        mode?: 'and' | 'or' | 'overwrite';
+      };
+    }
+  ) {
+    const tab = this._tabs.find((t) => t.id === tabId);
+    tab?.types?.add(subtype);
+
+    if (tab && options?.tabCondition?.predicate) {
+      let mode = options?.tabCondition.mode ?? 'or';
+
+      tab.enabled ??= (_context: ItemSheetQuadroneContext) => true;
+
+      const original = tab.enabled;
+      const newPredicate = options.tabCondition.predicate;
+
+      if (mode === 'or') {
+        tab.enabled = (context: ItemSheetQuadroneContext) =>
+          original(context) || newPredicate(context);
+      } else if (mode === 'and') {
+        tab.enabled = (context: ItemSheetQuadroneContext) =>
+          original(context) && newPredicate(context);
+      } else if (mode === 'overwrite') {
+        tab.enabled = newPredicate;
+      }
+    }
+
+    if (options?.includeAsDefault ?? true) {
+      this._sheetMap.get(subtype)?.defaultTabs;
+    }
+  }
 }
 
 export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
@@ -231,7 +269,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
-        Array.from(context.document.system.activities).filter((x) =>
+        Array.from(context.document.system.activities ?? []).filter((x) =>
           Activities.isConfigurable(x)
         ).length,
       layout: 'quadrone',
@@ -251,12 +289,13 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         CONSTANTS.ITEM_TYPE_SPELL,
         CONSTANTS.ITEM_TYPE_TOOL,
         CONSTANTS.ITEM_TYPE_WEAPON,
+        CONSTANTS.ITEM_TYPE_LOOT,
       ]),
     },
     {
       id: CONSTANTS.TAB_ITEM_ADVANCEMENT,
       itemCount: (context) =>
-        Array.from(context.document.system.advancement).length,
+        Array.from(context.document.system.advancement ?? []).length,
       layout: 'quadrone',
       title: 'DND5E.AdvancementTitle',
       content: {
@@ -458,7 +497,8 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     },
     {
       id: CONSTANTS.TAB_EFFECTS,
-      itemCount: (context) => Array.from(context.document?.effects).length,
+      itemCount: (context) =>
+        Array.from(context.document?.effects ?? []).length,
       layout: 'quadrone',
       title: 'DND5E.Effects',
       content: {
@@ -475,6 +515,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
         CONSTANTS.ITEM_TYPE_SPELL,
         CONSTANTS.ITEM_TYPE_TOOL,
         CONSTANTS.ITEM_TYPE_WEAPON,
+        CONSTANTS.ITEM_TYPE_LOOT,
       ]),
     },
   ],
@@ -565,7 +606,12 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       CONSTANTS.ITEM_TYPE_LOOT,
       {
         component: LootSheet,
-        defaultTabs: [CONSTANTS.TAB_DESCRIPTION, CONSTANTS.TAB_ITEM_DETAILS],
+        defaultTabs: [
+          CONSTANTS.TAB_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
+          CONSTANTS.TAB_EFFECTS,
+        ],
       },
     ],
     [

@@ -16,6 +16,7 @@ import type {
   HeaderControlRegistrationParams,
   TabIdDocumentItemTypesParams,
   TabIdDocumentItemTypesOptions,
+  ExistingTabAssociationOptions,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { HtmlContent } from './content/HtmlContent';
@@ -1032,6 +1033,21 @@ export class Tidy5eSheetsApi {
         ItemSheetQuadroneRuntime.registerTab(registeredTab, options);
       }
     }
+  }
+
+  /**
+   * Associates an existing tab by Tab ID with an item subtype.
+   * **Note that Details tabs (tab ID `details`) will not associate properly.**
+   * @param itemSubtype the item subtype key (e.g., loot, equipment, weapon, spell)
+   * @param tabId the tab ID for the target tab to update
+   * @param options additional, optional aspects that can be configured
+   */
+  associateExistingItemTab(
+    itemSubtype: string,
+    tabId: string,
+    options?: ExistingTabAssociationOptions
+  ) {
+    ItemSheetQuadroneRuntime.associateExistingTab(itemSubtype, tabId, options);
   }
 
   /**
