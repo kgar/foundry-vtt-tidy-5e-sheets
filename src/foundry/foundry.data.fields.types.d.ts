@@ -10,7 +10,7 @@ declare module 'foundry.data.fields' {
     gmOnly?: boolean;
     initial?: Function | any;
     label?: string;
-    hint?: string;
+    hint?: string | false;
     validate?: DataFieldValidator;
     validationError?: string;
   }

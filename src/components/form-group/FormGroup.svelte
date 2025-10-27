@@ -53,7 +53,7 @@
 
   let effectiveLabel = $derived(label ?? field?.label ?? field?.fieldPath);
 
-  let effectiveHint = $derived(hint ?? field?.hint);
+  let effectiveHint = $derived(hint ?? config?.hint ?? field?.hint);
 
   let fieldPathSlug = $derived(field?.fieldPath);
 </script>
