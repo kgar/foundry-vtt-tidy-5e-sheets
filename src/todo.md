@@ -26,7 +26,7 @@
     - [x] Spell
     - [x] .. FieldActivation
     - [x] .. FieldRange
-    - [ ] .. FieldDuration
+    - [x] .. FieldDuration
     - [ ] .. FieldTargets
     - [ ] Subclass
     - [ ] Tool
