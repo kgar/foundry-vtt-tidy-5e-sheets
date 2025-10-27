@@ -24,8 +24,8 @@
     - [x] Loot
     - [x] Species
     - [x] Spell
-    - [ ] .. FieldActivation
-    - [ ] .. FieldRange
+    - [x] .. FieldActivation
+    - [x] .. FieldRange
     - [ ] .. FieldDuration
     - [ ] .. FieldTargets
     - [ ] Subclass
