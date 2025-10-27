@@ -13,7 +13,7 @@ import ItemBackgroundDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/Item
 import ItemClassDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemClassDetailsTab.svelte';
 import ItemConsumableDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemConsumableDetailsTab.svelte';
 import ItemContainerContentsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerContentsTab.svelte';
-import ItemContainerDetailsQuadronTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
+import ItemContainerDetailsQuadroneTab from 'src/sheets/quadrone/container/tabs/ContainerDetailsTab.svelte';
 import ItemDescriptionsQuadroneTab from '../../sheets/quadrone/item/tabs/ItemDescriptionsTab.svelte';
 import ItemEffectsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEffectsTab.svelte';
 import ItemEquipmentDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemEquipmentDetailsTab.svelte';
@@ -231,7 +231,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
-        Array.from(context.document.system.activities).filter((x) =>
+        Array.from(context.document.system.activities ?? []).filter((x) =>
           Activities.isConfigurable(x)
         ).length,
       layout: 'quadrone',
@@ -256,7 +256,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     {
       id: CONSTANTS.TAB_ITEM_ADVANCEMENT,
       itemCount: (context) =>
-        Array.from(context.document.system.advancement).length,
+        Array.from(context.document.system.advancement ?? []).length,
       layout: 'quadrone',
       title: 'DND5E.AdvancementTitle',
       content: {
@@ -322,7 +322,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       layout: 'quadrone',
       title: 'DND5E.Details',
       content: {
-        component: ItemContainerDetailsQuadronTab,
+        component: ItemContainerDetailsQuadroneTab,
         type: 'svelte',
       },
       enabled: (context) =>
@@ -458,7 +458,8 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     },
     {
       id: CONSTANTS.TAB_EFFECTS,
-      itemCount: (context) => Array.from(context.document?.effects).length,
+      itemCount: (context) =>
+        Array.from(context.document?.effects ?? []).length,
       layout: 'quadrone',
       title: 'DND5E.Effects',
       content: {
