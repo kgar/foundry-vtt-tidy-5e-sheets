@@ -8,7 +8,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let species = $derived(context.species);
+  let species = $derived(context.species?.id ? context.species : null);
 
   function openSheet(mode: number) {
     if (species) {
