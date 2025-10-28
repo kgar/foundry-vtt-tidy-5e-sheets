@@ -39,9 +39,8 @@
   - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
   - [x] Rename FormGroup `blank` prop to `blankLabel`
   - [x] If a FormGroup is supplied a blank label, then consider usesBlank to be true
-- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
-- [ ] Create string-tags replacement
-  - [ ] Plug in to Required Items
+- [x] Create string-tags replacement
+  - [x] Plug in to Required Items
 - [ ] Create document-tags replacement
   - [ ] Support single tag
     - [ ] Plug into Facility details
@@ -49,6 +48,7 @@
 - [ ] Create multi-select replacement
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
+- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
 
 
 ### Short List

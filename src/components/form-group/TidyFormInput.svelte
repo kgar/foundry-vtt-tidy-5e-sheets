@@ -19,6 +19,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ComponentProps } from 'svelte';
   import { buildDataset, isNil } from 'src/utils/data';
+  import StringTags from '../inputs/StringTags.svelte';
 
   type Choices<T = any> = T[] | object | Function;
 
@@ -95,6 +96,22 @@
         field: field,
         options: config,
       });
+    }
+
+    if (
+      field instanceof foundry.data.fields.SetField &&
+      field.element instanceof foundry.data.fields.StringField
+    ) {
+      return {
+        ...componentWithProps(StringTags, {
+          document,
+          field: effectiveFieldPath,
+          id: config.id,
+          disabled,
+          value: config.value,
+          placeholder: config.placeholder,
+        }),
+      };
     }
 
     if (
