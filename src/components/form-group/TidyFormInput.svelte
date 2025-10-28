@@ -1,6 +1,7 @@
 <script lang="ts">
   import {
     type DataField,
+    type DocumentUUIDFieldOptions,
     type FormInputConfig,
     type NumberFieldOptions,
   } from 'foundry.data.fields';
@@ -20,6 +21,7 @@
   import type { ComponentProps } from 'svelte';
   import { buildDataset, isNil } from 'src/utils/data';
   import StringTags from '../inputs/StringTags.svelte';
+  import DocumentTag from '../inputs/DocumentTag.svelte';
 
   type Choices<T = any> = T[] | object | Function;
 
@@ -90,11 +92,16 @@
       attributes['data-tooltip'] = effectiveTooltip;
     }
 
-    // TODO: Create Tidy DocumentUUIDField control
     if (field instanceof foundry.data.fields.DocumentUUIDField) {
-      return componentWithProps(FoundryFormInput, {
-        field: field,
-        options: config,
+      let options: FormInputConfig & DocumentUUIDFieldOptions = config;
+
+      return componentWithProps(DocumentTag, {
+        document,
+        field: effectiveFieldPath,
+        id: options.id,
+        disabled,
+        value: options.value,
+        type: options.type ?? field.options.type,
       });
     }
 

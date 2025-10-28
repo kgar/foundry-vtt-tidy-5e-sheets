@@ -438,7 +438,13 @@ declare module 'foundry.data.fields' {
     getCollection(parent: FoundryDocument): Map<string, FoundryDocument>;
   }
   declare class DocumentIdField extends StringField {}
-  declare class DocumentUUIDField extends StringField {}
+  declare class DocumentUUIDField extends StringField {
+    constructor(
+      options: DocumentUUIDFieldOptions = {},
+      context: DataFieldContext = {}
+    ): DocumentUUIDField;
+    options: DocumentUUIDFieldOptions;
+  }
   declare class ForeignDocumentField extends DocumentIdField {}
   declare class ColorField extends StringField {}
   declare class FilePathField extends StringField {

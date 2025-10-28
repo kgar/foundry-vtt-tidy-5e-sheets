@@ -241,7 +241,7 @@
               <div class="list-controls flexrow">
                 <button
                   type="button"
-                  class="button button-borderless button-icon-only"
+                  class="button button-borderless button-icon-only flexshrink"
                   onclick={() =>
                     context.sheet.submit({
                       updateData: { 'system.craft': null },

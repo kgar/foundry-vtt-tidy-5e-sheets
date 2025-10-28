@@ -135,6 +135,7 @@ declare global {
         TypedObjectField: typeof TypedObjectField;
         TypedSchemaField: typeof TypedSchemaField;
       };
+      validators: any;
     };
   } & Record<string, any>;
   var fromUuid: any;

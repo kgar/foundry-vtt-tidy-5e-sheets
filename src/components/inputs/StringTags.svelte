@@ -44,6 +44,12 @@
     if (!tag) {
       throw new Error(game.i18n.localize('ELEMENTS.TAGS.ErrorBlank'));
     }
+
+    if (fieldValue.has(tag)) {
+      throw new Error(
+        game.i18n.format('ELEMENTS.TAGS.ErrorNonUnique', { tag }),
+      );
+    }
   }
 
   async function removeTag(selected: string) {
@@ -61,6 +67,9 @@
       return;
     }
 
+    event.preventDefault();
+    event.stopPropagation();
+
     return addTag();
   }
 </script>
@@ -75,7 +84,14 @@
       bind:value={tag}
       onkeydown={handleKeydown}
     />
-    <button {disabled} type="button" class="button" onclick={addTag}>
+    <button
+      {disabled}
+      type="button"
+      class="button"
+      onclick={addTag}
+      aria-label={localize('ELEMENTS.TAGS.Add')}
+      data-tooltip
+    >
       <i class="fa-solid fa-add"></i>
       {localize('DND5E.Add')}
     </button>
@@ -95,7 +111,9 @@
           <button
             type="button"
             class="button button-borderless button-icon-only"
-            onclick={(ev) => removeTag(selected)}
+            onclick={() => removeTag(selected)}
+            aria-label={localize('ELEMENTS.TAGS.Remove')}
+            data-tooltip
           >
             <i class="fa-solid fa-xmark"></i>
           </button>

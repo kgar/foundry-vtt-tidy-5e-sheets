@@ -1,58 +1,11 @@
 ## kgar To Do
 
-- [x] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
-- [x] Ditto for document-tags: check on Facility details document-tags usage.
-- [x] Evolve the hands-free data field input to its own component that uses the ~~HTMLElement adapter~~ outerHTML approach. 
-  - Like Foundry, we can simply slam down outerHTML and call it a day, because the form will handle form submission.
-- [x] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
-- [x] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
-- [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
-- [ ] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
-  - [ ] Convert Item Sheet Details tabs to vet this out
-    - [x] Background
-    - [x] Class
-    - [x] .. DetailsSpellcasting
-    - [x] .. ItemStartingEquipment
-    - [x] Consumable
-    - [x] .. QuantityWeightPriceFormGroups
-    - [x] .. FieldDamage
-    - [x] .. FieldUses
-    - [x] Equipment
-    - [x] .. DetailsMountable
-    - [x] Facility
-    - [x] Feat
-    - [x] Loot
-    - [x] Species
-    - [x] Spell
-    - [x] .. FieldActivation
-    - [x] .. FieldRange
-    - [x] .. FieldDuration
-    - [x] .. FieldTargets
-    - [x] Subclass
-    - [x] Tool
-    - [x] Weapon
-    - [x] Tattoo
-    - [x] ~~MCDM Power?~~ Let Michael do it if he wishes.
-    - [ ] Container
-    - [ ] ...other?
-  - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
-  - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
-  - [x] Rename FormGroup `blank` prop to `blankLabel`
-  - [x] If a FormGroup is supplied a blank label, then consider usesBlank to be true
-- [x] Create string-tags replacement
-  - [x] Plug in to Required Items
-- [ ] Create document-tags replacement
-  - [ ] Support single tag
-    - [ ] Plug into Facility details
-  - [ ] Support multiple tags
+### Short List
+
 - [ ] Create multi-select replacement
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
 - [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
-
-
-### Short List
-
 - [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
@@ -169,6 +122,8 @@
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
+- [ ] DocumentTag upgrade - show rich preview of found document
+- [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
 
 ## hightouch To Do
 
@@ -243,3 +198,47 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
   - [x] Implement Show Sheet Pins option
   - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
   - [x] Make custom action bar for Group Members to exclude filters and sorting.
+- [x] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
+- [x] Ditto for document-tags: check on Facility details document-tags usage.
+- [x] Evolve the hands-free data field input to its own component that uses the ~~HTMLElement adapter~~ outerHTML approach. 
+  - Like Foundry, we can simply slam down outerHTML and call it a day, because the form will handle form submission.
+- [x] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
+- [x] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
+- [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
+- [ ] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
+  - [ ] Convert Item Sheet Details tabs to vet this out
+    - [x] Background
+    - [x] Class
+    - [x] .. DetailsSpellcasting
+    - [x] .. ItemStartingEquipment
+    - [x] Consumable
+    - [x] .. QuantityWeightPriceFormGroups
+    - [x] .. FieldDamage
+    - [x] .. FieldUses
+    - [x] Equipment
+    - [x] .. DetailsMountable
+    - [x] Facility
+    - [x] Feat
+    - [x] Loot
+    - [x] Species
+    - [x] Spell
+    - [x] .. FieldActivation
+    - [x] .. FieldRange
+    - [x] .. FieldDuration
+    - [x] .. FieldTargets
+    - [x] Subclass
+    - [x] Tool
+    - [x] Weapon
+    - [x] Tattoo
+    - [x] ~~MCDM Power?~~ Let Michael do it if he wishes.
+    - [ ] Container
+    - [ ] ...other?
+  - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
+  - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
+  - [x] Rename FormGroup `blank` prop to `blankLabel`
+  - [x] If a FormGroup is supplied a blank label, then consider usesBlank to be true
+- [x] Create string-tags replacement
+  - [x] Plug in to Required Items
+- [x] Create document-tags replacement for single documents as DocumentTag.
+  - [x] Support single tag
+    - [x] Plug into Facility details
