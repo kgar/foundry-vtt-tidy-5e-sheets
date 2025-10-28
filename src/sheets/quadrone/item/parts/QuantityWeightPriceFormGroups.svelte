@@ -6,8 +6,6 @@
   let context = $derived(getItemSheetContextQuadrone());
 
   let appId = $derived(context.document.id);
-
-  let localize = FoundryAdapter.localize;
 </script>
 
 <FormGroup
@@ -65,7 +63,7 @@
       },
     },
     {
-      field: context.fields.weight.fields.units,
+      field: context.fields.price.fields.denomination,
       config: {
         value: context.source.price.denomination,
         disabled: !context.unlocked,
