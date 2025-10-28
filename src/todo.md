@@ -29,7 +29,7 @@
     - [x] .. FieldDuration
     - [x] .. FieldTargets
     - [x] Subclass
-    - [ ] Tool
+    - [x] Tool
     - [ ] Weapon
     - [ ] Tattoo
     - [ ] MCDM Power?
