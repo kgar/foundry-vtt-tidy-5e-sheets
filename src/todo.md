@@ -1,8 +1,5 @@
 ## kgar To Do
 
-- [x] Container details - roll out FormGroup
-- [x] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
-
 ### Short List
 
 - [ ] Create multi-select replacement
@@ -243,3 +240,5 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 - [x] Create document-tags replacement for single documents as DocumentTag.
   - [x] Support single tag
     - [x] Plug into Facility details
+- [x] Container details - roll out FormGroup
+- [x] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
