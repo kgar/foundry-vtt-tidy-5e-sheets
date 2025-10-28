@@ -34,6 +34,10 @@
       currentTarget: EventTarget & HTMLSelectElement;
     },
   ) {
+    if (rest.name) {
+      return;
+    }
+
     const targetValue = event.currentTarget.value;
 
     await document.update({

@@ -1,8 +1,6 @@
 <script lang="ts">
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import TidyFormInput from 'src/components/form-group/TidyFormInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
@@ -13,62 +11,50 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="form-group split-group">
-  <label for="{appId}-activation-value">{localize('DND5E.SpellCastTime')}</label
-  >
-
-  <div class="form-fields">
-    <!-- Amount -->
-    {#if context.system.activation.scalar}
-      <div class="form-group label-top">
-        <label for="{appId}-activation-value">
-          {localize('DND5E.Amount')}
-        </label>
-        <div class="form-fields">
-          <NumberInputQuadrone
-            id="{appId}-activation-value"
-            document={context.item}
-            field="system.activation.value"
-            value={context.source.activation.value}
-            placeholder="—"
-            min="0"
-            disabled={!context.unlocked}
-          />
-        </div>
-      </div>
-    {/if}
-
-    <!-- Type -->
-    <div class="form-group label-top">
-      <label for="{appId}-activation-type">
-        {localize('DND5E.Cost')}
-      </label>
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-activation-type"
-          document={context.item}
-          field="system.activation.type"
-          value={context.source.activation.type}
-          disabled={!context.unlocked}
-        >
-          <SelectOptions
-            data={context.activationTypes}
-            labelProp="label"
-            valueProp="value"
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
-  </div>
-
-  <!-- Condition -->
-  <TextInputQuadrone
-    id="{appId}-activation-condition"
-    document={context.item}
-    field="system.activation.condition"
-    value={context.source.activation.condition}
-    placeholder={localize('DND5E.ItemActivationCondition')}
-    class="full-width"
-    disabled={!context.unlocked}
+<FormGroup label="DND5E.SpellCastTime" groupClasses="split-group">
+  <!-- Amount -->
+  {#if context.system.activation.scalar}
+    <FormGroup
+      label="DND5E.Amount"
+      labelFor="{appId}-activation-value"
+      document={context.document}
+      field={context.fields.activation.fields.value}
+      config={{
+        id: `${appId}-activation-value`,
+        value: context.source.activation.value,
+        placeholder: '—',
+        hint: false,
+        blank: false,
+      }}
+      groupClasses="label-top"
+    />
+  {/if}
+  <!-- Type -->
+  <FormGroup
+    label="DND5E.Cost"
+    labelFor="{appId}-activation-type"
+    document={context.document}
+    field={context.fields.activation.fields.type}
+    config={{
+      id: `${appId}-activation-type`,
+      value: context.source.activation.type,
+      hint: false,
+      blank: false,
+    }}
+    choices={context.activationTypes}
+    groupClasses="label-top"
   />
-</div>
+  {#snippet beforeGroupEnd()}
+    <!-- Condition -->
+    <TidyFormInput
+      document={context.document}
+      field={context.fields.activation.fields.condition}
+      config={{
+        id: `${appId}-activation-condition`,
+        value: context.source.activation.condition,
+        classes: 'full-width',
+        placeholder: localize('DND5E.ItemActivationCondition'),
+      }}
+    />
+  {/snippet}
+</FormGroup>

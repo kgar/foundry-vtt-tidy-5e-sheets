@@ -381,7 +381,7 @@
         </div>
       </div>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Colors
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -496,7 +496,7 @@
         </button>
       </div>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Button / Icon Only Menu
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -539,7 +539,7 @@
         </ButtonWithOptionPanel>
       </div>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Button / Edit Description
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -616,14 +616,14 @@
         </ToggleButton>
       </div>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Category / Spell context icon
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <!-- TODO -->
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Data / Spell Components
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -636,7 +636,7 @@
         <li class="spell-component-special" data-tooltip="Concentration">C</li>
       </ul>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Data / Time
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -646,35 +646,35 @@
         <div class="subtitle">Ritual</div>
       </div>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Data / Uses
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <!-- TODO -->
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Enricher
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <!-- TODO -->
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Field
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <!-- TODO -->
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Filigree box
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
       <!-- TODO -->
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Input / Checkbox
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -752,7 +752,7 @@
         <option value="4">Absolutely Cursed 💀</option>
       </select>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend
         >Input / Switch - Field Toggle
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -820,7 +820,7 @@
         <span> GP </span>
       </div>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Pill
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -835,7 +835,7 @@
         </li>
       </ul>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Pill / Readonly
         <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -851,7 +851,7 @@
         </li>
       </ul>
     </fieldset>
-    <fieldset>
+    <fieldset disabled={!context.unlocked}>
       <legend>
         Pill / Switch
         <tidy-gold-header-underline></tidy-gold-header-underline>

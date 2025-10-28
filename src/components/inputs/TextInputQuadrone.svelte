@@ -58,6 +58,10 @@
       return;
     }
 
+    if (rest.name) {
+      return;
+    }
+
     stopChangePropagation && event.stopPropagation();
 
     const currentTarget = event.currentTarget;

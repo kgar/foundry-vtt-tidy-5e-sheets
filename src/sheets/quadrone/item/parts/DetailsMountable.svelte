@@ -2,10 +2,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import TidyFormInput from 'src/components/form-group/TidyFormInput.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -14,7 +12,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {#if context.item.type === CONSTANTS.ITEM_TYPE_WEAPON}
       {localize('DND5E.ItemSiegeProperties')}
@@ -25,145 +23,123 @@
   </legend>
 
   <!-- Armor Class -->
-  <div class="form-group">
-    <label for="{appId}-armor-value">{localize('DND5E.ArmorClass')}</label>
-    <div class="form-fields">
-      <NumberInputQuadrone
-        id="{appId}-armor-value"
-        document={context.item}
-        field="system.armor.value"
-        value={context.source.armor.value}
-        disabled={!context.unlocked}
-        step="1"
-      />
-    </div>
-  </div>
+  <FormGroup
+    labelFor="{appId}-armor-value"
+    document={context.document}
+    field={context.fields.armor.fields.value}
+    config={{
+      id: `${appId}-armor-value`,
+      value: context.source.armor.value,
+      step: 1,
+    }}
+  />
 
   <!-- Cover -->
-  <div class="form-group">
-    <label for="{appId}-cover"
-      >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
-    >
-    <div class="form-fields">
-      <SelectQuadrone
-        id="{appId}-cover"
-        document={context.item}
-        field="system.cover"
-        value={context.source.cover}
-        disabled={!context.unlocked}
-      >
-        <SelectOptions
-          data={context.coverOptions}
-          labelProp="label"
-          valueProp="value"
-          blank=""
-        />
-      </SelectQuadrone>
-    </div>
-    <p class="hint">
-      {localize('DND5E.FEATURE.FIELDS.cover.hint')}
-    </p>
-  </div>
+  <FormGroup
+    labelFor="{appId}-cover"
+    document={context.document}
+    field={context.fields.cover}
+    config={{
+      id: `${appId}-cover`,
+      value: context.source.cover ?? 0,
+    }}
+    choices={context.coverOptions}
+  />
 
   <!-- Hit Points -->
-  <div class="form-group split-group">
-    <label for="{appId}-hp-value">{localize('DND5E.HitPoints')}</label>
-    <div class="form-fields">
-      <!-- Current -->
-      <div class="form-group label-top">
-        <label for="{appId}-hp-value">{localize('DND5E.Current')}</label>
-        <NumberInputQuadrone
-          id="{appId}-hp-value"
-          document={context.item}
-          field="system.hp.value"
-          value={context.source.hp?.value}
-          disabled={!context.unlocked}
-          placeholder="0"
-          min="0"
-        />
-      </div>
-
-      <!-- Max -->
-      <div class="form-group label-top">
-        <label for="{appId}-hp-max">{localize('DND5E.Max')}</label>
-        <div class="form-fields">
-          <NumberInputQuadrone
-            id="{appId}-hp-max"
-            document={context.item}
-            field="system.hp.max"
-            value={context.source.hp?.max}
-            disabled={!context.unlocked}
-            placeholder="0"
-            min="0"
-          />
-        </div>
-      </div>
-
-      <!-- Threshold -->
-      <div class="form-group label-top">
-        <label for="{appId}-hp-dt">{localize('DND5E.Threshold')}</label>
-        <div class="form-fields">
-          <NumberInputQuadrone
-            id="{appId}-hp-dt"
-            document={context.item}
-            field="system.hp.dt"
-            value={context.source.hp?.dt}
-            disabled={!context.unlocked}
-            placeholder="—"
-            min="0"
-          />
-        </div>
-      </div>
-    </div>
-    <!-- Conditions -->
-    <TextInputQuadrone
-      id="{appId}-hp-conditions"
-      document={context.item}
-      field="system.hp.conditions"
-      value={context.source.hp?.conditions}
-      placeholder={localize(
-        'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
-      )}
-      class="full-width"
-      disabled={!context.unlocked}
+  <FormGroup label="DND5E.HitPoints" groupClasses="split-group">
+    <!-- Current -->
+    <FormGroup
+      label="DND5E.Current"
+      labelFor="{appId}-hp-value"
+      document={context.document}
+      field={context.fields.hp.fields.value}
+      config={{
+        id: `${appId}-hp-value`,
+        value: context.source.hp.value,
+        placeholder: '0',
+      }}
+      groupClasses="label-top"
     />
-  </div>
+
+    <!-- Max -->
+    <FormGroup
+      label="DND5E.Max"
+      labelFor="{appId}-hp-max"
+      document={context.document}
+      field={context.fields.hp.fields.max}
+      config={{
+        id: `${appId}-hp-max`,
+        value: context.source.hp.max,
+        placeholder: '0',
+      }}
+      groupClasses="label-top"
+    />
+
+    <!-- Threshold -->
+    <FormGroup
+      label="DND5E.Threshold"
+      labelFor="{appId}-hp-dt"
+      document={context.document}
+      field={context.fields.hp.fields.dt}
+      config={{
+        id: `${appId}-hp-dt`,
+        value: context.source.hp.dt,
+        placeholder: '—',
+      }}
+      groupClasses="label-top"
+    />
+
+    {#snippet beforeGroupEnd()}
+      <TidyFormInput
+        document={context.document}
+        field={context.fields.hp.fields.conditions}
+        config={{
+          id: `${appId}-hp-conditions`,
+          value: context.source.hp.conditions,
+          placeholder: localize(
+            'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
+          ),
+          classes: 'full-width',
+        }}
+      />
+    {/snippet}
+  </FormGroup>
 
   <!-- Speed -->
   {#if context.item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT}
-    <div class="form-group split-group">
-      <label for="{appId}-speed-value">{localize('DND5E.Speed')}</label>
-      <div class="form-fields">
-        <!-- Value -->
-        <div class="form-group label-top">
-          <label for="{appId}-speed-value">
-            {localize('DND5E.Value')}
-          </label>
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-speed-value"
-              document={context.item}
-              field="system.speed.value"
-              value={context.source.speed?.value}
-              min="0"
-              placeholder="0"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-      </div>
-      <!-- Conditions -->
-      <TextInputQuadrone
-        id="{appId}-speed-conditions"
-        document={context.item}
-        field="system.speed.conditions"
-        value={context.source.speed?.conditions}
-        placeholder={localize(
-          'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
-        )}
-        class="full-width"
-        disabled={!context.unlocked}
+    <FormGroup
+      label="DND5E.Speed"
+      labelFor="{appId}-speed-value"
+      groupClasses="split-group"
+    >
+      <FormGroup
+        label="DND5E.Value"
+        labelFor="{appId}-speed-value"
+        document={context.document}
+        field={context.fields.speed.fields.value}
+        config={{
+          id: `${appId}-speed-value`,
+          value: context.source.speed.value,
+          placeholder: '0',
+        }}
+        groupClasses="label-top"
       />
-    </div>
+
+      {#snippet beforeGroupEnd()}
+        <TidyFormInput
+          document={context.document}
+          field={context.fields.speed.fields.conditions}
+          config={{
+            id: `${appId}-speed-conditions`,
+            value: context.source.speed.conditions,
+            placeholder: localize(
+              'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
+            ),
+            classes: 'full-width',
+          }}
+        />
+      {/snippet}
+    </FormGroup>
   {/if}
 </fieldset>

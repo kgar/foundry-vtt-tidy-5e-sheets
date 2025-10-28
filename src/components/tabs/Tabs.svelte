@@ -160,7 +160,7 @@
         <span class="tab-title">{title}</span>
 
         {#if itemCount > 0}
-          <span class="tab-title-count font-data-medium theme-dark"
+          <span class="tab-title-count font-label-medium theme-dark"
             >{itemCount}</span
           >
         {/if}

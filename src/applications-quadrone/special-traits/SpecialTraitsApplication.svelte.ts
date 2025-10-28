@@ -29,7 +29,6 @@ export class SpecialTraitsApplication extends DocumentSheetDialog<DocumentSheetA
       'special-traits',
       'scrollable-window-content',
     ],
-    tag: 'div',
     id: 'special-traits-{id}',
     sheetConfig: false,
     window: {
@@ -44,7 +43,6 @@ export class SpecialTraitsApplication extends DocumentSheetDialog<DocumentSheetA
       height: 600,
     },
     actions: {},
-    submitOnClose: false,
   };
 
   _createComponent(

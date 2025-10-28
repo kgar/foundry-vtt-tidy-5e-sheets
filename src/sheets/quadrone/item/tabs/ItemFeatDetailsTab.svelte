@@ -1,15 +1,11 @@
 <script lang="ts">
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import { CONSTANTS } from 'src/constants';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import FeatureOriginFormGroup from '../parts/FeatureOriginFormGroup.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -18,139 +14,103 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemFeatureDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <div class="form-group">
-    <label for="{appId}-requirements">{localize('DND5E.Requirements')}</label>
-    <div class="form-fields">
-      <TextInputQuadrone
-        id="{appId}-requirements"
-        document={context.item}
-        field="system.requirements"
-        value={context.source.requirements}
-        disabled={!context.unlocked}
-      />
-    </div>
-  </div>
+  <!-- Requirements -->
+  <FormGroup
+    label="DND5E.Requirements"
+    labelFor="{appId}-requirements"
+    document={context.document}
+    field={context.fields.requirements}
+    config={{
+      id: `${appId}-requirements`,
+      value: context.source.requirements,
+    }}
+  />
 
-  <div class="form-group">
-    <label for="{appId}-type-value">{localize('DND5E.Type')}</label>
-    <div class="form-fields">
-      <SelectQuadrone
-        id="{appId}-type-value"
-        document={context.item}
-        field="system.type.value"
-        value={context.source.type.value}
-        disabled={!context.unlocked}
-      >
-        <SelectOptions
-          data={context.config.featureTypes}
-          labelProp="label"
-          blank=""
-        />
-      </SelectQuadrone>
-    </div>
-  </div>
+  <!-- Feature Type -->
+  <FormGroup
+    labelFor="{appId}-type-value"
+    document={context.document}
+    field={context.fields.type.fields.value}
+    config={{
+      id: `${appId}-type-value`,
+      value: context.source.type.value,
+    }}
+    choices={context.config.featureTypes}
+  />
 
   {#if context.item.actor?.type === CONSTANTS.SHEET_TYPE_CHARACTER}
     <FeatureOriginFormGroup />
   {/if}
 
+  <!-- Feature Sub-Type -->
   {#if context.itemSubtypes}
     {@const category =
       context.config.featureTypes[context.system.type.value]?.label}
 
-    <div class="form-group">
-      <label for="{appId}-type-subtype"
-        >{localize('DND5E.ItemFeatureSubtype', { category })}</label
-      >
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-type-subtype"
-          document={context.item}
-          field="system.type.subtype"
-          value={context.source.type.subtype}
-          disabled={!context.unlocked}
-        >
-          <SelectOptions data={context.itemSubtypes} blank="" />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      label={localize('DND5E.ItemFeatureSubtype', { category })}
+      labelFor="{appId}-type-subtype"
+      document={context.document}
+      field={context.fields.type.fields.subtype}
+      config={{
+        id: `${appId}-type-subtype`,
+        value: context.source.type.subtype,
+      }}
+      choices={context.itemSubtypes}
+    />
   {/if}
 
   {#if context.system.type.value === CONSTANTS.FEAT_TYPE_VEHICLE}
-    <div class="form-group">
-      <label for="{appId}-cover"
-        >{localize('DND5E.FEATURE.FIELDS.cover.label')}</label
-      >
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-cover"
-          document={context.item}
-          field="system.cover"
-          value={context.source.cover}
-          disabled={!context.unlocked}
-        >
-          <SelectOptions
-            data={context.coverOptions}
-            labelProp="label"
-            valueProp="value"
-            blank=""
-          />
-        </SelectQuadrone>
-      </div>
-      <p class="hint">
-        {localize('DND5E.FEATURE.FIELDS.cover.hint')}
-      </p>
-    </div>
+    <FormGroup
+      labelFor="{appId}-cover"
+      document={context.document}
+      field={context.fields.cover}
+      config={{
+        id: `${appId}-cover`,
+        value: context.source.cover ?? 0,
+      }}
+      choices={context.coverOptions}
+    />
   {/if}
 
-  <div class="form-group">
-    <label for="{appId}-prerequisites-level"
-      >{localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}</label
-    >
-    <div class="form-fields">
-      <NumberInputQuadrone
-        id="{appId}-prerequisites-level"
-        document={context.item}
-        field="system.prerequisites.level"
-        value={context.source.prerequisites.level}
-        disabled={!context.unlocked}
-        step="1"
-      />
-    </div>
+  <!-- Feature Prerequisites -->
+  <FormGroup
+    labelFor="{appId}-prerequisites-level"
+    document={context.document}
+    field={context.fields.prerequisites.fields.level}
+    config={{
+      id: `${appId}-prerequisites-level`,
+      value: context.source.prerequisites.level,
+    }}
+  />
 
-    <p class="hint">
-      {localize('DND5E.Prerequisites.FIELDS.prerequisites.level.hint')}
-    </p>
-  </div>
+  <FormGroup
+    labelFor="{appId}-prerequisites-items"
+    document={context.document}
+    field={context.fields.prerequisites.fields.items}
+    config={{
+      id: `${appId}-prerequisites-items`,
+      value: context.source.prerequisites.items,
+    }}
+  />
 
-  <div class="form-group">
-    <label for="prerequisites-repeatable-{appId}">
-      {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.label')}
-    </label>
-    <div class="form-fields">
-      <label class="checkbox" for="prerequisites-repeatable-{appId}">
-        <CheckboxQuadrone
-          id="prerequisites-repeatable-{appId}"
-          document={context.item}
-          field="system.prerequisites.repeatable"
-          checked={context.source.prerequisites.repeatable}
-          disabledChecked={context.system.prerequisites.repeatable}
-          disabled={!context.unlocked}
-        />
-        &nbsp;
-      </label>
-    </div>
-    <p class="hint">
-      {localize('DND5E.Prerequisites.FIELDS.prerequisites.repeatable.hint')}
-    </p>
-  </div>
+  <FormGroup
+    labelFor="{appId}-prerequisites-repeatable"
+    document={context.document}
+    field={context.fields.prerequisites.fields.repeatable}
+    config={{
+      id: `${appId}-prerequisites-repeatable`,
+      value: context.source.prerequisites.repeatable,
+    }}
+  />
 
+  <!-- Feature Properties -->
   <div class="form-group stacked feature-properties checkbox-grid">
     <label for="">{localize('DND5E.ItemFeatureProperties')}</label>
     <div class="form-fields">
@@ -160,63 +120,39 @@
 </fieldset>
 
 {#if context.system.isEnchantmentSource}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       {localize('DND5E.ENCHANTMENT.Label')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
     </legend>
 
     <!-- Max Enchantments -->
-    <div class="form-group">
-      <label for="{appId}-enchant-max"
-        >{localize(
-          'DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.label',
-        )}</label
-      >
-      <div class="form-fields">
-        <TextInputQuadrone
-          id="{appId}-enchant-max"
-          document={context.item}
-          field="system.enchant.max"
-          value={context.source.enchant.max}
-          disabled={!context.unlocked}
-        />
-      </div>
-
-      <p class="hint">
-        {localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.hint')}
-      </p>
-    </div>
+    <FormGroup
+      label="DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.label"
+      labelFor="{appId}-enchant-max"
+      document={context.document}
+      field={context.fields.enchant.fields.max}
+      config={{
+        id: `${appId}-enchant-max`,
+        value: context.source.enchant.max,
+      }}
+      hint="DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.hint"
+    />
 
     <!-- Enchantment Replacement -->
-    <div class="form-group">
-      <label for="{appId}-enchant-period"
-        >{localize(
-          'DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.label',
-        )}</label
-      >
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-enchant-period"
-          document={context.item}
-          field="system.enchant.period"
-          value={context.source.enchant.period}
-          blankValue=""
-          disabled={!context.unlocked}
-        >
-          <SelectOptions
-            data={context.config.enchantmentPeriods}
-            blank={localize('DND5E.USES.Recovery.Never')}
-            labelProp="label"
-            valueProp="value"
-          />
-        </SelectQuadrone>
-      </div>
-
-      <p class="hint">
-        {localize('DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.hint')}
-      </p>
-    </div>
+    <FormGroup
+      label="DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.label"
+      labelFor="{appId}-enchant-period"
+      document={context.document}
+      field={context.fields.enchant.fields.period}
+      config={{
+        id: `${appId}-enchant-period`,
+        value: context.source.enchant.period,
+      }}
+      hint="DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.hint"
+      blankLabel="DND5E.ENCHANTMENT.Period.Never"
+      choices={context.config.enchantmentPeriods}
+    />
   </fieldset>
 {/if}
 

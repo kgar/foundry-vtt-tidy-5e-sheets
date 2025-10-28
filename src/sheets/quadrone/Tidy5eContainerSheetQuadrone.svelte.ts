@@ -225,6 +225,8 @@ export class Tidy5eContainerSheetQuadrone
 
     const documentSheetContext = await super._prepareContext(options);
 
+    documentSheetContext.fields = this.item.system.schema.fields;
+
     const rollData = this.item.getRollData();
 
     const enrichmentOptions = {

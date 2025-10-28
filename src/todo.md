@@ -1,11 +1,11 @@
 ## kgar To Do
 
-- [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
-- [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
-
-
 ### Short List
 
+- [ ] Create multi-select replacement
+  - [ ] Plug into Weapon Details damage types
+  - [ ] Determine where else could benefit, namely limited checkbox lists
+- [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
 - [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
@@ -14,16 +14,10 @@
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
-
-### Group Sheet
-
 - [ ] Group Sheet - Members tab - Hover Styles and cursor pointer needed for Member name+subtitle, since it functions as a button and can open the member sheet.
 - [ ] Group Sheet - Plan and task Bastions tab
   - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
-
-### The Short List
-
 - [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
 - [ ] Extract and share: TidyTableRowUseButton
 - [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
@@ -39,6 +33,8 @@
 
 ### (Almost) Everything after the short list
 
+- [ ] Stretch - Group Sheet: Enable Sorting. Curating a solution is an option. Redesigning the item filter and item sort codebases to be more generic and flexible would be a better longterm goal.
+- [ ] Stretch - Group Sheet: Explore Section-wide rename for group members. The rename logic is easy. The UI decisions are a little murkier. Consider context menu on the section header, as well as a horiz 3-dots menu on sheet unlock where the add button would be.
 - [ ] Stretch, post-release, Encounter sheet - when clicking "Create a Placeholder" button, show a dialog with name, subtitle, and img page with filepicker button, autofocus and select all text on load
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
@@ -126,6 +122,8 @@
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
 - [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
+- [ ] DocumentTag upgrade - show rich preview of found document
+- [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
 
 ## hightouch To Do
 
@@ -200,3 +198,47 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
   - [x] Implement Show Sheet Pins option
   - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
   - [x] Make custom action bar for Group Members to exclude filters and sorting.
+- [x] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
+- [x] Ditto for document-tags: check on Facility details document-tags usage.
+- [x] Evolve the hands-free data field input to its own component that uses the ~~HTMLElement adapter~~ outerHTML approach. 
+  - Like Foundry, we can simply slam down outerHTML and call it a day, because the form will handle form submission.
+- [x] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
+- [x] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
+- [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
+- [x] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
+  - [x] Convert Item Sheet Details tabs to vet this out
+    - [x] Background
+    - [x] Class
+    - [x] .. DetailsSpellcasting
+    - [x] .. ItemStartingEquipment
+    - [x] Consumable
+    - [x] .. QuantityWeightPriceFormGroups
+    - [x] .. FieldDamage
+    - [x] .. FieldUses
+    - [x] Equipment
+    - [x] .. DetailsMountable
+    - [x] Facility
+    - [x] Feat
+    - [x] Loot
+    - [x] Species
+    - [x] Spell
+    - [x] .. FieldActivation
+    - [x] .. FieldRange
+    - [x] .. FieldDuration
+    - [x] .. FieldTargets
+    - [x] Subclass
+    - [x] Tool
+    - [x] Weapon
+    - [x] Tattoo
+    - [x] ~~MCDM Power?~~ Let Michael do it if he wishes.
+  - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
+  - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
+  - [x] Rename FormGroup `blank` prop to `blankLabel`
+  - [x] If a FormGroup is supplied a blank label, then consider usesBlank to be true
+- [x] Create string-tags replacement
+  - [x] Plug in to Required Items
+- [x] Create document-tags replacement for single documents as DocumentTag.
+  - [x] Support single tag
+    - [x] Plug into Facility details
+- [x] Container details - roll out FormGroup
+- [x] Set an error boundary on TidyFormInput and on FormGroup; should log error to console

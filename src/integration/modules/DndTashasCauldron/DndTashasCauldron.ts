@@ -60,7 +60,6 @@ export class DndTashasCauldronModuleIntegration
     );
 
     // Establish tattoo sheet and custom detail tab
-
     ItemSheetQuadroneRuntime.registerItemSheet(
       DndTashasCauldronModuleIntegration.ITEM_TYPE_TATTOO,
       {

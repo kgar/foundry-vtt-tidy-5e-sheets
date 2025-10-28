@@ -437,7 +437,6 @@
     .editor {
       flex: 1;
       min-height: var(--t5e-size-12x);
-      background: var(--t5e-component-field-background-disabled);
       border-radius: var(--t5e-size-1x);
 
       &.prosemirror {

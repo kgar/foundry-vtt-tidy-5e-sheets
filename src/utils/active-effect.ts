@@ -9,7 +9,7 @@ export class ActiveEffectsHelper {
       return (
         document?.overrides &&
         !isNil(field) &&
-        foundry.utils.getProperty(document.overrides, field)
+        !!foundry.utils.getProperty(document.overrides, field)
       );
     } catch (e) {
       error(

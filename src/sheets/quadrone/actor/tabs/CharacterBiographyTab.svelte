@@ -106,7 +106,9 @@
     },
   ]);
 
-  let hasPersonalityEntries = $derived(personalityEntries.some(entry => entry.enriched !== ''));
+  let hasPersonalityEntries = $derived(
+    personalityEntries.some((entry) => entry.enriched !== ''),
+  );
 
   let editing = $state(false);
   let contentToEdit: string = $state('');
@@ -114,7 +116,6 @@
   let fieldToEdit: string = $state('');
 
   async function stopEditing() {
-    await context.actor.sheet.submit();
     editing = false;
   }
 

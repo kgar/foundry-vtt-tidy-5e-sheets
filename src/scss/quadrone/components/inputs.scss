@@ -501,6 +501,42 @@ input[type='text']:not(:disabled):not(.uninput) {
   }
 }
 
+/* String Tags */
+.string-tags {
+  display: flex;
+  flex-direction: column;
+  gap: var(--t5e-size-1x);
+
+  > input {
+    flex: 1;
+  }
+
+  > button {
+    flex: 0;
+  }
+
+  > .string-tags-control {
+    display: flex;
+    gap: var(--t5e-size-1x);
+  }
+
+  > .string-tags-selected > .pill {
+    padding-inline-end: 0;
+    padding-block: 0;
+    border-color: var(--t5e-component-field-border);
+    flex-wrap: nowrap;
+
+    span {
+      padding-block: 0.125rem;
+    }
+
+    &:has(> button:disabled) {
+      background-color: var(--t5e-component-field-background-disabled);
+      border-color: transparent;
+    }
+  }
+}
+
 &.theme-dark,
 .theme-dark {
 

@@ -1,8 +1,5 @@
 <script lang="ts">
-  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
@@ -13,71 +10,57 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend
     >{localize('DND5E.Usage')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Uses -->
-  <div class="form-group split-group">
-    <label for="{appId}-uses-spent">{localize('DND5E.LimitedUses')}</label>
-    <div class="form-fields">
-      <!-- Spent  -->
-      <div class="form-group label-top">
-        <label for="{appId}-uses-spent">{localize('DND5E.Spent')}</label>
-        <NumberInputQuadrone
-          id="{appId}-uses-spent"
-          document={context.item}
-          field="system.uses.spent"
-          value={context.source.uses.spent}
-          disabled={!context.unlocked}
-        />
-      </div>
-
-      <!-- Max -->
-      <div class="form-group label-top">
-        <label for="{appId}-uses-max">{localize('DND5E.Max')}</label>
-        <div class="form-fields">
-          <TextInputQuadrone
-            id="{appId}-uses-max"
-            document={context.item}
-            field="system.uses.max"
-            value={context.source.uses.max}
-            disabled={!context.unlocked}
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  <FormGroup
+    labelFor="{appId}-uses-spent"
+    label="DND5E.LimitedUses"
+    groupClasses="split-group"
+  >
+    <FormGroup
+      field={context.fields.uses.fields.spent}
+      label="DND5E.Spent"
+      labelFor="{appId}-uses-spent"
+      config={{
+        id: `${appId}-uses-spent`,
+        value: context.source.uses.spent,
+      }}
+      groupClasses="label-top"
+    />
+    <FormGroup
+      field={context.fields.uses.fields.max}
+      label="DND5E.Max"
+      labelFor="{appId}-uses-max"
+      config={{
+        id: `${appId}-uses-max`,
+        value: context.source.uses.max,
+      }}
+      groupClasses="label-top"
+    />
+  </FormGroup>
 
   <!-- Auto-Destroy -->
   {#if context.system.schema.fields.uses?.fields?.autoDestroy}
-    <div class="form-group">
-      <label for="{appId}-uses-autoDestroy"
-        >{localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.label')}</label
-      >
-      <div class="form-fields">
-        <label class="checkbox" for="{appId}-uses-autoDestroy">
-          <CheckboxQuadrone
-            id="{appId}-uses-autoDestroy"
-            document={context.item}
-            field="system.uses.autoDestroy"
-            checked={context.source.uses.autoDestroy}
-            disabledChecked={context.system.uses.autoDestroy}
-            disabled={!context.unlocked}
-          />
-        </label>
-      </div>
-      <p class="hint">
-        {localize('DND5E.CONSUMABLE.FIELDS.uses.autoDestroy.hint')}
-      </p>
-    </div>
+    <FormGroup
+      labelFor="{appId}-uses-autoDestroy"
+      document={context.document}
+      field={context.fields.uses.fields.autoDestroy}
+      config={{
+        id: `${appId}-uses-autoDestroy`,
+        value: context.source.uses.autoDestroy,
+      }}
+      disabledValue={context.system.uses.autoDestroy}
+    />
   {/if}
 </fieldset>
 
 {#if context.item.hasLimitedUses}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       <div class="legend-with-button">
         <span>
@@ -108,108 +91,62 @@
       <div class="form-group split-group full-width card" data-index={index}>
         <div class="form-fields">
           <!-- Period -->
-          <div class="form-group label-top">
-            <label for="{appId}-uses-recovery-{index}-period">
-              {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.period.label')}
-            </label>
-            <select
-              id="{appId}-uses-recovery-{index}-period"
-              data-tidy-field="system.uses.recovery.{index}.period"
-              value={!disabled
+          <FormGroup
+            label="DND5E.Period"
+            labelFor="{appId}-uses-recovery-${index}-period"
+            document={context.document}
+            field={recovery.fields.period}
+            config={{
+              id: `${appId}-uses-recovery-${index}-period`,
+              value: !disabled
                 ? recovery.data.period
-                : systemRecovery[index].period}
-              onchange={(ev) =>
-                context.sheet.updateRecovery(
-                  index,
-                  'period',
-                  ev.currentTarget.value,
-                )}
-              {disabled}
-            >
-              <SelectOptions
-                data={context.recoveryPeriods}
-                labelProp="label"
-                valueProp="value"
-              />
-            </select>
-          </div>
+                : systemRecovery[index].period,
+              disabled,
+              name: `${recovery.prefix}period`,
+            }}
+            choices={context.recoveryPeriods}
+            groupClasses="label-top"
+          />
 
           <!-- Type -->
           {#if recovery.data.period !== 'recharge'}
-            <div class="form-group label-top">
-              <label for="{appId}-uses-recovery-{index}-type">
-                {localize('DND5E.USES.FIELDS.uses.recovery.FIELDS.type.label')}
-              </label>
-              <select
-                id="{appId}-uses-recovery-{index}-type"
-                data-tidy-field="system.uses.recovery.{index}.type"
-                value={!disabled
+            <FormGroup
+              label="DND5E.Recovery"
+              labelFor="{appId}-uses-recovery-${index}-type"
+              document={context.document}
+              field={recovery.fields.type}
+              config={{
+                id: `${appId}-uses-recovery-${index}-type`,
+                value: !disabled
                   ? recovery.data.type
-                  : systemRecovery[index].type}
-                onchange={(ev) =>
-                  context.sheet.updateRecovery(
-                    index,
-                    'type',
-                    ev.currentTarget.value,
-                  )}
-                {disabled}
-              >
-                <SelectOptions
-                  data={context.recoveryTypes}
-                  labelProp="label"
-                  valueProp="value"
-                />
-              </select>
-            </div>
+                  : systemRecovery[index].type,
+                disabled,
+                name: `${recovery.prefix}type`,
+              }}
+              choices={context.recoveryTypes}
+              groupClasses="label-top"
+            />
           {/if}
 
           <!-- Formula -->
           {#if recovery.data.type === 'formula' || recovery.formulaOptions}
-            <div class="form-group label-top">
-              <label for="{appId}-uses-recovery-{index}-formula">
-                {localize(
-                  'DND5E.USES.FIELDS.uses.recovery.FIELDS.formula.label',
-                )}
-              </label>
-              {#if recovery.formulaOptions}
-                <select
-                  id="{appId}-uses-recovery-{index}-formula"
-                  data-tidy-field="system.uses.recovery.{index}.formula"
-                  onchange={(ev) =>
-                    context.sheet.updateRecovery(
-                      index,
-                      'formula',
-                      ev.currentTarget.value,
-                    )}
-                  value={!disabled
-                    ? recovery.data.formula
-                    : systemRecovery[index].formula}
-                  {disabled}
-                >
-                  <SelectOptions
-                    data={recovery.formulaOptions}
-                    labelProp="label"
-                    valueProp="value"
-                  />
-                </select>
-              {:else if recovery.data.type === 'formula'}
-                <input
-                  type="text"
-                  id="{appId}-uses-recovery-{index}-formula"
-                  data-tidy-field="system.uses.recovery.{index}.formula"
-                  onchange={(ev) =>
-                    context.sheet.updateRecovery(
-                      index,
-                      'formula',
-                      ev.currentTarget.value,
-                    )}
-                  {disabled}
-                  value={(!disabled
-                    ? recovery.data.formula
-                    : systemRecovery[index].formula) ?? ''}
-                />
-              {/if}
-            </div>
+            <FormGroup
+              label="DND5E.Formula"
+              labelFor="{appId}-uses-recovery-${index}-formula"
+              document={context.document}
+              field={recovery.fields.formula}
+              config={{
+                id: `${appId}-uses-recovery-${index}-formula`,
+                value: !disabled
+                  ? recovery.data.formula
+                  : systemRecovery[index].formula,
+                disabled,
+                name: `${recovery.prefix}formula`,
+                blank: false,
+              }}
+              choices={recovery.formulaOptions}
+              groupClasses="label-top"
+            />
           {/if}
 
           {#if context.unlocked}

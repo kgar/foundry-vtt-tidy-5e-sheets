@@ -1,7 +1,6 @@
 <script lang="ts">
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import TidyFormInput from 'src/components/form-group/TidyFormInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
@@ -13,54 +12,48 @@
 </script>
 
 <!-- Range -->
-<div class="form-group split-group">
-  <label for="{appId}-range-units">{localize('DND5E.Range')}</label>
-  <div class="form-fields">
-    <!-- Value -->
-    {#if context.system.range.scalar}
-      <div class="form-group label-top">
-        <label for="{appId}-range-value">{localize('DND5E.Value')}</label>
-        <div class="form-fields">
-          <TextInputQuadrone
-            id="{appId}-range-value"
-            document={context.item}
-            field="system.range.value"
-            value={context.source.range.value}
-            disabled={!context.unlocked}
-          />
-        </div>
-      </div>
-    {/if}
-
-    <!-- Units -->
-    <div class="form-group label-top">
-      <label for="{appId}-range-units">{localize('DND5E.MovementUnits')}</label>
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-range-units"
-          document={context.item}
-          field="system.range.units"
-          value={context.source.range.units}
-          disabled={!context.unlocked}
-        >
-          <SelectOptions
-            data={context.rangeTypes}
-            labelProp="label"
-            valueProp="value"
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
-  </div>
-
-  <!-- Condition -->
-  <TextInputQuadrone
-    id="{appId}-range-special"
-    document={context.item}
-    field="system.range.special"
-    value={context.source.range.special}
-    class="full-width"
-    placeholder={localize('DND5E.RANGE.FIELDS.range.special.label')}
-    disabled={!context.unlocked}
+<FormGroup label="DND5E.Range" groupClasses="split-group">
+  <!-- Value -->
+  {#if context.system.range.scalar}
+    <FormGroup
+      label="DND5E.Value"
+      labelFor="{appId}-range-value"
+      document={context.document}
+      field={context.fields.range.fields.value}
+      config={{
+        id: `${appId}-range-value`,
+        value: context.source.range.value,
+        hint: false,
+      }}
+      groupClasses="label-top"
+    />
+  {/if}
+  <!-- Units -->
+  <FormGroup
+    label="DND5E.MovementUnits"
+    labelFor="{appId}-range-units"
+    document={context.document}
+    field={context.fields.range.fields.units}
+    config={{
+      id: `${appId}-range-units`,
+      value: context.source.range.units,
+      hint: false,
+    }}
+    choices={context.rangeTypes}
+    groupClasses="label-top"
   />
-</div>
+
+  {#snippet beforeGroupEnd()}
+    <!-- Condition -->
+    <TidyFormInput
+      document={context.document}
+      field={context.fields.range.fields.special}
+      config={{
+        id: `${appId}-range-special`,
+        value: context.source.range.special,
+        classes: 'full-width',
+        placeholder: localize('DND5E.RANGE.FIELDS.range.special.label'),
+      }}
+    />
+  {/snippet}
+</FormGroup>

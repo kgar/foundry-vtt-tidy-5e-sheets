@@ -123,7 +123,6 @@
       */
   }
 
-
   .form-group.label-top,
   .form-field.label-top {
     --label-height: var(--font-size-small);
@@ -416,6 +415,10 @@
       --checkbox-size: 1rem;
     }
 
+    &:has(input[type="checkbox"]:only-child) {
+      justify-content: flex-start;
+    }
+
     &.flexcol {
       flex-direction: column;
     }
@@ -496,5 +499,9 @@
         }
       }
     }
+  }
+
+  fieldset .form-group .form-fields .starting-equipment-list {
+    margin-bottom: var(--t5e-size-3x);
   }
 }

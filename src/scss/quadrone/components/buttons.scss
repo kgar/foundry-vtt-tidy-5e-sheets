@@ -463,6 +463,18 @@
   gap: var(--t5e-size-2x);
 }
 
+/* ---------------------------------------- */
+/*  Foundry Control Styles                  */
+/* ---------------------------------------- */
+
+button.icon,
+a.button.icon {
+  font-family: var(--font-awesome);
+  flex: 0 0 var(--button-size);
+  width: var(--button-size);
+  font-weight: 600;
+}
+
 &.theme-dark {
   .button-with-options-wrapper {
     .with-options {

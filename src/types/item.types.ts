@@ -190,6 +190,8 @@ export type ItemSheetQuadroneContext = {
   };
   equipmentTypes: GroupableSelectOption[];
   facilitySubtypes?: Record<string, string>;
+  /** The data schema of document.system. */
+  fields: any; // One day, maybe we can have types for all the various items. Doesn't seem within reach right now.
   hasDexModifier: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
@@ -249,6 +251,9 @@ export type ItemSheetQuadroneContext = {
   usesRecovery: {
     data: UsesRecoveryData;
     formulaOptions: { label: string; value: string }[] | null;
+    source: any;
+    fields: any;
+    prefix: string;
   }[];
   tabs: Tab[];
 } & DocumentSheetV2Context;

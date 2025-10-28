@@ -8,7 +8,7 @@
   interface Props {
     label?: string;
     units?: string;
-    hint?: string;
+    hint?: string | false;
     rootId?: string;
     groupClasses?: ClassValue;
     stacked?: boolean;
