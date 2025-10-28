@@ -1,11 +1,8 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import ItemProperties from 'src/sheets/quadrone/item/parts/ItemProperties.svelte';
   import { getContainerSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
 
   let context = $derived(getContainerSheetQuadroneContext());
 
@@ -15,57 +12,60 @@
 </script>
 
 <fieldset disabled={!context.unlocked}>
-  <div class="form-group">
-    <label for="{appId}-weight-value">
-      {localize('DND5E.Weight')}
-    </label>
-    <div class="form-fields">
-      <NumberInputQuadrone
-        id="{appId}-weight-value"
-        value={context.source.weight.value}
-        step="any"
-        field="system.weight.value"
-        document={context.item}
-        selectOnFocus={true}
-      />
-      <SelectQuadrone
-        document={context.item}
-        field="system.weight.units"
-        value={context.source.weight.units}
-      >
-        <SelectOptions
-          data={context.config.weightUnits}
-          labelProp="abbreviation"
-        />
-      </SelectQuadrone>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="{appId}-price-value">
-      {localize('DND5E.Price')}
-    </label>
-    <div class="form-fields">
-      <NumberInputQuadrone
-        id="{appId}-price-value"
-        value={context.source.price.value}
-        step="any"
-        field="system.price.value"
-        document={context.item}
-        selectOnFocus={true}
-        class="large-value"
-      />
-      <SelectQuadrone
-        value={context.source.price.denomination}
-        field="system.price.denomination"
-        document={context.item}
-      >
-        <SelectOptions
-          data={context.config.currencies}
-          labelProp="abbreviation"
-        />
-      </SelectQuadrone>
-    </div>
-  </div>
+  <FormGroup
+    label="DND5E.Weight"
+    labelFor="{appId}-weight-value"
+    document={context.document}
+    fields={[
+      {
+        field: context.fields.weight.fields.value,
+        config: {
+          value: context.source.weight.value,
+          disabled: !context.unlocked,
+          id: `${appId}-weight-value`,
+          step: 'any',
+        },
+      },
+      {
+        field: context.fields.weight.fields.units,
+        config: {
+          value: context.source.weight.units,
+          disabled: !context.unlocked,
+          id: `${appId}-weight-units`,
+        },
+        choices: context.config.weightUnits,
+        labelAttr: 'abbreviation',
+      },
+    ]}
+  />
+
+  <FormGroup
+    label="DND5E.Price"
+    labelFor="{appId}-price-value"
+    document={context.document}
+    fields={[
+      {
+        field: context.fields.price.fields.value,
+        config: {
+          value: context.source.price.value,
+          disabled: !context.unlocked,
+          id: `${appId}-price-value`,
+          step: 'any',
+          classes: 'large-value',
+        },
+      },
+      {
+        field: context.fields.price.fields.denomination,
+        config: {
+          value: context.source.price.denomination,
+          disabled: !context.unlocked,
+          id: `${appId}-price-denomination`,
+        },
+        choices: context.config.currencies,
+        labelAttr: 'abbreviation',
+      },
+    ]}
+  />
 </fieldset>
 
 <fieldset disabled={!context.unlocked}>
@@ -82,36 +82,44 @@
   </div>
 
   {#if context.properties.object.mgc}
-    <div class="form-group split-group">
-      <label for="{appId}-attunement">
-        {localize('DND5E.Attunement')}
-      </label>
-      <div class="form-fields">
-        <label class="checkbox" for="{appId}-attuned">
-          <CheckboxQuadrone
-            id="{appId}-attuned"
-            document={context.item}
-            field="system.attuned"
-            checked={context.source.attuned}
-            disabledChecked={context.system.attuned}
-            disabled={!context.unlocked ||
-              !context.config.attunementTypes[context.system.attunement]}
-            title={localize('DND5E.AttunementAttuned')}
-          />
-        </label>
-        <SelectQuadrone
-          id="{appId}-attunement"
-          document={context.item}
-          field="system.attunement"
-          value={context.source.attunement}
-        >
-          <SelectOptions
-            data={context.config.attunementTypes}
-            blank={localize('DND5E.AttunementNone')}
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      label="DND5E.Attunement"
+      labelFor="{appId}-attunement"
+      document={context.document}
+      fields={[
+        // Attuned
+        {
+          config: {
+            id: `${appId}-attuned`,
+            value: context.source.attuned,
+            disabled:
+              !context.unlocked ||
+              !context.config.attunementTypes[context.system.attunement],
+            aria: {
+              label: localize('DND5E.AttunementAttuned'),
+            },
+          },
+          disabledValue: context.system.attuned,
+          field: context.fields.attuned,
+          tooltip: 'DND5E.AttunementAttuned',
+        },
+        // Attunement
+        {
+          blankLabel: 'DND5E.AttunementNone',
+          choices: context.config.attunementTypes,
+          config: {
+            id: `${appId}-attunement`,
+            value: context.source.attunement,
+            disabled: !context.unlocked,
+            aria: {
+              label: localize('DND5E.Attunement'),
+            },
+            classes: 'flex-1',
+          },
+          field: context.fields.attunement,
+        },
+      ]}
+    />
   {/if}
 </fieldset>
 
@@ -121,92 +129,84 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
-  <div class="form-group">
-    <label>{localize('DND5E.CONTAINER.FIELDS.capacity.count.label')}</label>
-    <div class="form-fields">
-      <NumberInputQuadrone
-        document={context.item}
-        field="system.capacity.count"
-        value={context.source.capacity.count}
-        step="1"
-        min="0"
-        placeholder="—"
-      />
-    </div>
-  </div>
+  <FormGroup
+    labelFor="{appId}-capacity-count"
+    document={context.document}
+    field={context.fields.capacity.fields.count}
+    config={{
+      id: `${appId}-capacity-count`,
+      value: context.source.capacity.count,
+      placeholder: '—',
+    }}
+  />
 
   <!-- Volume Capacity -->
+  <FormGroup
+    label="DND5E.CONTAINER.FIELDS.capacity.volume.label"
+    groupClasses="split-group"
+  >
+    <!-- Amount -->
+    <FormGroup
+      label="DND5E.Amount"
+      labelFor="{appId}-capacity-volume-value"
+      document={context.document}
+      field={context.fields.capacity.fields.volume.fields.value}
+      config={{
+        id: `${appId}-capacity-volume-value`,
+        value: context.source.capacity.volume.value,
+        placeholder: '—',
+      }}
+      groupClasses="label-top"
+    />
 
-  <div class="form-group split-group">
-    <label>{localize('DND5E.CONTAINER.FIELDS.capacity.volume.label')}</label>
-    <div class="form-fields">
-      <div class="form-group label-top">
-        <label>{localize('DND5E.Amount')}</label>
-        <div class="form-fields">
-          <NumberInputQuadrone
-            document={context.item}
-            field="system.capacity.volume.value"
-            value={context.source.capacity.volume.value}
-            step="any"
-            min="0"
-            placeholder="—"
-          />
-        </div>
-      </div>
-
-      <div class="form-group label-top">
-        <label>{localize('DND5E.Unit')}</label>
-        <div class="form-fields">
-          <SelectQuadrone
-            document={context.item}
-            field="system.capacity.volume.units"
-            value={context.source.capacity.volume.units}
-            blankValue=""
-          >
-            <SelectOptions
-              data={context.config.volumeUnits}
-              labelProp="label"
-            />
-          </SelectQuadrone>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Units -->
+    <FormGroup
+      label="DND5E.Unit"
+      labelFor="{appId}-capacity-volume-units"
+      document={context.document}
+      field={context.fields.capacity.fields.volume.fields.units}
+      config={{
+        id: `${appId}-capacity-volume-units`,
+        value: context.source.capacity.volume.units,
+        placeholder: '—',
+      }}
+      choices={context.config.volumeUnits}
+      groupClasses="label-top"
+    />
+  </FormGroup>
 
   <!-- Weight Capacity -->
-  <div class="form-group split-group">
-    <label>{localize('DND5E.CONTAINER.FIELDS.capacity.weight.label')}</label>
-    <div class="form-fields">
-      <div class="form-group label-top">
-        <label>{localize('DND5E.Amount')}</label>
-        <div class="form-fields">
-          <NumberInputQuadrone
-            document={context.item}
-            field="system.capacity.weight.value"
-            value={context.source.capacity.weight.value}
-            step="any"
-            min="0"
-            placeholder="—"
-          />
-        </div>
-      </div>
+  <FormGroup
+    label="DND5E.CONTAINER.FIELDS.capacity.weight.label"
+    groupClasses="split-group"
+  >
+    <!-- Amount -->
+    <FormGroup
+      label="DND5E.Amount"
+      labelFor="{appId}-capacity-weight-value"
+      document={context.document}
+      field={context.fields.capacity.fields.weight.fields.value}
+      config={{
+        id: `${appId}-capacity-weight-value`,
+        value: context.source.capacity.weight.value,
+        placeholder: '—',
+      }}
+      groupClasses="label-top"
+    />
 
-      <div class="form-group label-top">
-        <label>{localize('DND5E.Unit')}</label>
-        <div class="form-fields">
-          <SelectQuadrone
-            document={context.item}
-            field="system.capacity.weight.units"
-            value={context.source.capacity.weight.units}
-            blankValue=""
-          >
-            <SelectOptions
-              data={context.config.weightUnits}
-              labelProp="label"
-            />
-          </SelectQuadrone>
-        </div>
-      </div>
-    </div>
-  </div>
+    <!-- Units -->
+    <FormGroup
+      label="DND5E.Unit"
+      labelFor="{appId}-capacity-weight-units"
+      document={context.document}
+      field={context.fields.capacity.fields.weight.fields.units}
+      config={{
+        id: `${appId}-capacity-weight-units`,
+        value: context.source.capacity.weight.units,
+        placeholder: '—',
+      }}
+      choices={context.config.weightUnits}
+      groupClasses="label-top"
+    />
+  </FormGroup>
 </fieldset>

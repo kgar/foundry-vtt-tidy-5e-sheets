@@ -1,5 +1,8 @@
 ## kgar To Do
 
+- [x] Container details - roll out FormGroup
+- [ ] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
+
 ### Short List
 
 - [ ] Create multi-select replacement
@@ -205,8 +208,8 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 - [x] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
 - [x] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
 - [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
-- [ ] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
-  - [ ] Convert Item Sheet Details tabs to vet this out
+- [x] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
+  - [x] Convert Item Sheet Details tabs to vet this out
     - [x] Background
     - [x] Class
     - [x] .. DetailsSpellcasting
@@ -231,8 +234,6 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
     - [x] Weapon
     - [x] Tattoo
     - [x] ~~MCDM Power?~~ Let Michael do it if he wishes.
-    - [ ] Container
-    - [ ] ...other?
   - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
   - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
   - [x] Rename FormGroup `blank` prop to `blankLabel`
