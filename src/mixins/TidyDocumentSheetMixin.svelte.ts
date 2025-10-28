@@ -680,7 +680,12 @@ export function TidyExtensibleDocumentSheetMixin<
         options
       ) as DocumentSheetConfiguration;
 
-      const effectiveControls = [...(updatedOptions.window?.controls ?? [])];
+      const headerControls = new Map<string, CustomHeaderControlsEntry>();
+
+      [...(updatedOptions.window?.controls ?? [])].forEach((c) =>
+        headerControls.set(c.label, c)
+      );
+
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
 
       try {
@@ -701,6 +706,8 @@ export function TidyExtensibleDocumentSheetMixin<
           updatedOptions.document
         );
 
+        customControls.controls.forEach((c) => headerControls.set(c.label, c));
+
         /*
           Rather than update the source object, make a new one and spread the actions across.
           Otherwise, it has a chance of updating DEFAULT_OPTIONS.
@@ -711,10 +718,7 @@ export function TidyExtensibleDocumentSheetMixin<
           ...effectiveActions,
           ...customControls.actions,
         };
-        updatedOptions.window.controls = [
-          ...effectiveControls,
-          ...customControls.controls,
-        ];
+        updatedOptions.window.controls = [...headerControls.values()];
 
         this._headerControlSettings = this._getHeaderControlSettings(
           options.document
@@ -802,7 +806,7 @@ export function TidyExtensibleDocumentSheetMixin<
       };
     }
 
-    getAllHeaderControls() {
+    getAllHeaderControls(): ApplicationHeaderControlsEntry[] {
       return this.options.window.controls?.slice() ?? [];
     }
 
