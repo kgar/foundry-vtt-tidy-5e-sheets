@@ -237,8 +237,11 @@ class ItemSheetQuadroneRuntimeImpl {
     }
   ) {
     const tab = this._tabs.find((t) => t.id === tabId);
+
+    // This causes the tab to show up on Tab Selection
     tab?.types?.add(subtype);
 
+    // Modify the rules for whether to enable the tab.
     if (tab && options?.tabCondition?.predicate) {
       let mode = options?.tabCondition.mode ?? 'or';
 
@@ -248,16 +251,20 @@ class ItemSheetQuadroneRuntimeImpl {
       const newPredicate = options.tabCondition.predicate;
 
       if (mode === 'or') {
+        // Provide an additional reason to enable the tab
         tab.enabled = (context: ItemSheetQuadroneContext) =>
           original(context) || newPredicate(context);
       } else if (mode === 'and') {
+        // Provide additional criteria that must be met to enable the tab
         tab.enabled = (context: ItemSheetQuadroneContext) =>
           original(context) && newPredicate(context);
       } else if (mode === 'overwrite') {
+        // Discard all other logic and use just this logic to determine whether to enable the tab.
         tab.enabled = newPredicate;
       }
     }
 
+    // Handle including the tab for first time use and when Use Default is selected for tab configuration.
     if (options?.includeAsDefault ?? true) {
       this._sheetMap.get(subtype)?.defaultTabs;
     }
@@ -664,12 +671,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       CONSTANTS.ITEM_TYPE_WEAPON,
       {
         component: WeaponSheet,
-        defaultTabs: [
-          CONSTANTS.TAB_DESCRIPTION,
-          CONSTANTS.TAB_ITEM_DETAILS,
-          CONSTANTS.TAB_ITEM_ACTIVITIES,
-          CONSTANTS.TAB_EFFECTS,
-        ],
+        defaultTabs: [CONSTANTS.TAB_DESCRIPTION, CONSTANTS.TAB_ITEM_DETAILS],
       },
     ],
   ]
