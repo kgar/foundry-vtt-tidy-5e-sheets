@@ -28,7 +28,7 @@
     - [x] .. FieldRange
     - [x] .. FieldDuration
     - [x] .. FieldTargets
-    - [ ] Subclass
+    - [x] Subclass
     - [ ] Tool
     - [ ] Weapon
     - [ ] Tattoo
