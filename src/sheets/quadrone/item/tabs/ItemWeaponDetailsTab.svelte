@@ -1,8 +1,4 @@
 <script lang="ts">
-  import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DetailsMountable from 'src/sheets/quadrone/item/parts/DetailsMountable.svelte';
   import FieldDamage from 'src/sheets/quadrone/item/parts/FieldDamage.svelte';
@@ -10,6 +6,7 @@
   import ItemProperties from 'src/sheets/quadrone/item/parts/ItemProperties.svelte';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import QuantityWeightPriceFormGroups from '../parts/QuantityWeightPriceFormGroups.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
 
@@ -18,99 +15,69 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemWeaponDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   <!-- Weapon Type -->
-  <div class="form-group">
-    <label for="{appId}-type-value">{localize('DND5E.ItemWeaponType')}</label>
-    <div class="form-fields">
-      <SelectQuadrone
-        id="{appId}-type-value"
-        document={context.item}
-        field="system.type.value"
-        value={context.source.type.value}
-        disabled={!context.unlocked}
-        blankValue=""
-      >
-        <SelectOptions data={context.config.weaponTypes} blank="" />
-      </SelectQuadrone>
-    </div>
-  </div>
+  <FormGroup
+    label="DND5E.ItemWeaponType"
+    labelFor="{appId}-type-value"
+    document={context.document}
+    field={context.fields.type.fields.value}
+    config={{
+      id: `${appId}-type-value`,
+      value: context.source.type.value,
+    }}
+    choices={context.config.weaponTypes}
+  />
 
   <!-- Weapon Base -->
   {#if Object.keys(context.baseItems).length}
-    <div class="form-group">
-      <label for="{appId}-type-baseItem"
-        >{localize('DND5E.ItemWeaponBase')}</label
-      >
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-type-baseItem"
-          document={context.item}
-          field="system.type.baseItem"
-          value={context.source.type.baseItem}
-          disabled={!context.unlocked}
-        >
-          <SelectOptions data={context.baseItems} blank="" />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      label="DND5E.ItemWeaponBase"
+      labelFor="{appId}-type-baseItem"
+      document={context.document}
+      field={context.fields.type.fields.baseItem}
+      config={{
+        id: `${appId}-type-baseItem`,
+        value: context.source.type.baseItem,
+      }}
+      choices={context.baseItems}
+    />
   {/if}
 
   <!-- Proficiency -->
   {#if !context.item.isMountable}
-    <div class="form-group">
-      <label for="{appId}-proficient"
-        >{localize('DND5E.ProficiencyLevel')}</label
-      >
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-proficient"
-          document={context.item}
-          field="system.proficient"
-          value={context.source.proficient}
-          disabled={!context.unlocked}
-        >
-          <SelectOptions
-            data={context.config.weaponAndArmorProficiencyLevels}
-            blank={localize('DND5E.Automatic')}
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      labelFor="{appId}-proficient"
+      document={context.document}
+      field={context.fields.proficient}
+      config={{
+        id: `${appId}-proficient`,
+        value: context.source.proficient,
+        blank: true,
+      }}
+      choices={context.config.weaponAndArmorProficiencyLevels}
+      blank="DND5E.Automatic"
+    />
   {/if}
 
   <!-- Weapon Mastery -->
-  <div class="form-group">
-    <label for="{appId}-weapon-mastery">
-      {localize('DND5E.WEAPON.FIELDS.mastery.label')}
-    </label>
-    <div class="form-fields">
-      <SelectQuadrone
-        id="{appId}-weapon-mastery"
-        document={context.item}
-        field="system.mastery"
-        value={context.source.mastery}
-        blankValue=""
-        disabled={!context.unlocked}
-      >
-        <SelectOptions
-          data={context.config.weaponMasteries}
-          labelProp="label"
-          blank=""
-        />
-      </SelectQuadrone>
-    </div>
-    <p class="hint">{localize('DND5E.WEAPON.FIELDS.mastery.hint')}</p>
-  </div>
+  <FormGroup
+    labelFor="{appId}-mastery"
+    document={context.document}
+    field={context.fields.mastery}
+    config={{ id: `${appId}-mastery`, value: context.source.mastery }}
+    choices={context.config.weaponMasteries}
+    labelAttr="label"
+  />
 
   <!-- Weapon Properties -->
   <div class="form-group stacked weapon-properties checkbox-grid">
@@ -123,225 +90,187 @@
   <!-- Magical Properties -->
   {#if context.properties.object.mgc}
     <!-- Attunement -->
-    <div class="form-group split-group">
-      <label for="{appId}-attunement"
-        >{localize('DND5E.ITEM.Property.Magical')}</label
-      >
-      <div class="form-fields">
-        <!-- Attunement -->
-        {#if !context.item.isMountable}
-          <div class="form-group label-top no-gap">
-            <label for="{appId}-attunement">
-              {localize('DND5E.Attunement')}
-            </label>
-            <div class="form-fields">
-              <!-- Attuned -->
-              <label class="checkbox" for="{appId}-attuned">
-                <CheckboxQuadrone
-                  id="{appId}-attuned"
-                  document={context.item}
-                  field="system.attuned"
-                  checked={context.source.attuned}
-                  disabledChecked={context.source.attuned}
-                  disabled={!context.unlocked ||
-                    !context.config.attunementTypes[context.system.attunement]}
-                  title={localize('DND5E.AttunementAttuned')}
-                />
-              </label>
-              <!-- Attunement -->
-              <SelectQuadrone
-                id="{appId}-attunement"
-                document={context.item}
-                field="system.attunement"
-                value={context.source.attunement}
-                disabled={!context.unlocked}
-                class="flex-1"
-              >
-                <SelectOptions
-                  data={context.config.attunementTypes}
-                  blank={localize('DND5E.AttunementNone')}
-                />
-              </SelectQuadrone>
-            </div>
-          </div>
-        {/if}
-        <!-- Magical Bonus -->
-        <div class="form-group label-top">
-          <label for="{appId}-magical-bonus">{localize('DND5E.Bonus')}</label>
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-magical-bonus"
-              value={context.source.magicalBonus}
-              field="system.magicalBonus"
-              document={context.item}
-              disabled={!context.unlocked}
-              min="0"
-              step="1"
-              placeholder="0"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    <FormGroup
+      label="DND5E.ITEM.Property.Magical"
+      labelFor="{appId}-system-attunement"
+      groupClasses="split-group"
+    >
+      {#if !context.system.isMountable}
+        <FormGroup
+          label="DND5E.Attunement"
+          labelFor="{appId}-attunement"
+          document={context.document}
+          groupClasses="label-top no-gap"
+          fields={[
+            // Attuned
+            {
+              config: {
+                id: `${appId}-attuned`,
+                value: context.source.attuned,
+                disabled:
+                  !context.unlocked ||
+                  !context.config.attunementTypes[context.system.attunement],
+                aria: {
+                  label: localize('DND5E.AttunementAttuned'),
+                },
+              },
+              disabledValue: context.system.attuned,
+              field: context.fields.attuned,
+              tooltip: 'DND5E.AttunementAttuned',
+            },
+            // Attunement
+            {
+              blank: 'DND5E.AttunementNone',
+              choices: context.config.attunementTypes,
+              config: {
+                id: `${appId}-attunement`,
+                value: context.source.attunement,
+                disabled: !context.unlocked,
+                aria: {
+                  label: localize('DND5E.Attunement'),
+                },
+                classes: 'flex-1',
+              },
+              field: context.fields.attunement,
+            },
+          ]}
+        />
+      {/if}
+
+      <FormGroup
+        label="DND5E.Bonus"
+        labelFor="{appId}-magical-bonus"
+        document={context.document}
+        groupClasses="label-top"
+        field={context.fields.magicalBonus}
+        config={{
+          id: `${appId}-magical-bonus`,
+          value: context.source.magicalBonus,
+          disabled: !context.unlocked,
+          placeholder: '0',
+          step: 1,
+        }}
+      />
+    </FormGroup>
   {/if}
 
   <!-- Ammunition Type -->
   {#if context.properties.object.amm}
-    <div class="form-group">
-      <label for="{appId}-ammunition-type"
-        >{localize('DND5E.WEAPON.FIELDS.ammunition.type.label')}</label
-      >
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-ammunition-type"
-          document={context.item}
-          field="system.ammunition.type"
-          value={context.source.ammunition.type}
-          blankValue=""
-          disabled={!context.unlocked}
-        >
-          <SelectOptions
-            data={context.config.consumableTypes.ammo.subtypes}
-            blank=""
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      labelFor="{appId}-ammunition-type"
+      document={context.document}
+      field={context.fields.ammunition.fields.type}
+      config={{
+        id: `${appId}-ammunition-type`,
+        value: context.source.ammunition.type,
+      }}
+      choices={context.config.consumableTypes.ammo.subtypes}
+    />
   {/if}
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.Range')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </legend>
 
   {#if context.system.hasRange || !context.system.attackType}
-    <div class="form-group split-group">
-      <label for="">{localize('DND5E.RangeDistance')}</label>
-      <div class="form-fields">
-        <!-- Normal -->
-        <div class="form-group label-top">
-          <label for="{appId}-range-value">{localize('DND5E.Normal')}</label>
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-range-value"
-              document={context.item}
-              field="system.range.value"
-              value={context.source.range.value}
-              min="0"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-
-        <!-- Long -->
-        <div class="form-group label-top">
-          <label for="{appId}-range-long">{localize('DND5E.Long')}</label>
-          <div class="form-fields">
-            <NumberInputQuadrone
-              id="{appId}-range-long"
-              document={context.item}
-              field="system.range.long"
-              value={context.source.range.long}
-              min="0"
-              disabled={!context.unlocked}
-            />
-          </div>
-        </div>
-
-        <!-- Reach -->
-        {#if context.system.attackType !== 'ranged'}
-          <div class="form-group label-top">
-            <label for="{appId}-range-reach"
-              >{localize('DND5E.RANGE.FIELDS.range.reach.label')}</label
-            >
-            <div class="form-fields">
-              <NumberInputQuadrone
-                id="{appId}-range-reach"
-                document={context.item}
-                field="system.range.reach"
-                value={context.source.range.reach}
-                min="0"
-                placeholder={context.system.range.reach === null
-                  ? '—'
-                  : context.system.range.reach}
-                disabled={!context.unlocked}
-              />
-            </div>
-          </div>
-        {/if}
-      </div>
-    </div>
+    <FormGroup label="DND5E.RangeDistance" groupClasses="split-group">
+      <!-- Normal -->
+      <FormGroup
+        label="DND5E.Normal"
+        labelFor="{appId}-range-value"
+        document={context.document}
+        field={context.fields.range.fields.value}
+        config={{
+          id: `${appId}-range-value`,
+          value: context.source.range.value,
+          hint: false,
+        }}
+        groupClasses="label-top"
+      />
+      <!-- Long -->
+      <FormGroup
+        label="DND5E.Long"
+        labelFor="{appId}-range-long"
+        document={context.document}
+        field={context.fields.range.fields.long}
+        config={{
+          id: `${appId}-range-long`,
+          value: context.source.range.long,
+          hint: false,
+        }}
+        groupClasses="label-top"
+      />
+      <!-- Reach -->
+      {#if context.system.attackType !== 'ranged'}
+        <FormGroup
+          label="DND5E.RANGE.FIELDS.range.reach.label"
+          labelFor="{appId}-range-reach"
+          document={context.document}
+          field={context.fields.range.fields.reach}
+          config={{
+            id: `${appId}-range-reach`,
+            value: context.source.range.reach,
+            placeholder:
+              context.system.range.reach === null
+                ? '—'
+                : context.system.range.reach,
+          }}
+          groupClasses="label-top"
+        />
+      {/if}
+    </FormGroup>
 
     <!-- Units -->
-    <div class="form-group">
-      <label for="{appId}-range-units">{localize('DND5E.MovementUnits')}</label>
-      <div class="form-fields">
-        <SelectQuadrone
-          id="{appId}-range-units"
-          document={context.item}
-          field="system.range.units"
-          value={context.source.range.units}
-          blankValue=""
-          disabled={!context.unlocked}
-        >
-          <SelectOptions
-            data={context.config.movementUnits}
-            labelProp="label"
-            blank=""
-          />
-        </SelectQuadrone>
-      </div>
-    </div>
+    <FormGroup
+      label="DND5E.MovementUnits"
+      labelFor="{appId}-range-units"
+      document={context.document}
+      field={context.fields.range.fields.units}
+      config={{
+        id: `${appId}-range-units`,
+        value: context.source.range.units,
+        hint: false,
+      }}
+      choices={context.config.movementUnits}
+    />
   {:else}
-    <div class="form-group split-group">
-      <label for="">{localize('DND5E.RangeDistance')}</label>
-      <div class="form-fields">
-        <!-- Reach -->
-        {#if context.system.attackType === 'melee'}
-          <div class="form-group label-top">
-            <label for="{appId}-range-reach"
-              >{localize('DND5E.RANGE.FIELDS.range.reach.label')}</label
-            >
-            <div class="form-fields">
-              <NumberInputQuadrone
-                id="{appId}-range-reach"
-                document={context.item}
-                field="system.range.reach"
-                value={context.source.range.reach}
-                min="0"
-                placeholder={context.system.range.reach === null
-                  ? '—'
-                  : context.system.range.reach}
-                disabled={!context.unlocked}
-              />
-            </div>
-          </div>
-        {/if}
-
-        <!-- Units -->
-        <div class="form-group label-top">
-          <label for="{appId}-range-units"
-            >{localize('DND5E.MovementUnits')}</label
-          >
-          <div class="form-fields">
-            <SelectQuadrone
-              id="{appId}-range-units"
-              document={context.item}
-              field="system.range.units"
-              value={context.source.range.units}
-              disabled={!context.unlocked}
-            >
-              <SelectOptions
-                data={context.config.movementUnits}
-                labelProp="label"
-              />
-            </SelectQuadrone>
-          </div>
-        </div>
-      </div>
-    </div>
+    <FormGroup label="DND5E.RangeDistance" groupClasses="split-group">
+      <!-- Reach -->
+      {#if context.system.attackType === 'melee'}
+        <FormGroup
+          label="DND5E.RANGE.FIELDS.range.reach.label"
+          labelFor="{appId}-range-reach"
+          document={context.document}
+          field={context.fields.range.fields.reach}
+          config={{
+            id: `${appId}-range-reach`,
+            value: context.source.range.reach,
+            placeholder:
+              context.system.range.reach === null
+                ? '—'
+                : context.system.range.reach,
+          }}
+          groupClasses="label-top"
+        />
+      {/if}
+      <!-- Units -->
+      <FormGroup
+        label="DND5E.MovementUnits"
+        labelFor="{appId}-range-units"
+        document={context.document}
+        field={context.fields.range.fields.units}
+        config={{
+          id: `${appId}-range-units`,
+          value: context.source.range.units,
+          hint: false,
+        }}
+        choices={context.config.movementUnits}
+        groupClasses="label-top"
+      />
+    </FormGroup>
   {/if}
 </fieldset>
 
