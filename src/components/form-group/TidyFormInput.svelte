@@ -23,7 +23,7 @@
   type Choices<T = any> = T[] | object | Function;
 
   type Props = {
-    blank?: string;
+    blankLabel?: string;
     choices?: Choices | null;
     condition?: boolean;
     config?: FormInputConfig;
@@ -37,7 +37,7 @@
   };
 
   let {
-    blank,
+    blankLabel,
     choices,
     condition = true,
     config = {},
@@ -289,7 +289,7 @@
   function getBlankValue() {
     const usesBlank =
       'blank' in config ? config.blank : 'blank' in field ? field.blank : false;
-    return usesBlank ? (blank ?? '') : null;
+    return usesBlank ? (blankLabel ?? '') : null;
   }
 </script>
 

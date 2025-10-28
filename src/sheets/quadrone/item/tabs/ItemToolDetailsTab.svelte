@@ -72,7 +72,7 @@
         value: context.source.proficient,
         blank: true,
       }}
-      blank="DND5E.Automatic"
+      blankLabel="DND5E.Automatic"
       choices={context.config.proficiencyLevels}
       groupClasses="label-top"
     />
@@ -83,7 +83,7 @@
       document={context.document}
       field={context.fields.ability}
       config={{ id: `${appId}-ability`, value: context.source.ability }}
-      blank="DND5E.Default"
+      blankLabel="DND5E.Default"
       labelAttr="label"
       groupClasses="label-top"
       choices={context.config.abilities}
@@ -123,7 +123,7 @@
         },
         // Attunement
         {
-          blank: 'DND5E.AttunementNone',
+          blankLabel: 'DND5E.AttunementNone',
           choices: context.config.attunementTypes,
           config: {
             id: `${appId}-attunement`,

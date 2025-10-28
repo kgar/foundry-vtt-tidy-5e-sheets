@@ -26,7 +26,7 @@
   };
 
   let {
-    blank,
+    blankLabel,
     formLabel,
     children,
     beforeGroupEnd,
@@ -84,7 +84,7 @@
   <div class="form-fields">
     {#if field}
       {@render FormInput({
-        blank,
+        blankLabel,
         choices,
         config,
         disabledValue,
@@ -110,7 +110,7 @@
 </div>
 
 {#snippet FormInput({
-  blank,
+  blankLabel,
   choices,
   config,
   disabledValue,
@@ -123,7 +123,7 @@
 }: FormInputOptions)}
   {#if field}
     <TidyFormInput
-      {blank}
+      {blankLabel}
       {choices}
       {config}
       {disabledValue}

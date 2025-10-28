@@ -178,7 +178,7 @@
         id: `${appId}-ability`,
         value: context.source.ability,
       }}
-      blank={context.defaultAbility}
+      blankLabel={context.defaultAbility}
       choices={context.config.abilities}
     />
   {:else}

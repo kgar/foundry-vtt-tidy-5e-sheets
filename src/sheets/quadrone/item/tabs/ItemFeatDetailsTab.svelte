@@ -150,7 +150,7 @@
         value: context.source.enchant.period,
       }}
       hint="DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.hint"
-      blank="DND5E.ENCHANTMENT.Period.Never"
+      blankLabel="DND5E.ENCHANTMENT.Period.Never"
       choices={context.config.enchantmentPeriods}
     />
   </fieldset>

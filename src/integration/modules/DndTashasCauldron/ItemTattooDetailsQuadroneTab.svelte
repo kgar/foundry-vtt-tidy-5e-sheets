@@ -62,7 +62,7 @@
           id: `${appId}-attunement`,
           value: context.source.attunement,
         },
-        blank: 'DND5E.AttunementNone',
+        blankLabel: 'DND5E.AttunementNone',
         choices: context.config.attunementTypes,
       },
     ]}
@@ -129,7 +129,7 @@
       value: context.source.proficient,
       blank: true,
     }}
-    blank="DND5E.Automatic"
+    blankLabel="DND5E.Automatic"
     choices={context.config.weaponAndArmorProficiencyLevels}
   />
 

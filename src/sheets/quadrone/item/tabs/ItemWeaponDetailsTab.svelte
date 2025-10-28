@@ -65,7 +65,7 @@
         blank: true,
       }}
       choices={context.config.weaponAndArmorProficiencyLevels}
-      blank="DND5E.Automatic"
+      blankLabel="DND5E.Automatic"
     />
   {/if}
 
@@ -120,7 +120,7 @@
             },
             // Attunement
             {
-              blank: 'DND5E.AttunementNone',
+              blankLabel: 'DND5E.AttunementNone',
               choices: context.config.attunementTypes,
               config: {
                 id: `${appId}-attunement`,
