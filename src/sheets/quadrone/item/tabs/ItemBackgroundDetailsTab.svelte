@@ -11,7 +11,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemBackgroundDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -22,7 +22,6 @@
     config={{
       value: context.source.identifier,
       placeholder: context.item.identifier,
-      disabled: !context.unlocked,
       id: `${appId}-identifier`,
     }}
     document={context.document}

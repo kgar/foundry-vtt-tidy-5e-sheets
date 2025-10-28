@@ -32,10 +32,11 @@
     - [x] Tool
     - [x] Weapon
     - [x] Tattoo
-    - [ ] MCDM Power?
+    - [x] ~~MCDM Power?~~ Let Michael do it if he wishes.
+    - [ ] Container
     - [ ] ...other?
   - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
-  - [ ] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
+  - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
   - [ ] Rename FormGroup `blank` prop to `blankLabel`
   - [ ] If a FormGroup is supplied a blank label, then consider usesLabel to be true
 - [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.

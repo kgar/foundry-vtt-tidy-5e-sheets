@@ -278,7 +278,7 @@
   <DetailsMountable />
 {/if}
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.DAMAGE.Title')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -299,7 +299,7 @@
 </fieldset>
 
 {#if context.properties.object.ver}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       {localize('DND5E.Versatile')}
       <tidy-gold-header-underline></tidy-gold-header-underline>

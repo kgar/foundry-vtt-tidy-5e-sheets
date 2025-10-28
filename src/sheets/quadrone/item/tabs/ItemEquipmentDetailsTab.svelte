@@ -14,11 +14,11 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemEquipmentDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -33,7 +33,6 @@
     config={{
       id: `${appId}-type-value`,
       value: context.source.type.value,
-      disabled: !context.unlocked,
     }}
     choices={context.equipmentTypes}
   />
@@ -48,7 +47,6 @@
       config={{
         id: `${appId}-type-base-item`,
         value: context.source.type.baseItem,
-        disabled: !context.unlocked,
       }}
       choices={context.baseItems}
     />
@@ -62,7 +60,6 @@
     config={{
       id: `${appId}-proficient`,
       value: context.source.proficient,
-      disabled: !context.unlocked,
     }}
     choices={context.config.weaponAndArmorProficiencyLevels}
     blank="DND5E.Automatic"
@@ -79,7 +76,6 @@
         config={{
           id: `${appId}-armor-value`,
           value: context.source.armor.value,
-          disabled: !context.unlocked,
           step: 1,
         }}
         groupClasses="label-top"
@@ -93,7 +89,6 @@
           config={{
             id: `${appId}-armor-dex`,
             value: context.source.armor.dex,
-            disabled: !context.unlocked,
           }}
           groupClasses="label-top"
         />
@@ -106,7 +101,6 @@
         config={{
           id: `${appId}-strength`,
           value: context.source.strength,
-          disabled: !context.unlocked,
           placeholder: '—',
         }}
         groupClasses="label-top"
@@ -160,7 +154,6 @@
               config: {
                 id: `${appId}-attunement`,
                 value: context.source.attunement,
-                disabled: !context.unlocked,
                 aria: {
                   label: localize('DND5E.Attunement'),
                 },
@@ -180,7 +173,6 @@
         config={{
           id: `${appId}-armor-magical-bonus`,
           value: context.source.armor.magicalBonus,
-          disabled: !context.unlocked,
           placeholder: '0',
           step: 1,
         }}

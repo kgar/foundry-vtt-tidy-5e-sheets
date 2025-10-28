@@ -11,7 +11,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.TargetPl')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -29,7 +29,6 @@
         config={{
           id: `${appId}-target-affects-count`,
           value: context.source.target.affects.count,
-          disabled: !context.unlocked,
           placeholder: context.affectsPlaceholder,
           hint: false,
         }}
@@ -45,7 +44,6 @@
       config={{
         id: `${appId}-target-affects-type`,
         value: context.source.target.affects.type,
-        disabled: !context.unlocked,
         hint: false,
       }}
       choices={context.config.individualTargetTypes}
@@ -61,7 +59,6 @@
         config={{
           id: `${appId}-target-affects-special`,
           value: context.source.target.affects.special,
-          disabled: !context.unlocked,
           classes: 'full-width',
           placeholder: localize(
             'DND5E.TARGET.FIELDS.target.affects.special.label',
@@ -81,13 +78,12 @@
       config={{
         id: `${appId}-target-affects-choice`,
         value: context.source.target.affects.choice,
-        disabled: !context.unlocked,
       }}
     />
   {/if}
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.TargetTypeArea')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -102,7 +98,6 @@
     config={{
       id: `${appId}-target-template-type`,
       value: context.source.target.template.type,
-      disabled: !context.unlocked,
       hint: false,
       blank: false,
     }}
@@ -122,7 +117,6 @@
         config={{
           id: `${appId}-target-template-size`,
           value: context.source.target.template.size,
-          disabled: !context.unlocked,
           hint: false,
         }}
         groupClasses="label-top"
@@ -137,7 +131,6 @@
           config={{
             id: `${appId}-target-template-width`,
             value: context.source.target.template.width,
-            disabled: !context.unlocked,
             hint: false,
           }}
           groupClasses="label-top"
@@ -153,7 +146,6 @@
           config={{
             id: `${appId}-target-template-height`,
             value: context.source.target.template.height,
-            disabled: !context.unlocked,
             hint: false,
           }}
           groupClasses="label-top"
@@ -168,7 +160,6 @@
         config={{
           id: `${appId}-target-template-units`,
           value: context.source.target.template.units,
-          disabled: !context.unlocked,
           hint: false,
         }}
         choices={context.config.movementUnits}
@@ -187,7 +178,6 @@
         config={{
           id: `${appId}-target-template-count`,
           value: context.source.target.template.count,
-          disabled: !context.unlocked,
           placeholder: '1',
           hint: false,
         }}
@@ -205,7 +195,6 @@
               config={{
                 id: `${appId}-target-template-contiguous`,
                 value: context.source.target.template.contiguous,
-                disabled: !context.unlocked,
                 hint: false,
               }}
             />

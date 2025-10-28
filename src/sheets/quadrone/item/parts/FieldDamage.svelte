@@ -47,7 +47,6 @@
       config: {
         id: `${idPrefix}custom-enabled`,
         value: source.custom.enabled,
-        disabled: !context.unlocked,
       },
       disabledValue: system.custom.enabled,
     },
@@ -57,7 +56,6 @@
       config: {
         id: `${idPrefix}custom-formula`,
         value: source.custom.formula,
-        disabled: !context.unlocked,
       },
     },
   ]}
@@ -77,7 +75,6 @@
       config={{
         id: `${idPrefix}number`,
         value: source.number,
-        disabled: !context.unlocked,
         placeholder: numberPlaceholder,
         step: 1,
       }}
@@ -91,7 +88,6 @@
       config={{
         id: `${idPrefix}denomination`,
         value: source.denomination,
-        disabled: !context.unlocked,
       }}
       choices={denominationOptions}
       groupClasses="label-top"
@@ -104,7 +100,6 @@
       config={{
         id: `${idPrefix}bonus`,
         value: source.bonus,
-        disabled: !context.unlocked,
       }}
       groupClasses="label-top"
     />

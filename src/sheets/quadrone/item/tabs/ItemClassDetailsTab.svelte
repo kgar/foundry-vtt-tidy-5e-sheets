@@ -2,9 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DetailsSpellcasting from '../parts/DetailsSpellcasting.svelte';
   import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
-  import {
-    mapMulticlassingAbilitiesToSave,
-  } from 'src/utils/system-properties-quadrone';
+  import { mapMulticlassingAbilitiesToSave } from 'src/utils/system-properties-quadrone';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
@@ -19,7 +17,7 @@
   let abilities = $derived(context.primaryAbilities ?? []);
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemClassDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -31,7 +29,6 @@
     document={context.item}
     config={{
       id: `${appId}-identifier`,
-      disabled: !context.unlocked,
       placeholder: context.item.identifier,
       value: context.source.identifier,
     }}
@@ -56,7 +53,6 @@
       config={{
         id: `${appId}-hit-dice`,
         value: context.source.hd.denomination,
-        disabled: !context.unlocked,
       }}
       choices={context.config.hitDieTypes}
     ></FormGroup>
@@ -70,7 +66,6 @@
       config={{
         id: `${appId}-hit-dice-spent`,
         value: context.source.hd.spent,
-        disabled: !context.unlocked,
         placeholder: '0',
       }}
     ></FormGroup>
@@ -85,7 +80,6 @@
     config={{
       id: `${appId}-hit-dice-additional`,
       value: context.source.hd.additional,
-      disabled: !context.unlocked,
     }}
   ></FormGroup>
 
@@ -97,7 +91,7 @@
   </div>
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.CLASS.Multiclass.Title')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -156,7 +150,7 @@
   {/if}
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.Spellcasting')}
     <tidy-gold-header-underline></tidy-gold-header-underline>

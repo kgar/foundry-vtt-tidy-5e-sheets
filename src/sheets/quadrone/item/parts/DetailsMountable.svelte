@@ -12,7 +12,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {#if context.item.type === CONSTANTS.ITEM_TYPE_WEAPON}
       {localize('DND5E.ItemSiegeProperties')}
@@ -30,7 +30,6 @@
     config={{
       id: `${appId}-armor-value`,
       value: context.source.armor.value,
-      disabled: !context.unlocked,
       step: 1,
     }}
   />
@@ -43,7 +42,6 @@
     config={{
       id: `${appId}-cover`,
       value: context.source.cover ?? 0,
-      disabled: !context.unlocked,
     }}
     choices={context.coverOptions}
   />
@@ -59,7 +57,6 @@
       config={{
         id: `${appId}-hp-value`,
         value: context.source.hp.value,
-        disabled: !context.unlocked,
         placeholder: '0',
       }}
       groupClasses="label-top"
@@ -74,7 +71,6 @@
       config={{
         id: `${appId}-hp-max`,
         value: context.source.hp.max,
-        disabled: !context.unlocked,
         placeholder: '0',
       }}
       groupClasses="label-top"
@@ -89,7 +85,6 @@
       config={{
         id: `${appId}-hp-dt`,
         value: context.source.hp.dt,
-        disabled: !context.unlocked,
         placeholder: '—',
       }}
       groupClasses="label-top"
@@ -102,7 +97,6 @@
         config={{
           id: `${appId}-hp-conditions`,
           value: context.source.hp.conditions,
-          disabled: !context.unlocked,
           placeholder: localize(
             'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
           ),
@@ -127,7 +121,6 @@
         config={{
           id: `${appId}-speed-value`,
           value: context.source.speed.value,
-          disabled: !context.unlocked,
           placeholder: '0',
         }}
         groupClasses="label-top"
@@ -140,7 +133,6 @@
           config={{
             id: `${appId}-speed-conditions`,
             value: context.source.speed.conditions,
-            disabled: !context.unlocked,
             placeholder: localize(
               'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
             ),

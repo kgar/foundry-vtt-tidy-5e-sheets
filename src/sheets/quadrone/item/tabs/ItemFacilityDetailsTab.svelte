@@ -12,7 +12,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemFacilityDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -26,7 +26,6 @@
     config={{
       id: `${appId}-type-value`,
       value: context.source.type.value,
-      disabled: !context.unlocked,
       blank: false,
     }}
     choices={context.config.facilities.types}
@@ -40,7 +39,6 @@
     config={{
       id: `${appId}-type-subtype`,
       value: context.source.type.subtype,
-      disabled: !context.unlocked,
     }}
     choices={context.facilitySubtypes}
   />
@@ -53,7 +51,6 @@
     config={{
       id: `${appId}-size`,
       value: context.source.size,
-      disabled: !context.unlocked,
     }}
     choices={context.config.facilities.sizes}
   />
@@ -67,7 +64,6 @@
       config={{
         id: `${appId}-level`,
         value: context.source.level,
-        disabled: !context.unlocked,
         min: 1,
         step: 1,
       }}
@@ -86,7 +82,6 @@
         config={{
           id: `${appId}-level`,
           value: context.source.level,
-          disabled: !context.unlocked,
         }}
         groupClasses="label-top"
       />
@@ -98,7 +93,6 @@
         config={{
           id: `${appId}-order`,
           value: context.source.order,
-          disabled: !context.unlocked,
         }}
         choices={context.orders?.available ?? []}
         groupClasses="label-top"
@@ -115,7 +109,6 @@
         config={{
           id: `${appId}-hirelings-max`,
           value: context.source.hirelings.max,
-          disabled: !context.unlocked,
           placeholder: '—',
         }}
         groupClasses="label-top"
@@ -128,7 +121,6 @@
         config={{
           id: `${appId}-defenders-max`,
           value: context.source.defenders.max,
-          disabled: !context.unlocked,
           placeholder: '—',
         }}
         groupClasses="label-top"
@@ -143,7 +135,6 @@
       config={{
         id: `${appId}-system-free`,
         value: context.source.free,
-        disabled: !context.unlocked,
       }}
     />
 
@@ -155,7 +146,6 @@
       config={{
         id: `${appId}-enlargeable`,
         value: context.source.enlargeable,
-        disabled: !context.unlocked,
       }}
     />
 
@@ -167,7 +157,6 @@
       config={{
         id: `${appId}-disabled`,
         value: context.source.disabled,
-        disabled: !context.unlocked,
       }}
     />
   {:else}
@@ -179,13 +168,12 @@
       config={{
         id: `${appId}-building-built`,
         value: context.source.building.built,
-        disabled: !context.unlocked,
       }}
     />
   {/if}
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.FACILITY.Orders.Label')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -199,7 +187,6 @@
     config={{
       id: `${appId}-progress-order`,
       value: context.source.progress.order,
-      disabled: !context.unlocked,
     }}
     choices={context.orders?.executable ?? []}
   />
@@ -214,7 +201,6 @@
       config={{
         id: `${appId}-progress-value`,
         value: context.source.progress.value,
-        disabled: !context.unlocked,
         placeholder: '—',
       }}
       groupClasses="label-top"
@@ -227,7 +213,6 @@
       config={{
         id: `${appId}-progress-max`,
         value: context.source.progress.max,
-        disabled: !context.unlocked,
         placeholder: '—',
       }}
       groupClasses="label-top"
@@ -236,7 +221,7 @@
 </fieldset>
 
 {#if context.canCraft}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       {localize(`DND5E.FACILITY.Orders.${context.source.order}.present`)}
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -274,7 +259,6 @@
               field={context.system.schema.fields.craft.fields.item}
               config={{
                 id: `${appId}-craft-item`,
-                disabled: !context.unlocked,
                 value: context.source.craft.item,
               }}
             />
@@ -290,7 +274,6 @@
             config={{
               id: `${appId}-craft-quantity`,
               value: context.source.craft.quantity,
-              disabled: !context.unlocked,
               classes: 'flexshrink',
             }}
           />
@@ -301,7 +284,7 @@
 {/if}
 
 {#if context.source.type.value === CONSTANTS.FACILITY_TYPE_SPECIAL && context.source.order === 'trade'}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       {localize('DND5E.FACILITY.Orders.trade.present')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -315,7 +298,6 @@
       config={{
         id: `${appId}-system-trade-stock-stocked`,
         value: context.source.trade.stock.stocked,
-        disabled: !context.unlocked,
       }}
     />
 
@@ -329,7 +311,6 @@
         config={{
           id: `${appId}-system-trade-stock-value`,
           value: context.source.trade.stock.value,
-          disabled: !context.unlocked,
           placeholder: '—',
         }}
         groupClasses="label-top"
@@ -343,7 +324,6 @@
         config={{
           id: `${appId}-system-trade-stock-max`,
           value: context.source.trade.stock.max,
-          disabled: !context.unlocked,
           placeholder: '—',
         }}
         groupClasses="label-top"
@@ -358,7 +338,6 @@
       config={{
         id: `${appId}-trade-creatures-max`,
         value: context.source.trade.creatures.max,
-        disabled: !context.unlocked,
         placeholder: '—',
       }}
     />
@@ -374,7 +353,6 @@
         config={{
           id: `${appId}-system-trade-profit`,
           value: context.source.trade.profit,
-          disabled: !context.unlocked,
           placeholder: '—',
         }}
       />

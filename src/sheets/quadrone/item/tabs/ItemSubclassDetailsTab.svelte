@@ -41,7 +41,7 @@
   />
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>{localize('DND5E.Spellcasting')}</legend>
   <DetailsSpellcasting />
 </fieldset>

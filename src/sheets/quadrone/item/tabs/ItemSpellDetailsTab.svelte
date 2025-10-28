@@ -17,7 +17,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.SpellDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -31,7 +31,6 @@
     config={{
       id: `${appId}-level`,
       value: context.source.level,
-      disabled: !context.unlocked,
     }}
     choices={context.config.spellLevels}
   />
@@ -44,7 +43,6 @@
     config={{
       id: `${appId}-school`,
       value: context.source.school,
-      disabled: !context.unlocked,
     }}
     choices={context.config.spellSchools}
   />
@@ -71,7 +69,6 @@
         config={{
           id: `${appId}-materials-supply`,
           value: context.source.materials.supply,
-          disabled: !context.unlocked,
         }}
         groupClasses="label-top"
       />
@@ -82,7 +79,6 @@
         config={{
           id: `${appId}-materials-cost`,
           value: context.source.materials.cost,
-          disabled: !context.unlocked,
           placeholder: '—',
         }}
         groupClasses="label-top"
@@ -108,7 +104,6 @@
             config={{
               id: `${appId}-materials-consumed`,
               value: context.source.materials.consumed,
-              disabled: !context.unlocked,
             }}
           />
         </label>
@@ -121,7 +116,6 @@
           config={{
             id: `${appId}-materials-value`,
             value: context.source.materials.value,
-            disabled: !context.unlocked,
             classes: 'full-width',
           }}
         />
@@ -140,7 +134,6 @@
       config={{
         id: `${appId}-method`,
         value: context.source.method,
-        disabled: !context.unlocked,
       }}
       choices={context.spellcastingMethods}
       groupClasses="label-top"
@@ -155,7 +148,6 @@
         config={{
           id: `${appId}-prepared`,
           value: context.source.prepared,
-          disabled: !context.unlocked,
         }}
         choices={context.config.spellPreparationStates}
         groupClasses="label-top"
@@ -173,7 +165,6 @@
       config={{
         id: `${appId}-sourceClass`,
         value: context.source.sourceClass,
-        disabled: !context.unlocked,
       }}
       labelAttr="name"
       choices={context.document.parent.spellcastingClasses}
@@ -186,7 +177,6 @@
       config={{
         id: `${appId}-ability`,
         value: context.source.ability,
-        disabled: !context.unlocked,
       }}
       blank={context.defaultAbility}
       choices={context.config.abilities}
@@ -199,13 +189,12 @@
       config={{
         id: `${appId}-sourceClass`,
         value: context.source.sourceClass,
-        disabled: !context.unlocked,
       }}
     />
   {/if}
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.Casting')}
     <tidy-gold-header-underline></tidy-gold-header-underline>

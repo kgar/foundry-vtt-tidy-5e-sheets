@@ -14,7 +14,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <div class="form-group">
     <label for="{appId}-weight-value">
       {localize('DND5E.Weight')}
@@ -26,14 +26,12 @@
         step="any"
         field="system.weight.value"
         document={context.item}
-        disabled={!context.unlocked}
         selectOnFocus={true}
       />
       <SelectQuadrone
         document={context.item}
         field="system.weight.units"
         value={context.source.weight.units}
-        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.weightUnits}
@@ -53,7 +51,6 @@
         step="any"
         field="system.price.value"
         document={context.item}
-        disabled={!context.unlocked}
         selectOnFocus={true}
         class="large-value"
       />
@@ -61,7 +58,6 @@
         value={context.source.price.denomination}
         field="system.price.denomination"
         document={context.item}
-        disabled={!context.unlocked}
       >
         <SelectOptions
           data={context.config.currencies}
@@ -72,7 +68,7 @@
   </div>
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.CONTAINER.Details')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -108,7 +104,6 @@
           document={context.item}
           field="system.attunement"
           value={context.source.attunement}
-          disabled={!context.unlocked}
         >
           <SelectOptions
             data={context.config.attunementTypes}
@@ -120,7 +115,7 @@
   {/if}
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.CONTAINER.FIELDS.capacity.label')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -136,7 +131,6 @@
         step="1"
         min="0"
         placeholder="—"
-        disabled={!context.unlocked}
       />
     </div>
   </div>
@@ -156,7 +150,6 @@
             step="any"
             min="0"
             placeholder="—"
-            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -169,7 +162,6 @@
             field="system.capacity.volume.units"
             value={context.source.capacity.volume.units}
             blankValue=""
-            disabled={!context.unlocked}
           >
             <SelectOptions
               data={context.config.volumeUnits}
@@ -195,7 +187,6 @@
             step="any"
             min="0"
             placeholder="—"
-            disabled={!context.unlocked}
           />
         </div>
       </div>
@@ -208,7 +199,6 @@
             field="system.capacity.weight.units"
             value={context.source.capacity.weight.units}
             blankValue=""
-            disabled={!context.unlocked}
           >
             <SelectOptions
               data={context.config.weightUnits}

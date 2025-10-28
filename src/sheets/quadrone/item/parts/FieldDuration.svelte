@@ -23,7 +23,6 @@
       config={{
         id: `${appId}-duration-value`,
         value: context.source.duration.value,
-        disabled: !context.unlocked,
         hint: false,
         placeholder: '—',
       }}
@@ -39,7 +38,6 @@
     config={{
       id: `${appId}-duration-units`,
       value: context.source.duration.units,
-      disabled: !context.unlocked,
       hint: false,
     }}
     choices={context.durationUnits}
@@ -55,7 +53,6 @@
         config={{
           id: `${appId}-duration-special`,
           value: context.source.duration.special,
-          disabled: !context.unlocked,
           classes: 'full-width',
           placeholder: localize('DND5E.DURATION.FIELDS.duration.special.label'),
         }}

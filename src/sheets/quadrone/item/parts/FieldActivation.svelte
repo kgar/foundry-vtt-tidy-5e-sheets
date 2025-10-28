@@ -22,7 +22,6 @@
       config={{
         id: `${appId}-activation-value`,
         value: context.source.activation.value,
-        disabled: !context.unlocked,
         placeholder: '—',
         hint: false,
         blank: false,
@@ -39,7 +38,6 @@
     config={{
       id: `${appId}-activation-type`,
       value: context.source.activation.type,
-      disabled: !context.unlocked,
       hint: false,
       blank: false,
     }}
@@ -54,7 +52,6 @@
       config={{
         id: `${appId}-activation-condition`,
         value: context.source.activation.condition,
-        disabled: !context.unlocked,
         classes: 'full-width',
         placeholder: localize('DND5E.ItemActivationCondition'),
       }}

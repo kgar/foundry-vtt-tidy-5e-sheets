@@ -23,7 +23,6 @@
       config={{
         id: `${appId}-range-value`,
         value: context.source.range.value,
-        disabled: !context.unlocked,
         hint: false,
       }}
       groupClasses="label-top"
@@ -38,7 +37,6 @@
     config={{
       id: `${appId}-range-units`,
       value: context.source.range.units,
-      disabled: !context.unlocked,
       hint: false,
     }}
     choices={context.rangeTypes}
@@ -53,7 +51,6 @@
       config={{
         id: `${appId}-range-special`,
         value: context.source.range.special,
-        disabled: !context.unlocked,
         classes: 'full-width',
         placeholder: localize('DND5E.RANGE.FIELDS.range.special.label'),
       }}

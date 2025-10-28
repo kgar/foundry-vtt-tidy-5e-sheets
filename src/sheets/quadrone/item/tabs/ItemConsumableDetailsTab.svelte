@@ -15,11 +15,11 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemConsumableDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -33,7 +33,6 @@
     config={{
       id: `${appId}-type-value`,
       value: context.source.type.value,
-      disabled: !context.unlocked,
     }}
     choices={context.config.consumableTypes}
   />
@@ -52,7 +51,6 @@
       config={{
         id: `${appId}-type-subtype`,
         value: context.source.type.subtype,
-        disabled: !context.unlocked,
       }}
       choices={context.itemSubtypes}
     />
@@ -105,7 +103,6 @@
             config: {
               id: `${appId}-attunement`,
               value: context.source.attunement,
-              disabled: !context.unlocked,
               aria: {
                 label: localize('DND5E.Attunement'),
               },
@@ -125,7 +122,6 @@
           config={{
             id: `${appId}-magical-bonus`,
             value: context.source.magicalBonus,
-            disabled: !context.unlocked,
             placeholder: '0',
             step: 1,
           }}
@@ -137,7 +133,7 @@
 </fieldset>
 
 {#if context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       {localize('DND5E.CONSUMABLE.FIELDS.damage.label')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -149,7 +145,6 @@
       config={{
         id: `${appId}-damage-replace`,
         value: context.source.damage.replace,
-        disabled: !context.unlocked,
       }}
       field={context.fields.damage.fields.replace}
       disabledValue={context.system.damage.replace}

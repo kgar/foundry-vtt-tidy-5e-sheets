@@ -10,7 +10,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend
     >{localize('DND5E.Usage')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -29,7 +29,6 @@
       config={{
         id: `${appId}-uses-spent`,
         value: context.source.uses.spent,
-        disabled: !context.unlocked,
       }}
       groupClasses="label-top"
     />
@@ -40,7 +39,6 @@
       config={{
         id: `${appId}-uses-max`,
         value: context.source.uses.max,
-        disabled: !context.unlocked,
       }}
       groupClasses="label-top"
     />
@@ -55,7 +53,6 @@
       config={{
         id: `${appId}-uses-autoDestroy`,
         value: context.source.uses.autoDestroy,
-        disabled: !context.unlocked,
       }}
       disabledValue={context.system.uses.autoDestroy}
     />
@@ -63,7 +60,7 @@
 </fieldset>
 
 {#if context.item.hasLimitedUses}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       <div class="legend-with-button">
         <span>

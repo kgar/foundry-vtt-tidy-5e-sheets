@@ -12,11 +12,11 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <QuantityWeightPriceFormGroups />
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemLootDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -31,7 +31,6 @@
     config={{
       id: `${appId}-type-value`,
       value: context.source.type.value,
-      disabled: !context.unlocked,
     }}
     choices={context.config.lootTypes}
   />
@@ -51,7 +50,6 @@
       config={{
         id: `${appId}-type-subtype`,
         value: context.source.type.subtype,
-        disabled: !context.unlocked,
       }}
       choices={context.itemSubtypes}
     />

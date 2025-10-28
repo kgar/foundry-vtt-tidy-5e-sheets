@@ -8,18 +8,6 @@
 
   let appId = $derived(context.document.id);
 
-  let optionGroups = $derived.by(() => {
-    let groups: Record<string, { label: string; value: string }[]> = {};
-
-    for (let prog of context.spellProgression) {
-      let group = (groups[prog.group ?? ''] ??= []);
-
-      group.push(prog);
-    }
-
-    return Object.entries(groups);
-  });
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -29,7 +17,6 @@
   field={context.fields.spellcasting.fields.progression}
   config={{
     id: `${appId}-spellcasting-progression`,
-    disabled: !context.unlocked,
     value: context.source.spellcasting.progression,
   }}
   choices={context.spellProgression}
@@ -41,7 +28,6 @@
   field={context.fields.spellcasting.fields.ability}
   config={{
     id: `${appId}-spellcasting-ability`,
-    disabled: !context.unlocked,
     value: context.source.spellcasting.ability,
   }}
   choices={context.config.abilities}
@@ -53,7 +39,6 @@
   field={context.fields.spellcasting.fields.preparation.fields.formula}
   config={{
     id: `${appId}-spellcasting-preparation-formula`,
-    disabled: !context.unlocked,
     value: context.source.spellcasting.preparation.formula,
     placeholder: '—',
   }}

@@ -14,7 +14,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemFeatureDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -29,7 +29,6 @@
     config={{
       id: `${appId}-requirements`,
       value: context.source.requirements,
-      disabled: !context.unlocked,
     }}
   />
 
@@ -41,7 +40,6 @@
     config={{
       id: `${appId}-type-value`,
       value: context.source.type.value,
-      disabled: !context.unlocked,
     }}
     choices={context.config.featureTypes}
   />
@@ -63,7 +61,6 @@
       config={{
         id: `${appId}-type-subtype`,
         value: context.source.type.subtype,
-        disabled: !context.unlocked,
       }}
       choices={context.itemSubtypes}
     />
@@ -77,7 +74,6 @@
       config={{
         id: `${appId}-cover`,
         value: context.source.cover ?? 0,
-        disabled: !context.unlocked,
       }}
       choices={context.coverOptions}
     />
@@ -91,7 +87,6 @@
     config={{
       id: `${appId}-prerequisites-level`,
       value: context.source.prerequisites.level,
-      disabled: !context.unlocked,
     }}
   />
 
@@ -102,7 +97,6 @@
     config={{
       id: `${appId}-prerequisites-items`,
       value: context.source.prerequisites.items,
-      disabled: !context.unlocked,
     }}
   />
 
@@ -113,7 +107,6 @@
     config={{
       id: `${appId}-prerequisites-repeatable`,
       value: context.source.prerequisites.repeatable,
-      disabled: !context.unlocked,
     }}
   />
 
@@ -127,7 +120,7 @@
 </fieldset>
 
 {#if context.system.isEnchantmentSource}
-  <fieldset>
+  <fieldset disabled={!context.unlocked}>
     <legend>
       {localize('DND5E.ENCHANTMENT.Label')}
       <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -142,7 +135,6 @@
       config={{
         id: `${appId}-enchant-max`,
         value: context.source.enchant.max,
-        disabled: !context.unlocked,
       }}
       hint="DND5E.ENCHANTMENT.FIELDS.enchantment.items.max.hint"
     />
@@ -156,7 +148,6 @@
       config={{
         id: `${appId}-enchant-period`,
         value: context.source.enchant.period,
-        disabled: !context.unlocked,
       }}
       hint="DND5E.ENCHANTMENT.FIELDS.enchantment.items.period.hint"
       blank="DND5E.ENCHANTMENT.Period.Never"

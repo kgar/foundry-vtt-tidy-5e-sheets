@@ -12,7 +12,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.StartingEquipment.Title')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -27,7 +27,6 @@
       aria-label={localize('DND5E.StartingEquipment.Action.Configure')}
       onclick={() => FoundryAdapter.openStartingEquipmentConfig(context.item)}
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-      disabled={!context.unlocked}
     >
       <i class="fas fa-gear"></i>
       {localize('DND5E.StartingEquipment.Action.Configure')}
@@ -53,7 +52,6 @@
     config={{
       id: `${appId}-wealth`,
       value: context.source.wealth,
-      disabled: !context.unlocked,
     }}
   />
 </fieldset>

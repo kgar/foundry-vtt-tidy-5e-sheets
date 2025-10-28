@@ -10,7 +10,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('DND5E.ItemSpeciesDetails')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -22,7 +22,6 @@
     config={{
       id: `${appId}-identifier`,
       value: context.source.identifier,
-      disabled: !context.unlocked,
       placeholder: context.item.identifier,
     }}
     hint="DND5E.IdentifierError"
