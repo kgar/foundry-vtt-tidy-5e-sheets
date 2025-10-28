@@ -31,7 +31,7 @@
     - [x] Subclass
     - [x] Tool
     - [x] Weapon
-    - [ ] Tattoo
+    - [x] Tattoo
     - [ ] MCDM Power?
     - [ ] ...other?
   - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it

@@ -306,7 +306,6 @@
 {#snippet StringChoices(stringChoices: Choices<string>)}
   {@const options = enumerateChoices(stringChoices)}
   {@const blankLabel = getBlankValue()}
-  {console.log({ blankValue: blankLabel })}
   <SelectOptions
     blank={blankLabel}
     labelProp="label"
