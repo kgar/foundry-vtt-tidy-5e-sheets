@@ -1,7 +1,7 @@
 ## kgar To Do
 
 - [x] Container details - roll out FormGroup
-- [ ] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
+- [x] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
 
 ### Short List
 

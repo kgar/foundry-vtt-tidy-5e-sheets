@@ -3,6 +3,7 @@
   import type { ClassValue } from 'svelte/elements';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyFormInput from './TidyFormInput.svelte';
+  import { error } from 'src/utils/logging';
 
   type FormInputOptions = Omit<
     ComponentProps<typeof TidyFormInput>,
@@ -58,56 +59,67 @@
   let fieldPathSlug = $derived(field?.fieldPath);
 </script>
 
-<div
-  class={[
-    'form-group',
-    {
-      stacked: stacked,
-      hidden: hidden,
-    },
-    groupClasses,
-  ]}
-  data-field-path={fieldPathSlug}
+<svelte:boundary
+  onerror={(e) =>
+    error('An error occurred while rendering a form group.', false, {
+      error: e,
+      field,
+      config,
+    })}
 >
-  {#if formLabel}
-    {@render formLabel()}
-  {:else}
-    <label for={labelFor}>
-      {#if effectiveLabel}
-        {localize ? FoundryAdapter.localize(effectiveLabel) : effectiveLabel}
-      {/if}
-      {#if units}
-        <span class="units">{FoundryAdapter.localize(units)}</span>
-      {/if}
-    </label>
-  {/if}
-  <div class="form-fields">
-    {#if field}
-      {@render FormInput({
-        blankLabel,
-        choices,
-        config,
-        disabledValue,
-        disableOverriddenInputs,
-        field,
-        tooltip,
-        labelAttr,
-        valueAttr,
-        condition,
-      })}
+  <div
+    class={[
+      'form-group',
+      {
+        stacked: stacked,
+        hidden: hidden,
+      },
+      groupClasses,
+    ]}
+    data-field-path={fieldPathSlug}
+  >
+    {#if formLabel}
+      {@render formLabel()}
+    {:else}
+      <label for={labelFor}>
+        {#if effectiveLabel}
+          {localize ? FoundryAdapter.localize(effectiveLabel) : effectiveLabel}
+        {/if}
+        {#if units}
+          <span class="units">{FoundryAdapter.localize(units)}</span>
+        {/if}
+      </label>
     {/if}
-    {#each fields as options}
-      {@render FormInput(options)}
-    {/each}
-    {@render children?.()}
+    <div class="form-fields">
+      {#if field}
+        {@render FormInput({
+          blankLabel,
+          choices,
+          config,
+          disabledValue,
+          disableOverriddenInputs,
+          field,
+          tooltip,
+          labelAttr,
+          valueAttr,
+          condition,
+        })}
+      {/if}
+      {#each fields as options}
+        {@render FormInput(options)}
+      {/each}
+      {@render children?.()}
+    </div>
+    {@render beforeGroupEnd?.()}
+    {#if effectiveHint}
+      <p class="hint">
+        {@html localize
+          ? FoundryAdapter.localize(effectiveHint)
+          : effectiveHint}
+      </p>
+    {/if}
   </div>
-  {@render beforeGroupEnd?.()}
-  {#if effectiveHint}
-    <p class="hint">
-      {@html localize ? FoundryAdapter.localize(effectiveHint) : effectiveHint}
-    </p>
-  {/if}
-</div>
+</svelte:boundary>
 
 {#snippet FormInput({
   blankLabel,
