@@ -18,7 +18,7 @@
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ComponentProps } from 'svelte';
-  import { buildDataset } from 'src/utils/data';
+  import { buildDataset, isNil } from 'src/utils/data';
 
   type Choices<T = any> = T[] | object | Function;
 
@@ -288,7 +288,12 @@
 
   function getBlankValue() {
     const usesBlank =
-      'blank' in config ? config.blank : 'blank' in field ? field.blank : false;
+      !isNil(blankLabel) ||
+      ('blank' in config
+        ? config.blank
+        : 'blank' in field
+          ? field.blank
+          : false);
     return usesBlank ? (blankLabel ?? '') : null;
   }
 </script>

@@ -62,7 +62,6 @@
       config={{
         id: `${appId}-proficient`,
         value: context.source.proficient,
-        blank: true,
       }}
       choices={context.config.weaponAndArmorProficiencyLevels}
       blankLabel="DND5E.Automatic"
