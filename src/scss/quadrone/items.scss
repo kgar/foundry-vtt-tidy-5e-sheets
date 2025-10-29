@@ -529,6 +529,13 @@
         margin-inline-end: var(--t5e-size-2x);
       }
 
+      .details .content-link {
+        min-height: var(--t5e-tag-size-default);
+        align-items: center;
+        display: flex;
+        padding-left: var(--t5e-size-2x);
+      }
+
       .list-controls {
         justify-content: flex-end;
 

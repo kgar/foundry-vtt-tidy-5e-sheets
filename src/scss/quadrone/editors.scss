@@ -409,7 +409,6 @@
   }
 
   .editor-rendered-content {
-    flex: 0 0 100%;
     margin-top: var(--t5e-size-2x);
     padding-right: var(--t5e-size-2x);
     padding-left: var(--t5e-size-2x);
@@ -437,6 +436,14 @@
     // TODO: Remove the line separator and this style when App V1 is eliminated
     .horizontal-line-separator {
       display: none;
+    }
+
+    &:not(:has(.inline-wrapped-elements)) {
+      padding-bottom: var(--t5e-size-2x);
+    }
+
+    &:not(:has(p)) {
+      padding-bottom: var(--t5e-size-1x);
     }
 
     .inline-wrapped-elements {

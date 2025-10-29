@@ -102,6 +102,7 @@
         <span
           class={[
             'pill',
+            'pill-dismissable',
             {
               'text-color-disabled': disabled,
             },
