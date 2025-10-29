@@ -812,25 +812,19 @@ export function TidyExtensibleDocumentSheetMixin<
     *_headerControlButtons(
       position: SheetHeaderControlPosition | 'all' = 'menu'
     ) {
-      const controls = new Map<
-        string,
-        ApplicationHeaderControlsEntry | CustomHeaderControlsEntry
-      >();
+      const controls = new Map<string, ApplicationHeaderControlsEntry>(
+        super
+          ._headerControlButtons()
+          .map((c: ApplicationHeaderControlsEntry) => [c.label, c])
+      );
 
-      // Eliminate duplicates first
-      for (const c of super._headerControlButtons()) {
-        controls.set(c.label, c);
-      }
-
-      // Then, filter on position
-      for (const c of controls.values()) {
-        if (
-          position === 'all' ||
-          this._headerControlIsConfiguredForPosition(c, position)
-        ) {
-          yield c;
-        }
-      }
+      yield* controls
+        .values()
+        .filter(
+          (c) =>
+            position === 'all' ||
+            this._headerControlIsConfiguredForPosition(c, position)
+        );
     }
 
     private _headerControlIsConfiguredForPosition(
