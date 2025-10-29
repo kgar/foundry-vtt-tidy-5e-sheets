@@ -22,7 +22,7 @@ export function createHeaderButton(
       control.onClick?.(event);
     });
   }
-  
+
   return button;
 }
 
