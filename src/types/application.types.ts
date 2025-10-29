@@ -62,6 +62,7 @@ export interface ApplicationHeaderControlsEntry {
   ownership?: string | number;
   /** Where the control should be placed, whether the header or the menu. Tidy-specific field */
   position?: SheetHeaderControlPosition;
+  onClick?: (event: PointerEvent) => void;
 }
 
 export interface ApplicationConstructorParams {

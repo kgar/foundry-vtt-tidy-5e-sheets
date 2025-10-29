@@ -103,7 +103,9 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
       }),
     });
 
-    const controls = [...sheet.getAllHeaderControls()].sort((l, r) =>
+    const controls = [...sheet._headerControlButtons('all')];
+
+    controls.sort((l, r) =>
       FoundryAdapter.localize(l.label ?? '').localeCompare(
         FoundryAdapter.localize(r.label ?? ''),
         game.i18n.lang

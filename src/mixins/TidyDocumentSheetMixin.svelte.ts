@@ -14,7 +14,7 @@ import type {
   DocumentSheetV2Context,
   Tab,
 } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import {
   CustomContentRendererV2,
@@ -31,7 +31,6 @@ import type {
 import { coalesce } from 'src/utils/formatting';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import {
-  createHeaderButton,
   insertHeaderButton,
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
@@ -369,13 +368,9 @@ export function TidyExtensibleDocumentSheetMixin<
       removeTidyHeaderButtons(this.element);
 
       // Add header bar controls
-      this._getVisibleHeaderControlsForPosition('header').forEach((x) =>
-        insertHeaderButton(
-          this,
-          this.element,
-          createHeaderButton(x.label, x.action ?? '', x.icon)
-        )
-      );
+      for (const c of this._headerControlButtons('header')) {
+        insertHeaderButton(this, this.element, c);
+      }
 
       // For whatever reason, application v2 titles don't update themselves on _updateFrame without an implementing class specifiying window settings.
       FoundryAdapter.mergeObject(options, {
@@ -806,40 +801,47 @@ export function TidyExtensibleDocumentSheetMixin<
       };
     }
 
-    getAllHeaderControls(): ApplicationHeaderControlsEntry[] {
-      return this.options.window.controls?.slice() ?? [];
-    }
-
     /**
-     * Configure the array of header control menu options
+     * Get visible header control buttons from sheet options and hook subscribers.
+     * The header position is defaulted to 'menu' because the App V2 framework
+     * is calling this generator with no parameters in order to populate
+     * the header menu.
+     * Header controls are deduplicated by label.
+     * @param position the desired header position. (default: 'menu')
      */
-    _getHeaderControls() {
-      return this._getVisibleHeaderControlsForPosition('menu');
+    *_headerControlButtons(
+      position: SheetHeaderControlPosition | 'all' = 'menu'
+    ) {
+      const controls = new Map<
+        string,
+        ApplicationHeaderControlsEntry | CustomHeaderControlsEntry
+      >();
+
+      // Eliminate duplicates first
+      for (const c of super._headerControlButtons()) {
+        controls.set(c.label, c);
+      }
+
+      // Then, filter on position
+      for (const c of controls.values()) {
+        if (
+          position === 'all' ||
+          this._headerControlIsConfiguredForPosition(c, position)
+        ) {
+          yield c;
+        }
+      }
     }
 
-    _getVisibleHeaderControlsForPosition(
-      position: SheetHeaderControlPosition
-    ): CustomHeaderControlsEntry[] {
-      const controls = super._getHeaderControls();
-      return controls.filter((c: CustomHeaderControlsEntry) => {
-        try {
-          const visible =
-            typeof c.visible !== 'function' || c.visible.call(this);
-
-          const configuredForThisPosition =
-            this._headerControlSettings.get(c.label) === position ||
-            (!this._headerControlSettings.has(c.label) &&
-              coalesce(c.position, 'menu') === position);
-
-          return visible && configuredForThisPosition;
-        } catch (e) {
-          error('Failed to get custom control', false, {
-            control: c,
-            error: e,
-          });
-          return false;
-        }
-      });
+    private _headerControlIsConfiguredForPosition(
+      c: CustomHeaderControlsEntry,
+      position: string
+    ) {
+      return (
+        this._headerControlSettings.get(c.label) === position ||
+        (!this._headerControlSettings.has(c.label) &&
+          coalesce(c.position, 'menu') === position)
+      );
     }
 
     /* -------------------------------------------- */
