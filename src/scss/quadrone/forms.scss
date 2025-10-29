@@ -259,8 +259,9 @@
     }
 
     &:not(.label-top) {
-      label {
-        // margin-inline-start: 0.25rem;
+      >label {
+        align-self: flex-start;
+        line-height: var(--t5e-field-size-default);
       }
     }
 

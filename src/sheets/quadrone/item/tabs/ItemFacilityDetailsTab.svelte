@@ -238,7 +238,7 @@
             <div class="details flexrow">
               <img src={context.craft.img} alt={context.craft.name} />
               {@html context.craft.contentLink}
-              <div class="list-controls flexrow">
+              <div class="list-controls flexrow flexshrink">
                 <button
                   type="button"
                   class="button button-borderless button-icon-only flexshrink"
