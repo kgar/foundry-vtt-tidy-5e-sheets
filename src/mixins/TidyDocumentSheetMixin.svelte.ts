@@ -38,6 +38,7 @@ import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { mapGetOrInsert } from 'src/utils/map';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -720,11 +721,6 @@ export function TidyExtensibleDocumentSheetMixin<
         );
 
         updatedOptions.window.controls.forEach((c) => {
-          if (this._headerControlSettings.has(c.label)) {
-            c.position = this._headerControlSettings.get(c.label);
-            return;
-          }
-
           if (
             c.action === 'configureToken' ||
             c.action === 'configurePrototypeToken'
@@ -801,30 +797,49 @@ export function TidyExtensibleDocumentSheetMixin<
       };
     }
 
+    getAllHeaderControlButtons() {
+      const uniqueControls = new Map<string, ApplicationHeaderControlsEntry>();
+
+      this._doEvent(this._getHeaderControls, {
+        async: false,
+        debugText: 'Header Control Buttons',
+        hookName: 'getHeaderControls',
+        hookResponse: true,
+      }).forEach((c: ApplicationHeaderControlsEntry) =>
+        mapGetOrInsert(uniqueControls, c.label, c)
+      );
+
+      // Some controls, such as Portrait Artwork, do not show when calling the event.
+      this.options.window.controls?.forEach((c: ApplicationHeaderControlsEntry) =>
+        mapGetOrInsert(uniqueControls, c.label, c)
+      );
+
+      return [...uniqueControls.values()];
+    }
+
     /**
      * Get visible header control buttons from sheet options and hook subscribers.
      * The header position is defaulted to 'menu' because the App V2 framework
      * is calling this generator with no parameters in order to populate
      * the header menu.
-     * Header controls are deduplicated by label.
+     * Header controls are deduplicated by label, preferring Tidy registrations,
+     * then window controls, then hook subscribers.
      * @param position the desired header position. (default: 'menu')
      */
-    *_headerControlButtons(
-      position: SheetHeaderControlPosition | 'all' = 'menu'
-    ) {
-      const controls = new Map<string, ApplicationHeaderControlsEntry>(
-        super
-          ._headerControlButtons()
-          .map((c: ApplicationHeaderControlsEntry) => [c.label, c])
-      );
+    *_headerControlButtons(position: SheetHeaderControlPosition = 'menu') {
+      const uniqueControls = new Set<string>();
 
-      yield* controls
-        .values()
-        .filter(
-          (c) =>
-            position === 'all' ||
-            this._headerControlIsConfiguredForPosition(c, position)
-        );
+      for (const c of super._headerControlButtons()) {
+        if (uniqueControls.has(c.label)) {
+          continue;
+        }
+
+        uniqueControls.add(c.label);
+
+        if (this._headerControlIsConfiguredForPosition(c, position)) {
+          yield c;
+        }
+      }
     }
 
     private _headerControlIsConfiguredForPosition(

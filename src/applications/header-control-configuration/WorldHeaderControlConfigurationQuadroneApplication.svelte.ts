@@ -103,7 +103,7 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
       }),
     });
 
-    const controls = [...sheet._headerControlButtons('all')];
+    const controls = sheet.getAllHeaderControlButtons();
 
     controls.sort((l, r) =>
       FoundryAdapter.localize(l.label ?? '').localeCompare(
