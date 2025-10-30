@@ -25,6 +25,7 @@
     <FormGroup
       field={context.fields.uses.fields.spent}
       label="DND5E.Spent"
+      document={context.document}
       labelFor="{appId}-uses-spent"
       config={{
         id: `${appId}-uses-spent`,
@@ -35,6 +36,7 @@
     <FormGroup
       field={context.fields.uses.fields.max}
       label="DND5E.Max"
+      document={context.document}
       labelFor="{appId}-uses-max"
       config={{
         id: `${appId}-uses-max`,

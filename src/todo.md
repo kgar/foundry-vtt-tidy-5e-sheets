@@ -2,6 +2,11 @@
 
 ### Short List
 
+- [ ] Character Sheet - Sheet tab upgrade
+  - [ ] Add preference / flag: "Auto-populate Items"
+  - [ ] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
+  - [ ] Ensure column loadout for each section is based on whether the items are of a contiguous type or of mixed company
+- [ ] 
 - [ ] Create multi-select replacement
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists

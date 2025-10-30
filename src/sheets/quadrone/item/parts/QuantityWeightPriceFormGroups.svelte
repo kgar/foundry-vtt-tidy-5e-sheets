@@ -1,6 +1,5 @@
 <script lang="ts">
   import FormGroup from 'src/components/form-group/FormGroup.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
 
   let context = $derived(getItemSheetContextQuadrone());
