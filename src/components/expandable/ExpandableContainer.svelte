@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onMount, type Snippet } from 'svelte';
+  import { EventHelper } from 'src/utils/events';
+  import { onMount, untrack, type Snippet } from 'svelte';
   import type { HTMLAttributes } from 'svelte/elements';
 
   type Props = {
@@ -20,7 +21,7 @@
   let overflowYHidden = $state(!expanded);
   let expandableContainer: HTMLElement;
 
-  let renderContents = $state(expanded);
+  let renderContents = $state<boolean>(expanded);
 
   onMount(() => {
     const controller = new AbortController();
@@ -76,7 +77,17 @@
   {...rest}
 >
   {#if alwaysRenderWrapper || renderContents}
-    <div role="presentation" class="expandable-child-animation-wrapper">
+    <div
+      role="presentation"
+      class="expandable-child-animation-wrapper"
+      {@attach () => {
+        untrack(() => {
+          if (!alwaysRenderWrapper && expandableContainer) {
+            EventHelper.triggerDynamicContentRenderedEvent(expandableContainer);
+          }
+        });
+      }}
+    >
       {@render children?.()}
     </div>
   {/if}

@@ -65,7 +65,7 @@
   {...datasetAttributes}
 >
   {@render header?.(expanded)}
-  <ExpandableContainer {expanded}>
+  <ExpandableContainer {expanded} alwaysRenderWrapper={false}>
     <div class="item-table-body">
       {@render body?.()}
     </div>

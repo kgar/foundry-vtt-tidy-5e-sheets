@@ -85,6 +85,7 @@
 <ExpandableContainer
   expanded={toggleServiceMap.get(tabId)?.has(container.id) === true}
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
+  alwaysRenderWrapper={false}
 >
   <div class="inline-content-view filigree-guideline-and-contents full-height">
     <div
