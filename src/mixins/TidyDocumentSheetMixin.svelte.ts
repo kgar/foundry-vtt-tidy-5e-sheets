@@ -38,7 +38,6 @@ import { CONSTANTS } from 'src/constants';
 import { DragAndDropMixin, type DropEffectValue } from './DragAndDropBaseMixin';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import { mapGetOrInsert } from 'src/utils/map';
 
 export type TidyDocumentSheetRenderOptions = ApplicationRenderOptions & {
   mode?: number;
@@ -805,13 +804,15 @@ export function TidyExtensibleDocumentSheetMixin<
         debugText: 'Header Control Buttons',
         hookName: 'getHeaderControls',
         hookResponse: true,
-      }).forEach((c: ApplicationHeaderControlsEntry) =>
-        mapGetOrInsert(uniqueControls, c.label, c)
+      }).forEach(
+        (c: ApplicationHeaderControlsEntry) =>
+          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c)
       );
 
       // Some controls, such as Portrait Artwork, do not show when calling the event.
-      this.options.window.controls?.forEach((c: ApplicationHeaderControlsEntry) =>
-        mapGetOrInsert(uniqueControls, c.label, c)
+      this.options.window.controls?.forEach(
+        (c: ApplicationHeaderControlsEntry) =>
+          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c)
       );
 
       return [...uniqueControls.values()];
