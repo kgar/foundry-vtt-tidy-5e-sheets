@@ -2,11 +2,15 @@
 
 ### Short List
 
+- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
+  - [ ] Identify all resize observers which can be removed.
+  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
 - [ ] Character Sheet - Sheet tab upgrade
   - [ ] Add preference / flag: "Auto-populate Items"
   - [ ] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
   - [ ] Ensure column loadout for each section is based on whether the items are of a contiguous type or of mixed company
-- [ ] 
+- [ ] Implement "Auto-populate Items" unchecked
+- [ ] Implement "Organize Items by Origin Sections" and alternating column loadout
 - [ ] Create multi-select replacement
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
@@ -48,14 +52,9 @@
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
-- [ ] Create attachment for inlineWidth observer so that a callback can supply the inline width for the caller to react to. We can take the width and update a stateful value that is also included in context, so that all descendents have access to the inline width.
-  - [ ] Identify all resize observers which can be removed.
-  - [ ] Propagate it to all locations where relevant. Namely, each instance of TabContent should track its inline width. This pays dividends.
-  - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
 - [ ] disable all roll buttons when in observer or locked compendium view. Leverage the `canUse` helper. <https://discord.com/channels/@me/1243307347682529423/1397418208813650091>
   - [ ] Fully remove the short/long rest buttons in the header
   - [ ] ...
-- [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable perforamnce hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. At much as possible needs to be moved to
 - [ ] Suggestion: Hide the Add to Sheet Tab button when the sheet tab is hidden.
   - [ ] Actor Sheet base - add abstract function `getSelectedTabIds()`; all callers must return the effective list of selected tab IDs. If the flag is nil, then return the default tab ID list. This will side-step any need for major refactors
     - [ ] Then add `isUsingActionsTab()`, which leverages `getSelectedTabIds()` and returns whether the actions tab ID is included.
