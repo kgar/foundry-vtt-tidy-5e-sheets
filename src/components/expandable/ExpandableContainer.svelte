@@ -24,6 +24,7 @@
       },
       {
         signal: controller.signal,
+        passive: true,
       },
     );
 
@@ -36,6 +37,7 @@
       },
       {
         signal: controller.signal,
+        passive: true,
       },
     );
 

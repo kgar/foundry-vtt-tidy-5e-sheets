@@ -5,6 +5,7 @@
 - [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
   - [ ] Identify all resize observers which can be removed.
   - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
+- [ ] Try revisiting the Expandable containers. Is there a more performant way that doesn't involve hooking into transition events?
 - [ ] Character Sheet - Sheet tab upgrade
   - [ ] Add preference / flag: "Auto-populate Items"
   - [ ] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
