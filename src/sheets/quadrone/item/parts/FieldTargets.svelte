@@ -74,6 +74,7 @@
       label="DND5E.TARGET.FIELDS.target.affects.choice.label"
       labelFor="{appId}-target-affects-choice"
       hint="DND5E.TARGET.FIELDS.target.affects.choice.hint"
+      document={context.document}
       field={context.fields.target.fields.affects.fields.choice}
       config={{
         id: `${appId}-target-affects-choice`,

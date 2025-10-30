@@ -18,13 +18,13 @@
   </legend>
   <FormGroup
     labelFor="{appId}-identifier"
+    document={context.document}
     field={context.fields.identifier}
     config={{
       value: context.source.identifier,
       placeholder: context.item.identifier,
       id: `${appId}-identifier`,
     }}
-    document={context.document}
     hint="DND5E.IdentifierError"
   />
 </fieldset>
