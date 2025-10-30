@@ -1,16 +1,26 @@
 <script lang="ts">
   import { onMount, type Snippet } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  interface Props {
+  type Props = {
     expanded?: boolean;
     children?: Snippet;
-    [key: string]: any;
-  }
+    /** Even when collapsed, render the wrapper and its children. */
+    alwaysRenderWrapper?: boolean;
+  } & HTMLAttributes<HTMLElement>;
 
-  let { expanded = true, children, ...rest }: Props = $props();
+  let {
+    expanded = true,
+    children,
+    class: cssClass,
+    alwaysRenderWrapper = true,
+    ...rest
+  }: Props = $props();
 
   let overflowYHidden = $state(!expanded);
   let expandableContainer: HTMLElement;
+
+  let renderContents = $state(expanded);
 
   onMount(() => {
     const controller = new AbortController();
@@ -20,6 +30,10 @@
       (ev) => {
         if (ev.target === expandableContainer) {
           overflowYHidden = true;
+
+          if (expanded) {
+            renderContents = true;
+          }
         }
       },
       {
@@ -33,6 +47,7 @@
       (ev) => {
         if (ev.target === expandableContainer) {
           overflowYHidden = !expanded;
+          renderContents = expanded;
         }
       },
       {
@@ -49,14 +64,22 @@
 
 <div
   bind:this={expandableContainer}
-  class="expandable {rest.class ?? ''}"
-  class:expanded
-  class:overflow-y-hidden={overflowYHidden}
+  class={[
+    'expandable',
+    cssClass,
+    {
+      expanded,
+      'overflow-y-hidden': overflowYHidden,
+    },
+  ]}
   role="presentation"
+  {...rest}
 >
-  <div role="presentation" class="expandable-child-animation-wrapper">
-    {@render children?.()}
-  </div>
+  {#if alwaysRenderWrapper || renderContents}
+    <div role="presentation" class="expandable-child-animation-wrapper">
+      {@render children?.()}
+    </div>
+  {/if}
 </div>
 
 <style lang="scss">
