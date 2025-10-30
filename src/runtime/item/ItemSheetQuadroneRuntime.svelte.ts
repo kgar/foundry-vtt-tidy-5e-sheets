@@ -613,12 +613,7 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       CONSTANTS.ITEM_TYPE_LOOT,
       {
         component: LootSheet,
-        defaultTabs: [
-          CONSTANTS.TAB_DESCRIPTION,
-          CONSTANTS.TAB_ITEM_DETAILS,
-          CONSTANTS.TAB_ITEM_ACTIVITIES,
-          CONSTANTS.TAB_EFFECTS,
-        ],
+        defaultTabs: [CONSTANTS.TAB_DESCRIPTION, CONSTANTS.TAB_ITEM_DETAILS],
       },
     ],
     [
@@ -671,7 +666,12 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
       CONSTANTS.ITEM_TYPE_WEAPON,
       {
         component: WeaponSheet,
-        defaultTabs: [CONSTANTS.TAB_DESCRIPTION, CONSTANTS.TAB_ITEM_DETAILS],
+        defaultTabs: [
+          CONSTANTS.TAB_DESCRIPTION,
+          CONSTANTS.TAB_ITEM_DETAILS,
+          CONSTANTS.TAB_ITEM_ACTIVITIES,
+          CONSTANTS.TAB_EFFECTS,
+        ],
       },
     ],
   ]
