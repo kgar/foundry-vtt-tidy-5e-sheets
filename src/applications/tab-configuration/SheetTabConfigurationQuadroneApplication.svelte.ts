@@ -35,7 +35,7 @@ type SetTabConfigFn = (
 type GetTabContextFn = (
   doc: any,
   setting: SheetTabConfiguration
-) => TabConfigContextEntry | undefined;
+) => TabConfigContextEntry;
 
 export type SheetTabConfigurationQuadroneApplicationConfiguration =
   DocumentSheetApplicationConfiguration & {
@@ -76,7 +76,6 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
   _setTabConfig: SetTabConfigFn;
   _getTabContext: GetTabContextFn;
   _inclusionTabTitle: string;
-  _visibilityTabTitle: string;
 
   constructor(options: SheetTabConfigurationQuadroneApplicationConfiguration) {
     super(options);
@@ -95,7 +94,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
     this._getTabContext =
       options.customTabConfigProvider?.getTabContext ??
-      SheetTabConfigurationQuadroneApplication._getConfigFromRuntime;
+      this._getConfigFromRuntime;
 
     this._inclusionTabTitle =
       options.title ??
@@ -104,8 +103,6 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
           `TYPES.${options.document.documentName}.${options.document.type}`
         ),
       });
-
-    this._visibilityTabTitle = 'TODO';
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
@@ -174,7 +171,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     return context;
   }
 
-  static _getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
+  _getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
       if (runtime) {
@@ -185,6 +182,8 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
       return getItemTabContext(doc.type, setting);
     }
+
+    throw new Error('Document type not supported');
   }
 
   async save() {
