@@ -15,6 +15,7 @@
 - [ ] Ensure context menu options are always available regardless of lock state
 - [ ] When unlocked, show section rename control in table head
 - [ ] Review the section command API to determine if there's more information that can be included in the enabled callback
+- [ ] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
 
 ### Short List
 
