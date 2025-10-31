@@ -89,7 +89,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
                 doc.type,
                 CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
                 setting,
-                CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+                CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds(),
+                SettingsProvider.settings.tabConfiguration.get()?.[
+                  CONSTANTS.DOCUMENT_NAME_ACTOR
+                ]?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR]?.selected
               );
             },
           },
@@ -883,7 +886,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
     const tabIds: string[] = [CONSTANTS.TAB_ACTOR_ACTIONS];
-    
+
     const originTab = Inventory.isItemInventoryType(sheetPin)
       ? CONSTANTS.TAB_ACTOR_INVENTORY
       : sheetPin.type === CONSTANTS.ITEM_TYPE_SPELL

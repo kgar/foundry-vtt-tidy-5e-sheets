@@ -60,6 +60,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     entry: {
       allTabs: {},
       defaultSelected: [],
+      worldDefaultSelected: [],
       defaultUnselected: [],
       documentName: '',
       documentType: '',
@@ -194,8 +195,8 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
   async apply() {
     let curr = this._config.entry;
     let selected =
-      curr.defaultSelected.length === curr.selected.length &&
-      curr.defaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
+      curr.worldDefaultSelected.length === curr.selected.length &&
+      curr.worldDefaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
         ? []
         : curr.selected.map((s) => s.id);
 

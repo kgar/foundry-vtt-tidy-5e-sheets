@@ -17,9 +17,11 @@ export function getItemTabContext(
 ) {
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
 
-  let defaultSelectedIds =
-    getWorldDefaultSelectedTabId(documentName, type) ??
-    ItemSheetQuadroneRuntime.getDefaultTabIds(type);
+  let defaultSelectedIds = ItemSheetQuadroneRuntime.getDefaultTabIds(type);
+  let worldDefaultSelectedIds = getWorldDefaultSelectedTabId(
+    documentName,
+    type
+  ) ?? [...defaultSelectedIds];
   let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
 
   return buildTabConfigContextEntry(
@@ -27,7 +29,8 @@ export function getItemTabContext(
     type,
     allRegisteredTabs,
     settings,
-    defaultSelectedIds
+    defaultSelectedIds,
+    worldDefaultSelectedIds
   );
 }
 
@@ -38,16 +41,19 @@ export function getActorTabContext(
 ): TabConfigContextEntry {
   let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
   const allRegisteredTabs = runtime.getAllRegisteredTabs();
-  let defaultSelectedIds =
-    getWorldDefaultSelectedTabId(documentName, type) ??
-    runtime.getDefaultTabIds();
+  let defaultSelectedIds = runtime.getDefaultTabIds();
+  let worldDefaultSelectedIds = getWorldDefaultSelectedTabId(
+    documentName,
+    type
+  ) ?? [...defaultSelectedIds];
 
   return buildTabConfigContextEntry(
     documentName,
     type,
     allRegisteredTabs,
     settings,
-    defaultSelectedIds
+    defaultSelectedIds,
+    worldDefaultSelectedIds
   );
 }
 
@@ -69,7 +75,8 @@ export function buildTabConfigContextEntry(
   type: string,
   allRegisteredTabs: { id: string; title: CustomTabTitle }[],
   settings: SheetTabConfiguration | undefined | null,
-  defaultSelectedIds: string[]
+  defaultSelectedIds: string[],
+  worldDefaultSelectedIds: string[]
 ): TabConfigContextEntry {
   let configSectionTitle = FoundryAdapter.localize(
     `TYPES.${documentName}.${type}`
@@ -96,18 +103,22 @@ export function buildTabConfigContextEntry(
   let selected = mapTabIdsToOptions(allTabs, effectiveSelections);
 
   let defaultSelected = mapTabIdsToOptions(allTabs, defaultSelectedIds);
+  let worldDefaultSelected = mapTabIdsToOptions(
+    allTabs,
+    worldDefaultSelectedIds
+  );
 
   if (!selected.length) {
     selected = [...defaultSelected];
   }
 
-  const visibilityLevels: VisibilityLevelConfig[] = Object.values(allTabs).map(
-    (t) => ({
+  const visibilityLevels: VisibilityLevelConfig[] = Object.values(allTabs)
+    .map((t) => ({
       id: t.id,
       title: t.title,
       visibilityLevel: settings?.visibilityLevels[t.id] ?? null,
-    })
-  ).sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
 
   return {
     documentName: documentName,
@@ -115,6 +126,7 @@ export function buildTabConfigContextEntry(
     title: configSectionTitle,
     allTabs,
     defaultSelected,
+    worldDefaultSelected,
     defaultUnselected: getUnselectedTabs(allTabs, defaultSelected),
     selected: selected,
     unselected: getUnselectedTabs(allTabs, selected),

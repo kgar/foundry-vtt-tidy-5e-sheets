@@ -3,7 +3,7 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import WorldTabConfigurationQuadrone from './WorldTabConfigurationQuadrone.svelte';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
@@ -81,12 +81,18 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       )
     );
 
+    const defaultSidebarTabIds =
+      CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds();
     const characterSidebarContext = buildTabConfigContextEntry(
       CONSTANTS.DOCUMENT_NAME_ACTOR,
       CONSTANTS.SHEET_TYPE_CHARACTER,
       CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
       actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
-      CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+      defaultSidebarTabIds,
+      SettingsProvider.settings.tabConfiguration.get()?.[
+        CONSTANTS.DOCUMENT_NAME_ACTOR
+      ]?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR]?.selected ??
+        defaultSidebarTabIds
     );
 
     characterSidebarContext.title = FoundryAdapter.localize(
