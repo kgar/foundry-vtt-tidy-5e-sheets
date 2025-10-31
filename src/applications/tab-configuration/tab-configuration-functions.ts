@@ -13,15 +13,17 @@ import type { CustomTabTitle } from 'src/api';
 
 export function getItemTabContext(
   type: string,
-  settings: SheetTabConfiguration | undefined | null
+  settings: SheetTabConfiguration | undefined | null,
+  useWorldSettings: boolean
 ) {
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
 
   let defaultSelectedIds = ItemSheetQuadroneRuntime.getDefaultTabIds(type);
-  let worldDefaultSelectedIds = getWorldDefaultSelectedTabId(
-    documentName,
-    type
-  ) ?? [...defaultSelectedIds];
+  let worldDefaultSelectedIds = useWorldSettings
+    ? getWorldDefaultSelectedTabIds(documentName, type) ?? [
+        ...defaultSelectedIds,
+      ]
+    : undefined;
   let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
 
   return buildTabConfigContextEntry(
@@ -37,15 +39,18 @@ export function getItemTabContext(
 export function getActorTabContext(
   runtime: ActorSheetQuadroneRuntime<any>,
   type: string,
-  settings: SheetTabConfiguration | undefined | null
+  settings: SheetTabConfiguration | undefined | null,
+  useWorldSettings: boolean,
+  docTypeKeyOverride?: string
 ): TabConfigContextEntry {
   let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
   const allRegisteredTabs = runtime.getAllRegisteredTabs();
   let defaultSelectedIds = runtime.getDefaultTabIds();
-  let worldDefaultSelectedIds = getWorldDefaultSelectedTabId(
-    documentName,
-    type
-  ) ?? [...defaultSelectedIds];
+  let worldDefaultSelectedIds = useWorldSettings
+    ? getWorldDefaultSelectedTabIds(documentName, type, docTypeKeyOverride) ?? [
+        ...defaultSelectedIds,
+      ]
+    : undefined;
 
   return buildTabConfigContextEntry(
     documentName,
@@ -53,17 +58,20 @@ export function getActorTabContext(
     allRegisteredTabs,
     settings,
     defaultSelectedIds,
-    worldDefaultSelectedIds
+    worldDefaultSelectedIds,
+    docTypeKeyOverride
   );
 }
 
-function getWorldDefaultSelectedTabId(
+function getWorldDefaultSelectedTabIds(
   documentName: string,
-  type: string
+  type: string,
+  typeOverride?: string
 ): string[] | undefined {
   const selected =
-    SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[type]
-      ?.selected;
+    SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[
+      typeOverride ?? type
+    ]?.selected;
 
   if (selected?.length > 0) {
     return selected;
@@ -76,7 +84,8 @@ export function buildTabConfigContextEntry(
   allRegisteredTabs: { id: string; title: CustomTabTitle }[],
   settings: SheetTabConfiguration | undefined | null,
   defaultSelectedIds: string[],
-  worldDefaultSelectedIds: string[]
+  worldDefaultSelectedIds?: string[],
+  docTypeKeyOverride?: string
 ): TabConfigContextEntry {
   let configSectionTitle = FoundryAdapter.localize(
     `TYPES.${documentName}.${type}`
@@ -103,10 +112,17 @@ export function buildTabConfigContextEntry(
   let selected = mapTabIdsToOptions(allTabs, effectiveSelections);
 
   let defaultSelected = mapTabIdsToOptions(allTabs, defaultSelectedIds);
-  let worldDefaultSelected = mapTabIdsToOptions(
-    allTabs,
-    worldDefaultSelectedIds
-  );
+
+  if (worldDefaultSelectedIds) {
+    let worldDefaultSelected = mapTabIdsToOptions(
+      allTabs,
+      worldDefaultSelectedIds
+    );
+
+    if (worldDefaultSelected.length) {
+      defaultSelected = worldDefaultSelected;
+    }
+  }
 
   if (!selected.length) {
     selected = [...defaultSelected];
@@ -126,11 +142,11 @@ export function buildTabConfigContextEntry(
     title: configSectionTitle,
     allTabs,
     defaultSelected,
-    worldDefaultSelected,
     defaultUnselected: getUnselectedTabs(allTabs, defaultSelected),
     selected: selected,
     unselected: getUnselectedTabs(allTabs, selected),
     visibilityLevels,
+    docTypeKeyOverride,
   };
 }
 

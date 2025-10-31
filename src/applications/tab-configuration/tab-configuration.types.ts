@@ -12,7 +12,6 @@ export type TabConfigContextEntry = {
   documentType: string;
   title: string;
   allTabs: Record<string, ConfigTabInfo>;
-  worldDefaultSelected: ConfigTabInfo[];
   defaultSelected: ConfigTabInfo[];
   defaultUnselected: ConfigTabInfo[];
   selected: ConfigTabInfo[];
