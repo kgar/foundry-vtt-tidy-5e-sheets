@@ -1,5 +1,21 @@
 ## kgar To Do
 
+### 1422 To Dos
+
+- [ ] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
+- [ ] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
+- [ ] Update sheet header commands column to leverage API and place options in reverse order, favoring tidy default content on the far right. Flex row-reverse might suffice for this.
+- [ ] Handle overflow control with a 3-dots context menu; for simplicity, just show all options, even the non-overflow ones
+  - [ ] Leverage knowledge of column width to control when the menu appears, replacing the last control on the far left
+- [ ] Add context menu support to the section header at large with same behavior
+- [ ] Ensure Quick Insert shows magnifying glass per configuration
+- [ ] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
+- [ ] Implement section rename command in context menu 
+- [ ] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
+- [ ] Ensure context menu options are always available regardless of lock state
+- [ ] When unlocked, show section rename control in table head
+- [ ] Review the section command API to determine if there's more information that can be included in the enabled callback
+
 ### Short List
 
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
