@@ -85,7 +85,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
     const characterSidebarContext = getActorTabContext(
       CharacterSheetQuadroneSidebarRuntime,
       CONSTANTS.SHEET_TYPE_CHARACTER,
-      actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER],
+      actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
       false,
       CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
     );
