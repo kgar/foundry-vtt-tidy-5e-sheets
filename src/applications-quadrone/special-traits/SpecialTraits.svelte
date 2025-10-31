@@ -53,16 +53,20 @@
         {section.label}
         <tidy-gold-header-underline></tidy-gold-header-underline>
       </legend>
-      {#each section.fields as field}
-        {@const isCheckbox = field instanceof foundry.data.fields.BooleanField}
+      {#each section.fields as fieldContext}
+        {@const isCheckbox =
+          fieldContext instanceof foundry.data.fields.BooleanField}
+        {@const id = `${context.actor.id}-${fieldContext.name.slugify().replaceAll('.', '-')}`}
         <FormGroup
-          rootId={idPrefix}
+          labelFor={id}
           document={context.actor}
-          field={field.field}
-          value={field.value}
-          layout="quadrone"
+          field={fieldContext.field}
+          config={{
+            id,
+            value: fieldContext.value,
+            name: fieldContext.name,
+          }}
           localize={true}
-          name={field.name}
           groupClasses={{ slim: isCheckbox }}
           disableOverriddenInputs
         />

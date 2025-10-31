@@ -26,7 +26,7 @@ import type {
   EncounterPlaceholder,
   SheetPinFlag,
 } from 'src/foundry/TidyFlags.types';
-import type { DataField, DataSchema, SchemaField } from 'foundry.data.fields';
+import type { DataField } from 'foundry.data.fields';
 import type { Ability } from './dnd5e.actor5e.types';
 import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 import type { Tidy5eCharacterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
@@ -666,7 +666,8 @@ export type DocumentSheetV2Context = {
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
-  fields: Record<string, SchemaField>;
+  /** The data schema of the document. */
+  fields: any; // One day, maybe we can have types. Doesn't seem within reach right now.
   rootId: string;
   source: Record<string, any>;
   /**
@@ -984,7 +985,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   customContent: CustomContent[];
   elements: unknown;
   enableXp: boolean;
-  fields: DataSchema;
+  fields: any; // One day, maybe we can have types. Doesn't seem within reach right now.
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
   currentTabId: string;

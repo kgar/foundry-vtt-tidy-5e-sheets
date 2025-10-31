@@ -49,7 +49,7 @@
     event: MouseEvent & { currentTarget: HTMLElement },
     tab: TabStripInfo,
   ) {
-    if (settings.value.truesight) {
+    if (settings.value?.truesight) {
       if (extraTabs && event.ctrlKey && selectedTabId !== tab.id) {
         extraTabs.add(tab.id);
         return;
@@ -160,7 +160,9 @@
         <span class="tab-title">{title}</span>
 
         {#if itemCount > 0}
-          <span class="tab-title-count font-data-medium theme-dark">{itemCount}</span>
+          <span class="tab-title-count font-label-medium theme-dark"
+            >{itemCount}</span
+          >
         {/if}
       </a>
     </svelte:boundary>

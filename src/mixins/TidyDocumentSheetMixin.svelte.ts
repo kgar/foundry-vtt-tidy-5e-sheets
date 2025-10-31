@@ -14,7 +14,7 @@ import type {
   DocumentSheetV2Context,
   Tab,
 } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
 import {
   CustomContentRendererV2,
@@ -31,7 +31,6 @@ import type {
 import { coalesce } from 'src/utils/formatting';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import {
-  createHeaderButton,
   insertHeaderButton,
   removeTidyHeaderButtons,
 } from 'src/features/sheet-header-controls/header-controls';
@@ -60,6 +59,8 @@ export function TidyExtensibleDocumentSheetMixin<
   }>
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
+    // TODO: Remove _fixedMode when classic sheets are gone
+    _fixedMode: number | undefined;
     _mode = $state<number | undefined>();
     _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
 
@@ -68,6 +69,9 @@ export function TidyExtensibleDocumentSheetMixin<
     }
 
     static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
+      form: {
+        submitOnChange: true,
+      },
       window: {
         controls: [],
       },
@@ -127,7 +131,14 @@ export function TidyExtensibleDocumentSheetMixin<
     };
 
     get sheetMode() {
-      return this._mode;
+      return this._fixedMode ?? this._mode;
+    }
+
+    set sheetMode(value) {
+      if (this._fixedMode !== undefined) {
+        return;
+      }
+      this._mode = value;
     }
 
     /**
@@ -139,8 +150,6 @@ export function TidyExtensibleDocumentSheetMixin<
       '[data-tidy-track-scroll-y]',
     ];
 
-    #customHTMLTags: string[] = ['PROSE-MIRROR'];
-
     _customContentRenderer: CustomContentRendererV2 =
       new CustomContentRendererV2();
 
@@ -148,9 +157,7 @@ export function TidyExtensibleDocumentSheetMixin<
 
     #focusedInputSelector: string | undefined = '';
 
-    _onChangeForm(formConfig: unknown, event: any) {
-      super._onChangeForm(formConfig, event);
-
+    async _onChangeForm(formConfig: unknown, event: any) {
       if (event.type !== 'change') {
         return;
       }
@@ -164,12 +171,23 @@ export function TidyExtensibleDocumentSheetMixin<
         return;
       }
 
-      if (!this.#customHTMLTags.includes(target.tagName)) {
-        return;
-      }
+      try {
+        if (event.target.matches('[data-name]')) {
+          await this._onEmbeddedDocumentInputChange(event);
+          return;
+        }
 
-      const value = target._getValue();
-      this.document.update({ [target.name]: value });
+        const isSelfSufficientInput = !event.target.name;
+        if (isSelfSufficientInput) {
+          return;
+        }
+
+        super._onChangeForm(formConfig, event);
+      } catch (e: any) {
+        Object.values(e.getAllFailures()).forEach((failure: any) =>
+          ui.notifications.error(failure.message)
+        );
+      }
     }
 
     async #persistSheetPositionPreferences(position?: ApplicationPosition) {
@@ -224,7 +242,7 @@ export function TidyExtensibleDocumentSheetMixin<
         mode = CONSTANTS.SHEET_MODE_EDIT;
       }
 
-      this._mode = mode ?? this._mode ?? CONSTANTS.SHEET_MODE_PLAY;
+      this.sheetMode = mode ?? this.sheetMode ?? CONSTANTS.SHEET_MODE_PLAY;
     }
 
     async _prepareContext(
@@ -327,29 +345,6 @@ export function TidyExtensibleDocumentSheetMixin<
         );
 
         this._applySheetModeClass(element);
-
-        // Support injected named inputs
-        element.addEventListener(
-          'change',
-          async (ev: InputEvent & { target: HTMLInputElement }) => {
-            if (
-              ev.target.matches('input[name], textarea[name], select[name]') &&
-              // Supports radio button group opt-out of this feature
-              !ev.target.hasAttribute('data-skip-submit')
-            ) {
-              await this.submit();
-              return;
-            }
-
-            if (
-              ev.target.matches(
-                'input[data-name], textarea[data-name], select[data-name]'
-              )
-            ) {
-              await this._submitEmbeddedDocumentChange(ev);
-            }
-          }
-        );
       } catch (e) {
         error(
           'An error occurred while preparing the rendered frame of the application.',
@@ -373,13 +368,9 @@ export function TidyExtensibleDocumentSheetMixin<
       removeTidyHeaderButtons(this.element);
 
       // Add header bar controls
-      this._getVisibleHeaderControlsForPosition('header').forEach((x) =>
-        insertHeaderButton(
-          this,
-          this.element,
-          createHeaderButton(x.label, x.action ?? '', x.icon)
-        )
-      );
+      for (const c of this._headerControlButtons('header')) {
+        insertHeaderButton(this, this.element, c);
+      }
 
       // For whatever reason, application v2 titles don't update themselves on _updateFrame without an implementing class specifiying window settings.
       FoundryAdapter.mergeObject(options, {
@@ -392,23 +383,35 @@ export function TidyExtensibleDocumentSheetMixin<
       super._updateFrame(options);
     }
 
-    async _submitEmbeddedDocumentChange(
+    async _onEmbeddedDocumentInputChange(
       event: InputEvent & { target: HTMLInputElement }
     ) {
       const itemId =
         event.target.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+
+      const item = !!itemId ? await this.getItem(itemId) : null;
+
+      const activityId =
+        event.target.closest<HTMLElement>('[data-activity-id]')?.dataset
+          .activityId;
+
+      const activity = item?.system.activities?.get(activityId);
+
+      if (activity) {
+        return await this._processEmbeddedDocumentChange(event, activity);
+      }
+
       if (itemId) {
-        await this._submitEmbeddedItemChange(event, itemId);
+        return await this._processEmbeddedDocumentChange(event, item);
       }
     }
 
-    async _submitEmbeddedItemChange(
+    private async _processEmbeddedDocumentChange(
       event: InputEvent & { target: HTMLInputElement },
-      itemId: string
+      doc: any
     ) {
       event.stopImmediatePropagation();
 
-      const item = await this.getItem(itemId);
       const field = event.target.getAttribute('data-name')!;
 
       let valueToSave: string | number = event.target.value;
@@ -417,7 +420,7 @@ export function TidyExtensibleDocumentSheetMixin<
       if (event.target.matches('[inputmode="numeric"]')) {
         valueToSave = processInputChangeDelta(
           event.target.value,
-          item,
+          doc,
           field
         )?.toString();
       }
@@ -433,13 +436,13 @@ export function TidyExtensibleDocumentSheetMixin<
         const valueAsNumber = Number(valueToSave);
         valueToSave = Math.clamp(valueAsNumber, min, max);
 
-        if (item && !Number.isNaN(valueToSave)) {
+        if (doc && !Number.isNaN(valueToSave)) {
           event.target.value = valueToSave?.toString();
         }
       }
 
       // Save the value to the document, whatever that value ultimately became
-      await item.update({ [field]: valueToSave });
+      await doc.update({ [field]: valueToSave });
     }
 
     getItem(id: string) {
@@ -502,7 +505,7 @@ export function TidyExtensibleDocumentSheetMixin<
      * @protected
      */
     async changeSheetMode(mode: number) {
-      this._mode = mode;
+      this.sheetMode = mode;
       await this.submit();
       this._applySheetModeClass(this.element);
       await this.render();
@@ -514,7 +517,7 @@ export function TidyExtensibleDocumentSheetMixin<
      */
     async toggleSheetMode() {
       const newMode =
-        this._mode === CONSTANTS.SHEET_MODE_PLAY
+        this.sheetMode === CONSTANTS.SHEET_MODE_PLAY
           ? CONSTANTS.SHEET_MODE_EDIT
           : CONSTANTS.SHEET_MODE_PLAY;
 
@@ -672,11 +675,17 @@ export function TidyExtensibleDocumentSheetMixin<
         options
       ) as DocumentSheetConfiguration;
 
-      const effectiveControls = [...(updatedOptions.window?.controls ?? [])];
+      const headerControls = new Map<string, CustomHeaderControlsEntry>();
+
+      [...(updatedOptions.window?.controls ?? [])].forEach((c) =>
+        headerControls.set(c.label, c)
+      );
+
       const effectiveActions = { ...(updatedOptions.actions ?? {}) };
 
       try {
-        const { width, height } = UserSheetPreferencesService.getByType(sheetType);
+        const { width, height } =
+          UserSheetPreferencesService.getByType(sheetType);
 
         const position = (updatedOptions.position ??= {});
 
@@ -692,6 +701,8 @@ export function TidyExtensibleDocumentSheetMixin<
           updatedOptions.document
         );
 
+        customControls.controls.forEach((c) => headerControls.set(c.label, c));
+
         /*
           Rather than update the source object, make a new one and spread the actions across.
           Otherwise, it has a chance of updating DEFAULT_OPTIONS.
@@ -702,21 +713,13 @@ export function TidyExtensibleDocumentSheetMixin<
           ...effectiveActions,
           ...customControls.actions,
         };
-        updatedOptions.window.controls = [
-          ...effectiveControls,
-          ...customControls.controls,
-        ];
+        updatedOptions.window.controls = [...headerControls.values()];
 
         this._headerControlSettings = this._getHeaderControlSettings(
           options.document
         );
 
         updatedOptions.window.controls.forEach((c) => {
-          if (this._headerControlSettings.has(c.label)) {
-            c.position = this._headerControlSettings.get(c.label);
-            return;
-          }
-
           if (
             c.action === 'configureToken' ||
             c.action === 'configurePrototypeToken'
@@ -793,40 +796,62 @@ export function TidyExtensibleDocumentSheetMixin<
       };
     }
 
-    getAllHeaderControls() {
-      return this.options.window.controls?.slice() ?? [];
+    getAllHeaderControlButtons() {
+      const uniqueControls = new Map<string, ApplicationHeaderControlsEntry>();
+
+      this._doEvent(this._getHeaderControls, {
+        async: false,
+        debugText: 'Header Control Buttons',
+        hookName: 'getHeaderControls',
+        hookResponse: true,
+      }).forEach(
+        (c: ApplicationHeaderControlsEntry) =>
+          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c)
+      );
+
+      // Some controls, such as Portrait Artwork, do not show when calling the event.
+      this.options.window.controls?.forEach(
+        (c: ApplicationHeaderControlsEntry) =>
+          !uniqueControls.has(c.label) && uniqueControls.set(c.label, c)
+      );
+
+      return [...uniqueControls.values()];
     }
 
     /**
-     * Configure the array of header control menu options
+     * Get visible header control buttons from sheet options and hook subscribers.
+     * The header position is defaulted to 'menu' because the App V2 framework
+     * is calling this generator with no parameters in order to populate
+     * the header menu.
+     * Header controls are deduplicated by label, preferring Tidy registrations,
+     * then window controls, then hook subscribers.
+     * @param position the desired header position. (default: 'menu')
      */
-    _getHeaderControls() {
-      return this._getVisibleHeaderControlsForPosition('menu');
+    *_headerControlButtons(position: SheetHeaderControlPosition = 'menu') {
+      const uniqueControls = new Set<string>();
+
+      for (const c of super._headerControlButtons()) {
+        if (uniqueControls.has(c.label)) {
+          continue;
+        }
+
+        uniqueControls.add(c.label);
+
+        if (this._headerControlIsConfiguredForPosition(c, position)) {
+          yield c;
+        }
+      }
     }
 
-    _getVisibleHeaderControlsForPosition(
-      position: SheetHeaderControlPosition
-    ): CustomHeaderControlsEntry[] {
-      const controls = super._getHeaderControls();
-      return controls.filter((c: CustomHeaderControlsEntry) => {
-        try {
-          const visible =
-            typeof c.visible !== 'function' || c.visible.call(this);
-
-          const configuredForThisPosition =
-            this._headerControlSettings.get(c.label) === position ||
-            (!this._headerControlSettings.has(c.label) &&
-              coalesce(c.position, 'menu') === position);
-
-          return visible && configuredForThisPosition;
-        } catch (e) {
-          error('Failed to get custom control', false, {
-            control: c,
-            error: e,
-          });
-          return false;
-        }
-      });
+    private _headerControlIsConfiguredForPosition(
+      c: CustomHeaderControlsEntry,
+      position: string
+    ) {
+      return (
+        this._headerControlSettings.get(c.label) === position ||
+        (!this._headerControlSettings.has(c.label) &&
+          coalesce(c.position, 'menu') === position)
+      );
     }
 
     /* -------------------------------------------- */

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import FormGroup from 'src/components/form-group/FormGroup.svelte';
+  import FormGroupClassic from 'src/components/form-group/FormGroupClassic.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -45,12 +45,11 @@
     >
       <legend>{section.label}</legend>
       {#each section.fields as field}
-        <FormGroup
+        <FormGroupClassic
           rootId={context.rootId}
           document={context.actor}
           field={field.field}
           value={field.value}
-          layout="classic"
           localize={true}
           editable={context.unlocked}
           name={field.name}

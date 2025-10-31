@@ -52,6 +52,8 @@ export class Tidy5eContainerSheetClassic extends TidyExtensibleDocumentSheetMixi
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
+    this._fixedMode = CONSTANTS.SHEET_MODE_EDIT;
+
     this.itemFilterService = new ItemFilterService({}, this.item);
 
     this.sectionExpansionTracker = new ExpansionTracker(

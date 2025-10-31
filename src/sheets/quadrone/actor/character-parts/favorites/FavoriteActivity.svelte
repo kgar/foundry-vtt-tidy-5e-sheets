@@ -38,6 +38,8 @@
 </script>
 
 <div
+  role="button"
+  tabindex="0"
   class="list-entry favorite"
   data-favorite-type="activity"
   data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ACTIVITIES}
@@ -58,8 +60,8 @@
     name={favorite.activity.name}
     {subtitle}
   />
-  <div class="">
-    <div class="primary">
+  <div class="favorite-context stacked">
+    <span class="primary">
       {#if uses.max}
         <span class="inline-uses">
           {#if context.owner}
@@ -104,7 +106,7 @@
           </span>
         </span>
       {:else if save?.dc?.value}
-        <span class="save">
+        <span class="save flexrow">
           <span class="ability font-label-medium color-text-gold-emphasis">
             {save.ability?.size > 1
               ? FoundryAdapter.localize('DND5E.AbbreviationDC')
@@ -117,8 +119,8 @@
           </span>
         </span>
       {/if}
-    </div>
-    <div class="secondary font-default-medium">
+    </span>
+    <span class="secondary font-default-medium">
       {#if range?.value}
         {@const units =
           CONFIG.DND5E.movementUnits[range.units]?.abbreviation ?? range.units}
@@ -143,6 +145,6 @@
           </span>
         </span>
       {/if}
-    </div>
+    </span>
   </div>
 </div>

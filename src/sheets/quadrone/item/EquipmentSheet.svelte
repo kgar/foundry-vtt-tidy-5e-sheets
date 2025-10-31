@@ -24,13 +24,16 @@
   let itemNameEl: HTMLElement | undefined = $state();
 
   let subtitle = $derived(
-    [context.item.system.type?.label, context.labels.armor]
+    [
+      context.item.system.type?.label,
+      context.sheet._shouldShowAc() ? context.labels.armor : null,
+    ]
       .filter((x) => !isNil(x, ''))
       .join(', '),
   );
 
   let armorPills = $derived.by(() => {
-    if (!context.system.isArmor) {
+    if (!context.sheet._shouldShowAc()) {
       return [];
     }
 

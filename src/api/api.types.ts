@@ -505,3 +505,25 @@ export type TabIdDocumentItemTypesParams = {
 export type TabIdDocumentItemTypesOptions = {
   mode: 'merge' | 'override';
 };
+
+/** Additional, optional aspects that can be configured when associating tabs to item subtypes. */
+export type ExistingTabAssociationOptions = {
+  /** 
+   * When associating the tab to the item subtype, also ensure the tab is among the defaults. (default: true)
+   */
+  includeAsDefault?: boolean;
+  tabCondition?: TabEnabledCallbackFunctionOverrideOptions;
+};
+
+/** Options for updating the conditions under which the tab should be shown. */
+export type TabEnabledCallbackFunctionOverrideOptions = {
+  /** A function which returns a boolean `true` or `false` to indicate whether to show the tab */
+  predicate: (context: any) => boolean;
+  /**
+   * The logical handling of your predicate and the original tab's predicate.
+   *   - `"and"`: requires the original tab visibility conditions as well as your additional conditions
+   *   - `"or"`: show the tab when the original tab visibility conditions or your additional conditions are true
+   *   - `"overwrite"`: discard the original tab condition and exclusively use your conditions
+   */
+  mode?: 'and' | 'or' | 'overwrite';
+};

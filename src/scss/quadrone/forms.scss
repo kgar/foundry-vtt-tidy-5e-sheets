@@ -123,7 +123,6 @@
       */
   }
 
-
   .form-group.label-top,
   .form-field.label-top {
     --label-height: var(--font-size-small);
@@ -260,8 +259,9 @@
     }
 
     &:not(.label-top) {
-      label {
-        // margin-inline-start: 0.25rem;
+      >label {
+        align-self: flex-start;
+        line-height: var(--t5e-field-size-default);
       }
     }
 
@@ -416,6 +416,10 @@
       --checkbox-size: 1rem;
     }
 
+    &:has(input[type="checkbox"]:only-child) {
+      justify-content: flex-start;
+    }
+
     &.flexcol {
       flex-direction: column;
     }
@@ -496,5 +500,9 @@
         }
       }
     }
+  }
+
+  fieldset .form-group .form-fields .starting-equipment-list {
+    margin-bottom: var(--t5e-size-3x);
   }
 }

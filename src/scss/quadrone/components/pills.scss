@@ -123,6 +123,14 @@
   }
 }
 
+.pill-dismissable {
+  button.button-borderless.button-icon-only {
+    border-radius: 0.125rem;
+    --size: var(--t5e-tag-size-small);
+    min-height: var(--size);
+  }
+}
+
 .pill-switch {
   cursor: pointer;
   display: flex;

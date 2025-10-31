@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { SvelteInputEvent } from 'src/types/types';
-  import { type Snippet } from 'svelte';
   import type { HTMLInputAttributes } from 'svelte/elements';
 
   type Props = {
@@ -8,7 +7,6 @@
     field: string;
     document: any;
     onDataPreparing?: SvelteInputEvent | null;
-    children?: Snippet;
   } & HTMLInputAttributes;
 
   let {
@@ -16,7 +14,6 @@
     field,
     document,
     onDataPreparing = null,
-    children,
     ...rest
   }: Props = $props();
 
@@ -25,6 +22,10 @@
       currentTarget: EventTarget & HTMLInputElement;
     },
   ) {
+    if (rest.name) {
+      return;
+    }
+
     let data: any = onDataPreparing?.(event) ?? {
       [field]: event.currentTarget.checked,
     };
@@ -44,10 +45,3 @@
   {...rest}
   {checked}
 />
-
-<style lang="scss">
-  label {
-    --tidy-checkbox-width-internal: var(--tidy-checkbox-width, unset);
-    width: var(--tidy-checkbox-width-internal);
-  }
-</style>

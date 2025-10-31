@@ -70,18 +70,18 @@
       </h4>
       <ul class="pills stacked">
         <li>
-          <span class="pill stacked">
-            {#if showSubtype}
-              <span>
-                {context.system.type.subtype}
-              </span>
-            {/if}
-            <span class={{ ['text-normal']: showSubtype }}>
-              {CONFIG.DND5E.creatureTypes[context.system.type.value]?.label ??
-                context.system.type.value}
-            </span>
+          <span class="pill" data-tooltip={localize('DND5E.CreatureType')}>
+            {CONFIG.DND5E.creatureTypes[context.system.type.value]?.label ??
+              context.system.type.value}
           </span>
         </li>
+        {#if showSubtype}
+        <li>
+          <span class="pill" data-tooltip={localize('DND5E.Subtype')}>
+            {context.system.type.subtype}
+          </span>
+        </li>
+        {/if}
       </ul>
     </div>
     <div>

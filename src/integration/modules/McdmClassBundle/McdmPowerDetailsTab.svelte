@@ -15,10 +15,9 @@
   let appId = $derived(context.document.id);
 
   let localize = FoundryAdapter.localize;
-
 </script>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('MCDMCB.TALENT.POWERS.SHEET.Details')}
     <tidy-gold-header-underline></tidy-gold-header-underline>
@@ -26,33 +25,35 @@
 
   <!-- Power Order -->
   <div class="form-group">
-    <label for="{appId}-order">{localize('MCDMCB.TALENT.POWERS.ORDERS.Label')}</label>
+    <label for="{appId}-order"
+      >{localize('MCDMCB.TALENT.POWERS.ORDERS.Label')}</label
+    >
     <div class="form-fields">
       <SelectQuadrone
         id="{appId}-order"
         document={context.item}
         field="system.order"
         value={context.source.order}
-        disabled={!context.unlocked}
       >
-        <SelectOptions data={CONFIG.MCDM.powerOrders}/>
+        <SelectOptions data={CONFIG.MCDM.powerOrders} />
       </SelectQuadrone>
     </div>
   </div>
 
   <!-- Power Specialty -->
   <div class="form-group">
-    <label for="{appId}-specialty">{localize('MCDMCB.TALENT.POWERS.SPECIALTIES.Label')}</label>
+    <label for="{appId}-specialty"
+      >{localize('MCDMCB.TALENT.POWERS.SPECIALTIES.Label')}</label
+    >
     <div class="form-fields">
       <SelectQuadrone
         id="{appId}-specialty"
         document={context.item}
         field="system.specialty"
         value={context.source.specialty}
-        disabled={!context.unlocked}
         blankValue=""
       >
-        <SelectOptions data={CONFIG.MCDM.specialties} blank=""/>
+        <SelectOptions data={CONFIG.MCDM.specialties} blank="" />
       </SelectQuadrone>
     </div>
   </div>
@@ -70,24 +71,29 @@
   <!-- Ability -->
   {#if context.isEmbedded}
     <div class="form-group">
-      <label for="{appId}-ability">{localize('MCDMCB.TALENT.POWERS.ManifestAbility')}</label>
+      <label for="{appId}-ability"
+        >{localize('MCDMCB.TALENT.POWERS.ManifestAbility')}</label
+      >
       <div class="form-fields">
         <SelectQuadrone
           id="{appId}-ability"
           document={context.item}
           field="system.ability"
           value={context.source.ability}
-          disabled={!context.unlocked}
           blankValue=""
         >
-          <SelectOptions data={context.config.abilities} labelProp="label" blank={context.defaultAbility} />
+          <SelectOptions
+            data={context.config.abilities}
+            labelProp="label"
+            blank={context.defaultAbility}
+          />
         </SelectQuadrone>
       </div>
     </div>
   {/if}
 </fieldset>
 
-<fieldset>
+<fieldset disabled={!context.unlocked}>
   <legend>
     {localize('MCDMCB.TALENT.POWERS.SHEET.ManifestingHeader')}
     <tidy-gold-header-underline></tidy-gold-header-underline>

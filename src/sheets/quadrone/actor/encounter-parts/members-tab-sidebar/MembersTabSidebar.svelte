@@ -218,6 +218,7 @@
     <EncounterSkills />
 
     <!-- Specials -->
+    {#if context.traits.specials.length > 0}
     <div class="list-entry traits-specials">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
@@ -257,5 +258,6 @@
         </div>
       </div>
     </div>
+    {/if}
   </div>
 </aside>

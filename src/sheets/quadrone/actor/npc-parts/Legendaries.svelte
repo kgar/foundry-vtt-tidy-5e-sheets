@@ -82,9 +82,9 @@
     <!-- Switch - inside lair -->
     {#if showFiligree}
       <div class="card-header flexrow">
-        <h3>
+        <h4>
           {localize('DND5E.LAIR.Inside')}
-        </h3>
+        </h4>
       </div>
     {:else}
       <label for="{appId}-lair-inside">
@@ -116,10 +116,10 @@
         </h3>
       </div>
     {:else}
-      <h3 class="font-label-medium bordered">
-        <i class="fa-solid fa-eye-evil color-icon-disabled"></i>
+      <h4 class="font-label-medium bordered">
+        <i class="fa-solid fa-eye-evil"></i>
         {localize('DND5E.LAIR.Action.Label')}
-      </h3>
+      </h4>
     {/if}
     <div class="card-content flexrow lair-initiative">
       <span class="font-label-medium color-text-lighter flexshrink">

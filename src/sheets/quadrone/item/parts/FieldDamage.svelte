@@ -1,30 +1,31 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { mapSystemDamageTypesToSave } from 'src/utils/system-properties-quadrone';
   import type { GroupableSelectOption } from 'src/types/types';
   import { getItemSheetContextQuadrone } from 'src/sheets/sheet-context.svelte';
   import CheckboxQuadrone from 'src/components/inputs/CheckboxQuadrone.svelte';
-  import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import FormGroup from 'src/components/form-group/FormGroup.svelte';
 
   interface Props {
     source: any;
+    fields: any;
     system: any;
     prefix: string;
     denominationOptions: GroupableSelectOption[];
     numberPlaceholder?: string;
     types?: { label: string; value: string; selected: boolean }[] | undefined;
+    heal?: boolean;
   }
 
   let {
     source,
+    fields,
     system,
     prefix,
     denominationOptions,
     numberPlaceholder = '',
     types = undefined,
+    heal,
   }: Props = $props();
 
   let context = $derived(getItemSheetContextQuadrone());
@@ -36,96 +37,73 @@
 </script>
 
 <!-- Custom Formula -->
-<div class="form-group split-group">
-  <label for="{idPrefix}custom-enabled">Formula</label>
-  <div class="form-fields">
-    <label class="checkbox" for="{idPrefix}custom-enabled">
-      <CheckboxQuadrone
-        id="{idPrefix}custom-enabled"
-        document={context.item}
-        field="{prefix}custom.enabled"
-        checked={source.custom.enabled}
-        disabledChecked={system.custom.enabled}
-        disabled={!context.unlocked}
-      />
-    </label>
-
-    {#if source.custom.enabled}
-      <TextInputQuadrone
-        id="{idPrefix}custom-formula"
-        document={context.item}
-        field="{prefix}custom.formula"
-        value={source.custom.formula}
-        disabled={!context.unlocked}
-      />
-    {/if}
-  </div>
-</div>
+<FormGroup
+  label="DND5E.Formula"
+  document={context.document}
+  groupClasses="split-group"
+  fields={[
+    {
+      field: fields.custom.fields.enabled,
+      config: {
+        id: `${idPrefix}custom-enabled`,
+        value: source.custom.enabled,
+      },
+      disabledValue: system.custom.enabled,
+    },
+    {
+      condition: source.custom.enabled,
+      field: fields.custom.fields.formula,
+      config: {
+        id: `${idPrefix}custom-formula`,
+        value: source.custom.formula,
+      },
+    },
+  ]}
+/>
 
 <!-- Simple Input -->
 {#if !source.custom.enabled}
-  <div class="form-group split-group">
-    <label for="{idPrefix}number"
-      >{context.system.damage.heal
-        ? localize('DND5E.HEAL.Title')
-        : localize('DND5E.DAMAGE.Title')}</label
-    >
-    <div class="form-fields">
-      <div class="form-group label-top">
-        <label for="{idPrefix}number">{localize('DND5E.Number')}</label>
-        <div class="form-fields">
-          <!-- Number -->
-          <NumberInputQuadrone
-            id="{idPrefix}number"
-            document={context.item}
-            field="{prefix}number"
-            value={source.number}
-            placeholder={numberPlaceholder}
-            min="0"
-            step="1"
-            disabled={!context.unlocked}
-          />
-        </div>
-      </div>
-
-      <!-- Die -->
-      <div class="form-group label-top">
-        <label for="{idPrefix}denomination">{localize('DND5E.Die')}</label>
-        <div class="form-fields">
-          <SelectQuadrone
-            id="{idPrefix}denomination"
-            document={context.item}
-            field="{prefix}denomination"
-            value={source.denomination}
-            blankValue=""
-            disabled={!context.unlocked}
-          >
-            <SelectOptions
-              data={denominationOptions}
-              labelProp="label"
-              valueProp="value"
-            />
-          </SelectQuadrone>
-        </div>
-      </div>
-
-      <!-- Bonus -->
-      <div class="form-group label-top">
-        <label for="{idPrefix}bonus">
-          {localize('DND5E.Bonus')}
-        </label>
-        <div class="form-fields">
-          <TextInputQuadrone
-            id="{idPrefix}bonus"
-            document={context.item}
-            field="{prefix}bonus"
-            value={source.bonus}
-            disabled={!context.unlocked}
-          />
-        </div>
-      </div>
-    </div>
-  </div>
+  <FormGroup
+    label={heal ? localize('DND5E.HEAL.Title') : localize('DND5E.DAMAGE.Title')}
+    groupClasses="split-group"
+  >
+    <FormGroup
+      label="DND5E.Number"
+      labelFor="{idPrefix}number"
+      document={context.document}
+      field={fields.number}
+      config={{
+        id: `${idPrefix}number`,
+        value: source.number,
+        placeholder: numberPlaceholder,
+        step: 1,
+      }}
+      groupClasses="label-top"
+    />
+    <FormGroup
+      label="DND5E.Die"
+      labelFor="{idPrefix}denomination"
+      document={context.document}
+      field={fields.denomination}
+      config={{
+        id: `${idPrefix}denomination`,
+        value: source.denomination,
+      }}
+      choices={denominationOptions}
+      groupClasses="label-top"
+    />
+    <FormGroup
+      label="DND5E.Bonus"
+      labelFor="{idPrefix}bonus"
+      document={context.document}
+      field={fields.bonus}
+      config={{
+        id: `${idPrefix}bonus`,
+        value: source.bonus,
+      }}
+      groupClasses="label-top"
+    />
+  </FormGroup>
 {/if}
 
 <!-- Types -->

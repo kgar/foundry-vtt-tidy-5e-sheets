@@ -10,7 +10,7 @@ declare module 'foundry.data.fields' {
     gmOnly?: boolean;
     initial?: Function | any;
     label?: string;
-    hint?: string;
+    hint?: string | false;
     validate?: DataFieldValidator;
     validationError?: string;
   }
@@ -43,8 +43,8 @@ declare module 'foundry.data.fields' {
   /**
    * @template [FormInputValue=unknown]
    */
-  interface FormInputConfig {
-    name: string;
+  type FormInputConfig = {
+    name?: string;
     value?: FormInputValue;
     id?: string;
     required?: boolean;
@@ -57,11 +57,19 @@ declare module 'foundry.data.fields' {
     placeholder?: string;
     classes?: string;
     input?: CustomFormInput;
-  }
+  } & AnyFieldOptions;
 
-  interface StringFieldInputConfig {
+  type AnyFieldOptions =
+    | NumberFieldOptions
+    | StringFieldOptions
+    | ArrayFieldOptions
+    | DocumentUUIDFieldOptions
+    | FilePathFieldOptions
+    | JavaScriptFieldOptions;
+
+  type StringFieldInputConfig = {
     elementType?: 'input' | 'textarea' | 'prose-mirror' | 'code-mirror';
-  }
+  };
 
   type CodeMirrorLanguage =
     | 'javascript'
@@ -86,7 +94,7 @@ declare module 'foundry.data.fields' {
   interface _NumberFieldOptions {
     min?: number;
     max?: number;
-    step?: number;
+    step?: number | 'any';
     integer?: boolean;
     positive?: boolean;
     choices?: number[] | object | Function;
@@ -430,7 +438,13 @@ declare module 'foundry.data.fields' {
     getCollection(parent: FoundryDocument): Map<string, FoundryDocument>;
   }
   declare class DocumentIdField extends StringField {}
-  declare class DocumentUUIDField extends StringField {}
+  declare class DocumentUUIDField extends StringField {
+    constructor(
+      options: DocumentUUIDFieldOptions = {},
+      context: DataFieldContext = {}
+    ): DocumentUUIDField;
+    options: DocumentUUIDFieldOptions;
+  }
   declare class ForeignDocumentField extends DocumentIdField {}
   declare class ColorField extends StringField {}
   declare class FilePathField extends StringField {
