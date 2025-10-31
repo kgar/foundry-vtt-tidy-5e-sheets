@@ -1,6 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import type { ColumnHeaderProps } from 'src/runtime/types';
   import type {
     Actor5e,
@@ -32,7 +33,30 @@
       data: { type: section.key, ...section.dataset },
     });
   }
+
+  let sectionActions = $derived(
+    ActorItemRuntime.getActorItemSectionCommands({
+      section,
+      actor: sheetContext.document,
+      unlocked: sheetContext.unlocked,
+    }),
+  );
 </script>
+
+<!-- Configured Controls -->
+{#each sectionActions as action}
+  <a
+    class="tidy-table-button"
+    data-tooltip
+    aria-label={localize(action.tooltip ?? action.label ?? '')}
+    onclick={(event) =>
+      action.execute?.({ actor: sheetContext.document, event, section })}
+  >
+    {#if action.iconClass}
+      <i class={action.iconClass}></i>
+    {/if}
+  </a>
+{/each}
 
 {#if sheetContext.editable && 'canCreate' in section && !!section.canCreate}
   <a

@@ -3,10 +3,11 @@
 ### 1422 To Dos
 
 - [x] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
-- [ ] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
-- [ ] Update sheet header commands column to leverage API and place options in reverse order, favoring tidy default content on the far right. Flex row-reverse might suffice for this.
+- [x] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
+- [x] Update sheet header commands column to leverage API ~~and place options in reverse order~~, favoring tidy default content on the far right. ~~Flex row-reverse might suffice for this.~~
+- [ ] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
 - [ ] Handle overflow control with a 3-dots context menu; for simplicity, just show all options, even the non-overflow ones
-  - [ ] Leverage knowledge of column width to control when the menu appears, replacing the last control on the far left
+  - [ ] Leverage knowledge of row actions width to indicate when to include the menu control. The menu control replaces the first command in the array.
 - [ ] Add context menu support to the section header at large with same behavior
 - [ ] Ensure Quick Insert shows magnifying glass per configuration
 - [ ] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
