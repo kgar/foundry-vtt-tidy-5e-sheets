@@ -11,6 +11,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import {
   getActorTabContext,
   getItemTabContext,
+  mapTabIdsToOptions,
 } from './tab-configuration-functions';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
@@ -18,7 +19,7 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { error } from 'src/utils/logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 
@@ -193,21 +194,30 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
   async apply() {
     let curr = this._config.entry;
+
+    let worldDefaultTabIds =
+      SettingsProvider.settings.tabConfiguration.get()?.[curr.documentName]?.[
+        curr.docTypeKeyOverride ?? curr.documentType
+      ]?.selected ?? [];
+
+    let worldDefaultTabs = mapTabIdsToOptions(curr.allTabs, worldDefaultTabIds);
+
+    let effectiveDefaultTabs = worldDefaultTabs.length
+      ? worldDefaultTabs
+      : curr.defaultSelected;
+
     let selected =
-      curr.defaultSelected.length === curr.selected.length &&
-      curr.defaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
+      effectiveDefaultTabs.length === curr.selected.length &&
+      effectiveDefaultTabs.every((d, i) => d.id === curr.selected[i]?.id)
         ? []
         : curr.selected.map((s) => s.id);
 
     return await this._setTabConfig(this.document, {
       selected: selected,
-      visibilityLevels: this._config.entry.visibilityLevels.reduce(
-        (prev, curr) => {
-          prev[curr.id] = curr.visibilityLevel;
-          return prev;
-        },
-        {} as Record<string, number | null>
-      ),
+      visibilityLevels: curr.visibilityLevels.reduce((prev, curr) => {
+        prev[curr.id] = curr.visibilityLevel;
+        return prev;
+      }, {} as Record<string, number | null>),
     });
   }
 

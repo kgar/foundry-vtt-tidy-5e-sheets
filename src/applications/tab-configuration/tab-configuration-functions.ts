@@ -8,7 +8,6 @@ import type { SheetTabConfiguration } from 'src/settings/settings.types';
 import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRuntime.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { CustomTabTitle } from 'src/api';
 
 export function getItemTabContext(
@@ -17,9 +16,7 @@ export function getItemTabContext(
 ) {
   const documentName = CONSTANTS.DOCUMENT_NAME_ITEM;
 
-  let defaultSelectedIds =
-    getWorldDefaultSelectedTabId(documentName, type) ??
-    ItemSheetQuadroneRuntime.getDefaultTabIds(type);
+  let defaultSelectedIds = ItemSheetQuadroneRuntime.getDefaultTabIds(type);
   let allRegisteredTabs = ItemSheetQuadroneRuntime.getAllRegisteredTabs(type);
 
   return buildTabConfigContextEntry(
@@ -38,9 +35,7 @@ export function getActorTabContext(
 ): TabConfigContextEntry {
   let documentName = CONSTANTS.DOCUMENT_NAME_ACTOR;
   const allRegisteredTabs = runtime.getAllRegisteredTabs();
-  let defaultSelectedIds =
-    getWorldDefaultSelectedTabId(documentName, type) ??
-    runtime.getDefaultTabIds();
+  let defaultSelectedIds = runtime.getDefaultTabIds();
 
   return buildTabConfigContextEntry(
     documentName,
@@ -49,19 +44,6 @@ export function getActorTabContext(
     settings,
     defaultSelectedIds
   );
-}
-
-function getWorldDefaultSelectedTabId(
-  documentName: string,
-  type: string
-): string[] | undefined {
-  const selected =
-    SettingsProvider.settings.tabConfiguration.get()?.[documentName]?.[type]
-      ?.selected;
-
-  if (selected?.length > 0) {
-    return selected;
-  }
 }
 
 export function buildTabConfigContextEntry(
@@ -101,13 +83,13 @@ export function buildTabConfigContextEntry(
     selected = [...defaultSelected];
   }
 
-  const visibilityLevels: VisibilityLevelConfig[] = Object.values(allTabs).map(
-    (t) => ({
+  const visibilityLevels: VisibilityLevelConfig[] = Object.values(allTabs)
+    .map((t) => ({
       id: t.id,
       title: t.title,
       visibilityLevel: settings?.visibilityLevels[t.id] ?? null,
-    })
-  ).sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title, game.i18n.lang));
 
   return {
     documentName: documentName,
@@ -122,7 +104,7 @@ export function buildTabConfigContextEntry(
   };
 }
 
-function mapTabIdsToOptions(
+export function mapTabIdsToOptions(
   all: Record<string, ConfigTabInfo>,
   tabIds: string[]
 ) {
