@@ -20,7 +20,8 @@
   }
 }
 
-.pill {
+.pill
+{
   align-items: center;
   background: var(--t5e-component-pill-background);
   border-radius: var(--radius-card, 0.1875rem);
@@ -40,6 +41,13 @@
 
   word-break: break-word;
   flex-wrap: wrap;
+
+  >.button {
+    height: unset;
+    min-height: unset;
+    padding: 0;
+    line-height: normal;
+  }
 
   &.pill-medium {
     font-size: var(--font-size-13);

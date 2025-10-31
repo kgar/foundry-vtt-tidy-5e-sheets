@@ -1,5 +1,5 @@
 import type { CustomActorTrait } from 'src/api/config/actor-traits/types';
-import type { RegisteredCustomActorTrait } from '../types';
+import type { RegisteredCustomActorTrait, CustomTraitEnabledParams } from '../types';
 import { debug, error } from 'src/utils/logging';
 
 export class CustomActorTraitsRuntime {
@@ -13,15 +13,17 @@ export class CustomActorTraitsRuntime {
       openConfiguration: t.openConfiguration,
       openConfigurationTooltip: t.openConfigurationTooltip,
       enabled: t.enabled,
+      content: t.content,
+      pills: t.pills
     }));
 
     CustomActorTraitsRuntime._traits.push(...registeredTraits);
   }
 
-  static getEnabledTraits(context: any) {
+  static getEnabledTraits(params: CustomTraitEnabledParams) {
     return this._traits.filter((t) => {
       try {
-        return t.enabled?.({ context }) ?? true;
+        return t.enabled?.(params) ?? true;
       } catch (e) {
         error(
           'An error occurred while determining if a custom actor trait is enabled.',
@@ -29,7 +31,7 @@ export class CustomActorTraitsRuntime {
           e
         );
         debug('Custom actor trait enabled error details', {
-          context,
+          params,
           trait: t,
         });
         return false;

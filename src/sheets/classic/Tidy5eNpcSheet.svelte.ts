@@ -731,9 +731,11 @@ export class Tidy5eNpcSheet
     context.filterData = this.itemFilterService.getFilterData();
     context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
-    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits(
-      defaultDocumentContext
-    );
+    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits({
+      context: defaultDocumentContext,
+      app: this,
+      element: this.element,
+    });
 
     context.customContent = await NpcSheetClassicRuntime.getContent(context);
 
