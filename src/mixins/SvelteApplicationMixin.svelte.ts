@@ -114,7 +114,7 @@ export function SvelteApplicationMixin<
 
     #debouncedRerenderForSettings = FoundryAdapter.debounce(
       () => this.render(),
-      500
+      150
     );
 
     async _renderFrame(options: ApplicationRenderOptions) {

@@ -6,6 +6,8 @@
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
   - [ ] When making any changes to the shuttle, uncheck the box.
   - [ ] The box is calculated on load one time and is not derived.
+  - [ ] Change "Use Default" button to "Use Default for All"
+  - [ ] Give the same treatment ot Configure Header Controls
 - [ ] For some reason, opening sheet tab configuration causes the actor's own flag data to be altered, so closing the sheet and triggering a suibmit will update the flag accordingly. Prevent document flags from being altered in memory when the dialog opens.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
