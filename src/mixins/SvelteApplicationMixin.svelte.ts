@@ -14,6 +14,7 @@ import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -46,6 +47,8 @@ export function SvelteApplicationMixin<
 
     /** The component which represents the UI. */
     #components: Record<string, any>[] = [];
+
+    #hookSubscriptions: { name: string; id: unknown }[] = [];
 
     /**
      * Compatibility shim from Application V1.
@@ -109,6 +112,11 @@ export function SvelteApplicationMixin<
     /*  Rendering                                   */
     /* -------------------------------------------- */
 
+    #debouncedRerenderForSettings = FoundryAdapter.debounce(
+      () => this.render(),
+      500
+    );
+
     async _renderFrame(options: ApplicationRenderOptions) {
       const element = await super._renderFrame(options);
       const themeConfigOptions = this.themeConfigOptions();
@@ -116,6 +124,15 @@ export function SvelteApplicationMixin<
       applyThemeToApplication(element, themeConfigOptions.doc ?? this.document);
 
       ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
+
+      this.#hookSubscriptions.push(
+        Hooks.on('updateSetting', (setting: any) => {
+          if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
+            debug('Tidy setting update detected. Requesting sheet re-render');
+            this.#debouncedRerenderForSettings();
+          }
+        })
+      );
 
       return element;
     }
@@ -172,6 +189,9 @@ export function SvelteApplicationMixin<
 
     async close(options: ApplicationClosingOptions = {}) {
       this.themeSettingsSubscription?.unsubscribe();
+
+      this.#hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
+      this.#hookSubscriptions = [];
 
       await super.close(options);
     }
