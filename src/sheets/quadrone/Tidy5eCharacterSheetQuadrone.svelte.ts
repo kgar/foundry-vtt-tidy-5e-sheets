@@ -51,7 +51,7 @@ import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
-import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
+import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
@@ -82,14 +82,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
           document: this.document,
           customTabConfigProvider: {
             getTabConfig: TidyFlags.sidebarTabConfiguration.get,
-            setTabsConfig: TidyFlags.sidebarTabConfiguration.set,
+            setTabConfig: TidyFlags.sidebarTabConfiguration.set,
             getTabContext: (doc, setting) => {
-              return buildTabConfigContextEntry(
+              return getActorTabContext(
+                CharacterSheetQuadroneSidebarRuntime,
                 doc.documentName,
-                doc.type,
-                CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
                 setting,
-                CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+                true,
+                CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
               );
             },
           },
@@ -883,7 +883,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
 
   protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
     const tabIds: string[] = [CONSTANTS.TAB_ACTOR_ACTIONS];
-    
+
     const originTab = Inventory.isItemInventoryType(sheetPin)
       ? CONSTANTS.TAB_ACTOR_INVENTORY
       : sheetPin.type === CONSTANTS.ITEM_TYPE_SPELL

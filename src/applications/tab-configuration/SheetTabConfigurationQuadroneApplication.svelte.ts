@@ -18,7 +18,6 @@ import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadr
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { error } from 'src/utils/logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 import type { SheetTabConfiguration } from 'src/settings/settings.types';
 
@@ -40,10 +39,11 @@ export type SheetTabConfigurationQuadroneApplicationConfiguration =
   DocumentSheetApplicationConfiguration & {
     customTabConfigProvider?: {
       getTabConfig: GetTabConfigFn;
-      setTabsConfig: SetTabConfigFn;
+      setTabConfig: SetTabConfigFn;
       getTabContext: GetTabContextFn;
     };
     title?: string;
+    docTypeKeyOverride?: string;
   };
 
 /**
@@ -69,32 +69,28 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
       visibilityLevels: [],
     },
   });
-  /** When the document has no selected tabs, this is the fallback tab ID list. */
-  _worldDefaultTabIds: string[] = $state([]);
   _getTabConfig: GetTabConfigFn;
   _setTabConfig: SetTabConfigFn;
   _getTabContext: GetTabContextFn;
   _inclusionTabTitle: string;
-  _visibilityTabTitle: string;
+
+  /** TODO: document */
+  _docTypeKeyOverride?: string;
 
   constructor(options: SheetTabConfigurationQuadroneApplicationConfiguration) {
     super(options);
-    this._worldDefaultTabIds =
-      settings.value.tabConfiguration[options.document.documentName]?.[
-        options.document.type
-      ]?.selected ?? [];
 
     this._getTabConfig =
       options.customTabConfigProvider?.getTabConfig ??
       TidyFlags.tabConfiguration.get;
 
     this._setTabConfig =
-      options.customTabConfigProvider?.setTabsConfig ??
+      options.customTabConfigProvider?.setTabConfig ??
       TidyFlags.tabConfiguration.set;
 
     this._getTabContext =
       options.customTabConfigProvider?.getTabContext ??
-      SheetTabConfigurationQuadroneApplication._getConfigFromRuntime;
+      this._getConfigFromRuntime;
 
     this._inclusionTabTitle =
       options.title ??
@@ -104,7 +100,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
         ),
       });
 
-    this._visibilityTabTitle = 'TODO';
+    this._docTypeKeyOverride = options.docTypeKeyOverride;
   }
 
   static DEFAULT_OPTIONS: Partial<DocumentSheetConfiguration> = {
@@ -173,16 +169,22 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
     return context;
   }
 
-  static _getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
+  _getConfigFromRuntime(doc: any, setting: SheetTabConfiguration) {
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR) {
       const runtime = getActorRuntime(doc.type);
       if (runtime) {
-        return getActorTabContext(runtime, doc.type, setting);
+        return getActorTabContext(
+          runtime,
+          doc.type,
+          setting,
+          true,
+          this._docTypeKeyOverride
+        );
       }
     }
 
     if (doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
-      return getItemTabContext(doc.type, setting);
+      return getItemTabContext(doc.type, setting, true);
     }
   }
 
@@ -193,6 +195,7 @@ export class SheetTabConfigurationQuadroneApplication extends DocumentSheetDialo
 
   async apply() {
     let curr = this._config.entry;
+
     let selected =
       curr.defaultSelected.length === curr.selected.length &&
       curr.defaultSelected.every((d, i) => d.id === curr.selected[i]?.id)
