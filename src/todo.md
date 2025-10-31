@@ -2,7 +2,7 @@
 
 ### 1422 To Dos
 
-- [ ] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
+- [x] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
 - [ ] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
 - [ ] Update sheet header commands column to leverage API and place options in reverse order, favoring tidy default content on the far right. Flex row-reverse might suffice for this.
 - [ ] Handle overflow control with a 3-dots context menu; for simplicity, just show all options, even the non-overflow ones

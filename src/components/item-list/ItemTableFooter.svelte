@@ -30,7 +30,11 @@
   }: Props = $props();
 
   let customCommands = isItem
-    ? ActorItemRuntime.getActorItemSectionCommands({ actor, section })
+    ? ActorItemRuntime.getActorItemSectionCommands({
+        actor,
+        section,
+        unlocked: true,
+      })
     : [];
 
   function createForCustom(custom: CustomSectionOptions) {

@@ -44,6 +44,7 @@
     ActorItemRuntime.getActorItemSectionCommands({
       actor: context.actor,
       section,
+      unlocked: true
     }),
   );
 
