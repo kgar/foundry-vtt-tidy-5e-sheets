@@ -2,6 +2,10 @@
 
 ### Short List
 
+- [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
+  - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
+  - [ ] When making any changes to the shuttle, uncheck the box.
+  - [ ] The box is calculated on load one time and is not derived.
 - [ ] Eliminate settings state rune and just use SettingsProvider. Prefer putting settings into sheet context.
 - [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
   - [ ] Identify all resize observers which can be removed.
