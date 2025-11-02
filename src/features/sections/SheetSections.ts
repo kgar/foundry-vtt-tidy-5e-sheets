@@ -42,7 +42,7 @@ import { Inventory } from './Inventory';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
-  static _itemCustomSectionBlacklist = new Set<string>([
+  static _itemCustomSectionDenylist = new Set<string>([
     CONSTANTS.ITEM_TYPE_BACKGROUND,
     CONSTANTS.ITEM_TYPE_CLASS,
     CONSTANTS.ITEM_TYPE_FACILITY,
@@ -56,10 +56,11 @@ export class SheetSections {
     key: '',
     show: true,
     rowActions: [],
+    headerActions: [],
   });
 
   static itemSupportsCustomSections(itemType: string) {
-    return !this._itemCustomSectionBlacklist.has(itemType);
+    return !this._itemCustomSectionDenylist.has(itemType);
   }
 
   static applySpellToSection(
@@ -101,6 +102,7 @@ export class SheetSections {
       },
       show: true,
       rowActions: [], // for the UI Overhaul
+      headerActions: [], // for the UI Overhaul
       // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
       slot: '',
       method: '',
@@ -179,6 +181,7 @@ export class SheetSections {
           method: s.id,
           show: true,
           rowActions: options.rowActions ?? [], // for the UI Overhaul
+          headerActions: options.headerActions ?? [], // for the UI Overhaul
         } satisfies SpellbookSection)
     );
 

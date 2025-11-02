@@ -55,6 +55,7 @@ export class NpcSheetSections {
       },
       show: true,
       rowActions: [], // for the UI Overhaul
+      headerActions: [], // for the UI Overhaul
       ...customSectionOptions,
     };
   }

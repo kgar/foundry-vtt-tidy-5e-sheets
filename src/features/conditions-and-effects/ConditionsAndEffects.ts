@@ -7,8 +7,10 @@ import type {
   Actor5e,
   DocumentSheetQuadroneContext,
   EffectCategory,
+  TidySectionBase,
 } from 'src/types/types';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export class ConditionsAndEffects {
   static async getConditionsAndEffectsForActor(
@@ -118,6 +120,8 @@ export class ConditionsAndEffects {
       return arr;
     }, []);
 
+    const headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
+
     let newCategories: ActiveEffectSection[] = [];
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
@@ -173,6 +177,7 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+        headerActions,
       });
     }
 
@@ -187,6 +192,7 @@ export class ConditionsAndEffects {
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>
   ): Promise<ActiveEffectSection[]> {
     let newCategories: ActiveEffectSection[] = [];
+    const headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
 
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
@@ -224,6 +230,7 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+        headerActions,
       });
     }
 

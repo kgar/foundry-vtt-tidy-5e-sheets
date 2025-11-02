@@ -53,6 +53,7 @@ export class Inventory {
         custom: undefined,
         isExternal: false,
         rowActions: [], // TODO: add rowActions here
+        headerActions: [], // TODO: add headerActions here
         ...options,
       };
     }
@@ -101,6 +102,7 @@ export class Inventory {
       },
       show: true,
       rowActions: [], // TODO: add rowActions here
+      headerActions: [], // TODO: add rowActions here
       ...customSectionOptions,
     };
   }

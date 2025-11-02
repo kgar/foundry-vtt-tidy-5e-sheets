@@ -6,6 +6,16 @@
 - [x] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
 - [x] Update sheet header commands column to leverage API ~~and place options in reverse order~~, favoring tidy default content on the far right. ~~Flex row-reverse might suffice for this.~~
 - [ ] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
+  - [ ] // TODO: add headerActions here
+  - [ ] actions.ts - section rename; skip API commands here
+  - [ ] Quadrone Character Feature Sections
+  - [ ] Quadrone NPC Feature Sections
+  - [ ] Quadrone Inventory Sections
+  - [ ] Quadrone Spellbook Sections
+  - [ ] MCDM Powers (be conservative about this one, just use the add control)
+  - [ ] Group Sheet Members
+  - [ ] NPC Statblock Section
+  - [ ] Test and look for trouble
 - [ ] Handle overflow control with a 3-dots context menu; for simplicity, just show all options, even the non-overflow ones
   - [ ] Leverage knowledge of row actions width to indicate when to include the menu control. The menu control replaces the first command in the array.
 - [ ] Add context menu support to the section header at large with same behavior
@@ -17,6 +27,8 @@
 - [ ] When unlocked, show section rename control in table head
 - [ ] Review the section command API to determine if there's more information that can be included in the enabled callback
 - [ ] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
+- [ ] Add ActorEffects, ActorConditions section commands APIs
+  - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
 
 ### Short List
 
@@ -90,7 +102,7 @@
   - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
   - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
   - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
-- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+- [ ] // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts

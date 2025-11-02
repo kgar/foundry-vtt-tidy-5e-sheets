@@ -12,6 +12,7 @@ import type {
   GroupTraits,
   MeasurableGroupTrait,
   MultiActorQuadroneContext,
+  TidySectionBase,
   TravelPaceConfigEntry,
 } from 'src/types/types';
 import type {
@@ -40,6 +41,7 @@ import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -155,12 +157,14 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
     skills: GroupSkill[];
     traits: GroupTraits;
   }> {
-    let customSections = TidyFlags.sections.get(this.actor);
+    const customSections = TidyFlags.sections.get(this.actor);
 
-    let rowActions =
+    const rowActions =
       TableRowActionsRuntime.getGroupMemberRowActions(actorContext);
 
-    let sections = new Map<string, GroupMemberSection>([
+    const headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
+
+    const sections = new Map<string, GroupMemberSection>([
       [
         CONSTANTS.SHEET_TYPE_CHARACTER,
         {
@@ -170,6 +174,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
           show: true,
           dataset: {},
           rowActions,
+          headerActions,
         },
       ],
       [
@@ -181,6 +186,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
           show: true,
           dataset: {},
           rowActions,
+          headerActions,
         },
       ],
       [
@@ -192,6 +198,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
           show: true,
           dataset: {},
           rowActions,
+          headerActions,
         },
       ],
     ]);
@@ -244,6 +251,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
             creationItemTypes: [],
           },
           rowActions,
+          headerActions,
         })
       );
 

@@ -108,6 +108,7 @@
       label: `MCDMCB.TALENT.POWERS.ORDERS.${order}`,
       canCreate: true,
       rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
+      headerActions: [],
       show: sectionConfig?.[`order${order}`]?.show !== false
     })).concat(Object.entries(customSectionToPowersMap).map(([sectionKey, powers]) => ({
       key: sectionKey,
@@ -120,6 +121,7 @@
       label: sectionKey,
       canCreate: true,
       rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
+      headerActions: [],
       show: sectionConfig?.[sectionKey]?.show !== false
     })))
     return SheetSections.sortKeyedSections(allSections, sectionConfig)

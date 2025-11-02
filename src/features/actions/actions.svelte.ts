@@ -98,6 +98,7 @@ function buildActionSections(
       key: activationType,
       show: true,
       rowActions: [],
+      headerActions: [],
     };
   });
 
@@ -116,6 +117,7 @@ function buildActionSections(
           section: customSectionName,
         },
         rowActions: [],
+        headerActions: [],
       });
       customSection.actions.push(actionItem);
     } else {
@@ -130,6 +132,7 @@ function buildActionSections(
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
         rowActions: [],
+        headerActions: [],
       });
       section.actions.push(actionItem);
     }
@@ -197,6 +200,7 @@ function buildActionSectionsQuadrone(
       key: activationType,
       show: true,
       rowActions: [],
+      headerActions: [],
       ...options,
     };
   });
@@ -216,6 +220,7 @@ function buildActionSectionsQuadrone(
           section: customSectionName,
         },
         rowActions: [],
+        headerActions: [],
         ...options,
       });
       customSection.items.push(item);
@@ -232,6 +237,7 @@ function buildActionSectionsQuadrone(
         label: FoundryAdapter.getActivationTypeLabel(activationType),
         show: true,
         rowActions: [],
+        headerActions: [],
         ...options,
       });
       section.items.push(item);

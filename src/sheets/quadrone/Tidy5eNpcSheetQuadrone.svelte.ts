@@ -10,6 +10,7 @@ import type {
   NpcSheetQuadroneContext,
   NpcSpellcastingContext,
   SpellcastingClassContext,
+  TidySectionBase,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import type {
@@ -36,6 +37,7 @@ import UserPreferencesService from 'src/features/user-preferences/UserPreference
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { debug } from 'src/utils/logging';
+import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_NPC
@@ -341,6 +343,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     const statblockRowActions =
       TableRowActionsRuntime.getStatblockRowActions(context);
 
+    let headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
+
     const createNewStatblockSection = (
       label: string,
       id: string,
@@ -361,6 +365,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
         key: id,
         show: true,
         rowActions: statblockRowActions,
+        headerActions,
         dataset: dataset,
         canCreate: true,
       };

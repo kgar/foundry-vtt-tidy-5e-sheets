@@ -252,7 +252,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
       });
     }
 
-    // kgar: I am knowingly repurposing the Custom Section blacklist,
+    // kgar: I am knowingly repurposing the Custom Section denylist,
     // because for items where custom sections are irrelevant,
     // they are likely not to have a need for a Chat descriptions.
     if (

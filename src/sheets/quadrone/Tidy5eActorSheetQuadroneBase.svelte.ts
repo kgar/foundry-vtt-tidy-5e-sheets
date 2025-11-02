@@ -1422,7 +1422,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       if (
         !canPolymorph ||
-        // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+        // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
         this.currentTabId === CONSTANTS.TAB_CHARACTER_BASTION
       ) {
         return;
