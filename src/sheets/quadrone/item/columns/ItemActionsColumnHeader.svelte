@@ -1,7 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import type { ColumnHeaderProps } from 'src/runtime/types';
   import type {
     Actor5e,
@@ -9,7 +6,6 @@
     SpellbookSection,
     TidySectionBase,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
 
   let {
     sheetContext,
@@ -20,31 +16,14 @@
     DocumentSheetQuadroneContext<any>,
     TidySectionBase | SpellbookSection
   > = $props();
-
-  let localize = FoundryAdapter.localize;
-
-  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-
-  function onAddClicked() {
-    sheetDocument.sheet._addDocument({
-      tabId,
-      customSection: section.custom?.section,
-      creationItemTypes: section.custom?.creationItemTypes,
-      data: { type: section.key, ...section.dataset },
-    });
-  }
-
-  let sectionActions = $derived(
-    ActorItemRuntime.getActorItemSectionCommands({
-      section,
-      actor: sheetContext.document,
-      unlocked: sheetContext.unlocked,
-    }),
-  );
 </script>
 
+{#each section.headerActions as action}
+  <action.component {...action.props} />
+{/each}
+
 <!-- Configured Controls -->
-{#each sectionActions as action}
+<!-- {#each sectionActions as action}
   <a
     class="tidy-table-button"
     data-tooltip
@@ -78,4 +57,4 @@
   >
     <i class="fas fa-cog"></i>
   </a>
-{/if}
+{/if} -->

@@ -12,6 +12,7 @@
   - [ ] Quadrone NPC Feature Sections
   - [ ] Quadrone Inventory Sections
   - [ ] Quadrone Spellbook Sections
+    - [ ] Include slots config when usesSlots is true
   - [ ] MCDM Powers (be conservative about this one, just use the add control)
   - [ ] Group Sheet Members
   - [ ] NPC Statblock Section
