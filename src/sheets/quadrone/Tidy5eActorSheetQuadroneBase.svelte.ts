@@ -308,12 +308,6 @@ export function Tidy5eActorSheetQuadroneBase<
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
-        actions: await getActorActionSectionsQuadrone(this.actor, {
-          rowActions: TableRowActionsRuntime.getActionsRowActions(
-            this.actor.isOwner,
-            documentSheetContext.unlocked
-          ),
-        }),
         actor: this.actor,
         appId: this.appId,
         config: CONFIG.DND5E,

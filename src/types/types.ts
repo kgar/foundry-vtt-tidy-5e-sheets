@@ -976,7 +976,6 @@ export type ActorTraitContext<TValue = unknown> = {
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
-  actions: TidyItemSectionBase[];
   actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
@@ -1182,6 +1181,7 @@ export type ActorTraitItemContext = {
 };
 
 export type CharacterSheetQuadroneContext = {
+  actions: TidyItemSectionBase[];
   background?: ActorTraitItemContext;
   // TODO: Populate with context data as needed
   classes: ActorClassEntryContext[];

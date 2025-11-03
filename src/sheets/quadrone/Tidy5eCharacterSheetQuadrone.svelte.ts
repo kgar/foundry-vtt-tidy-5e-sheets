@@ -43,6 +43,7 @@ import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
@@ -53,6 +54,7 @@ import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/Characte
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
+import { getActorActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -168,6 +170,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
     let species = this.actor.system.details.race;
 
     const context: CharacterSheetQuadroneContext = {
+      actions: [],
       abilities: this._prepareAbilities(actorContext),
       background: background
         ? {
@@ -297,6 +300,30 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       );
     }
 
+    const tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
+
+    // TODO: Incorporate user preference for whether to auto-populate or to fill with just those that are specifically indicated.
+    const usesSheetTab = tabs.some((t) => t.id === CONSTANTS.TAB_ACTOR_ACTIONS);
+
+    if (usesSheetTab) {
+      context.actions = await getActorActionSectionsQuadrone(this.actor, {
+        rowActions: TableRowActionsRuntime.getActionsRowActions(
+          this.actor.isOwner,
+          actorContext.unlocked
+        ),
+      });
+
+      context.actions.forEach((section) => {
+        section.headerActions =
+          TableHeaderActionsRuntime.getActionHeaderActions(
+            this.actor,
+            this.actor.isOwner,
+            actorContext.unlocked,
+            section
+          );
+      });
+    }
+
     context.customContent = await CharacterSheetQuadroneRuntime.getContent(
       context
     );
@@ -305,7 +332,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
       context
     );
 
-    context.tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
+    context.tabs = tabs;
 
     return context;
   }
