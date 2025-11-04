@@ -935,5 +935,10 @@
     },
     "TIDY5E.GMOnly.Title": "Apenas Mestre",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opções Globais de Exibição Padrão",
-    "TIDY5E.Character.Sidebar.Title": "Barra Lateral do Personagem de Jogador"
+    "TIDY5E.Character.Sidebar.Title": "Barra Lateral do Personagem de Jogador",
+    "TIDY5E.SheetPin": {
+        "Label": "Fixado da Ficha",
+        "LabelPl": "Fixados da Ficha"
+    },
+    "TIDY5E.Utilities.ShowSheetPins": "Mostrar Fixados da Ficha"
 }
