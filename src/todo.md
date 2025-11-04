@@ -136,6 +136,8 @@
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
 - [ ] DocumentTag upgrade - show rich preview of found document
 - [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
+- [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
+
 
 ## hightouch To Do
 
