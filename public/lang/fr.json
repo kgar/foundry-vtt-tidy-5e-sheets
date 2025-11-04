@@ -442,7 +442,9 @@
         "AvailableHeader": "Onglets masqués",
         "SelectedHeader": "Onglets visible",
         "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
-        "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis."
+        "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis.",
+        "SelectionTab.Title": "Sélection de l'onglet",
+        "VisibilityTab.Title": "Visibilité des onglets"
     },
     "TIDY5E.Listbox": {
         "MoveRight": "Déplacer vers la droite (Espace)",
@@ -958,5 +960,22 @@
     "TIDY5E.UserDefaultPrefix": "Paramètres par défaut de l'utilisateur :{value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Options d'affichage globale par défaut",
     "TIDY5E.Character.Sidebar.Title": "Barre latérale du personnage joueur",
-    "TIDY5E.Actor.Characteristics": "Caractéristiques"
+    "TIDY5E.Actor.Characteristics": "Caractéristiques",
+    "TIDY5E.ContextMenuActionPin": "Épingler en haut",
+    "TIDY5E.ContextMenuActionUnpin": "Désépingler du haut",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "Menu",
+        "LocationHeader": "En-tête"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "Commandes d'en-tête",
+        "label": "Configurer les commandes d'en-tête",
+        "hint": "Nouvelle Tidy Sheets seulement : Configurez l'emplacement des commandes d'en-tête de feuille."
+    },
+    "TIDY5E.GMOnly.Title": "MD seleument",
+    "TIDY5E.Utilities.ShowSheetPins": "Afficher les sélections épingler de la feuille",
+    "TIDY5E.SheetPin": {
+        "LabelPl": "Épingles de la feuille",
+        "Label": "Épingle de la feuille"
+    }
 }
