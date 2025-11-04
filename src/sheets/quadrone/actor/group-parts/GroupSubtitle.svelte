@@ -212,17 +212,19 @@
     </span>
   {/if}
   {#if context.unlocked}
-    <button
-      aria-label={localize('DND5E.MovementConfig')}
-      type="button"
-      class={[
-        'button button-borderless button-icon-only button-config flexshrink',
-      ]}
-      onclick={() =>
-        FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
-      data-tidy-sheet-part="ability-configuration-control"
-    >
-      <i class="fas fa-cog"></i>
-    </button>
+    <span class="config-speeds">
+      <button
+        aria-label={localize('DND5E.MovementConfig')}
+        type="button"
+        class={[
+          'button button-borderless button-icon-only button-config flexshrink',
+        ]}
+        onclick={() =>
+          FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
+        data-tidy-sheet-part="ability-configuration-control"
+      >
+        <i class="fas fa-cog"></i>
+      </button>
+    </span>
   {/if}
 </div>
