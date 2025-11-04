@@ -974,5 +974,10 @@
         "label": "Configura Controlli Intestazione",
         "hint": "Solo per nuova Tidy Sheets: Configura la posizione dei controlli dell'intestazione scheda."
     },
-    "TIDY5E.GMOnly.Title": "Solo DM"
+    "TIDY5E.GMOnly.Title": "Solo DM",
+    "TIDY5E.SheetPin": {
+        "Label": "Pin Scheda",
+        "LabelPl": "Pins Scheda"
+    },
+    "TIDY5E.Utilities.ShowSheetPins": "Mostra Pins Scheda"
 }
