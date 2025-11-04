@@ -944,5 +944,10 @@
         "label": "Nastavení ovládacích prvků záhlaví",
         "hint": "Pouze nové deníky Tidy: Nastavení umístění ovládacích prvků záhlaví deníku."
     },
-    "TIDY5E.GMOnly.Title": "Pouze PJ"
+    "TIDY5E.GMOnly.Title": "Pouze PJ",
+    "TIDY5E.SheetPin": {
+        "Label": "Připnutý deník",
+        "LabelPl": "Připnuté deníky"
+    },
+    "TIDY5E.Utilities.ShowSheetPins": "Zobrazit připnuté deníky"
 }

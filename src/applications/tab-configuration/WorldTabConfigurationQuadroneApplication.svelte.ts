@@ -3,7 +3,7 @@ import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { mount } from 'svelte';
 import WorldTabConfigurationQuadrone from './WorldTabConfigurationQuadrone.svelte';
-import { settings } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
@@ -77,24 +77,22 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       getActorTabContext(
         CharacterSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_CHARACTER,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER]
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_CHARACTER],
+        false
       )
     );
 
-    const characterSidebarContext = buildTabConfigContextEntry(
-      CONSTANTS.DOCUMENT_NAME_ACTOR,
+    const characterSidebarContext = getActorTabContext(
+      CharacterSheetQuadroneSidebarRuntime,
       CONSTANTS.SHEET_TYPE_CHARACTER,
-      CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
       actorConfigs?.[CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR],
-      CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+      false,
+      CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
     );
 
     characterSidebarContext.title = FoundryAdapter.localize(
       'TIDY5E.Character.Sidebar.Title'
     );
-
-    characterSidebarContext.docTypeKeyOverride =
-      CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR;
 
     config.push(characterSidebarContext);
 
@@ -102,7 +100,8 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       getActorTabContext(
         NpcSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_NPC,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC]
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_NPC],
+        false
       )
     );
 
@@ -110,7 +109,8 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       getActorTabContext(
         GroupSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_GROUP,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP]
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_GROUP],
+        false
       )
     );
 
@@ -118,7 +118,8 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       getActorTabContext(
         EncounterSheetQuadroneRuntime,
         CONSTANTS.SHEET_TYPE_ENCOUNTER,
-        actorConfigs?.[CONSTANTS.SHEET_TYPE_ENCOUNTER]
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_ENCOUNTER],
+        false
       )
     );
 
@@ -127,7 +128,8 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
         getActorTabContext(
           VehicleSheetQuadroneRuntime,
           CONSTANTS.SHEET_TYPE_VEHICLE,
-          actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE]
+          actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE],
+          false
         )
       );
     }
@@ -136,7 +138,7 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
 
     let allItemTypes = ItemSheetQuadroneRuntime.getSheetTypes();
     for (let type of allItemTypes) {
-      config.push(getItemTabContext(type, itemConfigs?.[type]));
+      config.push(getItemTabContext(type, itemConfigs?.[type], false));
     }
 
     return config;

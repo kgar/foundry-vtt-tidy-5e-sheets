@@ -26,30 +26,26 @@
       : ctx.document.img,
   );
 
-  let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
-    $derived.by(() => {
-      const uses = ctx.document.uses;
+  let { usesDocument, value, maxText } = $derived.by(() => {
+    const uses = ctx.document.uses;
 
-      return {
-        usesDocument: ctx.document,
-        uses: uses,
-        value: (uses.max ?? 0) - uses.spent,
-        maxText: isNil(uses.max, '') ? '—' : uses.max.toString(),
-        valueProp: 'uses.value',
-        spentProp: 'uses.spent',
-        maxProp: 'uses.max',
-      };
-    });
+    return {
+      usesDocument: ctx.document,
+      uses: uses,
+      value: (uses.max ?? 0) - uses.spent,
+      maxText: isNil(uses.max, '') ? '—' : uses.max.toString(),
+    };
+  });
 
   function saveValueChange(
     ev: Event & { currentTarget: EventTarget & HTMLInputElement },
   ): boolean {
-    FoundryAdapter.handleItemUsesChanged(
+    FoundryAdapter.handleDocumentUsesChanged(
       ev,
       usesDocument,
-      valueProp,
-      spentProp,
-      maxProp,
+      'uses.value',
+      'uses.spent',
+      'uses.max',
     );
     return false;
   }
@@ -183,7 +179,7 @@
             <TextInput
               class={['uninput uses-value', { diminished: value < 1 }]}
               document={usesDocument}
-              field={spentProp}
+              field="uses.spent"
               {value}
               onSaveChange={(ev) => saveValueChange(ev)}
               selectOnFocus={true}

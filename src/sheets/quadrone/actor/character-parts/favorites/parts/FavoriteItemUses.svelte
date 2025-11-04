@@ -26,9 +26,11 @@
       selectOnFocus={true}
       onSaveChange={(event) => {
         const el = event.currentTarget;
-        FoundryAdapter.handleItemUsesChanged(event, favorite.item).then(() => {
-          el?.select();
-        });
+        FoundryAdapter.handleDocumentUsesChanged(event, favorite.item).then(
+          () => {
+            el?.select();
+          },
+        );
 
         return false;
       }}
