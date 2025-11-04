@@ -188,7 +188,7 @@
                   onclick={preventUseItemEvent}
                   disabled={!context.editable}
                   onSaveChange={(ev) =>
-                    FoundryAdapter.handleItemUsesChanged(ev, item) && false}
+                    FoundryAdapter.handleDocumentUsesChanged(ev, item) && false}
                 />
               {/if}
             </div>
