@@ -1350,8 +1350,7 @@ export const FoundryAdapter = {
   formatNumber(num: number) {
     return dnd5e.utils.formatNumber(num) as string;
   },
-  // TODO: Consolidate uses changed to one function
-  handleItemUsesChanged(
+  handleDocumentUsesChanged(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },

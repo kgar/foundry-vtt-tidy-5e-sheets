@@ -90,6 +90,7 @@
         <a
           class={['tidy-table-row-use-button', { disabled: !context.editable }]}
           onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}
+          data-has-roll-modes
         >
           <img
             class="item-image"

@@ -55,7 +55,7 @@
   function saveValueChange(
     ev: Event & { currentTarget: EventTarget & HTMLInputElement },
   ): boolean {
-    FoundryAdapter.handleItemUsesChanged(
+    FoundryAdapter.handleDocumentUsesChanged(
       ev,
       usesDocument,
       valueProp,

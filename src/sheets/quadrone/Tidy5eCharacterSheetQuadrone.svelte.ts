@@ -51,7 +51,7 @@ import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
-import { buildTabConfigContextEntry } from 'src/applications/tab-configuration/tab-configuration-functions';
+import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
@@ -82,14 +82,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           document: this.document,
           customTabConfigProvider: {
             getTabConfig: TidyFlags.sidebarTabConfiguration.get,
-            setTabsConfig: TidyFlags.sidebarTabConfiguration.set,
+            setTabConfig: TidyFlags.sidebarTabConfiguration.set,
             getTabContext: (doc, setting) => {
-              return buildTabConfigContextEntry(
+              return getActorTabContext(
+                CharacterSheetQuadroneSidebarRuntime,
                 doc.documentName,
-                doc.type,
-                CharacterSheetQuadroneSidebarRuntime.getAllRegisteredTabs(),
                 setting,
-                CharacterSheetQuadroneSidebarRuntime.getDefaultTabIds()
+                true,
+                CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR
               );
             },
           },
