@@ -14,6 +14,7 @@ import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
 import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
+import { EventHelper } from 'src/utils/events';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type RenderResult<TContext> = {
@@ -113,13 +114,27 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     #debouncedRerenderForSettings = FoundryAdapter.debounce(
-      () => this.render(),
+      this.render.bind(this),
       150
     );
+
+    #throttleSoftRendering = FoundryAdapter.throttle(
+      this.#renderSoftly.bind(this),
+      50
+    );
+
+    /** Run the standard render cycle while reusing the existing prepared context data. */
+    #renderSoftly() {
+      this.render({ soft: true });
+    }
 
     async _renderFrame(options: ApplicationRenderOptions) {
       const element = await super._renderFrame(options);
       const themeConfigOptions = this.themeConfigOptions();
+
+      EventHelper.subscribeToDynamicContentRenderEvents(element, () => {
+        this.#throttleSoftRendering();
+      });
 
       applyThemeToApplication(element, themeConfigOptions.doc ?? this.document);
 

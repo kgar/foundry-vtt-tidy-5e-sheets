@@ -3,7 +3,10 @@ import { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.
 import { ImportSheetControl } from 'src/features/sheet-header-controls/ImportSheetControl';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
-import type { ApplicationConfiguration } from 'src/types/application.types';
+import type {
+  ApplicationConfiguration,
+  DocumentSheetApplicationConfiguration,
+} from 'src/types/application.types';
 import type {
   AdvancementItemContext,
   AdvancementsContext,
@@ -38,17 +41,20 @@ import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
 
-export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
+export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
+  DocumentSheetApplicationConfiguration | undefined,
+  ItemSheetQuadroneContext
+>(
   CONSTANTS.SHEET_TYPE_ITEM,
   SvelteApplicationMixin<
-    ApplicationConfiguration | undefined,
+    DocumentSheetApplicationConfiguration | undefined,
     ItemSheetQuadroneContext
   >(foundry.applications.sheets.ItemSheetV2)
 ) {
   currentTabId: string = '';
   sectionExpansionTracker: ExpansionTracker;
 
-  constructor(options?: Partial<ApplicationConfiguration> | undefined) {
+  constructor(options?: DocumentSheetApplicationConfiguration | undefined) {
     super(options);
 
     this.sectionExpansionTracker = new ExpansionTracker(
@@ -197,6 +203,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
   async _prepareContext(
     options: TidyDocumentSheetRenderOptions
   ): Promise<ItemSheetQuadroneContext> {
+    if (options.soft && this._context?.data) {
+      return this._context.data;
+    }
+
     const documentSheetContext = await super._prepareContext(options);
 
     documentSheetContext.fields = this.item.system.schema.fields;
@@ -446,7 +456,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin(
           data,
           formulaOptions:
             data.period === 'recharge' ? data.recharge?.options : null,
-          fields: this.item.system.schema.fields.uses.fields.recovery.element.fields,
+          fields:
+            this.item.system.schema.fields.uses.fields.recovery.element.fields,
           prefix: `system.uses.recovery.${index}.`,
           source: systemSource.uses.recovery[index] ?? data,
         })

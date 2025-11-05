@@ -56,7 +56,7 @@ import { getActorTabContext } from 'src/applications/tab-configuration/tab-confi
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 import { getActorActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 
-export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
+export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER
 ) {
   currentTabId: string;
@@ -125,6 +125,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<CharacterSheetQuadroneContext> {
+    if (options.soft && this._context?.data) {
+      return this._context.data;
+    }
+
     this._concentration = this.actor.concentration;
 
     const actorContext = (await super._prepareContext(

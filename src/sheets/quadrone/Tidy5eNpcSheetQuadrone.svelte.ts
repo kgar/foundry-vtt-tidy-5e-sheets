@@ -39,7 +39,7 @@ import { ItemContext } from 'src/features/item/ItemContext';
 import { debug } from 'src/utils/logging';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
-export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
+export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
 ) {
   currentTabId: string;
@@ -79,7 +79,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<NpcSheetQuadroneContext> {
-    // this._concentration = this.actor.concentration;
+    if (options.soft && this._context?.data) {
+      return this._context.data;
+    }
 
     const actorContext = (await super._prepareContext(
       options

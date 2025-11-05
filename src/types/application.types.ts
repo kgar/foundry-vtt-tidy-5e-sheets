@@ -1,4 +1,7 @@
-import type { CustomHeaderControlsEntry, SheetHeaderControlPosition } from 'src/api/api.types';
+import type {
+  CustomHeaderControlsEntry,
+  SheetHeaderControlPosition,
+} from 'src/api/api.types';
 
 /** For use with Tidy applications that apply updates to a document but are not necessarily full-fledged sheets. */
 export type DocumentSheetApplicationConfiguration =
@@ -79,6 +82,14 @@ export interface ApplicationRenderOptions {
   renderData?: any;
   action?: string;
   data?: object;
+
+  // Tidy-specific options
+  /**
+   * If possible, reuse the existing prepared context data and
+   * proceed through the render lifecycle logic, particularly including
+   * custom content management.
+   */
+  soft?: boolean;
 }
 
 export interface ApplicationWindowRenderOptions {

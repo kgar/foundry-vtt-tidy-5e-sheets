@@ -43,7 +43,7 @@ import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
-export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
+export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP
 ) {
   currentTabId: string;
@@ -87,6 +87,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<GroupSheetQuadroneContext> {
+    if (options.soft && this._context?.data) {
+      return this._context.data;
+    }
+
     const actorContext = (await super._prepareContext(
       options
     )) as MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;
