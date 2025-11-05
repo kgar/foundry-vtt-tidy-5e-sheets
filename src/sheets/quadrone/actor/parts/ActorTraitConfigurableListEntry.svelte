@@ -5,13 +5,15 @@
   import type { ActorTraitContext } from 'src/types/types';
   import type { ClassValue } from 'svelte/elements';
 
+  type OnConfigFn = (
+    ev: MouseEvent & {
+      currentTarget: EventTarget & HTMLButtonElement;
+    },
+  ) => void;
+
   interface Props {
     entries: ActorTraitContext[];
-    onconfig?: (
-      ev: MouseEvent & {
-        currentTarget: EventTarget & HTMLButtonElement;
-      },
-    ) => void;
+    onconfig?: OnConfigFn;
     configurationTooltip?: string;
     icon?: ClassValue;
     label: string;
@@ -61,37 +63,31 @@
         {label}
       </h4>
       {#if context.unlocked && configButtonLocation == 'label' && onconfig}
-        <button
-          aria-label={configurationLabel}
-          type="button"
-          class="button button-borderless button-icon-only button-config flexshrink"
-          data-tooltip={configurationTooltip ?? configurationLabel}
-          onclick={(ev) => onconfig(ev)}
-        >
-          <i class="fa-solid fa-cog"></i>
-        </button>
+        {@render configButton(onconfig)}
       {/if}
     </div>
-    {#if entries.length}
-      <div class="list-content">
-        <div class="list-values">
-          {#if entries.length}
-            <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
-          {/if}
-        </div>
-        {#if context.unlocked && configButtonLocation == 'end' && onconfig}
-          <button
-            aria-label={configurationLabel}
-            type="button"
-            class="button button-borderless button-icon-only button-config flexshrink"
-            data-tooltip={configurationTooltip ?? configurationLabel}
-            onclick={(ev) => onconfig(ev)}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
+    <div class="list-content">
+      <div class="list-values">
+        {#if entries.length}
+          <ActorTraitPills values={entries} {pillClass} {aggregateIcons} />
         {/if}
       </div>
-    {/if}
+      {#if context.unlocked && configButtonLocation == 'end' && onconfig}
+        {@render configButton(onconfig)}
+      {/if}
+    </div>
   </div>
   {@html contentHtml}
 {/if}
+
+{#snippet configButton(configFn: OnConfigFn)}
+  <button
+    aria-label={configurationLabel}
+    type="button"
+    class="button button-borderless button-icon-only button-config flexshrink"
+    data-tooltip={configurationTooltip ?? configurationLabel}
+    onclick={(ev) => configFn(ev)}
+  >
+    <i class="fa-solid fa-cog"></i>
+  </button>
+{/snippet}
