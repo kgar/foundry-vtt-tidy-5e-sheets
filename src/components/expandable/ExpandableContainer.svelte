@@ -6,15 +6,19 @@
   type Props = {
     expanded?: boolean;
     children?: Snippet;
-    /** Even when collapsed, render the wrapper and its children. */
-    alwaysRenderWrapper?: boolean;
+    /**
+     * When collapsed, exclude the wrapper and its children from rendering.
+     * When rendering the content, trigger a soft render of the sheet
+     * to ensure all integrating code can inject content appropriately.
+     */
+    deferRendering?: boolean;
   } & HTMLAttributes<HTMLElement>;
 
   let {
     expanded = true,
     children,
     class: cssClass,
-    alwaysRenderWrapper = true,
+    deferRendering,
     ...rest
   }: Props = $props();
 
@@ -76,13 +80,13 @@
   role="presentation"
   {...rest}
 >
-  {#if alwaysRenderWrapper || renderContents}
+  {#if !deferRendering || renderContents}
     <div
       role="presentation"
       class="expandable-child-animation-wrapper"
       {@attach () => {
         untrack(() => {
-          if (!alwaysRenderWrapper && expandableContainer) {
+          if (deferRendering && expandableContainer) {
             EventHelper.triggerDynamicContentRenderedEvent(expandableContainer);
           }
         });
@@ -93,6 +97,7 @@
   {/if}
 </div>
 
+<!-- TODO: Remove the scoped CSS styles. -->
 <style lang="scss">
   .expandable {
     display: grid;

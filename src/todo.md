@@ -2,6 +2,7 @@
 
 ### Short List
 
+- [ ] Eliminate scoped CSS styles from ExpandableContainer.svelte. Ensure Quadrone sheets have the CSS they need for it.
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
   - [ ] When making any changes to the shuttle, uncheck the box.
