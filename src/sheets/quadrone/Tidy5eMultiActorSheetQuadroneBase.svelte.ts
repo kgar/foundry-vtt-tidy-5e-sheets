@@ -11,6 +11,7 @@ import type {
   MeasurableGroupTrait,
   MultiActorMemberPortraitContext,
   MultiActorQuadroneContext,
+  TidyItemSectionBase,
 } from 'src/types/types';
 import type {
   ApplicationClosingOptions,
@@ -31,6 +32,7 @@ import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.sve
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
+import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -136,6 +138,16 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       });
 
       context.inventory = Object.values(inventory);
+
+      context.inventory.forEach((section: TidyItemSectionBase) => {
+        section.headerActions =
+          TableHeaderActionsRuntime.getStandardItemHeaderActions(
+            this.actor,
+            this.actor.isOwner,
+            context.unlocked,
+            section
+          );
+      });
     }
 
     protected _prepareItem(item: Item5e, ctx: TContext) {}

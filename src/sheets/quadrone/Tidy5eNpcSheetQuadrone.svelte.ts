@@ -10,6 +10,7 @@ import type {
   NpcSheetQuadroneContext,
   NpcSpellcastingContext,
   SpellcastingClassContext,
+  TidyItemSectionBase,
   TidySectionBase,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
@@ -38,6 +39,7 @@ import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { debug } from 'src/utils/logging';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -494,11 +496,36 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       }
     );
 
+    const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
+      section.headerActions =
+        TableHeaderActionsRuntime.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+    };
+
     context.inventory = Object.values(inventory);
+
+    // TODO: Could header action prep be organized better?
+    context.inventory.forEach(applyStandardItemHeaderActions);
 
     context.spellbook = spellbook;
 
+    context.spellbook.forEach((section) => {
+      section.headerActions =
+        TableHeaderActionsRuntime.getSpellbookItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+    });
+
     context.features = Object.values(featureSections);
+
+    context.features.forEach(applyStandardItemHeaderActions);
   }
 
   protected _prepareItem(item: Item5e, ctx: NpcItemContext) {

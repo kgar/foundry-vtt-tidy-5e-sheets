@@ -6,18 +6,19 @@
 - [x] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
 - [x] Update sheet header commands column to leverage API ~~and place options in reverse order~~, favoring tidy default content on the far right. ~~Flex row-reverse might suffice for this.~~
 - [ ] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
-  - [ ] // TODO: add headerActions here
+  - [x] // TODO: add headerActions here
   - [x] Sheet tab - section rename (unlocked only), API commands
-  - [ ] Quadrone Character Feature Sections
-  - [ ] Quadrone NPC Feature Sections
-  - [ ] Quadrone Inventory Sections
-  - [ ] Quadrone Spellbook Sections
-    - [ ] Include slots config when usesSlots is true
-  - [ ] MCDM Powers (be conservative about this one, just use the add control)
+  - [x] Quadrone Character Feature Sections
+  - [x] Quadrone NPC Feature Sections
+  - [x] Quadrone Inventory Sections
+  - [x] Quadrone Spellbook Sections
+    - [x] Include slots config when usesSlots is true
+  - [x] MCDM Powers (be conservative about this one, just use the add control)
   - [ ] Group Sheet Members
-  - [ ] NPC Statblock Section
+  - [x] NPC Statblock Section
   - [ ] Test and look for trouble
-- [ ] Handle overflow control with a 3-dots context menu; for simplicity, just show all options, even the non-overflow ones
+- [ ] Consider renaming them "sectionActions"
+- [ ] (pending hightouch perspective) Handle overflow control with a 3-dots context menu; for simplicity, just show all options, even the non-overflow ones
   - [ ] Leverage knowledge of row actions width to indicate when to include the menu control. The menu control replaces the first command in the array.
 - [ ] Add context menu support to the section header at large with same behavior
 - [ ] Need to Handle: be able to show a field in the context menu even when locked. Take some time to think how to do this one. Example: Section Rename option should always be available in the menu but not available in the header controls when unlocked.

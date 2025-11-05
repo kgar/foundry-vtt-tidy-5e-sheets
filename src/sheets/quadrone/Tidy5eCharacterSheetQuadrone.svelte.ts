@@ -21,6 +21,8 @@ import type {
   InspirationSource,
   FeatureSection,
   ActorTraitContext,
+  TidySectionBase,
+  TidyItemSectionBase,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -679,13 +681,38 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         }
       );
 
+    const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
+      section.headerActions =
+        TableHeaderActionsRuntime.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+    };
+
     // Apply sections to their section lists
 
     context.inventory = Object.values(inventory);
 
+    // TODO: Find a more organized / sane way to apply header actions to sections?
+    context.inventory.forEach(applyStandardItemHeaderActions);
+
     context.spellbook = spellbook;
 
+    context.spellbook.forEach((section) => {
+      section.headerActions =
+        TableHeaderActionsRuntime.getSpellbookItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+    });
+
     context.features = Object.values(features);
+
+    context.features.forEach(applyStandardItemHeaderActions);
   }
 
   /**
