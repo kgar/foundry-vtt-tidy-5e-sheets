@@ -756,6 +756,9 @@ export const FoundryAdapter = {
   debounce(callback: Function, delay: number): Function {
     return foundry.utils.debounce(callback, delay);
   },
+  throttle(callback: Function, delay: number): Function {
+    return foundry.utils.throttle(callback, delay);
+  },
   roll(
     formula: string,
     rollData?: unknown,

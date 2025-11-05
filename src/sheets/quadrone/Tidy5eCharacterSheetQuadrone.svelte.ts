@@ -54,7 +54,7 @@ import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 
-export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
+export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER
 ) {
   currentTabId: string;
@@ -123,6 +123,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<CharacterSheetQuadroneContext> {
+    if (options.soft && this._context?.data) {
+      return this._context.data;
+    }
+
     this._concentration = this.actor.concentration;
 
     const actorContext = (await super._prepareContext(
