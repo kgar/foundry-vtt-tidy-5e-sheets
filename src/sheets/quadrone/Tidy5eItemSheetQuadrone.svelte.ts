@@ -203,7 +203,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   async _prepareContext(
     options: TidyDocumentSheetRenderOptions
   ): Promise<ItemSheetQuadroneContext> {
-    if (options.soft && this._context?.data) {
+    if (options?.soft && this._context?.data) {
       return this._context.data;
     }
 
