@@ -351,8 +351,11 @@ export function Tidy5eActorSheetQuadroneBase<
       // Concentration
       this._applyConcentration(context);
 
-      context.customActorTraits =
-        CustomActorTraitsRuntime.getEnabledTraits(context);
+      context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits({
+        context,
+        app: this,
+        element: this.element,
+      });
 
       await this.setExpandedItemData();
 

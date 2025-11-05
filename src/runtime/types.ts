@@ -110,15 +110,82 @@ export type RegisteredActorItemSectionCommandExecuteParams = {
 
 export type RegisteredCustomActorTrait = {
   title: string;
-  alwaysShow?: boolean;
-  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
-  openConfigurationTooltip?: string;
-  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
-  iconClass?: string;
+  alwaysShow: boolean | undefined;
+  openConfiguration:
+    | ((params: RegisteredTraitOpenConfigurationParams) => void)
+    | undefined;
+  openConfigurationTooltip: string | undefined;
+  enabled?: ((params: CustomTraitEnabledParams) => boolean) | undefined;
+  iconClass: string | undefined;
+  pills: ((params: RegisteredCustomTraitRenderParams) => RegisteredCustomTraitEntry[]) | undefined;
+  content: ((params: RegisteredCustomTraitRenderParams) => string) | undefined;
 };
-export type RegisteredTraitEnabledParams = {
+
+export type RegisteredCustomTraitEntry = {
+  /**
+   * An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button.
+   * Parameters:
+   *   - app - the sheet instance.
+   *   - document - the relevant Foundry document.
+   *   - context - the Tidy prepared context data. Use as your own risk.
+   */
+  onClick?: (params: RegisteredCustomTraitOnClickParams) => void;
+  /** 
+    Custom HTML content, to appear to the right of any specified icons and before any other content.
+    This content is specifically rendered as HTML, unlike the more specific building blocks.
+   */
+  content?: string;
+
+  /* -------------------------------------------- */
+  /*  Curated pill content                        */
+  /* -------------------------------------------- */
+  /* The below content is assembled with Tidy-specific markup and classes to form common pills. */
+
+  /** Icons associated with the trait. */
+  icons?: { icon: string; label: string }[];
+  /** Text that describes the trait. */
+  label: string;
+  /** The number sign (+ or -) for a numeric trait. */
+  sign?: string;
+  /** A value associated with the trait. */
+  value?: string;
+  /** The localized units abbreviation. */
+  units?: string;
+  /** The units key for CONFIG.DND5E purposes. */
+  unitsKey?: string;
+  /**
+   * Optional classes to apply to the resulting trait UI element. Any clsx value is permissible.
+   *
+   * @example ['your-classes', 'canBeListed', { ['in-a-variety']: true, ['of-ways']: false}]
+   * @example 'your-classes canBeListed in-a-variety of-ways'
+   *
+   * @see {@link https://svelte.dev/docs/svelte/class}
+   * @see {@link https://github.com/lukeed/clsx?tab=readme-ov-file#usage}
+   */
+  cssClass?: ClassValue;
+  /** Any information that should appear in parentheses after the main trait context info. */
+  parenthetical?: string;
+};
+
+export type RegisteredCustomTraitOnClickParams = {
+  app: any;
+  element: HTMLElement;
+  context: any;
+  event: MouseEvent;
+};
+
+export type CustomTraitEnabledParams = {
+  app: any;
+  element: HTMLElement;
   context: any;
 };
+
+export type RegisteredCustomTraitRenderParams = {
+  app: any;
+  element: HTMLElement;
+  data: any;
+};
+
 export type RegisteredTraitOpenConfigurationParams = {
   app: any;
   element: HTMLElement;

@@ -30,7 +30,7 @@
     type="text"
     value={item.system.uses.value}
     onchange={(event) => {
-      FoundryAdapter.handleItemUsesChanged(event, item);
+      FoundryAdapter.handleDocumentUsesChanged(event, item);
     }}
     disabled={!item.isOwner}
     {@attach InputAttachments.selectOnFocus}

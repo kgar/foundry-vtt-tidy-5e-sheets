@@ -25,30 +25,26 @@
       : ctx.document.img,
   );
 
-  let { usesDocument, valueProp, spentProp, maxProp, value, maxText, uses } =
-    $derived.by(() => {
-      const uses = ctx.document.uses;
+  let { usesDocument, value, maxText, uses } = $derived.by(() => {
+    const uses = ctx.document.uses;
 
-      return {
-        usesDocument: ctx.document,
-        uses: uses,
-        value: (uses.max ?? 0) - uses.spent,
-        maxText: isNil(uses.max, '') ? '—' : uses.max.toString(),
-        valueProp: 'uses.value',
-        spentProp: 'uses.spent',
-        maxProp: 'uses.max',
-      };
-    });
+    return {
+      usesDocument: ctx.document,
+      uses: uses,
+      value: (uses.max ?? 0) - uses.spent,
+      maxText: isNil(uses.max, '') ? '—' : uses.max.toString(),
+    };
+  });
 
   function saveValueChange(
     ev: Event & { currentTarget: EventTarget & HTMLInputElement },
   ): boolean {
-    FoundryAdapter.handleItemUsesChanged(
+    FoundryAdapter.handleDocumentUsesChanged(
       ev,
       usesDocument,
-      valueProp,
-      spentProp,
-      maxProp,
+      'uses.value',
+      'uses.spent',
+      'uses.max',
     );
     return false;
   }
@@ -111,7 +107,7 @@
     </div>
     <div class="attribute-counter {ctx.resource}">
       {#if ctx.resource === 'limited-uses' && ctx.document.isOnCooldown}
-        <RechargeControl document={ctx.document} field={spentProp} {uses} />
+        <RechargeControl document={ctx.document} field="uses.spent" {uses} />
       {:else if ctx.resource === 'limited-uses' && ctx.document.hasRecharge}
         <span class="charged-text">
           {#if value > 1}
@@ -122,7 +118,7 @@
       {:else if ctx.resource === 'limited-uses'}
         <TextInput
           document={usesDocument}
-          field={spentProp}
+          field="uses.spent"
           {value}
           onSaveChange={(ev) => saveValueChange(ev)}
           selectOnFocus={true}
