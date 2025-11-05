@@ -123,7 +123,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<CharacterSheetQuadroneContext> {
-    if (options.soft && this._context?.data) {
+    if (options?.soft && this._context?.data) {
       return this._context.data;
     }
 
