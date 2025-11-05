@@ -123,6 +123,7 @@ export function SvelteApplicationMixin<
       50
     );
 
+    /** Run the standard render cycle while reusing the existing prepared context data. */
     #renderSoftly() {
       this.render({ soft: true });
     }
