@@ -41,4 +41,13 @@
       {@html context.enriched.biography}
     {/if}
   </div>
+  {#if context.type === CONSTANTS.SHEET_TYPE_NPC && context.enriched.appearance}
+    <div class="editor-rendered-content">
+      <h3>
+        {localize('DND5E.Appearance')}
+      </h3>
+      <tidy-gold-header-underline></tidy-gold-header-underline>
+      {@html context.enriched.appearance}
+    </div>
+  {/if}
 </div>

@@ -252,6 +252,7 @@
           </a>
           {#if context.editable}
             <button
+              type="button"
               class="button button-borderless button-icon-only flexshrink"
               aria-label={localize('TIDY5E.ContextMenuActionEdit')}
               onclick={() => edit(value, enriched, field)}
