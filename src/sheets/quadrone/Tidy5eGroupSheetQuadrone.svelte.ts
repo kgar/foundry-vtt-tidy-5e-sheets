@@ -12,7 +12,6 @@ import type {
   GroupTraits,
   MeasurableGroupTrait,
   MultiActorQuadroneContext,
-  TidySectionBase,
   TravelPaceConfigEntry,
 } from 'src/types/types';
 import type {
@@ -41,7 +40,7 @@ import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
+import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -163,10 +162,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }> {
     const customSections = TidyFlags.sections.get(this.actor);
 
-    const rowActions =
-      TableRowActionsRuntime.getGroupMemberRowActions(actorContext);
-
-    const headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
+    const rowActions = TableRowActionsRuntime.getGroupMemberRowActions(
+      actorContext.document,
+      actorContext.unlocked
+    );
 
     const sections = new Map<string, GroupMemberSection>([
       [
@@ -178,7 +177,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           show: true,
           dataset: {},
           rowActions,
-          headerActions,
+          headerActions: [],
         },
       ],
       [
@@ -190,7 +189,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           show: true,
           dataset: {},
           rowActions,
-          headerActions,
+          headerActions: [],
         },
       ],
       [
@@ -202,7 +201,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           show: true,
           dataset: {},
           rowActions,
-          headerActions,
+          headerActions: [],
         },
       ],
     ]);
@@ -255,7 +254,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
             creationItemTypes: [],
           },
           rowActions,
-          headerActions,
+          headerActions: [],
         })
       );
 
@@ -331,6 +330,15 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
         this._prepareMemberSpeeds(actor, speeds);
       }
     }
+
+    sections.forEach((section) => {
+      section.headerActions =
+        TableHeaderActionsRuntime.getGroupMemberHeaderActions(
+          this.actor,
+          actorContext.unlocked,
+          section
+        );
+    });
 
     membersContext.skilled.push(
       ...skilled.values().reduce((prev, curr) => {

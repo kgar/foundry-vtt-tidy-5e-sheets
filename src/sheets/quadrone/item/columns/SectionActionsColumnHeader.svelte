@@ -3,7 +3,6 @@
   import type {
     Actor5e,
     DocumentSheetQuadroneContext,
-    SpellbookSection,
     TidySectionBase,
   } from 'src/types/types';
 
@@ -12,7 +11,7 @@
   }: ColumnHeaderProps<
     Actor5e,
     DocumentSheetQuadroneContext<any>,
-    TidySectionBase | SpellbookSection
+    TidySectionBase
   > = $props();
 </script>
 

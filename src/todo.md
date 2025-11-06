@@ -14,7 +14,7 @@
   - [x] Quadrone Spellbook Sections
     - [x] Include slots config when usesSlots is true
   - [x] MCDM Powers (be conservative about this one, just use the add control)
-  - [ ] Group Sheet Members
+  - [x] Group Sheet Members
   - [x] NPC Statblock Section
   - [ ] Test and look for trouble
 - [ ] Consider renaming them "sectionActions"

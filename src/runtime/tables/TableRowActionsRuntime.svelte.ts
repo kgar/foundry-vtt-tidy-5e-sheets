@@ -427,7 +427,7 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getGroupMemberRowActions(context: ActorSheetQuadroneContext) {
+  getGroupMemberRowActions(actor: Actor5e, unlocked: boolean) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Actor5e,
@@ -437,13 +437,13 @@ class TableRowActionsRuntime {
     let rowActions: TableAction<any>[] = $derived.by(() => {
       let result: TableAction<any>[] = [];
 
-      if (context.owner) {
-        if (context.unlocked) {
+      if (actor.isOwner) {
+        if (unlocked) {
           result.push({
             component: DeleteButton,
             props: (args) => ({
               doc: args.data,
-              deleteFn: () => context.actor.system.removeMember(args.data),
+              deleteFn: () => actor.system.removeMember(args.data),
               tooltip: FoundryAdapter.localize('DND5E.Group.Action.Remove'),
             }),
           } satisfies TableAction<typeof DeleteButton>);

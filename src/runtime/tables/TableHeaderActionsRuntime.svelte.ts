@@ -4,11 +4,17 @@ import {
   type ComponentWithProps,
 } from 'src/utils/component';
 import { ActorItemRuntime } from '../ActorItemRuntime';
-import type { Actor5e, TidyItemSectionBase } from 'src/types/types';
+import type {
+  Actor5e,
+  GroupMemberQuadroneContext,
+  GroupMemberSection,
+  TidyItemSectionBase,
+} from 'src/types/types';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { TidyFlags } from 'src/api';
 import CreateItemHeaderControl from 'src/components/item-list/controls/CreateItemHeaderControl.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 class TableHeaderActionsRuntime {
   getActionHeaderActions(
@@ -153,6 +159,51 @@ class TableHeaderActionsRuntime {
 
     return controls;
   }
+
+  getGroupMemberHeaderActions(
+    group: Actor5e,
+    unlocked: boolean,
+    section: GroupMemberSection
+  ) {
+    return [
+      componentWithProps(CustomItemHeaderControl, {
+        action: {
+          enabled: () => unlocked && group.isOwner && !!section.members.length,
+          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+          iconClass: 'fa-solid fa-diagram-cells',
+          execute: (params) => {
+            const firstMember = params.section.members[0].actor;
+            new SectionSelectorApplication({
+              flag: `${TidyFlags.sections.prop}.${firstMember.id}`,
+              callingDocument: group,
+              document: group,
+              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+              getKnownCustomSections:
+                SheetSections.getKnownCustomGroupMemberSections,
+              async onSave(newSectionName) {
+                const updates = params.section.members.reduce(
+                  (
+                    prev: Record<string, string | null>,
+                    curr: GroupMemberQuadroneContext
+                  ) => {
+                    prev[`${TidyFlags.sections.prop}.${curr.actor.id}`] =
+                      newSectionName;
+                    return prev;
+                  },
+                  {}
+                );
+
+                params.actor.update(updates);
+              },
+            }).render({ force: true });
+          },
+        },
+        section,
+        sheetDocument: group,
+        unlocked,
+      }),
+    ];
+  }
 }
 
 function getItemSectionRenameControl(
@@ -165,7 +216,7 @@ function getItemSectionRenameControl(
     component: CustomItemHeaderControl,
     props: {
       action: {
-        enabled: () => unlocked && !!section.items.length,
+        enabled: () => unlocked && actor.isOwner && !!section.items.length,
         execute: () => {
           new SectionSelectorApplication({
             flag: flagProp,
@@ -179,11 +230,11 @@ function getItemSectionRenameControl(
 
               return Item.updateDocuments(updates, { parent: actor });
             },
-            sectionType: 'TODO Sheet',
+            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
           }).render({ force: true });
         },
-        iconClass: 'fa-solid fa-pencil',
-        label: 'TODO Rename',
+        iconClass: 'fa-solid fa-diagram-cells',
+        label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
       },
       section,
       sheetDocument: actor,

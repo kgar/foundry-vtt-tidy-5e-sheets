@@ -12,10 +12,10 @@
     Actor5e,
     GroupMemberQuadroneContext,
     GroupMemberSection,
+    TidySectionBase,
   } from 'src/types/types';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
-  import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -28,10 +28,6 @@
   let context = $derived(getGroupSheetQuadroneContext());
 
   const localize = FoundryAdapter.localize;
-
-  let rowActions: any[] = $derived(
-    TableRowActionsRuntime.getGroupMemberRowActions(context),
-  );
 
   let sectionsContainer: HTMLElement;
   let sectionsInlineWidth: number = $state(0);
@@ -121,8 +117,8 @@
           sheetType: CONSTANTS.SHEET_TYPE_GROUP,
           tabId: CONSTANTS.TAB_MEMBERS,
           sectionKey: section.key,
-          rowActions: rowActions,
-          section: { ...SheetSections.EMPTY, rowActions },
+          rowActions: section.rowActions,
+          section,
           sheetDocument: context.actor,
         }),
       )}
@@ -144,12 +140,12 @@
                 <span class="table-header-count">{visibleItemCount}</span>
               </h3>
             </TidyTableHeaderCell>
-            {@render headerColumns(columns, hiddenColumns)}
+            {@render headerColumns(columns, hiddenColumns, section)}
           </TidyTableHeaderRow>
         {/snippet}
         {#snippet body()}
           {#each section.members as member}
-            {@render tableRow(member, columns, hiddenColumns)}
+            {@render tableRow(member, columns, hiddenColumns, section)}
           {/each}
         {/snippet}
       </TidyTable>
@@ -163,7 +159,11 @@
   {/if}
 </section>
 
-{#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
+{#snippet headerColumns(
+  columns: ColumnsLoadout,
+  hiddenColumns: Set<string>,
+  section: TidySectionBase,
+)}
   {#each columns.ordered as column}
     {@const hidden = hiddenColumns.has(column.key)}
     <TidyTableHeaderCell
@@ -178,10 +178,7 @@
           <column.headerContent.component
             sheetContext={context}
             sheetDocument={context.document}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
+            {section}
           />
         {:else if column.headerContent.type === 'html'}
           {@html column.headerContent.html}
@@ -195,6 +192,7 @@
   member: GroupMemberQuadroneContext,
   columns: ColumnsLoadout,
   hiddenColumns: Set<string>,
+  section: TidySectionBase,
 )}
   <div
     class={[
@@ -225,10 +223,7 @@
             <column.cellContent.component
               rowContext={member}
               rowDocument={member.actor}
-              section={{
-                ...SheetSections.EMPTY,
-                rowActions: rowActions,
-              }}
+              {section}
             />
           {/if}
         </TidyTableCell>
