@@ -56,7 +56,7 @@ export class SheetSections {
     key: '',
     show: true,
     rowActions: [],
-    headerActions: [],
+    sectionActions: [],
   });
 
   static itemSupportsCustomSections(itemType: string) {
@@ -102,7 +102,7 @@ export class SheetSections {
       },
       show: true,
       rowActions: [], // for the UI Overhaul
-      headerActions: [], // for the UI Overhaul
+      sectionActions: [], // for the UI Overhaul
       // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
       slot: '',
       method: '',
@@ -181,7 +181,7 @@ export class SheetSections {
           method: s.id,
           show: true,
           rowActions: options.rowActions ?? [], // for the UI Overhaul
-          headerActions: options.headerActions ?? [], // for the UI Overhaul
+          sectionActions: options.sectionActions ?? [], // for the UI Overhaul
         } satisfies SpellbookSection)
     );
 

@@ -42,7 +42,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
-import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
+import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin<
@@ -366,8 +366,8 @@ export class Tidy5eContainerSheetQuadrone
     // TODO: Could header action prep be organized better?
     context.containerContents.contents.forEach(
       (section: TidyItemSectionBase) => {
-        section.headerActions =
-          TableHeaderActionsRuntime.getStandardItemHeaderActions(
+        section.sectionActions =
+          SectionActionsRuntime.getStandardItemHeaderActions(
             this.document,
             this.document.isOwner,
             context.unlocked,

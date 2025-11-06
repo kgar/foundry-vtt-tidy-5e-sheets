@@ -587,7 +587,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         isExternal: false,
         showCrColumn: false,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       npc: {
         label: `${CONFIG.Actor.typeLabels.npc}Pl`,
@@ -599,7 +599,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         isExternal: false,
         showCrColumn: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       vehicle: {
         label: `${CONFIG.Actor.typeLabels.vehicle}Pl`,
@@ -611,7 +611,7 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
         isExternal: false,
         showCrColumn: false,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
     };
 

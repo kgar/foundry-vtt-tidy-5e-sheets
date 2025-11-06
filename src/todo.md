@@ -5,7 +5,7 @@
 - [x] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
 - [x] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
 - [x] Update sheet header commands column to leverage API ~~and place options in reverse order~~, favoring tidy default content on the far right. ~~Flex row-reverse might suffice for this.~~
-- [ ] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
+- [x] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
   - [x] // TODO: add headerActions here
   - [x] Sheet tab - section rename (unlocked only), API commands
   - [x] Quadrone Character Feature Sections
@@ -16,22 +16,23 @@
   - [x] MCDM Powers (be conservative about this one, just use the add control)
   - [x] Group Sheet Members
   - [x] NPC Statblock Section
-  - [ ] Test and look for trouble
-- [ ] Consider renaming them "sectionActions"
-- [ ] (pending hightouch perspective) Handle overflow control with a 3-dots context menu; for simplicity, just show all options, even the non-overflow ones
-  - [ ] Leverage knowledge of row actions width to indicate when to include the menu control. The menu control replaces the first command in the array.
+- [x] Consider renaming them "sectionActions"
+- [x] Ensure Quick Insert shows magnifying glass per configuration
+- [x] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
+- [x] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
+- [x] ~~Ensure context menu options are always available regardless of lock state~~ Nah. If the caller doesn't want it seen, we don't show it. The model should account for the alternate enabled state, perhaps through the enabled params ‼️.
+- [ ] Convert all section actions to the API model. Render them into the custom action component at render time, using the data.
+- [ ] Implement Overflow control 
+  - [ ] When 3+ commands, replace all header actions with single 3-dots menu button that opens context menu. All enabled options should be present. This can trivially be done in the component where section actions are rendered.
 - [ ] Add context menu support to the section header at large with same behavior
 - [ ] Need to Handle: be able to show a field in the context menu even when locked. Take some time to think how to do this one. Example: Section Rename option should always be available in the menu but not available in the header controls when unlocked.
-- [ ] Ensure Quick Insert shows magnifying glass per configuration
-- [ ] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
-- [ ] Implement section rename command in context menu 
-- [ ] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
-- [ ] Ensure context menu options are always available regardless of lock state
+- [ ] Implement section rename command in context menu as always available, even when locked
 - [ ] When unlocked, show section rename control in table head
 - [ ] Review the section command API to determine if there's more information that can be included in the enabled callback
 - [ ] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
+- [ ] #1422 - Test and look for trouble
 
 ### Short List
 

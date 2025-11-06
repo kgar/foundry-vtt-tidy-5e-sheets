@@ -348,7 +348,7 @@ export class Tidy5eVehicleSheet
         ],
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         canCreate: true,
       },
       equipment: {
@@ -361,7 +361,7 @@ export class Tidy5eVehicleSheet
         key: 'equipment',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         canCreate: true,
       },
       passive: {
@@ -372,7 +372,7 @@ export class Tidy5eVehicleSheet
         key: 'passive',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         canCreate: true,
       },
       reactions: {
@@ -383,7 +383,7 @@ export class Tidy5eVehicleSheet
         key: 'reactions',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         canCreate: true,
       },
       weapons: {
@@ -396,7 +396,7 @@ export class Tidy5eVehicleSheet
         key: 'weapons',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         canCreate: true,
       },
     };
@@ -417,7 +417,7 @@ export class Tidy5eVehicleSheet
         key: 'crew',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       passengers: {
         type: CONSTANTS.SECTION_TYPE_CARGO,
@@ -430,7 +430,7 @@ export class Tidy5eVehicleSheet
         key: 'passengers',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       cargo: {
         type: CONSTANTS.SECTION_TYPE_CARGO,
@@ -460,7 +460,7 @@ export class Tidy5eVehicleSheet
         key: CONSTANTS.SECTION_TYPE_CARGO,
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
     };
 

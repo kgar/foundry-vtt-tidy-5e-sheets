@@ -41,7 +41,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         ...options,
       },
       background: {
@@ -55,7 +55,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         ...options,
       },
       classes: {
@@ -70,7 +70,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         ...options,
       },
       active: {
@@ -89,7 +89,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         ...options,
       },
       passive: {
@@ -105,7 +105,7 @@ export class CharacterSheetSections {
         key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
         ...options,
       },
     };
@@ -177,7 +177,7 @@ export class CharacterSheetSections {
       },
       show: true,
       rowActions: [], // for the UI Overhaul
-      headerActions: [], // for the UI Overhaul
+      sectionActions: [], // for the UI Overhaul
       ...customSectionOptions,
     };
   }
@@ -356,7 +356,7 @@ export class CharacterSheetSections {
       type: CONSTANTS.SECTION_TYPE_FEATURE,
       key: args.key,
       rowActions: [],
-      headerActions: [],
+      sectionActions: [],
       items: [],
       label: args.title,
       show: true,
@@ -450,7 +450,7 @@ export class CharacterSheetSections {
       isExternal: false,
       show: true,
       rowActions: [], // for the UI Overhaul
-      headerActions: [], // for the UI Overhaul
+      sectionActions: [], // for the UI Overhaul
     };
   }
 }

@@ -40,7 +40,7 @@ import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
+import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -177,7 +177,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           show: true,
           dataset: {},
           rowActions,
-          headerActions: [],
+          sectionActions: [],
         },
       ],
       [
@@ -189,7 +189,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           show: true,
           dataset: {},
           rowActions,
-          headerActions: [],
+          sectionActions: [],
         },
       ],
       [
@@ -201,7 +201,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           show: true,
           dataset: {},
           rowActions,
-          headerActions: [],
+          sectionActions: [],
         },
       ],
     ]);
@@ -254,7 +254,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
             creationItemTypes: [],
           },
           rowActions,
-          headerActions: [],
+          sectionActions: [],
         })
       );
 
@@ -332,8 +332,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     }
 
     sections.forEach((section) => {
-      section.headerActions =
-        TableHeaderActionsRuntime.getGroupMemberHeaderActions(
+      section.sectionActions =
+        SectionActionsRuntime.getGroupMemberHeaderActions(
           this.actor,
           actorContext.unlocked,
           section

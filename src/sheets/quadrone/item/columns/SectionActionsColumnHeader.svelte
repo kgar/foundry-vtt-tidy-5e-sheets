@@ -15,6 +15,6 @@
   > = $props();
 </script>
 
-{#each section.headerActions as action}
+{#each section.sectionActions as action}
   <action.component {...action.props} />
 {/each}

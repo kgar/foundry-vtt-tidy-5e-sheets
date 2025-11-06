@@ -120,7 +120,7 @@ export class ConditionsAndEffects {
       return arr;
     }, []);
 
-    const headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
+    const sectionActions: TidyTableAction<any, any, TidySectionBase>[] = [];
 
     let newCategories: ActiveEffectSection[] = [];
     for (const [key, category] of Object.entries(effectSections)) {
@@ -177,7 +177,7 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
-        headerActions,
+        sectionActions,
       });
     }
 
@@ -192,7 +192,7 @@ export class ConditionsAndEffects {
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>
   ): Promise<ActiveEffectSection[]> {
     let newCategories: ActiveEffectSection[] = [];
-    const headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
+    const sectionActions: TidyTableAction<any, any, TidySectionBase>[] = [];
 
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
@@ -230,7 +230,7 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
-        headerActions,
+        sectionActions,
       });
     }
 

@@ -858,7 +858,7 @@ export class Tidy5eNpcSheet
         key: 'weapons',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_ACTIONS]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -873,7 +873,7 @@ export class Tidy5eNpcSheet
         key: 'actions',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_PASSIVE]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -885,7 +885,7 @@ export class Tidy5eNpcSheet
         show: true,
         hasUses: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -896,7 +896,7 @@ export class Tidy5eNpcSheet
         key: 'equipment',
         show: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
       [CONSTANTS.NPC_ABILITY_SECTION_CLASSES]: {
         type: CONSTANTS.SECTION_TYPE_FEATURE,
@@ -908,7 +908,7 @@ export class Tidy5eNpcSheet
         show: true,
         isClass: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
     };
 

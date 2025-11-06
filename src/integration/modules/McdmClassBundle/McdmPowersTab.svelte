@@ -128,7 +128,7 @@
         label: `MCDMCB.TALENT.POWERS.ORDERS.${order}`,
         canCreate: true,
         rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
-        headerActions: [
+        sectionActions: [
           {
             component: CreateItemHeaderControl,
             props: {},
@@ -149,7 +149,7 @@
             label: sectionKey,
             canCreate: true,
             rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
-            headerActions: [],
+            sectionActions: [],
             show: sectionConfig?.[sectionKey]?.show !== false,
           }),
         ),

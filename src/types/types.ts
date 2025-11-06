@@ -185,7 +185,7 @@ export type TidySectionBase = {
   isExternal?: boolean;
   // columns: ColumnsLoadout[];
   rowActions: TidyTableAction<any, any, any>[];
-  headerActions: ComponentWithProps<any>[];
+  sectionActions: ComponentWithProps<any>[];
 };
 
 export type FeatureSection = {

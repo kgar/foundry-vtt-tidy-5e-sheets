@@ -21,7 +21,6 @@ import type {
   InspirationSource,
   FeatureSection,
   ActorTraitContext,
-  TidySectionBase,
   TidyItemSectionBase,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
@@ -45,7 +44,7 @@ import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
+import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
@@ -320,13 +319,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       });
 
       context.actions.forEach((section) => {
-        section.headerActions =
-          TableHeaderActionsRuntime.getActionHeaderActions(
-            this.actor,
-            this.actor.isOwner,
-            actorContext.unlocked,
-            section
-          );
+        section.sectionActions = SectionActionsRuntime.getActionHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          actorContext.unlocked,
+          section
+        );
       });
     }
 
@@ -682,8 +680,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       );
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
-      section.headerActions =
-        TableHeaderActionsRuntime.getStandardItemHeaderActions(
+      section.sectionActions =
+        SectionActionsRuntime.getStandardItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,
@@ -701,8 +699,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     context.spellbook = spellbook;
 
     context.spellbook.forEach((section) => {
-      section.headerActions =
-        TableHeaderActionsRuntime.getSpellbookItemHeaderActions(
+      section.sectionActions =
+        SectionActionsRuntime.getSpellbookItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,

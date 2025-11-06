@@ -31,7 +31,7 @@ import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.sve
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
-import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
+import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -153,8 +153,8 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       context.inventory = Object.values(inventory);
 
       context.inventory.forEach((section: TidyItemSectionBase) => {
-        section.headerActions =
-          TableHeaderActionsRuntime.getStandardItemHeaderActions(
+        section.sectionActions =
+          SectionActionsRuntime.getStandardItemHeaderActions(
             this.actor,
             this.actor.isOwner,
             context.unlocked,

@@ -16,7 +16,7 @@ import CreateItemHeaderControl from 'src/components/item-list/controls/CreateIte
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
 
-class TableHeaderActionsRuntime {
+class SectionActionsRuntime {
   getActionHeaderActions(
     actor: Actor5e,
     owner: boolean,
@@ -265,6 +265,6 @@ function getItemActionsContextMenu(
   };
 }
 
-const singleton = new TableHeaderActionsRuntime();
+const singleton = new SectionActionsRuntime();
 
 export default singleton;

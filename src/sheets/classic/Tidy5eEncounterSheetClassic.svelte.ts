@@ -569,7 +569,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
         isExternal: false,
         showCrColumn: true,
         rowActions: [], // for the UI Overhaul
-        headerActions: [], // for the UI Overhaul
+        sectionActions: [], // for the UI Overhaul
       },
     };
 

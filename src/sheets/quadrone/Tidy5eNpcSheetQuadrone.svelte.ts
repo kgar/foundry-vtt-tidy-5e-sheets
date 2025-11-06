@@ -37,9 +37,7 @@ import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
-import { debug } from 'src/utils/logging';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-import TableHeaderActionsRuntime from 'src/runtime/tables/TableHeaderActionsRuntime.svelte';
+import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -347,8 +345,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     const statblockRowActions =
       TableRowActionsRuntime.getStatblockRowActions(context);
 
-    let headerActions: TidyTableAction<any, any, TidySectionBase>[] = []; // TODO: get header actions
-
     const createNewStatblockSection = (
       label: string,
       id: string,
@@ -369,7 +365,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         key: id,
         show: true,
         rowActions: statblockRowActions,
-        headerActions,
+        sectionActions: [],
         dataset: dataset,
         canCreate: true,
       };
@@ -497,8 +493,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     );
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
-      section.headerActions =
-        TableHeaderActionsRuntime.getStandardItemHeaderActions(
+      section.sectionActions =
+        SectionActionsRuntime.getStandardItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,
@@ -514,8 +510,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     context.spellbook = spellbook;
 
     context.spellbook.forEach((section) => {
-      section.headerActions =
-        TableHeaderActionsRuntime.getSpellbookItemHeaderActions(
+      section.sectionActions =
+        SectionActionsRuntime.getSpellbookItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,
