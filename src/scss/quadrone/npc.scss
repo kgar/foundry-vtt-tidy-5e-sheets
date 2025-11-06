@@ -11,6 +11,10 @@
     mix-blend-mode: normal;
   }
 
+  &.actor .sheet-body {
+    background-image: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp);
+  }
+
   &::after {
     background: none;
   }
