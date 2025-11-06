@@ -1673,6 +1673,11 @@
       }
     }
 
+    &.sheet-body {
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
     .editor-rendered-content {
       border: none;
       margin: var(--t5e-size-4x) 0;
