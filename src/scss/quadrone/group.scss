@@ -29,9 +29,9 @@
     }
 
     .actor-subtitle {
-      // max-height: 1.25rem;
       min-height: 1.25rem;
       align-content: center;
+      flex-wrap: wrap;
 
       .pill {
         flex: 0 1 auto;
@@ -43,7 +43,6 @@
           flex: 0 1 auto;
         }
       }
-
 
       .currency {
         margin-bottom: -0.125rem;
@@ -95,6 +94,11 @@
             border-color: var(--t5e-component-field-border-hover);
           }
         }
+      }
+
+      >span {
+        min-height: 1.25rem;
+        max-height: 1.25rem;
       }
     }
 

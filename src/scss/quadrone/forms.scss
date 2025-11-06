@@ -260,8 +260,9 @@
 
     &:not(.label-top) {
       >label {
+        align-content: center;
         align-self: flex-start;
-        line-height: var(--t5e-field-size-default);
+        min-height: var(--t5e-field-size-default);
       }
     }
 
