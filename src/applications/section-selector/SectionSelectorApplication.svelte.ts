@@ -26,6 +26,7 @@ export type SectionSelectorApplicationConfiguration =
     sectionType: string;
     callingDocument: any;
     onSave?: (section: string | null) => Promise<any>;
+    getKnownCustomSections?: (document: any) => string[];
   };
 
 export class SectionSelectorApplication extends DocumentSheetDialog<
@@ -49,12 +50,18 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
    * Optional save override for scenarios where the section affiliation is being handled differently.
    */
   _onSave?: (section: string | null) => Promise<any>;
+  /**
+   * The function by which the section selector determines the known custom sections
+   * to present to the user.
+   */
+  _getKnownCustomSections: (document: any) => string[];
 
   constructor({
     flag,
     sectionType,
     callingDocument,
     onSave,
+    getKnownCustomSections = SheetSections.getKnownCustomItemSections,
     ...options
   }: SectionSelectorApplicationConfiguration) {
     super(options);
@@ -63,6 +70,7 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
     this._sectionType = sectionType;
     this._callingDocument = callingDocument;
     this._onSave = onSave;
+    this._getKnownCustomSections = getKnownCustomSections;
   }
 
   static DEFAULT_OPTIONS: Partial<ApplicationConfiguration> = {
@@ -134,7 +142,7 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
   }
 
   async _prepareContext() {
-    const sections = SheetSections.getKnownCustomSections(this.document);
+    const sections = this._getKnownCustomSections(this.document);
 
     const currentSection = FoundryAdapter.getProperty<string>(
       this.document,
