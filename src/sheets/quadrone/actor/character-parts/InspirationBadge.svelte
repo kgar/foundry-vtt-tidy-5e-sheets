@@ -25,11 +25,12 @@
   {#if inspirationSource}
     {#if inspirationSource.max > 0}
       <button
-        aria-label="Inspiration"
         type="button"
         class="inspiration button button-borderless button-icon-only stacked"
         class:inspired={inspirationSource.value > 0}
         data-tidy-sheet-part="banked-inspiration-value"
+        aria-label={localize('DND5E.Inspiration')}
+        data-tooltip
       >
         <span class="inspiration-level theme-dark">
           <span class="level font-data-large color-text-inverse">
@@ -44,7 +45,8 @@
         <button
           type="button"
           class="button button-borderless button-icon-only"
-          aria-label="Remove Inspiration"
+          aria-label={localize('TIDY5E.InspirationRemove')}
+          data-tooltip
           disabled={inspirationSource.value === 0}
           onclick={() => inspirationSource.change(-1)}
           data-tidy-sheet-part="banked-inspiration-decrementer"
@@ -54,7 +56,8 @@
         <button
           type="button"
           class="button button-borderless button-icon-only"
-          aria-label="Add Inspiration"
+          aria-label={localize('TIDY5E.InspirationAdd')}
+          data-tooltip
           disabled={inspirationSource.value === inspirationSource.max}
           onclick={() => inspirationSource.change(1)}
           data-tidy-sheet-part="banked-inspiration-incrementer"
@@ -71,7 +74,7 @@
         { inspired: inspired },
       ]}
       aria-label={localize('DND5E.Inspiration')}
-      data-tooltip="DND5E.Inspiration"
+      data-tooltip
       onclick={(ev) =>
         actor.update({
           ['system.attributes.inspiration']: !inspired,
