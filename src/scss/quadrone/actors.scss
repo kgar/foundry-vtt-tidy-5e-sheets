@@ -105,6 +105,7 @@
       background-image: url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp);
       background-position: bottom center;
       background-repeat: no-repeat;
+      background-size: cover;
 
       &::before {
         content: '';
@@ -1671,6 +1672,11 @@
       .actor-name {
         margin-bottom: 1.5rem;
       }
+    }
+
+    &.sheet-body {
+      flex-direction: column;
+      overflow-y: auto;
     }
 
     .editor-rendered-content {
