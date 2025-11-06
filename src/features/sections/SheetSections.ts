@@ -757,7 +757,7 @@ export class SheetSections {
     return sections;
   }
 
-  static getKnownCustomSections(document: any) {
+  static getKnownCustomItemSections(document: any) {
     const useParentCollection =
       !!document.parent && !FoundryAdapter.isLockedInCompendium(document);
 
@@ -765,11 +765,28 @@ export class SheetSections {
       ? document.parent.items
       : game.items;
 
-    const sectionSet = itemCollection.reduce((prev: Item5e, curr: Item5e) => {
-      prev.add(TidyFlags.section.get(curr));
-      prev.add(TidyFlags.actionSection.get(curr));
-      return prev;
-    }, new Set<string>());
+    const sectionSet: Set<string> = itemCollection.reduce(
+      (prev: Item5e, curr: Item5e) => {
+        prev.add(TidyFlags.section.get(curr));
+        prev.add(TidyFlags.actionSection.get(curr));
+        return prev;
+      },
+      new Set<string>()
+    );
+
+    settings.value.globalCustomSections.forEach((defaultSectionConfig) =>
+      sectionSet.add(defaultSectionConfig.section)
+    );
+
+    return Array.from<string>(sectionSet)
+      .filter((x) => !isNil(x, ''))
+      .toSorted((left, right) => left.localeCompare(right, game.i18n.lang));
+  }
+
+  static getKnownCustomGroupMemberSections(group: Actor5e) {
+    const sectionSet = new Set<string>(
+      Object.values(TidyFlags.sections.get(group)).filter((s) => !isNil(s))
+    );
 
     settings.value.globalCustomSections.forEach((defaultSectionConfig) =>
       sectionSet.add(defaultSectionConfig.section)
@@ -846,7 +863,7 @@ export class SheetSections {
         // Sort - Group members are natively manually sorted
         if (sortMode !== 'm') {
           // TODO: This doesn't work because of the member data shape.
-          // Will need to find a way to punch through the item for comparison 
+          // Will need to find a way to punch through the item for comparison
           // while still sorting the main entry.
           // section.members = ItemUtils.getSortedItems(section.members, sortMode);
         }
