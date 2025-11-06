@@ -153,7 +153,7 @@
   {@render children?.({ toggleSummary, expanded })}
 
   {#snippet afterRow()}
-    <ExpandableContainer {expanded}>
+    <ExpandableContainer {expanded} deferRendering>
       <TidyItemSummary chatData={chatData ?? emptyChatData} {item} />
     </ExpandableContainer>
   {/snippet}

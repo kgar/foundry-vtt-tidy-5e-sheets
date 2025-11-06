@@ -35,9 +35,8 @@ import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
-import { debug } from 'src/utils/logging';
 
-export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
+export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
 ) {
   currentTabId: string;
@@ -77,7 +76,9 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase(
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<NpcSheetQuadroneContext> {
-    // this._concentration = this.actor.concentration;
+    if (options?.soft && this._context?.data) {
+      return this._context.data;
+    }
 
     const actorContext = (await super._prepareContext(
       options

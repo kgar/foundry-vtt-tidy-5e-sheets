@@ -756,6 +756,9 @@ export const FoundryAdapter = {
   debounce(callback: Function, delay: number): Function {
     return foundry.utils.debounce(callback, delay);
   },
+  throttle(callback: Function, delay: number): Function {
+    return foundry.utils.throttle(callback, delay);
+  },
   roll(
     formula: string,
     rollData?: unknown,
@@ -1347,8 +1350,7 @@ export const FoundryAdapter = {
   formatNumber(num: number) {
     return dnd5e.utils.formatNumber(num) as string;
   },
-  // TODO: Consolidate uses changed to one function
-  handleItemUsesChanged(
+  handleDocumentUsesChanged(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },

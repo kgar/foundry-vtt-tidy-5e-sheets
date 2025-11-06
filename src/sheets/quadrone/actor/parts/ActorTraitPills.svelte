@@ -51,6 +51,7 @@
 
 <ul class="pills">
   {#each values as value}
+    {@const onClick = value.onClick}
     <li
       class={[
         'pill pill-medium',
@@ -63,33 +64,52 @@
       data-tooltip-direction="UP"
       onmouseover={(ev) => onHover(ev, value)}
     >
-      {#if aggregateIcons && value.icons?.length}
-        <i class={aggregateIcons.iconClass}></i>
-      {:else if value.icons}
-        {#each value.icons as icon}
-          <i class={icon.icon} data-tooltip={icon.label}></i>
-        {/each}
+      {#if onClick}
+        <a
+          class="button button-borderless"
+          onclick={(event) =>
+            onClick({
+              app: context.sheet,
+              context,
+              element: context.sheet.element,
+              event,
+            })}
+        >
+          {@render pillContents()}
+        </a>
+      {:else}
+        {@render pillContents()}
       {/if}
-      <span class="label font-label-medium">
-        {value.label}
-      </span>
-      {#if value.sign || value.value || value.units}
-        <span>
-          {#if value.sign}<span class="sign font-label-medium"
-              >{value.sign}</span
-            >{/if}{#if value.value}<span class="value font-data-medium"
-              >{value.value}</span
-            >{/if}{#if value.units}<span
-              class="units font-default-medium color-text-lighter"
-              >{value.units}</span
-            >{/if}
-        </span>
-      {/if}
-      {#if value.parenthetical}
+
+      {#snippet pillContents()}
+        {#if aggregateIcons && value.icons?.length}
+          <i class={aggregateIcons.iconClass}></i>
+        {:else if value.icons}
+          {#each value.icons as icon}
+            <i class={icon.icon} data-tooltip={icon.label}></i>
+          {/each}
+        {/if}
         <span class="label font-label-medium">
-          ({value.parenthetical})
+          {value.label}
         </span>
-      {/if}
+        {#if value.sign || value.value || value.units}
+          <span>
+            {#if value.sign}<span class="sign font-label-medium"
+                >{value.sign}</span
+              >{/if}{#if value.value}<span class="value font-data-medium"
+                >{value.value}</span
+              >{/if}{#if value.units}<span
+                class="units font-default-medium color-text-lighter"
+                >{value.units}</span
+              >{/if}
+          </span>
+        {/if}
+        {#if value.parenthetical}
+          <span class="label font-label-medium">
+            ({value.parenthetical})
+          </span>
+        {/if}
+      {/snippet}
     </li>
   {/each}
 </ul>

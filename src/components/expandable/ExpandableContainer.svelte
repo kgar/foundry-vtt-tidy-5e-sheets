@@ -1,16 +1,31 @@
 <script lang="ts">
-  import { onMount, type Snippet } from 'svelte';
+  import { EventHelper } from 'src/utils/events';
+  import { onMount, untrack, type Snippet } from 'svelte';
+  import type { HTMLAttributes } from 'svelte/elements';
 
-  interface Props {
+  type Props = {
     expanded?: boolean;
     children?: Snippet;
-    [key: string]: any;
-  }
+    /**
+     * When collapsed, exclude the wrapper and its children from rendering.
+     * When rendering the content, trigger a soft render of the sheet
+     * to ensure all integrating code can inject content appropriately.
+     */
+    deferRendering?: boolean;
+  } & HTMLAttributes<HTMLElement>;
 
-  let { expanded = true, children, ...rest }: Props = $props();
+  let {
+    expanded = true,
+    children,
+    class: cssClass,
+    deferRendering,
+    ...rest
+  }: Props = $props();
 
   let overflowYHidden = $state(!expanded);
   let expandableContainer: HTMLElement;
+
+  let renderContents = $state<boolean>(expanded);
 
   onMount(() => {
     const controller = new AbortController();
@@ -20,10 +35,15 @@
       (ev) => {
         if (ev.target === expandableContainer) {
           overflowYHidden = true;
+
+          if (expanded) {
+            renderContents = true;
+          }
         }
       },
       {
         signal: controller.signal,
+        passive: true,
       },
     );
 
@@ -32,10 +52,12 @@
       (ev) => {
         if (ev.target === expandableContainer) {
           overflowYHidden = !expanded;
+          renderContents = expanded;
         }
       },
       {
         signal: controller.signal,
+        passive: true,
       },
     );
 
@@ -47,16 +69,35 @@
 
 <div
   bind:this={expandableContainer}
-  class="expandable {rest.class ?? ''}"
-  class:expanded
-  class:overflow-y-hidden={overflowYHidden}
+  class={[
+    'expandable',
+    cssClass,
+    {
+      expanded,
+      'overflow-y-hidden': overflowYHidden,
+    },
+  ]}
   role="presentation"
+  {...rest}
 >
-  <div role="presentation" class="expandable-child-animation-wrapper">
-    {@render children?.()}
-  </div>
+  {#if !deferRendering || renderContents}
+    <div
+      role="presentation"
+      class="expandable-child-animation-wrapper"
+      {@attach () => {
+        untrack(() => {
+          if (deferRendering && expandableContainer) {
+            EventHelper.triggerDynamicContentRenderedEvent(expandableContainer);
+          }
+        });
+      }}
+    >
+      {@render children?.()}
+    </div>
+  {/if}
 </div>
 
+<!-- TODO: Remove the scoped CSS styles. -->
 <style lang="scss">
   .expandable {
     display: grid;

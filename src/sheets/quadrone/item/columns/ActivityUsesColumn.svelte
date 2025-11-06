@@ -55,7 +55,13 @@
       value={activity.uses.value}
       {@attach InputAttachments.selectOnFocus}
       onchange={(event) =>
-        FoundryAdapter.handleItemUsesChanged(event, activity)}
+        FoundryAdapter.handleDocumentUsesChanged(
+          event,
+          activity,
+          'uses.value',
+          'uses.spent',
+          'uses.max',
+        )}
       class="uninput uses-value color-text-default"
       disabled={!context.editable}
     />

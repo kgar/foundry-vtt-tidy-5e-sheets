@@ -12,6 +12,7 @@ import type {
 } from 'src/api/api.types';
 import type {
   RegisteredCustomActorTrait,
+  RegisteredCustomTraitOnClickParams,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
@@ -971,6 +972,8 @@ export type ActorTraitContext<TValue = unknown> = {
   cssClass?: ClassValue;
   /** Any information that should appear in parentheses after the main trait context info. */
   parenthetical?: string;
+  /** An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. */
+  onClick?: (params: RegisteredCustomTraitOnClickParams) => void;
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {

@@ -41,7 +41,7 @@ import { CombatantSettings } from 'src/features/combat/CombatantSettings';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
 
-export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase(
+export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<EncounterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_ENCOUNTER
 ) {
   static DEFAULT_ENCOUNTER_PLACEHOLDER_ICON = 'icons/svg/mystery-man.svg';
@@ -95,6 +95,10 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<EncounterSheetQuadroneContext> {
+    if (options?.soft && this._context?.data) {
+      return this._context.data;
+    }
+
     const actorContext = (await super._prepareContext(
       options
     )) as MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;

@@ -834,12 +834,12 @@
     "TIDY5E.ConfigureTab.Title": "Konfiguruj {tabName}",
     "TIDY5E.DisplayOptions.Title": "Opcje wyświetlania",
     "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Pokarz wiersz pojemnika",
-    "TIDY5E.Tidy5eNpcSheetQuadrone": "Karta postaci NPC Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Karta NPC Tidy 5e",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Karta Pojemnika Tidy 5e",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Karta Przedmiotu Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Karta Pojazdu Tidy 5e",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Karta Grupy Tidy 5e",
-    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Karta postaci Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Karta Postaci Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Rzut na {ordinal}",
     "TIDY5E.AddSpecific": "Dodaj {name}",
     "TIDY5E.StatblockTabName": "Blok statystyk",
@@ -892,7 +892,7 @@
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Pokaż liczniki akcji legendarnych/leża w zakładce statystyk",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Uwzględnij sekcje księgi czarów w zakładce statystyk",
     "TIDY5E.UseSpecificDefaultValue.Label": "Użyj domyślnej ({value})",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasyczna karta spotkań Tidy 5e",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasyczna Karta Spotkań Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Karta spotkań Tidy 5e",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Użyj zabezpieczeń Karty Grupy",
@@ -939,5 +939,12 @@
         "label": "Konfiguruj przyciski nagłówka",
         "hint": "Tylko Nowe Karty Tidy: Skonfiguruj położenie przycisków nagłówka karty."
     },
-    "TIDY5E.GMOnly.Title": "Tylko MG"
+    "TIDY5E.GMOnly.Title": "Tylko MG",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globalne domyślne opcje wyświetlania",
+    "TIDY5E.Character.Sidebar.Title": "Panel boczny postaci",
+    "TIDY5E.Utilities.ShowSheetPins": "Pokaż przypięcia karty",
+    "TIDY5E.SheetPin": {
+        "Label": "Przypięcie karty",
+        "LabelPl": "Przypięcia karty"
+    }
 }

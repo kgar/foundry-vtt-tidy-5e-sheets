@@ -2,6 +2,7 @@
 
 ### Short List
 
+- [ ] Eliminate scoped CSS styles from ExpandableContainer.svelte. Ensure Quadrone sheets have the CSS they need for it.
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
   - [ ] When making any changes to the shuttle, uncheck the box.
@@ -13,6 +14,7 @@
 - [ ] Need to refactor: Resize Observation and Column Loadout. There are so many places in a given tab where resize observers are needed for inline activities that it imposes a noticeable performance hit. Also, with every adjustment, column loadout is redone and re-ordered, which is unnecessary. Eliminate ColumnLoadout class and instead simply calculate column setup in section preparation, since that has to be done, anyway.
   - [ ] Identify all resize observers which can be removed.
   - [ ] Consider optimizing nested container inline width management at this time; apply spacer calculations to the final total for each level of nesting. It doesn't have to be perfect.
+- [ ] Try revisiting the Expandable containers. Is there a more performant way that doesn't involve hooking into transition events?
 - [ ] Character Sheet - Sheet tab upgrade
   - [ ] Add preference / flag: "Auto-populate Items"
   - [ ] Add preference / flag: "Organize Items by Action Economy" / "Organize Items by Origin Sections"
@@ -136,6 +138,8 @@
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
 - [ ] DocumentTag upgrade - show rich preview of found document
 - [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
+- [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
+
 
 ## hightouch To Do
 

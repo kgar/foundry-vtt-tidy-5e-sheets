@@ -57,7 +57,7 @@
       type="text"
       value={item.system.uses.value}
       {@attach InputAttachments.selectOnFocus}
-      onchange={(event) => FoundryAdapter.handleItemUsesChanged(event, item)}
+      onchange={(event) => FoundryAdapter.handleDocumentUsesChanged(event, item)}
       class="uninput uses-value color-text-default"
       disabled={!context.editable}
     />

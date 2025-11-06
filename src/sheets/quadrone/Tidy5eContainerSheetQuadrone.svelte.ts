@@ -25,7 +25,6 @@ import type {
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { Container } from 'src/features/containers/Container';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime.svelte';
@@ -44,7 +43,10 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
 
 export class Tidy5eContainerSheetQuadrone
-  extends TidyExtensibleDocumentSheetMixin(
+  extends TidyExtensibleDocumentSheetMixin<
+    DocumentSheetApplicationConfiguration | undefined,
+    ContainerSheetQuadroneContext
+  >(
     CONSTANTS.SHEET_TYPE_CONTAINER,
     SvelteApplicationMixin<
       DocumentSheetApplicationConfiguration | undefined,
@@ -221,6 +223,10 @@ export class Tidy5eContainerSheetQuadrone
   async _prepareContext(
     options: ApplicationRenderOptions
   ): Promise<ContainerSheetQuadroneContext> {
+    if (options?.soft && this._context?.data) {
+      return this._context.data;
+    }
+
     this.itemFilterService.refreshFilters();
 
     const documentSheetContext = await super._prepareContext(options);

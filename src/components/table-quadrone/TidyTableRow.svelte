@@ -50,9 +50,52 @@
     {...rowAttributes}
     {ondblclick}
     {onmousedown}
-    {onmouseenter}
-    {onmouseleave}
-    {ondragstart}
+    {@attach (el) => {
+      const controller = new AbortController();
+
+      if (onmouseenter) {
+        el.addEventListener(
+          'mouseenter',
+          (ev) => {
+            onmouseenter?.(ev as MouseEvent & { currentTarget: HTMLElement });
+          },
+          {
+            signal: controller.signal,
+            passive: true,
+          },
+        );
+      }
+
+      if (onmouseleave) {
+        el.addEventListener(
+          'mouseleave',
+          (ev) => {
+            onmouseleave?.(ev as MouseEvent & { currentTarget: HTMLElement });
+          },
+          {
+            signal: controller.signal,
+            passive: true,
+          },
+        );
+      }
+
+      if (ondragstart) {
+        el.addEventListener(
+          'dragstart',
+          (ev) => {
+            ondragstart?.(ev as DragEvent & { currentTarget: HTMLElement });
+          },
+          {
+            signal: controller.signal,
+            passive: true,
+          },
+        );
+      }
+
+      return () => {
+        controller.abort();
+      };
+    }}
   >
     {@render children?.()}
   </div>
