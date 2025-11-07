@@ -185,7 +185,20 @@ export type TidySectionBase = {
   isExternal?: boolean;
   // columns: ColumnsLoadout[];
   rowActions: TidyTableAction<any, any, any>[];
-  sectionActions: ComponentWithProps<any>[];
+  sectionActions: ActorSectionCommand[];
+};
+
+export type ActorSectionCommand = {
+  label?: string;
+  iconClass?: string;
+  tooltip?: string;
+  execute?: (params: ActorSectionCommandExecuteParams) => void;
+};
+
+export type ActorSectionCommandExecuteParams = {
+  actor: Actor5e;
+  section: any;
+  event: Event;
 };
 
 export type FeatureSection = {

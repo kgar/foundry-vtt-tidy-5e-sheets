@@ -1,6 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetQuadroneContext } from 'src/types/types';
+  import type {
+    ActorSectionCommand,
+    ActorSheetQuadroneContext,
+  } from 'src/types/types';
   import { MCDM_CLASS_BUNDLE_CONSTANTS } from './McdmClassBundleConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
@@ -19,7 +22,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Item5e } from 'src/types/item.types';
   import type { PowersSection } from './McdmClassBundle';
-  import CreateItemHeaderControl from 'src/components/item-list/controls/CreateItemHeaderControl.svelte';
+  import { getCreateItemHeaderSectionAction } from 'src/features/sections/SectionActions';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -116,6 +119,11 @@
     );
     const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
     const sectionConfig = TidyFlags.sectionConfig.get(context.actor)?.[tabId];
+    const sectionActions: ActorSectionCommand[] = [];
+    if (context.owner) {
+      sectionActions.push(getCreateItemHeaderSectionAction());
+    }
+
     const allSections = Object.entries(orderToPowersMap)
       .map<PowersSection>(([order, powers]) => ({
         key: `order${order}`,
@@ -128,12 +136,7 @@
         label: `MCDMCB.TALENT.POWERS.ORDERS.${order}`,
         canCreate: true,
         rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
-        sectionActions: [
-          {
-            component: CreateItemHeaderControl,
-            props: {},
-          },
-        ],
+        sectionActions,
         show: sectionConfig?.[`order${order}`]?.show !== false,
       }))
       .concat(
@@ -149,7 +152,7 @@
             label: sectionKey,
             canCreate: true,
             rowActions: TableRowActionsRuntime.getInventoryRowActions(context),
-            sectionActions: [],
+            sectionActions,
             show: sectionConfig?.[sectionKey]?.show !== false,
           }),
         ),

@@ -21,7 +21,7 @@
 - [x] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
 - [x] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
 - [x] ~~Ensure context menu options are always available regardless of lock state~~ Nah. If the caller doesn't want it seen, we don't show it. The model should account for the alternate enabled state, perhaps through the enabled params ‼️.
-- [ ] Convert all section actions to the API model. Render them into the custom action component at render time, using the data.
+- [x] Convert all section actions to the API model. Render them into the custom action component at render time, using the data.
 - [ ] Implement Overflow control 
   - [ ] When 3+ commands, replace all header actions with single 3-dots menu button that opens context menu. All enabled options should be present. This can trivially be done in the component where section actions are rendered.
 - [ ] Add context menu support to the section header at large with same behavior
@@ -33,6 +33,7 @@
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
 - [ ] #1422 - Test and look for trouble
+- [ ] (Maybe resolved) Section Actions are completely item-oriented right now on TidySectionBase. Make them able to accommodate any entity and increase specificity in, say, TidyItemSectionBase.
 
 ### Short List
 

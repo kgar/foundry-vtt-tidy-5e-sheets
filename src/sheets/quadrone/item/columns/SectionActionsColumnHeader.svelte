@@ -1,4 +1,5 @@
 <script lang="ts">
+  import SectionActionHeaderControl from 'src/components/item-list/controls/SectionActionHeaderControl.svelte';
   import type { ColumnHeaderProps } from 'src/runtime/types';
   import type {
     Actor5e,
@@ -8,6 +9,7 @@
 
   let {
     section,
+    sheetDocument,
   }: ColumnHeaderProps<
     Actor5e,
     DocumentSheetQuadroneContext<any>,
@@ -16,5 +18,5 @@
 </script>
 
 {#each section.sectionActions as action}
-  <action.component {...action.props} />
+  <SectionActionHeaderControl {action} {section} {sheetDocument} />
 {/each}

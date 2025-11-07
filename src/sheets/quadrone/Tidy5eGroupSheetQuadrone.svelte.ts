@@ -40,7 +40,7 @@ import type { Item5e } from 'src/types/item.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/api';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
+import SectionActions from 'src/features/sections/SectionActions';
 
 export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<GroupSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_GROUP
@@ -333,7 +333,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
     sections.forEach((section) => {
       section.sectionActions =
-        SectionActionsRuntime.getGroupMemberHeaderActions(
+        SectionActions.getGroupMemberHeaderActions(
           this.actor,
           actorContext.unlocked,
           section

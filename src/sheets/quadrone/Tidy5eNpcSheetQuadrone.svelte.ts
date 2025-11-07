@@ -37,7 +37,7 @@ import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
-import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
+import SectionActions from 'src/features/sections/SectionActions';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -494,7 +494,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
       section.sectionActions =
-        SectionActionsRuntime.getStandardItemHeaderActions(
+        SectionActions.getStandardItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,
@@ -511,7 +511,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     context.spellbook.forEach((section) => {
       section.sectionActions =
-        SectionActionsRuntime.getSpellbookItemHeaderActions(
+        SectionActions.getSpellbookItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,

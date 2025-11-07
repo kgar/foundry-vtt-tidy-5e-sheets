@@ -3,7 +3,6 @@ import type {
   RegisteredActorItemSectionCommand,
   RegisteredActorItemSectionCommandEnabledParams,
 } from './types';
-import type { Actor5e } from 'src/types/types';
 import { error } from 'src/utils/logging';
 
 export class ActorItemRuntime {
@@ -18,7 +17,7 @@ export class ActorItemRuntime {
     section,
     actor,
     unlocked,
-  }: RegisteredActorItemSectionCommandEnabledParams): RegisteredActorItemSectionCommand[] {
+  }: RegisteredActorItemSectionCommandEnabledParams): ActorItemSectionCommand[] {
     return [...ActorItemRuntime._actorItemSectionCommands].filter((c) => {
       try {
         return section && (c.enabled?.({ section, actor, unlocked }) ?? true);

@@ -42,7 +42,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
-import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
+import SectionActions from 'src/features/sections/SectionActions';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin<
@@ -367,7 +367,7 @@ export class Tidy5eContainerSheetQuadrone
     context.containerContents.contents.forEach(
       (section: TidyItemSectionBase) => {
         section.sectionActions =
-          SectionActionsRuntime.getStandardItemHeaderActions(
+          SectionActions.getStandardItemHeaderActions(
             this.document,
             this.document.isOwner,
             context.unlocked,

@@ -44,7 +44,7 @@ import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import SectionActionsRuntime from 'src/runtime/tables/SectionActionsRuntime';
+import SectionActions from 'src/features/sections/SectionActions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
@@ -319,7 +319,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       });
 
       context.actions.forEach((section) => {
-        section.sectionActions = SectionActionsRuntime.getActionHeaderActions(
+        section.sectionActions = SectionActions.getActionHeaderActions(
           this.actor,
           this.actor.isOwner,
           actorContext.unlocked,
@@ -681,7 +681,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
       section.sectionActions =
-        SectionActionsRuntime.getStandardItemHeaderActions(
+        SectionActions.getStandardItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,
@@ -700,7 +700,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     context.spellbook.forEach((section) => {
       section.sectionActions =
-        SectionActionsRuntime.getSpellbookItemHeaderActions(
+        SectionActions.getSpellbookItemHeaderActions(
           this.actor,
           this.actor.isOwner,
           context.unlocked,

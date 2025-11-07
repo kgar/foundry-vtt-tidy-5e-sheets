@@ -5,12 +5,11 @@ import type {
   ActiveEffectContext,
   ActiveEffectSection,
   Actor5e,
+  ActorSectionCommand,
   DocumentSheetQuadroneContext,
   EffectCategory,
-  TidySectionBase,
 } from 'src/types/types';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
 
 export class ConditionsAndEffects {
   static async getConditionsAndEffectsForActor(
@@ -120,7 +119,7 @@ export class ConditionsAndEffects {
       return arr;
     }, []);
 
-    const sectionActions: TidyTableAction<any, any, TidySectionBase>[] = [];
+    const sectionActions: ActorSectionCommand[] = [];
 
     let newCategories: ActiveEffectSection[] = [];
     for (const [key, category] of Object.entries(effectSections)) {
@@ -192,7 +191,7 @@ export class ConditionsAndEffects {
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>
   ): Promise<ActiveEffectSection[]> {
     let newCategories: ActiveEffectSection[] = [];
-    const sectionActions: TidyTableAction<any, any, TidySectionBase>[] = [];
+    const sectionActions: ActorSectionCommand[] = [];
 
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
