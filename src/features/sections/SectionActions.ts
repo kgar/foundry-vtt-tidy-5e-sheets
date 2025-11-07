@@ -226,7 +226,8 @@ class SectionActions {
       execute: (params) => {
         params.actor.sheet._sectionForMenu = params.section;
         EventHelper.triggerContextMenu(
-          params.event as Event & { currentTarget: HTMLElement }
+          params.event as Event & { currentTarget: HTMLElement },
+          '[data-context-menu]'
         );
       },
       iconClass: 'fa-solid fa-ellipsis-vertical',

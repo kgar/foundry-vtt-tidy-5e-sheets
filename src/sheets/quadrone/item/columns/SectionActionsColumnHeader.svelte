@@ -7,6 +7,7 @@
     TidySectionBase,
   } from 'src/types/types';
   import SectionActions from 'src/features/sections/SectionActions';
+  import { CONSTANTS } from 'src/constants';
 
   let {
     section,
@@ -25,5 +26,10 @@
     <SectionActionHeaderControl {action} {section} {sheetDocument} />
   {/each}
 {:else}
-  <SectionActionHeaderControl action={menuAction} {section} {sheetDocument} />
+  <SectionActionHeaderControl
+    action={menuAction}
+    {section}
+    {sheetDocument}
+    data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_SECTION}
+  />
 {/if}
