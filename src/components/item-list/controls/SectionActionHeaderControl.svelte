@@ -12,12 +12,14 @@
   let { action, section, sheetDocument, ...attributes }: Props = $props();
 
   const localize = FoundryAdapter.localize;
+
+  const tooltip = $derived(localize(action.tooltip ?? action.label ?? ''));
 </script>
 
 <a
   class="tidy-table-button"
-  data-tooltip
-  aria-label={localize(action.tooltip ?? action.label ?? '')}
+  data-tooltip={tooltip}
+  aria-label={tooltip}
   onclick={(event) =>
     action.execute?.({ actor: sheetDocument, event, section })}
   {...attributes}

@@ -19,9 +19,11 @@
   > = $props();
 
   const menuAction = SectionActions.getMenuActionCommand();
+
+  const sectionActionLimit = $derived(section.rowActions.length);
 </script>
 
-{#if section.sectionActions.length <= 3}
+{#if section.sectionActions.length <= sectionActionLimit}
   {#each section.sectionActions as action}
     <SectionActionHeaderControl {action} {section} {sheetDocument} />
   {/each}
