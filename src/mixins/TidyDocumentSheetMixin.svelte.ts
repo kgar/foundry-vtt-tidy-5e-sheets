@@ -13,6 +13,7 @@ import type {
   CustomContent,
   DocumentSheetV2Context,
   Tab,
+  TidySectionBase,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
 import type { RenderResult } from './SvelteApplicationMixin.svelte';
@@ -63,6 +64,7 @@ export function TidyExtensibleDocumentSheetMixin<
     _fixedMode: number | undefined;
     _mode = $state<number | undefined>();
     _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
+    _sectionForMenu?: TidySectionBase;
 
     constructor(options: TConstructorArgs) {
       super(options);

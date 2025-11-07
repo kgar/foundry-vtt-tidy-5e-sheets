@@ -33,7 +33,7 @@
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
 - [ ] #1422 - Test and look for trouble
-- [ ] (Maybe resolved) Section Actions are completely item-oriented right now on TidySectionBase. Make them able to accommodate any entity and increase specificity in, say, TidyItemSectionBase.
+- [ ] (Maybe resolved) Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
 
 ### Short List
 

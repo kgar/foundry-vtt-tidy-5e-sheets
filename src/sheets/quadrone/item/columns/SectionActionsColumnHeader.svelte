@@ -6,6 +6,7 @@
     DocumentSheetQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
+  import SectionActions from 'src/features/sections/SectionActions';
 
   let {
     section,
@@ -15,8 +16,14 @@
     DocumentSheetQuadroneContext<any>,
     TidySectionBase
   > = $props();
+
+  const menuAction = SectionActions.getMenuActionCommand();
 </script>
 
-{#each section.sectionActions as action}
-  <SectionActionHeaderControl {action} {section} {sheetDocument} />
-{/each}
+{#if section.sectionActions.length <= 3}
+  {#each section.sectionActions as action}
+    <SectionActionHeaderControl {action} {section} {sheetDocument} />
+  {/each}
+{:else}
+  <SectionActionHeaderControl action={menuAction} {section} {sheetDocument} />
+{/if}

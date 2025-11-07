@@ -132,7 +132,6 @@
         {#snippet header()}
           <TidyTableHeaderRow
             class="theme-dark"
-            data-context-menu="group-section"
           >
             <TidyTableHeaderCell primary={true}>
               <h3>

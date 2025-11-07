@@ -1,12 +1,28 @@
 export class EventHelper {
   static triggerContextMenu(
-    event: (MouseEvent | PointerEvent) & { currentTarget: HTMLElement },
-    targetSelector: string
+    event: (MouseEvent | PointerEvent | Event) & { currentTarget: HTMLElement },
+    targetSelector?: string
   ) {
     event.preventDefault();
     event.stopPropagation();
-    const { clientX, clientY } = event;
-    event.currentTarget.closest(targetSelector)?.dispatchEvent(
+
+    let clientX = 0;
+    let clientY = 0;
+
+    if ('clientX' in event) {
+      clientX = event.clientX;
+      clientY = event.clientY;
+    } else {
+      var clientRect = event.currentTarget.getBoundingClientRect();
+      clientX = clientRect.left;
+      clientY = clientRect.top;
+    }
+
+    const target = targetSelector
+      ? event.currentTarget.closest(targetSelector)
+      : event.currentTarget;
+
+    target?.dispatchEvent(
       new PointerEvent('contextmenu', {
         view: window,
         bubbles: true,

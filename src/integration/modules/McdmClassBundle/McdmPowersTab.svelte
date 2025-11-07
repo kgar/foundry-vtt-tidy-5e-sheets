@@ -22,7 +22,7 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Item5e } from 'src/types/item.types';
   import type { PowersSection } from './McdmClassBundle';
-  import { getCreateItemHeaderSectionAction } from 'src/features/sections/SectionActions';
+  import SectionActions from 'src/features/sections/SectionActions';
 
   let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
@@ -121,7 +121,7 @@
     const sectionConfig = TidyFlags.sectionConfig.get(context.actor)?.[tabId];
     const sectionActions: ActorSectionCommand[] = [];
     if (context.owner) {
-      sectionActions.push(getCreateItemHeaderSectionAction());
+      sectionActions.push(SectionActions.getCreateItemHeaderSectionAction());
     }
 
     const allSections = Object.entries(orderToPowersMap)

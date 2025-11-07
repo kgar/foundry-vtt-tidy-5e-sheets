@@ -10,6 +10,7 @@ import { SectionSelectorApplication } from 'src/applications/section-selector/Se
 import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { EventHelper } from 'src/utils/events';
 
 class SectionActions {
   getActionHeaderActions(
@@ -22,7 +23,7 @@ class SectionActions {
       return [];
     }
 
-    const renameCommand = getItemSectionRenameCommand(
+    const renameCommand = this.getItemSectionRenameCommand(
       actor,
       unlocked,
       section,
@@ -52,7 +53,7 @@ class SectionActions {
     unlocked: boolean,
     section: TidyItemSectionBase
   ): ActorSectionCommand[] {
-    const renameControl = getItemSectionRenameCommand(
+    const renameControl = this.getItemSectionRenameCommand(
       actor,
       unlocked,
       section,
@@ -87,7 +88,7 @@ class SectionActions {
     }
 
     if (owner) {
-      controls.push(getCreateItemHeaderSectionAction());
+      controls.push(this.getCreateItemHeaderSectionAction());
     }
 
     return controls;
@@ -99,7 +100,7 @@ class SectionActions {
     unlocked: boolean,
     section: TidyItemSectionBase
   ): ActorSectionCommand[] {
-    const renameControl = getItemSectionRenameCommand(
+    const renameControl = this.getItemSectionRenameCommand(
       actor,
       unlocked,
       section,
@@ -121,7 +122,7 @@ class SectionActions {
     controls.push(...runtimeCommands);
 
     if (owner) {
-      controls.push(getCreateItemHeaderSectionAction());
+      controls.push(this.getCreateItemHeaderSectionAction());
     }
 
     return controls;
@@ -169,70 +170,69 @@ class SectionActions {
 
     return controls;
   }
-}
 
-function getItemSectionRenameCommand(
-  actor: Actor5e,
-  unlocked: boolean,
-  section: TidyItemSectionBase,
-  flagProp: string
-): ActorSectionCommand | undefined {
-  return unlocked && actor.isOwner && !!section.items.length
-    ? {
-        execute: () => {
-          new SectionSelectorApplication({
-            flag: flagProp,
-            callingDocument: actor,
-            document: section.items[0],
-            async onSave(newSectionName) {
-              const updates = section.items.map((i) => ({
-                _id: i.id,
-                [flagProp]: newSectionName,
-              }));
+  getCreateItemHeaderSectionAction(): ActorSectionCommand {
+    return {
+      execute({ section, actor, event }) {
+        const target = event.currentTarget as HTMLElement;
+        const tabId = target
+          .closest('[data-tab-contents-for]')
+          ?.getAttribute('data-tab-contents-for');
 
-              return Item.updateDocuments(updates, { parent: actor });
-            },
-            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-          }).render({ force: true });
-        },
-        iconClass: 'fa-solid fa-diagram-cells',
-        label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-      }
-    : undefined;
-}
+        actor.sheet._addDocument({
+          tabId,
+          customSection: section.custom?.section,
+          creationItemTypes: section.custom?.creationItemTypes,
+          data: { type: section.key, ...section.dataset },
+        });
+      },
+      label: 'DND5E.ItemCreate',
+      iconClass: 'fas fa-plus',
+    };
+  }
 
-export function getCreateItemHeaderSectionAction(): ActorSectionCommand {
-  return {
-    execute({ section, actor, event }) {
-      const target = event.currentTarget as HTMLElement;
-      const tabId = target
-        .closest('[data-tab-contents-for]')
-        ?.getAttribute('data-tab-contents-for');
+  getItemSectionRenameCommand(
+    actor: Actor5e,
+    unlocked: boolean,
+    section: TidyItemSectionBase,
+    flagProp: string
+  ): ActorSectionCommand | undefined {
+    return unlocked && actor.isOwner && !!section.items.length
+      ? {
+          execute: () => {
+            new SectionSelectorApplication({
+              flag: flagProp,
+              callingDocument: actor,
+              document: section.items[0],
+              async onSave(newSectionName) {
+                const updates = section.items.map((i) => ({
+                  _id: i.id,
+                  [flagProp]: newSectionName,
+                }));
 
-      actor.sheet._addDocument({
-        tabId,
-        customSection: section.custom?.section,
-        creationItemTypes: section.custom?.creationItemTypes,
-        data: { type: section.key, ...section.dataset },
-      });
-    },
-    label: 'DND5E.ItemCreate',
-    iconClass: 'fas fa-plus',
-  };
-}
+                return Item.updateDocuments(updates, { parent: actor });
+              },
+              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+            }).render({ force: true });
+          },
+          iconClass: 'fa-solid fa-diagram-cells',
+          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+        }
+      : undefined;
+  }
 
-function getItemActionsContextMenu(
-  actor: Actor5e,
-  unlocked: boolean,
-  section: TidyItemSectionBase
-): ActorSectionCommand {
-  return {
-    execute: (params) => {
-      alert('todo: trigger section selection dialog for whole section.');
-    },
-    iconClass: 'fa-solid fa-edit',
-    label: 'TODO Rename',
-  };
+  getMenuActionCommand(): ActorSectionCommand {
+    return {
+      execute: (params) => {
+        params.actor.sheet._sectionForMenu = params.section;
+        EventHelper.triggerContextMenu(
+          params.event as Event & { currentTarget: HTMLElement }
+        );
+      },
+      iconClass: 'fa-solid fa-ellipsis-vertical',
+      label: 'TIDY5E.Options.Title',
+    };
+  }
 }
 
 const singleton = new SectionActions();
