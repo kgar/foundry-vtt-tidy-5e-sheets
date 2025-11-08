@@ -31,9 +31,7 @@
 - [x] Review the section command API to determine if there's more information that can be included in the enabled callback
 - [x] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
 - [x] Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
-- [ ] Reorder the header actions to put them in the ideal order of importance. Then use flex reverse or a reverse array iteration to put the header actions from highest to lowest index.
-- [ ] Add ActorEffects, ActorConditions section commands APIs
-  - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
+- [x] Reorder the header actions to put them in the ideal order of importance. Then use flex reverse or a reverse array iteration to put the header actions from highest to lowest index.
 - [ ] #1422 - Test and look for trouble
 
 ### Short List
@@ -175,7 +173,8 @@
 - [ ] DocumentTag upgrade - show rich preview of found document
 - [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
 - [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
-
+- [ ] Add ActorEffects, ActorConditions section commands APIs
+  - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
 
 ## hightouch To Do
 

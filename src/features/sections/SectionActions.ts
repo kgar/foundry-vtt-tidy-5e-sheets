@@ -38,11 +38,11 @@ class SectionActions {
 
     const controls: SectionCommand[] = [];
 
+    controls.push(...runtimeCommands);
+
     if (renameCommand) {
       controls.push(renameCommand);
     }
-
-    controls.push(...runtimeCommands);
 
     return controls;
   }
@@ -68,11 +68,9 @@ class SectionActions {
 
     const controls: SectionCommand[] = [];
 
-    if (renameControl) {
-      controls.push(renameControl);
+    if (owner) {
+      controls.push(this.getCreateItemHeaderSectionAction());
     }
-
-    controls.push(...runtimeCommands);
 
     if (
       unlocked &&
@@ -88,8 +86,10 @@ class SectionActions {
       });
     }
 
-    if (owner) {
-      controls.push(this.getCreateItemHeaderSectionAction());
+    controls.push(...runtimeCommands);
+
+    if (renameControl) {
+      controls.push(renameControl);
     }
 
     return controls;
@@ -116,14 +116,14 @@ class SectionActions {
 
     const controls: SectionCommand[] = [];
 
-    if (renameControl) {
-      controls.push(renameControl);
+    if (owner) {
+      controls.push(this.getCreateItemHeaderSectionAction());
     }
 
     controls.push(...runtimeCommands);
 
-    if (owner) {
-      controls.push(this.getCreateItemHeaderSectionAction());
+    if (renameControl) {
+      controls.push(renameControl);
     }
 
     return controls;
