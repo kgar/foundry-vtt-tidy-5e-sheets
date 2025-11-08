@@ -22,7 +22,6 @@ export function initTidy5eContextMenu(
 ) {
   new FloatingContextMenu(html, contextMenuSelector, [], {
     onOpen: onDocumentContextOpened.bind(sheet),
-    onClose: onDocumentContextClosed.bind(sheet),
     jQuery: false,
     layout,
   });
@@ -71,26 +70,11 @@ function onDocumentContextOpened(this: any, element: HTMLElement) {
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_SECTION:
       configureSectionContextMenu(element, app);
+      break;
     default:
       warn(
         `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
       );
       break;
-  }
-}
-
-/**
- * Run any cleanups for side-effecting behaviors that occur during context menu activity.
- */
-function onDocumentContextClosed(this: any, element: HTMLElement) {
-  const app = this;
-  const contextMenuType = element.getAttribute('data-context-menu');
-
-  // TODO: VET THIS WITH LOTS OF CHAOS GOBLIN TESTING
-  switch (contextMenuType) {
-    case CONSTANTS.CONTEXT_MENU_TYPE_SECTION: {
-      app._sectionForMenu = undefined;
-      break;
-    }
   }
 }

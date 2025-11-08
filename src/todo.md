@@ -22,18 +22,18 @@
 - [x] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
 - [x] ~~Ensure context menu options are always available regardless of lock state~~ Nah. If the caller doesn't want it seen, we don't show it. The model should account for the alternate enabled state, perhaps through the enabled params ‼️.
 - [x] Convert all section actions to the API model. Render them into the custom action component at render time, using the data.
-- [ ] Implement Overflow control 
-  - [ ] When 3+ commands, replace all header actions with single 3-dots menu button that opens context menu. All enabled options should be present. This can trivially be done in the component where section actions are rendered.
-- [ ] Add context menu support to the section header at large with same behavior
-- [ ] Need to Handle: be able to show a field in the context menu even when locked. Take some time to think how to do this one. Example: Section Rename option should always be available in the menu but not available in the header controls when unlocked.
-- [ ] Implement section rename command in context menu as always available, even when locked
-- [ ] When unlocked, show section rename control in table head
-- [ ] Review the section command API to determine if there's more information that can be included in the enabled callback
-- [ ] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
+- [x] Implement Overflow control 
+  - [x] When 4+ commands, replace all header actions with single 3-dots menu button that opens context menu. All enabled options should be present. This can trivially be done in the component where section actions are rendered.
+- [x] ~~Add context menu support to the section header at large with same behavior~~ Not worth it.
+- [x] ~~Need to Handle: be able to show a field in the context menu even when locked. Take some time to think how to do this one. Example: Section Rename option should always be available in the menu but not available in the header controls when unlocked.~~ Not worth it.
+- [x] ~~Implement section rename command in context menu as always available, even when locked~~ Standalone context menu abandoned. Not worth it.
+- [x] When unlocked, show section rename control in table head
+- [x] Review the section command API to determine if there's more information that can be included in the enabled callback
+- [x] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
+- [ ] (Maybe resolved) Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
 - [ ] #1422 - Test and look for trouble
-- [ ] (Maybe resolved) Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
 
 ### Short List
 

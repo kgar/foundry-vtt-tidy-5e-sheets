@@ -12,6 +12,8 @@ export function configureSectionContextMenu(
     return;
   }
 
+  app._sectionForMenu = undefined;
+
   const sectionActions: ActorSectionCommand[] = section.sectionActions ?? [];
 
   ui.context.menuItems = sectionActions.map((action) => ({
