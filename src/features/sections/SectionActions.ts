@@ -1,9 +1,9 @@
 import { ActorItemRuntime } from '../../runtime/ActorItemRuntime';
 import type {
   Actor5e,
-  ActorSectionCommand,
   GroupMemberQuadroneContext,
   GroupMemberSection,
+  SectionCommand,
   TidyItemSectionBase,
 } from 'src/types/types';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
@@ -18,7 +18,7 @@ class SectionActions {
     owner: boolean,
     unlocked: boolean,
     section: TidyItemSectionBase
-  ): ActorSectionCommand[] {
+  ): SectionCommand[] {
     if (!owner) {
       return [];
     }
@@ -31,12 +31,12 @@ class SectionActions {
     );
 
     const runtimeCommands = ActorItemRuntime.getActorItemSectionCommands({
-      actor,
+      document: actor,
       section,
       unlocked,
     });
 
-    const controls: ActorSectionCommand[] = [];
+    const controls: SectionCommand[] = [];
 
     if (renameCommand) {
       controls.push(renameCommand);
@@ -52,7 +52,7 @@ class SectionActions {
     owner: boolean,
     unlocked: boolean,
     section: TidyItemSectionBase
-  ): ActorSectionCommand[] {
+  ): SectionCommand[] {
     const renameControl = this.getItemSectionRenameCommand(
       actor,
       unlocked,
@@ -61,12 +61,12 @@ class SectionActions {
     );
 
     const runtimeCommands = ActorItemRuntime.getActorItemSectionCommands({
-      actor,
+      document: actor,
       section,
       unlocked,
     });
 
-    const controls: ActorSectionCommand[] = [];
+    const controls: SectionCommand[] = [];
 
     if (renameControl) {
       controls.push(renameControl);
@@ -82,7 +82,8 @@ class SectionActions {
     ) {
       controls.push({
         label: 'DND5E.SpellSlotsConfig',
-        execute: ({ actor }) => FoundryAdapter.openSpellSlotsConfig(actor),
+        execute: ({ document }) =>
+          FoundryAdapter.openSpellSlotsConfig(document),
         iconClass: 'fa-solid fa-cog',
       });
     }
@@ -99,7 +100,7 @@ class SectionActions {
     owner: boolean,
     unlocked: boolean,
     section: TidyItemSectionBase
-  ): ActorSectionCommand[] {
+  ): SectionCommand[] {
     const renameControl = this.getItemSectionRenameCommand(
       actor,
       unlocked,
@@ -108,12 +109,12 @@ class SectionActions {
     );
 
     const runtimeCommands = ActorItemRuntime.getActorItemSectionCommands({
-      actor,
+      document: actor,
       section,
       unlocked,
     });
 
-    const controls: ActorSectionCommand[] = [];
+    const controls: SectionCommand[] = [];
 
     if (renameControl) {
       controls.push(renameControl);
@@ -132,8 +133,8 @@ class SectionActions {
     group: Actor5e,
     unlocked: boolean,
     section: GroupMemberSection
-  ): ActorSectionCommand[] {
-    const controls: ActorSectionCommand[] = [];
+  ): SectionCommand[] {
+    const controls: SectionCommand[] = [];
 
     if (unlocked && group.isOwner && !!section.members.length) {
       controls.push({
@@ -161,7 +162,7 @@ class SectionActions {
                 {}
               );
 
-              params.actor.update(updates);
+              params.document.update(updates);
             },
           }).render({ force: true });
         },
@@ -171,15 +172,15 @@ class SectionActions {
     return controls;
   }
 
-  getCreateItemHeaderSectionAction(): ActorSectionCommand {
+  getCreateItemHeaderSectionAction(): SectionCommand {
     return {
-      execute({ section, actor, event }) {
+      execute({ section, document, event }) {
         const target = event.currentTarget as HTMLElement;
         const tabId = target
           .closest('[data-tab-contents-for]')
           ?.getAttribute('data-tab-contents-for');
 
-        actor.sheet._addDocument({
+        document.sheet._addDocument({
           tabId,
           customSection: section.custom?.section,
           creationItemTypes: section.custom?.creationItemTypes,
@@ -196,7 +197,7 @@ class SectionActions {
     unlocked: boolean,
     section: TidyItemSectionBase,
     flagProp: string
-  ): ActorSectionCommand | undefined {
+  ): SectionCommand | undefined {
     return unlocked && actor.isOwner && !!section.items.length
       ? {
           execute: () => {
@@ -221,10 +222,10 @@ class SectionActions {
       : undefined;
   }
 
-  getMenuActionCommand(): ActorSectionCommand {
+  getMenuActionCommand(): SectionCommand {
     return {
       execute: (params) => {
-        params.actor.sheet._sectionForMenu = params.section;
+        params.document.sheet._sectionForMenu = params.section;
         EventHelper.triggerContextMenu(
           params.event as Event & { currentTarget: HTMLElement },
           '[data-context-menu]'

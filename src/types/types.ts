@@ -185,18 +185,18 @@ export type TidySectionBase = {
   isExternal?: boolean;
   // columns: ColumnsLoadout[];
   rowActions: TidyTableAction<any, any, any>[];
-  sectionActions: ActorSectionCommand[];
+  sectionActions: SectionCommand[];
 };
 
-export type ActorSectionCommand = {
+export type SectionCommand = {
   label?: string;
   iconClass?: string;
   tooltip?: string;
-  execute?: (params: ActorSectionCommandExecuteParams) => void;
+  execute?: (params: SectionCommandExecuteParams) => void;
 };
 
-export type ActorSectionCommandExecuteParams = {
-  actor: Actor5e;
+export type SectionCommandExecuteParams = {
+  document: any;
   section: any;
   event: Event;
 };

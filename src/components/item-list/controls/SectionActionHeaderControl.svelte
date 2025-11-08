@@ -1,10 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSectionCommand, TidySectionBase } from 'src/types/types';
+  import type { SectionCommand, TidySectionBase } from 'src/types/types';
   import type { HTMLAnchorAttributes } from 'svelte/elements';
 
   type Props = {
-    action: ActorSectionCommand;
+    action: SectionCommand;
     section: TidySectionBase;
     sheetDocument: any;
   } & HTMLAnchorAttributes;
@@ -21,7 +21,7 @@
   data-tooltip={tooltip}
   aria-label={tooltip}
   onclick={(event) =>
-    action.execute?.({ actor: sheetDocument, event, section })}
+    action.execute?.({ document: sheetDocument, event, section })}
   {...attributes}
 >
   {#if action.iconClass}

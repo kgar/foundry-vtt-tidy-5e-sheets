@@ -1,5 +1,5 @@
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
-import type { ActorSectionCommand, TidySectionBase } from 'src/types/types';
+import type { SectionCommand, TidySectionBase } from 'src/types/types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 export function configureSectionContextMenu(
@@ -14,13 +14,13 @@ export function configureSectionContextMenu(
 
   app._sectionForMenu = undefined;
 
-  const sectionActions: ActorSectionCommand[] = section.sectionActions ?? [];
+  const sectionActions: SectionCommand[] = section.sectionActions ?? [];
 
   ui.context.menuItems = sectionActions.map((action) => ({
     callback: () => {
       try {
         action.execute?.({
-          actor: app.document,
+          document: app.document,
           event: { target: element, currentTarget: element } as any, // TODO: more properly simulate an event here
           section,
         });

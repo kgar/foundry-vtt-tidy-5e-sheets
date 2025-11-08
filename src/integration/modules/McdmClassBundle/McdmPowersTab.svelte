@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ActorSectionCommand,
+    SectionCommand,
     ActorSheetQuadroneContext,
   } from 'src/types/types';
   import { MCDM_CLASS_BUNDLE_CONSTANTS } from './McdmClassBundleConstants';
@@ -119,7 +119,7 @@
     );
     const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
     const sectionConfig = TidyFlags.sectionConfig.get(context.actor)?.[tabId];
-    const sectionActions: ActorSectionCommand[] = [];
+    const sectionActions: SectionCommand[] = [];
     if (context.owner) {
       sectionActions.push(SectionActions.getCreateItemHeaderSectionAction());
     }

@@ -30,7 +30,8 @@
 - [x] When unlocked, show section rename control in table head
 - [x] Review the section command API to determine if there's more information that can be included in the enabled callback
 - [x] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
-- [ ] (Maybe resolved) Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
+- [x] Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
+- [ ] Reorder the header actions to put them in the ideal order of importance. Then use flex reverse or a reverse array iteration to put the header actions from highest to lowest index.
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
 - [ ] #1422 - Test and look for trouble

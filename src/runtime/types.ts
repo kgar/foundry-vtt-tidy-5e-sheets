@@ -89,21 +89,21 @@ export type RegisteredPortraitMenuCommandExecuteParams = {
   context: ActorSheetContextV1 | ActorSheetClassicContextV2;
 };
 
-export type RegisteredActorItemSectionCommand = {
+export type RegisteredSectionCommand = {
   label?: string;
   iconClass?: string;
   tooltip?: string;
-  enabled?: (params: RegisteredActorItemSectionCommandEnabledParams) => boolean;
-  execute?: (params: RegisteredActorItemSectionCommandExecuteParams) => void;
+  enabled?: (params: RegisteredSectionCommandEnabledParams) => boolean;
+  execute?: (params: RegisteredSectionCommandExecuteParams) => void;
 };
 
-export type RegisteredActorItemSectionCommandEnabledParams = {
-  actor: Actor5e;
+export type RegisteredSectionCommandEnabledParams = {
+  document: any;
   section: any;
   unlocked: boolean;
 };
-export type RegisteredActorItemSectionCommandExecuteParams = {
-  actor: Actor5e;
+export type RegisteredSectionCommandExecuteParams = {
+  document: any;
   section: any;
   event: Event;
 };

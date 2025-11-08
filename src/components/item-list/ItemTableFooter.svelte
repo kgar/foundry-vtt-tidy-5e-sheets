@@ -31,7 +31,7 @@
 
   let customCommands = isItem
     ? ActorItemRuntime.getActorItemSectionCommands({
-        actor,
+        document: actor,
         section,
         unlocked: true,
       })
@@ -85,7 +85,8 @@
     <button
       type="button"
       class="item-list-footer-button"
-      onclick={(ev) => command.execute?.({ section, event: ev, actor: actor })}
+      onclick={(ev) =>
+        command.execute?.({ section, event: ev, document: actor })}
       title={localize(command.tooltip ?? '')}
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >

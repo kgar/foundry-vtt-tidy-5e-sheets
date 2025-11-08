@@ -5,7 +5,7 @@ import type {
   ActiveEffectContext,
   ActiveEffectSection,
   Actor5e,
-  ActorSectionCommand,
+  SectionCommand,
   DocumentSheetQuadroneContext,
   EffectCategory,
 } from 'src/types/types';
@@ -119,7 +119,7 @@ export class ConditionsAndEffects {
       return arr;
     }, []);
 
-    const sectionActions: ActorSectionCommand[] = [];
+    const sectionActions: SectionCommand[] = [];
 
     let newCategories: ActiveEffectSection[] = [];
     for (const [key, category] of Object.entries(effectSections)) {
@@ -191,7 +191,7 @@ export class ConditionsAndEffects {
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>
   ): Promise<ActiveEffectSection[]> {
     let newCategories: ActiveEffectSection[] = [];
-    const sectionActions: ActorSectionCommand[] = [];
+    const sectionActions: SectionCommand[] = [];
 
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
