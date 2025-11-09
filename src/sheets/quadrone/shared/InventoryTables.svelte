@@ -239,19 +239,26 @@
                       </span>
                     </a>
                   </TidyTableCell>
-                  {#if ctx.attunement}
+                  <!-- 
+                    PROBLEM: this hides the attunement indicator within containers.
+                    Having an attuned item in a container is a common problem with
+                    players who enjoy using containers a lot.
+                    Perhaps we either
+                    A. Put attune control in containers when the container has a parent Actor
+                    B. Show the below indicator if within a container.
+                  -->
+                  <!-- {#if ctx.attunement}
                     {@const iconClass = item.system.attuned
                       ? 'fa-solid fa-sun color-text-highlight highlighted'
                       : 'fa-regular fa-sun color-text-lighter'}
 
                     {@const title = localize(ctx.attunement.title)}
 
-                    <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
                     <i
                       class={[iconClass, 'item-state-indicator']}
                       data-tooltip={title}
                     ></i>
-                  {/if}
+                  {/if} -->
                   {#each columns.ordered as column}
                     {@const hidden = hiddenColumns.has(column.key)}
 
