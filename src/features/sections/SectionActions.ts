@@ -11,6 +11,7 @@ import { TidyFlags } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { EventHelper } from 'src/utils/events';
+import type { Item5e } from 'src/types/item.types';
 
 class SectionActions {
   getActionHeaderActions(
@@ -23,7 +24,7 @@ class SectionActions {
       return [];
     }
 
-    const renameCommand = this.getItemSectionRenameCommand(
+    const renameCommand = this.getActorItemSectionRenameCommand(
       actor,
       unlocked,
       section,
@@ -53,7 +54,7 @@ class SectionActions {
     unlocked: boolean,
     section: TidyItemSectionBase
   ): SectionCommand[] {
-    const renameControl = this.getItemSectionRenameCommand(
+    const renameControl = this.getActorItemSectionRenameCommand(
       actor,
       unlocked,
       section,
@@ -101,7 +102,7 @@ class SectionActions {
     unlocked: boolean,
     section: TidyItemSectionBase
   ): SectionCommand[] {
-    const renameControl = this.getItemSectionRenameCommand(
+    const renameControl = this.getActorItemSectionRenameCommand(
       actor,
       unlocked,
       section,
@@ -121,6 +122,32 @@ class SectionActions {
     }
 
     controls.push(...runtimeCommands);
+
+    if (renameControl) {
+      controls.push(renameControl);
+    }
+
+    return controls;
+  }
+
+  getContainerContentsItemHeaderActions(
+    container: Item5e,
+    owner: boolean,
+    unlocked: boolean,
+    section: TidyItemSectionBase
+  ): SectionCommand[] {
+    const renameControl = this.getContainerItemSectionRenameCommand(
+      container,
+      unlocked,
+      section,
+      TidyFlags.section.prop
+    );
+
+    const controls: SectionCommand[] = [];
+
+    if (owner) {
+      controls.push(this.getCreateItemHeaderSectionAction());
+    }
 
     if (renameControl) {
       controls.push(renameControl);
@@ -192,7 +219,7 @@ class SectionActions {
     };
   }
 
-  getItemSectionRenameCommand(
+  getActorItemSectionRenameCommand(
     actor: Actor5e,
     unlocked: boolean,
     section: TidyItemSectionBase,
@@ -211,7 +238,39 @@ class SectionActions {
                   [flagProp]: newSectionName,
                 }));
 
-                return Item.updateDocuments(updates, { parent: actor });
+                return Item.implementation.updateDocuments(updates, {
+                  parent: actor,
+                });
+              },
+              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+            }).render({ force: true });
+          },
+          iconClass: 'fa-solid fa-diagram-cells',
+          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+        }
+      : undefined;
+  }
+
+  getContainerItemSectionRenameCommand(
+    container: Item5e,
+    unlocked: boolean,
+    section: TidyItemSectionBase,
+    flagProp: string
+  ): SectionCommand | undefined {
+    return unlocked && container.isOwner && !!section.items.length
+      ? {
+          execute: () => {
+            new SectionSelectorApplication({
+              flag: flagProp,
+              callingDocument: container,
+              document: section.items[0],
+              async onSave(newSectionName) {
+                const updates = section.items.map((i) => ({
+                  _id: i.id,
+                  [flagProp]: newSectionName,
+                }));
+
+                return Item.implementation.updateDocuments(updates);
               },
               sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
             }).render({ force: true });

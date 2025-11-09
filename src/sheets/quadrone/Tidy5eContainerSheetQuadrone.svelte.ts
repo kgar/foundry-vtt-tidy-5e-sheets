@@ -367,7 +367,7 @@ export class Tidy5eContainerSheetQuadrone
     context.containerContents.contents.forEach(
       (section: TidyItemSectionBase) => {
         section.sectionActions =
-          SectionActions.getStandardItemHeaderActions(
+          SectionActions.getContainerContentsItemHeaderActions(
             this.document,
             this.document.isOwner,
             context.unlocked,
