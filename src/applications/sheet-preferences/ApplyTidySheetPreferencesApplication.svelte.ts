@@ -75,21 +75,17 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
 
       // Evaluate each option.
       this.sheetOptions.forEach((o) => {
-        const compositeSettingKey = `${o.documentName}.${o.subType}`;
+        // const compositeSettingKey = `${o.documentName}.${o.subType}`;
 
         // When selected, simply assign the Tidy class to the appropriate subtype of the appropriate document name
         if (o.selected) {
-          sheetSettings = foundry.utils.mergeObject(sheetSettings, {
-            [compositeSettingKey]: o.sheetClassIdentifier,
-          });
+          const documents = (sheetSettings[o.documentName] ??= {});
+          documents[o.subType] = o.sheetClassIdentifier;
           return;
         }
 
         // When not selected, we want to remove any Tidy
-        const currentSetting = foundry.utils.getProperty(
-          sheetSettings,
-          compositeSettingKey
-        );
+        const currentSetting = sheetSettings[o.documentName]?.[o.subType];
         if (currentSetting !== o.sheetClassIdentifier) {
           // The option was unselected, and the setting does not reference Tidy. Do not change it.
           return;
