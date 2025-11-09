@@ -1635,25 +1635,23 @@ export const FoundryAdapter = {
           continue;
         }
 
-        const tidyClass =
+        const sheetClassDetails =
           // @ts-expect-error - todo: make this somehow work with TS
-          CONFIG[documentName]?.sheetClasses[subType]?.[className]?.cls;
+          CONFIG[documentName]?.sheetClasses[subType]?.[className];
 
         const documentClass =
           // @ts-expect-error - todo: make this somehow work with TS
           CONFIG[documentName]?.documentClass;
 
-        const isDefault =
-          className ===
-          foundry.utils.getProperty(setting, `${documentName}.${subType}`);
+        const isDefault = className === setting[documentName]?.[subType];
 
         result.push({
           documentClass,
           documentName,
           documentSubtype: subType,
           isDefault,
-          sheetClass: tidyClass,
-          sheetClassIdentifier: tidyClass,
+          sheetClass: sheetClassDetails?.cls,
+          sheetClassIdentifier: sheetClassDetails?.id,
           typeLabel: FoundryAdapter.localize(
             // @ts-ignore
             CONFIG[documentName].typeLabels?.[subType]
