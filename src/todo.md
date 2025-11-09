@@ -2,14 +2,18 @@
 
 ### 1422 To Dos
 
-- [ ] #1422 - Test and look for trouble
-  - [ ] Character - Sheet, Inventory, Spellbook, Features, Effects
-  - [ ] NPC - Statblock, Inventory, Spellbook
-  - [ ] Container - Contents, Effects, Activities
-  - [ ] Item - Effects, Activities
+- [ ] Bulk Section title override - Use the section name instead of the first item's name in the title.
+- [x] #1422 - Test and look for trouble
+  - [x] Character - Sheet, Inventory, Spellbook, Features, Effects
+  - [x] NPC - Statblock, Inventory, Spellbook
+  - [x] Group - Members, Inventory
+  - [x] Encounter - Loot
+  - [x] Container - Contents
+  - [x] Item - Effects, Activities
 
 ### Short List
 
+- [ ] Bug: Setting default sheet preference is reportedly resetting. 
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Always show the spell icon in spellbook, whether locked or unlocked
 - [ ] Trigger `tidy5e.prepareSheetContext` hook to provide visibility into Tidy's prepared context. Provide all relevant info. This is not a parts-based prep hook like `dnd5e.prepareSheetContext`
