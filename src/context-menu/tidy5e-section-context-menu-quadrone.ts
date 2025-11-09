@@ -21,7 +21,7 @@ export function configureSectionContextMenu(
       try {
         action.execute?.({
           document: app.document,
-          event: { target: element, currentTarget: element } as any, // TODO: more properly simulate an event here
+          event: { target: element, currentTarget: element } as any, // TODO: more properly simulate an event here; or, pray for Foundry to expose the context menu click event.
           section,
         });
       } finally {
@@ -31,7 +31,4 @@ export function configureSectionContextMenu(
     icon: `<i class="${action.iconClass}"></i>`,
     name: action.label ?? action.tooltip,
   })) satisfies ContextMenuEntry[];
-
-  // TODO: Make one if this works out
-  //TidyHooks.tidy5eGetSectionContextOptions(section, ui.context.menuItems);
 }
