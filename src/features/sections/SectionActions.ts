@@ -191,6 +191,15 @@ class SectionActions {
 
               params.document.update(updates);
             },
+            window: {
+              title: FoundryAdapter.localize(
+                'TIDY5E.Section.SectionSelectorTitle',
+                {
+                  sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+                  documentName: FoundryAdapter.localize(section.label),
+                }
+              ),
+            },
           }).render({ force: true });
         },
       });
@@ -243,6 +252,17 @@ class SectionActions {
                 });
               },
               sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+              window: {
+                title: FoundryAdapter.localize(
+                  'TIDY5E.Section.SectionSelectorTitle',
+                  {
+                    sectionType: FoundryAdapter.localize(
+                      'TIDY5E.Section.Label'
+                    ),
+                    documentName: FoundryAdapter.localize(section.label),
+                  }
+                ),
+              },
             }).render({ force: true });
           },
           iconClass: 'fa-solid fa-diagram-cells',
@@ -271,6 +291,17 @@ class SectionActions {
                 }));
 
                 return Item.implementation.updateDocuments(updates);
+              },
+              window: {
+                title: FoundryAdapter.localize(
+                  'TIDY5E.Section.SectionSelectorTitle',
+                  {
+                    sectionType: FoundryAdapter.localize(
+                      'TIDY5E.Section.Label'
+                    ),
+                    documentName: FoundryAdapter.localize(section.label),
+                  }
+                ),
               },
               sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
             }).render({ force: true });

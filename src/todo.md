@@ -1,16 +1,5 @@
 ## kgar To Do
 
-### 1422 To Dos
-
-- [ ] Bulk Section title override - Use the section name instead of the first item's name in the title.
-- [x] #1422 - Test and look for trouble
-  - [x] Character - Sheet, Inventory, Spellbook, Features, Effects
-  - [x] NPC - Statblock, Inventory, Spellbook
-  - [x] Group - Members, Inventory
-  - [x] Encounter - Loot
-  - [x] Container - Contents
-  - [x] Item - Effects, Activities
-
 ### Short List
 
 - [ ] Bug: Setting default sheet preference is reportedly resetting. 
@@ -305,3 +294,11 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 - [x] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
 - [x] Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
 - [x] Reorder the header actions to put them in the ideal order of importance. Then use flex reverse or a reverse array iteration to put the header actions from highest to lowest index.
+- [x] #1422 - Test and look for trouble
+  - [x] Character - Sheet, Inventory, Spellbook, Features, Effects
+  - [x] NPC - Statblock, Inventory, Spellbook
+  - [x] Group - Members, Inventory
+  - [x] Encounter - Loot
+  - [x] Container - Contents
+  - [x] Item - Effects, Activities
+- [x] Bulk Section title override - Use the section name instead of the first item's name in the title.

@@ -12,6 +12,7 @@ import type { Tab } from 'src/types/types';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
+import { coalesce } from 'src/utils/formatting';
 
 export type SectionSelectorContext = {
   sections: string[];
@@ -118,10 +119,13 @@ export class SectionSelectorApplication extends DocumentSheetDialog<
   }
 
   get title() {
-    return FoundryAdapter.localize('TIDY5E.Section.SectionSelectorTitle', {
-      sectionType: this._sectionType,
-      documentName: this.document.name,
-    });
+    return coalesce(
+      this.options?.window?.title,
+      FoundryAdapter.localize('TIDY5E.Section.SectionSelectorTitle', {
+        sectionType: this._sectionType,
+        documentName: this.document.name,
+      })
+    );
   }
 
   async _renderHTML(
