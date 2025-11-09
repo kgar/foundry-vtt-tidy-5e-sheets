@@ -162,6 +162,11 @@ class TableRowActionsRuntime {
       let result: TableAction<any>[] = [];
 
       if (context.owner) {
+        result.push({
+          component: SpellButton,
+          props: (args) => ({ doc: args.data }),
+        } satisfies TableAction<typeof SpellButton>);
+
         if (context.unlocked) {
           result.push({
             component: EditButton,
@@ -192,11 +197,6 @@ class TableRowActionsRuntime {
             }),
           } satisfies TableAction<typeof ChooseAButton>);
         } else {
-          result.push({
-            component: SpellButton,
-            props: (args) => ({ doc: args.data }),
-          } satisfies TableAction<typeof SpellButton>);
-
           if (config?.hasActionsTab) {
             result.push({
               component: ActionsTabToggleButton,
