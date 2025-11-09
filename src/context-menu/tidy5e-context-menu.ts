@@ -10,7 +10,7 @@ import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-conte
 import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu';
 import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
 import { configureEncounterPlaceholderContextMenu } from './tidy5e-encounter-placeholder-context-menu';
-import { configureGroupSectionContextMenu } from './tidy5e-group-section-context-menu-quadrone';
+import { configureSectionContextMenu as configureSectionContextMenu } from './tidy5e-section-context-menu-quadrone';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -21,7 +21,7 @@ export function initTidy5eContextMenu(
   contextMenuSelector: string = '[data-context-menu]'
 ) {
   new FloatingContextMenu(html, contextMenuSelector, [], {
-    onOpen: onDocumentContext.bind(sheet),
+    onOpen: onDocumentContextOpened.bind(sheet),
     jQuery: false,
     layout,
   });
@@ -33,7 +33,7 @@ export function initTidy5eContextMenu(
  * @param {HTMLElement} element       The HTML element for which the context menu is activated
  * @protected
  */
-function onDocumentContext(this: any, element: HTMLElement) {
+function onDocumentContextOpened(this: any, element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
 
   const app = this;
@@ -68,9 +68,9 @@ function onDocumentContext(this: any, element: HTMLElement) {
     case CONSTANTS.CONTEXT_MENU_TYPE_ACTOR_JOURNAL:
       configureActorJournalContextMenu(element, app);
       break;
-    // TODO: If we do want to pursue section-wide context menu options, formalize this.
-    case 'group-section':
-      configureGroupSectionContextMenu(element, app);
+    case CONSTANTS.CONTEXT_MENU_TYPE_SECTION:
+      configureSectionContextMenu(element, app);
+      break;
     default:
       warn(
         `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`

@@ -308,12 +308,6 @@ export function Tidy5eActorSheetQuadroneBase<
       const rollData = this.actor.getRollData();
 
       let context: ActorSheetQuadroneContext = {
-        actions: await getActorActionSectionsQuadrone(this.actor, {
-          rowActions: TableRowActionsRuntime.getActionsRowActions(
-            this.actor.isOwner,
-            documentSheetContext.unlocked
-          ),
-        }),
         actor: this.actor,
         appId: this.appId,
         config: CONFIG.DND5E,
@@ -1425,7 +1419,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       if (
         !canPolymorph ||
-        // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+        // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
         this.currentTabId === CONSTANTS.TAB_CHARACTER_BASTION
       ) {
         return;

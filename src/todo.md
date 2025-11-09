@@ -2,6 +2,10 @@
 
 ### Short List
 
+- [ ] Bug: Setting default sheet preference is reportedly resetting. 
+- [ ] Move attunement to the item row actions as a toggle
+- [ ] Always show the spell icon in spellbook, whether locked or unlocked
+- [ ] Trigger `tidy5e.prepareSheetContext` hook to provide visibility into Tidy's prepared context. Provide all relevant info. This is not a parts-based prep hook like `dnd5e.prepareSheetContext`
 - [ ] Eliminate scoped CSS styles from ExpandableContainer.svelte. Ensure Quadrone sheets have the CSS they need for it.
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
@@ -74,7 +78,7 @@
   - [ ] If the relevant filters do not all match, decorate as Off; a single click should be able to bring them all into the right state
   - [ ] Configure so left click toggles Include / Off, and right click toggles Exclude / Off.
   - [ ] When engaging the Prepared footer multi-filter, clear all others. This is a productivity filter. They can pile on manually in Advanced.
-- [ ] // TODO: Create a polymorph tab ID blacklist that implementing sheet classes can opt into
+- [ ] // TODO: Create a polymorph tab ID denylist that implementing sheet classes can opt into
 - [ ] Add sheet parts everywhere. Make this easy for the user who wants to mod this.
   - [ ] header parts
   - [ ] sidebar parts
@@ -139,7 +143,8 @@
 - [ ] DocumentTag upgrade - show rich preview of found document
 - [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
 - [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
-
+- [ ] Add ActorEffects, ActorConditions section commands APIs
+  - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
 
 ## hightouch To Do
 
@@ -258,3 +263,42 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
     - [x] Plug into Facility details
 - [x] Container details - roll out FormGroup
 - [x] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
+- [x] ~~Investigate `dnd5e.prepareSheetContext` and determine if I need to do something about this. realistically, what is my part ID for "all the context"?~~ We don't need it.
+- [x] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
+- [x] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
+- [x] Update sheet header commands column to leverage API ~~and place options in reverse order~~, favoring tidy default content on the far right. ~~Flex row-reverse might suffice for this.~~
+- [x] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
+  - [x] // TODO: add headerActions here
+  - [x] Sheet tab - section rename (unlocked only), API commands
+  - [x] Quadrone Character Feature Sections
+  - [x] Quadrone NPC Feature Sections
+  - [x] Quadrone Inventory Sections
+  - [x] Quadrone Spellbook Sections
+    - [x] Include slots config when usesSlots is true
+  - [x] MCDM Powers (be conservative about this one, just use the add control)
+  - [x] Group Sheet Members
+  - [x] NPC Statblock Section
+- [x] Consider renaming them "sectionActions"
+- [x] Ensure Quick Insert shows magnifying glass per configuration
+- [x] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
+- [x] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
+- [x] ~~Ensure context menu options are always available regardless of lock state~~ Nah. If the caller doesn't want it seen, we don't show it. The model should account for the alternate enabled state, perhaps through the enabled params ‼️.
+- [x] Convert all section actions to the API model. Render them into the custom action component at render time, using the data.
+- [x] Implement Overflow control 
+  - [x] When 4+ commands, replace all header actions with single 3-dots menu button that opens context menu. All enabled options should be present. This can trivially be done in the component where section actions are rendered.
+- [x] ~~Add context menu support to the section header at large with same behavior~~ Not worth it.
+- [x] ~~Need to Handle: be able to show a field in the context menu even when locked. Take some time to think how to do this one. Example: Section Rename option should always be available in the menu but not available in the header controls when unlocked.~~ Not worth it.
+- [x] ~~Implement section rename command in context menu as always available, even when locked~~ Standalone context menu abandoned. Not worth it.
+- [x] When unlocked, show section rename control in table head
+- [x] Review the section command API to determine if there's more information that can be included in the enabled callback
+- [x] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
+- [x] Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
+- [x] Reorder the header actions to put them in the ideal order of importance. Then use flex reverse or a reverse array iteration to put the header actions from highest to lowest index.
+- [x] #1422 - Test and look for trouble
+  - [x] Character - Sheet, Inventory, Spellbook, Features, Effects
+  - [x] NPC - Statblock, Inventory, Spellbook
+  - [x] Group - Members, Inventory
+  - [x] Encounter - Loot
+  - [x] Container - Contents
+  - [x] Item - Effects, Activities
+- [x] Bulk Section title override - Use the section name instead of the first item's name in the title.

@@ -47,3 +47,9 @@ export function splitSemicolons(input: string): string[] {
 export function randomItem<T>(arr: ArrayLike<T>, random?: number): T {
   return arr[Math.floor(arr.length * (random ?? Math.random()))];
 }
+
+export function* iterateReversed<T>(arr: ArrayLike<T>): Generator<T> {
+  for (let i = arr.length - 1; i >= 0; i--) {
+    yield arr[i];
+  }
+}

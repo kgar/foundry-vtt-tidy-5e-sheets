@@ -1,33 +1,49 @@
-import type { ActorItemSectionFooterCommand } from 'src/api/api.types';
+import type { ActorItemSectionCommand } from 'src/api/api.types';
 import type {
-  RegisteredActorItemSectionFooterCommand,
-  RegisteredActorItemSectionFooterCommandEnabledParams,
+  RegisteredSectionCommand,
+  RegisteredSectionCommandEnabledParams,
+  RegisteredSectionCommandExecuteParams,
 } from './types';
-import type { Actor5e } from 'src/types/types';
 import { error } from 'src/utils/logging';
+import type { SectionCommand } from 'src/types/types';
 
 export class ActorItemRuntime {
-  private static _actorItemSectionCommands: RegisteredActorItemSectionFooterCommand[] =
-    [];
+  private static _actorItemSectionCommands: RegisteredSectionCommand[] = [];
 
-  static registerActorItemSectionCommands(
-    commands: ActorItemSectionFooterCommand[]
-  ) {
-    ActorItemRuntime._actorItemSectionCommands.push(...commands);
+  static registerActorItemSectionCommands(commands: ActorItemSectionCommand[]) {
+    const sectionCommands: RegisteredSectionCommand[] = commands.map(
+      (command) => ({
+        ...command,
+        enabled: command.enabled
+          ? (params: RegisteredSectionCommandEnabledParams) =>
+              command.enabled?.({ ...params, actor: params.document }) ?? true
+          : undefined,
+        execute: (params: RegisteredSectionCommandExecuteParams) =>
+          command.execute?.({
+            ...params,
+            actor: params.document,
+          }),
+      })
+    );
+
+    ActorItemRuntime._actorItemSectionCommands.push(...sectionCommands);
   }
 
   static getActorItemSectionCommands({
     section,
-    actor,
-  }: RegisteredActorItemSectionFooterCommandEnabledParams): RegisteredActorItemSectionFooterCommand[] {
+    document,
+    unlocked,
+  }: RegisteredSectionCommandEnabledParams): SectionCommand[] {
     return [...ActorItemRuntime._actorItemSectionCommands].filter((c) => {
       try {
-        return section && (c.enabled?.({ section, actor }) ?? true);
+        return (
+          section && (c.enabled?.({ section, document, unlocked }) ?? true)
+        );
       } catch (e) {
         error(
           'Failed to check if actor item section command is enabled',
           false,
-          { error: e, actor, section }
+          { error: e, document, section }
         );
         return false;
       }

@@ -42,8 +42,9 @@
 
   let customCommands = $derived(
     ActorItemRuntime.getActorItemSectionCommands({
-      actor: context.actor,
+      document: context.actor,
       section,
+      unlocked: true
     }),
   );
 
@@ -163,7 +164,7 @@
                   command.execute?.({
                     section,
                     event: ev,
-                    actor: context.actor,
+                    document: context.actor,
                   })}
                 title={localize(command.tooltip ?? '')}
                 tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}

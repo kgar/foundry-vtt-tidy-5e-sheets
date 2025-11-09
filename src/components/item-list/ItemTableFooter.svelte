@@ -30,7 +30,11 @@
   }: Props = $props();
 
   let customCommands = isItem
-    ? ActorItemRuntime.getActorItemSectionCommands({ actor, section })
+    ? ActorItemRuntime.getActorItemSectionCommands({
+        document: actor,
+        section,
+        unlocked: true,
+      })
     : [];
 
   function createForCustom(custom: CustomSectionOptions) {
@@ -81,7 +85,8 @@
     <button
       type="button"
       class="item-list-footer-button"
-      onclick={(ev) => command.execute?.({ section, event: ev, actor: actor })}
+      onclick={(ev) =>
+        command.execute?.({ section, event: ev, document: actor })}
       title={localize(command.tooltip ?? '')}
       tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >

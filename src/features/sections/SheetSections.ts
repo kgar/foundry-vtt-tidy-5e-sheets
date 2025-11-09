@@ -42,7 +42,7 @@ import { Inventory } from './Inventory';
 
 export class SheetSections {
   // TODO: To item sheet runtime with API support?
-  static _itemCustomSectionBlacklist = new Set<string>([
+  static _itemCustomSectionDenylist = new Set<string>([
     CONSTANTS.ITEM_TYPE_BACKGROUND,
     CONSTANTS.ITEM_TYPE_CLASS,
     CONSTANTS.ITEM_TYPE_FACILITY,
@@ -56,10 +56,11 @@ export class SheetSections {
     key: '',
     show: true,
     rowActions: [],
+    sectionActions: [],
   });
 
   static itemSupportsCustomSections(itemType: string) {
-    return !this._itemCustomSectionBlacklist.has(itemType);
+    return !this._itemCustomSectionDenylist.has(itemType);
   }
 
   static applySpellToSection(
@@ -101,6 +102,7 @@ export class SheetSections {
       },
       show: true,
       rowActions: [], // for the UI Overhaul
+      sectionActions: [], // for the UI Overhaul
       // TODO: Will something bad happen if I have an empty string on spellbook section .slot or .method?
       slot: '',
       method: '',
@@ -179,6 +181,7 @@ export class SheetSections {
           method: s.id,
           show: true,
           rowActions: options.rowActions ?? [], // for the UI Overhaul
+          sectionActions: options.sectionActions ?? [], // for the UI Overhaul
         } satisfies SpellbookSection)
     );
 
@@ -754,7 +757,7 @@ export class SheetSections {
     return sections;
   }
 
-  static getKnownCustomSections(document: any) {
+  static getKnownCustomItemSections(document: any) {
     const useParentCollection =
       !!document.parent && !FoundryAdapter.isLockedInCompendium(document);
 
@@ -762,11 +765,28 @@ export class SheetSections {
       ? document.parent.items
       : game.items;
 
-    const sectionSet = itemCollection.reduce((prev: Item5e, curr: Item5e) => {
-      prev.add(TidyFlags.section.get(curr));
-      prev.add(TidyFlags.actionSection.get(curr));
-      return prev;
-    }, new Set<string>());
+    const sectionSet: Set<string> = itemCollection.reduce(
+      (prev: Item5e, curr: Item5e) => {
+        prev.add(TidyFlags.section.get(curr));
+        prev.add(TidyFlags.actionSection.get(curr));
+        return prev;
+      },
+      new Set<string>()
+    );
+
+    settings.value.globalCustomSections.forEach((defaultSectionConfig) =>
+      sectionSet.add(defaultSectionConfig.section)
+    );
+
+    return Array.from<string>(sectionSet)
+      .filter((x) => !isNil(x, ''))
+      .toSorted((left, right) => left.localeCompare(right, game.i18n.lang));
+  }
+
+  static getKnownCustomGroupMemberSections(group: Actor5e) {
+    const sectionSet = new Set<string>(
+      Object.values(TidyFlags.sections.get(group)).filter((s) => !isNil(s))
+    );
 
     settings.value.globalCustomSections.forEach((defaultSectionConfig) =>
       sectionSet.add(defaultSectionConfig.section)
@@ -843,7 +863,7 @@ export class SheetSections {
         // Sort - Group members are natively manually sorted
         if (sortMode !== 'm') {
           // TODO: This doesn't work because of the member data shape.
-          // Will need to find a way to punch through the item for comparison 
+          // Will need to find a way to punch through the item for comparison
           // while still sorting the main entry.
           // section.members = ItemUtils.getSortedItems(section.members, sortMode);
         }

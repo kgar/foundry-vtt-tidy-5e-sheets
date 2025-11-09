@@ -116,6 +116,8 @@
   "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
 
   "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
+  "TIDY5E.InspirationAdd": "Add Inspiration",
+  "TIDY5E.InspirationRemove": "Remove Inspiration",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
   "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",

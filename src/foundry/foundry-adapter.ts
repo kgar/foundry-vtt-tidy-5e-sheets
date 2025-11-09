@@ -949,7 +949,10 @@ export const FoundryAdapter = {
   },
   async onActorItemDelete(actor: Actor5e, item: Item5e) {
     // If item has advancement, handle it separately
-    if (!game.settings.get('dnd5e', 'disableAdvancements')) {
+    if (
+      actor?.system.metadata?.supportsAdvancement &&
+      !game.settings.get('dnd5e', 'disableAdvancements')
+    ) {
       const manager =
         dnd5e.applications.advancement.AdvancementManager.forDeletedItem(
           actor,

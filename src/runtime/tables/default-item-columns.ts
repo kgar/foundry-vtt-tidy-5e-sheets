@@ -1,5 +1,5 @@
 import DocumentActionsColumn from 'src/sheets/quadrone/item/columns/DocumentActionsColumn.svelte';
-import ItemActionsColumnHeader from 'src/sheets/quadrone/item/columns/ItemActionsColumnHeader.svelte';
+import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
 import type {
   ColumnSpecificationCalculatedWidthArgs,
   DefaultTableColumns,
@@ -27,7 +27,7 @@ export function getDefaultItemColumns() {
       headerClasses: 'header-cell-actions',
       headerContent: {
         type: 'component',
-        component: ItemActionsColumnHeader,
+        component: SectionActionsColumnHeader,
       },
       cellClasses: 'tidy-table-actions',
       cellContent: {

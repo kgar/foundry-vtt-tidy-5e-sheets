@@ -40,6 +40,7 @@ import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQ
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import type { TravelPaceConfig } from 'src/foundry/config.types';
+import type { ComponentWithProps } from 'src/utils/component';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -184,6 +185,20 @@ export type TidySectionBase = {
   isExternal?: boolean;
   // columns: ColumnsLoadout[];
   rowActions: TidyTableAction<any, any, any>[];
+  sectionActions: SectionCommand[];
+};
+
+export type SectionCommand = {
+  label?: string;
+  iconClass?: string;
+  tooltip?: string;
+  execute?: (params: SectionCommandExecuteParams) => void;
+};
+
+export type SectionCommandExecuteParams = {
+  document: any;
+  section: any;
+  event: Event;
 };
 
 export type FeatureSection = {
@@ -977,7 +992,6 @@ export type ActorTraitContext<TValue = unknown> = {
 };
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
-  actions: TidyItemSectionBase[];
   actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
   config: typeof CONFIG.DND5E;
@@ -1183,6 +1197,7 @@ export type ActorTraitItemContext = {
 };
 
 export type CharacterSheetQuadroneContext = {
+  actions: TidyItemSectionBase[];
   background?: ActorTraitItemContext;
   // TODO: Populate with context data as needed
   classes: ActorClassEntryContext[];

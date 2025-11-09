@@ -260,7 +260,7 @@ export interface PortraitMenuCommandExecuteParams {
  * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor item section.
  */
 /** @category Configuration */
-export interface ActorItemSectionFooterCommand {
+export interface ActorItemSectionCommand {
   /**
    * Optional label to use when displaying the command. Localization keys also work.
    */
@@ -291,7 +291,7 @@ export interface ActorItemSectionFooterCommand {
    * It is up to the user to execute commands, such as clicking a button that represents the command. This is the general-purpose event handler for that button click.
    * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
    */
-  execute?: (params: ActorItemSectionFooterCommandExecuteParams) => void;
+  execute?: (params: ActorItemSectionCommandExecuteParams) => void;
 }
 
 /** @category Configuration */
@@ -304,10 +304,15 @@ export interface ActorItemSectionFooterCommandEnabledParams {
    * The item section for which the command will show.
    */
   section: any;
+  /**
+   * The sheet is in Edit Mode, or unlocked. For Classic sheets, this is always `true`.
+   * For Quadrone sheets, this corresponds to the sheet lock toggle.
+   */
+  unlocked: boolean;
 }
 
 /** @category Configuration */
-export interface ActorItemSectionFooterCommandExecuteParams {
+export interface ActorItemSectionCommandExecuteParams {
   /**
    * The actor for whom the command was executed.
    */
@@ -508,7 +513,7 @@ export type TabIdDocumentItemTypesOptions = {
 
 /** Additional, optional aspects that can be configured when associating tabs to item subtypes. */
 export type ExistingTabAssociationOptions = {
-  /** 
+  /**
    * When associating the tab to the item subtype, also ensure the tab is among the defaults. (default: true)
    */
   includeAsDefault?: boolean;

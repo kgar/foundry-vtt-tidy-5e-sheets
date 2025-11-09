@@ -11,6 +11,7 @@ import type {
   MeasurableGroupTrait,
   MultiActorMemberPortraitContext,
   MultiActorQuadroneContext,
+  TidyItemSectionBase,
 } from 'src/types/types';
 import type {
   ApplicationClosingOptions,
@@ -24,13 +25,13 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { TidyFlags } from 'src/api';
 import type { Group5eMember as MultiActor5eMember } from 'src/types/group.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
-import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import { isNil } from 'src/utils/data';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
+import SectionActions from 'src/features/sections/SectionActions';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -38,6 +39,20 @@ export function Tidy5eMultiActorSheetQuadroneBase<
   const TidyActorSheetBase = Tidy5eActorSheetQuadroneBase<TContext>(sheetType);
 
   abstract class Tidy5eMultiActorSheetQuadroneBase extends TidyActorSheetBase {
+    async _renderFrame(options: ApplicationRenderOptions) {
+      const result = await super._renderFrame(options);
+
+      this._hookSubscriptions.push(
+        Hooks.on('updateSetting', (setting: any) => {
+          if (setting?.key === 'dnd5e.primaryParty') {
+            this.render();
+          }
+        })
+      );
+
+      return result;
+    }
+
     async _prepareContext(
       options: ApplicationRenderOptions
     ): Promise<MultiActorQuadroneContext<Tidy5eMultiActorSheetQuadroneBase>> {
@@ -136,6 +151,16 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       });
 
       context.inventory = Object.values(inventory);
+
+      context.inventory.forEach((section: TidyItemSectionBase) => {
+        section.sectionActions =
+          SectionActions.getStandardItemHeaderActions(
+            this.actor,
+            this.actor.isOwner,
+            context.unlocked,
+            section
+          );
+      });
     }
 
     protected _prepareItem(item: Item5e, ctx: TContext) {}

@@ -10,6 +10,8 @@ import type {
   NpcSheetQuadroneContext,
   NpcSpellcastingContext,
   SpellcastingClassContext,
+  TidyItemSectionBase,
+  TidySectionBase,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import type {
@@ -35,6 +37,7 @@ import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
+import SectionActions from 'src/features/sections/SectionActions';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -362,6 +365,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         key: id,
         show: true,
         rowActions: statblockRowActions,
+        sectionActions: [],
         dataset: dataset,
         canCreate: true,
       };
@@ -488,11 +492,36 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       }
     );
 
+    const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
+      section.sectionActions =
+        SectionActions.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+    };
+
     context.inventory = Object.values(inventory);
+
+    // TODO: Could header action prep be organized better?
+    context.inventory.forEach(applyStandardItemHeaderActions);
 
     context.spellbook = spellbook;
 
+    context.spellbook.forEach((section) => {
+      section.sectionActions =
+        SectionActions.getSpellbookItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+    });
+
     context.features = Object.values(featureSections);
+
+    context.features.forEach(applyStandardItemHeaderActions);
   }
 
   protected _prepareItem(item: Item5e, ctx: NpcItemContext) {

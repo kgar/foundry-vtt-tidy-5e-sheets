@@ -5,6 +5,7 @@ import type {
   ActiveEffectContext,
   ActiveEffectSection,
   Actor5e,
+  SectionCommand,
   DocumentSheetQuadroneContext,
   EffectCategory,
 } from 'src/types/types';
@@ -118,6 +119,8 @@ export class ConditionsAndEffects {
       return arr;
     }, []);
 
+    const sectionActions: SectionCommand[] = [];
+
     let newCategories: ActiveEffectSection[] = [];
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
@@ -173,6 +176,7 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+        sectionActions,
       });
     }
 
@@ -187,6 +191,7 @@ export class ConditionsAndEffects {
     effectSections: Record<string, EffectCategory<ActiveEffect5e>>
   ): Promise<ActiveEffectSection[]> {
     let newCategories: ActiveEffectSection[] = [];
+    const sectionActions: SectionCommand[] = [];
 
     for (const [key, category] of Object.entries(effectSections)) {
       newCategories.push({
@@ -224,6 +229,7 @@ export class ConditionsAndEffects {
         dataset: {}, // TODO: put things that help with effect creation via _addDocument here
         show: !category.hidden,
         rowActions: TableRowActionsRuntime.getEffectsRowActions(context),
+        sectionActions,
       });
     }
 

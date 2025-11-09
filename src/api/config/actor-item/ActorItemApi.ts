@@ -1,5 +1,6 @@
 import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
-import type { ActorItemSectionFooterCommand } from '../../api.types';
+import type { ActorItemSectionCommand } from '../../api.types';
+import { warn } from 'src/utils/logging';
 
 /**
  * API functionality related to Actor-owned items.
@@ -7,6 +8,17 @@ import type { ActorItemSectionFooterCommand } from '../../api.types';
  * @category Configuration
  */
 export class ActorItemApi {
+  /**
+   * Registers actor item section commands which Tidy 5e can render at select locations on the sheet.
+   * @param commands actor item section commands for Tidy 5e to render
+   * 
+   * @deprecated This API method was too specific and now simply forwards to @see registerSectionCommands
+   * ```
+   */
+  registerSectionFooterCommands(commands: ActorItemSectionCommand[]) {
+    ActorItemRuntime.registerActorItemSectionCommands(commands);
+  }
+  
   /**
    * Registers actor item section commands which Tidy 5e can render at select locations on the sheet.
    * @param commands actor item section commands for Tidy 5e to render
@@ -39,7 +51,7 @@ export class ActorItemApi {
    * });
    * ```
    */
-  registerSectionFooterCommands(commands: ActorItemSectionFooterCommand[]) {
+  registerSectionCommands(commands: ActorItemSectionCommand[]) {
     ActorItemRuntime.registerActorItemSectionCommands(commands);
   }
 }

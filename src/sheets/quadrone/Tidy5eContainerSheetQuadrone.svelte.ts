@@ -22,6 +22,7 @@ import type {
   ExpandedItemData,
   Tab,
   SheetTabCacheable,
+  TidyItemSectionBase,
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -41,6 +42,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import { isNil } from 'src/utils/data';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { mapGetOrInsert } from 'src/utils/map';
+import SectionActions from 'src/features/sections/SectionActions';
 
 export class Tidy5eContainerSheetQuadrone
   extends TidyExtensibleDocumentSheetMixin<
@@ -360,6 +362,19 @@ export class Tidy5eContainerSheetQuadrone
       userPreferences: UserPreferencesService.get(),
       ...documentSheetContext,
     };
+
+    // TODO: Could header action prep be organized better?
+    context.containerContents.contents.forEach(
+      (section: TidyItemSectionBase) => {
+        section.sectionActions =
+          SectionActions.getContainerContentsItemHeaderActions(
+            this.document,
+            this.document.isOwner,
+            context.unlocked,
+            section
+          );
+      }
+    );
 
     // Properties
     context.properties = {

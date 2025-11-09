@@ -527,7 +527,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`,
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -597,7 +597,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`,
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -690,7 +690,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`,
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -752,7 +752,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-flask"></i></a>`,
    *       injectParams: {
-   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`,
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -814,7 +814,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`,
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {
@@ -876,7 +876,7 @@ export class Tidy5eSheetsApi {
    *     new api.models.HtmlContent({
    *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
    *       injectParams: {
-   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`
+   *         selector: `[data-tidy-sheet-part="${api.constants.SHEET_PARTS.NAME_CONTAINER}"]`,
    *         position: "beforebegin",
    *       },
    *       onContentReady: (params) => {

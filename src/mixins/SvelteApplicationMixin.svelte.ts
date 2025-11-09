@@ -49,7 +49,7 @@ export function SvelteApplicationMixin<
     /** The component which represents the UI. */
     #components: Record<string, any>[] = [];
 
-    #hookSubscriptions: { name: string; id: unknown }[] = [];
+    _hookSubscriptions: { name: string; id: unknown }[] = [];
 
     /**
      * Compatibility shim from Application V1.
@@ -140,7 +140,7 @@ export function SvelteApplicationMixin<
 
       ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
 
-      this.#hookSubscriptions.push(
+      this._hookSubscriptions.push(
         Hooks.on('updateSetting', (setting: any) => {
           if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
             debug('Tidy setting update detected. Requesting sheet re-render');
@@ -205,8 +205,8 @@ export function SvelteApplicationMixin<
     async close(options: ApplicationClosingOptions = {}) {
       this.themeSettingsSubscription?.unsubscribe();
 
-      this.#hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
-      this.#hookSubscriptions = [];
+      this._hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
+      this._hookSubscriptions = [];
 
       await super.close(options);
     }

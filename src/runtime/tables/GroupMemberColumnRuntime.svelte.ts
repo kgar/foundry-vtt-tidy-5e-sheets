@@ -4,6 +4,7 @@ import type {
   ColumnSpecification,
   ColumnSpecificationCalculatedWidthArgs,
 } from '../types';
+import SectionActionsColumnHeader from 'src/sheets/quadrone/item/columns/SectionActionsColumnHeader.svelte';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import GroupMemberInspirationColumn from 'src/sheets/quadrone/item/columns/GroupMemberInspirationColumn.svelte';
@@ -112,14 +113,15 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
 
     const actionsColumn: ColumnSpecificationBase = {
       headerContent: {
-        type: 'html',
-        html: '',
+        type: 'component',
+        component: SectionActionsColumnHeader,
       },
       cellContent: {
         type: 'component',
         component: DocumentActionsColumn,
       },
       cellClasses: 'tidy-table-actions',
+      headerClasses: 'header-cell-actions',
       widthRems: (section: ColumnSpecificationCalculatedWidthArgs) => {
         let paddingX = 0.1875;
         let buttonWidth = 1.5;

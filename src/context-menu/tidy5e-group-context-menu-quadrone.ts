@@ -3,6 +3,7 @@ import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SectionSelectorApplication } from 'src/applications/section-selector/SectionSelectorApplication.svelte';
 import { TidyFlags } from 'src/api';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 /**
  * Prepare an array of context menu options which are available for a member of a group.
@@ -17,7 +18,7 @@ export function getGroupMemberContextOptionsQuadrone(
   let options: ContextMenuEntry[] = [
     {
       name: 'DND5E.Group.Action.View',
-      icon: `<i class="fas fa-eye fa-fw"></i>`,
+      icon: `<i class="fa-solid fa-eye fa-fw"></i>`,
       callback: async () => (await fromUuid(actor.uuid))?.sheet.render(true),
       condition: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
@@ -25,7 +26,7 @@ export function getGroupMemberContextOptionsQuadrone(
     },
     {
       name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-      icon: '<i class="fa fa-diagram-cells"></i>',
+      icon: '<i class="fa-solid fa-diagram-cells"></i>',
       condition: () => group.isOwner,
       group: 'customize',
       callback: () =>
@@ -34,11 +35,13 @@ export function getGroupMemberContextOptionsQuadrone(
           sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
           callingDocument: group,
           document: group,
+          getKnownCustomSections:
+            SheetSections.getKnownCustomGroupMemberSections,
         }).render(true),
     },
     {
       name: 'DND5E.Group.Action.Remove',
-      icon: `<i class="fas fa-trash fa-fw"></i>`,
+      icon: `<i class="fa-solid fa-trash fa-fw"></i>`,
       callback: async () => await group.system.removeMember(actor),
       condition: () =>
         group.isOwner && !FoundryAdapter.isLockedInCompendium(group),
