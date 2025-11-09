@@ -75,8 +75,6 @@ export class ApplyTidySheetPreferencesApplication extends SvelteApplicationMixin
 
       // Evaluate each option.
       this.sheetOptions.forEach((o) => {
-        // const compositeSettingKey = `${o.documentName}.${o.subType}`;
-
         // When selected, simply assign the Tidy class to the appropriate subtype of the appropriate document name
         if (o.selected) {
           const documents = (sheetSettings[o.documentName] ??= {});
