@@ -34,6 +34,7 @@ import EncounterCombatInclusionToggle from 'src/components/table-quadrone/table-
 import EncounterAddAsCombatPlaceholder from 'src/components/table-quadrone/table-buttons/EncounterAddAsCombatPlaceholder.svelte';
 import EncounterCombatVisibilityToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatVisibilityToggle.svelte';
 import DeleteEncounterEntityButton from 'src/components/table-quadrone/table-buttons/DeleteEncounterEntityButton.svelte';
+import AttunementToggleButton from 'src/components/table-quadrone/table-buttons/AttunementToggleButton.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -59,6 +60,12 @@ class TableRowActionsRuntime {
       let result: TableAction<any>[] = [];
 
       if (context.owner) {
+        result.push({
+          component: AttunementToggleButton,
+          props: (args) => ({ item: args.data, ctx: args.rowContext }),
+          condition: (args) => !!args.data.system.attunement,
+        } satisfies TableAction<typeof AttunementToggleButton>);
+
         if (context.unlocked) {
           result.push({
             component: EditButton,
