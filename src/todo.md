@@ -1,6 +1,7 @@
 ## kgar To Do
 
 - [ ] Move attunement to the item row actions as a toggle
+- [ ] Consider trimming off row actions that are not enabled for any rows
 
 ### Short List
 
