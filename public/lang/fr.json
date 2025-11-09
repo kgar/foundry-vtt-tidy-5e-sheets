@@ -977,5 +977,7 @@
     "TIDY5E.SheetPin": {
         "LabelPl": "Épingles de la feuille",
         "Label": "Épingle de la feuille"
-    }
+    },
+    "TIDY5E.InspirationAdd": "Ajouter une inspiration",
+    "TIDY5E.InspirationRemove": "Enlever une inspiration"
 }
