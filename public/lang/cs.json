@@ -949,5 +949,7 @@
         "Label": "Připnutý deník",
         "LabelPl": "Připnuté deníky"
     },
-    "TIDY5E.Utilities.ShowSheetPins": "Zobrazit připnuté deníky"
+    "TIDY5E.Utilities.ShowSheetPins": "Zobrazit připnuté deníky",
+    "TIDY5E.InspirationAdd": "Přidat inspiraci",
+    "TIDY5E.InspirationRemove": "Odebrat inspiraci"
 }
