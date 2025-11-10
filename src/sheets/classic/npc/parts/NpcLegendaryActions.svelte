@@ -111,7 +111,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .counters {
     display: flex;
     flex: none;

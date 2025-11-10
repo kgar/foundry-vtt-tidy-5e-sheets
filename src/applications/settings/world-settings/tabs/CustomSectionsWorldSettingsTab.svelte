@@ -275,7 +275,7 @@
   </article>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .section-summary {
     display: inline-flex;
     align-items: center;

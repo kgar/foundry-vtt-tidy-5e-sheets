@@ -129,7 +129,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .attributes-tab-contents {
     display: flex;
     flex-direction: row;

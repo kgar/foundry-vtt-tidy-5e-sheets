@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .rest-container {
     display: block;
     position: absolute;

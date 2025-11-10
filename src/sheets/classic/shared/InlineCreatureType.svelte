@@ -30,7 +30,7 @@
   >
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .creature-type-label,
   .configure-creature-type {
     flex: 1;

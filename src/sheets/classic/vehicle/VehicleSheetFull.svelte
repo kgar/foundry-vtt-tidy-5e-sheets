@@ -181,7 +181,7 @@
   <TabContents tabs={context.tabs} {selectedTabId} />
 </section>
 
-<style lang="scss">
+<style lang="less">
   header {
     display: flex;
     flex-direction: row;

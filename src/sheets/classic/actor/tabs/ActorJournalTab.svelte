@@ -229,7 +229,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .journal-container {
     display: flex;
     align-items: flex-start;

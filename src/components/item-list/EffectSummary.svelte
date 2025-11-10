@@ -81,7 +81,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .effect-summary-changes-table {
     table-layout: fixed;
 

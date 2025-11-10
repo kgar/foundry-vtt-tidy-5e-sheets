@@ -8,7 +8,7 @@ export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
   userColorCss: string = '';
 
   init(_api: Tidy5eSheetsApi): void {
-    import('./coloris.scss');
+    import('./coloris.less');
     Coloris.init();
     Coloris.coloris({
       el: '.coloris',

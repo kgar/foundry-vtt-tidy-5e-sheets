@@ -27,7 +27,7 @@
   {@render children?.()}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .item-table-column {
     color: var(--t5e-tertiary-color);
     font-family: var(--t5e-body-font-family);

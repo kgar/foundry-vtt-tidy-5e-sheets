@@ -109,7 +109,7 @@
   </ExpandableContainer>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .effect-table-row-container {
     position: relative;
     border-radius: 0.3125rem;

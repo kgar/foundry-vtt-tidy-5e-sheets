@@ -158,7 +158,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .settings-form {
     height: 100%;
     display: grid;

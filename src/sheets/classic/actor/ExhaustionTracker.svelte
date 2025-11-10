@@ -101,7 +101,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .exhaustion-container {
     position: absolute;
     top: 0;

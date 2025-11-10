@@ -67,7 +67,7 @@
   </ul>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .tidy-info-banner {
     display: flex;
     flex-direction: column;

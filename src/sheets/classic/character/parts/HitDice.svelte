@@ -33,7 +33,7 @@
   </button>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .portrait-hd {
     position: absolute;
     right: 0;

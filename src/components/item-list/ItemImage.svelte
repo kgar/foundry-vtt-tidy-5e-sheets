@@ -10,7 +10,7 @@
 
 <img class="item-image {classes}" {src} {alt} />
 
-<style lang="scss">
+<style lang="less">
   .item-image {
     flex: 0 0 var(--t5e-image-size-override, 1.5rem);
     height: var(--t5e-image-size-override, 1.5rem);

@@ -3,7 +3,7 @@
   --sidebar-width: var(--sidebar-expanded-width);
   --sidebar-background-image-height: 31.875rem;
   --window-border-color: var(--t5e-color-gold);
-  $sidebar-bg: var(--t5e-sidebar-bg, url(../../modules/tidy5e-sheet/images/sidebar-item-sheet.webp)) top center / auto no-repeat,
+  @sidebar-bg: var(--t5e-sidebar-bg, url(../../modules/tidy5e-sheet/images/sidebar-item-sheet.webp)) top center / auto no-repeat,
     var(--t5e-component-card-dark-darker);
 
   // Items and Containers feature a sidebar that extends to the top of the sheet, inside the header area.
@@ -63,7 +63,7 @@
       }
 
       .header-over-sidebar {
-        background: $sidebar-bg;
+        background: @sidebar-bg;
         background-attachment: scroll, local;
         border-right: 0.0625rem solid var(--window-border-color, #9f9275);
       }
@@ -143,7 +143,7 @@
   /* Sidebar */
 
   .sidebar {
-    background: $sidebar-bg;
+    background: @sidebar-bg;
     background-attachment: scroll, local;
     background-blend-mode: luminosity;
     border-right: 0.0625rem solid var(--window-border-color, #9f9275);

@@ -53,7 +53,7 @@
   <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>
 </div>
 
-<style lang="scss">
+<style lang="less">
   span:has(:global(.configure-starting-equipment)) {
     font-size: 0.875rem;
   }

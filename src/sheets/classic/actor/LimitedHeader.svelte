@@ -19,7 +19,7 @@
   <h1>{context.actor.name}</h1>
 </header>
 
-<style lang="scss">
+<style lang="less">
   header {
     --t5e-portrait-size: 9.375rem;
     display: flex;

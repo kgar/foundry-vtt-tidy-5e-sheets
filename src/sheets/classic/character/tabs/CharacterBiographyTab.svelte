@@ -247,7 +247,7 @@
   </article>
 {/snippet}
 
-<style lang="scss">
+<style lang="less">
   .notes-container {
     display: flex;
     flex: 1;

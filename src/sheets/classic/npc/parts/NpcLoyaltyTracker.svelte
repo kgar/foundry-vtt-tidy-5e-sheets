@@ -38,7 +38,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .loyalty-container {
     position: absolute;
     top: 0;

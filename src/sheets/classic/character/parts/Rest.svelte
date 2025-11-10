@@ -42,7 +42,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .rest-container {
     position: absolute;
     left: 0;

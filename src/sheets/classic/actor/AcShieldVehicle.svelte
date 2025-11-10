@@ -46,7 +46,7 @@
   </AcShieldBase>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .vehicle-armor-class-wrapper {
     display: flex;
 

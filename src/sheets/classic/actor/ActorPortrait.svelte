@@ -93,7 +93,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .portrait,
   .actor-image-wrap,
   .actor-image {

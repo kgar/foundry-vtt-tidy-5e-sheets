@@ -291,7 +291,7 @@
   {/key}
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .item-properties {
     flex: 0 0 7.5rem;
     padding-top: 0.0625rem;

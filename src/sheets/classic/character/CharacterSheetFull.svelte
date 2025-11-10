@@ -243,7 +243,7 @@
   <TabContents tabs={context.tabs} {selectedTabId} />
 </section>
 
-<style lang="scss">
+<style lang="less">
   .tidy5e-sheet-header {
     display: flex;
     justify-content: center;

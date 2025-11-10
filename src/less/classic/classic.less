@@ -1,5 +1,5 @@
 :where(.tidy5e-sheet.classic) {
-  @import './partials/reset-v2';
+  @import './partials/_reset-v2.less';
 
   // Light Mode Variables
   --t5e-title-font-family: 'Modesto Condensed', 'Palatino Linotype', serif;
@@ -274,14 +274,14 @@
   }
 
   &.settings {
-    @import './partials/settings';
+    @import './partials/_settings.less';
   }
 
-  @import './partials/application-shell';
+  @import './partials/_application-shell.less';
 
-  @import './compatibility/apps-items-lists';
-  @import './compatibility/apps-active-effects';
-  @import './compatibility/tabs';
+  @import './compatibility/_apps-items-lists.less';
+  @import './compatibility/_apps-active-effects.less';
+  @import './compatibility/_tabs.less';
 
   // TODO: Move partials inputs
   select :is(option, optgroup) {
@@ -338,8 +338,8 @@
   }
 
   &:where(.actor) {
-    @import './partials/actor';
-    @import '../../sheets/classic/actor/traits/traits';
+    @import './partials/_actor.less';
+    @import '../../sheets/classic/actor/traits/_traits.less';
   }
 
   &:is(.group) {
@@ -357,13 +357,13 @@
     }
   }
 
-  @import './partials/forms';
+  @import './partials/_forms.less';
 
   &.item {
-    @import './partials/items';
+    @import './partials/_items.less';
   }
 
-  @import './partials/layout';
+  @import './partials/_layout.less';
 
   .top-left,
   .bottom-right {
@@ -451,27 +451,27 @@
 
   // TODO: Either put the remainder of the partial style imports here, or move the nonstandard style files to another location.
   // Partials - Styles that can be pulled into anything
-  @import './partials/colors';
+  @import './partials/_colors.less';
 
   // Shared
-  @import '../../sheets/classic/shared/SheetHeaderModeToggle-classic';
+  @import '../../sheets/classic/shared/SheetHeaderModeToggle-classic.less';
 
   // Applications
-  @import '../../applications/section-config/DocumentTabSectionConfig';
+  @import '../../applications/section-config/DocumentTabSectionConfig.less';
 
   // Components
-  @import './components/accordion.scss';
-  @import '../../components/button-menu/button-menu.scss';
-  @import '../../components/toggles/toggles.scss';
-  @import '../../components/item-list/item-table.scss';
-  @import '../../components/table/tidy-table.scss';
-  @import '../../components/filter/filter.scss';
-  @import '../../components/pips/pips.scss';
-  @import '../../components/listbox/listbox.scss';
-  @import '../../components/editor/SheetEditorV2.scss';
-  @import '../../components/tabs/UnderlinedTabStrip.scss';
-  @import './components/info-card.scss';
-  @import './components/tabs.scss';
+  @import './components/accordion.less';
+  @import '../../components/button-menu/button-menu.less';
+  @import '../../components/toggles/_toggles.less';
+  @import '../../components/item-list/item-table.less';
+  @import '../../components/table/tidy-table.less';
+  @import '../../components/filter/_filter.less';
+  @import '../../components/pips/pips.less';
+  @import '../../components/listbox/listbox.less';
+  @import '../../components/editor/SheetEditorV2.less';
+  @import '../../components/tabs/UnderlinedTabStrip.less';
+  @import './components/info-card.less';
+  @import './components/tabs.less';
 
   // TODO: Buttons V2?
   :where(.window-content) {
@@ -486,23 +486,23 @@
     }
   }
 
-  @import './partials/buttons';
+  @import './partials/_buttons.less';
 
   // Tooltips
-  @import '../../tooltips/tooltips.scss';
+  @import '../../tooltips/tooltips.less';
 
   // Components - Actor-specific
-  @import '../../sheets/classic/actor/ActorMovement.scss';
-  @import '../../sheets/classic/actor/ActorProfile.scss';
-  @import '../../sheets/classic/actor/AttributeBlock.scss';
-  @import '../../sheets/classic/actor/AttunementTracker.scss';
-  @import '../../sheets/classic/actor/Currency.scss';
-  @import '../../sheets/classic/actor/SheetEditModeToggle.scss';
+  @import '../../sheets/classic/actor/ActorMovement.less';
+  @import '../../sheets/classic/actor/ActorProfile.less';
+  @import '../../sheets/classic/actor/AttributeBlock.less';
+  @import '../../sheets/classic/actor/AttunementTracker.less';
+  @import '../../sheets/classic/actor/Currency.less';
+  @import '../../sheets/classic/actor/SheetEditModeToggle.less';
 
   // Sheets
   &.group,
   &.encounter {
-    @import '../../sheets/classic/group/GroupSheet.scss';
+    @import '../../sheets/classic/group/GroupSheet.less';
   }
 
   /* Unidentified Item Concealment */

@@ -261,7 +261,7 @@
   {/snippet}
 </ItemTable>
 
-<style lang="scss">
+<style lang="less">
   .inventory-primary-column-label {
     font-size: 0.75rem;
     line-height: 0.75rem;

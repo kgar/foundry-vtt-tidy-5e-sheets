@@ -339,7 +339,7 @@
   {/each}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .actions-tab-container {
     --t5e-image-size-override: 2rem;
     --icon-fill: var(--t5e-secondary-color);

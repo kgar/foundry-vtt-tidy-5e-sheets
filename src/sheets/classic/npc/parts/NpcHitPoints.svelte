@@ -29,7 +29,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="less">
   .portrait-hp {
     border-radius: 0.3125rem;
     position: absolute;

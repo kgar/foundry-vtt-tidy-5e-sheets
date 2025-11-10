@@ -30,7 +30,7 @@
   {@render children?.()}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .ac-display {
     position: relative;
 

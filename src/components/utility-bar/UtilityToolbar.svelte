@@ -17,7 +17,7 @@
   {@render props.children?.()}
 </section>
 
-<style lang="scss">
+<style lang="less">
   .utility-toolbar {
     --vertical-padding-internal: 0.375rem;
     display: flex;

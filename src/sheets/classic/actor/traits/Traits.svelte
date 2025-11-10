@@ -347,7 +347,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .traits {
     border: 0.0625rem solid var(--t5e-faint-color);
     border-radius: 0.3125rem 0.3125rem 0 0;

@@ -150,7 +150,7 @@
   </svelte:element>
 {/if}
 
-<style lang="scss">
+<style lang="less">
   [contenteditable] {
     border: none;
     outline: none;
