@@ -35,7 +35,7 @@
   >
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .source-label,
   .configure-source {
     flex: 1;

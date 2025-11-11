@@ -16,7 +16,7 @@
   >
 {/each}
 
-<style lang="scss">
+<style lang="less">
   .spell-component.spell-tag {
     color: var(--t5e-background);
     background: var(--t5e-tertiary-color);

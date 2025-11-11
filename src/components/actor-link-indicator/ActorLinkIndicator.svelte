@@ -60,7 +60,7 @@
   </a>
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .link-state-button {
     cursor: pointer;
 

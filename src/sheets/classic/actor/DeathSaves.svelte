@@ -87,7 +87,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .death-saves {
     position: absolute;
     top: 0;

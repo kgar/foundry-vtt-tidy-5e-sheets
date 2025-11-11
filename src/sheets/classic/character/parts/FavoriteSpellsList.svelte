@@ -162,7 +162,7 @@
   </ItemTable>
 </section>
 
-<style lang="scss">
+<style lang="less">
   .spell-primary-column-label {
     font-size: 0.75rem;
     line-height: 0.75rem;

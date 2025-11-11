@@ -54,7 +54,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .tidy-capacity {
     position: relative;
     height: var(--capacity-bar-height, 1.25rem);

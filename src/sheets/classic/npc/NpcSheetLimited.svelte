@@ -77,7 +77,7 @@
   </section>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .limited-npc {
     height: 100%;
     flex: 1;

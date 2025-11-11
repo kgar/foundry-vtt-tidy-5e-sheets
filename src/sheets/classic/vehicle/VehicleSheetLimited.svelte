@@ -47,7 +47,7 @@
   </section>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .limited-vehicle {
     flex: 1;
     display: flex;

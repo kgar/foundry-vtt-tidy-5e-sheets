@@ -103,7 +103,7 @@
   </div>
 </article>
 
-<style lang="scss">
+<style lang="less">
   article {
     background: var(--t5e-faintest-color);
     border-radius: 0.3125rem;

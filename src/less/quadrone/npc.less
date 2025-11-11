@@ -1,18 +1,21 @@
 .tidy5e-sheet.application:where(.quadrone.npc) {
 
   background: var(--t5e-component-card-darker);
-  --t5e-sheet-header-bg: url(../../systems/dnd5e/ui/official/banner-npc-dark.webp);
+  @banner-npc-dark : '../../systems/dnd5e/ui/official/banner-npc-dark.webp';
+  --t5e-sheet-header-bg: url('@{banner-npc-dark}');
 
   &.actor::before {
     // opacity: 0.2;
-    background-image: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp);
+    @texture-gray-1 : '../../modules/tidy5e-sheet/images/texture-gray-1.webp';
+    background-image: url('@{texture-gray-1}');
     filter: none;
     opacity: 1;
     mix-blend-mode: normal;
   }
 
   &.actor .sheet-body {
-    background-image: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp);
+    @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
+    background-image: url('@{texture-gray-2}');
   }
 
   &::after {
@@ -142,7 +145,8 @@
         bottom: -0.375rem;
         text-align: center;
         align-items: center;
-        background-image: url(../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg);
+        @badge_ac_npc_light : '../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg';
+        background-image: url('@{badge_ac_npc_light}');
 
         .button-config {
           position: absolute;
@@ -544,7 +548,7 @@
     }
   }
 
-  @mixin collapse-abilities {
+  .collapse-abilities() {
     --collapse-bg-light: rgba(0, 0, 0, 0.20);
     --collapse-bg-dark: rgba(0, 0, 0, 0.4);
     --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.24);
@@ -553,7 +557,7 @@
 
     gap: var(--t5e-size-halfx);
 
-    @include ability-smaller;
+    .ability-smaller();
 
     >* {
       background: var(--collapse-bg-light);
@@ -690,7 +694,7 @@
   }
 
 
-  @mixin ability-smaller {
+  .ability-smaller() {
     --collapse-font-medium: 1.4375rem;
 
     .ability-bonus-container {
@@ -722,11 +726,11 @@
   }
 
   .sheet-header .abilities-container.ability-smaller .abilities-container-inner {
-    @include ability-smaller;
+    .ability-smaller();
   }
 
   .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
-    @include collapse-abilities;
+    .collapse-abilities();
   }
 
   @container actor-sheet (width > 50rem) {
@@ -779,7 +783,8 @@
   }
 
   &.theme-dark {
-    background: url(../../modules/tidy5e-sheet/images/denim065.png),
+    @denim065 : '../../modules/tidy5e-sheet/images/denim065.png';
+    background: url('@{denim065}'),
       var(--t5e-component-card-dark-darker);
     background-position: top center, center;
     background-repeat: repeat, no-repeat;
@@ -790,7 +795,8 @@
     }
 
     &::after {
-      background-image: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp);
+      @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
+      background-image: url('@{texture-gray-2}');
       background-position: bottom center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -805,7 +811,8 @@
 
     .sheet-header {
       .actor-vitals-container .shield {
-        background-image: url(../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg);
+        @badge_ac_npc_dark : '../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg';
+        background-image: url('@{badge_ac_npc_dark}');
       }
 
       .abilities-container.ability-collapsed .abilities-container-inner {
@@ -825,7 +832,8 @@
 
     .sheet-header {
       .initiative-container .initiative.score {
-        background-image: url(../../modules/tidy5e-sheet/images/badge_init_light.webp);
+        @badge_init_light : '../../modules/tidy5e-sheet/images/badge_init_light.webp';
+        background-image: url('@{badge_init_light}');
 
         .initiative-roll-button {
           &:hover {
@@ -841,7 +849,8 @@
 
       .ability {
         .ability-score {
-          background-image: url(../../modules/tidy5e-sheet/images/badge_ability_light.webp);
+          @badge_ability_light : '../../modules/tidy5e-sheet/images/badge_ability_light.webp';
+          background-image: url('@{badge_ability_light}');
           background-position: top center;
           background-size: cover;
           background-repeat: no-repeat;
@@ -880,10 +889,12 @@
       }
 
       .bonus-container {
-        background-image: url(../../modules/tidy5e-sheet/images/badge_ability_light.webp);
+        @badge_ability_light : '../../modules/tidy5e-sheet/images/badge_ability_light.webp';
+        background-image: url('@{badge_ability_light}');
 
         &.proficient {
-          background-image: url(../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp);
+          @badge_ability_light_prof : '../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp';
+          background-image: url('@{badge_ability_light_prof}');
         }
       }
     }

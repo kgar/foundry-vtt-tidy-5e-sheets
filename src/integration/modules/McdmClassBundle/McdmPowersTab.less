@@ -40,7 +40,8 @@
         flex-direction: column;
         gap: 2px;
         &::before {
-          background: transparent url("/systems/dnd5e/ui/lozenge.svg") no-repeat top / contain;
+          @lozenge : '../../systems/dnd5e/ui/lozenge.svg';
+          background: transparent url('@{lozenge}') no-repeat top / contain;
           background-size: cover;
           content: "";
           height: 30px;

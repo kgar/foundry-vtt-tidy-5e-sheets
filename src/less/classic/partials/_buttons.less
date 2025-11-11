@@ -1,4 +1,4 @@
-@mixin transparent-button-base {
+.transparent-button-base() {
   line-height: normal;
   border: none;
   margin: 0;
@@ -21,11 +21,11 @@
 }
 
 .transparent-button {
-  @include transparent-button-base();
+  .transparent-button-base();
 }
 
 .inline-transparent-button {
-  @include transparent-button-base();
+  .transparent-button-base();
 
   & {
     font-size: inherit;
@@ -35,8 +35,8 @@
   }
 }
 
-@mixin icon-button-base {
-  @include transparent-button-base();
+.icon-button-base() {
+  .transparent-button-base();
 
   &,
   i {
@@ -53,11 +53,11 @@
 }
 
 .icon-button {
-  @include icon-button-base();
+  .icon-button-base();
 }
 
 .inline-icon-button {
-  @include icon-button-base();
+  .icon-button-base();
 
   & {
     font-size: inherit;
@@ -72,7 +72,7 @@
 }
 
 .icon-button {
-  @include transparent-button-base();
+  .transparent-button-base();
 
   & {
     color: var(--t5e-icon-font-color);
@@ -85,7 +85,7 @@
 }
 
 .item-list-button {
-  @include transparent-button-base();
+  .transparent-button-base();
 
   & {
     font-size: 0.75rem;
@@ -121,7 +121,7 @@
   }
 }
 
-@mixin pill-button-base {
+.pill-button-base() {
   line-height: 1.25rem;
   transition: color 0.3s ease, transform 0.3s ease;
   transition: background-color 0.3s ease, transform 0.3s ease;
@@ -146,7 +146,7 @@
 }
 
 .pill-button {
-  @include pill-button-base();
+  .pill-button-base();
 }
 
 .sheet-header-button {

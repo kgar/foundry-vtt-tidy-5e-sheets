@@ -315,7 +315,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .attributes-tab-contents {
     flex: 1;
     display: flex;

@@ -470,7 +470,7 @@
   {/if}
 </TabFooter>
 
-<style lang="scss">
+<style lang="less">
   section {
     flex: 1;
   }

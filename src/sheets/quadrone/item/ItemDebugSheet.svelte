@@ -1256,7 +1256,7 @@
   </div>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .sidebar-contents {
     position: sticky;
     top: var(--header-height);

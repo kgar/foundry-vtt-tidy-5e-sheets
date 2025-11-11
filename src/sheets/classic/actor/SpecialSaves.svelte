@@ -31,7 +31,7 @@
   </span>
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .special-save {
     display: flex;
     flex-direction: row;

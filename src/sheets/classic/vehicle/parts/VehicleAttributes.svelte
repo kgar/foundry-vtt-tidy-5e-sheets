@@ -169,7 +169,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .counter-flex {
     display: flex;
     flex-direction: column;

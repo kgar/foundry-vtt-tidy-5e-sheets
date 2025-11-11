@@ -33,7 +33,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="less">
   .profile-thresholds {
     display: flex;
     justify-content: center;

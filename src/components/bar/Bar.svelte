@@ -25,7 +25,7 @@
   style="width: {barPercentage}%; --bar-color: {color}"
 ></div>
 
-<style lang="scss">
+<style lang="less">
   .bar {
     position: absolute;
     top: 0;

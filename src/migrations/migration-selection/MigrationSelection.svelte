@@ -148,7 +148,7 @@
   </footer>
 </section>
 
-<style lang="scss">
+<style lang="less">
   section {
     height: 100%;
     display: flex;

@@ -155,7 +155,7 @@
   {/if}
 </TabFooter>
 
-<style lang="scss">
+<style lang="less">
   .attunement-and-currency {
     display: flex;
     flex: 0 0 1.875rem;

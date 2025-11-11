@@ -57,7 +57,7 @@
   </button>
 </section>
 
-<style lang="scss">
+<style lang="less">
   .sample-formulas {
     button {
       flex: 0 0 1rem;

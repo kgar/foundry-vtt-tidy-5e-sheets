@@ -76,7 +76,7 @@
   </section>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .limited-character {
     height: 100%;
     flex: 1;

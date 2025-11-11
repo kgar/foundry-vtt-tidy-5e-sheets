@@ -13,7 +13,7 @@
   {@render children?.()}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .notice {
     display: block;
     background: var(--t5e-warning-accent-color);

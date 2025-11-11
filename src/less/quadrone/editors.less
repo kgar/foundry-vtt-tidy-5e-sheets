@@ -366,7 +366,9 @@
       &::before,
       &::after {
         content: "";
-        background-image: url(/images/notable-right-corner.svg), url(/images/notable-left-corner.svg);
+        @notable-right-corner : '../../modules/tidy5e-sheet/images/notable-right-corner.svg';
+        @notable-left-corner : '../../modules/tidy5e-sheet/images/notable-left-corner.svg';
+        background-image: url('@{notable-right-corner}'), url('@{notable-left-corner}');
         background-position: 0, 100%;
         background-size: contain;
         background-repeat: no-repeat;

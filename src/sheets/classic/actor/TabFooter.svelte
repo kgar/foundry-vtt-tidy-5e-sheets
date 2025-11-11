@@ -14,7 +14,7 @@
   {@render children?.()}
 </footer>
 
-<style lang="scss">
+<style lang="less">
   .tab-footer {
     background-color: var(--t5e-header-background);
     box-shadow: 0 0 0.1875rem 0 var(--t5e-tertiary-color);

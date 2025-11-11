@@ -135,7 +135,7 @@
   {@render checkboxInput()}
 {/if}
 
-<style lang="scss">
+<style lang="less">
   label {
     --tidy-checkbox-width-internal: var(--tidy-checkbox-width, unset);
     width: var(--tidy-checkbox-width-internal);

@@ -46,7 +46,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .note-entries {
     flex: 1;
     overflow-y: scroll;

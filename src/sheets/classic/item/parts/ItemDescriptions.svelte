@@ -113,7 +113,7 @@
   </div>
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .item-descriptions-container {
     padding-right: 0.3125rem;
 

@@ -70,7 +70,7 @@
   bind:this={fileImportInput}
 />
 
-<style lang="scss">
+<style lang="less">
   .theme-import-input {
     display: none;
   }

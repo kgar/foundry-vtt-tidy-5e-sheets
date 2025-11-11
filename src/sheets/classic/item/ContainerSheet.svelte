@@ -77,5 +77,5 @@
   <TabContents tabs={context.tabs} {selectedTabId} />
 </section>
 
-<style lang="scss">
+<style lang="less">
 </style>

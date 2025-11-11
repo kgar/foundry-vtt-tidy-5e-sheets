@@ -54,7 +54,7 @@
   </button>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .health {
     position: absolute;
     right: 0.4375rem;

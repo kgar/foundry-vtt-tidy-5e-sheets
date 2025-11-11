@@ -39,7 +39,7 @@
   </span>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .spell-slots-detail {
     display: flex;
     flex: 0 0 0.0625rem;

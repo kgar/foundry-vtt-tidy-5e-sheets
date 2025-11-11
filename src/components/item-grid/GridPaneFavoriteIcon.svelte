@@ -9,7 +9,7 @@
   title={localize('TIDY5E.Favorite')}
 ></i>
 
-<style lang="scss">
+<style lang="less">
   .icon-fav {
     position: absolute;
     top: -0.125rem;

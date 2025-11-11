@@ -71,7 +71,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .resource-container {
     position: absolute;
     display: flex;

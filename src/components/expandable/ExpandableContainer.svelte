@@ -98,7 +98,7 @@
 </div>
 
 <!-- TODO: Remove the scoped CSS styles. -->
-<style lang="scss">
+<style lang="less">
   .expandable {
     display: grid;
     grid-template-rows: 0fr;

@@ -204,7 +204,7 @@
   </ItemTable>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .passenger-crew-list-container :global(input.editable-name) {
     padding: 0 0.25rem;
   }

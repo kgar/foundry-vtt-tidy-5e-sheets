@@ -50,7 +50,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .profile-temp {
     display: flex;
     justify-content: center;

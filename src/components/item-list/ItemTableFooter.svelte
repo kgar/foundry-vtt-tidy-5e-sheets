@@ -98,7 +98,7 @@
   {/each}
 </footer>
 
-<style lang="scss">
+<style lang="less">
   .item-table-footer-row {
     display: flex;
     justify-content: flex-end;

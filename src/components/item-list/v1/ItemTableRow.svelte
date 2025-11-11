@@ -162,7 +162,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .item-table-row-container {
     position: relative;
     border-radius: 0.3125rem;

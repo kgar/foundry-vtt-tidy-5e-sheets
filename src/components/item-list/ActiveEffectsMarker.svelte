@@ -8,7 +8,7 @@
   Æ
 </span>
 
-<style lang="scss">
+<style lang="less">
   .ae-marker {
     display: inline-block;
     padding: 0.0625rem 0.1875rem 0 0.1875rem;
