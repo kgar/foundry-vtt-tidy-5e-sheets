@@ -2,7 +2,8 @@
   --difficulty-diplay-size: 6rem;
 
   &::before {
-    background-image: var(--t5e-sheet-header-bg, url(../../modules/tidy5e-sheet/images/banner-encounter.jpg));
+    @banner-encounter : '../../modules/tidy5e-sheet/images/banner-encounter.jpg';
+    background-image: var(--t5e-sheet-header-bg, url('@{banner-encounter}'));
     // mix-blend-mode: darken;
   }
 
@@ -44,7 +45,8 @@
       text-overflow: ellipsis;
 
       &::before {
-        background-image: url(../../modules/tidy5e-sheet/images/badge_encounter_difficulty.png);
+        @badge_encounter_difficulty : '../../modules/tidy5e-sheet/images/badge_encounter_difficulty.png';
+        background-image: url('@{badge_encounter_difficulty}');
         background-size: contain;
         background-repeat: no-repeat;
         background-position: center;

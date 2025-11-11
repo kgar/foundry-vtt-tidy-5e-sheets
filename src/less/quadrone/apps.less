@@ -380,12 +380,14 @@
   &:where(.theme-light) {
 
     &::before {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-1.webp) no-repeat top center;
+      @texture-gray-1 : '../../modules/tidy5e-sheet/images/texture-gray-1.webp';
+      background: url('@{texture-gray-1}') no-repeat top center;
       background-size: cover;
     }
 
     &::after {
-      background: url(../../modules/tidy5e-sheet/images/texture-gray-2.webp) no-repeat bottom center;
+      @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
+      background: url('@{texture-gray-2}') no-repeat bottom center;
       background-size: cover;
     }
 
@@ -602,7 +604,8 @@
 
 
   &:where(.theme-dark) {
-    background: var(--app-background) url(../../modules/tidy5e-sheet/images/denim065.png);
+    @denim065 : '../../modules/tidy5e-sheet/images/denim065.png';
+    background: var(--app-background) url('@{denim065}');
     border-color: var(--t5e-color-palette-gold-45);
 
     code {

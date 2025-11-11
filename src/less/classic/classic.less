@@ -1,5 +1,9 @@
+@parchment-texture-top : '../../modules/tidy5e-sheet/images/parchment-texture-top.webp';
+@parchment-texture-bottom : '../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp';
+
 :where(.tidy5e-sheet.classic) {
   @import './partials/_reset-v2.less';
+
 
   // Light Mode Variables
   --t5e-title-font-family: 'Modesto Condensed', 'Palatino Linotype', serif;
@@ -93,9 +97,9 @@
     255,
     1
   );
-  --t5e-item-info-card-background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
+  --t5e-item-info-card-background: url('@{parchment-texture-top}')
       no-repeat top center / 150% auto,
-    #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)
+    #f1ebe8 url('@{parchment-texture-bottom}')
       no-repeat bottom center / 150% auto;
   --t5e-content-entity-link-color: var(--t5e-primary-font-color);
   --t5e-content-entity-link-hover-color: var(--t5e-white);
@@ -195,9 +199,9 @@
 }
 
 .tidy5e-sheet.application:where(.classic) {
-  --t5e-parchment-background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp)
+  --t5e-parchment-background: url('@{parchment-texture-top}')
       no-repeat top center / 150% auto,
-    #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp)
+    #f1ebe8 url('@{parchment-texture-bottom}')
       no-repeat bottom center / 150% auto;
 
   // Document V2 sheets need more width to be readable.
