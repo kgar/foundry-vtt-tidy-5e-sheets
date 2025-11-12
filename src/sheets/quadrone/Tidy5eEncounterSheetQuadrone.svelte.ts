@@ -32,11 +32,12 @@ import { mapGetOrInsertComputed } from 'src/utils/map';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import type { EncounterMemberContext } from 'src/types/group.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import {
-  TidyFlags,
   type EncounterCombatantSettings,
   type EncounterPlaceholder,
-} from 'src/api';
+} from 'src/foundry/TidyFlags.types';
 import { CombatantSettings } from 'src/features/combat/CombatantSettings';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { Item5e } from 'src/types/item.types';
@@ -188,6 +189,8 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
     );
 
     context.tabs = await EncounterSheetQuadroneRuntime.getTabs(context);
+
+    TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
 
     return context;
   }
