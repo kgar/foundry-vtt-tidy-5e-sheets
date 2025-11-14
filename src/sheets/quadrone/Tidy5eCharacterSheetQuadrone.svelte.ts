@@ -56,6 +56,7 @@ import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 import { getActorActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER
@@ -337,6 +338,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     );
 
     context.tabs = tabs;
+
+    TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
 
     return context;
   }
@@ -680,13 +683,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       );
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
-      section.sectionActions =
-        SectionActions.getStandardItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section
+      );
     };
 
     // Apply sections to their section lists
@@ -699,13 +701,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     context.spellbook = spellbook;
 
     context.spellbook.forEach((section) => {
-      section.sectionActions =
-        SectionActions.getSpellbookItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
+      section.sectionActions = SectionActions.getSpellbookItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section
+      );
     });
 
     context.features = Object.values(features);

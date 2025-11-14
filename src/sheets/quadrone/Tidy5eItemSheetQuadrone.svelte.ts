@@ -623,6 +623,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
+    TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
+
     return context;
   }
 

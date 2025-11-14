@@ -18,4 +18,21 @@
   @import './components/toggles.less';
   @import './components/trackers.less';
   @import '../classic/components/info-card.less';
+
+  // TODO: Find a proper home for this:
+  // ExpandableContainer.svelte styles
+  .expandable {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease;
+
+    &.expanded {
+      grid-template-rows: 1fr;
+    }
+
+    &.overflow-y-hidden > * {
+      overflow-y: hidden;
+    }
+  }
 }

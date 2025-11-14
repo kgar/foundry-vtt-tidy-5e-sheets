@@ -150,6 +150,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
     context.tabs = await GroupSheetQuadroneRuntime.getTabs(context);
 
+    TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
+
     return context;
   }
 
@@ -332,12 +334,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     }
 
     sections.forEach((section) => {
-      section.sectionActions =
-        SectionActions.getGroupMemberHeaderActions(
-          this.actor,
-          actorContext.unlocked,
-          section
-        );
+      section.sectionActions = SectionActions.getGroupMemberHeaderActions(
+        this.actor,
+        actorContext.unlocked,
+        section
+      );
     });
 
     membersContext.skilled.push(

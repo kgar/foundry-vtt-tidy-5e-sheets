@@ -416,6 +416,8 @@ export class Tidy5eContainerSheetQuadrone
 
     TidyHooks.tidy5eSheetsPreConfigureSections(this, this.element, context);
 
+    TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
+
     return context;
   }
 

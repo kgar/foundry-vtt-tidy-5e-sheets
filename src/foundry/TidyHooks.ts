@@ -19,6 +19,7 @@ import type {
 } from 'src/types/item.types';
 import type { Encounter5e, Group5e } from 'src/types/group.types';
 import type { Activity5e } from './dnd5e.types';
+import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -420,6 +421,20 @@ export class TidyHooks {
       context,
       event
     );
+  }
+
+  /**
+   * The sheet context has been prepared and is about to be used for rendering the sheet.
+   * @param document the document (e.g., an Actor, an Item, etc.)
+   * @param app the document's sheet
+   * @param context the prepared context data
+   */
+  static tidy5eSheetsPrepareSheetContext(
+    document: any,
+    app: TidyExtensibleDocumentSheetMixinInstance,
+    context: any
+  ): void {
+    Hooks.callAll('tidy5e-sheet.prepareSheetContext', document, app, context);
   }
 
   /**
