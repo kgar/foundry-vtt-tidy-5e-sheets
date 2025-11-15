@@ -51,6 +51,7 @@
 
   let hpValueInput = $state<TextInputQuadrone>();
   let hpTempInput = $state<TextInputQuadrone>();
+  let hpMaxInput = $state<TextInputQuadrone>();
 
   let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
   let effectiveMaxHp = $derived(
@@ -399,6 +400,40 @@
               blurAfterChange={true}
               hidden={!hpTempInputFocused}
             />
+
+            {:else if true} <!-- TODO: Temp/Max HP overlay option -->
+            <div class="hp-overlay-bar flexrow">
+              <span class="label">Max HP</span>
+              <TextInputQuadrone
+                bind:this={hpMaxInput}
+                id="{appId}-system-attributes-hp-max"
+                document={context.actor}
+                field="system.attributes.hp.max"
+                class="hp-max-input"
+                value={hpMax}
+                selectOnFocus={true}
+                enableDeltaChanges={true}
+                onfocus={() => (hpTempInputFocused = true)}
+                onblur={() => (hpTempInputFocused = false)}
+                blurAfterChange={true}
+                hidden={!hpTempInputFocused}
+              />
+              <span class="label">Temp HP</span>
+              <TextInputQuadrone
+                bind:this={hpTempInput}
+                id="{appId}-system-attributes-hp-temp"
+                document={context.actor}
+                field="system.attributes.hp.temp"
+                class="hp-temp-input"
+                value={hpTemp}
+                selectOnFocus={true}
+                enableDeltaChanges={true}
+                onfocus={() => (hpTempInputFocused = true)}
+                onblur={() => (hpTempInputFocused = false)}
+                blurAfterChange={true}
+                hidden={!hpTempInputFocused}
+              />
+            </div>
           {:else if context.editable}
             <button
               onclick={() =>
@@ -434,7 +469,13 @@
               }}
             />
           {:else}
-            <div class="hd-row">
+            <button
+              aria-label={localize('DND5E.HitDiceConfig')}
+              type="button"
+              class="unbutton hd-row"
+              onclick={() =>
+                FoundryAdapter.renderHitDiceConfig(context.actor)}
+              data-tooltip="DND5E.HitDiceConfig">
               <div
                 class="meter progress hit-die view-only"
                 style="--bar-percentage: {hdPct}%"
@@ -467,7 +508,7 @@
                   </button>
                 {/if}
               </div>
-            </div>
+            </button>
             {#if context.editable || exhaustionLevel > 0}
               <div class={['exhaustion', { exhausted: exhaustionLevel > 0 }]}>
                 <button

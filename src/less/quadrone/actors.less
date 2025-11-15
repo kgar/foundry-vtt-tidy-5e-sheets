@@ -861,7 +861,22 @@
       }
 
       .hd-row {
+        padding-top: 0.125rem;
         flex: 1;
+
+        &:hover .hit-die {
+
+          .label {
+            text-shadow: 0 0 0.3125rem var(--t5e-color-text-gold-emphasis);
+          }
+
+          &:focus,
+          &:active {
+            background-color: inherit;
+            border: none;
+            outline: none;
+          }
+        }
       }
 
       .max {
@@ -875,17 +890,6 @@
           cursor: auto;
           justify-content: flex-start;
           transition: all var(--t5e-transition-default);
-
-          &:hover {
-            text-shadow: 0 0 0.3125rem var(--t5e-color-text-gold-emphasis);
-          }
-
-          &:focus,
-          &:active {
-            background-color: inherit;
-            border: none;
-            outline: none;
-          }
         }
 
         .hd-label {
@@ -910,6 +914,34 @@
       }
 
       .exhaustion-bar {
+        position: absolute;
+        bottom: -0.125rem;
+        left: -0.125rem;
+        top: -0.125rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.125rem;
+        border: 0.125rem solid var(--t5e-color-gold);
+        height: 1.75rem;
+        width: max-content;
+        background-color: var(--t5e-component-card-dark-darker);
+        z-index: 1; // TODO: This is a hack
+
+        .button {
+          border-radius: 0;
+
+          &.active {
+            font-weight: var(--font-weight-bold);
+            background-color: var(--t5e-color-palette-orange-40);
+            color: var(--t5e-color-icon-default);
+            text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
+          }
+        }
+      }
+
+      .hp-overlay-bar {
         position: absolute;
         bottom: -0.125rem;
         left: -0.125rem;
