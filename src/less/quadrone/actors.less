@@ -945,6 +945,7 @@
         position: absolute;
         bottom: -0.125rem;
         left: -0.125rem;
+        right: calc((var(--t5e-field-size-default) + 0.125rem)*-1);
         top: -0.125rem;
         display: flex;
         flex-direction: row;
@@ -952,8 +953,7 @@
         justify-content: center;
         border-radius: 0.125rem;
         border: 0.125rem solid var(--t5e-color-gold);
-        height: 1.75rem;
-        width: max-content;
+        padding: 0 0 0 0.5rem;
         background-color: var(--t5e-component-card-dark-darker);
         z-index: 1; // TODO: This is a hack
 
@@ -2804,7 +2804,7 @@
     .sheet-body {
       @denim065: '../../modules/tidy5e-sheet/images/denim065.png';
       background: url('@{denim065}') top center / auto repeat,
-        var(--t5e-component-card-dark-darker);
+      var(--t5e-component-card-dark-darker);
       background-size: auto;
 
       &::before {
