@@ -3,6 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "exports":{
+    "./context": {
+      "types": "./src/api/PublicTypes.ts"
+    },
+    "./api": {
+      "types": "./src/api/Tidy5eSheetsApi.ts"
+    }
+  },
   "scripts": {
     "prepare-dev": "node prepare-dist-for-dev.js",
     "dev": "npm run prepare-dev && vite",
