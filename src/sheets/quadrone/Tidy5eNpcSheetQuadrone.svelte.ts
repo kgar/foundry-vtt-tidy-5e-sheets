@@ -38,6 +38,7 @@ import UserPreferencesService from 'src/features/user-preferences/UserPreference
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -295,6 +296,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     context.customContent = await NpcSheetQuadroneRuntime.getContent(context);
 
     context.tabs = await NpcSheetQuadroneRuntime.getTabs(context);
+
+    TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
 
     return context;
   }
