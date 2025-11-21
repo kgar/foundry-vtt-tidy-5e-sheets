@@ -357,15 +357,12 @@
               </div>
               {#if effectiveMaxHp !== hpMax}
                 <div class="max-hp-override-container">
-                  <!-- <i class="fas fa-{hpTempMax < 0 ? 'minus' : 'plus'}"></i> -->
-                  <span class="font-default-small color-text-lighter"
-                    >{hpTempMax < 0 ? '-' : '+'}</span
-                  >
-                  <!-- {#if ((hpTempMax < 100 && effectiveMaxHp < 1000) || (effectiveMaxHp < 1000 && hpTempMax < 10))} -->
                   <span class="font-default-small color-text-lighter">
-                    {hpTempMax}</span
-                  >
-                  <!-- {/if} -->
+                    {hpTempMax < 0 ? '-' : '+'}
+                  </span>
+                  <span class="font-default-small color-text-lighter">
+                    {hpTempMax}
+                  </span>
                 </div>
                 <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
               {/if}
@@ -416,6 +413,7 @@
                 type="button"
                 class="button button-borderless button-icon-only temp-hp"
                 onclick={() => {
+                  console.log('onclick');
                   hpOverlayFocusTarget = 'temp';
                   hpOverlayOpen = true;
                 }}
@@ -462,7 +460,6 @@
             </button>
           {/if}
           {#if hpOverlayOpen}
-            <!-- TODO: Temp/Max HP overlay option -->
             <div class="hp-overlay-bar flexrow">
               <span class="font-label-medium color-text-gold">Max</span>
               <TextInputQuadrone
