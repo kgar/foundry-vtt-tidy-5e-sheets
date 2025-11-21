@@ -635,17 +635,10 @@
           flex: 1;
         }
 
-        .hit-points:has(+.button.editMode) {
-          box-shadow: 0.125rem 0 0 var(--t5e-color-gold);
-        }
-
         .button.button-icon-only.button-borderless {
-          &:not(.editMode) {
-            position: absolute;
-            right: 0;
-          }
-
           flex: 0 1 auto;
+          position: absolute;
+          right: 0;
 
           i {
             font-size: var(--font-size-14);
@@ -653,14 +646,13 @@
             margin-left: 0.0625rem;
           }
 
-          &:hover {
-            background-color: var(--t5e-color-hp-temp-dark);
+          &.temp-hp {
+            background: none;
           }
         }
 
         .button-config {
           border-radius: 0;
-          background-color: var(--t5e-color-hp-dark);
 
           &:hover {
             background-color: var(--t5e-color-hp-dark);
@@ -674,7 +666,7 @@
           flex: 0 1 auto;
           align-items: center;
           justify-content: center;
-          padding: 0 0.5rem;
+          padding: 0 0.375rem;
           transition: all var(--t5e-transition-default);
 
           &.label {
@@ -686,15 +678,6 @@
             background-color: var(--t5e-color-hp-temp-dark);
           }
         }
-      }
-
-      input[type="text"].hp-temp-input {
-        background-color: var(--t5e-color-hp-temp-dark);
-        border-color: var(--t5e-color-hp-temp);
-        font: var(--t5e-font-label-large);
-        outline: none;
-        position: relative;
-        text-align: right;
       }
 
       ::selection {
@@ -808,7 +791,7 @@
         }
 
         .death-saves {
-          i {
+          .button-death-saves i {
             color: var(--t5e-vitals-button-icon-color);
           }
 
@@ -957,6 +940,10 @@
         background-color: var(--t5e-component-card-dark-darker);
         z-index: 1; // TODO: This is a hack
 
+        span { 
+          flex: 0 fit-content;
+        }
+
         .button {
           border-radius: 0;
 
@@ -967,17 +954,38 @@
             text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
           }
         }
+        
+        .button-config {
+          border-left: 0.125rem solid var(--t5e-color-gold);
+        }
+
+        input[type="text"] {
+          padding-left: 0.25rem;
+          padding-right: 0.25rem;
+          text-align: left;
+          padding-block-end: 0;
+          outline: none;
+        }
+        
+        button {
+          flex: 0 fit-content;
+          min-width: var(--t5e-field-size-default);
+        }
+
+        >* {
+          font-size: var(--font-size-14);
+        }
       }
 
       .max-hp-override-container {
         display: flex;
         flex-direction: row;
         position: relative;
+        height: 100%;
+        align-items: center;
+        padding-bottom: 0.25rem;
 
         i {
-          position: absolute;
-          top: 0;
-
           font-size: var(--font-size-10);
         }
       }

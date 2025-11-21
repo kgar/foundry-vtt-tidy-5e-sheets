@@ -350,13 +350,15 @@
               </div>
               {#if effectiveMaxHp !== hpMax}
                 <div class="max-hp-override-container">
-                  <i class="fas fa-heart-circle-plus"></i>
-                  <!-- <span class="font-label-small color-text-lighter"
+                  <!-- <i class="fas fa-{hpTempMax < 0 ? 'minus' : 'plus'}"></i> -->
+                  <span class="font-default-small color-text-lighter"
                     >{hpTempMax < 0 ? '-' : '+'}</span
                   >
-                  <span class="font-label-small color-text-lighter">
+                  <!-- {#if ((hpTempMax < 100 && effectiveMaxHp < 1000) || (effectiveMaxHp < 1000 && hpTempMax < 10))} -->
+                  <span class="font-default-small color-text-lighter">
                     {hpTempMax}</span
-                  > -->
+                  >
+                  <!-- {/if} -->
                 </div>
                 <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
               {/if}
@@ -617,7 +619,7 @@
                 {:else if context.editable}
                   <button
                     type="button"
-                    class="button button-borderless button-icon-only"
+                    class="button button-borderless button-icon-only button-death-saves"
                     aria-label={localize('DND5E.DeathSave')}
                     data-tooltip="DND5E.DeathSave"
                     onclick={() => context.actor.sheet.toggleDeathSaves()}
