@@ -49,7 +49,7 @@
     ),
   );
 
-  let showSheetPin = $derived(
+  let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       tabId,
@@ -70,7 +70,7 @@
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
-  {#if showSheetPin}
+  {#if showSheetPins}
     <SheetPins />
   {/if}
 

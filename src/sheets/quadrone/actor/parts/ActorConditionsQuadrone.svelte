@@ -27,10 +27,16 @@
     <ul class="conditions-list">
       {#each conditions as condition (condition.id)}
         <li
-          class="condition"
-          class:active={!condition.disabled}
+          class={[
+            'condition',
+            {
+              active: !condition.disabled,
+              'content-link': !!condition.reference,
+            },
+          ]}
           data-uuid={condition.reference}
           data-condition-id={condition.id}
+          data-tooltip={condition.name}
         >
           <ConditionToggleQuadrone {condition} />
         </li>

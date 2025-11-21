@@ -979,5 +979,7 @@
         "Label": "Pin Scheda",
         "LabelPl": "Pins Scheda"
     },
-    "TIDY5E.Utilities.ShowSheetPins": "Mostra Pins Scheda"
+    "TIDY5E.Utilities.ShowSheetPins": "Mostra Pins Scheda",
+    "TIDY5E.InspirationAdd": "Aggiungi Ispirazione",
+    "TIDY5E.InspirationRemove": "Rimuovi Ispirazione"
 }
