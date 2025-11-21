@@ -36,7 +36,7 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  const showSheetPin = $derived(
+  const showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       CONSTANTS.TAB_MEMBERS,
@@ -103,7 +103,7 @@
     {tabOptionGroups}
   />
 
-  {#if showSheetPin}
+  {#if showSheetPins}
     <SheetPins />
   {/if}
 
