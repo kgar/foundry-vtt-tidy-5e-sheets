@@ -626,6 +626,22 @@
           }
         }
 
+        &:has(.max-hp-override-container)::after {
+          background: linear-gradient(to right, var(--adjusted-darker) 0%, var(--adjusted-lighter) 100%);
+          border-right: var(--bar-end-border-width) solid var(--t5e-color-palette-green-21);
+          content: '';
+          position: absolute;
+          block-size: 100%;
+          left: calc(var(--bar-percentage, 0%));
+          transition: all 0.5s ease;
+          border-radius: var(--t5e-radius-card);
+          inline-size: calc(var(--bar-adjusted, 0%));
+          opacity: 50%;
+        }
+        
+        button {
+          z-index: 1;
+        }
       }
 
       .hp-row {

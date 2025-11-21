@@ -61,7 +61,12 @@
     context.system.attributes?.hp?.effectiveMax ?? 0,
   );
   let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
-  let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
+  let hpPct = $derived(
+    effectiveMaxHp < hpMax
+      ? ((hpValue / hpMax) * 100).toFixed(0)
+      : (context.system.attributes?.hp?.pct ?? 0).toFixed(0),
+  );
+  let hpAdjustedPct = $derived(((hpMax - effectiveMaxHp) / effectiveMaxHp * 100).toFixed(0));
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempmax ?? 0);
 
@@ -326,7 +331,9 @@
         <div class="hp-row flexrow">
           <div
             class="meter progress hit-points"
-            style="--bar-percentage: {hpPct.toFixed(0)}%"
+            style={effectiveMaxHp < hpMax
+              ? `--bar-percentage: ${hpPct}%; --bar-adjusted: ${hpAdjustedPct}%; --adjusted-darker: var(--t5e-color-palette-green-21); --adjusted-lighter: var(--t5e-color-palette-green-43);`
+              : `--bar-percentage: ${hpPct}%`}
           >
             <button
               type="button"
