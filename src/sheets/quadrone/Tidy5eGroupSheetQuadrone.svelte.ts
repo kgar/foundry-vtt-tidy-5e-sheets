@@ -419,10 +419,10 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     });
   }
 
-  protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
+  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
     const tabIds: string[] = [CONSTANTS.TAB_MEMBERS];
 
-    if (Inventory.isItemInventoryType(sheetPin)) {
+    if (Inventory.isItemInventoryType(item)) {
       tabIds.push(CONSTANTS.TAB_ACTOR_INVENTORY);
     }
 
