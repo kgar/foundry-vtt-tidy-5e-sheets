@@ -348,6 +348,18 @@
               <div class="max" aria-label={localize('DND5E.HitPointsMax')}>
                 {effectiveMaxHp}
               </div>
+              {#if effectiveMaxHp !== hpMax}
+                <div class="max-hp-override-container">
+                  <i class="fas fa-heart-circle-plus"></i>
+                  <!-- <span class="font-label-small color-text-lighter"
+                    >{hpTempMax < 0 ? '-' : '+'}</span
+                  >
+                  <span class="font-label-small color-text-lighter">
+                    {hpTempMax}</span
+                  > -->
+                </div>
+                <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
+              {/if}
             </button>
             <TextInputQuadrone
               bind:this={hpValueInput}
@@ -446,13 +458,13 @@
               <span class="font-label-medium color-text-gold">Max</span>
               <TextInputQuadrone
                 bind:this={hpTempMaxInput}
-                id="{appId}-system-attributes-hp-max"
+                id="{appId}-system-attributes-hp-tempmax"
                 document={context.actor}
-                field="system.attributes.hp.max"
+                field="system.attributes.hp.tempmax"
                 class="hp-temp-input"
                 value={hpTempMax}
                 selectOnFocus={true}
-                enableDeltaChanges={true}
+                enableDeltaChanges={false}
                 onkeydown={(ev) => {
                   if (ev.key === 'Enter' || ev.key === ' ') {
                     hpOverlayCloseOnBlur = true;
@@ -519,9 +531,6 @@
                 <i class="fas fa-cog"></i>
               </button>
             </div>
-          {/if}
-          {#if effectiveMaxHp !== hpMax}
-            <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
           {/if}
         </div>
         <div class="actor-vitals-row">
