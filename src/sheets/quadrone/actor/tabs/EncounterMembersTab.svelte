@@ -33,7 +33,7 @@
     sectionsInlineWidth = entry.borderBoxSize[0].inlineSize;
   }
 
-  let showSheetPin = $derived(
+  let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       CONSTANTS.TAB_MEMBERS,
@@ -56,7 +56,7 @@
   class="group-tab-content group-members-content flexcol"
   bind:this={sectionsContainer}
 >
-  {#if showSheetPin}
+  {#if showSheetPins}
     <SheetPins />
   {/if}
 

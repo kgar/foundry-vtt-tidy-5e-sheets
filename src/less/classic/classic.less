@@ -1021,4 +1021,19 @@
     grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
     gap: 0.125rem;
   }
+
+  .expandable {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease;
+
+    &.expanded {
+      grid-template-rows: 1fr;
+    }
+
+    &.overflow-y-hidden > * {
+      overflow-y: hidden;
+    }
+  }
 }
