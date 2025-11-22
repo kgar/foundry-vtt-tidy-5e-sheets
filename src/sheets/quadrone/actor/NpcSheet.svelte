@@ -109,9 +109,16 @@
                 document={context.actor}
                 value={context.actor.name}
                 class="actor-name flex1 h2"
+                data-tooltip={context.actor.name}
               />
             {:else}
-              <h1 class="actor-name flex1">{context.actor.name}</h1>
+              <h1
+                class="actor-name flex1"
+                data-tidy-sheet-part="actor-name"
+                data-tooltip={context.actor.name}
+              >
+                {context.actor.name}
+              </h1>
             {/if}
             <div
               class={['sheet-header-actions', 'flexrow']}

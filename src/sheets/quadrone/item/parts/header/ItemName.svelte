@@ -18,7 +18,10 @@
     document={context.item}
     {value}
     class="document-name"
+    data-tooltip={context.item.name}
   />
 {:else}
-  <div class="document-name">{context.item.name}</div>
+  <div class="document-name" data-tooltip={context.item.name}>
+    {context.item.name}
+  </div>
 {/if}
