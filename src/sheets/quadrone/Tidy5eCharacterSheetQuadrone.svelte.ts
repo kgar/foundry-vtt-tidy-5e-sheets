@@ -67,7 +67,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+    this.currentTabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
     this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
   }
 

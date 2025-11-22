@@ -15,6 +15,7 @@
   import { untrack } from 'svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -32,7 +33,8 @@
 
     sidebarExpanded =
       UserSheetPreferencesService.getByType(type)?.tabs?.[selectedTabId]
-        ?.sidebarExpanded ?? true;
+        ?.sidebarExpanded ??
+      selectedTabId !== CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
   });
 
   // When the user expands or collapses the sidebar, remember their preference for this tab.
@@ -66,7 +68,9 @@
       ? ((hpValue / hpMax) * 100).toFixed(0)
       : (context.system.attributes?.hp?.pct ?? 0).toFixed(0),
   );
-  let hpAdjustedPct = $derived(((hpMax - effectiveMaxHp) / effectiveMaxHp * 100).toFixed(0));
+  let hpAdjustedPct = $derived(
+    (((hpMax - effectiveMaxHp) / effectiveMaxHp) * 100).toFixed(0),
+  );
   let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
   let hpTempMax = $derived(context.system.attributes?.hp?.tempmax ?? 0);
 
