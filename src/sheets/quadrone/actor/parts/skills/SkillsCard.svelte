@@ -55,7 +55,6 @@
       return prev;
     }, {}),
   );
-  console.log('showProficiency', showProficiency);
 </script>
 
 {#snippet skillsContent()}
