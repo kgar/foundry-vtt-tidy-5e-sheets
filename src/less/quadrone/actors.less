@@ -157,9 +157,8 @@
         }
 
         .sidebar-tab-contents {
-          padding: var(--t5e-size-3x) 0;
-          overflow-y: auto;
-          flex: 1;
+          padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) 0;
+          margin-right: calc(var(--t5e-size-3x) * -1);
         }
 
         &.expanded {
@@ -2479,7 +2478,6 @@
     }
 
     li {
-      width: 13.75rem;
       display: flex;
       flex-direction: row;
       justify-content: center;

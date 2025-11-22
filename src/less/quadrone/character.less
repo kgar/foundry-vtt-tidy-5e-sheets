@@ -524,9 +524,9 @@
       grid-template-rows: auto 1fr;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       grid-template-areas:
-        'skills saves'
-        'skills tools'
-        'traits traits';
+        'skills traits'
+        'saves traits'
+        'tools traits';
     }
 
     .saving-throws .use-ability-list {
@@ -547,10 +547,9 @@
     .tidy-tab-contents.attributes .columns {
       grid-template-columns: minmax(0, 1fr);
       grid-template-areas:
-        'skills'
-        'saves'
-        'tools'
-        'traits';
+        'skills skills'
+        'saves tools'
+        'traits traits';
       gap: var(--t5e-size-4x);
     }
   }

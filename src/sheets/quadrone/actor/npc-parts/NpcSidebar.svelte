@@ -10,10 +10,10 @@
 </script>
 
 <NpcTraits />
-<SkillsCard defaultExpansionState={false} showFiligree={false} />
+<SkillsCard defaultExpansionState={false} showFiligree={false} showProficiency={false} />
 <LoyaltyTracker />
 <Legendaries showFiligree={false} />
 
 {#if context.tools.length || context.unlocked}
-  <ToolsCard showFiligree={false} />
+  <ToolsCard showFiligree={false} showProficiency={false} />
 {/if}

@@ -17,10 +17,15 @@
 
   type Props = {
     defaultExpansionState?: boolean;
+    showProficiency?: boolean;
     showFiligree?: boolean;
   };
 
-  let { defaultExpansionState = true, showFiligree = true }: Props = $props();
+  let { 
+    defaultExpansionState = true, 
+    showFiligree = true, 
+    showProficiency = true 
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -50,6 +55,7 @@
       return prev;
     }, {}),
   );
+  console.log('showProficiency', showProficiency);
 </script>
 
 {#snippet skillsContent()}
@@ -72,7 +78,7 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
           data-key={skill.key}
         >
-          {#if context.unlocked || showFiligree}
+          {#if showProficiency}
             <ProficiencyCycle
               actor={context.actor}
               aria-label={localize(skill.hover)}
