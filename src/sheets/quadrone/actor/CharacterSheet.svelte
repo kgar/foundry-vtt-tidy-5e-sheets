@@ -114,9 +114,14 @@
                 value={context.actor.name}
                 class="actor-name flex1 h1"
                 data-tidy-sheet-part="actor-name"
+                data-tooltip={context.actor.name}
               />
             {:else}
-              <h1 class="actor-name flex1" data-tidy-sheet-part="actor-name">
+              <h1
+                class="actor-name flex1"
+                data-tidy-sheet-part="actor-name"
+                data-tooltip={context.actor.name}
+              >
                 {context.actor.name}
               </h1>
             {/if}
