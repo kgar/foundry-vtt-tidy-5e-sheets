@@ -157,9 +157,8 @@
         }
 
         .sidebar-tab-contents {
-          padding: var(--t5e-size-3x) 0;
-          overflow-y: auto;
-          flex: 1;
+          padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) 0;
+          margin-right: calc(var(--t5e-size-3x) * -1);
         }
 
         &.expanded {
@@ -626,6 +625,24 @@
           }
         }
 
+        &:has(.max-hp-override-container)::after {
+          background: linear-gradient(to right, var(--adjusted-darker) 0%, var(--adjusted-lighter) 100%);
+          border-right: var(--bar-end-border-width) solid var(--t5e-color-palette-green-21);
+          content: '';
+          position: absolute;
+          block-size: 100%;
+          left: calc(var(--bar-percentage, 0%));
+          transition: all 0.5s ease;
+          border-radius: var(--t5e-radius-card);
+          inline-size: calc(var(--bar-adjusted, 0%));
+          opacity: 50%;
+        }
+        
+        button {
+          box-shadow: none;
+          width: calc(100% - var(--t5e-field-size-default));
+          z-index: 1;
+        }
       }
 
       .hp-row {
@@ -635,17 +652,10 @@
           flex: 1;
         }
 
-        .hit-points:has(+.button.editMode) {
-          box-shadow: 0.125rem 0 0 var(--t5e-color-gold);
-        }
-
         .button.button-icon-only.button-borderless {
-          &:not(.editMode) {
-            position: absolute;
-            right: 0;
-          }
-
           flex: 0 1 auto;
+          position: absolute;
+          right: 0;
 
           i {
             font-size: var(--font-size-14);
@@ -653,14 +663,13 @@
             margin-left: 0.0625rem;
           }
 
-          &:hover {
-            background-color: var(--t5e-color-hp-temp-dark);
+          &.temp-hp {
+            background: none;
           }
         }
 
         .button-config {
           border-radius: 0;
-          background-color: var(--t5e-color-hp-dark);
 
           &:hover {
             background-color: var(--t5e-color-hp-dark);
@@ -674,7 +683,7 @@
           flex: 0 1 auto;
           align-items: center;
           justify-content: center;
-          padding: 0 0.5rem;
+          padding: 0 0.375rem;
           transition: all var(--t5e-transition-default);
 
           &.label {
@@ -686,15 +695,6 @@
             background-color: var(--t5e-color-hp-temp-dark);
           }
         }
-      }
-
-      input[type="text"].hp-temp-input {
-        background-color: var(--t5e-color-hp-temp-dark);
-        border-color: var(--t5e-color-hp-temp);
-        font: var(--t5e-font-label-large);
-        outline: none;
-        position: relative;
-        text-align: right;
       }
 
       ::selection {
@@ -808,7 +808,7 @@
         }
 
         .death-saves {
-          i {
+          .button-death-saves i {
             color: var(--t5e-vitals-button-icon-color);
           }
 
@@ -861,7 +861,22 @@
       }
 
       .hd-row {
+        padding-top: 0.125rem;
         flex: 1;
+
+        &:hover .hit-die {
+
+          .label {
+            text-shadow: 0 0 0.3125rem var(--t5e-color-text-gold-emphasis);
+          }
+
+          &:focus,
+          &:active {
+            background-color: inherit;
+            border: none;
+            outline: none;
+          }
+        }
       }
 
       .max {
@@ -875,17 +890,6 @@
           cursor: auto;
           justify-content: flex-start;
           transition: all var(--t5e-transition-default);
-
-          &:hover {
-            text-shadow: 0 0 0.3125rem var(--t5e-color-text-gold-emphasis);
-          }
-
-          &:focus,
-          &:active {
-            background-color: inherit;
-            border: none;
-            outline: none;
-          }
         }
 
         .hd-label {
@@ -934,6 +938,72 @@
             color: var(--t5e-color-icon-default);
             text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
           }
+        }
+      }
+
+      .hp-overlay-bar {
+        position: absolute;
+        bottom: -0.125rem;
+        left: -0.125rem;
+        right: calc((var(--t5e-field-size-default) + 0.125rem)*-1);
+        top: -0.125rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.125rem;
+        border: 0.125rem solid var(--t5e-color-gold);
+        padding: 0 0 0 0.5rem;
+        background-color: var(--t5e-component-card-dark-darker);
+        z-index: 1; // TODO: This is a hack
+
+        span { 
+          flex: 0 fit-content;
+        }
+
+        .button {
+          border-radius: 0;
+
+          &.active {
+            font-weight: var(--font-weight-bold);
+            background-color: var(--t5e-color-palette-orange-40);
+            color: var(--t5e-color-icon-default);
+            text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
+          }
+        }
+        
+        .button-config {
+          border-left: 0.125rem solid var(--t5e-color-gold);
+        }
+
+        input[type="text"] {
+          padding-left: 0.25rem;
+          padding-right: 0.25rem;
+          text-align: left;
+          padding-block-end: 0;
+          outline: none;
+        }
+        
+        button {
+          flex: 0 fit-content;
+          min-width: var(--t5e-field-size-default);
+        }
+
+        >* {
+          font-size: var(--font-size-14);
+        }
+      }
+
+      .max-hp-override-container {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        height: 100%;
+        align-items: center;
+        padding-bottom: 0.25rem;
+
+        i {
+          font-size: var(--font-size-10);
         }
       }
     }
@@ -2408,7 +2478,6 @@
     }
 
     li {
-      width: 13.75rem;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -2772,7 +2841,7 @@
     .sheet-body {
       @denim065: '../../modules/tidy5e-sheet/images/denim065.png';
       background: url('@{denim065}') top center / auto repeat,
-        var(--t5e-component-card-dark-darker);
+      var(--t5e-component-card-dark-darker);
       background-size: auto;
 
       &::before {

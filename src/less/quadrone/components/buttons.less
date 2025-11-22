@@ -340,6 +340,17 @@
     box-shadow: none;
     outline: none;
   }
+
+  &.unbutton{ 
+    &:active,
+    &:focus,
+    &:hover
+    &:active:hover {
+      outline: none;
+      border: 0;
+      background: none;
+    }
+  }
 }
 
 :is(button, .button).header-control {
