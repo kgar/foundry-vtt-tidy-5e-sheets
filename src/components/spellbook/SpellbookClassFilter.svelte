@@ -42,7 +42,7 @@
   {/each}
 </select>
 
-<style lang="scss">
+<style lang="less">
   .class-filter {
     text-overflow: ellipsis;
   }

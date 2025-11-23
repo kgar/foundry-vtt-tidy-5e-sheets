@@ -43,7 +43,7 @@
   <TabContents {tabs} {selectedTabId} cssClass="tidy-sheet-body" />
 </div>
 
-<style lang="scss">
+<style lang="less">
   .bulk-migrations-container {
     height: 100%;
     display: grid;

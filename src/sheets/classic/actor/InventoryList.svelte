@@ -338,7 +338,7 @@
   </ItemTable>
 </section>
 
-<style lang="scss">
+<style lang="less">
   .inventory-list-section {
     .item-detail.attunement {
       display: flex;

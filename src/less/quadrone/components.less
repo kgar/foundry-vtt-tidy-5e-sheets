@@ -1,0 +1,38 @@
+.tidy5e-sheet.application:where(.quadrone) {
+  @import './components/action-bar.less';
+  @import './components/buttons.less';
+  @import './components/collapsible-header-section.less';
+  @import './components/configurable-source.less';
+  @import './components/filigrees.less';
+  @import './components/inputs.less';
+  @import './components/item-descriptions.less';
+  @import './components/layout.less';
+  @import './components/listboxes.less';
+  @import './components/meters.less';
+  @import './components/pills.less';
+  @import './components/pins.less';
+  @import './components/pips.less';
+  @import './components/separators.less';
+  @import './components/tabs.less';
+  @import './components/text.less';
+  @import './components/toggles.less';
+  @import './components/trackers.less';
+  @import '../classic/components/info-card.less';
+
+  // TODO: Find a proper home for this:
+  // ExpandableContainer.svelte styles
+  .expandable {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.2s ease;
+
+    &.expanded {
+      grid-template-rows: 1fr;
+    }
+
+    &.overflow-y-hidden > * {
+      overflow-y: hidden;
+    }
+  }
+}

@@ -33,7 +33,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .no-spells-container {
     display: flex;
     flex-direction: column;

@@ -37,7 +37,7 @@
   <ActiveEffectsMarker />
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .item-name {
     flex: 1 1 0.0625rem;
     min-width: 0;

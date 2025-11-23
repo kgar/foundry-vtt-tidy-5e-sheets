@@ -49,7 +49,7 @@
     },
   ]);
 
-  let showSheetPin = $derived(
+  let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       tabId,
@@ -69,7 +69,7 @@
 
 <ItemsActionBar bind:searchCriteria sections={features} {tabId} {tabOptionGroups} />
 
-{#if showSheetPin}
+{#if showSheetPins}
   <SheetPins />
 {/if}
 

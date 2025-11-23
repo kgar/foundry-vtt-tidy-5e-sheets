@@ -96,22 +96,3 @@
     </div>
   {/if}
 </div>
-
-<!-- TODO: Remove the scoped CSS styles. -->
-<style lang="scss">
-  .expandable {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows 0.2s ease;
-
-    &.expanded {
-      grid-template-rows: 1fr;
-    }
-
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .overflow-y-hidden :global(> *) {
-    overflow-y: hidden;
-  }
-</style>

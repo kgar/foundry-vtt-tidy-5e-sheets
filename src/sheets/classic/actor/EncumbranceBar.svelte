@@ -33,7 +33,7 @@
   <i class="encumbrance-breakpoint encumbrance-high arrow-down"></i>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .encumbrance {
     background: var(--t5e-light-color);
     border-radius: 0.3125rem;

@@ -17,7 +17,7 @@
   ></i>
 {/if}
 
-<style lang="scss">
+<style lang="less">
   .concentration-overlay {
     --tidy-icon-font-size-internal: var(--tidy-icon-font-size, 1rem);
     position: absolute;

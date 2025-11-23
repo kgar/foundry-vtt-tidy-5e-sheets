@@ -67,10 +67,12 @@
   let totalSpellCount = $derived(
     sections.reduce((count, s) => count + s.items.length, 0),
   );
+
+  let hasSlots = $derived(sections.some((section) => section.slots));
 </script>
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
-  {#if totalSpellCount === 0 && context.editable}
+  {#if totalSpellCount === 0 && context.editable && !hasSlots}
     <div class="spellbook-empty empty-state-container">
       <button
         type="button"

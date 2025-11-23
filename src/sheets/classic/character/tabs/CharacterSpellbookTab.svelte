@@ -176,7 +176,7 @@
 
 <SpellbookFooter />
 
-<style lang="scss">
+<style lang="less">
   .spellbook-class-filter {
     margin-left: 0.25rem;
     margin-right: 0.25rem;

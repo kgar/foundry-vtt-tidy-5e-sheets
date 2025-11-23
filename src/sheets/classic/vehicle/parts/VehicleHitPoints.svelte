@@ -28,7 +28,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="less">
   .portrait-hp {
     position: absolute;
     width: 8.5rem;

@@ -57,7 +57,7 @@
   {@render children?.()}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .delimited-truncated-content {
     display: grid;
     gap: 0.25rem;

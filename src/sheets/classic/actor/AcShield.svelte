@@ -40,7 +40,7 @@
   </button>
 </AcShieldBase>
 
-<style lang="scss">
+<style lang="less">
   .attribute-value {
     position: absolute;
     width: 100%;

@@ -46,7 +46,7 @@
   </Checkbox>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .inspiration {
     position: absolute;
     right: 0;

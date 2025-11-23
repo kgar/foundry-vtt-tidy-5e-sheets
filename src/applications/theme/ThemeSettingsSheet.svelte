@@ -170,7 +170,7 @@
   </div>
 </section>
 
-<style lang="scss">
+<style lang="less">
   .theme-settings-wrapper {
     display: flex;
     flex-direction: column;

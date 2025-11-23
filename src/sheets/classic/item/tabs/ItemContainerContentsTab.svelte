@@ -152,7 +152,7 @@
   </footer>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .container-contents-wrapper {
     height: 100%;
     padding-left: 1rem;

@@ -38,7 +38,7 @@
   </Checkbox>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .motion {
     position: absolute;
     right: 0;

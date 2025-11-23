@@ -4,7 +4,8 @@
   }
 
   &::before {
-    background-image: var(--t5e-sheet-header-bg, url(../../modules/tidy5e-sheet/images/banner-character.webp));
+    @banner-character : '../../modules/tidy5e-sheet/images/banner-character.webp';
+    background-image: var(--t5e-sheet-header-bg, url('@{banner-character}'));
     background-position: top center;
     background-size: auto;
     background-repeat: no-repeat;
@@ -203,7 +204,8 @@
     position: relative;
 
     .shield {
-      background-image: url(../../modules/tidy5e-sheet/images/badge_ac_dark.webp);
+      @badge_ac_dark : '../../modules/tidy5e-sheet/images/badge_ac_dark.webp';
+      background-image: url('@{badge_ac_dark}');
     }
 
     .button-config {
@@ -263,7 +265,7 @@
     }
   }
 
-  @mixin ability-smaller {
+  .ability-smaller() {
     --collapse-font-medium: 1.4375rem;
 
     .ac-container,
@@ -320,7 +322,7 @@
     }
   }
 
-  @mixin collapse-abilities {
+  .collapse-abilities() {
     --collapse-bg-light: rgba(0, 0, 0, 0.20);
     --collapse-bg-dark: rgba(0, 0, 0, 0.56);
     --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.16);
@@ -329,7 +331,7 @@
 
     gap: var(--t5e-size-halfx);
 
-    @include ability-smaller;
+    .ability-smaller();
 
     >* {
       background: var(--collapse-bg-light);
@@ -429,11 +431,11 @@
   }
 
   .sheet-header .abilities-container.ability-smaller .abilities-container-inner {
-    @include ability-smaller;
+    .ability-smaller();
   }
 
   .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
-    @include collapse-abilities;
+    .collapse-abilities();
   }
 
   @container character-sheet (width > 50rem) {
@@ -553,7 +555,7 @@
     }
   }
 
-  @import './character-parts/tab-bastion.scss';
+  @import './character-parts/tab-bastion.less';
 
 
   &.theme-dark,

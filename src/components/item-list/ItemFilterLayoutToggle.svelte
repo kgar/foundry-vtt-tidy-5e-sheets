@@ -43,7 +43,7 @@
   {/if}
 </svelte:element>
 
-<style lang="scss">
+<style lang="less">
   .toggle-layout {
     margin: 0 0.25rem;
     padding: 0 0.125rem;

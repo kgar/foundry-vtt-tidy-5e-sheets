@@ -305,3 +305,5 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 - [x] Bulk Section title override - Use the section name instead of the first item's name in the title.
 - [x] Bug: Setting default sheet preference is reportedly resetting. 
 - [x] Always show the spell icon in spellbook, whether locked or unlocked
+- [x] Trigger `tidy5e.prepareSheetContext` hook to provide visibility into Tidy's prepared context. Provide all relevant info. This is not a parts-based prep hook like `dnd5e.prepareSheetContext`
+- [x] Eliminate scoped CSS styles from ExpandableContainer.svelte. Ensure Quadrone sheets have the CSS they need for it.

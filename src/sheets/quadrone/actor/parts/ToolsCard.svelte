@@ -15,9 +15,13 @@
 
   type Props = {
     showFiligree?: boolean;
+    showProficiency?: boolean;
   };
 
-  let { showFiligree = true }: Props = $props();
+  let { 
+    showFiligree = true, 
+    showProficiency = true
+  }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -74,7 +78,7 @@
         {@const modTotal = getModifierData(tool.total)}
 
         <li data-reference-tooltip={references[tool.key]}>
-          {#if context.unlocked || showFiligree}
+          {#if showProficiency}
             <ProficiencyCycle
               actor={context.actor}
               aria-label={localize(tool.hover)}

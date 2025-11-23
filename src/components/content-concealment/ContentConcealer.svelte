@@ -22,7 +22,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .concealing-parent {
     flex: 1;
     position: relative;

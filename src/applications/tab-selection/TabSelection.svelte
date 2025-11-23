@@ -77,7 +77,7 @@
   </div>
 </section>
 
-<style lang="scss">
+<style lang="less">
   .extra-info-icon-container {
     width: 3.5rem;
     text-align: center;

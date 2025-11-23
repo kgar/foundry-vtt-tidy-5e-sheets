@@ -1,6 +1,5 @@
 .tidy5e-sheet.application:where(.quadrone.actor) {
   --sidebar-expanded-width: 17.25rem; // I just picked a value for now while prototyping.
-  // --header-image: url(../../modules/tidy5e-sheet/images/background-character.webp);
   --header-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.64);
   --portrait-border-color: var(--t5e-color-gold);
   --portrait-border-color-hover: var(--t5e-color-palette-gold-75);
@@ -21,7 +20,8 @@
   // }
 
   &::before {
-    background-image: var(--t5e-sheet-header-bg, url(../../modules/tidy5e-sheet/images/banner-character.webp));
+    @banner-character : '../../modules/tidy5e-sheet/images/banner-character.webp';
+    background-image: var(--t5e-sheet-header-bg, url('@{banner-character}'));
     background-position: top center;
     background-size: auto;
     background-repeat: no-repeat;
@@ -93,6 +93,9 @@
     }
 
     .sheet-body {
+      @parchment-texture-top: '../../modules/tidy5e-sheet/images/parchment-texture-top.webp';
+      @parchment-texture-bottom: '../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp';
+
       display: flex;
       flex: 1;
       flex-direction: row;
@@ -102,7 +105,7 @@
       z-index: 0;
 
       background-color: var(--t5e-component-card-default);
-      background-image: url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp);
+      background-image: url('@{parchment-texture-bottom}');
       background-position: bottom center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -115,7 +118,7 @@
         left: 0;
         right: 0;
         z-index: -1;
-        background-image: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp);
+        background-image: url('@{parchment-texture-top}');
         background-position: top center;
         background-repeat: no-repeat;
       }
@@ -154,9 +157,8 @@
         }
 
         .sidebar-tab-contents {
-          padding: var(--t5e-size-3x) 0;
-          overflow-y: auto;
-          flex: 1;
+          padding: var(--t5e-size-3x) var(--t5e-size-3x) var(--t5e-size-3x) 0;
+          margin-right: calc(var(--t5e-size-3x) * -1);
         }
 
         &.expanded {
@@ -623,6 +625,24 @@
           }
         }
 
+        &:has(.max-hp-override-container)::after {
+          background: linear-gradient(to right, var(--adjusted-darker) 0%, var(--adjusted-lighter) 100%);
+          border-right: var(--bar-end-border-width) solid var(--t5e-color-palette-green-21);
+          content: '';
+          position: absolute;
+          block-size: 100%;
+          left: calc(var(--bar-percentage, 0%));
+          transition: all 0.5s ease;
+          border-radius: var(--t5e-radius-card);
+          inline-size: calc(var(--bar-adjusted, 0%));
+          opacity: 50%;
+        }
+        
+        button {
+          box-shadow: none;
+          width: calc(100% - var(--t5e-field-size-default));
+          z-index: 1;
+        }
       }
 
       .hp-row {
@@ -632,17 +652,10 @@
           flex: 1;
         }
 
-        .hit-points:has(+.button.editMode) {
-          box-shadow: 0.125rem 0 0 var(--t5e-color-gold);
-        }
-
         .button.button-icon-only.button-borderless {
-          &:not(.editMode) {
-            position: absolute;
-            right: 0;
-          }
-
           flex: 0 1 auto;
+          position: absolute;
+          right: 0;
 
           i {
             font-size: var(--font-size-14);
@@ -650,14 +663,13 @@
             margin-left: 0.0625rem;
           }
 
-          &:hover {
-            background-color: var(--t5e-color-hp-temp-dark);
+          &.temp-hp {
+            background: none;
           }
         }
 
         .button-config {
           border-radius: 0;
-          background-color: var(--t5e-color-hp-dark);
 
           &:hover {
             background-color: var(--t5e-color-hp-dark);
@@ -671,7 +683,7 @@
           flex: 0 1 auto;
           align-items: center;
           justify-content: center;
-          padding: 0 0.5rem;
+          padding: 0 0.375rem;
           transition: all var(--t5e-transition-default);
 
           &.label {
@@ -683,15 +695,6 @@
             background-color: var(--t5e-color-hp-temp-dark);
           }
         }
-      }
-
-      input[type="text"].hp-temp-input {
-        background-color: var(--t5e-color-hp-temp-dark);
-        border-color: var(--t5e-color-hp-temp);
-        font: var(--t5e-font-label-large);
-        outline: none;
-        position: relative;
-        text-align: right;
       }
 
       ::selection {
@@ -805,7 +808,7 @@
         }
 
         .death-saves {
-          i {
+          .button-death-saves i {
             color: var(--t5e-vitals-button-icon-color);
           }
 
@@ -858,7 +861,22 @@
       }
 
       .hd-row {
+        padding-top: 0.125rem;
         flex: 1;
+
+        &:hover .hit-die {
+
+          .label {
+            text-shadow: 0 0 0.3125rem var(--t5e-color-text-gold-emphasis);
+          }
+
+          &:focus,
+          &:active {
+            background-color: inherit;
+            border: none;
+            outline: none;
+          }
+        }
       }
 
       .max {
@@ -872,17 +890,6 @@
           cursor: auto;
           justify-content: flex-start;
           transition: all var(--t5e-transition-default);
-
-          &:hover {
-            text-shadow: 0 0 0.3125rem var(--t5e-color-text-gold-emphasis);
-          }
-
-          &:focus,
-          &:active {
-            background-color: inherit;
-            border: none;
-            outline: none;
-          }
         }
 
         .hd-label {
@@ -931,6 +938,72 @@
             color: var(--t5e-color-icon-default);
             text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
           }
+        }
+      }
+
+      .hp-overlay-bar {
+        position: absolute;
+        bottom: -0.125rem;
+        left: -0.125rem;
+        right: calc((var(--t5e-field-size-default) + 0.125rem)*-1);
+        top: -0.125rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.125rem;
+        border: 0.125rem solid var(--t5e-color-gold);
+        padding: 0 0 0 0.5rem;
+        background-color: var(--t5e-component-card-dark-darker);
+        z-index: 1; // TODO: This is a hack
+
+        span { 
+          flex: 0 fit-content;
+        }
+
+        .button {
+          border-radius: 0;
+
+          &.active {
+            font-weight: var(--font-weight-bold);
+            background-color: var(--t5e-color-palette-orange-40);
+            color: var(--t5e-color-icon-default);
+            text-shadow: 0 0 0.5rem var(--t5e-color-palette-orange-100);
+          }
+        }
+        
+        .button-config {
+          border-left: 0.125rem solid var(--t5e-color-gold);
+        }
+
+        input[type="text"] {
+          padding-left: 0.25rem;
+          padding-right: 0.25rem;
+          text-align: left;
+          padding-block-end: 0;
+          outline: none;
+        }
+        
+        button {
+          flex: 0 fit-content;
+          min-width: var(--t5e-field-size-default);
+        }
+
+        >* {
+          font-size: var(--font-size-14);
+        }
+      }
+
+      .max-hp-override-container {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        height: 100%;
+        align-items: center;
+        padding-bottom: 0.25rem;
+
+        i {
+          font-size: var(--font-size-10);
         }
       }
     }
@@ -1126,7 +1199,8 @@
 
       // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
       &.single.single.single {
-        background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
+        @badge_inspiration_single : '../../modules/tidy5e-sheet/images/badge_inspiration_single.webp';
+        background: url('@{badge_inspiration_single}') center / contain no-repeat;
 
         &::before {
           transition: all var(--t5e-transition-default);
@@ -1149,7 +1223,7 @@
         &:hover,
         &:focus,
         &:active {
-          background: url(../../modules/tidy5e-sheet/images/badge_inspiration_single.webp) center / contain no-repeat;
+          background: url('@{badge_inspiration_single}') center / contain no-repeat;
           filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
         }
 
@@ -1168,7 +1242,8 @@
 
       // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
       &.stacked.stacked.stacked {
-        background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
+        @badge_inspiration_stacked : '../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp';
+        background: url('@{badge_inspiration_stacked}') center / contain no-repeat;
         width: 2.75rem;
         height: 2.75rem;
 
@@ -1202,7 +1277,7 @@
         &:hover,
         &:focus,
         &:active {
-          background: url(../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp) center / contain no-repeat;
+          background: url('@{badge_inspiration_stacked}') center / contain no-repeat;
           filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
         }
       }
@@ -1273,7 +1348,8 @@
   }
 
   .level-block {
-    background: url(../../modules/tidy5e-sheet/images/badge_level_dark.webp) top center / auto no-repeat;
+    @badge_level_dark : '../../modules/tidy5e-sheet/images/badge_level_dark.webp';
+    background: url('@{badge_level_dark}') top center / auto no-repeat;
     background-size: contain;
     margin-left: 1.1875rem;
     margin-right: var(--t5e-size-2x);
@@ -1399,7 +1475,8 @@
 
     .bonus-container {
       aspect-ratio: 1/1.125;
-      background: url(../../modules/tidy5e-sheet/images/badge_ability_dark.webp) top center / auto no-repeat;
+      @badge_ability_dark : '../../modules/tidy5e-sheet/images/badge_ability_dark.webp';
+      background: url('@{badge_ability_dark}') top center / auto no-repeat;
       background-size: contain;
       padding-top: var(--t5e-size-halfx);
       position: relative;
@@ -1415,7 +1492,8 @@
       justify-content: center;
 
       &.proficient {
-        background: url(../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp) top center / auto no-repeat;
+        @badge_ability_dark_prof : '../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp';
+        background: url('@{badge_ability_dark_prof}') top center / auto no-repeat;
         background-size: contain;
       }
 
@@ -1457,7 +1535,8 @@
     }
 
     .ability-score {
-      background: url(../../modules/tidy5e-sheet/images/badge_score_dark.webp) top center / auto no-repeat;
+      @badge_score_dark : '../../modules/tidy5e-sheet/images/badge_score_dark.webp';
+      background: url('@{badge_score_dark}') top center / auto no-repeat;
       background-size: contain;
       height: 2rem;
       margin-top: -0.75rem;
@@ -1561,7 +1640,8 @@
     position: relative;
 
     .initiative.score {
-      background: url(../../modules/tidy5e-sheet/images/badge_init_dark.webp) top center / auto no-repeat;
+      @badge_init_dark : '../../modules/tidy5e-sheet/images/badge_init_dark.webp';
+      background: url('@{badge_init_dark}') top center / auto no-repeat;
       background-size: contain;
       border-radius: var(--t5e-size-1x);
       height: 3.75rem;
@@ -1618,7 +1698,7 @@
     }
   }
 
-  @mixin ability-smaller {
+  .ability-smaller() {
     --collapse-font-medium: 1.4375rem;
 
     .ability-bonus-container {
@@ -2035,7 +2115,7 @@
     }
   }
 
-  @import './character-parts/favorites.scss';
+  @import './character-parts/favorites.less';
 
 
   .window-header {
@@ -2398,7 +2478,6 @@
     }
 
     li {
-      width: 13.75rem;
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -2747,8 +2826,8 @@
     }
   }
 
-  @import './character-parts/tab-effects.scss';
-  @import './character-parts/tab-biography.scss';
+  @import './character-parts/tab-effects.less';
+  @import './character-parts/tab-biography.less';
 
   &.theme-dark,
   .theme-dark {
@@ -2760,8 +2839,9 @@
     }
 
     .sheet-body {
-      background: url(../../modules/tidy5e-sheet/images/denim065.png) top center / auto repeat,
-        var(--t5e-component-card-dark-darker);
+      @denim065: '../../modules/tidy5e-sheet/images/denim065.png';
+      background: url('@{denim065}') top center / auto repeat,
+      var(--t5e-component-card-dark-darker);
       background-size: auto;
 
       &::before {

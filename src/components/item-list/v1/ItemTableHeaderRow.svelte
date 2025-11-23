@@ -50,7 +50,7 @@
   {@render children?.()}
 </header>
 
-<style lang="scss">
+<style lang="less">
   .item-table-header-row {
     display: flex;
     justify-content: space-between;

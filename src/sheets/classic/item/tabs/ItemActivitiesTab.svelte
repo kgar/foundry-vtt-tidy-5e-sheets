@@ -91,7 +91,7 @@
   </div>
 </section>
 
-<style lang="scss">
+<style lang="less">
   .add-activity-button {
     background: var(--t5e-faintest-color);
     height: 1.5rem;

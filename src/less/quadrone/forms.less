@@ -333,23 +333,28 @@
 
       &.currency {
         &.cp::after {
-          background-image: url('../../systems/dnd5e/icons/currency/copper.webp');
+          @copper : '../../systems/dnd5e/icons/currency/copper.webp';
+          background-image: url('@{copper}');
         }
 
         &.sp::after {
-          background-image: url('../../systems/dnd5e/icons/currency/silver.webp');
+          @silver : '../../systems/dnd5e/icons/currency/silver.webp';
+          background-image: url('@{silver}');
         }
 
         &.ep::after {
-          background-image: url('../../systems/dnd5e/icons/currency/electrum.webp');
+          @electrum: '../../systems/dnd5e/icons/currency/electrum.webp';
+          background-image: url('@{electrum}');
         }
 
         &.gp::after {
-          background-image: url('../../systems/dnd5e/icons/currency/gold.webp');
+          @gold: '../../systems/dnd5e/icons/currency/gold.webp';
+          background-image: url('@{gold}');
         }
 
         &.pp::after {
-          background-image: url('../../systems/dnd5e/icons/currency/platinum.webp');
+          @platinum : '../../systems/dnd5e/icons/currency/platinum.webp';
+          background-image: url('@{platinum}');
         }
       }
     }

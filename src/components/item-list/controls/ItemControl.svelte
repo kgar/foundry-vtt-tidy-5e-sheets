@@ -46,7 +46,7 @@
   {/if}
 </button>
 
-<style lang="scss">
+<style lang="less">
   .item-list-button {
     display: flex;
     justify-content: center;

@@ -56,7 +56,7 @@ export class McdmClassBundleModuleIntegration implements ModuleIntegrationBase {
 
   init(api: Tidy5eSheetsApi): void {
     // Powers tab
-    import('./McdmPowersTab.scss');
+    import('./McdmPowersTab.less');
     const powersTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('TYPES.Item.mcdm-class-bundle.powerPl'),
       tabId: this.powersTabId,

@@ -13,7 +13,7 @@
   class="horizontal-line-separator {borderColor} {rest.class ?? ''}"
 ></div>
 
-<style lang="scss">
+<style lang="less">
   .horizontal-line-separator {
     height: 0.0625rem;
     flex: 0 0 auto;

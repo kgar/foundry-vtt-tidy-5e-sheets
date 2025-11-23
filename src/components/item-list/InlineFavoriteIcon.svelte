@@ -8,7 +8,7 @@
   <i class="fas fa-bookmark icon-fav fa-fw"></i>
 </div>
 
-<style lang="scss">
+<style lang="less">
   .is-favorite {
     font-size: 0.75rem;
     color: var(--t5e-secondary-color);

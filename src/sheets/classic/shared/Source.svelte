@@ -43,7 +43,7 @@
   {/if}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .source-container {
     width: 100%;
     line-height: inherit;

@@ -19,7 +19,7 @@
   {/each}
 </div>
 
-<style lang="scss">
+<style lang="less">
   .tidy5e-classic-controls {
     flex: 1;
     align-self: stretch;

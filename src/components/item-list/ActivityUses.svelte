@@ -55,7 +55,7 @@
   />
 </div>
 
-<style lang="scss">
+<style lang="less">
   .activity-uses {
     justify-self: center;
     text-align: center;

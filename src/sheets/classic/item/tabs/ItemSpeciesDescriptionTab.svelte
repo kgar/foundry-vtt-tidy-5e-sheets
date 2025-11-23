@@ -89,7 +89,7 @@
   <ItemDescription />
 </div>
 
-<style lang="scss">
+<style lang="less">
   .item-properties {
     flex: 0 0 7.5rem;
   }
