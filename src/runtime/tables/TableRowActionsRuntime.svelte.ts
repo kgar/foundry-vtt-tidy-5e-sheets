@@ -34,6 +34,8 @@ import EncounterCombatInclusionToggle from 'src/components/table-quadrone/table-
 import EncounterAddAsCombatPlaceholder from 'src/components/table-quadrone/table-buttons/EncounterAddAsCombatPlaceholder.svelte';
 import EncounterCombatVisibilityToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatVisibilityToggle.svelte';
 import DeleteEncounterEntityButton from 'src/components/table-quadrone/table-buttons/DeleteEncounterEntityButton.svelte';
+import AttunementToggleButton from 'src/components/table-quadrone/table-buttons/AttunementToggleButton.svelte';
+import MagicalIndicatorButton from 'src/components/table-quadrone/table-buttons/MagicalIndicatorButton.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -59,6 +61,32 @@ class TableRowActionsRuntime {
       let result: TableAction<any>[] = [];
 
       if (context.owner) {
+        result.push({
+          component: ChooseAButton,
+          props: (args) => ({
+            doc: args.data,
+            buttons: [
+              {
+                component: AttunementToggleButton,
+                props: {
+                  item: args.data,
+                  ctx: args.rowContext,
+                },
+                condition: (doc) =>
+                  !!doc.system.attunement &&
+                  !FoundryAdapter.concealDetails(doc),
+              },
+              {
+                component: MagicalIndicatorButton,
+                props: {},
+                condition: (doc) =>
+                  !!doc.system.properties?.has('mgc') &&
+                  !FoundryAdapter.concealDetails(doc),
+              },
+            ],
+          }),
+        } satisfies TableAction<typeof ChooseAButton>);
+
         if (context.unlocked) {
           result.push({
             component: EditButton,

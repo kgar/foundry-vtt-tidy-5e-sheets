@@ -1,8 +1,12 @@
 ## kgar To Do
 
+- [ ] Move attunement to the item row actions as a toggle
+- [ ] Consider trimming off row actions that are not enabled for any rows
+
 ### Short List
 
-- [ ] Move attunement to the item row actions as a toggle
+- [ ] Trigger `tidy5e.prepareSheetContext` hook to provide visibility into Tidy's prepared context. Provide all relevant info. This is not a parts-based prep hook like `dnd5e.prepareSheetContext`
+- [ ] Eliminate scoped CSS styles from ExpandableContainer.svelte. Ensure Quadrone sheets have the CSS they need for it.
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
   - [ ] When making any changes to the shuttle, uncheck the box.
@@ -141,6 +145,7 @@
 - [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
+- [ ] Attunement Tracker - visualize parent containers when relevant
 
 ## hightouch To Do
 
