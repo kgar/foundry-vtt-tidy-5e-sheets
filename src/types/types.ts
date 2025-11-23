@@ -37,6 +37,7 @@ import type {
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import type { TravelPaceConfig } from 'src/foundry/config.types';
@@ -1506,8 +1507,24 @@ export type VehicleSheetQuadroneContext = {
   enriched: {
     biography: string;
   };
+  cargo: VehicleCargoSection[];
+  conditions: Dnd5eActorCondition[];
+  crew: GroupMembersQuadroneContext,
+  currencies: CurrencyContext[];
+  effects: ActiveEffectSection[];
+  encumbrance: EncumbranceContext;
+  features: VehicleFeatureSection[];
+  itemContext: Record<string, VehicleItemContext>;
+  passengers: number,
+  scale: number,
+  size: ActorSizeContext;
+  speeds: ActorSpeedSenseEntryContext[];
+  traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
-} & SingleActorContext<unknown>;
+  useActionsFeature?: boolean;
+  utilities: Utilities<VehicleSheetQuadroneContext>;
+  lockSensitiveFields?: boolean;
+} & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
 
 /* Misc - Svelte */
 

@@ -1,0 +1,89 @@
+<script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settings } from 'src/settings/settings.svelte';
+  import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import ActorInventoryFooter from 'src/sheets/quadrone/actor/parts/ActorInventoryFooter.svelte';
+  import ActorEncumbranceBar from 'src/sheets/quadrone/actor/parts/ActorEncumbranceBar.svelte';
+  import InventoryTables from '../../shared/InventoryTables.svelte';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { getContext } from 'svelte';
+  import { CONSTANTS } from 'src/constants';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
+  import {
+    createSearchResultsState,
+    setSearchResultsContext,
+  } from 'src/features/search/search.svelte';
+  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
+  import SheetPins from '../../shared/SheetPins.svelte';
+  import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
+
+  let context = $derived(getVehicleSheetQuadroneContext());
+
+  let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
+    
+  let inlineToggleService = getContext<InlineToggleService>(
+    CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
+  );
+
+  let searchCriteria = $state('');
+
+  const searchResults = createSearchResultsState();
+  setSearchResultsContext(searchResults);
+    
+    let cargo = $derived(
+      SheetSections.configureInventory(
+        context.items,
+        tabId,
+        UserSheetPreferencesService.getByType(context.actor.type),
+        TidyFlags.sectionConfig.get(context.actor)?.[tabId],
+      ),
+    );
+
+  const localize = FoundryAdapter.localize;
+
+  let showSheetPin = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
+  );
+
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: context.itemContext,
+      sections: cargo,
+      tabId: tabId,
+    });
+  });
+</script>
+
+<div class="vehicle-tab-content vehicle-cargo-content">
+  <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
+
+  {#if showSheetPin}
+    <SheetPins />
+  {/if}
+
+  <InventoryTables 
+    sections={context.cargo}
+    editable={context.editable}
+    {searchCriteria}
+    itemContext={context.itemContext}
+    {inlineToggleService}
+    sheetDocument={context.actor}
+    root={true}
+  />
+
+  <div class="vehicle-footer">
+    {#if settings.value.useVehicleEncumbranceBar && context.encumbrance}
+      <div class="encumbrance-container">
+        <ActorEncumbranceBar actor={context.actor} />
+      </div>
+    {/if}
+    <ActorInventoryFooter useAttunement={false} />
+  </div>
+</div>

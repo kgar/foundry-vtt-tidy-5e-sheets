@@ -1,62 +1,6 @@
 .tidy5e-sheet.application:where(.quadrone.vehicle) {
 
-  .sheet-header {
-    padding: 0.5rem;
-    background: var(--t5e-header-background);
-    color: var(--t5e-header-text-color);
-  }
-  .sheet-body {
-    flex: 1;
-    overflow: hidden;
-  }
-  .main-content {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-    gap: 1rem;
-  }
-  .sidebar {
-    width: 0;
-    overflow: hidden;
-    transition: width 0.2s;
-    &.expanded {
-      width: 13.75rem;
-      margin-left: 0.5rem;
-    }
-  }
 
-  /* Additional styles for header layout matching CharacterSheet logic */
-  .sheet-header-content {
-    gap: 0.5rem;
-  }
-
-  .actor-details-container {
-    flex: 1;
-  }
-
-  .actor-vitals-container {
-    flex: 0;
-  }
-
-  .actor-name {
-    flex: 1;
-    /* Ensure input takes full width */
-    :global(input) {
-      font-family: var(--t5e-title-font-family);
-      font-weight: 700;
-      font-size: 2rem;
-      height: 2.5rem;
-      background: transparent;
-      border: none;
-      color: inherit;
-    }
-  }
-  
-  .vehicle-sidebar {
-    gap: 0.5rem;
-  }
-
-  
   .vehicle-attributes-content {
     flex: 1;
     display: flex;

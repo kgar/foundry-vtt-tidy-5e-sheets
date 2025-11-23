@@ -2,9 +2,10 @@ import { ActorSheetQuadroneRuntime } from '../ActorSheetQuadroneRuntime.svelte';
 import type { VehicleSheetQuadroneContext } from 'src/types/types';
 import ActorEffectsTab from 'src/sheets/quadrone/actor/tabs/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/quadrone/actor/tabs/VehicleFeaturesTab.svelte';
-import VehicleCargoAndCrewTab from 'src/sheets/quadrone/actor/tabs/VehicleCargoAndCrewTab.svelte';
-import VehicleDescriptionTab from 'src/sheets/classic/vehicle/tabs/VehicleDescriptionTab.svelte';
-import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
+import VehicleCargoTab from 'src/sheets/quadrone/actor/tabs/VehicleCargoTab.svelte';
+import VehicleCrewTab from 'src/sheets/quadrone/actor/tabs/VehicleCrewTab.svelte';
+import VehicleDescriptionTab from 'src/sheets/quadrone/actor/tabs/VehicleDescriptionTab.svelte';
+// import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
 import { CONSTANTS } from 'src/constants';
 
 export const VehicleSheetQuadroneRuntime = new ActorSheetQuadroneRuntime<VehicleSheetQuadroneContext>(
@@ -31,9 +32,19 @@ export const VehicleSheetQuadroneRuntime = new ActorSheetQuadroneRuntime<Vehicle
     },
     {
       id: CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
-      title: 'DND5E.VehicleCargoCrew',
+      title: 'DND5E.VEHICLE.Tabs.Cargo',
       content: {
-        component: VehicleCargoAndCrewTab,
+        component: VehicleCargoTab,
+        type: 'svelte',
+      },
+      layout: 'quadrone',
+      iconClass: 'fa-solid fa-boxes-packing',
+    },
+    {
+      id: CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
+      title: 'DND5E.VEHICLE.Tabs.CrewPassengers',
+      content: {
+        component: VehicleCrewTab,
         type: 'svelte',
       },
       layout: 'quadrone',

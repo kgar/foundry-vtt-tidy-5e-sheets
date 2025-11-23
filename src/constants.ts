@@ -174,6 +174,8 @@ export const CONSTANTS = {
   TAB_USER_SETTINGS_VEHICLES: 'user-settings-vehicles',
   TAB_VEHICLE_ATTRIBUTES: 'attributes',
   TAB_VEHICLE_CARGO_AND_CREW: 'cargo',
+  TAB_VEHICLE_CARGO: 'cargo',
+  TAB_VEHICLE_CREW: 'crew',
   TAB_VEHICLE_DESCRIPTION_LEGACY: 'biography',
   TAB_WORLD_SETTINGS_CHARACTER: 'world-settings-character',
   TAB_WORLD_SETTINGS_CUSTOM_SECTIONS: 'world-settings-custom-sections',
