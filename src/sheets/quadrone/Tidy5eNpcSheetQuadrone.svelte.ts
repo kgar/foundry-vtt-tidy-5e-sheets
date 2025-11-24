@@ -402,7 +402,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     this.actor.items.forEach((item: Item5e) => {
       if (
         !inventoryTypesSet.has(item.type) &&
-        !SheetSections.showInFeatures(item)
+        item.type !== CONSTANTS.ITEM_TYPE_FEAT
       ) {
         return;
       }
