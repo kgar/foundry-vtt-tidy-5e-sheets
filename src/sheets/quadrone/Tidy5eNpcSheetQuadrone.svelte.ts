@@ -38,6 +38,7 @@ import UserPreferencesService from 'src/features/user-preferences/UserPreference
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -296,6 +297,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     context.tabs = await NpcSheetQuadroneRuntime.getTabs(context);
 
+    TidyHooks.tidy5eSheetsPrepareSheetContext(this.document, this, context);
+
     return context;
   }
 
@@ -493,13 +496,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     );
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
-      section.sectionActions =
-        SectionActions.getStandardItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section
+      );
     };
 
     context.inventory = Object.values(inventory);
@@ -510,13 +512,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     context.spellbook = spellbook;
 
     context.spellbook.forEach((section) => {
-      section.sectionActions =
-        SectionActions.getSpellbookItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
+      section.sectionActions = SectionActions.getSpellbookItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section
+      );
     });
 
     context.features = Object.values(featureSections);
@@ -596,12 +597,12 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     return [npcSpellcasting];
   }
 
-  protected _getSheetPinTabIdsForItem(sheetPin: Item5e): string[] {
+  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
     const tabIds: string[] = [CONSTANTS.TAB_NPC_STATBLOCK];
 
-    const originTab = Inventory.isItemInventoryType(sheetPin)
+    const originTab = Inventory.isItemInventoryType(item)
       ? CONSTANTS.TAB_ACTOR_INVENTORY
-      : sheetPin.type === CONSTANTS.ITEM_TYPE_SPELL
+      : item.type === CONSTANTS.ITEM_TYPE_SPELL
       ? CONSTANTS.TAB_ACTOR_SPELLBOOK
       : null;
 
