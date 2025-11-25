@@ -879,4 +879,18 @@ export class SheetSections {
 
     return sections;
   }
+
+  static showInFeatures(item: Item5e) {
+      return (
+        !item.type.includes([
+          CONSTANTS.ITEM_TYPE_CONTAINER,
+          CONSTANTS.ITEM_TYPE_SPELL,
+          CONSTANTS.ITEM_TYPE_BACKGROUND,
+          CONSTANTS.ITEM_TYPE_CLASS,
+          CONSTANTS.ITEM_TYPE_SUBCLASS,
+          CONSTANTS.ITEM_TYPE_RACE,
+          CONSTANTS.ITEM_TYPE_FACILITY,
+        ]) && !Inventory.isItemInventoryType(item)
+      );
+    }
 }

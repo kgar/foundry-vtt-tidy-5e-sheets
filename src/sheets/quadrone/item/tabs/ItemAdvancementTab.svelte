@@ -214,7 +214,7 @@
             <TidyTableCell {...columnSpecs.value}>
               {#if !isNil(advancement.value)}
                 {@const value = advancement.value?.toString()}
-                <span>
+                <span class="truncate" data-tooltip={value}>
                   {value}
                 </span>
               {:else}

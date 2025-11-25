@@ -15,6 +15,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
 import { isNil } from 'src/utils/data';
+import { Inventory } from './Inventory';
 
 export class CharacterSheetSections {
   static buildClassicFeaturesSections(
@@ -374,8 +375,6 @@ export class CharacterSheetSections {
   ) {
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       partitions.spells.push(item);
-    } else if (item.type === CONSTANTS.ITEM_TYPE_FEAT) {
-      partitions.feats.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_RACE) {
       partitions.species.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_BACKGROUND) {
@@ -388,6 +387,8 @@ export class CharacterSheetSections {
       partitions.facilities.push(item);
     } else if (Object.keys(inventory).includes(item.type)) {
       partitions.items.push(item);
+    } else if (SheetSections.showInFeatures(item)) {
+      partitions.feats.push(item);
     }
   }
 

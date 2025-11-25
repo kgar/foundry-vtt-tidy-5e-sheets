@@ -30,9 +30,6 @@
 </script>
 
 <label
-  data-uuid={condition.reference}
-  data-tooltip={condition.name}
-  data-condition-id={condition.id}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.CONDITION_TOGGLE}
   class="condition-toggle-label effect-toggle"
 >

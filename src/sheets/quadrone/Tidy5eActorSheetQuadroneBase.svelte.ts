@@ -893,7 +893,7 @@ export function Tidy5eActorSheetQuadroneBase<
       };
     }
 
-    protected abstract _getSheetPinTabIdsForItem(sheetPin: Item5e): string[];
+    protected abstract _getSheetPinTabIdsForItem(item: Item5e): string[];
 
     async _getSheetPins(): Promise<SheetPinContext[]> {
       let flagPins = TidyFlags.sheetPins
