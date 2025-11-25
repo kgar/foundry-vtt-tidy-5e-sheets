@@ -14,7 +14,8 @@
   let tooltipContent = $derived(
     (inferredActivation?.value ?? '') +
       ' ' +
-      (inferredActivation?.condition !== undefined
+      (inferredActivation?.condition !== undefined &&
+      inferredActivation?.condition !== ''
         ? abbrOrLabel.label + ', ' + inferredActivation?.condition
         : abbrOrLabel.label),
   );
@@ -23,15 +24,15 @@
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
-  <span class="property-count">{inferredActivation?.value ?? ''}</span>&nbsp;
-  <span data-tooltip={tooltipContent} class="property-time uppercase"
-    >{localize(abbrOrLabel.abbreviation)}</span
-  >
+  <span class="property-time" data-tooltip={tooltipContent}>
+    {inferredActivation?.value ?? ''}&nbsp;
+    {localize(abbrOrLabel.abbreviation)}
+  </span>
 {:else if !isNil(abbrOrLabel.label, '')}
-  <span class="property-count">{inferredActivation?.value ?? ''}</span>&nbsp;
-  <span data-tooltip={tooltipContent} class="property-time"
-    >{localize(abbrOrLabel.label)}</span
-  >
+  <span class="property-time truncate" data-tooltip={tooltipContent}>
+    {inferredActivation?.value ?? ''}&nbsp;
+    {localize(abbrOrLabel.label)}
+  </span>
 {:else}
   <span class="color-text-disabled">—</span>
 {/if}
