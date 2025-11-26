@@ -689,15 +689,5 @@
       {extraTabs}
       cssClass="tidy-tab-contents"
     />
-
-    <!-- Footers -->
-    <!-- TODO: Temporarily moved to the inventory tab directly -->
-    <!-- <CharacterInventoryFooter
-      class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_INVENTORY }}
-    /> -->
-    <!-- <CharacterSpellbookFooter
-      class={{ hidden: selectedTabId !== CONSTANTS.TAB_ACTOR_SPELLBOOK }}
-      tabId={selectedTabId}
-    /> -->
   </div>
 </div>
