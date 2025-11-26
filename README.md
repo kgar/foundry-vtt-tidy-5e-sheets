@@ -228,7 +228,7 @@ If a module is not compatible with Tidy 5e Sheets, submit a [github issue](https
 
 ### Compatibility Modules
 
-Some modules call for a "Compatibility" supplemental module to bridge the gap between Tidy and the module in question. Usually, these are premium modules where innate compatibility cannot be established. If you are using a module from this table, we recommend installing the linked "Compatibility Module" to ensure you get the best experience with Tidy 5e Sheets for that particular module.
+Some modules call for a supplemental "Compatibility Module" to bridge the gap between Tidy and the module in question. Usually, these are premium modules where innate compatibility cannot be established. If you are using a module from this table, we recommend installing the linked "Compatibility Module" to ensure you get the best experience with Tidy 5e Sheets for that particular module.
 
 | Module                                         | Compatibility Module                                                             |
 | ---------------------------------------------- | -------------------------------------------------------------------------------- |
