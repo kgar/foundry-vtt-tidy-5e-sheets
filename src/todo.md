@@ -1,5 +1,50 @@
 ## kgar To Do
 
+- [ ] Add global display options to Sheet tab
+  - [ ] Section Organization
+    - [ ] Default: Action Economy
+    - [ ] Action Economy
+      - [ ] Items are partitioned by their action economy
+      - [ ] Custom sections override this with the generic Sheet tab section columns
+    - [ ] Origin Tab
+      - [ ] Items are partitioned into their native sections from their origin tabs
+      - [ ] Custom sections override this with the generic Sheet tab section columns
+    - [ ] Ungrouped
+      - [ ] A section called Items
+      - [ ] Custom sections override this with the generic Sheet tab section columns
+  - [ ] Auto-populate Actionable Items
+    - [ ] Default: true
+    - [ ] When false, skip the action list item aggregation step
+- [ ] Add global display option Inventory tab
+  - [ ] Section Organization
+    - [ ] Default: Item Type
+    - [ ] Item Type
+      - [ ] Standard inventory item partitioning
+      - [ ] Custom sections
+    - [ ] Ungrouped
+      - [ ] A section called Items
+      - [ ] Custom sections
+- [ ] Add global display option Spellbook tab
+  - [ ] Section Organization
+    - [ ] Default: Spell Method
+    - [ ] Spell Method
+      - [ ] Standard spellbook partitioning
+      - [ ] Custom sections
+    - [ ] Ungrouped
+      - [ ] A section called Spells
+      - [ ] Custom sections
+- [ ] Add global display option Features tab
+  - [ ] Section Organization
+    - [ ] Default: Feature Origin
+    - [ ] Feature Origin
+      - [ ] Standard feature partitioning by the advancement origin
+      - [ ] Custom sections
+    - [ ] Action Economy
+      - [ ] Partition by action economy, using the verbatim style of the action list
+    - [ ] Ungrouped
+      - [ ] A section called Features
+      - [ ] Custom sections
+
 ### Short List
 
 - [ ] Move attunement to the item row actions as a toggle
