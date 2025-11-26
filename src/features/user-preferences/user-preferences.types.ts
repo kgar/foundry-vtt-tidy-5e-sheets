@@ -4,6 +4,8 @@ export type UserSheetTypeTabPreferences = {
   sort?: string;
   sidebarExpanded?: boolean;
   showSheetPins?: boolean;
+  sectionOrganization?: string;
+  autoPopulateItems?: boolean;
 };
 
 export type UserSheetPreference = {

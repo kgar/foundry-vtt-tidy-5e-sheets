@@ -44,6 +44,41 @@
       title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
       settings: [
         SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
+        {
+          type: 'boolean',
+          label: 'TODO: Auto-populate Sheet Tab Items',
+          prop: UserSheetPreferencesService.getTabProp(
+            CONSTANTS.SHEET_TYPE_CHARACTER,
+            CONSTANTS.TAB_ACTOR_ACTIONS,
+            'sectionOrganization',
+          ),
+          doc: game.user,
+          default: true,
+        },
+        {
+          type: 'radio',
+          options: [
+            {
+              label: 'TODO: Action Economy',
+              value: 'action-economy',
+            },
+            {
+              label: 'TODO: Origin Tab',
+              value: 'origin-tab',
+            },
+            {
+              label: 'TODO: Ungrouped',
+              value: 'ungrouped',
+            },
+          ],
+          prop: UserSheetPreferencesService.getTabProp(
+            CONSTANTS.SHEET_TYPE_CHARACTER,
+            CONSTANTS.TAB_ACTOR_ACTIONS,
+            'sectionOrganization',
+          ),
+          doc: game.user,
+          default: 'action-economy',
+        },
       ],
     },
   ]);
@@ -66,7 +101,12 @@
   });
 </script>
 
-<ItemsActionBar bind:searchCriteria sections={actions} {tabId} {tabOptionGroups} />
+<ItemsActionBar
+  bind:searchCriteria
+  sections={actions}
+  {tabId}
+  {tabOptionGroups}
+/>
 
 {#if showSheetPins}
   <SheetPins />

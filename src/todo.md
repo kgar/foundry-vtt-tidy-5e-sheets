@@ -44,6 +44,9 @@
     - [ ] Ungrouped
       - [ ] A section called Features
       - [ ] Custom sections
+- [ ] Revamp options sections
+  - [ ] Headers: Options, Global Default Display Options, Tools, and Sections
+  - [ ] Existing checkboxes in global options should be a 2-column checkbox grid
 
 ### Short List
 
