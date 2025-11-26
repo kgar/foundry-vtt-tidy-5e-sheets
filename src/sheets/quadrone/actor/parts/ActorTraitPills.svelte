@@ -23,7 +23,7 @@
 
   let listItemsTooltip: ListItemsTooltip;
 
-  let entries = $state<string[]>([]);
+  let tooltipListItems = $state<string[]>([]);
 
   async function onHover(
     event: Event & { currentTarget: EventTarget & HTMLElement },
@@ -35,7 +35,7 @@
 
     const currentTarget = event.currentTarget;
 
-    entries = pill.icons?.map((i) => i.label) ?? [];
+    tooltipListItems = pill.icons?.map((i) => i.label) ?? [];
 
     await tick();
 
@@ -45,7 +45,7 @@
 
 <ListItemsTooltip
   bind:this={listItemsTooltip}
-  {entries}
+  entries={tooltipListItems}
   sheetDocument={context.document}
 />
 
@@ -75,41 +75,43 @@
               event,
             })}
         >
-          {@render pillContents()}
+          {@render pillContents(value)}
         </a>
       {:else}
-        {@render pillContents()}
+        {@render pillContents(value)}
       {/if}
-
-      {#snippet pillContents()}
-        {#if aggregateIcons && value.icons?.length}
-          <i class={aggregateIcons.iconClass}></i>
-        {:else if value.icons}
-          {#each value.icons as icon}
-            <i class={icon.icon} data-tooltip={icon.label}></i>
-          {/each}
-        {/if}
-        <span class="label font-label-medium">
-          {value.label}
-        </span>
-        {#if value.sign || value.value || value.units}
-          <span>
-            {#if value.sign}<span class="sign font-label-medium"
-                >{value.sign}</span
-              >{/if}{#if value.value}<span class="value font-data-medium"
-                >{value.value}</span
-              >{/if}{#if value.units}<span
-                class="units font-default-medium color-text-lighter"
-                >{value.units}</span
-              >{/if}
-          </span>
-        {/if}
-        {#if value.parenthetical}
-          <span class="label font-label-medium">
-            ({value.parenthetical})
-          </span>
-        {/if}
-      {/snippet}
     </li>
   {/each}
 </ul>
+
+{#snippet pillContents(value: ActorTraitContext)}
+  {#if aggregateIcons && value.icons?.length}
+    <i class={aggregateIcons.iconClass}></i>
+  {:else if value.icons}
+    {#each value.icons as icon}
+      <i class={icon.icon} data-tooltip={icon.label}></i>
+    {/each}
+  {/if}
+  {#if value.content}
+    {@html value.content}
+  {/if}
+  <span class="label font-label-medium">
+    {value.label}
+  </span>
+  {#if value.sign || value.value || value.units}
+    <span>
+      {#if value.sign}<span class="sign font-label-medium">{value.sign}</span
+        >{/if}{#if value.value}<span class="value font-data-medium"
+          >{value.value}</span
+        >{/if}{#if value.units}<span
+          class="units font-default-medium color-text-lighter"
+          >{value.units}</span
+        >{/if}
+    </span>
+  {/if}
+  {#if value.parenthetical}
+    <span class="label font-label-medium">
+      ({value.parenthetical})
+    </span>
+  {/if}
+{/snippet}
