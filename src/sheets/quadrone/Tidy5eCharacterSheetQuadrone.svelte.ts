@@ -541,10 +541,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
-    const eligibleItems = this.actor.items.filter((item: Item5e) => {
-      // Suppress riders for disabled enchantments
-      return item.dependentOrigin?.active !== false;
-    });
+    const eligibleItems = Array.from(this.actor.items).filter(
+      (item: Item5e) => {
+        // Suppress riders for disabled enchantments
+        return item.dependentOrigin?.active !== false;
+      }
+    );
 
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
@@ -559,7 +561,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     // Partition items by category
     let { backgrounds, classes, feats, items, species, spells, subclasses } =
-      Array.from(eligibleItems).reduce(
+      eligibleItems.reduce(
         (obj: CharacterItemPartitions, item: Item5e) => {
           const { quantity } = item.system;
 
@@ -578,7 +580,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
           // Item grouping
           const originId = FoundryAdapter.getAdvancementOriginId(item);
-          const originItem = eligibleItems.get(originId);
+          const originItem = this.actor.items.get(originId);
           switch (originItem?.type) {
             case CONSTANTS.ITEM_TYPE_RACE:
               ctx.group = 'species';
@@ -599,7 +601,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           // Individual item preparation
           this._prepareItem(item, ctx);
 
-          const isWithinContainer = eligibleItems.has(item.system.container);
+          const isWithinContainer = this.actor.items.has(item.system.container);
 
           // Classify items into types
           if (!isWithinContainer) {
