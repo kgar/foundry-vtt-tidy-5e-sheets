@@ -779,12 +779,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       return {};
     }
 
-    const baseType = context?.source.type.value ?? this.item.system.type.value;
-
     const items: Record<string, any> = {};
     for (const [name, id] of Object.entries(baseIds)) {
       const baseItem = await dnd5e.documents.Trait.getBaseItem(id);
-      if (baseType !== baseItem?.system?.type?.value) continue;
+      if (context?.source.type.value !== baseItem?.system?.type?.value) {
+        continue;
+      }
       items[name] = baseItem.name;
     }
     if (foundry.utils.isEmpty(items)) return {};
