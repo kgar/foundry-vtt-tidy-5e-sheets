@@ -10,7 +10,7 @@
   - [x] `src\runtime\item\default-item-filters.ts` should refer only to visible activities
 - [x] Disabled facilities in favorites are still usable <https://github.com/foundryvtt/dnd5e/issues/6170>
   - verify whether we've covered this already
-- [ ] Fix negative to hit values & dice-attack bonuses <https://github.com/foundryvtt/dnd5e/commit/0df423367f0a5ec9dd7cb39ef9a79b248b7341ae>
+- [x] Fix negative to hit values & dice-attack bonuses <https://github.com/foundryvtt/dnd5e/commit/0df423367f0a5ec9dd7cb39ef9a79b248b7341ae>
   - Base Actor: changed `toHit` for `labels.modifier`
 - [ ] Enchant thats modify a weapon's type and base item dont display properly #6228 <https://github.com/foundryvtt/dnd5e/commit/f3f1716de3f02ba4a810649592d4ef2743215fb6>
   - For Tidy, it would likely affect `_getItemBaseTypes`

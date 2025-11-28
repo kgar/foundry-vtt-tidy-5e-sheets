@@ -47,7 +47,7 @@ export class Activities {
 
   static getActivityItemContext(activity: Activity5e): ActivityItemContext {
     // To Hit
-    const toHit = parseInt(activity.labels.toHit);
+    const toHit = parseInt(activity.labels.modifier);
 
     // Activation
     const activationAbbr =
