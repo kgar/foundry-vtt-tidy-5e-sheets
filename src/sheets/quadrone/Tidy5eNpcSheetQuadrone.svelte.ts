@@ -311,6 +311,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {
+    const items = this.actor.items.filter((item: Item5e) => {
+      // Suppress riders for disabled enchantments
+      return item.dependentOrigin?.active !== false;
+    });
+
     const isImportant = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
@@ -327,14 +332,14 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       inventoryItems: Item5e[];
     };
 
-    let { inventoryItems } = Array.from(this.actor.items).reduce(
+    let { inventoryItems } = Array.from(items).reduce(
       (obj: NpcPartitions, item: Item5e) => {
         const ctx = (context.itemContext[item.id] ??= {});
 
         // Individual item preparation
         this._prepareItem(item, ctx);
 
-        const isWithinContainer = this.actor.items.has(item.system.container);
+        const isWithinContainer = items.has(item.system.container);
 
         if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
           obj.inventoryItems.push(item);
@@ -399,7 +404,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     const inventoryTypesSet = new Set(inventoryTypes);
 
     // TODO: We could loop less by doing all of this in the single pass over items.
-    this.actor.items.forEach((item: Item5e) => {
+    items.forEach((item: Item5e) => {
       if (
         !inventoryTypesSet.has(item.type) &&
         item.type !== CONSTANTS.ITEM_TYPE_FEAT

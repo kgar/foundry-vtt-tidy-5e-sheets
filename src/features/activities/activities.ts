@@ -11,7 +11,7 @@ import type {
 
 export class Activities {
   static isConfigurable(activity: Activity5e) {
-    return CONFIG.DND5E.activityTypes[activity.type]?.configurable !== false;
+    return activity.canConfigure;
   }
 
   static getVisibleActivities(

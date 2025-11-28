@@ -373,7 +373,12 @@ export class CharacterSheetSections {
     partitions: CharacterItemPartitions,
     inventory: ActorInventoryTypes
   ) {
-    if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+
+    // Suppress riders for disabled enchantments
+    if ( item.dependentOrigin?.active === false ) {
+      return;
+    }
+    else if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       partitions.spells.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_RACE) {
       partitions.species.push(item);

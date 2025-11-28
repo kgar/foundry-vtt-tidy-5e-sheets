@@ -100,6 +100,11 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     }
 
     _prepareItems(context: MultiActorQuadroneContext<any>) {
+      const items = this.actor.items.filter((item: Item5e) => {
+        // Suppress riders for disabled enchantments
+        return item.dependentOrigin?.active !== false;
+      });
+
       const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
         context,
         { hasActionsTab: false, canEquip: false }
@@ -110,14 +115,14 @@ export function Tidy5eMultiActorSheetQuadroneBase<
           rowActions: inventoryRowActions,
         });
 
-      let inventoryItems = Array.from(this.actor.items).reduce(
+      let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
           const ctx = (context.itemContext[item.id] ??= {});
 
           // Individual item preparation
           this._prepareItem(item, ctx);
 
-          const isWithinContainer = this.actor.items.has(item.system.container);
+          const isWithinContainer = items.has(item.system.container);
 
           if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
             inventoryItems.push(item);
@@ -153,13 +158,12 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       context.inventory = Object.values(inventory);
 
       context.inventory.forEach((section: TidyItemSectionBase) => {
-        section.sectionActions =
-          SectionActions.getStandardItemHeaderActions(
-            this.actor,
-            this.actor.isOwner,
-            context.unlocked,
-            section
-          );
+        section.sectionActions = SectionActions.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
       });
     }
 
