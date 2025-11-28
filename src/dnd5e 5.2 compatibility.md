@@ -6,9 +6,9 @@
   - Actor base: when assigning item categories, skip items where `item.dependentOrigin?.active === false`
   - Effects: exclude effects where `(e.dependentOrigin?.active === false) || ((e.parent.system?.identified === false) && !game.user.isGM)`
   - Items: include activities where `activity.canConfigure` is true; it replaces `CONFIG.DND5E.activityTypes[a.type]?.configurable !== false`
-- [ ] Add visibility options to activities <https://github.com/foundryvtt/dnd5e/pull/5892/files>
-  - verify working out-of-the-box
-- [ ] Disabled facilities in favorites are still usable <https://github.com/foundryvtt/dnd5e/issues/6170>
+- [x] Add visibility options to activities <https://github.com/foundryvtt/dnd5e/pull/5892/files>
+  - [x] `src\runtime\item\default-item-filters.ts` should refer only to visible activities
+- [x] Disabled facilities in favorites are still usable <https://github.com/foundryvtt/dnd5e/issues/6170>
   - verify whether we've covered this already
 - [ ] Fix negative to hit values & dice-attack bonuses <https://github.com/foundryvtt/dnd5e/commit/0df423367f0a5ec9dd7cb39ef9a79b248b7341ae>
   - Base Actor: changed `toHit` for `labels.modifier`

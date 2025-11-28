@@ -24,7 +24,8 @@ export class Activities {
       activities:
         activities?.filter(
           (a: Activity5e) =>
-            !item.getFlag('dnd5e', 'riders.activity')?.includes(a.id)
+            !item.getFlag('dnd5e', 'riders.activity')?.includes(a.id) &&
+            a.canUse
         ) ?? [],
     };
 
