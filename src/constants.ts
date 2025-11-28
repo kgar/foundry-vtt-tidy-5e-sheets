@@ -498,7 +498,7 @@ export const CONSTANTS = {
   },
   WIKI_LINK: 'https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki',
   WIKI_LINK_CHANGE_ALL_SHEETS_GUIDE:
-    'https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/Using-Tidy5e#set-the-default-for-all-sheets',
+    'https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/1.-Getting-Started#set-the-default-for-all-sheets',
   WIKI_LINK_CHANGE_SHEET_GUIDE:
-    'https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/Using-Tidy5e#change-an-existing-sheet-to-tidy',
+    'https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/1.-Getting-Started#change-an-existing-sheet-to-tidy',
 } as const;
