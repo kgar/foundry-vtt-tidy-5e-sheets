@@ -218,13 +218,21 @@ If you are experiencing a bug or have an idea for a new feature, submit a [githu
 
 The [Tidy 5e Sheets API](https://kgar.github.io/foundry-vtt-tidy-5e-sheets/) is here to allow for extending the sheets in a variety of supported ways. Because this module uses alternate web technology from the normal Foundry sheets, integrating by API is essential for other modules and for those making world scripts.
 
-#### Need API Functions for Something? Let's Talk
+### Need API Functions for Something? Let's Talk
 
 If you need API support for a feature or customization that you have in mind, submit a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) or begin a discussion in the community discord.
 
 ## Module Compatibility
 
 If a module is not compatible with Tidy 5e Sheets, submit a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues), and the author will work with other module authors to establish compatibility.
+
+### Compatibility Modules
+
+Some modules call for a supplemental "Compatibility Module" to bridge the gap between Tidy and the module in question. Usually, these are premium modules where innate compatibility cannot be established. If you are using a module from this table, we recommend installing the linked "Compatibility Module" to ensure you get the best experience with Tidy 5e Sheets for that particular module.
+
+| Module                                         | Compatibility Module                                                             |
+| ---------------------------------------------- | -------------------------------------------------------------------------------- |
+| [Ember](https://foundryvtt.com/packages/ember) | [Ember Tidy Integration](https://foundryvtt.com/packages/ember-tidy-integration) |
 
 
 ## Tidy 5e Sheets Manifesto

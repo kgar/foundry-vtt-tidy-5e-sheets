@@ -12,27 +12,16 @@
 
   let { configButtonLocation }: Props = $props();
 
-  let context = getSheetContext<ActorSheetQuadroneContext>();
+  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   const localize = FoundryAdapter.localize;
 </script>
 
-{#each context.customActorTraits as trait, i}
-  {@const pills =
-    trait.pills?.({
-      app: context.sheet,
-      element: context.sheet.element,
-      data: context,
-    }) ?? []}
-  {@const contentHtml = trait.content?.({
-    app: context.sheet,
-    element: context.sheet.element,
-    data: context,
-  })}
+{#each context.customActorTraits as trait}
   <ActorTraitConfigurableListEntry
     {configButtonLocation}
     label={localize(trait.title)}
-    entries={pills}
+    entries={trait.pills}
     onconfig={trait.openConfiguration
       ? (ev) =>
           trait.openConfiguration?.({
@@ -46,6 +35,6 @@
     icon={trait.iconClass}
     isCustomTrait={true}
     alwaysShow={trait.alwaysShow}
-    {contentHtml}
+    contentHtml={trait.content}
   />
 {/each}
