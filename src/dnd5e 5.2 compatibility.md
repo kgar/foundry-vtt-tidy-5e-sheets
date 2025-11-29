@@ -28,7 +28,7 @@
   - it might work out-of-the-box
 - [x] Add Trade Good loot type #6355 <https://github.com/foundryvtt/dnd5e/pull/6355/files>
   - check Loot types
-- [ ] #6019 Add "Webs" to difficult terrain types, add to actors #6058 <https://github.com/foundryvtt/dnd5e/pull/6058/files>
+- [x] #6019 Add "Webs" to difficult terrain types, add to actors #6058 <https://github.com/foundryvtt/dnd5e/pull/6058/files>
   - CONFIG.DND5E changes
 - [ ] Group Weight in the carriage cargo #6171 <https://github.com/foundryvtt/dnd5e/issues/6171>
   - Review Primary Vehicle and Inventory view toggle and task out vehicle sheet work
