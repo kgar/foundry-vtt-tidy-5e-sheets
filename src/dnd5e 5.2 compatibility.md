@@ -30,12 +30,16 @@
   - check Loot types
 - [x] #6019 Add "Webs" to difficult terrain types, add to actors #6058 <https://github.com/foundryvtt/dnd5e/pull/6058/files>
   - CONFIG.DND5E changes
-- [ ] Group Weight in the carriage cargo #6171 <https://github.com/foundryvtt/dnd5e/issues/6171>
+- [x] Group Weight in the carriage cargo #6171 <https://github.com/foundryvtt/dnd5e/issues/6171>
   - Review Primary Vehicle and Inventory view toggle and task out vehicle sheet work
 - [ ] Prevent Cast Activities from being added to spells <https://github.com/foundryvtt/dnd5e/commit/8be04a59e1d815122a79f5aa5a3124b509d27a29>
   - Do likewise
 - [ ] Honoring Damage Threshold / Damage Threshold Added to Actors <https://github.com/foundryvtt/dnd5e/pull/6209/files#diff-753ee83a2ebd7a18eea5612c5e96c010e8a12005fb0fb72c4da510385888de7a> 
-  - Determine if any action needed for any actor Damage Thresholds- [ ] Primary Vehicle
+  - Determine if any action needed for any actor Damage Thresholds
+
+---
+
+- [ ] Primary Vehicle
     - <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
       - Actor base
         - inventorySource getter on base actor and its usage throughout base actor handling (especially drag/drop)
@@ -93,4 +97,14 @@
 - [ ] Use number formatter for distances in NPC sidebar #6430 <https://github.com/foundryvtt/dnd5e/issues/6430>
   - Verify we're good to go
 
+## Group Sheet to do
+
+- [ ] Add context menu for Set / Unset Primary Vehicle <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
+- [ ] Add UI for primary vehicle on any tab where it appears
+- [ ] Add Inventory toggle for showing Vehicle Inventory / Currency / Weight, versus Group Inventory / Currency
+  - [ ] Use inventorySource approach to keep parity with the default sheets
+- [ ] 
+
 ## Vehicle Sheets to do
+
+- [ ] 
