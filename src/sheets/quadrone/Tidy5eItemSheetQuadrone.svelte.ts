@@ -1015,8 +1015,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         })
       );
       this.item.update({ 'system.activities': updateData });
+    } else if (
+      droppedActivityDocument?.constructor.availableForItem(this.item) === false
+    ) {
+      return;
     }
-
     // Copying
     else {
       delete data._id;
@@ -1125,14 +1128,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   addActivity() {
     return dnd5e.documents.activity.UtilityActivity.createDialog(
       {},
-      {
-        parent: this.item,
-        types: Object.entries(CONFIG.DND5E.activityTypes)
-          .filter(([, { configurable }]: any) => {
-            return configurable !== false;
-          })
-          .map(([k]) => k),
-      }
+      { parent: this.item }
     );
   }
 
