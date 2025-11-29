@@ -34,7 +34,7 @@
   - Review Primary Vehicle and Inventory view toggle and task out vehicle sheet work
 - [x] Prevent Cast Activities from being added to spells <https://github.com/foundryvtt/dnd5e/commit/8be04a59e1d815122a79f5aa5a3124b509d27a29>
   - Do likewise
-- [ ] Honoring Damage Threshold / Damage Threshold Added to Actors <https://github.com/foundryvtt/dnd5e/pull/6209/files#diff-753ee83a2ebd7a18eea5612c5e96c010e8a12005fb0fb72c4da510385888de7a> 
+- [x] Honoring Damage Threshold / Damage Threshold Added to Actors <https://github.com/foundryvtt/dnd5e/pull/6209/files#diff-753ee83a2ebd7a18eea5612c5e96c010e8a12005fb0fb72c4da510385888de7a> 
   - Determine if any action needed for any actor Damage Thresholds
 
 ---
