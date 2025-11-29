@@ -26,7 +26,7 @@
 - [x] #5237, #5293 Improve currency in starting equipment labels #6169 <https://github.com/foundryvtt/dnd5e/pull/6169/files#diff-35e9a18b20e4b17cc3b2e4e27f7f899707748c5ecbe8ed673dbdbac027c84c31>
   - check starting equipment
   - it might work out-of-the-box
-- [ ] Add Trade Good loot type #6355 <https://github.com/foundryvtt/dnd5e/pull/6355/files>
+- [x] Add Trade Good loot type #6355 <https://github.com/foundryvtt/dnd5e/pull/6355/files>
   - check Loot types
 - [ ] #6019 Add "Webs" to difficult terrain types, add to actors #6058 <https://github.com/foundryvtt/dnd5e/pull/6058/files>
   - CONFIG.DND5E changes
