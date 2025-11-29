@@ -15,7 +15,7 @@
 - [x] Enchant thats modify a weapon's type and base item dont display properly #6228 <https://github.com/foundryvtt/dnd5e/commit/f3f1716de3f02ba4a810649592d4ef2743215fb6>
   - For Tidy, it would likely affect `_getItemBaseTypes`
   - To Do: Review item-sheet `_getBaseItemOptions` and determine what things Tidy needs to do to stay in line with the logic
-- [ ] BUG: Monk unarmored movement dont increase after 6th level #3505 <https://github.com/foundryvtt/dnd5e/pull/6274/files#diff-5ab7cd05ad5f0b1b20878ec2638ebb732cb4466abc03963a02fc1c1aba759dc9> / <https://github.com/foundryvtt/dnd5e/issues/3505>
+- [x] BUG: Monk unarmored movement dont increase after 6th level #3505 <https://github.com/foundryvtt/dnd5e/pull/6274/files#diff-5ab7cd05ad5f0b1b20878ec2638ebb732cb4466abc03963a02fc1c1aba759dc9> / <https://github.com/foundryvtt/dnd5e/issues/3505>
   - CONFIG.DND5E changes 
   - test Movement rollData in sheets
 - [ ] #4728 Aggregate damage preview on sheet & remove flavor #6279 <https://github.com/foundryvtt/dnd5e/pull/6279>

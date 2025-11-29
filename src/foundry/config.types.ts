@@ -3628,11 +3628,12 @@ export type CONFIG = {
     >;
     movementTypes: {
       [k in
-        | keyof 'burrow'
+        | keyof 'walk'
+        | 'burrow'
         | 'climb'
         | 'fly'
         | 'swim'
-        | 'walk']: MovementTypeConfig;
+        ]: MovementTypeConfig;
     } & Record<string, MovementTypeConfig>;
     movementUnits: {
       ft: MovementUnitConfig;
@@ -5522,6 +5523,7 @@ export type ActivityActivationTypeConfig = {
 type MovementTypeConfig = {
   label: string;
   walkFallback?: boolean;
+  travel?: string;
 };
 
 type WeightUnitConfig = {

@@ -311,7 +311,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {
-    const items = this.actor.items.filter((item: Item5e) => {
+    const items: Item5e[] = this.actor.items.filter((item: Item5e) => {
       // Suppress riders for disabled enchantments
       return item.dependentOrigin?.active !== false;
     });
@@ -332,14 +332,14 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       inventoryItems: Item5e[];
     };
 
-    let { inventoryItems } = Array.from(items).reduce(
+    let { inventoryItems } = items.reduce(
       (obj: NpcPartitions, item: Item5e) => {
         const ctx = (context.itemContext[item.id] ??= {});
 
         // Individual item preparation
         this._prepareItem(item, ctx);
 
-        const isWithinContainer = items.has(item.system.container);
+        const isWithinContainer = this.actor.items.has(item.system.container);
 
         if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
           obj.inventoryItems.push(item);
