@@ -100,7 +100,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     }
 
     _prepareItems(context: MultiActorQuadroneContext<any>) {
-      const items = this.actor.items.filter((item: Item5e) => {
+      const items: Item5e[] = this.actor.items.filter((item: Item5e) => {
         // Suppress riders for disabled enchantments
         return item.dependentOrigin?.active !== false;
       });
@@ -122,7 +122,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
           // Individual item preparation
           this._prepareItem(item, ctx);
 
-          const isWithinContainer = items.has(item.system.container);
+          const isWithinContainer = this.actor.items.has(item.system.container);
 
           if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
             inventoryItems.push(item);
