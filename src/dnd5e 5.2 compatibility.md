@@ -46,7 +46,7 @@
   - [ ] Fix localization issues
   - [x] Remove Creature Capacity
   - [x] Cargo needs `.value` and a units dropdown
-  - [ ] Remove dimensions
+  - [x] Remove dimensions
   - [ ] Add keel / beam values and units
   - [ ] Add weight value and units
   - [ ] Add crew count
