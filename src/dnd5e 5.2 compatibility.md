@@ -45,7 +45,7 @@
 - [ ] Fix issues on Vehicle Sheet
   - [ ] Fix localization issues
   - [x] Remove Creature Capacity
-  - [ ] Cargo needs `.value` and a units dropdown
+  - [x] Cargo needs `.value` and a units dropdown
   - [ ] Remove dimensions
   - [ ] Add keel / beam values and units
   - [ ] Add weight value and units
