@@ -324,7 +324,12 @@ export function Tidy5eActorSheetQuadroneBase<
         isConcentrating,
         itemContext: {},
         items: Array.from(this.actor.items)
-          .filter((i: Item5e) => !this.actor.items.has(i.system.container))
+          .filter(
+            (i: Item5e) =>
+              !this.actor.items.has(i.system.container) &&
+              // Suppress riders for disabled enchantments
+              i.dependentOrigin?.active !== false
+          )
           .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
         journal: TidyFlags.documentJournal.get(this.actor),
         labels: this._getLabels(),
@@ -1735,7 +1740,7 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     async _onDropActivity(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      document: Activity5e
+      activity: Activity5e
     ) {
       const targetItemId = event.target
         .closest('[data-item-id]')
@@ -1744,15 +1749,15 @@ export function Tidy5eActorSheetQuadroneBase<
       const targetItem = this.actor.items.get(targetItemId);
 
       // Reordering
-      if (!!targetItem && targetItem.uuid === document.item?.uuid) {
-        const source = targetItem.system.activities.get(document._id);
+      if (!!targetItem && targetItem.uuid === activity.item?.uuid) {
+        const source = targetItem.system.activities.get(activity._id);
         const targetId = event.target.closest<HTMLElement>(
           '.activity[data-activity-id]'
         )?.dataset.activityId;
         const target = targetItem.system.activities.get(targetId);
         if (!target || target === source) return;
         const siblings = targetItem.system.activities.filter(
-          (a: any) => a._id !== document._id
+          (a: any) => a._id !== activity._id
         );
         const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
           source,
@@ -1769,18 +1774,19 @@ export function Tidy5eActorSheetQuadroneBase<
           )
         );
         targetItem.update({ 'system.activities': updateData });
+      } else if (activity.constructor.availableForItem(targetItem) === false) {
+        return;
       }
-
       // Copying/Moving
       else if (targetItem) {
-        const data = document.toObject();
+        const data = activity.toObject();
         delete data._id;
-        const behavior = this._dropBehavior(event, document.toDragData());
+        const behavior = this._dropBehavior(event, activity.toDragData());
         await targetItem.createActivity(data.type, data, {
           renderSheet: false,
         });
         if (behavior === 'move') {
-          await document.delete();
+          await activity.delete();
         }
       }
     }

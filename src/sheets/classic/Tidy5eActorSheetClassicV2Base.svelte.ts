@@ -230,7 +230,12 @@ export function Tidy5eActorSheetClassicV2Base<
         limited: this.actor.limited,
         itemContext: {},
         items: Array.from(this.actor.items)
-          .filter((i: Item5e) => !this.actor.items.has(i.system.container))
+          .filter(
+            (i: Item5e) =>
+              !this.actor.items.has(i.system.container) &&
+              // Suppress riders for disabled enchantments
+              i.dependentOrigin?.active !== false
+          )
           .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
         labels: this._getLabels(),
         lockExpChanges: FoundryAdapter.shouldLockExpChanges(),

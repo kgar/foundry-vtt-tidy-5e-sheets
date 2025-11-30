@@ -89,7 +89,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
     const damageThresholdColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.HITPOINTS.DT.Abbr'),
+        html: FoundryAdapter.localize('DND5E.HITPOINTS.DT.abbr'),
       },
       cellContent: {
         type: 'component',
@@ -101,7 +101,7 @@ class GroupMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
     const crewColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'html',
-        html: FoundryAdapter.localize('DND5E.VehicleCrew'),
+        html: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
       },
       cellContent: {
         type: 'component',

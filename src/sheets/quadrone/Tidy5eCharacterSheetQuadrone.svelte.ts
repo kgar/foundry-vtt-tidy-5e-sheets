@@ -541,6 +541,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
+    const eligibleItems = Array.from(this.actor.items).filter(
+      (item: Item5e) => {
+        // Suppress riders for disabled enchantments
+        return item.dependentOrigin?.active !== false;
+      }
+    );
+
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: true }
@@ -554,7 +561,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     // Partition items by category
     let { backgrounds, classes, feats, items, species, spells, subclasses } =
-      Array.from(this.actor.items).reduce(
+      eligibleItems.reduce(
         (obj: CharacterItemPartitions, item: Item5e) => {
           const { quantity } = item.system;
 

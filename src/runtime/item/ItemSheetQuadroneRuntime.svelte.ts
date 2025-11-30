@@ -276,9 +276,13 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
-        Array.from(context.document.system.activities ?? []).filter((x) =>
-          Activities.isConfigurable(x)
-        ).length,
+        (
+          Activities.getVisibleActivities(
+            context.document,
+            context.document.system.activities,
+            true
+          ) ?? []
+        ).filter((x) => Activities.isConfigurable(x)).length,
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
       content: {

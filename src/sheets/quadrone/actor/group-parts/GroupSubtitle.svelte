@@ -169,42 +169,42 @@
       </div>
     </div>
   {/if}
-  {#if context.actor.system.attributes.movement.paces.land > 0}
+  {#if context.actor.system.attributes.travel.paces.land > 0}
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
         >{localize('DND5E.MovementLand')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.actor.system.attributes.movement.paces.land}</span
+        >{context.actor.system.attributes.travel.paces.land}</span
       >
       <span class="color-text-lighter font-label-medium"
         >{context.travel.units.label}</span
       >
     </span>
   {/if}
-  {#if context.actor.system.attributes.movement.paces.air > 0}
+  {#if context.actor.system.attributes.travel.paces.air > 0}
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
         >{localize('DND5E.MovementAir')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.actor.system.attributes.movement.paces.air}</span
+        >{context.actor.system.attributes.travel.paces.air}</span
       >
       <span class="color-text-lighter font-label-medium"
         >{context.travel.units.label}</span
       >
     </span>
   {/if}
-  {#if context.actor.system.attributes.movement.paces.water > 0}
+  {#if context.actor.system.attributes.travel.paces.water > 0}
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
         >{localize('DND5E.MovementWater')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.actor.system.attributes.movement.paces.water}</span
+        >{context.actor.system.attributes.travel.paces.water}</span
       >
       <span class="color-text-lighter font-label-medium"
         >{context.travel.units.label}</span

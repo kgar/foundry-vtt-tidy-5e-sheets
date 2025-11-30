@@ -161,8 +161,8 @@
         </span>
       {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
         {@const vehicleType =
-          CONFIG.DND5E.vehicleTypes[member.actor.system.vehicleType] ??
-          member.actor.system.vehicleType}
+          CONFIG.DND5E.vehicleTypes[member.actor.system.details.type] ??
+          member.actor.system.details.type}
 
         <span class="font-label-medium color-text-gold-emphasis"
           >{vehicleType}</span

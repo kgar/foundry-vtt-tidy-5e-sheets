@@ -14,7 +14,7 @@
     ),
   );
 
-  let crewMax = $derived(rowDocument.system.attributes.capacity.creature);
+  let crewMax = $derived(rowDocument.system.crew.max ?? 0);
 
   let crewPct = $derived(
     crewMax === 0 ? 0 : Math.clamp((crewCount / crewMax) * 100, 0, 100),
