@@ -39,23 +39,8 @@
 </script>
 
 <div class="counters counter-flex">
-  <div class="counter creature-cap">
-    <h4>{localize('DND5E.VehicleCreatureCapacity')}</h4>
-    <div class="counter-value">
-      <ContentEditableFormField
-        element="div"
-        document={context.actor}
-        field="system.attributes.capacity.creature"
-        editable={context.editable && !context.lockSensitiveFields}
-        placeholder="—"
-        value={context.system.attributes.capacity.creature}
-        dataMaxLength={1000}
-      />
-    </div>
-  </div>
-  <HorizontalLineSeparator />
   <div class="counter cargo-cap">
-    <h4 class="flex-1">{localize('DND5E.VehicleCargoCapacity')}</h4>
+    <h4 class="flex-1">{localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label')}</h4>
     <div class="counter-value">
       <NumberInput
         document={context.actor}
@@ -79,7 +64,7 @@
         disabled={!context.editable || context.lockSensitiveFields}
       >
         <span class="action-stations-label"
-          >{localize('DND5E.VehicleActionStations')}</span
+          >{localize('DND5E.VEHICLE.FIELDS.attributes.actions.stations.label')}</span
         >
       </Checkbox>
     </div>
@@ -108,7 +93,7 @@
       </div>
       <HorizontalLineSeparator />
       <div class="counter action-thresholds">
-        <h4>{localize('DND5E.VehicleActionThresholds')}</h4>
+        <h4>{localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.label')}</h4>
         <div class="counter-value">
           <span class="sep">&lt;</span>
 

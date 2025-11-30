@@ -408,7 +408,7 @@ export class Tidy5eVehicleSheet
     const cargo: Record<string, VehicleCargoSection> = {
       crew: {
         type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: game.i18n.localize('DND5E.VehicleCrew'),
+        label: game.i18n.localize('DND5E.VEHICLE.Crew.Label'),
         items: context.actor.system.cargo.crew,
         css: 'cargo-row crew',
         editableName: true,
@@ -434,7 +434,7 @@ export class Tidy5eVehicleSheet
       },
       cargo: {
         type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: game.i18n.localize('DND5E.VehicleCargo'),
+        label: game.i18n.localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label'),
         items: [],
         dataset: { type: 'loot' },
         columns: [

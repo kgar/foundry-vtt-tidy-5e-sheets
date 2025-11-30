@@ -42,7 +42,21 @@
 - [x] Allow Tools to have the "Focus" property #6255 
   - verify good to go
 - Primary vehicle notes moved to separate todo list
-- [ ] Fix all localization issues on Vehicle Sheet
+- [ ] Fix issues on Vehicle Sheet
+  - [ ] Fix localization issues
+  - [x] Remove Creature Capacity
+  - [ ] Cargo needs `.value` and a units dropdown
+  - [ ] Remove dimensions
+  - [ ] Add keel / beam values and units
+  - [ ] Add weight value and units
+  - [ ] Add crew count
+  - [ ] Add passengers count
+  - [ ] Split "Passengers & Crew" and "Cargo" tabs apart
+    - [ ] DND5E.VEHICLE.Tabs.CrewPassengers / ["DND5E.VEHICLE"].Crew.Label / ["DND5E.VEHICLE"].Crew.Passengers / ["DND5E.VEHICLE"].Crew.Unassigned / ["DND5E.VEHICLE"].Crew.Assigned
+    - [ ] DND5E.VEHICLE.Tabs.Cargo
+      - [ ] It's just a full-fledged inventory tab, with currency.
+  - [ ] Don't show encumbrance stops
+  - [ ] Be able to add a Draft Animal
 
 ---
 

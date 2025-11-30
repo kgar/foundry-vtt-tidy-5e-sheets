@@ -147,7 +147,7 @@
             <div class="separated-list">
               <span class="actor-cargo separated-list">
                 <span class="font-body-medium color-text-lighter"
-                  >{localize('DND5E.VehicleCargo')}</span
+                  >{localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label')}</span
                 >
                 <span class="font-label-medium color-text-default"
                   >{member.encumbrance.value.toNearest(0.01)}</span

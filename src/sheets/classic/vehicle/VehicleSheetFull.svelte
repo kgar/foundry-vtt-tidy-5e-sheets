@@ -48,8 +48,8 @@
   );
 
   let currentVehicleType: DropdownListOption = $derived({
-    value: context.system.vehicleType,
-    text: context.config.vehicleTypes[context.system.vehicleType],
+    value: context.system.details.type,
+    text: context.config.vehicleTypes[context.system.details.type],
   });
 
   let abilities = $derived(Object.entries<any>(context.abilities));
@@ -104,7 +104,7 @@
             selected={currentVehicleType}
             onOptionClicked={(option) =>
               context.actor.update({
-                'system.vehicleType': option,
+                'system.details.type': option.value,
               })}
             title={localize('DND5E.VehicleType')}
           />
