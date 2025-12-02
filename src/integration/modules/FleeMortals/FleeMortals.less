@@ -1,0 +1,27 @@
+.tidy5e-sheet.application:where(.quadrone.actor) {
+  .pill {
+    &:has(.demon-soul-count) {
+      gap: 0;
+      .demon-soul-count {
+        width: 30px;
+        text-align: center;
+      }
+    }
+    .demon-soul-formula {
+      width: 100px;
+      + .label {
+        cursor: pointer;
+        &:hover {
+          text-shadow: 0 0 .375rem var(--t5e-color-text-gold);
+        }
+      }
+    }
+  }
+  .sidebar .traits .list-entry .pill:has(.creature-role) {
+      padding: 0;
+      gap: 0;
+      .creature-role {
+        border: none;
+      }
+    }
+}

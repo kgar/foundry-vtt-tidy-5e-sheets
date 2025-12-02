@@ -9,6 +9,7 @@ import { CustomCharacterSheetsModuleIntegration } from './modules/CustomCharacte
 import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { DrakkenheimCoreModuleIntegration } from './modules/Drakkenheim/DrakkenheimCore';
 import { McdmClassBundleModuleIntegration } from './modules/McdmClassBundle/McdmClassBundle';
+import { FleeMortalsModuleIntegration } from './modules/FleeMortals/FleeMortalsModuleIntegration';
 import { TidyCustomSectionsInDefaultItemSheetIntegration } from './system/TidyCustomSectionsInDefaultItemSheetIntegration';
 import { ColorisThirdPartyIntegration } from './third-party/Coloris.svelte';
 import { DndTashasCauldronModuleIntegration } from './modules/DndTashasCauldron/DndTashasCauldron';
@@ -45,6 +46,7 @@ const moduleIntegrations: ModuleIntegrationBase[] = [
   new CustomCharacterSheetsModuleIntegration(),
   new DrakkenheimCoreModuleIntegration(),
   new McdmClassBundleModuleIntegration(),
+  new FleeMortalsModuleIntegration(),
   new SebastianCrowesGuideToDrakkenheimModuleIntegration(),
   new MonstersOfDrakkenheimModuleIntegration(),
   new DndTashasCauldronModuleIntegration(),
