@@ -437,11 +437,9 @@ export function Tidy5eActorSheetQuadroneBase<
         )
         .map<ActorTraitContext>(([key, val]) => {
           if ('type' in val && val.type === Number) {
-            const modifier = getModifierData(dnd5eFlags[key]);
             return {
               label: val.name,
-              value: modifier.value,
-              sign: modifier.sign,
+              value: dnd5eFlags[key],
             };
           }
           return { label: val.name };
