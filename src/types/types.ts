@@ -1288,6 +1288,7 @@ export type NpcSheetQuadroneContext = {
   showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  specialTraits: ActorTraitContext[];
   species?: ActorTraitItemContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];

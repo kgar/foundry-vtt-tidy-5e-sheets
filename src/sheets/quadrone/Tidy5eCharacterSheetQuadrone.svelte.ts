@@ -344,24 +344,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return context;
   }
 
-  private _getSpecialTraits(): ActorTraitContext[] {
-    const dnd5eFlags = this.actor.flags.dnd5e;
-
-    if (!dnd5eFlags) {
-      return [];
-    }
-
-    const characterFlags = CONFIG.DND5E.characterFlags;
-
-    return Object.entries(characterFlags)
-      .filter(([name]) => name in dnd5eFlags && dnd5eFlags[name] !== false)
-      .map(([key, val]) => {
-        if ('type' in val && val.type === Number)
-          return { label: val.name, value: dnd5eFlags[key] };
-        return { label: val.name };
-      });
-  }
-
   public static async tryGetInspirationSource(
     actor: Actor5e
   ): Promise<InspirationSource | undefined> {
