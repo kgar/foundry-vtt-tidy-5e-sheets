@@ -2,43 +2,6 @@
 
 ## Actionable items from PRs, Merges, Commits, etc.
 
-- [x] Hide/suppress riders for disabled enchantments <https://github.com/foundryvtt/dnd5e/pull/6176/files>
-  - Actor base: when assigning item categories, skip items where `item.dependentOrigin?.active === false`
-  - Effects: exclude effects where `(e.dependentOrigin?.active === false) || ((e.parent.system?.identified === false) && !game.user.isGM)`
-  - Items: include activities where `activity.canConfigure` is true; it replaces `CONFIG.DND5E.activityTypes[a.type]?.configurable !== false`
-- [x] Add visibility options to activities <https://github.com/foundryvtt/dnd5e/pull/5892/files>
-  - [x] `src\runtime\item\default-item-filters.ts` should refer only to visible activities
-- [x] Disabled facilities in favorites are still usable <https://github.com/foundryvtt/dnd5e/issues/6170>
-  - verify whether we've covered this already
-- [x] Fix negative to hit values & dice-attack bonuses <https://github.com/foundryvtt/dnd5e/commit/0df423367f0a5ec9dd7cb39ef9a79b248b7341ae>
-  - Base Actor: changed `toHit` for `labels.modifier`
-- [x] Enchant thats modify a weapon's type and base item dont display properly #6228 <https://github.com/foundryvtt/dnd5e/commit/f3f1716de3f02ba4a810649592d4ef2743215fb6>
-  - For Tidy, it would likely affect `_getItemBaseTypes`
-  - To Do: Review item-sheet `_getBaseItemOptions` and determine what things Tidy needs to do to stay in line with the logic
-- [x] BUG: Monk unarmored movement dont increase after 6th level #3505 <https://github.com/foundryvtt/dnd5e/pull/6274/files#diff-5ab7cd05ad5f0b1b20878ec2638ebb732cb4466abc03963a02fc1c1aba759dc9> / <https://github.com/foundryvtt/dnd5e/issues/3505>
-  - CONFIG.DND5E changes 
-  - test Movement rollData in sheets
-- [x] #4728 Aggregate damage preview on sheet & remove flavor #6279 <https://github.com/foundryvtt/dnd5e/pull/6279>
-  - see what Tidy needs to do with formula.hbs
-
----
-
-- [x] #5237, #5293 Improve currency in starting equipment labels #6169 <https://github.com/foundryvtt/dnd5e/pull/6169/files#diff-35e9a18b20e4b17cc3b2e4e27f7f899707748c5ecbe8ed673dbdbac027c84c31>
-  - check starting equipment
-  - it might work out-of-the-box
-- [x] Add Trade Good loot type #6355 <https://github.com/foundryvtt/dnd5e/pull/6355/files>
-  - check Loot types
-- [x] #6019 Add "Webs" to difficult terrain types, add to actors #6058 <https://github.com/foundryvtt/dnd5e/pull/6058/files>
-  - CONFIG.DND5E changes
-- [x] Group Weight in the carriage cargo #6171 <https://github.com/foundryvtt/dnd5e/issues/6171>
-  - Review Primary Vehicle and Inventory view toggle and task out vehicle sheet work
-- [x] Prevent Cast Activities from being added to spells <https://github.com/foundryvtt/dnd5e/commit/8be04a59e1d815122a79f5aa5a3124b509d27a29>
-  - Do likewise
-- [x] Honoring Damage Threshold / Damage Threshold Added to Actors <https://github.com/foundryvtt/dnd5e/pull/6209/files#diff-753ee83a2ebd7a18eea5612c5e96c010e8a12005fb0fb72c4da510385888de7a> 
-  - Determine if any action needed for any actor Damage Thresholds
-
----
-
 - [x] Allow Tools to have the "Focus" property #6255 
   - verify good to go
 - Primary vehicle notes moved to separate todo list
@@ -47,10 +10,10 @@
   - [x] Remove Creature Capacity
   - [x] Cargo needs `.value` and a units dropdown
   - [x] Remove dimensions
-  - [ ] Add keel / beam values and units
-  - [ ] Add weight value and units
-  - [ ] Add crew count
-  - [ ] Add passengers count
+  - [x] Add keel / beam values and units
+  - [x] Add weight value and units
+  - [x] Add crew count
+  - [x] Add passengers count
   - [ ] Split "Passengers & Crew" and "Cargo" tabs apart
     - [ ] DND5E.VEHICLE.Tabs.CrewPassengers / ["DND5E.VEHICLE"].Crew.Label / ["DND5E.VEHICLE"].Crew.Passengers / ["DND5E.VEHICLE"].Crew.Unassigned / ["DND5E.VEHICLE"].Crew.Assigned
     - [ ] DND5E.VEHICLE.Tabs.Cargo
@@ -126,3 +89,40 @@
         - Primary vehicle has special UI to it
         - Apparently, group member Max HP is optional, probably due to vehicles not necessarily needing an HP value?
       - "Inventory UI" -> document getter now accounts for the app's inventorySource. We could do similarly with our inventory component 👍
+
+## To Do Graveyard
+
+- [x] Hide/suppress riders for disabled enchantments <https://github.com/foundryvtt/dnd5e/pull/6176/files>
+  - Actor base: when assigning item categories, skip items where `item.dependentOrigin?.active === false`
+  - Effects: exclude effects where `(e.dependentOrigin?.active === false) || ((e.parent.system?.identified === false) && !game.user.isGM)`
+  - Items: include activities where `activity.canConfigure` is true; it replaces `CONFIG.DND5E.activityTypes[a.type]?.configurable !== false`
+- [x] Add visibility options to activities <https://github.com/foundryvtt/dnd5e/pull/5892/files>
+  - [x] `src\runtime\item\default-item-filters.ts` should refer only to visible activities
+- [x] Disabled facilities in favorites are still usable <https://github.com/foundryvtt/dnd5e/issues/6170>
+  - verify whether we've covered this already
+- [x] Fix negative to hit values & dice-attack bonuses <https://github.com/foundryvtt/dnd5e/commit/0df423367f0a5ec9dd7cb39ef9a79b248b7341ae>
+  - Base Actor: changed `toHit` for `labels.modifier`
+- [x] Enchant thats modify a weapon's type and base item dont display properly #6228 <https://github.com/foundryvtt/dnd5e/commit/f3f1716de3f02ba4a810649592d4ef2743215fb6>
+  - For Tidy, it would likely affect `_getItemBaseTypes`
+  - To Do: Review item-sheet `_getBaseItemOptions` and determine what things Tidy needs to do to stay in line with the logic
+- [x] BUG: Monk unarmored movement dont increase after 6th level #3505 <https://github.com/foundryvtt/dnd5e/pull/6274/files#diff-5ab7cd05ad5f0b1b20878ec2638ebb732cb4466abc03963a02fc1c1aba759dc9> / <https://github.com/foundryvtt/dnd5e/issues/3505>
+  - CONFIG.DND5E changes 
+  - test Movement rollData in sheets
+- [x] #4728 Aggregate damage preview on sheet & remove flavor #6279 <https://github.com/foundryvtt/dnd5e/pull/6279>
+  - see what Tidy needs to do with formula.hbs
+
+---
+
+- [x] #5237, #5293 Improve currency in starting equipment labels #6169 <https://github.com/foundryvtt/dnd5e/pull/6169/files#diff-35e9a18b20e4b17cc3b2e4e27f7f899707748c5ecbe8ed673dbdbac027c84c31>
+  - check starting equipment
+  - it might work out-of-the-box
+- [x] Add Trade Good loot type #6355 <https://github.com/foundryvtt/dnd5e/pull/6355/files>
+  - check Loot types
+- [x] #6019 Add "Webs" to difficult terrain types, add to actors #6058 <https://github.com/foundryvtt/dnd5e/pull/6058/files>
+  - CONFIG.DND5E changes
+- [x] Group Weight in the carriage cargo #6171 <https://github.com/foundryvtt/dnd5e/issues/6171>
+  - Review Primary Vehicle and Inventory view toggle and task out vehicle sheet work
+- [x] Prevent Cast Activities from being added to spells <https://github.com/foundryvtt/dnd5e/commit/8be04a59e1d815122a79f5aa5a3124b509d27a29>
+  - Do likewise
+- [x] Honoring Damage Threshold / Damage Threshold Added to Actors <https://github.com/foundryvtt/dnd5e/pull/6209/files#diff-753ee83a2ebd7a18eea5612c5e96c010e8a12005fb0fb72c4da510385888de7a> 
+  - Determine if any action needed for any actor Damage Thresholds
