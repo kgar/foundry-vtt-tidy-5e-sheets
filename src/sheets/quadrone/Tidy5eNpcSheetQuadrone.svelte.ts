@@ -4,6 +4,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  ActorTraitContext,
   FeatureSection,
   NpcHabitat,
   NpcItemContext,
@@ -11,7 +12,6 @@ import type {
   NpcSpellcastingContext,
   SpellcastingClassContext,
   TidyItemSectionBase,
-  TidySectionBase,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import type {
@@ -210,6 +210,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         important &&
         game.settings.get('dnd5e', 'loyaltyScore') &&
         game.user.isGM,
+      specialTraits: this._getSpecialTraits(),
       species: species
         ? {
             id: species.id,
@@ -611,6 +612,18 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     }
 
     return tabIds;
+  }
+
+  protected _getSpecialTraits(): ActorTraitContext[] {
+    const traits = super._getSpecialTraits();
+
+    if (this.document.system.traits.important) {
+      traits.unshift({
+        label: this.document.system.schema.fields.traits.fields.important.label,
+      });
+    }
+
+    return traits;
   }
 
   /* -------------------------------------------- */
