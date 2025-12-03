@@ -51,17 +51,6 @@
 - [ ] Use number formatter for distances in NPC sidebar #6430 <https://github.com/foundryvtt/dnd5e/issues/6430>
   - Verify we're good to go
 
-## Group Sheet to do
-
-- [ ] Add context menu for Set / Unset Primary Vehicle <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
-- [ ] Add UI for primary vehicle on any tab where it appears
-- [ ] Add Inventory toggle for showing Vehicle Inventory / Currency / Weight, versus Group Inventory / Currency
-  - [ ] Use inventorySource approach to keep parity with the default sheets
-- [ ] 
-
-## Vehicle Sheets to do
-
-
 ## Primary Vehicle Notes
 
 - [ ] Primary Vehicle
@@ -89,6 +78,11 @@
         - Primary vehicle has special UI to it
         - Apparently, group member Max HP is optional, probably due to vehicles not necessarily needing an HP value?
       - "Inventory UI" -> document getter now accounts for the app's inventorySource. We could do similarly with our inventory component 👍
+- Group Sheet
+  - [ ] Add context menu for Set / Unset Primary Vehicle <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
+  - [ ] Add UI for primary vehicle on any tab where it appears
+  - [ ] Add Inventory toggle for showing Vehicle Inventory / Currency / Weight, versus Group Inventory / Currency
+    - [ ] Use inventorySource approach to keep parity with the default sheets
 
 ## To Do Graveyard
 
