@@ -70,6 +70,8 @@
     "SetOverrideTrue": "Add to Actions List",
     "ResetActionDefault": "Reset Action Default"
   },
+  "TIDY5E.LegendaryAbbr": "LA",
+  "TIDY5E.LairAbbr": "Lair",
 
   "TIDY5E.HitDC": "Hit / DC",
 

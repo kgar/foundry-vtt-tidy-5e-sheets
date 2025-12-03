@@ -355,7 +355,7 @@ export const FoundryAdapter = {
     >((prev, curr) => {
       const config =
         CONFIG.DND5E.itemProperties[
-          curr as keyof typeof CONFIG.DND5E.itemProperties
+        curr as keyof typeof CONFIG.DND5E.itemProperties
         ];
       if (config.abbreviation) {
         prev[config.abbreviation] = config.label;
@@ -599,8 +599,7 @@ export const FoundryAdapter = {
   },
   getWeightUnit() {
     return FoundryAdapter.localize(
-      `DND5E.UNITS.WEIGHT.${
-        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
+      `DND5E.UNITS.WEIGHT.${game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
       }.Abbreviation`
     );
   },
@@ -774,9 +773,9 @@ export const FoundryAdapter = {
     const keyPath =
       documentToUpdate.type === CONSTANTS.ITEM_TYPE_RACE
         ? // A species document
-          'type'
+        'type'
         : // An actor without a species
-          'details.type';
+        'details.type';
 
     const options: Record<string, any> = {
       document: documentToUpdate,
@@ -1157,16 +1156,16 @@ export const FoundryAdapter = {
   getAttunementContext(item: Item5e): AttunementContext | undefined {
     return FoundryAdapter.isAttunementApplicable(item) && !item.system.attuned
       ? {
-          ...FoundryAdapter.attunementContextApplicable,
-          title:
-            CONFIG.DND5E.attunementTypes[
-              item.system
-                .attunement as keyof typeof CONFIG.DND5E.attunementTypes
-            ],
-        }
+        ...FoundryAdapter.attunementContextApplicable,
+        title:
+          CONFIG.DND5E.attunementTypes[
+          item.system
+            .attunement as keyof typeof CONFIG.DND5E.attunementTypes
+          ],
+      }
       : !!item.system.attunement && item.system.attuned
-      ? FoundryAdapter.attunementContextAttune
-      : undefined;
+        ? FoundryAdapter.attunementContextAttune
+        : undefined;
   },
   async identifyAllItemsForContainer(container: any, items: Item5e[]) {
     const updates = items.map((i) => ({
@@ -1478,7 +1477,7 @@ export const FoundryAdapter = {
   getMovementInfo(movement: any): Record<string, MovementInfo> {
     const units =
       CONFIG.DND5E.movementUnits[
-        movement.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
+      movement.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
       ];
     return Object.entries(CONFIG.DND5E.movementTypes).reduce<
       Record<string, MovementInfo>
@@ -1492,7 +1491,7 @@ export const FoundryAdapter = {
   getSensesInfo(senses: any): Record<string, SenseInfo> {
     const units =
       CONFIG.DND5E.movementUnits[
-        senses.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
+      senses.units || Object.keys(CONFIG.DND5E.movementUnits)[0]
       ];
     return Object.entries(CONFIG.DND5E.senses).reduce<
       Record<string, SenseInfo>
@@ -1508,6 +1507,8 @@ export const FoundryAdapter = {
         action: 'DND5E.ActionAbbr',
         bonus: 'DND5E.BonusActionAbbr',
         reaction: 'DND5E.ReactionAbbr',
+        legendary: 'TIDY5E.LegendaryAbbr',
+        lair: 'TIDY5E.LairAbbr',
         minute: 'DND5E.TimeMinuteAbbr',
         hour: 'DND5E.TimeHourAbbr',
         day: 'DND5E.TimeDayAbbr',
@@ -1554,8 +1555,8 @@ export const FoundryAdapter = {
           ? 'fa-solid prepared'
           : item.system.prepared ===
             CONFIG.DND5E.spellPreparationStates.always.value
-          ? 'fa-solid always'
-          : 'fa-regular unprepared'
+            ? 'fa-solid always'
+            : 'fa-regular unprepared'
       );
     } else {
       classes.push('cannot-prepare', 'fa-solid');

@@ -221,11 +221,11 @@
   <ActorCustomTraitListEntries configButtonLocation="label" />
 
   <!-- Special Traits -->
-  {#if context.unlocked}
+  {#if context.unlocked || context.specialTraits.length}
     <ActorTraitConfigurableListEntry
       configButtonLocation="label"
       label={localize('DND5E.SpecialTraits')}
-      entries={[]}
+      entries={context.specialTraits}
       configurationTooltip={localize('DND5E.SpecialTraits')}
       onconfig={() =>
         new SpecialTraitsApplication({ document: context.actor }).render({

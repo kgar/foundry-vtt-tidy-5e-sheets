@@ -11,16 +11,28 @@
     FoundryAdapter.getActivationText(inferredActivation?.type),
   );
 
+  let tooltipContent = $derived(
+    (inferredActivation?.value ?? '') +
+      ' ' +
+      (inferredActivation?.condition !== undefined &&
+      inferredActivation?.condition !== ''
+        ? abbrOrLabel.label + ', ' + inferredActivation?.condition
+        : abbrOrLabel.label),
+  );
+
   const localize = FoundryAdapter.localize;
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
-  {inferredActivation?.value ?? ''}<span
-    data-tooltip={abbrOrLabel.label}
-    class="uppercase">{localize(abbrOrLabel.abbreviation)}</span
-  >
+  <span class="property-time" data-tooltip={tooltipContent}>
+    {inferredActivation?.value ?? ''}&nbsp;
+    {localize(abbrOrLabel.abbreviation)}
+  </span>
 {:else if !isNil(abbrOrLabel.label, '')}
-  {inferredActivation?.value ?? ''} {localize(abbrOrLabel.label)}
+  <span class="property-time truncate" data-tooltip={tooltipContent}>
+    {inferredActivation?.value ?? ''}&nbsp;
+    {localize(abbrOrLabel.label)}
+  </span>
 {:else}
   <span class="color-text-disabled">—</span>
 {/if}
