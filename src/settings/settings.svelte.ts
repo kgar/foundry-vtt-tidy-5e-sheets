@@ -882,7 +882,8 @@ export function createSettings() {
           type: Array,
           default: [
             CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-            CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
+            CONSTANTS.TAB_VEHICLE_CARGO,
+            CONSTANTS.TAB_VEHICLE_PASSENGERS_AND_CREW,
             CONSTANTS.TAB_EFFECTS,
             CONSTANTS.TAB_VEHICLE_DESCRIPTION_LEGACY,
           ],

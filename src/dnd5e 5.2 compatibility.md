@@ -15,11 +15,12 @@
   - [x] Add crew count
   - [x] Add passengers count
   - [ ] Split "Passengers & Crew" and "Cargo" tabs apart
-    - [ ] DND5E.VEHICLE.Tabs.CrewPassengers / ["DND5E.VEHICLE"].Crew.Label / ["DND5E.VEHICLE"].Crew.Passengers / ["DND5E.VEHICLE"].Crew.Unassigned / ["DND5E.VEHICLE"].Crew.Assigned
-    - [ ] DND5E.VEHICLE.Tabs.Cargo
-      - [ ] It's just a full-fledged inventory tab, with currency.
+    - [x] Passengers & Crew - DND5E.VEHICLE.Tabs.CrewPassengers / ["DND5E.VEHICLE"].Crew.Label / ["DND5E.VEHICLE"].Crew.Passengers / ["DND5E.VEHICLE"].Crew.Unassigned / ["DND5E.VEHICLE"].Crew.Assigned
+    - [ ] Cargo - DND5E.VEHICLE.Tabs.Cargo
+      - [ ] It's just a full-fledged inventory tab, with currency, minus the items that are used by the vehicle for vehicle purposes
+  - [x] On actor drop: detect `data-area` and adjust area accordingly
   - [ ] Don't show encumbrance stops
-  - [ ] Be able to add a Draft Animal
+  - [x] Be able to add a Draft Animal
 
 ---
 

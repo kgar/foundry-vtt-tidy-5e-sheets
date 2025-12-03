@@ -227,14 +227,6 @@ export type ActivitySection = {
   activities: Activity5e[];
 } & TidySectionBase;
 
-export type VehicleCargoSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
-  items: Item5e[];
-  css?: string;
-  editableName?: boolean;
-  columns: SimpleEditableColumn[];
-} & TidySectionBase;
-
 export type VehicleFeatureSection = {
   crewable?: boolean;
   columns?: SimpleEditableColumn[];
@@ -579,8 +571,23 @@ export type VehicleItemContext = {
   toggleTitle?: string;
 };
 
+export type VehicleMember = {
+  actor: Actor5e;
+  quantity: number;
+  // etc.
+}
+
+export type VehicleMemberSection = {
+  members: VehicleMember[];
+  dropLabel: string;
+  // etc.
+} & TidySectionBase;
+
 export type VehicleSheetContext = {
-  cargo: VehicleCargoSection[];
+  inventory: InventorySection[];
+  draft: VehicleMemberSection;
+  passengers: VehicleMemberSection;
+  crew: VehicleMemberSection;
   features: VehicleFeatureSection[];
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
