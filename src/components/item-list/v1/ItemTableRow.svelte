@@ -83,7 +83,9 @@
   }
 
   function handleDragStart(event: DragEvent) {
-    onMouseLeave(event);
+    if (item) {
+      onMouseLeave(event);
+    }
 
     const dragData = getDragData?.() ?? item?.toDragData?.();
     if (dragData) {
