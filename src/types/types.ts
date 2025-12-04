@@ -576,7 +576,7 @@ export type VehicleMember = {
   actor: Actor5e;
   quantity: number;
   // etc.
-}
+};
 
 export type VehicleMemberSection = {
   members: VehicleMember[];
@@ -593,6 +593,14 @@ export type VehicleSheetContext = {
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
 } & ActorSheetContextV1;
+
+export type VehicleCargoSection = {
+  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
+  items: any[];
+  css?: string;
+  editableName?: boolean;
+  columns?: SimpleEditableColumn[];
+} & TidySectionBase;
 
 export type DerivedDamage = {
   label: string;
@@ -1530,14 +1538,14 @@ export type VehicleSheetQuadroneContext = {
   };
   cargo: VehicleCargoSection[];
   conditions: Dnd5eActorCondition[];
-  crew: GroupMembersQuadroneContext,
+  crew: GroupMembersQuadroneContext;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
   features: VehicleFeatureSection[];
   itemContext: Record<string, VehicleItemContext>;
-  passengers: number,
-  scale: number,
+  passengers: number;
+  scale: number;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
   traits: Record<string, ActorTraitContext[]>;
