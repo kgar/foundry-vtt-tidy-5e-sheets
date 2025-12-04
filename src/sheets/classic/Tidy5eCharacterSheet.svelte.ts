@@ -803,7 +803,7 @@ export class Tidy5eCharacterSheet
     context.allowEffectsManagement =
       FoundryAdapter.allowCharacterEffectsManagement(this.actor);
 
-    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraits({
+    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraitsLegacy({
       context,
       app: this,
       element: this.element,

@@ -12,6 +12,7 @@ import type {
 } from 'src/api/api.types';
 import type {
   RegisteredCustomActorTrait,
+  RegisteredCustomTraitEntry,
   RegisteredCustomTraitOnClickParams,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
@@ -42,6 +43,7 @@ import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSh
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import type { TravelPaceConfig } from 'src/foundry/config.types';
 import type { ComponentWithProps } from 'src/utils/component';
+import type { CustomTraitEntry } from 'src/api';
 
 export type Actor5e = any;
 export type Folder = any;
@@ -95,7 +97,13 @@ export type CustomContent = {
   onRender?: (params: OnRenderParams) => void;
 };
 
-export type RenderableCustomActorTrait = RegisteredCustomActorTrait;
+export type RenderableCustomActorTrait = Omit<
+  RegisteredCustomActorTrait,
+  'pills' | 'content'
+> & {
+  pills: RegisteredCustomTraitEntry[];
+  content?: string;
+};
 
 export type ClassSummary = {
   class?: string;
@@ -702,7 +710,7 @@ export type ActorSheetContextV1 = {
   appId: string;
   biographyHTML: string;
   config: typeof CONFIG.DND5E;
-  customActorTraits: RenderableCustomActorTrait[];
+  customActorTraits: RegisteredCustomActorTrait[];
   customContent: CustomContent[];
   disableExperience: boolean;
   effects: Record<string, EffectCategory<ActiveEffect5e>>;
@@ -974,6 +982,11 @@ export type ActorTraitContext<TValue = unknown> = {
   key?: string;
   /** Icons associated with the trait. */
   icons?: { icon: string; label: string }[];
+  /** 
+    Custom HTML content, to appear to the right of any specified icons and before any other content.
+    This content is specifically rendered as HTML, unlike the more specific building blocks.
+   */
+  content?: string;
   /** Text that describes the trait. */
   label: string;
   /** The number sign (+ or -) for a numeric trait. */
@@ -1276,6 +1289,7 @@ export type NpcSheetQuadroneContext = {
   showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  specialTraits: ActorTraitContext[];
   species?: ActorTraitItemContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];

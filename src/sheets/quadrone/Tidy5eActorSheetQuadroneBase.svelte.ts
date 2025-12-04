@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { getActorActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
@@ -42,7 +41,6 @@ import type {
 import { randomItem, splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
@@ -421,6 +419,31 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       return labels;
+    }
+
+    protected _getSpecialTraits(): ActorTraitContext[] {
+      const dnd5eFlags = this.actor.flags.dnd5e;
+
+      if (!dnd5eFlags) {
+        return [];
+      }
+
+      // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
+      const characterFlags = CONFIG.DND5E.characterFlags;
+
+      return Object.entries(characterFlags)
+        .filter(
+          ([name]) => name in dnd5eFlags && !isNil(dnd5eFlags[name], false)
+        )
+        .map<ActorTraitContext>(([key, val]) => {
+          if ('type' in val && val.type === Number) {
+            return {
+              label: val.name,
+              value: dnd5eFlags[key],
+            };
+          }
+          return { label: val.name };
+        });
     }
 
     _prepareSpellcastingClassContext(): SpellcastingClassContext[] {
