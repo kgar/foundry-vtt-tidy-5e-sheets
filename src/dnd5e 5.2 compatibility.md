@@ -32,7 +32,7 @@
   - TravelField (SchemaField) added
     - Group 
       - replaces MovementField with TravelField as `attributes.travel`; includes a migration
-      - Changes localization keys for land / water / air travel - `DND5E.Travel.Type.Land`, `DND5E.Travel.Type.Water`, `DND5E.Travel.Type.Air`
+      - Changes localization keys for land / water / air travel - `DND5E.TRAVEL.Type.Land`, `DND5E.TRAVEL.Type.Water`, `DND5E.TRAVEL.Type.Air`
     - Vehicle
       - adds TravelField as `attributes.travel` and `attributes.quality.value`
       - sidebar now shows travel speed, if `showTravelSpeed` context boolean is true

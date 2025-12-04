@@ -161,7 +161,7 @@
       </button>
       <div>
         <span class="font-label-medium color-text-gold">
-          {localize('DND5E.Travel.Label')}
+          {localize('DND5E.TRAVEL.Label')}
         </span>
         <span class="label font-label-medium color-text-default flexshrink">
           {context.travel.currentPace.config.label}
