@@ -2,6 +2,7 @@
 
 ### Short List
 
+- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
@@ -141,6 +142,11 @@
 - [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
+- [ ] If possible, forward the parent sheet's theme to all dialogs/applications they open
+- [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
+- [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
+- [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
+
 
 ## hightouch To Do
 

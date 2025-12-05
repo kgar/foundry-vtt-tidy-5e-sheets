@@ -304,7 +304,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     const context: ItemSheetQuadroneContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
-          return Activities.isConfigurable(a);
+          return Activities.isConfigurable(a) && a.canUse;
         })
         ?.map(Activities.getActivityItemContext)
         .sort((a: any, b: any) => a.sort - b.sort),
@@ -368,6 +368,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       tabs: [],
       title: this.title,
       rollData: rollData,
+      unitsOptions: Object.entries(CONFIG.DND5E.movementUnits).map(
+        ([value, { label }]) => ({ value, label })
+      ),
 
       // Item Type, Status, and Details
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
@@ -779,12 +782,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       return {};
     }
 
-    const baseType = context?.source.type.value ?? this.item.system.type.value;
-
     const items: Record<string, any> = {};
     for (const [name, id] of Object.entries(baseIds)) {
       const baseItem = await dnd5e.documents.Trait.getBaseItem(id);
-      if (baseType !== baseItem?.system?.type?.value) continue;
+      if (context?.source.type.value !== baseItem?.system?.type?.value) {
+        continue;
+      }
       items[name] = baseItem.name;
     }
     if (foundry.utils.isEmpty(items)) return {};
@@ -1015,8 +1018,11 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         })
       );
       this.item.update({ 'system.activities': updateData });
+    } else if (
+      droppedActivityDocument?.constructor.availableForItem(this.item) === false
+    ) {
+      return;
     }
-
     // Copying
     else {
       delete data._id;
@@ -1125,14 +1131,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
   addActivity() {
     return dnd5e.documents.activity.UtilityActivity.createDialog(
       {},
-      {
-        parent: this.item,
-        types: Object.entries(CONFIG.DND5E.activityTypes)
-          .filter(([, { configurable }]: any) => {
-            return configurable !== false;
-          })
-          .map(([k]) => k),
-      }
+      { parent: this.item }
     );
   }
 

@@ -83,18 +83,11 @@
   }
 
   function handleDragStart(event: DragEvent) {
-    if (!item) {
-      return;
+    if (item) {
+      onMouseLeave(event);
     }
 
-    onMouseLeave(event);
-
-    if (event.target !== event.currentTarget) {
-      // Allow for draggables within this containing element to be handled elsewhere.
-      return;
-    }
-
-    const dragData = getDragData?.() ?? item.toDragData?.();
+    const dragData = getDragData?.() ?? item?.toDragData?.();
     if (dragData) {
       event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
     }

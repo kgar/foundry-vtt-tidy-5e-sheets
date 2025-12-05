@@ -2,11 +2,12 @@ import { ActorSheetRuntime } from '../ActorSheetRuntime.svelte';
 import type { VehicleSheetContext } from 'src/types/types';
 import ActorEffectsTab from 'src/sheets/classic/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/classic/vehicle/tabs/VehicleAttributesTab.svelte';
-import VehicleCargoAndCrewTab from 'src/sheets/classic/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/classic/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredTab } from '../types';
 import { CONSTANTS } from 'src/constants';
+import VehiclePassengersAndCrewTab from 'src/sheets/classic/vehicle/tabs/VehiclePassengersAndCrewTab.svelte';
+import VehicleCargoTab from 'src/sheets/classic/vehicle/tabs/VehicleCargoTab.svelte';
 
 const defaultVehicleClassicTabs: RegisteredTab<VehicleSheetContext>[] = [
   {
@@ -28,10 +29,19 @@ const defaultVehicleClassicTabs: RegisteredTab<VehicleSheetContext>[] = [
     layout: 'classic',
   },
   {
-    id: CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
-    title: 'DND5E.VehicleCargoCrew',
+    id: CONSTANTS.TAB_VEHICLE_PASSENGERS_AND_CREW,
+    title: 'DND5E.VEHICLE.Tabs.CrewPassengers',
     content: {
-      component: VehicleCargoAndCrewTab,
+      component: VehiclePassengersAndCrewTab,
+      type: 'svelte',
+    },
+    layout: 'classic',
+  },
+  {
+    id: CONSTANTS.TAB_VEHICLE_CARGO,
+    title: 'DND5E.VEHICLE.Tabs.Cargo',
+    content: {
+      component: VehicleCargoTab,
       type: 'svelte',
     },
     layout: 'classic',

@@ -246,6 +246,7 @@ export type ItemSheetQuadroneContext = {
   subtitle?: string;
   system: any;
   title: string;
+  unitsOptions: { value: string; label: string }[];
   unlocked: boolean;
   user: any;
   usesRecovery: {

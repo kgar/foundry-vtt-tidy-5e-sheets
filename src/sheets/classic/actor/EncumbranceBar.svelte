@@ -4,9 +4,10 @@
 
   interface Props {
     encumbrance: EncumbranceContext;
+    showStops?: boolean;
   }
 
-  let { encumbrance }: Props = $props();
+  let { encumbrance, showStops = true }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -16,21 +17,19 @@
   class:encumbered={encumbrance.encumbered}
   title={localize('TIDY5E.Encumbrance')}
   style="
-    --encumbrance-low: {encumbrance.stops?.encumbered ??
-    (1 / 3) * 100}%; 
-    --encumbrance-high: {encumbrance.stops?.heavilyEncumbered ??
-    (2 / 3) * 100}%
+    --encumbrance-low: {encumbrance.stops?.encumbered ?? (1 / 3) * 100}%; 
+    --encumbrance-high: {encumbrance.stops?.heavilyEncumbered ?? (2 / 3) * 100}%
   "
 >
-  <span class="encumbrance-bar" style="width:{encumbrance.pct}%"
-  ></span>
-  <span class="encumbrance-label"
-    >{encumbrance.value} / {encumbrance.max}</span
-  >
-  <i class="encumbrance-breakpoint encumbrance-low arrow-up"></i>
-  <i class="encumbrance-breakpoint encumbrance-low arrow-down"></i>
-  <i class="encumbrance-breakpoint encumbrance-high arrow-up"></i>
-  <i class="encumbrance-breakpoint encumbrance-high arrow-down"></i>
+  <span class="encumbrance-bar" style="width:{encumbrance.pct}%"></span>
+  <span class="encumbrance-label">{encumbrance.value} / {encumbrance.max}</span>
+
+  {#if showStops}
+    <i class="encumbrance-breakpoint encumbrance-low arrow-up"></i>
+    <i class="encumbrance-breakpoint encumbrance-low arrow-down"></i>
+    <i class="encumbrance-breakpoint encumbrance-high arrow-up"></i>
+    <i class="encumbrance-breakpoint encumbrance-high arrow-down"></i>
+  {/if}
 </div>
 
 <style lang="less">
