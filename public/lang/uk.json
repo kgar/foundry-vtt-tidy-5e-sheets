@@ -973,5 +973,7 @@
     },
     "TIDY5E.Utilities.ShowSheetPins": "Показати шпильки аркушів",
     "TIDY5E.InspirationAdd": "Додати натхнення",
-    "TIDY5E.InspirationRemove": "Вилучити натхнення"
+    "TIDY5E.InspirationRemove": "Вилучити натхнення",
+    "TIDY5E.LegendaryAbbr": "LA",
+    "TIDY5E.LairAbbr": "Лігво"
 }
