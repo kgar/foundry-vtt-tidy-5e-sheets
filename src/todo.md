@@ -144,7 +144,11 @@
 
 ## hightouch To Do
 
-
+- [ ] Default sheets to edit mode on first open
+- [ ] Change edit mode icon to quill
+- [ ] Update species and background to show by default when empty
+- [ ] Update species and background buttons to default to "Add from compendium" and "Create custom"
+- [ ] Fix Character sheet subtitle bug with extra dot separator before class name
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
