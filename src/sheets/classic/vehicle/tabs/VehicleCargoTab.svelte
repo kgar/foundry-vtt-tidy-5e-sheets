@@ -136,6 +136,6 @@
   </div>
 
   {#if settings.value.useCharacterEncumbranceBar && context.encumbrance}
-    <EncumbranceBar encumbrance={context.encumbrance} />
+    <EncumbranceBar encumbrance={context.encumbrance} showStops={false} />
   {/if}
 </TabFooter>

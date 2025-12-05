@@ -5,8 +5,8 @@
 - [x] Allow Tools to have the "Focus" property #6255 
   - verify good to go
 - Primary vehicle notes moved to separate todo list
-- [ ] Fix issues on Vehicle Sheet
-  - [ ] Fix localization issues
+- [x] Fix issues on Vehicle Sheet
+  - [x] Fix localization issues
   - [x] Remove Creature Capacity
   - [x] Cargo needs `.value` and a units dropdown
   - [x] Remove dimensions
@@ -16,10 +16,10 @@
   - [x] Add passengers count
   - [ ] Split "Passengers & Crew" and "Cargo" tabs apart
     - [x] Passengers & Crew - DND5E.VEHICLE.Tabs.CrewPassengers / ["DND5E.VEHICLE"].Crew.Label / ["DND5E.VEHICLE"].Crew.Passengers / ["DND5E.VEHICLE"].Crew.Unassigned / ["DND5E.VEHICLE"].Crew.Assigned
-    - [ ] Cargo - DND5E.VEHICLE.Tabs.Cargo
-      - [ ] It's just a full-fledged inventory tab, with currency, minus the items that are used by the vehicle for vehicle purposes
+    - [x] Cargo - DND5E.VEHICLE.Tabs.Cargo
+      - [x] It's just a full-fledged inventory tab, with currency, minus the items that are used by the vehicle for vehicle purposes
   - [x] On actor drop: detect `data-area` and adjust area accordingly
-  - [ ] Don't show encumbrance stops
+  - [x] Don't show encumbrance stops
   - [x] Be able to add a Draft Animal
 
 ---
@@ -51,6 +51,12 @@
   - Verify we're good to go. Compare what they're doing to what we're doing
 - [ ] Use number formatter for distances in NPC sidebar #6430 <https://github.com/foundryvtt/dnd5e/issues/6430>
   - Verify we're good to go
+
+---
+
+- [ ] Weapons sheet, "Siege Weapon" type, Siege Properties section is missing some fields: https://media.discordapp.net/attachments/1243307347682529423/1446352794457084026/image.png?ex=6933ac82&is=69325b02&hm=8b43aa5ee32887488088ca4e10c4bfb78e04d36e517a6d1819fd2c861f233230&=&format=webp&quality=lossless
+- [ ] Equipment sheet, "Vehicle Equipment" type, Vehicle Properties section is missing some fields
+- [ ] "DND5E.MovementUnits" loc key needs to be replaced
 
 ## Primary Vehicle Notes
 
