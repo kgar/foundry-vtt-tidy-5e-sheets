@@ -810,7 +810,7 @@ export function Tidy5eActorSheetQuadroneBase<
         this.actor.system._source.attributes?.movement ?? {};
 
       function excludeSpeed(key: string) {
-        return isNil(systemMovement[key], 0) && isNil(sourceMovement[key], 0);
+        return isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '');
       }
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
@@ -821,13 +821,13 @@ export function Tidy5eActorSheetQuadroneBase<
 
           const parenthetical =
             key === CONSTANTS.MOVEMENT_FLY && systemMovement.hover
-              ? FoundryAdapter.localize('DND5E.MovementHover')
+              ? FoundryAdapter.localize('DND5E.MOVEMENT.Hover')
               : undefined;
 
           acc.push({
             key,
             label: config.label,
-            value: Math.round(+systemMovement[key]).toString() ?? '',
+            value: FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ?? '',
             units:
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,

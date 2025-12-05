@@ -2,61 +2,29 @@
 
 ## Actionable items from PRs, Merges, Commits, etc.
 
-- [x] Allow Tools to have the "Focus" property #6255 
-  - verify good to go
-- Primary vehicle notes moved to separate todo list
-- [x] Fix issues on Vehicle Sheet
-  - [x] Fix localization issues
-  - [x] Remove Creature Capacity
-  - [x] Cargo needs `.value` and a units dropdown
-  - [x] Remove dimensions
-  - [x] Add keel / beam values and units
-  - [x] Add weight value and units
-  - [x] Add crew count
-  - [x] Add passengers count
-  - [ ] Split "Passengers & Crew" and "Cargo" tabs apart
-    - [x] Passengers & Crew - DND5E.VEHICLE.Tabs.CrewPassengers / ["DND5E.VEHICLE"].Crew.Label / ["DND5E.VEHICLE"].Crew.Passengers / ["DND5E.VEHICLE"].Crew.Unassigned / ["DND5E.VEHICLE"].Crew.Assigned
-    - [x] Cargo - DND5E.VEHICLE.Tabs.Cargo
-      - [x] It's just a full-fledged inventory tab, with currency, minus the items that are used by the vehicle for vehicle purposes
-  - [x] On actor drop: detect `data-area` and adjust area accordingly
-  - [x] Don't show encumbrance stops
-  - [x] Be able to add a Draft Animal
-
 ---
 
 - [ ] #6295 Add separate travel speeds to vehicles & party #6297 <https://github.com/foundryvtt/dnd5e/pull/6297> / <https://github.com/foundryvtt/dnd5e/pull/6297/files>
-  - Group: Switches from `movement.pace` to `travel.pace`
-  - Vehicle: Adds context booleans for `showTravelPace`, `showTravelSpeed`, `showCombatSpeed`
+  - [x] Group: Switches from `movement.pace` to `travel.pace`
+  - (Q only) Vehicle: Adds context booleans for `showTravelPace`, `showTravelSpeed`, `showCombatSpeed`
     - Combat speed is regular movement speed, whereas travel speed is mph/kph
-  - Review Movement/Senses config
-  - TravelField (SchemaField) added
+  - [x] Review Movement/Senses config
+  - [x] TravelField (SchemaField) added
     - Group 
       - replaces MovementField with TravelField as `attributes.travel`; includes a migration
       - Changes localization keys for land / water / air travel - `DND5E.TRAVEL.Type.Land`, `DND5E.TRAVEL.Type.Water`, `DND5E.TRAVEL.Type.Air`
-    - Vehicle
-      - adds TravelField as `attributes.travel` and `attributes.quality.value`
-      - sidebar now shows travel speed, if `showTravelSpeed` context boolean is true
-      - sidebar now shows combat speed, if `showCombatSpeed` context boolean is true
-    - MovementField deprecated
-    - CONFIG.DND5E changes
-      - Added tavelTypes
-      - Canged travel
-      - Changed movementTypes
-      - Added travelUnits
-    - New Util: formatTravelSpeed
-    - New Util: convertTravelSpeed
-- [ ] #6304 Add movement bonus that applies only to existing speeds #6306 / <https://github.com/foundryvtt/dnd5e/pull/6306/files>
+- [x] #6304 Add movement bonus that applies only to existing speeds #6306 / <https://github.com/foundryvtt/dnd5e/pull/6306/files>
   - Verify it works out-of-the-box
-- [ ] Group sheet ownership <https://github.com/foundryvtt/dnd5e/pull/6446/files>
+- [x] Group sheet ownership <https://github.com/foundryvtt/dnd5e/pull/6446/files>
   - Verify we're good to go. Compare what they're doing to what we're doing
-- [ ] Use number formatter for distances in NPC sidebar #6430 <https://github.com/foundryvtt/dnd5e/issues/6430>
+- [x] Use number formatter for distances in NPC sidebar #6430 <https://github.com/foundryvtt/dnd5e/issues/6430>
   - Verify we're good to go
 
 ---
 
 - [ ] Weapons sheet, "Siege Weapon" type, Siege Properties section is missing some fields: https://media.discordapp.net/attachments/1243307347682529423/1446352794457084026/image.png?ex=6933ac82&is=69325b02&hm=8b43aa5ee32887488088ca4e10c4bfb78e04d36e517a6d1819fd2c861f233230&=&format=webp&quality=lossless
 - [ ] Equipment sheet, "Vehicle Equipment" type, Vehicle Properties section is missing some fields
-- [ ] "DND5E.MovementUnits" loc key needs to be replaced
+- [x] "DND5E.MovementUnits" loc key needs to be replaced
 
 ## Primary Vehicle Notes
 
@@ -90,6 +58,22 @@
   - [ ] Add UI for primary vehicle on any tab where it appears
   - [ ] Add Inventory toggle for showing Vehicle Inventory / Currency / Weight, versus Group Inventory / Currency
     - [ ] Use inventorySource approach to keep parity with the default sheets
+
+## Misc Vehicle notes
+
+- From: #6295 Add separate travel speeds to vehicles & party #6297 <https://github.com/foundryvtt/dnd5e/pull/6297> / <https://github.com/foundryvtt/dnd5e/pull/6297/files>
+  - Vehicle
+    - adds TravelField as `attributes.travel` and `attributes.quality.value`
+    - sidebar now shows travel speed, if `showTravelSpeed` context boolean is true
+    - sidebar now shows combat speed, if `showCombatSpeed` context boolean is true
+  - MovementField deprecated
+  - CONFIG.DND5E changes
+    - Added tavelTypes
+    - Canged travel
+    - Changed movementTypes
+    - Added travelUnits
+  - New Util: formatTravelSpeed
+  - New Util: convertTravelSpeed
 
 ## To Do Graveyard
 
@@ -127,3 +111,27 @@
   - Do likewise
 - [x] Honoring Damage Threshold / Damage Threshold Added to Actors <https://github.com/foundryvtt/dnd5e/pull/6209/files#diff-753ee83a2ebd7a18eea5612c5e96c010e8a12005fb0fb72c4da510385888de7a> 
   - Determine if any action needed for any actor Damage Thresholds
+
+---
+
+- [x] Allow Tools to have the "Focus" property #6255 
+  - verify good to go
+- Primary vehicle notes moved to separate todo list
+- [x] Fix issues on Vehicle Sheet
+  - [x] Fix localization issues
+  - [x] Remove Creature Capacity
+  - [x] Cargo needs `.value` and a units dropdown
+  - [x] Remove dimensions
+  - [x] Add keel / beam values and units
+  - [x] Add weight value and units
+  - [x] Add crew count
+  - [x] Add passengers count
+  - [ ] Split "Passengers & Crew" and "Cargo" tabs apart
+    - [x] Passengers & Crew - DND5E.VEHICLE.Tabs.CrewPassengers / ["DND5E.VEHICLE"].Crew.Label / ["DND5E.VEHICLE"].Crew.Passengers / ["DND5E.VEHICLE"].Crew.Unassigned / ["DND5E.VEHICLE"].Crew.Assigned
+    - [x] Cargo - DND5E.VEHICLE.Tabs.Cargo
+      - [x] It's just a full-fledged inventory tab, with currency, minus the items that are used by the vehicle for vehicle purposes
+  - [x] On actor drop: detect `data-area` and adjust area accordingly
+  - [x] Don't show encumbrance stops
+  - [x] Be able to add a Draft Animal
+
+---

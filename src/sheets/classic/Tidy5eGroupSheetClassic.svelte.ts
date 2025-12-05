@@ -800,15 +800,15 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
     let speeds = [
       [
         travel.land,
-        `${game.i18n.localize('DND5E.MovementLand')} ${travel.land}`,
+        `${game.i18n.localize('DND5E.TRAVEL.Type.Land')} ${travel.land}`,
       ],
       [
         travel.water,
-        `${game.i18n.localize('DND5E.MovementWater')} ${travel.water}`,
+        `${game.i18n.localize('DND5E.TRAVEL.Type.Water')} ${travel.water}`,
       ],
       [
         travel.air,
-        `${game.i18n.localize('DND5E.MovementAir')} ${travel.air}`,
+        `${game.i18n.localize('DND5E.TRAVEL.Type.Air')} ${travel.air}`,
       ],
     ];
     speeds = speeds.filter((s) => s[0]).sort((a, b) => b[0] - a[0]);

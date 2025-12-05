@@ -27,7 +27,7 @@
 
     if (context.system.movement.hover) {
       result.push({
-        value: localize('DND5E.MovementHover'),
+        value: localize('DND5E.MOVEMENT.Hover'),
       });
     }
 

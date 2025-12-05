@@ -366,29 +366,29 @@ export function Tidy5eActorSheetClassicV2Base<
       let speeds = [
         [
           movement.burrow,
-          `${game.i18n.localize('DND5E.MovementBurrow')} ${movement.burrow}`,
+          `${game.i18n.localize('DND5E.MOVEMENT.Type.Burrow')} ${movement.burrow}`,
         ],
         [
           movement.climb,
-          `${game.i18n.localize('DND5E.MovementClimb')} ${movement.climb}`,
+          `${game.i18n.localize('DND5E.MOVEMENT.Type.Climb')} ${movement.climb}`,
         ],
         [
           movement.fly,
-          `${game.i18n.localize('DND5E.MovementFly')} ${movement.fly}${
+          `${game.i18n.localize('DND5E.MOVEMENT.Type.Fly')} ${movement.fly}${
             movement.hover
-              ? ` (${game.i18n.localize('DND5E.MovementHover')})`
+              ? ` (${game.i18n.localize('DND5E.MOVEMENT.Hover')})`
               : ''
           }`,
         ],
         [
           movement.swim,
-          `${game.i18n.localize('DND5E.MovementSwim')} ${movement.swim}`,
+          `${game.i18n.localize('DND5E.MOVEMENT.Type.Swim')} ${movement.swim}`,
         ],
       ];
       if (largestPrimary) {
         speeds.push([
           movement.walk,
-          `${game.i18n.localize('DND5E.MovementWalk')} ${movement.walk}`,
+          `${game.i18n.localize('DND5E.MOVEMENT.Type.Walk')} ${movement.walk}`,
         ]);
       }
 

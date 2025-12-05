@@ -154,7 +154,7 @@
       {/if}
       <!-- Units -->
       <FormGroup
-        label="DND5E.MovementUnits"
+        label="DND5E.MOVEMENT.FIELDS.units.label"
         labelFor="{appId}-target-template-units"
         document={context.document}
         field={context.fields.target.fields.template.fields.units}

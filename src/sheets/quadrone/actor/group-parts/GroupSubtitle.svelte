@@ -173,7 +173,7 @@
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
-        >{localize('DND5E.MovementLand')}</span
+        >{localize('DND5E.TRAVEL.Type.Land')}</span
       >
       <span class="color-text-default font-data-medium"
         >{context.actor.system.attributes.travel.paces.land}</span
@@ -187,7 +187,7 @@
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
-        >{localize('DND5E.MovementAir')}</span
+        >{localize('DND5E.TRAVEL.Type.Air')}</span
       >
       <span class="color-text-default font-data-medium"
         >{context.actor.system.attributes.travel.paces.air}</span
@@ -201,7 +201,7 @@
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
-        >{localize('DND5E.MovementWater')}</span
+        >{localize('DND5E.TRAVEL.Type.Water')}</span
       >
       <span class="color-text-default font-data-medium"
         >{context.actor.system.attributes.travel.paces.water}</span
@@ -214,7 +214,7 @@
   {#if context.unlocked}
     <span class="config-speeds">
       <button
-        aria-label={localize('DND5E.MovementConfig')}
+        aria-label={localize('DND5E.MOVEMENT.Action.Configure')}
         type="button"
         class={[
           'button button-borderless button-icon-only button-config flexshrink',
