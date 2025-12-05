@@ -110,7 +110,12 @@
       {#if section.show}
         {#if (searchCriteria.trim() === '' && context.unlocked) || visibleItemCount > 0}
           {#if layoutMode === 'list'}
-            <InventoryList {section}>
+            <InventoryList
+              {section}
+              allowEquipControl={false}
+              allowAttuneControl={false}
+              allowFavoriteIconNextToName={false}
+            >
               {#snippet primaryColumn()}
                 {localize(section.label)}
                 <span class="item-table-count">{visibleItemCount}</span>

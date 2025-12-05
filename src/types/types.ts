@@ -589,7 +589,9 @@ export type VehicleSheetContext = {
   draft: VehicleMemberSection;
   passengers: VehicleMemberSection;
   crew: VehicleMemberSection;
-  features: VehicleFeatureSection[];
+  features: FeatureSection;
+  weaponStations: InventorySection;
+  equipmentStations: InventorySection;
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
 } & ActorSheetContextV1;

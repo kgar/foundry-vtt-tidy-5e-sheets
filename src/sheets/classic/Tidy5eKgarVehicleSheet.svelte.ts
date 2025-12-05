@@ -10,8 +10,6 @@ import type {
   VehicleSheetContext,
   Utilities,
   SearchFilterCacheable,
-  VehicleFeatureSection,
-  SimpleEditableColumn,
   VehicleItemContext,
   VehicleMemberSection,
   Actor5e,
@@ -262,11 +260,47 @@ export class Tidy5eVehicleSheet
         'DND5E.VEHICLE.Crew.Label',
         'DND5E.VEHICLE.Action.Drop.Crew'
       ),
-      features: [],
+      features: {
+        ...SheetSections.EMPTY,
+        type: 'feature',
+        key: 'features',
+        label: 'TYPES.Item.featurePl',
+        canCreate: true,
+        items: [],
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+        },
+      },
       useActionsFeature: actorUsesActionFeature(this.actor),
       utilities: utilities,
+      equipmentStations: {
+        ...SheetSections.EMPTY,
+        type: 'inventory',
+        label: 'TYPES.Item.equipmentPl',
+        key: 'equipment',
+        items: [],
+        canCreate: true,
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+          ['system.type.value']: 'vehicle',
+        },
+      },
+      weaponStations: {
+        ...SheetSections.EMPTY,
+        type: 'inventory',
+        key: 'weapons',
+        label: 'TYPES.Item.weaponPl',
+        items: [],
+        canCreate: true,
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_WEAPON,
+          ['system.type.value']: 'siege',
+        },
+      },
       ...defaultDocumentContext,
     };
+
+    this._prepareVehicleItems(context);
 
     context.filterData = this.itemFilterService.getFilterData();
     context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
@@ -315,7 +349,6 @@ export class Tidy5eVehicleSheet
     context.tabs = tabs;
 
     await this.setExpandedItemData();
-    SheetSections.accountForExternalSections(['features'], context);
 
     debug('Vehicle Sheet context data', context);
 
@@ -358,129 +391,41 @@ export class Tidy5eVehicleSheet
     return section;
   }
 
-  _prepareItems(context: VehicleSheetContext) {
-    // TODO: Replace with Tidy Column Selection implementation
-    const cargoColumns: SimpleEditableColumn[] = [
-      {
-        label: game.i18n.localize('DND5E.Quantity'),
-        css: 'item-qty',
-        property: 'quantity',
-        editable: 'Number',
-      },
-    ];
-
-    // TODO: Replace with Tidy Column Selection implementation
-    const equipmentColumns: SimpleEditableColumn[] = [
-      {
-        label: game.i18n.localize('DND5E.Quantity'),
-        css: 'item-qty',
-        property: 'system.quantity',
-        editable: 'Number',
-      },
-      {
-        label: game.i18n.localize('DND5E.AC'),
-        css: 'item-ac',
-        property: 'system.armor.value',
-      },
-      {
-        label: game.i18n.localize('DND5E.HP'),
-        css: 'item-hp',
-        property: 'system.hp.value',
-        maxProperty: 'system.hp.max',
-        editable: 'Number',
-      },
-      {
-        label: game.i18n.localize('DND5E.Threshold'),
-        css: 'item-threshold',
-        property: 'threshold',
-      },
-    ];
-
-    const features: Record<string, VehicleFeatureSection> = {
-      actions: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize('DND5E.ActionPl'),
-        items: [],
-        hasActions: true,
-        crewable: true,
-        key: 'actions',
-        dataset: { type: 'feat' },
-        columns: [
-          {
-            label: game.i18n.localize('DND5E.Cover'),
-            css: 'item-cover',
-            property: 'cover',
-          },
-        ],
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      equipment: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize(CONFIG.Item.typeLabels.equipment),
-        items: [],
-        crewable: true,
-        dataset: { type: 'equipment', 'system.type.value': 'vehicle' },
-        columns: equipmentColumns,
-        key: 'equipment',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      passive: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize('DND5E.Features'),
-        items: [],
-        dataset: { type: 'feat' },
-        key: 'passive',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      reactions: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize('DND5E.ReactionPl'),
-        items: [],
-        dataset: { type: 'feat' },
-        key: 'reactions',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      weapons: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
-        items: [],
-        crewable: true,
-        dataset: { type: 'weapon', 'system.weaponType': 'siege' },
-        columns: equipmentColumns,
-        key: 'weapons',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-    };
+  _prepareVehicleItems(context: VehicleSheetContext) {
+    const inventory = Inventory.getDefaultInventorySections();
+    const inventoryTypes = Inventory.getInventoryTypes();
 
     context.items.forEach((item) => {
       context.itemContext[item.id] ??= this._prepareItem(item, context);
+
+      // Stations - Equipment
+      if (
+        item.system.isMountable &&
+        item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT
+      ) {
+        context.equipmentStations.items.push(item);
+      }
+      // Stations - Weapons
+      else if (
+        item.system.isMountable &&
+        item.type === CONSTANTS.ITEM_TYPE_WEAPON
+      ) {
+        context.weaponStations.items.push(item);
+      }
+      // Inventory
+      else if (Inventory.isItemInventoryType(item)) {
+        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+          canCreate: true,
+          rowActions: [],
+        });
+      }
+      // Features (and stray items)
+      else {
+        context.features.items.push(item);
+      }
     });
 
-    const baseUnits =
-      CONFIG.DND5E.encumbrance.baseUnits[
-        this.actor.type as keyof typeof CONFIG.DND5E.encumbrance.baseUnits
-      ] ?? CONFIG.DND5E.encumbrance.baseUnits.default;
-    const units = game.settings.get('dnd5e', 'metricWeightUnits')
-      ? baseUnits.metric
-      : baseUnits.imperial;
-
-    // Update the rendering context data
-    context.features = Object.values(features);
+    context.inventory = Object.values(inventory);
   }
 
   _prepareItem(item: Item5e, context: VehicleSheetContext): VehicleItemContext {
