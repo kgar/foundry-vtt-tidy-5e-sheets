@@ -942,5 +942,7 @@
     },
     "TIDY5E.Utilities.ShowSheetPins": "Mostrar Fixados da Ficha",
     "TIDY5E.InspirationAdd": "Adicionar Inspiração",
-    "TIDY5E.InspirationRemove": "Remover Inspiração"
+    "TIDY5E.InspirationRemove": "Remover Inspiração",
+    "TIDY5E.LegendaryAbbr": "AL",
+    "TIDY5E.LairAbbr": "AC"
 }

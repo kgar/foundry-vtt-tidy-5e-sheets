@@ -951,5 +951,7 @@
     },
     "TIDY5E.Utilities.ShowSheetPins": "Zobrazit připnuté deníky",
     "TIDY5E.InspirationAdd": "Přidat inspiraci",
-    "TIDY5E.InspirationRemove": "Odebrat inspiraci"
+    "TIDY5E.InspirationRemove": "Odebrat inspiraci",
+    "TIDY5E.LegendaryAbbr": "LA",
+    "TIDY5E.LairAbbr": "Doupě"
 }
