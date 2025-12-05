@@ -2,30 +2,6 @@
 
 ## Actionable items from PRs, Merges, Commits, etc.
 
----
-
-- [ ] #6295 Add separate travel speeds to vehicles & party #6297 <https://github.com/foundryvtt/dnd5e/pull/6297> / <https://github.com/foundryvtt/dnd5e/pull/6297/files>
-  - [x] Group: Switches from `movement.pace` to `travel.pace`
-  - (Q only) Vehicle: Adds context booleans for `showTravelPace`, `showTravelSpeed`, `showCombatSpeed`
-    - Combat speed is regular movement speed, whereas travel speed is mph/kph
-  - [x] Review Movement/Senses config
-  - [x] TravelField (SchemaField) added
-    - Group 
-      - replaces MovementField with TravelField as `attributes.travel`; includes a migration
-      - Changes localization keys for land / water / air travel - `DND5E.TRAVEL.Type.Land`, `DND5E.TRAVEL.Type.Water`, `DND5E.TRAVEL.Type.Air`
-- [x] #6304 Add movement bonus that applies only to existing speeds #6306 / <https://github.com/foundryvtt/dnd5e/pull/6306/files>
-  - Verify it works out-of-the-box
-- [x] Group sheet ownership <https://github.com/foundryvtt/dnd5e/pull/6446/files>
-  - Verify we're good to go. Compare what they're doing to what we're doing
-- [x] Use number formatter for distances in NPC sidebar #6430 <https://github.com/foundryvtt/dnd5e/issues/6430>
-  - Verify we're good to go
-
----
-
-- [ ] Weapons sheet, "Siege Weapon" type, Siege Properties section is missing some fields: https://media.discordapp.net/attachments/1243307347682529423/1446352794457084026/image.png?ex=6933ac82&is=69325b02&hm=8b43aa5ee32887488088ca4e10c4bfb78e04d36e517a6d1819fd2c861f233230&=&format=webp&quality=lossless
-- [ ] Equipment sheet, "Vehicle Equipment" type, Vehicle Properties section is missing some fields
-- [x] "DND5E.MovementUnits" loc key needs to be replaced
-
 ## Primary Vehicle Notes
 
 - [ ] Primary Vehicle
@@ -135,3 +111,25 @@
   - [x] Be able to add a Draft Animal
 
 ---
+
+- [x] #6295 Add separate travel speeds to vehicles & party #6297 <https://github.com/foundryvtt/dnd5e/pull/6297> / <https://github.com/foundryvtt/dnd5e/pull/6297/files>
+  - [x] Group: Switches from `movement.pace` to `travel.pace`
+  - (Q only) Vehicle: Adds context booleans for `showTravelPace`, `showTravelSpeed`, `showCombatSpeed`
+    - Combat speed is regular movement speed, whereas travel speed is mph/kph
+  - [x] Review Movement/Senses config
+  - [x] TravelField (SchemaField) added
+    - Group 
+      - replaces MovementField with TravelField as `attributes.travel`; includes a migration
+      - Changes localization keys for land / water / air travel - `DND5E.TRAVEL.Type.Land`, `DND5E.TRAVEL.Type.Water`, `DND5E.TRAVEL.Type.Air`
+- [x] #6304 Add movement bonus that applies only to existing speeds #6306 / <https://github.com/foundryvtt/dnd5e/pull/6306/files>
+  - Verify it works out-of-the-box
+- [x] Group sheet ownership <https://github.com/foundryvtt/dnd5e/pull/6446/files>
+  - Verify we're good to go. Compare what they're doing to what we're doing
+- [x] Use number formatter for distances in NPC sidebar #6430 <https://github.com/foundryvtt/dnd5e/issues/6430>
+  - Verify we're good to go
+
+---
+
+- [x] Weapons sheet, "Siege Weapon" type, Siege Properties section is missing some fields: https://media.discordapp.net/attachments/1243307347682529423/1446352794457084026/image.png?ex=6933ac82&is=69325b02&hm=8b43aa5ee32887488088ca4e10c4bfb78e04d36e517a6d1819fd2c861f233230&=&format=webp&quality=lossless
+- [x] Equipment sheet, "Vehicle Equipment" type, Vehicle Properties section is missing some fields
+- [x] "DND5E.MovementUnits" loc key needs to be replaced

@@ -445,6 +445,11 @@ export class Tidy5eVehicleSheet
       item,
       item.system.activities
     )?.map(Activities.getActivityItemContext);
+
+    if (item.isMountable) {
+      this._prepareCrewedItem(item, ctx);
+    }
+    
     return ctx;
   }
 

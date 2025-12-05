@@ -368,6 +368,9 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       tabs: [],
       title: this.title,
       rollData: rollData,
+      unitsOptions: Object.entries(CONFIG.DND5E.movementUnits).map(
+        ([value, { label }]) => ({ value, label })
+      ),
 
       // Item Type, Status, and Details
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
