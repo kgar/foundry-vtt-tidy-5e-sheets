@@ -27,6 +27,8 @@
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
 
   "TIDY5E.AddSpecific": "Add {name}",
+  "TIDY5E.AddCustom": "Add Custom {name}",
+  "TIDY5E.CompendiumBrowser": "Add {name} from Compendium",
 
   "TIDY5E.SheetPin": {
     "Label": "Sheet Pin",
@@ -88,6 +90,8 @@
   "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
   "TIDY5E.SheetEdit.Disable.Hint": "Disable Edit - {description}",
   "TIDY5E.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
+  "TIDY5E.SheetMode.Edit": "Switch to Play Mode",
+  "TIDY5E.SheetMode.Play": "Switch to Edit Mode",
 
   "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
   "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
@@ -918,6 +922,7 @@
   "TIDY5E.SortMenu.OptionPriority": "Priority",
   "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",
   "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+  "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Transfer all currency to parent actor",
   "TIDY5E.BrokenLink": "Broken Link",
   "TIDY5E.Visible": "Visible",
   "TIDY5E.Hidden": "Hidden",

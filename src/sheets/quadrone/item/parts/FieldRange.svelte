@@ -9,6 +9,8 @@
   let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
+
+  console.log('context.source', context.source);
 </script>
 
 <!-- Range -->
@@ -22,7 +24,7 @@
       field={context.fields.range.fields.value}
       config={{
         id: `${appId}-range-value`,
-        value: context.source.range.value,
+        value: (context.source.range.value === undefined || context.source.range.value === null || Number.isNaN(context.source.range.value)) ? '—' : context.source.range.value,
         hint: false,
       }}
       groupClasses="label-top"
