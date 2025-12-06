@@ -90,6 +90,8 @@
   "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
   "TIDY5E.SheetEdit.Disable.Hint": "Disable Edit - {description}",
   "TIDY5E.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
+  "TIDY5E.SheetMode.Edit": "Switch to Play Mode",
+  "TIDY5E.SheetMode.Play": "Switch to Edit Mode",
 
   "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
   "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
