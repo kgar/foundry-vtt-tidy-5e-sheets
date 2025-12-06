@@ -39,6 +39,7 @@ import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -48,7 +49,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_NPC_STATBLOCK;
+    this.currentTabId = settings.value.initialNpcSheetTab;
   }
 
   static DEFAULT_OPTIONS: Partial<
