@@ -59,21 +59,11 @@
           <span class="font-weight-label trait-name">
             {species.name}
           </span>
-        {:else if context.unlocked}
-          <button
-            aria-label={localize('DND5E.Species.Add')}
-            type="button"
-            class="button button-primary"
-            data-tooltip="DND5E.Species.Add"
-            onclick={(ev) =>
-              FoundryAdapter.createItem({ type: 'race' }, context.actor)}
-          >
-            {localize('DND5E.Species.Add')}
-          </button>
+        {:else if context.unlocked || !species}
           <button
             aria-label="Browse for {localize('TYPES.Item.race')}"
             type="button"
-            class="button button-borderless button-icon-only"
+            class="button button-primary"
             data-tooltip="DND5E.Species.Add"
             onclick={(ev) =>
               context.actor.sheet.findItem({
@@ -82,6 +72,21 @@
               })}
           >
             <i class="fa-solid fa-book-open-reader"></i>
+            {localize('TIDY5E.CompendiumBrowser', {
+              name: localize('TYPES.Item.race'),
+            })}
+          </button>
+          <button
+            aria-label={localize('DND5E.Species.Add')}
+            type="button"
+            class="button button-secondary"
+            data-tooltip="DND5E.Species.Add"
+            onclick={(ev) =>
+              FoundryAdapter.createItem({ type: 'race' }, context.actor)}
+          >
+            {localize('TIDY5E.AddCustom', {
+              name: localize('TYPES.Item.race'),
+            })}
           </button>
         {/if}
       </div>

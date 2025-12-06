@@ -27,6 +27,8 @@
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
 
   "TIDY5E.AddSpecific": "Add {name}",
+  "TIDY5E.AddCustom": "Add Custom {name}",
+  "TIDY5E.CompendiumBrowser": "Add {name} from Compendium",
 
   "TIDY5E.SheetPin": {
     "Label": "Sheet Pin",

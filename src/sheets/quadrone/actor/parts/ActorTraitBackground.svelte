@@ -67,21 +67,11 @@
           <span class="font-weight-label">
             {background.name}
           </span>
-        {:else if context.unlocked}
-          <button
-            aria-label="Add {localize('TYPES.Item.background')}"
-            type="button"
-            class="button button-primary"
-            data-tooltip="DND5E.BackgroundAdd"
-            onclick={(ev) =>
-              FoundryAdapter.createItem({ type: 'background' }, context.actor)}
-          >
-            {localize('DND5E.BackgroundAdd')}
-          </button>
+        {:else if context.unlocked || !background}
           <button
             aria-label="Browse for {localize('TYPES.Item.background')}"
             type="button"
-            class="button button-borderless button-icon-only"
+            class="button button-primary"
             data-tooltip="DND5E.BackgroundAdd"
             onclick={(ev) =>
               context.actor.sheet.findItem({
@@ -90,6 +80,21 @@
               })}
           >
             <i class="fa-solid fa-book-open-reader"></i>
+            {localize('TIDY5E.CompendiumBrowser', {
+              name: localize('TYPES.Item.background'),
+            })}
+          </button>
+          <button
+            aria-label="Add {localize('TYPES.Item.background')}"
+            type="button"
+            class="button button-secondary"
+            data-tooltip="DND5E.BackgroundAdd"
+            onclick={(ev) =>
+              FoundryAdapter.createItem({ type: 'background' }, context.actor)}
+          >
+            {localize('TIDY5E.AddCustom', {
+              name: localize('TYPES.Item.background'),
+            })}
           </button>
         {/if}
       </div>
