@@ -31,6 +31,7 @@
 {#if context.unlocked || background}
   <div
     class="list-entry"
+    role="listitem"
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
     data-item-id={background?.id}
     data-tidy-draggable
@@ -48,15 +49,16 @@
     <div class="list-content">
       <div class="list-values trait-item">
         {#if background}
+          <!-- svelte-ignore a11y_missing_attribute -->
           <a
-            aria-label="View {localize('TYPES.Item.subclass')}"
-            class="item-image-link"
             role="button"
-            data-keyboard-focus
             tabindex="0"
+            aria-label="View {localize('TYPES.Item.background')}"
+            class="item-image-link"
+            data-keyboard-focus
             onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-            onkeydown={(e) =>
-              e.key === 'Enter' && openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+            onkeydown={(ev) =>
+              ev.key === 'Enter' && openSheet(CONSTANTS.SHEET_MODE_PLAY)}
           >
             <img
               src={background.img}
@@ -69,10 +71,14 @@
           </span>
         {:else if context.unlocked || !background}
           <button
-            aria-label="Browse for {localize('TYPES.Item.background')}"
+            aria-label={localize('TIDY5E.CompendiumBrowser', {
+              name: localize('TYPES.Item.background'),
+            })}
             type="button"
             class="button button-primary"
-            data-tooltip="DND5E.BackgroundAdd"
+            data-tooltip={localize('TIDY5E.CompendiumBrowser', {
+              name: localize('TYPES.Item.background'),
+            })}
             onclick={(ev) =>
               context.actor.sheet.findItem({
                 event: ev,
@@ -80,15 +86,14 @@
               })}
           >
             <i class="fa-solid fa-book-open-reader"></i>
-            {localize('TIDY5E.CompendiumBrowser', {
-              name: localize('TYPES.Item.background'),
-            })}
+            {localize('DND5E.BackgroundAdd')}
           </button>
           <button
-            aria-label="Add {localize('TYPES.Item.background')}"
+            aria-label={localize('TIDY5E.AddCustom', {
+              name: localize('TYPES.Item.background'),
+            })}
             type="button"
             class="button button-secondary"
-            data-tooltip="DND5E.BackgroundAdd"
             onclick={(ev) =>
               FoundryAdapter.createItem({ type: 'background' }, context.actor)}
           >
@@ -101,10 +106,14 @@
       {#if context.unlocked && background}
         <div class="list-controls">
           <button
-            aria-label="Edit {localize('TYPES.Item.background')}"
+            aria-label={localize('DND5E.DescriptionEdit', {
+              description: localize('TYPES.Item.background'),
+            })}
             type="button"
             class="button button-borderless button-icon-only"
-            data-tooltip="DND5E.ItemEdit"
+            data-tooltip={localize('DND5E.DescriptionEdit', {
+              description: localize('TYPES.Item.background'),
+            })}
             onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
           >
             <i class="fa-solid fa-edit"></i>

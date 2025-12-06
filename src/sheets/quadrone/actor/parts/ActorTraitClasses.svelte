@@ -60,6 +60,7 @@
   {#if firstClass}
     <div
       class="list-entry"
+      role="listitem"
       data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
       data-item-id={firstClass?.item?.id}
       data-tidy-draggable
@@ -83,6 +84,7 @@
   {#each restClasses as cls (cls.uuid)}
     <div
       class="list-entry"
+      role="listitem"
       data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
       data-item-id={cls?.item?.id}
       data-tidy-draggable
@@ -109,10 +111,14 @@
       </div>
       <div class="list-content">
         <button
-          aria-label="Browse for {localize('TYPES.Item.class')}"
+          aria-label={localize('TIDY5E.CompendiumBrowser', {
+            name: localize('TYPES.Item.class'),
+          })}
           type="button"
           class="button button-secondary"
-          data-tooltip="DND5E.ClassAdd"
+          data-tooltip={localize('TIDY5E.CompendiumBrowser', {
+            name: localize('TYPES.Item.class'),
+          })}
           onclick={(ev) =>
             context.actor.sheet.findItem({
               event: ev,
@@ -124,17 +130,20 @@
         </button>
         <div class="list-values trait-item">
           <button
-            aria-label="Add {localize('TYPES.Item.class')}"
+            aria-label={localize('TIDY5E.AddCustom', {
+              name: localize('TYPES.Item.class'),
+            })}
             type="button"
             class="button {context.classes.length > 0
               ? 'button-secondary'
               : 'button-primary'}"
-            data-tooltip="DND5E.ClassAdd"
             onclick={(ev) =>
               FoundryAdapter.createItem({ type: 'class' }, context.actor)}
           >
             <i class="fa-solid fa-plus"></i>
-            {localize('TIDY5E.Class.Custom')}
+            {localize('TIDY5E.AddCustom', {
+              name: localize('TYPES.Item.class'),
+            })}
           </button>
         </div>
       </div>
@@ -152,11 +161,9 @@
       <div class="flexrow">
         <div class="list-values trait-class trait-item">
           {#if cls}
-            <a
+            <button
               aria-label="View {localize('TYPES.Item.class')}"
               class="item-image-link"
-              role="button"
-              tabindex="0"
               data-keyboard-focus
               onclick={() =>
                 cls.item.sheet.render({
@@ -171,7 +178,7 @@
                 })}
             >
               <img src={cls.img} alt={cls.name} class="item-image flex0" />
-            </a>
+            </button>
             <span class="trait-name font-label-medium">
               {cls.name}
             </span>
