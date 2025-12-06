@@ -161,8 +161,13 @@
       <div class="flexrow">
         <div class="list-values trait-class trait-item">
           {#if cls}
-            <button
-              aria-label="View {localize('TYPES.Item.class')}"
+            <!-- svelte-ignore a11y_missing_attribute -->
+            <a
+              role="button"
+              tabindex="0"
+              aria-label="{localize('DND5E.DescriptionView', {
+                description: localize('TYPES.Item.class'),
+              })}"
               class="item-image-link"
               data-keyboard-focus
               onclick={() =>
@@ -178,7 +183,7 @@
                 })}
             >
               <img src={cls.img} alt={cls.name} class="item-image flex0" />
-            </button>
+            </a>
             <span class="trait-name font-label-medium">
               {cls.name}
             </span>
@@ -195,7 +200,7 @@
             {#if cls.isOriginalClass}
               <i
                 class="flex0 fa-solid fa-chess-queen color-text-gold-emphasis icon-class-original"
-                data-tooltip="DND5E.ClassOriginal"
+                data-tooltip={localize('DND5E.ClassOriginal')}
                 aria-label={localize('DND5E.ClassOriginal')}
               ></i>
             {/if}
@@ -204,7 +209,9 @@
         {#if context.unlocked && cls}
           <div class="list-controls">
             <button
-              aria-label="Edit {localize('TYPES.Item.class')}"
+              aria-label={localize('DND5E.DescriptionEdit', {
+                description: localize('TYPES.Item.class'),
+              })}
               type="button"
               class="button button-borderless button-icon-only"
               data-tooltip="DND5E.ItemEdit"
@@ -217,7 +224,7 @@
               <i class="fa-solid fa-edit"></i>
             </button>
             <button
-              aria-label="{localize('TYPES.Item.class')} Context Menu"
+              aria-label="{localize('Tidy5E.ContextMenu')}"
               type="button"
               class="button button-borderless button-icon-only"
               onclick={(ev) =>
@@ -233,7 +240,7 @@
               aria-label={localize('DND5E.LevelActionIncrease')}
               type="button"
               class="button button-borderless button-icon-only"
-              data-tooltip="DND5E.LevelActionIncrease"
+              data-tooltip={localize('DND5E.LevelActionIncrease')}
               onclick={() =>
                 FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
             >
@@ -253,7 +260,7 @@
             aria-label={localize('DND5E.LevelActionIncrease')}
             type="button"
             class="button button-primary button-level-up flexshrink"
-            data-tooltip="DND5E.LevelActionIncrease"
+            data-tooltip={localize('DND5E.LevelActionIncrease')}
             disabled={hitLevelCap}
             onclick={() =>
               FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
@@ -277,6 +284,7 @@
 
 {#snippet subclassListEntry(subclass: Item5e, orphaned: boolean = false)}
   <div
+    role="listitem"
     class="list-entry list-sub-entry"
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
     data-item-id={subclass.id}
@@ -290,17 +298,19 @@
     <div class="list-content">
       <div class="list-values">
         {#if !orphaned}
-          <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right"></i>
+          <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"></i>
         {:else}
           <i
             data-tooltip="DND5E.SubclassMismatchWarn"
-            class="fa-solid fa-link-slash"
+            class="fa-solid fa-link-slash color-text-lighter"
           ></i>
         {/if}
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
-          aria-label="View {localize('TYPES.Item.subclass')}"
+          aria-label="{localize('DND5E.ItemSubclassDetails')}"
           class="item-image-link"
           role="button"
+          tabindex="0"
           data-keyboard-focus
           onclick={() =>
             subclass.sheet.render({
@@ -327,10 +337,14 @@
       {#if context.unlocked}
         <div class="list-controls">
           <button
-            aria-label="Edit Subclass"
+            aria-label={localize('DND5E.DescriptionEdit', {
+              description: localize('DND5E.ItemSubclassDetails'),
+            })}
             type="button"
             class="button button-borderless button-icon-only"
-            data-tooltip="DND5E.ItemEdit"
+            data-tooltip={localize('DND5E.DescriptionEdit', {
+              description: localize('DND5E.ItemSubclassDetails'),
+            })}
             onclick={() =>
               subclass.sheet.render({
                 force: true,
@@ -340,7 +354,7 @@
             <i class="fa-solid fa-edit"></i>
           </button>
           <button
-            aria-label="Subclass Context Menu"
+            aria-label="{localize('Tidy5E.ContextMenu')}"
             type="button"
             class="button button-borderless button-icon-only"
             onclick={(ev) =>
@@ -356,13 +370,38 @@
 
 {#snippet needsSubclassListEntry(cls: Item5e)}
   <div class="list-entry">
-    <div class="list-label"></div>
+    <div class="list-label">{localize('TYPES.Item.subclass')}</div>
     <div class="list-content">
-      <div class="list-values add-trait-container">
+      <div class="list-values trait-item">
+        <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"></i>
         <button
-          aria-label="Add Subclass"
+          aria-label={localize('TIDY5E.CompendiumBrowser', {
+            name: localize('TYPES.Item.subclass'),
+          })}
+          type="button"
+          class="button button-primary"
+          data-tooltip={localize('TIDY5E.CompendiumBrowser', {
+            name: localize('TYPES.Item.subclass'),
+          })}
+          onclick={async (ev) =>
+            await context.actor.sheet.findItem({
+              event: ev,
+              type: 'subclass',
+              classIdentifier: cls.system.identifier,
+            })}
+        >
+          <i class="fa-solid fa-book-open-reader"></i>
+          {localize('DND5E.SubclassAdd')}
+        </button>
+        <button
+          aria-label={localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.subclass'),
+          })}
           type="button"
           class="button button-secondary"
+          data-tooltip={localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.subclass'),
+          })}
           onclick={() =>
             FoundryAdapter.createItem(
               {
@@ -372,20 +411,9 @@
               context.actor,
             )}
         >
-          {localize('DND5E.SubclassAdd')}
-        </button>
-        <button
-          aria-label="Browse for Subclass"
-          type="button"
-          class="button button-borderless button-icon-only"
-          onclick={async (ev) =>
-            await context.actor.sheet.findItem({
-              event: ev,
-              type: 'subclass',
-              classIdentifier: cls.system.identifier,
-            })}
-        >
-          <i class="fa-solid fa-book-open-reader"></i>
+          {localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.subclass'),
+          })}
         </button>
       </div>
     </div>
