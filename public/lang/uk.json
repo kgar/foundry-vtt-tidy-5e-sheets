@@ -975,5 +975,7 @@
     "TIDY5E.InspirationAdd": "Додати натхнення",
     "TIDY5E.InspirationRemove": "Вилучити натхнення",
     "TIDY5E.LegendaryAbbr": "LA",
-    "TIDY5E.LairAbbr": "Лігво"
+    "TIDY5E.LairAbbr": "Лігво",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Тяглова тварина",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Тяглові тварини"
 }
