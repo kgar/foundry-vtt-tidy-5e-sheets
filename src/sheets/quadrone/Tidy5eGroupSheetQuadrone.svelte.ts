@@ -135,9 +135,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
             : 2, // Normal
         units: {
           label:
-            CONFIG.DND5E.movementUnits[
+            CONFIG.DND5E.travelUnits[
               this.actor.system.attributes.travel.units
-            ]?.abbreviation ?? this.actor.system.attributes.travel.units,
+            ]?.abbreviationDay ?? this.actor.system.attributes.travel.units,
         },
       },
       type: 'group',
