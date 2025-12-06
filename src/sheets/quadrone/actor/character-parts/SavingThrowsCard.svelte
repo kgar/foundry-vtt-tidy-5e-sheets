@@ -57,14 +57,18 @@
     {/each}
     <!-- </ul> -->
     <!-- Concentration here -->
-    {#if context.saves.concentration && (context.isConcentrating || context.unlocked)}
+    {#if context.saves.concentration}
       {@const conc = context.saves.concentration}
       {@const tooltip = localize('DND5E.AbilityConfigure', {
         ability: context.saves.concentration.label,
       })}
       <!-- <ul class="saving-throws-special-column unlist use-ability-list"> -->
       <li style="order: 50">
-        <i class="fas fa-head-side-brain color-text-gold"></i>
+        {#if context.isConcentrating}
+          <i class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse" aria-label="Concentration" style="font-size: var(--icon-size);"></i>
+        {:else}
+          <i class="fas fa-head-side-brain color-text-gold"></i>
+        {/if}
         <button
           type="button"
           class="button button-borderless use-ability-roll-button"
@@ -73,7 +77,7 @@
             context.actor.rollConcentration({ event: ev, legacy: false })}
           data-has-roll-modes
         >
-          {conc.label}
+          {conc.label + (context.isConcentrating ? ` (${localize('EFFECT.DND5E.StatusConcentrating')})` : '')}
         </button>
         <span class="modifier">
           <span class="font-label-medium color-text-lightest">

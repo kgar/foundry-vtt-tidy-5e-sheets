@@ -25,6 +25,7 @@ import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext } from 'src/types/item.types';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { settings } from 'src/settings/settings.svelte';
 
 const localize = FoundryAdapter.localize;
 
@@ -35,7 +36,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
-    this.currentTabId = CONSTANTS.TAB_VEHICLE_ATTRIBUTES;
+    this.currentTabId = settings.value.initialVehicleSheetTab;
   }
 
   static DEFAULT_OPTIONS: Partial<

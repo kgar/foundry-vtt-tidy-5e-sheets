@@ -49,7 +49,7 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
@@ -67,7 +67,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
+    // Default to Character tab if no class, otherwise first tab
+    const hasClass = this.actor.itemTypes.class?.length > 0;
+    this.currentTabId = hasClass
+      ? settings.value.initialCharacterSheetTab
+      : CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
     this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
   }
 

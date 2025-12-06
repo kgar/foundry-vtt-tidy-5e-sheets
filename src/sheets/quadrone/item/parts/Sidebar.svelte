@@ -392,7 +392,7 @@
         <ul class="pills stacked">
           {#each sidebarActivations as activation}
             <li class="pill">
-              {activation}
+              {activation?.toString().replace(/NaN/g, '—')}
             </li>
           {/each}
         </ul>
@@ -423,7 +423,10 @@
         <ul class="pills stacked">
           {#each scaleValues as scaleValue}
             <li>
+              <!-- svelte-ignore a11y_missing_attribute -->
               <a
+                role="button"
+                tabindex="0"
                 class="pill interactive centered wrapped copy-to-clipboard"
                 onclick={() => {
                   game.clipboard.copyPlainText(scaleValue.toCopy);
@@ -433,6 +436,19 @@
                     }),
                     { console: false },
                   );
+                }}
+                onkeydown={(ev) => {
+                  if (ev.key === 'Enter' || ev.key === ' ') {
+                    ev.preventDefault();
+                    ev.stopPropagation();
+                    game.clipboard.copyPlainText(scaleValue.toCopy);
+                    ui.notifications.info(
+                      game.i18n.format('DND5E.Copied', {
+                        value: scaleValue.toCopy,
+                      }),
+                      { console: false },
+                    );
+                  }
                 }}
               >
                 {#if !context.item.actor}
@@ -493,7 +509,10 @@
     <div>
       <h4>{localize('TIDY5E.Section.LabelPl')}</h4>
       <div class="pills stacked">
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
+          role="button"
+          tabindex="0"
           data-tooltip="TIDY5E.Section.SectionSelectorChooseSectionTooltip"
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
@@ -504,6 +523,18 @@
               callingDocument: context.item,
               document: context.item,
             }).render(true)}
+          onkeydown={(ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              ev.stopPropagation();
+              new SectionSelectorApplication({
+                flag: TidyFlags.section.prop,
+                sectionType: localize(sectionType),
+                callingDocument: context.item,
+                document: context.item,
+              }).render(true);
+            }
+          }}
         >
           <span class="text-normal">
             {sectionLabel}
@@ -512,7 +543,10 @@
             {section}
           </span>
         </a>
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
+          role="button"
+          tabindex="0"
           class="pill interactive wrapped no-row-gap centered"
           class:disabled={!context.editable}
           data-tooltip="TIDY5E.Section.SectionSelectorChooseActionSectionTooltip"
@@ -523,6 +557,18 @@
               callingDocument: context.item,
               document: context.item,
             }).render(true)}
+          onkeydown={(ev) => {
+            if (ev.key === 'Enter' || ev.key === ' ') {
+              ev.preventDefault();
+              ev.stopPropagation();
+              new SectionSelectorApplication({
+                flag: TidyFlags.actionSection.prop,
+                sectionType: localize(sectionType),
+                callingDocument: context.item,
+                document: context.item,
+              }).render(true);
+            }
+          }}
         >
           <span class="text-normal">
             {actionSectionLabel}

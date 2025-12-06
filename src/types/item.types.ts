@@ -402,6 +402,7 @@ export type ContainerContents = {
   capacity: { max: number; value: number; units: string; pct: number };
   contents: InventorySection[];
   currency: Record<string, number>;
+  currencies: CurrencyContext[];
   itemContext: Record<string, ContainerItemContext>;
 };
 
