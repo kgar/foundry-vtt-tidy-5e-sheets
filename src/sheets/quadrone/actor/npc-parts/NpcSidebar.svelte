@@ -13,7 +13,6 @@
 <SkillsCard
   defaultExpansionState={false}
   showFiligree={false}
-  showProficiency={context.unlocked}
 />
 <LoyaltyTracker />
 <Legendaries showFiligree={false} />
