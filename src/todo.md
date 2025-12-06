@@ -150,20 +150,11 @@
 
 ## hightouch To Do
 
-- [ ] Default sheets to edit mode on first open
-- [ ] Change edit mode icon to quill
-- [ ] Update species and background to show by default when empty
-- [ ] Update species and background buttons to default to "Add from compendium" and "Create custom"
-- [ ] Fix Character sheet subtitle bug with extra dot separator before class name
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
 - [ ] Item sheet sidebar background image (low)
-- [ ] Make a generic roll button component
-  - [ ] Fix Slot favorite roll icon not appearing
-  - [x] Add Bastion facility roll icon on hover
-  - [ ] Add Character tab roll icon on hover
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
 - [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
 

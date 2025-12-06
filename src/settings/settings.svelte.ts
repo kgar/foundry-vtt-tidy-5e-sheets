@@ -341,7 +341,7 @@ export function createSettings() {
             TabManager.getTabsAsConfigOptions(
               CharacterSheetClassicRuntime.getAllRegisteredTabs()
             ),
-          default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+          default: CONSTANTS.TAB_ACTOR_ACTIONS,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
