@@ -1,6 +1,7 @@
 import type {
   ContainerContents,
   ContainerItemContext,
+  CurrencyContext,
   Item5e,
 } from 'src/types/item.types';
 import { Inventory } from '../sections/Inventory';
@@ -26,9 +27,22 @@ export class Container {
           TableRowActionsRuntime.getContainerContentsRowActions(context),
       });
 
+    // Build currencies array from container's currency data
+    const currencies: CurrencyContext[] = [];
+    Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
+      currencies.push({
+        key: key,
+        value: (container.system.currency[key] ?? 0) as number,
+        abbr:
+          CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
+            ?.abbreviation ?? key,
+      })
+    );
+
     return {
       capacity: await container.system.computeCapacity(),
       currency: container.system.currency,
+      currencies,
       contents: containerContentsInventory,
       itemContext: await Container.getContainerItemContext(container, context),
     };
