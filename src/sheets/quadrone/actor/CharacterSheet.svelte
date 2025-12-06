@@ -422,7 +422,6 @@
                 type="button"
                 class="button button-borderless button-icon-only temp-hp"
                 onclick={() => {
-                  console.log('onclick');
                   hpOverlayFocusTarget = 'temp';
                   hpOverlayOpen = true;
                 }}

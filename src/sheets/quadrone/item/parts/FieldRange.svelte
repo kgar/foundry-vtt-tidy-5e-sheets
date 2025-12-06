@@ -9,8 +9,6 @@
   let appId = $derived(context.document.id);
 
   const localize = FoundryAdapter.localize;
-
-  console.log('context.source', context.source);
 </script>
 
 <!-- Range -->
