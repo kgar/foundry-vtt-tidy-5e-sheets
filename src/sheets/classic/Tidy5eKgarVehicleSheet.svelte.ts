@@ -10,10 +10,9 @@ import type {
   VehicleSheetContext,
   Utilities,
   SearchFilterCacheable,
-  VehicleCargoSection,
-  VehicleFeatureSection,
-  SimpleEditableColumn,
   VehicleItemContext,
+  VehicleMemberSection,
+  Actor5e,
 } from 'src/types/types';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -87,6 +86,18 @@ export class Tidy5eVehicleSheet
     position: {
       width: 740,
       height: 810,
+    },
+    actions: {
+      browseActors: async function () {
+        new dnd5e.applications.CompendiumBrowser({
+          filters: {
+            locked: {
+              documentClass: 'Actor',
+              types: new Set(['character', 'npc']),
+            },
+          },
+        }).render({ force: true });
+      },
     },
   };
 
@@ -233,23 +244,76 @@ export class Tidy5eVehicleSheet
     };
 
     const context: VehicleSheetContext = {
-      cargo: [],
-      features: [],
+      inventory: [],
+      draft: await this._prepareMemberSection(
+        'draft',
+        'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
+        'DND5E.VEHICLE.Action.Drop.Animal'
+      ),
+      passengers: await this._prepareMemberSection(
+        'passengers',
+        'DND5E.VEHICLE.Crew.Passengers',
+        'DND5E.VEHICLE.Action.Drop.Passengers'
+      ),
+      crew: await this._prepareMemberSection(
+        'crew',
+        'DND5E.VEHICLE.Crew.Label',
+        'DND5E.VEHICLE.Action.Drop.Crew'
+      ),
+      features: {
+        ...SheetSections.EMPTY,
+        type: 'feature',
+        key: 'features',
+        label: 'TYPES.Item.featurePl',
+        canCreate: true,
+        items: [],
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+        },
+      },
       useActionsFeature: actorUsesActionFeature(this.actor),
       utilities: utilities,
+      equipmentStations: {
+        ...SheetSections.EMPTY,
+        type: 'inventory',
+        label: 'TYPES.Item.equipmentPl',
+        key: 'equipment',
+        items: [],
+        canCreate: true,
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+          ['system.type.value']: 'vehicle',
+        },
+      },
+      weaponStations: {
+        ...SheetSections.EMPTY,
+        type: 'inventory',
+        key: 'weapons',
+        label: 'TYPES.Item.weaponPl',
+        items: [],
+        canCreate: true,
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_WEAPON,
+          ['system.type.value']: 'siege',
+        },
+      },
       ...defaultDocumentContext,
     };
+
+    this._prepareVehicleItems(context);
 
     context.filterData = this.itemFilterService.getFilterData();
     context.filterPins = ItemFilterRuntime.defaultFilterPins[this.actor.type];
 
     context.useClassicControls = settings.value.useClassicControlsForVehicle;
 
-    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraitsLegacy({
-      context,
-      app: this,
-      element: this.element,
-    });
+    context.customActorTraits = CustomActorTraitsRuntime.getEnabledTraitsLegacy(
+      {
+        context,
+        app: this,
+        element: this.element,
+      }
+    );
 
     context.customContent = await VehicleSheetClassicRuntime.getContent(
       context
@@ -285,239 +349,83 @@ export class Tidy5eVehicleSheet
     context.tabs = tabs;
 
     await this.setExpandedItemData();
-    SheetSections.accountForExternalSections(['features'], context);
 
     debug('Vehicle Sheet context data', context);
 
     return context;
   }
 
-  _prepareItems(context: VehicleSheetContext) {
-    // TODO: Replace with Tidy Column Selection implementation
-    const cargoColumns: SimpleEditableColumn[] = [
-      {
-        label: game.i18n.localize('DND5E.Quantity'),
-        css: 'item-qty',
-        property: 'quantity',
-        editable: 'Number',
-      },
-    ];
-
-    // TODO: Replace with Tidy Column Selection implementation
-    const equipmentColumns: SimpleEditableColumn[] = [
-      {
-        label: game.i18n.localize('DND5E.Quantity'),
-        css: 'item-qty',
-        property: 'system.quantity',
-        editable: 'Number',
-      },
-      {
-        label: game.i18n.localize('DND5E.AC'),
-        css: 'item-ac',
-        property: 'system.armor.value',
-      },
-      {
-        label: game.i18n.localize('DND5E.HP'),
-        css: 'item-hp',
-        property: 'system.hp.value',
-        maxProperty: 'system.hp.max',
-        editable: 'Number',
-      },
-      {
-        label: game.i18n.localize('DND5E.Threshold'),
-        css: 'item-threshold',
-        property: 'threshold',
-      },
-    ];
-
-    const features: Record<string, VehicleFeatureSection> = {
-      actions: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize('DND5E.ActionPl'),
-        items: [],
-        hasActions: true,
-        crewable: true,
-        key: 'actions',
-        dataset: { type: 'feat' },
-        columns: [
-          {
-            label: game.i18n.localize('DND5E.Cover'),
-            css: 'item-cover',
-            property: 'cover',
-          },
-        ],
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      equipment: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize(CONFIG.Item.typeLabels.equipment),
-        items: [],
-        crewable: true,
-        dataset: { type: 'equipment', 'system.type.value': 'vehicle' },
-        columns: equipmentColumns,
-        key: 'equipment',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      passive: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize('DND5E.Features'),
-        items: [],
-        dataset: { type: 'feat' },
-        key: 'passive',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      reactions: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize('DND5E.ReactionPl'),
-        items: [],
-        dataset: { type: 'feat' },
-        key: 'reactions',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      weapons: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
-        items: [],
-        crewable: true,
-        dataset: { type: 'weapon', 'system.weaponType': 'siege' },
-        columns: equipmentColumns,
-        key: 'weapons',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
+  async _prepareMemberSection(
+    area: string,
+    label: string,
+    dropLabel: string
+  ): Promise<VehicleMemberSection> {
+    const section: VehicleMemberSection = {
+      ...SheetSections.EMPTY,
+      members: [],
+      dropLabel,
+      label,
     };
 
-    context.items.forEach((item) => {
-      context.itemContext[item.id] ??= this._prepareItem(item, context);
-    });
+    const memberUuids = this.actor.system[area]?.value ?? [];
 
-    const cargo: Record<string, VehicleCargoSection> = {
-      crew: {
-        type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: game.i18n.localize('DND5E.VehicleCrew'),
-        items: context.actor.system.cargo.crew,
-        css: 'cargo-row crew',
-        editableName: true,
-        dataset: { type: 'crew' },
-        columns: cargoColumns,
-        key: 'crew',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-      },
-      passengers: {
-        type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: game.i18n.localize('DND5E.VehiclePassengers'),
-        items: context.actor.system.cargo.passengers,
-        css: 'cargo-row passengers',
-        editableName: true,
-        dataset: { type: 'passengers' },
-        columns: cargoColumns,
-        key: 'passengers',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-      },
-      cargo: {
-        type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: game.i18n.localize('DND5E.VehicleCargo'),
-        items: [],
-        dataset: { type: 'loot' },
-        columns: [
-          {
-            label: game.i18n.localize('DND5E.Quantity'),
-            css: 'item-qty',
-            property: 'system.quantity',
-            editable: 'Number',
-          },
-          {
-            label: game.i18n.localize('DND5E.Price'),
-            css: 'item-price',
-            property: 'system.price.value',
-            editable: 'Number',
-          },
-          {
-            label: game.i18n.localize('DND5E.Weight'),
-            css: 'item-weight',
-            property: 'system.weight.value',
-            editable: 'Number',
-          },
-        ],
-        key: CONSTANTS.SECTION_TYPE_CARGO,
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-      },
-    };
+    const memberCounts: Record<string, { actor: Actor5e; quantity: number }> =
+      {};
 
-    const baseUnits =
-      CONFIG.DND5E.encumbrance.baseUnits[
-        this.actor.type as keyof typeof CONFIG.DND5E.encumbrance.baseUnits
-      ] ?? CONFIG.DND5E.encumbrance.baseUnits.default;
-    const units = game.settings.get('dnd5e', 'metricWeightUnits')
-      ? baseUnits.metric
-      : baseUnits.imperial;
-
-    // Classify items owned by the vehicle and compute total cargo weight
-    let totalWeight = 0;
-    for (const item of context.items) {
-      const ctx = (context.itemContext[item.id] ??= {});
-      this._prepareCrewedItem(item, ctx);
-
-      // Handle cargo explicitly
-      const isCargo = item.flags.dnd5e?.vehicleCargo === true;
-      if (isCargo) {
-        totalWeight += item.system.totalWeightin?.(units) ?? 0;
-        cargo.cargo.items.push(item);
-        continue;
-      }
-
-      // Handle non-cargo item types
-      switch (item.type) {
-        case 'weapon':
-          features.weapons.items.push(item);
-          break;
-        case 'equipment':
-          features.equipment.items.push(item);
-          break;
-        case 'feat':
-          // TODO: Determine the best way to delineate active, passive, and reaction-based item sections.
-          const firstActivityActivationType =
-            item.system.activities?.contents[0]?.activation?.type;
-          if (
-            !firstActivityActivationType ||
-            firstActivityActivationType === 'none'
-          ) {
-            features.passive.items.push(item);
-          } else if (firstActivityActivationType === 'reaction') {
-            features.reactions.items.push(item);
-          } else {
-            features.actions.items.push(item);
-          }
-          break;
-        default:
-          totalWeight += item.system.totalWeightIn?.(units) ?? 0;
-          cargo.cargo.items.push(item);
+    for (const uuid of memberUuids) {
+      if (memberCounts[uuid]) {
+        memberCounts[uuid].quantity++;
+      } else {
+        const actor = await fromUuid(uuid);
+        if (actor) {
+          memberCounts[uuid] = {
+            actor,
+            quantity: 1,
+          };
+        }
       }
     }
 
-    // Update the rendering context data
-    context.features = Object.values(features);
-    context.cargo = Object.values(cargo);
+    section.members = Object.values(memberCounts);
+
+    return section;
+  }
+
+  _prepareVehicleItems(context: VehicleSheetContext) {
+    const inventory = Inventory.getDefaultInventorySections();
+    const inventoryTypes = Inventory.getInventoryTypes();
+
+    context.items.forEach((item) => {
+      context.itemContext[item.id] ??= this._prepareItem(item, context);
+
+      // Stations - Equipment
+      if (
+        item.system.isMountable &&
+        item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT
+      ) {
+        context.equipmentStations.items.push(item);
+      }
+      // Stations - Weapons
+      else if (
+        item.system.isMountable &&
+        item.type === CONSTANTS.ITEM_TYPE_WEAPON
+      ) {
+        context.weaponStations.items.push(item);
+      }
+      // Inventory
+      else if (Inventory.isItemInventoryType(item)) {
+        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+          canCreate: true,
+          rowActions: [],
+        });
+      }
+      // Features (and stray items)
+      else {
+        context.features.items.push(item);
+      }
+    });
+
+    context.inventory = Object.values(inventory);
   }
 
   _prepareItem(item: Item5e, context: VehicleSheetContext): VehicleItemContext {
@@ -537,6 +445,11 @@ export class Tidy5eVehicleSheet
       item,
       item.system.activities
     )?.map(Activities.getActivityItemContext);
+
+    if (item.isMountable) {
+      this._prepareCrewedItem(item, ctx);
+    }
+    
     return ctx;
   }
 
@@ -596,7 +509,7 @@ export class Tidy5eVehicleSheet
     const cargoTypes = Inventory.getInventoryTypes();
     const isCargo =
       cargoTypes.includes(itemData.type) &&
-      this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW;
+      this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO;
     foundry.utils.setProperty(itemData, 'flags.dnd5e.vehicleCargo', isCargo);
 
     // Create a Consumable spell scroll on the Inventory tab
@@ -618,8 +531,118 @@ export class Tidy5eVehicleSheet
     return await super._onDropSingleItem.call(this, itemData, event);
   }
 
+  async _onDropActor(
+    event: DragEvent,
+    actorData: { type: string; uuid: string } & Record<string, any>
+  ) {
+    const actor = await fromUuid(actorData.uuid);
+
+    if (!actor?.system.isCreature) {
+      return;
+    }
+
+    const target = event.target as HTMLElement | undefined;
+
+    let { area: src, itemId } = actorData;
+
+    const { area: dest = 'crew' } =
+      target?.closest<HTMLElement>('[data-area]')?.dataset ?? {};
+
+    if (!itemId) {
+      itemId = target?.closest<HTMLElement>('[data-item-id]')?.dataset.itemId;
+    }
+
+    if (src === dest) {
+      return;
+    }
+
+    const item = this.actor.items.get(itemId);
+
+    if (item && (src === 'draft' || dest === 'draft')) {
+      return this._onAssignCrew(actor, item, dest, { src });
+    }
+
+    return this._onAdjustCrew(actor, dest, { src });
+  }
+
   _disableFields(...args: any[]) {
     debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
+  }
+
+  /* -------------------------------------------- */
+  /*  Crew Management                             */
+  /* -------------------------------------------- */
+
+  /**
+   * Handle adjusting a crew member's area or adding a new one.
+   * @param {Actor5e} actor             The actor.
+   * @param {CrewArea5e} dest           The destination area.
+   * @param {object} [options]
+   * @param {CrewArea5e} [options.src]  An optional area the crew member came from.
+   * @protected
+   */
+  _onAdjustCrew(actor: Actor5e, dest: string, { src }: { src?: string } = {}) {
+    const updates = {};
+    if (src)
+      Object.assign(
+        updates,
+        this.actor.system.getCrewUpdates(src, actor.uuid, '-1')
+      );
+    Object.assign(
+      updates,
+      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1')
+    );
+    if (!foundry.utils.isEmpty(updates)) this.actor.update(updates);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle assigning or unassigned a crew member to a station.
+   */
+  _onAssignCrew(
+    actor: Actor5e,
+    item: Item5e,
+    dest: string,
+    { src }: { src?: string } = {}
+  ) {
+    const itemUpdates = { _id: item.id };
+    const actorUpdates = { items: [itemUpdates] };
+    let crew = foundry.utils.getProperty(item, 'system.crew.value');
+
+    // Case 1 - Assigning to a station.
+    if (dest === 'draft') {
+      // Prevent assigning a non-crew-member.
+      if (src && src !== 'crew') {
+        return;
+      }
+
+      // The actor may not be a crew member yet. If so, add them to the crew.
+      if (!src) {
+        Object.assign(
+          actorUpdates,
+          this.actor.system.getCrewUpdates('crew', actor.uuid, '+1')
+        );
+      }
+
+      foundry.utils.setProperty(
+        itemUpdates,
+        'system.crew.value',
+        crew.concat(actor.uuid)
+      );
+
+      this.actor.update(actorUpdates);
+    }
+    // Case 2 - Unassigning from a station.
+    else {
+      crew = [...crew];
+
+      if (!crew.findSplice((u: string) => u === actor.uuid)) {
+        return;
+      }
+
+      item.update({ 'system.crew.value': crew });
+    }
   }
 
   /* -------------------------------------------- */

@@ -15,6 +15,15 @@ interface MovementUnitConfig {
   type: string;
 }
 
+interface TravelUnitConfig {
+  label: string;
+  abbreviationDay: string;
+  abbreviationHour: string;
+  formattingUnit: string;
+  conversion: number;
+  type: string;
+}
+
 interface IndividualTargetTypesConfig {
   label: string;
   scalar?: boolean;
@@ -2580,6 +2589,18 @@ export type CONFIG = {
       hitPoints: string;
       concentration: string;
     };
+    difficultTerrainTypes: {
+      [k in
+        | 'snow'
+        | 'plans'
+        | 'rocks'
+        | 'liquid'
+        | 'sand'
+        | 'ice'
+        | 'slope'
+        | 'web'
+        | 'mud']: { label: string };
+    } & Record<string, { label: string }>;
     skills: {
       acr: Skill;
       ani: Skill;
@@ -3627,12 +3648,7 @@ export type CONFIG = {
       }
     >;
     movementTypes: {
-      [k in
-        | keyof 'burrow'
-        | 'climb'
-        | 'fly'
-        | 'swim'
-        | 'walk']: MovementTypeConfig;
+      [k in 'walk' | 'burrow' | 'climb' | 'fly' | 'swim']: MovementTypeConfig;
     } & Record<string, MovementTypeConfig>;
     movementUnits: {
       ft: MovementUnitConfig;
@@ -3640,6 +3656,10 @@ export type CONFIG = {
       m: MovementUnitConfig;
       km: MovementUnitConfig;
     } & Record<string, MovementUnitConfig>;
+    travelUnits: {
+      mph: TravelUnitConfig;
+      kph: TravelUnitConfig;
+      } & Record<string, TravelUnitConfig>;
     rangeTypes: {
       self: string;
       touch: string;
@@ -5409,8 +5429,8 @@ export type CONFIG = {
       };
     } & Record<string, { label: string; subtypes?: boolean }>;
     travelPace: {
-      [k in string]: TravelPaceConfig;
-    };
+      [k in 'slow' | 'normal' | 'fast']: TravelPaceConfig;
+    } & Record<string, TravelPaceConfig>;
     treasure: {
       any: TreasureConfig;
       arcana: TreasureConfig;
@@ -5435,8 +5455,9 @@ type BaseUnitsConfig = {
 
 export type TravelPaceConfig = {
   label: string;
-  multiplier: number;
   standard: number;
+  multiplier: number;
+  round: string;
 };
 
 type ActivityType = {
@@ -5522,6 +5543,7 @@ export type ActivityActivationTypeConfig = {
 type MovementTypeConfig = {
   label: string;
   walkFallback?: boolean;
+  travel?: string;
 };
 
 type WeightUnitConfig = {

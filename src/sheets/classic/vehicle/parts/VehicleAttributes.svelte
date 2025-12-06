@@ -1,12 +1,13 @@
 <script lang="ts">
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { quadInOut } from 'svelte/easing';
   import { slide } from 'svelte/transition';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
 
   let context = $derived(getVehicleSheetContext());
 
@@ -39,36 +40,161 @@
 </script>
 
 <div class="counters counter-flex">
-  <div class="counter creature-cap">
-    <h4>{localize('DND5E.VehicleCreatureCapacity')}</h4>
-    <div class="counter-value">
-      <ContentEditableFormField
-        element="div"
+  <div class="counter vehicle-weight">
+    <h4>
+      {localize('DND5E.Weight')}
+    </h4>
+    <div class="counter-value flexrow">
+      <NumberInput
         document={context.actor}
-        field="system.attributes.capacity.creature"
-        editable={context.editable && !context.lockSensitiveFields}
-        placeholder="—"
-        value={context.system.attributes.capacity.creature}
-        dataMaxLength={1000}
+        field="system.traits.weight.value"
+        value={context.system.traits.weight.value}
+        min="0"
+        selectOnFocus={true}
+        disabled={!context.editable || context.lockSensitiveFields}
       />
+
+      <Select
+        document={context.actor}
+        field="system.traits.weight.units"
+        value={context.system.traits.weight.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.weightUnits}
+          labelProp="abbreviation"
+        />
+      </Select>
     </div>
   </div>
   <HorizontalLineSeparator />
-  <div class="counter cargo-cap">
-    <h4 class="flex-1">{localize('DND5E.VehicleCargoCapacity')}</h4>
-    <div class="counter-value">
+
+  <div class="counter vehicle-keel">
+    <h4>
+      {localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label')}
+    </h4>
+    <div class="counter-value flexrow">
       <NumberInput
         document={context.actor}
-        field="system.attributes.capacity.cargo"
-        value={context.system.attributes.capacity.cargo}
+        field="system.traits.keel.value"
+        value={context.system.traits.keel.value}
+        min="0"
+        selectOnFocus={true}
+        disabled={!context.editable || context.lockSensitiveFields}
+      />
+
+      <Select
+        document={context.actor}
+        field="system.traits.keel.units"
+        value={context.system.traits.keel.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.movementUnits}
+          labelProp="abbreviation"
+        />
+      </Select>
+    </div>
+  </div>
+  <HorizontalLineSeparator />
+
+  <div class="counter vehicle-beam">
+    <h4>
+      {localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label')}
+    </h4>
+    <div class="counter-value flexrow">
+      <NumberInput
+        document={context.actor}
+        field="system.traits.beam.value"
+        value={context.system.traits.beam.value}
+        min="0"
+        selectOnFocus={true}
+        disabled={!context.editable || context.lockSensitiveFields}
+      />
+
+      <Select
+        document={context.actor}
+        field="system.traits.beam.units"
+        value={context.system.traits.beam.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.movementUnits}
+          labelProp="abbreviation"
+        />
+      </Select>
+    </div>
+  </div>
+
+  <HorizontalLineSeparator />
+  <div class="counter cargo-cap">
+    <h4 class="flex-1">
+      {localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label')}
+    </h4>
+    <div class="counter-value flexrow">
+      <NumberInput
+        document={context.actor}
+        field="system.attributes.capacity.cargo.value"
+        value={context.system.attributes.capacity.cargo.value}
         min="0"
         placeholder="0"
         selectOnFocus={true}
         disabled={!context.editable || context.lockSensitiveFields}
       />
+
+      <Select
+        document={context.actor}
+        field="system.attributes.capacity.cargo.units"
+        value={context.system.attributes.capacity.cargo.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.weightUnits}
+          labelProp="abbreviation"
+        />
+      </Select>
     </div>
   </div>
   <HorizontalLineSeparator />
+
+  <!-- Crew -->
+  <div class="counter vehicle-crew">
+    <h4>
+      {localize('DND5E.VEHICLE.FIELDS.crew.max.label')}
+    </h4>
+    <div class="counter-value flexrow">
+      <NumberInput
+        document={context.actor}
+        field="system.crew.max"
+        value={context.system.crew.max}
+        min="0"
+        selectOnFocus={true}
+        disabled={!context.editable || context.lockSensitiveFields}
+      />
+    </div>
+  </div>
+
+  <HorizontalLineSeparator />
+
+  <!-- Passengers -->
+  <div class="counter vehicle-passengers">
+    <h4>
+      {localize('DND5E.VEHICLE.FIELDS.passengers.max.label')}
+    </h4>
+    <div class="counter-value flexrow">
+      <NumberInput
+        document={context.actor}
+        field="system.passengers.max"
+        value={context.system.passengers.max}
+        min="0"
+        selectOnFocus={true}
+        disabled={!context.editable || context.lockSensitiveFields}
+      />
+    </div>
+  </div>
+
+  <HorizontalLineSeparator />
+
   <div class="counter stations">
     <div class="counter-value">
       <Checkbox
@@ -79,7 +205,9 @@
         disabled={!context.editable || context.lockSensitiveFields}
       >
         <span class="action-stations-label"
-          >{localize('DND5E.VehicleActionStations')}</span
+          >{localize(
+            'DND5E.VEHICLE.FIELDS.attributes.actions.stations.label',
+          )}</span
         >
       </Checkbox>
     </div>
@@ -108,7 +236,9 @@
       </div>
       <HorizontalLineSeparator />
       <div class="counter action-thresholds">
-        <h4>{localize('DND5E.VehicleActionThresholds')}</h4>
+        <h4>
+          {localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.label')}
+        </h4>
         <div class="counter-value">
           <span class="sep">&lt;</span>
 

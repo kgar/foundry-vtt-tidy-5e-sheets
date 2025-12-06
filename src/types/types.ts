@@ -38,6 +38,7 @@ import type {
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import type { TravelPaceConfig } from 'src/foundry/config.types';
@@ -225,14 +226,6 @@ export type FacilitySection = {
 export type ActivitySection = {
   type: typeof CONSTANTS.SECTION_TYPE_ACTIVITY;
   activities: Activity5e[];
-} & TidySectionBase;
-
-export type VehicleCargoSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
-  items: Item5e[];
-  css?: string;
-  editableName?: boolean;
-  columns: SimpleEditableColumn[];
 } & TidySectionBase;
 
 export type VehicleFeatureSection = {
@@ -579,12 +572,37 @@ export type VehicleItemContext = {
   toggleTitle?: string;
 };
 
+export type VehicleMember = {
+  actor: Actor5e;
+  quantity: number;
+  // etc.
+};
+
+export type VehicleMemberSection = {
+  members: VehicleMember[];
+  dropLabel: string;
+  // etc.
+} & TidySectionBase;
+
 export type VehicleSheetContext = {
-  cargo: VehicleCargoSection[];
-  features: VehicleFeatureSection[];
+  inventory: InventorySection[];
+  draft: VehicleMemberSection;
+  passengers: VehicleMemberSection;
+  crew: VehicleMemberSection;
+  features: FeatureSection;
+  weaponStations: InventorySection;
+  equipmentStations: InventorySection;
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
 } & ActorSheetContextV1;
+
+export type VehicleCargoSection = {
+  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
+  items: any[];
+  css?: string;
+  editableName?: boolean;
+  columns?: SimpleEditableColumn[];
+} & TidySectionBase;
 
 export type DerivedDamage = {
   label: string;
@@ -1520,8 +1538,24 @@ export type VehicleSheetQuadroneContext = {
   enriched: {
     biography: string;
   };
+  cargo: VehicleCargoSection[];
+  conditions: Dnd5eActorCondition[];
+  crew: GroupMembersQuadroneContext;
+  currencies: CurrencyContext[];
+  effects: ActiveEffectSection[];
+  encumbrance: EncumbranceContext;
+  features: VehicleFeatureSection[];
+  itemContext: Record<string, VehicleItemContext>;
+  passengers: number;
+  scale: number;
+  size: ActorSizeContext;
+  speeds: ActorSpeedSenseEntryContext[];
+  traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
-} & SingleActorContext<unknown>;
+  useActionsFeature?: boolean;
+  utilities: Utilities<VehicleSheetQuadroneContext>;
+  lockSensitiveFields?: boolean;
+} & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
 
 /* Misc - Svelte */
 

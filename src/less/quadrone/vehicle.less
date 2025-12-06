@@ -1,0 +1,57 @@
+.tidy5e-sheet.application:where(.quadrone.vehicle) {
+
+
+  .vehicle-attributes-content {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    padding-right: 0.75rem;
+    overflow-y: scroll;
+
+    .main-panel {
+      flex: 1;
+    }
+
+    :global(.items-header-item-threshold) {
+      align-self: flex-start;
+    }
+
+    .item-hp {
+      align-self: center;
+      position: relative;
+      width: calc(100% - 0.25rem);
+      margin-left: 0.125rem;
+      margin-right: 0.125rem;
+      height: 1.325rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .vehicle-cargo-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .scroll-container {
+      flex: 1;
+      overflow-y: scroll;
+      padding-right: 0.75rem;
+    }
+
+    .vehicle-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .encumbrance-container {
+      padding: 0 0.25rem;
+    }
+  }
+
+}

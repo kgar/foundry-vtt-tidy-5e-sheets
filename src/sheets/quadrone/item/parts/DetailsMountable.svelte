@@ -34,17 +34,37 @@
     }}
   />
 
-  <!-- Cover -->
+  <!-- Crew -->
   <FormGroup
-    labelFor="{appId}-cover"
-    document={context.document}
-    field={context.fields.cover}
-    config={{
-      id: `${appId}-cover`,
-      value: context.source.cover ?? 0,
-    }}
-    choices={context.coverOptions}
-  />
+    label="DND5E.VEHICLE.MOUNTABLE.FIELDS.crew.label"
+    groupClasses="split-group"
+  >
+    <FormGroup
+      label="DND5E.Max"
+      labelFor="{appId}-crew-max"
+      document={context.document}
+      field={context.fields.crew.fields.max}
+      config={{
+        id: `${appId}-crew-max`,
+        value: context.source.crew.max,
+        placeholder: '—',
+      }}
+      groupClasses="label-top"
+    />
+    <FormGroup
+      labelFor="{appId}-cover"
+      document={context.document}
+      field={context.fields.cover}
+      config={{
+        id: `${appId}-cover`,
+        value: context.source.cover ?? 0,
+        hint: false,
+      }}
+      choices={context.coverOptions}
+      groupClasses="label-top"
+      tooltip="DND5E.VEHICLE.MOUNTABLE.FIELDS.cover.hint"
+    />
+  </FormGroup>
 
   <!-- Hit Points -->
   <FormGroup label="DND5E.HitPoints" groupClasses="split-group">
@@ -56,7 +76,7 @@
       field={context.fields.hp.fields.value}
       config={{
         id: `${appId}-hp-value`,
-        value: context.source.hp.value,
+        value: context.source.hp?.value,
         placeholder: '0',
       }}
       groupClasses="label-top"
@@ -70,7 +90,7 @@
       field={context.fields.hp.fields.max}
       config={{
         id: `${appId}-hp-max`,
-        value: context.source.hp.max,
+        value: context.source.hp?.max,
         placeholder: '0',
       }}
       groupClasses="label-top"
@@ -84,7 +104,7 @@
       field={context.fields.hp.fields.dt}
       config={{
         id: `${appId}-hp-dt`,
-        value: context.source.hp.dt,
+        value: context.source.hp?.dt,
         placeholder: '—',
       }}
       groupClasses="label-top"
@@ -96,7 +116,7 @@
         field={context.fields.hp.fields.conditions}
         config={{
           id: `${appId}-hp-conditions`,
-          value: context.source.hp.conditions,
+          value: context.source.hp?.conditions,
           placeholder: localize(
             'DND5E.VEHICLE.MOUNTABLE.FIELDS.hp.conditions.label',
           ),
@@ -120,10 +140,23 @@
         field={context.fields.speed.fields.value}
         config={{
           id: `${appId}-speed-value`,
-          value: context.source.speed.value,
+          value: context.source.speed?.value,
           placeholder: '0',
         }}
         groupClasses="label-top"
+      />
+      <FormGroup
+        label="DND5E.Unit"
+        labelFor="{appId}-speed-units"
+        document={context.document}
+        field={context.fields.speed.fields.units}
+        config={{
+          id: `${appId}-speed-units`,
+          value: context.source.speed?.units ?? context.unitsOptions[0]?.value,
+          
+        }}
+        groupClasses="label-top"
+        choices={context.unitsOptions}
       />
 
       {#snippet beforeGroupEnd()}
@@ -132,7 +165,7 @@
           field={context.fields.speed.fields.conditions}
           config={{
             id: `${appId}-speed-conditions`,
-            value: context.source.speed.conditions,
+            value: context.source.speed?.conditions,
             placeholder: localize(
               'DND5E.VEHICLE.MOUNTABLE.FIELDS.speed.conditions.label',
             ),

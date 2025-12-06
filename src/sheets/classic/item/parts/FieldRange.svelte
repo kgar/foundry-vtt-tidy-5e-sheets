@@ -32,7 +32,7 @@
 
     <!-- Units -->
     <div class="form-group label-top">
-      <label for="{appId}-range-units">{localize('DND5E.MovementUnits')}</label>
+      <label for="{appId}-range-units">{localize('DND5E.MOVEMENT.FIELDS.units.label')}</label>
       <Select
         id="{appId}-range-units"
         document={context.item}

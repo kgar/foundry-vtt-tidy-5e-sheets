@@ -796,19 +796,19 @@ export class Tidy5eGroupSheetClassic extends Tidy5eActorSheetBaseMixin(
   }
 
   #prepareMovementSpeed() {
-    const movement = this.actor.system.attributes.movement;
+    const travel = this.actor.system.attributes.travel;
     let speeds = [
       [
-        movement.land,
-        `${game.i18n.localize('DND5E.MovementLand')} ${movement.land}`,
+        travel.land,
+        `${game.i18n.localize('DND5E.TRAVEL.Type.Land')} ${travel.land}`,
       ],
       [
-        movement.water,
-        `${game.i18n.localize('DND5E.MovementWater')} ${movement.water}`,
+        travel.water,
+        `${game.i18n.localize('DND5E.TRAVEL.Type.Water')} ${travel.water}`,
       ],
       [
-        movement.air,
-        `${game.i18n.localize('DND5E.MovementAir')} ${movement.air}`,
+        travel.air,
+        `${game.i18n.localize('DND5E.TRAVEL.Type.Air')} ${travel.air}`,
       ],
     ];
     speeds = speeds.filter((s) => s[0]).sort((a, b) => b[0] - a[0]);
