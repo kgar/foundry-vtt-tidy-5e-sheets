@@ -15,6 +15,15 @@ interface MovementUnitConfig {
   type: string;
 }
 
+interface TravelUnitConfig {
+  label: string;
+  abbreviationDay: string;
+  abbreviationHour: string;
+  formattingUnit: string;
+  conversion: number;
+  type: string;
+}
+
 interface IndividualTargetTypesConfig {
   label: string;
   scalar?: boolean;
@@ -3647,6 +3656,10 @@ export type CONFIG = {
       m: MovementUnitConfig;
       km: MovementUnitConfig;
     } & Record<string, MovementUnitConfig>;
+    travelUnits: {
+      mph: TravelUnitConfig;
+      kph: TravelUnitConfig;
+      } & Record<string, TravelUnitConfig>;
     rangeTypes: {
       self: string;
       touch: string;
