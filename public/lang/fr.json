@@ -979,5 +979,9 @@
         "Label": "Épingle de la feuille"
     },
     "TIDY5E.InspirationAdd": "Ajouter une inspiration",
-    "TIDY5E.InspirationRemove": "Enlever une inspiration"
+    "TIDY5E.InspirationRemove": "Enlever une inspiration",
+    "TIDY5E.LegendaryAbbr": "AL",
+    "TIDY5E.LairAbbr": "Antre",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animal de trait",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animaux de trait"
 }
