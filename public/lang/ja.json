@@ -1,736 +1,967 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Character Sheet",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e NPC Sheet",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Item Sheet",
-    "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e Container Sheet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
-    "TIDY5E.PlayerName": "プレイヤー名",
-    "TIDY5E.EditSheetImageHint": "左クリック: 画像変更",
-    "TIDY5E.SheetImageOptionsHint": "右クリック: 画像表示",
-    "TIDY5E.ShowPortraitArt": "画像表示",
-    "TIDY5E.PortraitTitle": "Portrait: {subject}",
-    "TIDY5E.ItemImageTitle": "Item: {subject}",
-    "TIDY5E.ShowTokenArt": "トークン表示",
-    "TIDY5E.ShowItemImage": "右クリック: 画像表示",
-    "TIDY5E.ShowItemArt": "画像表示",
-    "TIDY5E.AbbrInitiative": "ｲﾆｼ",
-    "TIDY5E.RestHint": "休憩",
-    "TIDY5E.ShortRest": "小休憩",
-    "TIDY5E.LongRest": "大休憩",
-    "TIDY5E.HitDiceRollAverage": "右クリック：平均",
-    "TIDY5E.JournalTabName": "記録",
-    "TIDY5E.Actions": {
-        "TabName": "Actions",
-        "OverriddenSetOverrideFalse": "Remove from Actions List (Shift+Click to clear override)",
-        "OverriddenSetOverrideTrue": "Add to Actions List (Shift+Click to clear override)",
-        "SetOverrideFalse": "Remove from Actions List",
-        "SetOverrideTrue": "Add to Actions List",
-        "ResetActionDefault": "Reset Action Default"
-    },
-    "TIDY5E.HitDC": "Hit / DC",
-    "TIDY5E.RestoreOnRest": "休憩時に回復",
-    "TIDY5E.JournalPersonsOfInterest": "関心のある人物",
-    "TIDY5E.JournalLocationsOfInterest": "関心のある場所",
-    "TIDY5E.JournalQuests": "クエスト",
-    "TIDY5E.JournalMisc": "その他",
-    "TIDY5E.JournalEntries": "資料",
-    "TIDY5E.TogglePersonalityInfo": "情報表示の切替",
-    "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Disable Edit - {description}",
-    "TIDY5E.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
-    "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
-    "TIDY5E.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
-    "TIDY5E.Inventory.Weight.Tooltip": "Weight: {weight} {weightUnit}",
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
-    "TIDY5E.ContextMenuActionEquip": "装備",
-    "TIDY5E.ContextMenuActionUnequip": "装備解除",
-    "TIDY5E.ContextMenuActionAttune": "同調",
-    "TIDY5E.ContextMenuActionUnattune": "同調解除",
-    "TIDY5E.ContextMenuActionPrepare": "呪文準備",
-    "TIDY5E.ContextMenuActionUnprepare": "準備解除",
-    "TIDY5E.ContextMenuActionEdit": "編集",
-    "TIDY5E.ContextMenuActionDelete": "削除",
-    "TIDY5E.EmptySection": "シートがロックされているため新規作成ができません。シートロックを解除して編集してください。",
-    "TIDY5E.GMOnlyEdit": "この項目を編集できるのはGMだけです。",
-    "TIDY5E.AttunementWarning": "警告：同調が最大数である{number}に達しています。",
-    "TIDY5E.AttunementItems": "同調アイテム",
-    "TIDY5E.AttunementMax": "同調上限",
-    "TIDY5E.GridLayout": "グリッド",
-    "TIDY5E.ListLayout": "リスト",
-    "TIDY5E.LayoutNotSupported": "",
-    "TIDY5E.Encumbrance": "荷重",
-    "TIDY5E.AddFavorite": "お気に入り追加",
-    "TIDY5E.Favorite": "お気に入り",
-    "TIDY5E.RemoveFavorite": "お気に入りから削除",
-    "TIDY5E.ShowNotProficientSkills": "未習熟を表示",
-    "TIDY5E.HideNotProficientSkills": "未習熟を隠す",
-    "TIDY5E.Abilities": "能力",
-    "TIDY5E.Environment": "環境",
-    "TIDY5E.EnvironmentTooltip": "環境: {environment}",
-    "TIDY5E.Search": "検索",
-    "TIDY5E.SearchClear": "検索クリア",
-    "TIDY5E.SearchHint": "検索……",
-    "TIDY5E.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
-    "TIDY5E.AbbrMod": "修正",
-    "TIDY5E.AbbrSavingThrow": "セーヴ",
-    "TIDY5E.AttackMod": "Attack Mod",
-    "TIDY5E.ActorSpellAttackTitle": "{actorName} - Spell Attack",
-    "TIDY5E.ActorSpellAttackFlavorText": "Spell Attack",
-    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Melee Spell Attack",
-    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Melee Spell Attack",
-    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ranged Spell Attack",
-    "TIDY5E.ActorRangedSpellAttackFlavorText": "Ranged Spell Attack",
-    "TIDY5E.SpellAttackMod": "攻撃修正",
-    "TIDY5E.MeleeSpellAttackMod": "Melee Spell Attack Mod",
-    "TIDY5E.RangedSpellAttackMod": "Ranged Spell Attack Mod",
-    "TIDY5E.PreparedSpells": "準備済み呪文",
-    "TIDY5E.TokenLinked": "リンク中のトークン",
-    "TIDY5E.TokenUnlinked": "未リンクのトークン",
-    "TIDY5E.SpellClass": "Spell Class",
-    "TIDY5E.Class.Artificer": "アーティフィサ―",
-    "TIDY5E.Class.Barbarian": "バーバリアン",
-    "TIDY5E.Class.Bard": "バード",
-    "TIDY5E.Class.Cleric": "クレリック",
-    "TIDY5E.Class.Custom": "カスタム",
-    "TIDY5E.Class.Druid": "ドルイド",
-    "TIDY5E.Class.Fighter": "ファイター",
-    "TIDY5E.Class.Monk": "モンク",
-    "TIDY5E.Class.Paladin": "パラディン",
-    "TIDY5E.Class.Ranger": "レンジャー",
-    "TIDY5E.Class.Rogue": "ローグ",
-    "TIDY5E.Class.Sorcerer": "ソーサラー",
-    "TIDY5E.Class.Warlock": "ウォーロック",
-    "TIDY5E.Class.Wizard": "ウィザード",
-    "TIDY5E.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
-    "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Max Prepared Spells Configuration: {documentName}",
-        "ExamplesHeader": "Sample Formulas",
-        "ButtonTooltip": "Configure Max Prepared Spells",
-        "MoreFormulas": "More formulas"
-    },
-    "TIDY5E.TabConfiguration": {
-        "Title": "Tab Selection: {documentName}",
-        "MenuOptionText": "Tab Selection",
-        "AvailableHeader": "Available Tabs",
-        "SelectedHeader": "Selected Tabs",
-        "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
-        "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
-        "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
-    },
-    "TIDY5E.ButtonConfirm.Text": "Confirm",
-    "TIDY5E.Listbox": {
-        "MoveUp": "Move Up (Alt + Up arrow key)",
-        "MoveDown": "Move down (Alt + Down arrow key)",
-        "MoveLeft": "Move left (Space)",
-        "MoveRight": "Move right (Space)",
-        "MoveAllLeft": "Move all to the left",
-        "MoveAllRight": "Move all to the right"
-    },
-    "TIDY5E.WorldSettings.TabCharacter": {
-        "tabLabel": "Character"
-    },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NPC"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Vehicle"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Exhaustion"
-    },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "Header": "Character/NPC Exhaustion",
-        "name": "Exhaustion Configuration",
-        "hint": "Determines how non-vehicle exhaustion is configured and presented on the character and NPC sheets.",
-        "options.specific.text": "Specific Levels",
-        "options.specific.levels.name": "Total Levels",
-        "options.specific.levels.hint": "Determines the maximum number of levels of exhaustion.",
-        "options.specific.levels.tooltip.name": "Exhaustion Level {level} Tooltip",
-        "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
-        "options.open.text": "Open Number Input",
-        "options.open.explanation": "Shows the user a numeric input for entering levels of exhaustion.",
-        "AtLeastOneLevelRequiredErrorMessage": "At least one exhaustion level is required."
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "Vehicle Exhaustion",
-        "name": "Vehicular Exhaustion Configuration",
-        "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet.",
-        "AtLeastOneLevelRequiredErrorMessage": "At least one vehicle exhaustion level is required."
-    },
-    "TIDY5E.WorldSettings.TabItem": {
-        "tabLabel": "Item"
-    },
-    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
-        "name": "Item Identification Permission",
-        "hint": "Determines which type of user is able to access the UI controls for identifying items.",
-        "options.GmOnly": "GM Only",
-        "options.GmAndOwners": "GM and Item Owners"
-    },
-    "TIDY5E.WorldSettings.TabSheetLock": {
-        "tabLabel": "ロック",
-        "header": "ロック設定",
-        "hint": "シートの中であんまり使わない場所をPLが間違って変更するのを防いだり、そもそも表示したくないものを隠すためのオプションをここで提供しています。何をロックするのか、誰が使って良いのかを権限で完全に管理できます。",
-        "hint2": "注意：やろうと思えばこのロックを迂回する方法は存在します。悪意を持ったPLから完全に身を守ることはできません。あくまでも初心者やミスしやすい操作をさせない等、特定の経験を提供したいDMのためのものです。",
-        "labelGeneralLocks": "一般ロック",
-        "labelInventoryLocks": "所持品ロック",
-        "labelFeaturesLocks": "機能ロック"
-    },
-    "TIDY5E.WorldSettings.TabMisc": {
-        "tabLabel": "GMオプション"
-    },
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
-    "TIDY5E.WorldSettings.Menu": {
-        "name": "World Settings",
-        "hint": "Adjust world-level settings to customize the Tidy 5e Sheets experience. These settings are saved to this Foundry world and apply to all relevant Tidy 5e Sheets content.",
-        "label": "World Settings",
-        "title": "World Settings (GM Only)"
-    },
-    "TIDY5E.UserSettings.Menu": {
-        "name": "Tidy Sheet設定",
-        "hint": "キャラクターシートの見た目を自由にカスタマイズしましょう！",
-        "label": "シート設定",
-        "title": "Tidy5eシート設定"
-    },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "プレイヤー",
-        "header": "プレイヤーキャラクターシート"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "",
-        "header": ""
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "",
-        "header": ""
-    },
-    "TIDY5E.UserSettings.TabActionsList": {
-        "tabLabel": "アクションリスト"
-    },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "アイテム情報のカードをすべてのシートで表示するすべてのｼｰﾄでアイテム情報カード表示機能を使用",
-        "hint": "アイテム情報をすべてのシートで表示する必要が無い場合は無効にしくてださい。(再読み込みが発生します)"
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "アイテム情報カードをカーソル横に表示",
-        "hint": "アイテム情報カードがカーソルの横に出現します。シートをオップアウト時に使用するのをお勧めします。遅延を設定しておくと便利です。(再読み込みが発生します)"
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "アイテム情報カードの表示遅延",
-        "hint": "ミリ秒単位で指定した時間後にアイテムにカーソルを合わせたところに情報が出現します。（0:遅延なし、300:デフォルト）(再読み込みが発生します)"
-    },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Use Accessible Keyboard Support",
-        "hint": "Enables users to tab through most of the buttons/commands on Tidy 5e Sheets and execute them with conventional button-based keyboard hotkeys. Note: when focused on a button in Foundry, keybindings from \"Configure Controls\" do not respond. If a module uses this Foundry feature for controls on the sheets, such as using items while holding a special key, then enabling this Tidy 5e Sheets option will interfere with those keybindings."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Use default sheet attribute keyboard tabbing",
-        "hint": "The default 5e sheet allows keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Use default sheet HP keyboard tabbing",
-        "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "一覧表示で従来のアイテム操作を使用",
-        "hint": "常にアイテム操作を表示し、右クリックメニューを無効にします。一覧表示でPCのアイテム/呪文インベントリにのみ適用されます。"
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "特徴ラベルの表示",
-        "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "プレイヤー名の表示",
-        "hint": "キャラクターの名前の下に、プレイヤー名を表示します。"
-    },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Show Class List",
-        "hint": "Shows the class list below the character's name."
-    },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "インスピレーションアニメ",
-        "hint": "インスピレーションアイコンのアニメーションを無効化します。"
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "消耗とインスピレーションが0の時､表示を隠す",
-        "hint": "0の場合、消耗とインスピレーションは表示されなくなります。マウスカーソルを合わせたときだけ表示されます。"
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "ﾏｳｽｵｰﾊﾞｰ時にｲﾝｽﾋﾟ表示",
-        "hint": "画像の上にマウスカーソルを置いたときだけ、インスピレーションを表示します。"
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "ﾏｳｽｵｰﾊﾞｰ時に消耗表示",
-        "hint": "画像の上にマウスカーソルを置いたときだけ、消耗を表示します。"
-    },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Use Health Overlay",
-        "hint": "Shows a colored HP overlay."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "Toggle Empty Character Skills",
-        "hint": "Adds a toggle button for showing/hiding empty skills."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "特徴をﾘｿｰｽの下に移動",
-        "hint": "特徴を、技能の下 (左段)から、リソース下 (右段)に移動する場合に有効にします。"
-    },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "装備済の矢弾のみ表示",
-        "hint": "武器ごとに現在装備されている矢弾のみ表示するようにします。"
-    },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "常に技能を表示",
-        "hint": "デフォルトでは、技能が無効な場合はトグルボタンで表示されます。"
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "アイテムに有効な効果を示すマーカーを表示",
-        "hint": "有効な効果を持っているアイテムにマーカーを付けて、判別できるようにする場合は有効にします（リスト表示の場合のみ）。"
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "リミテッド･シートの拡大表示",
-        "hint": "リミテッド･シートの表示について、そのアクターに対して限定的(Limited)権限を持つプレイヤーに、キャラクターシートの全て（[効果],[記録]を除く）を表示します。"
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "PCシート：シートに円形画像を使用",
-        "hint": "アクターの円形画像/アイコンを有効にする場合に選択します。",
-        "all": "全てのアクター",
-        "pc": "PCのみ",
-        "npc": "NPC/乗り物 のみ",
-        "none": "－"
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "誤操作による変更をロック",
-        "hint": "表記上ほとんど変わることがない値を、誤操作で変更されるのを防ぐことができます。"
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "GMだけが有効化された効果を編集可能",
-        "hint": "プレイヤーによる、自身のシート上にある有効化された効果の編集を禁止します。GM以外は適用されている効果の確認ができます。"
-    },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "常にアイテム数量を表示する",
-        "hint": "アイテム数量を常に表示にします。"
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseNPCRest": {
-        "name": "NPCの休憩",
-        "hint": "NPCシートのアイコン/ボタンに残り回数を表示します。"
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "関連付けされたNPCをﾏｰｷﾝｸﾞ",
-        "hint": "関連付けされた、または、されてないNPCシートに、色付きの境界線とアイコンを追加します。",
-        "default": "関連付けマーカーなし (デフォルト)",
-        "unlinked": "関連付けされてないシートを強調表示",
-        "linked": "関連付けされたトークンを強調表示",
-        "both": "トークンを全て強調表示"
-    },
-    "TIDY5E.Settings.InitialSheetTab": {
-        "name": "Initial Sheet Tab",
-        "hint": "Shows the indicated tab when opening a sheet for the first time."
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Default Sheet Tabs",
-        "hint": "Determines which tabs will show and in what order by default. Applies when no tab selections have been made for an actor.",
-        "AvailableHeader": "Available Tabs",
-        "SelectedHeader": "Selected Tabs",
-        "AtLeastOneTabRequiredErrorMessage": "Default tabs: at least one tab is required for each actor type."
-    },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "PLから死亡セーヴを隠す",
-        "hint": "有効化することで死亡セーヴの結果をGMのみ表示します。"
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Use Character Encumbrance Bar",
-        "hint": "Shows an encumbrance bar on character sheets."
-    },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Use NPC Encumbrance Bar",
-        "hint": "Shows an encumbrance bar on NPC sheets."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Use Vehicle Encumbrance Bar",
-        "hint": "Shows an encumbrance bar on vehicle sheets."
-    },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "マルチクラス呪文フィルタを有効化",
-        "hint": "キャラシの空間を少し空けたい場合はこれを無効化すると良いです。"
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "呪文アイコンをクラスアイコンに置き換える",
-        "hint": "呪文の固有のアイコンの代わりにその呪文を獲得したクラスのアイコンを表示するように変更します。呪文の数が多い場合は判別しやすくなります。"
-    },
-    "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-        "name": "Additional Classes for Multiclass Spellbook Filtering",
-        "hint": "Puts additional classes in the multiclass spellbook filter. Add classes to the dropdown with this syntax \"id1|name1,id2|name2\" e.g. \"occultist|Occultist,alchemist|Alchemist\""
-    },
-    "TIDY5E.Settings.AllowCantripsToBePrepared": {
-        "name": "初級呪文も「準備」できる",
-        "hint": "ターシャの釜やOne D&D対応として初級呪文も右クリックメニューで準備を入れ替える事ができます。"
-    },
-    "TIDY5E.Settings.LockMoneyChanges": {
-        "name": "非GMの所持金操作をロック",
-        "hint": "pp, gp, ep, sp, cpの入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "非GMの経験値金操作をロック",
-        "hint": "経験値の入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "非GMの最大HP操作をロックLock change hp max for non GM",
-        "hint": "最大HPの入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "非GMのレベル操作をロック",
-        "hint": "レベルのドロップダウンをロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "非GMのアイテム所持数変更をロック",
-        "hint": "アイテム所持数の入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
-    },
-    "TIDY5E.Settings.ActionList.Header": "Actions List",
-    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
-        "name": "Limit Actions to Cantrips",
-        "hint": "Instead of showing all spells that deal damage in the Actions tab/panel by default, limits to only cantrips. This is the default D&DBeyond behavior."
-    },
-    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
-        "name": "Include Minute-long Spells as Actions",
-        "hint": "Includes spells with a duration of one minute or less (e.g. 1 round) and an activation time of 1 Action or 1 Bonus Action (e.g. Bless, Bane, Command) in the Actions tab/panel by default."
-    },
-    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
-        "name": "Include Spells with Active Effects as Actions",
-        "hint": "Includes spells with active effects attached (e.g. Barkskin) in the Actions tab/panel by default."
-    },
-    "TIDY5E.Settings.ActionListIncludeConsumables": {
-        "name": "Include Consumables as Actions",
-        "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "色カスタマイズを有効化",
-        "hint": "色のカスタマイズを有効化／無効化します。"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Primary Accent"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "「装備」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "HP Bars"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "「装備された枠」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "「装備された背景」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "「準備済み」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "「準備済み枠」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "「準備済み背景」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "「契約」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "「契約枠」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "「契約背景」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "「常に発動可能」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "「常に発動可能枠」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "「常に発動可能背景」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "「生得呪文」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "「生得呪文枠」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "「生得呪文背景」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "「常に準備済み」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "「常に準備済み枠」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "「常に準備済みの背景」色カスタマイズを有効化"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Scrollbar Thumb"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Scrollbar Track"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Magic Item Accent Outline"
-    },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "キャラクターの最大HP手動変更",
-        "hint": "キャラクターシートのデフォルトの設定を上書きし、プレイヤーキャラクターの最大HPをGMが手動で変更できるようになります。"
-    },
-    "TIDY5E.Settings.Reset": {
-        "name": "設定を初期化",
-        "hint": "シートの設定をデフォルトに戻します。",
-        "dialogs": {
-            "title": "Mod設定を初期化",
-            "content": "設定を初期化しますか？　この操作は元に戻せません！",
-            "confirm": "設定を初期化する",
-            "cancel": "キャンセル"
-        }
-    },
-    "TIDY5E.Settings.Migrations": {
-        "name": "Migrations",
-        "buttonLabel": "Migrate Tidy Data",
-        "dialogTitle": "Migrate Tidy Data",
-        "hint": "If you were a user of the original Tidy5e Sheet module or the Alpha sheets, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
-        "migrationBeginningMessage": "Migrating data. Please do not refresh the page until done.",
-        "migrationErrorMessage": "An error occurred. More details are in the dev console.",
-        "migrationCompleteMessage": "Migration complete.",
-        "migrateDocumentFlagsButtonLabel": "Migrate Document Flags",
-        "migrateGmSettingsButtonLabel": "Migrate GM Settings",
-        "migrateConfirmTitle": "Confirm Migration",
-        "migrateConfirmMessage1": "Are you sure you wish to perform this migration?",
-        "migrateConfirmMessage2": "{boldStart}Note{boldEnd}: always remember to {boldStart}back up your data{boldEnd}.",
-        "migrateConfirmButtonYes": "Migrate",
-        "migrateConfirmButtonNo": "Cancel",
-        "v1": {
-            "sectionTitle": "Tidy V1 Onboarding Migrations",
-            "mainExplanation1": "Migrating data to the new Tidy 5e Sheets module is not required in order to use it. Worst-case, if you are an original Tidy5e Sheet user and skip migrations, you will need to re-apply your settings to your liking.",
-            "mainExplanation2": "{boldStart}Note{boldEnd}: Client Settings are not a part of this migration. Enough has changed about how client settings work in Tidy, so it is recommended to take a fresh look at client settings.",
-            "originalHeader": "Original Tidy5e Sheet",
-            "originalExplanation": "Migrate GM settings and Tidy sheet data flags from the original Tidy5e Sheet. Most of the differences in data are from GM settings. If you migrate your settings and find a setting to be not to your liking, simply change the settings from the config settings menu.",
-            "alphaHeader": "Alpha Tidy 5e Sheets",
-            "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
-            "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
-        },
-        "Notification": {
-            "Title": "Tidy 5e Sheets: Migrations Available",
-            "Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
-            "Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
-            "Button.DoNotShowAgain": "Do Not Show Again",
-            "DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration."
-        },
-        "OptionsHeader": "Migration Options",
-        "OptionOverwrite.Text": "Overwrite",
-        "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
-        "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
-        "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
-        "ButtonMigration.Text": "Migrate",
-        "CharacterBiography": {
-            "sectionTitle": "Character Biography",
-            "selectionDialogTitle": "Migration: Character Biography"
-        },
-        "Selection": {
-            "TotalSelectedLabel": "Total Selected: {total}",
-            "ToMigrate": "To Migrate",
-            "SelectAllNoneTooltip": "Select all or none"
-        },
-        "Parent": "",
-        "CcssToTidy": {
-            "overwrite": "",
-            "section": "",
-            "explanation1": "",
-            "ccss": "",
-            "selectionDialogTitle": "",
-            "deleteFlags": "",
-            "sectionTitle": "",
-            "overwriteTooltip": "",
-            "deleteFlagsTooltip": ""
-        },
-        "NpcDeathSaves": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "FavoritesToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "UnlinkedExplanation": "",
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "NpcExhaustion": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "MigrateCompendia.TotalEntriesLabel": "",
-        "MigrateCompendia.SelectionDialogTitle": "",
-        "MigrateCompendia.CompendiumLabel": "",
-        "MigrateCompendia.Title": ""
-    },
-    "TIDY5E.Settings.About": {
-        "name": "About",
-        "buttonLabel": "About Tidy 5e Sheets",
-        "dialogTitle": "About Tidy 5e Sheets",
-        "hint": "Information about the Tidy 5e Sheets module.",
-        "logoAltText": "A heater shield with four stars and the words 'Tidy 5e' on the front.",
-        "MaintainerParagraph": "Tidy 5e Sheets are maintained by {urlStart}kgar{urlEnd}.",
-        "GithubParagraph": "Do you have a feature idea? Is something wrong? Submit a {urlStart}Github Issue{urlEnd}.",
-        "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: Discuss new feature ideas, get help from others, and track progress of this module.",
-        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Do you localize web content? Tidy 5e Sheets could use your help! Go to the Weblate website to see our localization progress in various languages. This module is accepting new language translations and modifications to existing translations.",
-        "FinancialSupportHeader": "Ways to Support Tidy 5e Sheets",
-        "FinancialSupportParagraph": "If you like Tidy 5e Sheets and want to support it financially, here are some ways to do it:",
-        "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
-        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
-        "PatreonLink": "{urlStart}Patreon{urlEnd}"
-    },
-    "TIDY5E.Settings.Debug": {
-        "name": "Enable Debugging",
-        "hint": "Prints debug messages to the console."
-    },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Sort Favorites Alphabetically",
-        "hint": "Sorts favorites alphabetically."
-    },
-    "TIDY5E.ThemeSettings": {
-        "SheetMenu": {
-            "name": "Tidy Theme Settings",
-            "buttonLabel": "Theme Settings",
-            "hint": "Customize the colors of Tidy 5e Sheets."
-        },
-        "Sheet": {
-            "title": "Theme Settings: {userName}",
-            "header": "Custom Theme Colors",
-            "useDefaultLightColors": "Default Light",
-            "useDefaultDarkColors": "Default Dark",
-            "export": "Export",
-            "import": "Import",
-            "importDropHint": "Hint: You can drag a \".tidy5e-theme\" file onto this form to import it.",
-            "importError": "Theme import failed. See console for more details.",
-            "importSuccess": "Theme imported successfully!",
-            "menuLabel": "Menu",
-            "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
-        }
-    },
-    "TIDY5E.FavoriteSpellLevelLabel": "呪文レベル {number}",
-    "TIDY5E.ApplyChanges": "適用",
-    "TIDY5E.SaveChanges": "保存",
-    "TIDY5E.UseDefault": "デフォルト使用",
-    "TIDY5E.Reset": "リセット",
-    "TIDY5E.VehicleInMotion": "Vehicle is in motion",
-    "TIDY5E.VehicleMotionless": "Vehicle is motionless",
-    "TIDY5E.TotalCrewCount": "Total Crew",
-    "TIDY5E.ActionsPerTurn": "Actions Per Turn",
-    "TIDY5E.SheetMenu": {
-        "label": "メニュー",
-        "themeLabel": "テーマ"
-    },
-    "TIDY5E.ActiveEffectsMarkerTitle": "アイテムにアクティブ効果がありません。",
-    "TIDY5E.SortMode.ActionListDefault": "デフォルトのアクションソート",
-    "TIDY5E.Commands.ExpandAll": "すべて展開",
-    "TIDY5E.Commands.CollapseAll": "すべて縮小",
-    "TIDY5E.ItemFilters.MenuTooltip.Filters": "フィルター",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "伝説ツールバーを表示",
-    "TIDY5E.Commands.HideLegendaryToolbar": "伝説ツールバーを隠す",
-    "TIDY5E.Commands.ShowContainerPanel": "容器ツールバーを表示",
-    "TIDY5E.Commands.HideContainerPanel": "容器ツールバーを隠す",
-    "TIDY5E.ItemFilters.CanCast": "発動可能",
-    "TIDY5E.ItemFilters.CanUse": "使用可能",
-    "TIDY5E.ItemFilters.ClearAll": "クリア",
-    "TIDY5E.ItemFilters.Category.Miscellaneous": "その他",
-    "TIDY5E.ItemFilters.Filter.Other": "その他",
-    "TIDY5E.GMOnly.Message": "GM: {message}",
-    "TIDY5E.ReminderToBackUp": "ワールドのバックアップを忘れないでください！",
-    "TIDY5E.Utilities.GMTools": "GMツール",
-    "TIDY5E.Utilities.IdentifyAll": "すべてのアイテムを識別",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "識別されていないアイテムをマーク",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "",
-    "TIDY5E.SpellSourceIdentifierSelectText": "",
-    "TIDY5E.EmptyContainer": "",
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Section": {
-        "ConfigDialog": {
-            "showTooltip": "",
-            "hideTooltip": "",
-            "title": ""
-        },
-        "Tooltip": "",
-        "ActionTooltip": "",
-        "Label": "",
-        "ActionLabel": "",
-        "Default": ""
-    },
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
-    "TIDY5E.Utilities.Tools": "",
-    "TIDY5E.Utilities.AssignSpellsToClasses": "",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.SheetPreferences": {
-        "name": "",
-        "hint": "",
-        "buttonLabel": "",
-        "explanation": ""
-    },
-    "TIDY5E.UseDefaultDialog": {
-        "title": "",
-        "text": ""
-    },
-    "TIDY5E.RollRecharge.Hint": "",
-    "TIDY5E.LocalizationTestKey": "",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": ""
-    },
-    "TIDY5E.Utilities.ConfigureSections": "",
-    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.GenericErrorNotification": ""
+  "TIDY5E.ModuleName": "Tidy 5e Sheets",
+  "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e 旧キャラクターシート",
+  "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e 旧NPCシート",
+  "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e 旧アイテムシート",
+  "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e 旧容器シート",
+  "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e 旧乗り物シート",
+  "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e 旧グループシート",
+  "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e 旧遭遇シート",
+  "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e キャラクターシート",
+  "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPCシート",
+  "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e 容器シート",
+  "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e アイテムシート",
+  "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 乗り物シート",
+  "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e グループシート",
+  "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e 遭遇シート",
+  "TIDY5E.PlayerName": "プレイヤー名",
+  "TIDY5E.EditSheetImageHint": "左クリック: 画像変更",
+  "TIDY5E.PreviewSheetImageHint": "右クリック: 画像プレビュー",
+  "TIDY5E.SheetImageOptionsHint": "右クリック: 画像オプション表示",
+  "TIDY5E.ShowPortraitArt": "画像表示",
+  "TIDY5E.PortraitTitle": "画像: {subject}",
+  "TIDY5E.ItemImageTitle": "アイテム: {subject}",
+  "TIDY5E.ShowTokenArt": "コマ表示",
+  "TIDY5E.ShowItemImage": "右クリック: 画像表示",
+  "TIDY5E.ShowItemArt": "画像表示",
+  "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 設定",
+
+  "TIDY5E.AddSpecific": "{name}追加",
+  "TIDY5E.AddCustom": "カスタム{name}追加",
+  "TIDY5E.CompendiumBrowser": "辞典から{name}追加",
+
+  "TIDY5E.SheetPin": {
+    "Label": "シートピン",
+    "LabelPl": "シートピン"
+  },
+
+  "TIDY5E.Show": "表示",
+  "TIDY5E.Hide": "非表示",
+
+  "TIDY5E.LegendaryLairToolbar": "伝説/住処ツールバー",
+  "TIDY5E.SpellbookSections": "呪文書セクション",
+
+  "TIDY5E.ExhaustionLevelTooltip": "消耗状態 {level}段階",
+
+  "TIDY5E.UserDefaultPrefix": "ユーザーデフォルト: {value}",
+
+  "TIDY5E.AbbrInitiative": "ｲﾆｼ",
+
+  "TIDY5E.NoSpecialSenses": "特殊感覚なし",
+
+  "TIDY5E.Group.NamePlaceholder": "グループ名",
+  "TIDY5E.Group.ShowMemberTabInfoPanel": "情報パネル表示",
+  "TIDY5E.Group.HideMemberTabInfoPanel": "情報パネル非表示",
+  "TIDY5E.Group.EmptyMembersTabHint": "このグループは空です。サイドバーからキャラクターをドロップしてメンバーを追加してください。",
+  "TIDY5E.Group.PrimaryParty.Label": "メインパーティ",
+
+  "TIDY5E.RestHint": "休憩",
+  "TIDY5E.ShortRest": "小休憩",
+  "TIDY5E.LongRest": "大休憩",
+  "TIDY5E.HitDiceRollAverage": "右クリック：平均を適用",
+
+  "TIDY5E.JournalTabName": "記録",
+  "TIDY5E.StatblockTabName": "データ･ブロック",
+  "TIDY5E.CombatTabName": "戦闘",
+
+  "TIDY5E.Actions": {
+    "TabName": "アクション",
+    "OverriddenSetOverrideFalse": "アクションリストから削除 (Shift+Click to clear override)",
+    "OverriddenSetOverrideTrue": "アクションリストに追加 (Shift+Click to clear override)",
+    "SetOverrideFalse": "アクションリストから削除",
+    "SetOverrideTrue": "アクションリストに追加",
+    "ResetActionDefault": "アクションをデフォルトにリセット"
+  },
+  "TIDY5E.LegendaryAbbr": "伝説",
+  "TIDY5E.LairAbbr": "住処",
+
+  "TIDY5E.HitDC": "ヒット / 難易度",
+
+  "TIDY5E.RestoreOnRest": "休憩時に回復",
+
+  "TIDY5E.JournalPersonsOfInterest": "関心のある人物",
+  "TIDY5E.JournalLocationsOfInterest": "関心のある場所",
+  "TIDY5E.JournalQuests": "クエスト",
+  "TIDY5E.JournalMisc": "その他",
+  "TIDY5E.JournalEntries": "資料",
+  "TIDY5E.JournalEntry.NewTitle": "資料{number}",
+  "TIDY5E.TogglePersonalityInfo": "情報表示の切替",
+
+  "TIDY5E.SheetEdit.Enable.Hint": "編集を有効化 - {description}",
+  "TIDY5E.SheetEdit.Disable.Hint": "編集を無効化 - {description}",
+  "TIDY5E.SheetEdit.Description": "追加/削除ボタンと空のセクションの表示を切り替えます",
+  "TIDY5E.SheetMode.Edit": "プレイモードに変更",
+  "TIDY5E.SheetMode.Play": "編集モードに変更",
+
+  "TIDY5E.SheetLock.Unlock.Hint": "アンロック - {description}",
+  "TIDY5E.SheetLock.Lock.Hint": "ロック - {description}",
+  "TIDY5E.SheetLock.Description": "頻繁に変更すべきでないフィールドのロックを切り替えます",
+  "TIDY5E.SheetLock.Empty.Hint": "クラスと最初のアイテムを追加することから始めましょう。次に、アイテムメニューまたは右クリックから「シートタブに追加」を選んでここに追加します。",
+
+  "TIDY5E.Inventory.Weight.Tooltip": "重量: {weight} {weightUnit}",
+  "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
+
+  "TIDY5E.ContextMenuActionEquip": "装備",
+  "TIDY5E.ContextMenuActionUnequip": "装備解除",
+  "TIDY5E.ContextMenuActionAttune": "同調",
+  "TIDY5E.ContextMenuActionUnattune": "同調解除",
+  "TIDY5E.ContextMenuActionPrepare": "呪文準備",
+  "TIDY5E.ContextMenuActionUnprepare": "準備解除",
+  "TIDY5E.ContextMenuActionEdit": "編集",
+  "TIDY5E.ContextMenuActionView": "閲覧",
+  "TIDY5E.ContextMenuActionDelete": "削除",
+  "TIDY5E.ContextMenuActionPinToAttributes": "能力値にピン留め",
+  "TIDY5E.ContextMenuActionUnpinFromAttributes": "能力値からピン留め解除",
+  "TIDY5E.ContextMenuActionPin": "上にピン留め",
+  "TIDY5E.ContextMenuActionUnpin": "ピン留め解除",
+  "TIDY5E.ContextMenuActionShowLimitedUses": "使用制限を表示",
+  "TIDY5E.ContextMenuActionShowQuantity": "数量表示",
+  "TIDY5E.ContextMenuActionSetAsInspirationSource": "インスピレーション源に設定",
+  "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "インスピレーション源から削除",
+  "TIDY5E.ContextMenuActionAddToSheetTab": "シートタブに追加",
+  "TIDY5E.ContextMenuActionRemoveFromSheetTab": "シートタブから削除",
+
+  "TIDY5E.InspirationSource.ItemIsSourceTooltip": "インスピレーション源",
+  "TIDY5E.InspirationAdd": "インスピレーション追加",
+  "TIDY5E.InspirationRemove": "インスピレーション削除",
+
+  "TIDY5E.EmptyContainer": "この容器は空です。",
+  "TIDY5E.EmptySection": "シートがロックされているため新規作成ができません。シートロックを解除して編集してください。",
+  "TIDY5E.GMOnlyEdit": "この項目を編集できるのはGMだけです。",
+
+  "TIDY5E.AttunementWarning": "警告：同調が最大数である{number}に達しています。",
+  "TIDY5E.AttunementItems": "同調アイテム",
+  "TIDY5E.AttunementMax": "同調上限",
+
+  "TIDY5E.GridLayout": "グリッド",
+  "TIDY5E.ListLayout": "リスト",
+  "TIDY5E.LayoutNotSupported": "レイアウトモードはサポートされていません",
+
+  "TIDY5E.Encumbrance": "荷重",
+
+  "TIDY5E.AddFavorite": "お気に入り追加",
+  "TIDY5E.Favorite": "お気に入り",
+  "TIDY5E.RemoveFavorite": "お気に入りから削除",
+  "TIDY5E.EmptyFavorites": "右クリックでお気に入りに追加するか、シートから何かをドラッグしてクイックアクセスできるようにしてください。",
+
+  "TIDY5E.ShowNotProficientSkills": "未習熟を表示",
+  "TIDY5E.HideNotProficientSkills": "未習熟を隠す",
+
+  "TIDY5E.Abilities": "能力",
+  "TIDY5E.Ability.EditScore.label": "値を編集",
+
+  "TIDY5E.EmptyTools": "道具の習熟がありません。",
+
+  "TIDY5E.Environment": "環境",
+  "TIDY5E.EnvironmentTooltip": "環境: {environment}",
+
+  "TIDY5E.Search": "検索",
+  "TIDY5E.SearchClear": "検索クリア",
+  "TIDY5E.SearchHint": "検索……",
+
+  "TIDY5E.InfoCardInspectHint": "{inspectKey} 固定",
+
+  "TIDY5E.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
+
+  "TIDY5E.AbbrMod": "修正",
+  "TIDY5E.AbbrSavingThrow": "セーヴ",
+  "TIDY5E.AttackMod": "攻撃修正",
+  "TIDY5E.ActorSpellAttackTitle": "{actorName} - 呪文攻撃",
+  "TIDY5E.ActorSpellAttackFlavorText": "呪文攻撃",
+  "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - 近接呪文攻撃",
+  "TIDY5E.ActorMeleeSpellAttackFlavorText": "近接呪文攻撃",
+  "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - 遠隔呪文攻撃",
+  "TIDY5E.ActorRangedSpellAttackFlavorText": "遠隔呪文攻撃",
+  "TIDY5E.SpellAttackMod": "呪文攻撃修正",
+  "TIDY5E.MeleeSpellAttackMod": "近接呪文攻撃修正",
+  "TIDY5E.RangedSpellAttackMod": "遠隔呪文攻撃修正",
+  "TIDY5E.PreparedSpells": "準備済み呪文",
+
+  "TIDY5E.TokenLinked": "リンク中のコマ",
+  "TIDY5E.TokenUnlinked": "未リンクのコマ",
+
+  "TIDY5E.SpellSourceIdentifierSelectText": "クラス識別子: {identifier}",
+  "TIDY5E.SpellSourceIdentifierLabelHint": "この呪文を持っているキャラクターは、ここで指定されているソースクラスを持っていません。",
+
+  "TIDY5E.Class.Artificer": "アーティフィサ―",
+  "TIDY5E.Class.Barbarian": "バーバリアン",
+  "TIDY5E.Class.Bard": "バード",
+  "TIDY5E.Class.Cleric": "クレリック",
+  "TIDY5E.Class.Druid": "ドルイド",
+  "TIDY5E.Class.Fighter": "ファイター",
+  "TIDY5E.Class.Monk": "モンク",
+  "TIDY5E.Class.Paladin": "パラディン",
+  "TIDY5E.Class.Ranger": "レンジャー",
+  "TIDY5E.Class.Rogue": "ローグ",
+  "TIDY5E.Class.Sorcerer": "ソーサラー",
+  "TIDY5E.Class.Warlock": "ウォーロック",
+  "TIDY5E.Class.Wizard": "ウィザード",
+  "TIDY5E.Class.Custom": "カスタム",
+
+  "TIDY5E.OriginSummaryConfig": "種族概要設定: {actorName}",
+
+  "TIDY5E.MaxPreparedSpellsConfig": {
+    "Title": "Max Prepared Spells Configuration: {documentName}",
+    "ExamplesHeader": "サンプル式",
+    "ButtonTooltip": "最大準備呪文数の設定",
+    "MoreFormulas": "他の計算式"
+  },
+
+  "TIDY5E.HeaderControlConfiguration": {
+    "LocationMenu": "メニュー",
+    "LocationHeader": "ヘッダー"
+  },
+
+  "TIDY5E.TabConfiguration": {
+    "Title": "タブ設定: {documentName}",
+    "MenuOptionText": "タブ設定",
+    "SelectionTab.Title": "タブ選択",
+    "AvailableHeader": "非表示タブ",
+    "SelectedHeader": "表示タブ",
+    "VisibilityTab.Title": "タブ可視性",
+    "UnsupportedDocumentErrorMessage": "ドキュメント種別 {documentType} は現在タブ選択に対応していません。",
+    "AtLeastOneRequiredErrorMessage": "少なくとも1つのタブが必要です。",
+    "Explanation": "ユーザーまたはシートが表示しないように設定されているタブ（例：設定で記録を無効化）は、選択しても表示されません。"
+  },
+
+  "TIDY5E.ButtonConfirm.Text": "確認",
+
+  "TIDY5E.Listbox": {
+    "MoveUp": "上に移動 (Alt + 上矢印)",
+    "MoveDown": "下に移動 (Alt + 下矢印)",
+    "MoveLeft": "左に移動 (スペース)",
+    "MoveRight": "右に移動 (スペース)",
+    "MoveAllLeft": "全て左に移動",
+    "MoveAllRight": "全て右に移動"
+  },
+
+  "TIDY5E.WorldSettings.TabCharacter": {
+    "tabLabel": "キャラクター"
+  },
+  "TIDY5E.WorldSettings.TabNpc": {
+    "tabLabel": "NPC"
+  },
+  "TIDY5E.WorldSettings.TabVehicle": {
+    "tabLabel": "乗り物"
+  },
+  "TIDY5E.WorldSettings.TabExhaustion": {
+    "tabLabel": "消耗状態"
+  },
+  "TIDY5E.WorldSettings.Exhaustion": {
+    "Header": "PC/NPCの消耗状態",
+    "name": "消耗状態設定",
+    "hint": "PC/NPCシートで消耗状態がどのように設定され、表示されるかを決定します。",
+    "options.specific.text": "特定レベル",
+    "options.specific.levels.name": "合計段階数",
+    "options.specific.levels.hint": "消耗状態の最大段階数を決定します。",
+    "options.specific.levels.tooltip.name": "消耗状態 {level}段階 ツールチップ",
+    "options.specific.levels.tooltip.hint": "この消耗段階のツールチップです。翻訳キーも使用できます。",
+    "options.open.text": "数値入力を開く",
+    "options.open.explanation": "消耗状態の段階を入力するための数値入力欄をユーザーに表示します。",
+    "AtLeastOneLevelRequiredErrorMessage": "少なくとも1段階の消耗状態が必要です。"
+  },
+  "TIDY5E.WorldSettings.VehicleExhaustion": {
+    "Header": "乗り物の消耗状態",
+    "name": "乗り物の消耗状態設定",
+    "hint": "乗り物シートで乗り物の消耗状態がどのように設定され、表示されるかを決定します。",
+    "AtLeastOneLevelRequiredErrorMessage": "少なくとも1段階の乗り物消耗状態が必要です。"
+  },
+  "TIDY5E.WorldSettings.TabItem": {
+    "tabLabel": "アイテム"
+  },
+  "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+    "name": "アイテム識別権限",
+    "hint": "アイテムを識別するためのUIコントロールにアクセスできるユーザータイプを決定します。",
+    "options.GmOnly": "GMのみ",
+    "options.GmAndOwners": "GMとアイテム所有者"
+  },
+  "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+    "name": "呪文の巻物作成時にフラグを含める",
+    "hint": "呪文には、呪文の巻物に引き継ぐと便利な他のモジュールの特殊データが含まれている場合があります。有効にすると、作成時にすべてのフラグベースのデータを呪文の巻物にコピーします。"
+  },
+  "TIDY5E.WorldSettings.TabSheetLock": {
+    "tabLabel": "ロック",
+    "header": "ロック設定",
+    "hint": "シートの中であんまり使わない場所をPLが間違って変更するのを防いだり、そもそも表示したくないものを隠すためのオプションをここで提供しています。何をロックするのか、誰が使って良いのかを権限で完全に管理できます。",
+    "hint2": "注意：やろうと思えばこのロックを迂回する方法は存在します。悪意を持ったPLから完全に身を守ることはできません。あくまでも初心者やミスしやすい操作をさせない等、特定の経験を提供したいDMのためのものです。",
+    "labelGeneralLocks": "全般ロック",
+    "labelInventoryLocks": "所持品ロック",
+    "labelFeaturesLocks": "機能ロック"
+  },
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "GMオプション"
+  },
+  "TIDY5E.WorldSettings.TabIcons": {
+    "tabLabel": "アイコン"
+  },
+  "TIDY5E.WorldSettings.TabCustomSections": {
+    "tabLabel": "カスタムセクション",
+    "CustomizedIndicatorLabel": "カスタマイズ済み",
+    "ShowWhenEmptyLabel": "空の場合もセクションを表示",
+    "ShowWhenEmptyTooltip": "アイテムテーブルを持つすべてのタブには、セクションにアイテムがない場合でも常に表示されるデフォルトセクションがあります。このセクションは空でも常に表示します。",
+    "LimitToSpecificSheetsLabel": "表示セクションを特定のシートに制限",
+    "LimitToSpecificTabsLabel": "表示セクションを特定のタブに制限"
+  },
+
+  "TIDY5E.SettingsMenu.WorldThemeSettings": {
+    "name": "テーマ設定",
+    "label": "テーマ設定",
+    "hint": "新Tidyシートのみ：ゲームワールドのデフォルトテーマ設定を構成します。すべてのシートタイプに適用されます。"
+  },
+
+  "TIDY5E.SettingsMenu.Homebrew": {
+    "name": "Homebrew",
+    "label": "Homebrew設定",
+    "hint": "このモジュールが提供するHomebrewオプションを有効化して設定します。"
+  },
+
+  "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+    "name": "ヘッダーコントロール",
+    "label": "ヘッダーコントロール設定",
+    "hint": "新Tidyシートのみ：シートヘッダーコントロールの位置を設定します。"
+  },
+
+  "TIDY5E.SettingsMenu.TabConfiguration": {
+    "name": "シートタブ",
+    "label": "シートタブ設定",
+    "hint": "新Tidyシートのみ：すべてのキャラクター/アイテムシートに対して、どのタブが表示されるか設定します。"
+  },
+
+  "TIDY5E.Settings.BankedInspiration.title": "蓄積インスピレーション",
+  "TIDY5E.Settings.EnableBankedInspiration": {
+    "name": "蓄積インスピレーションを有効化",
+    "hint": "この設定を有効にすると、ユーザーは特徴アイテムをインスピレーション源として設定できます。使用回数のある特徴アイテムのコンテキストメニューからこのオプションを探してください。"
+  },
+  "TIDY5E.Settings.BankedInspirationGmOnly": {
+    "name": "蓄積インスピレーション管理 - GMのみ",
+    "hint": "この設定を有効にすると、蓄積インスピレーションの管理をGMに限定します。"
+  },
+
+  "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
+
+  "TIDY5E.WorldSettings.Menu": {
+    "name": "ワールド設定",
+    "hint": "Tidy 5e Sheetsの体験をカスタマイズするためにワールドレベルの設定を調整します。これらの設定はこのFoundryワールドに保存され、すべての関連するTidy 5e Sheetsコンテンツに適用されます。",
+    "label": "ワールド設定",
+    "title": "ワールド設定 (GMのみ)"
+  },
+
+  "TIDY5E.UserSettings.Menu": {
+    "name": "ユーザー設定",
+    "hint": "Tidy 5e Sheetsの設定をカスタマイズします。これらの設定はブラウザに保存され、あなたのシートだけに適用されます。",
+    "label": "ユーザー設定",
+    "title": "ユーザー設定: {userName}"
+  },
+  "TIDY5E.UserSettings.TabPlayers": {
+    "tabLabel": "PC",
+    "header": "プレイヤーキャラクターシート"
+  },
+  "TIDY5E.UserSettings.TabNPCs": {
+    "tabLabel": "NPC",
+    "header": "NPCシート"
+  },
+  "TIDY5E.UserSettings.TabVehicles": {
+    "tabLabel": "乗り物",
+    "header": "乗り物シート"
+  },
+  "TIDY5E.UserSettings.TabActionsList": {
+    "tabLabel": "アクションリスト"
+  },
+  "TIDY5E.UserSettings.TabActivities": {
+    "tabLabel": "用途"
+  },
+  "TIDY5E.Settings.ItemCardsForAllItems": {
+    "name": "アイテムカードを全レイアウトで表示",
+    "hint": "この設定を無効にすると、アイテムカードはグリッド表示でのみ表示されます。"
+  },
+  "TIDY5E.Settings.UseEffectCards": {
+    "name": "アクティブ効果情報カードを表示",
+    "hint": "有効にすると、アクティブ効果を持つすべてのキャラクターとアイテムに情報カードが表示されます。"
+  },
+  "TIDY5E.Settings.ItemCardsAreFloating": {
+    "name": "アイテム情報カードをカーソル横に表示",
+    "hint": "アイテム情報カードがカーソルの横に出現します。遅延を設定しておくと便利です。"
+  },
+  "TIDY5E.Settings.ItemCardsDelay": {
+    "name": "アイテム情報カードの表示遅延",
+    "hint": "ミリ秒単位で指定した時間後にアイテムにカーソルを合わせたところに情報が出現します。（0:遅延なし、300:デフォルト）"
+  },
+  "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
+    "name": "アクセシブルキーボードサポート使用",
+    "hint": "Tidy 5e Sheetsのほとんどのボタン/コマンドをタブキーで移動し、従来のボタンベースのキーボードホットキーで実行できるようにします。注意：Foundryでボタンにフォーカスしている場合、「ショートカット設定」のショートカットは応答しません。特別なキーを押しながらアイテムを使用するなど、シート上のコントロールにこのFoundry機能を使用するモジュールがある場合、このTidy 5e Sheetsオプションを有効にするとそれらのショートカットと干渉します。"
+  },
+  "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
+    "name": "デフォルトシートの能力値キーボードタブ移動を使用",
+    "hint": "デフォルトの5版シートは、周りのコントロールをタブ順序から隠すことで、ある能力値入力から次の入力へキーボードでタブ移動できます。これを有効にすると、その動作を再現します。この設定は「アクセシブルキーボードサポート使用」がオフの場合は無視されます。"
+  },
+  "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
+    "name": "デフォルトシートのHPキーボードタブ移動を使用",
+    "hint": "デフォルトの5版シートは、現在のHP入力から現在の一時HP入力へキーボードでタブ移動できます。これを有効にすると、その動作を再現します。この設定は「アクセシブルキーボードサポート使用」がオフの場合は無視されます。"
+  },
+  "TIDY5E.Settings.InfoCardsInspectKey": {
+    "name": "情報カード 固定キー",
+    "hint": "情報カードを表示中にこのキーボードキー（例：\"t\"キー）を押すと、カードを固定します。"
+  },
+  "TIDY5E.Settings.UseClassicControls": {
+    "name": "従来のアイテム操作を使用",
+    "hint": "一覧表示でアイテム操作を表示します。"
+  },
+  "TIDY5E.Settings.ShowTraitLabels": {
+    "name": "特徴ラベルの表示",
+    "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"
+  },
+  "TIDY5E.Settings.ShowPlayerName": {
+    "name": "プレイヤー名の表示",
+    "hint": "キャラクターの名前の下に、プレイヤー名を表示します。"
+  },
+  "TIDY5E.Settings.ShowClassList": {
+    "name": "クラスリスト表示",
+    "hint": "キャラクター名の下にクラスリストを表示します。"
+  },
+  "TIDY5E.Settings.InspirationAnimation": {
+    "name": "インスピレーションアニメ",
+    "hint": "インスピレーションアイコンのアニメーションを有効にします。"
+  },
+  "TIDY5E.Settings.HideIfZero": {
+    "name": "消耗とインスピレーションが0の時､非表示",
+    "hint": "0の場合、消耗とインスピレーションは表示されなくなります。マウスカーソルを合わせたときだけ表示されます。"
+  },
+  "TIDY5E.Settings.ShowInspirationOnHover": {
+    "name": "マウスオーバー時にインスピレーション表示",
+    "hint": "画像の上にマウスカーソルを置いたときだけ、インスピレーションを表示します。"
+  },
+  "TIDY5E.Settings.ShowExhaustionOnHover": {
+    "name": "マウスオーバー時に消耗表示",
+    "hint": "画像の上にマウスカーソルを置いたときだけ、消耗を表示します。"
+  },
+  "TIDY5E.Settings.UseHpBar": {
+    "name": "HPバーを使用",
+    "hint": "残りHPを示す色付きバーを表示します。HP数値は引き続き表示されます。"
+  },
+  "TIDY5E.Settings.UseHpOverlay": {
+    "name": "HPオーバーレイを使用",
+    "hint": "色付きのHPオーバーレイを表示します。"
+  },
+  "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
+    "name": "空の技能を切り替え",
+    "hint": "空の技能の表示/非表示を切り替えるボタンを追加します。"
+  },
+  "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
+    "name": "特徴を技能の右に移動",
+    "hint": "特徴を技能リストの右側、他のUIの上（例：お気に入り、NPC能力）に配置します。"
+  },
+  "TIDY5E.Settings.ShowEquippedAmmoOnly": {
+    "name": "装備済の矢弾のみ表示",
+    "hint": "武器の矢弾セレクタで現在装備されている矢弾のみ表示します。"
+  },
+  "TIDY5E.Settings.AlwaysShowSkills": {
+    "name": "常に技能を表示",
+    "hint": "未習熟技能の表示切替ボタンを削除し、すべて表示します。"
+  },
+  "TIDY5E.Settings.ShowNPCSpellbookTab": {
+    "name": "呪文書タブを表示",
+    "hint": "NPCの呪文書タブを表示します。無効にすると、呪文書セクションが能力値タブに移動します。"
+  },
+  "TIDY5E.Settings.ShowActiveEffectsMarker": {
+    "name": "アクティブ効果マーカーを表示",
+    "hint": "アクティブ効果を持つリスト表示のアイテムにマーカーを表示します。"
+  },
+  "TIDY5E.Settings.UseContextMenu": {
+    "name": "コンテキストメニューを使用",
+    "hint": "アイテムの右クリックコンテキストメニューを有効にします。"
+  },
+  "TIDY5E.Settings.ShowExpandedLimitedView": {
+    "name": "限定的シートの拡張表示",
+    "hint": "限定的権限を持つプレイヤーにシート全体（記録を除く）を表示します。"
+  },
+  "TIDY5E.Settings.UseCircularPortraitStyle": {
+    "name": "シートに円形画像を使用",
+    "hint": "キャラクターの円形画像/アイコンを表示",
+    "all": "すべてのキャラクター",
+    "pc": "PCのみ",
+    "npc": "NPC/乗り物 のみ",
+    "none": "しない"
+  },
+  "TIDY5E.Settings.UseTotalSheetLock": {
+    "name": "誤操作による変更をロック",
+    "hint": "ほとんど変更されないフィールド（名前、習熟トグル）をロックし、シートがロックされているときに設定ボタンを隠します。"
+  },
+  "TIDY5E.Settings.LimitEffectsManagementToGM": {
+    "name": "GMだけがアクティブ効果を編集可能",
+    "hint": "アクティブ効果の編集または切り替え権限をGMのみに制限します。"
+  },
+  "TIDY5E.Settings.UseInspiration": {
+    "name": "インスピレーション トラッカーを表示",
+    "hint": "キャラクタープロフィールにインスピレーショントラッカーを表示します。"
+  },
+  "TIDY5E.Settings.UseVehicleMotion": {
+    "name": "乗り物の動作トラッカーを使用",
+    "hint": "乗り物プロフィールに動作トラッカーを表示します。"
+  },
+  "TIDY5E.Settings.UseExhaustion": {
+    "name": "消耗トラッカーを使用",
+    "hint": "キャラクター、NPC、乗り物の消耗トラッカーを表示します。"
+  },
+  "TIDY5E.Settings.ShowNPCRestInChat": {
+    "name": "NPCの休憩をチャットに表示",
+    "hint": "NPCが休憩したときにチャットカードを表示します。"
+  },
+  "TIDY5E.Settings.ShowNPCActorLinkMarker": {
+    "name": "リンクされたNPCをマーク",
+    "hint": "リンクされた、または、されてないNPCシートに、色付きの境界線とアイコンを追加します。",
+    "default": "リンクマーカーなし (デフォルト)",
+    "unlinked": "リンクされてないシートを強調表示",
+    "linked": "リンクされたコマを強調表示",
+    "both": "コマを全て強調表示"
+  },
+  "TIDY5E.Settings.InitialSheetTab": {
+    "name": "初期シートタブ",
+    "hint": "シートを初めて開いたときに指定されたタブを表示します。"
+  },
+  "TIDY5E.Settings.DefaultSheetTabs": {
+    "name": "デフォルトシートタブ",
+    "hint": "デフォルトで表示するタブとその順序を決定します。キャラクターにタブ選択が行われていない場合に適用されます。",
+    "AvailableHeader": "利用可能タブ",
+    "SelectedHeader": "選択中のタブ",
+    "AtLeastOneTabRequiredErrorMessage": "デフォルトタブ：各キャラクター種別に少なくとも1つのタブが必要です。"
+  },
+  "TIDY5E.Settings.HideDeathSavesFromPlayers": {
+    "name": "PLから死亡セーヴを隠す",
+    "hint": "死亡セーヴの合計をGMのみ表示します。死亡セーヴロールボタンは引き続き表示されます。"
+  },
+  "TIDY5E.Settings.DefaultDeathSaveRoll": {
+    "name": "デフォルトの死亡セーヴロール",
+    "hint": "死亡セーヴィング・スローをロールするときに使用するデフォルトのロールモードを決定します。"
+  },
+  "TIDY5E.Settings.UseCharacterEncumbranceBar": {
+    "name": "キャラクターの荷重バーを使用",
+    "hint": "キャラクターシートに荷重バーを表示します。"
+  },
+  "TIDY5E.Settings.UseNPCEncumbranceBar": {
+    "name": "NPCの荷重バーを使用",
+    "hint": "NPCシートに荷重バーを表示します。"
+  },
+  "TIDY5E.Settings.UseVehicleEncumbranceBar": {
+    "name": "乗り物の荷重バーを使用",
+    "hint": "乗り物シートに荷重バーを表示します。"
+  },
+  "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
+    "name": "マルチクラス呪文フィルタを使用",
+    "hint": "呪文書タブでクラス別に呪文をフィルタリングできます。呪文編集シートのクラスセレクタを使用して、呪文をクラスに関連付ける必要があります。"
+  },
+  "TIDY5E.Settings.UseSpellClassIcons": {
+    "name": "呪文アイコンをクラスアイコンに置き換える",
+    "hint": "呪文自身の画像の代わりに呪文クラスの画像を表示します。呪文編集シートのクラスセレクタを使用して、呪文をクラスに関連付ける必要があります。マルチクラスの場合、この機能により、どのクラスにどの呪文が属しているかを一目で識別できます。"
+  },
+  "TIDY5E.Settings.AllowCantripsToBePrepared": {
+    "name": "初級呪文も「準備」できる",
+    "hint": "『ターシャの万物釜』のオプション･ルール「初級呪文の定式」により、ウィザードは大休憩後にレベル呪文と同様に初級呪文を準備できます。準備した初級呪文は準備済み呪文の総数には含まれません。"
+  },
+  "TIDY5E.Settings.LockMoneyChanges": {
+    "name": "所持金操作をロック",
+    "hint": "GM以外が貨幣を変更できないようにします。"
+  },
+  "TIDY5E.Settings.LockExpChanges": {
+    "name": "経験点操作をロック",
+    "hint": "GM以外が経験点を変更できないようにします。"
+  },
+  "TIDY5E.Settings.LockHpMaxChanges": {
+    "name": "最大HP操作をロック",
+    "hint": "GM以外が最大HPを変更できないようにします。"
+  },
+  "TIDY5E.Settings.LockLevelSelector": {
+    "name": "レベル操作をロック",
+    "hint": "GM以外がクラスレベルセレクタでPCレベルを変更できないようにします。"
+  },
+  "TIDY5E.Settings.LockItemQuantity": {
+    "name": "アイテム数をロック",
+    "hint": "GM以外がアイテム数量を変更できないようにします。"
+  },
+  "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+    "name": "グループシートメンバーセキュリティを使用",
+    "hint": "GMがグループシートでユーザーが閲覧できるグループメンバー情報を制御できるようにします。プレイヤーがグループメンバーに対する権限を持っていない場合、グループシートはそのメンバーやその集計情報を表示しません。限定的権限では、ユーザーはメンバーの名前のみを見ることができます。閲覧者以上の権限では、メンバーに関するすべてのグループシート情報を見ることができます。"
+  },
+  "TIDY5E.Settings.ActionList.Header": "アクションリスト",
+  "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+    "name": "アクションを初級呪文に制限",
+    "hint": "デフォルトでアクションタブ/パネルにダメージを与えるすべての呪文を表示する代わりに、初級呪文のみに制限します。これはD&D Beyondのデフォルト動作です。"
+  },
+  "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+    "name": "1分間の呪文をアクションに含める",
+    "hint": "デフォルトでアクションタブ/パネルに、持続時間が1分以下（例：1ラウンド）で発動時間が1アクションまたは1ボーナスアクション（例：ブレス、ベイン、コマンド）の呪文を含めます。"
+  },
+  "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+    "name": "アクティブ効果のある呪文をアクションに含める",
+    "hint": "デフォルトでアクションタブ/パネルに、アクティブ効果が付いた呪文（例：バークスキン）を含めます。"
+  },
+  "TIDY5E.Settings.ActionListIncludeConsumables": {
+    "name": "消耗品をアクションに含める",
+    "hint": "デフォルトでアクションリストに、起動コスト（アクション、ボーナスアクションなど）を持つ消耗品を含めます。"
+  },
+  "TIDY5E.Settings.ColorPickerEnabled": {
+    "name": "カスタムテーマカラーを使用",
+    "hint": "カスタムテーマカラーを表示"
+  },
+  "TIDY5E.Settings.ColorPickerPrimaryAccent": {
+    "name": "主要アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerEquipped": {
+    "name": "装備中"
+  },
+  "TIDY5E.Settings.ColorPickerHpBar": {
+    "name": "HPバー"
+  },
+  "TIDY5E.Settings.ColorPickerEquippedOutline": {
+    "name": "装備中 アウトライン"
+  },
+  "TIDY5E.Settings.ColorPickerEquippedAccent": {
+    "name": "装備中 アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerPrepared": {
+    "name": "準備済み"
+  },
+  "TIDY5E.Settings.ColorPickerPreparedOutline": {
+    "name": "準備済み アウトライン"
+  },
+  "TIDY5E.Settings.ColorPickerPreparedAccent": {
+    "name": "準備済み アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerPact": {
+    "name": "契約"
+  },
+  "TIDY5E.Settings.ColorPickerPactOutline": {
+    "name": "契約 アウトライン"
+  },
+  "TIDY5E.Settings.ColorPickerPactAccent": {
+    "name": "契約 アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerAtWill": {
+    "name": "常に発動可能"
+  },
+  "TIDY5E.Settings.ColorPickerAtWillOutline": {
+    "name": "常に発動可能 アウトライン"
+  },
+  "TIDY5E.Settings.ColorPickerAtWillAccent": {
+    "name": "常に発動可能 アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnly": {
+    "name": "儀式のみ"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+    "name": "儀式のみ アウトライン"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+    "name": "儀式のみ アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerInnate": {
+    "name": "生得呪文"
+  },
+  "TIDY5E.Settings.ColorPickerInnateOutline": {
+    "name": "生得呪文 アウトライン"
+  },
+  "TIDY5E.Settings.ColorPickerInnateAccent": {
+    "name": "生得呪文 アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+    "name": "常に準備済み"
+  },
+  "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+    "name": "常に準備済み アウトライン"
+  },
+  "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+    "name": "常に準備済み アクセント"
+  },
+  "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+    "name": "スクロールバーつまみ"
+  },
+  "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+    "name": "スクロールバートラック"
+  },
+  "TIDY5E.Settings.ColorPickerMagicAccent": {
+    "name": "魔法のアイテム アクセント アウトライン"
+  },
+  "TIDY5E.Settings.AllowHpMaxOverride": {
+    "name": "キャラクターの最大HP手動変更",
+    "hint": "GMがキャラクターシートで最大HPを手動で変更できるようにします。"
+  },
+  "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+    "name": "Tidyの呪文系統アイコンを使用",
+    "hint": "呪文系統にTidyが厳選したアイコンを使用します。CONFIG.DND5Eまたは他のモジュールで呪文系統アイコンをカスタマイズするには、このオプションを無効にしてください。Tidyのカスタム呪文系統アイコンを拡張するには、Tidy APIドキュメントを参照してください。"
+  },
+  "TIDY5E.Settings.InlineActivitiesPosition": {
+    "name": "インライン用途の位置",
+    "hint": "アイテムを展開すると、そのアイテムの用途が表示されます。この設定を使用して、用途をアイテム説明の前（上）に配置するか、アイテム説明、ボタン、タグの後（下）に配置するかを決定します。",
+    "top": "上",
+    "bottom": "下"
+  },
+  "TIDY5E.Settings.Reset": {
+    "name": "設定を初期化",
+    "hint": "シートの設定をデフォルトに戻します。",
+    "dialogs": {
+      "title": "モジュール設定をリセット",
+      "content": "すべてのモジュール設定を現在のシステムのデフォルトにリセットしてもよろしいですか？ <strong>この操作は元に戻せません。</strong>",
+      "confirm": "モジュール設定をリセット",
+      "cancel": "キャンセル"
+    }
+  },
+  "TIDY5E.Settings.Migrations": {
+    "name": "移行",
+    "buttonLabel": "Tidyデータ移行",
+    "dialogTitle": "Tidyデータ移行",
+    "hint": "オリジナルのTidy5e Sheetモジュールまたはアルファシートのユーザーだった場合、オプションでこの移行メニューを使用してGM設定とTidyシートデータを移行してください。",
+    "chatNotification": "新しいTidy 5e Sheetsの移行が利用可能です。利用可能な移行を表示するには、Tidy 5e Sheetsゲーム設定を参照してください。",
+    "migrationBeginningMessage": "データを移行しています。完了するまでページを更新しないでください。",
+    "migrationErrorMessage": "エラーが発生しました。詳細は開発者コンソールを確認してください。",
+    "migrationCompleteMessage": "移行完了。",
+    "migrateDocumentFlagsButtonLabel": "ドキュメントフラグを移行",
+    "migrateGmSettingsButtonLabel": "GM設定移行",
+    "migrateConfirmTitle": "移行の確認",
+    "migrateConfirmMessage1": "本当にこの移行を実行しますか？",
+    "migrateConfirmMessage2": "{boldStart}注意{boldEnd}: 必ず{boldStart}データをバックアップ{boldEnd}してください。",
+    "migrateConfirmButtonYes": "移行",
+    "migrateConfirmButtonNo": "キャンセル",
+    "OptionsHeader": "移行オプション",
+    "OptionOverwrite.Text": "上書き",
+    "OptionOverwrite.Tooltip": "既存のシートデータを上書きする場合は有効にします。チェックを外すと、空のシステムフィールドのみが移行されたTidyデータを受け取ります。",
+    "OptionDeleteFlags.Text": "影響を受けるTidyフラグを削除",
+    "OptionDeleteFlags.Tooltip": "カスタムTidyフラグデータから公式システムデータに移行する際、デフォルトではフラグは残ります。これらのフラグを削除するには、このオプションをチェックしてください。",
+    "ButtonMigration.Text": "移行",
+    "MigrateCompendia.CompendiumLabel": "辞典",
+    "MigrateCompendia.Title": "辞典移行",
+    "MigrateCompendia.SelectionDialogTitle": "移行する辞典を選択",
+    "MigrateCompendia.TotalEntriesLabel": "合計エントリー数",
+    "CcssToTidy": {
+      "sectionTitle": "CCSS から Tidy 5e",
+      "selectionDialogTitle": "移行: CCSS から Tidy 5e",
+      "ccss": "CCSS",
+      "section": "セクション",
+      "explanation1": "Tidy 5eはカスタムセクションをネイティブでサポートし、カスタムセクションに関する追加機能を提供します。この移行により、Custom Character Sheet Sections (CCSS)のセクション名がTidyのセクション設定にコピーされます。",
+      "overwrite": "上書き",
+      "overwriteTooltip": "既存のTidyセクションフラグを上書きする場合は有効にします。チェックを外すと、空のTidyフラグのみが移行されたCCSSデータを受け取ります。",
+      "deleteFlags": "影響を受けるCCSSフラグを削除",
+      "deleteFlagsTooltip": "CCSSからTidyカスタムセクションに移行する際、デフォルトではCCSSフラグは残ります。これらのフラグを削除するには、このオプションをチェックしてください。"
+    },
+    "Journal": {
+      "explanation1": "Tidy 5e SheetsのUIオーバーホールにより、記録は必要なだけのエントリーを持てるように刷新されました。これに対応するため、古い記録構造から新しい拡張可能な記録構造への移行が必要です。古い記録は、オーバーホールされたTidy 5e Sheetsでは表示されません。"
+    },
+    "UnlinkedExplanation": "この移行では、現在のシーン内の未リンクトークンドキュメントを移行するオプションが提供されます。必要に応じて追加のシーンでも移行を実行できます。",
+    "Selection": {
+      "TotalSelectedLabel": "合計選択数: {total}",
+      "ToMigrate": "移行対象",
+      "SelectAllNoneTooltip": "すべて選択/選択解除"
+    },
+    "Parent": "親"
+  },
+  "TIDY5E.Settings.SheetPreferences": {
+    "name": "Tidyをデフォルトシートにセット",
+    "hint": "1つ以上のドキュメント種別のデフォルトシートにTidy 5e Sheetsを設定したいが、本体の「デフォルトのシート設定」メニューが期待どおりに機能しない場合、このメニューを使用して設定を選択してください。",
+    "buttonLabel": "Tidyをデフォルトシートにセット",
+    "explanation": "Tidy 5e Sheetsをデフォルトにしたいすべてのドキュメント種別を選択してください。"
+  },
+  "TIDY5E.Settings.About": {
+    "name": "About",
+    "buttonLabel": "Tidy 5e Sheetsについて",
+    "dialogTitle": "Tidy 5e Sheetsについて",
+    "hint": "Tidy 5e Sheets モジュールについての情報。",
+    "logoAltText": "4つの星と「Tidy 5e」の文字が描かれたヒーターシールド。",
+    "MaintainerParagraph": "Tidy 5e Sheetsは{urlStart}kgar{urlEnd}によりメンテナンスされています。",
+    "GithubParagraph": "機能についてアイデアがありますか？何かが変ですか？{urlStart}Github Issue{urlEnd}に投稿してください。",
+    "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: 新機能のアイデアを議論したり、他の人から助けを得たり、このモジュールの進捗状況を追跡したりできます。",
+    "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: ウェブコンテンツの翻訳をしていますか？Tidy 5e Sheetsはあなたの助けを必要としています！Weblateウェブサイトにアクセスして、各言語での翻訳の進捗状況を確認してください。このモジュールは、新しい言語翻訳と既存の翻訳の修正を受け付けています。",
+    "FinancialSupportHeader": "Tidy 5e Sheetsを支援するには",
+    "FinancialSupportParagraph": "Tidy 5e Sheetsが気に入って経済的に支援したい場合、以下の方法があります:",
+    "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
+    "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
+    "PatreonLink": "{urlStart}Patreon{urlEnd}"
+  },
+  "TIDY5E.Settings.GlobalCustomSections": {
+    "name": "グローバルカスタムセクション",
+    "hint": "様々な目的に設定できるワールドカスタムセクションです。グローバルカスタムセクションは常にセクションセレクタに含まれます。",
+    "AddSection": "セクション追加"
+  },
+  "TIDY5E.Settings.Debug": {
+    "name": "デバッグ有効化",
+    "hint": "コンソールにデバッグメッセージを出力します。"
+  },
+  "TIDY5E.ThemeSettings": {
+    "SheetMenu": {
+      "name": "Tidyテーマ設定",
+      "buttonLabel": "テーマ設定",
+      "hint": "旧Tidyシートのみ：Tidy 5e Sheetsのカラーをカスタマイズします。"
+    },
+    "Sheet": {
+      "title": "テーマ設定: {userName}",
+      "header": "カスタムテーマカラー",
+      "useDefaultLightColors": "デフォルトライト",
+      "useDefaultDarkColors": "デフォルトダーク",
+      "export": "エクスポート",
+      "import": "インポート",
+      "importDropHint": "ヒント: \".tidy5e-theme\"ファイルをこのフォームにドラッグしてインポートできます。",
+      "importError": "テーマのインポートに失敗しました。詳細はコンソールを確認してください。",
+      "importSuccess": "テーマのインポートに成功しました！",
+      "menuLabel": "メニュー",
+      "explanation": "各オプションに使用したい色を選択してください。値「#00000000」は色を無効にすることと同等です。"
+    },
+    "hint": "ゲームを補完する没入型体験を作成するためにシートをカスタマイズします。",
+    "AccentColor.title": "アクセントカラー",
+    "ActorHeaderBackground.title": "キャラクターヘッダー背景",
+    "ItemSidebarBackground.title": "アイテムサイドバー背景",
+    "PortraitShape": {
+      "title": "{type}画像の形状",
+      "option.round": "ラウンド",
+      "option.transparent": "透明",
+      "option.square": "スクエア",
+      "option.token": "コマ"
+    },
+    "RarityColors.title": "レアリティ別カラー",
+    "SheetTheme.title": "シートテーマ",
+    "SheetTheme.hint": "最良の結果を得るには、カラーパレットの中央付近の色を選択してください。",
+    "SpellcastingMethodColors.title": "呪文発動方法別カラー"
+  },
+  "TIDY5E.FavoriteSpellLevelLabel": "呪文レベル {number}",
+  "TIDY5E.ApplyChanges": "適用",
+  "TIDY5E.SaveChanges": "保存",
+  "TIDY5E.UseDefault": "デフォルトを使用",
+  "TIDY5E.Reset": "リセット",
+  "TIDY5E.VehicleInMotion": "乗り物は移動中",
+  "TIDY5E.VehicleMotionless": "乗り物は止まっている",
+  "TIDY5E.Vehicle.Member.DraftAnimal.Label": "ドラフト･アニマル",
+  "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "ドラフト･アニマル",
+  "TIDY5E.TotalCrewCount": "総乗組員数",
+  "TIDY5E.ActionsPerTurn": "ターンごとのアクション",
+  "TIDY5E.SheetMenu": {
+    "label": "メニュー",
+    "themeLabel": "テーマ"
+  },
+  "TIDY5E.ActiveEffectsMarkerTitle": "このアイテムにはアクティブ効果があります",
+  "TIDY5E.SortMode.ActionListDefault": "デフォルトのアクションソート",
+  "TIDY5E.Commands.ExpandAll": "すべて展開",
+  "TIDY5E.Commands.CollapseAll": "すべて縮小",
+  "TIDY5E.ItemFilters.MenuTooltip.Filters": "フィルター",
+  "TIDY5E.Commands.ShowLegendaryToolbar": "伝説ツールバーを表示",
+  "TIDY5E.Commands.HideLegendaryToolbar": "伝説ツールバーを隠す",
+  "TIDY5E.Commands.ShowContainerPanel": "容器ツールバーを表示",
+  "TIDY5E.Commands.HideContainerPanel": "容器ツールバーを隠す",
+  "TIDY5E.ItemFilters.CanCast": "発動可能",
+  "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "「発動可能」に儀式呪文を含める",
+  "TIDY5E.ItemFilters.CanUse": "使用可能",
+  "TIDY5E.ItemFilters.ClearAll": "クリア",
+  "TIDY5E.ItemFilters.Category.Miscellaneous": "その他",
+  "TIDY5E.ItemFilters.Filter.Other": "その他",
+  "TIDY5E.GMOnly.Title": "GMのみ",
+  "TIDY5E.GMOnly.Message": "GMのみ：{message}",
+  "TIDY5E.ReminderToBackUp": "ワールドのバックアップを忘れないでください！",
+  "TIDY5E.Utilities.Tools": "ツール",
+  "TIDY5E.Utilities.GMTools": "GMツール",
+  "TIDY5E.Utilities.IdentifyAll": "すべてのアイテムを識別",
+  "TIDY5E.Utilities.AssignSpellsToClasses": "呪文をクラスに割り当て",
+  "TIDY5E.GenericErrorNotification": "このアクションの実行中にエラーが発生しました。詳細は開発者ツールコンソールを確認してください。",
+  "TIDY5E.Utilities.MarkAllAsUnidentified": "識別されていないアイテムをマーク",
+  "TIDY5E.Utilities.ConfigureSections": "セクション設定",
+  "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "呪文スロット追跡",
+  "TIDY5E.Utilities.SpellPips": "呪文ピップ",
+  "TIDY5E.Utilities.SpellValueMax": "呪文値/最大",
+  "TIDY5E.Utilities.CastActivitySpellGroupingTitle": "発動アクティビティ呪文グループ化",
+  "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "追加呪文セクション",
+  "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "アイテムごとにセクション",
+  "TIDY5E.Utilities.ShowSheetPins": "シートピンを表示",
+  "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "データブロックタブに伝説/住処トラッカーを表示",
+  "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "データブロックタブに呪文書セクションを含める",
+  "TIDY5E.Section": {
+    "Default": "デフォルトセクション",
+    "Label": "セクション",
+    "LabelPl": "セクション",
+    "Tooltip": "キャラクターシートに配置される際のこのアイテムのカスタムセクションを指定するか、デフォルトの動作のために空白のままにします。",
+    "ActionLabel": "アクションセクション",
+    "ActionTooltip": "アクションタブに配置される際のこのアイテムのカスタムセクションを指定するか、デフォルトの動作のために空白のままにします。",
+    "ConfigDialog": {
+      "title": "セクション設定: {tabTitle}",
+      "showTooltip": "このセクションを表示",
+      "hideTooltip": "このセクションを非表示"
+    },
+    "SectionSelectorChooseSectionTooltip": "セクション選択",
+    "SectionSelectorChooseActionSectionTooltip": "アクションセクション選択",
+    "SectionSelectorChooseTabSectionTooltip": "{tabName}セクション選択",
+    "SectionSelectorTitle": "{sectionType}: {documentName}",
+    "SectionSelectorExistingSections": "既存セクション",
+    "SectionSelectorCreateNewSection": "新規セクションを作成",
+    "SectionSelectorNewSectionName": "新規セクション名",
+    "SectionSelectorSaveNewSection": "新規セクションを保存"
+  },
+  "TIDY5E.UseDefaultDialog": {
+    "title": "確認: デフォルトを使用",
+    "text": "本当にデフォルトを使用しますか？"
+  },
+  "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+クリックでロールをスキップして即座に再チャージ) ",
+  "TIDY5E.RollRecharge.Label": "再チャージ",
+  "TIDY5E.SpellSourceClassAssignments.Identifier": "ソースクラス識別子",
+  "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "呪文のソースクラス識別子がここに表示されます。キャラクターが所有していない識別子を割り当てるには、このテキストフィールドにクラス識別子を入力してください。",
+  "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "未割り当てのみ表示",
+  "TIDY5E.Keybindings.ToggleSheetLock.Name": "シートロック切り替え",
+  "TIDY5E.Keybindings.ToggleSheetLock.Hint": "TidyシートがUIの現在のアクティブウィンドウである場合、このショートカットはシートロックを切り替えます。",
+  "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "ヘッダーメニュー切り替え",
+  "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "TidyシートがUIの現在のアクティブウィンドウである場合、このショートカットはシートヘッダーメニューを切り替えます。",
+  "TIDY5E.Facilities": {
+    "Hirelings.Label": "雇い人",
+    "Defenders.Label": "防衛者",
+    "Creatures.Label": "クリーチャー",
+    "RosterMember.Label": "{actorName} - {facilityName}",
+    "ContextMenuActionRemove": "{facilityName}から削除",
+    "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
+  },
+  "TIDY5E.LocalizationTestKey": "翻訳テストキー",
+  "TIDY5E.ExpandCollapseMenu.OptionTitle": "展開/折りたたみ動作",
+  "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "トップレベルセクション",
+  "TIDY5E.ExpandCollapseMenu.OptionAllSections": "全セクション",
+  "TIDY5E.SortMenu.OptionAlphabetical": "アルファベット順 (A-Z)",
+  "TIDY5E.SortMethod.AlphabeticalAscending.Label": "昇順",
+  "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "アルファベット順（昇順）でソート",
+  "TIDY5E.SortMethod.AlphabeticalDescending.Label": "降順",
+  "TIDY5E.SortMethod.AlphabeticalDescending.Tooltip": "アルファベット順（降順）でソート",
+  "TIDY5E.SortMenu.OptionManual": "手動",
+  "TIDY5E.SortMenu.OptionPriority": "優先度",
+  "TIDY5E.Activities.Cast.SourceHintText": "{itemName}から",
+  "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+  "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "全貨幣を親キャラクターに移動",
+  "TIDY5E.BrokenLink": "壊れたリンク",
+  "TIDY5E.Visible": "表示",
+  "TIDY5E.Hidden": "非表示",
+  "TIDY5E.Options.Title": "オプション",
+  "TIDY5E.ConfigureTab.Title": "{tabName}設定",
+  "TIDY5E.DisplayOptions.Title": "オプション表示",
+  "TIDY5E.DisplayOptionsGlobalDefault.Title": "グローバルデフォルト表示オプション",
+  "TIDY5E.DisplayOptions.ShowContainerRow.Label": "容器行を表示",
+  "TIDY5E.ItemSheet.PactLevelCastLabel": "{ordinal}レベルで発動",
+  "TIDY5E.ItemSheet.FeatureOriginLabel": "種族特徴",
+  "TIDY5E.HitDice.Abbreviation": "HD",
+  "TIDY5E.HitDice.Current.Label": "現在ヒット･ダイス",
+  "TIDY5E.HitDice.Max.Label": "最大ヒット･ダイス",
+  "TIDY5E.CharacterTraits.Title": "キャラクター特性",
+  "TIDY5E.UseSpecificDefaultValue.Label": "デフォルトを使用（{value}）",
+  "TIDY5E.Notifications.FirstTimeWelcome1": "Tidy 5e Sheetsへようこそ！開始するには、{sheetLinkStart}シート{sheetLinkEnd}（または{allSheetsLinkStart}すべてのシート{allSheetsLinkEnd}！）をTidyバージョンに変更する必要があります。このモジュールとその機能について詳しくは、{wikiLinkStart}公式wiki{wikiLinkEnd}をご覧ください。",
+  "TIDY5E.AggregateSkill.HighMeasure": "高",
+  "TIDY5E.AggregateSkill.LowMeasure": "低",
+  "TIDY5E.Difficulty": "難易度",
+  "TIDY5E.Character.Sidebar.Title": "PCサイドバー",
+  "TIDY5E.Encounter": {
+    "CombatantsSection.Title": "戦闘参加キャラ",
+    "Combat.IncludeInCombat.Tooltip": "戦闘に含める",
+    "Combat.ExcludeFromCombat.Tooltip": "戦闘から除外",
+    "AddMember.Label": "メンバー追加",
+    "AddPlaceholderToCombatTracker.Label": "現在の遭遇にプレースホルダーとして追加",
+    "AddPlaceholder.Label": "戦闘プレースホルダーを作成",
+    "DeletePlaceholder.Label": "プレースホルダーを削除",
+    "DifficultyTarget.Label": "難易度目標",
+    "AddAllPlaceholders.Label": "すべてをプレースホルダーとして追加",
+    "PrerollInitiative": "イニシアチブ事前ロール",
+    "NewPlaceholder.Name": "新規プレースホルダー",
+    "NewPlaceholder.SubtitlePlaceholderText": "このプレースホルダーについてのメモ",
+    "AddCombatants.MustHaveEncounter.Message": "遭遇トラッカーに追加するには遭遇を選択する必要があります",
+    "CombatVisibility.Hidden.Label": "トラッカーに追加時にプレイヤーから非表示",
+    "CombatVisibility.Visible.Label": "トラッカーに追加時にプレイヤーに表示",
+    "InitiativeCount.Label": "イニシアチブカウント{count}を追加",
+    "PlaceholderNameField.PlaceholderText": "プレースホルダー名",
+    "PlaceholderNotesField.PlaceholderText": "メモ"
+  },
+  "TIDY5E.Actor.Characteristics": "性質"
 }
