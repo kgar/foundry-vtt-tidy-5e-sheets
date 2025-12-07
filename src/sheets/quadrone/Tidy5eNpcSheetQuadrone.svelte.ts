@@ -49,7 +49,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = settings.value.initialNpcSheetTab;
+    this.currentTabId = CONSTANTS.TAB_NPC_STATBLOCK;
   }
 
   static DEFAULT_OPTIONS: Partial<

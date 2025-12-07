@@ -111,7 +111,7 @@
   <ProficiencyCycle
     actor={context.actor}
     aria-label={localize(ability.hover)}
-    data-tooltip={ability.hover}
+    data-tooltip
     disabled={!context.unlocked}
     path="system.abilities.{ability.key}.proficient"
     type="ability"

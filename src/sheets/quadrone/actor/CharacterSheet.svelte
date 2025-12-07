@@ -303,7 +303,7 @@
                   <div class="config-container">
                     <button
                       aria-label={tooltip}
-                      data-tooltip={tooltip}
+                      data-tooltip
                       type="button"
                       class="button button-borderless button-icon-only button-config"
                       onclick={() =>
@@ -606,7 +606,7 @@
                   type="button"
                   class="button button-borderless button-icon-only"
                   aria-label={localize('DND5E.Exhaustion')}
-                  data-tooltip={'DND5E.Exhaustion'}
+                  data-tooltip
                   onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
                   disabled={!context.editable}
                 >

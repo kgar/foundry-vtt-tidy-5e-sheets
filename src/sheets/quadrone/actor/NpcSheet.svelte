@@ -428,7 +428,7 @@
                   type="button"
                   class="button button-borderless button-icon-only"
                   aria-label={localize('DND5E.Exhaustion')}
-                  data-tooltip={'DND5E.Exhaustion'}
+                  data-tooltip
                   onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
                   disabled={!context.editable}
                 >
@@ -449,7 +449,7 @@
                   placeholder="+{localize('DND5E.Max')}"
                   class="max-hp uninput centered"
                   aria-label={localize('DND5E.HitPointsTempMax')}
-                  data-tooltip={'DND5E.HitPointsTempMax'}
+                  data-tooltip
                   disabled={!context.editable}
                 />
               </div>

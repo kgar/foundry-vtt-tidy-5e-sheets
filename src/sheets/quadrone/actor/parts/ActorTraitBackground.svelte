@@ -76,9 +76,7 @@
             })}
             type="button"
             class="button button-primary"
-            data-tooltip={localize('TIDY5E.CompendiumBrowser', {
-              name: localize('TYPES.Item.background'),
-            })}
+            data-tooltip
             onclick={(ev) =>
               context.actor.sheet.findItem({
                 event: ev,
@@ -111,9 +109,7 @@
             })}
             type="button"
             class="button button-borderless button-icon-only"
-            data-tooltip={localize('DND5E.DescriptionEdit', {
-              description: localize('TYPES.Item.background'),
-            })}
+            data-tooltip
             onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
           >
             <i class="fa-solid fa-edit"></i>

@@ -135,7 +135,7 @@
           'button button-borderless button-icon-only button-config',
           { invisible: editingScore },
         ]}
-        data-tooltip={configButtonTooltip}
+        data-tooltip
         onclick={(ev) => onConfigClicked?.(ability.key)}
         data-tidy-sheet-part="ability-configuration-control"
       >
@@ -161,7 +161,7 @@
   <button
     type="button"
     aria-label={localize('DND5E.SavingThrowRoll', { ability: ability.label })}
-    data-tooltip={localize('DND5E.SavingThrowRoll', { ability: ability.label })}
+    data-tooltip
     class={[
       'button-borderless ability-save flexrow',
       { invisible: editingScore },
