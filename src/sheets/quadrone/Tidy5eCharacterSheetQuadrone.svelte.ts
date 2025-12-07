@@ -70,7 +70,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     // Default to Character tab if no class, otherwise first tab
     const hasClass = this.actor.itemTypes.class?.length > 0;
     this.currentTabId = hasClass
-      ? settings.value.initialCharacterSheetTab
+      ? CONSTANTS.TAB_ACTOR_ACTIONS
       : CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
     this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
   }

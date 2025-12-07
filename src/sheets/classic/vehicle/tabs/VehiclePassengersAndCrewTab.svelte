@@ -56,7 +56,6 @@
           {#each section.members as member}
             <ItemTableRow getDragData={() => {
               const data = member.actor.toDragData();
-              console.log(data);
               return data;
             }}>
               <!-- Image -->

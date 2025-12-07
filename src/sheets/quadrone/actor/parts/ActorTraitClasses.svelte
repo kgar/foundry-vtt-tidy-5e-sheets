@@ -116,9 +116,7 @@
           })}
           type="button"
           class="button button-secondary"
-          data-tooltip={localize('TIDY5E.CompendiumBrowser', {
-            name: localize('TYPES.Item.class'),
-          })}
+          data-tooltip
           onclick={(ev) =>
             context.actor.sheet.findItem({
               event: ev,
@@ -200,7 +198,7 @@
             {#if cls.isOriginalClass}
               <i
                 class="flex0 fa-solid fa-chess-queen color-text-gold-emphasis icon-class-original"
-                data-tooltip={localize('DND5E.ClassOriginal')}
+                data-tooltip
                 aria-label={localize('DND5E.ClassOriginal')}
               ></i>
             {/if}
@@ -240,7 +238,7 @@
               aria-label={localize('DND5E.LevelActionIncrease')}
               type="button"
               class="button button-borderless button-icon-only"
-              data-tooltip={localize('DND5E.LevelActionIncrease')}
+              data-tooltip
               onclick={() =>
                 FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
             >
@@ -260,7 +258,7 @@
             aria-label={localize('DND5E.LevelActionIncrease')}
             type="button"
             class="button button-primary button-level-up flexshrink"
-            data-tooltip={localize('DND5E.LevelActionIncrease')}
+            data-tooltip
             disabled={hitLevelCap}
             onclick={() =>
               FoundryAdapter.changeLevel(context.actor, cls.item, 1)}
@@ -342,9 +340,7 @@
             })}
             type="button"
             class="button button-borderless button-icon-only"
-            data-tooltip={localize('DND5E.DescriptionEdit', {
-              description: localize('DND5E.ItemSubclassDetails'),
-            })}
+            data-tooltip
             onclick={() =>
               subclass.sheet.render({
                 force: true,
@@ -380,9 +376,7 @@
           })}
           type="button"
           class="button button-primary"
-          data-tooltip={localize('TIDY5E.CompendiumBrowser', {
-            name: localize('TYPES.Item.subclass'),
-          })}
+          data-tooltip
           onclick={async (ev) =>
             await context.actor.sheet.findItem({
               event: ev,
@@ -399,9 +393,7 @@
           })}
           type="button"
           class="button button-secondary"
-          data-tooltip={localize('TIDY5E.AddCustom', {
-            name: localize('TYPES.Item.subclass'),
-          })}
+          data-tooltip
           onclick={() =>
             FoundryAdapter.createItem(
               {

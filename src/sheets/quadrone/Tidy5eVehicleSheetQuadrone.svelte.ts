@@ -36,7 +36,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
-    this.currentTabId = settings.value.initialVehicleSheetTab;
+    this.currentTabId = CONSTANTS.TAB_VEHICLE_ATTRIBUTES;
   }
 
   static DEFAULT_OPTIONS: Partial<

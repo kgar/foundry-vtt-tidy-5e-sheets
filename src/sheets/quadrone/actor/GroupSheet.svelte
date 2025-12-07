@@ -89,7 +89,7 @@
             aria-label={awardAriaLabel}
             type="button"
             class="button long-rest button-gold flexshrink"
-            data-tooltip={awardAriaLabel}
+            data-tooltip
             onclick={() => context.sheet.award()}
           >
             <i class="fas fa-trophy"></i>

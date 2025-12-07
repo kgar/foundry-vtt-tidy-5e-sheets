@@ -1,40 +1,5 @@
 # 5.2.x Compatibility Punch List
 
-## Actionable items from PRs, Merges, Commits, etc.
-
-## Primary Vehicle Notes
-
-- [ ] Primary Vehicle
-    - <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
-      - Actor base
-        - inventorySource getter on base actor and its usage throughout base actor handling (especially drag/drop)
-        - group sheet override of inventorySource
-        - isOwner checks against item itself rather than the actor when preparing items instead of `this.actor`
-        - default drop behavior changes
-        - new _onSortItem logic
-      - Character
-        - Looks to item parent rather than `this.actor` when getting advancement origin
-      - Group
-        - Overrides inventorySource with specific logic for dealing with primary vehicles
-        - Prepares in-built travel pace for context now
-        - member encumbrance context prep needs to account for vehicle `actor.system.getEncumbrance()` being async, and it needs to use the primary vehicle if set
-        - Currency updates need special handling to update Vehicle currency instead of the group
-        - Currency context prep / UI account for primary vehicle
-        - Context menu options  "DND5E.Group.Action.SetPrimaryVehicle" / "DND5E.Group.Action.UnsetPrimaryVehicle"
-          - Note conditions and callback
-        - Group actor now has `getTravelPace()`
-        - dedicated travel paces context data
-        - Overall Slowed movement UI
-        - Per-member Slowed moveiment UI
-        - Primary vehicle has special UI to it
-        - Apparently, group member Max HP is optional, probably due to vehicles not necessarily needing an HP value?
-      - "Inventory UI" -> document getter now accounts for the app's inventorySource. We could do similarly with our inventory component 👍
-- Group Sheet
-  - [ ] Add context menu for Set / Unset Primary Vehicle <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
-  - [ ] Add UI for primary vehicle on any tab where it appears
-  - [ ] Add Inventory toggle for showing Vehicle Inventory / Currency / Weight, versus Group Inventory / Currency
-    - [ ] Use inventorySource approach to keep parity with the default sheets
-
 ## Misc Vehicle notes
 
 - From: #6295 Add separate travel speeds to vehicles & party #6297 <https://github.com/foundryvtt/dnd5e/pull/6297> / <https://github.com/foundryvtt/dnd5e/pull/6297/files>
@@ -133,3 +98,38 @@
 - [x] Weapons sheet, "Siege Weapon" type, Siege Properties section is missing some fields: https://media.discordapp.net/attachments/1243307347682529423/1446352794457084026/image.png?ex=6933ac82&is=69325b02&hm=8b43aa5ee32887488088ca4e10c4bfb78e04d36e517a6d1819fd2c861f233230&=&format=webp&quality=lossless
 - [x] Equipment sheet, "Vehicle Equipment" type, Vehicle Properties section is missing some fields
 - [x] "DND5E.MovementUnits" loc key needs to be replaced
+
+## Primary Vehicle Notes
+
+> captured in https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/1501
+
+- [ ] Primary Vehicle
+    - <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
+      - Actor base
+        - inventorySource getter on base actor and its usage throughout base actor handling (especially drag/drop)
+        - group sheet override of inventorySource
+        - isOwner checks against item itself rather than the actor when preparing items instead of `this.actor`
+        - default drop behavior changes
+        - new _onSortItem logic
+      - Character
+        - Looks to item parent rather than `this.actor` when getting advancement origin
+      - Group
+        - Overrides inventorySource with specific logic for dealing with primary vehicles
+        - Prepares in-built travel pace for context now
+        - member encumbrance context prep needs to account for vehicle `actor.system.getEncumbrance()` being async, and it needs to use the primary vehicle if set
+        - Currency updates need special handling to update Vehicle currency instead of the group
+        - Currency context prep / UI account for primary vehicle
+        - Context menu options  "DND5E.Group.Action.SetPrimaryVehicle" / "DND5E.Group.Action.UnsetPrimaryVehicle"
+          - Note conditions and callback
+        - Group actor now has `getTravelPace()`
+        - dedicated travel paces context data
+        - Overall Slowed movement UI
+        - Per-member Slowed moveiment UI
+        - Primary vehicle has special UI to it
+        - Apparently, group member Max HP is optional, probably due to vehicles not necessarily needing an HP value?
+      - "Inventory UI" -> document getter now accounts for the app's inventorySource. We could do similarly with our inventory component 👍
+- Group Sheet
+  - [ ] Add context menu for Set / Unset Primary Vehicle <https://github.com/foundryvtt/dnd5e/pull/6316/files#diff-5cd0a46c8dcd0e0b13b66c96d7a7ace4d781ed671e1b365d8a0a82f2f13b0415>
+  - [ ] Add UI for primary vehicle on any tab where it appears
+  - [ ] Add Inventory toggle for showing Vehicle Inventory / Currency / Weight, versus Group Inventory / Currency
+    - [ ] Use inventorySource approach to keep parity with the default sheets
