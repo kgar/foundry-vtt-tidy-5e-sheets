@@ -16,6 +16,7 @@ import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { EventHelper } from 'src/utils/events';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { getTidyPerformanceSettings } from 'src/settings/settings.svelte';
 
 export type RenderResult<TContext> = {
   customContents: RenderedSheetPart[];
@@ -150,6 +151,16 @@ export function SvelteApplicationMixin<
       );
 
       return element;
+    }
+
+    _updateFrame(options: ApplicationRenderOptions) {
+      const performanceSettings = getTidyPerformanceSettings();
+
+      for (const [cssClass, toggle] of performanceSettings) {
+        this.element?.classList.toggle(cssClass, toggle);
+      }
+
+      super._updateFrame(options);
     }
 
     /**
