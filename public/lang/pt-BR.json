@@ -944,5 +944,12 @@
     "TIDY5E.InspirationAdd": "Adicionar Inspiração",
     "TIDY5E.InspirationRemove": "Remover Inspiração",
     "TIDY5E.LegendaryAbbr": "AL",
-    "TIDY5E.LairAbbr": "AC"
+    "TIDY5E.LairAbbr": "AC",
+    "TIDY5E.AddCustom": "Adicionar {name} Personalizado",
+    "TIDY5E.CompendiumBrowser": "Adicionar {name} do Compêndio",
+    "TIDY5E.SheetMode.Edit": "Mudar para Modo de Jogo",
+    "TIDY5E.SheetMode.Play": "Mudar para Modo de Edição",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animal de Tração",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animais de Tração",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Transfere todas as moedas para o ator principal"
 }
