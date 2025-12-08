@@ -101,6 +101,7 @@
       </span>
       <div class="divider-dot {context.enableXp ? '' : 'hide-under-600'}"></div>
     {/if}
+    {#if alignment}
     <span
       class="alignment {context.speeds.secondary.length > 0
         ? context.enableXp
@@ -121,6 +122,7 @@
           ? 'hide-under-600'
           : 'hide-under-700'}"
     ></div>
+    {/if}
     {#each context.classes as entry, i}
       <span class="class">
         <span class="color-text-gold font-label-medium">{entry.name}</span>

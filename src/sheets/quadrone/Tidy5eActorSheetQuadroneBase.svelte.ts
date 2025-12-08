@@ -393,7 +393,7 @@ export function Tidy5eActorSheetQuadroneBase<
         src,
         token: showToken,
         path: showToken ? 'prototypeToken.texture.src' : 'img',
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+        shape: showToken ? 'token' : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
         isVideo,
         isRandom,
       };

@@ -81,7 +81,7 @@
             <ProficiencyCycle
               actor={context.actor}
               aria-label={localize(skill.hover)}
-              data-tooltip
+              data-tooltip=""
               disabled={!context.unlocked}
               path="system.skills.{skill.key}.value"
               type="skill"

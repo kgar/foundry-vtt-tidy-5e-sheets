@@ -24,7 +24,7 @@ export type ThemeableSheetType =
   | Tidy5eContainerSheetQuadrone;
 
 export class ThemeQuadrone {
-  static readonly DEFAULT_PORTRAIT_SHAPE: PortraitShape = 'round';
+  static readonly DEFAULT_PORTRAIT_SHAPE: PortraitShape = 'transparent';
   // a collection of stylesheets currently only used for popped out stylesheets
   private static readonly _externalStylesheets: Set<CSSStyleSheet> = new Set();
 
