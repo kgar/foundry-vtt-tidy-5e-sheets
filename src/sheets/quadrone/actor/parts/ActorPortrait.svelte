@@ -26,6 +26,8 @@
   );
 
   let currentPortraitShape = $derived(context.portrait.shape);
+  console.log('DEBUG context.portrait:', context.portrait);
+  console.log('DEBUG currentPortraitShape:', currentPortraitShape);
 
   const availableShapes = ThemeQuadrone.getActorPortraitShapes();
 
