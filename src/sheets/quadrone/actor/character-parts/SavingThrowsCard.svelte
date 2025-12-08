@@ -57,7 +57,7 @@
     {/each}
     <!-- </ul> -->
     <!-- Concentration here -->
-    {#if context.saves.concentration}
+    {#if 'spellcasting' in context && context.spellcasting?.length > 0 && context.saves.concentration}
       {@const conc = context.saves.concentration}
       {@const tooltip = localize('DND5E.AbilityConfigure', {
         ability: context.saves.concentration.label,
