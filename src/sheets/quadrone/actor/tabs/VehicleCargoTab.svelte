@@ -17,6 +17,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
+    import ContainerPanel from '../../shared/ContainerPanel.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -40,9 +41,7 @@
     ),
   );
 
-  const localize = FoundryAdapter.localize;
-
-  let showSheetPin = $derived(
+  let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       tabId,
@@ -63,8 +62,15 @@
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
 
-  {#if showSheetPin}
+  {#if showSheetPins}
     <SheetPins />
+  {/if}
+
+    {#if context.showContainerPanel && !!context.containerPanelItems.length}
+    <ContainerPanel
+      {searchCriteria}
+      containerPanelItems={context.containerPanelItems}
+    />
   {/if}
 
   <InventoryTables

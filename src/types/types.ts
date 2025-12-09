@@ -1538,6 +1538,7 @@ export type VehicleSheetQuadroneContext = {
     biography: string;
   };
   conditions: Dnd5eActorCondition[];
+  containerPanelItems: ContainerPanelItemContext[];
   crew: GroupMembersQuadroneContext;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
@@ -1548,6 +1549,7 @@ export type VehicleSheetQuadroneContext = {
   passengers: number;
   scale: number;
   size: ActorSizeContext;
+  showContainerPanel: boolean;
   speeds: ActorSpeedSenseEntryContext[];
   traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;

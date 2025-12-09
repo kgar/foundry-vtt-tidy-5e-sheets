@@ -24,19 +24,19 @@
       - [ ] Crew
       - [ ] Passengers
       - [ ] Draft Animals
-  - [ ] Cargo
+  - [x] Cargo
     - [x] Runtime, component
-    - [ ] Contains
-      - [ ] Action bar
-        - [ ] Search
-        - [ ] Filters / Advanced Filters
-        - [ ] Sort
-        - [ ] Section config
-      - [ ] Sheet pins?
-      - [ ] Encumbrance
-      - [ ] Container panel?
-      - [ ] Sections of all inventory except Siege Weapons and Vehicle Equipment
-      - [ ] Currency, conversion, and Add button
+    - [x] Contains
+      - [x] Action bar
+        - [x] Search
+        - [x] Filters / Advanced Filters
+        - [x] Sort
+        - [x] Section config
+      - [x] Sheet pins
+      - [x] Container panel?
+      - [x] Sections of all inventory except Siege Weapons and Vehicle Equipment
+      - [x] Encumbrance
+      - [x] Currency, conversion, and Add button
   - [ ] Effects
     - [x] Runtime, component
     - [ ] Action bar (search)

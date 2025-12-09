@@ -21,12 +21,13 @@ import { Activities } from 'src/features/activities/activities';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
-import type { CurrencyContext } from 'src/types/item.types';
+import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 const localize = FoundryAdapter.localize;
 
@@ -113,6 +114,9 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       inventory: [],
       crew: this.actor.system.cargo.crew,
       conditions: conditions,
+      containerPanelItems: await Inventory.getContainerPanelItems(
+        actorContext.items
+      ),
       currencies,
       effects: enhancedEffectSections,
       encumbrance: await this.actor.system.getEncumbrance(),
@@ -125,6 +129,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       features: [],
       passengers: this.actor.system.cargo.passengers,
       scale: this.actor.system.attributes.scale,
+      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       size: {
         key: this.actor.system.traits.size,
         label:
@@ -328,7 +333,18 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
   }
 
-  protected _getSheetPinTabIdsForItem(item: any): string[] {
-    return [CONSTANTS.TAB_VEHICLE_ATTRIBUTES];
+  protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
+    const tabIds: string[] = [];
+
+    // TODO: Somehow share the mountable logic somewhere
+    const originTab = Inventory.isItemInventoryType(item) && !item.system.isMountable
+      ? CONSTANTS.TAB_ACTOR_INVENTORY
+      : CONSTANTS.TAB_STATBLOCK;
+
+    if (originTab) {
+      tabIds.push(originTab);
+    }
+
+    return tabIds;
   }
 }
