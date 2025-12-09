@@ -431,7 +431,6 @@ export class Tidy5eVehicleSheet
   _prepareItem(item: Item5e, context: VehicleSheetContext): VehicleItemContext {
     const { uses } = item.system;
     const ctx: VehicleItemContext = {};
-    ctx.canToggle = false;
     ctx.hasUses = uses && uses.max > 0;
 
     // Save
@@ -509,7 +508,7 @@ export class Tidy5eVehicleSheet
     const cargoTypes = Inventory.getInventoryTypes();
     const isCargo =
       cargoTypes.includes(itemData.type) &&
-      this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO;
+      this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO_LEGACY;
     foundry.utils.setProperty(itemData, 'flags.dnd5e.vehicleCargo', isCargo);
 
     // Create a Consumable spell scroll on the Inventory tab

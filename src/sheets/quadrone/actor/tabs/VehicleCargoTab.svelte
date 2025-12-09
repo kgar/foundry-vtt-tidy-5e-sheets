@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settings } from 'src/settings/settings.svelte';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import ActorInventoryFooter from 'src/sheets/quadrone/actor/parts/ActorInventoryFooter.svelte';
   import ActorEncumbranceBar from 'src/sheets/quadrone/actor/parts/ActorEncumbranceBar.svelte';
@@ -34,7 +33,7 @@
 
   let cargo = $derived(
     SheetSections.configureInventory(
-      context.items,
+      context.inventory,
       tabId,
       UserSheetPreferencesService.getByType(context.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[tabId],
@@ -61,7 +60,7 @@
   });
 </script>
 
-<div class="vehicle-tab-content vehicle-cargo-content">
+<div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
 
   {#if showSheetPin}
@@ -69,7 +68,7 @@
   {/if}
 
   <InventoryTables
-    sections={context.cargo}
+    sections={cargo}
     editable={context.editable}
     {searchCriteria}
     itemContext={context.itemContext}
@@ -79,11 +78,9 @@
   />
 
   <div class="vehicle-footer">
-    {#if settings.value.useVehicleEncumbranceBar && context.encumbrance}
-      <div class="encumbrance-container">
-        <ActorEncumbranceBar actor={context.actor} />
-      </div>
-    {/if}
+    <div class="encumbrance-container">
+      <ActorEncumbranceBar actor={context.actor} />
+    </div>
     <ActorInventoryFooter useAttunement={false} />
   </div>
 </div>

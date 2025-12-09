@@ -21,7 +21,7 @@ export const VehicleSheetQuadroneRuntime =
         iconClass: 'fa-solid fa-wreath-laurel',
       },
       {
-        id: CONSTANTS.TAB_VEHICLE_CARGO,
+        id: CONSTANTS.TAB_ACTOR_INVENTORY,
         title: 'DND5E.VEHICLE.Tabs.Cargo',
         content: {
           component: VehicleCargoTab,
@@ -64,7 +64,7 @@ export const VehicleSheetQuadroneRuntime =
     [
       CONSTANTS.TAB_STATBLOCK,
       CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
-      CONSTANTS.TAB_VEHICLE_CARGO,
+      CONSTANTS.TAB_ACTOR_INVENTORY,
       CONSTANTS.TAB_EFFECTS,
       CONSTANTS.TAB_DESCRIPTION,
     ]

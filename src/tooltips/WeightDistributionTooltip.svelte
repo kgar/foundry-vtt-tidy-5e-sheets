@@ -10,11 +10,15 @@
     currencyWeight: number;
   }
 
-  let { sheetDocument, fullWeight, currencyWeight }: Props = $props();
+  const { sheetDocument, fullWeight, currencyWeight }: Props = $props();
 
-  let itemsWeight = $derived((fullWeight - currencyWeight).toNearest(0.1));
+  const readableItemsWeight = $derived(
+    FoundryAdapter.formatNumber((fullWeight - currencyWeight).toNearest(0.1)),
+  );
 
-  let unitsAbbreviation = $derived(FoundryAdapter.getWeightUnit());
+  const unitsAbbreviation = $derived(FoundryAdapter.getWeightUnit());
+
+  const readableCurrencyWeight = $derived(FoundryAdapter.formatNumber(currencyWeight));
 
   let tooltip: HTMLElement;
 
@@ -48,7 +52,7 @@
           <span class="truncate">{localize('DND5E.Items')}</span>
         </span>
         <span>
-          <span class="value">{itemsWeight.toNearest(0.01)}</span>
+          <span class="value">{readableItemsWeight}</span>
           <span class="units color-text-lighter">{unitsAbbreviation}</span>
         </span>
       </li>
@@ -58,7 +62,7 @@
           <span class="truncate">{localize('DND5E.Currency')}</span>
         </span>
         <span>
-          <span class="value">{currencyWeight.toNearest(0.01)}</span>
+          <span class="value">{readableCurrencyWeight}</span>
           <span class="units color-text-lighter">{unitsAbbreviation}</span>
         </span>
       </li>

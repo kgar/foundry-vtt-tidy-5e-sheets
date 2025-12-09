@@ -6,12 +6,11 @@ import type {
 import VehicleSheet from './actor/VehicleSheet.svelte';
 import { mount } from 'svelte';
 import type {
-  SimpleEditableColumn,
-  VehicleCargoSection,
-  VehicleFeatureSection,
   VehicleItemContext,
   VehicleSheetQuadroneContext,
   ActorSheetQuadroneContext,
+  InventorySection,
+  ActorInventoryTypes,
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
@@ -25,7 +24,9 @@ import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext } from 'src/types/item.types';
 import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
+import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import SectionActions from 'src/features/sections/SectionActions';
 
 const localize = FoundryAdapter.localize;
 
@@ -40,7 +41,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   }
 
   static DEFAULT_OPTIONS: Partial<
-    ApplicationConfiguration & { dragDrop:  Partial<DragDropConfiguration>[] }
+    ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
     position: {
       width: 740,
@@ -109,12 +110,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     const context: VehicleSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
-      cargo: [],
+      inventory: [],
       crew: this.actor.system.cargo.crew,
       conditions: conditions,
       currencies,
       effects: enhancedEffectSections,
-      encumbrance: this.actor.system.attributes.encumbrance,
+      encumbrance: await this.actor.system.getEncumbrance(),
       enriched: {
         biography: await foundry.applications.ux.TextEditor.enrichHTML(
           this.actor.system.details.biography.value,
@@ -158,237 +159,122 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   }
 
   _prepareItems(context: VehicleSheetQuadroneContext) {
-    // TODO: Replace with Tidy Column Selection implementation
-    const cargoColumns: SimpleEditableColumn[] = [
-      {
-        label: localize('DND5E.Quantity'),
-        css: 'item-qty',
-        property: 'quantity',
-        editable: 'Number',
-      },
-    ];
-
-    // TODO: Replace with Tidy Column Selection implementation
-    const equipmentColumns: SimpleEditableColumn[] = [
-      {
-        label: localize('DND5E.Quantity'),
-        css: 'item-qty',
-        property: 'system.quantity',
-        editable: 'Number',
-      },
-      {
-        label: localize('DND5E.AC'),
-        css: 'item-ac',
-        property: 'system.armor.value',
-      },
-      {
-        label: localize('DND5E.HP'),
-        css: 'item-hp',
-        property: 'system.hp.value',
-        maxProperty: 'system.hp.max',
-        editable: 'Number',
-      },
-      {
-        label: localize('DND5E.Threshold'),
-        css: 'item-threshold',
-        property: 'threshold',
-      },
-    ];
-
-    const features: Record<string, VehicleFeatureSection> = {
-      actions: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: localize('DND5E.ActionPl'),
+    const statblock: Record<string, InventorySection> = {
+      features: {
+        type: CONSTANTS.SECTION_TYPE_INVENTORY,
         items: [],
-        hasActions: true,
-        crewable: true,
-        key: 'actions',
-        dataset: { type: 'feat' },
-        columns: [
-          {
-            label: localize('DND5E.Cover'),
-            css: 'item-cover',
-            property: 'cover',
-          },
-        ],
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
         canCreate: true,
-      },
-      equipment: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: localize(CONFIG.Item.typeLabels.equipment),
-        items: [],
-        crewable: true,
-        dataset: { type: 'equipment', 'system.type.value': 'vehicle' },
-        columns: equipmentColumns,
-        key: 'equipment',
+        label: 'DND5E.Features',
+        dataset: {
+          ['type']: CONSTANTS.ITEM_TYPE_FEAT,
+        },
+        key: 'features',
+        rowActions: [],
+        sectionActions: [],
         show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      passive: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: localize('DND5E.Features'),
-        items: [],
-        dataset: { type: 'feat' },
-        key: 'passive',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
-      },
-      reactions: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: localize('DND5E.ReactionPl'),
-        items: [],
-        dataset: { type: 'feat' },
-        key: 'reactions',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        canCreate: true,
       },
       weapons: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
+        type: CONSTANTS.SECTION_TYPE_INVENTORY,
         items: [],
-        crewable: true,
-        dataset: { type: 'weapon', 'system.weaponType': 'siege' },
-        columns: equipmentColumns,
-        key: 'weapons',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
         canCreate: true,
-      },
-    };
-
-    context.items.forEach((item) => {
-      const ctx = (context.itemContext[item.id] ??= {});
-      this._prepareItem(item, ctx);
-    });
-
-    const cargo: Record<string, VehicleCargoSection> = {
-      crew: {
-        type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: localize('DND5E.VehicleCrew'),
-        items: context.actor.system.cargo.crew,
-        css: 'cargo-row crew',
-        editableName: true,
-        dataset: { type: 'crew' },
-        columns: cargoColumns,
-        key: 'crew',
+        label: 'TYPES.Item.weaponPl',
+        dataset: {
+          ['type']: CONSTANTS.ITEM_TYPE_WEAPON,
+          ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_SIEGE_WEAPON,
+        },
+        key: 'weapons',
+        rowActions: [],
+        sectionActions: [],
         show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
       },
-      passengers: {
-        type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: localize('DND5E.VehiclePassengers'),
-        items: context.actor.system.cargo.passengers,
-        css: 'cargo-row passengers',
-        editableName: true,
-        dataset: { type: 'passengers' },
-        columns: cargoColumns,
-        key: 'passengers',
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-      },
-      cargo: {
-        type: CONSTANTS.SECTION_TYPE_CARGO,
-        label: localize('DND5E.VehicleCargo'),
+      equipment: {
+        type: CONSTANTS.SECTION_TYPE_INVENTORY,
         items: [],
-        dataset: { type: 'loot' },
-        columns: [
-          {
-            label: localize('DND5E.Quantity'),
-            css: 'item-qty',
-            property: 'system.quantity',
-            editable: 'Number',
-          },
-          {
-            label: localize('DND5E.Price'),
-            css: 'item-price',
-            property: 'system.price.value',
-            editable: 'Number',
-          },
-          {
-            label: localize('DND5E.Weight'),
-            css: 'item-weight',
-            property: 'system.weight.value',
-            editable: 'Number',
-          },
-        ],
-        key: CONSTANTS.SECTION_TYPE_CARGO,
+        canCreate: true,
+        label: 'TYPES.Item.equipmentPl',
+        dataset: {
+          ['type']: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+          ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_VEHICLE_EQUIPMENT,
+        },
+        key: 'equipment',
+        rowActions: [],
+        sectionActions: [],
         show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
       },
     };
 
-    const baseUnits =
-      CONFIG.DND5E.encumbrance.baseUnits[
-        this.actor.type as keyof typeof CONFIG.DND5E.encumbrance.baseUnits
-      ] ?? CONFIG.DND5E.encumbrance.baseUnits.default;
-    const units = game.settings.get('dnd5e', 'metricWeightUnits')
-      ? baseUnits.metric
-      : baseUnits.imperial;
+    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { hasActionsTab: true }
+    );
 
-    // Classify items owned by the vehicle and compute total cargo weight
-    let totalWeight = 0;
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections({
+        rowActions: inventoryRowActions,
+      });
+
+    const inventoryTypes = Inventory.getInventoryTypes();
+
     for (const item of context.items) {
       const ctx = (context.itemContext[item.id] ??= {});
-      this._prepareCrewedItem(item, ctx);
+      this._prepareItem(item, ctx);
 
-      // Handle cargo explicitly
-      const isCargo = item.flags.dnd5e?.vehicleCargo === true;
-      if (isCargo) {
-        totalWeight += item.system.totalWeightin?.(units) ?? 0;
-        cargo.cargo.items.push(item);
-        continue;
+      // partition to section
+      if (Inventory.isItemInventoryType(item) && !item.system.isMountable) {
+        // Cargo
+        Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+          canCreate: true,
+          rowActions: inventoryRowActions,
+        });
+      } else {
+        // Statblock
+        const section =
+          item.type === CONSTANTS.ITEM_TYPE_WEAPON
+            ? 'weapons'
+            : item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT
+            ? 'equipment'
+            : 'features';
+
+        statblock[section].items.push(item);
       }
 
-      // Handle non-cargo item types
-      switch (item.type) {
-        case 'weapon':
-          features.weapons.items.push(item);
-          break;
-        case 'equipment':
-          features.equipment.items.push(item);
-          break;
-        case 'feat':
-          // TODO: Determine the best way to delineate active, passive, and reaction-based item sections.
-          const firstActivityActivationType =
-            item.system.activities?.contents[0]?.activation?.type;
-          if (
-            !firstActivityActivationType ||
-            firstActivityActivationType === 'none'
-          ) {
-            features.passive.items.push(item);
-          } else if (firstActivityActivationType === 'reaction') {
-            features.reactions.items.push(item);
-          } else {
-            features.actions.items.push(item);
-          }
-          break;
-        default:
-          totalWeight += item.system.totalWeightIn?.(units) ?? 0;
-          cargo.cargo.items.push(item);
-      }
+      // TODO: Custom sections?
+
+      context.features = Object.values(statblock);
+      context.inventory = Object.values(inventory);
+
+      context.features.forEach((section) => {
+        section.sectionActions = SectionActions.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+      });
+
+      context.inventory.forEach((section) => {
+        section.sectionActions = SectionActions.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+      });
+
+      SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+        context.actor,
+        CONSTANTS.TAB_ACTOR_INVENTORY
+      ).forEach((s) => {
+        inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+          canCreate: true,
+          rowActions: inventoryRowActions,
+        });
+      });
     }
-
-    // Update the rendering context data
-    context.features = Object.values(features);
-    context.cargo = Object.values(cargo);
   }
 
   protected _prepareItem(item: any, ctx: VehicleItemContext) {
     const { uses } = item.system;
-    ctx.canToggle = false;
     ctx.hasUses = uses && uses.max > 0;
 
     // Save
@@ -402,6 +288,11 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       item,
       item.system.activities
     )?.map(Activities.getActivityItemContext);
+
+    // Crew Assignment
+    if (item.system.isMountable) {
+      // TODO
+    }
   }
 
   /**
@@ -441,4 +332,3 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     return [CONSTANTS.TAB_VEHICLE_ATTRIBUTES];
   }
 }
-

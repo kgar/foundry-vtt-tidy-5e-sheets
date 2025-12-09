@@ -8,7 +8,7 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
-  import FeatureTables from '../../shared/FeatureTables.svelte';
+  import InventoryTables from '../../shared/InventoryTables.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -37,10 +37,11 @@
   });
 </script>
 
-<FeatureTables
+<InventoryTables
   sections={features}
   {inlineToggleService}
   itemContext={context.itemContext}
   {searchCriteria}
   sheetDocument={context.actor}
+  editable={context.editable}
 />

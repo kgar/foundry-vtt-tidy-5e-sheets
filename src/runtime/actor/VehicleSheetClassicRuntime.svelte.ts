@@ -38,7 +38,7 @@ const defaultVehicleClassicTabs: RegisteredTab<VehicleSheetContext>[] = [
     layout: 'classic',
   },
   {
-    id: CONSTANTS.TAB_VEHICLE_CARGO,
+    id: CONSTANTS.TAB_VEHICLE_CARGO_LEGACY,
     title: 'DND5E.VEHICLE.Tabs.Cargo',
     content: {
       component: VehicleCargoTab,

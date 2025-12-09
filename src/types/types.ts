@@ -229,9 +229,9 @@ export type ActivitySection = {
 } & TidySectionBase;
 
 export type VehicleFeatureSection = {
-  crewable?: boolean;
-  columns?: SimpleEditableColumn[];
-} & FeatureSection;
+  type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
+  items: Item5e[];
+} & TidySectionBase;
 
 export type SimpleEditableColumn = {
   label: string;
@@ -561,7 +561,6 @@ export type NpcSheetContext = {
 export type VehicleItemContext = {
   actionSubtitle?: string;
   activities?: ActivityItemContext[];
-  canToggle?: boolean;
   containerContents?: ContainerContents;
   cover?: string;
   hasUses?: boolean;
@@ -1538,13 +1537,13 @@ export type VehicleSheetQuadroneContext = {
   enriched: {
     biography: string;
   };
-  cargo: VehicleCargoSection[];
   conditions: Dnd5eActorCondition[];
   crew: GroupMembersQuadroneContext;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
-  features: VehicleFeatureSection[];
+  features: InventorySection[];
+  inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
   passengers: number;
   scale: number;
