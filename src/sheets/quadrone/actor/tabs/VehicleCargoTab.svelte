@@ -22,7 +22,7 @@
   let context = $derived(getVehicleSheetQuadroneContext());
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-    
+
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
@@ -31,15 +31,15 @@
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
-    
-    let cargo = $derived(
-      SheetSections.configureInventory(
-        context.items,
-        tabId,
-        UserSheetPreferencesService.getByType(context.actor.type),
-        TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-      ),
-    );
+
+  let cargo = $derived(
+    SheetSections.configureInventory(
+      context.items,
+      tabId,
+      UserSheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
+    ),
+  );
 
   const localize = FoundryAdapter.localize;
 
@@ -68,7 +68,7 @@
     <SheetPins />
   {/if}
 
-  <InventoryTables 
+  <InventoryTables
     sections={context.cargo}
     editable={context.editable}
     {searchCriteria}
