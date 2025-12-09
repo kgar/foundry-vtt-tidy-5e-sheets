@@ -153,7 +153,7 @@ export class ItemFilterRuntime {
       ]),
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
-      [CONSTANTS.TAB_NPC_STATBLOCK]: new Set<string>([
+      [CONSTANTS.TAB_STATBLOCK]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
@@ -447,7 +447,7 @@ export class ItemFilterRuntime {
       },
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
-      [CONSTANTS.TAB_NPC_STATBLOCK]: {
+      [CONSTANTS.TAB_STATBLOCK]: {
         'DND5E.ItemActivationCost': [
           {
             ...defaultItemFilters.activationCostAction,

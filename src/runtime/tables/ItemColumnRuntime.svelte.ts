@@ -219,7 +219,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
       },
       [CONSTANTS.SHEET_TYPE_NPC]: {
-        [CONSTANTS.TAB_NPC_STATBLOCK]: {
+        [CONSTANTS.TAB_STATBLOCK]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { ...columns.recovery, order: 100, priority: 400 },
             uses: { ...columns.uses, order: 200, priority: 600 },

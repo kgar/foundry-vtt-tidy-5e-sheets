@@ -49,7 +49,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_NPC_STATBLOCK;
+    this.currentTabId = CONSTANTS.TAB_STATBLOCK;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -461,7 +461,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       this.actor,
-      CONSTANTS.TAB_NPC_STATBLOCK
+      CONSTANTS.TAB_STATBLOCK
     ).forEach((sectionName) => {
       featureSections[sectionName] ??= createNewStatblockSection(
         sectionName,
@@ -605,7 +605,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   }
 
   protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [CONSTANTS.TAB_NPC_STATBLOCK];
+    const tabIds: string[] = [CONSTANTS.TAB_STATBLOCK];
 
     const originTab = Inventory.isItemInventoryType(item)
       ? CONSTANTS.TAB_ACTOR_INVENTORY

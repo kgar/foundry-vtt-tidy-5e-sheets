@@ -888,7 +888,7 @@ export function createSettings() {
           default: [
             CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
             CONSTANTS.TAB_VEHICLE_CARGO,
-            CONSTANTS.TAB_VEHICLE_PASSENGERS_AND_CREW,
+            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
             CONSTANTS.TAB_EFFECTS,
             CONSTANTS.TAB_VEHICLE_DESCRIPTION_LEGACY,
           ],

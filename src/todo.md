@@ -1,5 +1,58 @@
 ## kgar To Do
 
+### Vehicle Sheet
+
+- [ ] Ensure the following tabs exist
+  - [ ] Statblock
+    - [x] Runtime, component
+    - [ ] Contains
+      - [ ] Action bar
+        - [ ] Search
+        - [ ] Filters / Advanced Filters
+        - [ ] Sort
+        - [ ] Section config
+      - [ ] Sheet pins?
+      - [ ] Features
+      - [ ] Siege Weapons
+      - [ ] Vehicle Equipment
+  - [ ] Crew & Passengers
+    - [x] Runtime, component
+    - [ ] Contains 
+      - [ ] Action Bar
+        - [ ] Search
+      - [ ] Sheet pins?
+      - [ ] Crew
+      - [ ] Passengers
+      - [ ] Draft Animals
+  - [ ] Cargo
+    - [x] Runtime, component
+    - [ ] Contains
+      - [ ] Action bar
+        - [ ] Search
+        - [ ] Filters / Advanced Filters
+        - [ ] Sort
+        - [ ] Section config
+      - [ ] Sheet pins?
+      - [ ] Encumbrance
+      - [ ] Container panel?
+      - [ ] Sections of all inventory except Siege Weapons and Vehicle Equipment
+      - [ ] Currency, conversion, and Add button
+  - [ ] Effects
+    - [x] Runtime, component
+    - [ ] Action bar (search)
+    - [ ] Effects
+    - [ ] Conditions
+  - [x] Description
+    - [x] Runtime, component
+    - [x] Implement
+- [ ] Description tab needs styles
+  - [ ] Of note: the description container needs to stretch the remainder of the tab area. It's half height and scrolling, editing or reading.
+
+### Vehicle Sheet Questions
+
+- Should she only show Crew and Passengers tab when they've specified having at least one Crew or Passenger?
+  - I'm thinking no, because we want draft animals in there as well
+
 ### Short List
 
 - [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair

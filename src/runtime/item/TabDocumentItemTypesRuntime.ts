@@ -11,7 +11,7 @@ export class TabDocumentItemTypesRuntime {
   static initOnReady() {
     this._registeredTypes = {
       [CONSTANTS.TAB_CHARACTER_FEATURES]: ['feat'],
-      [CONSTANTS.TAB_NPC_STATBLOCK]: ['feat'],
+      [CONSTANTS.TAB_STATBLOCK]: ['feat'],
       [CONSTANTS.TAB_ACTOR_INVENTORY]: Inventory.getInventoryTypes(),
       [CONSTANTS.TAB_ACTOR_SPELLBOOK]: ['spell'],
     };

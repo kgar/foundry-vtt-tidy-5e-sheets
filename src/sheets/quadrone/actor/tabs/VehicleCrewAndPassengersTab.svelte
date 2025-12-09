@@ -39,7 +39,7 @@
   const showSheetPin = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
-      CONSTANTS.TAB_VEHICLE_CREW,
+      CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
       'showSheetPins',
     ) ?? true,
   );
@@ -51,9 +51,9 @@
   let sections: GroupMemberSection[] = $derived(
     SheetSections.configureGroupMembers(
       context.crew.sections,
-      CONSTANTS.TAB_VEHICLE_CREW,
+      CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
       UserSheetPreferencesService.getByType(context.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_VEHICLE_CREW],
+      TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS],
     ),
   );
 
@@ -63,7 +63,7 @@
       settings: [
         SheetPinsProvider.getGlobalSectionSetting(
           context.document.type,
-          CONSTANTS.TAB_VEHICLE_CREW,
+          CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
         ),
       ],
     },
@@ -93,19 +93,10 @@
 <MembersTabSidebar />
 
 <section
-  class="group-tab-content group-members-content flexcol"
+  class="vehicle-tab-content flexcol"
   bind:this={sectionsContainer}
 >
-  <GroupMembersActionBar
-    bind:searchCriteria
-    {sections}
-    tabId={CONSTANTS.TAB_MEMBERS}
-    {tabOptionGroups}
-  />
-
-  {#if showSheetPin}
-    <SheetPins />
-  {/if}
+  <!-- TODO: Action Bar -->
 
   {#each sections as section (section.key)}
     {@const hasViewableItems =
