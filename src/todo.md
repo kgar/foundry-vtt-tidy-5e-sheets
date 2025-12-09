@@ -37,15 +37,14 @@
       - [x] Sections of all inventory except Siege Weapons and Vehicle Equipment
       - [x] Encumbrance
       - [x] Currency, conversion, and Add button
-  - [ ] Effects
+  - [x] Effects
     - [x] Runtime, component
-    - [ ] Action bar (search)
-    - [ ] Effects
-    - [ ] Conditions
+    - [x] Effects
+    - [x] Conditions
   - [x] Description
     - [x] Runtime, component
     - [x] Implement
-- [ ] Implement VehicleTraits.svelte
+- [x] Implement VehicleTraits.svelte
 - [ ] Determine where fields will go
   - [ ] system.attributes.actions.stations toggle
   - [ ] Actions max
@@ -67,6 +66,7 @@
   - [ ] Be able to see crew member assignments
 - [ ] Description tab needs styles
   - [ ] Of note: the description container needs to stretch the remainder of the tab area. It's half height and scrolling, editing or reading.
+- [ ] Actor Effects Action bar with search?
 
 ### Vehicle Sheet Questions
 

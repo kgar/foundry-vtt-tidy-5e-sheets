@@ -4,7 +4,7 @@
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { SpecialTraitsApplication } from 'src/applications-quadrone/special-traits/SpecialTraitsApplication.svelte';
   import NpcTraitCreatureType from './traits/NpcTraitCreatureType.svelte';
-  import NpcTraitSize from './traits/NpcTraitSize.svelte';
+  import ActorTraitSize from '../parts/ActorTraitSize.svelte';
   import ActorCustomTraitListEntries from '../parts/ActorCustomTraitListEntries.svelte';
 
   let context = $derived(getNpcSheetQuadroneContext());
@@ -100,7 +100,7 @@
 
   <!-- Size -->
   {#if context.unlocked}
-    <NpcTraitSize />
+    <ActorTraitSize />
   {/if}
 
   <!-- Creature Type -->
