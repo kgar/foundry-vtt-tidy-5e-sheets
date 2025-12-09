@@ -45,6 +45,26 @@
   - [x] Description
     - [x] Runtime, component
     - [x] Implement
+- [ ] Implement VehicleTraits.svelte
+- [ ] Determine where fields will go
+  - [ ] system.attributes.actions.stations toggle
+  - [ ] Actions max
+  - [ ] system.attributes.actions.spent (shown as Actions pips in default)
+  - [ ] Action thresholds
+  - [ ] Armor class, Armor class config
+  - [ ] Cost / units
+  - [ ] Size
+  - [ ] Weight / units
+  - [ ] Keel / units
+  - [ ] Beam / units
+  - [ ] Crew Max
+  - [ ] Passenger Max
+  - [ ] Quality tracking (quality toggle?)
+- [ ] Put Source in sheet header
+- [ ] Handle use cases
+  - [ ] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
+  - [ ] Unassign crew member from crew-able vehicle item
+  - [ ] Be able to see crew member assignments
 - [ ] Description tab needs styles
   - [ ] Of note: the description container needs to stretch the remainder of the tab area. It's half height and scrolling, editing or reading.
 
