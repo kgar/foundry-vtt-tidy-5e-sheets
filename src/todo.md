@@ -67,9 +67,7 @@
   - [ ] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
   - [ ] Unassign crew member from crew-able vehicle item
   - [ ] Be able to see crew member assignments
-- [ ] Description tab needs styles
-  - [ ] Of note: the description container needs to stretch the remainder of the tab area. It's half height and scrolling, editing or reading.
-- [ ] Actor Effects Action bar with search?
+
 
 ### Vehicle Sheet Questions
 
