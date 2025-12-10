@@ -703,7 +703,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     });
 
     context.features = Object.values(features);
-
     context.features.forEach(applyStandardItemHeaderActions);
   }
 

@@ -9,6 +9,13 @@
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
   import InventoryTables from '../../shared/InventoryTables.svelte';
+  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
+  import SheetPins from '../../shared/SheetPins.svelte';
+  import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
+  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -23,9 +30,31 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  // Vehicle features don't use SheetSections.configureFeatures
-  // They are already configured in the sheet class
-  let features = $derived(context.features);
+  let tabOptionGroups: SectionOptionGroup[] = $derived([
+    {
+      title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
+      settings: [
+        SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),
+      ],
+    },
+  ]);
+
+  let showSheetPins = $derived(
+    UserSheetPreferencesService.getDocumentTypeTabPreference(
+      context.document.type,
+      tabId,
+      'showSheetPins',
+    ) ?? true,
+  );
+
+  let features = $derived(
+    SheetSections.configureInventory(
+      context.features,
+      tabId,
+      UserSheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
+    ),
+  );
 
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
@@ -36,6 +65,17 @@
     });
   });
 </script>
+
+<ItemsActionBar
+  bind:searchCriteria
+  sections={features}
+  {tabId}
+  {tabOptionGroups}
+/>
+
+{#if showSheetPins}
+  <SheetPins />
+{/if}
 
 <InventoryTables
   sections={features}

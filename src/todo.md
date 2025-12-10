@@ -8,16 +8,17 @@
     - [x] Prep
       - [x] itemContext, mountable items, add crew slots array
         - [x] ensure overflow assignments are included beyond the max
-    - [ ] Contains
-      - [ ] Action bar
-        - [ ] Search
-        - [ ] Filters / Advanced Filters
-        - [ ] Sort
-        - [ ] Section config
-      - [ ] Sheet pins?
+    - [x] Contains
+      - [x] Action bar
+        - [x] Search
+        - [x] Filters / Advanced Filters
+        - [x] Sort
+        - [x] Section config
+      - [x] Sheet pins
       - [x] Features
       - [x] Siege Weapons
       - [x] Vehicle Equipment
+    - [ ] Column spec scaffolding
   - [ ] Crew & Passengers
     - [x] Runtime, component
     - [ ] Contains 
@@ -27,6 +28,7 @@
       - [ ] Crew
       - [ ] Passengers
       - [ ] Draft Animals
+    - [ ] Column spec scaffolding
   - [x] Cargo
     - [x] Runtime, component
     - [x] Contains

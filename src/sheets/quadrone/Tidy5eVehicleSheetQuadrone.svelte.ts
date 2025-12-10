@@ -165,7 +165,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
     const statblock: Record<string, InventorySection> = {
-      features: {
+      [CONSTANTS.ITEM_TYPE_FEAT]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
         items: [],
         canCreate: true,
@@ -173,12 +173,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         dataset: {
           ['type']: CONSTANTS.ITEM_TYPE_FEAT,
         },
-        key: 'features',
+        key: CONSTANTS.ITEM_TYPE_FEAT,
         rowActions: [],
         sectionActions: [],
         show: true,
       },
-      weapons: {
+      [CONSTANTS.ITEM_TYPE_WEAPON]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
         items: [],
         canCreate: true,
@@ -187,12 +187,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           ['type']: CONSTANTS.ITEM_TYPE_WEAPON,
           ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_SIEGE_WEAPON,
         },
-        key: 'weapons',
+        key: CONSTANTS.ITEM_TYPE_WEAPON,
         rowActions: [],
         sectionActions: [],
         show: true,
       },
-      equipment: {
+      [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
         items: [],
         canCreate: true,
@@ -201,7 +201,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           ['type']: CONSTANTS.ITEM_TYPE_EQUIPMENT,
           ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_VEHICLE_EQUIPMENT,
         },
-        key: 'equipment',
+        key: CONSTANTS.ITEM_TYPE_EQUIPMENT,
         rowActions: [],
         sectionActions: [],
         show: true,
@@ -220,6 +220,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     const inventoryTypes = Inventory.getInventoryTypes();
 
+    const statblockTypes = [
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_WEAPON,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+    ];
+
     for (const item of context.items) {
       const ctx = (context.itemContext[item.id] ??= {});
       await this._prepareItem(item, ctx);
@@ -232,15 +238,15 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           rowActions: inventoryRowActions,
         });
       } else {
-        // Statblock
-        const section =
-          item.type === CONSTANTS.ITEM_TYPE_WEAPON
-            ? 'weapons'
-            : item.type === CONSTANTS.ITEM_TYPE_EQUIPMENT
-            ? 'equipment'
-            : 'features';
-
-        statblock[section].items.push(item);
+        Inventory.applyInventoryItemToSection(
+          statblock,
+          item,
+          statblockTypes,
+          {
+            canCreate: false,
+          },
+          CONSTANTS.ITEM_TYPE_FEAT
+        );
       }
 
       // TODO: Custom sections?
