@@ -15,9 +15,9 @@
         - [ ] Sort
         - [ ] Section config
       - [ ] Sheet pins?
-      - [ ] Features
-      - [ ] Siege Weapons
-      - [ ] Vehicle Equipment
+      - [x] Features
+      - [x] Siege Weapons
+      - [x] Vehicle Equipment
   - [ ] Crew & Passengers
     - [x] Runtime, component
     - [ ] Contains 
