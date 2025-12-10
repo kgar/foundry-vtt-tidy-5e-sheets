@@ -150,7 +150,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     context.useActionsFeature = actorUsesActionFeature(this.actor);
 
     // Prepare owned items
-    this._prepareItems(context);
+    await this._prepareItems(context);
 
     // Custom content
     context.customContent = await VehicleSheetQuadroneRuntime.getContent(
@@ -163,7 +163,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     return context;
   }
 
-  _prepareItems(context: VehicleSheetQuadroneContext) {
+  async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
     const statblock: Record<string, InventorySection> = {
       features: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -222,7 +222,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     for (const item of context.items) {
       const ctx = (context.itemContext[item.id] ??= {});
-      this._prepareItem(item, ctx);
+      await this._prepareItem(item, ctx);
 
       // partition to section
       if (Inventory.isItemInventoryType(item) && !item.system.isMountable) {
@@ -278,7 +278,10 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
   }
 
-  protected _prepareItem(item: any, ctx: VehicleItemContext) {
+  protected async _prepareItem(
+    item: any,
+    ctx: VehicleItemContext
+  ): Promise<void> {
     const { uses } = item.system;
     ctx.hasUses = uses && uses.max > 0;
 
@@ -295,8 +298,17 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     )?.map(Activities.getActivityItemContext);
 
     // Crew Assignment
+    const crew = item.system.crew;
+
     if (item.system.isMountable) {
-      // TODO
+      ctx.crew = await Promise.all(
+        Array.fromRange(Math.max(crew.max ?? 0, crew.value.length)).map(
+          async (index) => {
+            const uuid = crew.value[index];
+            return { actor: uuid ? await fromUuid(uuid) : undefined };
+          }
+        )
+      );
     }
   }
 
@@ -337,9 +349,10 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     const tabIds: string[] = [];
 
     // TODO: Somehow share the mountable logic somewhere
-    const originTab = Inventory.isItemInventoryType(item) && !item.system.isMountable
-      ? CONSTANTS.TAB_ACTOR_INVENTORY
-      : CONSTANTS.TAB_STATBLOCK;
+    const originTab =
+      Inventory.isItemInventoryType(item) && !item.system.isMountable
+        ? CONSTANTS.TAB_ACTOR_INVENTORY
+        : CONSTANTS.TAB_STATBLOCK;
 
     if (originTab) {
       tabIds.push(originTab);

@@ -5,6 +5,9 @@
 - [ ] Ensure the following tabs exist
   - [ ] Statblock
     - [x] Runtime, component
+    - [x] Prep
+      - [x] itemContext, mountable items, add crew slots array
+        - [x] ensure overflow assignments are included beyond the max
     - [ ] Contains
       - [ ] Action bar
         - [ ] Search

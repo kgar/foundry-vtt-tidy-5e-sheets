@@ -558,11 +558,16 @@ export type NpcSheetContext = {
   utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContextV1;
 
+export type VehicleItemCrewAssignment = {
+  actor: Actor5e | undefined;
+};
+
 export type VehicleItemContext = {
   actionSubtitle?: string;
   activities?: ActivityItemContext[];
   containerContents?: ContainerContents;
   cover?: string;
+  crew?: VehicleItemCrewAssignment[];
   hasUses?: boolean;
   save?: ItemSaveContext;
   toHit?: number | null;
