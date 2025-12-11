@@ -963,5 +963,7 @@
     "PlaceholderNameField.PlaceholderText": "Placeholder Name",
     "PlaceholderNotesField.PlaceholderText": "Notes"
   },
-  "TIDY5E.Actor.Characteristics": "Characteristics"
+  "TIDY5E.Actor.Characteristics": "Characteristics",
+  "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Notice</strong>: Tidy 5e's Classic Sheets will be removed from the Tidy 5e Sheets module as of Foundry V14.",
+  "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's Classic Sheets have been removed from the Tidy 5e Sheets module as of Foundry V14."
 }
