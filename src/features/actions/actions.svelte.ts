@@ -2,19 +2,15 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { settings } from 'src/settings/settings.svelte';
-import type { ContainerContents, Item5e } from 'src/types/item.types';
+import type { Item5e } from 'src/types/item.types';
 import type {
   ActionItem,
-  ActionSectionClassic,
   Actor5e,
   TidyItemSectionBase,
 } from 'src/types/types';
-import { isNil } from 'src/utils/data';
-import { simplifyFormula } from 'src/utils/formula';
-import { debug, error } from 'src/utils/logging';
+import { error } from 'src/utils/logging';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { Container } from '../containers/Container';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -39,107 +35,6 @@ const activationTypeSortValues: Record<string, number> = {
   crew: 7,
   special: 8,
 };
-
-export async function getActorActionSections(
-  actor: Actor5e
-): Promise<ActionSectionClassic[]> {
-  try {
-    let eligibleItems: ActionItem[] = [];
-
-    for (let item of actor.items) {
-      if (!isItemInActionList(item)) {
-        continue;
-      }
-
-      eligibleItems.push(await mapActionItem(item));
-    }
-
-    return buildActionSections(actor, eligibleItems);
-  } catch (e) {
-    error('An error occurred while getting actions', false, e);
-    return [];
-  }
-}
-
-export function getSortedActions(
-  section: ActionSectionClassic,
-  sortMode: string
-) {
-  return section.actions.toSorted(({ item: a }, { item: b }) => {
-    if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
-      return a.name.localeCompare(b.name, game.i18n.lang);
-    }
-
-    // Sort by Arbitrary Action List Rules
-    if (a.type !== b.type) {
-      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-    }
-    if (a.type === 'spell' && b.type === 'spell') {
-      return a.system.level - b.system.level;
-    }
-    return (a.sort || 0) - (b.sort || 0);
-  });
-}
-
-function buildActionSections(
-  actor: Actor5e,
-  actionItems: ActionItem[]
-): ActionSectionClassic[] {
-  const customMappings = ActionListRuntime.getActivationTypeMappings();
-
-  let actionSections: Record<string, ActionSectionClassic> = {};
-
-  // Initialize the default sections in their default order.
-  Object.keys(activationTypeSortValues).forEach((activationType) => {
-    actionSections[activationType] = {
-      actions: [],
-      dataset: {},
-      label: FoundryAdapter.getActivationTypeLabel(activationType),
-      key: activationType,
-      show: true,
-      rowActions: [],
-      sectionActions: [],
-    };
-  });
-
-  // partition items into sections
-  for (let actionItem of actionItems) {
-    const customSectionName = TidyFlags.actionSection.get(actionItem.item);
-    if (customSectionName) {
-      const customSection = (actionSections[customSectionName] ??= {
-        actions: [],
-        dataset: {},
-        key: customSectionName,
-        label: FoundryAdapter.localize(customSectionName),
-        show: true,
-        custom: {
-          creationItemTypes: [],
-          section: customSectionName,
-        },
-        rowActions: [],
-        sectionActions: [],
-      });
-      customSection.actions.push(actionItem);
-    } else {
-      const activationType = getActivationType(
-        actionItem.item.system.activities?.contents[0]?.activation.type,
-        customMappings
-      );
-      const section = (actionSections[activationType] ??= {
-        actions: [],
-        dataset: {},
-        key: activationType,
-        label: FoundryAdapter.getActivationTypeLabel(activationType),
-        show: true,
-        rowActions: [],
-        sectionActions: [],
-      });
-      section.actions.push(actionItem);
-    }
-  }
-
-  return Object.values(actionSections);
-}
 
 export async function getActorActionSectionsQuadrone(
   actor: Actor5e,
@@ -351,113 +246,6 @@ function getActivityFirstDamage(item: Item5e) {
   };
 }
 
-async function mapActionItem(item: Item5e): Promise<ActionItem> {
-  try {
-    let calculatedDerivedDamage = Array.isArray(item.labels.damages)
-      ? [...item.labels.damages].map(
-          ({ formula, label, damageType }: any, i: number) => {
-            const damage = getActivityFirstDamage(item);
-            const rawDamagePartFormula = damage.parts?.[0]?.[0];
-
-            if (rawDamagePartFormula?.trim() === '') {
-              formula = '';
-            }
-
-            const formulaBeforeSimplificaton = formula;
-
-            formula = simplifyFormula(formula, true);
-
-            if (formula.includes('NaN')) {
-              formula = formulaBeforeSimplificaton;
-            }
-
-            const damageHealingTypeLabel =
-              FoundryAdapter.lookupDamageType(damageType) ??
-              FoundryAdapter.lookupHealingType(damageType) ??
-              '';
-
-            /*
-            TODO:
-            When revisiting how to represent damage rolls, 
-            pursue activity.getDamageConfig() for each activity.
-            It provides damage parts and types.            
-            */
-
-            return {
-              label,
-              formula,
-              damageType,
-              damageHealingTypeLabel,
-            };
-          }
-        )
-      : [];
-
-    let containerContents: ContainerContents | undefined = undefined;
-    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-      containerContents = await Container.getContainerContents(item, {
-        hasActor: false,
-        unlocked: item.actor.sheet.sheetMode === CONSTANTS.SHEET_MODE_EDIT,
-      });
-    }
-
-    return {
-      item,
-      typeLabel: FoundryAdapter.localize(`TYPES.Item.${item.type}`),
-      calculatedDerivedDamage,
-      containerContents,
-      ...getRangeTitles(item),
-    };
-  } catch (e) {
-    error(
-      'An error occurred while processing an item for the action list',
-      false,
-      e
-    );
-    debug('Action list mapping error troubleshooting info', { item });
-
-    return {
-      item,
-      typeLabel: FoundryAdapter.localize(`TYPES.Item.${item.type}`),
-      calculatedDerivedDamage: [],
-      rangeTitle: '',
-      rangeSubtitle: '',
-    };
-  }
-}
-
-function getRangeTitles(item: Item5e): {
-  rangeTitle: string | null;
-  rangeSubtitle: string | null;
-} {
-  const firstActivity = item.system.activities?.contents[0] ?? {};
-
-  const rangeSubtitle =
-    (firstActivity.target?.affects?.type ??
-      firstActivity.target?.template?.type) &&
-    item.labels?.target
-      ? item.labels.target
-      : null;
-
-  const rangeTitle =
-    firstActivity.target?.type === 'self'
-      ? item.labels.target
-      : hasRange(item)
-      ? item.labels.range
-      : rangeSubtitle !== null
-      ? '—'
-      : null;
-
-  return {
-    rangeTitle,
-    rangeSubtitle,
-  };
-}
-
-function hasRange(item: Item5e): boolean {
-  return !isNil(item.system.activities?.contents[0]?.range?.units);
-}
-
 function getActivationType(
   activationType: string,
   customMappings: Record<string, string>
@@ -504,23 +292,4 @@ export class Actions {
       ...healingTypes,
     };
   }
-}
-
-export function actorUsesActionFeature(actor: Actor5e) {
-  const selectedTabIds = TidyFlags.selectedTabs.get(actor);
-
-  if (selectedTabIds) {
-    return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
-  }
-
-  const defaultTabIds =
-    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
-      ? settings.value.defaultCharacterSheetTabs
-      : actor.type === CONSTANTS.SHEET_TYPE_NPC
-      ? settings.value.defaultNpcSheetTabs
-      : actor.type === CONSTANTS.SHEET_TYPE_VEHICLE
-      ? settings.value.defaultVehicleSheetTabs
-      : [];
-
-  return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
 }

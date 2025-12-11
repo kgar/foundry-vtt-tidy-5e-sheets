@@ -411,45 +411,6 @@ export type CharacterFacilitiesContext = {
   }
 >;
 
-export type CharacterSheetContext = {
-  actorClassesToImages: Record<string, string>;
-  allowMaxHpOverride: boolean;
-  appearanceEnrichedHtml: string;
-  attributePins: AttributePinContext[];
-  bastion: {
-    description: string;
-  };
-  biographyEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
-  defenders: Actor5e[];
-  effects: Record<string, EffectCategory<ActiveEffectContext>>;
-  epicBoonsEarned: string | undefined;
-  facilities: CharacterFacilitiesContext;
-  favorites: FavoriteSection[];
-  features: CharacterFeatureSection[];
-  flawEnrichedHtml: string;
-  idealEnrichedHtml: string;
-  inventory: InventorySection[];
-  itemContext: Record<string, CharacterItemContext>;
-  languages: LanguageTraitContext[];
-  notes1EnrichedHtml: string;
-  notes2EnrichedHtml: string;
-  notes3EnrichedHtml: string;
-  notes4EnrichedHtml: string;
-  notesEnrichedHtml: string;
-  showContainerPanel: boolean;
-  spellComponentLabels: Record<string, string>;
-  spellbook: SpellbookSection[];
-  spellcastingInfo: SpellcastingInfo;
-  spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
-  traitEnrichedHtml: string;
-  utilities: Utilities<CharacterSheetContext>;
-} & ActorSheetContextV1;
-
 /** A list of available actions that can be done on behalf of a facility type. */
 type AvailableBastionActionContext = {
   label: string;
@@ -522,42 +483,6 @@ export type NpcHabitat = {
   subtype?: string;
 };
 
-export type NpcSheetContext = {
-  appearanceEnrichedHtml: string;
-  biographyEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
-  defaultSkills: Set<string>;
-  features: NpcAbilitySection[];
-  flags: SpecialTraits;
-  flawEnrichedHtml: string;
-  hasLegendaries: boolean;
-  habitat: { label: string }[];
-  hideEmptySpellbook: boolean;
-  idealEnrichedHtml: string;
-  inventory: InventorySection[];
-  itemContext: Record<string, NpcItemContext>;
-  languages: LanguageTraitContext[];
-  notes1EnrichedHtml: string;
-  notes2EnrichedHtml: string;
-  notes3EnrichedHtml: string;
-  notes4EnrichedHtml: string;
-  notesEnrichedHtml: string;
-  showContainerPanel: boolean;
-  showLoyalty: boolean;
-  showSpellbookTab: boolean;
-  spellComponentLabels: Record<string, string>;
-  spellbook: SpellbookSection[];
-  spellcastingInfo: SpellcastingInfo;
-  spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
-  traitEnrichedHtml: string;
-  treasure: { label: string }[];
-  utilities: Utilities<NpcSheetContext>;
-} & ActorSheetContextV1;
-
 export type VehicleItemContext = {
   actionSubtitle?: string;
   activities?: ActivityItemContext[];
@@ -584,18 +509,6 @@ export type VehicleMemberSection = {
   // etc.
 } & TidySectionBase;
 
-export type VehicleSheetContext = {
-  inventory: InventorySection[];
-  draft: VehicleMemberSection;
-  passengers: VehicleMemberSection;
-  crew: VehicleMemberSection;
-  features: FeatureSection;
-  weaponStations: InventorySection;
-  equipmentStations: InventorySection;
-  itemContext: Record<string, VehicleItemContext>;
-  utilities: Utilities<VehicleSheetContext>;
-} & ActorSheetContextV1;
-
 export type VehicleCargoSection = {
   type: typeof CONSTANTS.SECTION_TYPE_CARGO;
   items: any[];
@@ -619,10 +532,6 @@ export type ActionItem = {
   rangeSubtitle: string | null;
   containerContents?: ContainerContents;
 };
-
-export type ActionSectionClassic = {
-  actions: ActionItem[];
-} & TidySectionBase;
 
 export type ExtensibleComponent = {
   cssClasses: string[];
@@ -718,83 +627,6 @@ export type DocumentSheetV2Context = {
   user: any;
 };
 
-export type ActorSheetContextV1 = {
-  abilities: any;
-  actions: ActionSectionClassic[];
-  actor: Actor5e;
-  actorPortraitCommands: RegisteredPortraitMenuCommand[];
-  allowEffectsManagement: boolean;
-  appId: string;
-  biographyHTML: string;
-  config: typeof CONFIG.DND5E;
-  customActorTraits: RegisteredCustomActorTrait[];
-  customContent: CustomContent[];
-  disableExperience: boolean;
-  effects: Record<string, EffectCategory<ActiveEffect5e>>;
-  elements: unknown;
-  encumbrance?: EncumbranceContext;
-  filterData: DocumentFilters;
-  filterPins: Record<string, Set<string>>;
-  flags: SpecialTraits; // TODO: Type it
-  /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
-  hasSpecialSaves?: boolean;
-  /**
-   * Represents remaining health as a percentage within the range of `0` to `100`.
-   *
-   * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
-   */
-  healthPercentage: number;
-  hp: {
-    value: number;
-    max: number;
-    temp?: number;
-    tempmax?: number;
-  };
-  isCharacter: boolean;
-  isNPC: boolean;
-  isVehicle: boolean;
-  limited: boolean;
-  itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
-  /** All items without a container. */
-  items: Item5e[];
-  labels: Record<string, any>;
-  lockExpChanges: boolean;
-  lockHpMaxChanges: boolean;
-  /**
-   * Item Quantity should be uneditable.
-   */
-  lockItemQuantity: boolean;
-  lockLevelSelector: boolean;
-  lockMoneyChanges: boolean;
-  lockSensitiveFields: boolean;
-  modernRules: boolean;
-  movement: {
-    primary: string;
-    special?: string;
-    secondary?: string;
-  };
-  options: unknown;
-  overrides: unknown;
-  /**
-   * The current user owns the actor.
-   */
-  owner: boolean;
-  saves: ActorSaves;
-  rollData: unknown;
-  senses: unknown;
-  skills: any;
-  showLimitedSheet: boolean;
-  system: any;
-  tabs: Tab[];
-  tools: any;
-  traits: any;
-  useActionsFeature?: boolean;
-  useClassicControls: boolean;
-  useRoundedPortraitStyle: boolean;
-  viewableWarnings: DocumentPreparationWarning[];
-  warnings: DocumentPreparationWarning[];
-} & DocumentSheetV2Context;
-
 export type DocumentPreparationWarning = Partial<{
   message: string;
   link: string;
@@ -883,12 +715,6 @@ export type ContainerCapacityContext = {
   units: string;
 };
 
-export type RenderableClassicControl<TParams> = {
-  component: Component<any>;
-  props?: (params: TParams) => Record<string, unknown>;
-  visible?: (params: TParams) => boolean;
-};
-
 export type AvailableClassLevel = {
   delta: number;
   disabled: boolean;
@@ -955,20 +781,6 @@ export type ActorV2 = {
   uuid: string;
   update(toUpdate: Record<string, unknown>): Promise<ActorV2 | undefined>;
 } & {};
-
-// TODO: Deprecate
-export type ActorSheetClassicContextV2<TActor = ActorV2> = {
-  actor: TActor;
-  actorPortraitCommands: RegisteredPortraitMenuCommand[];
-  customContent: CustomContent[];
-  editable: boolean;
-  healthPercentage: number;
-  modernRules: boolean;
-  lockSensitiveFields: boolean;
-  tabs: Tab[];
-  unlocked: boolean;
-  useRoundedPortraitStyle: boolean;
-};
 
 export type GroupableSelectOption = {
   value: string;
@@ -1552,7 +1364,6 @@ export type VehicleSheetQuadroneContext = {
   speeds: ActorSpeedSenseEntryContext[];
   traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
-  useActionsFeature?: boolean;
   utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;

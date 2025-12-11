@@ -9,7 +9,7 @@ interface ContextMenuEntry {
   condition?: (html: any) => boolean | boolean;
 }
 
-type ContextMenuOptionsV13 = {
+type ContextMenuOptions = {
   /** Optionally override the triggering event which can spawn the menu. If the menu is using a fixed position, this event must be a MouseEvent. */
   eventName?: string;
   /** A function to call when the context menu is opened. */
@@ -21,9 +21,7 @@ type ContextMenuOptionsV13 = {
   /** If true, the context menu is given a fixed position rather than being injected into the target. */
   fixed?: boolean;
 } & {
-  layout:
-    | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
-    | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
+  layout: typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
 };
 
 /**
@@ -38,7 +36,7 @@ export default class FloatingContextMenu extends foundry.applications.ux
     container: any,
     selector: string,
     menuItems: ContextMenuEntry[],
-    options: ContextMenuOptionsV13
+    options: ContextMenuOptions
   ) {
     super(container, selector, menuItems, options);
 

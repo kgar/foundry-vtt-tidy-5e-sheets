@@ -10,14 +10,12 @@ import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-conte
 import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu';
 import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
 import { configureEncounterPlaceholderContextMenu } from './tidy5e-encounter-placeholder-context-menu';
-import { configureSectionContextMenu as configureSectionContextMenu } from './tidy5e-section-context-menu-quadrone';
+import { configureSectionContextMenu } from './tidy5e-section-context-menu-quadrone';
 
 export function initTidy5eContextMenu(
   sheet: any,
   html: HTMLElement,
-  layout:
-    | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
-    | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE,
+  layout: typeof CONSTANTS.SHEET_LAYOUT_QUADRONE,
   contextMenuSelector: string = '[data-context-menu]'
 ) {
   new FloatingContextMenu(html, contextMenuSelector, [], {

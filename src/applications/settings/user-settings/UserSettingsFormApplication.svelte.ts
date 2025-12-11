@@ -32,8 +32,8 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
     classes: [
       CONSTANTS.MODULE_ID,
       'settings',
-      'application-shell',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'application',
+      CONSTANTS.SHEET_LAYOUT_QUADRONE,
     ],
     tag: 'div',
     id: 'tidy5e-sheet-user-settings',

@@ -20,8 +20,8 @@ export class MigrationSelectionApplication<T> extends SvelteApplicationMixin<
   static DEFAULT_OPTIONS = {
     classes: [
       CONSTANTS.MODULE_ID,
-      'application-shell',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'application',
+      CONSTANTS.SHEET_LAYOUT_QUADRONE,
     ],
     id: 'tidy-5e-sheets-migration-selection',
     tag: 'form',

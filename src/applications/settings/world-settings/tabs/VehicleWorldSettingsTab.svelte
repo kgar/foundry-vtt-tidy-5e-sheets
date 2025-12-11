@@ -22,38 +22,6 @@
 </script>
 
 <div class="settings-form">
-  <SelectSetting
-    options={SettingsProvider.settings.initialVehicleSheetTab.options.choices()}
-    bind:value={context.settings.initialVehicleSheetTab}
-    name={SettingsProvider.settings.initialVehicleSheetTab.options.name}
-    hint={SettingsProvider.settings.initialVehicleSheetTab.options.hint}
-    id="initialVehicleSheetTab"
-  />
-
-  <ListboxSetting
-    name={SettingsProvider.settings.defaultVehicleSheetTabs.options.name}
-    hint={SettingsProvider.settings.defaultVehicleSheetTabs.options.hint}
-    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:leftItems={context.defaultVehicleTabs.selected}
-    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:rightItems={context.defaultVehicleTabs.available}
-    labelProp="label"
-    valueProp="id"
-  >
-    {#snippet belowListbox()}
-      <div>
-        <button
-          type="button"
-          onclick={() =>
-            functions.resetDefaultTabs(CONSTANTS.SHEET_TYPE_VEHICLE)}
-        >
-          <i class="fas fa-rotate-right"></i>
-          {localize('TIDY5E.Reset')}
-        </button>
-      </div>
-    {/snippet}
-  </ListboxSetting>
-
   <CheckboxSetting
     bind:value={context.settings.useVehicleEncumbranceBar}
     name={SettingsProvider.settings.useVehicleEncumbranceBar.options.name}

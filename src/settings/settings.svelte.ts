@@ -4,10 +4,7 @@ import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { GetFunctionReturnType } from 'src/types/types';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication.svelte';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
-import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication.svelte';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
-import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
@@ -17,8 +14,6 @@ import type {
   HeaderControlConfiguration,
   TabConfiguration,
 } from './settings.types';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import { applyCurrentThemeClassic } from 'src/theme/theme';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
@@ -193,16 +188,6 @@ export function createSettings() {
           restricted: false,
         },
       },
-      theme: {
-        options: {
-          name: `TIDY5E.ThemeSettings.SheetMenu.name`,
-          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
-          hint: `TIDY5E.ThemeSettings.SheetMenu.hint`,
-          icon: 'fa-solid fa-swatchbook',
-          type: ThemeSettingsFormApplication,
-          restricted: false,
-        },
-      },
       worldThemeSettingsMenu: {
         options: {
           name: `TIDY5E.SettingsMenu.WorldThemeSettings.name`,
@@ -332,52 +317,6 @@ export function createSettings() {
       },
 
       // Player Character Settings
-
-      initialCharacterSheetTab: {
-        options: {
-          name: 'TIDY5E.Settings.InitialSheetTab.name',
-          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
-          scope: 'world',
-          config: false,
-          type: String,
-          choices: () =>
-            TabManager.getTabsAsConfigOptions(
-              CharacterSheetClassicRuntime.getAllRegisteredTabs()
-            ),
-          default: CONSTANTS.TAB_ACTOR_ACTIONS,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'initialCharacterSheetTab'
-          );
-        },
-      },
-
-      defaultCharacterSheetTabs: {
-        options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
-          scope: 'world',
-          config: false,
-          type: Array,
-          default: [
-            CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-            CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_ACTOR_SPELLBOOK,
-            CONSTANTS.TAB_CHARACTER_FEATURES,
-            CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
-            CONSTANTS.TAB_CHARACTER_JOURNAL,
-            CONSTANTS.TAB_CHARACTER_BASTION,
-            CONSTANTS.TAB_ACTOR_SPECIAL_TRAITS,
-          ],
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string[]>(
-            'defaultCharacterSheetTabs'
-          );
-        },
-      },
 
       headerControlConfiguration: {
         options: {
@@ -731,45 +670,6 @@ export function createSettings() {
         },
       },
 
-      initialNpcSheetTab: {
-        options: {
-          name: 'TIDY5E.Settings.InitialSheetTab.name',
-          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
-          scope: 'world',
-          config: false,
-          type: String,
-          choices: () =>
-            TabManager.getTabsAsConfigOptions(
-              NpcSheetClassicRuntime.getAllRegisteredTabs()
-            ),
-          default: CONSTANTS.TAB_NPC_ABILITIES,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>('initialNpcSheetTab');
-        },
-      },
-
-      defaultNpcSheetTabs: {
-        options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
-          scope: 'world',
-          config: false,
-          type: Array,
-          default: [
-            CONSTANTS.TAB_NPC_ABILITIES,
-            CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_ACTOR_SPELLBOOK,
-            CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_ACTOR_BIOGRAPHY,
-            CONSTANTS.TAB_ACTOR_SPECIAL_TRAITS,
-          ],
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string[]>('defaultNpcSheetTabs');
-        },
-      },
-
       useClassicControlsForNpc: {
         options: {
           name: 'TIDY5E.Settings.UseClassicControls.name',
@@ -858,48 +758,6 @@ export function createSettings() {
         },
       },
 
-      initialVehicleSheetTab: {
-        options: {
-          name: 'TIDY5E.Settings.InitialSheetTab.name',
-          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
-          scope: 'world',
-          config: false,
-          type: String,
-          choices: () =>
-            TabManager.getTabsAsConfigOptions(
-              VehicleSheetClassicRuntime.getAllRegisteredTabs()
-            ),
-          default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'initialVehicleSheetTab'
-          );
-        },
-      },
-
-      defaultVehicleSheetTabs: {
-        options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
-          scope: 'world',
-          config: false,
-          type: Array,
-          default: [
-            CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-            CONSTANTS.TAB_VEHICLE_CARGO,
-            CONSTANTS.TAB_VEHICLE_PASSENGERS_AND_CREW,
-            CONSTANTS.TAB_EFFECTS,
-            CONSTANTS.TAB_VEHICLE_DESCRIPTION_LEGACY,
-          ],
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string[]>(
-            'defaultVehicleSheetTabs'
-          );
-        },
-      },
-
       useClassicControlsForVehicle: {
         options: {
           name: 'TIDY5E.Settings.UseClassicControls.name',
@@ -958,26 +816,6 @@ export function createSettings() {
         },
       },
 
-      defaultGroupSheetTabs: {
-        options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
-          scope: 'world',
-          config: false,
-          type: Array,
-          default: [
-            CONSTANTS.TAB_MEMBERS,
-            CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_DESCRIPTION,
-          ],
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string[]>(
-            'defaultGroupSheetTabs'
-          );
-        },
-      },
-
       useGroupSheetMemberSecurity: {
         options: {
           name: 'TIDY5E.Settings.UseGroupSheetMemberSecurity.name',
@@ -990,26 +828,6 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'useGroupSheetMemberSecurity'
-          );
-        },
-      },
-
-      defaultEncounterSheetTabs: {
-        options: {
-          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
-          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
-          scope: 'world',
-          config: false,
-          type: Array,
-          default: [
-            CONSTANTS.TAB_MEMBERS,
-            CONSTANTS.TAB_ACTOR_INVENTORY,
-            CONSTANTS.TAB_DESCRIPTION,
-          ],
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string[]>(
-            'defaultEncounterSheetTabs'
           );
         },
       },

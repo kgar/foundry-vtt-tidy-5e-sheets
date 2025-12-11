@@ -2,17 +2,11 @@ import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import type {
   ActiveEffect5e,
   Actor5e,
-  ActorSheetContextV1,
-  ActorSheetClassicContextV2,
-  CharacterSheetContext,
-  NpcSheetContext,
-  VehicleSheetContext,
   ActorSheetQuadroneContext,
   GroupSkillRollProcessConfiguration,
 } from 'src/types/types';
 import type { ContextMenuEntry } from './foundry.types';
 import type {
-  ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
   Item5e,
   ItemSheetQuadroneContext,
@@ -333,12 +327,7 @@ export class TidyHooks {
   static tidy5eSheetsPreConfigureSections(
     app: any,
     element: HTMLElement,
-    data:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ContainerSheetClassicContext
-      | ContainerSheetQuadroneContext
-      | ItemSheetQuadroneContext
+    data: ContainerSheetQuadroneContext | ItemSheetQuadroneContext
   ) {
     Hooks.callAll('tidy5e-sheet.preConfigureSections', app, element, data);
   }
@@ -410,10 +399,7 @@ export class TidyHooks {
    * ```
    */
   static tidy5eSheetsPreOpenActorPortraitFilePicker(
-    context:
-      | ActorSheetContextV1
-      | ActorSheetClassicContextV2
-      | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
   ): boolean {
     return Hooks.call(
@@ -485,29 +471,6 @@ export class TidyHooks {
    */
   static tidy5eSheetsReady(api: Tidy5eSheetsApi): void {
     Hooks.callAll('tidy5e-sheet.ready', api);
-  }
-
-  /**
-   * The actor sheet has rendered all content and registered custom content. Is called on partial and full renders.
-   * @param {any} app The sheet application instance.
-   * @param {HTMLElement} element The sheet's HTML element.
-   * @param {CharacterSheetContext | NpcSheetContext | VehicleSheetContext} data The data context from `getData()`.
-   * @param {boolean} forced `true` when performing a full re-render; `false` when performing a partial re-render.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.renderActorSheet', (app, element, data, forced) => {
-   *   // Your code here
-   * });
-   * ```
-   */
-  static tidy5eSheetsRenderActorSheet(
-    app: any,
-    element: HTMLElement,
-    data: CharacterSheetContext | NpcSheetContext | VehicleSheetContext,
-    forced: boolean
-  ) {
-    Hooks.callAll('tidy5e-sheet.renderActorSheet', app, element, data, forced);
   }
 
   /**

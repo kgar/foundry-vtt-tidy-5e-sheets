@@ -47,6 +47,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
 import type { ItemTabRegistrationOptions } from 'src/api';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+import type { RegisteredEquipmentTypeGroup } from './item.types';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -57,6 +58,7 @@ class ItemSheetQuadroneRuntimeImpl {
   private _content = $state<RegisteredContent<ItemSheetQuadroneContext>[]>([]);
   private _tabs = $state<RegisteredTab<ItemSheetQuadroneContext>[]>([]);
   private _sheetMap: SvelteMap<string, ItemSheetInfo>;
+  private _customItemEquipmentTypeGroups: RegisteredEquipmentTypeGroup[] = [];
 
   constructor(
     nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
@@ -268,6 +270,14 @@ class ItemSheetQuadroneRuntimeImpl {
     if (options?.includeAsDefault ?? true) {
       this._sheetMap.get(subtype)?.defaultTabs;
     }
+  }
+
+  registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
+    this._customItemEquipmentTypeGroups.push(group);
+  }
+
+  getCustomEquipmentTypeGroups() {
+    return [...this._customItemEquipmentTypeGroups];
   }
 }
 

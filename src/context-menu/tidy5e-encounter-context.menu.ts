@@ -15,39 +15,14 @@ export function configureEncounterContextMenu(element: HTMLElement, app: any) {
 
   if (!memberPromise) return;
 
-  const isQuadroneSheet = element.closest('.quadrone');
-
-  ui.context.menuItems = isQuadroneSheet
-    ? getEncounterMemberContextOptionsQuadrone(app.document, memberPromise)
-    : getEncounterMemberContextOptions(app.document, memberPromise);
+  ui.context.menuItems = getEncounterMemberContextOptionsQuadrone(
+    app.document,
+    memberPromise
+  );
 
   TidyHooks.tidy5eSheetsGetEncounterMemberContextOptions(
     app.document,
     memberPromise,
     ui.context.menuItems
   );
-}
-
-/**
- * Prepare an array of context menu options which are available for a member of an encounter.
- * @param encounter    The encounter for which the context menu is activated.
- * @param memberPromise    The actor for whom the context menu is activate.
- * @returns        Context menu options.
- */
-function getEncounterMemberContextOptions(
-  encounter: Actor5e,
-  memberPromise: Promise<Actor5e>
-): ContextMenuEntry[] {
-  let options: ContextMenuEntry[] = [
-    {
-      name: 'DND5E.Group.Action.Remove',
-      icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
-      callback: async () =>
-        await encounter.system.removeMember(await memberPromise),
-      condition: () =>
-        encounter.isOwner && !FoundryAdapter.isLockedInCompendium(encounter),
-    },
-  ];
-
-  return options;
 }

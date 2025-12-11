@@ -12,13 +12,10 @@ import type {
   WorldSettingsFunctions,
 } from './WorldSettings.types';
 import type { RegisteredTab } from 'src/runtime/types';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
@@ -34,8 +31,8 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
     classes: [
       CONSTANTS.MODULE_ID,
       'settings',
-      'application-shell',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'application',
+      CONSTANTS.SHEET_LAYOUT_QUADRONE,
     ],
     id: 'tidy5e-sheet-world-settings',
     tag: 'div',
@@ -82,11 +79,8 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         lockMoneyChanges: currentSettings.lockMoneyChanges,
         lockLevelSelector: currentSettings.lockLevelSelector,
         lockItemQuantity: currentSettings.lockItemQuantity,
-        initialNpcSheetTab: currentSettings.initialNpcSheetTab,
         showNpcRestInChat: currentSettings.showNpcRestInChat,
         showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
-        initialCharacterSheetTab: currentSettings.initialCharacterSheetTab,
-        initialVehicleSheetTab: currentSettings.initialVehicleSheetTab,
         itemIdentificationPermission:
           currentSettings.itemIdentificationPermission,
         includeFlagsInSpellScrollCreation:
@@ -94,18 +88,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         useTidySpellSchoolIcons: currentSettings.useTidySpellSchoolIcons,
         globalCustomSections: currentSettings.globalCustomSections,
       },
-      defaultCharacterTabs: this.mapTabSelectionFields(
-        CharacterSheetClassicRuntime.getAllRegisteredTabs(),
-        currentSettings.defaultCharacterSheetTabs
-      ),
-      defaultNpcTabs: this.mapTabSelectionFields(
-        NpcSheetClassicRuntime.getAllRegisteredTabs(),
-        currentSettings.defaultNpcSheetTabs
-      ),
-      defaultVehicleTabs: this.mapTabSelectionFields(
-        VehicleSheetClassicRuntime.getAllRegisteredTabs(),
-        currentSettings.defaultVehicleSheetTabs
-      ),
       exhaustionConfig: {
         ...SettingsProvider.settings.exhaustionConfig.options.default,
         ...currentSettings.exhaustionConfig,
@@ -169,20 +151,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
     let valid = true;
 
     if (
-      context.defaultCharacterTabs.selected.length === 0 ||
-      context.defaultNpcTabs.selected.length === 0 ||
-      context.defaultVehicleTabs.selected.length === 0
-    ) {
-      valid = false;
-      error(
-        FoundryAdapter.localize(
-          'TIDY5E.Settings.DefaultSheetTabs.AtLeastOneTabRequiredErrorMessage'
-        ),
-        true
-      );
-    }
-
-    if (
       context.exhaustionConfig.type === 'specific' &&
       context.exhaustionConfig.levels < 1
     ) {
@@ -236,15 +204,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
 
     const newSettings: Partial<CurrentSettings> = {
       ...this.context.settings,
-      defaultCharacterSheetTabs: this.context.defaultCharacterTabs.selected.map(
-        (t) => t.id
-      ),
-      defaultNpcSheetTabs: this.context.defaultNpcTabs.selected.map(
-        (t) => t.id
-      ),
-      defaultVehicleSheetTabs: this.context.defaultVehicleTabs.selected.map(
-        (t) => t.id
-      ),
       exhaustionConfig: this.context.exhaustionConfig,
       vehicleExhaustionConfig: this.context.vehicleExhaustionConfig,
     };
@@ -272,36 +231,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
     }
 
     this.close();
-  }
-
-  resetDefaultTabs(actorType: string) {
-    if (!this.context) {
-      return;
-    }
-
-    switch (actorType) {
-      case CONSTANTS.SHEET_TYPE_CHARACTER:
-        this.context.defaultCharacterTabs = this.mapTabSelectionFields(
-          CharacterSheetClassicRuntime.getAllRegisteredTabs(),
-          [
-            ...SettingsProvider.settings.defaultCharacterSheetTabs.options
-              .default,
-          ]
-        );
-        break;
-      case CONSTANTS.SHEET_TYPE_NPC:
-        this.context.defaultNpcTabs = this.mapTabSelectionFields(
-          NpcSheetClassicRuntime.getAllRegisteredTabs(),
-          [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
-        );
-        break;
-      case CONSTANTS.SHEET_TYPE_VEHICLE:
-        this.context.defaultVehicleTabs = this.mapTabSelectionFields(
-          VehicleSheetClassicRuntime.getAllRegisteredTabs(),
-          [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default]
-        );
-        break;
-    }
   }
 
   // Not going to refactor this because this application is living on borrowed time

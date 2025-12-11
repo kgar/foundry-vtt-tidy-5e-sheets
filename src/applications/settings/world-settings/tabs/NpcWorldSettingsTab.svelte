@@ -22,37 +22,6 @@
 </script>
 
 <div class="settings-form">
-  <SelectSetting
-    options={SettingsProvider.settings.initialNpcSheetTab.options.choices()}
-    bind:value={context.settings.initialNpcSheetTab}
-    name={SettingsProvider.settings.initialNpcSheetTab.options.name}
-    hint={SettingsProvider.settings.initialNpcSheetTab.options.hint}
-    id="initialNpcSheetTab"
-  />
-
-  <ListboxSetting
-    name={SettingsProvider.settings.defaultNpcSheetTabs.options.name}
-    hint={SettingsProvider.settings.defaultNpcSheetTabs.options.hint}
-    leftHeaderText="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:leftItems={context.defaultNpcTabs.selected}
-    rightHeaderText="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:rightItems={context.defaultNpcTabs.available}
-    labelProp="label"
-    valueProp="id"
-  >
-    {#snippet belowListbox()}
-      <div>
-        <button
-          type="button"
-          onclick={() => functions.resetDefaultTabs(CONSTANTS.SHEET_TYPE_NPC)}
-        >
-          <i class="fas fa-rotate-right"></i>
-          {localize('TIDY5E.Reset')}
-        </button>
-      </div>
-    {/snippet}
-  </ListboxSetting>
-
   <CheckboxSetting
     bind:value={context.settings.showNpcRestInChat}
     name={'TIDY5E.Settings.ShowNPCRestInChat.name'}

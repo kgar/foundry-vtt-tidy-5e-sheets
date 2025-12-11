@@ -41,8 +41,8 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
     });
 
     api.registerCharacterTab(contaminationTab, {
-      layout: ['classic', 'quadrone'],
+      layout: ['quadrone'],
     });
-    api.registerNpcTab(contaminationTab, { layout: ['classic', 'quadrone'] });
+    api.registerNpcTab(contaminationTab, { layout: ['quadrone'] });
   }
 }

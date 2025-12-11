@@ -2,12 +2,9 @@ import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import type {
-  ActionSectionClassic,
   Actor5e,
-  ActorSheetContextV1,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
-  CharacterSheetContext,
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
   FavoriteSection,
@@ -15,7 +12,6 @@ import type {
   GroupMemberSection,
   InventorySection,
   NpcAbilitySection,
-  NpcSheetContext,
   NpcSheetQuadroneContext,
   SpellbookSection,
   SpellbookSectionLegacy,
@@ -29,10 +25,7 @@ import { UserSheetPreferencesService } from '../user-preferences/SheetPreference
 import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
 import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import {
-  getSortedActions,
-  getSortedActionsQuadrone,
-} from '../actions/actions.svelte';
+import { getSortedActionsQuadrone } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -155,10 +148,7 @@ export class SheetSections {
 
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {}
@@ -220,7 +210,7 @@ export class SheetSections {
    * @protected
    */
   static _prepareSpellbookLegacy(
-    context: ActorSheetContextV1 | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     items: Item5e[]
   ) {
     const owner = context.actor.isOwner;
@@ -357,11 +347,7 @@ export class SheetSections {
   }
 
   static prepareClassItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     classes: Item5e[],
     subclasses: Item5e[],
     actor: Actor5e
@@ -398,11 +384,7 @@ export class SheetSections {
   }
 
   static collocateSubItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     items: Item5e[]
   ): Item5e[] {
     const itemContext = context.itemContext;
@@ -674,11 +656,7 @@ export class SheetSections {
       | NpcAbilitySection
   >(
     features: TSection[],
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
@@ -705,31 +683,6 @@ export class SheetSections {
     }
 
     return features;
-  }
-
-  static configureActions(
-    sections: ActionSectionClassic[],
-    tabId: string,
-    sheetPreferences: UserSheetPreference,
-    sectionConfigs: Record<string, SectionConfig> | undefined
-  ) {
-    try {
-      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
-
-      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-
-      return sections.map(({ ...section }) => {
-        section.actions = getSortedActions(section, sortMode);
-
-        section.show = sectionConfigs?.[section.key]?.show !== false;
-
-        return section;
-      });
-    } catch (e) {
-      error('An error occurred while configuring actions', false, e);
-    }
-
-    return sections;
   }
 
   static configureActionsQuadrone(
@@ -881,16 +834,16 @@ export class SheetSections {
   }
 
   static showInFeatures(item: Item5e) {
-      return (
-        !item.type.includes([
-          CONSTANTS.ITEM_TYPE_CONTAINER,
-          CONSTANTS.ITEM_TYPE_SPELL,
-          CONSTANTS.ITEM_TYPE_BACKGROUND,
-          CONSTANTS.ITEM_TYPE_CLASS,
-          CONSTANTS.ITEM_TYPE_SUBCLASS,
-          CONSTANTS.ITEM_TYPE_RACE,
-          CONSTANTS.ITEM_TYPE_FACILITY,
-        ]) && !Inventory.isItemInventoryType(item)
-      );
-    }
+    return (
+      !item.type.includes([
+        CONSTANTS.ITEM_TYPE_CONTAINER,
+        CONSTANTS.ITEM_TYPE_SPELL,
+        CONSTANTS.ITEM_TYPE_BACKGROUND,
+        CONSTANTS.ITEM_TYPE_CLASS,
+        CONSTANTS.ITEM_TYPE_SUBCLASS,
+        CONSTANTS.ITEM_TYPE_RACE,
+        CONSTANTS.ITEM_TYPE_FACILITY,
+      ]) && !Inventory.isItemInventoryType(item)
+    );
+  }
 }

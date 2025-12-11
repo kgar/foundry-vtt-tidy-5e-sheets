@@ -4,7 +4,7 @@
   import type { Actor5e } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';
-  import { getCharacterSheetContext, getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -115,8 +115,10 @@
   </li>
 {:else}
   <li class="slot occupant-slot {type} empty" data-index={index}>
-    <a onclick={(ev) => context.editable && onSlotClick(ev)}
-      class="button button-tertiary button-icon-only">
+    <a
+      onclick={(ev) => context.editable && onSlotClick(ev)}
+      class="button button-tertiary button-icon-only"
+    >
       <i class={iconClass}></i>
     </a>
   </li>

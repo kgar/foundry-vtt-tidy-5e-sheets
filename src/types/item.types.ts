@@ -18,8 +18,6 @@ import type {
 } from 'src/runtime/item/item.types';
 import type { Tidy5eItemSheetQuadrone } from 'src/sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
 import type { Tidy5eContainerSheetQuadrone } from 'src/sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
-import type { Tidy5eItemSheetClassic } from 'src/sheets/classic/Tidy5eItemSheetClassic.svelte';
-import type { Tidy5eContainerSheetClassic } from 'src/sheets/classic/Tidy5eContainerSheetClassic.svelte';
 
 export type PropertyContext = {
   active: string[];
@@ -41,109 +39,6 @@ export type ItemFacilityOrdersContext = {
     label: string;
   }[];
 };
-
-export type ItemSheetContext = {
-  activities: {
-    id: string;
-    uuid: string;
-    name: string;
-    sort: number;
-    img: {
-      src: string;
-      svg: boolean;
-    };
-  }[];
-  activationTypes: GroupableSelectOption[];
-  advancement: any;
-  advancementEditable: boolean;
-  affectsPlaceholder: string;
-  baseItems: Record<string, string>;
-  canCraft?: boolean;
-  concealDetails: boolean;
-  config: typeof CONFIG.DND5E;
-  coverOptions: { value: string; label: string }[];
-  craft?: {
-    img: string;
-    name: string;
-    contentLink: string;
-  };
-  customContent: CustomContent[];
-  customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
-  data: any;
-  damageTypes:
-    | { label: string; value: string; selected: boolean }[]
-    | undefined;
-  defaultAbility: string;
-  denominationOptions: any;
-  dimensions:
-    | { size: string; width: string | false; height: string | false }
-    | undefined;
-  document: any;
-  durationUnits: GroupableSelectOption[];
-  editable: boolean;
-  effects: any;
-  enriched: {
-    description: string;
-    unidentified: string;
-    chat: string;
-  };
-  equipmentTypes: GroupableSelectOption[];
-  facilitySubtypes?: Record<string, string>;
-  hasDexModifier: boolean;
-  /**
-   * Represents remaining health as a percentage within the range of `0` to `100`.
-   */
-  healthPercentage: number;
-  identifiedName: string;
-  isEmbedded: boolean;
-  isHarvesting?: boolean;
-  isIdentifiable: boolean;
-  isIdentified: boolean;
-  isPhysical: boolean;
-  item: Item5e;
-  itemDescriptions: ItemDescription[];
-  itemType: string;
-  itemStatus: string | null;
-  itemSubtypes?: Record<string, string>;
-  // TODO: Possibly apply typings here. If it's not feasible, we're better off not wasting time trying to chase after every item's specific labels in TS typings.
-  labels: Record<string, any>;
-  limited: boolean;
-  lockItemQuantity: boolean;
-  modernRules: boolean;
-  options: any;
-  orders?: ItemFacilityOrdersContext;
-  owner: boolean;
-  properties: PropertyContext;
-  rangeTypes: GroupableSelectOption[];
-  recoveryPeriods: GroupableSelectOption[];
-  recoveryTypes: {
-    value: string;
-    label: string;
-  }[];
-  rollData: Record<string, any>;
-  scalarTarget: boolean;
-  sheet: Tidy5eItemSheetClassic; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
-  source: any;
-  spellcastingMethods: {
-    label: string;
-    value: string;
-  }[];
-  spellProgression: {
-    value: string;
-    label: string;
-    group?: string;
-  }[];
-  system: any;
-  title: string;
-  toggleAdvancementLock: () => Promise<void>;
-  user: any;
-  usesRecovery: {
-    data: UsesRecoveryData;
-    formulaOptions: { label: string; value: string }[] | null;
-  }[];
-  itemOverrides: Set<string>;
-  tabs: Tab[];
-} & DocumentSheetV2Context;
 
 export type ItemNameContext = {
   value: string;
@@ -306,46 +201,6 @@ export type ContainerItemContext = {
   isStack?: boolean;
   totalWeight?: number;
 };
-
-export type ContainerSheetClassicContext = {
-  capacity: ContainerCapacityContext;
-  config: typeof CONFIG.DND5E;
-  concealDetails: boolean;
-  containerContents: ContainerContents;
-  document: Item5e;
-  editable: boolean;
-  enriched: {
-    description: string;
-    unidentified: string;
-    chat: string;
-  };
-  filterData: DocumentFilters;
-  filterPins: Record<string, Set<string>>;
-  item: Item5e;
-  identifiedName: string;
-  items: Item5e[];
-  itemContext: Record<string, ContainerItemContext>;
-  itemDescriptions: ItemDescription[];
-  itemOverrides: Set<string>;
-  itemType: string;
-  isContainer: true;
-  isIdentifiable: boolean;
-  isIdentified: boolean;
-  isPhysical: boolean;
-  labels: Record<string, any>;
-  lockItemQuantity: boolean;
-  lockMoneyChanges: boolean;
-  modernRules: boolean;
-  customContent: CustomContent[];
-  owner: boolean;
-  properties: PropertyContext;
-  rollData: Record<string, any>;
-  sheet: Tidy5eContainerSheetClassic; // Modules like Item Piles will make a synthetic preview sheet. In so doing, context.item.sheet is not availables, so using a dedicated sheet prop for sheet needs improves compatibility.
-  source: any;
-  system: any;
-  tabs: Tab[];
-  utilities: Utilities<ContainerSheetClassicContext>;
-} & DocumentSheetV2Context;
 
 export type CurrencyContext = {
   key: string;

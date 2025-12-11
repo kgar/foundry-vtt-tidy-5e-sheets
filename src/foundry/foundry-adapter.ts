@@ -3,11 +3,9 @@ import type {
   ActiveEffect5e,
   ActiveEffectContext,
   AttunementContext,
-  CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
   LanguageTraitContext,
-  NpcSheetContext,
   SpellcastingInfo,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
@@ -439,32 +437,6 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(
-    context: CharacterSheetContext | NpcSheetContext
-  ) {
-    let actor = context.actor;
-    let formula = Roll.replaceFormulaData(
-      actor.system.bonuses.rsak.attack,
-      actor.getRollData(),
-      { missing: 0, warn: false }
-    );
-
-    let prof = actor.system.attributes.prof ?? 0;
-    let spellAbility = context.system.attributes.spellcasting;
-    let abilityMod =
-      (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
-    let spellAttackMod = prof + abilityMod;
-    let spellAttackText =
-      spellAttackMod > 0 ? '+' + spellAttackMod : spellAttackMod;
-
-    let spellAttackTextTooltip = `${prof} (prof.)+${abilityMod} (${spellAbility})`;
-
-    return {
-      mod: spellAttackText /* TODO: apply static bonuses; mention rolled bonuses without rolling them */,
-      bonus: formula,
-      modTooltip: spellAttackTextTooltip,
-    };
-  },
   cycleProficiency(
     actor: Actor5e,
     key: string,
@@ -493,23 +465,6 @@ export const FoundryAdapter = {
       2: 'fas fa-circle-star color-text-gold-light',
     };
     return icons[level] || icons[0];
-  },
-  getSpellImageUrl(
-    context: CharacterSheetContext | NpcSheetContext,
-    spell: any
-  ): string | undefined {
-    if (!settings.value.useSpellClassFilterIcons) {
-      return spell.img;
-    }
-
-    const sourceClass = spell.system.sourceClass;
-
-    const classImage =
-      sourceClass && 'actorClassesToImages' in context
-        ? context.actorClassesToImages[sourceClass]
-        : undefined;
-
-    return classImage ?? spell.img;
   },
   searchActors(searchCriteria: string, actors: Actor5e[]) {
     return new Set(

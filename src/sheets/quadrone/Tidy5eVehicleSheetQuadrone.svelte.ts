@@ -21,11 +21,8 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import { Activities } from 'src/features/activities/activities';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext } from 'src/types/item.types';
-import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
 
 const localize = FoundryAdapter.localize;
 
@@ -140,8 +137,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       utilities: {},
       ...actorContext,
     };
-
-    context.useActionsFeature = actorUsesActionFeature(this.actor);
 
     // Prepare owned items
     this._prepareItems(context);
