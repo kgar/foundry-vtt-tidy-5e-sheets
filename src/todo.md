@@ -3,7 +3,7 @@
 ### Vehicle Sheet
 
 - [ ] Ensure the following tabs exist
-  - [ ] Statblock
+  - [x] Statblock
     - [x] Runtime, component
     - [x] Prep
       - [x] itemContext, mountable items, add crew slots array
@@ -18,7 +18,7 @@
       - [x] Features
       - [x] Siege Weapons
       - [x] Vehicle Equipment
-    - [ ] Column spec scaffolding
+    - [x] Column spec scaffolding
   - [ ] Crew & Passengers
     - [x] Runtime, component
     - [ ] Contains 

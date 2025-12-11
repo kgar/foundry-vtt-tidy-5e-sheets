@@ -164,6 +164,11 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   }
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
+    const statblockRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { canEquip: false, hasActionsTab: false }
+    );
+
     const statblock: Record<string, InventorySection> = {
       [CONSTANTS.ITEM_TYPE_FEAT]: {
         type: CONSTANTS.SECTION_TYPE_INVENTORY,
@@ -174,7 +179,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           ['type']: CONSTANTS.ITEM_TYPE_FEAT,
         },
         key: CONSTANTS.ITEM_TYPE_FEAT,
-        rowActions: [],
+        rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
       },
@@ -188,7 +193,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_SIEGE_WEAPON,
         },
         key: CONSTANTS.ITEM_TYPE_WEAPON,
-        rowActions: [],
+        rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
       },
@@ -202,7 +207,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           ['system.type.value']: CONSTANTS.ITEM_SUBTYPE_VEHICLE_EQUIPMENT,
         },
         key: CONSTANTS.ITEM_TYPE_EQUIPMENT,
-        rowActions: [],
+        rowActions: statblockRowActions,
         sectionActions: [],
         show: true,
       },
@@ -244,6 +249,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           statblockTypes,
           {
             canCreate: false,
+            rowActions: statblockRowActions
           },
           CONSTANTS.ITEM_TYPE_FEAT
         );
