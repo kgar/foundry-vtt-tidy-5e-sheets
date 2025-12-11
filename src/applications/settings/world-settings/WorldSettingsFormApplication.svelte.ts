@@ -58,7 +58,6 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
         defaultDeathSaveRoll: currentSettings.defaultDeathSaveRoll,
         allowCantripsToBePrepared: currentSettings.allowCantripsToBePrepared,
         lockMoneyChanges: currentSettings.lockMoneyChanges,
-        showNpcRestInChat: currentSettings.showNpcRestInChat,
         itemIdentificationPermission:
           currentSettings.itemIdentificationPermission,
         includeFlagsInSpellScrollCreation:

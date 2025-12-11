@@ -2,14 +2,10 @@
   import { CONSTANTS } from 'src/constants';
   import type { Tab } from 'src/types/types';
   import MiscWorldSettingsTab from './tabs/MiscWorldSettingsTab.svelte';
-  import NpcWorldSettingsTab from './tabs/NpcWorldSettingsTab.svelte';
   import ItemWorldSettingsTab from './tabs/ItemWorldSettingsTab.svelte';
   import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
-  import type {
-    WorldSettingsContext,
-    WorldSettingsFunctions,
-  } from './WorldSettings.types';
+  import type { WorldSettingsFunctions } from './WorldSettings.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
@@ -26,14 +22,6 @@
       title: 'TIDY5E.WorldSettings.TabMisc.tabLabel',
       content: {
         component: MiscWorldSettingsTab,
-        type: 'svelte',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_WORLD_SETTINGS_NPC,
-      title: 'TIDY5E.WorldSettings.TabNpc.tabLabel',
-      content: {
-        component: NpcWorldSettingsTab,
         type: 'svelte',
       },
     },

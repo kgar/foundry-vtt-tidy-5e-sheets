@@ -6,7 +6,6 @@ export type WorldSettingsContext = {
     defaultDeathSaveRoll: CurrentSettings['defaultDeathSaveRoll'];
     allowCantripsToBePrepared: CurrentSettings['allowCantripsToBePrepared'];
     lockMoneyChanges: CurrentSettings['lockMoneyChanges'];
-    showNpcRestInChat: CurrentSettings['showNpcRestInChat'];
     itemIdentificationPermission: CurrentSettings['itemIdentificationPermission'];
     includeFlagsInSpellScrollCreation: CurrentSettings['includeFlagsInSpellScrollCreation'];
     globalCustomSections: CurrentSettings['globalCustomSections'];

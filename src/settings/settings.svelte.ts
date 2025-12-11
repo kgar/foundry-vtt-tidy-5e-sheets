@@ -392,21 +392,6 @@ export function createSettings() {
         },
       },
 
-      // TODO: think about this one...
-      showNpcRestInChat: {
-        options: {
-          name: 'TIDY5E.Settings.ShowNPCRestInChat.name',
-          hint: 'TIDY5E.Settings.ShowNPCRestInChat.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('showNpcRestInChat');
-        },
-      },
-
       lockMoneyChanges: {
         options: {
           name: 'TIDY5E.Settings.LockMoneyChanges.name',

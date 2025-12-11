@@ -135,3 +135,6 @@
   - [ ] TIDY5E.WorldSettings.VehicleExhaustion.Header
   - [ ] TIDY5E.WorldSettings.VehicleExhaustion.hint
   - [ ] TIDY5E.WorldSettings.VehicleExhaustion.name
+  - [ ] TIDY5E.Settings.ShowNPCRestInChat.name
+  - [ ] TIDY5E.Settings.ShowNPCRestInChat.hint
+          
