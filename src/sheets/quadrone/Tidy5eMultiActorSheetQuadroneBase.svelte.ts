@@ -9,20 +9,16 @@ import type {
   GroupTrait,
   GroupTraitBase,
   MeasurableGroupTrait,
-  MultiActorMemberPortraitContext,
   MultiActorQuadroneContext,
   TidyItemSectionBase,
 } from 'src/types/types';
-import type {
-  ApplicationClosingOptions,
-  ApplicationRenderOptions,
-} from 'src/types/application.types';
+import type { ApplicationRenderOptions } from 'src/types/application.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { Container } from 'src/features/containers/Container';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Group5eMember as MultiActor5eMember } from 'src/types/group.types';
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { isNil } from 'src/utils/data';

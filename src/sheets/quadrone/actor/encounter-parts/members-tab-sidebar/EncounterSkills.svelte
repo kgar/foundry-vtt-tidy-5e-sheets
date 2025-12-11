@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import SkillsCardHeader from '../../parts/skills/SkillsCardHeader.svelte';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { CONSTANTS } from 'src/constants';

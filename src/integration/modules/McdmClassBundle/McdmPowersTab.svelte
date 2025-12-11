@@ -18,7 +18,7 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Item5e } from 'src/types/item.types';
   import type { PowersSection } from './McdmClassBundle';

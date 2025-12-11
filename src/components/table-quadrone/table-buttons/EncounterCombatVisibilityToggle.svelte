@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type {

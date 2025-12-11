@@ -4,7 +4,7 @@ import SidebarTabFavorites from 'src/sheets/quadrone/actor/tabs/SidebarTabFavori
 import SidebarTabSkills from 'src/sheets/quadrone/actor/tabs/SidebarTabSkills.svelte';
 import SidebarTabTraits from 'src/sheets/quadrone/actor/tabs/SidebarTabTraits.svelte';
 import { CONSTANTS } from 'src/constants';
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export const CharacterSheetQuadroneSidebarRuntime =
   new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(

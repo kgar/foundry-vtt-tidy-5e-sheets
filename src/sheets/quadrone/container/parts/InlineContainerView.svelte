@@ -12,7 +12,7 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   interface Props {
     container: Item5e;
