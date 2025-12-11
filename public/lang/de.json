@@ -1,8 +1,4 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Character Sheet",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e NPC Sheet",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Item Sheet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
     "TIDY5E.PlayerName": "Spieler Name",
     "TIDY5E.EditSheetImageHint": "Linksklick: Bild bearbeiten",
     "TIDY5E.SheetImageOptionsHint": "Rechtsklick: Charakter-Bilder zeigen",
@@ -637,7 +633,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Gegenstand"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e Klassischer Behälter Bogen",
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Zauber mit aktiven Effekten als Aktionen einbeziehen",
         "hint": "Zeigt standardmäßig Zauber mit aktiven Effekten (z. B. Rindenhaut) im Reiter/Feld „Aktionen”."
@@ -727,8 +722,6 @@
     "TIDY5E.PortraitTitle": "Porträt: {subject}",
     "TIDY5E.ItemImageTitle": "Gegenstand: {subject}",
     "TIDY5E.SortMode.ActionListDefault": "",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e Klassischer Gruppenbogen",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e Klassischer Begegnungsbogen",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Charakterbogen",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC-Bogen",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Behälterbogen",

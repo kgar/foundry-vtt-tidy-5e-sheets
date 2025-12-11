@@ -1,5 +1,4 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "நேர்த்தியான 5e கிளாசிக் எழுத்துத் தாள்",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "செய்தி பேனலைக் காட்டு",
     "TIDY5E.JournalLocationsOfInterest": "ஆர்வமுள்ள இடங்கள்",
     "TIDY5E.JournalQuests": "தேடல்கள்",
@@ -321,11 +320,6 @@
     "TIDY5E.SortMenu.OptionAlphabetical": "அகரவரிசை (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "கையேடு",
     "TIDY5E.SortMenu.OptionPrepared": "தயாரிக்கப்பட்டது",
-    "TIDY5E.Tidy5eNpcSheetClassic": "நேர்த்தியான 5e கிளாசிக் NPC தாள்",
-    "TIDY5E.Tidy5eItemSheetClassic": "நேர்த்தியான 5e கிளாசிக் உருப்படி தாள்",
-    "TIDY5E.Tidy5eContainerSheetClassic": "நேர்த்தியான 5e கிளாசிக் கொள்கலன் தாள்",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "நேர்த்தியான 5e கிளாசிக் வாகன தாள்",
-    "TIDY5E.Tidy5eGroupSheetClassic": "நேர்த்தியான 5e கிளாசிக் குழு தாள்",
     "TIDY5E.PlayerName": "வீரர் பெயர்",
     "TIDY5E.EditSheetImageHint": "இடது கிளிக்: படத்தைத் திருத்து",
     "TIDY5E.PreviewSheetImageHint": "இடது கிளிக்: படத்தை முன்னோட்டமிடுங்கள்",

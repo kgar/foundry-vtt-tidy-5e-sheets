@@ -1,12 +1,5 @@
 {
   "TIDY5E.ModuleName": "Tidy 5e Sheets",
-  "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Classic Character Sheet",
-  "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e Classic NPC Sheet",
-  "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Classic Item Sheet",
-  "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e Classic Container Sheet",
-  "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Classic Vehicle Sheet",
-  "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e Classic Group Sheet",
-  "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e Classic Encounter Sheet",
   "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Character Sheet",
   "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC Sheet",
   "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Container Sheet",
@@ -964,6 +957,5 @@
     "PlaceholderNotesField.PlaceholderText": "Notes"
   },
   "TIDY5E.Actor.Characteristics": "Characteristics",
-  "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> will be removed from the Tidy 5e Sheets module in Foundry v14.",
   "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> have been removed from the Tidy 5e Sheets module as of Foundry v14."
 }

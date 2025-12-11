@@ -1,8 +1,4 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Klasický deník postavy Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Klasický deník NP Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Klasický deník položky Tidy 5e",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Klasický deník dopravního prostředku Tidy 5e",
     "TIDY5E.PlayerName": "Jméno hráče",
     "TIDY5E.EditSheetImageHint": "Levé tlačítko myši: Upravit obrázek",
     "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
@@ -751,14 +747,12 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Vyčerpání"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Klasický deník kontejneru Tidy 5e",
     "TIDY5E.Reset": "Obnovení výchozího nastavení",
     "TIDY5E.Tidy5eSettings": "Nastavení deníků Tidy 5e",
     "TIDY5E.ExhaustionLevelTooltip": "Úroveň vyčerpání {level}",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Zobrazit informační panel",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Skrýt informační panel",
     "TIDY5E.Group.EmptyMembersTabHint": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu.",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Klasický deník skupiny Tidy 5e",
     "TIDY5E.NoSpecialSenses": "Žádné zvláštní smysly",
     "TIDY5E.Group.NamePlaceholder": "Název skupiny",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
@@ -894,7 +888,6 @@
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zobrazit legendární akce a akce doupěte v záložce statistik",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Zahrnout sekci Kouzla do záložky statistik",
     "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí (NP) Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Použít zabezpečení členů skupiny",

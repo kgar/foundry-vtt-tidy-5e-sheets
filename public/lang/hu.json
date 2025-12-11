@@ -1,8 +1,4 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Character Sheet",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e NPC Sheet",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Item Sheet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
     "TIDY5E.PlayerName": "Játékosnév",
     "TIDY5E.EditSheetImageHint": "bal klikk: kép szerkesztés",
     "TIDY5E.SheetImageOptionsHint": "jobb klikk: karakterkép mutatás",
@@ -555,7 +551,6 @@
         "PatreonLink": "",
         "BuyMeACoffeeLink": ""
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "",
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
         "hint": "",
         "name": ""

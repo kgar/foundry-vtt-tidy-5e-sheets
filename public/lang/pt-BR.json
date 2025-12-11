@@ -1,10 +1,4 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Ficha de Personagem Clássica Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Ficha de PNJ Clássica Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Ficha de Item Clássica Tidy 5e",
-    "TIDY5E.Tidy5eContainerSheetClassic": "Ficha de Recipiente Clássica Tidy 5e",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Ficha de Veículo Clássica Tidy 5e",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Ficha de Grupo Clássica Tidy 5e",
     "TIDY5E.PlayerName": "Nome do Jogador",
     "TIDY5E.EditSheetImageHint": "Clique Esq.: Editar Imagem",
     "TIDY5E.PreviewSheetImageHint": "Clique Esq.: Visualizar Imagem",
@@ -885,7 +879,6 @@
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Incluir seções do Grimório na aba Bloco de Estatísticas",
     "TIDY5E.UseSpecificDefaultValue.Label": "Usar Padrão ({value})",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostrar Rastreador Lendário/Covil na aba Bloco de Estatísticas",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Ficha de Encontro Clássica Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Ficha de Encontro Tidy 5e",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Usar Segurança de Membros da Ficha de Grupo",

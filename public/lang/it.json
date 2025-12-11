@@ -1,8 +1,4 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Scheda PG Classica Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Scheda PNG Classica Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Scheda Oggetti Classica Tidy 5e",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Scheda Veicoli Classica Tidy 5e",
     "TIDY5E.PlayerName": "Nome del Giocatore",
     "TIDY5E.EditSheetImageHint": "Tasto Sinistro: Modifica Immagine",
     "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
@@ -706,7 +702,6 @@
         "options.GmOnly": "Solo DM",
         "options.GmAndOwners": "DM e Proprietari Oggetti"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Scheda Contenitore Classica Tidy 5e",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Oggetto"
     },
@@ -783,7 +778,6 @@
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
     "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Scheda Gruppo Classica Tidy 5e",
     "TIDY5E.NoSpecialSenses": "Nessun senso speciale",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostra Pannello Info",
     "TIDY5E.Group.EmptyMembersTabHint": "Questo gruppo è vuoto. Trascina un personaggio dalla barra laterale per aggiungere un membro.",
@@ -924,7 +918,6 @@
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Includi Sezioni Incantesimi nella scheda Statistiche",
     "TIDY5E.UseSpecificDefaultValue.Label": "Usa predefinito ({value})",
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Mostra i tracker Leggendari/Tana nella scheda Statistiche",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Scheda Incontro Classica Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Scheda Incontro Tidy 5e",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "hint": "Consente al GM di controllare quali informazioni sui membri del gruppo un utente può visualizzare nella scheda del gruppo. Quando il giocatore non ha l'autorizzazione per un membro del gruppo, la scheda del gruppo non mostra quel membro o le sue informazioni aggregate. Con l'autorizzazione Limitata, l'utente può vedere il nome del membro ma nessun'altra informazione. Con l'autorizzazione Osservatore o superiore, l'utente può vedere tutte le informazioni sulla scheda del gruppo relative al membro.",

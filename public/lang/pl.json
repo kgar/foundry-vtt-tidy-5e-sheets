@@ -1,13 +1,9 @@
 {
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Klasyczna Karta Pojazdu Tidy 5e",
     "TIDY5E.EditSheetImageHint": "Lewy przycisk myszy: edytuj obraz",
     "TIDY5E.ShowTokenArt": "Pokaż token",
     "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż opcje obrazu",
     "TIDY5E.ShowItemImage": "Prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "Pokaż obraz",
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Klasyczna Karta Postaci Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Klasyczna Karta NPC Tidy 5e",
-    "TIDY5E.Tidy5eItemSheetClassic": "Klasyczna Karta Przedmiotu Tidy 5e",
     "TIDY5E.PlayerName": "Nazwa gracza",
     "TIDY5E.ShowPortraitArt": "Pokaż portret",
     "TIDY5E.TabConfiguration": {
@@ -420,7 +416,6 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Zawsze przygotowane - akcent"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Klasyczna Karta Pojemnika Tidy 5e",
     "TIDY5E.Settings.UseHpOverlay": {
         "hint": "Pokazuje kolorową nakładkę HP na portrecie postaci.",
         "name": "Użyj nakładki zdrowia"
@@ -757,7 +752,6 @@
     "TIDY5E.Group.NamePlaceholder": "Nazwa grupy",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Schowaj panel informacyjny",
     "TIDY5E.Group.EmptyMembersTabHint": "Ta grupa jest pusta. Upuść postać z paska bocznego, żeby dodać członka.",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Klasyczna Karta Grupy Tidy 5e",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Pokaż panel informacyjny",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Przełącz blokadę karty",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty.",
@@ -892,7 +886,6 @@
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Pokaż liczniki akcji legendarnych/leża w zakładce statystyk",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Uwzględnij sekcje księgi czarów w zakładce statystyk",
     "TIDY5E.UseSpecificDefaultValue.Label": "Użyj domyślnej ({value})",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasyczna Karta Spotkań Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Karta spotkań Tidy 5e",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Użyj zabezpieczeń Karty Grupy",

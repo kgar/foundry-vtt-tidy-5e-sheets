@@ -1,9 +1,5 @@
 {
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e 经典物品卡",
     "TIDY5E.NoSpecialSenses": "无特殊感官",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e 经典 NPC 卡",
-    "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e 经典容器卡",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e 经典载具卡",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e 角色卡",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC 卡",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e 容器卡",
@@ -24,7 +20,6 @@
     "TIDY5E.Group.ShowMemberTabInfoPanel": "显示信息面板",
     "TIDY5E.Group.HideMemberTabInfoPanel": "隐藏信息面板",
     "TIDY5E.RestHint": "休息",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e 经典小队卡",
     "TIDY5E.Group.NamePlaceholder": "群组名称",
     "TIDY5E.ShortRest": "短休",
     "TIDY5E.LongRest": "长休",
@@ -80,7 +75,6 @@
     "TIDY5E.Environment": "环境",
     "TIDY5E.EnvironmentTooltip": "环境：{environment}",
     "TIDY5E.Search": "搜索",
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e 经典角色卡",
     "TIDY5E.ShowTokenArt": "显示指示物",
     "TIDY5E.Group.EmptyMembersTabHint": "此群组为空。从侧边栏拖放一个角色以添加成员。",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 小队卡",
@@ -474,7 +468,6 @@
         "name": "允许准备戏法",
         "hint": "塔莎的万事坩埚中提出的“戏法公式”可选规则允许法师在长休后重新准备戏法，其运作机制与准备环位法术相同。以此方式准备的戏法不计入每日法术准备数量上限。"
     },
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e 经典遭遇卡",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e 遭遇卡",
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "锁定货币",

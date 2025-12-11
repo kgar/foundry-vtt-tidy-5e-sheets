@@ -1,8 +1,4 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Feuille de personnage classique",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e feuille de PNJ",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e feuille d'objet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e feuille de véhicule",
     "TIDY5E.PlayerName": "Nom du joueur",
     "TIDY5E.EditSheetImageHint": "Clic gauche : éditer l'image",
     "TIDY5E.SheetImageOptionsHint": "Clic droit : voir les options de l'image",
@@ -711,7 +707,6 @@
         "options.GmAndOwners": "MJ et propriétaires des objets"
     },
     "TIDY5E.Commands.ShowContainerPanel": "Afficher le panneau conteneur",
-    "TIDY5E.Tidy5eContainerSheetClassic": "Feuille de conteneur Tidy 5e",
     "TIDY5E.Commands.HideContainerPanel": "Masquer le panneau conteneur",
     "TIDY5E.Utilities.GMTools": "Outils du MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
@@ -787,7 +782,6 @@
     "TIDY5E.Group.HideMemberTabInfoPanel": "Cacher le panneau d'information",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Changer le verrouillage de la feuille",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Si une feuille Tidy est la fenêtre active dans l'interface utilisateur, ce raccourci clavier active le verrouillage de la feuille.",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e feuille de groupe classique",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Afficher le panneau d'information",
     "TIDY5E.NoSpecialSenses": "Pas de perceptions spéciales",
     "TIDY5E.Group.EmptyMembersTabHint": "Ce groupe est vide. Cliquez sur un acteur dans la barre latérale pour ajouter un membre.",
@@ -920,7 +914,6 @@
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Inclure les sections du livre de sorts dans l'onglet Statblock",
     "TIDY5E.UseSpecificDefaultValue.Label": "Par défaut ({value})",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Incanté en {ordinal}",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e feuille de rencontre classique",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Feuille de rencontre",
     "TIDY5E.CharacterTraits.Title": "Capacités du personnage",
     "TIDY5E.ItemSheet.FeatureOriginLabel": "composantes d'origine",

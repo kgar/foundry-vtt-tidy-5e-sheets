@@ -1,11 +1,5 @@
 {
     "TIDY5E.ModuleName": "Tidy 5e 시트",
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e 클래식 캐릭터 시트",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e 클래식 NPC 시트",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e 클래식 아이템 시트",
-    "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e 클래식 용기 시트",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e 클래식 탑승물 시트",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e 클래식 그룹 시트",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e 캐릭터 시트",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC 시트",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e 용기 시트",
