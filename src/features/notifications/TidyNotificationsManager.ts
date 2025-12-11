@@ -33,7 +33,7 @@ export class TidyNotificationsManager {
       notifications.classicRetirementImminent = true;
     }
     
-    if ((game.release.generation >= 14 || true) && !notifications.classicRetired) {
+    if ((game.release.generation >= 14) && !notifications.classicRetired) {
       const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetired');
       this.sendTidyChatMessageToGm(`<p>${message}</p>`);
       notifications.classicRetired = true;
