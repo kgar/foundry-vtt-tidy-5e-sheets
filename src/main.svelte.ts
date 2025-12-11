@@ -1,14 +1,10 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
-import { Tidy5eCharacterSheet } from './sheets/classic/Tidy5eCharacterSheet.svelte';
 import './less/tidy5e.less';
 import {
   SettingsProvider,
   initSettings,
   settings,
 } from './settings/settings.svelte';
-import { Tidy5eItemSheetClassic } from './sheets/classic/Tidy5eItemSheetClassic.svelte';
-import { Tidy5eNpcSheet } from './sheets/classic/Tidy5eNpcSheet.svelte';
-import { Tidy5eVehicleSheet } from './sheets/classic/Tidy5eKgarVehicleSheet.svelte';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
@@ -17,9 +13,7 @@ import { MigrationTally } from 'src/migrations/MigrationTally';
 import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
-import { Tidy5eGroupSheetClassic } from './sheets/classic/Tidy5eGroupSheetClassic.svelte';
 import { DebugTools } from './utils/DebugTools';
-import { Tidy5eContainerSheetClassic } from './sheets/classic/Tidy5eContainerSheetClassic.svelte';
 import { Tidy5eContainerSheetQuadrone } from './sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import { Tidy5eItemDebugSheetQuadrone } from './sheets/quadrone/Tidy5eItemDebugSheetQuadrone.svelte';
 import { initReadyHooks } from './features/ready-hooks';
@@ -31,7 +25,6 @@ import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterS
 import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
 import { TidyNotificationsManager } from './features/notifications/TidyNotificationsManager';
-import { Tidy5eEncounterSheetClassic } from './sheets/classic/Tidy5eEncounterSheetClassic.svelte';
 import { Tidy5eGroupSheetQuadrone } from './sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import { Tidy5eEncounterSheetQuadrone } from './sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import { formatResourcePathForCss } from './utils/path';
@@ -43,40 +36,10 @@ Hooks.once('init', () => {
   documentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eCharacterSheet,
-    {
-      types: [CONSTANTS.SHEET_TYPE_CHARACTER],
-      label: 'TIDY5E.Tidy5eCharacterSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
     Tidy5eCharacterSheetQuadrone,
     {
       types: [CONSTANTS.SHEET_TYPE_CHARACTER],
       label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eNpcSheet,
-    {
-      types: [CONSTANTS.SHEET_TYPE_NPC],
-      label: 'TIDY5E.Tidy5eNpcSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eVehicleSheet,
-    {
-      types: [CONSTANTS.SHEET_TYPE_VEHICLE],
-      label: 'TIDY5E.Tidy5eVehicleSheetClassic',
     }
   );
 
@@ -104,46 +67,6 @@ Hooks.once('init', () => {
     CONSTANTS.ITEM_TYPE_TOOL,
     CONSTANTS.ITEM_TYPE_WEAPON,
   ];
-
-  documentSheetConfig.registerSheet(
-    Item,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eItemSheetClassic,
-    {
-      types: supportedItemTypes,
-      label: 'TIDY5E.Tidy5eItemSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Item,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eContainerSheetClassic,
-    {
-      types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-      label: 'TIDY5E.Tidy5eContainerSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eGroupSheetClassic,
-    {
-      types: [CONSTANTS.SHEET_TYPE_GROUP],
-      label: 'TIDY5E.Tidy5eGroupSheetClassic',
-    }
-  );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eEncounterSheetClassic,
-    {
-      types: [CONSTANTS.SHEET_TYPE_ENCOUNTER],
-      label: 'TIDY5E.Tidy5eEncounterSheetClassic',
-    }
-  );
 
   initSettings();
   initRuntime();
