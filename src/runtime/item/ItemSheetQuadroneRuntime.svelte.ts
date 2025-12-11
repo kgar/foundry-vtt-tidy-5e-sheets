@@ -45,7 +45,7 @@ import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
-import type { ItemTabRegistrationOptions } from 'src/api';
+import type { ItemTabRegistrationOptions } from 'src/api/api.types';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
 

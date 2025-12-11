@@ -59,7 +59,7 @@ import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTyp
 import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
-import type { SheetPinFlag } from 'src/api';
+import type { SheetPinFlag } from 'src/foundry/TidyFlags.types';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -393,7 +393,9 @@ export function Tidy5eActorSheetQuadroneBase<
         src,
         token: showToken,
         path: showToken ? 'prototypeToken.texture.src' : 'img',
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
+        shape: showToken
+          ? 'token'
+          : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
         isVideo,
         isRandom,
       };
@@ -810,7 +812,9 @@ export function Tidy5eActorSheetQuadroneBase<
         this.actor.system._source.attributes?.movement ?? {};
 
       function excludeSpeed(key: string) {
-        return isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '');
+        return (
+          isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '')
+        );
       }
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
@@ -827,7 +831,9 @@ export function Tidy5eActorSheetQuadroneBase<
           acc.push({
             key,
             label: config.label,
-            value: FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ?? '',
+            value:
+              FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ??
+              '',
             units:
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,

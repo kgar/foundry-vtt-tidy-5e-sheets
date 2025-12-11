@@ -8,7 +8,7 @@ import {
   FoundryAdapter,
   type DocumentSheetConstructor,
 } from 'src/foundry/foundry-adapter';
-import type { SheetHeaderControlPosition } from 'src/api';
+import type { SheetHeaderControlPosition } from 'src/api/api.types';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
 
 type HeaderControlConfigMember = {

@@ -1,7 +1,7 @@
 import type {
   TabIdDocumentItemTypesOptions,
   TabIdDocumentItemTypesParams,
-} from 'src/api';
+} from 'src/api/api.types';
 import { CONSTANTS } from 'src/constants';
 import { Inventory } from 'src/features/sections/Inventory';
 

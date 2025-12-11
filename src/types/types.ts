@@ -14,7 +14,6 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredCustomTraitEntry,
   RegisteredCustomTraitOnClickParams,
-  RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
@@ -42,8 +41,6 @@ import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehic
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import type { TravelPaceConfig } from 'src/foundry/config.types';
-import type { ComponentWithProps } from 'src/utils/component';
-import type { CustomTraitEntry } from 'src/api';
 
 export type Actor5e = any;
 export type Folder = any;
