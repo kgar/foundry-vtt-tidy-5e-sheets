@@ -1,5 +1,4 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
-import './less/tidy5e.less';
 import {
   SettingsProvider,
   initSettings,
