@@ -485,6 +485,20 @@ export class Tidy5eContainerSheetQuadrone
         return await this._onDropFolder(event, document);
       }
 
+      // Nested Container Drop
+      const nestedContainerUuid = event.target
+        .closest('[data-tidy-nested-container-uuid]')
+        ?.getAttribute('data-tidy-nested-container-uuid');
+
+      if (nestedContainerUuid && nestedContainerUuid !== this.document.uuid) {
+        const container = await fromUuid(nestedContainerUuid);
+        const containerSheet = new Tidy5eContainerSheetQuadrone({
+          document: container,
+        });
+
+        return await containerSheet._onDrop(event);
+      }
+
       return await this._onDropItem(event, document);
     } finally {
       this.#dropBehavior = null;

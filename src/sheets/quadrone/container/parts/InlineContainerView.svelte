@@ -8,7 +8,6 @@
   import { CONSTANTS } from 'src/constants';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import type { MessageBus } from 'src/types/types';
-  import { Tidy5eContainerSheetQuadrone } from '../../Tidy5eContainerSheetQuadrone.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -42,22 +41,6 @@
 
   let messageBus = getContext<MessageBus>(CONSTANTS.SVELTE_CONTEXT.MESSAGE_BUS);
 
-  async function onDrop(
-    event: DragEvent & { currentTarget: EventTarget & HTMLElement },
-  ) {
-    const sheet = new Tidy5eContainerSheetQuadrone({ document: container });
-
-    sheet._onDrop(
-      event as DragEvent & {
-        currentTarget: EventTarget & HTMLElement;
-        target: HTMLElement;
-      },
-    );
-
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }
-
   $effect(() => {
     if (
       messageBus?.message?.tabId === tabId &&
@@ -85,9 +68,7 @@
   );
 
   // Check if container has any currency to transfer
-  let hasCurrency = $derived(
-    currencies.some((c) => c.value > 0),
-  );
+  let hasCurrency = $derived(currencies.some((c) => c.value > 0));
 
   // Transfer all currency from container to parent actor
   async function transferCurrencyToParent() {
@@ -122,12 +103,10 @@
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
   deferRendering
 >
-
   <div class="inline-content-view full-height">
     <div
       class="flex-column extra-small-gap flex-1 inline-container-view"
-      data-tidy-container-id={container.id}
-      ondrop={onDrop}
+      data-tidy-nested-container-uuid={container.uuid}
     >
       <InventoryTables
         sections={inventory}
@@ -147,7 +126,9 @@
       {/if}
     </div>
 
-    <div class="currency-container flexrow flex1 extra-small-gap align-items-center">
+    <div
+      class="currency-container flexrow flex1 extra-small-gap align-items-center"
+    >
       {#each currencies as currency (currency.key)}
         <label class="input-group">
           <i class="currency {currency.key}" aria-label={currency.key}></i>
@@ -182,7 +163,7 @@
         >
           <i class="fas fa-person-arrow-up-from-line"></i>
           {FoundryAdapter.localize('DND5E.CurrencyManager.Transfer.Label')}
-          </a>
+        </a>
       {/if}
     </div>
   </div>
