@@ -42,17 +42,6 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eCharacterSheetQuadrone',
     }
   );
-
-  documentSheetConfig.registerSheet(
-    Actor,
-    CONSTANTS.DND5E_SYSTEM_ID,
-    Tidy5eVehicleSheetQuadrone,
-    {
-      types: [CONSTANTS.SHEET_TYPE_VEHICLE],
-      label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
-    }
-  );
-
   const supportedItemTypes = [
     CONSTANTS.ITEM_TYPE_BACKGROUND,
     CONSTANTS.ITEM_TYPE_CLASS,
@@ -139,6 +128,16 @@ Hooks.once('init', () => {
 
   /* FOR THOSE WITH TRUE SIGHT */
   if (settings.value.truesight) {
+    documentSheetConfig.registerSheet(
+      Actor,
+      CONSTANTS.DND5E_SYSTEM_ID,
+      Tidy5eVehicleSheetQuadrone,
+      {
+        types: [CONSTANTS.SHEET_TYPE_VEHICLE],
+        label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
+      }
+    );
+
     documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,

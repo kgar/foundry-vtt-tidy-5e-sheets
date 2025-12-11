@@ -12,7 +12,7 @@ export class TidyNotificationsManager {
       SettingsProvider.settings.notifications.get() ?? {};
 
     if (!notifications.firstTimeWelcome) {
-      const message1 = FoundryAdapter.localize(
+      const message = FoundryAdapter.localize(
         'TIDY5E.Notifications.FirstTimeWelcome1',
         {
           sheetLinkStart: `<a href="${CONSTANTS.WIKI_LINK_CHANGE_SHEET_GUIDE}" target="_blank">`,
@@ -23,8 +23,20 @@ export class TidyNotificationsManager {
           wikiLinkEnd: `</a>`,
         }
       );
-      this.sendTidyChatMessageToGm(`<p>${message1}</p>`);
+      this.sendTidyChatMessageToGm(`<p>${message}</p>`);
       notifications.firstTimeWelcome = true;
+    }
+
+    if (game.release.generation < 14 && !notifications.classicRetirementImminent) {
+      const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetirementImminent');
+      this.sendTidyChatMessageToGm(`<p>${message}</p>`);
+      notifications.classicRetirementImminent = true;
+    }
+    
+    if (game.release.generation >= 14 && !notifications.classicRetired) {
+      const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetired');
+      this.sendTidyChatMessageToGm(`<p>${message}</p>`);
+      notifications.classicRetired = true;
     }
 
     FoundryAdapter.setTidySetting('notifications', notifications);
