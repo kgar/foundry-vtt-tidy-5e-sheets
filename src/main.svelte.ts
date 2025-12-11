@@ -5,8 +5,8 @@ import {
   settings,
 } from './settings/settings.svelte';
 import { CONSTANTS } from './constants';
+import './less/tidy5e.less';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
-import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntimeOnReady, initRuntime } from './runtime/runtime-init';
 import { MigrationTally } from 'src/migrations/MigrationTally';
 import { setupIntegrations } from './integration/integration';

@@ -1,9 +1,9 @@
-import { SpellSchool } from 'src/features/spell-school/SpellSchool';
+import { warn } from 'src/utils/logging';
 import type { SupportedSpellSchoolIcon } from './spell-school.types';
 
 /**
  * Allows for configuration related to Spell Schools.
- * Currently, [FontAwesome](https://fontawesome.com/) and [RPG Awesome](https://nagoshiashumari.github.io/Rpg-Awesome/) icons are officially supported.
+ * Currently, [FontAwesome](https://fontawesome.com/) icons are officially supported.
  *
  * @category Configuration
  */
@@ -20,7 +20,7 @@ export class SpellSchoolApi {
    * });
    * ```
    */
-  setIcon(schoolKey: string, iconClass: SupportedSpellSchoolIcon) {
-    SpellSchool.setIcon(schoolKey, iconClass);
+  setIcon(_schoolKey: string, _iconClass: SupportedSpellSchoolIcon) {
+    warn(`The API ${SpellSchoolApi.name} is no longer supported and will be removed in Foundry version 15`);
   }
 }
