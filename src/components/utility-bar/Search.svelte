@@ -56,7 +56,6 @@
       class="inline-icon-button search-close-button"
       onclick={() => clearSearch()}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_CLEAR}
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-times"></i>
     </button>

@@ -673,10 +673,6 @@
   "TIDY5E.Settings.ColorPickerMagicAccent": {
     "name": "Magic Item Accent Outline"
   },
-  "TIDY5E.Settings.AllowHpMaxOverride": {
-    "name": "Allow HP Max Override on Character",
-    "hint": "Allows the GM to manually change max HP on the character sheet."
-  },
   "TIDY5E.Settings.UseTidySpellSchoolIcons": {
     "name": "Use Tidy Spell School Icons",
     "hint": "Use Tidy's handpicked icons for spell schools. To customize spell school icons through CONFIG.DND5E or through other modules, disable this option. To extend Tidy's custom spell school icons, refer to the Tidy API documentation."

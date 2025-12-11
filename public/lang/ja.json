@@ -673,10 +673,6 @@
   "TIDY5E.Settings.ColorPickerMagicAccent": {
     "name": "魔法のアイテム アクセント アウトライン"
   },
-  "TIDY5E.Settings.AllowHpMaxOverride": {
-    "name": "キャラクターの最大HP手動変更",
-    "hint": "GMがキャラクターシートで最大HPを手動で変更できるようにします。"
-  },
   "TIDY5E.Settings.UseTidySpellSchoolIcons": {
     "name": "Tidyの呪文系統アイコンを使用",
     "hint": "呪文系統にTidyが厳選したアイコンを使用します。CONFIG.DND5Eまたは他のモジュールで呪文系統アイコンをカスタマイズするには、このオプションを無効にしてください。Tidyのカスタム呪文系統アイコンを拡張するには、Tidy APIドキュメントを参照してください。"

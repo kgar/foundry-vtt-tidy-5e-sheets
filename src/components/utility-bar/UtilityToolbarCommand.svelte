@@ -33,7 +33,6 @@
   class:hidden={!visible}
   onclick={(ev) => onExecute?.({ event: ev, context: context, sections })}
   {title}
-  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR_COMMAND}
 >
   {#if !isNil(iconClass, '')}

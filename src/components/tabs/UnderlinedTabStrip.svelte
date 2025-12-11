@@ -17,7 +17,6 @@
       class="underlined-tab"
       class:active={selected === tab}
       onclick={() => (selected = tab)}
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {tab}
     </button>

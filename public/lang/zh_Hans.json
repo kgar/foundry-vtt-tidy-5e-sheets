@@ -616,10 +616,6 @@
     "TIDY5E.Settings.ColorPickerMagicAccent": {
         "name": "魔法物品轮廓描边"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "允许角色最大生命值上限覆盖",
-        "hint": "允许 DM 在角色卡上手动更改最大生命值。"
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "使用 Tidy 法术学派图标",
         "hint": "使用 Tidy 精心挑选的法术学派图标。若要通过 CONFIG.DND5E 或其他模块自定义法术学派图标，请禁用此选项。若要扩展 Tidy 的自定义法术学派图标，请参考 Tidy API 文档。"

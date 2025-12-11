@@ -351,10 +351,6 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "„Immer Vorbereitet“ Akzent"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Überschreiben der maximalen TP erlauben",
-        "hint": "Erlaubt es dem SL maximale TP auf dem Charakterbogen zu überschreiben."
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Einstellungen zurücksetzen",
         "hint": "Dadurch werden alle Einstellungen auf die Standardeinstellungen des aktiven Spielsystems zurückgesetzt. Dies betrifft nur Einstellungen, die sich auf die „Welt“ beziehen, wie z. B. SL-Optionen.",

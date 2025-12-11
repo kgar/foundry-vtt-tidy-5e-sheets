@@ -88,7 +88,6 @@
       onclick={(ev) =>
         command.execute?.({ section, event: ev, document: actor })}
       title={localize(command.tooltip ?? '')}
-      tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if (command.iconClass ?? '') !== ''}
         <i class={command.iconClass}></i>

@@ -513,10 +513,6 @@
     "TIDY5E.Settings.ColorPickerMagicAccent": {
         "name": "Contorno de Destaque de Item Mágico"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Permitir Sobreposição de PV Máximo",
-        "hint": "Permite que o Mestre altere manualmente o PV máximo na ficha do personagem."
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "Usar Ícones de Escolas de Magia do Tidy",
         "hint": "Use os ícones de escolas de magia escolhidos à mão do Tidy. Para personalizar ícones de escolas de magia através do CONFIG.DND5E ou por outros módulos, desative esta opção. Para estender os ícones personalizados de escolas de magia do Tidy, consulte a documentação da API do Tidy."

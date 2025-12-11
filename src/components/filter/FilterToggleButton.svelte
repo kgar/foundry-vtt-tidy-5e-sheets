@@ -36,7 +36,6 @@
   class:exclude={filter.value === false}
   onclick={() => cycleFilterForward(filter.name, filter.value)}
   oncontextmenu={() => cycleFilterBackward(filter.name, filter.value)}
-  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   title={localize(filter.text)}
 >
   {@render children?.()}

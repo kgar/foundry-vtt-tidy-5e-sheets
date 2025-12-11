@@ -351,10 +351,6 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Colore Sempre Preparato"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Permetti Sovrascrittura PF massimi sul personaggio",
-        "hint": "Consente al GM di modificare manualmente i PF massimi sulla scheda del personaggio."
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Ripristina le impostazioni predefinite",
         "hint": "Ciò ripristinerà tutte le impostazioni predefinite del sistema di gioco attivo. Ciò influisce solo sulle impostazioni con ambito \"mondo\", come le opzioni DM.",

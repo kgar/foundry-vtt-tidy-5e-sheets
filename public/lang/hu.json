@@ -351,10 +351,6 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": ""
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.Reset": {
         "name": "",
         "hint": "",

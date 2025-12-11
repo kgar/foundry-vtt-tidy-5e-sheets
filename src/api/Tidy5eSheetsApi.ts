@@ -1352,47 +1352,6 @@ export class Tidy5eSheetsApi {
   svelte = TidySvelteApi;
 
   /**
-   * Wraps the provided HTML so that Tidy will remove the content when handling document changes.
-   * @param html any HTML string that needs to be re-rendered in the style of Foundry Handlebars (usually, this is any time the target document or its embedded documents change).
-   * @returns the original HTML with a transparent element wrapped around which indicates to Tidy that this should be removed and re-rendered.
-   *
-   * @remarks
-   * The intended use of this function is to accompany the use of the `tidy5e-sheet.renderActorSheet` hook in App V1 (PCs, NPCs, Vehicles)
-   * or the standard sheet render hooks in App V2 (Items, Containers, Groups).
-   * Any content injected through those hooks needs to be wrapped in this way so that the old version
-   * of the HTML can be removed before adding it back in.
-   * Handlebars refreshes content in this way, but for Tidy purposes, the module needs to know when an arbitrary
-   * segment of HTML is meant to be removed. This function provides that information to Tidy for your HTML.
-   *
-   * @example Injecting dynamic HTML through Tidy actor sheet render hook
-   * ```js
-   * Hooks.on('tidy5e-sheet.renderActorSheet', (app, element, data) => {
-   *   const api = game.modules.get('tidy5e-sheet').api;
-   *   const actorEmoji = data.actor.system.currency.pp > 0 ? '💹' : '📉';
-   *   let iconHtml = api.useHandlebarsRendering(`<h1>${actorEmoji}</h1>`);
-   *   // 👆 This HTML looks like `<div style="display: contents;" data-tidy-render-scheme="handlebars"><h1>📉</h1></div>`
-   *   // if the actor doesn't have at least 1 platinum.
-   *   // Tidy will remove this each time the sheet would normally re-render, and it will add it back.
-   *   // When the actor have more than 0 platinum, stonks will rise.
-   *
-   *   let actorNameElement = element.querySelector(`[data-tidy-field="name"]`);
-   *   actorNameElement?.insertAdjacentHTML('afterend', iconHtml);
-   * });
-   * ```
-   *
-   * @deprecated
-   * Tidy is no longer going to use `div[style="display: contents"]` wrappers around your HTML.
-   * If you wish to have your content remove and re-render on each render cycle, put
-   * `data-tidy-render-scheme="handlebars"` on the top-level elements of your HTML to inject.
-   */
-  useHandlebarsRendering(html: string): string {
-    warn(
-      'api.useHandlebarsRendering is deprecated and will be removed in Tidy V13. For handlebars rendering, use `data-tidy-render-scheme="handlebars" on top-level elements when injecting outside of the content registration system.`'
-    );
-    return `<div style="display: contents;" ${CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE}>${html}</div>`;
-  }
-
-  /**
    * Registers additional mappings of tab ID to item types, controlling available options when clicking a "create"
    * button for a given tab.
    *

@@ -367,10 +367,6 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Acento de Siempre Preparado"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Permitir sobreescribir PS máximos en el personaje",
-        "hint": "Permite al DM cambiar manualmente los PS máximos en la hoja de personaje."
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Restablecer la configuración predeterminada",
         "hint": "Esto restablecerá todas las configuraciones a las predeterminadas del sistema de juego activo. Esto afecta únicamente a las configuraciones de ámbito \"mundo\", como las opciones de GM.",

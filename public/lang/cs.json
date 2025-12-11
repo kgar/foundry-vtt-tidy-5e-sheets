@@ -351,10 +351,6 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Důraz na vždy připravené"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Umožnit u postavy přepsání maxima BV?",
-        "hint": "Umožní PJ manuálně měnit maximální BV v deníku postavy"
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Obnovení výchozího nastavení",
         "hint": "Tímto obnovíš všechna nastavení aktivního herního systému na výchozí hodnoty. Týká se to pouze 'celkového' nastavení, například PJ voleb.",

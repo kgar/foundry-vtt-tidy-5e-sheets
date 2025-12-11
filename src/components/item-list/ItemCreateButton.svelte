@@ -25,7 +25,6 @@
   onclick={create}
   title={localize('DND5E.FeatureAdd')}
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
-  tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-plus-circle"></i>
   {localize('DND5E.Add')}

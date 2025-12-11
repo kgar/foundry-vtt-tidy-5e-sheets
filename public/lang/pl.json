@@ -206,10 +206,6 @@
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "Pasek przewijania"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Zezwalaj na nadpisywanie maksymalnego HP postaci",
-        "hint": "Umożliwia MG ręczną zmianę maksymalnego HP na karcie postaci."
-    },
     "TIDY5E.Settings.Reset": {
         "dialogs": {
             "cancel": "Anuluj",

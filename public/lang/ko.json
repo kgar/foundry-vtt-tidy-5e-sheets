@@ -582,10 +582,6 @@
     "TIDY5E.Settings.ColorPickerMagicAccent": {
         "name": "마법 아이템 강조 외곽선"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "캐릭터에 최대 HP 오버라이드 허용",
-        "hint": "GM이 캐릭터 시트의 최대 HP를 수동으로 변경할 수 있습니다."
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "Tidy 주문 학교 아이콘 사용",
         "hint": "Tidy에서 지정한 주문 학파 아이콘을 사용합니다. CONFIG.DND5E 또는 다른 모듈을 통해 주문 학파 아이콘을 사용자 지정하려면 이 옵션을 비활성화하세요. Tidy의 사용자 지정 주문 학파 아이콘을 확장하려면 Tidy API 설명서를 참조하세요."

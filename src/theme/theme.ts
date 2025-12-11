@@ -69,41 +69,6 @@ function removeExistingTidyThemeStyleTag() {
   }
 }
 
-export function getColorPickerColors() {
-  const variables: Record<string, string> = {};
-
-  const themeableColors = getThemeableColors();
-  for (let color of themeableColors) {
-    variables[color.cssVariable] = SettingsProvider.settings[color.key]
-      .get()
-      ?.toString();
-  }
-
-  return variables;
-}
-
-export function applyCurrentThemeClassic(colorPickerEnabledOverride?: boolean) {
-  let enabled = colorPickerEnabledOverride ?? settings.value.colorPickerEnabled;
-  if (enabled) {
-    const variables = getColorPickerColors();
-    applyThemeColorsToHead(variables);
-  } else {
-    removeExistingTidyThemeStyleTag();
-  }
-}
-
-export function getThemeableColors(): ThemeColorSetting[] {
-  return Object.entries(SettingsProvider.settings)
-    .filter(([, value]) => 'representsCssVariable' in value)
-    .map(([key, value]) => ({
-      key: key as any,
-      name: value.options.name,
-      hint: 'hint' in value.options ? value.options.hint : '',
-      cssVariable:
-        'representsCssVariable' in value ? value.representsCssVariable : '',
-    }));
-}
-
 type ProcessedColor = {
   original: string;
   hexa?: string;

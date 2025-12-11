@@ -14,14 +14,7 @@ export function getActiveEffectContextOptionsQuadrone(
   // Assumption: Either the effect belongs to the character or is transferred from an item.
   const actor = effectParent.actor ?? effectParent;
 
-  if (!effectParent?.isOwner || !settings.value.useContextMenu) {
-    return [];
-  }
-
-  if (
-    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
-    !FoundryAdapter.allowCharacterEffectsManagement(actor)
-  ) {
+  if (!effectParent?.isOwner) {
     return [];
   }
 

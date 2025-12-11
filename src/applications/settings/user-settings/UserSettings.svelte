@@ -2,12 +2,9 @@
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import PlayerSettingsTab from './tabs/PlayerSettingsTab.svelte';
-  import NpcSettingsTab from './tabs/NpcSettingsTab.svelte';
-  import VehicleSettingsTab from './tabs/VehicleSettingsTab.svelte';
   import ActionsListSettingsTab from './tabs/ActionsListSettingsTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext, untrack } from 'svelte';
+  import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import type {
     UserSettingsContext,
@@ -18,7 +15,7 @@
   let context = getContext<UserSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
-  
+
   let functions = getContext<UserSettingsFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
   );
@@ -28,48 +25,22 @@
   let tabs: Tab[] = $derived.by(() => {
     const result: Tab[] = [
       {
-        id: CONSTANTS.TAB_USER_SETTINGS_PLAYERS,
-        title: 'TIDY5E.UserSettings.TabPlayers.tabLabel',
+        id: CONSTANTS.TAB_USER_SETTINGS_ACTIONS_LIST,
+        title: 'TIDY5E.UserSettings.TabActionsList.tabLabel',
         content: {
-          component: PlayerSettingsTab,
+          component: ActionsListSettingsTab,
           type: 'svelte',
         },
       },
       {
-        id: CONSTANTS.TAB_USER_SETTINGS_NPCS,
-        title: 'TIDY5E.UserSettings.TabNPCs.tabLabel',
+        id: CONSTANTS.TAB_USER_SETTINGS_ACTIVITIES,
+        title: 'TIDY5E.UserSettings.TabActivities.tabLabel',
         content: {
-          component: NpcSettingsTab,
-          type: 'svelte',
-        },
-      },
-      {
-        id: CONSTANTS.TAB_USER_SETTINGS_VEHICLES,
-        title: 'TIDY5E.UserSettings.TabVehicles.tabLabel',
-        content: {
-          component: VehicleSettingsTab,
+          component: ActivitiesSettingsTab,
           type: 'svelte',
         },
       },
     ];
-
-    result.push({
-      id: CONSTANTS.TAB_USER_SETTINGS_ACTIONS_LIST,
-      title: 'TIDY5E.UserSettings.TabActionsList.tabLabel',
-      content: {
-        component: ActionsListSettingsTab,
-        type: 'svelte',
-      },
-    });
-
-    result.push({
-      id: CONSTANTS.TAB_USER_SETTINGS_ACTIVITIES,
-      title: 'TIDY5E.UserSettings.TabActivities.tabLabel',
-      content: {
-        component: ActivitiesSettingsTab,
-        type: 'svelte',
-      },
-    });
 
     return result;
   });

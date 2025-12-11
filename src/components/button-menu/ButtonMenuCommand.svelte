@@ -45,7 +45,6 @@
     onclick={handleClick}
     {title}
     {disabled}
-    tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if useIconColumn}
       <span class="icon-container">

@@ -1,7 +1,6 @@
 import { mount } from 'svelte';
 import WorldSettings from './WorldSettings.svelte';
 import {
-  SettingsProvider,
   getCurrentSettings,
   type Tidy5eSettingKey,
   type CurrentSettings,
@@ -14,7 +13,7 @@ import type {
 import type { RegisteredTab } from 'src/runtime/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';
-import { debug, error } from 'src/utils/logging';
+import { debug } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import type { ApplicationConfiguration } from 'src/types/application.types';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
@@ -56,45 +55,15 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
 
     return {
       settings: {
-        hideDeathSavesFromPlayers: currentSettings.hideDeathSavesFromPlayers,
         defaultDeathSaveRoll: currentSettings.defaultDeathSaveRoll,
-        useCharacterEncumbranceBar: currentSettings.useCharacterEncumbranceBar,
-        useNpcEncumbranceBar: currentSettings.useNpcEncumbranceBar,
-        useVehicleEncumbranceBar: currentSettings.useVehicleEncumbranceBar,
-        showPlayerName: currentSettings.showPlayerName,
-        showExpandedLimitedView: currentSettings.showExpandedLimitedView,
-        itemCardsFixKey: currentSettings.itemCardsFixKey,
-        useCircularPortraitStyle: currentSettings.useCircularPortraitStyle,
-        limitEffectsManagementToGm: currentSettings.limitEffectsManagementToGm,
-        useCharacterInspiration: currentSettings.useCharacterInspiration,
-        useVehicleMotion: currentSettings.useVehicleMotion,
-        useExhaustion: currentSettings.useExhaustion,
-        showTraitLabels: currentSettings.showTraitLabels,
         allowCantripsToBePrepared: currentSettings.allowCantripsToBePrepared,
-        allowHpMaxOverride: currentSettings.allowHpMaxOverride,
-        showActiveEffectsMarker: currentSettings.showActiveEffectsMarker,
-        useTotalSheetLock: currentSettings.useTotalSheetLock,
-        lockExpChanges: currentSettings.lockExpChanges,
-        lockHpMaxChanges: currentSettings.lockHpMaxChanges,
         lockMoneyChanges: currentSettings.lockMoneyChanges,
-        lockLevelSelector: currentSettings.lockLevelSelector,
-        lockItemQuantity: currentSettings.lockItemQuantity,
         showNpcRestInChat: currentSettings.showNpcRestInChat,
-        showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
         itemIdentificationPermission:
           currentSettings.itemIdentificationPermission,
         includeFlagsInSpellScrollCreation:
           currentSettings.includeFlagsInSpellScrollCreation,
-        useTidySpellSchoolIcons: currentSettings.useTidySpellSchoolIcons,
         globalCustomSections: currentSettings.globalCustomSections,
-      },
-      exhaustionConfig: {
-        ...SettingsProvider.settings.exhaustionConfig.options.default,
-        ...currentSettings.exhaustionConfig,
-      },
-      vehicleExhaustionConfig: {
-        ...SettingsProvider.settings.vehicleExhaustionConfig.options.default,
-        ...currentSettings.vehicleExhaustionConfig,
       },
     };
   }
@@ -147,65 +116,13 @@ export class WorldSettingsFormApplication extends SvelteApplicationMixin<
     };
   }
 
-  validate(context: WorldSettingsContext) {
-    let valid = true;
-
-    if (
-      context.exhaustionConfig.type === 'specific' &&
-      context.exhaustionConfig.levels < 1
-    ) {
-      valid = false;
-      error(
-        FoundryAdapter.localize(
-          'TIDY5E.WorldSettings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
-        ),
-        true
-      );
-    }
-
-    if (
-      context.vehicleExhaustionConfig.type === 'specific' &&
-      context.vehicleExhaustionConfig.levels < 1
-    ) {
-      valid = false;
-      error(
-        FoundryAdapter.localize(
-          'TIDY5E.WorldSettings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
-        ),
-        true
-      );
-    }
-
-    // Add more data validation here as needed
-
-    return valid;
-  }
-
   async applyChangedSettings() {
     if (!this.context || !this.validate(this.context)) {
       return false;
     }
 
-    if (this.context.exhaustionConfig.type === 'specific') {
-      this.context.exhaustionConfig.hints =
-        this.context.exhaustionConfig.hints.slice(
-          0,
-          this.context.exhaustionConfig.levels + 1
-        );
-    }
-
-    if (this.context.vehicleExhaustionConfig.type === 'specific') {
-      this.context.vehicleExhaustionConfig.hints =
-        this.context.vehicleExhaustionConfig.hints.slice(
-          0,
-          this.context.vehicleExhaustionConfig.levels + 1
-        );
-    }
-
     const newSettings: Partial<CurrentSettings> = {
       ...this.context.settings,
-      exhaustionConfig: this.context.exhaustionConfig,
-      vehicleExhaustionConfig: this.context.vehicleExhaustionConfig,
     };
 
     const currentSettings = getCurrentSettings();

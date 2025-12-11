@@ -351,10 +351,6 @@
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
         "name": "Surbrillance toujours préparé"
     },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Autoriser l'annulation des PV Max sur le personnage",
-        "hint": "Permet au MJ de modifier manuellement le nombre maximum de PV sur la feuille de personnage."
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Rétablir les paramètres par défaut",
         "hint": "Cette opération réinitialise tous les paramètres du système de jeu actif à leur valeur par défaut. Cela n'affecte que les paramètres du \"monde\", tels que les options du MJ.",

@@ -2,11 +2,8 @@
   import { CONSTANTS } from 'src/constants';
   import type { Tab } from 'src/types/types';
   import MiscWorldSettingsTab from './tabs/MiscWorldSettingsTab.svelte';
-  import CharacterWorldSettingsTab from './tabs/CharacterWorldSettingsTab.svelte';
   import NpcWorldSettingsTab from './tabs/NpcWorldSettingsTab.svelte';
-  import VehicleWorldSettingsTab from './tabs/VehicleWorldSettingsTab.svelte';
   import ItemWorldSettingsTab from './tabs/ItemWorldSettingsTab.svelte';
-  import ExhaustionWorldSettingsTab from './tabs/ExhaustionWorldSettingsTab.svelte';
   import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
   import type {
@@ -16,15 +13,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import IconsWorldSettingsTab from './tabs/IconsWorldSettingsTab.svelte';
   import CustomSectionsWorldSettingsTab from './tabs/CustomSectionsWorldSettingsTab.svelte';
 
   let selectedTabId: string = $state('');
   let functions = getContext<WorldSettingsFunctions>(
     CONSTANTS.SVELTE_CONTEXT.FUNCTIONS,
-  );
-  let context = getContext<WorldSettingsContext>(
-    CONSTANTS.SVELTE_CONTEXT.CONTEXT,
   );
 
   let tabs: Tab[] = [
@@ -37,26 +30,10 @@
       },
     },
     {
-      id: CONSTANTS.TAB_WORLD_SETTINGS_CHARACTER,
-      title: 'TIDY5E.WorldSettings.TabCharacter.tabLabel',
-      content: {
-        component: CharacterWorldSettingsTab,
-        type: 'svelte',
-      },
-    },
-    {
       id: CONSTANTS.TAB_WORLD_SETTINGS_NPC,
       title: 'TIDY5E.WorldSettings.TabNpc.tabLabel',
       content: {
         component: NpcWorldSettingsTab,
-        type: 'svelte',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_WORLD_SETTINGS_VEHICLE,
-      title: 'TIDY5E.WorldSettings.TabVehicle.tabLabel',
-      content: {
-        component: VehicleWorldSettingsTab,
         type: 'svelte',
       },
     },
@@ -69,26 +46,10 @@
       },
     },
     {
-      id: CONSTANTS.TAB_WORLD_SETTINGS_EXHAUSTION,
-      title: 'TIDY5E.WorldSettings.TabExhaustion.tabLabel',
-      content: {
-        component: ExhaustionWorldSettingsTab,
-        type: 'svelte',
-      },
-    },
-    {
       id: CONSTANTS.TAB_WORLD_SETTINGS_SHEETLOCK,
       title: 'TIDY5E.WorldSettings.TabSheetLock.tabLabel',
       content: {
         component: SheetLockWorldSettingsTab,
-        type: 'svelte',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_WORLD_SETTINGS_ICONS,
-      title: 'TIDY5E.WorldSettings.TabIcons.tabLabel',
-      content: {
-        component: IconsWorldSettingsTab,
         type: 'svelte',
       },
     },
