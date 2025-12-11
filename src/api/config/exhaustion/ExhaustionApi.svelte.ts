@@ -20,7 +20,10 @@ export class ExhaustionApi {
    */
   async useOpenNumberExhaustion(): Promise<void> {
     warn(
-      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
     );
   }
 
@@ -48,7 +51,10 @@ export class ExhaustionApi {
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
     warn(
-      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
     );
   }
 
@@ -65,7 +71,10 @@ export class ExhaustionApi {
    */
   async useOpenNumberVehicleExhaustion(): Promise<void> {
     warn(
-      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
     );
   }
 
@@ -88,7 +97,10 @@ export class ExhaustionApi {
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
     warn(
-      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
     );
   }
 }

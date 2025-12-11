@@ -21,6 +21,6 @@ export class SpellSchoolApi {
    * ```
    */
   setIcon(_schoolKey: string, _iconClass: SupportedSpellSchoolIcon) {
-    warn(`The API ${SpellSchoolApi.name} is no longer supported and will be removed in Foundry version 15`);
+    warn(`The API ${SpellSchoolApi.name} is no longer supported and will be removed in Foundry version 15`, false, undefined, true);
   }
 }

@@ -28,7 +28,6 @@ import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQ
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
-import { TidySvelteApi } from './svelte/TidySvelteApi';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
@@ -71,21 +70,21 @@ export class Tidy5eSheetsApi {
   /** {@inheritDoc ActionListApi} */
   /** @deprecated api.actionList API has been moved to api.config.actionList */
   get actionList() {
-    warn('api.actionList API has been moved to api.config.actionList');
+    warn('api.actionList API has been moved to api.config.actionList', false, undefined, true);
     return this.config.actionList;
   }
 
   /** {@inheritDoc ActorItemApi} */
   /** @deprecated api.actorItem API has been moved to api.config.actorItem */
   get actorItem() {
-    warn('api.actorItem API has been moved to api.config.actorItem');
+    warn('api.actorItem API has been moved to api.config.actorItem', false, undefined, true);
     return this.config.actorItem;
   }
 
   /** {@inheritDoc ActorPortraitApi} */
   /** @deprecated api.actorPortrait API has been moved to api.config.actorPortrait */
   get actorPortrait() {
-    warn('api.actorPortrait API has been moved to api.config.actorPortrait');
+    warn('api.actorPortrait API has been moved to api.config.actorPortrait', false, undefined, true);
     return this.config.actorPortrait;
   }
 
@@ -114,7 +113,7 @@ export class Tidy5eSheetsApi {
   /** {@inheritDoc ExhaustionApi} */
   /** @deprecated api.exhaustion API has been moved to api.config.exhaustion */
   get exhaustion() {
-    warn('api.exhaustion API has been moved to api.config.exhaustion');
+    warn('api.exhaustion API has been moved to api.config.exhaustion', false, undefined, true);
     return this.config.exhaustion;
   }
 
@@ -198,7 +197,7 @@ export class Tidy5eSheetsApi {
   /**{@inheritDoc ItemSummaryApi} */
   /** @deprecated api.itemSummary API has been moved to api.config.actorPortrait */
   get itemSummary() {
-    warn('api.itemSummary API has been moved to api.config.actorPortrait');
+    warn('api.itemSummary API has been moved to api.config.actorPortrait', false, undefined, true);
     return this.config.itemSummary;
   }
 
@@ -1343,13 +1342,6 @@ export class Tidy5eSheetsApi {
       }))
     );
   }
-
-  /**
-   * Svelte-specific integration content. This content is currently experimental
-   * and may be subject to change based on integration efforts of other
-   * svelte-based modules.
-   */
-  svelte = TidySvelteApi;
 
   /**
    * Registers additional mappings of tab ID to item types, controlling available options when clicking a "create"

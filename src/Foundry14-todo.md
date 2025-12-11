@@ -1,5 +1,28 @@
 ## Foundry 14 To Do
 
+- [ ] Eliminate unused content from /src
+  - [ ] actions
+  - [x] api
+  - [x] applications
+  - [x] application-quadrone
+  - [ ] attachments
+  - [ ] components
+  - [ ] context-menu
+  - [ ] events
+  - [ ] features
+  - [ ] foundry
+  - [ ] integration
+  - [ ] keybindings
+  - [ ] less
+  - [ ] migrations
+  - [ ] mixins
+  - [ ] runtime
+  - [ ] settings
+  - [ ] sheets
+  - [ ] theme
+  - [ ] tooltips
+  - [ ] types
+  - [ ] utils
 - [ ] Eliminate these loc keys
   - [x] TIDY5E.Settings.AllowHpMaxOverride.hint
   - [ ] TIDY5E.Settings.AllowHpMaxOverride.name
