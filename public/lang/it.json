@@ -35,11 +35,9 @@
     "TIDY5E.AddFavorite": "Aggiungi ai Preferiti",
     "TIDY5E.RemoveFavorite": "Rimuovi dai Preferiti",
     "TIDY5E.ShowNotProficientSkills": "Mostra Non Competente",
-    "TIDY5E.HideNotProficientSkills": "Nascondi Non Competente",
     "TIDY5E.Search": "Cerca",
     "TIDY5E.SearchClear": "Cancella Ricerca",
     "TIDY5E.SearchHint": "Inizia a digitare ciò che stai cercando",
-    "TIDY5E.ItemCardsMouseHint": "Tasti centrale del mouse per vedere/modificare oggetti",
     "TIDY5E.SpellAttackMod": "Mod Attacco con Incantesimo",
     "TIDY5E.TokenLinked": "Token collegato all'attore",
     "TIDY5E.TokenUnlinked": "Token non collegato all'attore",
@@ -164,9 +162,6 @@
     "TIDY5E.Actions": {
         "TabName": "Azioni"
     },
-    "TIDY5E.HitDC": "Colpire / CD",
-    "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ExamplesHeader": "Formule di Esempio",
         "Title": "Configurazione Massimi Incantesimi Preparati: {documentName}",
@@ -469,7 +464,6 @@
     "TIDY5E.SortMenu.OptionEquipped": "Equipaggiato",
     "TIDY5E.SortMenu.OptionAlphabetical": "Alfabetico (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "Manuale",
-    "TIDY5E.InfoCardInspectHint": "{inspectKey} Ispeziona",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Attiva/Disattiva Menu Intestazione",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il menu dell'intestazione della scheda.",
     "TIDY5E.Settings.DefaultDeathSaveRoll": {

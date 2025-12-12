@@ -53,8 +53,6 @@
   "TIDY5E.LegendaryAbbr": "伝説",
   "TIDY5E.LairAbbr": "住処",
 
-  "TIDY5E.HitDC": "ヒット / 難易度",
-
   "TIDY5E.RestoreOnRest": "休憩時に回復",
 
   "TIDY5E.JournalPersonsOfInterest": "関心のある人物",
@@ -74,9 +72,6 @@
   "TIDY5E.SheetLock.Lock.Hint": "ロック - {description}",
   "TIDY5E.SheetLock.Description": "頻繁に変更すべきでないフィールドのロックを切り替えます",
   "TIDY5E.SheetLock.Empty.Hint": "クラスと最初のアイテムを追加することから始めましょう。次に、アイテムメニューまたは右クリックから「シートタブに追加」を選んでここに追加します。",
-
-  "TIDY5E.Inventory.Weight.Tooltip": "重量: {weight} {weightUnit}",
-  "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
 
   "TIDY5E.ContextMenuActionEquip": "装備",
   "TIDY5E.ContextMenuActionUnequip": "装備解除",
@@ -112,7 +107,6 @@
   "TIDY5E.EmptyFavorites": "右クリックでお気に入りに追加するか、シートから何かをドラッグしてクイックアクセスできるようにしてください。",
 
   "TIDY5E.ShowNotProficientSkills": "未習熟を表示",
-  "TIDY5E.HideNotProficientSkills": "未習熟を隠す",
 
   "TIDY5E.Ability.EditScore.label": "値を編集",
 
@@ -121,10 +115,6 @@
   "TIDY5E.Search": "検索",
   "TIDY5E.SearchClear": "検索クリア",
   "TIDY5E.SearchHint": "検索……",
-
-  "TIDY5E.InfoCardInspectHint": "{inspectKey} 固定",
-
-  "TIDY5E.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
 
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - 呪文攻撃",
   "TIDY5E.ActorSpellAttackFlavorText": "呪文攻撃",

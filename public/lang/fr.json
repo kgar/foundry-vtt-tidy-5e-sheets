@@ -35,11 +35,9 @@
     "TIDY5E.AddFavorite": "Ajouter aux Favoris",
     "TIDY5E.RemoveFavorite": "Enlever des Favoris",
     "TIDY5E.ShowNotProficientSkills": "Indiquer comme non compétent",
-    "TIDY5E.HideNotProficientSkills": "cacher comme non compétent",
     "TIDY5E.Search": "Chercher",
     "TIDY5E.SearchClear": "Vider la recherche",
     "TIDY5E.SearchHint": "Saisir votre recherche",
-    "TIDY5E.ItemCardsMouseHint": "Clic central de la souris pour voir / éditer",
     "TIDY5E.SpellAttackMod": "Bonus d'attaque",
     "TIDY5E.TokenLinked": "Token lié à l'acteur",
     "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
@@ -165,7 +163,6 @@
     "TIDY5E.Actions": {
         "TabName": "Actions"
     },
-    "TIDY5E.Inventory.Weight.Tooltip": "Poids : {weight} {weightUnit}",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Attaque de sort au contact",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Attaque de sort à distance",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Attaque de sort",
@@ -199,7 +196,6 @@
         "tabLabel": "Liste des actions"
     },
     "TIDY5E.MeleeSpellAttackMod": "Modificateur d'attaque de sort",
-    "TIDY5E.HitDC": "Dés de vie",
     "TIDY5E.RangedSpellAttackMod": "Modificateur d'attaque de sort à distance",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Attaque sort de mêlée",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Attaque de sort à distance",
@@ -357,7 +353,6 @@
     "TIDY5E.SortMode.ActionListDefault": "Tri par défaut de la liste d'actions",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Divers",
     "TIDY5E.ItemFilters.Filter.Other": "Autre",
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.SheetMigrations": {
         "MenuOptionText": "Migrations de feuilles",
         "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
@@ -495,7 +490,6 @@
     "TIDY5E.Utilities.SpellPips": "Slots d'incantation",
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Inclure les rituels dans la catégorie \"peut lancer\"",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Feuille de groupe Tidy 5e",
-    "TIDY5E.InfoCardInspectHint": "{inspectKey} Contrôler",
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportement d'expansion/réduction",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Basculer sur le menu d'en-tête",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Toutes les sections",

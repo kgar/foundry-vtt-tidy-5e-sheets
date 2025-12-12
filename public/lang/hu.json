@@ -35,11 +35,9 @@
     "TIDY5E.AddFavorite": "Hozzáadás a Kedvencekhez",
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.ShowNotProficientSkills": "",
-    "TIDY5E.HideNotProficientSkills": "",
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "Kezdd el írni, amit keresel.",
-    "TIDY5E.ItemCardsMouseHint": "középső egérgomb, hogy megnézed/szerkeszd.",
     "TIDY5E.SpellAttackMod": "Támadás Mód.",
     "TIDY5E.TokenLinked": "Aktorhoz linkelt token",
     "TIDY5E.TokenUnlinked": "Token nincs aktorhoz linkelve",
@@ -241,12 +239,10 @@
         "hint": "",
         "name": ""
     },
-    "TIDY5E.HitDC": "",
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "hint": "",
         "name": ""
     },
-    "TIDY5E.Inventory.Weight.Tooltip": "",
     "TIDY5E.RollRecharge.Hint": "",
     "TIDY5E.Settings.About": {
         "LocalizationParagraph": "",
@@ -316,7 +312,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.Inventory.Weight.Text": "",
     "TIDY5E.RangedSpellAttackMod": "",
     "TIDY5E.WorldSettings.TabNpc": {
         "tabLabel": ""

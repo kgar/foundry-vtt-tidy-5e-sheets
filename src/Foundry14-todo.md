@@ -52,12 +52,12 @@
   - [x] TIDY5E.Group.HideMemberTabInfoPanel
   - [x] TIDY5E.Group.NamePlaceholder
   - [x] TIDY5E.Group.ShowMemberTabInfoPanel
-  - [ ] TIDY5E.HideNotProficientSkills
-  - [ ] TIDY5E.HitDC
-  - [ ] TIDY5E.InfoCardInspectHint
-  - [ ] TIDY5E.Inventory.Weight.Text
-  - [ ] TIDY5E.Inventory.Weight.Tooltip
-  - [ ] TIDY5E.ItemCardsMouseHint
+  - [x] TIDY5E.HideNotProficientSkills
+  - [x] TIDY5E.HitDC
+  - [x] TIDY5E.InfoCardInspectHint
+  - [x] TIDY5E.Inventory.Weight.Text
+  - [x] TIDY5E.Inventory.Weight.Tooltip
+  - [x] TIDY5E.ItemCardsMouseHint
   - [ ] TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast
   - [ ] TIDY5E.ItemImageTitle
   - [ ] TIDY5E.JournalEntries

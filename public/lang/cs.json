@@ -35,11 +35,9 @@
     "TIDY5E.AddFavorite": "Přidat do oblíbených",
     "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
     "TIDY5E.ShowNotProficientSkills": "Ukázat i ty bez zdatnosti",
-    "TIDY5E.HideNotProficientSkills": "Skrýt ty bez zdatnosti",
     "TIDY5E.Search": "Vyhledat",
     "TIDY5E.SearchClear": "Vyčistit hledání",
     "TIDY5E.SearchHint": "Začni psát název toho, co hledáš...",
-    "TIDY5E.ItemCardsMouseHint": "Střední tlačítko myši pro zobrazení/editaci položky",
     "TIDY5E.SpellAttackMod": "Oprava útoku kouzlem",
     "TIDY5E.TokenLinked": "Token propojený s aktérem",
     "TIDY5E.TokenUnlinked": "Token nepropojený s aktérem",
@@ -168,7 +166,6 @@
         "hint": "Určuje, který typ uživatele má přístup k ovládacím prvkům uživatelského rozhraní identifikace položek.",
         "options.GmOnly": "Pouze PJ"
     },
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ItemFilters.Filter.Other": "Další",
     "TIDY5E.TabConfiguration": {
         "SelectedHeader": "Viditelné karty",
@@ -348,8 +345,6 @@
     "TIDY5E.Utilities.Tools": "Nástroje",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Zobrazit pouze nepřiřazené",
-    "TIDY5E.HitDC": "Zásah / SO",
-    "TIDY5E.Inventory.Weight.Tooltip": "Váha: {weight} {weightUnit}",
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Postava"
     },
@@ -475,7 +470,6 @@
     "TIDY5E.Facilities.ContextMenuActionRemove": "Odstranit z {facilityName}",
     "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Sekce nejvyšší úrovně",
     "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Podržet{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
-    "TIDY5E.InfoCardInspectHint": "Kontrola",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Přepínání záhlaví nabídky",
     "TIDY5E.ContextMenuActionShowQuantity": "Zobrazit množství",
     "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "Řadit abecedně vzestupně",

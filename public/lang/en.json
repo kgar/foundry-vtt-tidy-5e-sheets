@@ -53,8 +53,6 @@
   "TIDY5E.LegendaryAbbr": "LA",
   "TIDY5E.LairAbbr": "Lair",
 
-  "TIDY5E.HitDC": "Hit / DC",
-
   "TIDY5E.RestoreOnRest": "Restore on Rest",
 
   "TIDY5E.JournalPersonsOfInterest": "Persons of Interest",
@@ -74,9 +72,6 @@
   "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
   "TIDY5E.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
   "TIDY5E.SheetLock.Empty.Hint": "Start by adding a class and your first items. Then, use the item menu or right-click and choose \"Add to Sheet tab\" to add them here.",
-
-  "TIDY5E.Inventory.Weight.Tooltip": "Weight: {weight} {weightUnit}",
-  "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
 
   "TIDY5E.ContextMenuActionEquip": "Equip",
   "TIDY5E.ContextMenuActionUnequip": "Unequip",
@@ -112,7 +107,6 @@
   "TIDY5E.EmptyFavorites": "Right-click and Favorite, or drag anything from your sheet here to for quick access.",
 
   "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
-  "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
 
   "TIDY5E.Ability.EditScore.label": "Edit Score",
 
@@ -121,10 +115,6 @@
   "TIDY5E.Search": "Search",
   "TIDY5E.SearchClear": "Clear Search",
   "TIDY5E.SearchHint": "Start typing to show search results",
-
-  "TIDY5E.InfoCardInspectHint": "{inspectKey} Inspect",
-
-  "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item",
 
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - Spell Attack",
   "TIDY5E.ActorSpellAttackFlavorText": "Spell Attack",

@@ -6,7 +6,6 @@
         "TabName": "Дія"
     },
     "TIDY5E.ShowNotProficientSkills": "Показувати відсутні володіння",
-    "TIDY5E.HideNotProficientSkills": "Ховати відсутні володіння",
     "TIDY5E.PlayerName": "Ім'я Гравця",
     "TIDY5E.SheetImageOptionsHint": "Права клавіша миші: Показати опції зображення",
     "TIDY5E.ShowPortraitArt": "Показати Портрет",
@@ -35,7 +34,6 @@
     "TIDY5E.LongRest": "Довгий Відпочинок",
     "TIDY5E.HitDiceRollAverage": "Права кнопка миші: Застосувати середнє",
     "TIDY5E.JournalTabName": "Журнал",
-    "TIDY5E.HitDC": "Влучання / КС",
     "TIDY5E.RestoreOnRest": "Відновити під час відпочинку",
     "TIDY5E.JournalPersonsOfInterest": "Особи, що становлять інтерес",
     "TIDY5E.JournalLocationsOfInterest": "Місця, що становлять інтерес",
@@ -48,8 +46,6 @@
     "TIDY5E.SheetLock.Unlock.Hint": "Розблокувати - {description}",
     "TIDY5E.SheetLock.Lock.Hint": "Заблокувати - {description}",
     "TIDY5E.SheetLock.Description": "Перемкнути блокування для чутливих полів, які не слід часто змінювати",
-    "TIDY5E.Inventory.Weight.Tooltip": "Вага: {weight} {weightUnit}",
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ContextMenuActionEquip": "Спорядити",
     "TIDY5E.ContextMenuActionUnequip": "Зняти спорядження",
     "TIDY5E.ContextMenuActionAttune": "Налаштуватися",
@@ -59,7 +55,6 @@
     "TIDY5E.LayoutNotSupported": "Режим показу не підтримується",
     "TIDY5E.AddFavorite": "Додати до обраних",
     "TIDY5E.RemoveFavorite": "Прибрати з обраних",
-    "TIDY5E.ItemCardsMouseHint": "середня кнопка миші: перегляд/редагування",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Атака Чарами Дального Бою",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Атака Чарами Дального Бою",
     "TIDY5E.SpellAttackMod": "Модифікатор Атаки Чарами",
@@ -447,7 +442,6 @@
         "text": "Ви впевнені, що хочете використовувати усталені значення?",
         "title": "Підтвердження: використовувати усталені значення"
     },
-    "TIDY5E.InfoCardInspectHint": "{inspectKey} Оглянути",
     "TIDY5E.ModuleName": "Аркуші Tidy 5e",
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Активності"

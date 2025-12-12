@@ -35,11 +35,9 @@
     "TIDY5E.AddFavorite": "添加到收藏",
     "TIDY5E.RemoveFavorite": "從收藏中移除",
     "TIDY5E.ShowNotProficientSkills": "",
-    "TIDY5E.HideNotProficientSkills": "",
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "輸入你想要搜索的東西就夠了。",
-    "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item.",
     "TIDY5E.SpellAttackMod": "攻擊加值",
     "TIDY5E.TokenLinked": "指示物已鏈接到角色",
     "TIDY5E.TokenUnlinked": "指示物未鏈接到角色",
@@ -307,7 +305,6 @@
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": ""
     },
-    "TIDY5E.HitDC": "",
     "TIDY5E.SpellSourceIdentifierSelectText": "",
     "TIDY5E.SpellSourceIdentifierLabelHint": "",
     "TIDY5E.Utilities.Tools": "",
@@ -315,8 +312,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.Inventory.Weight.Tooltip": "",
-    "TIDY5E.Inventory.Weight.Text": "",
     "TIDY5E.MeleeSpellAttackMod": "",
     "TIDY5E.RangedSpellAttackMod": "",
     "TIDY5E.WorldSettings.TabVehicle": {

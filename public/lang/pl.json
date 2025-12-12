@@ -28,7 +28,6 @@
     },
     "TIDY5E.AttunementItems": "Zestrojone przedmioty",
     "TIDY5E.AddFavorite": "Dodaj do ulubionych",
-    "TIDY5E.ItemCardsMouseHint": "środkowy przycisk myszy, żeby podejrzeć/edytować przedmiot",
     "TIDY5E.MeleeSpellAttackMod": "Modyfikator do rzutu na atak czarem wręcz",
     "TIDY5E.SpellClass": "Rodzaj czaru",
     "TIDY5E.Class.Bard": "Bard",
@@ -45,8 +44,6 @@
     "TIDY5E.JournalLocationsOfInterest": "Ciekawe Lokacje",
     "TIDY5E.JournalMisc": "Różne",
     "TIDY5E.SheetLock.Lock.Hint": "Zablokuj - {description}",
-    "TIDY5E.Inventory.Weight.Tooltip": "Waga: {weight} {weightUnit}",
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ContextMenuActionEquip": "Wyposaż",
     "TIDY5E.ContextMenuActionUnequip": "Zdejmij",
     "TIDY5E.RestHint": "Odpoczynek",
@@ -73,7 +70,6 @@
     "TIDY5E.LayoutNotSupported": "Układ nie jest wspierany",
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
-    "TIDY5E.HideNotProficientSkills": "Ukryj niebiegłe",
     "TIDY5E.Search": "Szukaj",
     "TIDY5E.SearchClear": "Wyczyść wyszukiwanie",
     "TIDY5E.SearchHint": "Zacznij pisać, żeby pokazać wyniki zapytania",
@@ -111,7 +107,6 @@
         "header": "Karty NPC",
         "tabLabel": "NPC"
     },
-    "TIDY5E.HitDC": "Trafienie/ST",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Różne",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Test Ataku Czarem",
     "TIDY5E.Class.Druid": "Druid",
@@ -433,7 +428,6 @@
     "TIDY5E.Facilities.Creatures.Label": "Stworzenia",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Rozwiń/Zwiń",
-    "TIDY5E.InfoCardInspectHint": "{inspectKey} Sprawdź",
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Domyślny rzut przeciw śmierć",
         "hint": "Określa domyślny typ rzutu używany podczas rzutu przeciw śmiercią."
