@@ -8,7 +8,7 @@
   - [x] attachments
   - [x] components
   - [x] context-menu
-  - [ ] events
+  - [x] events
   - [ ] features
   - [ ] foundry
   - [ ] integration

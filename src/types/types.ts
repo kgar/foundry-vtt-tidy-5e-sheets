@@ -164,12 +164,6 @@ export type InventorySection = {
   canCreate: boolean;
 } & TidySectionBase;
 
-export type EffectFavoriteSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_EFFECT;
-  effects: FavoriteEffectContext[];
-  canCreate: false;
-} & TidySectionBase;
-
 export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
@@ -341,14 +335,6 @@ export type FavoriteEffectContext = {
     value: boolean;
   };
 };
-
-export type FavoriteSection =
-  | InventorySection
-  | FacilitySection
-  | SpellbookSection
-  | CharacterFeatureSection
-  | ActivitySection
-  | EffectFavoriteSection;
 
 export type LanguageTraitContext = {
   label: string;

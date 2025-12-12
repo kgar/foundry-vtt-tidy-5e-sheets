@@ -6,183 +6,14 @@ import type {
   TidyItemSectionBase,
   CharacterFeatureSection,
   CharacterItemPartitions,
-  FavoriteSection,
   FeatureSection,
-  EffectFavoriteSection,
-  ActivitySection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SheetSections } from './SheetSections';
 import { isNil } from 'src/utils/data';
-import { Inventory } from './Inventory';
 
 export class CharacterSheetSections {
-  static buildClassicFeaturesSections(
-    actor: any,
-    tabId: string,
-    races: any[],
-    backgrounds: any[],
-    classes: any[],
-    feats: any[],
-    options: Partial<CharacterFeatureSection>
-  ): Record<string, CharacterFeatureSection> {
-    const customFeats = feats.filter((f) => TidyFlags.section.get(f));
-    feats = feats.filter((f) => !TidyFlags.section.get(f));
-
-    const features: Record<string, CharacterFeatureSection> = {
-      race: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: CONFIG.Item.typeLabels.race,
-        items: races,
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_RACE },
-        showRequirementsColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        ...options,
-      },
-      background: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: CONFIG.Item.typeLabels.background,
-        items: backgrounds,
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_BACKGROUND },
-        showRequirementsColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        ...options,
-      },
-      classes: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: `${CONFIG.Item.typeLabels.class}Pl`,
-        items: classes,
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_CLASS },
-        isClass: true,
-        showLevelColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        ...options,
-      },
-      active: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: 'DND5E.FeatureActive',
-        items: feats.filter((feat) => !!feat.system.activities?.size),
-        hasActions: true,
-        dataset: {
-          type: CONSTANTS.ITEM_TYPE_FEAT,
-        },
-        showFeatureTypeColumn: true,
-        showRequirementsColumn: true,
-        showUsagesColumn: true,
-        showUsesColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        ...options,
-      },
-      passive: {
-        type: CONSTANTS.SECTION_TYPE_FEATURE,
-        label: 'DND5E.FeaturePassive',
-        items: feats.filter((feat) => !feat.system.activities?.size),
-        hasActions: false,
-        dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
-        showFeatureTypeColumn: true,
-        showRequirementsColumn: true,
-        showUsesColumn: true,
-        canCreate: true,
-        key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
-        show: true,
-        rowActions: [], // for the UI Overhaul
-        sectionActions: [], // for the UI Overhaul
-        ...options,
-      },
-    };
-
-    customFeats.forEach((f) =>
-      CharacterSheetSections.applyCharacterFeatureToSection(
-        features,
-        f,
-        options
-      )
-    );
-
-    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      actor,
-      tabId
-    ).forEach((s) => {
-      features[s] ??= CharacterSheetSections.createFeatureSection(s, {
-        canCreate: true,
-        ...options,
-      });
-    });
-
-    return features;
-  }
-
-  static applyCharacterFeatureToSection(
-    features: Record<string, CharacterFeatureSection>,
-    feat: Item5e,
-    customSectionOptions: Partial<CharacterFeatureSection>
-  ) {
-    const customSectionName = TidyFlags.section.get(feat);
-
-    if (!customSectionName) {
-      return;
-    }
-
-    const customSection: CharacterFeatureSection = (features[
-      customSectionName
-    ] ??= CharacterSheetSections.createFeatureSection(
-      customSectionName,
-      customSectionOptions
-    ));
-
-    customSection.items.push(feat);
-  }
-
-  static createFeatureSection(
-    customSectionName: string,
-    customSectionOptions: Partial<CharacterFeatureSection>
-  ): CharacterFeatureSection {
-    return {
-      type: CONSTANTS.SECTION_TYPE_FEATURE,
-      label: customSectionName,
-      items: [],
-      hasActions: true,
-      dataset: {
-        [TidyFlags.section.prop]: customSectionName,
-      },
-      isClass: false,
-      canCreate: true,
-      showUsesColumn: true,
-      showUsagesColumn: true,
-      showFeatureTypeColumn: true,
-      showRequirementsColumn: true,
-      key: customSectionName,
-      custom: {
-        section: customSectionName,
-        creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
-      },
-      show: true,
-      rowActions: [], // for the UI Overhaul
-      sectionActions: [], // for the UI Overhaul
-      ...customSectionOptions,
-    };
-  }
-
   static buildQuadroneFeatureSections(
     actor: Actor5e,
     unlocked: boolean,
@@ -373,12 +204,10 @@ export class CharacterSheetSections {
     partitions: CharacterItemPartitions,
     inventory: ActorInventoryTypes
   ) {
-
     // Suppress riders for disabled enchantments
-    if ( item.dependentOrigin?.active === false ) {
+    if (item.dependentOrigin?.active === false) {
       return;
-    }
-    else if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+    } else if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       partitions.spells.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_RACE) {
       partitions.species.push(item);
@@ -395,68 +224,5 @@ export class CharacterSheetSections {
     } else if (SheetSections.showInFeatures(item)) {
       partitions.feats.push(item);
     }
-  }
-
-  // TODO: Figure out how to handle effects with section names that collide with items
-  static mergeDuplicateFavoriteSections(sections: FavoriteSection[]) {
-    let sectionsMap: Record<
-      string,
-      Exclude<FavoriteSection, EffectFavoriteSection | ActivitySection>
-    > = {};
-    for (let section of sections) {
-      if (
-        section.type === CONSTANTS.SECTION_TYPE_EFFECT ||
-        section.type === CONSTANTS.SECTION_TYPE_ACTIVITY
-      ) {
-        continue;
-      }
-
-      const mappedSection = sectionsMap[section.key];
-
-      if (!mappedSection) {
-        sectionsMap[section.key] = section;
-        continue;
-      }
-
-      const incomingItems = section.items;
-
-      if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
-        const mappedItems = mappedSection.items;
-
-        sectionsMap[section.key] =
-          CharacterSheetSections.createGenericFavoriteSection(section.key, [
-            ...incomingItems,
-            ...mappedItems,
-          ]);
-
-        continue;
-      }
-
-      mappedSection.items.push(...incomingItems);
-    }
-
-    return Object.values(sectionsMap);
-  }
-
-  static createGenericFavoriteSection(
-    key: string,
-    items: Item5e[]
-  ): CharacterFeatureSection {
-    return {
-      type: 'feature',
-      canCreate: false,
-      dataset: [],
-      items: items,
-      key: key,
-      label: FoundryAdapter.localize(key),
-      custom: {
-        creationItemTypes: [],
-        section: key,
-      },
-      isExternal: false,
-      show: true,
-      rowActions: [], // for the UI Overhaul
-      sectionActions: [], // for the UI Overhaul
-    };
   }
 }
