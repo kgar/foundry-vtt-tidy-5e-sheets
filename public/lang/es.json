@@ -121,18 +121,6 @@
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
         "BuyMeACoffeeLink": "{urlStart}Cómprame un Coffee{urlEnd}"
     },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
-        "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Mostrar etiquetas de los rasgos",
-        "hint": "Por defecto sólo se muestran los iconos de los rasgos. Actívalo para mostrar también las etiquetas."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Mostrar nombre del jugador",
-        "hint": "Permite mostrar un campo para el nombre del jugador debajo del nombre del personaje."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Utilizar barra de PS",
         "hint": "Mostrar una barra de colores indicando los PS restantes. Los números de salud seguirán siendo visibles."
@@ -140,23 +128,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Utilizar superposición de salud",
         "hint": "Muestra una superposición de PS de colores."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Muestra la Pestaña de Hechizos",
-        "hint": "Muestra la pestaña de hechizos para los NPCs. Desactivar para mover la sección de hechizos a la pestaña de atributos."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Utilizar menú contextual",
-        "hint": "Activa los menús contextuales en objetos con clic derecho."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Estilo de retrato redondo",
-        "hint": "Selecciona activar los retratos/iconos redondos para los actores.",
-        "all": "Todos los actores",
-        "pc": "PJs",
-        "npc": "NPCs/Vehículos",
-        "none": "Ninguno",
-        "default": "ninguno"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Bloquear los campos sensibles",
@@ -170,10 +141,6 @@
         "name": "Utilizar el seguimiento del movimiento del vehículo",
         "hint": "Muestra un seguimiento del movimiento en el perfil del vehículo."
     },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Utilizar seguimiento de agotamiento",
-        "hint": "Muestra un seguimiento de agotamiento para personajes, NPCs y vehículos."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Descanso para los PNJs",
         "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
@@ -185,10 +152,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Pestaña inicial en hoja",
         "hint": "Muestra la pestaña indicada al abrir una hoja por primera vez."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Usar la barra de carga de personaje",
-        "hint": "Muestra una barra de carga en las hojas de personaje."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "Utilizar Barra de Carga en NPCs",
@@ -279,10 +242,6 @@
         "themeLabel": "Tema"
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "Este objeto tiene efectos activos",
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "Añade un botón para mostrar/ocultar habilidades vacías.",
-        "name": "Alternar habilidades vacías del personaje"
-    },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "AvailableHeader": "Pestañas disponibles",
         "SelectedHeader": "Pestañas seleccionadas",
@@ -314,14 +273,6 @@
     },
     "TIDY5E.UseDefault": "Utilizar predeterminado",
     "TIDY5E.Reset": "Restablecer",
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "La hoja 5e predeterminada permite tabular desde una entrada de atributo a la siguiente ocultando los controles a su alrededor en orden de tabulación. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Utilizar la Compatibilidad con Teclado Accesible\" está desactivado.",
-        "name": "Usar tabulación de atributo de la hoja predeterminada"
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Usar la tabulación de PS de la hoja predeterminada",
-        "hint": "La hoja 5e predeterminada permite tabular desde la entrada de PS actual hasta la entrada PS temporal actual. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Usar compatibilidad con teclado accesible\" está desactivado."
-    },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Incluir hechizos de un minuto como acciones",
         "hint": "Incluye hechizos con una duración de un minuto o menos (por ejemplo, 1 ronda) y un tiempo de activación de 1 acción o 1 acción adicional (por ejemplo, bendecir, azotar, ordenar) en la pestaña/panel de acciones de forma predeterminada."
@@ -355,10 +306,6 @@
         "MoveDown": "Mover abajo (Alt + Flecha abajo)",
         "MoveLeft": "Mover izquierda (Espacio)",
         "MoveRight": "Mover derecha (Espacio)"
-    },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Utilizar la Compatibilidad con Teclado Accesible",
-        "hint": "Permite a los usuarios desplazarse por la mayoría de los botones/comandos de Tidy 5e y ejecutarlos con teclas de acceso rápido del teclado basadas en botones convencionales. Nota: cuando se enfoca en un botón en Foundry, las combinaciones de teclas de \"Configurar controles\" no responden. Si un módulo usa esta función de Foundry para los controles en las hojas, como el uso de elementos mientras se mantiene presionada una tecla especial, habilitar esta opción de Tidy 5e interferirá con esas combinaciones de teclas."
     },
     "TIDY5E.WorldSettings.VehicleExhaustion": {
         "name": "Configuración de Agotamiento Vehicular",
@@ -664,10 +611,6 @@
     },
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Actividades"
-    },
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Muestra las Tarjetas de Información de Efectos Activos",
-        "hint": "Habilita para mostrar tarjetas de información para efectos activos en todos los objetos y actores con efectos activos."
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Salvación de Muerte por Defecto",

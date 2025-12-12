@@ -105,18 +105,6 @@
         "labelInventoryLocks": "Inventarsperren",
         "labelFeaturesLocks": "Eigenschaftensperren"
     },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Klassische Listensteuerungen verwenden",
-        "hint": "Zeigt die Steuerelemente in der Listenansicht an."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Merkmalsbeschriftungen anzeigen",
-        "hint": "Zeigt Beschriftungen für SC-, NSC- und Fahrzeugeigenschaften. Deaktivieren, um nur Symbole anzuzeigen."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Spielername anzeigen",
-        "hint": "Zeigt ein Feld für den Spielernamen unter dem Namen des Charakters an."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Nutze TP-Balken",
         "hint": "Zeigt einen farbigen Balken mit den verbleibenden TP an. Die Trefferpunktzahlen sind weiterhin sichtbar."
@@ -124,23 +112,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Nutze Gesundheitsüberblende",
         "hint": "Zeigt eine farbige TP-Überblende."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Zeige Zauberbuchreiter",
-        "hint": "Zeigt ein Zauberbuchreiter für NSCe. Deaktivieren, um das Zauberbuch in den Reiter \"Attribute\" zu verschieben."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Kontextmenü verwenden",
-        "hint": "Ermöglicht ein Rechtsklick-Kontextmenü für Elemente."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Runde Portraits",
-        "hint": "Wähle runde Portraits/Symbole für Akteure.",
-        "all": "Alle Akteure",
-        "pc": "SCe",
-        "npc": "NSCe/Fahrzeuge",
-        "none": "Keine",
-        "default": "Keine"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Sensible Felder sperren",
@@ -154,10 +125,6 @@
         "name": "Fahrzeugbewegungsindikator verwenden",
         "hint": "Zeigt einen Bewegungsindikator auf dem Fahrzeugprofil an."
     },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Erschöpfungsindikator verwenden",
-        "hint": "Zeigt einen Erschöpfungs-/Verschleißindikator für Charaktere, NSCe und Fahrzeuge an."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "NSC-Rast verwenden",
         "hint": "Ermöglicht kurze und lange Rast für NSCe."
@@ -169,10 +136,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Initiale Bogenregisterkarte",
         "hint": "Zeigt die angegebene Registerkarte an, wenn ein Spielbogen zum ersten Mal geöffnet wird."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Charakterbelastungsleiste verwenden",
-        "hint": "Zeigt einen Lastenbalken auf dem Charakterbogen an."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "NSC-Belastungsleiste verwenden",
@@ -281,18 +244,6 @@
         "MoveUp": "Nach oben bewegen (Alt + Pfeiltaste nach oben)",
         "MoveDown": "Nach unten bewegen (Alt + Pfeiltaste nach unten)"
     },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Unterstützung für barrierefreie Tastaturen verwenden",
-        "hint": "Ermöglicht es dem Benutzer, die meisten Schaltflächen/Befehle auf \"Tidy 5e Sheets\" mit der Tabulatortaste aufzurufen und sie mit herkömmlichen, auf Schaltflächen basierenden Tastenkombinationen auszuführen. Hinweis: Wenn der Fokus auf einer Schaltfläche in Foundry liegt, reagieren die Tastenkombinationen aus \"Steuerelemente konfigurieren\" nicht. Wenn ein Modul diese Foundry-Funktion für Steuerelemente auf den Spielbögen verwendet, wie z. B. die Verwendung von Elementen bei gedrückter Sondertaste, so wird jene Tastenbindungen durch die Aktivierung dieser \"Tidy 5e Sheets\"-Option beeinträchtigt."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Standardbogen Tabulator-Wechsel für TP verwenden",
-        "hint": "Der 5e-Standardbogen erlaubt den Wechsel mittels Tabulator von der aktuellen TP-Eingabe zur aktuellen temporären TP-Eingabe. Durch Aktivierung, wird dieses Verhalten repliziert. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "Fügt eine Schaltfläche zum Ein- und Ausblenden von leeren Fertigkeiten hinzu.",
-        "name": "Leere Charakterfähigkeiten umschalten"
-    },
     "TIDY5E.WorldSettings.VehicleExhaustion": {
         "AtLeastOneLevelRequiredErrorMessage": "Es ist mindestens ein Fahrzeugverschleißgrad erforderlich.",
         "Header": "Fahrzeugverschleiß",
@@ -343,10 +294,6 @@
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Aktionsliste"
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Standard-Tabulator für Bogenattribute verwenden",
-        "hint": "Der 5e-Standardbogen erlaubt das Wechseln von einer Attributeingabe zur nächsten, indem es die Steuerelemente um sie herum aus der Tabulatorreihenfolge ausblendet. Durch Aktivierung wird dieses Verhalten nachgebildet. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
     },
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampf-Zauberangriff",
@@ -634,10 +581,6 @@
     },
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Aktivitäten"
-    },
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Zeige Active Effect Informationskarten",
-        "hint": "Aktivieren, um Informationskarten für aktive Effekte auf allen Figuren und Gegenständen mit aktiven Effekten anzuzeigen."
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Standard Todesrettungswurf",

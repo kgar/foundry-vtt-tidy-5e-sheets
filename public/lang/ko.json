@@ -275,34 +275,6 @@
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "활동"
     },
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "활성 효과 정보 카드",
-        "hint": "이 설정을 활성화하면 활성화된 효과가 있는 모든 액터와 아이템의 활성 효과에 대한 정보 카드를 표시할 수 있습니다."
-    },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "접근 가능한 키보드 지원 사용",
-        "hint": "사용자가 Tidy 5e 시트의 대부분의 버튼/명령을 탭하여 기존의 버튼 기반 키보드 단축키를 사용해 실행할 수 있습니다. 참고: Foundry의 버튼에 초점을 맞추면 \"컨트롤 구성\"의 키 바인딩이 응답하지 않습니다. 모듈이 특수 키를 누른 상태에서 항목을 사용하는 등 시트의 컨트롤에 이 Foundry 기능을 사용하는 경우, 이 Tidy 5e 시트 옵션을 활성화하면 해당 키 바인딩이 방해받게 됩니다."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "기본 시트 속성 키보드 탭 사용",
-        "hint": "기본 5e 시트에서는 탭 순서에서 주변의 컨트롤을 숨겨서 한 속성 입력에서 다음 속성 입력으로 키보드 탭을 이동할 수 있습니다. 이 설정을 활성화하면 해당 동작이 복제됩니다. \"접근 가능한 키보드 지원 사용\"이 꺼져 있으면 이 설정은 무시됩니다."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "기본 시트 HP 키보드 탭 사용",
-        "hint": "기본 5e 시트는 현재 HP 입력에서 현재 임시 HP 입력으로 키보드 탭 이동을 허용합니다. 이 설정을 활성화하면 해당 동작이 복제됩니다. \"접근 가능한 키보드 지원 사용\"이 꺼져 있으면 이 설정은 무시됩니다."
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "클래식 목록 제어 사용",
-        "hint": "목록 보기에 제어를 표시합니다."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "특징 레이블 표시",
-        "hint": "PC, NPC, 탑승물 특성에 대한 레이블을 표시합니다. 아이콘만 표시하려면 비활성화합니다."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "플레이어 이름 표시",
-        "hint": "캐릭터 이름 아래에 플레이어 이름 입력창을 표시합니다."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "HP 바 사용",
         "hint": "남은 HP를 나타내는 색 막대를 표시합니다. 체력 수치는 계속 표시됩니다."
@@ -310,26 +282,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "체력 오버레이 사용",
         "hint": "색칠된 HP 오버레이를 표시합니다."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "빈 캐릭터 기술 전환 버튼",
-        "hint": "비어있는 기술을 표시/숨기기 하는 전환 버튼을 추가합니다."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "주문책 탭 보이기",
-        "hint": "NPC의 주문책 탭을 표시합니다. 주문책 섹션을 속성 탭으로 이동하려면 비활성화합니다."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "조건 메뉴 활성",
-        "hint": "아이템의 우클릭 조건 메뉴를 활성화합니다."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "둥근 포트레이트 스타일",
-        "hint": "액터에 둥근 포트레이트를 사용하려면 체크합니다.",
-        "all": "모든 액터",
-        "pc": "PC",
-        "npc": "NPC/탑승물",
-        "none": "없음"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "중요 영역 잠금",
@@ -342,10 +294,6 @@
     "TIDY5E.Settings.UseVehicleMotion": {
         "name": "탑승물 모션 트래커 사용",
         "hint": "탑승물 프로필에 모션 트래커를 표시합니다."
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "탈진 추적기 사용",
-        "hint": "캐릭터, NPC, 탑승물의 탈진 추적기를 표시합니다."
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "채팅에 NPC 휴식 표시",
@@ -365,10 +313,6 @@
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "기본 죽음 내성 굴림",
         "hint": "죽음 내성 굴림을 할 때의 기본 굴림을 지정합니다."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "캐릭터 과적 바 사용",
-        "hint": "캐릭터 시트에 과적 바를 표시합니다."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "NPC 과적 바 사용",

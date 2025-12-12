@@ -105,18 +105,6 @@
         "labelInventoryLocks": "Blocca Inventario",
         "labelFeaturesLocks": "Blocca Privilegi"
     },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Utilizza i controlli classici",
-        "hint": "Mostra controlli nella visualizzazione elenco."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Mostra le etichette relative ai tratti",
-        "hint": "Per impostazione predefinita, vengono visualizzate solo le icone relative ai tratti. Seleziona per visualizzare anche le etichette."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Mostra Nome Giocatore",
-        "hint": "Mostra un campo per il nome del giocatore sotto il nome del personaggio."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Usa Barra PF",
         "hint": "Mostra una barra colorata che indica gli PF rimanenti. I punti ferita saranno ancora visibili."
@@ -124,23 +112,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Usa Overlay Salute",
         "hint": "Mostra overlay PF colorato."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Mostra la scheda Libro degli incantesimi",
-        "hint": "Mostra una scheda del libro degli incantesimi per i PNG. Disabilita per spostare la sezione del libro degli incantesimi nella scheda Attributi."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Usa il menu contestuale",
-        "hint": "Abilita il menu contestuale del tasto destro sugli elementi."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Stile ritratto tondo",
-        "hint": "Scegli di abilitare i ritratti/icone tondi per gli attori.",
-        "all": "Tutti gli attori",
-        "pc": "PG",
-        "npc": "PNG/Veicoli",
-        "none": "nessuna",
-        "default": null
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Blocca i campi sensibili",
@@ -154,10 +125,6 @@
         "name": "Utilizza il rilevatore di movimento del veicolo",
         "hint": "Mostra un rilevatore di movimento sul profilo del veicolo."
     },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Usa il monitoraggio dell'indebolimento",
-        "hint": "Mostra un indicatore di esaurimento per personaggi, PNG e veicoli."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Riposo per i PNG",
         "hint": "Seleziona per mostrare l'icona/i pulsanti di riposo sulle schede dei PNG."
@@ -169,10 +136,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Pagina Iniziale Scheda",
         "hint": "Mostra la scheda indicata quando si apre un foglio per la prima volta."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Usa la barra di ingombro del personaggio",
-        "hint": "Mostra una barra degli ingombri sulle schede dei personaggi."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "Usa la Barra di Ingombro per PNG",
@@ -471,22 +434,6 @@
         "label": "Impostazioni del Mondo",
         "title": "Impostazioni del Mondo (Solo DM)"
     },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Usa supporto per Tastiera Accessibile",
-        "hint": "Consente agli utenti di scorrere la maggior parte dei pulsanti/comandi su Tidy 5e Sheets ed eseguirli con i tradizionali tasti di scelta rapida da tastiera basati su pulsanti. Nota: quando è attivo un pulsante in Foundry, le combinazioni di tasti da \"Configura controlli\" non rispondono. Se un modulo utilizza questa funzionalità Foundry per i controlli sui fogli, come l'utilizzo di oggetti tenendo premuto un tasto speciale, l'abilitazione di questa opzione Tidy 5e Sheets interferirà con tali combinazioni di tasti."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Usa tabulazione tastiera con attributi del foglio predefinito",
-        "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input di un attributo a quello successivo nascondendo i controlli attorno ad essi dall'ordine di tabulazione. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Usa scheda predefinita dei PF da tastiera",
-        "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input PF attuali all'input PF temporanei attuali. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "Attiva/disattiva le abilità dei personaggi vuoti",
-        "hint": "Aggiunge un pulsante di attivazione/disattivazione per mostrare/nascondere le abilità vuote."
-    },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "AvailableHeader": "Schede Disponibili",
         "SelectedHeader": "Schede Selezionate",
@@ -632,10 +579,6 @@
     "TIDY5E.InfoCardInspectHint": "{inspectKey} Ispeziona",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Attiva/Disattiva Menu Intestazione",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il menu dell'intestazione della scheda.",
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Mostra Schede Informative Effetti Attivi",
-        "hint": "Abilita per mostrare le schede informative degli effetti attivi per tutti i personaggi e gli elementi con effetti attivi."
-    },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "hint": "Determina il tipo di tiro predefinito da utilizzare quando si effettua un tiro salvezza su morte.",
         "name": "Tiro Salvezza Morte Predefinito"

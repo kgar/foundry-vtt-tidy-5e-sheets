@@ -105,18 +105,6 @@
         "labelInventoryLocks": "Zámek inventáře",
         "labelFeaturesLocks": "Zámek schopností"
     },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Používat klasické ovládací prvky seznamu?",
-        "hint": "Zobrazí ovládací prvky v náhledu seznamu."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Zobrazovat popisky rysů?",
-        "hint": "Zobrazí štítky rysů postav, NP a dopravních prostředků. Po vypnutí se zobrazí pouze ikony."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Zobrazovat jméno hráče?",
-        "hint": "Zaškrtnutím zobrazíš pole se jménem hráče pod jménem postavy."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Používat panel BV?",
         "hint": "Zobrazí barevný panel označující zbývající BV. Čísla BV budou stále viditelná."
@@ -124,23 +112,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Používat překryv výdrže?",
         "hint": "Zobrazí barevný překryv BV."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Zobrazovat kartu kouzel?",
-        "hint": "Zobrazí kartu kouzel NP. Zakázáním přesuneš sekci kouzel do záložky rysy."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Používat kontextovou nabídku?",
-        "hint": "Povolí kontextovou nabídku položek kliknutím pravým tlačítkem myši."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Prstencový styl portrétu",
-        "hint": "Zobrazí prstencové portréty/ikony aktérů.",
-        "all": "Všichni aktéři",
-        "pc": "Postavy hráčů",
-        "npc": "NP/Dop. prostředky",
-        "none": "Žádné",
-        "default": "žádné"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Zamykat citlivá pole?",
@@ -154,10 +125,6 @@
         "name": "Používat ukazatel pohybu dopravního prostředku?",
         "hint": "Zobrazovat ukazatel pohybu na profilu dopravního prostředku."
     },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Používat ukazatel vyčerpání?",
-        "hint": "Zobrazovat ukazatel vyčerpání postav, NP a dopravních prostředků."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Odpočinek pro CP.",
         "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
@@ -169,10 +136,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Úvodní karta deníku",
         "hint": "Při prvním otevření deníku se zobrazí uvedená karta."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Používat u postav panel zatížení?",
-        "hint": "Zobrazí panel zatížení na denících postav."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "Používat u NP panel zatížení?",
@@ -466,14 +429,6 @@
         "ResetActionDefault": "Výchozí nastavení akcí"
     },
     "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem na blízko",
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Používat klávesové zkratky?",
-        "hint": "Umožní uživatelům procházet na kartě většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z 'Konfigurace ovládacích prvků' nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Tabelovat výchozí rysy pomocí tabulátoru na klávesnici?",
-        "hint": "Výchozí deník 5e umožňuje přecházet z jednoho vstupu rysů na druhý pomocí klávesnice tak, že se ovládací prvky kolem nich skryjí z pořadí tabulátoru. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta volba 'Používání klávesových zkratek'."
-    },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "Místo toho, aby se na kartě/panelu akce ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
         "name": "Omezit akce na triky?"
@@ -535,10 +490,6 @@
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
     },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "Výchozí deník 5e umožňuje tabelovat klávesnicí z aktuálního vstupu bodů výdrže do aktuálního vstupu dočasných bodů výdrže. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta možnost 'Používat podporu přístupnosti klávesnicí'.",
-        "name": "Tabelovat výchozí BV deníku pomocí tabulátoru na klávesnici?"
-    },
     "TIDY5E.Settings.ActionList.Header": "Seznam akcí",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Různé",
     "TIDY5E.Utilities.ConfigureSections": "Nastavení sekcí",
@@ -559,10 +510,6 @@
     "TIDY5E.ActorSpellAttackFlavorText": "Útok kouzlem",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Útok kouzlem na dálku",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Útok kouzlem na blízko",
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "Přidává přepínací tlačítko pro zobrazení/skrytí prázdných dovedností.",
-        "name": "Přepínat prázdné dovednosti postav?"
-    },
     "TIDY5E.UseDefault": "Použít výchozí",
     "TIDY5E.Commands.ShowLegendaryToolbar": "Zobrazit panel nástrojů legendárních předmětů",
     "TIDY5E.Commands.HideLegendaryToolbar": "Skrýt panel legendárních předmětů",
@@ -597,10 +544,6 @@
         "ShowWhenEmptyLabel": "Zobrazit sekci, i když je prázdná"
     },
     "TIDY5E.BrokenLink": "Přerušený odkaz",
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Zobrazovat informační karty aktivních efektů?",
-        "hint": "Umožňuje zobrazení informační karty aktivních efektů u všech aktérů a položek s aktivními efekty."
-    },
     "TIDY5E.ContextMenuActionView": "Náhled",
     "TIDY5E.ContextMenuActionPinToAttributes": "Připnout k rysům",
     "TIDY5E.ContextMenuActionUnpinFromAttributes": "Odepnout od rysů",

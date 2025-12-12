@@ -387,14 +387,6 @@
         "tabLabel": "Ikony"
     },
     "TIDY5E.SpellSourceIdentifierSelectText": "Identyfikator klasy: {identifier}",
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "all": "Wszystkie postacie",
-        "pc": "Postać gracza",
-        "name": "Użyj okrągłych portretów",
-        "none": "Nigdy",
-        "npc": "NPC/Pojazdy",
-        "hint": "Pokazuje okrągłe portrety/ikony postaci."
-    },
     "TIDY5E.LocalizationTestKey": "Klucz testowy lokalizacji",
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Początkowa zakładka karty",
@@ -432,19 +424,11 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Przedmiot"
     },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Klasyczne sterowanie w widoku listy",
-        "hint": "Pokazuje elementy sterujące w widoku listy. Dotyczy ekwipunku i listy zaklęć w widoku listy."
-    },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Uwzględnij zaklęcia z aktywnymi efektami jako akcje",
         "hint": "Domyślnie obejmuje zaklęcia z dołączonymi aktywnymi efektami (np. Korowa skóra) w zakładce/panelu Akcje."
     },
     "TIDY5E.EmptyContainer": "Ten pojemnik jest pusty.",
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Użyj menu kontekstowego",
-        "hint": "Włącza menu kontekstowe przy kliknięciu prawym przyciskiem myszy na przedmiot."
-    },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "hint": "Pokazuje pasek obciążenia na kartach NPC.",
         "name": "Użyj paska obciążenia NPC"
@@ -453,24 +437,12 @@
         "name": "Pozwól przygotowywać sztuczki",
         "hint": "Opcjonalna zasada „formuły sztuczek” z Tasha's Cauldron of Everything pozwala magom przygotowywać sztuczki po długim odpoczynku w taki sam sposób, w jaki robią to z zaklęciami poziomowymi. Przygotowane sztuczki nie wliczają się do całkowitej liczby przygotowanych zaklęć."
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Użyj domyślnego przejścia klawiszem Tab dla atrybutów karty",
-        "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawiatury z jednego atrybutu do następnego, ukrywając elementy sterujące przed kolejności tabulacji. Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "hint": "Pokazuje zakładkę księgi czarów dla NPC-ów. Wyłącz, aby przenieść sekcję księgi czarów do zakładki Atrybuty.",
-        "name": "Pokaż zakładkę Księgi Czarów"
-    },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "AvailableHeader": "Dostępne zakładki",
         "SelectedHeader": "Wybrane zakładki",
         "hint": "Określa, które zakładki i w jakiej kolejności będą wyświetlane domyślnie. Ma zastosowanie, gdy nie dokonano wyboru zakładek dla postaci.",
         "AtLeastOneTabRequiredErrorMessage": "Domyślne zakładki: dla każdego typu aktora wymagana jest co najmniej jedna zakładka.",
         "name": "Domyślne zakładki karty"
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "hint": "Pokazuje pasek obciążenia na kartach postaci.",
-        "name": "Użyj paska obciążenia postaci"
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Użyj filtra wieloklasowej księgi czarów",
@@ -506,10 +478,6 @@
         "name": "Konfiguracja wyczerpania pojazdu",
         "hint": "Ustala w jaki sposób wyczerpanie pojazdów jest konfigurowane i pokazane na kartach pojazdu."
     },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Użyj domyślnego przejścia klawiszem Tab dla HP",
-        "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawisza Tab z pola obecne HP do pola obecne tymczasowe HP.Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "hint": "Użyj specjalnie wybranych ikon Tidy dla szkół magii. Aby dostosować ikony szkół magii przez CONFIG.DND5E lub przez inne moduły, wyłącz tę opcję. Aby rozszerzyć niestandardowe ikony Tidy dla szkół magii , zapoznaj się z dokumentacją API Tidy.",
         "name": "Użyj ikon Tidy dla szkół magii"
@@ -540,14 +508,6 @@
         "title": "Potwierdź: Użyj domyślnych",
         "text": "Czy na pewno chcesz użyć ustawień domyślnych?"
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "Przełącznik pustych umiejętności",
-        "hint": "Dodaje przycisk przełączający wyświetlanie/ukrywanie umiejętności w których postać nie ma biegłości."
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Użyj wskaźnika wyczerpania",
-        "hint": "Pokazuje wskaźnik wyczerpania dla postaci, NPC-ów oraz pojazdów."
-    },
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Dołącz flagi przy tworzeniu zwojów zaklęć",
         "hint": "Zaklęcia mogą czasami zawierać specjalne dane z innych modułów, które warto przenieść do zwojów. Włącz, aby skopiować wszystkie dane oparte na flagach do zwoju w momencie jego tworzenia."
@@ -558,23 +518,11 @@
         "hint": "Zmień ustawienia na poziomie świata, aby spersonalizować korzystanie z Tidy 5e Sheets. Ustawienia te są zapisywane w tym świecie Foundry i mają zastosowanie do całej zawartości związanej z Tidy 5e Sheets.",
         "label": "Ustawienia świata"
     },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Pokaż etykiety atrybutów",
-        "hint": "Pokazuje etykiety dla atrybutów postaci gracza, NPC i pojazdu. Wyłącz, aby pokazać tylko ikony."
-    },
     "TIDY5E.Settings.LockMoneyChanges": {
         "hint": "Zapobiega zmianom w walucie przez graczy niebędących MG.",
         "name": "Zablokuj walutę"
     },
     "TIDY5E.ButtonConfirm.Text": "Potwierdź",
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Użyj przystępnego wsparcia dla klawiatury",
-        "hint": "Umożliwia użytkownikom nawigację między większością przycisków/poleceń w Tidy 5e Sheets i wykonywanie ich za pomocą standardowych skrótów klawiszowych .Uwaga: po skupieniu na przycisku w Foundry, skróty klawiszowe z „Skonfiguruj sterowanie” nie reagują. Jeśli moduł używa tej funkcji Foundry do sterowania kartami, np. do używania przedmiotów podczas przytrzymywania specjalnego klawisza, włączenie tej opcji Tidy 5e Sheets będzie kolidować z tymi skrótami klawiszowymi."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "hint": "Pokazuje pole na imię gracza, pod nazwą postaci.",
-        "name": "Pokaż imię gracza"
-    },
     "TIDY5E.PreviewSheetImageHint": "Lewy przycisk myszy: podgląd obrazu",
     "TIDY5E.Tidy5eSettings": "Ustawienia Tidy 5e Sheets",
     "TIDY5E.ExhaustionLevelTooltip": "Poziom Wyczerpania {level}",
@@ -592,10 +540,6 @@
     "TIDY5E.Facilities.Creatures.Label": "Stworzenia",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Rozwiń/Zwiń",
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Pokaż karty informacyjne aktywnych efektów",
-        "hint": "Włącz wyświetlanie kart informacyjnych aktywnych efektów dla wszystkich postaci i przedmiotów z aktywnymi efektami."
-    },
     "TIDY5E.InfoCardInspectHint": "{inspectKey} Sprawdź",
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Domyślny rzut przeciw śmierć",

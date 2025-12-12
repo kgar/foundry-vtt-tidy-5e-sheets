@@ -100,36 +100,36 @@
   - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.hint
   - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.name
   - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.unlinked
-  - [ ] TIDY5E.Settings.ShowNPCSpellbookTab.hint
-  - [ ] TIDY5E.Settings.ShowNPCSpellbookTab.name
-  - [ ] TIDY5E.Settings.ShowPlayerName.hint
-  - [ ] TIDY5E.Settings.ShowPlayerName.name
-  - [ ] TIDY5E.Settings.ShowTraitLabels.hint
-  - [ ] TIDY5E.Settings.ShowTraitLabels.name
-  - [ ] TIDY5E.Settings.ToggleEmptyCharacterSkills.hint
-  - [ ] TIDY5E.Settings.ToggleEmptyCharacterSkills.name
-  - [ ] TIDY5E.Settings.UseAccessibleKeyboardSupport.hint
-  - [ ] TIDY5E.Settings.UseAccessibleKeyboardSupport.name
-  - [ ] TIDY5E.Settings.UseCharacterEncumbranceBar.hint
-  - [ ] TIDY5E.Settings.UseCharacterEncumbranceBar.name
-  - [ ] TIDY5E.Settings.UseCircularPortraitStyle.all
-  - [ ] TIDY5E.Settings.UseCircularPortraitStyle.hint
-  - [ ] TIDY5E.Settings.UseCircularPortraitStyle.name
-  - [ ] TIDY5E.Settings.UseCircularPortraitStyle.none
-  - [ ] TIDY5E.Settings.UseCircularPortraitStyle.npc
-  - [ ] TIDY5E.Settings.UseCircularPortraitStyle.pc
-  - [ ] TIDY5E.Settings.UseClassicControls.hint
-  - [ ] TIDY5E.Settings.UseClassicControls.name
-  - [ ] TIDY5E.Settings.UseContextMenu.hint
-  - [ ] TIDY5E.Settings.UseContextMenu.name
-  - [ ] TIDY5E.Settings.UseDefaultSheetAttributeTabbing.hint
-  - [ ] TIDY5E.Settings.UseDefaultSheetAttributeTabbing.name
-  - [ ] TIDY5E.Settings.UseDefaultSheetHpTabbing.hint
-  - [ ] TIDY5E.Settings.UseDefaultSheetHpTabbing.name
-  - [ ] TIDY5E.Settings.UseEffectCards.hint
-  - [ ] TIDY5E.Settings.UseEffectCards.name
-  - [ ] TIDY5E.Settings.UseExhaustion.hint
-  - [ ] TIDY5E.Settings.UseExhaustion.name
+  - [x] TIDY5E.Settings.ShowNPCSpellbookTab.hint
+  - [x] TIDY5E.Settings.ShowNPCSpellbookTab.name
+  - [x] TIDY5E.Settings.ShowPlayerName.hint
+  - [x] TIDY5E.Settings.ShowPlayerName.name
+  - [x] TIDY5E.Settings.ShowTraitLabels.hint
+  - [x] TIDY5E.Settings.ShowTraitLabels.name
+  - [x] TIDY5E.Settings.ToggleEmptyCharacterSkills.hint
+  - [x] TIDY5E.Settings.ToggleEmptyCharacterSkills.name
+  - [x] TIDY5E.Settings.UseAccessibleKeyboardSupport.hint
+  - [x] TIDY5E.Settings.UseAccessibleKeyboardSupport.name
+  - [x] TIDY5E.Settings.UseCharacterEncumbranceBar.hint
+  - [x] TIDY5E.Settings.UseCharacterEncumbranceBar.name
+  - [x] TIDY5E.Settings.UseCircularPortraitStyle.all
+  - [x] TIDY5E.Settings.UseCircularPortraitStyle.hint
+  - [x] TIDY5E.Settings.UseCircularPortraitStyle.name
+  - [x] TIDY5E.Settings.UseCircularPortraitStyle.none
+  - [x] TIDY5E.Settings.UseCircularPortraitStyle.npc
+  - [x] TIDY5E.Settings.UseCircularPortraitStyle.pc
+  - [x] TIDY5E.Settings.UseClassicControls.hint
+  - [x] TIDY5E.Settings.UseClassicControls.name
+  - [x] TIDY5E.Settings.UseContextMenu.hint
+  - [x] TIDY5E.Settings.UseContextMenu.name
+  - [x] TIDY5E.Settings.UseDefaultSheetAttributeTabbing.hint
+  - [x] TIDY5E.Settings.UseDefaultSheetAttributeTabbing.name
+  - [x] TIDY5E.Settings.UseDefaultSheetHpTabbing.hint
+  - [x] TIDY5E.Settings.UseDefaultSheetHpTabbing.name
+  - [x] TIDY5E.Settings.UseEffectCards.hint
+  - [x] TIDY5E.Settings.UseEffectCards.name
+  - [x] TIDY5E.Settings.UseExhaustion.hint
+  - [x] TIDY5E.Settings.UseExhaustion.name
   - [ ] TIDY5E.Settings.UseHpBar.hint
   - [ ] TIDY5E.Settings.UseHpBar.name
   - [ ] TIDY5E.Settings.UseHpOverlay.hint

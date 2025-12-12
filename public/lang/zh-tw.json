@@ -105,18 +105,6 @@
         "labelInventoryLocks": "",
         "labelFeaturesLocks": ""
     },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "列表視圖下使用舊版物品操作按鈕。",
-        "hint": "始終顯示物品操作按鈕並禁用右鍵菜單。僅適用於 PC 物品和法術的列表視圖。"
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "",
         "hint": ""
@@ -124,23 +112,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "",
         "hint": ""
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "",
-        "hint": "",
-        "all": "",
-        "pc": "",
-        "npc": "",
-        "none": "",
-        "default": null
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "",
@@ -154,10 +125,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": null,
         "hint": null
@@ -167,10 +134,6 @@
         "hint": ""
     },
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "",
         "hint": ""
     },
@@ -252,10 +215,6 @@
         "hint": "",
         "name": ""
     },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "",
         "name": ""
@@ -265,10 +224,6 @@
         "AtLeastOneLevelRequiredErrorMessage": "",
         "name": "",
         "Header": ""
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "",
-        "name": ""
     },
     "TIDY5E.Settings.Migrations": {
         "Notification": {
@@ -446,15 +401,7 @@
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": ""
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "",
-        "name": ""
-    },
     "TIDY5E.HitDC": "",
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "",
-        "name": ""
-    },
     "TIDY5E.SpellSourceIdentifierSelectText": "",
     "TIDY5E.SpellSourceIdentifierLabelHint": "",
     "TIDY5E.Utilities.Tools": "",

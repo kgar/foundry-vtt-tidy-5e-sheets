@@ -361,34 +361,6 @@
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "Activities"
   },
-  "TIDY5E.Settings.UseEffectCards": {
-    "name": "Show Active Effect Info Cards",
-    "hint": "Enable to show info cards for active effects on all actors and items with active effects."
-  },
-  "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-    "name": "Use Accessible Keyboard Support",
-    "hint": "Enables users to tab through most of the buttons/commands on Tidy 5e Sheets and execute them with conventional button-based keyboard hotkeys. Note: when focused on a button in Foundry, keybindings from \"Configure Controls\" do not respond. If a module uses this Foundry feature for controls on the sheets, such as using items while holding a special key, then enabling this Tidy 5e Sheets option will interfere with those keybindings."
-  },
-  "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-    "name": "Use default sheet attribute keyboard tabbing",
-    "hint": "The default 5e sheet allows keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-  },
-  "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-    "name": "Use default sheet HP keyboard tabbing",
-    "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-  },
-  "TIDY5E.Settings.UseClassicControls": {
-    "name": "Use Classic List Controls",
-    "hint": "Shows controls in the list view."
-  },
-  "TIDY5E.Settings.ShowTraitLabels": {
-    "name": "Show Trait Labels",
-    "hint": "Shows labels for PC, NPC, and Vehicle traits. Disable to show only icons."
-  },
-  "TIDY5E.Settings.ShowPlayerName": {
-    "name": "Show Player Name",
-    "hint": "Shows a field for the player name below the character's name."
-  },
   "TIDY5E.Settings.UseHpBar": {
     "name": "Use HP Bar",
     "hint": "Shows a colored bar indicating remaining HP. Health numbers will still be visible."
@@ -396,26 +368,6 @@
   "TIDY5E.Settings.UseHpOverlay": {
     "name": "Use Health Overlay",
     "hint": "Shows a colored HP overlay."
-  },
-  "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-    "name": "Toggle Empty Character Skills",
-    "hint": "Adds a toggle button for showing/hiding empty skills."
-  },
-  "TIDY5E.Settings.ShowNPCSpellbookTab": {
-    "name": "Show Spellbook Tab",
-    "hint": "Shows a spellbook tab for NPCs. Disable to move the spellbook section to the Attributes tab."
-  },
-  "TIDY5E.Settings.UseContextMenu": {
-    "name": "Use Context Menu",
-    "hint": "Enables right-click context menu on items."
-  },
-  "TIDY5E.Settings.UseCircularPortraitStyle": {
-    "name": "Use Circular Portraits",
-    "hint": "Shows circular portraits/icons for actors.",
-    "all": "All actors",
-    "pc": "PCs",
-    "npc": "NPCs/Vehicles",
-    "none": "None"
   },
   "TIDY5E.Settings.UseTotalSheetLock": {
     "name": "Lock Down Sensitive Fields",
@@ -428,10 +380,6 @@
   "TIDY5E.Settings.UseVehicleMotion": {
     "name": "Use Vehicle Motion Tracker",
     "hint": "Shows a motion tracker on the vehicle profile."
-  },
-  "TIDY5E.Settings.UseExhaustion": {
-    "name": "Use Exhaustion Tracker",
-    "hint": "Shows an exhaustion tracker for characters, NPCs, and vehicles."
   },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "Show NPC Rest in Chat",
@@ -451,10 +399,6 @@
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "Default Death Save Roll",
     "hint": "Determines the default roll type to use when rolling a death saving throw."
-  },
-  "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-    "name": "Use Character Encumbrance Bar",
-    "hint": "Shows an encumbrance bar on character sheets."
   },
   "TIDY5E.Settings.UseNPCEncumbranceBar": {
     "name": "Use NPC Encumbrance Bar",

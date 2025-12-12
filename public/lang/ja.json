@@ -361,34 +361,6 @@
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "用途"
   },
-  "TIDY5E.Settings.UseEffectCards": {
-    "name": "アクティブ効果情報カードを表示",
-    "hint": "有効にすると、アクティブ効果を持つすべてのキャラクターとアイテムに情報カードが表示されます。"
-  },
-  "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-    "name": "アクセシブルキーボードサポート使用",
-    "hint": "Tidy 5e Sheetsのほとんどのボタン/コマンドをタブキーで移動し、従来のボタンベースのキーボードホットキーで実行できるようにします。注意：Foundryでボタンにフォーカスしている場合、「ショートカット設定」のショートカットは応答しません。特別なキーを押しながらアイテムを使用するなど、シート上のコントロールにこのFoundry機能を使用するモジュールがある場合、このTidy 5e Sheetsオプションを有効にするとそれらのショートカットと干渉します。"
-  },
-  "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-    "name": "デフォルトシートの能力値キーボードタブ移動を使用",
-    "hint": "デフォルトの5版シートは、周りのコントロールをタブ順序から隠すことで、ある能力値入力から次の入力へキーボードでタブ移動できます。これを有効にすると、その動作を再現します。この設定は「アクセシブルキーボードサポート使用」がオフの場合は無視されます。"
-  },
-  "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-    "name": "デフォルトシートのHPキーボードタブ移動を使用",
-    "hint": "デフォルトの5版シートは、現在のHP入力から現在の一時HP入力へキーボードでタブ移動できます。これを有効にすると、その動作を再現します。この設定は「アクセシブルキーボードサポート使用」がオフの場合は無視されます。"
-  },
-  "TIDY5E.Settings.UseClassicControls": {
-    "name": "従来のアイテム操作を使用",
-    "hint": "一覧表示でアイテム操作を表示します。"
-  },
-  "TIDY5E.Settings.ShowTraitLabels": {
-    "name": "特徴ラベルの表示",
-    "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"
-  },
-  "TIDY5E.Settings.ShowPlayerName": {
-    "name": "プレイヤー名の表示",
-    "hint": "キャラクターの名前の下に、プレイヤー名を表示します。"
-  },
   "TIDY5E.Settings.UseHpBar": {
     "name": "HPバーを使用",
     "hint": "残りHPを示す色付きバーを表示します。HP数値は引き続き表示されます。"
@@ -396,26 +368,6 @@
   "TIDY5E.Settings.UseHpOverlay": {
     "name": "HPオーバーレイを使用",
     "hint": "色付きのHPオーバーレイを表示します。"
-  },
-  "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-    "name": "空の技能を切り替え",
-    "hint": "空の技能の表示/非表示を切り替えるボタンを追加します。"
-  },
-  "TIDY5E.Settings.ShowNPCSpellbookTab": {
-    "name": "呪文書タブを表示",
-    "hint": "NPCの呪文書タブを表示します。無効にすると、呪文書セクションが能力値タブに移動します。"
-  },
-  "TIDY5E.Settings.UseContextMenu": {
-    "name": "コンテキストメニューを使用",
-    "hint": "アイテムの右クリックコンテキストメニューを有効にします。"
-  },
-  "TIDY5E.Settings.UseCircularPortraitStyle": {
-    "name": "シートに円形画像を使用",
-    "hint": "キャラクターの円形画像/アイコンを表示",
-    "all": "すべてのキャラクター",
-    "pc": "PCのみ",
-    "npc": "NPC/乗り物 のみ",
-    "none": "しない"
   },
   "TIDY5E.Settings.UseTotalSheetLock": {
     "name": "誤操作による変更をロック",
@@ -428,10 +380,6 @@
   "TIDY5E.Settings.UseVehicleMotion": {
     "name": "乗り物の動作トラッカーを使用",
     "hint": "乗り物プロフィールに動作トラッカーを表示します。"
-  },
-  "TIDY5E.Settings.UseExhaustion": {
-    "name": "消耗トラッカーを使用",
-    "hint": "キャラクター、NPC、乗り物の消耗トラッカーを表示します。"
   },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "NPCの休憩をチャットに表示",
@@ -451,10 +399,6 @@
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "デフォルトの死亡セーヴロール",
     "hint": "死亡セーヴィング・スローをロールするときに使用するデフォルトのロールモードを決定します。"
-  },
-  "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-    "name": "キャラクターの荷重バーを使用",
-    "hint": "キャラクターシートに荷重バーを表示します。"
   },
   "TIDY5E.Settings.UseNPCEncumbranceBar": {
     "name": "NPCの荷重バーを使用",

@@ -278,34 +278,6 @@
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Atividades"
     },
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Mostrar Cartões de Info. de Efeitos",
-        "hint": "Ative para mostrar cartões de informações para efeitos ativos em todos os atores e elementos com efeitos ativos."
-    },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Use o Apoio de Teclado Acessível",
-        "hint": "Permite que os utilizadores usem tab na maioria dos botões/comandos no Tidy 5e Sheet e os executem com teclas de atalho convencionais baseadas em botões do teclado. Observação: quando focado num botão no Foundry, as associações de teclas de \"Configurar Controles\" não respondem. Se um módulo usar este recurso do Foundry para controles nas fichas, como o uso de elementos enquanto mantém pressionada uma tecla, a ativação dessa opção do Tidy 5e Sheets interferirá nessas associações de teclas."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Usar Tab Entre Atributos da Ficha Padrão",
-        "hint": "A ficha padrão permite o uso do tab de uma entrada de atributo para a próxima, ocultando os controles em torno deles na ordem do tab. A ativação dessa opção replica este comportamento. Esta configuração será ignorada se a opção \"Usar Apoio a Teclado Acessível\" estiver desativada."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Usar Tab Entre PVs da Ficha Padrão",
-        "hint": "A ficha padrão permite o uso do tab do PV Atual para PV Temporário. A ativação dessa opção replica este comportamento. Esta configuração será ignorada se a opção \"Usar Apoio a Teclado Acessível\" estiver desativada."
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Usar Lista Clássica de Controles",
-        "hint": "Mostra os controles na exibição de lista."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Mostrar Rótulos de Traços",
-        "hint": "Mostra rótulos para características de PJ, PnJ e Veículo. Desative para mostrar somente os ícones."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Mostrar Nome do Jogador",
-        "hint": "Mostra um campo para o nome do jogador abaixo do nome do personagem."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Usar Barra de HP",
         "hint": "Mostra uma barra colorida indicando o HP restante. Os números de vida ainda estarão visíveis."
@@ -313,26 +285,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Use Sobreposição de Vida",
         "hint": "Mostra uma sobreposição colorida de PV."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "Alternar Investigações Vazias de Personagem",
-        "hint": "Adiciona um botão de alternância para mostrar/ocultar investigações vazias."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Mostrar Guia de Grimório",
-        "hint": "Mostra uma guia de grimório para PnJs. Desative para mover a secção de grimório para a guia Atributos."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Usar Menu de Contexto",
-        "hint": "Ativa o menu de contexto ao clicar com o botão direito do rato nos elementos."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Usar Retratos Redondos",
-        "hint": "Mostra retratos/ícones redondos para atores.",
-        "all": "Todos os atores",
-        "pc": "PJs",
-        "npc": "PnJs/Veículos",
-        "none": "Nenhum"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Travar Campos Sensíveis",
@@ -345,10 +297,6 @@
     "TIDY5E.Settings.UseVehicleMotion": {
         "name": "Usar Rastreador de Movimento do Veículo",
         "hint": "Mostra um rastreador de movimento no perfil do veículo."
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Use Rastreador de Exaustão",
-        "hint": "Mostra um rastreador de exaustão para personagens, PnJs e veículos."
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Mostrar Descanso do PnJ no Chat",
@@ -368,10 +316,6 @@
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Rolagem Padrão de Salvaguarda Contra Morte",
         "hint": "Determina o tipo de rolagem padrão a ser usada ao realizar uma salvaguarda contra morte."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Usar Barra de Carga para PJ",
-        "hint": "Mostra uma barra de carga nas fichas de personagem."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "Usar Barra de Carga para PnJ",

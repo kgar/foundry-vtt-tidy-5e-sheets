@@ -240,37 +240,9 @@
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "行动"
     },
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "显示主动效应信息卡片",
-        "hint": "启用显示所有具有主动效应的角色和物品的主动效应信息卡片。"
-    },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "使用无障碍键盘支持",
-        "hint": "启用后，用户可通过 `Tab` 键在 Tidy 5e 角色卡的大多数按钮/命令间切换，并使用常规的按钮式键盘快捷键执行操作。 注意：当焦点位于 Foundry 的某个按钮上时，通过“配置控件”（Configure Controls）设置的键位绑定将不会响应。如果其他MOD利用 Foundry 的该功能在角色卡中实现控制功能（例如按住特殊键使用物品），则启用此 Tidy 5e 角色卡选项会与这些键位绑定冲突。"
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "使用默认工作卡属性键盘选项卡切换",
-        "hint": "默认的 5e 角色表通过将属性输入框周围的控件从 Tab 切换顺序中隐藏，允许用户通过键盘的 `Tab` 键直接从一个属性输入框跳转到下一个输入框。启用此选项将重现此行为。若未启用“无障碍键盘支持”，则此设置无效。"
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "默认 5e 角色卡允许通过键盘的 `Tab` 键从当前生命值（HP）输入框直接跳转到临时生命值输入框。启用此选项将重现该行为。若未启用“使用无障碍键盘支持”，则此设置无效。",
-        "name": "使用默认卡键盘切换HP"
-    },
     "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "玩家",
         "header": "玩家角色卡"
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "使用经典列表控件",
-        "hint": "在列表视图中显示控件。"
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "显示特质标签",
-        "hint": "显示“玩家角色”、“非玩家角色”以及“载具”特质的标签。关闭后仅显示图标。"
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "现实玩家名称",
-        "hint": "在角色名称下方显示一个用于输入玩家名称的字段。"
     },
     "TIDY5E.Settings.UseHpBar": {
         "name": "使用生命值条",
@@ -279,26 +251,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "启用生命值覆盖显示",
         "hint": "显示彩色生命值覆盖。"
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "切换空角色技能",
-        "hint": "添加了一个切换按钮，用于显示/隐藏空技能。"
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "显示法术书选项卡",
-        "hint": "显示 NPC 的法术书分区。禁用后将法术书分区移至属性选项卡。"
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "使用上下文菜单",
-        "hint": "启用物品上的右键单击上下文菜单。"
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "hint": "显示角色的圆形立绘/图标。",
-        "name": "使用圆形立绘",
-        "all": "所有角色",
-        "pc": "玩家角色",
-        "npc": "NPC/载具",
-        "none": "无"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "锁定敏感字段",
@@ -311,10 +263,6 @@
     "TIDY5E.Settings.UseVehicleMotion": {
         "name": "使用载具运动追踪器",
         "hint": "在载具简介中显示运动追踪器。"
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "使用力竭追踪器",
-        "hint": "显示角色、非玩家角色和载具的力竭追踪器。"
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "在聊天中显示NPC的休息状态",
@@ -370,10 +318,6 @@
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "默认死亡豁免掷骰",
         "hint": "确定进行死亡豁免掷骰时所使用的默认骰子类型。"
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "使用角色负重条",
-        "hint": "在角色卡上显示负重条。"
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "使用NPC负重条",
