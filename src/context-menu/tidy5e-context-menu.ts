@@ -10,7 +10,7 @@ import { configureKeyedFavoriteContextMenu } from './tidy5e-keyed-favorite-conte
 import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu';
 import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
 import { configureEncounterPlaceholderContextMenu } from './tidy5e-encounter-placeholder-context-menu';
-import { configureSectionContextMenu } from './tidy5e-section-context-menu-quadrone';
+import { configureSectionContextMenu } from './tidy5e-section-context-menu';
 
 export function initTidy5eContextMenu(
   sheet: any,

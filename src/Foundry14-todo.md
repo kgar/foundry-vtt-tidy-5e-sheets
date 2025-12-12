@@ -6,8 +6,8 @@
   - [x] applications
   - [x] application-quadrone
   - [x] attachments
-  - [ ] components
-  - [ ] context-menu
+  - [x] components
+  - [x] context-menu
   - [ ] events
   - [ ] features
   - [ ] foundry
