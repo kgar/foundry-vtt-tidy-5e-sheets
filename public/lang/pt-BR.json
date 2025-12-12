@@ -183,90 +183,9 @@
             "cancel": "Cancelar"
         }
     },
-    "TIDY5E.Settings.Migrations": {
-        "name": "Migrações",
-        "buttonLabel": "Migrar Dados Tidy",
-        "dialogTitle": "Migrar Dados Tidy",
-        "hint": "Se você era um usuário do módulo Tidy5e Sheet original, opcionalmente use este menu Migrações para migrar suas configurações de Mestre e dados da ficha Tidy.",
-        "migrationBeginningMessage": "Migrando dados. Por favor, não atualize a página até que esteja concluído.",
-        "migrationErrorMessage": "Ocorreu um erro. Mais detalhes estão no console de desenvolvimento.",
-        "migrationCompleteMessage": "Migração concluída.",
-        "migrateDocumentFlagsButtonLabel": "Migrar Marcadores do Documento",
-        "migrateConfirmTitle": "Confirmar migração",
-        "migrateConfirmMessage1": "Tem certeza de que deseja realizar essa migração?",
-        "migrateConfirmMessage2": "{boldStart}Nota{boldEnd}: lembre-se sempre de {boldStart}fazer backup de seus dados.{boldEnd}.",
-        "migrateConfirmButtonYes": "Migrar",
-        "migrateConfirmButtonNo": "Cancelar",
-        "v1": {
-            "sectionTitle": "Migrações de Integração do Tidy V1",
-            "mainExplanation1": "Não é necessário migrar os dados para o novo módulo Tidy 5e Sheets para usá-lo. Na pior das hipóteses, se você for um usuário original do Tidy5e Sheet e pular as migrações, precisará re-aplicar as configurações de acordo com o seu gosto.",
-            "mainExplanation2": "{boldStart}Nota{boldEnd}: Configurações do cliente não fazem parte dessa migração. Não houve mudanças suficientes na forma como as configurações do cliente funcionam no Tidy, portanto, é recomendável dar uma nova olhada nas configurações do cliente.",
-            "originalHeader": "Ficha Tidy5e Original",
-            "originalExplanation": "Migrar as configurações do MJ e as flags de dados da ficha Tidy da ficha Tidy5e original. A maioria das diferenças nos dados vem das configurações do MJ. Se você migrar suas configurações e achar que uma configuração não é do seu agrado, basta alterar as configurações no menu de configurações."
-        },
-        "Notification": {
-            "Title": "Tidy 5e Sheets: Migrações Disponíveis",
-            "Explanation": "Novas migrações de dados do Tidy 5e Sheets estão disponíveis. Verifique o {boldStart}menu de configurações de Migrações{boldEnd} para saber mais.",
-            "Explanation2": "Nota: As migrações movem dados de um local para outro. Às vezes, os dados que foram originalmente armazenados pelo Tidy 5e Sheets precisam ser movidos para os campos de dados oficialmente suportados pelo sistema. Em outros casos, o Tidy pode adotar funcionalidades de outro módulo e, como resultado, uma migração conveniente pode ser fornecida para facilitar a transição. Se você não perder dados em suas fichas após atualizar o Tidy 5e Sheets, nenhuma migração será necessária.",
-            "Button.DoNotShowAgain": "Não Mostrar Novamente",
-            "DoNotShowAgain.ConfirmMessage": "Confirmado. Esta mensagem não será exibida novamente até que haja outra migração disponível."
-        },
-        "OptionsHeader": "Opções de Migração",
-        "OptionOverwrite.Text": "Substituir",
-        "OptionOverwrite.Tooltip": "Ative para substituir os dados da ficha existente. Se desmarcado, apenas os campos vazios do sistema receberão dados migrados do Tidy.",
-        "OptionDeleteFlags.Text": "Excluir Flags Afetadas do Tidy",
-        "OptionDeleteFlags.Tooltip": "Ao migrar dados de flags personalizadas do Tidy para dados oficiais do sistema, as flags permanecem no lugar por padrão. Marque esta opção para remover essas flags.",
-        "ButtonMigration.Text": "Migrar",
-        "MigrateCompendia.CompendiumLabel": "Compêndio",
-        "MigrateCompendia.Title": "Migrar Compêndio",
-        "MigrateCompendia.SelectionDialogTitle": "Selecione Compêndio para Migrar",
-        "MigrateCompendia.TotalEntriesLabel": "Entradas Totais",
-        "CharacterBiography": {
-            "sectionTitle": "Biografia do Personagem",
-            "selectionDialogTitle": "Migração: Biografia do Personagem"
-        },
-        "NpcDeathSaves": {
-            "sectionTitle": "Salvaguardas Contra Morte de PnJs",
-            "selectionDialogTitle": "Migração: Salvaguardas Contra Morte de PnJs"
-        },
-        "CcssToTidy": {
-            "sectionTitle": "CCSS para Tidy 5e",
-            "selectionDialogTitle": "Migração: CCSS para Tidy 5e",
-            "ccss": "CCSS",
-            "section": "Seção",
-            "explanation1": "O Tidy 5e agora suporta nativamente seções personalizadas e providencia características opcionais para seções personalizadas. Essa migração irá copiar os nomes das seções do Custom Character Sheet Sections (CCSS) para as configurações de seção do Tidy.",
-            "overwrite": "Substituir",
-            "overwriteTooltip": "Habilite para substituir flags existentes do Tidy. Se desmarcado, apenas flags vazias do Tidy irão receber os dados de migração do CCSS.",
-            "deleteFlags": "Deletar Flags Afetadas do CCSS",
-            "deleteFlagsTooltip": "Ao migrar as seções personalizadas do CCSS para o Tidy, as flags do CCSS permanecem no lugar, por padrão. Marque esta opção para remover estas flags."
-        },
-        "UnlinkedExplanation": "Esta migração oferece a opção de migrar documentos token desvinculados no cenário atual. Você pode executar a migração em cenas adicionais conforme necessário.",
-        "Selection": {
-            "TotalSelectedLabel": "Total Selecionado: {total}",
-            "ToMigrate": "Para Migrar",
-            "SelectAllNoneTooltip": "Selecione tudo ou nenhum"
-        },
-        "FavoritesToSystem": {
-            "sectionTitle": "Favoritos dos Personagens",
-            "selectionDialogTitle": "Migração: Favoritos dos Personagens para o Sistema"
-        },
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "Vínculos, Ideais e Falhas de PdM",
-            "selectionDialogTitle": "Migração: Vínculos, Ideais e Falhas de PdMs para Sistema"
-        },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Classe da Magia para Origem da Magia",
-            "selectionDialogTitle": "Migração: Classe da Magia para Origem da Magia"
-        },
-        "NpcExhaustion": {
-            "sectionTitle": "Exaustão de PnJ",
-            "selectionDialogTitle": "Migração: Exaustão de PnJ para o sistema"
-        },
-        "Parent": "Pai",
-        "chatNotification": "Uma nova migração do Tidy 5e Sheets está disponível. Consulte as Configurações de Jogo do Tidy 5e Sheets para ver as migrações disponíveis.",
-        "Journal": {
-            "explanation1": "A Reformulação da Interface do Tidy 5e Sheets alterou o Diário para que ele tenha quantas entradas você quiser. Para acomodar isso, é necessária uma migração da estrutura antiga do Diário para a nova estrutura extensível. Os dados antigos do Diário não serão visíveis nas Fichas Tidy 5e reformuladas."
-        }
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "Total Selecionado: {total}",
+        "SelectAllNoneTooltip": "Selecione tudo ou nenhum"
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",

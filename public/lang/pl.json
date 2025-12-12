@@ -138,93 +138,9 @@
         "name": "Przywracanie ustawień domyślnych",
         "hint": "Spowoduje to zresetowanie wszystkich ustawień z powrotem do domyślnych ustawień aktywnego systemu gry. Ma to wpływ tylko na ustawienia \"ogólne\", takie jak opcje MG."
     },
-    "TIDY5E.Settings.Migrations": {
-        "migrateConfirmMessage1": "Czy na pewno chcesz przeprowadzić tę migrację?",
-        "v1": {
-            "originalHeader": "Oryginalna Tidy5e Sheet",
-            "alphaExplanation2": "{boldStart}Note{boldEnd}: ta migracja nie wpływa na dane w kompendiach.",
-            "mainExplanation2": "{boldStart}Uwaga{boldEnd}: Ustawienia klienta nie są uwzględniane w tej migracji. Wystarczająco dużo zmieniło się w sposobie działania ustawień klienta w Tidy, więc zaleca się powtórne ich ustawienie.",
-            "originalExplanation": "Migracja ustawień MG i flag danych Tidy 5e Sheets z oryginalnego Tidy5e. Większość różnic w danych wynika z ustawień MG. Jeśli po migracji ustawień okaże się, że któreś z nich nie odpowiada, wystarczy zmienić je w menu ustawień konfiguracji.",
-            "alphaExplanation1": "Migracja ustawień MG i flag danych karty Tidy z arkuszy Alpha Tidy 5e. Większość różnic w danych pochodzi z flag karty. Migracja flag Alpha dotyczy aktorów najwyższego poziomu, przedmiotów aktorów najwyższego poziomu i przedmiotów najwyższego poziomu. Spowoduje to przeniesienie danych biograficznych, ulubionych i innych specyficznych dla karty Alpha flag .",
-            "alphaHeader": "Wersja Alfa Tidy 5e Sheets",
-            "sectionTitle": "Tidy V1 Wdrożenie Migracji",
-            "mainExplanation1": "Migracja danych do nowego modułu Tidy 5e Sheets nie jest wymagana do korzystania z niego. W najgorszym przypadku, jeśli jesteś użytkownikiem oryginalnego Tidy5e Sheet i pominąłeś migrację, będziesz musiał ponownie zastosować ustawienia zgodnie z własnymi upodobaniami."
-        },
-        "migrationBeginningMessage": "Migracja danych. Nie odświeżaj strony przed zakończeniem migracji.",
-        "hint": "Jeśli byłeś użytkownikiem oryginalnego modułu Tidy5e Sheet, opcjonalnie użyj tego menu Migracje do migracji ustawień MG i danych kart Tidy.",
-        "migrateDocumentFlagsButtonLabel": "Migracja flag dokumentów",
-        "migrationCompleteMessage": "Migracja zakończona.",
-        "buttonLabel": "Migracja danych Tidy",
-        "dialogTitle": "Migracja danych Tidy",
-        "CharacterBiography": {
-            "sectionTitle": "Biografia postaci",
-            "selectionDialogTitle": "Migracja: Biografia postaci"
-        },
-        "Notification": {
-            "Title": "Tidy 5e Sheets: Migracja dostępna",
-            "DoNotShowAgain.ConfirmMessage": "Potwierdzono. Ten komunikat nie pojawi się ponownie, dopóki nie będzie dostępnej kolejnej migracji.",
-            "Explanation": "Dostępne są nowe migracje danych Tidy 5e Sheets. Więcej informacji można znaleźć w menu ustawień {boldStart}Migracje{boldEnd}.",
-            "Button.DoNotShowAgain": "Nie pokazuj ponownie",
-            "Explanation2": "Uwaga: Migracje przenoszą dane z jednego miejsca do drugiego. Czasami dane, które były pierwotnie przechowywane przez Tidy 5e Sheets, muszą zostać przeniesione do oficjalnie obsługiwanych pól danych systemu. W innych przypadkach Tidy może przejąć funkcjonalność z innego modułu, w wyniku czego może zostać zapewniona wygodna migracja, aby ułatwić przejście. Jeśli nie brakuje danych na kartach po aktualizacji Tidy 5e Sheets, migracja nie jest wymagana."
-        },
-        "migrateConfirmMessage2": "{boldStart}Uwaga{boldEnd}: zawsze pamiętaj o {boldStart}tworzeniu kopii zapasowych swoich danych{boldEnd}.",
-        "migrateConfirmTitle": "Potwierdź migrację",
-        "migrateConfirmButtonNo": "Anuluj",
-        "migrateConfirmButtonYes": "Migruj",
-        "name": "Migracje",
-        "NpcDeathSaves": {
-            "sectionTitle": "Rzuty przeciw śmierci NPC",
-            "selectionDialogTitle": "Migracja: Rzuty przeciw śmierci NPC"
-        },
-        "Selection": {
-            "SelectAllNoneTooltip": "Wybierz wszystkie lub żadne",
-            "ToMigrate": "Do migracji",
-            "TotalSelectedLabel": "Łączna liczba wybranych: {total}"
-        },
-        "OptionOverwrite.Text": "Nadpisz",
-        "OptionsHeader": "Opcje Migracji",
-        "OptionOverwrite.Tooltip": "Włącz nadpisywanie istniejących danych karty. Jeśli opcja nie jest zaznaczona, tylko puste pola systemowe otrzymają przeniesione dane Tidy.",
-        "migrationErrorMessage": "Wystąpił błąd. Więcej szczegółów znajduje się w konsoli.",
-        "UnlinkedExplanation": "Ta migracja umożliwia migrację niepowiązanych tokenów w bieżącej scenie. W razie potrzeby migrację można uruchomić na dodatkowych scenach.",
-        "ButtonMigration.Text": "Migruj",
-        "OptionDeleteFlags.Tooltip": "Podczas migracji z niestandardowych flag Tidy do oficjalnych danych systemowych, flagi pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
-        "OptionDeleteFlags.Text": "Usuń flagi Tidy, które zostały zmienione",
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Klasa czaru do klasy źródłowej",
-            "selectionDialogTitle": "Migracja: Klasa czaru do klasy źródłowej"
-        },
-        "NpcExhaustion": {
-            "selectionDialogTitle": "Migracaj: Wyczerpanie NPC do systemu",
-            "sectionTitle": "Wyczerpanie NPC"
-        },
-        "CcssToTidy": {
-            "deleteFlagsTooltip": "Podczas migracji z CCSS do Tidy sekcji niestandardowych, flagi CCSS pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
-            "sectionTitle": "CCSS do Tidy 5e",
-            "ccss": "CCSS",
-            "selectionDialogTitle": "Migracja: CCSS do Tidy 5e",
-            "explanation1": "Tidy 5e teraz natywnie obsługuje sekcje niestandardowe i zapewnia dodatkowe funkcje z nimi związane. Ta migracja skopiuje nazwy niestandardowych sekcji kart postaci (Custom Character Sheet Sections (CCSS)) do konfiguracji sekcji Tidy.",
-            "deleteFlags": "Usuń powiązane flagi CCSS",
-            "overwriteTooltip": "Włącz, aby nadpisać istniejącą flagę sekcji Tidy. Jeśli niezaznaczone, tylko puste flagi Tidy otrzymają przeniesione dane CCSS.",
-            "section": "Sekcja",
-            "overwrite": "Nadpisz"
-        },
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "Więzi, ideały i słabości NPC",
-            "selectionDialogTitle": "Migracja: Więzi, ideały i wady NPC do systemu"
-        },
-        "Parent": "Rodzic",
-        "FavoritesToSystem": {
-            "selectionDialogTitle": "Migracja: Ulubione rzeczy postaci do systemu",
-            "sectionTitle": "Ulubione rzeczy postaci"
-        },
-        "MigrateCompendia.TotalEntriesLabel": "Łączna liczba wpisów",
-        "MigrateCompendia.SelectionDialogTitle": "Wybierz kompendia do migracji",
-        "MigrateCompendia.CompendiumLabel": "Kompendium",
-        "MigrateCompendia.Title": "Przeprowadź migrację kompendium",
-        "chatNotification": "Nowa migracja dla Tidy 5e Sheets jest dostępna. Zobacz Ustawienia dla Tidy 5e Sheets, żeby zobaczyć dostępne migracje.",
-        "Journal": {
-            "explanation1": "UI Overhaul w Tidy 5e Sheets wprowadził możliwość tworzenia dowolnej ilości wpisów w Dzienniku. Aby dostosować się do tej zmiany, konieczna jest migracja ze starej struktury Dziennika do nowej rozszerzalnej struktury Dziennika. Dane ze starego Dziennika nie będą widoczne w odświeżonej wersji Tidy 5e Sheets."
-        }
+    "TIDY5E.Selection": {
+        "SelectAllNoneTooltip": "Wybierz wszystkie lub żadne",
+        "TotalSelectedLabel": "Łączna liczba wybranych: {total}"
     },
     "TIDY5E.ThemeSettings": {
         "Sheet": {

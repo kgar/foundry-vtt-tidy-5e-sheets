@@ -246,52 +246,9 @@
             "cancel": "취소"
         }
     },
-    "TIDY5E.Settings.Migrations": {
-        "name": "데이터 마이그레이션",
-        "buttonLabel": "Tidy 데이터 마이그레이션",
-        "dialogTitle": "Tidy 데이터 마이그레이션",
-        "hint": "기존 Tidy5e 시트 모듈 사용자라면 선택적으로 이 데이터 마이그레이션 메뉴를 사용해 GM 설정과 Tidy 시트 데이터를 마이그레이션할 수 있습니다.",
-        "chatNotification": "새로운 Tidy 5e 시트 마이그레이션을 사용할 수 있습니다. 사용 가능한 마이그레이션을 보려면 Tidy 5e 시트 게임 설정을 참조하세요.",
-        "migrationBeginningMessage": "데이터를 마이그레이션하는 중입니다. 완료될 때까지 페이지를 새로고침하지 마세요.",
-        "migrationErrorMessage": "오류가 발생했습니다. 자세한 내용은 개발자 콘솔에서 확인할 수 있습니다.",
-        "migrationCompleteMessage": "마이그레이션 완료.",
-        "migrateDocumentFlagsButtonLabel": "문서 플래그 마이그레이션",
-        "migrateConfirmTitle": "마이그레이션 확인",
-        "migrateConfirmMessage1": "이 마이그레이션을 실행하시겠습니까?",
-        "migrateConfirmMessage2": "{boldStart}Note{boldEnd}: {boldStart}데이터 백업을{boldEnd} 항상 잊지 마세요.",
-        "migrateConfirmButtonYes": "마이그레이션",
-        "migrateConfirmButtonNo": "취소",
-        "OptionsHeader": "마이그레이션 옵션",
-        "OptionOverwrite.Text": "덮어쓰기",
-        "OptionOverwrite.Tooltip": "기존 시트 데이터를 덮어쓰도록 설정합니다. 이 옵션을 선택하지 않으면 빈 시스템 필드만 마이그레이션된 Tidy 데이터를 받게 됩니다.",
-        "OptionDeleteFlags.Text": "변경된 Tidy 플래그 삭제",
-        "OptionDeleteFlags.Tooltip": "사용자 지정 Tidy 플래그 데이터에서 공식 시스템 데이터로 마이그레이션할 때 플래그는 기본적으로 그대로 유지됩니다. 해당 플래그를 제거하려면 이 옵션을 확인하세요.",
-        "ButtonMigration.Text": "마이그레이션",
-        "MigrateCompendia.CompendiumLabel": "컴펜디움",
-        "MigrateCompendia.Title": "마이그레이션 컴펜디움",
-        "MigrateCompendia.SelectionDialogTitle": "마이그레이션할 컴펜디움 선택",
-        "MigrateCompendia.TotalEntriesLabel": "전체 입력값",
-        "CcssToTidy": {
-            "sectionTitle": "CCSS 에서 Tidy 5e로",
-            "selectionDialogTitle": "마이그레이션: CCSS 에서 Tidy 5e로",
-            "ccss": "사용자 지정 캐릭터 시트 섹션(CCSS)",
-            "section": "섹션",
-            "explanation1": "이제 Tidy 5e는 기본적으로 사용자 지정 섹션을 지원하며 사용자 지정 섹션과 관련된 추가 기능을 제공합니다. 이 마이그레이션은 사용자 지정 캐릭터 시트 섹션(CCSS) 섹션 이름을 Tidy의 섹션 설정에 복사합니다.",
-            "overwrite": "덮어쓰기",
-            "overwriteTooltip": "기존 Tidy 섹션 플래그를 덮어쓰려면 활성화합니다. 이 옵션을 선택하지 않으면 빈 Tidy 플래그만 마이그레이션된 CCSS 데이터를 수신합니다.",
-            "deleteFlags": "변경된 CCSS 플래그 삭제",
-            "deleteFlagsTooltip": "CCSS에서 Tidy 사용자 지정 섹션으로 마이그레이션하는 경우 기본적으로 CCSS 플래그는 그대로 유지됩니다. 해당 플래그를 제거하려면 이 옵션을 확인하세요."
-        },
-        "Journal": {
-            "explanation1": "Tidy 5e 시트의 UI 개편으로 저널이 원하는 만큼의 항목을 만들 수 있도록 개선되었습니다. 이를 수용하려면 기존 저널 구조에서 새로운 확장 가능한 저널 구조로의 마이그레이션이 필요합니다. 개편된 Tidy 5e 시트에서는 이전 저널 데이터가 표시되지 않습니다."
-        },
-        "UnlinkedExplanation": "이 마이그레이션은 현재 장면에서 연결되지 않은 토큰 문서를 마이그레이션할 수 있는 옵션을 제공합니다. 필요에 따라 추가 장면에서 마이그레이션을 실행할 수 있습니다.",
-        "Selection": {
-            "TotalSelectedLabel": "전체 선택: {total}",
-            "ToMigrate": "마이그레이션으로",
-            "SelectAllNoneTooltip": "전체 선택 혹은 취소"
-        },
-        "Parent": "부모"
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "전체 선택: {total}",
+        "SelectAllNoneTooltip": "전체 선택 혹은 취소"
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Tidy를 기본 시트로 설정",

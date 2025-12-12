@@ -4,7 +4,6 @@ import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { GetFunctionReturnType } from 'src/types/types';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication.svelte';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication.svelte';
-import { BulkMigrationsApplication } from 'src/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication.svelte';
 import type {
@@ -234,16 +233,6 @@ export function createSettings() {
           restricted: true,
         },
       },
-      migrations: {
-        options: {
-          name: `TIDY5E.Settings.Migrations.name`,
-          label: 'TIDY5E.Settings.Migrations.buttonLabel',
-          hint: `TIDY5E.Settings.Migrations.hint`,
-          icon: 'fa-solid fa-right-left',
-          type: BulkMigrationsApplication,
-          restricted: true,
-        },
-      },
       applyTidySheetPreferences: {
         options: {
           name: `TIDY5E.Settings.SheetPreferences.name`,
@@ -278,22 +267,6 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<Record<string, boolean>>(
             'notifications'
-          );
-        },
-      },
-
-      migrationsConfirmationTally: {
-        options: {
-          name: 'Migrations Confirmation Tally',
-          hint: 'Developer Only: This field tells the developer when was the last time the GM indicated "Do Not Show Again" for a migration notification. This is so Tidy does not notify of migrations until a new migration has become available. A migration tick counter increments each release where a migration has become available.',
-          scope: 'world',
-          config: false,
-          type: Number,
-          default: 0,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<number>(
-            'migrationsConfirmationTally'
           );
         },
       },

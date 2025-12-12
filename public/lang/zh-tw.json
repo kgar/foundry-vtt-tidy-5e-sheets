@@ -140,86 +140,9 @@
         "hint": "",
         "name": ""
     },
-    "TIDY5E.Settings.Migrations": {
-        "Notification": {
-            "Title": "",
-            "Button.DoNotShowAgain": "",
-            "DoNotShowAgain.ConfirmMessage": "",
-            "Explanation": "",
-            "Explanation2": ""
-        },
-        "OptionDeleteFlags.Text": "",
-        "CcssToTidy": {
-            "overwrite": "",
-            "deleteFlags": "",
-            "overwriteTooltip": "",
-            "explanation1": "",
-            "sectionTitle": "",
-            "selectionDialogTitle": "",
-            "ccss": "",
-            "section": "",
-            "deleteFlagsTooltip": ""
-        },
-        "MigrateCompendia.TotalEntriesLabel": "",
-        "OptionOverwrite.Tooltip": "",
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "Selection": {
-            "ToMigrate": "",
-            "SelectAllNoneTooltip": "",
-            "TotalSelectedLabel": ""
-        },
-        "MigrateCompendia.CompendiumLabel": "",
-        "MigrateCompendia.Title": "",
-        "CharacterBiography": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "MigrateCompendia.SelectionDialogTitle": "",
-        "name": "",
-        "buttonLabel": "",
-        "FavoritesToSystem": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "migrationErrorMessage": "",
-        "dialogTitle": "",
-        "migrateDocumentFlagsButtonLabel": "",
-        "migrationBeginningMessage": "",
-        "OptionOverwrite.Text": "",
-        "migrateConfirmButtonNo": "",
-        "ButtonMigration.Text": "",
-        "v1": {
-            "sectionTitle": "",
-            "mainExplanation1": "",
-            "originalHeader": "",
-            "originalExplanation": "",
-            "mainExplanation2": ""
-        },
-        "OptionDeleteFlags.Tooltip": "",
-        "Parent": "",
-        "hint": "",
-        "migrateConfirmMessage2": "",
-        "NpcDeathSaves": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "UnlinkedExplanation": "",
-        "migrateConfirmTitle": "",
-        "migrateConfirmButtonYes": "",
-        "migrateConfirmMessage1": "",
-        "NpcExhaustion": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "migrationCompleteMessage": "",
-        "OptionsHeader": ""
+    "TIDY5E.Selection": {
+        "SelectAllNoneTooltip": "",
+        "TotalSelectedLabel": ""
     },
     "TIDY5E.ActorRangedSpellAttackFlavorText": "",
     "TIDY5E.UseDefaultDialog": {

@@ -209,93 +209,9 @@
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista de Acciones"
     },
-    "TIDY5E.Settings.Migrations": {
-        "name": "Migraciones",
-        "buttonLabel": "Migrar datos de Tidy",
-        "dialogTitle": "Migrar datos de Tidy",
-        "migrationBeginningMessage": "Migrando datos. Por favor, no refresques la pagina hasta que haya finalizado.",
-        "migrationErrorMessage": "Error detectado. Verifica los detalles en la consola de desarrollo.",
-        "migrateDocumentFlagsButtonLabel": "Migrar indicadores de datos de documento",
-        "migrateConfirmMessage1": "¿Estás seguro de querer llevar acabo esta migración?",
-        "v1": {
-            "originalHeader": "Hoja de Tidy 5e Original",
-            "alphaHeader": "Hojas T5E Alpha",
-            "alphaExplanation1": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy desde T5E Alpha. La mayoría de las diferencias en los datos provienen de las banderas de datos de la hoja. La migración de banderas Alpha se dirige a actores de nivel superior, elementos de actores de nivel superior y elementos de nivel superior. Esto traerá datos biográficos, favoritos y otros indicadores de datos Alpha específicos de la hoja.",
-            "alphaExplanation2": "{boldStart}Nota{boldEnd}: esta migración no afecta el contenidos de compendio.",
-            "mainExplanation1": "No es necesario migrar datos al nuevo módulo Tidy 5e para poder utilizarlo. En el peor de los casos, si eres un usuario original de Tidy 5e e ignoras las migraciones, deberás volver a aplicar la configuración a tu gusto.",
-            "mainExplanation2": "{boldStart}Nota{boldEnd}: La configuración del cliente no forma parte de esta migración. Ya ha cambiado bastante la forma en la que funcionan las configuraciones del cliente en Tidy 5e, por lo que se recomienda echar un nuevo vistazo a las configuraciones del cliente.",
-            "originalExplanation": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy de la hoja Tidy 5e original. La mayoría de las diferencias en los datos provienen de configuraciones de DM. Si migras tu configuración y adviertes que una configuración no es de tu agrado, simplemente cámbiala desde el menú de configuración.",
-            "sectionTitle": "Inicio de las migraciones de Tidy V1"
-        },
-        "hint": "Si era usuario del módulo original de Tidy5e Sheet, utiliza opcionalmente este menú Migraciones para migrar tu configuración de GM y los datos de Tidy Sheet.",
-        "migrateConfirmTitle": "Confirmar migración",
-        "migrationCompleteMessage": "Migración completada.",
-        "migrateConfirmButtonNo": "Cancelar",
-        "migrateConfirmMessage2": "{boldStart}Nota{boldEnd}: recuerda hacer una {boldStart}copia de seguridad de tus datos{boldEnd}.",
-        "migrateConfirmButtonYes": "Migrar",
-        "Notification": {
-            "Title": "Tarjetas Tidy 5e: Migraciones disponibles",
-            "Explanation": "Ya están disponibles las nuevas migraciones de datos de Tidy 5e Sheets. Consulte el menú Migraciones de {boldStart}configuración{boldEnd} para obtener más información.",
-            "Explanation2": "Nota: Las migraciones mueven datos de un lugar a otro. A veces, los datos almacenados originalmente por Tidy 5e Sheets deben trasladarse a los campos de datos oficialmente soportados por el sistema. En otros casos, Tidy puede adoptar funcionalidades de otro módulo, y como resultado, se puede proporcionar una migración conveniente para facilitar la transición. Si no le faltan datos en sus hojas después de actualizar las Hojas Tidy 5e, entonces no es necesaria ninguna migración.",
-            "Button.DoNotShowAgain": "No volver a mostrar",
-            "DoNotShowAgain.ConfirmMessage": "Confirmado. Este mensaje no volverá a aparecer hasta que haya otra migración disponible."
-        },
-        "OptionsHeader": "Opciones de migración",
-        "OptionOverwrite.Text": "Sobrescribir",
-        "OptionOverwrite.Tooltip": "Habilitar para sobrescribir los datos de hoja existentes. Si no está marcada, sólo los campos vacíos del sistema recibirán los datos Tidy migrados.",
-        "OptionDeleteFlags.Text": "Borrar los indicadores Tidy afectados",
-        "OptionDeleteFlags.Tooltip": "Al migrar de los datos de banderas personalizados de Tidy a los datos oficiales del sistema, las banderas permanecen en su lugar por defecto. Marque esta opción para eliminar esas banderas.",
-        "ButtonMigration.Text": "Migrar",
-        "CharacterBiography": {
-            "sectionTitle": "Biografía del personaje",
-            "selectionDialogTitle": "Migración: Biografía de los personajes"
-        },
-        "Selection": {
-            "TotalSelectedLabel": "Total seleccionado: {total}",
-            "ToMigrate": "Para migrar",
-            "SelectAllNoneTooltip": "Seleccionar todos o ninguno"
-        },
-        "NpcDeathSaves": {
-            "sectionTitle": "Salvaciones por muerte de PNJ",
-            "selectionDialogTitle": "Migración: Salvaciones por muerte de PNJ"
-        },
-        "UnlinkedExplanation": "Esta migración ofrece la opción de migrar documentos token no vinculados en la escena actual. Puede ejecutar la migración en escenas adicionales según sea necesario.",
-        "CcssToTidy": {
-            "overwrite": "Sobrescribir",
-            "selectionDialogTitle": "Migración: CCSS a Tidy 5e",
-            "ccss": "CCSS",
-            "section": "Sección",
-            "deleteFlags": "Eliminar indicadores CCSS afectados",
-            "sectionTitle": "CCSS para Tidy 5e",
-            "explanation1": "Tidy 5e ahora soporta de forma nativa secciones personalizadas y proporciona características adicionales en torno a las secciones personalizadas. Esta migración copiará los nombres de sección de las Secciones Personalizadas de la Hoja de Personajes (CCSS) en la configuración de secciones de Tidy.",
-            "overwriteTooltip": "Habilite la opción de sobrescribir el indicador de sección Tidy existente. Si no está marcado, solo los indicadores Tidy vacíos recibirán datos CCSS migrados.",
-            "deleteFlagsTooltip": "Al migrar de CCSS a secciones personalizadas de Tidy, las banderas CCSS permanecen en su lugar de forma predeterminada. Marque esta opción para eliminar esas banderas."
-        },
-        "Parent": "Padre",
-        "MigrateCompendia.CompendiumLabel": "Compendio",
-        "MigrateCompendia.Title": "Migrar compendios",
-        "MigrateCompendia.TotalEntriesLabel": "Total de entradas",
-        "MigrateCompendia.SelectionDialogTitle": "Seleccionar compendios para migrar",
-        "FavoritesToSystem": {
-            "sectionTitle": "Personajes favoritos",
-            "selectionDialogTitle": "Migración: personajes favoritos al sistema"
-        },
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "Vínculos, ideales y defectos de los NPC",
-            "selectionDialogTitle": "Migración: vínculos, ideales y defectos de los NPC con el sistema"
-        },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Clase de hechizo a clase de origen",
-            "selectionDialogTitle": "Migración: Clase de hechizo a clase de origen"
-        },
-        "NpcExhaustion": {
-            "selectionDialogTitle": "Migración: NPC Exhaustion a Sistema",
-            "sectionTitle": "NPC Exhaustion"
-        },
-        "chatNotification": "Una nueva migración para Tidy 5e Sheets está disponible. Reivsa la Configuración de Juego de Tidy 5e Sheets para visualizar las migraciones disponibles.",
-        "Journal": {
-            "explanation1": "La revisión de interfaz de usuario de Tidy 5e Sheets ha renovado el Diario para poseer tantas entradas como quieras. Para acomodar esto, se neesita migrar de la antigua estructura de Diarios a la nueva y extensible estructura. Información antigua de Diarios no será visible en las Tidy 5e Sheets renovadas."
-        }
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "Total seleccionado: {total}",
+        "SelectAllNoneTooltip": "Seleccionar todos o ninguno"
     },
     "TIDY5E.Commands.CollapseAll": "Contraer todo",
     "TIDY5E.Commands.ExpandAll": "Expandir todo",

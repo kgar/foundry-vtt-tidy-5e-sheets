@@ -188,88 +188,9 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampf-Zauberangriff",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filter",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Sonstiges",
-    "TIDY5E.Settings.Migrations": {
-        "name": "Migrationen",
-        "buttonLabel": "Tidy Daten migrieren",
-        "hint": "Falls du ein Nutzer des originalen Tidy 5e Sheet Moduls oder der Alpha Sheets warst, kannst du dieses Migrations Menü nutzen, um deine SL Einstellungen sowie deine Tidy Sheet Daten zu migrieren.",
-        "migrateConfirmMessage1": "Bist du dir sicher das du diese Migration ausführen möchtest?",
-        "migrationCompleteMessage": "Migration abgeschlossen.",
-        "dialogTitle": "Tidy Daten migrieren",
-        "migrationErrorMessage": "Ein Fehler ist aufgetreten. Weitere Details findest du in der Dev-Konsole.",
-        "migrateConfirmTitle": "Migration bestätigen",
-        "migrateConfirmButtonYes": "Migrieren",
-        "migrateConfirmButtonNo": "Abbrechen",
-        "migrationBeginningMessage": "Datenmigration. Bitte aktualisiere nicht die Seite bis die Migration abgeschlossen ist.",
-        "v1": {
-            "mainExplanation1": "Das Migrieren von Daten zu den neuen Tidy 5e Sheets ist zur Nutzung nicht erforderlich. Im schlimmsten Falle, solltest du ein Nutzer des originalen Tidy5e Sheets sein, und diesen Schritt überspringen, wirst du deine Einstellungen erneut abschließen müssen.",
-            "alphaHeader": "Alpha Tidy 5e Sheets",
-            "sectionTitle": "",
-            "originalExplanation": "",
-            "mainExplanation2": "",
-            "originalHeader": ""
-        },
-        "Notification": {
-            "Button.DoNotShowAgain": "Nicht erneut anzeigen",
-            "Explanation": "",
-            "Title": "",
-            "Explanation2": "",
-            "DoNotShowAgain.ConfirmMessage": ""
-        },
-        "OptionOverwrite.Text": "Überschreiben",
-        "MigrateCompendia.TotalEntriesLabel": "Gesamtzahl der Einträge",
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "NpcExhaustion": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "MigrateCompendia.CompendiumLabel": "Kompendium",
-        "UnlinkedExplanation": "",
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "MigrateCompendia.Title": "Kompendien migrieren",
-        "CcssToTidy": {
-            "overwriteTooltip": "",
-            "section": "",
-            "overwrite": "",
-            "deleteFlags": "",
-            "ccss": "",
-            "sectionTitle": "CCSS zu Tidy 5e",
-            "selectionDialogTitle": "",
-            "explanation1": "",
-            "deleteFlagsTooltip": ""
-        },
-        "MigrateCompendia.SelectionDialogTitle": "Zu migrierende Kompendien auswählen",
-        "NpcDeathSaves": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "Selection": {
-            "ToMigrate": "",
-            "TotalSelectedLabel": "",
-            "SelectAllNoneTooltip": ""
-        },
-        "Parent": "",
-        "CharacterBiography": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "migrateConfirmMessage2": "{boldStart}Hinweis{boldEnd}: Denke immer daran, {boldStart}deine Daten zu sichern{boldEnd}.",
-        "OptionDeleteFlags.Tooltip": "Bei der Migration von benutzerdefinierten Tidy-Flag-Daten zu offiziellen Systemdaten bleiben die Flags standardmäßig erhalten. Aktivieren Sie diese Option, um diese Flags zu entfernen.",
-        "FavoritesToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "migrateDocumentFlagsButtonLabel": "Dokumenten Flags migrieren",
-        "OptionsHeader": "Migrationsoptionen",
-        "ButtonMigration.Text": "Migrieren",
-        "OptionOverwrite.Tooltip": "Aktiviere diese Option, um vorhandene Daten des Bogens zu überschreiben. Wenn diese Option deaktiviert ist, werden nur leere Systemfelder mit migrierten Tidy-Daten gefüllt.",
-        "OptionDeleteFlags.Text": "Betroffene Tidy-Flags löschen",
-        "chatNotification": "Eine neue Migration für Tidy 5e Sheets ist verfügbar. Unter „Tidy 5e Sheets-Spieleinstellungen“ kannst du die verfügbaren Migrationen anzeigen."
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "",
+        "SelectAllNoneTooltip": ""
     },
     "TIDY5E.Settings.About": {
         "FinancialSupportHeader": "Tidy 5e Sheets unterstützen",

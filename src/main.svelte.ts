@@ -8,7 +8,6 @@ import { CONSTANTS } from './constants';
 import './less/tidy5e.less';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import { initRuntimeOnReady, initRuntime } from './runtime/runtime-init';
-import { MigrationTally } from 'src/migrations/MigrationTally';
 import { setupIntegrations } from './integration/integration';
 import { TidyHooks } from './foundry/TidyHooks';
 import { initKeybindings } from './keybindings/keybind-init';
@@ -159,8 +158,6 @@ Hooks.once('ready', async () => {
 
   setupIntegrations(api);
 
-  handleMigrationNotification();
-
   DebugTools.onReady(api);
 
   ThemeQuadrone.onReady();
@@ -183,34 +180,3 @@ Hooks.once('setup', async () => {
     )
     .join('\n\n');
 });
-
-function handleMigrationNotification() {
-  let tally = SettingsProvider.settings.migrationsConfirmationTally.get();
-
-  if (FoundryAdapter.userIsGm() && tally === 0) {
-    debug(
-      'Skipping migration notification because this appears to be a new Tidy installation.'
-    );
-    tally = MigrationTally;
-  }
-
-  if (FoundryAdapter.userIsGm() && tally < MigrationTally) {
-    let migrationNotification = {
-      user: game.user._id,
-      whisper: game.users.filter((u: any) => u.isGM).map((u: any) => u._id),
-      content: `
-      <h2>${game.i18n.localize('TIDY5E.ModuleName')}</h2>
-      <p>
-        ${game.i18n.localize('TIDY5E.Settings.Migrations.chatNotification')}
-      </p>
-      `,
-    };
-
-    ChatMessage.create(migrationNotification, {});
-
-    FoundryAdapter.setTidySetting(
-      'migrationsConfirmationTally',
-      MigrationTally
-    );
-  }
-}

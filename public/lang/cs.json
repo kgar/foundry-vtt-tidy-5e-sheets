@@ -167,90 +167,9 @@
         "VisibilityTab.Title": "Viditelnost záložky"
     },
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identifikátor zdrojového povolání",
-    "TIDY5E.Settings.Migrations": {
-        "CcssToTidy": {
-            "deleteFlags": "Odstranění dotčených příznaků CCSS",
-            "section": "Sekce",
-            "overwrite": "Přepis",
-            "sectionTitle": "CCSS do Tidy 5e",
-            "overwriteTooltip": "Umožňuje přepsat existující příznak sekce Tidy. Pokud není zaškrtnuto, budou migrovaná data CCSS přijímat pouze prázdné příznaky Tidy.",
-            "explanation1": "Tidy 5e nyní nativně podporuje vlastní sekce a poskytuje další funkce týkající se vlastních sekcí. Tato migrace zkopíruje názvy sekcí CCSS (vlastní sekce deníku postavy) do nastavení sekcí v Tidy.",
-            "deleteFlagsTooltip": "Při přechodu z CCSS na vlastní sekce Tidy zůstávají příznaky CCSS ve výchozím nastavení. Zaškrtnutím této možnosti tyto příznaky odstraníš.",
-            "ccss": "CCSS",
-            "selectionDialogTitle": "Migrace: CCSS do Tidy 5e"
-        },
-        "dialogTitle": "Migrovat data Tidy",
-        "Selection": {
-            "TotalSelectedLabel": "Celkem vybraných: {total}",
-            "SelectAllNoneTooltip": "Vyber všechny, nebo žádný",
-            "ToMigrate": "Migrovat"
-        },
-        "migrateConfirmButtonYes": "Migrovat",
-        "NpcExhaustion": {
-            "selectionDialogTitle": "Migrace: Vyčerpání NP do systému",
-            "sectionTitle": "Vyčerpání NP"
-        },
-        "migrationBeginningMessage": "Migrace dat. Neobnovuj stránku, dokud migrace nebude hotová.",
-        "MigrateCompendia.CompendiumLabel": "Kompendium",
-        "MigrateCompendia.Title": "Migrovat kompendia",
-        "OptionDeleteFlags.Tooltip": "Při migraci z vlastních dat příznaků Tidy na oficiální systémová data zůstávají příznaky ve výchozím nastavení. Zaškrtnutím této možnosti tyto příznaky odstraníš.",
-        "NpcDeathSaves": {
-            "sectionTitle": "Záchrany před smrtí NP",
-            "selectionDialogTitle": "Migrace: Záchrany před smrtí NP"
-        },
-        "UnlinkedExplanation": "Tato migrace umožňuje migrovat nepropojené dokumenty tokenů v aktuální scéně. Migraci můžeš dle potřeby spustit i v dalších scénách.",
-        "BondsIdealsFlawsToSystem": {
-            "selectionDialogTitle": "Migrace: Ideály, pouta a vady NP do systému",
-            "sectionTitle": "Ideály, pouta a vady NP"
-        },
-        "MigrateCompendia.SelectionDialogTitle": "Vybrat kompendia k migraci",
-        "v1": {
-            "originalHeader": "Původní deník Tidy 5e",
-            "mainExplanation2": "{boldStart}Poznámka{boldEnd}: Nastavení klienta nejsou součástí této migrace. V Tidy se dost změnilo fungování klientských nastavení, proto doporučujeme podívat se na klientská nastavení znovu.",
-            "originalExplanation": "Migrace nastavení PJ a datových příznaků deníku Tidy z původního deníku Tidy5e. Většina rozdílů v datech pochází z nastavení PJ. Pokud migruješ nastavení a zjistíš, že ti některé nastavení nevyhovuje, jednoduše jej změň v nabídce nastavení.",
-            "sectionTitle": "Migrace na Tidy V1",
-            "mainExplanation1": "Pro použití nového modulu deníků Tidy 5e není nutná migrace dat do tohoto modulu. V nejhorším případě, pokud jsi původním uživatelem modulu deníků Tidy5e a migraci přeskočíš, budeš je muset znovu nastavit podle svých představ."
-        },
-        "buttonLabel": "Migrovat data Tidy",
-        "migrationErrorMessage": "Došlo k chybě. Další podrobnosti nalezneš ve vývojářské konzoli.",
-        "hint": "Pokud jsi byl uživatelem původního modulu deníků Tidy5e, můžeš volitelně použít tuto nabídku pro migraci nastavení PJ a dat deníků Tidy.",
-        "migrateConfirmMessage1": "Jsi si jistý(á), že si přeješ tuto migraci provést?",
-        "migrateConfirmMessage2": "{boldStart}Poznámka{boldEnd}: Nikdy nezapomínej {boldStart}zálohovat svá data{boldEnd}.",
-        "OptionsHeader": "Nabídka migrace",
-        "Notification": {
-            "Explanation2": "Poznámka: Migrace přesouvají data z jednoho místa na druhé. Někdy je třeba dat, která byla původně uložena v systému deníků Tidy 5e, přesunout do oficiálně podporovaných datových polí systému. V jiných případech může Tidy převzít funkce z jiného modulu, a v důsledku toho může být poskytnuta vhodná migrace, která usnadní přechod. Pokud ti po aktualizaci systému deníků Tidy 5e nechybějí data v denících, není migrace nutná.",
-            "Title": "Deníky Tidy 5e: Migrace k dispozici",
-            "Button.DoNotShowAgain": "Znovu již nezobrazovat",
-            "Explanation": "K dispozici jsou nové migrace dat z deníků Tidy 5e. Více informací najdeš v nabídce {boldStart}Nastavení migrace{boldEnd}.",
-            "DoNotShowAgain.ConfirmMessage": "Potvrzeno. Tato zpráva se znovu nezobrazí, dokud nebude k dispozici další migrace."
-        },
-        "FavoritesToSystem": {
-            "sectionTitle": "Oblíbené postavy",
-            "selectionDialogTitle": "Migrace: Oblíbené postavy do systému"
-        },
-        "ButtonMigration.Text": "Migrovat",
-        "migrationCompleteMessage": "Migrace kompletní.",
-        "migrateConfirmTitle": "Potvrzení migrace",
-        "migrateDocumentFlagsButtonLabel": "Migrace příznaků dokumentů",
-        "migrateConfirmButtonNo": "Zrušit",
-        "OptionDeleteFlags.Text": "Odstranění dotčených příznaků Tidy",
-        "OptionOverwrite.Tooltip": "Umožňuje přepsat stávající data deníku. Pokud není zaškrtnuto, budou data migrována pouze do prázdných polí systému.",
-        "CharacterBiography": {
-            "sectionTitle": "Životopis postavy",
-            "selectionDialogTitle": "Migrace: Životopis postavy"
-        },
-        "Parent": "Rodič",
-        "name": "Migrace",
-        "MigrateCompendia.TotalEntriesLabel": "Celkový počet záznamů",
-        "OptionOverwrite.Text": "Přepis",
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "Migrace: Kouzla povolání do zdrojového povolání",
-            "sectionTitle": "Kouzla povolání do zdrojového povolání"
-        },
-        "chatNotification": "K dispozici je migrace na nové deníky Tidy 5e. Dostupné migrace nalezneš v Nastavení deníků Tidy 5e.",
-        "Journal": {
-            "explanation1": "V rámci přepracování uživatelského rozhraní aplikace Deníků Tidy 5e byl deník upraven tak, aby mohl obsahovat libovolný počet záznamů. Z tohoto důvodu je nutné provést migraci ze staré struktury deníku do nové rozšiřitelné struktury. Stará data deníku nebudou v přepracované aplikaci Deníků Tidy 5e viditelná."
-        }
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "Celkem vybraných: {total}",
+        "SelectAllNoneTooltip": "Vyber všechny, nebo žádný"
     },
     "TIDY5E.SpellSourceIdentifierLabelHint": "Aktér, který má toto kouzlo, nemá zdrojové povolání u tohoto kouzla uvedené.",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",

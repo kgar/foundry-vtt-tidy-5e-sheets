@@ -279,41 +279,5 @@
             "confirm": "重置模组设置",
             "cancel": "取消"
         }
-    },
-    "TIDY5E.Settings.Migrations": {
-        "name": "迁移",
-        "buttonLabel": "迁移 Tidy 数据",
-        "dialogTitle": "迁移 Tidy 数据",
-        "hint": "如果你曾是旧版 Tidy5e 表单模组的用户，可选择使用此“迁移”菜单来迁移你的 DM 设置和 Tidy 表单数据。",
-        "chatNotification": "新 Tidy 5e 表单迁移功能现已推出。请查看 Tidy 5e 表单游戏设置以了解可用的迁移选项。",
-        "migrationBeginningMessage": "迁移数据。直至完成前请勿刷新页面。",
-        "migrationErrorMessage": "出错了。更多详情可在开发控制台中查看。",
-        "migrationCompleteMessage": "迁移完成。",
-        "migrateDocumentFlagsButtonLabel": "迁移文档标志",
-        "migrateConfirmTitle": "配置迁移",
-        "migrateConfirmMessage1": "你确定要执行此次迁移操作吗？",
-        "migrateConfirmMessage2": "{boldStart}注意{boldEnd}：请务必记得定期备份你的数据。",
-        "migrateConfirmButtonYes": "迁移",
-        "migrateConfirmButtonNo": "取消",
-        "OptionsHeader": "迁移选项",
-        "OptionOverwrite.Text": "覆盖",
-        "OptionOverwrite.Tooltip": "允许覆盖现有表单中的数据。若未勾选，则仅系统中空缺的字段会接收迁移后的 Tidy 数据。",
-        "OptionDeleteFlags.Text": "删除受影响的 Tidy 标志",
-        "OptionDeleteFlags.Tooltip": "在将自定义的 Tidy 标志数据迁移至官方系统数据的过程中，这些标志默认会保留不变。请勾选此选项以删除这些标志。",
-        "ButtonMigration.Text": "迁移",
-        "MigrateCompendia.CompendiumLabel": "合集包",
-        "MigrateCompendia.Title": "迁移合集包",
-        "MigrateCompendia.SelectionDialogTitle": "选择迁移合集包",
-        "MigrateCompendia.TotalEntriesLabel": "总条目数",
-        "CcssToTidy": {
-            "sectionTitle": "CCSS 至 Tidy 5e",
-            "selectionDialogTitle": "迁移：CCSS 至 Tidy 5e",
-            "ccss": "CCSS",
-            "section": "分区",
-            "explanation1": "Tidy 5e 现已原生支持自定义分区，并提供了围绕自定义分区的其他功能。此次迁移会将自定义角色卡分区（CCSS）的分区名称复制到 Tidy 的分区设置中。",
-            "overwrite": "覆盖",
-            "overwriteTooltip": "允许选择覆盖现有的 Tidy 分区标志。若未勾选，则仅空的 Tidy 标志将接收迁移过来的 CCSS 数据。",
-            "deleteFlags": "删除受影响的 CCSS 标签"
-        }
     }
 }

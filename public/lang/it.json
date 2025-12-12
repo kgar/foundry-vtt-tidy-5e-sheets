@@ -186,94 +186,9 @@
         "name": "Includi oggetti consumabili come azioni",
         "hint": "Include i materiali di consumo che hanno un costo di attivazione (Azione, Azione bonus, ecc.) nell'elenco Azioni per impostazione predefinita."
     },
-    "TIDY5E.Settings.Migrations": {
-        "name": "Migrazioni",
-        "buttonLabel": "Migrare Dati di Tidy",
-        "dialogTitle": "Migrare dati di Tidy",
-        "migrationBeginningMessage": "Migrazione dei dati. Si prega di non aggiornare la pagina fino al termine.",
-        "migrateConfirmTitle": "Conferma la migrazione",
-        "migrateConfirmMessage1": "Sei sicuro di voler eseguire questa migrazione?",
-        "migrateConfirmMessage2": "{boldStart}NB{boldEnd}: ricorda sempre di {boldStart}fare il backup dei tuoi dati{boldEnd}.",
-        "v1": {
-            "mainExplanation1": "La migrazione dei dati al nuovo modulo Tidy 5e Sheets non è necessaria per utilizzarlo. Nel peggiore dei casi, se sei un utente originale di Tidy5e Sheet e salti le migrazioni, dovrai riapplicare le tue impostazioni a tuo piacimento.",
-            "originalHeader": "Scheda originale Tidy5e",
-            "alphaHeader": "Scheda Alpha Tidy 5e",
-            "originalExplanation": "Migrare le impostazioni DM e i flag di dati del foglio Tidy dal foglio Tidy5e originale. La maggior parte delle differenze nei dati derivano dalle impostazioni DM. Se esegui la migrazione delle tue impostazioni e trovi che un'impostazione non è di tuo gradimento, modifica semplicemente le impostazioni dal menu delle impostazioni di configurazione.",
-            "mainExplanation2": "{boldStart}NB{boldEnd}: le impostazioni del client non fanno parte di questa migrazione. È cambiato abbastanza sul modo in cui funzionano le impostazioni del client in Tidy, quindi si consiglia di dare uno sguardo nuovo alle impostazioni del client.",
-            "alphaExplanation1": "Migrare le impostazioni DM e i flag dei dati del foglio Tidy da Alpha Tidy 5e Sheets. La maggior parte delle differenze nei dati derivano dai flag dei dati del foglio. La migrazione dei flag Alpha prende di mira i personaggi di livello superiore, gli elementi dei personaggi di livello superiore e gli elementi di livello superiore. Ciò porterà dati biografici, preferiti e altri flag di dati Alpha specifici del foglio.",
-            "alphaExplanation2": "{boldStart}NB{boldEnd}: questa migrazione non influisce sul contenuto del compendio.",
-            "sectionTitle": "Migrazioni Schede Tidy V1"
-        },
-        "hint": "Se eri un utente del modulo Tidy5e Sheet originale, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
-        "migrationErrorMessage": "Si è verificato un errore. Maggiori dettagli sono nella console di sviluppo.",
-        "migrationCompleteMessage": "Migrazione completa.",
-        "migrateDocumentFlagsButtonLabel": "Migrazione dei flag del documento",
-        "migrateConfirmButtonYes": "Migrare",
-        "migrateConfirmButtonNo": "Annulla",
-        "Notification": {
-            "Title": "Schede Tidy 5e: Migrazioni Disponibili",
-            "Explanation": "Sono disponibili le nuove migrazioni dei dati di Tidy 5e Sheets. Verifica il {boldStart}Menu di Configurazione delle Migrazioni{boldEnd} per saperne di più.",
-            "Button.DoNotShowAgain": "Non mostrare più",
-            "DoNotShowAgain.ConfirmMessage": "Confermato. Questo messaggio non verrà più visualizzato finché non sarà disponibile un'altra migrazione.",
-            "Explanation2": "NB: Le migrazioni spostano i dati da un luogo a un altro. A volte, i dati originariamente archiviati da Tidy 5e Sheets devono essere spostati nei campi dati ufficialmente supportati dal sistema. In altri casi, Tidy può adottare funzionalità da un altro modulo e, di conseguenza, può essere fornita una comoda migrazione per facilitare la transizione. Se non mancano dati sui tuoi fogli dopo l'aggiornamento di Tidy 5e Sheets, non è necessaria alcuna migrazione."
-        },
-        "OptionsHeader": "Opzioni di Migrazione",
-        "OptionOverwrite.Text": "Sovrascrivi",
-        "OptionOverwrite.Tooltip": "Abilita la sovrascrittura dei dati del foglio esistente. Se deselezionato, solo i campi di sistema vuoti riceveranno i dati Tidy migrati.",
-        "OptionDeleteFlags.Text": "Elimina i flag Tidy interessati",
-        "OptionDeleteFlags.Tooltip": "Durante la migrazione dai dati dei flag Tidy personalizzati ai dati del sistema ufficiale, i flag rimangono al loro posto per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag.",
-        "ButtonMigration.Text": "Migrare",
-        "CharacterBiography": {
-            "sectionTitle": "Biografia del Personaggio",
-            "selectionDialogTitle": "Migrazione: Biografia del Personaggio"
-        },
-        "Selection": {
-            "ToMigrate": "Per Migrare",
-            "TotalSelectedLabel": "Totale Selezionato: {total}",
-            "SelectAllNoneTooltip": "Seleziona tutti o nessuno"
-        },
-        "NpcDeathSaves": {
-            "selectionDialogTitle": "Migrazione: Tiri Salvezza PNG",
-            "sectionTitle": "Tiri Salvezza PNG"
-        },
-        "UnlinkedExplanation": "Questa migrazione offre la possibilità di migrare i documenti dei token non collegati nella scena corrente. È possibile eseguire la migrazione su scene aggiuntive secondo necessità.",
-        "CcssToTidy": {
-            "selectionDialogTitle": "Migrazione: da CCSS a Tidy 5e",
-            "section": "Sezione",
-            "explanation2": "{boldStart}NB{boldEnd}: CCSS ha la priorità con le sezioni personalizzate. Per disabilitare CCSS per un elemento, assicurati di utilizzare l'opzione per eliminare i flag interessati o cancellare manualmente il valore della sezione personalizzata CCSS.",
-            "overwrite": "Sovrascrivi",
-            "deleteFlags": "Elimina i flag CCSS interessati",
-            "explanation1": "Tidy 5e ora supporta nativamente le sezioni personalizzate e fornisce funzionalità aggiuntive relative alle sezioni personalizzate. Questa migrazione copierà i nomi delle sezioni Custom Character Sheet Sections (CCSS) nella sezione delle impostazioni di Tidy.",
-            "sectionTitle": "Da CCSS a Tidy 5e",
-            "ccss": "CCSS",
-            "overwriteTooltip": "Abilita per sovrascrivere il flag di sezione Tidy esistente. Se deselezionati, solo i flag Tidy vuoti riceveranno i dati CCSS migrati.",
-            "deleteFlagsTooltip": "Durante la migrazione da CCSS alle sezioni personalizzate Tidy, i flag CCSS rimangono attivi per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag."
-        },
-        "Parent": "Genitore",
-        "MigrateCompendia.CompendiumLabel": "Compendio",
-        "MigrateCompendia.SelectionDialogTitle": "Seleziona Compendio da Migrare",
-        "MigrateCompendia.TotalEntriesLabel": "Totale Elementi",
-        "MigrateCompendia.Title": "Migrare Compendio",
-        "FavoritesToSystem": {
-            "sectionTitle": "Preferiti dei Personaggi",
-            "selectionDialogTitle": "Migrazione: Preferiti dei Personaggi a Sistema"
-        },
-        "BondsIdealsFlawsToSystem": {
-            "selectionDialogTitle": "Migrazione: Legami, Ideali e Difetti PNG a System",
-            "sectionTitle": "Legami, Ideali e Difetti PNG"
-        },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Classe Incantesimo a Classe Sorgente",
-            "selectionDialogTitle": "Migrazione: Classe Incantesimo a Classe Sorgente"
-        },
-        "NpcExhaustion": {
-            "sectionTitle": "Indebolimento PNG",
-            "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
-        },
-        "chatNotification": "È disponibile una nuova migrazione di Tidy 5e Sheets. Vedi le impostazioni di gioco di Tidy 5e Sheets per visualizzare le migrazioni disponibili.",
-        "Journal": {
-            "explanation1": "La revisione dell'interfaccia utente di Tidy 5e Sheets ha migliorato il Diario, consentendo di gestire tutte le voci desiderate. Per questo motivo, è necessaria una migrazione dalla vecchia struttura del diario alla nuova struttura estensibile. I dati del registro precedente non saranno visibili nella versione rinnovata di Tidy 5e Sheets."
-        }
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "Totale Selezionato: {total}",
+        "SelectAllNoneTooltip": "Seleziona tutti o nessuno"
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.About": {

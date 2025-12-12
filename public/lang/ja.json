@@ -324,52 +324,9 @@
       "cancel": "キャンセル"
     }
   },
-  "TIDY5E.Settings.Migrations": {
-    "name": "移行",
-    "buttonLabel": "Tidyデータ移行",
-    "dialogTitle": "Tidyデータ移行",
-    "hint": "オリジナルのTidy5e Sheetモジュールまたはアルファシートのユーザーだった場合、オプションでこの移行メニューを使用してGM設定とTidyシートデータを移行してください。",
-    "chatNotification": "新しいTidy 5e Sheetsの移行が利用可能です。利用可能な移行を表示するには、Tidy 5e Sheetsゲーム設定を参照してください。",
-    "migrationBeginningMessage": "データを移行しています。完了するまでページを更新しないでください。",
-    "migrationErrorMessage": "エラーが発生しました。詳細は開発者コンソールを確認してください。",
-    "migrationCompleteMessage": "移行完了。",
-    "migrateDocumentFlagsButtonLabel": "ドキュメントフラグを移行",
-    "migrateConfirmTitle": "移行の確認",
-    "migrateConfirmMessage1": "本当にこの移行を実行しますか？",
-    "migrateConfirmMessage2": "{boldStart}注意{boldEnd}: 必ず{boldStart}データをバックアップ{boldEnd}してください。",
-    "migrateConfirmButtonYes": "移行",
-    "migrateConfirmButtonNo": "キャンセル",
-    "OptionsHeader": "移行オプション",
-    "OptionOverwrite.Text": "上書き",
-    "OptionOverwrite.Tooltip": "既存のシートデータを上書きする場合は有効にします。チェックを外すと、空のシステムフィールドのみが移行されたTidyデータを受け取ります。",
-    "OptionDeleteFlags.Text": "影響を受けるTidyフラグを削除",
-    "OptionDeleteFlags.Tooltip": "カスタムTidyフラグデータから公式システムデータに移行する際、デフォルトではフラグは残ります。これらのフラグを削除するには、このオプションをチェックしてください。",
-    "ButtonMigration.Text": "移行",
-    "MigrateCompendia.CompendiumLabel": "辞典",
-    "MigrateCompendia.Title": "辞典移行",
-    "MigrateCompendia.SelectionDialogTitle": "移行する辞典を選択",
-    "MigrateCompendia.TotalEntriesLabel": "合計エントリー数",
-    "CcssToTidy": {
-      "sectionTitle": "CCSS から Tidy 5e",
-      "selectionDialogTitle": "移行: CCSS から Tidy 5e",
-      "ccss": "CCSS",
-      "section": "セクション",
-      "explanation1": "Tidy 5eはカスタムセクションをネイティブでサポートし、カスタムセクションに関する追加機能を提供します。この移行により、Custom Character Sheet Sections (CCSS)のセクション名がTidyのセクション設定にコピーされます。",
-      "overwrite": "上書き",
-      "overwriteTooltip": "既存のTidyセクションフラグを上書きする場合は有効にします。チェックを外すと、空のTidyフラグのみが移行されたCCSSデータを受け取ります。",
-      "deleteFlags": "影響を受けるCCSSフラグを削除",
-      "deleteFlagsTooltip": "CCSSからTidyカスタムセクションに移行する際、デフォルトではCCSSフラグは残ります。これらのフラグを削除するには、このオプションをチェックしてください。"
-    },
-    "Journal": {
-      "explanation1": "Tidy 5e SheetsのUIオーバーホールにより、記録は必要なだけのエントリーを持てるように刷新されました。これに対応するため、古い記録構造から新しい拡張可能な記録構造への移行が必要です。古い記録は、オーバーホールされたTidy 5e Sheetsでは表示されません。"
-    },
-    "UnlinkedExplanation": "この移行では、現在のシーン内の未リンクトークンドキュメントを移行するオプションが提供されます。必要に応じて追加のシーンでも移行を実行できます。",
-    "Selection": {
-      "TotalSelectedLabel": "合計選択数: {total}",
-      "ToMigrate": "移行対象",
-      "SelectAllNoneTooltip": "すべて選択/選択解除"
-    },
-    "Parent": "親"
+  "TIDY5E.Selection": {
+    "TotalSelectedLabel": "合計選択数: {total}",
+    "SelectAllNoneTooltip": "すべて選択/選択解除"
   },
   "TIDY5E.Settings.SheetPreferences": {
     "name": "Tidyをデフォルトシートにセット",

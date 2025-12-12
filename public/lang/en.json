@@ -324,52 +324,9 @@
       "cancel": "Cancel"
     }
   },
-  "TIDY5E.Settings.Migrations": {
-    "name": "Migrations",
-    "buttonLabel": "Migrate Tidy Data",
-    "dialogTitle": "Migrate Tidy Data",
-    "hint": "If you were a user of the original Tidy5e Sheet module, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
-    "chatNotification": "A new Tidy 5e Sheets migration is available. See Tidy 5e Sheets Game Settings to view available migrations.",
-    "migrationBeginningMessage": "Migrating data. Please do not refresh the page until done.",
-    "migrationErrorMessage": "An error occurred. More details are in the dev console.",
-    "migrationCompleteMessage": "Migration complete.",
-    "migrateDocumentFlagsButtonLabel": "Migrate Document Flags",
-    "migrateConfirmTitle": "Confirm Migration",
-    "migrateConfirmMessage1": "Are you sure you wish to perform this migration?",
-    "migrateConfirmMessage2": "{boldStart}Note{boldEnd}: always remember to {boldStart}back up your data{boldEnd}.",
-    "migrateConfirmButtonYes": "Migrate",
-    "migrateConfirmButtonNo": "Cancel",
-    "OptionsHeader": "Migration Options",
-    "OptionOverwrite.Text": "Overwrite",
-    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
-    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
-    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
-    "ButtonMigration.Text": "Migrate",
-    "MigrateCompendia.CompendiumLabel": "Compendium",
-    "MigrateCompendia.Title": "Migrate Compendia",
-    "MigrateCompendia.SelectionDialogTitle": "Select Compendia to Migrate",
-    "MigrateCompendia.TotalEntriesLabel": "Total Entries",
-    "CcssToTidy": {
-      "sectionTitle": "CCSS to Tidy 5e",
-      "selectionDialogTitle": "Migration: CCSS to Tidy 5e",
-      "ccss": "CCSS",
-      "section": "Section",
-      "explanation1": "Tidy 5e now natively supports custom sections and provides additional features around custom sections. This migration will copy Custom Character Sheet Sections (CCSS) section names into Tidy's section setup.",
-      "overwrite": "Overwrite",
-      "overwriteTooltip": "Enable to overwrite existing Tidy section flag. If unchecked, only empty Tidy flags will receive migrated CCSS data.",
-      "deleteFlags": "Delete Affected CCSS Flags",
-      "deleteFlagsTooltip": "When migrating from CCSS to Tidy custom sections, the CCSS flags remain in place by default. Check this option to remove those flags."
-    },
-    "Journal": {
-      "explanation1": "The UI Overhaul of Tidy 5e Sheets has revamped the Journal to be as many entries as you want. To accommodate this, a migration from the old Journal structure to the new extensible journal structure is needed. Old Journal data will not be visible in the overhauled Tidy 5e Sheets."
-    },
-    "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
-    "Selection": {
-      "TotalSelectedLabel": "Total Selected: {total}",
-      "ToMigrate": "To Migrate",
-      "SelectAllNoneTooltip": "Select all or none"
-    },
-    "Parent": "Parent"
+  "TIDY5E.Selection": {
+    "TotalSelectedLabel": "Total Selected: {total}",
+    "SelectAllNoneTooltip": "Select all or none"
   },
   "TIDY5E.Settings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",

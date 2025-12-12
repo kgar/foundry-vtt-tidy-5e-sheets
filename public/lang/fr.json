@@ -206,94 +206,9 @@
         "name": "Inclure les sorts à effets actifs dans les actions",
         "hint": "Inclut les sorts avec des effets actifs attachés (par exemple Barkskin(Peau d'écorce)) dans l'onglet/panneau Actions par défaut."
     },
-    "TIDY5E.Settings.Migrations": {
-        "dialogTitle": "Migrer des données de Tidy",
-        "migrationBeginningMessage": "Migration des données. Ne rafraîchissez pas la page avant d'avoir terminé.",
-        "migrateConfirmTitle": "Confirmer la migration",
-        "migrateConfirmMessage1": "Êtes-vous sûr de vouloir effectuer cette migration ?",
-        "migrateConfirmMessage2": "{boldStart}Note{boldEnd} : n'oubliez jamais de {boldStart} sauvegarder vos données{boldEnd}.",
-        "migrateConfirmButtonYes": "Migrer",
-        "v1": {
-            "originalHeader": "Feuille originale Tidy5e",
-            "alphaExplanation2": "{boldStart}Note{boldEnd} : Cette migration n'affecte pas le contenu du compendium.",
-            "mainExplanation1": "Il n'est pas nécessaire de migrer les données vers le nouveau module Tidy 5e Sheets pour pouvoir l'utiliser. Dans le pire des cas, si vous êtes un utilisateur original de Tidy5e Sheet et que vous sautez les migrations, vous devrez réappliquer vos paramètres à votre convenance.",
-            "alphaHeader": "Feuilles Alpha Tidy 5e",
-            "originalExplanation": "La migration des paramètres du MJ et des indicateurs de données de la feuille Tidy à partir de la feuille Tidy5e originale. La plupart des différences dans les données proviennent des paramètres du MJ. Si vous migrez vos paramètres et que vous constatez qu'un paramètre ne vous convient pas, il vous suffit de le modifier à partir du menu de configuration.",
-            "mainExplanation2": "{boldStart}Note{boldEnd} : Les paramètres du client ne font pas partie de cette migration. La façon dont les paramètres des clients fonctionnent dans Tidy n'a pas changé, il est donc recommandé de jeter un nouveau coup d'œil aux paramètres des clients.",
-            "alphaExplanation1": "La migration des paramètres MJ et des indicateurs de données des feuilles Tidy depuis les feuilles Alpha Tidy 5e. La plupart des différences de données proviennent des drapeaux de données des feuilles. La migration des indicateurs Alpha cible les acteurs de premier niveau, les objets des acteurs de premier niveau et les objets de premier niveau. Cela apportera des données biographiques, des favoris et d'autres indicateurs de données Alpha spécifiques à la feuille.",
-            "sectionTitle": "Accueil des migrations de Tidy V1"
-        },
-        "migrationErrorMessage": "Une erreur s'est produite. Plus de détails dans la console.",
-        "buttonLabel": "Migrer des données de Tidy5e",
-        "migrateConfirmButtonNo": "Annuler",
-        "migrateDocumentFlagsButtonLabel": "Migrer les indicateurs des documents",
-        "migrationCompleteMessage": "Migration terminée.",
-        "name": "Migrations",
-        "hint": "Si vous avez utilisé le module original Tidy5e Sheet, vous pouvez éventuellement utiliser ce menu Migrations pour migrer vos paramètres MJ et les données de vos feuilles Tidy 5e.",
-        "Notification": {
-            "Title": "Feuilles Tidy 5e : Migrations disponibles",
-            "Explanation": "De nouvelles migrations de données Tidy 5e Sheets sont disponibles. Consultez le menu {boldStart}paramètres de configuration des Migrations{boldEnd} pour en savoir plus.",
-            "Button.DoNotShowAgain": "Ne pas montrer à nouveau",
-            "DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
-            "Explanation2": "Note: Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire."
-        },
-        "OptionsHeader": "Options de migrations",
-        "OptionOverwrite.Text": "Écraser",
-        "OptionOverwrite.Tooltip": "Permet d'écraser les données de la feuille existante. Si cette option n'est pas cochée, seuls les champs vides du système recevront les données Tidy migrées.",
-        "OptionDeleteFlags.Text": "Supprimer les indicateurs Tidy affectés",
-        "ButtonMigration.Text": "Migrer",
-        "CharacterBiography": {
-            "sectionTitle": "Biographie du personnage",
-            "selectionDialogTitle": "Migration : Biographie du personnage"
-        },
-        "Selection": {
-            "TotalSelectedLabel": "Total sélectionné : {total}",
-            "ToMigrate": "Pour migrer",
-            "SelectAllNoneTooltip": "Sélectionner tous ou aucun"
-        },
-        "OptionDeleteFlags.Tooltip": "Lors de la migration des données des indicateurs Tidy personnalisées vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs.",
-        "NpcDeathSaves": {
-            "selectionDialogTitle": "Migration : Sauvegarde contre la mort des PNJ",
-            "sectionTitle": "Sauvegarde contre la mort des PNJ"
-        },
-        "UnlinkedExplanation": "Cette migration offre la possibilité de migrer les documents non liés aux acteurs dans la scène actuelle. Vous pouvez exécuter la migration sur d'autres scènes si nécessaire.",
-        "CcssToTidy": {
-            "sectionTitle": "CCSS pour Tidy 5e",
-            "selectionDialogTitle": "Migration : CCSS pour Tidy 5e",
-            "section": "Section",
-            "ccss": "CCSS",
-            "explanation1": "Tidy 5e supporte désormais nativement les sections personnalisées et fournit des fonctionnalités supplémentaires autour des sections personnalisées. Cette migration copiera les noms des sections des feuilles de caractères personnalisées (CCSS) dans la configuration des sections de Tidy5e.",
-            "explanation2": "{boldStart}Note{boldEnd}: Le CCSS a la priorité sur les sections personnalisées. Pour désactiver le CCSS pour un élément, assurez-vous d'utiliser l'option de suppression des indicateurs concernés ou d'effacer manuellement la valeur de la section personnalisée CCSS.",
-            "overwrite": "Écraser",
-            "overwriteTooltip": "Permet d'écraser l'indicateur de section Tidy existant. Si la case n'est pas cochée, seuls les indicateurs Tidy vides recevront les données CCSS migrées.",
-            "deleteFlags": "Supprimer les indicateurs CCSS concernés",
-            "deleteFlagsTooltip": "Lors de la migration des sections CCSS vers les sections personnalisées Tidy, les indicateurs CCSS restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
-        },
-        "Parent": "Parent",
-        "MigrateCompendia.CompendiumLabel": "Compendium",
-        "MigrateCompendia.Title": "Migrer les compendiums",
-        "MigrateCompendia.SelectionDialogTitle": "Sélection des compendiums pour migration",
-        "NpcExhaustion": {
-            "selectionDialogTitle": "Migration : Épuisement du PNJ vers le système",
-            "sectionTitle": "Épuisement des PNJ"
-        },
-        "BondsIdealsFlawsToSystem": {
-            "selectionDialogTitle": "Migration : Liens, idéaux et défauts des PNJ vers le système",
-            "sectionTitle": "Liens, idéaux et défauts des PNJ"
-        },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Classe de sort vers Classe source",
-            "selectionDialogTitle": "Migration : Classe de sort vers la classe source"
-        },
-        "MigrateCompendia.TotalEntriesLabel": "Total des entrées",
-        "FavoritesToSystem": {
-            "selectionDialogTitle": "Migration : Personnages favoris vers le système",
-            "sectionTitle": "Personnages préférés"
-        },
-        "chatNotification": "Une nouvelle migration des feuilles Tidy 5e est disponible. Voir Paramètres du jeu Tidy 5e Sheets pour voir les migrations disponibles.",
-        "Journal": {
-            "explanation1": "La refonte de l'interface utilisateur de Tidy 5e Sheets a permis de réorganiser le journal afin qu'il puisse contenir autant d'entrées que vous le souhaitez. Pour cela, une migration de l'ancienne structure du journal vers la nouvelle structure extensible est nécessaire. Les anciennes données du journal ne seront pas visibles dans la version remaniée de Tidy 5e Sheets."
-        }
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "Total sélectionné : {total}",
+        "SelectAllNoneTooltip": "Sélectionner tous ou aucun"
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",

@@ -249,52 +249,9 @@
             "cancel": "Cancelar"
         }
     },
-    "TIDY5E.Settings.Migrations": {
-        "name": "Migrações",
-        "buttonLabel": "Migrar Dados Tidy",
-        "dialogTitle": "Migrar Dados Tidy",
-        "hint": "Se era um utilizador do módulo Tidy5e Sheet original, opcionalmente use este menu Migrações para migrar as suas configurações de Mestre e dados da ficha Tidy.",
-        "chatNotification": "Uma nova migração do Tidy 5e Sheets está disponível. Consulte as Configurações de Jogo do Tidy 5e Sheets para ver as migrações disponíveis.",
-        "migrationBeginningMessage": "A migrar dados. Por favor, não atualize a página até que esteja concluído.",
-        "migrationErrorMessage": "Ocorreu um erro. Mais pormenores estão no console de desenvolvimento.",
-        "migrationCompleteMessage": "Migração concluída.",
-        "migrateDocumentFlagsButtonLabel": "Migrar Marcadores do Documento",
-        "migrateConfirmTitle": "Confirmar migração",
-        "migrateConfirmMessage1": "Tem certeza de que deseja realizar esta migração?",
-        "migrateConfirmMessage2": "{boldStart}Nota{boldEnd}: lembre-se sempre de {boldStart}fazer backup dos seus dados.{boldEnd}.",
-        "migrateConfirmButtonYes": "Migrar",
-        "migrateConfirmButtonNo": "Cancelar",
-        "OptionsHeader": "Opções de Migração",
-        "OptionOverwrite.Text": "Substituir",
-        "OptionOverwrite.Tooltip": "Ative para substituir os dados da ficha existente. Se desmarcado, apenas os campos vazios do sistema receberão dados migrados do Tidy.",
-        "OptionDeleteFlags.Text": "Apagar Flags Afetadas do Tidy",
-        "OptionDeleteFlags.Tooltip": "Ao migrar dados de flags personalizadas do Tidy para dados oficiais do sistema, as flags permanecem no lugar por padrão. Marque esta opção para remover essas flags.",
-        "ButtonMigration.Text": "Migrar",
-        "MigrateCompendia.CompendiumLabel": "Compêndio",
-        "MigrateCompendia.Title": "Migrar Compêndio",
-        "MigrateCompendia.SelectionDialogTitle": "Selecione Compêndio para Migrar",
-        "MigrateCompendia.TotalEntriesLabel": "Entradas Totais",
-        "CcssToTidy": {
-            "sectionTitle": "CCSS para Tidy 5e",
-            "selectionDialogTitle": "Migração: CCSS para Tidy 5e",
-            "ccss": "CCSS",
-            "section": "Secção",
-            "explanation1": "O Tidy 5e agora suporta nativamente secções personalizadas e providencia características opcionais para secções personalizadas. Esta migração irá copiar os nomes das secções do Custom Character Sheet Sections (CCSS) para as configurações de secção do Tidy.",
-            "overwrite": "Substituir",
-            "overwriteTooltip": "Ative para substituir flags existentes do Tidy. Se desmarcado, apenas flags vazias do Tidy irão receber os dados de migração do CCSS.",
-            "deleteFlags": "Apagar Flags Afetadas do CCSS",
-            "deleteFlagsTooltip": "Ao migrar as secções personalizadas do CCSS para o Tidy, as flags do CCSS permanecem no lugar, por padrão. Marque esta opção para remover estas flags."
-        },
-        "Journal": {
-            "explanation1": "A Reformulação da Interface do Tidy 5e Sheets alterou o Diário para que ele tenha quantas entradas quiser. Para acomodar isto, é necessária uma migração da estrutura antiga do Diário para a nova estrutura extensível. Os dados antigos do Diário não serão visíveis nas Fichas Tidy 5e reformuladas."
-        },
-        "UnlinkedExplanation": "Esta migração oferece a opção de migrar documentos token desvinculados no cenário atual. Pode executar a migração em cenas adicionais conforme necessário.",
-        "Selection": {
-            "TotalSelectedLabel": "Total Selecionado: {total}",
-            "ToMigrate": "Para Migrar",
-            "SelectAllNoneTooltip": "Selecione tudo ou nenhum"
-        },
-        "Parent": "Pai"
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "Total Selecionado: {total}",
+        "SelectAllNoneTooltip": "Selecione tudo ou nenhum"
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",

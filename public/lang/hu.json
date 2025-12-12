@@ -136,86 +136,9 @@
     "TIDY5E.Actions": {
         "TabName": ""
     },
-    "TIDY5E.Settings.Migrations": {
-        "Notification": {
-            "Button.DoNotShowAgain": "",
-            "Explanation2": "",
-            "DoNotShowAgain.ConfirmMessage": "",
-            "Explanation": "",
-            "Title": ""
-        },
-        "MigrateCompendia.SelectionDialogTitle": "",
-        "CcssToTidy": {
-            "sectionTitle": "",
-            "deleteFlagsTooltip": "",
-            "explanation1": "",
-            "overwriteTooltip": "",
-            "deleteFlags": "",
-            "selectionDialogTitle": "",
-            "section": "",
-            "ccss": "",
-            "overwrite": ""
-        },
-        "BondsIdealsFlawsToSystem": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "MigrateCompendia.TotalEntriesLabel": "",
-        "CharacterBiography": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "Selection": {
-            "TotalSelectedLabel": "",
-            "ToMigrate": "",
-            "SelectAllNoneTooltip": ""
-        },
-        "dialogTitle": "",
-        "migrationCompleteMessage": "",
-        "migrateConfirmMessage2": "",
-        "Parent": "",
-        "v1": {
-            "mainExplanation2": "",
-            "mainExplanation1": "",
-            "originalHeader": "",
-            "originalExplanation": "",
-            "sectionTitle": ""
-        },
-        "MigrateCompendia.CompendiumLabel": "",
-        "OptionOverwrite.Tooltip": "",
-        "migrateDocumentFlagsButtonLabel": "",
-        "name": "",
-        "migrateConfirmTitle": "",
-        "migrateConfirmButtonYes": "",
-        "migrateConfirmMessage1": "",
-        "ButtonMigration.Text": "",
-        "FavoritesToSystem": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "buttonLabel": "",
-        "migrateConfirmButtonNo": "",
-        "OptionDeleteFlags.Tooltip": "",
-        "OptionsHeader": "",
-        "hint": "",
-        "migrationBeginningMessage": "",
-        "OptionOverwrite.Text": "",
-        "UnlinkedExplanation": "",
-        "NpcDeathSaves": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "MigrateCompendia.Title": "",
-        "NpcExhaustion": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "migrationErrorMessage": "",
-        "OptionDeleteFlags.Text": ""
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "",
+        "SelectAllNoneTooltip": ""
     },
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "options.GmOnly": "",

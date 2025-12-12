@@ -1,5 +1,8 @@
 ## Foundry 14 To Do
 
+- [x] Convert loc keys
+  - [x] TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip to TIDY5E.Selection.SelectAllNoneTooltip 
+  - [x] TIDY5E.Settings.Migrations.Selection.TotalSelectedLabel to TIDY5E.Selection.TotalSelectedLabel 
 - [ ] Inspect these loc keys and remove unused ones
   - [x] (Keep) TIDY5E.Section.ConfigDialog.title
   - [x] TIDY5E.PortraitTitle
@@ -86,12 +89,12 @@
   - [x] TIDY5E.Settings.DefaultSheetTabs.name
   - [x] TIDY5E.Settings.DefaultSheetTabs.SelectedHeader
   - [x] (keep) TIDY5E.Settings.GlobalCustomSections.AddSection
-  - [ ] TIDY5E.Settings.Migrations.Journal.explanation1
-  - [ ] TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel
-  - [ ] TIDY5E.Settings.Migrations.OptionDeleteFlags.Text
-  - [ ] TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip
-  - [ ] TIDY5E.Settings.Migrations.OptionOverwrite.Text
-  - [ ] TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip
+  - [x] TIDY5E.Settings.Migrations.Journal.explanation1
+  - [x] TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel
+  - [x] TIDY5E.Settings.Migrations.OptionDeleteFlags.Text
+  - [x] TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip
+  - [x] TIDY5E.Settings.Migrations.OptionOverwrite.Text
+  - [x] TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip
   - [ ] TIDY5E.Settings.Reset.dialogs.cancel
   - [ ] TIDY5E.Settings.Reset.dialogs.confirm
   - [ ] TIDY5E.Settings.UseMulticlassSpellbookFilter.hint
