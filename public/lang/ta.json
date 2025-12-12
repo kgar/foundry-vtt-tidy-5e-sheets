@@ -1,7 +1,4 @@
 {
-    "TIDY5E.SheetEdit.Enable.Hint": "திருத்தத்தை இயக்கு - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "பூட்டு - {description}",
-    "TIDY5E.SheetLock.Description": "அடிக்கடி மாறக்கூடாது என்று முக்கியமான புலங்களுக்கான பூட்டை மாற்றவும்",
     "TIDY5E.ContextMenuActionPrepare": "ஆயத்தம்",
     "TIDY5E.ActorSpellAttackFlavorText": "எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - கைகலப்பு எழுத்துப்பிழை தாக்குதல்",
@@ -47,10 +44,8 @@
     },
     "TIDY5E.Settings.Reset": {
         "dialogs": {
-            "cancel": "ரத்துசெய்",
             "title": "தொகுதி அமைப்புகளை மீட்டமைக்கவும்",
-            "content": "தற்போதைய அமைப்பின் இயல்புநிலைகளுக்கு அனைத்து தொகுதி அமைப்புகளையும் மீட்டமைக்க விரும்புகிறீர்களா? <strong> இதை செயல்தவிர்க்க முடியாது. </strong>",
-            "confirm": "தொகுதி அமைப்புகளை மீட்டமைக்கவும்"
+            "content": "தற்போதைய அமைப்பின் இயல்புநிலைகளுக்கு அனைத்து தொகுதி அமைப்புகளையும் மீட்டமைக்க விரும்புகிறீர்களா? <strong> இதை செயல்தவிர்க்க முடியாது. </strong>"
         },
         "name": "அமைப்புகளை இயல்புநிலைக்கு மீட்டமைக்கவும்",
         "hint": "இது செயலில் உள்ள விளையாட்டு அமைப்பின் இயல்புநிலைக்கு திரும்புவதற்கான அனைத்து அமைப்புகளையும் மீட்டமைக்கும். இது GM விருப்பங்கள் போன்ற \"உலக\"-ச்கோப் செய்யப்பட்ட அமைப்புகளை மட்டுமே பாதிக்கிறது."
@@ -131,13 +126,9 @@
     "TIDY5E.SortMenu.OptionAlphabetical": "அகரவரிசை (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "கையேடு",
     "TIDY5E.SortMenu.OptionPrepared": "தயாரிக்கப்பட்டது",
-    "TIDY5E.SheetImageOptionsHint": "வலது கிளிக்: பட விருப்பங்களைக் காட்டு",
     "TIDY5E.ShowPortraitArt": "உருவப்படத்தைக் காட்டு",
-    "TIDY5E.ShowItemImage": "வலது கிளிக்: உருப்படி கலையைக் காட்டு",
-    "TIDY5E.ShowItemArt": "படத்தைக் காட்டு",
     "TIDY5E.Tidy5eSettings": "நேர்த்தியான 5e தாள்கள் அமைப்புகள்",
     "TIDY5E.Group.EmptyMembersTabHint": "இந்த குழு காலியாக உள்ளது. ஒரு உறுப்பினரைச் சேர்க்க பக்கப்பட்டியில் இருந்து ஒரு நடிகரை விடுங்கள்.",
-    "TIDY5E.ShortRest": "குறுகிய ஓய்வு",
     "TIDY5E.HitDiceRollAverage": "வலது கிளிக்: சராசரியைப் பயன்படுத்துங்கள்",
     "TIDY5E.JournalTabName": "செய்தித் தாள்",
     "TIDY5E.Actions": {
@@ -146,9 +137,6 @@
     "TIDY5E.ContextMenuActionAttune": "சுருதிசேர்",
     "TIDY5E.TogglePersonalityInfo": "ஆளுமை தகவலை மாற்றவும்",
     "TIDY5E.ContextMenuActionUnattune": "டோனெட்",
-    "TIDY5E.SheetEdit.Disable.Hint": "திருத்து முடக்கு - {description}",
-    "TIDY5E.SheetEdit.Description": "சேர்/நீக்கு பொத்தான்கள் மற்றும் வெற்று பிரிவுகளின் தெரிவுநிலையை மாற்றவும்",
-    "TIDY5E.SheetLock.Unlock.Hint": "திறத்தல் - {description}",
     "TIDY5E.ContextMenuActionEquip": "உபகரணங்கள்",
     "TIDY5E.ContextMenuActionUnequip": "WAKIP",
     "TIDY5E.ContextMenuActionUnprepare": "தயாராக இல்லை",
@@ -158,7 +146,6 @@
     "TIDY5E.AttunementItems": "இணைந்த உருப்படிகள்",
     "TIDY5E.AddFavorite": "பிடித்ததைச் சேர்க்கவும்",
     "TIDY5E.RemoveFavorite": "பிடித்ததை அகற்று",
-    "TIDY5E.ShowNotProficientSkills": "திறமையானதைக் காட்டு",
     "TIDY5E.Search": "தேடல்",
     "TIDY5E.SearchHint": "தேடல் முடிவுகளைக் காட்ட தட்டச்சு செய்யத் தொடங்குங்கள்",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - எழுத்துப்பிழை தாக்குதல்",
@@ -229,10 +216,6 @@
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "செயல்கள் பட்டியல்"
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "மல்டிகிளாச் எழுத்துப்பிழை வடிகட்டியைப் பயன்படுத்தவும்",
-        "hint": "எழுத்துப்பிழை புத்தகத்தில் வகுப்பின் மூலம் எழுத்துப்பிழைகளை வடிகட்ட அனுமதிக்கிறது. எழுத்துப்பிழை திருத்து தாளில் வகுப்பு தேர்வாளரைப் பயன்படுத்தி ஒரு வகுப்போடு எழுத்துப்பிழை தொடர்புடையதாக இருக்க வேண்டும்."
-    },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Cantrips ஐ தயாரிக்க அனுமதிக்கவும்",
         "hint": "எல்லாவற்றின் தாசாவின் கால்ட்ரானிலிருந்து \"கான்ட்ரிப் ஃபார்முலாக்கள்\" விருப்ப விதி, மந்திரவாதிகள் ஒரு நீண்ட ஓய்வுக்குப் பிறகு கேன்ட்ரிப்களைத் தயாரிக்க அனுமதிக்கிறது. தயாரிக்கப்பட்ட கேன்ட்ரிப்ச் மொத்த தயாரிக்கப்பட்ட மந்திரங்களை நோக்கி கணக்கிடாது."
@@ -274,10 +257,6 @@
     "TIDY5E.VehicleInMotion": "வண்டி இயக்கத்தில் உள்ளது",
     "TIDY5E.VehicleMotionless": "வண்டி அசைவற்றது",
     "TIDY5E.TotalCrewCount": "மொத்த குழுவினர்",
-    "TIDY5E.SheetMenu": {
-        "label": "பட்டியல்",
-        "themeLabel": "கருப்பொருள்"
-    },
     "TIDY5E.SortMode.ActionListDefault": "இயல்புநிலை செயல் பட்டியல் வரிசை",
     "TIDY5E.Commands.ExpandAll": "அனைத்தையும் விரிவாக்குங்கள்",
     "TIDY5E.Commands.CollapseAll": "அனைத்தையும் சரக்கு",

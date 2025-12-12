@@ -1,18 +1,8 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "Rechtsklick: Charakter-Bilder zeigen",
     "TIDY5E.ShowPortraitArt": "Portrait zeigen",
-    "TIDY5E.ShowItemImage": "Rechtsklick: Gegenstands-Bild zeigen",
-    "TIDY5E.ShowItemArt": "Bild zeigen",
-    "TIDY5E.ShortRest": "Kurze Rast",
     "TIDY5E.HitDiceRollAverage": "Rechtsklick: Durchschnitt anwenden",
     "TIDY5E.JournalTabName": "Tagebuch",
     "TIDY5E.TogglePersonalityInfo": "Persönlichkeits-Infos umschalten",
-    "TIDY5E.SheetEdit.Enable.Hint": "Editieren erlauben - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Bearbeiten deaktivieren - {description}",
-    "TIDY5E.SheetEdit.Description": "Schaltet Sichtbarkeit von Hinzufügen/Löschen Buttons und leeren Sektionen um.",
-    "TIDY5E.SheetLock.Unlock.Hint": "Entsperren - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Sperren - {description}",
-    "TIDY5E.SheetLock.Description": "Sperre für sensible Felder, die sich nicht oft ändern sollten, umschalten",
     "TIDY5E.ContextMenuActionEquip": "Gegenstand anlegen",
     "TIDY5E.ContextMenuActionUnequip": "Gegenstand Ablegen",
     "TIDY5E.ContextMenuActionAttune": "Gegenstand einstimmen",
@@ -24,7 +14,6 @@
     "TIDY5E.AttunementItems": "Eingestimmte Gegenstände",
     "TIDY5E.AddFavorite": "Favorit hinzufügen",
     "TIDY5E.RemoveFavorite": "Favorit löschen",
-    "TIDY5E.ShowNotProficientSkills": "Nicht-fachkundige anzeigen",
     "TIDY5E.Search": "Suche",
     "TIDY5E.SearchHint": "Tippe ein wonach du suchst um Ergebnisse anzeigen zu lassen.",
     "TIDY5E.SpellAttackMod": "Zauberangriffs Modifikator",
@@ -74,10 +63,6 @@
         "name": "Initiale Bogenregisterkarte",
         "hint": "Zeigt die angegebene Registerkarte an, wenn ein Spielbogen zum ersten Mal geöffnet wird."
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Multiklassen-Zauberbuchfilter verwenden",
-        "hint": "Ermöglicht das Filtern von Zaubern nach Klassen in der Registerkarte Zauberbuch. Der Zauber muss einer Klasse zugeordnet werden, indem die Klassenauswahl auf dem Zauberbearbeitungsblatt verwendet wird."
-    },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
         "hint": null
@@ -95,9 +80,7 @@
         "hint": "Dadurch werden alle Einstellungen auf die Standardeinstellungen des aktiven Spielsystems zurückgesetzt. Dies betrifft nur Einstellungen, die sich auf die „Welt“ beziehen, wie z. B. SL-Optionen.",
         "dialogs": {
             "title": "Modul Einstellungen zurücksetzen",
-            "content": "Möchtest du wirklich alle Moduleinstellungen auf die aktuellen Systemstandards zurücksetzen? <strong>Dieser Vorgang kann nicht rückgängig gemacht werden.</strong>",
-            "confirm": "Modul Einstellungen zurücksetzen",
-            "cancel": "Abbrechen"
+            "content": "Möchtest du wirklich alle Moduleinstellungen auf die aktuellen Systemstandards zurücksetzen? <strong>Dieser Vorgang kann nicht rückgängig gemacht werden.</strong>"
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -128,10 +111,6 @@
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
     "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.SheetMenu": {
-        "label": "Menü",
-        "themeLabel": ""
-    },
     "TIDY5E.Actions": {
         "TabName": "Aktionen"
     },

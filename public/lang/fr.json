@@ -1,18 +1,8 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "Clic droit : voir les options de l'image",
     "TIDY5E.ShowPortraitArt": "Voir le portrait",
-    "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
-    "TIDY5E.ShowItemArt": "Montrer l'image",
-    "TIDY5E.ShortRest": "Repos Court",
     "TIDY5E.HitDiceRollAverage": "Clic droit : Appliquer la moyenne",
     "TIDY5E.JournalTabName": "Journal",
     "TIDY5E.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
-    "TIDY5E.SheetEdit.Enable.Hint": "Activer l'édition - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Désactiver l'édition - {description}",
-    "TIDY5E.SheetEdit.Description": "Visibilité des boutons d'ajout/suppression et des sections vides",
-    "TIDY5E.SheetLock.Unlock.Hint": "Déverrouiller - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Vérrouiller - {description}",
-    "TIDY5E.SheetLock.Description": "Basculer le verrouillage des champs sensibles qui ne doivent pas être modifiés souvent",
     "TIDY5E.ContextMenuActionEquip": "Équiper l'objet",
     "TIDY5E.ContextMenuActionUnequip": "Déséquiper l'objet",
     "TIDY5E.ContextMenuActionAttune": "Se lier à l'objet",
@@ -24,7 +14,6 @@
     "TIDY5E.AttunementItems": "Objets liés",
     "TIDY5E.AddFavorite": "Ajouter aux Favoris",
     "TIDY5E.RemoveFavorite": "Enlever des Favoris",
-    "TIDY5E.ShowNotProficientSkills": "Indiquer comme non compétent",
     "TIDY5E.Search": "Chercher",
     "TIDY5E.SearchHint": "Saisir votre recherche",
     "TIDY5E.SpellAttackMod": "Bonus d'attaque",
@@ -74,10 +63,6 @@
         "name": "Onglet initial de la feuille",
         "hint": "ffiche l'onglet indiqué lors de la première ouverture de la feuille."
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Utiliser le filtre de livre de sorts multi-classes",
-        "hint": "Permet de filtrer les sorts par classe dans l'onglet du livre des sorts. Le sort doit être associé à une classe en utilisant le sélecteur de classe sur la feuille d'édition des sorts."
-    },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": "Classes supplémentaires pour le filtrage multiclasse du livre des sorts",
         "hint": "Ajoute des classes supplémentaires dans le filtre du livre de sorts multi-classes. Ajoutez des classes à la liste déroulante avec la syntaxe suivante : \"id1|nom1,id2|nom2\", par exemple \"occultiste|Occultiste,alchimiste|Alchimiste\""
@@ -95,9 +80,7 @@
         "hint": "Cette opération réinitialise tous les paramètres du système de jeu actif à leur valeur par défaut. Cela n'affecte que les paramètres du \"monde\", tels que les options du MJ.",
         "dialogs": {
             "title": "Réinitialisation des paramètres du module",
-            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel ? <strong>Il n'est pas possible de revenir en arrière.</strong>",
-            "confirm": "Réinitialisation des paramètres du module",
-            "cancel": "Annuler"
+            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel ? <strong>Il n'est pas possible de revenir en arrière.</strong>"
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -144,10 +127,6 @@
     "TIDY5E.VehicleInMotion": "Le véhicule est en mouvement",
     "TIDY5E.VehicleMotionless": "Le véhicule n'a pas de mouvement",
     "TIDY5E.TotalCrewCount": "Équipage total",
-    "TIDY5E.SheetMenu": {
-        "label": "Menu",
-        "themeLabel": "Thème"
-    },
     "TIDY5E.Actions": {
         "TabName": "Actions"
     },

@@ -1,18 +1,8 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
     "TIDY5E.ShowPortraitArt": "Mostra Ritratto",
-    "TIDY5E.ShowItemImage": "Tasto Destro: Mostra Immagine Oggetto",
-    "TIDY5E.ShowItemArt": "Mostra Immagine",
-    "TIDY5E.ShortRest": "Riposo Breve",
     "TIDY5E.HitDiceRollAverage": "Tasto Destro: Usa Valore Medio",
     "TIDY5E.JournalTabName": "Diario",
     "TIDY5E.TogglePersonalityInfo": "Attiva/disattiva le informazioni sulla personalità",
-    "TIDY5E.SheetEdit.Enable.Hint": "Abilita Modifica - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Disabilita Modifica - {description}",
-    "TIDY5E.SheetEdit.Description": "Attiva/disattiva la visibilità dei pulsanti di aggiunta/eliminazione e delle sezioni vuote",
-    "TIDY5E.SheetLock.Unlock.Hint": "Sblocca - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Blocca - {description}",
-    "TIDY5E.SheetLock.Description": "Attiva/disattiva il blocco per i campi sensibili che non dovrebbero cambiare spesso",
     "TIDY5E.ContextMenuActionEquip": "Equipaggia",
     "TIDY5E.ContextMenuActionUnequip": "Disequipaggia",
     "TIDY5E.ContextMenuActionAttune": "Sintonizza",
@@ -24,7 +14,6 @@
     "TIDY5E.AttunementItems": "Oggetti Sintonizzati",
     "TIDY5E.AddFavorite": "Aggiungi ai Preferiti",
     "TIDY5E.RemoveFavorite": "Rimuovi dai Preferiti",
-    "TIDY5E.ShowNotProficientSkills": "Mostra Non Competente",
     "TIDY5E.Search": "Cerca",
     "TIDY5E.SearchHint": "Inizia a digitare ciò che stai cercando",
     "TIDY5E.SpellAttackMod": "Mod Attacco con Incantesimo",
@@ -74,10 +63,6 @@
         "name": "Pagina Iniziale Scheda",
         "hint": "Mostra la scheda indicata quando si apre un foglio per la prima volta."
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Usa il filtro del libro degli incantesimi multiclasse",
-        "hint": "Permette di filtrare gli incantesimi per classe nella scheda del libro degli incantesimi. L'incantesimo deve essere associato a una classe utilizzando il selettore Classe nel foglio di modifica dell'incantesimo."
-    },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": "Classi aggiuntive per il filtraggio dei libri degli incantesimi multiclasse",
         "hint": "Inserisce classi aggiuntive nel filtro del libro degli incantesimi multiclasse. Aggiungi classi al menu a discesa con questa sintassi \"id1|nome1,id2|nome2\" ad esempio \"occultista|Occultista,alchimista|Alchimista\""
@@ -95,9 +80,7 @@
         "hint": "Ciò ripristinerà tutte le impostazioni predefinite del sistema di gioco attivo. Ciò influisce solo sulle impostazioni con ambito \"mondo\", come le opzioni DM.",
         "dialogs": {
             "title": "Ripristina le impostazioni del modulo",
-            "content": "Sei sicuro di voler ripristinare tutte le impostazioni del modulo sui valori predefiniti del sistema corrente? <strong>L'operazione non può essere annullata.</strong>",
-            "confirm": "Ripristina le impostazioni del modulo",
-            "cancel": "Annulla"
+            "content": "Sei sicuro di voler ripristinare tutte le impostazioni del modulo sui valori predefiniti del sistema corrente? <strong>L'operazione non può essere annullata.</strong>"
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -143,10 +126,6 @@
     "TIDY5E.VehicleInMotion": "Il Veicolo è in movimento",
     "TIDY5E.VehicleMotionless": "Il Veicolo è fermo",
     "TIDY5E.TotalCrewCount": "Equipaggio totale",
-    "TIDY5E.SheetMenu": {
-        "label": "Menu",
-        "themeLabel": "Tema"
-    },
     "TIDY5E.Actions": {
         "TabName": "Azioni"
     },

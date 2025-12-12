@@ -4,23 +4,14 @@
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e 容器卡",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e 物品卡",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 载具卡",
-    "TIDY5E.SheetImageOptionsHint": "右键单击：显示图片选项",
     "TIDY5E.ShowPortraitArt": "显示立绘",
-    "TIDY5E.ShowItemImage": "右键单击：显示物品图像",
-    "TIDY5E.ShowItemArt": "显示图像",
     "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 设置",
-    "TIDY5E.ShortRest": "短休",
     "TIDY5E.JournalTabName": "日志",
     "TIDY5E.Actions": {
         "TabName": "行动"
     },
     "TIDY5E.HitDiceRollAverage": "右键单击：取平均值",
     "TIDY5E.TogglePersonalityInfo": "切换个人信息",
-    "TIDY5E.SheetEdit.Enable.Hint": "启用编辑 - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "禁用编辑 - {description}",
-    "TIDY5E.SheetLock.Unlock.Hint": "解锁 - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "锁定 - {description}",
-    "TIDY5E.SheetLock.Description": "切换不常更改的敏感字段的锁定状态",
     "TIDY5E.ContextMenuActionEquip": "装备",
     "TIDY5E.ContextMenuActionUnequip": "未装备",
     "TIDY5E.ContextMenuActionAttune": "同调",
@@ -35,11 +26,9 @@
     "TIDY5E.AttunementItems": "同调物品",
     "TIDY5E.AddFavorite": "添加到收藏夹",
     "TIDY5E.RemoveFavorite": "取消收藏",
-    "TIDY5E.ShowNotProficientSkills": "显示未熟练",
     "TIDY5E.Search": "搜索",
     "TIDY5E.Group.EmptyMembersTabHint": "此群组为空。从侧边栏拖放一个角色以添加成员。",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 小队卡",
-    "TIDY5E.SheetEdit.Description": "切换添加/删除按钮和空白分区的可见性",
     "TIDY5E.ContextMenuActionUnprepare": "未准备",
     "TIDY5E.SpellSourceIdentifierLabelHint": "拥有此法术的角色不属于此处指定的源职业。",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - 法术攻击",
@@ -206,10 +195,6 @@
         "name": "默认死亡豁免掷骰",
         "hint": "确定进行死亡豁免掷骰时所使用的默认骰子类型。"
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "使用兼职法术书筛选器",
-        "hint": "在法术书标签卡中，允许按职业类别筛选法术。必须使用法术编辑卡中的职业选择器将法术与某个职业相关联。"
-    },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "允许准备戏法",
         "hint": "塔莎的万事坩埚中提出的“戏法公式”可选规则允许法师在长休后重新准备戏法，其运作机制与准备环位法术相同。以此方式准备的戏法不计入每日法术准备数量上限。"
@@ -275,9 +260,7 @@
         "hint": "此操作将把所有配置重置为当前激活游戏系统的默认值。该重置仅作用于全局范围的设置，例如GM选项。",
         "dialogs": {
             "title": "重置模组设置",
-            "content": "你确定要将所有模组设置重置为当前系统的默认值吗？<strong>这无法撤销。</strong>",
-            "confirm": "重置模组设置",
-            "cancel": "取消"
+            "content": "你确定要将所有模组设置重置为当前系统的默认值吗？<strong>这无法撤销。</strong>"
         }
     }
 }

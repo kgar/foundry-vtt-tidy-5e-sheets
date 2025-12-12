@@ -1,18 +1,8 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "jobb klikk: karakterkép mutatás",
     "TIDY5E.ShowPortraitArt": "portré mutatás",
-    "TIDY5E.ShowItemImage": "right click: show item art",
-    "TIDY5E.ShowItemArt": "show image",
-    "TIDY5E.ShortRest": "Rövid Pihenő",
     "TIDY5E.HitDiceRollAverage": "Jobb Klikk: Átlag",
     "TIDY5E.JournalTabName": "Napló",
     "TIDY5E.TogglePersonalityInfo": "Személyiség Info Ki/Be",
-    "TIDY5E.SheetEdit.Enable.Hint": "",
-    "TIDY5E.SheetEdit.Disable.Hint": "",
-    "TIDY5E.SheetEdit.Description": "A hozzáadás/törlés gombok és üres szekciók láthatóságát kapcsolja ki/be",
-    "TIDY5E.SheetLock.Unlock.Hint": "",
-    "TIDY5E.SheetLock.Lock.Hint": "",
-    "TIDY5E.SheetLock.Description": "",
     "TIDY5E.ContextMenuActionEquip": "Tárgy Felszerelése",
     "TIDY5E.ContextMenuActionUnequip": "Tárgy Leszerelése",
     "TIDY5E.ContextMenuActionAttune": "Összehangolódás",
@@ -24,7 +14,6 @@
     "TIDY5E.AttunementItems": "Összehangolt Tárgyak",
     "TIDY5E.AddFavorite": "Hozzáadás a Kedvencekhez",
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
-    "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.Search": "",
     "TIDY5E.SearchHint": "Kezdd el írni, amit keresel.",
     "TIDY5E.SpellAttackMod": "Támadás Mód.",
@@ -74,10 +63,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
         "hint": null
@@ -95,9 +80,7 @@
         "hint": "",
         "dialogs": {
             "title": "",
-            "content": "",
-            "confirm": "",
-            "cancel": ""
+            "content": ""
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -128,10 +111,6 @@
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
     "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.SheetMenu": {
-        "label": "",
-        "themeLabel": ""
-    },
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.Actions": {
         "TabName": ""

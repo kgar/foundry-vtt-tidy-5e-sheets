@@ -7,10 +7,7 @@
   "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Vehicle Sheet",
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Group Sheet",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Encounter Sheet",
-  "TIDY5E.SheetImageOptionsHint": "Right Click: Show Image Options",
   "TIDY5E.ShowPortraitArt": "Show Portrait",
-  "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
-  "TIDY5E.ShowItemArt": "Show Image",
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
 
   "TIDY5E.AddSpecific": "Add {name}",
@@ -33,7 +30,6 @@
   "TIDY5E.Group.EmptyMembersTabHint": "This group is empty. Drop an actor from the sidebar to add a member.",
   "TIDY5E.Group.PrimaryParty.Label": "Primary Party",
 
-  "TIDY5E.ShortRest": "Short Rest",
   "TIDY5E.HitDiceRollAverage": "Right Click: Apply Average",
 
   "TIDY5E.JournalTabName": "Journal",
@@ -49,15 +45,9 @@
   "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
   "TIDY5E.TogglePersonalityInfo": "Toggle Personality Info",
 
-  "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
-  "TIDY5E.SheetEdit.Disable.Hint": "Disable Edit - {description}",
-  "TIDY5E.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
   "TIDY5E.SheetMode.Edit": "Switch to Play Mode",
   "TIDY5E.SheetMode.Play": "Switch to Edit Mode",
 
-  "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
-  "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
-  "TIDY5E.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
   "TIDY5E.SheetLock.Empty.Hint": "Start by adding a class and your first items. Then, use the item menu or right-click and choose \"Add to Sheet tab\" to add them here.",
 
   "TIDY5E.ContextMenuActionEquip": "Equip",
@@ -89,8 +79,6 @@
   "TIDY5E.AddFavorite": "Add Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
   "TIDY5E.EmptyFavorites": "Right-click and Favorite, or drag anything from your sheet here to for quick access.",
-
-  "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
 
   "TIDY5E.Ability.EditScore.label": "Edit Score",
 
@@ -275,10 +263,6 @@
     "name": "Default Death Save Roll",
     "hint": "Determines the default roll type to use when rolling a death saving throw."
   },
-  "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-    "name": "Use Multiclass Spellbook Filter",
-    "hint": "Allows filtering spells by class in the spellbook tab. The spell must be associated with a class using the Class selector on the spell edit sheet."
-  },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "Allow Cantrips to be Prepared",
     "hint": "The \"cantrip formulas\" optional rule from Tasha's Cauldron of Everything allows wizards to prepare cantrips after a long rest in the same way that they do with leveled spells. Prepared cantrips do not count toward total prepared spells."
@@ -319,9 +303,7 @@
     "hint": "This will reset all of the settings of back to the active game system's default. This affects \"world\"-scoped settings only, such as GM options.",
     "dialogs": {
       "title": "Reset Module Settings",
-      "content": "Are you sure you want to reset all of the module settings to the current system's defaults? <strong>This cannot be undone.</strong>",
-      "confirm": "Reset Module Settings",
-      "cancel": "Cancel"
+      "content": "Are you sure you want to reset all of the module settings to the current system's defaults? <strong>This cannot be undone.</strong>"
     }
   },
   "TIDY5E.Selection": {
@@ -401,10 +383,6 @@
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals",
   "TIDY5E.TotalCrewCount": "Total Crew",
-  "TIDY5E.SheetMenu": {
-    "label": "Menu",
-    "themeLabel": "Theme"
-  },
   "TIDY5E.SortMode.ActionListDefault": "Default Action List Sort",
   "TIDY5E.Commands.ExpandAll": "Expand All",
   "TIDY5E.Commands.CollapseAll": "Collapse All",

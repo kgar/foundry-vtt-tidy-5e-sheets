@@ -7,10 +7,7 @@
   "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 乗り物シート",
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e グループシート",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e 遭遇シート",
-  "TIDY5E.SheetImageOptionsHint": "右クリック: 画像オプション表示",
   "TIDY5E.ShowPortraitArt": "画像表示",
-  "TIDY5E.ShowItemImage": "右クリック: 画像表示",
-  "TIDY5E.ShowItemArt": "画像表示",
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 設定",
 
   "TIDY5E.AddSpecific": "{name}追加",
@@ -33,7 +30,6 @@
   "TIDY5E.Group.EmptyMembersTabHint": "このグループは空です。サイドバーからキャラクターをドロップしてメンバーを追加してください。",
   "TIDY5E.Group.PrimaryParty.Label": "メインパーティ",
 
-  "TIDY5E.ShortRest": "小休憩",
   "TIDY5E.HitDiceRollAverage": "右クリック：平均を適用",
 
   "TIDY5E.JournalTabName": "記録",
@@ -49,15 +45,9 @@
   "TIDY5E.JournalEntry.NewTitle": "資料{number}",
   "TIDY5E.TogglePersonalityInfo": "情報表示の切替",
 
-  "TIDY5E.SheetEdit.Enable.Hint": "編集を有効化 - {description}",
-  "TIDY5E.SheetEdit.Disable.Hint": "編集を無効化 - {description}",
-  "TIDY5E.SheetEdit.Description": "追加/削除ボタンと空のセクションの表示を切り替えます",
   "TIDY5E.SheetMode.Edit": "プレイモードに変更",
   "TIDY5E.SheetMode.Play": "編集モードに変更",
 
-  "TIDY5E.SheetLock.Unlock.Hint": "アンロック - {description}",
-  "TIDY5E.SheetLock.Lock.Hint": "ロック - {description}",
-  "TIDY5E.SheetLock.Description": "頻繁に変更すべきでないフィールドのロックを切り替えます",
   "TIDY5E.SheetLock.Empty.Hint": "クラスと最初のアイテムを追加することから始めましょう。次に、アイテムメニューまたは右クリックから「シートタブに追加」を選んでここに追加します。",
 
   "TIDY5E.ContextMenuActionEquip": "装備",
@@ -89,8 +79,6 @@
   "TIDY5E.AddFavorite": "お気に入り追加",
   "TIDY5E.RemoveFavorite": "お気に入りから削除",
   "TIDY5E.EmptyFavorites": "右クリックでお気に入りに追加するか、シートから何かをドラッグしてクイックアクセスできるようにしてください。",
-
-  "TIDY5E.ShowNotProficientSkills": "未習熟を表示",
 
   "TIDY5E.Ability.EditScore.label": "値を編集",
 
@@ -275,10 +263,6 @@
     "name": "デフォルトの死亡セーヴロール",
     "hint": "死亡セーヴィング・スローをロールするときに使用するデフォルトのロールモードを決定します。"
   },
-  "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-    "name": "マルチクラス呪文フィルタを使用",
-    "hint": "呪文書タブでクラス別に呪文をフィルタリングできます。呪文編集シートのクラスセレクタを使用して、呪文をクラスに関連付ける必要があります。"
-  },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "初級呪文も「準備」できる",
     "hint": "『ターシャの万物釜』のオプション･ルール「初級呪文の定式」により、ウィザードは大休憩後にレベル呪文と同様に初級呪文を準備できます。準備した初級呪文は準備済み呪文の総数には含まれません。"
@@ -319,9 +303,7 @@
     "hint": "シートの設定をデフォルトに戻します。",
     "dialogs": {
       "title": "モジュール設定をリセット",
-      "content": "すべてのモジュール設定を現在のシステムのデフォルトにリセットしてもよろしいですか？ <strong>この操作は元に戻せません。</strong>",
-      "confirm": "モジュール設定をリセット",
-      "cancel": "キャンセル"
+      "content": "すべてのモジュール設定を現在のシステムのデフォルトにリセットしてもよろしいですか？ <strong>この操作は元に戻せません。</strong>"
     }
   },
   "TIDY5E.Selection": {
@@ -401,10 +383,6 @@
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "ドラフト･アニマル",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "ドラフト･アニマル",
   "TIDY5E.TotalCrewCount": "総乗組員数",
-  "TIDY5E.SheetMenu": {
-    "label": "メニュー",
-    "themeLabel": "テーマ"
-  },
   "TIDY5E.SortMode.ActionListDefault": "デフォルトのアクションソート",
   "TIDY5E.Commands.ExpandAll": "すべて展開",
   "TIDY5E.Commands.CollapseAll": "すべて縮小",

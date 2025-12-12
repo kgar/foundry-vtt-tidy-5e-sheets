@@ -6,14 +6,10 @@
     "TIDY5E.Tidy5eItemSheetQuadrone": "Ficha de Elemento Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Ficha de Veículo Tidy 5e",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Ficha de Grupo Tidy 5e",
-    "TIDY5E.SheetImageOptionsHint": "Clique Dir.: Mostrar Opções de Imagem",
     "TIDY5E.ShowPortraitArt": "Mostrar Avatar",
-    "TIDY5E.ShowItemImage": "Clique Dir.: Mostrar Arte do Elemento",
-    "TIDY5E.ShowItemArt": "Mostrar Imagem",
     "TIDY5E.Tidy5eSettings": "Configurações Tidy 5e Sheets",
     "TIDY5E.AddSpecific": "Adicionar {name}",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vazio. Solte um ator da barra lateral para adicionar um membro.",
-    "TIDY5E.ShortRest": "Descanso Curto",
     "TIDY5E.HitDiceRollAverage": "Clique Direito: Aplicar Média",
     "TIDY5E.JournalTabName": "Diário",
     "TIDY5E.StatblockTabName": "Bloco de Estatísticas",
@@ -22,12 +18,6 @@
     },
     "TIDY5E.JournalEntry.NewTitle": "Entrada de Diário {number}",
     "TIDY5E.TogglePersonalityInfo": "Alternar Informações de Personalidade",
-    "TIDY5E.SheetEdit.Enable.Hint": "Ativar Edição - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Desativar Edição - {description}",
-    "TIDY5E.SheetEdit.Description": "Alternar visibilidade dos botões adicionar/apagar e secções vazias",
-    "TIDY5E.SheetLock.Unlock.Hint": "Destrancar - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Trancar - {description}",
-    "TIDY5E.SheetLock.Description": "Alternar bloqueio para campos sensíveis que não devem ser alterados frequentemente",
     "TIDY5E.SheetLock.Empty.Hint": "Comece adicionando uma classe e os seus primeiros elementos. Em seguida, use o menu de elementos ou clique com o botão direito e escolha \"Adicionar à guia Ficha\" para adicioná-los aqui.",
     "TIDY5E.ContextMenuActionEquip": "Equipar",
     "TIDY5E.ContextMenuActionUnequip": "Desequipar",
@@ -50,7 +40,6 @@
     "TIDY5E.AddFavorite": "Adicionar aos Favoritos",
     "TIDY5E.RemoveFavorite": "Remover dos Favoritos",
     "TIDY5E.EmptyFavorites": "Clique com o botão direito e adicione aos Favoritos, ou arraste qualquer coisa da sua ficha para cá para acesso rápido.",
-    "TIDY5E.ShowNotProficientSkills": "Mostrar Não-Proficiente",
     "TIDY5E.Ability.EditScore.label": "Editar Valor",
     "TIDY5E.EmptyTools": "Sem proficiência em ferramentas.",
     "TIDY5E.Search": "Procurar",
@@ -204,10 +193,6 @@
         "name": "Rolagem Padrão de Salvaguarda Contra Morte",
         "hint": "Determina o tipo de rolagem padrão a ser usada ao realizar uma salvaguarda contra morte."
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Usar Filtro de Grimório Multiclasse",
-        "hint": "Permite filtrar as magias por classe, na guia Grimório. A magia deve ser associado a uma classe usando o seletor Classe na ficha da magia."
-    },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Permitir Preparação de Truques",
         "hint": "A regra opcional \"Fórmulas de Truques\" do O Caldeirão de Todas as Coisas de Tasha, permite que magos preparem truques após um descanso longo da mesma forma que fazem com magias de nível. Truques preparados não contam para o máximo de magias preparadas."
@@ -244,9 +229,7 @@
         "hint": "Isto redefinirá todas as configurações de volta para o padrão do sistema de jogo ativo. Isto afeta apenas as configurações de escopo \"mundo\", como opções do Mestre.",
         "dialogs": {
             "title": "Redefinir Configurações do Módulo",
-            "content": "Tem certeza que deseja redefinir todas as configurações do módulo para os padrões do sistema atual? <strong>Isto não pode ser desfeito.</strong>",
-            "confirm": "Redefinir Configurações do Módulo",
-            "cancel": "Cancelar"
+            "content": "Tem certeza que deseja redefinir todas as configurações do módulo para os padrões do sistema atual? <strong>Isto não pode ser desfeito.</strong>"
         }
     },
     "TIDY5E.Selection": {
@@ -324,10 +307,6 @@
     "TIDY5E.VehicleInMotion": "O veículo está em movimento",
     "TIDY5E.VehicleMotionless": "O veículo está imóvel",
     "TIDY5E.TotalCrewCount": "Tripulação Total",
-    "TIDY5E.SheetMenu": {
-        "label": "Menu",
-        "themeLabel": "Tema"
-    },
     "TIDY5E.SortMode.ActionListDefault": "Classificação da Lista de Ações Padrão",
     "TIDY5E.Commands.ExpandAll": "Expandir Tudo",
     "TIDY5E.Commands.CollapseAll": "Recolher Tudo",

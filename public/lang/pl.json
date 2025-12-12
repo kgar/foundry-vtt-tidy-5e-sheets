@@ -1,7 +1,4 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż opcje obrazu",
-    "TIDY5E.ShowItemImage": "Prawy przycisk myszy: pokaż grafikę przedmiotu",
-    "TIDY5E.ShowItemArt": "Pokaż obraz",
     "TIDY5E.ShowPortraitArt": "Pokaż portret",
     "TIDY5E.TabConfiguration": {
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
@@ -38,18 +35,11 @@
     "TIDY5E.Actions": {
         "TabName": "Akcje"
     },
-    "TIDY5E.SheetLock.Lock.Hint": "Zablokuj - {description}",
     "TIDY5E.ContextMenuActionEquip": "Wyposaż",
     "TIDY5E.ContextMenuActionUnequip": "Zdejmij",
-    "TIDY5E.ShortRest": "Krótki odpoczynek",
     "TIDY5E.HitDiceRollAverage": "Prawy przycisk myszy: zastosuj średnią",
     "TIDY5E.JournalTabName": "Dziennik",
     "TIDY5E.TogglePersonalityInfo": "Przełącz Informacje o Charakterze",
-    "TIDY5E.SheetEdit.Disable.Hint": "Wyłącz Edycję - {description}",
-    "TIDY5E.SheetEdit.Enable.Hint": "Włącz Edycję - {description}",
-    "TIDY5E.SheetEdit.Description": "Przełącz widoczność przycisków dodawania/usuwania oraz pustych sekcji",
-    "TIDY5E.SheetLock.Unlock.Hint": "Odblokuj - {description}",
-    "TIDY5E.SheetLock.Description": "Przełącz blokadę wrażliwych pól, które nie powinny być często modyfikowane",
     "TIDY5E.ContextMenuActionAttune": "Zestrój",
     "TIDY5E.ContextMenuActionUnattune": "Rozstrój",
     "TIDY5E.ContextMenuActionPrepare": "Przygotuj",
@@ -57,7 +47,6 @@
     "TIDY5E.ContextMenuActionEdit": "Edytuj",
     "TIDY5E.ContextMenuActionDelete": "Usuń",
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
-    "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
     "TIDY5E.Search": "Szukaj",
     "TIDY5E.SearchHint": "Zacznij pisać, żeby pokazać wyniki zapytania",
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
@@ -103,10 +92,6 @@
     },
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Test Ataku Czarem Wręcz",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Test Ataku Czarem Wręcz",
-    "TIDY5E.SheetMenu": {
-        "label": "Menu",
-        "themeLabel": "Motyw"
-    },
     "TIDY5E.Commands.CollapseAll": "Zwiń wszystko",
     "TIDY5E.ActorSpellAttackFlavorText": "Test Ataku Czarem",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Test Ataku Dystansowego Czarem",
@@ -130,9 +115,7 @@
     "TIDY5E.ItemFilters.Filter.Other": "Inne",
     "TIDY5E.Settings.Reset": {
         "dialogs": {
-            "cancel": "Anuluj",
             "title": "Resetowanie ustawień modułu",
-            "confirm": "Resetowanie ustawień modułu",
             "content": "Czy na pewno chcesz zresetować wszystkie ustawienia modułu do bieżących ustawień domyślnych systemu? <strong>Tego procesu nie można cofnąć.</strong>"
         },
         "name": "Przywracanie ustawień domyślnych",
@@ -246,10 +229,6 @@
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Pozwól przygotowywać sztuczki",
         "hint": "Opcjonalna zasada „formuły sztuczek” z Tasha's Cauldron of Everything pozwala magom przygotowywać sztuczki po długim odpoczynku w taki sam sposób, w jaki robią to z zaklęciami poziomowymi. Przygotowane sztuczki nie wliczają się do całkowitej liczby przygotowanych zaklęć."
-    },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Użyj filtra wieloklasowej księgi czarów",
-        "hint": "Umożliwia filtrowanie zaklęć według klasy w zakładce księga czarów. Zaklęcie musi być powiązane z klasą za pomocą selektora klasy na arkuszu edycji zaklęć."
     },
     "TIDY5E.Settings.ActionList.Header": "Lista akcji",
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {

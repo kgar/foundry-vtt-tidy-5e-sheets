@@ -6,14 +6,10 @@
     "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e 아이템 시트",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 탑승물 시트",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 그룹 시트",
-    "TIDY5E.SheetImageOptionsHint": "우클릭: 이미지 옵션 보기",
     "TIDY5E.ShowPortraitArt": "포트레이트 보기",
-    "TIDY5E.ShowItemImage": "우클릭: 아이템 이미지 보기",
-    "TIDY5E.ShowItemArt": "이미지 보기",
     "TIDY5E.Tidy5eSettings": "Tidy 5e 시트 설정",
     "TIDY5E.AddSpecific": "{name} 추가",
     "TIDY5E.Group.EmptyMembersTabHint": "이 그룹은 비었습니다. 멤버를 추가하려면 사이드바에서 액터를 드래그하세요.",
-    "TIDY5E.ShortRest": "짧은 휴식",
     "TIDY5E.HitDiceRollAverage": "우클릭: 평균 적용",
     "TIDY5E.JournalTabName": "저널",
     "TIDY5E.StatblockTabName": "능력치 블록",
@@ -22,12 +18,6 @@
     },
     "TIDY5E.JournalEntry.NewTitle": "저널 항목 {number}",
     "TIDY5E.TogglePersonalityInfo": "성격 정보 전환",
-    "TIDY5E.SheetEdit.Enable.Hint": "편집 활성 - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "편집 비활성 - {description}",
-    "TIDY5E.SheetEdit.Description": "추가/삭제 버튼과 빈 섹션의 표시 여부를 전환",
-    "TIDY5E.SheetLock.Unlock.Hint": "잠금 해제 - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "잠금 - {description}",
-    "TIDY5E.SheetLock.Description": "바뀌면 안 되는 중요 정보 편집을 잠그기",
     "TIDY5E.ContextMenuActionEquip": "아이템 착용",
     "TIDY5E.ContextMenuActionUnequip": "아이템 해제",
     "TIDY5E.ContextMenuActionAttune": "아이템 조율",
@@ -48,7 +38,6 @@
     "TIDY5E.AttunementItems": "조율한 아이템",
     "TIDY5E.AddFavorite": "즐겨찾기에 추가",
     "TIDY5E.RemoveFavorite": "줄겨찾기에서 삭제",
-    "TIDY5E.ShowNotProficientSkills": "비숙련 항목 표시",
     "TIDY5E.Ability.EditScore.label": "점수 편집",
     "TIDY5E.Search": "검색",
     "TIDY5E.SearchHint": "찾고자 하는 것을 입력합니다.",
@@ -201,10 +190,6 @@
         "name": "기본 죽음 내성 굴림",
         "hint": "죽음 내성 굴림을 할 때의 기본 굴림을 지정합니다."
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "다중클래스 주문책 필터 사용",
-        "hint": "주문책 탭에서 클래스별로 주문을 필터링할 수 있습니다. 주문은 주문 편집 시트의 클래스 선택기를 사용하여 클래스와 연결해야 합니다."
-    },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "소마법 준비 허용",
         "hint": "타샤의 만물 가마솥에 나오는 \"소마법 공식\" 선택 규칙을 사용하면 위저드는 레벨 주문과 같은 방식으로 긴 휴식 후 소마법을 준비할 수 있습니다. 준비된 소마법은 총 준비된 주문 수에 포함되지 않습니다."
@@ -241,9 +226,7 @@
         "hint": "모든 설정이 활성 게임 시스템의 기본값으로 초기화됩니다. 이는 GM 옵션과 같은 \"월드\" 범위 설정에만 영향을 줍니다.",
         "dialogs": {
             "title": "모듈 설정 초기화",
-            "content": "모든 모듈 설정을 현재 시스템의 기본값으로 재설정하시겠습니까? <strong>이 설정은 되돌릴 수 없습니다.</strong>",
-            "confirm": "모듈 설정 초기화",
-            "cancel": "취소"
+            "content": "모든 모듈 설정을 현재 시스템의 기본값으로 재설정하시겠습니까? <strong>이 설정은 되돌릴 수 없습니다.</strong>"
         }
     },
     "TIDY5E.Selection": {
@@ -320,10 +303,6 @@
     "TIDY5E.VehicleInMotion": "탑승물은 움직입니다.",
     "TIDY5E.VehicleMotionless": "탑승물은 움직이지 않습니다.",
     "TIDY5E.TotalCrewCount": "전체 승객",
-    "TIDY5E.SheetMenu": {
-        "label": "메뉴",
-        "themeLabel": "테마"
-    },
     "TIDY5E.SortMode.ActionListDefault": "기본 행동 목록 정렬",
     "TIDY5E.Commands.ExpandAll": "모두 열기",
     "TIDY5E.Commands.CollapseAll": "모두 닫기",

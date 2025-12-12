@@ -1,14 +1,9 @@
 {
     "TIDY5E.AttunementItems": "Налаштовано на предмети",
-    "TIDY5E.ShortRest": "Короткий Відпочинок",
     "TIDY5E.Actions": {
         "TabName": "Дія"
     },
-    "TIDY5E.ShowNotProficientSkills": "Показувати відсутні володіння",
-    "TIDY5E.SheetImageOptionsHint": "Права клавіша миші: Показати опції зображення",
     "TIDY5E.ShowPortraitArt": "Показати Портрет",
-    "TIDY5E.ShowItemImage": "Права клавіша миші: Показати зображення елемента",
-    "TIDY5E.ShowItemArt": "Показати Зображення",
     "TIDY5E.StandardExhaustion2": "Швидкість зменшена вдвічі",
     "TIDY5E.StandardExhaustion3": "Перешкода для Кидків Атаки та Рятівних Кидків",
     "TIDY5E.StandardExhaustion4": "Макс. к-сть Пунктів Здоров'я зменшена вдвічі",
@@ -29,12 +24,6 @@
     "TIDY5E.HitDiceRollAverage": "Права кнопка миші: Застосувати середнє",
     "TIDY5E.JournalTabName": "Журнал",
     "TIDY5E.TogglePersonalityInfo": "Перемкнути Інформацію Персонажа",
-    "TIDY5E.SheetEdit.Enable.Hint": "Увімкнути Редагування - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Вимкнути Редагування - {description}",
-    "TIDY5E.SheetEdit.Description": "Перемикання видимості кнопок додавання/видалення та порожніх розділів",
-    "TIDY5E.SheetLock.Unlock.Hint": "Розблокувати - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Заблокувати - {description}",
-    "TIDY5E.SheetLock.Description": "Перемкнути блокування для чутливих полів, які не слід часто змінювати",
     "TIDY5E.ContextMenuActionEquip": "Спорядити",
     "TIDY5E.ContextMenuActionUnequip": "Зняти спорядження",
     "TIDY5E.ContextMenuActionAttune": "Налаштуватися",
@@ -175,10 +164,6 @@
         "hint": "Не дозволяє нікому окрім ГМа змінювати кількість валюти персонажа."
     },
     "TIDY5E.Settings.ActionList.Header": "Список дії",
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Використовувати фільтр чар мультикласу",
-        "hint": "Дозволяє фільтрувати чари за класом на вкладці чар. Чари мають бути пов’язані з класом за допомогою селектора класу на аркуші редагування чар."
-    },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Дозволяти підготовлювати замовляння",
         "hint": "Необов’язкове правило «формули замовлянь» з посібника «Tasha's Cauldron of Everything» дозволяє чаротворцям підготовлювати замовляння після тривалого відпочинку, так само як вони це роблять із рівневими чарами. Підготовлені замовляння не враховуються до загальної кількості підготовлених чар."
@@ -202,8 +187,6 @@
     "TIDY5E.Settings.Reset": {
         "name": "Скидання налаштувань до усталених",
         "dialogs": {
-            "confirm": "Скидання налаштувань модуля",
-            "cancel": "Скасувати",
             "title": "Скидання налаштувань модуля",
             "content": "Ви впевнені, що хочете скинути всі налаштування модуля до усталених налаштувань поточної системи? <strong>Це не можна скасувати.</strong>"
         },
@@ -267,10 +250,6 @@
         "ItemSidebarBackground.title": "Фон бічної панелі елемента"
     },
     "TIDY5E.TotalCrewCount": "Всього екіпажу",
-    "TIDY5E.SheetMenu": {
-        "label": "Меню",
-        "themeLabel": "Тема"
-    },
     "TIDY5E.ItemFilters.CanCast": "Можна створити",
     "TIDY5E.ItemFilters.ClearAll": "Очистити всі",
     "TIDY5E.ItemFilters.Filter.Other": "Інше",

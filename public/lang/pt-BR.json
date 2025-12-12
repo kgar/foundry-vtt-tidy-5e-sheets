@@ -1,22 +1,12 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "Clique Dir.: Mostrar Opções de Imagem",
     "TIDY5E.ShowPortraitArt": "Mostrar Avatar",
-    "TIDY5E.ShowItemImage": "Clique Dir.: Mostrar Arte do Item",
-    "TIDY5E.ShowItemArt": "Mostrar Imagem",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vazio. Solte um ator da barra lateral para adicionar um membro.",
-    "TIDY5E.ShortRest": "Descanso Curto",
     "TIDY5E.HitDiceRollAverage": "Clique Direito: Aplicar Média",
     "TIDY5E.JournalTabName": "Diário",
     "TIDY5E.Actions": {
         "TabName": "Ações"
     },
     "TIDY5E.TogglePersonalityInfo": "Alternar Informações de Personalidade",
-    "TIDY5E.SheetEdit.Enable.Hint": "Ativar Edição - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Desativar Edição - {description}",
-    "TIDY5E.SheetEdit.Description": "Alternar visibilidade dos botões adicionar/apagar e seções vazias",
-    "TIDY5E.SheetLock.Unlock.Hint": "Destrancar - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Trancar - {description}",
-    "TIDY5E.SheetLock.Description": "Alternar bloqueio para campos sensíveis que não devem ser alterados frequentemente",
     "TIDY5E.ContextMenuActionEquip": "Equipar",
     "TIDY5E.ContextMenuActionUnequip": "Desequipar",
     "TIDY5E.ContextMenuActionAttune": "Sintonizar",
@@ -29,7 +19,6 @@
     "TIDY5E.AttunementItems": "Itens Sintonizados",
     "TIDY5E.AddFavorite": "Adicionar aos Favoritos",
     "TIDY5E.RemoveFavorite": "Remover dos Favoritos",
-    "TIDY5E.ShowNotProficientSkills": "Mostrar Não-Proficiente",
     "TIDY5E.Search": "Procurar",
     "TIDY5E.SearchHint": "Digite para exibir os resultados da busca",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Ataque Mágico",
@@ -144,10 +133,6 @@
         "name": "Aba Inicial da Ficha",
         "hint": "Mostra a aba indicada ao abrir uma ficha pela primeira vez."
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Usar Filtro de Grimório Multiclasse",
-        "hint": "Permite filtrar as magias por classe, na aba Grimório. A magia deve ser associado a uma classe usando o seletor Classe na ficha da magia."
-    },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Permitir Preparação de Truques",
         "hint": "A regra opcional \"Fórmulas de Truques\" do O Caldeirão de Todas as Coisas de Tasha, permite que magos preparem truques após um descanso longo da mesma forma que fazem com magias de nível. Truques preparados não contam para o máximo de magias preparadas."
@@ -178,9 +163,7 @@
         "hint": "Isso redefinirá todas as configurações de volta para o padrão do sistema de jogo ativo. Isso afeta apenas as configurações de escopo \"mundo\", como opções do Mestre.",
         "dialogs": {
             "title": "Redefinir Configurações do Módulo",
-            "content": "Tem certeza que deseja redefinir todas as configurações do módulo para os padrões do sistema atual? <strong>Isso não pode ser desfeito.</strong>",
-            "confirm": "Redefinir Configurações do Módulo",
-            "cancel": "Cancelar"
+            "content": "Tem certeza que deseja redefinir todas as configurações do módulo para os padrões do sistema atual? <strong>Isso não pode ser desfeito.</strong>"
         }
     },
     "TIDY5E.Selection": {
@@ -253,10 +236,6 @@
     "TIDY5E.VehicleInMotion": "O veículo está em movimento",
     "TIDY5E.VehicleMotionless": "O veículo está imóvel",
     "TIDY5E.TotalCrewCount": "Tripulação Total",
-    "TIDY5E.SheetMenu": {
-        "label": "Menu",
-        "themeLabel": "Tema"
-    },
     "TIDY5E.SortMode.ActionListDefault": "Classificação da Lista de Ações Padrão",
     "TIDY5E.Commands.ExpandAll": "Expandir Tudo",
     "TIDY5E.Commands.CollapseAll": "Recolher Tudo",

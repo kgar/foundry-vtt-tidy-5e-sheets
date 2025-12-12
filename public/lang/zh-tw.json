@@ -1,18 +1,8 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "右鍵單擊: 顯示角色立繪",
     "TIDY5E.ShowPortraitArt": "顯示立繪",
-    "TIDY5E.ShowItemImage": "right click: show item art",
-    "TIDY5E.ShowItemArt": "show image",
-    "TIDY5E.ShortRest": "短休",
     "TIDY5E.HitDiceRollAverage": "Right Click: Average",
     "TIDY5E.JournalTabName": "日誌",
     "TIDY5E.TogglePersonalityInfo": "切換個人信息顯示",
-    "TIDY5E.SheetEdit.Enable.Hint": "",
-    "TIDY5E.SheetEdit.Disable.Hint": "",
-    "TIDY5E.SheetEdit.Description": "切換添加/刪除按鈕和未空區塊的顯示",
-    "TIDY5E.SheetLock.Unlock.Hint": "",
-    "TIDY5E.SheetLock.Lock.Hint": "",
-    "TIDY5E.SheetLock.Description": "",
     "TIDY5E.ContextMenuActionEquip": "",
     "TIDY5E.ContextMenuActionUnequip": "",
     "TIDY5E.ContextMenuActionAttune": "",
@@ -24,7 +14,6 @@
     "TIDY5E.AttunementItems": "已同調物品",
     "TIDY5E.AddFavorite": "添加到收藏",
     "TIDY5E.RemoveFavorite": "從收藏中移除",
-    "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.Search": "",
     "TIDY5E.SearchHint": "輸入你想要搜索的東西就夠了。",
     "TIDY5E.SpellAttackMod": "攻擊加值",
@@ -74,10 +63,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
         "hint": null
@@ -95,9 +80,7 @@
         "hint": "",
         "dialogs": {
             "title": "",
-            "content": "",
-            "confirm": "",
-            "cancel": ""
+            "content": ""
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -128,10 +111,6 @@
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
     "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.SheetMenu": {
-        "label": "",
-        "themeLabel": ""
-    },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "hint": "",
         "name": ""

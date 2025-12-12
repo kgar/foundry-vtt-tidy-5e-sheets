@@ -1,18 +1,8 @@
 {
-    "TIDY5E.SheetImageOptionsHint": "Click Derecho: Mostrar Opciones de la Imagen",
     "TIDY5E.ShowPortraitArt": "Mostrar Retrato",
-    "TIDY5E.ShowItemImage": "Click Derecho: Mostrar Arte del Objeto",
-    "TIDY5E.ShowItemArt": "Mostrar Imagen",
-    "TIDY5E.ShortRest": "Descanso Corto",
     "TIDY5E.HitDiceRollAverage": "Click Derecho: Aplicar Promedio",
     "TIDY5E.JournalTabName": "Diario",
     "TIDY5E.TogglePersonalityInfo": "Alternar Información de Personalidad",
-    "TIDY5E.SheetEdit.Enable.Hint": "Habilitar Edición - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Deshabilitar Edición - {description}",
-    "TIDY5E.SheetEdit.Description": "Alternar la visibilidad de los botones añadir/eliminar de las secciones vacías",
-    "TIDY5E.SheetLock.Unlock.Hint": "Desbloquear - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Bloquear - {description}",
-    "TIDY5E.SheetLock.Description": "Alterna el bloqueo para campos sensibles que no deberían cambiar con frecuencia",
     "TIDY5E.ContextMenuActionEquip": "Equipar",
     "TIDY5E.ContextMenuActionUnequip": "Desequipar",
     "TIDY5E.ContextMenuActionAttune": "Sintonizarse al Objeto",
@@ -24,7 +14,6 @@
     "TIDY5E.AttunementItems": "Objetos Sintonizados",
     "TIDY5E.AddFavorite": "Añadir Favorito",
     "TIDY5E.RemoveFavorite": "Eliminar Favorito",
-    "TIDY5E.ShowNotProficientSkills": "Mostrar no competente",
     "TIDY5E.Search": "Buscar",
     "TIDY5E.SearchHint": "Comienza a escribir lo que estás buscando",
     "TIDY5E.SpellAttackMod": "Modificador de Ataque con Hechizos",
@@ -90,10 +79,6 @@
         "name": "Pestaña inicial en hoja",
         "hint": "Muestra la pestaña indicada al abrir una hoja por primera vez."
     },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Usar filtro de hechizos multiclase",
-        "hint": "Permite filtrar hechizos por clase en la pestaña de hechizos. El hechizo debe estar asociado con una clase usando el selector de clase en la hoja de edición de hechizos."
-    },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": "Clases adicionales para el filtrado de hechizos multiclase",
         "hint": "Coloca clases adicionales en el filtro de hechizos multiclase. Agrega clases al menú desplegable con esta sintaxis \"id1|name1,id2|name2\", p. \"occultist|Occultist,alchemist|Alchemist\""
@@ -111,9 +96,7 @@
         "hint": "Esto restablecerá todas las configuraciones a las predeterminadas del sistema de juego activo. Esto afecta únicamente a las configuraciones de ámbito \"mundo\", como las opciones de GM.",
         "dialogs": {
             "title": "Restablecer la configuración del módulo",
-            "content": "¿Está seguro de que deseas restablecer todas las configuraciones del módulo a los valores predeterminados del sistema actual? <strong>Esto no se puede deshacer.</strong>",
-            "confirm": "Restablecer la configuración del módulo",
-            "cancel": "Cancelar"
+            "content": "¿Está seguro de que deseas restablecer todas las configuraciones del módulo a los valores predeterminados del sistema actual? <strong>Esto no se puede deshacer.</strong>"
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -159,10 +142,6 @@
     "TIDY5E.VehicleInMotion": "El vehículo está en movimiento",
     "TIDY5E.VehicleMotionless": "El vehículo está inmóvil",
     "TIDY5E.TotalCrewCount": "Tripulación total",
-    "TIDY5E.SheetMenu": {
-        "label": "Menú",
-        "themeLabel": "Tema"
-    },
     "TIDY5E.Settings.ActionList.Header": "Lista de acciones",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "name": "Limitar acciones a trucos",

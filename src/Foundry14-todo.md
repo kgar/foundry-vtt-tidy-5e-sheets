@@ -95,25 +95,25 @@
   - [x] TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip
   - [x] TIDY5E.Settings.Migrations.OptionOverwrite.Text
   - [x] TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip
-  - [ ] TIDY5E.Settings.Reset.dialogs.cancel
-  - [ ] TIDY5E.Settings.Reset.dialogs.confirm
-  - [ ] TIDY5E.Settings.UseMulticlassSpellbookFilter.hint
-  - [ ] TIDY5E.Settings.UseMulticlassSpellbookFilter.name
-  - [ ] TIDY5E.SheetEdit.Description
-  - [ ] TIDY5E.SheetEdit.Disable.Hint
-  - [ ] TIDY5E.SheetEdit.Enable.Hint
-  - [ ] TIDY5E.SheetImageOptionsHint
-  - [ ] TIDY5E.SheetLock.Description
-  - [ ] TIDY5E.SheetLock.Lock.Hint
-  - [ ] TIDY5E.SheetLock.Unlock.Hint
-  - [ ] TIDY5E.SheetMenu.label
-  - [ ] TIDY5E.SheetMenu.themeLabel
-  - [ ] TIDY5E.SheetPin.Label
-  - [ ] TIDY5E.SheetPin.LabelPl
-  - [ ] TIDY5E.ShortRest
-  - [ ] TIDY5E.ShowItemArt
-  - [ ] TIDY5E.ShowItemImage
-  - [ ] TIDY5E.ShowNotProficientSkills
+  - [x] TIDY5E.Settings.Reset.dialogs.cancel
+  - [x] TIDY5E.Settings.Reset.dialogs.confirm
+  - [x] TIDY5E.Settings.UseMulticlassSpellbookFilter.hint
+  - [x] TIDY5E.Settings.UseMulticlassSpellbookFilter.name
+  - [x] TIDY5E.SheetEdit.Description
+  - [x] TIDY5E.SheetEdit.Disable.Hint
+  - [x] TIDY5E.SheetEdit.Enable.Hint
+  - [x] TIDY5E.SheetImageOptionsHint
+  - [x] TIDY5E.SheetLock.Description
+  - [x] TIDY5E.SheetLock.Lock.Hint
+  - [x] TIDY5E.SheetLock.Unlock.Hint
+  - [x] TIDY5E.SheetMenu.label
+  - [x] TIDY5E.SheetMenu.themeLabel
+  - [x] (keep) TIDY5E.SheetPin.Label
+  - [x] (keep) TIDY5E.SheetPin.LabelPl
+  - [x] TIDY5E.ShortRest
+  - [x] TIDY5E.ShowItemArt
+  - [x] TIDY5E.ShowItemImage
+  - [x] TIDY5E.ShowNotProficientSkills
   - [ ] TIDY5E.ShowPortraitArt
   - [ ] TIDY5E.SortMenu.OptionAlphabetical
   - [ ] TIDY5E.SortMode.ActionListDefault
