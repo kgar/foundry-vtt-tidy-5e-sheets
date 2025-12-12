@@ -7,8 +7,6 @@
   "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 乗り物シート",
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e グループシート",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e 遭遇シート",
-  "TIDY5E.ShowPortraitArt": "画像表示",
-  "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 設定",
 
   "TIDY5E.AddSpecific": "{name}追加",
   "TIDY5E.AddCustom": "カスタム{name}追加",
@@ -24,8 +22,6 @@
 
   "TIDY5E.LegendaryLairToolbar": "伝説/住処ツールバー",
   "TIDY5E.SpellbookSections": "呪文書セクション",
-
-  "TIDY5E.UserDefaultPrefix": "ユーザーデフォルト: {value}",
 
   "TIDY5E.Group.EmptyMembersTabHint": "このグループは空です。サイドバーからキャラクターをドロップしてメンバーを追加してください。",
   "TIDY5E.Group.PrimaryParty.Label": "メインパーティ",
@@ -43,7 +39,6 @@
   "TIDY5E.LairAbbr": "住処",
 
   "TIDY5E.JournalEntry.NewTitle": "資料{number}",
-  "TIDY5E.TogglePersonalityInfo": "情報表示の切替",
 
   "TIDY5E.SheetMode.Edit": "プレイモードに変更",
   "TIDY5E.SheetMode.Play": "編集モードに変更",
@@ -93,13 +88,8 @@
   "TIDY5E.ActorMeleeSpellAttackFlavorText": "近接呪文攻撃",
   "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - 遠隔呪文攻撃",
   "TIDY5E.ActorRangedSpellAttackFlavorText": "遠隔呪文攻撃",
-  "TIDY5E.SpellAttackMod": "呪文攻撃修正",
 
-  "TIDY5E.TokenLinked": "リンク中のコマ",
   "TIDY5E.TokenUnlinked": "未リンクのコマ",
-
-  "TIDY5E.SpellSourceIdentifierSelectText": "クラス識別子: {identifier}",
-  "TIDY5E.SpellSourceIdentifierLabelHint": "この呪文を持っているキャラクターは、ここで指定されているソースクラスを持っていません。",
 
   "TIDY5E.Class.Artificer": "アーティフィサ―",
   "TIDY5E.Class.Barbarian": "バーバリアン",
@@ -133,10 +123,7 @@
     "SelectionTab.Title": "タブ選択",
     "AvailableHeader": "非表示タブ",
     "SelectedHeader": "表示タブ",
-    "VisibilityTab.Title": "タブ可視性",
-    "UnsupportedDocumentErrorMessage": "ドキュメント種別 {documentType} は現在タブ選択に対応していません。",
-    "AtLeastOneRequiredErrorMessage": "少なくとも1つのタブが必要です。",
-    "Explanation": "ユーザーまたはシートが表示しないように設定されているタブ（例：設定で記録を無効化）は、選択しても表示されません。"
+    "VisibilityTab.Title": "タブ可視性"
   },
 
   "TIDY5E.ButtonConfirm.Text": "確認",
@@ -241,14 +228,6 @@
     "label": "ユーザー設定",
     "title": "ユーザー設定: {userName}"
   },
-  "TIDY5E.UserSettings.TabNPCs": {
-    "tabLabel": "NPC",
-    "header": "NPCシート"
-  },
-  "TIDY5E.UserSettings.TabVehicles": {
-    "tabLabel": "乗り物",
-    "header": "乗り物シート"
-  },
   "TIDY5E.UserSettings.TabActionsList": {
     "tabLabel": "アクションリスト"
   },
@@ -349,15 +328,10 @@
     },
     "Sheet": {
       "title": "テーマ設定: {userName}",
-      "header": "カスタムテーマカラー",
-      "useDefaultLightColors": "デフォルトライト",
-      "useDefaultDarkColors": "デフォルトダーク",
       "export": "エクスポート",
       "import": "インポート",
       "importError": "テーマのインポートに失敗しました。詳細はコンソールを確認してください。",
-      "importSuccess": "テーマのインポートに成功しました！",
-      "menuLabel": "メニュー",
-      "explanation": "各オプションに使用したい色を選択してください。値「#00000000」は色を無効にすることと同等です。"
+      "importSuccess": "テーマのインポートに成功しました！"
     },
     "hint": "ゲームを補完する没入型体験を作成するためにシートをカスタマイズします。",
     "AccentColor.title": "アクセントカラー",
@@ -382,8 +356,6 @@
   "TIDY5E.VehicleMotionless": "乗り物は止まっている",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "ドラフト･アニマル",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "ドラフト･アニマル",
-  "TIDY5E.TotalCrewCount": "総乗組員数",
-  "TIDY5E.SortMode.ActionListDefault": "デフォルトのアクションソート",
   "TIDY5E.Commands.ExpandAll": "すべて展開",
   "TIDY5E.Commands.CollapseAll": "すべて縮小",
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "フィルター",
@@ -402,7 +374,6 @@
   "TIDY5E.Utilities.AssignSpellsToClasses": "呪文をクラスに割り当て",
   "TIDY5E.GenericErrorNotification": "このアクションの実行中にエラーが発生しました。詳細は開発者ツールコンソールを確認してください。",
   "TIDY5E.Utilities.MarkAllAsUnidentified": "識別されていないアイテムをマーク",
-  "TIDY5E.Utilities.ConfigureSections": "セクション設定",
   "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "呪文スロット追跡",
   "TIDY5E.Utilities.SpellPips": "呪文ピップ",
   "TIDY5E.Utilities.SpellValueMax": "呪文値/最大",
@@ -454,7 +425,6 @@
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "展開/折りたたみ動作",
   "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "トップレベルセクション",
   "TIDY5E.ExpandCollapseMenu.OptionAllSections": "全セクション",
-  "TIDY5E.SortMenu.OptionAlphabetical": "アルファベット順 (A-Z)",
   "TIDY5E.SortMethod.AlphabeticalAscending.Label": "昇順",
   "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "アルファベット順（昇順）でソート",
   "TIDY5E.SortMethod.AlphabeticalDescending.Label": "降順",

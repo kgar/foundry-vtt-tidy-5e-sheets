@@ -4,14 +4,11 @@
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e 容器卡",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e 物品卡",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 载具卡",
-    "TIDY5E.ShowPortraitArt": "显示立绘",
-    "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 设置",
     "TIDY5E.JournalTabName": "日志",
     "TIDY5E.Actions": {
         "TabName": "行动"
     },
     "TIDY5E.HitDiceRollAverage": "右键单击：取平均值",
-    "TIDY5E.TogglePersonalityInfo": "切换个人信息",
     "TIDY5E.ContextMenuActionEquip": "装备",
     "TIDY5E.ContextMenuActionUnequip": "未装备",
     "TIDY5E.ContextMenuActionAttune": "同调",
@@ -30,7 +27,6 @@
     "TIDY5E.Group.EmptyMembersTabHint": "此群组为空。从侧边栏拖放一个角色以添加成员。",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 小队卡",
     "TIDY5E.ContextMenuActionUnprepare": "未准备",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "拥有此法术的角色不属于此处指定的源职业。",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - 法术攻击",
     "TIDY5E.ActorSpellAttackFlavorText": "法术攻击",
     "TIDY5E.MaxPreparedSpellsConfig": {
@@ -45,10 +41,7 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "近战法术攻击",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - 远程法术攻击",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "远程法术攻击",
-    "TIDY5E.SpellAttackMod": "法术攻击调整值",
-    "TIDY5E.TokenLinked": "指示物关联至角色",
     "TIDY5E.TokenUnlinked": "指示物未关联至角色",
-    "TIDY5E.SpellSourceIdentifierSelectText": "职业识别符：{identifier}",
     "TIDY5E.Class.Artificer": "奇械师",
     "TIDY5E.Class.Barbarian": "野蛮人",
     "TIDY5E.Class.Bard": "吟游诗人",
@@ -66,9 +59,6 @@
         "MenuOptionText": "选项卡选择",
         "AvailableHeader": "隐藏选项卡",
         "SelectedHeader": "显示选项卡",
-        "UnsupportedDocumentErrorMessage": "文档类型 {documentType} 当前尚未设置为可选项卡选择。",
-        "AtLeastOneRequiredErrorMessage": "至少需要一个标签卡。",
-        "Explanation": "即使已选择，用户或卡的配置为不显示的任何选项卡（例如，在配置设置中禁用日志）也不会出现在卡上。",
         "SelectionTab.Title": "选项卡",
         "VisibilityTab.Title": "选项卡可见性"
     },
@@ -136,14 +126,6 @@
         "label": "用户设置",
         "title": "用户设置：{userName}",
         "name": "用户设置"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "header": "非玩家角色卡",
-        "tabLabel": "非玩家角色"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "载具",
-        "header": "载具卡"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "动作列表"
@@ -225,7 +207,6 @@
     "TIDY5E.Hide": "隐藏",
     "TIDY5E.LegendaryLairToolbar": "传奇/巢穴工具栏",
     "TIDY5E.SpellbookSections": "法术书分区",
-    "TIDY5E.UserDefaultPrefix": "用户默认：{value}",
     "TIDY5E.Group.PrimaryParty.Label": "主要队伍",
     "TIDY5E.CombatTabName": "战斗",
     "TIDY5E.ContextMenuActionPin": "固定至顶部",

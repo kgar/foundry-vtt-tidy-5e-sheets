@@ -1,8 +1,6 @@
 {
-    "TIDY5E.ShowPortraitArt": "Portrait zeigen",
     "TIDY5E.HitDiceRollAverage": "Rechtsklick: Durchschnitt anwenden",
     "TIDY5E.JournalTabName": "Tagebuch",
-    "TIDY5E.TogglePersonalityInfo": "Persönlichkeits-Infos umschalten",
     "TIDY5E.ContextMenuActionEquip": "Gegenstand anlegen",
     "TIDY5E.ContextMenuActionUnequip": "Gegenstand Ablegen",
     "TIDY5E.ContextMenuActionAttune": "Gegenstand einstimmen",
@@ -16,8 +14,6 @@
     "TIDY5E.RemoveFavorite": "Favorit löschen",
     "TIDY5E.Search": "Suche",
     "TIDY5E.SearchHint": "Tippe ein wonach du suchst um Ergebnisse anzeigen zu lassen.",
-    "TIDY5E.SpellAttackMod": "Zauberangriffs Modifikator",
-    "TIDY5E.TokenLinked": "Figur mit Akteur verknüpft",
     "TIDY5E.TokenUnlinked": "Figur nicht mit Akteur verknüpft",
     "TIDY5E.SpellClass": "Zauberspruchklasse",
     "TIDY5E.Class.Artificer": "Artifizient",
@@ -39,14 +35,6 @@
         "hint": "Die eigene Version von \"Tidy 5e Sheets\" anpassen. Diese Einstellungen werden im Browser gespeichert und gelten für die eigenen Spielbögen.",
         "label": "Benutzereinstellungen",
         "title": "Benutzereinstellungen: {userName}"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "NSCe",
-        "header": "NSC-Bögen"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Fahrzeuge",
-        "header": "Fahrzeugbögen"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "SL Einstellungen"
@@ -95,22 +83,16 @@
         },
         "Sheet": {
             "title": "",
-            "header": "",
-            "useDefaultLightColors": "Standard Hell",
-            "useDefaultDarkColors": "Standard Dunkel",
             "export": "Exportieren",
             "import": "Importieren",
             "importError": "",
-            "importSuccess": "",
-            "menuLabel": "Menü",
-            "explanation": ""
+            "importSuccess": ""
         }
     },
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
-    "TIDY5E.TotalCrewCount": "",
     "TIDY5E.Actions": {
         "TabName": "Aktionen"
     },
@@ -118,10 +100,7 @@
         "MenuOptionText": "Reiter Auswahl",
         "AvailableHeader": "Versteckte Reiter",
         "SelectedHeader": "Sichtbare Reiter",
-        "UnsupportedDocumentErrorMessage": "Der Dokumenttyp {documentType} ist derzeit nicht für die Reiterauswahl eingerichtet.",
-        "Explanation": "Alle Reiter, für die der Benutzer oder der Bogen so konfiguriert sind, dass sie nicht angezeigt werden (z. B. durch Deaktivieren des Journals in den Konfigurationseinstellungen), werden selbst dann nicht auf dem Bogen angezeigt, wenn sie ausgewählt sind.",
         "Title": "Reiter Auswahl: {documentName}",
-        "AtLeastOneRequiredErrorMessage": "Mindestens ein Reiter erforderlich.",
         "SelectionTab.Title": "Reiter-Auswahl",
         "VisibilityTab.Title": "Reiter Sichtbarkeit"
     },
@@ -216,8 +195,6 @@
         "hint": "Zeigt Zauber mit einer Dauer von einer Minute oder weniger (z. B. 1 Runde) und einer Aktivierungszeit von 1 Aktion oder 1 Bonusaktion (z. B. Segnen, Verderben, Befehl) standardmäßig im Reiter/Fenster „Aktionen“.",
         "name": "Minutenlange Zauber mit als Aktionen einbeziehen"
     },
-    "TIDY5E.SpellSourceIdentifierSelectText": "Klassenkennung: {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "Der Akteur er diesen Zauber hat, verfügt nicht über die hier angegebene Ursprungsklasse.",
     "TIDY5E.Utilities.Tools": "",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
@@ -247,7 +224,6 @@
         "hint": "Zeigt Verbrauchsgegenstände, die Aktivierungskosten (Aktion, Bonusaktion usw.) haben standardmäßig in der Aktionsliste.",
         "name": "Zeigt Verbrauchsmaterialien als Aktionen"
     },
-    "TIDY5E.Utilities.ConfigureSections": "",
     "TIDY5E.Settings.SheetPreferences": {
         "buttonLabel": "",
         "name": "",
@@ -263,7 +239,6 @@
     "TIDY5E.ItemFilters.CanUse": "",
     "TIDY5E.Utilities.GMTools": "",
     "TIDY5E.Utilities.IdentifyAll": "",
-    "TIDY5E.SortMode.ActionListDefault": "",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Charakterbogen",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC-Bogen",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Behälterbogen",
@@ -271,7 +246,6 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Fahrzeugbogen",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Gruppenbogen",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Begegnungsbogen",
-    "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Einstellungen",
     "TIDY5E.AddSpecific": "Hinzufügen {name}",
     "TIDY5E.Group.EmptyMembersTabHint": "Diese Gruppe ist leer. Ziehe eine Figur von der Seitenleiste hinein, um ein Mitglied hinzuzufügen.",
     "TIDY5E.ModuleName": "Tidy 5e Sheets",
@@ -301,7 +275,6 @@
     "TIDY5E.Hide": "Ausblenden",
     "TIDY5E.LegendaryLairToolbar": "Legendäre/Hort Toolbar",
     "TIDY5E.SpellbookSections": "Zauberbuchabschnitt",
-    "TIDY5E.UserDefaultPrefix": "Benutzerstandard: {value}",
     "TIDY5E.Group.PrimaryParty.Label": "Primäre Gruppe",
     "TIDY5E.CombatTabName": "Kampf",
     "TIDY5E.ContextMenuActionPin": "oben anpinnen",

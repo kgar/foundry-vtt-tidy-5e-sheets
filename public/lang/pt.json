@@ -6,8 +6,6 @@
     "TIDY5E.Tidy5eItemSheetQuadrone": "Ficha de Elemento Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Ficha de Veículo Tidy 5e",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Ficha de Grupo Tidy 5e",
-    "TIDY5E.ShowPortraitArt": "Mostrar Avatar",
-    "TIDY5E.Tidy5eSettings": "Configurações Tidy 5e Sheets",
     "TIDY5E.AddSpecific": "Adicionar {name}",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vazio. Solte um ator da barra lateral para adicionar um membro.",
     "TIDY5E.HitDiceRollAverage": "Clique Direito: Aplicar Média",
@@ -17,7 +15,6 @@
         "TabName": "Ações"
     },
     "TIDY5E.JournalEntry.NewTitle": "Entrada de Diário {number}",
-    "TIDY5E.TogglePersonalityInfo": "Alternar Informações de Personalidade",
     "TIDY5E.SheetLock.Empty.Hint": "Comece adicionando uma classe e os seus primeiros elementos. Em seguida, use o menu de elementos ou clique com o botão direito e escolha \"Adicionar à guia Ficha\" para adicioná-los aqui.",
     "TIDY5E.ContextMenuActionEquip": "Equipar",
     "TIDY5E.ContextMenuActionUnequip": "Desequipar",
@@ -50,11 +47,7 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Ataque Mágico Corpo a Corpo",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ataque Mágico à Distância",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Ataque Mágico à Distância",
-    "TIDY5E.SpellAttackMod": "Mod. de Ataque Mágico",
-    "TIDY5E.TokenLinked": "Token vinculado a ator",
     "TIDY5E.TokenUnlinked": "Token não vinculado a ator",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identificador de Classe: {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "O ator que possui esta magia não possui a classe de origem especificada aqui.",
     "TIDY5E.Class.Artificer": "Artífice",
     "TIDY5E.Class.Barbarian": "Bárbaro",
     "TIDY5E.Class.Bard": "Bardo",
@@ -78,10 +71,7 @@
         "Title": "Seleção de Guia: {documentName}",
         "MenuOptionText": "Seleção de Guia",
         "AvailableHeader": "Guias Ocultas",
-        "SelectedHeader": "Guias Visíveis",
-        "UnsupportedDocumentErrorMessage": "O tipo de documento {documentType} não está atualmente configurado para seleção de guia.",
-        "AtLeastOneRequiredErrorMessage": "É necessário ter pelo menos uma guia.",
-        "Explanation": "Qualquer guia que o utilizador ou ficha estiver configurado para não exibir (exemplo: desativar o Diário nas configurações), não aparecerá na ficha, mesmo que selecionada."
+        "SelectedHeader": "Guias Visíveis"
     },
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
     "TIDY5E.Listbox": {
@@ -170,14 +160,6 @@
         "hint": "Personalize a sua própria versão do Tidy 5e Sheets. Estas configurações são gravadas no seu navegador e aplicam-se às suas fichas.",
         "label": "Configurações de Utilizador",
         "title": "Configurações de Utilizador: {userName}"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "PnJs",
-        "header": "Fichas de PnJs"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Veículos",
-        "header": "Fichas de Veículos"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista de Ações"
@@ -275,15 +257,10 @@
         },
         "Sheet": {
             "title": "Configurações do Tema: {userName}",
-            "header": "Cores Personalizadas do Tema",
-            "useDefaultLightColors": "Padrão Claro",
-            "useDefaultDarkColors": "Padrão Escuro",
             "export": "Exportar",
             "import": "Importar",
             "importError": "Falha na importação do tema. Consulte o console para obter mais pormenores.",
-            "importSuccess": "O tema foi importado com sucesso!",
-            "menuLabel": "Menu",
-            "explanation": "Selecione a cor que deseja usar para cada opção. O valor \"#00000000\" é equivalente a desativar a cor."
+            "importSuccess": "O tema foi importado com sucesso!"
         },
         "hint": "Personalize a sua ficha para criar uma experiência imersiva que complemente o seu jogo.",
         "AccentColor.title": "Cor de Destaque",
@@ -306,8 +283,6 @@
     "TIDY5E.UseDefault": "Usar Padrão",
     "TIDY5E.VehicleInMotion": "O veículo está em movimento",
     "TIDY5E.VehicleMotionless": "O veículo está imóvel",
-    "TIDY5E.TotalCrewCount": "Tripulação Total",
-    "TIDY5E.SortMode.ActionListDefault": "Classificação da Lista de Ações Padrão",
     "TIDY5E.Commands.ExpandAll": "Expandir Tudo",
     "TIDY5E.Commands.CollapseAll": "Recolher Tudo",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtros",
@@ -325,7 +300,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "Atribuir Magias às Classes",
     "TIDY5E.GenericErrorNotification": "Ocorreu um erro ao executar esta ação. Veja o console do devtools para mais pormenores.",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar Todos os Elementos como Não Identificados",
-    "TIDY5E.Utilities.ConfigureSections": "Configurar Secções",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Rastreamento de Espaço de Magia",
     "TIDY5E.Utilities.SpellPips": "Magias",
     "TIDY5E.Utilities.SpellValueMax": "Valor da Magia/Máx",
@@ -373,7 +347,6 @@
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportamento de Expansão/Recolhimento",
     "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Secções de Nível Superior",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Todas as Secções",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabético (A-Z)",
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ordem Crescente",
     "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "Classificar de A à Z",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Ordem Decrescente",

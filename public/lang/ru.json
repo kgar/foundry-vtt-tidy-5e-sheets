@@ -7,8 +7,6 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Лист Транспорта",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Лист Группы",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Лист Столкновения",
-    "TIDY5E.ShowPortraitArt": "Показать Портрет",
-    "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Настройки",
     "TIDY5E.AddSpecific": "Добавить {name}",
     "TIDY5E.Group.EmptyMembersTabHint": "Эта группа пуста. Чтобы добавить участника, перетащите имя актёра из боковой панели.",
     "TIDY5E.HitDiceRollAverage": "ПКМ: Применить Среднее Значение",
@@ -17,6 +15,5 @@
     "TIDY5E.Actions": {
         "TabName": "Действия"
     },
-    "TIDY5E.JournalEntry.NewTitle": "Запись в Журнале {number}",
-    "TIDY5E.TogglePersonalityInfo": "Переключить Подробности Личности"
+    "TIDY5E.JournalEntry.NewTitle": "Запись в Журнале {number}"
 }

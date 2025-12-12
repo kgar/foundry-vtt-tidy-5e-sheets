@@ -10,11 +10,8 @@
     "TIDY5E.TabConfiguration": {
         "MenuOptionText": "தாவல் தேர்வு",
         "AvailableHeader": "மறைக்கப்பட்ட தாவல்கள்",
-        "AtLeastOneRequiredErrorMessage": "குறைந்தது ஒரு தாவல் தேவை.",
         "Title": "தாவல் தேர்வு: {documentName}",
-        "SelectedHeader": "தெரியும் தாவல்கள்",
-        "UnsupportedDocumentErrorMessage": "ஆவண வகை {documentType} தற்போது தாவல் தேர்வுக்கு அமைக்கப்படவில்லை.",
-        "Explanation": "பார்க்கக்கூடாது என்று பயனர் அல்லது தாள் கட்டமைக்கப்பட்ட எந்த தாவல்களும் (எ.கா., பத்திரிகையை கட்டமைப்பு அமைப்புகளில் முடக்குவது) தேர்ந்தெடுக்கப்பட்டாலும் கூட தாளில் இன்னும் தோன்றாது."
+        "SelectedHeader": "தெரியும் தாவல்கள்"
     },
     "TIDY5E.Listbox": {
         "MoveLeft": "இடதுபுறம் நகர்த்தவும் (இடம்)",
@@ -33,10 +30,6 @@
         "title": "உலக அமைப்புகள் (GM மட்டும்)",
         "name": "உலக அமைப்புகள்",
         "hint": "நேர்த்தியான 5e தாள்களின் அனுபவத்தைத் தனிப்பயனாக்க உலக அளவிலான அமைப்புகளை சரிசெய்யவும். இந்த அமைப்புகள் இந்த ஃபவுண்டரி உலகில் சேமிக்கப்படுகின்றன மற்றும் தொடர்புடைய அனைத்து நேர்த்தியான 5e தாள்கள் உள்ளடக்கத்திற்கும் பொருந்தும்."
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "NPCS",
-        "header": "NPC தாள்கள்"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "தொடக்க தாள் தாவல்",
@@ -74,14 +67,9 @@
         "Sheet": {
             "importError": "கருப்பொருள் இறக்குமதி தோல்வியடைந்தது. மேலும் விவரங்களுக்கு கன்சோலைப் பார்க்கவும்.",
             "title": "கருப்பொருள் அமைப்புகள்: {userName}",
-            "header": "தனிப்பயன் கருப்பொருள் வண்ணங்கள்",
-            "useDefaultLightColors": "இயல்புநிலை ஒளி",
-            "useDefaultDarkColors": "இயல்புநிலை இருண்ட",
             "export": "ஏற்றுமதி",
             "import": "இறக்குமதி",
-            "importSuccess": "கருப்பொருள் வெற்றிகரமாக இறக்குமதி செய்யப்பட்டது!",
-            "menuLabel": "பட்டியல்",
-            "explanation": "ஒவ்வொரு விருப்பத்திற்கும் நீங்கள் பயன்படுத்த விரும்பும் வண்ணத்தைத் தேர்ந்தெடுக்கவும். \"#00000000\" மதிப்பு வண்ணத்தை முடக்குவதற்கு சமம்."
+            "importSuccess": "கருப்பொருள் வெற்றிகரமாக இறக்குமதி செய்யப்பட்டது!"
         },
         "SheetMenu": {
             "name": "நேர்த்தியான கருப்பொருள் அமைப்புகள்",
@@ -104,7 +92,6 @@
         "SpellcastingMethodColors.title": "எழுத்துப்பிழை தயாரிப்பு முறை வண்ணங்கள்"
     },
     "TIDY5E.ReminderToBackUp": "உங்கள் உலகத்தை காப்புப் பிரதி எடுக்க எப்போதும் நினைவில் கொள்ளுங்கள்.",
-    "TIDY5E.Utilities.ConfigureSections": "பிரிவுகளை உள்ளமைக்கவும்",
     "TIDY5E.Section": {
         "ConfigDialog": {
             "showTooltip": "இந்த பகுதியைக் காட்டு",
@@ -123,11 +110,8 @@
         "SectionSelectorSaveNewSection": "புதிய பகுதியைச் சேமிக்கவும்"
     },
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "ஒதுக்கப்படாததை மட்டும் காட்டு",
-    "TIDY5E.SortMenu.OptionAlphabetical": "அகரவரிசை (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "கையேடு",
     "TIDY5E.SortMenu.OptionPrepared": "தயாரிக்கப்பட்டது",
-    "TIDY5E.ShowPortraitArt": "உருவப்படத்தைக் காட்டு",
-    "TIDY5E.Tidy5eSettings": "நேர்த்தியான 5e தாள்கள் அமைப்புகள்",
     "TIDY5E.Group.EmptyMembersTabHint": "இந்த குழு காலியாக உள்ளது. ஒரு உறுப்பினரைச் சேர்க்க பக்கப்பட்டியில் இருந்து ஒரு நடிகரை விடுங்கள்.",
     "TIDY5E.HitDiceRollAverage": "வலது கிளிக்: சராசரியைப் பயன்படுத்துங்கள்",
     "TIDY5E.JournalTabName": "செய்தித் தாள்",
@@ -135,7 +119,6 @@
         "TabName": "செயல்கள்"
     },
     "TIDY5E.ContextMenuActionAttune": "சுருதிசேர்",
-    "TIDY5E.TogglePersonalityInfo": "ஆளுமை தகவலை மாற்றவும்",
     "TIDY5E.ContextMenuActionUnattune": "டோனெட்",
     "TIDY5E.ContextMenuActionEquip": "உபகரணங்கள்",
     "TIDY5E.ContextMenuActionUnequip": "WAKIP",
@@ -152,14 +135,10 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "கைகலப்பு எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - வீச்சு எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "வீச்சு எழுத்துப்பிழை தாக்குதல்",
-    "TIDY5E.SpellAttackMod": "எழுத்துப்பிழை தாக்குதல் மோட்",
-    "TIDY5E.TokenLinked": "கிள்ளாக்கு நடிகருடன் இணைக்கப்பட்டுள்ளது",
     "TIDY5E.TokenUnlinked": "கிள்ளாக்கு நடிகருடன் இணைக்கப்படவில்லை",
-    "TIDY5E.SpellSourceIdentifierSelectText": "வகுப்பு அடையாளங்காட்டி: {identifier}",
     "TIDY5E.Class.Barbarian": "காட்டுமிராண்டி",
     "TIDY5E.Class.Bard": "பார்ட்",
     "TIDY5E.Class.Cleric": "மதகுரு",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "இந்த எழுத்துப்பிழை கொண்ட நடிகருக்கு இங்கே குறிப்பிடப்பட்டுள்ள மூல வகுப்பு இல்லை.",
     "TIDY5E.Class.Custom": "தனிப்பயன்",
     "TIDY5E.Class.Druid": "ட்ரூயிட்",
     "TIDY5E.Class.Fighter": "போர்",
@@ -209,10 +188,6 @@
         "label": "பயனர் அமைப்புகள்",
         "title": "பயனர் அமைப்புகள்: {userName}"
     },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "வாகனங்கள்",
-        "header": "வாகனத் தாள்கள்"
-    },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "செயல்கள் பட்டியல்"
     },
@@ -256,8 +231,6 @@
     "TIDY5E.UseDefault": "இயல்புநிலையைப் பயன்படுத்தவும்",
     "TIDY5E.VehicleInMotion": "வண்டி இயக்கத்தில் உள்ளது",
     "TIDY5E.VehicleMotionless": "வண்டி அசைவற்றது",
-    "TIDY5E.TotalCrewCount": "மொத்த குழுவினர்",
-    "TIDY5E.SortMode.ActionListDefault": "இயல்புநிலை செயல் பட்டியல் வரிசை",
     "TIDY5E.Commands.ExpandAll": "அனைத்தையும் விரிவாக்குங்கள்",
     "TIDY5E.Commands.CollapseAll": "அனைத்தையும் சரக்கு",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "வடிப்பான்கள்",

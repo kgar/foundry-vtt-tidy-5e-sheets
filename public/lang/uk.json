@@ -3,7 +3,6 @@
     "TIDY5E.Actions": {
         "TabName": "Дія"
     },
-    "TIDY5E.ShowPortraitArt": "Показати Портрет",
     "TIDY5E.StandardExhaustion2": "Швидкість зменшена вдвічі",
     "TIDY5E.StandardExhaustion3": "Перешкода для Кидків Атаки та Рятівних Кидків",
     "TIDY5E.StandardExhaustion4": "Макс. к-сть Пунктів Здоров'я зменшена вдвічі",
@@ -23,7 +22,6 @@
     "TIDY5E.Group.EmptyMembersTabHint": "Ця група порожня. Перетягніть актора з бічної панелі, щоб додати учасника.",
     "TIDY5E.HitDiceRollAverage": "Права кнопка миші: Застосувати середнє",
     "TIDY5E.JournalTabName": "Журнал",
-    "TIDY5E.TogglePersonalityInfo": "Перемкнути Інформацію Персонажа",
     "TIDY5E.ContextMenuActionEquip": "Спорядити",
     "TIDY5E.ContextMenuActionUnequip": "Зняти спорядження",
     "TIDY5E.ContextMenuActionAttune": "Налаштуватися",
@@ -34,11 +32,7 @@
     "TIDY5E.RemoveFavorite": "Прибрати з обраних",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Атака Чарами Дального Бою",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Атака Чарами Дального Бою",
-    "TIDY5E.SpellAttackMod": "Модифікатор Атаки Чарами",
-    "TIDY5E.TokenLinked": "Токен прив'язаний до актора",
     "TIDY5E.TokenUnlinked": "Токен не прив'язаний до актора",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Ідентифікатор класу: {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "Актор, який має ці чари, не має указаного тут вихідного класу.",
     "TIDY5E.Class.Artificer": "Винахідник",
     "TIDY5E.Class.Barbarian": "Варвар",
     "TIDY5E.Class.Bard": "Бард",
@@ -61,9 +55,6 @@
         "MenuOptionText": "Вибір вкладки",
         "AvailableHeader": "Приховані вкладки",
         "SelectedHeader": "Видимі вкладки",
-        "UnsupportedDocumentErrorMessage": "Тип документа {documentType} наразі не налаштовано для вибору вкладки.",
-        "AtLeastOneRequiredErrorMessage": "Необхідна принаймні одна вкладка.",
-        "Explanation": "Будь-які вкладки, налаштовані так, що користувач або аркуш не можуть їх бачити (наприклад, вкладку «Журнал» вимкнено в налаштуваннях), не відображатимуться на аркуші, навіть якщо їх вибрано.",
         "SelectionTab.Title": "Вибір Вкладки",
         "VisibilityTab.Title": "Видимість Вкладок"
     },
@@ -118,14 +109,6 @@
         "label": "Налаштування Користувача",
         "title": "Налаштування Користувача: {userName}",
         "hint": "Налаштуйте власну версію аркушів Tidy 5e. Ці налаштування зберігаються у вашому браузері та застосовуються до ваших аркушів."
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "НІПи",
-        "header": "Аркуші НІП"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Машини",
-        "header": "Аркуші транспорту"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Список дій"
@@ -220,15 +203,10 @@
         },
         "Sheet": {
             "title": "Налаштування теми: {userName}",
-            "header": "Користувацькі кольори теми",
             "import": "Імпортувати",
             "importError": "Не вдалося імпортувати тему. Докладнішу інформацію дивись у консолі.",
-            "menuLabel": "Меню",
-            "useDefaultLightColors": "Усталена світла",
             "export": "Експортувати",
-            "useDefaultDarkColors": "Усталена темна",
-            "importSuccess": "Тему успішно імпортовано!",
-            "explanation": "Виберіть колір, який ви хочете використовувати для кожної опції. Значення «#00000000» еквівалентне вимкненню кольору."
+            "importSuccess": "Тему успішно імпортовано!"
         },
         "hint": "Налаштуйте свій аркуш, щоб створити занурюючий досвід, який доповнює вашу гру.",
         "AccentColor.title": "Акцентний колір",
@@ -249,7 +227,6 @@
         "ActorHeaderBackground.title": "Фон заголовка актора",
         "ItemSidebarBackground.title": "Фон бічної панелі елемента"
     },
-    "TIDY5E.TotalCrewCount": "Всього екіпажу",
     "TIDY5E.ItemFilters.CanCast": "Можна створити",
     "TIDY5E.ItemFilters.ClearAll": "Очистити всі",
     "TIDY5E.ItemFilters.Filter.Other": "Інше",
@@ -282,7 +259,6 @@
         "SectionSelectorNewSectionName": "Назва нового розілу",
         "SectionSelectorChooseTabSectionTooltip": "Виберіть розділ {tabName}"
     },
-    "TIDY5E.Tidy5eSettings": "Налаштування аркушівTidy 5e",
     "TIDY5E.Settings.Debug": {
         "name": "Увімкнути режим debug",
         "hint": "Виводить в консоль налагоджувальні повідомлення."
@@ -294,11 +270,9 @@
     "TIDY5E.VehicleMotionless": "Транспорт не рухається",
     "TIDY5E.Commands.CollapseAll": "Згорнути всі",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Фільтри",
-    "TIDY5E.SortMode.ActionListDefault": "Сортування списку дій за замовчуванням",
     "TIDY5E.Commands.ExpandAll": "Розгорнути всі",
     "TIDY5E.GenericErrorNotification": "Під час виконання цієї дії сталася помилка. Докладні відомості наведено у консолі розробника.",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Позначити всі предмети як неідентифіковані",
-    "TIDY5E.Utilities.ConfigureSections": "Налаштування розділів",
     "TIDY5E.Utilities.GMTools": "Інструменти ГМа",
     "TIDY5E.Utilities.IdentifyAll": "Ідентифікувати всі предмети",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Призначити чари класам",
@@ -343,7 +317,6 @@
     "TIDY5E.Facilities.ContextMenuActionRemove": "Прибрати з {facilityName}",
     "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Розгорнути/Згорнути",
-    "TIDY5E.SortMenu.OptionAlphabetical": "За алфавітом (А-Я)",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Всі розділи",
     "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Розділи верхнього рівня",
     "TIDY5E.SortMenu.OptionManual": "Вручну",
@@ -467,7 +440,6 @@
     "TIDY5E.Hide": "Приховати",
     "TIDY5E.LegendaryLairToolbar": "Легендарна/Лігво панель інструментів",
     "TIDY5E.SpellbookSections": "Розділи книги заклинань",
-    "TIDY5E.UserDefaultPrefix": "Користувач за замовчуванням: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Глобальні параметри відображення за замовчуванням",
     "TIDY5E.Character.Sidebar.Title": "Бічна панель персонажа гравця",
     "TIDY5E.ContextMenuActionPin": "Закріпити вгорі",

@@ -6,8 +6,6 @@
     "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e 아이템 시트",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 탑승물 시트",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 그룹 시트",
-    "TIDY5E.ShowPortraitArt": "포트레이트 보기",
-    "TIDY5E.Tidy5eSettings": "Tidy 5e 시트 설정",
     "TIDY5E.AddSpecific": "{name} 추가",
     "TIDY5E.Group.EmptyMembersTabHint": "이 그룹은 비었습니다. 멤버를 추가하려면 사이드바에서 액터를 드래그하세요.",
     "TIDY5E.HitDiceRollAverage": "우클릭: 평균 적용",
@@ -17,7 +15,6 @@
         "TabName": "행동"
     },
     "TIDY5E.JournalEntry.NewTitle": "저널 항목 {number}",
-    "TIDY5E.TogglePersonalityInfo": "성격 정보 전환",
     "TIDY5E.ContextMenuActionEquip": "아이템 착용",
     "TIDY5E.ContextMenuActionUnequip": "아이템 해제",
     "TIDY5E.ContextMenuActionAttune": "아이템 조율",
@@ -47,11 +44,7 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "근접 주문 공격",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - 원거리 ",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "주문 공격",
-    "TIDY5E.SpellAttackMod": "주문 공격 수정치",
-    "TIDY5E.TokenLinked": "액터에 연결된 토큰",
     "TIDY5E.TokenUnlinked": "액터에 연결되지 않은 토큰",
-    "TIDY5E.SpellSourceIdentifierSelectText": "클래스 식별: {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "이 주문이 있는 액터에게 여기에 지정된 출처 클래스가 없습니다.",
     "TIDY5E.Class.Artificer": "아티피서",
     "TIDY5E.Class.Barbarian": "바바리안",
     "TIDY5E.Class.Bard": "바드",
@@ -75,10 +68,7 @@
         "Title": "탭 선택: {documentName}",
         "MenuOptionText": "탭 선택",
         "AvailableHeader": "사용가능한 탭",
-        "SelectedHeader": "선택한 탭",
-        "UnsupportedDocumentErrorMessage": "{documentType} 문서 유형은 탭 선택으로 설정되지 않았습니다.",
-        "AtLeastOneRequiredErrorMessage": "최소 한 개의 탭을 활성화해야 합니다.",
-        "Explanation": "사용자 또는 시트가 표시되지 않도록 설정된 모든 탭(예: 설정 지정에서 저널 비활성화)은 선택하더라도 시트에 표시되지 않습니다."
+        "SelectedHeader": "선택한 탭"
     },
     "TIDY5E.ButtonConfirm.Text": "확인",
     "TIDY5E.Listbox": {
@@ -167,14 +157,6 @@
         "hint": "Tidy 5e 시트 개인 버전을 사용자 지정합니다. 이러한 설정은 브라우저에 저장되어 시트에 적용됩니다.",
         "label": "시트 설정",
         "title": "Tidy5e 시트 설정"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "NPC",
-        "header": "NPC 시트"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "탑승물",
-        "header": "탑승물 시트"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "행동 목록"
@@ -272,15 +254,10 @@
         },
         "Sheet": {
             "title": "테마 설정: {userName}",
-            "header": "테마 색상 사용자 지정",
-            "useDefaultLightColors": "기본 라이트모드",
-            "useDefaultDarkColors": "기본 다크모드",
             "export": "내보내기",
             "import": "불러오기",
             "importError": "테마 불러오기에 실패했습니다. 자세한 내용은 콘솔을 참조하세요.",
-            "importSuccess": "테마 불러오기 성공!",
-            "menuLabel": "메뉴",
-            "explanation": "각 옵션에 사용할 색상을 선택합니다. \"#00000000\" 값은 색상을 비활성화하는 것과 같습니다."
+            "importSuccess": "테마 불러오기 성공!"
         },
         "hint": "시트를 사용자 지정하여 게임을 보완하는 몰입형 환경을 만듭니다.",
         "AccentColor.title": "색상 강조",
@@ -302,8 +279,6 @@
     "TIDY5E.UseDefault": "기본으로 사용",
     "TIDY5E.VehicleInMotion": "탑승물은 움직입니다.",
     "TIDY5E.VehicleMotionless": "탑승물은 움직이지 않습니다.",
-    "TIDY5E.TotalCrewCount": "전체 승객",
-    "TIDY5E.SortMode.ActionListDefault": "기본 행동 목록 정렬",
     "TIDY5E.Commands.ExpandAll": "모두 열기",
     "TIDY5E.Commands.CollapseAll": "모두 닫기",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "필터",
@@ -321,7 +296,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "클래스에 주문 할당",
     "TIDY5E.GenericErrorNotification": "이 작업을 수행하는 동안 오류가 발생했습니다. 자세한 내용은 개발자 도구 콘솔을 참조하세요.",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "모든 아이템을 식별되지 않음으로 표기",
-    "TIDY5E.Utilities.ConfigureSections": "섹션 구성",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "주문 슬롯 추적",
     "TIDY5E.Utilities.SpellPips": "주문 표시",
     "TIDY5E.Utilities.SpellValueMax": "주문 가치/최대",
@@ -367,7 +341,6 @@
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
     "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "모든 항목",
-    "TIDY5E.SortMenu.OptionAlphabetical": "알파벳 순서로 (A-Z)",
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "오름",
     "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "알파벳 오름차순으로",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "내림",

@@ -1,8 +1,6 @@
 {
-    "TIDY5E.ShowPortraitArt": "Zobrazit portrét",
     "TIDY5E.HitDiceRollAverage": "Pravé tlačítko: Použít průměr",
     "TIDY5E.JournalTabName": "Záznamy",
-    "TIDY5E.TogglePersonalityInfo": "Přepnout na osobní informace",
     "TIDY5E.ContextMenuActionEquip": "Vybavit",
     "TIDY5E.ContextMenuActionUnequip": "Odložit",
     "TIDY5E.ContextMenuActionAttune": "Sladění",
@@ -16,8 +14,6 @@
     "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
     "TIDY5E.Search": "Vyhledat",
     "TIDY5E.SearchHint": "Začni psát název toho, co hledáš...",
-    "TIDY5E.SpellAttackMod": "Oprava útoku kouzlem",
-    "TIDY5E.TokenLinked": "Token propojený s aktérem",
     "TIDY5E.TokenUnlinked": "Token nepropojený s aktérem",
     "TIDY5E.SpellClass": null,
     "TIDY5E.Class.Artificer": "Divotvůrce",
@@ -39,14 +35,6 @@
         "hint": "Přizpůsob si svou vlastní verzi deníků Tidy 5e. Toto nastavení se uloží do prohlížeče a použije se na tvé deníky.",
         "label": "Uživatelská nastavení",
         "title": "Uživatelské nastavení: {userName}"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "NP",
-        "header": "Deníky NP"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Dopravní prostředky",
-        "header": "Deníky dopravních prostředků"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Nastavení PJ"
@@ -95,15 +83,10 @@
         },
         "Sheet": {
             "title": "Nastavení motivu: {userName}",
-            "header": "Vlastní barvy motivu",
-            "useDefaultLightColors": "Výchozí světlý motiv",
-            "useDefaultDarkColors": "Výchozí tmavý motiv",
             "export": "Export",
             "import": "Import",
             "importError": "Import motivu se nezdařil. Další podrobnosti nalezneš v konzoli.",
-            "importSuccess": "Motiv byl úspěšně importován!",
-            "menuLabel": "Nabídka",
-            "explanation": "Vyber barvu, kterou chceš použít pro každou volbu. Hodnota '#00000000' znamená zákaz barvy."
+            "importSuccess": "Motiv byl úspěšně importován!"
         },
         "hint": "Přizpůsob si svůj deník a vytvoř si tak pohlcující zážitek, který doplní tvou hru.",
         "AccentColor.title": "Akcentující barva",
@@ -125,7 +108,6 @@
     "TIDY5E.SaveChanges": "Uložit změny",
     "TIDY5E.VehicleInMotion": "Dopravní prostředek je v pohybu",
     "TIDY5E.VehicleMotionless": "Dopravní prostředek je nehybný",
-    "TIDY5E.TotalCrewCount": "Posádka celkem",
     "TIDY5E.GMOnly.Message": "Pouze pro PJ: {message}",
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "options.GmAndOwners": "PJ a vlastníci položky",
@@ -136,11 +118,8 @@
     "TIDY5E.ItemFilters.Filter.Other": "Další",
     "TIDY5E.TabConfiguration": {
         "SelectedHeader": "Viditelné karty",
-        "Explanation": "Jakékoli karty, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
-        "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není aktuálně nastaven pro výběr karty.",
         "Title": "Výběr karty: {documentName}",
         "MenuOptionText": "Výběr karet",
-        "AtLeastOneRequiredErrorMessage": "Je vyžadována alespoň jedna karta.",
         "AvailableHeader": "Skryté karty",
         "SelectionTab.Title": "Výběr záložky",
         "VisibilityTab.Title": "Viditelnost záložky"
@@ -150,7 +129,6 @@
         "TotalSelectedLabel": "Celkem vybraných: {total}",
         "SelectAllNoneTooltip": "Vyber všechny, nebo žádný"
     },
-    "TIDY5E.SpellSourceIdentifierLabelHint": "Aktér, který má toto kouzlo, nemá zdrojové povolání u tohoto kouzla uvedené.",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
     "TIDY5E.ButtonConfirm.Text": "Potvrdit",
     "TIDY5E.Section": {
@@ -177,9 +155,7 @@
         "ExamplesHeader": "Ukázkové vzorce"
     },
     "TIDY5E.Utilities.AssignSpellsToClasses": "Přiřadit kouzla povoláním",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identifikátor povolání: {identifier}",
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+klik pro přeskočení hodu a okamžité dobití) ",
-    "TIDY5E.SortMode.ActionListDefault": "Výchozí řazení seznamu akcí",
     "TIDY5E.Listbox": {
         "MoveDown": "Přesun dolů (Alt + Šipka dolů)",
         "MoveLeft": "Přesun doleva (Mezerník)",
@@ -260,7 +236,6 @@
     },
     "TIDY5E.Settings.ActionList.Header": "Seznam akcí",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Různé",
-    "TIDY5E.Utilities.ConfigureSections": "Nastavení sekcí",
     "TIDY5E.Commands.CollapseAll": "Sbalit vše",
     "TIDY5E.Commands.ExpandAll": "Rozbalit vše",
     "TIDY5E.ItemFilters.ClearAll": "Vymazat vše",
@@ -288,7 +263,6 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Vyčerpání"
     },
-    "TIDY5E.Tidy5eSettings": "Nastavení deníků Tidy 5e",
     "TIDY5E.Group.EmptyMembersTabHint": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato volba uzamčení listu.",
@@ -329,7 +303,6 @@
     "TIDY5E.RollRecharge.Label": "Dobití",
     "TIDY5E.Facilities.Defenders.Label": "Obránci",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Abecedně (A-Z)",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Všechny sekce",
     "TIDY5E.SortMenu.OptionManual": "Ručně",
     "TIDY5E.SortMenu.OptionPrepared": "Připraveno",
@@ -446,7 +419,6 @@
     "TIDY5E.Hide": "Skrýt",
     "TIDY5E.LegendaryLairToolbar": "Legendární/doupěte akce",
     "TIDY5E.SpellbookSections": "Sekce kouzel",
-    "TIDY5E.UserDefaultPrefix": "Výchozí uživatel: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Globální výchozí nastavení zobrazení",
     "TIDY5E.Character.Sidebar.Title": "Boční panel hráčských postav",
     "TIDY5E.ContextMenuActionPin": "Připnout navrch",

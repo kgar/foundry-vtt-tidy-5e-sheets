@@ -114,35 +114,35 @@
   - [x] TIDY5E.ShowItemArt
   - [x] TIDY5E.ShowItemImage
   - [x] TIDY5E.ShowNotProficientSkills
-  - [ ] TIDY5E.ShowPortraitArt
-  - [ ] TIDY5E.SortMenu.OptionAlphabetical
-  - [ ] TIDY5E.SortMode.ActionListDefault
-  - [ ] TIDY5E.SpellAttackMod
-  - [ ] TIDY5E.SpellSourceIdentifierLabelHint
-  - [ ] TIDY5E.SpellSourceIdentifierSelectText
-  - [ ] TIDY5E.TabConfiguration.AtLeastOneRequiredErrorMessage
-  - [ ] TIDY5E.TabConfiguration.Explanation
-  - [ ] TIDY5E.TabConfiguration.UnsupportedDocumentErrorMessage
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.round
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.square
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.token
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.transparent
-  - [ ] TIDY5E.ThemeSettings.Sheet.explanation
-  - [ ] TIDY5E.ThemeSettings.Sheet.header
-  - [ ] TIDY5E.ThemeSettings.Sheet.menuLabel
-  - [ ] TIDY5E.ThemeSettings.Sheet.useDefaultDarkColors
-  - [ ] TIDY5E.ThemeSettings.Sheet.useDefaultLightColors
-  - [ ] TIDY5E.ThemeSettings.SheetMenu.hint
-  - [ ] TIDY5E.Tidy5eSettings
-  - [ ] TIDY5E.TogglePersonalityInfo
-  - [ ] TIDY5E.TokenLinked
-  - [ ] TIDY5E.TotalCrewCount
-  - [ ] TIDY5E.UserDefaultPrefix
-  - [ ] TIDY5E.UserSettings.TabNPCs.header
-  - [ ] TIDY5E.UserSettings.TabNPCs.tabLabel
-  - [ ] TIDY5E.UserSettings.TabVehicles.header
-  - [ ] TIDY5E.UserSettings.TabVehicles.tabLabel
-  - [ ] TIDY5E.Utilities.ConfigureSections
+  - [x] TIDY5E.ShowPortraitArt
+  - [x] TIDY5E.SortMenu.OptionAlphabetical
+  - [x] TIDY5E.SortMode.ActionListDefault
+  - [x] TIDY5E.SpellAttackMod
+  - [x] TIDY5E.SpellSourceIdentifierLabelHint
+  - [x] TIDY5E.SpellSourceIdentifierSelectText
+  - [x] TIDY5E.TabConfiguration.AtLeastOneRequiredErrorMessage
+  - [x] TIDY5E.TabConfiguration.Explanation
+  - [x] TIDY5E.TabConfiguration.UnsupportedDocumentErrorMessage
+  - [x] (dynamic) TIDY5E.ThemeSettings.PortraitShape.option.round
+  - [x] (dynamic) TIDY5E.ThemeSettings.PortraitShape.option.square
+  - [x] (dynamic) TIDY5E.ThemeSettings.PortraitShape.option.token
+  - [x] (dynamic) TIDY5E.ThemeSettings.PortraitShape.option.transparent
+  - [x] TIDY5E.ThemeSettings.Sheet.explanation
+  - [x] TIDY5E.ThemeSettings.Sheet.header
+  - [x] TIDY5E.ThemeSettings.Sheet.menuLabel
+  - [x] TIDY5E.ThemeSettings.Sheet.useDefaultDarkColors
+  - [x] TIDY5E.ThemeSettings.Sheet.useDefaultLightColors
+  - [x] TIDY5E.ThemeSettings.SheetMenu.hint
+  - [x] TIDY5E.Tidy5eSettings
+  - [x] TIDY5E.TogglePersonalityInfo
+  - [x] TIDY5E.TokenLinked
+  - [x] TIDY5E.TotalCrewCount
+  - [x] TIDY5E.UserDefaultPrefix
+  - [x] TIDY5E.UserSettings.TabNPCs.header
+  - [x] TIDY5E.UserSettings.TabNPCs.tabLabel
+  - [x] TIDY5E.UserSettings.TabVehicles.header
+  - [x] TIDY5E.UserSettings.TabVehicles.tabLabel
+  - [x] TIDY5E.Utilities.ConfigureSections
   - [ ] TIDY5E.Utilities.GMTools
   - [ ] TIDY5E.Utilities.IdentifyAll
   - [ ] TIDY5E.Utilities.MarkAllAsUnidentified

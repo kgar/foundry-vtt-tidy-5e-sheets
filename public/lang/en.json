@@ -7,8 +7,6 @@
   "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Vehicle Sheet",
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Group Sheet",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Encounter Sheet",
-  "TIDY5E.ShowPortraitArt": "Show Portrait",
-  "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
 
   "TIDY5E.AddSpecific": "Add {name}",
   "TIDY5E.AddCustom": "Add Custom {name}",
@@ -24,8 +22,6 @@
 
   "TIDY5E.LegendaryLairToolbar": "Legendary/Lair Toolbar",
   "TIDY5E.SpellbookSections": "Spellbook Sections",
-
-  "TIDY5E.UserDefaultPrefix": "User Default: {value}",
 
   "TIDY5E.Group.EmptyMembersTabHint": "This group is empty. Drop an actor from the sidebar to add a member.",
   "TIDY5E.Group.PrimaryParty.Label": "Primary Party",
@@ -43,7 +39,6 @@
   "TIDY5E.LairAbbr": "Lair",
 
   "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
-  "TIDY5E.TogglePersonalityInfo": "Toggle Personality Info",
 
   "TIDY5E.SheetMode.Edit": "Switch to Play Mode",
   "TIDY5E.SheetMode.Play": "Switch to Edit Mode",
@@ -93,13 +88,8 @@
   "TIDY5E.ActorMeleeSpellAttackFlavorText": "Melee Spell Attack",
   "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ranged Spell Attack",
   "TIDY5E.ActorRangedSpellAttackFlavorText": "Ranged Spell Attack",
-  "TIDY5E.SpellAttackMod": "Spell Attack Mod",
 
-  "TIDY5E.TokenLinked": "Token linked to actor",
   "TIDY5E.TokenUnlinked": "Token not linked to actor",
-
-  "TIDY5E.SpellSourceIdentifierSelectText": "Class Identifier: {identifier}",
-  "TIDY5E.SpellSourceIdentifierLabelHint": "The actor who has this spell does not have the source class that is specified here.",
 
   "TIDY5E.Class.Artificer": "Artificer",
   "TIDY5E.Class.Barbarian": "Barbarian",
@@ -133,10 +123,7 @@
     "SelectionTab.Title": "Tab Selection",
     "AvailableHeader": "Hidden Tabs",
     "SelectedHeader": "Visible Tabs",
-    "VisibilityTab.Title": "Tab Visibility",
-    "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
-    "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
-    "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
+    "VisibilityTab.Title": "Tab Visibility"
   },
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",
@@ -241,14 +228,6 @@
     "label": "User Settings",
     "title": "User Settings: {userName}"
   },
-  "TIDY5E.UserSettings.TabNPCs": {
-    "tabLabel": "NPCs",
-    "header": "NPC Sheets"
-  },
-  "TIDY5E.UserSettings.TabVehicles": {
-    "tabLabel": "Vehicles",
-    "header": "Vehicle Sheets"
-  },
   "TIDY5E.UserSettings.TabActionsList": {
     "tabLabel": "Actions List"
   },
@@ -349,15 +328,10 @@
     },
     "Sheet": {
       "title": "Theme Settings: {userName}",
-      "header": "Custom Theme Colors",
-      "useDefaultLightColors": "Default Light",
-      "useDefaultDarkColors": "Default Dark",
       "export": "Export",
       "import": "Import",
       "importError": "Theme import failed. See console for more details.",
-      "importSuccess": "Theme imported successfully!",
-      "menuLabel": "Menu",
-      "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
+      "importSuccess": "Theme imported successfully!"
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor.title": "Accent Color",
@@ -382,8 +356,6 @@
   "TIDY5E.VehicleMotionless": "Vehicle is motionless",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals",
-  "TIDY5E.TotalCrewCount": "Total Crew",
-  "TIDY5E.SortMode.ActionListDefault": "Default Action List Sort",
   "TIDY5E.Commands.ExpandAll": "Expand All",
   "TIDY5E.Commands.CollapseAll": "Collapse All",
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",
@@ -402,7 +374,6 @@
   "TIDY5E.Utilities.AssignSpellsToClasses": "Assign Spells to Classes",
   "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details.",
   "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
-  "TIDY5E.Utilities.ConfigureSections": "Configure Sections",
   "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Spell Slot Tracking",
   "TIDY5E.Utilities.SpellPips": "Spell Pips",
   "TIDY5E.Utilities.SpellValueMax": "Spell Value/Max",
@@ -454,7 +425,6 @@
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
   "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
   "TIDY5E.ExpandCollapseMenu.OptionAllSections": "All Sections",
-  "TIDY5E.SortMenu.OptionAlphabetical": "Alphabetical (A-Z)",
   "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ascending",
   "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "Sort Alphabetically Ascending",
   "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Descending",

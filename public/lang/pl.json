@@ -1,19 +1,11 @@
 {
-    "TIDY5E.ShowPortraitArt": "Pokaż portret",
     "TIDY5E.TabConfiguration": {
-        "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
         "Title": "Wybór zakładki dla {documentName}",
         "MenuOptionText": "Ustawienia zakładki",
         "AvailableHeader": "Ukryte zakładki",
         "SelectedHeader": "Widoczne zakładki",
-        "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
-        "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone.",
         "SelectionTab.Title": "Wybór zakładki",
         "VisibilityTab.Title": "Widoczność zakładki"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Pojazdy",
-        "header": "Karty Pojazdów"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Ustawienia MG"
@@ -39,7 +31,6 @@
     "TIDY5E.ContextMenuActionUnequip": "Zdejmij",
     "TIDY5E.HitDiceRollAverage": "Prawy przycisk myszy: zastosuj średnią",
     "TIDY5E.JournalTabName": "Dziennik",
-    "TIDY5E.TogglePersonalityInfo": "Przełącz Informacje o Charakterze",
     "TIDY5E.ContextMenuActionAttune": "Zestrój",
     "TIDY5E.ContextMenuActionUnattune": "Rozstrój",
     "TIDY5E.ContextMenuActionPrepare": "Przygotuj",
@@ -49,8 +40,6 @@
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.Search": "Szukaj",
     "TIDY5E.SearchHint": "Zacznij pisać, żeby pokazać wyniki zapytania",
-    "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
-    "TIDY5E.TokenLinked": "Token przypisany do aktora",
     "TIDY5E.TokenUnlinked": "Token nie przypisany do aktora",
     "TIDY5E.Class.Artificer": "Wynalazca",
     "TIDY5E.Class.Barbarian": "Barbarzyńca",
@@ -76,10 +65,6 @@
         "hint": "Dostosuj własną wersję Tidy 5e Sheets. Te ustawienia są zapisywane w przeglądarce i mają zastosowanie do Twoich kart.",
         "label": "Ustawienia użytkownika",
         "title": "Ustawienia użytkownika: {userName}"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "header": "Karty NPC",
-        "tabLabel": "NPC"
     },
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Różne",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Test Ataku Czarem",
@@ -107,9 +92,7 @@
     "TIDY5E.UseDefault": "Użyj domyślnych",
     "TIDY5E.VehicleInMotion": "Pojazd w ruchu",
     "TIDY5E.VehicleMotionless": "Pojazd w bezruchu",
-    "TIDY5E.TotalCrewCount": "Całkowita załoga",
     "TIDY5E.Commands.ExpandAll": "Rozwiń wszystko",
-    "TIDY5E.SortMode.ActionListDefault": "Domyślne sortowanie listy Akcji",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
     "TIDY5E.ItemFilters.ClearAll": "Wyczyść wszystko",
     "TIDY5E.ItemFilters.Filter.Other": "Inne",
@@ -128,15 +111,10 @@
     "TIDY5E.ThemeSettings": {
         "Sheet": {
             "import": "Importuj",
-            "menuLabel": "Menu",
             "importError": "Import motywu nie powiódł się. Więcej szczegółów można znaleźć w konsoli.",
             "importSuccess": "Motyw został pomyślnie zaimportowany!",
             "title": "Ustawienia motywu: {userName}",
-            "useDefaultLightColors": "Domyślny Jasny",
-            "useDefaultDarkColors": "Domyślny Ciemny",
-            "export": "Eksportuj",
-            "header": "Niestandardowe kolory motywu",
-            "explanation": "Wybierz kolor, którego chcesz użyć dla każdej opcji. Wartość \"#00000000\" oznacza wyłączenie koloru."
+            "export": "Eksportuj"
         },
         "SheetMenu": {
             "hint": "Tylko klasyczne karty Tidy: Dostosuj kolory Tidy 5e Sheets.",
@@ -200,7 +178,6 @@
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
     },
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identyfikator klasy: {identifier}",
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."
@@ -239,8 +216,6 @@
         "name": "Uwzględnij materiały eksploatacyjne jako akcje",
         "hint": "Domyślnie na liście akcji umieszcza materiały eksploatacyjne, które mają koszt aktywacji (Akcja, Akcja bonusowa itp.)."
     },
-    "TIDY5E.Utilities.ConfigureSections": "Konfiguruj sekcje",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "Postać posiadająca ten czar nie ma określonej tutaj klasy źródłowej.",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identyfikator klasy źródłowej",
     "TIDY5E.Utilities.Tools": "Narzędzia",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Pokaż tylko nieprzypisane",
@@ -284,7 +259,6 @@
         "name": "Zablokuj walutę"
     },
     "TIDY5E.ButtonConfirm.Text": "Potwierdź",
-    "TIDY5E.Tidy5eSettings": "Ustawienia Tidy 5e Sheets",
     "TIDY5E.Group.EmptyMembersTabHint": "Ta grupa jest pusta. Upuść postać z paska bocznego, żeby dodać członka.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Przełącz blokadę karty",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty.",
@@ -319,7 +293,6 @@
         "AddSection": "Dodaj Sekcję"
     },
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Wszystkie sekcje",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabetycznie (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "Ręcznie",
     "TIDY5E.SortMenu.OptionPrepared": "Przygotowane",
     "TIDY5E.SortMenu.OptionEquipped": "Wyposażone",

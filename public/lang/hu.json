@@ -1,8 +1,6 @@
 {
-    "TIDY5E.ShowPortraitArt": "portré mutatás",
     "TIDY5E.HitDiceRollAverage": "Jobb Klikk: Átlag",
     "TIDY5E.JournalTabName": "Napló",
-    "TIDY5E.TogglePersonalityInfo": "Személyiség Info Ki/Be",
     "TIDY5E.ContextMenuActionEquip": "Tárgy Felszerelése",
     "TIDY5E.ContextMenuActionUnequip": "Tárgy Leszerelése",
     "TIDY5E.ContextMenuActionAttune": "Összehangolódás",
@@ -16,8 +14,6 @@
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.Search": "",
     "TIDY5E.SearchHint": "Kezdd el írni, amit keresel.",
-    "TIDY5E.SpellAttackMod": "Támadás Mód.",
-    "TIDY5E.TokenLinked": "Aktorhoz linkelt token",
     "TIDY5E.TokenUnlinked": "Token nincs aktorhoz linkelve",
     "TIDY5E.SpellClass": null,
     "TIDY5E.Class.Artificer": "",
@@ -39,14 +35,6 @@
         "hint": "",
         "label": "Lap Beállítások",
         "title": "Tidy5e Lap Beállítások"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "",
-        "header": ""
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "",
-        "header": ""
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "JM Opciók"
@@ -95,22 +83,16 @@
         },
         "Sheet": {
             "title": "",
-            "header": "",
-            "useDefaultLightColors": "",
-            "useDefaultDarkColors": "",
             "export": "",
             "import": "",
             "importError": "",
-            "importSuccess": "",
-            "menuLabel": "",
-            "explanation": ""
+            "importSuccess": ""
         }
     },
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
-    "TIDY5E.TotalCrewCount": "",
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.Actions": {
         "TabName": ""
@@ -167,11 +149,8 @@
     "TIDY5E.TabConfiguration": {
         "Title": "",
         "AvailableHeader": "",
-        "UnsupportedDocumentErrorMessage": "",
-        "Explanation": "",
         "SelectedHeader": "",
-        "MenuOptionText": "",
-        "AtLeastOneRequiredErrorMessage": ""
+        "MenuOptionText": ""
     },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": ""
@@ -187,13 +166,9 @@
         "MoveRight": "",
         "MoveAllLeft": ""
     },
-    "TIDY5E.SortMode.ActionListDefault": "",
-    "TIDY5E.Utilities.ConfigureSections": "",
     "TIDY5E.ReminderToBackUp": "",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "",
     "TIDY5E.ItemFilters.ClearAll": "",
-    "TIDY5E.SpellSourceIdentifierSelectText": "",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "",
     "TIDY5E.ButtonConfirm.Text": "",
     "TIDY5E.Utilities.Tools": "",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",

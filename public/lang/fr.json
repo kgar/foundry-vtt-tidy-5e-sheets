@@ -1,8 +1,6 @@
 {
-    "TIDY5E.ShowPortraitArt": "Voir le portrait",
     "TIDY5E.HitDiceRollAverage": "Clic droit : Appliquer la moyenne",
     "TIDY5E.JournalTabName": "Journal",
-    "TIDY5E.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
     "TIDY5E.ContextMenuActionEquip": "Équiper l'objet",
     "TIDY5E.ContextMenuActionUnequip": "Déséquiper l'objet",
     "TIDY5E.ContextMenuActionAttune": "Se lier à l'objet",
@@ -16,8 +14,6 @@
     "TIDY5E.RemoveFavorite": "Enlever des Favoris",
     "TIDY5E.Search": "Chercher",
     "TIDY5E.SearchHint": "Saisir votre recherche",
-    "TIDY5E.SpellAttackMod": "Bonus d'attaque",
-    "TIDY5E.TokenLinked": "Token lié à l'acteur",
     "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
     "TIDY5E.SpellClass": "Classe de sort",
     "TIDY5E.Class.Artificer": "Artificier",
@@ -39,14 +35,6 @@
         "hint": "Personnalisez votre propre version des Feuilles Tidy 5e. Ces paramètres sont enregistrés dans votre navigateur et s'appliquent à vos feuilles.",
         "label": "Configuration des feuilles",
         "title": "Configuration des feuilles Tidy5e"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "PNJs",
-        "header": "Feuilles PNJ"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Véhicules",
-        "header": "Feuilles de véhicules"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Options MJ"
@@ -95,15 +83,10 @@
         },
         "Sheet": {
             "title": "Paramètres du thème : {userName}",
-            "header": "Couleurs personnalisées du thème",
-            "useDefaultLightColors": "Lumineux par défaut",
-            "useDefaultDarkColors": "Sombre par défaut",
             "export": "Exporter",
             "import": "Importer",
             "importError": "L'importation du thème a échoué. Voir la console pour plus de détails.",
-            "importSuccess": "Thème importé avec succès !",
-            "menuLabel": "Menu",
-            "explanation": "Sélectionnez la couleur que vous souhaitez utiliser pour chaque option. La valeur \"#00000000\" équivaut à désactiver la couleur."
+            "importSuccess": "Thème importé avec succès !"
         },
         "hint": "Personnalisez votre feuille pour créer une expérience immersive qui complète votre jeu.",
         "ActorHeaderBackground.title": "Arrière-plan de l'en-tête du personnage",
@@ -126,7 +109,6 @@
     "TIDY5E.SaveChanges": "Enregistrer les modifications",
     "TIDY5E.VehicleInMotion": "Le véhicule est en mouvement",
     "TIDY5E.VehicleMotionless": "Le véhicule n'a pas de mouvement",
-    "TIDY5E.TotalCrewCount": "Équipage total",
     "TIDY5E.Actions": {
         "TabName": "Actions"
     },
@@ -135,13 +117,10 @@
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Attaque de sort",
     "TIDY5E.ActorSpellAttackFlavorText": "Attaque de sort",
     "TIDY5E.TabConfiguration": {
-        "Explanation": "Les onglets que l'utilisateur ou la feuille sont configurés pour ne pas les voir (par exemple, en désactivant le journal dans les paramètres de configuration) n'apparaîtront pas sur la feuille, même s'ils sont sélectionnés.",
         "MenuOptionText": "Onglet de sélection",
         "Title": "Onglet de sélection : {documentName}",
         "AvailableHeader": "Onglets masqués",
         "SelectedHeader": "Onglets visible",
-        "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
-        "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis.",
         "SelectionTab.Title": "Sélection de l'onglet",
         "VisibilityTab.Title": "Visibilité des onglets"
     },
@@ -223,27 +202,8 @@
         "name": "Limiter les actions au sorts mineurs (Cantrips)",
         "hint": "Au lieu d'afficher tous les sorts qui infligent des dégâts dans l'onglet/panneau Actions par défaut, limite aux seuls cantrips (sorts mineurs). C'est le comportement par défaut de D&D Beyond."
     },
-    "TIDY5E.SortMode.ActionListDefault": "Tri par défaut de la liste d'actions",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Divers",
     "TIDY5E.ItemFilters.Filter.Other": "Autre",
-    "TIDY5E.SheetMigrations": {
-        "MenuOptionText": "Migrations de feuilles",
-        "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
-        "Notification.SheetMigrationsAvailable.Explanation2": "Note : Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire.",
-        "OptionApplyAll.Tooltip": "Appliquer cette migration à toutes les feuilles qui peuvent recevoir cette migration. Les autres options sélectionnées ici seront également appliquées à toutes les feuilles migrées.",
-        "ButtonMigration.Text": "Migrer",
-        "Title": "Migrations des feuilles : {documentNameOrType}",
-        "Introduction": "Les migrations suivantes sont disponibles pour {actorNameOrType}:",
-        "NoMigrations": "Aucune migration n'est disponible.",
-        "Notification.SheetMigrationsAvailable.Title": "Feuilles Tidy 5e : Migrations disponibles",
-        "Notification.SheetMigrationsAvailable.Explanation": "De nouvelles migrations de données de feuilles sont disponibles. Pour visualiser les migrations de feuilles, ouvrez n'importe quelle feuille Tidy et sélectionnez l'option \"Migrations de feuilles\" dans le menu de la feuille.",
-        "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Ne pas montrer à nouveau",
-        "OptionOverwrite.Text": "Écraser",
-        "OptionOverwrite.Tooltip": "Permet d'écraser les données de la feuille existante. Si cette option n'est pas cochée, seuls les champs vides du système recevront les données Tidy migrées.",
-        "OptionApplyAll.Text": "Appliquer à toutes les fiches concernées",
-        "OptionDeleteFlags.Text": "Supprimer les indicateurs Tidy affectés",
-        "OptionDeleteFlags.Tooltip": "Lors de la migration des données personnalisées de Tidy vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
-    },
     "TIDY5E.Settings.ShowSheetMigrationsMenu": {
         "OptionNone.Text": "Ne pas montrer",
         "OptionGMOnly.Text": "MJ seulement",
@@ -297,7 +257,6 @@
         "SectionSelectorSaveNewSection": "Sauvegarder la nouvelle section",
         "SectionSelectorChooseTabSectionTooltip": "Choisissez la section {tabName}"
     },
-    "TIDY5E.Utilities.ConfigureSections": "Configurer les sections",
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Icones"
     },
@@ -307,8 +266,6 @@
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) ",
     "TIDY5E.EmptyContainer": "Ce conteneur est vide.",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identifiant de classe : {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "L'acteur qui bénéficie de ce sort n'a pas la classe source spécifiée ici.",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Attribuer des sorts aux classes",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identifiant de la classe source",
     "TIDY5E.Utilities.Tools": "Outils",
@@ -352,7 +309,6 @@
         "hint": "Détermine le type de jet par défaut à utiliser lors d'un jet de sauvegarde contre la mort.",
         "name": "Jet de sauvegarde de la mort par défaut"
     },
-    "TIDY5E.Tidy5eSettings": "Paramètre de la feuille Tidy 5e",
     "TIDY5E.Utilities.SpellPips": "Slots d'incantation",
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Inclure les rituels dans la catégorie \"peut lancer\"",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Feuille de groupe Tidy 5e",
@@ -371,7 +327,6 @@
     "TIDY5E.SortMenu.OptionPriority": "Priorité",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Si une feuille Tidy est la fenêtre active dans l'interface utilisateur, ce raccourci clavier permet d'activer le menu d'en-tête de la feuille.",
     "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Alphabétique (A-Z)",
     "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Afficher la rangée du conteneur",
     "TIDY5E.RollRecharge.Label": "Recharge",
     "TIDY5E.Activities.Cast.SourceHintText": "De {itemName}",
@@ -469,7 +424,6 @@
     "TIDY5E.Hide": "Cacher",
     "TIDY5E.LegendaryLairToolbar": "Barre d'outils Légendaire/Repaire",
     "TIDY5E.SpellbookSections": "Sections livres de sorts",
-    "TIDY5E.UserDefaultPrefix": "Paramètres par défaut de l'utilisateur :{value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Options d'affichage globale par défaut",
     "TIDY5E.Character.Sidebar.Title": "Barre latérale du personnage joueur",
     "TIDY5E.Actor.Characteristics": "Caractéristiques",

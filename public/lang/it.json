@@ -1,8 +1,6 @@
 {
-    "TIDY5E.ShowPortraitArt": "Mostra Ritratto",
     "TIDY5E.HitDiceRollAverage": "Tasto Destro: Usa Valore Medio",
     "TIDY5E.JournalTabName": "Diario",
-    "TIDY5E.TogglePersonalityInfo": "Attiva/disattiva le informazioni sulla personalità",
     "TIDY5E.ContextMenuActionEquip": "Equipaggia",
     "TIDY5E.ContextMenuActionUnequip": "Disequipaggia",
     "TIDY5E.ContextMenuActionAttune": "Sintonizza",
@@ -16,8 +14,6 @@
     "TIDY5E.RemoveFavorite": "Rimuovi dai Preferiti",
     "TIDY5E.Search": "Cerca",
     "TIDY5E.SearchHint": "Inizia a digitare ciò che stai cercando",
-    "TIDY5E.SpellAttackMod": "Mod Attacco con Incantesimo",
-    "TIDY5E.TokenLinked": "Token collegato all'attore",
     "TIDY5E.TokenUnlinked": "Token non collegato all'attore",
     "TIDY5E.SpellClass": "Classe Incantesimo",
     "TIDY5E.Class.Artificer": "Artefice",
@@ -39,14 +35,6 @@
         "hint": "Personalizza la tua versione di Tidy 5e Sheets. Queste impostazioni vengono salvate nel tuo browser e si applicano ai tuoi fogli.",
         "label": "Impostazioni Scheda",
         "title": "Impostazioni Utente: {userName}"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "PNGs",
-        "header": "Schede PNG"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Veicoli",
-        "header": "Schede Veicoli"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Opzioni DM"
@@ -95,15 +83,10 @@
         },
         "Sheet": {
             "title": "Impostazioni Tema: {userName}",
-            "header": "Colori tema personalizzati",
-            "useDefaultLightColors": "Predefinito Chiaro",
-            "useDefaultDarkColors": "Predefinito Scuro",
             "export": "Esporta",
             "import": "Importa",
             "importError": "L'importazione del tema non è riuscita. Vedi console per maggiori dettagli.",
-            "importSuccess": "Tema importato con successo!",
-            "menuLabel": "Menu",
-            "explanation": "Seleziona il colore che desideri utilizzare per ciascuna opzione. Il valore \"#00000000\" equivale a disabilitare il colore."
+            "importSuccess": "Tema importato con successo!"
         },
         "hint": "Personalizza la tua scheda per creare un'esperienza immersiva che completi il tuo gioco.",
         "ActorHeaderBackground.title": "Sfondo Intestazione Personaggio",
@@ -125,7 +108,6 @@
     "TIDY5E.SaveChanges": "Salva Modifiche",
     "TIDY5E.VehicleInMotion": "Il Veicolo è in movimento",
     "TIDY5E.VehicleMotionless": "Il Veicolo è fermo",
-    "TIDY5E.TotalCrewCount": "Equipaggio totale",
     "TIDY5E.Actions": {
         "TabName": "Azioni"
     },
@@ -138,10 +120,7 @@
         "SelectedHeader": "Schede Visibili",
         "MenuOptionText": "Configurazione Scheda",
         "AvailableHeader": "Schede Nascoste",
-        "AtLeastOneRequiredErrorMessage": "Almeno una scheda è richiesta.",
         "Title": "Configurazione Scheda: {documentName}",
-        "UnsupportedDocumentErrorMessage": "Il tipo di documento {documentType} non è attualmente impostato per la selezione della scheda.",
-        "Explanation": "Qualsiasi scheda che è configurata per non essere vista (ad esempio, disabilitando il diario nelle impostazioni di configurazione) non verrà comunque visualizzata sul foglio, anche se selezionata.",
         "SelectionTab.Title": "Selezione Scheda",
         "VisibilityTab.Title": "Visibilità Scheda"
     },
@@ -224,26 +203,7 @@
         "hint": "Include incantesimi con effetti attivi associati (ad esempio Barkskin) nella scheda/pannello Azioni per impostazione predefinita."
     },
     "TIDY5E.ItemFilters.Filter.Other": "Altro",
-    "TIDY5E.SortMode.ActionListDefault": "Ordinamento elenco azioni predefinito",
     "TIDY5E.GMOnly.Message": "Solo per il DM: {message}",
-    "TIDY5E.SheetMigrations": {
-        "Notification.SheetMigrationsAvailable.Title": "Schede Tidy 5e: Migrazioni Disponibili",
-        "Notification.SheetMigrationsAvailable.Explanation": "Sono disponibili nuove migrazioni dei dati delle schede. Per visualizzare le migrazioni delle schede, aprire qualsiasi scheda Tidy e selezionare l'opzione del menu \"Migrazioni Schede\".",
-        "OptionOverwrite.Text": "Sovrascrivi",
-        "OptionOverwrite.Tooltip": "Abilita la sovrascrittura dei dati del foglio esistente. Se deselezionato, solo i campi di sistema vuoti riceveranno i dati Tidy migrati.",
-        "OptionApplyAll.Text": "Applica a tutte le Schede pertinenti",
-        "ButtonMigration.Text": "Migrare",
-        "MenuOptionText": "Migrazioni schede",
-        "Title": "Migrazioni Schede: {documentNameOrType}",
-        "Introduction": "Le seguenti migrazioni sono disponibili per {actorNameOrType}:",
-        "NoMigrations": "Migrazioni non disponibili.",
-        "Notification.SheetMigrationsAvailable.Explanation2": "NB: Le migrazioni spostano i dati originariamente archiviati da Tidy 5e Sheets nei campi dati ufficialmente supportati dal sistema. Se non mancano dati sui tuoi fogli dopo l'aggiornamento di Tidy 5e Sheets, non è necessaria alcuna migrazione.",
-        "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Non Mostrare Ancora",
-        "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confermato. Questo messaggio non verrà più visualizzato finché non sarà disponibile un'altra migrazione.",
-        "OptionApplyAll.Tooltip": "Applica questa migrazione a tutte le schede che sono in grado di riceverla. Le altre opzioni selezionate qui verranno applicate anche a tutte le schede migrate.",
-        "OptionDeleteFlags.Text": "Elimina i flag Tidy interessati",
-        "OptionDeleteFlags.Tooltip": "Durante la migrazione dai dati dei flag Tidy personalizzati ai dati del sistema ufficiale, i flag rimangono al loro posto per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag."
-    },
     "TIDY5E.Settings.ShowSheetMigrationsMenu": {
         "OptionNone.Text": "Non Mostrare",
         "OptionGMOnly.Text": "Solo DM",
@@ -278,7 +238,6 @@
         "buttonLabel": "Imposta Tidy come scheda predefinita"
     },
     "TIDY5E.GenericErrorNotification": "Si è verificato un errore durante l'esecuzione di questa azione. Vedi la console devtools per maggiori dettagli.",
-    "TIDY5E.Utilities.ConfigureSections": "Configura sezioni",
     "TIDY5E.Section": {
         "Label": "Sezione",
         "ConfigDialog": {
@@ -306,17 +265,14 @@
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click per saltare il tiro e ricaricare subito) ",
     "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "Il personaggio che possiede questo incantesimo non ha la classe sorgente specificata qui.",
     "TIDY5E.Utilities.Tools": "Strumenti",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Assegna Incantesimi a Classi",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
     "TIDY5E.Group.EmptyMembersTabHint": "Questo gruppo è vuoto. Trascina un personaggio dalla barra laterale per aggiungere un membro.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Attiva/disattiva Blocco Scheda",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il blocco scheda.",
-    "TIDY5E.Tidy5eSettings": "Impostazioni Schede Tidy 5e",
     "TIDY5E.Facilities.Hirelings.Label": "Mercenari",
     "TIDY5E.Facilities.Creatures.Label": "Creature",
     "TIDY5E.Facilities.RosterMember.Label": "{actorName} - {facilityName}",
@@ -328,7 +284,6 @@
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Tutte le sezioni",
     "TIDY5E.SortMenu.OptionPrepared": "Preparato",
     "TIDY5E.SortMenu.OptionEquipped": "Equipaggiato",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Alfabetico (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "Manuale",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Attiva/Disattiva Menu Intestazione",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il menu dell'intestazione della scheda.",
@@ -472,7 +427,6 @@
     "TIDY5E.Hide": "Nascondi",
     "TIDY5E.LegendaryLairToolbar": "Barra Strumenti Leggendaria/Tana",
     "TIDY5E.SpellbookSections": "Sezioni Libro Incantesimi",
-    "TIDY5E.UserDefaultPrefix": "Predefinito utente: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opzioni Visualizzazione Predefinite Globali",
     "TIDY5E.Character.Sidebar.Title": "Barra laterale PG",
     "TIDY5E.ContextMenuActionPin": "Fissa in Alto",
