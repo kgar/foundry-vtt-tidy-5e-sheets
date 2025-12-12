@@ -49,26 +49,6 @@ export class TidyHooks {
   }
 
   /**
-   * The context menu for the advancements list has been constructed.
-   * @param {jQuery} html The HTML element to which the context options are attached.
-   * @param {ContextMenuEntry[]} contextOptions The context menu entries.
-   * @returns {boolean} `true` to allow the menu to show, `false` to prevent the default menu from showing.
-   *
-   * @example
-   * ```js
-   * Hooks.on('dnd5e.getItemAdvancementContext', (html, contextOptions) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static dnd5eGetItemAdvancementContext(
-    html: any,
-    contextOptions: ContextMenuEntry[]
-  ): boolean {
-    return Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
-  }
-
-  /**
    * The item context menu has established its options and is about to show.
    * @param {Item5e} item The item document instance.
    * @param {ContextMenuEntry[]} menuItems The menu items for this item.
@@ -126,25 +106,6 @@ export class TidyHooks {
    */
   static foundryDropActorSheetData(actor: Actor5e, app: any, data: any) {
     return Hooks.call('dropActorSheetData', actor, app, data);
-  }
-
-  /**
-   * The context menu is about to show for a given item on a sheet.
-   * @param {Item5e} item The item document instance.
-   * @param {object} options The mouse event which triggered the context menu.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.actorItemUseContextMenu', (item, options) => {
-   *   // Your code here
-   * });
-   * ```
-   */
-  static tidy5eSheetsActorItemUseContextMenu(
-    item: Item5e,
-    options: { event: Event }
-  ) {
-    Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
   }
 
   /**
@@ -383,30 +344,6 @@ export class TidyHooks {
     userId: string
   ): boolean {
     return Hooks.call('tidy5e-sheet.preCreateItem', owner, createData, userId);
-  }
-
-  /**
-   * The portrait picker is about to open.
-   * @param {ActorSheetContextV1 | ActorSheetClassicContextV2} context The actor sheet data from `getData()`.
-   * @param {MouseEvent & { currentTarget: EventTarget & HTMLElement }} event The triggering event.
-   * @returns {boolean} `true` to allow the picker to open, `false` to prevent it.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.preOpenActorPortraitFilePicker', (context, event) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static tidy5eSheetsPreOpenActorPortraitFilePicker(
-    context: ActorSheetQuadroneContext,
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
-  ): boolean {
-    return Hooks.call(
-      'tidy5e-sheet.preOpenActorPortraitFilePicker',
-      context,
-      event
-    );
   }
 
   /**

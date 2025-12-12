@@ -10,7 +10,7 @@
   - [x] context-menu
   - [x] events
   - [x] features
-  - [ ] foundry
+  - [x] foundry
   - [ ] integration
   - [ ] keybindings
   - [ ] less

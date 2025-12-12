@@ -8,8 +8,6 @@ import { isNil } from 'src/utils/data';
 import type { Actor5e } from 'src/types/types';
 import type {
   DocumentJournalEntries,
-  AttributePinFlag,
-  TidyFlagNamedNotes,
   TidyFlagUnnamedNotes,
   EncounterPlaceholders,
   EncounterPlaceholder,

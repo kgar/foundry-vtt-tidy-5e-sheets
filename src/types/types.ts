@@ -21,7 +21,6 @@ import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import type { Activity5e, SkillData, ToolData } from 'src/foundry/dnd5e.types';
 import type {
   DocumentJournalEntries,
-  AttributePinFlag,
   EncounterPlaceholder,
   SheetPinFlag,
 } from 'src/foundry/TidyFlags.types';
@@ -340,19 +339,6 @@ export type LanguageTraitContext = {
   label: string;
   value?: unknown;
 };
-
-export type AttributeItemPinContext = {
-  document: Item5e;
-  linkedUses?: LinkedUses;
-} & AttributePinFlag & { type: 'item' };
-
-export type AttributeActivityPinContext = {
-  document: Activity5e;
-} & AttributePinFlag & { type: 'activity' };
-
-export type AttributePinContext =
-  | AttributeItemPinContext
-  | AttributeActivityPinContext;
 
 export type SheetPinItemContext = {
   document: Item5e;
