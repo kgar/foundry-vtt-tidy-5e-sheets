@@ -23,7 +23,7 @@
   - [x] tooltips
   - [x] types
   - [ ] utils
-- [ ] Eliminate these loc keys
+- [x] Eliminate these loc keys
   - [x] TIDY5E.Settings.AllowHpMaxOverride.hint
   - [x] TIDY5E.Settings.AllowHpMaxOverride.name
   - [x] TIDY5E.Settings.AlwaysShowSkills.hint
