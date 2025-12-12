@@ -9,7 +9,7 @@
   - [x] components
   - [x] context-menu
   - [x] events
-  - [ ] features
+  - [x] features
   - [ ] foundry
   - [ ] integration
   - [ ] keybindings
