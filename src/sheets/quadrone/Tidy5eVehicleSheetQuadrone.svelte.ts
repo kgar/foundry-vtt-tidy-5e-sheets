@@ -134,7 +134,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       speeds: super._getMovementSpeeds(),
       traits: this._prepareTraits(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
-      utilities: {},
       ...actorContext,
     };
 

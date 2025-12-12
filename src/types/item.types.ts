@@ -10,7 +10,6 @@ import type {
   InventorySection,
   Tab,
   TidySectionBase,
-  Utilities,
 } from './types';
 import type {
   DocumentFilters,
