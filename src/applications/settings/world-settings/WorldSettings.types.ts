@@ -1,4 +1,3 @@
-import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
 import type { CurrentSettings } from 'src/settings/settings.svelte';
 
 export type WorldSettingsContext = {
