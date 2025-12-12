@@ -17,10 +17,10 @@
   - [x] migrations
   - [x] mixins
   - [x] runtime
-  - [ ] settings
-  - [ ] sheets
-  - [ ] theme
-  - [ ] tooltips
+  - [x] settings
+  - [x] sheets
+  - [x] theme
+  - [x] tooltips
   - [ ] types
   - [ ] utils
 - [ ] Eliminate these loc keys
