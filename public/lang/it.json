@@ -75,7 +75,6 @@
     "TIDY5E.Class.Warlock": "Warlock",
     "TIDY5E.Class.Wizard": "Mago",
     "TIDY5E.OriginSummaryConfig": "Configurazione di riepilogo origine: {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro Libro Incantesimi Multiclasse",
     "TIDY5E.UserSettings.Menu": {
         "name": "Impostazioni Utente",
         "hint": "Personalizza la tua versione di Tidy 5e Sheets. Queste impostazioni vengono salvate nel tuo browser e si applicano ai tuoi fogli.",
@@ -118,18 +117,6 @@
         "name": "Mostra Nome Giocatore",
         "hint": "Mostra un campo per il nome del giocatore sotto il nome del personaggio."
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Mostra la Lista delle Classi",
-        "hint": "Mostra l'elenco della classe sotto il nome del personaggio."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Mostra l'indicatore di ispirazione solo al passaggio del mouse",
-        "hint": "Seleziona per mostrare l'indicatore di ispirazione solo quando passi il mouse sopra il ritratto."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Mostra l'indicatore di indebolimento solo al passaggio del mouse",
-        "hint": "Seleziona per mostrare l'indicatore di indebolimento solo quando passi il mouse sopra il ritratto."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Usa Barra PF",
         "hint": "Mostra una barra colorata che indica gli PF rimanenti. I punti ferita saranno ancora visibili."
@@ -138,25 +125,13 @@
         "name": "Usa Overlay Salute",
         "hint": "Mostra overlay PF colorato."
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Mostra solo le munizioni equipaggiate",
-        "hint": "Mostra solo le munizioni attualmente equipaggiate nel selettore delle munizioni dell'arma."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Mostra la scheda Libro degli incantesimi",
         "hint": "Mostra una scheda del libro degli incantesimi per i PNG. Disabilita per spostare la sezione del libro degli incantesimi nella scheda Attributi."
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Mostra indicatore degli effetti attivi",
-        "hint": "Mostra un indicatore per gli elementi della visualizzazione elenco che hanno effetti attivi."
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Usa il menu contestuale",
         "hint": "Abilita il menu contestuale del tasto destro sugli elementi."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Vista limitata espansa per le schede PG",
-        "hint": "Mostra l'intera scheda del personaggio (meno il diario) ai giocatori con autorizzazioni limitate."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "name": "Stile ritratto tondo",
@@ -190,14 +165,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Mostra il riposo dell'NPC nella chat",
         "hint": "Mostra un messaggio in chat quando un PNG riposa."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Contrassegna i PNG collegati/non collegati",
-        "hint": "Aggiunge un bordo colorato e un'icona alle schede dei PNG collegati/non collegati.",
-        "default": "Nessun indicatore di collegamento (predefinito)",
-        "unlinked": "Evidenzia i token non collegati",
-        "linked": "Evidenzia i token collegati",
-        "both": "Evidenzia i token collegati e non collegati"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Pagina Iniziale Scheda",

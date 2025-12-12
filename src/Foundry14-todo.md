@@ -82,24 +82,24 @@
   - [x] TIDY5E.Settings.LockLevelSelector.name
   - [x] TIDY5E.Settings.MoveTraitsToRightOfSkills.hint
   - [x] TIDY5E.Settings.MoveTraitsToRightOfSkills.name
-  - [ ] TIDY5E.Settings.MulticlassSpellbookFilterLabel
-  - [ ] TIDY5E.Settings.ShowActiveEffectsMarker.hint
-  - [ ] TIDY5E.Settings.ShowActiveEffectsMarker.name
-  - [ ] TIDY5E.Settings.ShowClassList.hint
-  - [ ] TIDY5E.Settings.ShowClassList.name
-  - [ ] TIDY5E.Settings.ShowEquippedAmmoOnly.hint
-  - [ ] TIDY5E.Settings.ShowEquippedAmmoOnly.name
-  - [ ] TIDY5E.Settings.ShowExhaustionOnHover.hint
-  - [ ] TIDY5E.Settings.ShowExhaustionOnHover.name
-  - [ ] TIDY5E.Settings.ShowExpandedLimitedView.hint
-  - [ ] TIDY5E.Settings.ShowExpandedLimitedView.name
-  - [ ] TIDY5E.Settings.ShowInspirationOnHover.hint
-  - [ ] TIDY5E.Settings.ShowInspirationOnHover.name
-  - [ ] TIDY5E.Settings.ShowNPCActorLinkMarker.both
-  - [ ] TIDY5E.Settings.ShowNPCActorLinkMarker.default
-  - [ ] TIDY5E.Settings.ShowNPCActorLinkMarker.hint
-  - [ ] TIDY5E.Settings.ShowNPCActorLinkMarker.name
-  - [ ] TIDY5E.Settings.ShowNPCActorLinkMarker.unlinked
+  - [x] TIDY5E.Settings.MulticlassSpellbookFilterLabel
+  - [x] TIDY5E.Settings.ShowActiveEffectsMarker.hint
+  - [x] TIDY5E.Settings.ShowActiveEffectsMarker.name
+  - [x] TIDY5E.Settings.ShowClassList.hint
+  - [x] TIDY5E.Settings.ShowClassList.name
+  - [x] TIDY5E.Settings.ShowEquippedAmmoOnly.hint
+  - [x] TIDY5E.Settings.ShowEquippedAmmoOnly.name
+  - [x] TIDY5E.Settings.ShowExhaustionOnHover.hint
+  - [x] TIDY5E.Settings.ShowExhaustionOnHover.name
+  - [x] TIDY5E.Settings.ShowExpandedLimitedView.hint
+  - [x] TIDY5E.Settings.ShowExpandedLimitedView.name
+  - [x] TIDY5E.Settings.ShowInspirationOnHover.hint
+  - [x] TIDY5E.Settings.ShowInspirationOnHover.name
+  - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.both
+  - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.default
+  - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.hint
+  - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.name
+  - [x] TIDY5E.Settings.ShowNPCActorLinkMarker.unlinked
   - [ ] TIDY5E.Settings.ShowNPCSpellbookTab.hint
   - [ ] TIDY5E.Settings.ShowNPCSpellbookTab.name
   - [ ] TIDY5E.Settings.ShowPlayerName.hint

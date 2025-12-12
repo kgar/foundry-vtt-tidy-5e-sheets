@@ -75,7 +75,6 @@
     "TIDY5E.Class.Warlock": "Hexenmeister",
     "TIDY5E.Class.Wizard": "Magier",
     "TIDY5E.OriginSummaryConfig": "Herkunftskonfiguration: {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Mehrfachklassen-Zauberbuchfilter",
     "TIDY5E.UserSettings.Menu": {
         "name": "Benutzereinstellungen",
         "hint": "Die eigene Version von \"Tidy 5e Sheets\" anpassen. Diese Einstellungen werden im Browser gespeichert und gelten für die eigenen Spielbögen.",
@@ -118,18 +117,6 @@
         "name": "Spielername anzeigen",
         "hint": "Zeigt ein Feld für den Spielernamen unter dem Namen des Charakters an."
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Klassenliste anzeigen",
-        "hint": "Zeigt die Klassenliste unter dem Namen des Charakters an."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Inspirationsindikator nur beim Überschweben anzeigen",
-        "hint": "Zeigt die Inspirationsanzeige nur an, wenn der Mauszeiger über dem Porträt schwebt."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Erschöpfunganzeiger nur beim Überschweben anzeigen",
-        "hint": "Zeigt den Erschöpfungsindikator nur an, wenn der Mauszeiger über dem Porträt schwebt."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Nutze TP-Balken",
         "hint": "Zeigt einen farbigen Balken mit den verbleibenden TP an. Die Trefferpunktzahlen sind weiterhin sichtbar."
@@ -138,25 +125,13 @@
         "name": "Nutze Gesundheitsüberblende",
         "hint": "Zeigt eine farbige TP-Überblende."
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Zeige nur ausgerüstete Munition",
-        "hint": "Zeigt nur die aktuell ausgerüstete Munition in der Munitionsauswahl der Waffe an."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Zeige Zauberbuchreiter",
         "hint": "Zeigt ein Zauberbuchreiter für NSCe. Deaktivieren, um das Zauberbuch in den Reiter \"Attribute\" zu verschieben."
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Markierung für aktive Effekte anzeigen",
-        "hint": "Zeigt eine Markierung für Elemente der Listenansicht an, die Aktive Effekte haben."
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Kontextmenü verwenden",
         "hint": "Ermöglicht ein Rechtsklick-Kontextmenü für Elemente."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Zeige erweiterte eingeschränkte Ansicht",
-        "hint": "Zeigt Spielern mit eingeschränkter Berechtigung den gesamten Bogen (ohne das Journal) an."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "name": "Runde Portraits",
@@ -190,14 +165,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Zeige NSC-Rast im Dialog",
         "hint": "Zeigt eine Dialogkarte an, wenn ein NSC rastet."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Verknüpfte/unverknüpfte NSCe markieren",
-        "hint": "Fügt eine farbige Umrandung und ein Symbol zu verknüpften/unverknüpften NSC-Bögen hinzu.",
-        "default": "Kein Verknüpfungsmarker (standard)",
-        "unlinked": "Unverknüpfte Figuren hervorheben",
-        "linked": "Verknüpfte Figuren hervorheben",
-        "both": "Verknüpfte und unverknüpfte Figuren hervorheben"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Initiale Bogenregisterkarte",

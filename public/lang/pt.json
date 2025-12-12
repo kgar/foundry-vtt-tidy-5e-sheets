@@ -248,7 +248,6 @@
         "name": "Gestão de Acúmulo de Inspiração - Apenas Mestre",
         "hint": "Ative esta opção para limitar a gestão de inspiração acumulada ao Mestre."
     },
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de Grimório Multiclasse",
     "TIDY5E.WorldSettings.Menu": {
         "name": "Configurações do Mundo",
         "hint": "Ajuste as configurações de mundo para personalizar a experiência do Tidy 5e Sheets. Estas configurações são gravadas nesse mundo do Foundry e aplicam-se a todo o conteúdo relevante ao Tidy 5e Sheets.",
@@ -307,18 +306,6 @@
         "name": "Mostrar Nome do Jogador",
         "hint": "Mostra um campo para o nome do jogador abaixo do nome do personagem."
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Mostrar Lista de Classes",
-        "hint": "Mostra a lista de classes abaixo do nome do personagem."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Mostrar Indicador de Inspiração Apenas ao Passar o Cursor",
-        "hint": "Mostra o indicador de inspiração somente ao passar o cursor sobre o retrato."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Mostrar Indicador de Exaustão Apenas ao Passar o Cursor",
-        "hint": "Mostra o rastreador de exaustão somente ao passar o cursor sobre o retrato."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Usar Barra de HP",
         "hint": "Mostra uma barra colorida indicando o HP restante. Os números de vida ainda estarão visíveis."
@@ -331,25 +318,13 @@
         "name": "Alternar Investigações Vazias de Personagem",
         "hint": "Adiciona um botão de alternância para mostrar/ocultar investigações vazias."
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Mostrar Apenas Munição Equipada",
-        "hint": "Mostra apenas a munição equipada no seletor de munição da arma."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Mostrar Guia de Grimório",
         "hint": "Mostra uma guia de grimório para PnJs. Desative para mover a secção de grimório para a guia Atributos."
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Mostrar Marcador de Efeitos Ativos",
-        "hint": "Mostra um marcador para elementos de exibição de lista que possuem efeitos ativos."
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Usar Menu de Contexto",
         "hint": "Ativa o menu de contexto ao clicar com o botão direito do rato nos elementos."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Mostrar Visualização Limitada Expandida",
-        "hint": "Mostra toda a ficha de personagem (menos o diário) para jogadores com permissão limitada."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "name": "Usar Retratos Redondos",
@@ -378,14 +353,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Mostrar Descanso do PnJ no Chat",
         "hint": "Mostra um cartão no chat quando um PnJ descansa."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Marcar PnJs Vinculados/Não Vinculados",
-        "hint": "Adiciona uma borda colorida e um ícone em fichas de PnJs vinculados/não vinculados.",
-        "default": "Sem marca de vínculo (padrão)",
-        "unlinked": "Destacar tokens não vinculados",
-        "linked": "Destacar tokens vinculados",
-        "both": "Destacar vinculados e não vinculados"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Guia Inicial da Ficha",

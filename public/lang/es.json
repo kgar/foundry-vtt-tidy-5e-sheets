@@ -75,7 +75,6 @@
     "TIDY5E.Class.Warlock": "Brujo",
     "TIDY5E.Class.Wizard": "Mago",
     "TIDY5E.OriginSummaryConfig": "Configuración de Resumen de Origen: {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de Hechizos de Multiclase",
     "TIDY5E.UserSettings.Menu": {
         "name": "Configuración de Usuario",
         "hint": "Personaliza tu propia versión de Tidy 5e. Esta configuración se guarda en tu navegador y aplica a todas tus hojas.",
@@ -134,18 +133,6 @@
         "name": "Mostrar nombre del jugador",
         "hint": "Permite mostrar un campo para el nombre del jugador debajo del nombre del personaje."
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Mostrar lista de clases",
-        "hint": "Mostrar lista de clases bajo el nombre del personaje."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Mostrar el indicador de inspiración sólo al pasar por encima",
-        "hint": "Actívalo para mostrar el indicador de inspiración sólo al pasar el ratón por encima del retrato."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Mostrar el medidor de cansancio sólo al pasar por encima",
-        "hint": "Actívalo para mostrar el medidor de cansancio al pasar el ratón por encima del retrato."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Utilizar barra de PS",
         "hint": "Mostrar una barra de colores indicando los PS restantes. Los números de salud seguirán siendo visibles."
@@ -154,25 +141,13 @@
         "name": "Utilizar superposición de salud",
         "hint": "Muestra una superposición de PS de colores."
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Mostrar solo munición equipada",
-        "hint": "Muestra solo la munición equipada actualmente en el selector de munición del arma."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Muestra la Pestaña de Hechizos",
         "hint": "Muestra la pestaña de hechizos para los NPCs. Desactivar para mover la sección de hechizos a la pestaña de atributos."
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Mostrar un marcador de Efectos Activos en los objetos",
-        "hint": "Actívalo si quieres ver si los objetos tienen efectos activos en ellos (solo en diseño de lista)."
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Utilizar menú contextual",
         "hint": "Activa los menús contextuales en objetos con clic derecho."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Ampliar la vista limitada para las hojas de personaje",
-        "hint": "Muestra toda la hoja de personaje (menos el diario) a los jugadores con permiso limitado."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "name": "Estilo de retrato redondo",
@@ -206,14 +181,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Mostrar Descanso de NPC en el Chat",
         "hint": "Muestra una tarjeta de chat cuando un NPC descansa."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Indicar los NPCs vinculados/desvinculados",
-        "hint": "Agrega un borde de color y un ícono a las hojas de NPC vinculadas/desvinculadas.",
-        "default": "Sin marcador de vínculo (por defecto)",
-        "unlinked": "Resaltar los tokens desvinculados",
-        "linked": "Resaltar los tokens vinculados",
-        "both": "Resaltar los tokens vinculados y no vinculados"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Pestaña inicial en hoja",

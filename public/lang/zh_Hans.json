@@ -214,7 +214,6 @@
         "LimitToSpecificTabsLabel": "将“显示分区”限制为特定选项卡",
         "ShowWhenEmptyTooltip": "所有包含物品列表的标签页都有一组默认的分区，即使分区中没有物品，这些分区也会始终显示。即使分区为空，也始终显示此分区。"
     },
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "兼职法术书筛选器",
     "TIDY5E.WorldSettings.Menu": {
         "name": "世界设置",
         "hint": "调整世界设置以自定义 Tidy 5e 工作卡体验。这些设置将保存至此 Foundry 世界，并应用于所有相关的 Tidy 5e 工作卡内容。",
@@ -273,18 +272,6 @@
         "name": "现实玩家名称",
         "hint": "在角色名称下方显示一个用于输入玩家名称的字段。"
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "显示职业列表",
-        "hint": "在角色名称下方显示其职业列表。"
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "仅在悬浮时显示激励指示器",
-        "hint": "仅在鼠标悬停于头像上时显示激励指示器。"
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "仅在悬浮时显示力竭追踪器",
-        "hint": "仅在鼠标悬停于头像上时显示力竭指示器。"
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "使用生命值条",
         "hint": "显示一个彩色条来表示剩余的生命值。生命值数字仍会可见。"
@@ -297,25 +284,13 @@
         "name": "切换空角色技能",
         "hint": "添加了一个切换按钮，用于显示/隐藏空技能。"
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "仅显示已装备弹药",
-        "hint": "仅在武器弹药选择中显示当前装备的弹药。"
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "显示法术书选项卡",
         "hint": "显示 NPC 的法术书分区。禁用后将法术书分区移至属性选项卡。"
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "显示主动效应标记",
-        "hint": "为具有主动效应的列表视图项显示一个标记。"
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "使用上下文菜单",
         "hint": "启用物品上的右键单击上下文菜单。"
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "显示展开的受限视图",
-        "hint": "向权限受限的玩家显示整个工作卡（不包括日志）。"
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "hint": "显示角色的圆形立绘/图标。",
@@ -344,14 +319,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "在聊天中显示NPC的休息状态",
         "hint": "当非玩家角色休息时，会显示一张聊天卡片。"
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "标记已关联/未关联的NPC",
-        "hint": "为已关联/未关联的非玩家角色表单添加彩色边框和图标。",
-        "default": "无关联标记（默认）",
-        "unlinked": "高亮未关联指示物",
-        "linked": "高亮关联指示物",
-        "both": "高亮关联和未关联指示物"
     },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "name": "默认工作卡选项卡",

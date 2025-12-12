@@ -75,7 +75,6 @@
     "TIDY5E.Class.Warlock": "",
     "TIDY5E.Class.Wizard": "",
     "TIDY5E.OriginSummaryConfig": "",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "",
     "TIDY5E.UserSettings.Menu": {
         "name": "",
         "hint": "",
@@ -118,18 +117,6 @@
         "name": "Játékosnév mutatása.",
         "hint": "Kapcsold be, hogy mutasson egy mezőt a játékosnévnek a karakternév alatt."
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Inspiráció követő mutatása csak egérmutatóval.",
-        "hint": "Kapcsold be, hogy csak akkor mutassa az inspiráció követőt, ha ráviszed az egeret a portréra."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Kimerültség követő mutatása csak egérmutatóval.",
-        "hint": "Kapcsold be, hogy csak akkor mutassa a kimerültség követőt, ha ráviszed az egeret a portréra."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "",
         "hint": ""
@@ -138,25 +125,13 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Csak felszerelt lőszer mutatása.",
-        "hint": "Kapcsold be, hogy csak a felszerelt lőszert mutassa a fegyver lőszer választóban."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Aktív Hatások Jelölő mutatása a tételeken.",
-        "hint": "Kapcsold be, hogy lásd a tételeken lévő aktív hatásokat (csak lista nézetben)."
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "",
         "hint": ""
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Kiterjesztett Korlátozott nézet a karakterlapokra.",
-        "hint": "A naplón kívül az egész karakterlapot mutass a korlátozott jogosultsággal rendelkező játékosoknak."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "name": "Kerek portré stílus.",
@@ -190,14 +165,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "",
         "hint": ""
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Linkelt/nem linkelt NJK-k jelölése.",
-        "hint": "Színes szegélyt és ikont ad a linkelt/nem linkelt NJK lapokhoz.",
-        "default": "Nincs link jelölő (alapértelmezett)",
-        "unlinked": "Nem linkelt tokenek kiemelése",
-        "linked": "Linkelt tokenek kiemelése",
-        "both": "Linkelt és nem linkelt tokenek kiemelése"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "",

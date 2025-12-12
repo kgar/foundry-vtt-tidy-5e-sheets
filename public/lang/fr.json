@@ -75,7 +75,6 @@
     "TIDY5E.Class.Warlock": "Occultiste",
     "TIDY5E.Class.Wizard": "Magicien",
     "TIDY5E.OriginSummaryConfig": "Configuration du sommaire d'origine : {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtre de sortilèges multi-classes",
     "TIDY5E.UserSettings.Menu": {
         "name": "Paramètres utilisateur",
         "hint": "Personnalisez votre propre version des Feuilles Tidy 5e. Ces paramètres sont enregistrés dans votre navigateur et s'appliquent à vos feuilles.",
@@ -118,18 +117,6 @@
         "name": "Afficher le nom du joueur",
         "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Afficher la liste des classes",
-        "hint": "Affiche la liste des classes sous le nom du personnage."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Afficher l'indicateur d'inspiration uniquement au survol",
-        "hint": "Activer cette option pour rendre l'indicateur d'inspiration visible uniquement au survol du portrait avec la souris."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Afficher l'indicateur d'épuisement uniquement au survol",
-        "hint": "Activer cette option pour rendre l'indicateur d'épuisement visible uniquement au survol du portrait avec la souris."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Utiliser la barre de PV",
         "hint": "Affiche une barre colorée indiquant les PV restants. Les chiffres de santé restent visibles."
@@ -138,25 +125,13 @@
         "name": "Utiliser la superposition de santé",
         "hint": "Affiche une superposition PV colorée."
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Montrer les munitions équipées uniquement",
-        "hint": "N'affiche que les munitions actuellement équipées dans le sélecteur de munitions de l'arme."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Afficher l'onglet Livre de sort",
         "hint": "Affiche un onglet de livre de sorts pour les PNJ. Désactiver pour déplacer la section du livre de sorts vers l'onglet Attributs."
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Afficher le marqueru d'effet actif sur les objets",
-        "hint": "Activer cette option pour visualiser les objets avec un effet actif (uniquement pour la vue liste)."
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Utiliser le menu contextuel",
         "hint": "Active le menu contextuel du clic droit sur les éléments."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Vue étendue pour la feuille limitée",
-        "hint": "Activer cette option pour afficher l'intégralité de la feuille de personnage (sans l'onglet Notes Privées) pour les joueurs ayant une autorisation limitée pour cet acteur."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "name": "Utiliser des portraits ronds",
@@ -190,14 +165,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Afficher le repos du PNJ dans le chat",
         "hint": "Affiche un message dans le chat lorsqu'un PNJ se repose."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Marquer les PNJs liés / non liés",
-        "hint": "Ajoute un contour coloré et une icone liés / non liés pour les feuilles de PNJs.",
-        "default": "Aucun marqueur de lien (par défaut)",
-        "unlinked": "Mise en évidence des tokens non liés",
-        "linked": "Mise en évidence des tokens liés",
-        "both": "Mise en évidence des tokens liés ET non liés"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Onglet initial de la feuille",

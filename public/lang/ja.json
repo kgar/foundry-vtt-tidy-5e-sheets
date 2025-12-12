@@ -330,8 +330,6 @@
     "hint": "この設定を有効にすると、蓄積インスピレーションの管理をGMに限定します。"
   },
 
-  "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
-
   "TIDY5E.WorldSettings.Menu": {
     "name": "ワールド設定",
     "hint": "Tidy 5e Sheetsの体験をカスタマイズするためにワールドレベルの設定を調整します。これらの設定はこのFoundryワールドに保存され、すべての関連するTidy 5e Sheetsコンテンツに適用されます。",
@@ -391,18 +389,6 @@
     "name": "プレイヤー名の表示",
     "hint": "キャラクターの名前の下に、プレイヤー名を表示します。"
   },
-  "TIDY5E.Settings.ShowClassList": {
-    "name": "クラスリスト表示",
-    "hint": "キャラクター名の下にクラスリストを表示します。"
-  },
-  "TIDY5E.Settings.ShowInspirationOnHover": {
-    "name": "マウスオーバー時にインスピレーション表示",
-    "hint": "画像の上にマウスカーソルを置いたときだけ、インスピレーションを表示します。"
-  },
-  "TIDY5E.Settings.ShowExhaustionOnHover": {
-    "name": "マウスオーバー時に消耗表示",
-    "hint": "画像の上にマウスカーソルを置いたときだけ、消耗を表示します。"
-  },
   "TIDY5E.Settings.UseHpBar": {
     "name": "HPバーを使用",
     "hint": "残りHPを示す色付きバーを表示します。HP数値は引き続き表示されます。"
@@ -415,25 +401,13 @@
     "name": "空の技能を切り替え",
     "hint": "空の技能の表示/非表示を切り替えるボタンを追加します。"
   },
-  "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-    "name": "装備済の矢弾のみ表示",
-    "hint": "武器の矢弾セレクタで現在装備されている矢弾のみ表示します。"
-  },
   "TIDY5E.Settings.ShowNPCSpellbookTab": {
     "name": "呪文書タブを表示",
     "hint": "NPCの呪文書タブを表示します。無効にすると、呪文書セクションが能力値タブに移動します。"
   },
-  "TIDY5E.Settings.ShowActiveEffectsMarker": {
-    "name": "アクティブ効果マーカーを表示",
-    "hint": "アクティブ効果を持つリスト表示のアイテムにマーカーを表示します。"
-  },
   "TIDY5E.Settings.UseContextMenu": {
     "name": "コンテキストメニューを使用",
     "hint": "アイテムの右クリックコンテキストメニューを有効にします。"
-  },
-  "TIDY5E.Settings.ShowExpandedLimitedView": {
-    "name": "限定的シートの拡張表示",
-    "hint": "限定的権限を持つプレイヤーにシート全体（記録を除く）を表示します。"
   },
   "TIDY5E.Settings.UseCircularPortraitStyle": {
     "name": "シートに円形画像を使用",
@@ -462,14 +436,6 @@
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "NPCの休憩をチャットに表示",
     "hint": "NPCが休憩したときにチャットカードを表示します。"
-  },
-  "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-    "name": "リンクされたNPCをマーク",
-    "hint": "リンクされた、または、されてないNPCシートに、色付きの境界線とアイコンを追加します。",
-    "default": "リンクマーカーなし (デフォルト)",
-    "unlinked": "リンクされてないシートを強調表示",
-    "linked": "リンクされたコマを強調表示",
-    "both": "コマを全て強調表示"
   },
   "TIDY5E.Settings.InitialSheetTab": {
     "name": "初期シートタブ",

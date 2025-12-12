@@ -75,7 +75,6 @@
     "TIDY5E.Class.Warlock": "Černokněžník",
     "TIDY5E.Class.Wizard": "Kouzelník",
     "TIDY5E.OriginSummaryConfig": "Souhrnné nastavení původu: {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr kouzel multipovolání",
     "TIDY5E.UserSettings.Menu": {
         "name": "Uživatelské nastavení",
         "hint": "Přizpůsob si svou vlastní verzi deníků Tidy 5e. Toto nastavení se uloží do prohlížeče a použije se na tvé deníky.",
@@ -118,18 +117,6 @@
         "name": "Zobrazovat jméno hráče?",
         "hint": "Zaškrtnutím zobrazíš pole se jménem hráče pod jménem postavy."
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Zobrazovat seznam povolání?",
-        "hint": "Zobrazí seznam povolání pod jménem postavy."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Zobrazovat ukazatel Inspirace jen po přejetí myší?",
-        "hint": "Zaškrtnutím bude ukazatel inspirace viditelný pouze při najetí myši na portrét."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Zobrazovat ukazatel vyčerpání jen po přejetí myší?",
-        "hint": "Zaškrtnutím bude ukazatel únavy viditelný pouze při přejetí myší na portrét."
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "Používat panel BV?",
         "hint": "Zobrazí barevný panel označující zbývající BV. Čísla BV budou stále viditelná."
@@ -138,25 +125,13 @@
         "name": "Používat překryv výdrže?",
         "hint": "Zobrazí barevný překryv BV."
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Zobrazovat pouze vybavenou munici?",
-        "hint": "Ve výběru munice zbraně zobrazí pouze aktuálně vybavená munice."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Zobrazovat kartu kouzel?",
         "hint": "Zobrazí kartu kouzel NP. Zakázáním přesuneš sekci kouzel do záložky rysy."
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Zobrazovat značku aktivního efektu?",
-        "hint": "Zobrazuje značku zobrazení seznamu položek s aktivními efekty."
-    },
     "TIDY5E.Settings.UseContextMenu": {
         "name": "Používat kontextovou nabídku?",
         "hint": "Povolí kontextovou nabídku položek kliknutím pravým tlačítkem myši."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Zobrazovat rozšířený deník hráčům s omezeným oprávněním?",
-        "hint": "Zobrazí celý deník postavy (kromě poznámek) hráčům s omezeným oprávněním."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "name": "Prstencový styl portrétu",
@@ -190,14 +165,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Zobrazovat odpočinek NP v chatu?",
         "hint": "Zobrazí kartu chatu odpočinku NP."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Označení propojených/nepropojených nehráčských postav",
-        "hint": "Přidá barevné ohraničení a ikonu na propojené/nepropojené deníky nehráčských postav.",
-        "default": "Bez označení propojení (default)",
-        "unlinked": "Zvýraznit nepropojené tokeny",
-        "linked": "Zvýraznit propojené tokeny",
-        "both": "Zvýraznit propojené a nepropojené tokeny"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Úvodní karta deníku",

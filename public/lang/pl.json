@@ -128,7 +128,6 @@
         "MoveAllLeft": "Przenieś wszystko w lewo",
         "MoveAllRight": "Przenieś wszystko w prawo"
     },
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr Księgi Czarów dla Multiklasowości",
     "TIDY5E.UserSettings.Menu": {
         "name": "Ustawienia użytkownika",
         "hint": "Dostosuj własną wersję Tidy 5e Sheets. Te ustawienia są zapisywane w przeglądarce i mają zastosowanie do Twoich kart.",
@@ -387,14 +386,6 @@
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
     },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Oznacz powiązanych/niepowiązanych NPC-ów",
-        "default": "Brak znacznika łącza (domyślnie)",
-        "both": "Podświetl powiązane i niepowiązane tokeny",
-        "hint": "Dodaje kolorową ramkę i ikonę do połączonych/niepołączonych kart NPC.",
-        "unlinked": "Podświetl niepowiązane tokeny",
-        "linked": "Podświetl powiązane tokeny"
-    },
     "TIDY5E.SpellSourceIdentifierSelectText": "Identyfikator klasy: {identifier}",
     "TIDY5E.Settings.UseCircularPortraitStyle": {
         "all": "Wszystkie postacie",
@@ -438,10 +429,6 @@
         "options.GmAndOwners": "MG i właściciel przedmiotu",
         "name": "Pozwolenie na identyfikację przedmiotu"
     },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "hint": "Pokazuje wskaźnik wyczerpania tylko po najechaniu kursorem na portret.",
-        "name": "Pokaż wskaźnik wyczerpania tylko po najechaniu kursorem"
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Przedmiot"
     },
@@ -452,10 +439,6 @@
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Uwzględnij zaklęcia z aktywnymi efektami jako akcje",
         "hint": "Domyślnie obejmuje zaklęcia z dołączonymi aktywnymi efektami (np. Korowa skóra) w zakładce/panelu Akcje."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "hint": "Pokazuje wskaźnik inspiracji tylko po najechaniu kursorem na portret.",
-        "name": "Pokaż wskaźnik inspiracji tylko po najechaniu kursorem"
     },
     "TIDY5E.EmptyContainer": "Ten pojemnik jest pusty.",
     "TIDY5E.Settings.UseContextMenu": {
@@ -527,10 +510,6 @@
         "name": "Użyj domyślnego przejścia klawiszem Tab dla HP",
         "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawisza Tab z pola obecne HP do pola obecne tymczasowe HP.Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "hint": "Wyświetla całą kartę (bez dziennika) graczom z ograniczonymi uprawnieniami.",
-        "name": "Pokaż rozszerzony, ograniczony widok"
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "hint": "Użyj specjalnie wybranych ikon Tidy dla szkół magii. Aby dostosować ikony szkół magii przez CONFIG.DND5E lub przez inne moduły, wyłącz tę opcję. Aby rozszerzyć niestandardowe ikony Tidy dla szkół magii , zapoznaj się z dokumentacją API Tidy.",
         "name": "Użyj ikon Tidy dla szkół magii"
@@ -579,17 +558,9 @@
         "hint": "Zmień ustawienia na poziomie świata, aby spersonalizować korzystanie z Tidy 5e Sheets. Ustawienia te są zapisywane w tym świecie Foundry i mają zastosowanie do całej zawartości związanej z Tidy 5e Sheets.",
         "label": "Ustawienia świata"
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Pokaż listę klas",
-        "hint": "Pokazuje listę klas pod nazwą postaci."
-    },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Pokaż etykiety atrybutów",
         "hint": "Pokazuje etykiety dla atrybutów postaci gracza, NPC i pojazdu. Wyłącz, aby pokazać tylko ikony."
-    },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Pokaż tylko wyposażoną amunicję",
-        "hint": "Pokazuje tylko aktualnie wyposażoną amunicję w menu wyboru amunicji broni."
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "hint": "Zapobiega zmianom w walucie przez graczy niebędących MG.",
@@ -599,10 +570,6 @@
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Użyj przystępnego wsparcia dla klawiatury",
         "hint": "Umożliwia użytkownikom nawigację między większością przycisków/poleceń w Tidy 5e Sheets i wykonywanie ich za pomocą standardowych skrótów klawiszowych .Uwaga: po skupieniu na przycisku w Foundry, skróty klawiszowe z „Skonfiguruj sterowanie” nie reagują. Jeśli moduł używa tej funkcji Foundry do sterowania kartami, np. do używania przedmiotów podczas przytrzymywania specjalnego klawisza, włączenie tej opcji Tidy 5e Sheets będzie kolidować z tymi skrótami klawiszowymi."
-    },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Pokaż znacznik aktywnych efektów",
-        "hint": "Pokazuje w widoku listy znacznik dla przedmiotów, które mają aktywne efekty."
     },
     "TIDY5E.Settings.ShowPlayerName": {
         "hint": "Pokazuje pole na imię gracza, pod nazwą postaci.",

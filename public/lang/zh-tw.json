@@ -75,7 +75,6 @@
     "TIDY5E.Class.Warlock": "",
     "TIDY5E.Class.Wizard": "",
     "TIDY5E.OriginSummaryConfig": "",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "",
     "TIDY5E.UserSettings.Menu": {
         "name": "",
         "hint": "",
@@ -118,18 +117,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "僅在鼠標懸停時顯示激勵追踪器。",
-        "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示激勵追踪器。"
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "僅在鼠標懸停時顯示力竭追踪器。",
-        "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示力竭追踪器。"
-    },
     "TIDY5E.Settings.UseHpBar": {
         "name": "",
         "hint": ""
@@ -138,23 +125,11 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseContextMenu": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
         "name": "",
         "hint": ""
     },
@@ -190,14 +165,6 @@
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "",
         "hint": ""
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "標記鏈接/未鏈接的 NPC。",
-        "hint": "在鏈接/未鏈接的 NPC 卡上添加著色邊框和圖標。",
-        "default": "無鏈接標記 (默認)",
-        "unlinked": "高亮未鏈接指示物的卡片",
-        "linked": "高亮已鏈接指示物的卡片",
-        "both": "高亮已鏈接和未鏈接的指示物的卡片"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "",
