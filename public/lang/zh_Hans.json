@@ -244,26 +244,6 @@
         "tabLabel": "玩家",
         "header": "玩家角色卡"
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "使用生命值条",
-        "hint": "显示一个彩色条来表示剩余的生命值。生命值数字仍会可见。"
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "启用生命值覆盖显示",
-        "hint": "显示彩色生命值覆盖。"
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "锁定敏感字段",
-        "hint": "当工作卡被锁定时，很少更改的字段（名称、熟练切换按钮）会被锁定，并且隐藏配置按钮。"
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "使用激励追踪器",
-        "hint": "在角色简介中显示激励追踪器。"
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "使用载具运动追踪器",
-        "hint": "在载具简介中显示运动追踪器。"
-    },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "在聊天中显示NPC的休息状态",
         "hint": "当非玩家角色休息时，会显示一张聊天卡片。"
@@ -319,21 +299,9 @@
         "name": "默认死亡豁免掷骰",
         "hint": "确定进行死亡豁免掷骰时所使用的默认骰子类型。"
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "使用NPC负重条",
-        "hint": "在非玩家角色卡上显示负重条。"
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "使用载具负重条",
-        "hint": "在载具卡上显示负重条。"
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "使用兼职法术书筛选器",
         "hint": "在法术书标签卡中，允许按职业类别筛选法术。必须使用法术编辑卡中的职业选择器将法术与某个职业相关联。"
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "使用法术职业图标表示法术",
-        "hint": "在法术上展示所属法术职业图标，而非法术本身的图标。必须通过法术编辑卡上的类别选择器将法术与职业相关联。当玩家角色拥有多个职业时，此功能可一眼看出哪些法术属于哪个职业。"
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "允许准备戏法",
@@ -388,10 +356,6 @@
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "使用小队卡成员权限设置",
         "hint": "允许 DM 控制用户在小队卡上可以看到的小队成员信息。当玩家对小队成员没有权限时，小队卡不会显示该成员或其信息。具有有限权限时，用户可以看到成员的名称，但看不到其他信息。具有观察员或更高权限时，用户可以看到关于该成员的小队卡上的所有信息。"
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "使用 Tidy 法术学派图标",
-        "hint": "使用 Tidy 精心挑选的法术学派图标。若要通过 CONFIG.DND5E 或其他模块自定义法术学派图标，请禁用此选项。若要扩展 Tidy 的自定义法术学派图标，请参考 Tidy API 文档。"
     },
     "TIDY5E.Settings.InlineActivitiesPosition": {
         "name": "内联行动位置",

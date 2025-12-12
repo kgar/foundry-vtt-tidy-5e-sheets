@@ -361,26 +361,6 @@
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "用途"
   },
-  "TIDY5E.Settings.UseHpBar": {
-    "name": "HPバーを使用",
-    "hint": "残りHPを示す色付きバーを表示します。HP数値は引き続き表示されます。"
-  },
-  "TIDY5E.Settings.UseHpOverlay": {
-    "name": "HPオーバーレイを使用",
-    "hint": "色付きのHPオーバーレイを表示します。"
-  },
-  "TIDY5E.Settings.UseTotalSheetLock": {
-    "name": "誤操作による変更をロック",
-    "hint": "ほとんど変更されないフィールド（名前、習熟トグル）をロックし、シートがロックされているときに設定ボタンを隠します。"
-  },
-  "TIDY5E.Settings.UseInspiration": {
-    "name": "インスピレーション トラッカーを表示",
-    "hint": "キャラクタープロフィールにインスピレーショントラッカーを表示します。"
-  },
-  "TIDY5E.Settings.UseVehicleMotion": {
-    "name": "乗り物の動作トラッカーを使用",
-    "hint": "乗り物プロフィールに動作トラッカーを表示します。"
-  },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "NPCの休憩をチャットに表示",
     "hint": "NPCが休憩したときにチャットカードを表示します。"
@@ -400,21 +380,9 @@
     "name": "デフォルトの死亡セーヴロール",
     "hint": "死亡セーヴィング・スローをロールするときに使用するデフォルトのロールモードを決定します。"
   },
-  "TIDY5E.Settings.UseNPCEncumbranceBar": {
-    "name": "NPCの荷重バーを使用",
-    "hint": "NPCシートに荷重バーを表示します。"
-  },
-  "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-    "name": "乗り物の荷重バーを使用",
-    "hint": "乗り物シートに荷重バーを表示します。"
-  },
   "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
     "name": "マルチクラス呪文フィルタを使用",
     "hint": "呪文書タブでクラス別に呪文をフィルタリングできます。呪文編集シートのクラスセレクタを使用して、呪文をクラスに関連付ける必要があります。"
-  },
-  "TIDY5E.Settings.UseSpellClassIcons": {
-    "name": "呪文アイコンをクラスアイコンに置き換える",
-    "hint": "呪文自身の画像の代わりに呪文クラスの画像を表示します。呪文編集シートのクラスセレクタを使用して、呪文をクラスに関連付ける必要があります。マルチクラスの場合、この機能により、どのクラスにどの呪文が属しているかを一目で識別できます。"
   },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "初級呪文も「準備」できる",
@@ -444,10 +412,6 @@
   "TIDY5E.Settings.ActionListIncludeConsumables": {
     "name": "消耗品をアクションに含める",
     "hint": "デフォルトでアクションリストに、起動コスト（アクション、ボーナスアクションなど）を持つ消耗品を含めます。"
-  },
-  "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-    "name": "Tidyの呪文系統アイコンを使用",
-    "hint": "呪文系統にTidyが厳選したアイコンを使用します。CONFIG.DND5Eまたは他のモジュールで呪文系統アイコンをカスタマイズするには、このオプションを無効にしてください。Tidyのカスタム呪文系統アイコンを拡張するには、Tidy APIドキュメントを参照してください。"
   },
   "TIDY5E.Settings.InlineActivitiesPosition": {
     "name": "インライン用途の位置",

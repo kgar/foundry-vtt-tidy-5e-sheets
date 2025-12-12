@@ -375,14 +375,6 @@
     "TIDY5E.Commands.HideContainerPanel": "Ukryj panel pojemnika",
     "TIDY5E.PortraitTitle": "Portret: {subject}",
     "TIDY5E.ItemImageTitle": "Przedmiot: {subject}",
-    "TIDY5E.Settings.UseHpOverlay": {
-        "hint": "Pokazuje kolorową nakładkę HP na portrecie postaci.",
-        "name": "Użyj nakładki zdrowia"
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Użyj znacznika ruchu pojazdu",
-        "hint": "Pokazuje znacznik ruchu w profilu pojazdu."
-    },
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
     },
@@ -392,21 +384,9 @@
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "hint": "Pokazuje kolorowy pasek wskazujący pozostałe HP. Zdrowie podane liczbowo będzie nadal widoczne.",
-        "name": "Użyj paska HP"
-    },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "hint": "Wyświetla wiadomość na czacie, gdy NPC korzysta z odpoczynku.",
         "name": "Pokaż odpoczynek NPC na czacie"
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Zablokuj wrażliwe pola",
-        "hint": "Blokuje rzadko zmieniane pola (nazwa, przełączniki biegłości) i ukrywa przyciski konfiguracji, gdy karta jest zablokowana."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Użyj znacznika inspiracji",
-        "hint": "Pokazuje znacznik inspiracji w profilu postaci."
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "Zamiast domyślnie pokazywać wszystkie zaklęcia, które zadają obrażenia w zakładce/panelu Akcje, umieszcza tam tylko sztuczki. To domyślne zachowanie D&D Beyond.",
@@ -429,10 +409,6 @@
         "hint": "Domyślnie obejmuje zaklęcia z dołączonymi aktywnymi efektami (np. Korowa skóra) w zakładce/panelu Akcje."
     },
     "TIDY5E.EmptyContainer": "Ten pojemnik jest pusty.",
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "hint": "Pokazuje pasek obciążenia na kartach NPC.",
-        "name": "Użyj paska obciążenia NPC"
-    },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Pozwól przygotowywać sztuczki",
         "hint": "Opcjonalna zasada „formuły sztuczek” z Tasha's Cauldron of Everything pozwala magom przygotowywać sztuczki po długim odpoczynku w taki sam sposób, w jaki robią to z zaklęciami poziomowymi. Przygotowane sztuczki nie wliczają się do całkowitej liczby przygotowanych zaklęć."
@@ -448,10 +424,6 @@
         "name": "Użyj filtra wieloklasowej księgi czarów",
         "hint": "Umożliwia filtrowanie zaklęć według klasy w zakładce księga czarów. Zaklęcie musi być powiązane z klasą za pomocą selektora klasy na arkuszu edycji zaklęć."
     },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Użyj ikony klasy dla zaklęć",
-        "hint": "Pokazuje ikonę klasy na zaklęciach zamiast ikony samego zaklęcia. Zaklęcie musi być powiązane z klasą za pomocą selektora klasy na arkuszu edycji zaklęcia. w przypadku postaci wieloklasowych ta funkcja pozwala łatwo rozróżnić, które zaklęcia należą do której klasy."
-    },
     "TIDY5E.Settings.ActionList.Header": "Lista akcji",
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "hint": "Domyślnie obejmuje zaklęcia trwające jedną minutę lub krócej (np. 1 runda) i mające czas aktywacji wynoszący 1 Akcję lub 1 Akcję Bonusową (np. Błogosławieństwo, Zguba, Rozkaz) w zakładce/panelu Akcje.",
@@ -463,10 +435,6 @@
     },
     "TIDY5E.Utilities.ConfigureSections": "Konfiguruj sekcje",
     "TIDY5E.SpellSourceIdentifierLabelHint": "Postać posiadająca ten czar nie ma określonej tutaj klasy źródłowej.",
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Użyj paska obciążenia pojazdu",
-        "hint": "Pokazuje pasek obciążenia na kartach pojazdu."
-    },
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identyfikator klasy źródłowej",
     "TIDY5E.Utilities.Tools": "Narzędzia",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Pokaż tylko nieprzypisane",
@@ -477,10 +445,6 @@
         "AtLeastOneLevelRequiredErrorMessage": "Wymagany jest co najmniej jeden poziom wyczerpania pojazdu.",
         "name": "Konfiguracja wyczerpania pojazdu",
         "hint": "Ustala w jaki sposób wyczerpanie pojazdów jest konfigurowane i pokazane na kartach pojazdu."
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "hint": "Użyj specjalnie wybranych ikon Tidy dla szkół magii. Aby dostosować ikony szkół magii przez CONFIG.DND5E lub przez inne moduły, wyłącz tę opcję. Aby rozszerzyć niestandardowe ikony Tidy dla szkół magii , zapoznaj się z dokumentacją API Tidy.",
-        "name": "Użyj ikon Tidy dla szkół magii"
     },
     "TIDY5E.Section": {
         "Default": "Domyślna sekcja",

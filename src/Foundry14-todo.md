@@ -130,24 +130,24 @@
   - [x] TIDY5E.Settings.UseEffectCards.name
   - [x] TIDY5E.Settings.UseExhaustion.hint
   - [x] TIDY5E.Settings.UseExhaustion.name
-  - [ ] TIDY5E.Settings.UseHpBar.hint
-  - [ ] TIDY5E.Settings.UseHpBar.name
-  - [ ] TIDY5E.Settings.UseHpOverlay.hint
-  - [ ] TIDY5E.Settings.UseHpOverlay.name
-  - [ ] TIDY5E.Settings.UseInspiration.hint
-  - [ ] TIDY5E.Settings.UseInspiration.name
-  - [ ] TIDY5E.Settings.UseNPCEncumbranceBar.hint
-  - [ ] TIDY5E.Settings.UseNPCEncumbranceBar.name
-  - [ ] TIDY5E.Settings.UseSpellClassIcons.hint
-  - [ ] TIDY5E.Settings.UseSpellClassIcons.name
-  - [ ] TIDY5E.Settings.UseTidySpellSchoolIcons.hint
-  - [ ] TIDY5E.Settings.UseTidySpellSchoolIcons.name
-  - [ ] TIDY5E.Settings.UseTotalSheetLock.hint
-  - [ ] TIDY5E.Settings.UseTotalSheetLock.name
-  - [ ] TIDY5E.Settings.UseVehicleEncumbranceBar.hint
-  - [ ] TIDY5E.Settings.UseVehicleEncumbranceBar.name
-  - [ ] TIDY5E.Settings.UseVehicleMotion.hint
-  - [ ] TIDY5E.Settings.UseVehicleMotion.name
+  - [x] TIDY5E.Settings.UseHpBar.hint
+  - [x] TIDY5E.Settings.UseHpBar.name
+  - [x] TIDY5E.Settings.UseHpOverlay.hint
+  - [x] TIDY5E.Settings.UseHpOverlay.name
+  - [x] TIDY5E.Settings.UseInspiration.hint
+  - [x] TIDY5E.Settings.UseInspiration.name
+  - [x] TIDY5E.Settings.UseNPCEncumbranceBar.hint
+  - [x] TIDY5E.Settings.UseNPCEncumbranceBar.name
+  - [x] TIDY5E.Settings.UseSpellClassIcons.hint
+  - [x] TIDY5E.Settings.UseSpellClassIcons.name
+  - [x] TIDY5E.Settings.UseTidySpellSchoolIcons.hint
+  - [x] TIDY5E.Settings.UseTidySpellSchoolIcons.name
+  - [x] TIDY5E.Settings.UseTotalSheetLock.hint
+  - [x] TIDY5E.Settings.UseTotalSheetLock.name
+  - [x] TIDY5E.Settings.UseVehicleEncumbranceBar.hint
+  - [x] TIDY5E.Settings.UseVehicleEncumbranceBar.name
+  - [x] TIDY5E.Settings.UseVehicleMotion.hint
+  - [x] TIDY5E.Settings.UseVehicleMotion.name
   - [ ] TIDY5E.UserSettings.TabPlayers.header
   - [ ] TIDY5E.WorldSettings.Exhaustion.Header
   - [ ] TIDY5E.WorldSettings.Exhaustion.hint

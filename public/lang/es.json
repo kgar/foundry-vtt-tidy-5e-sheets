@@ -121,26 +121,6 @@
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
         "BuyMeACoffeeLink": "{urlStart}Cómprame un Coffee{urlEnd}"
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Utilizar barra de PS",
-        "hint": "Mostrar una barra de colores indicando los PS restantes. Los números de salud seguirán siendo visibles."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Utilizar superposición de salud",
-        "hint": "Muestra una superposición de PS de colores."
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Bloquear los campos sensibles",
-        "hint": "Actívalo para evitar cambiar accidentalmente valores sensibles, en su mayoría estáticos."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Utilizar seguimiento de inspiración",
-        "hint": "Muestra un seguimiento de inspiración en le perfil del personaje."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Utilizar el seguimiento del movimiento del vehículo",
-        "hint": "Muestra un seguimiento del movimiento en el perfil del vehículo."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Descanso para los PNJs",
         "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
@@ -153,21 +133,9 @@
         "name": "Pestaña inicial en hoja",
         "hint": "Muestra la pestaña indicada al abrir una hoja por primera vez."
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Utilizar Barra de Carga en NPCs",
-        "hint": "Muestra una barra de carga en las hojas de NPC."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Utilizar barra de carga en vehículos",
-        "hint": "Muestra una barra de estorbo en las hojas de vehículos."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Usar filtro de hechizos multiclase",
         "hint": "Permite filtrar hechizos por clase en la pestaña de hechizos. El hechizo debe estar asociado con una clase usando el selector de clase en la hoja de edición de hechizos."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Utilizar el icono de clase para hechizos",
-        "hint": "Muestra la imagen de la clase en los hechizos en lugar de la imagen propia del hechizo. El hechizo debe estar asociado con una clase usando el selector de clase en la hoja de edición de hechizos. Cuando se hace multiclase, esta característica distingue qué hechizos pertenecen a qué clase."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": "Clases adicionales para el filtrado de hechizos multiclase",
@@ -502,10 +470,6 @@
         "SectionSelectorCreateNewSection": "Crea una sección nueva",
         "SectionSelectorNewSectionName": "Nombre de sección nueva",
         "SectionSelectorSaveNewSection": "Guarda la sección nueva"
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "Utilice iconos de Tidy Spell School",
-        "hint": "Utiliza los iconos seleccionados por Tidy para las escuelas de hechizos. Para personalizar los iconos de las escuelas de hechizos a través de CONFIG.DND5E o a través de otros módulos, desactiva esta opción. Para ampliar los iconos personalizados de las escuelas de hechizos de Tidy, consulta la documentación de la API de Tidy."
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmar: Usar predeterminado",

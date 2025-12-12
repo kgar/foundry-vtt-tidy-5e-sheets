@@ -105,26 +105,6 @@
         "labelInventoryLocks": "Zámek inventáře",
         "labelFeaturesLocks": "Zámek schopností"
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Používat panel BV?",
-        "hint": "Zobrazí barevný panel označující zbývající BV. Čísla BV budou stále viditelná."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Používat překryv výdrže?",
-        "hint": "Zobrazí barevný překryv BV."
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Zamykat citlivá pole?",
-        "hint": "Zaškrtni, aby se zabránilo nechtěné změně citlivých, povětšinou neměnných hodnot."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Používat ukazatel inspirace?",
-        "hint": "Zobrazovat ukazatel inspirace v profilu postavy."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Používat ukazatel pohybu dopravního prostředku?",
-        "hint": "Zobrazovat ukazatel pohybu na profilu dopravního prostředku."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Odpočinek pro CP.",
         "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
@@ -137,21 +117,9 @@
         "name": "Úvodní karta deníku",
         "hint": "Při prvním otevření deníku se zobrazí uvedená karta."
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Používat u NP panel zatížení?",
-        "hint": "Zobrazí panel zatížení na denících NP."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Používat panel zatížení dopravních prostředků?",
-        "hint": "Zobrazí panel zatížení na denících dopravních prostředků."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Používat filtr kouzel multipovolání",
         "hint": "Umožňuje filtrovat kouzla podle povolání na kartě kouzel. Kouzlo musí být přiřazeno k povolání pomocí úpravy kouzla na kartě kouzla."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Používat ikonu povolání u kouzel?",
-        "hint": "Zobrazí u kouzel ikony povolání namísto vlastní ikony kouzla. Kouzlo musí být přiřazeno k povolání pomocí úpravy kouzla na kartě kouzla. Při multipovoláních pak tato funkce na první pohled rozlišuje, která kouzla patří ke kterému povolání."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
@@ -480,10 +448,6 @@
         "DiscordParagraph": "{urlStart}Discord Deníků Tidy 5e{urlEnd}: Diskutuj o nápadech na nové funkce, získej pomoc od ostatních a sleduj vývoj tohoto modulu.",
         "FinancialSupportHeader": "Způsoby podpory Deníků Tidy 5e",
         "logoAltText": "Protihaterský štít se čtyřmi hvězdami a nápisem „Tidy 5e“ na přední straně."
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "hint": "Použije ručně přiřazené ikony Tidy pro školy magie. Chceš-li přizpůsobit ikony škol kouzel prostřednictvím souboru CONFIG.DND5E nebo jiných modulů, tuto možnost zakaž. Chceš-li rozšířit vlastní ikony škol kouzel v Tidy, nahlédni do dokumentace API Tidy.",
-        "name": "Používat ikony škol magie Tidy?"
     },
     "TIDY5E.Commands.HideContainerPanel": "Skrýt panel kontejnerů",
     "TIDY5E.ItemFilters.CanCast": "Lze seslat",

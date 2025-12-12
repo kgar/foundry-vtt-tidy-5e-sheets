@@ -105,26 +105,6 @@
         "labelInventoryLocks": "",
         "labelFeaturesLocks": ""
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Érzékeny mezők lezárása.",
-        "hint": "Kapcsold be, hogy véletlenül ne lehessen megváltoztatni érzékny, főleg statikus értékeket."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Pihenés az NJK-knak.",
         "hint": "Kapcsold be, hogy mutasson pihenés ikont/gombokat az NJK lapokon."
@@ -137,19 +117,7 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
         "name": "",
         "hint": ""
     },
@@ -438,10 +406,6 @@
     "TIDY5E.Reset": "",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "",
     "TIDY5E.Commands.ShowLegendaryToolbar": "",
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.UseDefaultDialog": {
         "title": "",
         "text": ""

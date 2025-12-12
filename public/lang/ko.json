@@ -275,26 +275,6 @@
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "활동"
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "HP 바 사용",
-        "hint": "남은 HP를 나타내는 색 막대를 표시합니다. 체력 수치는 계속 표시됩니다."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "체력 오버레이 사용",
-        "hint": "색칠된 HP 오버레이를 표시합니다."
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "중요 영역 잠금",
-        "hint": "자주 변경하지 않는 필드(이름, 숙련 전환)를 잠그고 시트가 잠겨 있으면 설정 버튼을 숨깁니다."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "고양감 추적기 사용",
-        "hint": "캐릭터 포트레이트에 고양감 추적기를 표시합니다."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "탑승물 모션 트래커 사용",
-        "hint": "탑승물 프로필에 모션 트래커를 표시합니다."
-    },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "채팅에 NPC 휴식 표시",
         "hint": "NPC가 휴식할 경우 챗에 띄웁니다."
@@ -314,21 +294,9 @@
         "name": "기본 죽음 내성 굴림",
         "hint": "죽음 내성 굴림을 할 때의 기본 굴림을 지정합니다."
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "NPC 과적 바 사용",
-        "hint": "NPC 시트에 과적 바를 표시합니다."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "탑승물 과적 바 사용",
-        "hint": "탑승물 시트에 과적 바를 표시합니다."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "다중클래스 주문책 필터 사용",
         "hint": "주문책 탭에서 클래스별로 주문을 필터링할 수 있습니다. 주문은 주문 편집 시트의 클래스 선택기를 사용하여 클래스와 연결해야 합니다."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "주문에 주문 클래스 아이콘 사용",
-        "hint": "주문에 주문 자체 이미지 대신 주문 클래스의 이미지를 표시합니다. 주문은 주문 편집 시트의 클래스 선택기를 사용하여 클래스에 연결해야 합니다. 다중클래스를 사용하는 경우 이 기능을 사용하면 어떤 주문이 어떤 클래스에 속하는지 한 눈에 구분할 수 있습니다."
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "소마법 준비 허용",
@@ -354,10 +322,6 @@
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "소모성 항목을 행동으로 포함",
         "hint": "기본적으로 행동 목록에 활성화 비용(행동, 추가 행동 등)이 있는 소모성 항목이 포함됩니다."
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "Tidy 주문 학교 아이콘 사용",
-        "hint": "Tidy에서 지정한 주문 학파 아이콘을 사용합니다. CONFIG.DND5E 또는 다른 모듈을 통해 주문 학파 아이콘을 사용자 지정하려면 이 옵션을 비활성화하세요. Tidy의 사용자 지정 주문 학파 아이콘을 확장하려면 Tidy API 설명서를 참조하세요."
     },
     "TIDY5E.Settings.InlineActivitiesPosition": {
         "name": "내부 활동 위치",

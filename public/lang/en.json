@@ -361,26 +361,6 @@
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "Activities"
   },
-  "TIDY5E.Settings.UseHpBar": {
-    "name": "Use HP Bar",
-    "hint": "Shows a colored bar indicating remaining HP. Health numbers will still be visible."
-  },
-  "TIDY5E.Settings.UseHpOverlay": {
-    "name": "Use Health Overlay",
-    "hint": "Shows a colored HP overlay."
-  },
-  "TIDY5E.Settings.UseTotalSheetLock": {
-    "name": "Lock Down Sensitive Fields",
-    "hint": "Locks infrequently changed fields (name, proficiency toggles) and hides configuration buttons when the sheet is locked."
-  },
-  "TIDY5E.Settings.UseInspiration": {
-    "name": "Use Inspiration Tracker",
-    "hint": "Shows an inspiration tracker on the character profile."
-  },
-  "TIDY5E.Settings.UseVehicleMotion": {
-    "name": "Use Vehicle Motion Tracker",
-    "hint": "Shows a motion tracker on the vehicle profile."
-  },
   "TIDY5E.Settings.ShowNPCRestInChat": {
     "name": "Show NPC Rest in Chat",
     "hint": "Shows a chat card when an NPC rests."
@@ -400,21 +380,9 @@
     "name": "Default Death Save Roll",
     "hint": "Determines the default roll type to use when rolling a death saving throw."
   },
-  "TIDY5E.Settings.UseNPCEncumbranceBar": {
-    "name": "Use NPC Encumbrance Bar",
-    "hint": "Shows an encumbrance bar on NPC sheets."
-  },
-  "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-    "name": "Use Vehicle Encumbrance Bar",
-    "hint": "Shows an encumbrance bar on vehicle sheets."
-  },
   "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
     "name": "Use Multiclass Spellbook Filter",
     "hint": "Allows filtering spells by class in the spellbook tab. The spell must be associated with a class using the Class selector on the spell edit sheet."
-  },
-  "TIDY5E.Settings.UseSpellClassIcons": {
-    "name": "Use Spell Class Icon for Spells",
-    "hint": "Shows spell class's image on spells instead of the spell's own image. The spell must be associated with a class using the Class selector on the spell edit sheet. When multiclassing, this feature distinguishes which spells belong to which class at a glance."
   },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "Allow Cantrips to be Prepared",
@@ -444,10 +412,6 @@
   "TIDY5E.Settings.ActionListIncludeConsumables": {
     "name": "Include Consumables as Actions",
     "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
-  },
-  "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-    "name": "Use Tidy Spell School Icons",
-    "hint": "Use Tidy's handpicked icons for spell schools. To customize spell school icons through CONFIG.DND5E or through other modules, disable this option. To extend Tidy's custom spell school icons, refer to the Tidy API documentation."
   },
   "TIDY5E.Settings.InlineActivitiesPosition": {
     "name": "Inline Activities Position",

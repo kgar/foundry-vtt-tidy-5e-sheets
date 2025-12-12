@@ -105,26 +105,6 @@
         "labelInventoryLocks": "Blocca Inventario",
         "labelFeaturesLocks": "Blocca Privilegi"
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Usa Barra PF",
-        "hint": "Mostra una barra colorata che indica gli PF rimanenti. I punti ferita saranno ancora visibili."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Usa Overlay Salute",
-        "hint": "Mostra overlay PF colorato."
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Blocca i campi sensibili",
-        "hint": "Blocca i campi modificati raramente (nome, attiva/disattiva competenza) e nasconde i pulsanti di configurazione quando il foglio è bloccato."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Utilizza il monitoraggio dell'ispirazione",
-        "hint": "Mostra un tracker di ispirazione sul profilo del personaggio."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Utilizza il rilevatore di movimento del veicolo",
-        "hint": "Mostra un rilevatore di movimento sul profilo del veicolo."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Riposo per i PNG",
         "hint": "Seleziona per mostrare l'icona/i pulsanti di riposo sulle schede dei PNG."
@@ -137,21 +117,9 @@
         "name": "Pagina Iniziale Scheda",
         "hint": "Mostra la scheda indicata quando si apre un foglio per la prima volta."
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Usa la Barra di Ingombro per PNG",
-        "hint": "Mostra una barra di ingombro sulle schede dei PNG."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Usa la barra d'ingombro del veicolo",
-        "hint": "Mostra una barra d'ingombro sulle schede dei veicoli."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Usa il filtro del libro degli incantesimi multiclasse",
         "hint": "Permette di filtrare gli incantesimi per classe nella scheda del libro degli incantesimi. L'incantesimo deve essere associato a una classe utilizzando il selettore Classe nel foglio di modifica dell'incantesimo."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Usa l'icona della classe degli incantesimi per gli incantesimi",
-        "hint": "Mostra l'immagine della classe dell'incantesimo sugli incantesimi invece dell'immagine dell'incantesimo stesso. L'incantesimo deve essere associato a una classe utilizzando il selettore Classe nel foglio di modifica dell'incantesimo. Quando si diventa multiclasse, questa funzionalità distingue a colpo d'occhio quali incantesimi appartengono a quale classe."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": "Classi aggiuntive per il filtraggio dei libri degli incantesimi multiclasse",
@@ -539,10 +507,6 @@
     },
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Icone"
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "Usa Icone Scuola Magia di Tidy",
-        "hint": "Usa le icone selezionate da Tidy per le scuole di magia. Per personalizzare le icone della scuola di magia tramite CONFIG.DND5E o tramite altri moduli, disabilita questa opzione. Per estendere le icone personalizzate della scuola di magia di Tidy, fai riferimento alla documentazione dell'API Tidy."
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click per saltare il tiro e ricaricare subito) ",
     "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",

@@ -105,26 +105,6 @@
         "labelInventoryLocks": "Verrouillage de l'inventaire",
         "labelFeaturesLocks": "Verrouillages des caractéristiques"
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Utiliser la barre de PV",
-        "hint": "Affiche une barre colorée indiquant les PV restants. Les chiffres de santé restent visibles."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Utiliser la superposition de santé",
-        "hint": "Affiche une superposition PV colorée."
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Verrouiller les champs sensibles",
-        "hint": "Activer cette option pour prévenir les modifications de champs sensibles."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Utiliser le suivi de l'inspiration",
-        "hint": "Affiche un indicateur d'inspiration sur le profil du personnage."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Utiliser l'indicateur des déplacements des véhicules",
-        "hint": "Affiche un curseur de mouvement sur le profil du véhicule."
-    },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Repos pour les PNJs",
         "hint": "Activer cette option pour afficher le bouton de repos sur les feuilles de PNJs."
@@ -137,21 +117,9 @@
         "name": "Onglet initial de la feuille",
         "hint": "ffiche l'onglet indiqué lors de la première ouverture de la feuille."
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Utiliser la barre d'encombrement des PNJ",
-        "hint": "Affiche une barre d'encombrement sur les feuilles des PNJ."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Utiliser la barre d'encombrement des véhicules",
-        "hint": "Affiche une barre d'encombrement sur les feuilles de véhicule."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Utiliser le filtre de livre de sorts multi-classes",
         "hint": "Permet de filtrer les sorts par classe dans l'onglet du livre des sorts. Le sort doit être associé à une classe en utilisant le sélecteur de classe sur la feuille d'édition des sorts."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Utiliser l'icône de classe pour les sorts",
-        "hint": "Affiche l'image de la classe sur les sorts au lieu de l'image du sort lui-même. Le sort doit être associé à une classe à l'aide du sélecteur de classe de la feuille d'édition des sorts. En cas de multi-classage, cette caractéristique permet de distinguer d'un coup d'œil les sorts appartenant à telle ou telle classe."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": "Classes supplémentaires pour le filtrage multiclasse du livre des sorts",
@@ -541,10 +509,6 @@
         "text": "Êtes-vous sûr de vouloir utiliser la valeur par défaut ?"
     },
     "TIDY5E.LocalizationTestKey": "Clé de test de localisation",
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "hint": "Utilisez les icônes sélectionnées par Tidy pour les écoles de magie. Pour personnaliser les icônes des écoles de magie via CONFIG.DND5E ou d'autres modules, désactivez cette option. Pour étendre les icônes personnalisées des écoles de sorts de Tidy, reportez-vous à la documentation de l'API de Tidy.",
-        "name": "Utiliser les icônes d'écoles de Tidy"
-    },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) ",
     "TIDY5E.EmptyContainer": "Ce conteneur est vide.",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identifiant de classe : {identifier}",

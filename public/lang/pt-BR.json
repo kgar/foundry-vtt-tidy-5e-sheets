@@ -218,26 +218,6 @@
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista de Ações"
     },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Usar Barra de HP",
-        "hint": "Mostra uma barra colorida indicando o HP restante. Os números de vida ainda estarão visíveis."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Use Sobreposição de Vida",
-        "hint": "Mostra uma sobreposição colorida de PV."
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Travar Campos Sensíveis",
-        "hint": "Bloqueia campos alterados com pouca frequência (nome, proficiência, etc) e oculta botões de configuração quando a ficha estiver bloqueada."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Usar Rastreador de Inspiração",
-        "hint": "Mostra um rastreador de inspiração no perfil do personagem."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Usar Rastreador de Movimento do Veículo",
-        "hint": "Mostra um rastreador de movimento no perfil do veículo."
-    },
     "TIDY5E.Settings.ShowNPCRestInChat": {
         "name": "Mostrar Descanso do PNJ no Chat",
         "hint": "Mostra um cartão no chat quando um PNJ descansa."
@@ -253,21 +233,9 @@
         "SelectedHeader": "Abas Selecionadas",
         "AtLeastOneTabRequiredErrorMessage": "Abas padrão: pelo menos uma aba é necessária para cada tipo de ator."
     },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Usar Barra de Carga para PNJ",
-        "hint": "Mostra uma barra de carga nas fichas de PNJs."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Usar Barra de Carga para Veiculo",
-        "hint": "Mostra uma barra de carga nas fichas de veículos."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Usar Filtro de Grimório Multiclasse",
         "hint": "Permite filtrar as magias por classe, na aba Grimório. A magia deve ser associado a uma classe usando o seletor Classe na ficha da magia."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Usar Ícone de Classe de Magia para Magias",
-        "hint": "Mostra a imagem da classe da magia nas magias, ao vez da imagem da própria magia. A magia deve ser associado a uma classe usando o seletor Classe na ficha da magia. Ao fazer multiclasse, esse recurso distingue quais magias pertencem a qual classe em um piscar de olhos."
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Permitir Preparação de Truques",
@@ -293,10 +261,6 @@
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "Incluir Consumíveis como Ações",
         "hint": "Por padrão, inclui consumíveis que têm um custo de ativação (Ação, Ação Bônus, etc.) na lista de Ações."
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "Usar Ícones de Escolas de Magia do Tidy",
-        "hint": "Use os ícones de escolas de magia escolhidos à mão do Tidy. Para personalizar ícones de escolas de magia através do CONFIG.DND5E ou por outros módulos, desative esta opção. Para estender os ícones personalizados de escolas de magia do Tidy, consulte a documentação da API do Tidy."
     },
     "TIDY5E.Settings.Reset": {
         "name": "Redefinir Configurações para Padrão",
