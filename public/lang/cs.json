@@ -3,7 +3,6 @@
     "TIDY5E.EditSheetImageHint": "Levé tlačítko myši: Upravit obrázek",
     "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
     "TIDY5E.ShowPortraitArt": "Zobrazit portrét",
-    "TIDY5E.ShowTokenArt": "Zobrazit token",
     "TIDY5E.ShowItemImage": "Pravé tlačítko: Zobrazit ilustraci položky",
     "TIDY5E.ShowItemArt": "Zobrazit obrázek",
     "TIDY5E.AbbrInitiative": "Inic.",
@@ -15,7 +14,6 @@
     "TIDY5E.RestoreOnRest": "Obnovit při odpočinku",
     "TIDY5E.JournalPersonsOfInterest": "Zájmové osoby",
     "TIDY5E.JournalLocationsOfInterest": "Zájmové lokace",
-    "TIDY5E.JournalQuests": "Úkoly",
     "TIDY5E.JournalMisc": "Různé",
     "TIDY5E.JournalEntries": "Záznamy deníku",
     "TIDY5E.TogglePersonalityInfo": "Přepnout na osobní informace",
@@ -38,7 +36,6 @@
     "TIDY5E.AttunementWarning": "Sladění: Nemůžeš se sladit s více než s {number} předměty.",
     "TIDY5E.AttunementItems": "Sladěné předměty",
     "TIDY5E.AttunementMax": "Maximum sladění",
-    "TIDY5E.GridLayout": "Mřížkové rozvržení",
     "TIDY5E.ListLayout": "Seznamové rozvržení",
     "TIDY5E.LayoutNotSupported": "Režim rozvržení není podporován",
     "TIDY5E.Encumbrance": "Zatížení",
@@ -56,7 +53,6 @@
     "TIDY5E.AbbrMod": "Oprava",
     "TIDY5E.AbbrSavingThrow": "Záchrana",
     "TIDY5E.SpellAttackMod": "Oprava útoku kouzlem",
-    "TIDY5E.PreparedSpells": "Připravená kouzla",
     "TIDY5E.TokenLinked": "Token propojený s aktérem",
     "TIDY5E.TokenUnlinked": "Token nepropojený s aktérem",
     "TIDY5E.SpellClass": null,
@@ -147,7 +143,6 @@
             "useDefaultDarkColors": "Výchozí tmavý motiv",
             "export": "Export",
             "import": "Import",
-            "importDropHint": "Tip: Do tohoto formuláře můžeš přetáhnout '.tidy5e-theme' a tak jej importovat.",
             "importError": "Import motivu se nezdařil. Další podrobnosti nalezneš v konzoli.",
             "importSuccess": "Motiv byl úspěšně importován!",
             "menuLabel": "Nabídka",
@@ -182,7 +177,6 @@
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "Tato položka má aktivní efekty",
     "TIDY5E.GMOnly.Message": "Pouze pro PJ: {message}",
-    "TIDY5E.PortraitTitle": "Portrét: {subject}",
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "options.GmAndOwners": "PJ a vlastníci položky",
         "name": "Povolení k identifikaci položky",
@@ -247,7 +241,6 @@
             "sectionTitle": "Migrace na Tidy V1",
             "mainExplanation1": "Pro použití nového modulu deníků Tidy 5e není nutná migrace dat do tohoto modulu. V nejhorším případě, pokud jsi původním uživatelem modulu deníků Tidy5e a migraci přeskočíš, budeš je muset znovu nastavit podle svých představ."
         },
-        "migrateGmSettingsButtonLabel": "Migrace nastavení PJ",
         "buttonLabel": "Migrovat data Tidy",
         "migrationErrorMessage": "Došlo k chybě. Další podrobnosti nalezneš ve vývojářské konzoli.",
         "hint": "Pokud jsi byl uživatelem původního modulu deníků Tidy5e, můžeš volitelně použít tuto nabídku pro migraci nastavení PJ a dat deníků Tidy.",
@@ -455,7 +448,6 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Vyčerpání"
     },
-    "TIDY5E.Reset": "Obnovení výchozího nastavení",
     "TIDY5E.Tidy5eSettings": "Nastavení deníků Tidy 5e",
     "TIDY5E.ExhaustionLevelTooltip": "Úroveň vyčerpání {level}",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Zobrazit informační panel",

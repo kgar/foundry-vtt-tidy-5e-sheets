@@ -3,7 +3,6 @@
     "TIDY5E.EditSheetImageHint": "Clic gauche : éditer l'image",
     "TIDY5E.SheetImageOptionsHint": "Clic droit : voir les options de l'image",
     "TIDY5E.ShowPortraitArt": "Voir le portrait",
-    "TIDY5E.ShowTokenArt": "Voir le token",
     "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
     "TIDY5E.ShowItemArt": "Montrer l'image",
     "TIDY5E.AbbrInitiative": "Ini",
@@ -15,7 +14,6 @@
     "TIDY5E.RestoreOnRest": "Restaurer lors d'un repos",
     "TIDY5E.JournalPersonsOfInterest": "Personnages importants",
     "TIDY5E.JournalLocationsOfInterest": "Lieux importants",
-    "TIDY5E.JournalQuests": "Quêtes",
     "TIDY5E.JournalMisc": "Divers",
     "TIDY5E.JournalEntries": "Journal de bord",
     "TIDY5E.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
@@ -38,7 +36,6 @@
     "TIDY5E.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !.",
     "TIDY5E.AttunementItems": "Objets liés",
     "TIDY5E.AttunementMax": "Liens maximum",
-    "TIDY5E.GridLayout": "Affichage grille",
     "TIDY5E.ListLayout": "Affichage liste",
     "TIDY5E.LayoutNotSupported": "Mise en page non supporter",
     "TIDY5E.Encumbrance": "Encombrement",
@@ -56,7 +53,6 @@
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Sauvegarde",
     "TIDY5E.SpellAttackMod": "Bonus d'attaque",
-    "TIDY5E.PreparedSpells": "Sorts préparés",
     "TIDY5E.TokenLinked": "Token lié à l'acteur",
     "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
     "TIDY5E.SpellClass": "Classe de sort",
@@ -147,7 +143,6 @@
             "useDefaultDarkColors": "Sombre par défaut",
             "export": "Exporter",
             "import": "Importer",
-            "importDropHint": "Astuce : Vous pouvez faire glisser un fichier \".tidy5e-theme\" sur ce formulaire pour l'importer.",
             "importError": "L'importation du thème a échoué. Voir la console pour plus de détails.",
             "importSuccess": "Thème importé avec succès !",
             "menuLabel": "Menu",
@@ -262,7 +257,6 @@
     "TIDY5E.Settings.Migrations": {
         "dialogTitle": "Migrer des données de Tidy",
         "migrationBeginningMessage": "Migration des données. Ne rafraîchissez pas la page avant d'avoir terminé.",
-        "migrateGmSettingsButtonLabel": "Migrer les paramètres du MJ",
         "migrateConfirmTitle": "Confirmer la migration",
         "migrateConfirmMessage1": "Êtes-vous sûr de vouloir effectuer cette migration ?",
         "migrateConfirmMessage2": "{boldStart}Note{boldEnd} : n'oubliez jamais de {boldStart} sauvegarder vos données{boldEnd}.",
@@ -377,7 +371,6 @@
     },
     "TIDY5E.Commands.CollapseAll": "Réduire tout",
     "TIDY5E.UseDefault": "Utiliser la valeur par défaut",
-    "TIDY5E.Reset": "Remise à zéro",
     "TIDY5E.Commands.ExpandAll": "Tout développer",
     "TIDY5E.Settings.ActionList.Header": "Liste des actions",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
@@ -435,7 +428,6 @@
     "TIDY5E.ItemImageTitle": "Objet : {subject}",
     "TIDY5E.ItemFilters.CanCast": "Peu incanter",
     "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
-    "TIDY5E.PortraitTitle": "Portrait : {subject}",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Inclure les indicateurs dans la création des parchemins de sorts",
         "hint": "Les sorts peuvent parfois contenir des données spéciales provenant d'autres modules, qu'il peut être utile de transférer dans un parchemin de sort. Activer pour copier toutes les données basées sur les indicateurs dans le parchemin de sort lors de sa création."

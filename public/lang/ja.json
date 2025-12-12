@@ -12,9 +12,7 @@
   "TIDY5E.PreviewSheetImageHint": "右クリック: 画像プレビュー",
   "TIDY5E.SheetImageOptionsHint": "右クリック: 画像オプション表示",
   "TIDY5E.ShowPortraitArt": "画像表示",
-  "TIDY5E.PortraitTitle": "画像: {subject}",
   "TIDY5E.ItemImageTitle": "アイテム: {subject}",
-  "TIDY5E.ShowTokenArt": "コマ表示",
   "TIDY5E.ShowItemImage": "右クリック: 画像表示",
   "TIDY5E.ShowItemArt": "画像表示",
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 設定",
@@ -74,7 +72,6 @@
 
   "TIDY5E.JournalPersonsOfInterest": "関心のある人物",
   "TIDY5E.JournalLocationsOfInterest": "関心のある場所",
-  "TIDY5E.JournalQuests": "クエスト",
   "TIDY5E.JournalMisc": "その他",
   "TIDY5E.JournalEntries": "資料",
   "TIDY5E.JournalEntry.NewTitle": "資料{number}",
@@ -126,7 +123,6 @@
   "TIDY5E.AttunementItems": "同調アイテム",
   "TIDY5E.AttunementMax": "同調上限",
 
-  "TIDY5E.GridLayout": "グリッド",
   "TIDY5E.ListLayout": "リスト",
   "TIDY5E.LayoutNotSupported": "レイアウトモードはサポートされていません",
 
@@ -168,7 +164,6 @@
   "TIDY5E.SpellAttackMod": "呪文攻撃修正",
   "TIDY5E.MeleeSpellAttackMod": "近接呪文攻撃修正",
   "TIDY5E.RangedSpellAttackMod": "遠隔呪文攻撃修正",
-  "TIDY5E.PreparedSpells": "準備済み呪文",
 
   "TIDY5E.TokenLinked": "リンク中のコマ",
   "TIDY5E.TokenUnlinked": "未リンクのコマ",
@@ -407,7 +402,6 @@
     "migrationErrorMessage": "エラーが発生しました。詳細は開発者コンソールを確認してください。",
     "migrationCompleteMessage": "移行完了。",
     "migrateDocumentFlagsButtonLabel": "ドキュメントフラグを移行",
-    "migrateGmSettingsButtonLabel": "GM設定移行",
     "migrateConfirmTitle": "移行の確認",
     "migrateConfirmMessage1": "本当にこの移行を実行しますか？",
     "migrateConfirmMessage2": "{boldStart}注意{boldEnd}: 必ず{boldStart}データをバックアップ{boldEnd}してください。",
@@ -489,7 +483,6 @@
       "useDefaultDarkColors": "デフォルトダーク",
       "export": "エクスポート",
       "import": "インポート",
-      "importDropHint": "ヒント: \".tidy5e-theme\"ファイルをこのフォームにドラッグしてインポートできます。",
       "importError": "テーマのインポートに失敗しました。詳細はコンソールを確認してください。",
       "importSuccess": "テーマのインポートに成功しました！",
       "menuLabel": "メニュー",
@@ -515,7 +508,6 @@
   "TIDY5E.ApplyChanges": "適用",
   "TIDY5E.SaveChanges": "保存",
   "TIDY5E.UseDefault": "デフォルトを使用",
-  "TIDY5E.Reset": "リセット",
   "TIDY5E.VehicleInMotion": "乗り物は移動中",
   "TIDY5E.VehicleMotionless": "乗り物は止まっている",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "ドラフト･アニマル",

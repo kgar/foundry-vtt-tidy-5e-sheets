@@ -3,7 +3,6 @@
     "TIDY5E.EditSheetImageHint": "bal klikk: kép szerkesztés",
     "TIDY5E.SheetImageOptionsHint": "jobb klikk: karakterkép mutatás",
     "TIDY5E.ShowPortraitArt": "portré mutatás",
-    "TIDY5E.ShowTokenArt": "token mutatás",
     "TIDY5E.ShowItemImage": "right click: show item art",
     "TIDY5E.ShowItemArt": "show image",
     "TIDY5E.AbbrInitiative": "Kez",
@@ -15,7 +14,6 @@
     "TIDY5E.RestoreOnRest": "Pihenéskor visszaáll",
     "TIDY5E.JournalPersonsOfInterest": "Fontos Személyek",
     "TIDY5E.JournalLocationsOfInterest": "Fontos Helyszínek",
-    "TIDY5E.JournalQuests": "Küldetések",
     "TIDY5E.JournalMisc": "Egyéb",
     "TIDY5E.JournalEntries": "Napló Bejegyzések",
     "TIDY5E.TogglePersonalityInfo": "Személyiség Info Ki/Be",
@@ -38,7 +36,6 @@
     "TIDY5E.AttunementWarning": "Összehangolódás figyelmeztetés: Nem tudsz több, mint {number} tárggyal összehangolódni!",
     "TIDY5E.AttunementItems": "Összehangolt Tárgyak",
     "TIDY5E.AttunementMax": "Összehangolódás Maximum",
-    "TIDY5E.GridLayout": "Rács Elrendezés",
     "TIDY5E.ListLayout": "Lista Elrendezés",
     "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.Encumbrance": "Terheltség",
@@ -56,7 +53,6 @@
     "TIDY5E.AbbrMod": "Mód.",
     "TIDY5E.AbbrSavingThrow": "Mentő",
     "TIDY5E.SpellAttackMod": "Támadás Mód.",
-    "TIDY5E.PreparedSpells": "Előkészített varázslatok",
     "TIDY5E.TokenLinked": "Aktorhoz linkelt token",
     "TIDY5E.TokenUnlinked": "Token nincs aktorhoz linkelve",
     "TIDY5E.SpellClass": null,
@@ -147,7 +143,6 @@
             "useDefaultDarkColors": "",
             "export": "",
             "import": "",
-            "importDropHint": "",
             "importError": "",
             "importSuccess": "",
             "menuLabel": "",
@@ -253,7 +248,6 @@
             "sectionTitle": "",
             "selectionDialogTitle": ""
         },
-        "migrateGmSettingsButtonLabel": "",
         "migrationErrorMessage": "",
         "OptionDeleteFlags.Text": ""
     },
@@ -371,7 +365,6 @@
         "hint": "",
         "buttonLabel": ""
     },
-    "TIDY5E.Reset": "",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "",
     "TIDY5E.Commands.ShowLegendaryToolbar": "",
     "TIDY5E.UseDefaultDialog": {
@@ -421,7 +414,6 @@
         "tabLabel": ""
     },
     "TIDY5E.Settings.ActionList.Header": "",
-    "TIDY5E.PortraitTitle": "",
     "TIDY5E.ItemImageTitle": "",
     "TIDY5E.EnvironmentTooltip": "",
     "TIDY5E.AttackMod": "",

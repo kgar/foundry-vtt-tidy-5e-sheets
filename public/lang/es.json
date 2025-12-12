@@ -3,7 +3,6 @@
     "TIDY5E.EditSheetImageHint": "Click Izquierdo: Editar Imagen",
     "TIDY5E.SheetImageOptionsHint": "Click Derecho: Mostrar Opciones de la Imagen",
     "TIDY5E.ShowPortraitArt": "Mostrar Retrato",
-    "TIDY5E.ShowTokenArt": "Mostrar Token",
     "TIDY5E.ShowItemImage": "Click Derecho: Mostrar Arte del Objeto",
     "TIDY5E.ShowItemArt": "Mostrar Imagen",
     "TIDY5E.AbbrInitiative": "Ini",
@@ -15,7 +14,6 @@
     "TIDY5E.RestoreOnRest": "Recuperar tras Descanso",
     "TIDY5E.JournalPersonsOfInterest": "Personas de Interés",
     "TIDY5E.JournalLocationsOfInterest": "Lugares de Interés",
-    "TIDY5E.JournalQuests": "Misiones",
     "TIDY5E.JournalMisc": "Miscelánea",
     "TIDY5E.JournalEntries": "Entradas del Diario",
     "TIDY5E.TogglePersonalityInfo": "Alternar Información de Personalidad",
@@ -38,7 +36,6 @@
     "TIDY5E.AttunementWarning": "Sintonización: No puedes sintonizar más de {number} objetos.",
     "TIDY5E.AttunementItems": "Objetos Sintonizados",
     "TIDY5E.AttunementMax": "Máximo de Objetos Sintonizados",
-    "TIDY5E.GridLayout": "Diseño de Cuadrícula",
     "TIDY5E.ListLayout": "Diseño de Lista",
     "TIDY5E.LayoutNotSupported": "Modo de diseño no compatible",
     "TIDY5E.Encumbrance": "Carga",
@@ -56,7 +53,6 @@
     "TIDY5E.AbbrMod": "Mod",
     "TIDY5E.AbbrSavingThrow": "Salvación",
     "TIDY5E.SpellAttackMod": "Modificador de Ataque con Hechizos",
-    "TIDY5E.PreparedSpells": "Hechizos Preparados",
     "TIDY5E.TokenLinked": "Token vinculado a actor",
     "TIDY5E.TokenUnlinked": "Token no vinculado a actor",
     "TIDY5E.SpellClass": "Clase de hechizo",
@@ -163,7 +159,6 @@
             "useDefaultDarkColors": "Oscuro predeterminado",
             "export": "Exportar",
             "import": "Importar",
-            "importDropHint": "Sugerencia: puedes arrastrar un archivo \".tidy5e-theme\" a este formulario para importarlo.",
             "importError": "Error al importar el tema. Consulta la consola para obtener más detalles.",
             "importSuccess": "¡Tema importado exitosamente!",
             "menuLabel": "Menú",
@@ -214,7 +209,6 @@
         "hint": "Incluye hechizos con efectos activos adjuntos (por ejemplo, Piel de corteza) en la pestaña/panel de acciones de forma predeterminada."
     },
     "TIDY5E.UseDefault": "Utilizar predeterminado",
-    "TIDY5E.Reset": "Restablecer",
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Incluir hechizos de un minuto como acciones",
         "hint": "Incluye hechizos con una duración de un minuto o menos (por ejemplo, 1 ronda) y un tiempo de activación de 1 acción o 1 acción adicional (por ejemplo, bendecir, azotar, ordenar) en la pestaña/panel de acciones de forma predeterminada."
@@ -270,7 +264,6 @@
         "dialogTitle": "Migrar datos de Tidy",
         "migrationBeginningMessage": "Migrando datos. Por favor, no refresques la pagina hasta que haya finalizado.",
         "migrationErrorMessage": "Error detectado. Verifica los detalles en la consola de desarrollo.",
-        "migrateGmSettingsButtonLabel": "Migrar configuración de DM",
         "migrateDocumentFlagsButtonLabel": "Migrar indicadores de datos de documento",
         "migrateConfirmMessage1": "¿Estás seguro de querer llevar acabo esta migración?",
         "v1": {
@@ -405,7 +398,6 @@
     },
     "TIDY5E.ItemFilters.CanUse": "Se puede utilizar",
     "TIDY5E.ItemFilters.CanCast": "Se puede ejecutar",
-    "TIDY5E.PortraitTitle": "Retrato: {subject}",
     "TIDY5E.ItemImageTitle": "Objeto: {subject}",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "hint": "Los hechizos a veces pueden contener datos especiales de otros módulos que pueden ser útiles para transferir a un pergamino de hechizo. Habilitar para copiar todos los datos basados en banderas al pergamino de hechizos en el momento de la creación.",

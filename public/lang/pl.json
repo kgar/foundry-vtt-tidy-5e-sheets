@@ -1,6 +1,5 @@
 {
     "TIDY5E.EditSheetImageHint": "Lewy przycisk myszy: edytuj obraz",
-    "TIDY5E.ShowTokenArt": "Pokaż token",
     "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż opcje obrazu",
     "TIDY5E.ShowItemImage": "Prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "Pokaż obraz",
@@ -66,7 +65,6 @@
     "TIDY5E.JournalTabName": "Dziennik",
     "TIDY5E.RestoreOnRest": "Odzyskaj przy odpoczynku",
     "TIDY5E.JournalPersonsOfInterest": "Ciekawe Postaci",
-    "TIDY5E.JournalQuests": "Zadania",
     "TIDY5E.JournalEntries": "Wpisy w dzienniku",
     "TIDY5E.TogglePersonalityInfo": "Przełącz Informacje o Charakterze",
     "TIDY5E.SheetEdit.Disable.Hint": "Wyłącz Edycję - {description}",
@@ -83,7 +81,6 @@
     "TIDY5E.EmptySection": "Ta sekcja jest pusta. Odblokuj kartę, w celu edycji.",
     "TIDY5E.GMOnlyEdit": "Tylko MG może edytować tę sekcję.",
     "TIDY5E.AttunementWarning": "Zestrojenie: Nie można zestroić się z więcej niż {number} przedmiotami.",
-    "TIDY5E.GridLayout": "Układ siatki",
     "TIDY5E.ListLayout": "Układ listy",
     "TIDY5E.LayoutNotSupported": "Układ nie jest wspierany",
     "TIDY5E.Encumbrance": "Obciążenie",
@@ -100,7 +97,6 @@
     "TIDY5E.AttackMod": "Modyfikator do ataku",
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
     "TIDY5E.RangedSpellAttackMod": "Modyfikator do rzutu na atak czarem dystansowym",
-    "TIDY5E.PreparedSpells": "Przygotowane czary",
     "TIDY5E.TokenLinked": "Token przypisany do aktora",
     "TIDY5E.TokenUnlinked": "Token nie przypisany do aktora",
     "TIDY5E.Class.Artificer": "Wynalazca",
@@ -165,7 +161,6 @@
     "TIDY5E.ApplyChanges": "Zastosuj zmiany",
     "TIDY5E.SaveChanges": "Zapisz zmiany",
     "TIDY5E.UseDefault": "Użyj domyślnych",
-    "TIDY5E.Reset": "Resetuj",
     "TIDY5E.VehicleInMotion": "Pojazd w ruchu",
     "TIDY5E.VehicleMotionless": "Pojazd w bezruchu",
     "TIDY5E.TotalCrewCount": "Całkowita załoga",
@@ -188,7 +183,6 @@
         "hint": "Spowoduje to zresetowanie wszystkich ustawień z powrotem do domyślnych ustawień aktywnego systemu gry. Ma to wpływ tylko na ustawienia \"ogólne\", takie jak opcje MG."
     },
     "TIDY5E.Settings.Migrations": {
-        "migrateGmSettingsButtonLabel": "Migracja ustawień MG",
         "migrateConfirmMessage1": "Czy na pewno chcesz przeprowadzić tę migrację?",
         "v1": {
             "originalHeader": "Oryginalna Tidy5e Sheet",
@@ -282,7 +276,6 @@
             "menuLabel": "Menu",
             "importError": "Import motywu nie powiódł się. Więcej szczegółów można znaleźć w konsoli.",
             "importSuccess": "Motyw został pomyślnie zaimportowany!",
-            "importDropHint": "Wskazówka: Możesz przeciągnąć plik \".tidy5e-theme\" na to pole, aby go zaimportować.",
             "title": "Ustawienia motywu: {userName}",
             "useDefaultLightColors": "Domyślny Jasny",
             "useDefaultDarkColors": "Domyślny Ciemny",
@@ -351,7 +344,6 @@
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
     "TIDY5E.Commands.ShowContainerPanel": "Pokaż panel pojemnika",
     "TIDY5E.Commands.HideContainerPanel": "Ukryj panel pojemnika",
-    "TIDY5E.PortraitTitle": "Portret: {subject}",
     "TIDY5E.ItemImageTitle": "Przedmiot: {subject}",
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"

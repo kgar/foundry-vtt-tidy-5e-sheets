@@ -12,9 +12,7 @@
   "TIDY5E.PreviewSheetImageHint": "Left Click: Preview Image",
   "TIDY5E.SheetImageOptionsHint": "Right Click: Show Image Options",
   "TIDY5E.ShowPortraitArt": "Show Portrait",
-  "TIDY5E.PortraitTitle": "Portrait: {subject}",
   "TIDY5E.ItemImageTitle": "Item: {subject}",
-  "TIDY5E.ShowTokenArt": "Show Token",
   "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
   "TIDY5E.ShowItemArt": "Show Image",
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
@@ -74,7 +72,6 @@
 
   "TIDY5E.JournalPersonsOfInterest": "Persons of Interest",
   "TIDY5E.JournalLocationsOfInterest": "Locations of Interest",
-  "TIDY5E.JournalQuests": "Quests",
   "TIDY5E.JournalMisc": "Miscellaneous",
   "TIDY5E.JournalEntries": "Journal Entries",
   "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
@@ -126,7 +123,6 @@
   "TIDY5E.AttunementItems": "Attuned Items",
   "TIDY5E.AttunementMax": "Attunement Maximum",
 
-  "TIDY5E.GridLayout": "Grid Layout",
   "TIDY5E.ListLayout": "List Layout",
   "TIDY5E.LayoutNotSupported": "Layout mode not supported",
 
@@ -168,7 +164,6 @@
   "TIDY5E.SpellAttackMod": "Spell Attack Mod",
   "TIDY5E.MeleeSpellAttackMod": "Melee Spell Attack Mod",
   "TIDY5E.RangedSpellAttackMod": "Ranged Spell Attack Mod",
-  "TIDY5E.PreparedSpells": "Prepared spells",
 
   "TIDY5E.TokenLinked": "Token linked to actor",
   "TIDY5E.TokenUnlinked": "Token not linked to actor",
@@ -407,7 +402,6 @@
     "migrationErrorMessage": "An error occurred. More details are in the dev console.",
     "migrationCompleteMessage": "Migration complete.",
     "migrateDocumentFlagsButtonLabel": "Migrate Document Flags",
-    "migrateGmSettingsButtonLabel": "Migrate GM Settings",
     "migrateConfirmTitle": "Confirm Migration",
     "migrateConfirmMessage1": "Are you sure you wish to perform this migration?",
     "migrateConfirmMessage2": "{boldStart}Note{boldEnd}: always remember to {boldStart}back up your data{boldEnd}.",
@@ -489,7 +483,6 @@
       "useDefaultDarkColors": "Default Dark",
       "export": "Export",
       "import": "Import",
-      "importDropHint": "Hint: You can drag a \".tidy5e-theme\" file onto this form to import it.",
       "importError": "Theme import failed. See console for more details.",
       "importSuccess": "Theme imported successfully!",
       "menuLabel": "Menu",
@@ -515,7 +508,6 @@
   "TIDY5E.ApplyChanges": "Apply Changes",
   "TIDY5E.SaveChanges": "Save Changes",
   "TIDY5E.UseDefault": "Use Default",
-  "TIDY5E.Reset": "Reset",
   "TIDY5E.VehicleInMotion": "Vehicle is in motion",
   "TIDY5E.VehicleMotionless": "Vehicle is motionless",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",

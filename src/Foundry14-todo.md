@@ -1,21 +1,21 @@
 ## Foundry 14 To Do
 
 - [ ] Inspect these loc keys and remove unused ones
-  - [ ] TIDY5E.Section.ConfigDialog.title
-  - [ ] TIDY5E.PortraitTitle
-  - [ ] TIDY5E.JournalQuests
-  - [ ] TIDY5E.ShowTokenArt
-  - [ ] TIDY5E.ThemeSettings.Sheet.importDropHint
-  - [ ] TIDY5E.Reset
-  - [ ] TIDY5E.Settings.InitialSheetTab.hint
-  - [ ] TIDY5E.Settings.Migrations.migrateGmSettingsButtonLabel
-  - [ ] TIDY5E.GridLayout
-  - [ ] TIDY5E.PreparedSpells
+  - [x] (Keep) TIDY5E.Section.ConfigDialog.title
+  - [x] TIDY5E.PortraitTitle
+  - [x] TIDY5E.JournalQuests
+  - [x] TIDY5E.ShowTokenArt
+  - [x] TIDY5E.ThemeSettings.Sheet.importDropHint
+  - [x] TIDY5E.Reset
+  - [x] (keep) TIDY5E.Settings.InitialSheetTab.hint
+  - [x] TIDY5E.Settings.Migrations.migrateGmSettingsButtonLabel
+  - [x] TIDY5E.GridLayout
+  - [x] TIDY5E.PreparedSpells
   - [ ] TIDY5E.Settings.DefaultSheetTabs.AtLeastOneTabRequiredErrorMessage
   - [ ] TIDY5E.AbbrSavingThrow
   - [ ] TIDY5E.AbbrMod
   - [ ] TIDY5E.Utilities.MarkAllAsUnidentified
-  - [ ] TIDY5E.Settings.InitialSheetTab.name
+  - [x] (keep) TIDY5E.Settings.InitialSheetTab.name
   - [ ] TIDY5E.Class.Warlock
   - [ ] TIDY5E.ThemeSettings.PortraitShape.option.token
   - [ ] TIDY5E.SpellSourceIdentifierLabelHint
