@@ -5,7 +5,7 @@ import type {
 import type { RegisteredContent, RegisteredTab } from '../types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { CustomContent, Tab } from 'src/types/types';
+import type { CustomContent } from 'src/types/types';
 import { Activities } from 'src/features/activities/activities';
 import ItemActivitiesQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
 import ItemAdvancementQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';

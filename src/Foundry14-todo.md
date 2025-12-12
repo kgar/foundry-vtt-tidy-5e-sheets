@@ -13,10 +13,10 @@
   - [x] foundry
   - [x] integration
   - [x] keybindings
-  - [ ] less
-  - [ ] migrations
-  - [ ] mixins
-  - [ ] runtime
+  - [x] less
+  - [x] migrations
+  - [x] mixins
+  - [x] runtime
   - [ ] settings
   - [ ] sheets
   - [ ] theme
