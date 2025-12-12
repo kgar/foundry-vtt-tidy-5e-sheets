@@ -11,8 +11,8 @@
   - [x] events
   - [x] features
   - [x] foundry
-  - [ ] integration
-  - [ ] keybindings
+  - [x] integration
+  - [x] keybindings
   - [ ] less
   - [ ] migrations
   - [ ] mixins
