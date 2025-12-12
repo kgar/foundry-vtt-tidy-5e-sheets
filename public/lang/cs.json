@@ -6,14 +6,9 @@
     "TIDY5E.ShowItemArt": "Zobrazit obrázek",
     "TIDY5E.RestHint": "Odpočinek",
     "TIDY5E.ShortRest": "Krátký odpočinek",
-    "TIDY5E.LongRest": "Důkladný odpočinek",
     "TIDY5E.HitDiceRollAverage": "Pravé tlačítko: Použít průměr",
     "TIDY5E.JournalTabName": "Záznamy",
     "TIDY5E.RestoreOnRest": "Obnovit při odpočinku",
-    "TIDY5E.JournalPersonsOfInterest": "Zájmové osoby",
-    "TIDY5E.JournalLocationsOfInterest": "Zájmové lokace",
-    "TIDY5E.JournalMisc": "Různé",
-    "TIDY5E.JournalEntries": "Záznamy deníku",
     "TIDY5E.TogglePersonalityInfo": "Přepnout na osobní informace",
     "TIDY5E.SheetEdit.Enable.Hint": "Povolit úpravy - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Zakázat úpravy - {description}",
@@ -30,8 +25,6 @@
     "TIDY5E.ContextMenuActionEdit": "Upravit",
     "TIDY5E.ContextMenuActionDelete": "Odstranit",
     "TIDY5E.AttunementItems": "Sladěné předměty",
-    "TIDY5E.ListLayout": "Seznamové rozvržení",
-    "TIDY5E.LayoutNotSupported": "Režim rozvržení není podporován",
     "TIDY5E.AddFavorite": "Přidat do oblíbených",
     "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
     "TIDY5E.ShowNotProficientSkills": "Ukázat i ty bez zdatnosti",
@@ -301,7 +294,6 @@
         "ExamplesHeader": "Ukázkové vzorce"
     },
     "TIDY5E.Utilities.AssignSpellsToClasses": "Přiřadit kouzla povoláním",
-    "TIDY5E.ItemImageTitle": "Položka: {subject}",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identifikátor povolání: {identifier}",
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+klik pro přeskočení hodu a okamžité dobití) ",
     "TIDY5E.SortMode.ActionListDefault": "Výchozí řazení seznamu akcí",
@@ -327,7 +319,6 @@
         "text": "Jsi si jistý(á), že chceš použít výchozí nastavení?",
         "title": "Potvrdit: Použít výchozí nastavení"
     },
-    "TIDY5E.LocalizationTestKey": "Testovací klíč lokalizace",
     "TIDY5E.Actions": {
         "TabName": "Akce"
     },

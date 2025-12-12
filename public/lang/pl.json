@@ -41,19 +41,14 @@
     "TIDY5E.Actions": {
         "TabName": "Akcje"
     },
-    "TIDY5E.JournalLocationsOfInterest": "Ciekawe Lokacje",
-    "TIDY5E.JournalMisc": "Różne",
     "TIDY5E.SheetLock.Lock.Hint": "Zablokuj - {description}",
     "TIDY5E.ContextMenuActionEquip": "Wyposaż",
     "TIDY5E.ContextMenuActionUnequip": "Zdejmij",
     "TIDY5E.RestHint": "Odpoczynek",
     "TIDY5E.ShortRest": "Krótki odpoczynek",
-    "TIDY5E.LongRest": "Długi odpoczynek",
     "TIDY5E.HitDiceRollAverage": "Prawy przycisk myszy: zastosuj średnią",
     "TIDY5E.JournalTabName": "Dziennik",
     "TIDY5E.RestoreOnRest": "Odzyskaj przy odpoczynku",
-    "TIDY5E.JournalPersonsOfInterest": "Ciekawe Postaci",
-    "TIDY5E.JournalEntries": "Wpisy w dzienniku",
     "TIDY5E.TogglePersonalityInfo": "Przełącz Informacje o Charakterze",
     "TIDY5E.SheetEdit.Disable.Hint": "Wyłącz Edycję - {description}",
     "TIDY5E.SheetEdit.Enable.Hint": "Włącz Edycję - {description}",
@@ -66,8 +61,6 @@
     "TIDY5E.ContextMenuActionUnprepare": "Zrezygnuj z przygotowania",
     "TIDY5E.ContextMenuActionEdit": "Edytuj",
     "TIDY5E.ContextMenuActionDelete": "Usuń",
-    "TIDY5E.ListLayout": "Układ listy",
-    "TIDY5E.LayoutNotSupported": "Układ nie jest wspierany",
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
     "TIDY5E.Search": "Szukaj",
@@ -313,12 +306,10 @@
         "name": "Ustaw Tidy 5e jako domyślną kartę"
     },
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
-    "TIDY5E.ItemImageTitle": "Przedmiot: {subject}",
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
     },
     "TIDY5E.SpellSourceIdentifierSelectText": "Identyfikator klasy: {identifier}",
-    "TIDY5E.LocalizationTestKey": "Klucz testowy lokalizacji",
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."

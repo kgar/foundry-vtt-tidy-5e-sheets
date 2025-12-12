@@ -58,16 +58,16 @@
   - [x] TIDY5E.Inventory.Weight.Text
   - [x] TIDY5E.Inventory.Weight.Tooltip
   - [x] TIDY5E.ItemCardsMouseHint
-  - [ ] TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast
-  - [ ] TIDY5E.ItemImageTitle
-  - [ ] TIDY5E.JournalEntries
-  - [ ] TIDY5E.JournalLocationsOfInterest
-  - [ ] TIDY5E.JournalMisc
-  - [ ] TIDY5E.JournalPersonsOfInterest
-  - [ ] TIDY5E.LayoutNotSupported
-  - [ ] TIDY5E.ListLayout
-  - [ ] TIDY5E.LocalizationTestKey
-  - [ ] TIDY5E.LongRest
+  - [x] (keep) TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast
+  - [x] TIDY5E.ItemImageTitle
+  - [x] TIDY5E.JournalEntries
+  - [x] TIDY5E.JournalLocationsOfInterest
+  - [x] TIDY5E.JournalMisc
+  - [x] TIDY5E.JournalPersonsOfInterest
+  - [x] TIDY5E.LayoutNotSupported
+  - [x] TIDY5E.ListLayout
+  - [x] TIDY5E.LocalizationTestKey
+  - [x] TIDY5E.LongRest
   - [ ] TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip
   - [ ] TIDY5E.MeleeSpellAttackMod
   - [ ] TIDY5E.NoSpecialSenses

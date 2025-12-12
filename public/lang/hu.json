@@ -6,14 +6,9 @@
     "TIDY5E.ShowItemArt": "show image",
     "TIDY5E.RestHint": "Pihenő",
     "TIDY5E.ShortRest": "Rövid Pihenő",
-    "TIDY5E.LongRest": "Hosszú Pihenő",
     "TIDY5E.HitDiceRollAverage": "Jobb Klikk: Átlag",
     "TIDY5E.JournalTabName": "Napló",
     "TIDY5E.RestoreOnRest": "Pihenéskor visszaáll",
-    "TIDY5E.JournalPersonsOfInterest": "Fontos Személyek",
-    "TIDY5E.JournalLocationsOfInterest": "Fontos Helyszínek",
-    "TIDY5E.JournalMisc": "Egyéb",
-    "TIDY5E.JournalEntries": "Napló Bejegyzések",
     "TIDY5E.TogglePersonalityInfo": "Személyiség Info Ki/Be",
     "TIDY5E.SheetEdit.Enable.Hint": "",
     "TIDY5E.SheetEdit.Disable.Hint": "",
@@ -30,8 +25,6 @@
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
     "TIDY5E.AttunementItems": "Összehangolt Tárgyak",
-    "TIDY5E.ListLayout": "Lista Elrendezés",
-    "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.AddFavorite": "Hozzáadás a Kedvencekhez",
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.ShowNotProficientSkills": "",
@@ -383,7 +376,5 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": ""
     },
-    "TIDY5E.Settings.ActionList.Header": "",
-    "TIDY5E.ItemImageTitle": "",
-    "TIDY5E.LocalizationTestKey": ""
+    "TIDY5E.Settings.ActionList.Header": ""
 }

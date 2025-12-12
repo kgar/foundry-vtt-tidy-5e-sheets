@@ -11,7 +11,6 @@
   "TIDY5E.PreviewSheetImageHint": "Left Click: Preview Image",
   "TIDY5E.SheetImageOptionsHint": "Right Click: Show Image Options",
   "TIDY5E.ShowPortraitArt": "Show Portrait",
-  "TIDY5E.ItemImageTitle": "Item: {subject}",
   "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
   "TIDY5E.ShowItemArt": "Show Image",
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
@@ -40,7 +39,6 @@
 
   "TIDY5E.RestHint": "Rest",
   "TIDY5E.ShortRest": "Short Rest",
-  "TIDY5E.LongRest": "Long Rest",
   "TIDY5E.HitDiceRollAverage": "Right Click: Apply Average",
 
   "TIDY5E.JournalTabName": "Journal",
@@ -55,10 +53,6 @@
 
   "TIDY5E.RestoreOnRest": "Restore on Rest",
 
-  "TIDY5E.JournalPersonsOfInterest": "Persons of Interest",
-  "TIDY5E.JournalLocationsOfInterest": "Locations of Interest",
-  "TIDY5E.JournalMisc": "Miscellaneous",
-  "TIDY5E.JournalEntries": "Journal Entries",
   "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
   "TIDY5E.TogglePersonalityInfo": "Toggle Personality Info",
 
@@ -98,9 +92,6 @@
   "TIDY5E.EmptyContainer": "This container is empty.",
 
   "TIDY5E.AttunementItems": "Attuned Items",
-
-  "TIDY5E.ListLayout": "List Layout",
-  "TIDY5E.LayoutNotSupported": "Layout mode not supported",
 
   "TIDY5E.AddFavorite": "Add Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
@@ -547,7 +538,6 @@
     "ContextMenuActionRemove": "Remove from {facilityName}",
     "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
   },
-  "TIDY5E.LocalizationTestKey": "Localization Test Key",
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
   "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
   "TIDY5E.ExpandCollapseMenu.OptionAllSections": "All Sections",

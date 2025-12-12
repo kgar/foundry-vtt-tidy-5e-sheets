@@ -11,7 +11,6 @@
     "TIDY5E.PreviewSheetImageHint": "ЛКМ: Просмотр Изображения",
     "TIDY5E.SheetImageOptionsHint": "ПКМ: Показать Параметры Изображения",
     "TIDY5E.ShowPortraitArt": "Показать Портрет",
-    "TIDY5E.ItemImageTitle": "Предмет: {subject}",
     "TIDY5E.ShowItemImage": "ПКМ: Показать Изображение Предмета",
     "TIDY5E.ShowItemArt": "Показать Изображение",
     "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Настройки",
@@ -20,7 +19,6 @@
     "TIDY5E.Group.EmptyMembersTabHint": "Эта группа пуста. Чтобы добавить участника, перетащите имя актёра из боковой панели.",
     "TIDY5E.RestHint": "Отдых",
     "TIDY5E.ShortRest": "Короткий Отдых",
-    "TIDY5E.LongRest": "Долгий Отдых",
     "TIDY5E.HitDiceRollAverage": "ПКМ: Применить Среднее Значение",
     "TIDY5E.JournalTabName": "Журнал",
     "TIDY5E.StatblockTabName": "Статблок",
@@ -28,10 +26,6 @@
         "TabName": "Действия"
     },
     "TIDY5E.RestoreOnRest": "Восстанавливать при Отдыхе",
-    "TIDY5E.JournalPersonsOfInterest": "Примечательные личности",
-    "TIDY5E.JournalLocationsOfInterest": "Интересные Места",
-    "TIDY5E.JournalMisc": "Прочее",
-    "TIDY5E.JournalEntries": "Личные Записи",
     "TIDY5E.JournalEntry.NewTitle": "Запись в Журнале {number}",
     "TIDY5E.TogglePersonalityInfo": "Переключить Подробности Личности"
 }

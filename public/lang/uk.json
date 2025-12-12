@@ -1,6 +1,5 @@
 {
     "TIDY5E.AttunementItems": "Налаштовано на предмети",
-    "TIDY5E.ListLayout": "Показати списком",
     "TIDY5E.ShortRest": "Короткий Відпочинок",
     "TIDY5E.Actions": {
         "TabName": "Дія"
@@ -9,7 +8,6 @@
     "TIDY5E.PlayerName": "Ім'я Гравця",
     "TIDY5E.SheetImageOptionsHint": "Права клавіша миші: Показати опції зображення",
     "TIDY5E.ShowPortraitArt": "Показати Портрет",
-    "TIDY5E.ItemImageTitle": "Елемент: {subject}",
     "TIDY5E.ShowItemImage": "Права клавіша миші: Показати зображення елемента",
     "TIDY5E.ShowItemArt": "Показати Зображення",
     "TIDY5E.StandardExhaustion2": "Швидкість зменшена вдвічі",
@@ -31,14 +29,9 @@
     "TIDY5E.NoSpecialSenses": "Без Незвичайних Відчуттів",
     "TIDY5E.Group.EmptyMembersTabHint": "Ця група порожня. Перетягніть актора з бічної панелі, щоб додати учасника.",
     "TIDY5E.RestHint": "Відпочинок",
-    "TIDY5E.LongRest": "Довгий Відпочинок",
     "TIDY5E.HitDiceRollAverage": "Права кнопка миші: Застосувати середнє",
     "TIDY5E.JournalTabName": "Журнал",
     "TIDY5E.RestoreOnRest": "Відновити під час відпочинку",
-    "TIDY5E.JournalPersonsOfInterest": "Особи, що становлять інтерес",
-    "TIDY5E.JournalLocationsOfInterest": "Місця, що становлять інтерес",
-    "TIDY5E.JournalMisc": "Різне",
-    "TIDY5E.JournalEntries": "Записи в журналі",
     "TIDY5E.TogglePersonalityInfo": "Перемкнути Інформацію Персонажа",
     "TIDY5E.SheetEdit.Enable.Hint": "Увімкнути Редагування - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Вимкнути Редагування - {description}",
@@ -52,7 +45,6 @@
     "TIDY5E.ContextMenuActionUnattune": "Перервати Налаштування",
     "TIDY5E.ContextMenuActionUnprepare": "Прибрати Підготовку",
     "TIDY5E.EmptyContainer": "Цей контейнер пустий.",
-    "TIDY5E.LayoutNotSupported": "Режим показу не підтримується",
     "TIDY5E.AddFavorite": "Додати до обраних",
     "TIDY5E.RemoveFavorite": "Прибрати з обраних",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Атака Чарами Дального Бою",
@@ -437,7 +429,6 @@
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Показати тільки непризначені",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Перемкнути блокування аркуша",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Якщо аркуш Tidy є поточним активним вікном в інтерфейсі, ця комбінація клавіш перемикає блокування аркуша.",
-    "TIDY5E.LocalizationTestKey": "Клавіша перевірки локалізації",
     "TIDY5E.UseDefaultDialog": {
         "text": "Ви впевнені, що хочете використовувати усталені значення?",
         "title": "Підтвердження: використовувати усталені значення"

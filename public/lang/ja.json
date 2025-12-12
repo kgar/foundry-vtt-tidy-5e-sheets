@@ -11,7 +11,6 @@
   "TIDY5E.PreviewSheetImageHint": "右クリック: 画像プレビュー",
   "TIDY5E.SheetImageOptionsHint": "右クリック: 画像オプション表示",
   "TIDY5E.ShowPortraitArt": "画像表示",
-  "TIDY5E.ItemImageTitle": "アイテム: {subject}",
   "TIDY5E.ShowItemImage": "右クリック: 画像表示",
   "TIDY5E.ShowItemArt": "画像表示",
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 設定",
@@ -40,7 +39,6 @@
 
   "TIDY5E.RestHint": "休憩",
   "TIDY5E.ShortRest": "小休憩",
-  "TIDY5E.LongRest": "大休憩",
   "TIDY5E.HitDiceRollAverage": "右クリック：平均を適用",
 
   "TIDY5E.JournalTabName": "記録",
@@ -55,10 +53,6 @@
 
   "TIDY5E.RestoreOnRest": "休憩時に回復",
 
-  "TIDY5E.JournalPersonsOfInterest": "関心のある人物",
-  "TIDY5E.JournalLocationsOfInterest": "関心のある場所",
-  "TIDY5E.JournalMisc": "その他",
-  "TIDY5E.JournalEntries": "資料",
   "TIDY5E.JournalEntry.NewTitle": "資料{number}",
   "TIDY5E.TogglePersonalityInfo": "情報表示の切替",
 
@@ -98,9 +92,6 @@
   "TIDY5E.EmptyContainer": "この容器は空です。",
 
   "TIDY5E.AttunementItems": "同調アイテム",
-
-  "TIDY5E.ListLayout": "リスト",
-  "TIDY5E.LayoutNotSupported": "レイアウトモードはサポートされていません",
 
   "TIDY5E.AddFavorite": "お気に入り追加",
   "TIDY5E.RemoveFavorite": "お気に入りから削除",
@@ -547,7 +538,6 @@
     "ContextMenuActionRemove": "{facilityName}から削除",
     "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
   },
-  "TIDY5E.LocalizationTestKey": "翻訳テストキー",
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "展開/折りたたみ動作",
   "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "トップレベルセクション",
   "TIDY5E.ExpandCollapseMenu.OptionAllSections": "全セクション",

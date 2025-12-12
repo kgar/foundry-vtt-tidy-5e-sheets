@@ -6,14 +6,9 @@
     "TIDY5E.ShowItemArt": "Mostra Immagine",
     "TIDY5E.RestHint": "Riposati",
     "TIDY5E.ShortRest": "Riposo Breve",
-    "TIDY5E.LongRest": "Riposo Lungo",
     "TIDY5E.HitDiceRollAverage": "Tasto Destro: Usa Valore Medio",
     "TIDY5E.JournalTabName": "Diario",
     "TIDY5E.RestoreOnRest": "Ripristina dopo un Riposo",
-    "TIDY5E.JournalPersonsOfInterest": "Persone di interesse",
-    "TIDY5E.JournalLocationsOfInterest": "Luoghi di interesse",
-    "TIDY5E.JournalMisc": "Miscellanea",
-    "TIDY5E.JournalEntries": "Appunti Diario",
     "TIDY5E.TogglePersonalityInfo": "Attiva/disattiva le informazioni sulla personalità",
     "TIDY5E.SheetEdit.Enable.Hint": "Abilita Modifica - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Disabilita Modifica - {description}",
@@ -30,8 +25,6 @@
     "TIDY5E.ContextMenuActionEdit": "Modifica",
     "TIDY5E.ContextMenuActionDelete": "Cancella",
     "TIDY5E.AttunementItems": "Oggetti Sintonizzati",
-    "TIDY5E.ListLayout": "Layout ad Elenco",
-    "TIDY5E.LayoutNotSupported": "Modalità Layout non supportata",
     "TIDY5E.AddFavorite": "Aggiungi ai Preferiti",
     "TIDY5E.RemoveFavorite": "Rimuovi dai Preferiti",
     "TIDY5E.ShowNotProficientSkills": "Mostra Non Competente",
@@ -394,7 +387,6 @@
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Contrassegna tutti gli oggetti come non identificati",
     "TIDY5E.ItemFilters.CanCast": "Può Lanciare",
     "TIDY5E.ItemFilters.CanUse": "Può Usare",
-    "TIDY5E.ItemImageTitle": "Oggetto: {subject}",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Includi Flags nella Creazione Pergamene di Incantesimi",
         "hint": "Gli incantesimi a volte possono contenere dati speciali provenienti da altri moduli che possono essere utili da trasferire in una pergamena di incantesimi. Abilita la copia di tutti i dati basati sui flags nella pergamena dell'incantesimo al momento della creazione."
@@ -428,7 +420,6 @@
         "SectionSelectorSaveNewSection": "Salva nuova sezione",
         "SectionSelectorChooseTabSectionTooltip": "Scegli Sezione {tabName}"
     },
-    "TIDY5E.LocalizationTestKey": "Tasto Prova Localizzazione",
     "TIDY5E.UseDefaultDialog": {
         "title": "Conferma: usa predefinito",
         "text": "Sei sicuro di voler utilizzare l'impostazione predefinita?"

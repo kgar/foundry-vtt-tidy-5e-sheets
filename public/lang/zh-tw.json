@@ -6,14 +6,9 @@
     "TIDY5E.ShowItemArt": "show image",
     "TIDY5E.RestHint": "進行休息",
     "TIDY5E.ShortRest": "短休",
-    "TIDY5E.LongRest": "長休",
     "TIDY5E.HitDiceRollAverage": "Right Click: Average",
     "TIDY5E.JournalTabName": "日誌",
     "TIDY5E.RestoreOnRest": "休息時恢復",
-    "TIDY5E.JournalPersonsOfInterest": "相關人物",
-    "TIDY5E.JournalLocationsOfInterest": "相關地點",
-    "TIDY5E.JournalMisc": "雜項",
-    "TIDY5E.JournalEntries": "日誌條目",
     "TIDY5E.TogglePersonalityInfo": "切換個人信息顯示",
     "TIDY5E.SheetEdit.Enable.Hint": "",
     "TIDY5E.SheetEdit.Disable.Hint": "",
@@ -30,8 +25,6 @@
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
     "TIDY5E.AttunementItems": "已同調物品",
-    "TIDY5E.ListLayout": "列表佈局",
-    "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.AddFavorite": "添加到收藏",
     "TIDY5E.RemoveFavorite": "從收藏中移除",
     "TIDY5E.ShowNotProficientSkills": "",
@@ -281,7 +274,6 @@
         "GithubParagraph": "",
         "PatreonLink": ""
     },
-    "TIDY5E.ItemImageTitle": "",
     "TIDY5E.Actions": {
         "TabName": ""
     },
@@ -349,7 +341,6 @@
     },
     "TIDY5E.GenericErrorNotification": "",
     "TIDY5E.RollRecharge.Hint": "",
-    "TIDY5E.LocalizationTestKey": "",
     "TIDY5E.Settings.SheetPreferences": {
         "explanation": "",
         "buttonLabel": "",
