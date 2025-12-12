@@ -5,21 +5,10 @@ import VehicleAttributesTab from 'src/sheets/quadrone/actor/tabs/VehicleFeatures
 import VehicleCargoTab from 'src/sheets/quadrone/actor/tabs/VehicleCargoTab.svelte';
 import VehicleCrewTab from 'src/sheets/quadrone/actor/tabs/VehicleCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/quadrone/actor/tabs/VehicleDescriptionTab.svelte';
-// import ActorActionsTab from 'src/sheets/classic/actor/tabs/ActorActionsTab.svelte';
 import { CONSTANTS } from 'src/constants';
 
 export const VehicleSheetQuadroneRuntime = new ActorSheetQuadroneRuntime<VehicleSheetQuadroneContext>(
   [
-    // {
-    //   title: 'TIDY5E.Actions.TabName',
-    //   content: {
-    //     component: ActorActionsTab,
-    //     type: 'svelte',
-    //   },
-    //   id: CONSTANTS.TAB_ACTOR_ACTIONS,
-    //   layout: 'quadrone',
-    //   iconClass: 'fa-solid fa-chess-knight-piece',
-    // },
     {
       id: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
       title: 'DND5E.Attributes',

@@ -78,8 +78,7 @@
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Nastavení motivu Tidy",
-            "buttonLabel": "Nastavení motivů",
-            "hint": "Pouze klasické deníky Tidy: Přizpůsob si barvy deníků Tidy 5e."
+            "buttonLabel": "Nastavení motivů"
         },
         "Sheet": {
             "title": "Nastavení motivu: {userName}",

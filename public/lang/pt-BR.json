@@ -170,8 +170,7 @@
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Configurações de Temas",
-            "buttonLabel": "Configurações de Tema",
-            "hint": "Apenas Ficha Clássica Tidy: Personalize as cores do Tidy 5e Sheets."
+            "buttonLabel": "Configurações de Tema"
         },
         "Sheet": {
             "title": "Configurações do Tema: {userName}",

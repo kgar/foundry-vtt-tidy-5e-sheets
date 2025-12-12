@@ -20,7 +20,7 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
       return;
     }
 
-    import('./DrakkenheimContaminationTabClassic.less');
+    import('./DrakkenheimContaminationTab.less');
 
     const contaminationTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('DRAKKENHEIM.CONTAMINATION.tab'),

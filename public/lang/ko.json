@@ -237,8 +237,7 @@
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Tidy 테마 설정",
-            "buttonLabel": "Theme 설정",
-            "hint": "Tidy 5e 시트의 색상을 사용자 지정합니다."
+            "buttonLabel": "Theme 설정"
         },
         "Sheet": {
             "title": "테마 설정: {userName}",

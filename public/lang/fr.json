@@ -78,8 +78,7 @@
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Paramètres Tidy du thème",
-            "buttonLabel": "Paramètres du thème",
-            "hint": "Personnalisez les couleurs des feuilles Tidy 5e classique uniquement."
+            "buttonLabel": "Paramètres du thème"
         },
         "Sheet": {
             "title": "Paramètres du thème : {userName}",

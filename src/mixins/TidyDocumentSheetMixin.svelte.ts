@@ -60,8 +60,6 @@ export function TidyExtensibleDocumentSheetMixin<
   }>
 >(sheetType: string, BaseApplication: any) {
   class TidyDocumentSheet extends DragAndDropMixin(BaseApplication) {
-    // TODO: Remove _fixedMode when classic sheets are gone
-    _fixedMode: number | undefined;
     _mode = $state<number | undefined>();
     _headerControlSettings: Map<string, SheetHeaderControlPosition> = new Map();
     _sectionForMenu?: TidySectionBase;
@@ -133,13 +131,10 @@ export function TidyExtensibleDocumentSheetMixin<
     };
 
     get sheetMode() {
-      return this._fixedMode ?? this._mode;
+      return this._mode;
     }
 
     set sheetMode(value) {
-      if (this._fixedMode !== undefined) {
-        return;
-      }
       this._mode = value;
     }
 

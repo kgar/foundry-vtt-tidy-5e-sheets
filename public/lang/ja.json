@@ -311,8 +311,7 @@
   "TIDY5E.ThemeSettings": {
     "SheetMenu": {
       "name": "Tidyテーマ設定",
-      "buttonLabel": "テーマ設定",
-      "hint": "旧Tidyシートのみ：Tidy 5e Sheetsのカラーをカスタマイズします。"
+      "buttonLabel": "テーマ設定"
     },
     "Sheet": {
       "title": "テーマ設定: {userName}",

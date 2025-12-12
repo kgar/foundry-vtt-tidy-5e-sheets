@@ -106,7 +106,6 @@
             "export": "Eksportuj"
         },
         "SheetMenu": {
-            "hint": "Tylko klasyczne karty Tidy: Dostosuj kolory Tidy 5e Sheets.",
             "name": "Ustawienia motywu Tidy",
             "buttonLabel": "Ustawienia motywu"
         },

@@ -3,7 +3,9 @@ import type {
   ActiveEffect5e,
   Actor5e,
   ActorSheetQuadroneContext,
+  CharacterSheetQuadroneContext,
   GroupSkillRollProcessConfiguration,
+  NpcSheetQuadroneContext,
 } from 'src/types/types';
 import type { ContextMenuEntry } from './foundry.types';
 import type {
@@ -276,7 +278,7 @@ export class TidyHooks {
    * Sheet item/effect sections are about to be configured. Use this hook to inject additional items, sections, etc., or to adjust context data.
    * @param {any} app The sheet application instance.
    * @param {HTMLElement} element The sheet HTML element.
-   * @param {CharacterSheetContext | NpcSheetContext | ContainerSheetClassicContext} data The data context from `getData()`.
+   * @param {CharacterSheetQuadroneContext | NpcSheetQuadroneContext | ContainerSheetQuadroneContext} data The data context from `getData()`.
    *
    * @example
    * ```js
