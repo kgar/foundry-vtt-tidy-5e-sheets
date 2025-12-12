@@ -67,27 +67,6 @@ export class Tidy5eSheetsApi {
     return this._instance;
   }
 
-  /** {@inheritDoc ActionListApi} */
-  /** @deprecated api.actionList API has been moved to api.config.actionList */
-  get actionList() {
-    warn('api.actionList API has been moved to api.config.actionList', false, undefined, true);
-    return this.config.actionList;
-  }
-
-  /** {@inheritDoc ActorItemApi} */
-  /** @deprecated api.actorItem API has been moved to api.config.actorItem */
-  get actorItem() {
-    warn('api.actorItem API has been moved to api.config.actorItem', false, undefined, true);
-    return this.config.actorItem;
-  }
-
-  /** {@inheritDoc ActorPortraitApi} */
-  /** @deprecated api.actorPortrait API has been moved to api.config.actorPortrait */
-  get actorPortrait() {
-    warn('api.actorPortrait API has been moved to api.config.actorPortrait', false, undefined, true);
-    return this.config.actorPortrait;
-  }
-
   /** {@inheritDoc ConfigApi} */
   config = new ConfigApi();
 
@@ -108,13 +87,6 @@ export class Tidy5eSheetsApi {
    */
   getSheetPartSelector(sheetPart: string) {
     return `[${CONSTANTS.SHEET_PART_ATTRIBUTE}="${sheetPart}"]`;
-  }
-
-  /** {@inheritDoc ExhaustionApi} */
-  /** @deprecated api.exhaustion API has been moved to api.config.exhaustion */
-  get exhaustion() {
-    warn('api.exhaustion API has been moved to api.config.exhaustion', false, undefined, true);
-    return this.config.exhaustion;
   }
 
   /**
