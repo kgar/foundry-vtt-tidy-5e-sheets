@@ -140,15 +140,6 @@
   "TIDY5E.WorldSettings.TabCharacter": {
     "tabLabel": "Character"
   },
-  "TIDY5E.WorldSettings.TabNpc": {
-    "tabLabel": "NPC"
-  },
-  "TIDY5E.WorldSettings.TabVehicle": {
-    "tabLabel": "Vehicle"
-  },
-  "TIDY5E.WorldSettings.TabExhaustion": {
-    "tabLabel": "Exhaustion"
-  },
   "TIDY5E.WorldSettings.TabItem": {
     "tabLabel": "Item"
   },
@@ -168,9 +159,6 @@
   },
   "TIDY5E.WorldSettings.TabMisc": {
     "tabLabel": "GM Options"
-  },
-  "TIDY5E.WorldSettings.TabIcons": {
-    "tabLabel": "Icons"
   },
   "TIDY5E.WorldSettings.TabCustomSections": {
     "tabLabel": "Custom Sections",
@@ -352,8 +340,6 @@
   "TIDY5E.ApplyChanges": "Apply Changes",
   "TIDY5E.SaveChanges": "Save Changes",
   "TIDY5E.UseDefault": "Use Default",
-  "TIDY5E.VehicleInMotion": "Vehicle is in motion",
-  "TIDY5E.VehicleMotionless": "Vehicle is motionless",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals",
   "TIDY5E.Commands.ExpandAll": "Expand All",
@@ -369,11 +355,8 @@
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
   "TIDY5E.Utilities.Tools": "Tools",
-  "TIDY5E.Utilities.GMTools": "GM Tools",
-  "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
   "TIDY5E.Utilities.AssignSpellsToClasses": "Assign Spells to Classes",
   "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details.",
-  "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
   "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Spell Slot Tracking",
   "TIDY5E.Utilities.SpellPips": "Spell Pips",
   "TIDY5E.Utilities.SpellValueMax": "Spell Value/Max",

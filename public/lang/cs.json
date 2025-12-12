@@ -106,8 +106,6 @@
     },
     "TIDY5E.ApplyChanges": "Použít změny",
     "TIDY5E.SaveChanges": "Uložit změny",
-    "TIDY5E.VehicleInMotion": "Dopravní prostředek je v pohybu",
-    "TIDY5E.VehicleMotionless": "Dopravní prostředek je nehybný",
     "TIDY5E.GMOnly.Message": "Pouze pro PJ: {message}",
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "options.GmAndOwners": "PJ a vlastníci položky",
@@ -231,9 +229,6 @@
         "logoAltText": "Protihaterský štít se čtyřmi hvězdami a nápisem „Tidy 5e“ na přední straně."
     },
     "TIDY5E.ItemFilters.CanCast": "Lze seslat",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Ikony"
-    },
     "TIDY5E.Settings.ActionList.Header": "Seznam akcí",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Různé",
     "TIDY5E.Commands.CollapseAll": "Sbalit vše",
@@ -245,24 +240,12 @@
         "hint": "Kouzla mohou někdy obsahovat speciální údaje z jiných modulů, které je užitečné přenést do svitku kouzla. Umožňuje zkopírovat do svitku kouzla všechna data založená při jeho vytvoření jako příznaková.",
         "name": "Zahrnovat příznaky při vytváření svitků kouzel?"
     },
-    "TIDY5E.Utilities.IdentifyAll": "Identifikace všech položek",
-    "TIDY5E.Utilities.GMTools": "Nástroje PJ",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Označit všechny položky jako neidentifikované",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - útok kouzlem na dálku",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - útok kouzlem",
     "TIDY5E.ActorSpellAttackFlavorText": "Útok kouzlem",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Útok kouzlem na dálku",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Útok kouzlem na blízko",
     "TIDY5E.UseDefault": "Použít výchozí",
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NP"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Dopravní prostředek"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Vyčerpání"
-    },
     "TIDY5E.Group.EmptyMembersTabHint": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato volba uzamčení listu.",

@@ -91,8 +91,6 @@
     },
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
-    "TIDY5E.VehicleInMotion": "",
-    "TIDY5E.VehicleMotionless": "",
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.Actions": {
         "TabName": ""
@@ -155,9 +153,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": ""
     },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": ""
-    },
     "TIDY5E.Listbox": {
         "MoveAllRight": "",
         "MoveUp": "",
@@ -175,17 +170,10 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": ""
-    },
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": ""
     },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": ""
-    },
     "TIDY5E.ItemFilters.Filter.Other": "",
-    "TIDY5E.Utilities.GMTools": "",
     "TIDY5E.ItemFilters.CanUse": "",
     "TIDY5E.ItemFilters.CanCast": "",
     "TIDY5E.Settings.SheetPreferences": {
@@ -220,9 +208,7 @@
         "label": "",
         "title": ""
     },
-    "TIDY5E.Utilities.IdentifyAll": "",
     "TIDY5E.UseDefault": "",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.GenericErrorNotification": "",
     "TIDY5E.ActorSpellAttackTitle": "",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "",
@@ -231,9 +217,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "",
     "TIDY5E.ActorMeleeSpellAttackTitle": "",
     "TIDY5E.UserSettings.TabActionsList": {
-        "tabLabel": ""
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": ""
     },
     "TIDY5E.Settings.ActionList.Header": ""

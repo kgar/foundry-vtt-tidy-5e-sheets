@@ -69,12 +69,6 @@
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Różne",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Test Ataku Czarem",
     "TIDY5E.Class.Druid": "Druid",
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Wyczerpanie"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Pojazd"
-    },
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Test Ataku Czarem Wręcz",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Test Ataku Czarem Wręcz",
     "TIDY5E.Commands.CollapseAll": "Zwiń wszystko",
@@ -84,14 +78,9 @@
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Postać"
     },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NPC"
-    },
     "TIDY5E.ApplyChanges": "Zastosuj zmiany",
     "TIDY5E.SaveChanges": "Zapisz zmiany",
     "TIDY5E.UseDefault": "Użyj domyślnych",
-    "TIDY5E.VehicleInMotion": "Pojazd w ruchu",
-    "TIDY5E.VehicleMotionless": "Pojazd w bezruchu",
     "TIDY5E.Commands.ExpandAll": "Rozwiń wszystko",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
     "TIDY5E.ItemFilters.ClearAll": "Wyczyść wszystko",
@@ -165,9 +154,6 @@
     },
     "TIDY5E.ItemFilters.CanCast": "Może Rzucić",
     "TIDY5E.ItemFilters.CanUse": "Może Użyć",
-    "TIDY5E.Utilities.GMTools": "Narzędzia MG",
-    "TIDY5E.Utilities.IdentifyAll": "Zidentyfikuj wszystkie przedmioty",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Oznacz wszystkie przedmioty jako niezidentyfikowane",
     "TIDY5E.Settings.SheetPreferences": {
         "explanation": "Zaznacz wszystkie typy kart, dla których chcesz, aby Tidy 5e było używane domyślnie.",
         "buttonLabel": "Ustaw Tidy 5e jako domyślne dla Kart",
@@ -175,9 +161,6 @@
         "name": "Ustaw Tidy 5e jako domyślną kartę"
     },
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Ikony"
-    },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."

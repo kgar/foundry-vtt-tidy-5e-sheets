@@ -85,15 +85,6 @@
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Personagem"
     },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "PnJ"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Veículo"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Exaustão"
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Elemento"
     },
@@ -113,9 +104,6 @@
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Opções de Mestre"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Ícones"
     },
     "TIDY5E.WorldSettings.TabCustomSections": {
         "tabLabel": "Secções Personalizadas",
@@ -281,8 +269,6 @@
     "TIDY5E.ApplyChanges": "Aplicar Alterações",
     "TIDY5E.SaveChanges": "Gravar Alterações",
     "TIDY5E.UseDefault": "Usar Padrão",
-    "TIDY5E.VehicleInMotion": "O veículo está em movimento",
-    "TIDY5E.VehicleMotionless": "O veículo está imóvel",
     "TIDY5E.Commands.ExpandAll": "Expandir Tudo",
     "TIDY5E.Commands.CollapseAll": "Recolher Tudo",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtros",
@@ -295,11 +281,8 @@
     "TIDY5E.GMOnly.Message": "Apenas Mestre: {message}",
     "TIDY5E.ReminderToBackUp": "Lembre-se sempre de fazer backup do seu mundo.",
     "TIDY5E.Utilities.Tools": "Ferramentas",
-    "TIDY5E.Utilities.GMTools": "Ferramentas de Mestre",
-    "TIDY5E.Utilities.IdentifyAll": "Identifique Todos os Elementos",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Atribuir Magias às Classes",
     "TIDY5E.GenericErrorNotification": "Ocorreu um erro ao executar esta ação. Veja o console do devtools para mais pormenores.",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar Todos os Elementos como Não Identificados",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Rastreamento de Espaço de Magia",
     "TIDY5E.Utilities.SpellPips": "Magias",
     "TIDY5E.Utilities.SpellValueMax": "Valor da Magia/Máx",

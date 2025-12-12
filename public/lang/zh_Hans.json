@@ -84,15 +84,6 @@
         "hint": "法术有时会包含来自其他模块的特殊数据，这些数据在制作法术卷轴时可能会很有用。启用此选项后，在创建法术卷轴时将复制所有基于标记的数据。",
         "name": "在法术卷轴制作中加入标识符"
     },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NPC"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "载具"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "力竭"
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "物品"
     },
@@ -103,9 +94,6 @@
     "TIDY5E.AddSpecific": "添加 {name}",
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "GM 选项"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "图标"
     },
     "TIDY5E.WorldSettings.TabCustomSections": {
         "CustomizedIndicatorLabel": "自定义",

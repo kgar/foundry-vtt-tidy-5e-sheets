@@ -91,8 +91,6 @@
     },
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
-    "TIDY5E.VehicleInMotion": "",
-    "TIDY5E.VehicleMotionless": "",
     "TIDY5E.Actions": {
         "TabName": "Aktionen"
     },
@@ -124,15 +122,6 @@
     },
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Charakter"
-    },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NSC"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Fahrzeug"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Erschöpfung"
     },
     "TIDY5E.WorldSettings.Menu": {
         "hint": "Die Einstellungen auf Weltebene anpassen, um die \"Tidy 5e Sheets\"-Erfahrung anzupassen. Diese Einstellungen werden in dieser Foundry-Welt gespeichert und gelten für alle relevanten \"Tidy 5e Sheets\"-Inhalte.",
@@ -196,7 +185,6 @@
         "name": "Minutenlange Zauber mit als Aktionen einbeziehen"
     },
     "TIDY5E.Utilities.Tools": "",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
@@ -217,9 +205,6 @@
         "Label": ""
     },
     "TIDY5E.GMOnly.Message": "",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Symbole"
-    },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "hint": "Zeigt Verbrauchsgegenstände, die Aktivierungskosten (Aktion, Bonusaktion usw.) haben standardmäßig in der Aktionsliste.",
         "name": "Zeigt Verbrauchsmaterialien als Aktionen"
@@ -237,8 +222,6 @@
         "hint": "Zaubersprüche können manchmal spezielle Daten von anderen Modulen enthalten, die nützlich sein können, um in eine Zauberrolle zu übertragen. Aktivieren, um alle markenbasierten Daten bei der Erstellung in die Schriftrolle zu kopieren."
     },
     "TIDY5E.ItemFilters.CanUse": "",
-    "TIDY5E.Utilities.GMTools": "",
-    "TIDY5E.Utilities.IdentifyAll": "",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Charakterbogen",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC-Bogen",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Behälterbogen",

@@ -154,15 +154,6 @@
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "எழுத்து"
     },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NPC"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "வண்டி"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "சோர்வு"
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "உருப்படி"
     },
@@ -178,9 +169,6 @@
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "GM விருப்பங்கள்"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "சின்னங்கள்"
     },
     "TIDY5E.UserSettings.Menu": {
         "name": "பயனர் அமைப்புகள்",
@@ -229,8 +217,6 @@
     "TIDY5E.ApplyChanges": "மாற்றங்களைப் பயன்படுத்துங்கள்",
     "TIDY5E.SaveChanges": "மாற்றங்களைச் சேமிக்கவும்",
     "TIDY5E.UseDefault": "இயல்புநிலையைப் பயன்படுத்தவும்",
-    "TIDY5E.VehicleInMotion": "வண்டி இயக்கத்தில் உள்ளது",
-    "TIDY5E.VehicleMotionless": "வண்டி அசைவற்றது",
     "TIDY5E.Commands.ExpandAll": "அனைத்தையும் விரிவாக்குங்கள்",
     "TIDY5E.Commands.CollapseAll": "அனைத்தையும் சரக்கு",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "வடிப்பான்கள்",
@@ -241,11 +227,8 @@
     "TIDY5E.ItemFilters.ClearAll": "அனைத்தையும் அழிக்கவும்",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "மற்றவை",
     "TIDY5E.ItemFilters.Filter.Other": "மற்றொன்று",
-    "TIDY5E.Utilities.GMTools": "GM கருவிகள்",
-    "TIDY5E.Utilities.IdentifyAll": "எல்லா பொருட்களையும் அடையாளம் காணவும்",
     "TIDY5E.Utilities.AssignSpellsToClasses": "வகுப்புகளுக்கு மந்திரங்களை ஒதுக்குங்கள்",
     "TIDY5E.GenericErrorNotification": "இந்த செயலைச் செய்யும்போது பிழை ஏற்பட்டது. மேலும் விவரங்களுக்கு தேவ்டூல்ச் கன்சோலைப் பார்க்கவும்.",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "அனைத்து பொருட்களையும் அடையாளம் தெரியாததாகக் குறிக்கவும்",
     "TIDY5E.UseDefaultDialog": {
         "title": "உறுதிப்படுத்தவும்: இயல்புநிலையைப் பயன்படுத்தவும்",
         "text": "இயல்புநிலையைப் பயன்படுத்த விரும்புகிறீர்களா?"

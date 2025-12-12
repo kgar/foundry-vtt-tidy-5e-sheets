@@ -122,8 +122,6 @@
     },
     "TIDY5E.ApplyChanges": "Aplicar cambios",
     "TIDY5E.SaveChanges": "Guardar cambios",
-    "TIDY5E.VehicleInMotion": "El vehículo está en movimiento",
-    "TIDY5E.VehicleMotionless": "El vehículo está inmóvil",
     "TIDY5E.Settings.ActionList.Header": "Lista de acciones",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "name": "Limitar acciones a trucos",
@@ -173,17 +171,8 @@
     },
     "TIDY5E.Commands.CollapseAll": "Contraer todo",
     "TIDY5E.Commands.ExpandAll": "Expandir todo",
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NPC"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Vehículo"
-    },
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Personaje"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Agotamiento"
     },
     "TIDY5E.WorldSettings.Menu": {
         "name": "Ajustes Globales",
@@ -204,9 +193,6 @@
     "TIDY5E.GMOnly.Message": "Solo GM: {message}",
     "TIDY5E.ReminderToBackUp": "Recuerda siempre hacer copias de seguridad de tu mundo.",
     "TIDY5E.ButtonConfirm.Text": "Confirmar",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar todos los artículos como no identificados",
-    "TIDY5E.Utilities.GMTools": "Herramientas GM",
-    "TIDY5E.Utilities.IdentifyAll": "Identificar todos los artículos",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Objeto"
     },
@@ -250,9 +236,6 @@
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmar: Usar predeterminado",
         "text": "¿Está seguro de que desea utilizar el valor predeterminado?"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Íconos"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Mayús+Clic para saltar la tirada y recargar al instante) ",
     "TIDY5E.EmptyContainer": "Este contenedor está vacío.",

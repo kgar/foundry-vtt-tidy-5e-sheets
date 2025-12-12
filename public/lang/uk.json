@@ -70,15 +70,6 @@
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Персонаж"
     },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "НІП"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Машина"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Виснаження"
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Елемент"
     },
@@ -94,9 +85,6 @@
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Налаштування ГМа"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Піктограми"
     },
     "TIDY5E.WorldSettings.Menu": {
         "name": "Налаштування світу",
@@ -266,15 +254,10 @@
     "TIDY5E.ApplyChanges": "Застосувати зміни",
     "TIDY5E.SaveChanges": "Зберегти зміни",
     "TIDY5E.UseDefault": "Використовувати усталені",
-    "TIDY5E.VehicleInMotion": "Транспорт рухається",
-    "TIDY5E.VehicleMotionless": "Транспорт не рухається",
     "TIDY5E.Commands.CollapseAll": "Згорнути всі",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Фільтри",
     "TIDY5E.Commands.ExpandAll": "Розгорнути всі",
     "TIDY5E.GenericErrorNotification": "Під час виконання цієї дії сталася помилка. Докладні відомості наведено у консолі розробника.",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Позначити всі предмети як неідентифіковані",
-    "TIDY5E.Utilities.GMTools": "Інструменти ГМа",
-    "TIDY5E.Utilities.IdentifyAll": "Ідентифікувати всі предмети",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Призначити чари класам",
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Клац пропустити кидок і миттєво перезарядити) ",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Ідентифікатор класу походження",

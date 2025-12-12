@@ -107,8 +107,6 @@
     },
     "TIDY5E.ApplyChanges": "Appliquer les changements",
     "TIDY5E.SaveChanges": "Enregistrer les modifications",
-    "TIDY5E.VehicleInMotion": "Le véhicule est en mouvement",
-    "TIDY5E.VehicleMotionless": "Le véhicule n'a pas de mouvement",
     "TIDY5E.Actions": {
         "TabName": "Actions"
     },
@@ -144,15 +142,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Attaque de sort à distance",
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Personnage"
-    },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "PNJ"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Véhicule"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Épuisement"
     },
     "TIDY5E.WorldSettings.Menu": {
         "name": "Paramètres du monde",
@@ -223,9 +212,6 @@
         "options.GmOnly": "MJ seulement",
         "options.GmAndOwners": "MJ et propriétaires des objets"
     },
-    "TIDY5E.Utilities.GMTools": "Outils du MJ",
-    "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés",
     "TIDY5E.ItemFilters.CanCast": "Peu incanter",
     "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
@@ -256,9 +242,6 @@
         "SectionSelectorNewSectionName": "Nouveau nom de section",
         "SectionSelectorSaveNewSection": "Sauvegarder la nouvelle section",
         "SectionSelectorChooseTabSectionTooltip": "Choisissez la section {tabName}"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Icones"
     },
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmer : Utiliser par défaut",

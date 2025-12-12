@@ -3,7 +3,7 @@
 - [x] Convert loc keys
   - [x] TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip to TIDY5E.Selection.SelectAllNoneTooltip 
   - [x] TIDY5E.Settings.Migrations.Selection.TotalSelectedLabel to TIDY5E.Selection.TotalSelectedLabel 
-- [ ] Inspect these loc keys and remove unused ones
+- [x] Inspect these loc keys and remove unused ones
   - [x] (Keep) TIDY5E.Section.ConfigDialog.title
   - [x] TIDY5E.PortraitTitle
   - [x] TIDY5E.JournalQuests
@@ -143,17 +143,17 @@
   - [x] TIDY5E.UserSettings.TabVehicles.header
   - [x] TIDY5E.UserSettings.TabVehicles.tabLabel
   - [x] TIDY5E.Utilities.ConfigureSections
-  - [ ] TIDY5E.Utilities.GMTools
-  - [ ] TIDY5E.Utilities.IdentifyAll
-  - [ ] TIDY5E.Utilities.MarkAllAsUnidentified
-  - [ ] TIDY5E.Vehicle.Member.DraftAnimal.Label
-  - [ ] TIDY5E.Vehicle.Member.DraftAnimal.LabelPl
-  - [ ] TIDY5E.VehicleInMotion
-  - [ ] TIDY5E.VehicleMotionless
-  - [ ] TIDY5E.WorldSettings.TabExhaustion.tabLabel
-  - [ ] TIDY5E.WorldSettings.TabIcons.tabLabel
-  - [ ] TIDY5E.WorldSettings.TabNpc.tabLabel
-  - [ ] TIDY5E.WorldSettings.TabVehicle.tabLabel
+  - [x] TIDY5E.Utilities.GMTools
+  - [x] TIDY5E.Utilities.IdentifyAll
+  - [x] TIDY5E.Utilities.MarkAllAsUnidentified
+  - [x] (keep) TIDY5E.Vehicle.Member.DraftAnimal.Label
+  - [x] (keep) TIDY5E.Vehicle.Member.DraftAnimal.LabelPl
+  - [x] TIDY5E.VehicleInMotion
+  - [x] TIDY5E.VehicleMotionless
+  - [x] TIDY5E.WorldSettings.TabExhaustion.tabLabel
+  - [x] TIDY5E.WorldSettings.TabIcons.tabLabel
+  - [x] TIDY5E.WorldSettings.TabNpc.tabLabel
+  - [x] TIDY5E.WorldSettings.TabVehicle.tabLabel
 
 ## To Do Gravayard
 

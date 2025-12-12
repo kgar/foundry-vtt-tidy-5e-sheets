@@ -91,8 +91,6 @@
     },
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
-    "TIDY5E.VehicleInMotion": "",
-    "TIDY5E.VehicleMotionless": "",
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "hint": "",
         "name": ""
@@ -117,9 +115,6 @@
         "name": ""
     },
     "TIDY5E.WorldSettings.TabCharacter": {
-        "tabLabel": ""
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": ""
     },
     "TIDY5E.EmptyContainer": "",
@@ -171,12 +166,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": ""
-    },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": ""
-    },
     "TIDY5E.WorldSettings.Menu": {
         "label": "",
         "hint": "",
@@ -190,7 +179,6 @@
     },
     "TIDY5E.Commands.ExpandAll": "",
     "TIDY5E.ItemFilters.CanCast": "",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.Section": {
         "ConfigDialog": {
             "title": "",
@@ -211,13 +199,8 @@
     "TIDY5E.UseDefault": "",
     "TIDY5E.ItemFilters.ClearAll": "",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "",
-    "TIDY5E.Utilities.GMTools": "",
-    "TIDY5E.Utilities.IdentifyAll": "",
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.ItemFilters.Filter.Other": "",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": ""
-    },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "",
         "hint": ""

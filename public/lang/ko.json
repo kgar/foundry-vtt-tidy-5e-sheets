@@ -82,15 +82,6 @@
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "캐릭터"
     },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NPC"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "탑승물"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "탈진"
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "아이템"
     },
@@ -110,9 +101,6 @@
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "GM 옵션"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "아이콘"
     },
     "TIDY5E.WorldSettings.TabCustomSections": {
         "tabLabel": "사용자 지정 항목",
@@ -277,8 +265,6 @@
     "TIDY5E.ApplyChanges": "변경 적용",
     "TIDY5E.SaveChanges": "변경 저장",
     "TIDY5E.UseDefault": "기본으로 사용",
-    "TIDY5E.VehicleInMotion": "탑승물은 움직입니다.",
-    "TIDY5E.VehicleMotionless": "탑승물은 움직이지 않습니다.",
     "TIDY5E.Commands.ExpandAll": "모두 열기",
     "TIDY5E.Commands.CollapseAll": "모두 닫기",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "필터",
@@ -291,11 +277,8 @@
     "TIDY5E.GMOnly.Message": "GM 한정: {message}",
     "TIDY5E.ReminderToBackUp": "월드를 백업하는 것을 항상 잊지 마세요.",
     "TIDY5E.Utilities.Tools": "도구",
-    "TIDY5E.Utilities.GMTools": "GM 도구",
-    "TIDY5E.Utilities.IdentifyAll": "모든 아이템 식별",
     "TIDY5E.Utilities.AssignSpellsToClasses": "클래스에 주문 할당",
     "TIDY5E.GenericErrorNotification": "이 작업을 수행하는 동안 오류가 발생했습니다. 자세한 내용은 개발자 도구 콘솔을 참조하세요.",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "모든 아이템을 식별되지 않음으로 표기",
     "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "주문 슬롯 추적",
     "TIDY5E.Utilities.SpellPips": "주문 표시",
     "TIDY5E.Utilities.SpellValueMax": "주문 가치/최대",

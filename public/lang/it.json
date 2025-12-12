@@ -106,8 +106,6 @@
     },
     "TIDY5E.ApplyChanges": "Applica Modifiche",
     "TIDY5E.SaveChanges": "Salva Modifiche",
-    "TIDY5E.VehicleInMotion": "Il Veicolo è in movimento",
-    "TIDY5E.VehicleMotionless": "Il Veicolo è fermo",
     "TIDY5E.Actions": {
         "TabName": "Azioni"
     },
@@ -173,15 +171,6 @@
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Personaggio"
     },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "PNG"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Veicolo"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Indebolimento"
-    },
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Attacco con Incantesimo",
     "TIDY5E.ActorSpellAttackFlavorText": "Attacco con Incantesimo",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Attacco in Mischia con Incantesimo",
@@ -222,9 +211,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Oggetto"
     },
-    "TIDY5E.Utilities.GMTools": "Strumenti DM",
-    "TIDY5E.Utilities.IdentifyAll": "Identifica tutti gli Oggetti",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Contrassegna tutti gli oggetti come non identificati",
     "TIDY5E.ItemFilters.CanCast": "Può Lanciare",
     "TIDY5E.ItemFilters.CanUse": "Può Usare",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
@@ -259,9 +245,6 @@
     "TIDY5E.UseDefaultDialog": {
         "title": "Conferma: usa predefinito",
         "text": "Sei sicuro di voler utilizzare l'impostazione predefinita?"
-    },
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Icone"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click per saltare il tiro e ricaricare subito) ",
     "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",
