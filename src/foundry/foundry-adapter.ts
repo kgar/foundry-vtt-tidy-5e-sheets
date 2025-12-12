@@ -265,28 +265,11 @@ export const FoundryAdapter = {
         item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
     );
   },
-  // todo: resume here.
-  getNewCargo() {
-    return { name: '', quantity: 1 };
-  },
   getWeightUnit() {
     return FoundryAdapter.localize(
       `DND5E.UNITS.WEIGHT.${game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kilogram' : 'Pound'
       }.Abbreviation`
     );
-  },
-  isActiveEffectContextFavorited(context: ActiveEffectContext, actor: Actor5e) {
-    if (!actor) {
-      return false;
-    }
-
-    const effect = FoundryAdapter.getEffect({
-      document: actor,
-      effectId: context.id,
-      parentId: context.parentId,
-    });
-
-    return FoundryAdapter.isEffectFavorited(effect, actor);
   },
   getEffectActor(effect: ActiveEffect5e) {
     return (
@@ -359,24 +342,6 @@ export const FoundryAdapter = {
       });
     }
   },
-  async toggleFavoriteActivity(activity: Activity5e) {
-    const actor = activity.actor;
-
-    if (!actor || !actor.system?.addFavorite) {
-      return;
-    }
-
-    const favorited = FoundryAdapter.isActivityFavorited(activity);
-
-    if (favorited) {
-      await actor.system.removeFavorite(activity.relativeUUID);
-    } else {
-      await actor.system.addFavorite({
-        type: 'activity',
-        id: activity.relativeUUID,
-      });
-    }
-  },
   isInGmEditMode(document: any): boolean {
     return (
       document?.sheet?.sheetMode === CONSTANTS.SHEET_MODE_EDIT &&
@@ -386,15 +351,6 @@ export const FoundryAdapter = {
   shouldLockMoneyChanges() {
     return !FoundryAdapter.userIsGm() && settings.value.lockMoneyChanges;
   },
-  flattenObject(obj: Object) {
-    return foundry.utils.flattenObject(obj || {});
-  },
-  getGameItem(id: string): any | undefined {
-    return game.items.get(id);
-  },
-  getGameActor(id: string): any | undefined {
-    return game.actors.get(id);
-  },
   getModule(moduleId: string): any | undefined {
     return game.modules.get(moduleId);
   },
@@ -403,13 +359,6 @@ export const FoundryAdapter = {
   },
   throttle(callback: Function, delay: number): Function {
     return foundry.utils.throttle(callback, delay);
-  },
-  roll(
-    formula: string,
-    rollData?: unknown,
-    rollFnOptions: any = {}
-  ): Promise<any> {
-    return new Roll(formula, rollData).roll(rollFnOptions);
   },
   renderCreatureTypeConfig(document: Actor5e) {
     const raceId: string | undefined = document.system.details?.race?.id;
@@ -431,9 +380,6 @@ export const FoundryAdapter = {
     return new dnd5e.applications.shared.CreatureTypeConfig(options).render(
       true
     );
-  },
-  playDiceSound() {
-    return foundry.audio.AudioHelper.play({ src: CONFIG.sounds.dice });
   },
   calculateAverageFromFormula(formula: string) {
     let r = new Roll(formula);
@@ -481,10 +427,6 @@ export const FoundryAdapter = {
       { parent: item }
     );
   },
-  deleteAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
-    return advancement?.deleteDialog();
-  },
   modifyAdvancementChoices(advancementLevel: string, item: Item5e) {
     let manager =
       dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
@@ -497,24 +439,8 @@ export const FoundryAdapter = {
       manager.render(true);
     }
   },
-  editAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
-
-    return new advancement.constructor.metadata.apps.config(advancement).render(
-      true
-    );
-  },
   async renderSheetFromUuid(uuid: string) {
     (await fromUuid(uuid))?.sheet?.render(true);
-  },
-  renderImagePopout(args: {
-    src: string;
-    uuid: string;
-    window?: { title: string };
-  }) {
-    return new foundry.applications.apps.ImagePopout(args).render({
-      force: true,
-    });
   },
   renderArmorConfig(document: any) {
     return new dnd5e.applications.actor.ArmorClassConfig({ document }).render(
@@ -555,9 +481,6 @@ export const FoundryAdapter = {
     return new dnd5e.applications.actor.HitDiceConfig({ document }).render(
       true
     );
-  },
-  renderActorSheetFlags(actor: any) {
-    return new dnd5e.applications.actor.ActorSheetFlags(actor).render(true);
   },
   renderToolsConfig(document: any) {
     return new dnd5e.applications.actor.ToolsConfig({
@@ -630,15 +553,6 @@ export const FoundryAdapter = {
       ? FoundryAdapter.localize('DND5E.ActionOther')
       : game.dnd5e.config.abilityActivationTypes[activationType];
   },
-  lookupDamageType(type: string) {
-    return game.dnd5e.config.damageTypes[type]?.label;
-  },
-  lookupHealingType(type: string) {
-    return game.dnd5e.config.healingTypes[type];
-  },
-  lookupAbility(abbr: string) {
-    return game.dnd5e.config.abilities[abbr];
-  },
   async actorTryUseItem(item: Item5e, event: Event) {
     const config = { legacy: false, event };
 
@@ -650,10 +564,6 @@ export const FoundryAdapter = {
     }
 
     return await item.use(config);
-  },
-  onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
-    // Allow another module to react to a context menu action on the item use button.
-    TidyHooks.tidy5eSheetsActorItemUseContextMenu(item, options);
   },
   /**
    * Fires appropriate hooks related to tab selection and reports whether tab selection was cancelled.
@@ -687,22 +597,6 @@ export const FoundryAdapter = {
     });
 
     return true;
-  },
-  getAbilitiesAsDropdownOptions(abilities: any): DropdownListOption[] {
-    try {
-      return Object.entries<any>(abilities).map(([key, { label }]) => ({
-        value: key,
-        text: label,
-      }));
-    } catch (e) {
-      error(
-        'An error occurred while mapping abilities as dropdown items',
-        false,
-        e
-      );
-      debug('Dropdown mapping error troubleshooting info', { abilities });
-      return [];
-    }
   },
   concealDetails(item: Item5e | null | undefined) {
     return !game.user.isGM && item?.system?.identified === false;
@@ -769,9 +663,6 @@ export const FoundryAdapter = {
       ?.allApplicableEffects?.()
       .find((e: ActiveEffect5e) => e.id === effectId);
   },
-  canUseItem(item: Item5e) {
-    return !(!item.actor || !item.actor.isOwner || item.actor.pack);
-  },
   attunementContextApplicable: {
     icon: 'fa-sun',
     cls: 'not-attuned',
@@ -801,29 +692,6 @@ export const FoundryAdapter = {
         ? FoundryAdapter.attunementContextAttune
         : undefined;
   },
-  async identifyAllItemsForContainer(container: any, items: Item5e[]) {
-    const updates = items.map((i) => ({
-      _id: i.id,
-      'system.identified': true,
-    }));
-    await Item.updateDocuments(updates, {
-      parent: container.actor,
-      pack: container.pack,
-    });
-  },
-  async markAllItemsAsUnidentifiedForContainer(
-    container: any,
-    items: Item5e[]
-  ) {
-    const updates = items.map((i) => ({
-      _id: i.id,
-      'system.identified': false,
-    }));
-    await Item.updateDocuments(updates, {
-      parent: container.actor,
-      pack: container.pack,
-    });
-  },
   canIdentify(item: Item5e) {
     return (
       FoundryAdapter.userIsGm() ||
@@ -834,9 +702,6 @@ export const FoundryAdapter = {
   },
   openSpellSlotsConfig(document: any) {
     new dnd5e.applications.actor.SpellSlotsConfig({ document }).render(true);
-  },
-  openSummonConfig(item: Item5e) {
-    new dnd5e.applications.item.SummoningConfig(item).render(true);
   },
   openDamagesConfig(document: Actor5e, trait: 'dr' | 'di' | 'dv' | 'dm') {
     new dnd5e.applications.actor.DamagesConfig({ document, trait }).render(
@@ -1039,75 +904,14 @@ export const FoundryAdapter = {
     }
     return Object.entries<any>(groupMap);
   },
-  getFilteredClassOrOriginal(actor: Actor5e): Item5e | undefined | null {
-    return (
-      FoundryAdapter.getFilteredClass(actor) ??
-      actor.items.get(actor.system.details.originalClass) ??
-      actor.itemTypes.class[0]
-    );
-  },
-  getFilteredClass(actor: Actor5e): Item5e | undefined {
-    const classSpellbookFilter = actor.sheet.classSpellbookFilter;
-    return actor.classes?.[classSpellbookFilter];
-  },
-  getSpellcastingInfo(actor: Actor5e): SpellcastingInfo {
-    const currentFilteredClass =
-      FoundryAdapter.getFilteredClassOrOriginal(actor);
-
-    return {
-      currentFilteredClass: currentFilteredClass,
-      prepared: {
-        value:
-          currentFilteredClass?.system?.spellcasting?.preparation?.value ?? 0,
-        max: currentFilteredClass?.system?.spellcasting?.preparation?.max ?? 0,
-      },
-      calculations: calculateSpellAttackAndDc(actor, currentFilteredClass),
-    };
-  },
-  getSaveAbilityAbbreviation(save: any) {
-    return save.ability?.size
-      ? save.ability.size === 1
-        ? CONFIG.DND5E.abilities[save.ability.first()]?.abbreviation
-        : FoundryAdapter.localize('DND5E.AbbreviationDC')
-      : null;
-  },
   checkIfModernRules(document: any) {
     return document.system.source?.rules
       ? document.system.source?.rules === '2024'
       : game.settings.get('dnd5e', 'rulesVersion') === 'modern';
   },
-  prepareLanguageTrait(actor: any, traits: Record<string, any>) {
-    const languages = actor.system.traits?.languages?.labels;
-    traits.languages ??= [];
-
-    if (languages?.languages?.length)
-      traits.languages = languages.languages.map((label: string) => ({
-        label,
-      }));
-    for (const [key, { label }] of Object.entries(
-      CONFIG.DND5E.communicationTypes
-    )) {
-      const data = actor.system.traits?.languages?.communication?.[key];
-      if (!data?.value) continue;
-      let value = data.value;
-      if (data.units) {
-        const units =
-          CONFIG.DND5E.movementUnits[data.units]?.abbreviation ?? data.units;
-        value += ` ${units}`;
-      }
-      traits.languages.push({ label, value: value });
-    }
-    traits.languages.sort((a: LanguageTraitContext, b: LanguageTraitContext) =>
-      (a.label ?? a.value ?? '').localeCompare(
-        b.label ?? b.value ?? '',
-        game.i18n.lang
-      )
-    );
-  },
   isLockedInCompendium(doc: any) {
     return game.packs.get(doc.pack)?.locked;
   },
-
   getMovementInfo(movement: any): Record<string, MovementInfo> {
     const units =
       CONFIG.DND5E.movementUnits[
@@ -1154,19 +958,6 @@ export const FoundryAdapter = {
     let [originId] = (item.flags.dnd5e?.advancementOrigin ?? '').split('.');
 
     return originId;
-  },
-  getSpellPreparationStatesMap() {
-    return Object.entries(CONFIG.DND5E.spellPreparationStates).reduce<
-      Record<number, { label: string; value: number; key: string }>
-    >((prev, [key, config]) => {
-      prev[config.value] = {
-        key: key,
-        label: config.label,
-        value: config.value,
-      };
-
-      return prev;
-    }, {});
   },
   getSpellMethodConfig(item: Item5e) {
     return (
@@ -1226,11 +1017,9 @@ export const FoundryAdapter = {
       disadvantage: dnd5e.utils.areKeysPressed(ev, 'skipDialogDisadvantage'),
     };
   },
-
   hasVideoExtension(src: string): boolean {
     return foundry.helpers.media.VideoHelper.hasVideoExtension(src);
   },
-
   getAllTidySheetClassMetadata(): TidySheetClassMetadata[] {
     const result: TidySheetClassMetadata[] = [];
 

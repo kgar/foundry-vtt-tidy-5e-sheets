@@ -15,7 +15,6 @@ import { initKeybindings } from './keybindings/keybind-init';
 import { DebugTools } from './utils/DebugTools';
 import { Tidy5eContainerSheetQuadrone } from './sheets/quadrone/Tidy5eContainerSheetQuadrone.svelte';
 import { Tidy5eItemDebugSheetQuadrone } from './sheets/quadrone/Tidy5eItemDebugSheetQuadrone.svelte';
-import { initReadyHooks } from './features/ready-hooks';
 import '@melloware/coloris/dist/coloris.css';
 import { debug } from './utils/logging';
 import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
@@ -161,8 +160,6 @@ Hooks.once('ready', async () => {
   setupIntegrations(api);
 
   handleMigrationNotification();
-
-  initReadyHooks();
 
   DebugTools.onReady(api);
 
