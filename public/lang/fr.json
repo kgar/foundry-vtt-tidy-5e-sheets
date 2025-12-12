@@ -1,14 +1,11 @@
 {
-    "TIDY5E.PlayerName": "Nom du joueur",
     "TIDY5E.SheetImageOptionsHint": "Clic droit : voir les options de l'image",
     "TIDY5E.ShowPortraitArt": "Voir le portrait",
     "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
     "TIDY5E.ShowItemArt": "Montrer l'image",
-    "TIDY5E.RestHint": "Se reposer",
     "TIDY5E.ShortRest": "Repos Court",
     "TIDY5E.HitDiceRollAverage": "Clic droit : Appliquer la moyenne",
     "TIDY5E.JournalTabName": "Journal",
-    "TIDY5E.RestoreOnRest": "Restaurer lors d'un repos",
     "TIDY5E.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
     "TIDY5E.SheetEdit.Enable.Hint": "Activer l'édition - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Désactiver l'édition - {description}",
@@ -29,7 +26,6 @@
     "TIDY5E.RemoveFavorite": "Enlever des Favoris",
     "TIDY5E.ShowNotProficientSkills": "Indiquer comme non compétent",
     "TIDY5E.Search": "Chercher",
-    "TIDY5E.SearchClear": "Vider la recherche",
     "TIDY5E.SearchHint": "Saisir votre recherche",
     "TIDY5E.SpellAttackMod": "Bonus d'attaque",
     "TIDY5E.TokenLinked": "Token lié à l'acteur",
@@ -49,7 +45,6 @@
     "TIDY5E.Class.Sorcerer": "Sorcier",
     "TIDY5E.Class.Warlock": "Occultiste",
     "TIDY5E.Class.Wizard": "Magicien",
-    "TIDY5E.OriginSummaryConfig": "Configuration du sommaire d'origine : {actorName}",
     "TIDY5E.UserSettings.Menu": {
         "name": "Paramètres utilisateur",
         "hint": "Personnalisez votre propre version des Feuilles Tidy 5e. Ces paramètres sont enregistrés dans votre navigateur et s'appliquent à vos feuilles.",
@@ -182,14 +177,11 @@
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Configuration Max de sorts préparer : {documentName}",
         "ExamplesHeader": "Exemple de formules",
-        "ButtonTooltip": "Configuration Max des sorts préparés",
         "MoreFormulas": "Plus de formules"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Liste des actions"
     },
-    "TIDY5E.MeleeSpellAttackMod": "Modificateur d'attaque de sort",
-    "TIDY5E.RangedSpellAttackMod": "Modificateur d'attaque de sort à distance",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Attaque sort de mêlée",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Attaque de sort à distance",
     "TIDY5E.WorldSettings.TabCharacter": {
@@ -209,12 +201,6 @@
         "hint": "Ajustez les paramètres au niveau du monde pour personnaliser l'expérience de Tidy 5e Sheets. Ces paramètres sont enregistrés dans ce monde de Foundry et s'appliquent à tous les contenus pertinents de Tidy 5e Sheets.",
         "label": "Paramètres du monde",
         "title": "Paramètres du monde (MD seulement)"
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Onglets de la feuille par défaut",
-        "hint": "Détermine quels onglets seront affichés et dans quel ordre par défaut. S'applique lorsqu'aucun onglet n'a été sélectionné pour un acteur.",
-        "AvailableHeader": "Onglets disponibles",
-        "SelectedHeader": "Onglets sélectionnés"
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Inclure les sorts à effets actifs dans les actions",
@@ -401,15 +387,12 @@
     "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails.",
     "TIDY5E.Section": {
         "Label": "Section",
-        "Default": "Section par défaut",
         "ActionLabel": "Section Action",
         "ConfigDialog": {
             "hideTooltip": "Masquer cette section",
             "title": "Configurer la section : {tabTitle}",
             "showTooltip": "Afficher cette section"
         },
-        "ActionTooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans l'onglet Actions, ou laissez-la vide pour un comportement par défaut.",
-        "Tooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans une fiche d'acteur, ou laissez-la vide pour un comportement par défaut.",
         "LabelPl": "Sections",
         "SectionSelectorChooseActionSectionTooltip": "Choisir une section d'action",
         "SectionSelectorChooseSectionTooltip": "Choisir une section",
@@ -439,9 +422,7 @@
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Afficher uniquement les non assignés",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Changer le verrouillage de la feuille",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Si une feuille Tidy est la fenêtre active dans l'interface utilisateur, ce raccourci clavier active le verrouillage de la feuille.",
-    "TIDY5E.NoSpecialSenses": "Pas de perceptions spéciales",
     "TIDY5E.Group.EmptyMembersTabHint": "Ce groupe est vide. Cliquez sur un acteur dans la barre latérale pour ajouter un membre.",
-    "TIDY5E.PreviewSheetImageHint": "Clic gauche : Aperçu de l'image",
     "TIDY5E.ModuleName": "Feuilles Tidy 5e",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "CustomizedIndicatorLabel": "personnalisée",

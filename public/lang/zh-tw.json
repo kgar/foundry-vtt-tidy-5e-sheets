@@ -1,14 +1,11 @@
 {
-    "TIDY5E.PlayerName": "Player Name",
     "TIDY5E.SheetImageOptionsHint": "右鍵單擊: 顯示角色立繪",
     "TIDY5E.ShowPortraitArt": "顯示立繪",
     "TIDY5E.ShowItemImage": "right click: show item art",
     "TIDY5E.ShowItemArt": "show image",
-    "TIDY5E.RestHint": "進行休息",
     "TIDY5E.ShortRest": "短休",
     "TIDY5E.HitDiceRollAverage": "Right Click: Average",
     "TIDY5E.JournalTabName": "日誌",
-    "TIDY5E.RestoreOnRest": "休息時恢復",
     "TIDY5E.TogglePersonalityInfo": "切換個人信息顯示",
     "TIDY5E.SheetEdit.Enable.Hint": "",
     "TIDY5E.SheetEdit.Disable.Hint": "",
@@ -29,7 +26,6 @@
     "TIDY5E.RemoveFavorite": "從收藏中移除",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.Search": "",
-    "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "輸入你想要搜索的東西就夠了。",
     "TIDY5E.SpellAttackMod": "攻擊加值",
     "TIDY5E.TokenLinked": "指示物已鏈接到角色",
@@ -49,7 +45,6 @@
     "TIDY5E.Class.Sorcerer": "",
     "TIDY5E.Class.Warlock": "",
     "TIDY5E.Class.Wizard": "",
-    "TIDY5E.OriginSummaryConfig": "",
     "TIDY5E.UserSettings.Menu": {
         "name": "",
         "hint": "",
@@ -252,12 +247,6 @@
         "MoveUp": "",
         "MoveAllLeft": ""
     },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "",
-        "hint": "",
-        "AvailableHeader": "",
-        "SelectedHeader": ""
-    },
     "TIDY5E.Settings.About": {
         "FinancialSupportParagraph": "",
         "DiscordParagraph": "",
@@ -290,7 +279,6 @@
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "MoreFormulas": "",
-        "ButtonTooltip": "",
         "Title": "",
         "ExamplesHeader": ""
     },
@@ -304,8 +292,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.MeleeSpellAttackMod": "",
-    "TIDY5E.RangedSpellAttackMod": "",
     "TIDY5E.WorldSettings.TabVehicle": {
         "tabLabel": ""
     },
@@ -328,14 +314,11 @@
     "TIDY5E.ItemFilters.CanCast": "",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.Section": {
-        "Tooltip": "",
         "ConfigDialog": {
             "title": "",
             "hideTooltip": "",
             "showTooltip": ""
         },
-        "ActionTooltip": "",
-        "Default": "",
         "Label": "",
         "ActionLabel": ""
     },

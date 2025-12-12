@@ -1,14 +1,11 @@
 {
-    "TIDY5E.PlayerName": "Spieler Name",
     "TIDY5E.SheetImageOptionsHint": "Rechtsklick: Charakter-Bilder zeigen",
     "TIDY5E.ShowPortraitArt": "Portrait zeigen",
     "TIDY5E.ShowItemImage": "Rechtsklick: Gegenstands-Bild zeigen",
     "TIDY5E.ShowItemArt": "Bild zeigen",
-    "TIDY5E.RestHint": "Rasten",
     "TIDY5E.ShortRest": "Kurze Rast",
     "TIDY5E.HitDiceRollAverage": "Rechtsklick: Durchschnitt anwenden",
     "TIDY5E.JournalTabName": "Tagebuch",
-    "TIDY5E.RestoreOnRest": "Bei Rast regenerieren",
     "TIDY5E.TogglePersonalityInfo": "Persönlichkeits-Infos umschalten",
     "TIDY5E.SheetEdit.Enable.Hint": "Editieren erlauben - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Bearbeiten deaktivieren - {description}",
@@ -29,7 +26,6 @@
     "TIDY5E.RemoveFavorite": "Favorit löschen",
     "TIDY5E.ShowNotProficientSkills": "Nicht-fachkundige anzeigen",
     "TIDY5E.Search": "Suche",
-    "TIDY5E.SearchClear": "Suche leeren",
     "TIDY5E.SearchHint": "Tippe ein wonach du suchst um Ergebnisse anzeigen zu lassen.",
     "TIDY5E.SpellAttackMod": "Zauberangriffs Modifikator",
     "TIDY5E.TokenLinked": "Figur mit Akteur verknüpft",
@@ -49,7 +45,6 @@
     "TIDY5E.Class.Sorcerer": "Zauberer",
     "TIDY5E.Class.Warlock": "Hexenmeister",
     "TIDY5E.Class.Wizard": "Magier",
-    "TIDY5E.OriginSummaryConfig": "Herkunftskonfiguration: {actorName}",
     "TIDY5E.UserSettings.Menu": {
         "name": "Benutzereinstellungen",
         "hint": "Die eigene Version von \"Tidy 5e Sheets\" anpassen. Diese Einstellungen werden im Browser gespeichert und gelten für die eigenen Spielbögen.",
@@ -140,8 +135,6 @@
     "TIDY5E.Actions": {
         "TabName": "Aktionen"
     },
-    "TIDY5E.MeleeSpellAttackMod": "Nahkampf-Zauberangriffs Modifikator",
-    "TIDY5E.RangedSpellAttackMod": "Fernkampf-Zauberangriffs Modifikator",
     "TIDY5E.TabConfiguration": {
         "MenuOptionText": "Reiter Auswahl",
         "AvailableHeader": "Versteckte Reiter",
@@ -169,7 +162,6 @@
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {documentName}",
         "ExamplesHeader": "Beispielformeln",
-        "ButtonTooltip": "Maximal vorbereitete Zaubersprüche konfigurieren",
         "MoreFormulas": "Mehr Formeln"
     },
     "TIDY5E.WorldSettings.TabCharacter": {
@@ -194,12 +186,6 @@
         "tabLabel": "Aktionsliste"
     },
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampf-Zauberangriff",
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Standard-Bogenregisterkarten",
-        "AvailableHeader": "Verfügbare Registerkarten",
-        "SelectedHeader": "Ausgewählte Registerkarten",
-        "hint": "Bestimmt, welche Registerkarten standardmäßig angezeigt werden und in welcher Reihenfolge. Gilt, wenn für einen Akteur keine Registerkartenauswahl getroffen wurde."
-    },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filter",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Sonstiges",
     "TIDY5E.Settings.Migrations": {
@@ -351,10 +337,7 @@
             "title": ""
         },
         "ActionLabel": "",
-        "Label": "",
-        "Default": "",
-        "Tooltip": "",
-        "ActionTooltip": ""
+        "Label": ""
     },
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.WorldSettings.TabIcons": {
@@ -388,10 +371,8 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Fahrzeugbogen",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Gruppenbogen",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Begegnungsbogen",
-    "TIDY5E.PreviewSheetImageHint": "Linksklick: Vorschaubild",
     "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Einstellungen",
     "TIDY5E.AddSpecific": "Hinzufügen {name}",
-    "TIDY5E.NoSpecialSenses": "Keine besonderen Sinne",
     "TIDY5E.Group.EmptyMembersTabHint": "Diese Gruppe ist leer. Ziehe eine Figur von der Seitenleiste hinein, um ein Mitglied hinzuzufügen.",
     "TIDY5E.ModuleName": "Tidy 5e Sheets",
     "TIDY5E.StatblockTabName": "Wertekasten",

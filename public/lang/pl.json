@@ -2,7 +2,6 @@
     "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż opcje obrazu",
     "TIDY5E.ShowItemImage": "Prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "Pokaż obraz",
-    "TIDY5E.PlayerName": "Nazwa gracza",
     "TIDY5E.ShowPortraitArt": "Pokaż portret",
     "TIDY5E.TabConfiguration": {
         "UnsupportedDocumentErrorMessage": "Dokument typu {documentType} nie jest skonfigurowany do wyboru zakładek.",
@@ -28,12 +27,10 @@
     },
     "TIDY5E.AttunementItems": "Zestrojone przedmioty",
     "TIDY5E.AddFavorite": "Dodaj do ulubionych",
-    "TIDY5E.MeleeSpellAttackMod": "Modyfikator do rzutu na atak czarem wręcz",
     "TIDY5E.SpellClass": "Rodzaj czaru",
     "TIDY5E.Class.Bard": "Bard",
     "TIDY5E.Class.Rogue": "Łotr",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "ButtonTooltip": "Konfiguruj maks. liczbę przygotowanych czarów",
         "Title": "Konfiguracja maks. liczby przygotowanych czarów dla {documentName}",
         "ExamplesHeader": "Przykładowe wzory",
         "MoreFormulas": "Więcej wzorów"
@@ -44,11 +41,9 @@
     "TIDY5E.SheetLock.Lock.Hint": "Zablokuj - {description}",
     "TIDY5E.ContextMenuActionEquip": "Wyposaż",
     "TIDY5E.ContextMenuActionUnequip": "Zdejmij",
-    "TIDY5E.RestHint": "Odpoczynek",
     "TIDY5E.ShortRest": "Krótki odpoczynek",
     "TIDY5E.HitDiceRollAverage": "Prawy przycisk myszy: zastosuj średnią",
     "TIDY5E.JournalTabName": "Dziennik",
-    "TIDY5E.RestoreOnRest": "Odzyskaj przy odpoczynku",
     "TIDY5E.TogglePersonalityInfo": "Przełącz Informacje o Charakterze",
     "TIDY5E.SheetEdit.Disable.Hint": "Wyłącz Edycję - {description}",
     "TIDY5E.SheetEdit.Enable.Hint": "Włącz Edycję - {description}",
@@ -64,10 +59,8 @@
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
     "TIDY5E.Search": "Szukaj",
-    "TIDY5E.SearchClear": "Wyczyść wyszukiwanie",
     "TIDY5E.SearchHint": "Zacznij pisać, żeby pokazać wyniki zapytania",
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
-    "TIDY5E.RangedSpellAttackMod": "Modyfikator do rzutu na atak czarem dystansowym",
     "TIDY5E.TokenLinked": "Token przypisany do aktora",
     "TIDY5E.TokenUnlinked": "Token nie przypisany do aktora",
     "TIDY5E.Class.Artificer": "Wynalazca",
@@ -81,7 +74,6 @@
     "TIDY5E.Class.Sorcerer": "Zaklinacz",
     "TIDY5E.Class.Warlock": "Czarownik",
     "TIDY5E.Class.Wizard": "Mag",
-    "TIDY5E.OriginSummaryConfig": "Konfiguracja podsumowania pochodzenia dla {actorName}",
     "TIDY5E.Listbox": {
         "MoveUp": "Do góry (ALT + Strzałka w górę)",
         "MoveDown": "W dół (ALT + Strzałka w dół)",
@@ -339,12 +331,6 @@
         "name": "Pozwól przygotowywać sztuczki",
         "hint": "Opcjonalna zasada „formuły sztuczek” z Tasha's Cauldron of Everything pozwala magom przygotowywać sztuczki po długim odpoczynku w taki sam sposób, w jaki robią to z zaklęciami poziomowymi. Przygotowane sztuczki nie wliczają się do całkowitej liczby przygotowanych zaklęć."
     },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "AvailableHeader": "Dostępne zakładki",
-        "SelectedHeader": "Wybrane zakładki",
-        "hint": "Określa, które zakładki i w jakiej kolejności będą wyświetlane domyślnie. Ma zastosowanie, gdy nie dokonano wyboru zakładek dla postaci.",
-        "name": "Domyślne zakładki karty"
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Użyj filtra wieloklasowej księgi czarów",
         "hint": "Umożliwia filtrowanie zaklęć według klasy w zakładce księga czarów. Zaklęcie musi być powiązane z klasą za pomocą selektora klasy na arkuszu edycji zaklęć."
@@ -366,16 +352,13 @@
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Tutaj pojawia się identyfikator klasy źródłowej zaklęcia. Aby przypisać identyfikator, którego postać nie posiada, wprowadź identyfikator klasy w tym polu tekstowym.",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Przypisz czary do klas",
     "TIDY5E.Section": {
-        "Default": "Domyślna sekcja",
         "Label": "Sekcja",
-        "ActionTooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go w zakładce Akcje lub pozostaw ją pustą, aby zachować domyślne zachowanie.",
         "ConfigDialog": {
             "title": "Konfiguruj sekcję: {tabTitle}",
             "hideTooltip": "Ukryj tę sekcję",
             "showTooltip": "Pokaż tę sekcję"
         },
         "ActionLabel": "Sekcja akcji",
-        "Tooltip": "Określ własną sekcję dla tego przedmiotu po umieszczeniu go na karcie postaci lub pozostaw ją pustą, aby zachować domyślne zachowanie.",
         "LabelPl": "Sekcje",
         "SectionSelectorChooseSectionTooltip": "Wybierz sekcję",
         "SectionSelectorChooseActionSectionTooltip": "Wybierz Sekcję akcji",
@@ -406,12 +389,10 @@
         "name": "Zablokuj walutę"
     },
     "TIDY5E.ButtonConfirm.Text": "Potwierdź",
-    "TIDY5E.PreviewSheetImageHint": "Lewy przycisk myszy: podgląd obrazu",
     "TIDY5E.Tidy5eSettings": "Ustawienia Tidy 5e Sheets",
     "TIDY5E.Group.EmptyMembersTabHint": "Ta grupa jest pusta. Upuść postać z paska bocznego, żeby dodać członka.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Przełącz blokadę karty",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Jeśli w interfejsie użytkownika aktywnym oknem jest karta Tidy, to naciśnięcie tego klawisza powoduje przełączenie blokady karty.",
-    "TIDY5E.NoSpecialSenses": "Brak specjalnych zmysłów",
     "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
     "TIDY5E.Facilities.ContextMenuActionRemove": "Usuń z {facilityName}",
     "TIDY5E.Facilities.Hirelings.Label": "Najemnicy",

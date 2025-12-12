@@ -1,14 +1,11 @@
 {
-    "TIDY5E.PlayerName": "Nombre del jugador",
     "TIDY5E.SheetImageOptionsHint": "Click Derecho: Mostrar Opciones de la Imagen",
     "TIDY5E.ShowPortraitArt": "Mostrar Retrato",
     "TIDY5E.ShowItemImage": "Click Derecho: Mostrar Arte del Objeto",
     "TIDY5E.ShowItemArt": "Mostrar Imagen",
-    "TIDY5E.RestHint": "Tomar un descanso",
     "TIDY5E.ShortRest": "Descanso Corto",
     "TIDY5E.HitDiceRollAverage": "Click Derecho: Aplicar Promedio",
     "TIDY5E.JournalTabName": "Diario",
-    "TIDY5E.RestoreOnRest": "Recuperar tras Descanso",
     "TIDY5E.TogglePersonalityInfo": "Alternar Información de Personalidad",
     "TIDY5E.SheetEdit.Enable.Hint": "Habilitar Edición - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Deshabilitar Edición - {description}",
@@ -29,7 +26,6 @@
     "TIDY5E.RemoveFavorite": "Eliminar Favorito",
     "TIDY5E.ShowNotProficientSkills": "Mostrar no competente",
     "TIDY5E.Search": "Buscar",
-    "TIDY5E.SearchClear": "Borrar Búsqueda",
     "TIDY5E.SearchHint": "Comienza a escribir lo que estás buscando",
     "TIDY5E.SpellAttackMod": "Modificador de Ataque con Hechizos",
     "TIDY5E.TokenLinked": "Token vinculado a actor",
@@ -49,7 +45,6 @@
     "TIDY5E.Class.Sorcerer": "Hechicero",
     "TIDY5E.Class.Warlock": "Brujo",
     "TIDY5E.Class.Wizard": "Mago",
-    "TIDY5E.OriginSummaryConfig": "Configuración de Resumen de Origen: {actorName}",
     "TIDY5E.UserSettings.Menu": {
         "name": "Configuración de Usuario",
         "hint": "Personaliza tu propia versión de Tidy 5e. Esta configuración se guarda en tu navegador y aplica a todas tus hojas.",
@@ -168,12 +163,6 @@
         "label": "Menú",
         "themeLabel": "Tema"
     },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "AvailableHeader": "Pestañas disponibles",
-        "SelectedHeader": "Pestañas seleccionadas",
-        "name": "Pestaña predeterminada en hoja",
-        "hint": "Determina qué pestañas se mostrarán y en qué orden de forma predeterminada. Se aplica cuando no se han realizado selecciones de pestañas para un actor."
-    },
     "TIDY5E.Settings.ActionList.Header": "Lista de acciones",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "name": "Limitar acciones a trucos",
@@ -212,12 +201,9 @@
         "MoveLeft": "Mover izquierda (Espacio)",
         "MoveRight": "Mover derecha (Espacio)"
     },
-    "TIDY5E.MeleeSpellAttackMod": "Modificador de Ataque con Hechizos Cuerpo a Cuerpo",
-    "TIDY5E.RangedSpellAttackMod": "Modificador de Ataque con Hechizos a Distancia",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Configuración de Máximo de Hechizos Preparados: {documentName}",
         "ExamplesHeader": "Formulas de Ejemplo",
-        "ButtonTooltip": "Configurar Máximo de Hechizos Preparados",
         "MoreFormulas": "Más formulas"
     },
     "TIDY5E.UserSettings.TabActionsList": {
@@ -377,10 +363,7 @@
             "title": "Configurar sección: {tabTitle}",
             "showTooltip": "Mostrar esta sección"
         },
-        "Default": "Sección predeterminada",
         "Label": "Sección",
-        "Tooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en una hoja de actor o déjela en blanco para un comportamiento predeterminado.",
-        "ActionTooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en la pestaña Acciones o déjela en blanco para un comportamiento predeterminado.",
         "LabelPl": "Secciones",
         "SectionSelectorChooseSectionTooltip": "Selecciona una Sección",
         "SectionSelectorChooseActionSectionTooltip": "Selecciona una Sección de Acción",
@@ -408,8 +391,6 @@
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de clase de origen",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar",
-    "TIDY5E.PreviewSheetImageHint": "Click Izquierdo: Vista Previa de la Imagen",
-    "TIDY5E.NoSpecialSenses": "Sin Sentidos Especiales",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vacío. Suelte un actor de la barra lateral para añadir un miembro.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Activar o desactivar bloqueo de hoja",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Si una pestaña Tidy es la ventana actualmente activa en la interfaz de usuario, esta combinación de teclas alterna el bloqueo de pestañas.",

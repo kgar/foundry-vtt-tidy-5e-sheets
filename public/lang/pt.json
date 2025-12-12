@@ -6,17 +6,13 @@
     "TIDY5E.Tidy5eItemSheetQuadrone": "Ficha de Elemento Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Ficha de Veículo Tidy 5e",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Ficha de Grupo Tidy 5e",
-    "TIDY5E.PlayerName": "Nome do Jogador",
-    "TIDY5E.PreviewSheetImageHint": "Clique Esq.: Visualizar Imagem",
     "TIDY5E.SheetImageOptionsHint": "Clique Dir.: Mostrar Opções de Imagem",
     "TIDY5E.ShowPortraitArt": "Mostrar Avatar",
     "TIDY5E.ShowItemImage": "Clique Dir.: Mostrar Arte do Elemento",
     "TIDY5E.ShowItemArt": "Mostrar Imagem",
     "TIDY5E.Tidy5eSettings": "Configurações Tidy 5e Sheets",
     "TIDY5E.AddSpecific": "Adicionar {name}",
-    "TIDY5E.NoSpecialSenses": "Sem Sentidos Especiais",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vazio. Solte um ator da barra lateral para adicionar um membro.",
-    "TIDY5E.RestHint": "Descansar",
     "TIDY5E.ShortRest": "Descanso Curto",
     "TIDY5E.HitDiceRollAverage": "Clique Direito: Aplicar Média",
     "TIDY5E.JournalTabName": "Diário",
@@ -24,7 +20,6 @@
     "TIDY5E.Actions": {
         "TabName": "Ações"
     },
-    "TIDY5E.RestoreOnRest": "Restaurar em Descanso",
     "TIDY5E.JournalEntry.NewTitle": "Entrada de Diário {number}",
     "TIDY5E.TogglePersonalityInfo": "Alternar Informações de Personalidade",
     "TIDY5E.SheetEdit.Enable.Hint": "Ativar Edição - {description}",
@@ -59,7 +54,6 @@
     "TIDY5E.Ability.EditScore.label": "Editar Valor",
     "TIDY5E.EmptyTools": "Sem proficiência em ferramentas.",
     "TIDY5E.Search": "Procurar",
-    "TIDY5E.SearchClear": "Limpar Pesquisa",
     "TIDY5E.SearchHint": "Digite para exibir os resultados da procura",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Ataque Mágico",
     "TIDY5E.ActorSpellAttackFlavorText": "Ataque Mágico",
@@ -68,8 +62,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ataque Mágico à Distância",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Ataque Mágico à Distância",
     "TIDY5E.SpellAttackMod": "Mod. de Ataque Mágico",
-    "TIDY5E.MeleeSpellAttackMod": "Mod. de Ataque Mágico Corpo a Corpo",
-    "TIDY5E.RangedSpellAttackMod": "Mod. de Ataque Mágico à Distância",
     "TIDY5E.TokenLinked": "Token vinculado a ator",
     "TIDY5E.TokenUnlinked": "Token não vinculado a ator",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificador de Classe: {identifier}",
@@ -88,11 +80,9 @@
     "TIDY5E.Class.Warlock": "Bruxo",
     "TIDY5E.Class.Wizard": "Mago",
     "TIDY5E.Class.Custom": "Classe Personalizada",
-    "TIDY5E.OriginSummaryConfig": "Configuração Resumida de Origem: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Configuração do Máximo de Magias Preparadas: {documentName}",
         "ExamplesHeader": "Exemplo de Fórmulas",
-        "ButtonTooltip": "Configurar Máximo de Magias Preparadas",
         "MoreFormulas": "Mais Fórmulas"
     },
     "TIDY5E.TabConfiguration": {
@@ -209,12 +199,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Guia Inicial da Ficha",
         "hint": "Mostra a guia indicada ao abrir uma ficha pela primeira vez."
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Guias Padrão de Ficha",
-        "hint": "Determina quais guias serão exibidas e em qual ordem, por padrão. Aplica-se quando nenhuma seleção de guia seja feita para um ator.",
-        "AvailableHeader": "Guias Disponíveis",
-        "SelectedHeader": "Guias Selecionadas"
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Rolagem Padrão de Salvaguarda Contra Morte",
@@ -414,12 +398,9 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Secção por Elemento",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Incluir secções do Grimório na guia Bloco de Estatísticas",
     "TIDY5E.Section": {
-        "Default": "Secção Padrão",
         "Label": "Secção",
         "LabelPl": "Secções",
-        "Tooltip": "Especifique uma secção personalizada para este elemento quando posto na ficha de um ator, ou deixe vazio para comportamento padrão.",
         "ActionLabel": "Secção de Ação",
-        "ActionTooltip": "Especifique uma secção personalizada para este elemento quando posto na guia Ação, ou deixe vazio para comportamento padrão.",
         "ConfigDialog": {
             "title": "Configurar Secção: {tabTitle}",
             "showTooltip": "Exibir esta secção",

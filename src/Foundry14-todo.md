@@ -68,24 +68,24 @@
   - [x] TIDY5E.ListLayout
   - [x] TIDY5E.LocalizationTestKey
   - [x] TIDY5E.LongRest
-  - [ ] TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip
-  - [ ] TIDY5E.MeleeSpellAttackMod
-  - [ ] TIDY5E.NoSpecialSenses
-  - [ ] TIDY5E.OriginSummaryConfig
-  - [ ] TIDY5E.PlayerName
-  - [ ] TIDY5E.PreviewSheetImageHint
-  - [ ] TIDY5E.RangedSpellAttackMod
-  - [ ] TIDY5E.RestHint
-  - [ ] TIDY5E.RestoreOnRest
-  - [ ] TIDY5E.SearchClear
-  - [ ] TIDY5E.Section.ActionTooltip
-  - [ ] TIDY5E.Section.Default
-  - [ ] TIDY5E.Section.Tooltip
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.AvailableHeader
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.hint
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.name
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.SelectedHeader
-  - [ ] TIDY5E.Settings.GlobalCustomSections.AddSection
+  - [x] TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip
+  - [x] TIDY5E.MeleeSpellAttackMod
+  - [x] TIDY5E.NoSpecialSenses
+  - [x] TIDY5E.OriginSummaryConfig
+  - [x] TIDY5E.PlayerName
+  - [x] TIDY5E.PreviewSheetImageHint
+  - [x] TIDY5E.RangedSpellAttackMod
+  - [x] TIDY5E.RestHint
+  - [x] TIDY5E.RestoreOnRest
+  - [x] TIDY5E.SearchClear
+  - [x] TIDY5E.Section.ActionTooltip
+  - [x] TIDY5E.Section.Default
+  - [x] TIDY5E.Section.Tooltip
+  - [x] TIDY5E.Settings.DefaultSheetTabs.AvailableHeader
+  - [x] TIDY5E.Settings.DefaultSheetTabs.hint
+  - [x] TIDY5E.Settings.DefaultSheetTabs.name
+  - [x] TIDY5E.Settings.DefaultSheetTabs.SelectedHeader
+  - [x] (keep) TIDY5E.Settings.GlobalCustomSections.AddSection
   - [ ] TIDY5E.Settings.Migrations.Journal.explanation1
   - [ ] TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel
   - [ ] TIDY5E.Settings.Migrations.OptionDeleteFlags.Text

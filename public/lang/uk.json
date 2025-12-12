@@ -5,7 +5,6 @@
         "TabName": "Дія"
     },
     "TIDY5E.ShowNotProficientSkills": "Показувати відсутні володіння",
-    "TIDY5E.PlayerName": "Ім'я Гравця",
     "TIDY5E.SheetImageOptionsHint": "Права клавіша миші: Показати опції зображення",
     "TIDY5E.ShowPortraitArt": "Показати Портрет",
     "TIDY5E.ShowItemImage": "Права клавіша миші: Показати зображення елемента",
@@ -26,12 +25,9 @@
     "TIDY5E.OneDnDExhaustion8": "-8 до всіх кидків К20 та КС ряткидків від чарів",
     "TIDY5E.OneDnDExhaustion9": "-9 до всіх кидків К20 та КС ряткидків від чарів",
     "TIDY5E.StandardVehicleExhaustion6": "Пункти Здоров'я падають до 0 і транспорт ламається",
-    "TIDY5E.NoSpecialSenses": "Без Незвичайних Відчуттів",
     "TIDY5E.Group.EmptyMembersTabHint": "Ця група порожня. Перетягніть актора з бічної панелі, щоб додати учасника.",
-    "TIDY5E.RestHint": "Відпочинок",
     "TIDY5E.HitDiceRollAverage": "Права кнопка миші: Застосувати середнє",
     "TIDY5E.JournalTabName": "Журнал",
-    "TIDY5E.RestoreOnRest": "Відновити під час відпочинку",
     "TIDY5E.TogglePersonalityInfo": "Перемкнути Інформацію Персонажа",
     "TIDY5E.SheetEdit.Enable.Hint": "Увімкнути Редагування - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Вимкнути Редагування - {description}",
@@ -50,8 +46,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Атака Чарами Дального Бою",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Атака Чарами Дального Бою",
     "TIDY5E.SpellAttackMod": "Модифікатор Атаки Чарами",
-    "TIDY5E.MeleeSpellAttackMod": "Модифікатор атаки чарами ближнього бою",
-    "TIDY5E.RangedSpellAttackMod": "Модифікатор атаки чарами дального бою",
     "TIDY5E.TokenLinked": "Токен прив'язаний до актора",
     "TIDY5E.TokenUnlinked": "Токен не прив'язаний до актора",
     "TIDY5E.SpellSourceIdentifierSelectText": "Ідентифікатор класу: {identifier}",
@@ -68,11 +62,9 @@
     "TIDY5E.Class.Rogue": "Пройдисвіт",
     "TIDY5E.Class.Sorcerer": "Заклинач",
     "TIDY5E.Class.Warlock": "Чаклун",
-    "TIDY5E.OriginSummaryConfig": "Конфігурація підсумку походження: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Конфігурація макс. к-сті підготовлених чар: {documentName}",
         "ExamplesHeader": "Зразки формул",
-        "ButtonTooltip": "Конфігурація макс. к-сті підготовлених чар",
         "MoreFormulas": "Більше формул"
     },
     "TIDY5E.TabConfiguration": {
@@ -152,7 +144,6 @@
     "TIDY5E.ContextMenuActionPrepare": "Підготувати",
     "TIDY5E.ContextMenuActionEdit": "Редагувати",
     "TIDY5E.ContextMenuActionDelete": "Видалити",
-    "TIDY5E.PreviewSheetImageHint": "Ліва клавіша миші: Переглянути зображення",
     "TIDY5E.StandardExhaustion0": "Без негативних ефектів",
     "TIDY5E.StandardExhaustion6": "Смерть",
     "TIDY5E.StandardVehicleExhaustion1": "Перешкода для Перевірок Здібностей",
@@ -162,7 +153,6 @@
     "TIDY5E.StandardVehicleExhaustion3": "Перешкода для Кидків Атаки та Рятівних Кидків",
     "TIDY5E.StandardVehicleExhaustion5": "Швидкість зменшена до 0",
     "TIDY5E.Search": "Пошук",
-    "TIDY5E.SearchClear": "Очистити пошук",
     "TIDY5E.SearchHint": "Почніть вводити, щоб відобразити результати",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Атака Чарами",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Атака Чарами Ближнього Бою",
@@ -179,12 +169,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Початкова вкладка аркуша",
         "hint": "Відкриває вказану вкладку під час першого відкриття аркуша."
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Усталені вкладки аркуша",
-        "hint": "Визначає, які вкладки та в якому порядку відображатимуться за замовчуванням. Застосовується, якщо для актора не було обрано жодної вкладки.",
-        "AvailableHeader": "Доступні вкладки",
-        "SelectedHeader": "Вибрані вкладки"
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Блокування валюти",
@@ -383,8 +367,6 @@
     "TIDY5E.GMOnly.Message": "Тільки для ГМа: {message}",
     "TIDY5E.ReminderToBackUp": "Завжди пам'ятайте про резервне копіювання вашого світу.",
     "TIDY5E.Section": {
-        "Tooltip": "Вкажіть власний розділ для цього елемента при розміщенні на аркуші актора або залиште його порожнім для поведінки за замовчуванням.",
-        "Default": "Усталений розділ",
         "Label": "Розділ",
         "ConfigDialog": {
             "showTooltip": "Показувати цей розділ",
@@ -392,7 +374,6 @@
             "title": "Налаштування розділу: {tabTitle}"
         },
         "ActionLabel": "Розділ дій",
-        "ActionTooltip": "Вкажіть власний розділ для цього елемента при розміщенні на вкладці дій або залиште його порожнім для поведінки за замовчуванням.",
         "LabelPl": "Розділи",
         "SectionSelectorTitle": "{sectionType}: {documentName}",
         "SectionSelectorChooseSectionTooltip": "Оберіть розділ",

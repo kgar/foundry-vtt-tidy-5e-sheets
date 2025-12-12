@@ -7,8 +7,6 @@
   "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Vehicle Sheet",
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Group Sheet",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Encounter Sheet",
-  "TIDY5E.PlayerName": "Player Name",
-  "TIDY5E.PreviewSheetImageHint": "Left Click: Preview Image",
   "TIDY5E.SheetImageOptionsHint": "Right Click: Show Image Options",
   "TIDY5E.ShowPortraitArt": "Show Portrait",
   "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
@@ -32,12 +30,9 @@
 
   "TIDY5E.UserDefaultPrefix": "User Default: {value}",
 
-  "TIDY5E.NoSpecialSenses": "No Special Senses",
-
   "TIDY5E.Group.EmptyMembersTabHint": "This group is empty. Drop an actor from the sidebar to add a member.",
   "TIDY5E.Group.PrimaryParty.Label": "Primary Party",
 
-  "TIDY5E.RestHint": "Rest",
   "TIDY5E.ShortRest": "Short Rest",
   "TIDY5E.HitDiceRollAverage": "Right Click: Apply Average",
 
@@ -50,8 +45,6 @@
   },
   "TIDY5E.LegendaryAbbr": "LA",
   "TIDY5E.LairAbbr": "Lair",
-
-  "TIDY5E.RestoreOnRest": "Restore on Rest",
 
   "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
   "TIDY5E.TogglePersonalityInfo": "Toggle Personality Info",
@@ -104,7 +97,6 @@
   "TIDY5E.EmptyTools": "No tool proficiencies.",
 
   "TIDY5E.Search": "Search",
-  "TIDY5E.SearchClear": "Clear Search",
   "TIDY5E.SearchHint": "Start typing to show search results",
 
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - Spell Attack",
@@ -114,8 +106,6 @@
   "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ranged Spell Attack",
   "TIDY5E.ActorRangedSpellAttackFlavorText": "Ranged Spell Attack",
   "TIDY5E.SpellAttackMod": "Spell Attack Mod",
-  "TIDY5E.MeleeSpellAttackMod": "Melee Spell Attack Mod",
-  "TIDY5E.RangedSpellAttackMod": "Ranged Spell Attack Mod",
 
   "TIDY5E.TokenLinked": "Token linked to actor",
   "TIDY5E.TokenUnlinked": "Token not linked to actor",
@@ -138,12 +128,9 @@
   "TIDY5E.Class.Wizard": "Wizard",
   "TIDY5E.Class.Custom": "Custom Class",
 
-  "TIDY5E.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
-
   "TIDY5E.MaxPreparedSpellsConfig": {
     "Title": "Max Prepared Spells Configuration: {documentName}",
     "ExamplesHeader": "Sample Formulas",
-    "ButtonTooltip": "Configure Max Prepared Spells",
     "MoreFormulas": "More formulas"
   },
 
@@ -283,12 +270,6 @@
   "TIDY5E.Settings.InitialSheetTab": {
     "name": "Initial Sheet Tab",
     "hint": "Shows the indicated tab when opening a sheet for the first time."
-  },
-  "TIDY5E.Settings.DefaultSheetTabs": {
-    "name": "Default Sheet Tabs",
-    "hint": "Determines which tabs will show and in what order by default. Applies when no tab selections have been made for an actor.",
-    "AvailableHeader": "Available Tabs",
-    "SelectedHeader": "Selected Tabs"
   },
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "Default Death Save Roll",
@@ -497,12 +478,9 @@
   "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Show Legendary/Lair trackers in the Statblock tab",
   "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Include Spellbook sections in the Statblock tab",
   "TIDY5E.Section": {
-    "Default": "Default Section",
     "Label": "Section",
     "LabelPl": "Sections",
-    "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
     "ActionLabel": "Action Section",
-    "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
     "ConfigDialog": {
       "title": "Configure Section: {tabTitle}",
       "showTooltip": "Show this section",

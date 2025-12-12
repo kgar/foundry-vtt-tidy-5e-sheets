@@ -1,14 +1,11 @@
 {
-    "TIDY5E.PlayerName": "Játékosnév",
     "TIDY5E.SheetImageOptionsHint": "jobb klikk: karakterkép mutatás",
     "TIDY5E.ShowPortraitArt": "portré mutatás",
     "TIDY5E.ShowItemImage": "right click: show item art",
     "TIDY5E.ShowItemArt": "show image",
-    "TIDY5E.RestHint": "Pihenő",
     "TIDY5E.ShortRest": "Rövid Pihenő",
     "TIDY5E.HitDiceRollAverage": "Jobb Klikk: Átlag",
     "TIDY5E.JournalTabName": "Napló",
-    "TIDY5E.RestoreOnRest": "Pihenéskor visszaáll",
     "TIDY5E.TogglePersonalityInfo": "Személyiség Info Ki/Be",
     "TIDY5E.SheetEdit.Enable.Hint": "",
     "TIDY5E.SheetEdit.Disable.Hint": "",
@@ -29,7 +26,6 @@
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.Search": "",
-    "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "Kezdd el írni, amit keresel.",
     "TIDY5E.SpellAttackMod": "Támadás Mód.",
     "TIDY5E.TokenLinked": "Aktorhoz linkelt token",
@@ -49,7 +45,6 @@
     "TIDY5E.Class.Sorcerer": "",
     "TIDY5E.Class.Warlock": "",
     "TIDY5E.Class.Wizard": "",
-    "TIDY5E.OriginSummaryConfig": "",
     "TIDY5E.UserSettings.Menu": {
         "name": "",
         "hint": "",
@@ -264,7 +259,6 @@
     "TIDY5E.EmptyContainer": "",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ExamplesHeader": "",
-        "ButtonTooltip": "",
         "MoreFormulas": "",
         "Title": ""
     },
@@ -283,7 +277,6 @@
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": ""
     },
-    "TIDY5E.MeleeSpellAttackMod": "",
     "TIDY5E.Listbox": {
         "MoveAllRight": "",
         "MoveUp": "",
@@ -305,7 +298,6 @@
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.RangedSpellAttackMod": "",
     "TIDY5E.WorldSettings.TabNpc": {
         "tabLabel": ""
     },
@@ -314,12 +306,6 @@
     },
     "TIDY5E.WorldSettings.TabVehicle": {
         "tabLabel": ""
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "hint": "",
-        "AvailableHeader": "",
-        "name": "",
-        "SelectedHeader": ""
     },
     "TIDY5E.ItemFilters.Filter.Other": "",
     "TIDY5E.Utilities.GMTools": "",
@@ -343,10 +329,7 @@
             "title": ""
         },
         "Label": "",
-        "Default": "",
-        "Tooltip": "",
-        "ActionTooltip": "",
-        "ActionLabel": ""
+        "ActionTooltip": ""
     },
     "TIDY5E.Commands.ExpandAll": "",
     "TIDY5E.Commands.CollapseAll": "",

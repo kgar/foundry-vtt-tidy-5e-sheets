@@ -1,14 +1,11 @@
 {
-    "TIDY5E.PlayerName": "Jméno hráče",
     "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
     "TIDY5E.ShowPortraitArt": "Zobrazit portrét",
     "TIDY5E.ShowItemImage": "Pravé tlačítko: Zobrazit ilustraci položky",
     "TIDY5E.ShowItemArt": "Zobrazit obrázek",
-    "TIDY5E.RestHint": "Odpočinek",
     "TIDY5E.ShortRest": "Krátký odpočinek",
     "TIDY5E.HitDiceRollAverage": "Pravé tlačítko: Použít průměr",
     "TIDY5E.JournalTabName": "Záznamy",
-    "TIDY5E.RestoreOnRest": "Obnovit při odpočinku",
     "TIDY5E.TogglePersonalityInfo": "Přepnout na osobní informace",
     "TIDY5E.SheetEdit.Enable.Hint": "Povolit úpravy - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Zakázat úpravy - {description}",
@@ -29,7 +26,6 @@
     "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
     "TIDY5E.ShowNotProficientSkills": "Ukázat i ty bez zdatnosti",
     "TIDY5E.Search": "Vyhledat",
-    "TIDY5E.SearchClear": "Vyčistit hledání",
     "TIDY5E.SearchHint": "Začni psát název toho, co hledáš...",
     "TIDY5E.SpellAttackMod": "Oprava útoku kouzlem",
     "TIDY5E.TokenLinked": "Token propojený s aktérem",
@@ -49,7 +45,6 @@
     "TIDY5E.Class.Sorcerer": "Čaroděj",
     "TIDY5E.Class.Warlock": "Černokněžník",
     "TIDY5E.Class.Wizard": "Kouzelník",
-    "TIDY5E.OriginSummaryConfig": "Souhrnné nastavení původu: {actorName}",
     "TIDY5E.UserSettings.Menu": {
         "name": "Uživatelské nastavení",
         "hint": "Přizpůsob si svou vlastní verzi deníků Tidy 5e. Toto nastavení se uloží do prohlížeče a použije se na tvé deníky.",
@@ -258,12 +253,6 @@
         }
     },
     "TIDY5E.SpellSourceIdentifierLabelHint": "Aktér, který má toto kouzlo, nemá zdrojové povolání u tohoto kouzla uvedené.",
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Výchozí karty deníků",
-        "AvailableHeader": "Dostupné karty",
-        "SelectedHeader": "Vybrané karty",
-        "hint": "Určuje, které karty se ve výchozím nastavení zobrazí a v jakém pořadí. Použijí se v případě, že nebyla vybrána žádná karta u aktéra."
-    },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
     "TIDY5E.ButtonConfirm.Text": "Potvrdit",
     "TIDY5E.Section": {
@@ -273,10 +262,7 @@
             "title": "Nastavení sekce: {tabTitle}"
         },
         "ActionLabel": "Sekce akcí",
-        "ActionTooltip": "Po umístění na kartu Akce vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
         "Label": "Sekce",
-        "Default": "Výchozí sekce",
-        "Tooltip": "Po umístění do deníku aktéra vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
         "SectionSelectorTitle": "{sectionType}: {documentName}",
         "SectionSelectorChooseSectionTooltip": "Vyber sekci",
         "LabelPl": "Sekce",
@@ -288,7 +274,6 @@
         "SectionSelectorChooseTabSectionTooltip": "Zvol sekci {tabName}"
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "ButtonTooltip": "Nastavit maximum připravených kouzel",
         "Title": "Nastavení maxima připravených kouzel: {documentName}",
         "MoreFormulas": "Více vzorců",
         "ExamplesHeader": "Ukázkové vzorce"
@@ -322,7 +307,6 @@
     "TIDY5E.Actions": {
         "TabName": "Akce"
     },
-    "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem na blízko",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "Místo toho, aby se na kartě/panelu akce ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
         "name": "Omezit akce na triky?"
@@ -397,7 +381,6 @@
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Útok kouzlem na dálku",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Útok kouzlem na blízko",
     "TIDY5E.UseDefault": "Použít výchozí",
-    "TIDY5E.RangedSpellAttackMod": "Oprava útoku kouzlem na dálku",
     "TIDY5E.WorldSettings.TabNpc": {
         "tabLabel": "NP"
     },
@@ -409,9 +392,7 @@
     },
     "TIDY5E.Tidy5eSettings": "Nastavení deníků Tidy 5e",
     "TIDY5E.Group.EmptyMembersTabHint": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu.",
-    "TIDY5E.NoSpecialSenses": "Žádné zvláštní smysly",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
-    "TIDY5E.PreviewSheetImageHint": "Levé tlačítko myši: Náhled obrázku",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato volba uzamčení listu.",
     "TIDY5E.ModuleName": "Deníky Tidy 5E",
     "TIDY5E.WorldSettings.TabCustomSections": {

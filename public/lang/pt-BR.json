@@ -1,20 +1,15 @@
 {
-    "TIDY5E.PlayerName": "Nome do Jogador",
-    "TIDY5E.PreviewSheetImageHint": "Clique Esq.: Visualizar Imagem",
     "TIDY5E.SheetImageOptionsHint": "Clique Dir.: Mostrar Opções de Imagem",
     "TIDY5E.ShowPortraitArt": "Mostrar Avatar",
     "TIDY5E.ShowItemImage": "Clique Dir.: Mostrar Arte do Item",
     "TIDY5E.ShowItemArt": "Mostrar Imagem",
-    "TIDY5E.NoSpecialSenses": "Sem Sentidos Especiais",
     "TIDY5E.Group.EmptyMembersTabHint": "Este grupo está vazio. Solte um ator da barra lateral para adicionar um membro.",
-    "TIDY5E.RestHint": "Descansar",
     "TIDY5E.ShortRest": "Descanso Curto",
     "TIDY5E.HitDiceRollAverage": "Clique Direito: Aplicar Média",
     "TIDY5E.JournalTabName": "Diário",
     "TIDY5E.Actions": {
         "TabName": "Ações"
     },
-    "TIDY5E.RestoreOnRest": "Restaurar em Descanso",
     "TIDY5E.TogglePersonalityInfo": "Alternar Informações de Personalidade",
     "TIDY5E.SheetEdit.Enable.Hint": "Ativar Edição - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Desativar Edição - {description}",
@@ -36,7 +31,6 @@
     "TIDY5E.RemoveFavorite": "Remover dos Favoritos",
     "TIDY5E.ShowNotProficientSkills": "Mostrar Não-Proficiente",
     "TIDY5E.Search": "Procurar",
-    "TIDY5E.SearchClear": "Limpar Pesquisa",
     "TIDY5E.SearchHint": "Digite para exibir os resultados da busca",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Ataque Mágico",
     "TIDY5E.ActorSpellAttackFlavorText": "Ataque Mágico",
@@ -45,8 +39,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ataque Mágico à Distância",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Ataque Mágico à Distância",
     "TIDY5E.SpellAttackMod": "Mod. de Ataque Mágico",
-    "TIDY5E.MeleeSpellAttackMod": "Mod. de Ataque Mágico Corpo a Corpo",
-    "TIDY5E.RangedSpellAttackMod": "Mod. de Ataque Mágico à Distância",
     "TIDY5E.TokenLinked": "Token vinculado a ator",
     "TIDY5E.TokenUnlinked": "Token não vinculado a ator",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificador de Classe: {identifier}",
@@ -65,11 +57,9 @@
     "TIDY5E.Class.Sorcerer": "Feiticeiro",
     "TIDY5E.Class.Warlock": "Bruxo",
     "TIDY5E.Class.Wizard": "Mago",
-    "TIDY5E.OriginSummaryConfig": "Configuração Resumida de Origem: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Configuração do Máximo de Magias Preparadas: {documentName}",
         "ExamplesHeader": "Exemplo de Fórmulas",
-        "ButtonTooltip": "Configurar Máximo de Magias Preparadas",
         "MoreFormulas": "Mais Fórmulas"
     },
     "TIDY5E.TabConfiguration": {
@@ -153,12 +143,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Aba Inicial da Ficha",
         "hint": "Mostra a aba indicada ao abrir uma ficha pela primeira vez."
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Abas Padrão de Ficha",
-        "hint": "Determina quais abas serão exibidas e em qual ordem, por padrão. Aplica-se quando nenhuma seleção de aba seja feita para um ator.",
-        "AvailableHeader": "Abas Disponíveis",
-        "SelectedHeader": "Abas Selecionadas"
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Usar Filtro de Grimório Multiclasse",
@@ -373,11 +357,8 @@
     "TIDY5E.GenericErrorNotification": "Ocorreu um erro ao executar esta ação. Veja o console do devtools para mais detalhes.",
     "TIDY5E.Utilities.ConfigureSections": "Configurar Seções",
     "TIDY5E.Section": {
-        "Default": "Seção Padrão",
         "Label": "Seção",
-        "Tooltip": "Especifique uma seção personalizada para este item quando colocado na ficha de um ator, ou deixe vazio para comportamento padrão.",
         "ActionLabel": "Seção de Ação",
-        "ActionTooltip": "Especifique uma seção personalizada para este item quando colocado na aba Ação, ou deixe vazio para comportamento padrão.",
         "ConfigDialog": {
             "title": "Configurar Seção: {tabTitle}",
             "showTooltip": "Exibir esta seção",

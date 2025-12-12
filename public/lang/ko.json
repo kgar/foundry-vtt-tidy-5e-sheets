@@ -6,17 +6,13 @@
     "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e 아이템 시트",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 탑승물 시트",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 그룹 시트",
-    "TIDY5E.PlayerName": "플레이어 이름",
-    "TIDY5E.PreviewSheetImageHint": "좌클릭: 이미지 미리보기",
     "TIDY5E.SheetImageOptionsHint": "우클릭: 이미지 옵션 보기",
     "TIDY5E.ShowPortraitArt": "포트레이트 보기",
     "TIDY5E.ShowItemImage": "우클릭: 아이템 이미지 보기",
     "TIDY5E.ShowItemArt": "이미지 보기",
     "TIDY5E.Tidy5eSettings": "Tidy 5e 시트 설정",
     "TIDY5E.AddSpecific": "{name} 추가",
-    "TIDY5E.NoSpecialSenses": "특수 감각 없음",
     "TIDY5E.Group.EmptyMembersTabHint": "이 그룹은 비었습니다. 멤버를 추가하려면 사이드바에서 액터를 드래그하세요.",
-    "TIDY5E.RestHint": "휴식 취하기",
     "TIDY5E.ShortRest": "짧은 휴식",
     "TIDY5E.HitDiceRollAverage": "우클릭: 평균 적용",
     "TIDY5E.JournalTabName": "저널",
@@ -24,7 +20,6 @@
     "TIDY5E.Actions": {
         "TabName": "행동"
     },
-    "TIDY5E.RestoreOnRest": "휴식시 복원",
     "TIDY5E.JournalEntry.NewTitle": "저널 항목 {number}",
     "TIDY5E.TogglePersonalityInfo": "성격 정보 전환",
     "TIDY5E.SheetEdit.Enable.Hint": "편집 활성 - {description}",
@@ -56,7 +51,6 @@
     "TIDY5E.ShowNotProficientSkills": "비숙련 항목 표시",
     "TIDY5E.Ability.EditScore.label": "점수 편집",
     "TIDY5E.Search": "검색",
-    "TIDY5E.SearchClear": "검색 지우기",
     "TIDY5E.SearchHint": "찾고자 하는 것을 입력합니다.",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - 주문 공격",
     "TIDY5E.ActorSpellAttackFlavorText": "주문 공격",
@@ -65,8 +59,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - 원거리 ",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "주문 공격",
     "TIDY5E.SpellAttackMod": "주문 공격 수정치",
-    "TIDY5E.MeleeSpellAttackMod": "근접 공격 수정치",
-    "TIDY5E.RangedSpellAttackMod": "원거리 공격 수정치",
     "TIDY5E.TokenLinked": "액터에 연결된 토큰",
     "TIDY5E.TokenUnlinked": "액터에 연결되지 않은 토큰",
     "TIDY5E.SpellSourceIdentifierSelectText": "클래스 식별: {identifier}",
@@ -85,11 +77,9 @@
     "TIDY5E.Class.Sorcerer": "소서러",
     "TIDY5E.Class.Warlock": "워락",
     "TIDY5E.Class.Wizard": "위저드",
-    "TIDY5E.OriginSummaryConfig": "출신 요약 설정: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "주문 준비 수 최대값 설정: {documentName}",
         "ExamplesHeader": "예시 공식",
-        "ButtonTooltip": "주문 준비 수 최대값 설정",
         "MoreFormulas": "추가 공식"
     },
     "TIDY5E.TabConfiguration": {
@@ -206,12 +196,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "개시 시트 탭",
         "hint": "시트를 처음 열 때 보여줄 탭을 표시합니다."
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "기본 시트 탭",
-        "hint": "기본적으로 표시할 탭과 순서를 결정합니다. 액터에 대해 탭이 선택되지 않은 경우에 적용됩니다.",
-        "AvailableHeader": "가능한 탭",
-        "SelectedHeader": "선택된 탭"
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "기본 죽음 내성 굴림",
@@ -409,12 +393,9 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "추가 주문 항목",
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "아이템 당 항목",
     "TIDY5E.Section": {
-        "Default": "기본 섹션",
         "Label": "섹션",
         "LabelPl": "항목",
-        "Tooltip": "액터 시트에 배치할 때 이 항목에 대한 사용자 지정 섹션을 지정하거나 기본 동작을 위해 비워 둡니다.",
         "ActionLabel": "액터 섹션",
-        "ActionTooltip": "작업 탭에 배치할 때 이 항목에 대한 사용자 지정 섹션을 지정하거나 기본 동작을 위해 비워둡니다.",
         "ConfigDialog": {
             "title": "섹션 구성: {tabTitle}",
             "showTooltip": "이 섹션 보이기",

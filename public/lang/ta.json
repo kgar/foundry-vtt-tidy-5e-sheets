@@ -5,7 +5,6 @@
     "TIDY5E.ContextMenuActionPrepare": "ஆயத்தம்",
     "TIDY5E.ActorSpellAttackFlavorText": "எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - கைகலப்பு எழுத்துப்பிழை தாக்குதல்",
-    "TIDY5E.RangedSpellAttackMod": "வீச்சு எழுத்துப்பிழை தாக்குதல் மோட்",
     "TIDY5E.Class.Artificer": "கலைஞர்",
     "TIDY5E.Class.Ranger": "ரேஞ்சர்",
     "TIDY5E.Class.Rogue": "முரட்டு",
@@ -45,12 +44,6 @@
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "தொடக்க தாள் தாவல்",
         "hint": "முதல் முறையாக ஒரு தாளைத் திறக்கும்போது சுட்டிக்காட்டப்பட்ட தாவலைக் காட்டுகிறது."
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "hint": "எந்த தாவல்கள் காண்பிக்கப்படும், இயல்புநிலையாக எந்த வரிசையில் இருக்கும் என்பதை தீர்மானிக்கிறது. ஒரு நடிகருக்கு தாவல் தேர்வுகள் எதுவும் செய்யப்படாதபோது பொருந்தும்.",
-        "name": "இயல்புநிலை தாள் தாவல்கள்",
-        "AvailableHeader": "கிடைக்கும் தாவல்கள்",
-        "SelectedHeader": "தேர்ந்தெடுக்கப்பட்ட தாவல்கள்"
     },
     "TIDY5E.Settings.Reset": {
         "dialogs": {
@@ -204,12 +197,9 @@
             "hideTooltip": "இந்த பகுதியை மறைக்கவும்",
             "title": "பிரிவு உள்ளமைக்கவும்: {tabTitle}"
         },
-        "Default": "இயல்புநிலை பிரிவு",
         "Label": "பிரிவு",
         "LabelPl": "பிரிவுகள்",
-        "Tooltip": "ஒரு நடிகர் தாளில் வைக்கப்படும்போது இந்த உருப்படிக்கான தனிப்பயன் பகுதியைக் குறிப்பிடவும் அல்லது இயல்புநிலை நடத்தைக்கு காலியாக விடவும்.",
         "ActionLabel": "செயல் பிரிவு",
-        "ActionTooltip": "செயல்கள் தாவலில் வைக்கப்படும்போது இந்த உருப்படிக்கான தனிப்பயன் பகுதியைக் குறிப்பிடவும் அல்லது இயல்புநிலை நடத்தைக்கு காலியாக விடவும்.",
         "SectionSelectorChooseSectionTooltip": "ஒரு பகுதியைத் தேர்வுசெய்க",
         "SectionSelectorChooseActionSectionTooltip": "செயல் பிரிவைத் தேர்வுசெய்க",
         "SectionSelectorTitle": "{sectionType}: {documentName}",
@@ -222,23 +212,18 @@
     "TIDY5E.SortMenu.OptionAlphabetical": "அகரவரிசை (A-Z)",
     "TIDY5E.SortMenu.OptionManual": "கையேடு",
     "TIDY5E.SortMenu.OptionPrepared": "தயாரிக்கப்பட்டது",
-    "TIDY5E.PlayerName": "வீரர் பெயர்",
-    "TIDY5E.PreviewSheetImageHint": "இடது கிளிக்: படத்தை முன்னோட்டமிடுங்கள்",
     "TIDY5E.SheetImageOptionsHint": "வலது கிளிக்: பட விருப்பங்களைக் காட்டு",
     "TIDY5E.ShowPortraitArt": "உருவப்படத்தைக் காட்டு",
     "TIDY5E.ShowItemImage": "வலது கிளிக்: உருப்படி கலையைக் காட்டு",
     "TIDY5E.ShowItemArt": "படத்தைக் காட்டு",
     "TIDY5E.Tidy5eSettings": "நேர்த்தியான 5e தாள்கள் அமைப்புகள்",
-    "TIDY5E.NoSpecialSenses": "சிறப்பு புலன்கள் இல்லை",
     "TIDY5E.Group.EmptyMembersTabHint": "இந்த குழு காலியாக உள்ளது. ஒரு உறுப்பினரைச் சேர்க்க பக்கப்பட்டியில் இருந்து ஒரு நடிகரை விடுங்கள்.",
-    "TIDY5E.RestHint": "ஓய்வு",
     "TIDY5E.ShortRest": "குறுகிய ஓய்வு",
     "TIDY5E.HitDiceRollAverage": "வலது கிளிக்: சராசரியைப் பயன்படுத்துங்கள்",
     "TIDY5E.JournalTabName": "செய்தித் தாள்",
     "TIDY5E.Actions": {
         "TabName": "செயல்கள்"
     },
-    "TIDY5E.RestoreOnRest": "ஓய்வில் மீட்டமைக்கவும்",
     "TIDY5E.ContextMenuActionAttune": "சுருதிசேர்",
     "TIDY5E.TogglePersonalityInfo": "ஆளுமை தகவலை மாற்றவும்",
     "TIDY5E.ContextMenuActionUnattune": "டோனெட்",
@@ -256,14 +241,12 @@
     "TIDY5E.RemoveFavorite": "பிடித்ததை அகற்று",
     "TIDY5E.ShowNotProficientSkills": "திறமையானதைக் காட்டு",
     "TIDY5E.Search": "தேடல்",
-    "TIDY5E.SearchClear": "தேடலை அழி",
     "TIDY5E.SearchHint": "தேடல் முடிவுகளைக் காட்ட தட்டச்சு செய்யத் தொடங்குங்கள்",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "கைகலப்பு எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - வீச்சு எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "வீச்சு எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.SpellAttackMod": "எழுத்துப்பிழை தாக்குதல் மோட்",
-    "TIDY5E.MeleeSpellAttackMod": "கைகலப்பு எழுத்துப்பிழை தாக்குதல் மோட்",
     "TIDY5E.TokenLinked": "கிள்ளாக்கு நடிகருடன் இணைக்கப்பட்டுள்ளது",
     "TIDY5E.TokenUnlinked": "கிள்ளாக்கு நடிகருடன் இணைக்கப்படவில்லை",
     "TIDY5E.SpellSourceIdentifierSelectText": "வகுப்பு அடையாளங்காட்டி: {identifier}",
@@ -277,11 +260,9 @@
     "TIDY5E.Class.Monk": "துறவி",
     "TIDY5E.Class.Paladin": "பாலாடின்",
     "TIDY5E.Class.Wizard": "வழிகாட்டி",
-    "TIDY5E.OriginSummaryConfig": "தோற்றம் சுருக்கம் உள்ளமைவு: {actorName}",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "அதிகபட்சம் தயாரிக்கப்பட்ட எழுத்துப்பிழைகள் உள்ளமைவு: {documentName}",
         "ExamplesHeader": "மாதிரி சூத்திரங்கள்",
-        "ButtonTooltip": "அதிகபட்சம் தயாரிக்கப்பட்ட மந்திரங்களை உள்ளமைக்கவும்",
         "MoreFormulas": "மேலும் சூத்திரங்கள்"
     },
     "TIDY5E.ButtonConfirm.Text": "உறுதிப்படுத்தவும்",

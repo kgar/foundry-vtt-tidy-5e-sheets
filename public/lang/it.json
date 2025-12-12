@@ -1,14 +1,11 @@
 {
-    "TIDY5E.PlayerName": "Nome del Giocatore",
     "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
     "TIDY5E.ShowPortraitArt": "Mostra Ritratto",
     "TIDY5E.ShowItemImage": "Tasto Destro: Mostra Immagine Oggetto",
     "TIDY5E.ShowItemArt": "Mostra Immagine",
-    "TIDY5E.RestHint": "Riposati",
     "TIDY5E.ShortRest": "Riposo Breve",
     "TIDY5E.HitDiceRollAverage": "Tasto Destro: Usa Valore Medio",
     "TIDY5E.JournalTabName": "Diario",
-    "TIDY5E.RestoreOnRest": "Ripristina dopo un Riposo",
     "TIDY5E.TogglePersonalityInfo": "Attiva/disattiva le informazioni sulla personalità",
     "TIDY5E.SheetEdit.Enable.Hint": "Abilita Modifica - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "Disabilita Modifica - {description}",
@@ -29,7 +26,6 @@
     "TIDY5E.RemoveFavorite": "Rimuovi dai Preferiti",
     "TIDY5E.ShowNotProficientSkills": "Mostra Non Competente",
     "TIDY5E.Search": "Cerca",
-    "TIDY5E.SearchClear": "Cancella Ricerca",
     "TIDY5E.SearchHint": "Inizia a digitare ciò che stai cercando",
     "TIDY5E.SpellAttackMod": "Mod Attacco con Incantesimo",
     "TIDY5E.TokenLinked": "Token collegato all'attore",
@@ -49,7 +45,6 @@
     "TIDY5E.Class.Sorcerer": "Stregone",
     "TIDY5E.Class.Warlock": "Warlock",
     "TIDY5E.Class.Wizard": "Mago",
-    "TIDY5E.OriginSummaryConfig": "Configurazione di riepilogo origine: {actorName}",
     "TIDY5E.UserSettings.Menu": {
         "name": "Impostazioni Utente",
         "hint": "Personalizza la tua versione di Tidy 5e Sheets. Queste impostazioni vengono salvate nel tuo browser e si applicano ai tuoi fogli.",
@@ -158,7 +153,6 @@
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ExamplesHeader": "Formule di Esempio",
         "Title": "Configurazione Massimi Incantesimi Preparati: {documentName}",
-        "ButtonTooltip": "Configura Massimi Incantesimi Preparati",
         "MoreFormulas": "Più formule"
     },
     "TIDY5E.TabConfiguration": {
@@ -321,19 +315,11 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Attacco in Mischia con Incantesimo",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Attacco a Distanza con Incantesimo",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Attacco a Distanza con Incantesimo",
-    "TIDY5E.MeleeSpellAttackMod": "Mod Attacco in Mischia con Incantesimo",
-    "TIDY5E.RangedSpellAttackMod": "Mod Attacco a Distanza con Incantesimo",
     "TIDY5E.WorldSettings.Menu": {
         "name": "Impostazioni del mondo",
         "hint": "Regola le impostazioni a livello mondiale per personalizzare l'esperienza di Tidy 5e Sheets. Queste impostazioni vengono salvate in questo mondo Foundry e si applicano a tutti i contenuti rilevanti di Tidy 5e Sheets.",
         "label": "Impostazioni del Mondo",
         "title": "Impostazioni del Mondo (Solo DM)"
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "AvailableHeader": "Schede Disponibili",
-        "SelectedHeader": "Schede Selezionate",
-        "name": "Schede dei fogli predefinite",
-        "hint": "Determina quali schede verranno visualizzate e in quale ordine per impostazione predefinita. Si applica quando non è stata effettuata alcuna selezione nella scheda per un personaggio."
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Elenco Azioni"
@@ -400,16 +386,13 @@
     "TIDY5E.GenericErrorNotification": "Si è verificato un errore durante l'esecuzione di questa azione. Vedi la console devtools per maggiori dettagli.",
     "TIDY5E.Utilities.ConfigureSections": "Configura sezioni",
     "TIDY5E.Section": {
-        "Default": "Sezione predefinita",
         "Label": "Sezione",
         "ConfigDialog": {
             "hideTooltip": "Nascondi questa sezione",
             "title": "Configura Sezione: {tabTitle}",
             "showTooltip": "Mostra questa sezione"
         },
-        "Tooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito in un foglio attore o lascialo vuoto per il comportamento predefinito.",
         "ActionLabel": "Sezione Azioni",
-        "ActionTooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito nella scheda Azioni oppure lasciala vuota per il comportamento predefinito.",
         "LabelPl": "Sezioni",
         "SectionSelectorTitle": "{sectionType}: {documentName}",
         "SectionSelectorChooseSectionTooltip": "Scegli una Sezione",
@@ -436,8 +419,6 @@
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
-    "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine",
-    "TIDY5E.NoSpecialSenses": "Nessun senso speciale",
     "TIDY5E.Group.EmptyMembersTabHint": "Questo gruppo è vuoto. Trascina un personaggio dalla barra laterale per aggiungere un membro.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Attiva/disattiva Blocco Scheda",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Se una scheda Tidy è la finestra attualmente attiva nell'interfaccia utente, questa combinazione di tasti attiva/disattiva il blocco scheda.",

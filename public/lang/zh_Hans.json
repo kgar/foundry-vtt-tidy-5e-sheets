@@ -1,25 +1,20 @@
 {
-    "TIDY5E.NoSpecialSenses": "无特殊感官",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e 角色卡",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC 卡",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e 容器卡",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Tidy 5e 物品卡",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e 载具卡",
-    "TIDY5E.PlayerName": "玩家名称",
-    "TIDY5E.PreviewSheetImageHint": "左键单击：预览图片",
     "TIDY5E.SheetImageOptionsHint": "右键单击：显示图片选项",
     "TIDY5E.ShowPortraitArt": "显示立绘",
     "TIDY5E.ShowItemImage": "右键单击：显示物品图像",
     "TIDY5E.ShowItemArt": "显示图像",
     "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 设置",
-    "TIDY5E.RestHint": "休息",
     "TIDY5E.ShortRest": "短休",
     "TIDY5E.JournalTabName": "日志",
     "TIDY5E.Actions": {
         "TabName": "行动"
     },
     "TIDY5E.HitDiceRollAverage": "右键单击：取平均值",
-    "TIDY5E.RestoreOnRest": "在休息中恢复",
     "TIDY5E.TogglePersonalityInfo": "切换个人信息",
     "TIDY5E.SheetEdit.Enable.Hint": "启用编辑 - {description}",
     "TIDY5E.SheetEdit.Disable.Hint": "禁用编辑 - {description}",
@@ -44,7 +39,6 @@
     "TIDY5E.Search": "搜索",
     "TIDY5E.Group.EmptyMembersTabHint": "此群组为空。从侧边栏拖放一个角色以添加成员。",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 小队卡",
-    "TIDY5E.SearchClear": "清除搜索",
     "TIDY5E.SheetEdit.Description": "切换添加/删除按钮和空白分区的可见性",
     "TIDY5E.ContextMenuActionUnprepare": "未准备",
     "TIDY5E.SpellSourceIdentifierLabelHint": "拥有此法术的角色不属于此处指定的源职业。",
@@ -52,7 +46,6 @@
     "TIDY5E.ActorSpellAttackFlavorText": "法术攻击",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "最大准备法术数配置：{documentName}",
-        "ButtonTooltip": "配置最大准备法术数",
         "ExamplesHeader": "范例公式",
         "MoreFormulas": "更多公式"
     },
@@ -64,8 +57,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - 远程法术攻击",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "远程法术攻击",
     "TIDY5E.SpellAttackMod": "法术攻击调整值",
-    "TIDY5E.MeleeSpellAttackMod": "近战法师攻击调整值",
-    "TIDY5E.RangedSpellAttackMod": "远程法术攻击调整值",
     "TIDY5E.TokenLinked": "指示物关联至角色",
     "TIDY5E.TokenUnlinked": "指示物未关联至角色",
     "TIDY5E.SpellSourceIdentifierSelectText": "职业识别符：{identifier}",
@@ -81,7 +72,6 @@
     "TIDY5E.Class.Ranger": "游侠",
     "TIDY5E.Class.Rogue": "游荡者",
     "TIDY5E.Class.Sorcerer": "术士",
-    "TIDY5E.OriginSummaryConfig": "起源摘要配置：{actorName}",
     "TIDY5E.TabConfiguration": {
         "Title": "选项卡选择：{documentName}",
         "MenuOptionText": "选项卡选择",
@@ -171,12 +161,6 @@
     },
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "行动"
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "默认工作卡选项卡",
-        "hint": "确定默认情况下哪些选项卡会显示以及显示的顺序。当尚未为某个角色选择选项卡时生效。",
-        "AvailableHeader": "可用选项卡",
-        "SelectedHeader": "已选选项卡"
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "初始卡选项卡",
