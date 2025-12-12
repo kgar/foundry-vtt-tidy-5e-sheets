@@ -3,7 +3,6 @@
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import Notice from 'src/components/notice/Notice.svelte';
   import CcssToTidyMigration from './v3/CcssToTidyMigration.svelte';
   import JournalEntryClassicToJournalEntryQuadrone from './v10/JournalEntryClassicToJournalEntryQuadrone.svelte';
 
@@ -35,15 +34,24 @@
   <div role="presentation" class="vertical-tab-container flex-column no-gap">
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
     <div role="presentation" class="remaining-vertical-space"></div>
-    <Notice>
+    <div class="notice">
       {localize('TIDY5E.ReminderToBackUp')}
-    </Notice>
+    </div>
   </div>
 
   <TabContents {tabs} {selectedTabId} cssClass="tidy-sheet-body" />
 </div>
 
 <style lang="less">
+  .notice {
+    display: block;
+    background: var(--t5e-warning-accent-color);
+    padding: 0.625rem;
+    font-size: 0.75rem;
+    color: var(--t5e-warning-accent-contrast-color);
+    border-radius: 0.3125rem;
+  }
+
   .bulk-migrations-container {
     height: 100%;
     display: grid;

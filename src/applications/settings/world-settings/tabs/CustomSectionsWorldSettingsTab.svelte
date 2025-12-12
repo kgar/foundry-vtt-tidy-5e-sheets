@@ -8,7 +8,6 @@
   import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
   import { error } from 'src/utils/logging';
   import type { RegisteredTab } from 'src/runtime/types';
-  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
   import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 
@@ -261,7 +260,7 @@
           </div>
         </details>
 
-        <HorizontalLineSeparator />
+        <!-- <HorizontalLineSeparator /> -->
       {/each}
       <button
         type="button"
