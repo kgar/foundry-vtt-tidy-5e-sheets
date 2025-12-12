@@ -200,12 +200,6 @@
     "TIDY5E.Commands.HideLegendaryToolbar": "Ukryj pasek zdolności Legendarnych",
     "TIDY5E.ItemFilters.ClearAll": "Wyczyść wszystko",
     "TIDY5E.ItemFilters.Filter.Other": "Inne",
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pakt"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Pasek przewijania"
-    },
     "TIDY5E.Settings.Reset": {
         "dialogs": {
             "cancel": "Anuluj",
@@ -340,12 +334,6 @@
         "SheetTheme.hint": "Najlepsze rezultaty uzyskasz, wybierając kolor znajdujący się w pobliżu środka palety barw.",
         "SpellcastingMethodColors.title": "Kolory stanu przygotowania zaklęć"
     },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Wrodzone - akcent"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Zawsze przygotowane"
-    },
     "TIDY5E.Settings.About": {
         "buttonLabel": "Informacje o Tidy 5e Sheets",
         "name": "O nas",
@@ -372,21 +360,6 @@
         "hint": "Wyświetla komunikaty debugowania w konsoli.",
         "name": "Włącz debugowanie"
     },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Wrodzone"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Wyposażone"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Wrodzone - zarys"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Zawsze przygotowane - zarys"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Przygotowane"
-    },
     "TIDY5E.ItemFilters.CanCast": "Może Rzucić",
     "TIDY5E.ItemFilters.CanUse": "Może Użyć",
     "TIDY5E.Utilities.GMTools": "Narzędzia MG",
@@ -403,15 +376,6 @@
     "TIDY5E.Commands.HideContainerPanel": "Ukryj panel pojemnika",
     "TIDY5E.PortraitTitle": "Portret: {subject}",
     "TIDY5E.ItemImageTitle": "Przedmiot: {subject}",
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Zarys magicznego przedmiotu"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Suwak paska przewijania"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Zawsze przygotowane - akcent"
-    },
     "TIDY5E.Settings.UseHpOverlay": {
         "hint": "Pokazuje kolorową nakładkę HP na portrecie postaci.",
         "name": "Użyj nakładki zdrowia"
@@ -570,42 +534,11 @@
         "name": "Uwzględnij materiały eksploatacyjne jako akcje",
         "hint": "Domyślnie na liście akcji umieszcza materiały eksploatacyjne, które mają koszt aktywacji (Akcja, Akcja bonusowa itp.)."
     },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Główny akcent"
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Użyj własnych kolorów motywu",
-        "hint": "Pokazuje własne kolory motywu"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Wyposażone - zarys"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Wyposażone - akcent"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Paski HP"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Pakt - akcent"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Pakt - zarys"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Przygotowane - akcent"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Natychmiastowe - akcent"
-    },
     "TIDY5E.Utilities.ConfigureSections": "Konfiguruj sekcje",
     "TIDY5E.SpellSourceIdentifierLabelHint": "Postać posiadająca ten czar nie ma określonej tutaj klasy źródłowej.",
     "TIDY5E.Settings.UseVehicleEncumbranceBar": {
         "name": "Użyj paska obciążenia pojazdu",
         "hint": "Pokazuje pasek obciążenia na kartach pojazdu."
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "Natychmiastowe"
     },
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identyfikator klasy źródłowej",
     "TIDY5E.Utilities.Tools": "Narzędzia",
@@ -646,15 +579,6 @@
         "name": "Zablokuj ilość przedmiotu",
         "hint": "Zapobiega zmianom ilości przedmiotów przez graczy niebędących MG."
     },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Tylko rytuał - zarys"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Tylko rytuał"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Tylko rytuał - akcent"
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "hint": "Użyj specjalnie wybranych ikon Tidy dla szkół magii. Aby dostosować ikony szkół magii przez CONFIG.DND5E lub przez inne moduły, wyłącz tę opcję. Aby rozszerzyć niestandardowe ikony Tidy dla szkół magii , zapoznaj się z dokumentacją API Tidy.",
         "name": "Użyj ikon Tidy dla szkół magii"
@@ -693,9 +617,6 @@
         "name": "Użyj wskaźnika wyczerpania",
         "hint": "Pokazuje wskaźnik wyczerpania dla postaci, NPC-ów oraz pojazdów."
     },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "Natychmiastowe - zarys"
-    },
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Dołącz flagi przy tworzeniu zwojów zaklęć",
         "hint": "Zaklęcia mogą czasami zawierać specjalne dane z innych modułów, które warto przenieść do zwojów. Włącz, aby skopiować wszystkie dane oparte na flagach do zwoju w momencie jego tworzenia."
@@ -731,16 +652,9 @@
         "name": "Pokaż znacznik aktywnych efektów",
         "hint": "Pokazuje w widoku listy znacznik dla przedmiotów, które mają aktywne efekty."
     },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Przygotowane - zarys"
-    },
     "TIDY5E.Settings.ShowPlayerName": {
         "hint": "Pokazuje pole na imię gracza, pod nazwą postaci.",
         "name": "Pokaż imię gracza"
-    },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Zawsze pokazuj umiejętności",
-        "hint": "Usuwa przycisk przełączający widoczność umiejętności bez biegłości i zawsze je pokazuje."
     },
     "TIDY5E.PreviewSheetImageHint": "Lewy przycisk myszy: podgląd obrazu",
     "TIDY5E.Tidy5eSettings": "Ustawienia Tidy 5e Sheets",

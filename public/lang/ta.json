@@ -132,22 +132,6 @@
         "name": "எழுத்துக்குறி என்கம்பிரன்ச் பட்டியைப் பயன்படுத்தவும்",
         "hint": "கேரக்டர் தாள்களில் ஒரு குறியீட்டு பட்டியைக் காட்டுகிறது."
     },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "தனிப்பயன் கருப்பொருள் வண்ணங்களைப் பயன்படுத்தவும்",
-        "hint": "தனிப்பயன் கருப்பொருள் வண்ணங்களைக் காட்டுகிறது"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "உள்ளார்ந்த உச்சரிப்பு"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "எப்போதும் தயாராக உள்ளது"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "எப்போதும் தயாரிக்கப்பட்ட அவுட்லைன்"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "எப்போதும் தயாரிக்கப்பட்ட உச்சரிப்பு"
-    },
     "TIDY5E.Settings.Reset": {
         "dialogs": {
             "cancel": "ரத்துசெய்",
@@ -527,10 +511,6 @@
         "name": "பொருத்தப்பட்ட வெடிமருந்துகளை மட்டுமே காட்டு",
         "hint": "தற்போது ஆயுத அம்மோ தேர்வாளரில் வெடிமருந்துகளை மட்டுமே காட்டுகிறது."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "எப்போதும் திறன்களைக் காட்டுங்கள்",
-        "hint": "இலாப நோக்கற்ற திறன்களுக்கான தெரிவுநிலை மாற்று பொத்தானை அகற்றி அனைத்தையும் காட்டுகிறது."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "எழுத்துப்பிழை தாவலைக் காட்டு",
         "hint": "NPCS க்கான எழுத்துப்பிழை தாவலைக் காட்டுகிறது. எழுத்துப்பிழை பகுதியை பண்புக்கூறுகள் தாவலுக்கு நகர்த்த முடக்கு."
@@ -628,75 +608,9 @@
         "name": "நுகர்பொருட்களை செயல்களாக சேர்க்கவும்",
         "hint": "இயல்புநிலையாக செயல்கள் பட்டியலில் செயல்படுத்தும் செலவு (செயல், போனச் செயல் போன்றவை) கொண்ட நுகர்பொருட்களை உள்ளடக்கியது."
     },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "முதன்மை உச்சரிப்பு"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "பொருத்தப்பட்ட"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "எச்பி பார்கள்"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "பொருத்தப்பட்ட அவுட்லைன்"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "பொருத்தப்பட்ட உச்சரிப்பு"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "தயாரிக்கப்பட்டது"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "தயாரிக்கப்பட்ட அவுட்லைன்"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "தயாரிக்கப்பட்ட உச்சரிப்பு"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "ஒப்பந்தம்"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "PACT அவுட்லைன்"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "ஒப்பந்தம் உச்சரிப்பு"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "விருப்பத்தில்"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "வில் கோடிட்டுக் காட்டுங்கள்"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "விருப்படி உச்சரிப்பு"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "சடங்கு மட்டுமே"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "சடங்கு மட்டுமே அவுட்லைன்"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "சடங்கு மட்டுமே உச்சரிப்பு"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "உள்ளார்ந்த"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "உள்ளார்ந்த அவுட்லைன்"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "சுருள் கட்டைவிரல்"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "உருள் டிராக்"
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "நேர்த்தியான எழுத்துப்பிழை பள்ளி சின்னங்களைப் பயன்படுத்தவும்",
         "hint": "எழுத்துப்பிழை பள்ளிகளுக்கு டைடியின் கையால் தேர்ந்தெடுக்கப்பட்ட ஐகான்களைப் பயன்படுத்தவும். எழுத்துப்பிழை பள்ளி சின்னங்களை config.dnd5e அல்லது பிற தொகுதிகள் மூலம் தனிப்பயனாக்க, இந்த விருப்பத்தை முடக்கவும். நேர்த்தியின் தனிப்பயன் எழுத்துப்பிழை பள்ளி சின்னங்களை நீட்டிக்க, நேர்த்தியான பநிஇ ஆவணங்களைப் பார்க்கவும்."
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "மேசிக் உருப்படி உச்சரிப்பு அவுட்லைன்"
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "இயல்புநிலை தாளாக நேர்த்தியாக அமைக்கவும்",

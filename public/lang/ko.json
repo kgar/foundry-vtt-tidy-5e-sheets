@@ -360,10 +360,6 @@
         "name": "장비된 탄약만 표시.",
         "hint": "무기 탄약 선택기에서 현재 장비된 탄약만이 표시됩니다."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "항상 기술 보이기.",
-        "hint": "숙련이 아닌 기술에 대한 표시 여부 전환 버튼을 제거하고 모두 표시합니다."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "주문책 탭 보이기",
         "hint": "NPC의 주문책 탭을 표시합니다. 주문책 섹션을 속성 탭으로 이동하려면 비활성화합니다."
@@ -499,88 +495,6 @@
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "소모성 항목을 행동으로 포함",
         "hint": "기본적으로 행동 목록에 활성화 비용(행동, 추가 행동 등)이 있는 소모성 항목이 포함됩니다."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "사용자 설정 테마 색지정 사용",
-        "hint": "사용자 설정 테마 색지정 표시"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "주요 강조"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "장비중"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "HP 바"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "장비 외곽선"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "장비 강조"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "준비함"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "준비함 외곽선"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "준비함 강조"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "은혜"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "은혜 외곽선"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "은혜 강조"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "자유시전"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "자유시전 외곽선"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "자유시전 강조"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "의식 제한"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "의식 제한 외곽선"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "의식 제한 강조"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "선천적"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "선천적 외곽선"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "선천적 강조"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "항상 준비됨"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "항상 준비됨 외곽선"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "항상 준비됨 강조"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "스크롤바 막대"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "스크롤바 영역"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "마법 아이템 강조 외곽선"
     },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "Tidy 주문 학교 아이콘 사용",

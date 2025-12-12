@@ -166,10 +166,6 @@
         "name": "Montrer les munitions équipées uniquement",
         "hint": "N'affiche que les munitions actuellement équipées dans le sélecteur de munitions de l'arme."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Toujours montrer les caractéristiques",
-        "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Afficher l'onglet Livre de sort",
         "hint": "Affiche un onglet de livre de sorts pour les PNJ. Désactiver pour déplacer la section du livre de sorts vers l'onglet Attributs."
@@ -286,70 +282,6 @@
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Verrouiller la quantité d'objets",
         "hint": "Empêche les non-MJ d'apporter des modifications à la quantité des objets."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Utiliser des couleurs de thème personnalisées",
-        "hint": "Affiche les couleurs personnalisées du thème"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Surbrillance principale"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Equiper"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Barre de PV"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Contour équipé"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Surbrillance équipé"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Préparer"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Aperçu des préparé"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Surbrillance préparé"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pacte"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Pacte contours"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Surbrillance pacte"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "À volonté"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "A volonté contours"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Surbrillance à volonté"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Inné"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Inné contours"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Surbrillance inné"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Toujours préparé"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Toujours préparé contours"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Surbrillance toujours préparé"
     },
     "TIDY5E.Settings.Reset": {
         "name": "Rétablir les paramètres par défaut",
@@ -525,9 +457,6 @@
         "name": "Inclure les sorts à effets actifs dans les actions",
         "hint": "Inclut les sorts avec des effets actifs attachés (par exemple Barkskin(Peau d'écorce)) dans l'onglet/panneau Actions par défaut."
     },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Barre de défilement"
-    },
     "TIDY5E.Settings.Migrations": {
         "dialogTitle": "Migrer des données de Tidy",
         "migrationBeginningMessage": "Migration des données. Ne rafraîchissez pas la page avant d'avoir terminé.",
@@ -659,12 +588,6 @@
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Divers",
     "TIDY5E.ItemFilters.Filter.Other": "Autre",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Fond barre de défilement"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Surbrillance contours objet magique"
-    },
     "TIDY5E.SheetMigrations": {
         "MenuOptionText": "Migrations de feuilles",
         "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
@@ -757,15 +680,6 @@
         "name": "Utiliser les icônes d'écoles de Tidy"
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) ",
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Rituel Seulement"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Surbrillance Rituel seulement"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Contour Rituel seulement"
-    },
     "TIDY5E.EmptyContainer": "Ce conteneur est vide.",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identifiant de classe : {identifier}",
     "TIDY5E.SpellSourceIdentifierLabelHint": "L'acteur qui bénéficie de ce sort n'a pas la classe source spécifiée ici.",

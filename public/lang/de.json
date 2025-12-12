@@ -166,10 +166,6 @@
         "name": "Zeige nur ausgerüstete Munition",
         "hint": "Zeigt nur die aktuell ausgerüstete Munition in der Munitionsauswahl der Waffe an."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Zeige Fähigkeiten immer an",
-        "hint": "Entfernt die Umschalttaste für die Sichtbarkeit von ungeübten Fertigkeiten und zeigt alle an."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Zeige Zauberbuchreiter",
         "hint": "Zeigt ein Zauberbuchreiter für NSCe. Deaktivieren, um das Zauberbuch in den Reiter \"Attribute\" zu verschieben."
@@ -286,70 +282,6 @@
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Gegenstandsmengen sperren",
         "hint": "Verhindert, dass Nicht-SL Änderungen an der Gegenstandsmenge vornehmen."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Benutzerdefinierte Designfarben verwenden",
-        "hint": "Zeigt benutzerdefinierte Designfarben an"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Primärer Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Ausgerüstet"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "TP Balken"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "„Ausgerüstet“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "„Ausgerüstet“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Vorbereitet"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "„Vorbereitet“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "„Vorbereitet“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pakt"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "\"Pakt\" Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "\"Pakt\" Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "Nach Belieben"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "„Nach Belieben“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "„Nach Belieben“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Angeboren"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "„Angeboren“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "„Angeboren“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Immer vorbereitet"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "„Immer Vorbereitet“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "„Immer Vorbereitet“ Akzent"
     },
     "TIDY5E.Settings.Reset": {
         "name": "Einstellungen zurücksetzen",
@@ -651,18 +583,6 @@
         "text": "",
         "title": ""
     },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Bildlaufleistenspur"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "„Nur als Ritual“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "„Nur als Ritual“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Nur als Ritual"
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "Verwende Tidy Spell School Symbole",
         "hint": ""
@@ -705,12 +625,6 @@
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Flags in die Erstellung von Zauberspruchrollen einbeziehen",
         "hint": "Zaubersprüche können manchmal spezielle Daten von anderen Modulen enthalten, die nützlich sein können, um in eine Zauberrolle zu übertragen. Aktivieren, um alle markenbasierten Daten bei der Erstellung in die Schriftrolle zu kopieren."
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Verschiebbarer Scrollgriff"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Magischer Gegenstand Akzent Umrandung"
     },
     "TIDY5E.ItemFilters.CanUse": "",
     "TIDY5E.Utilities.GMTools": "",

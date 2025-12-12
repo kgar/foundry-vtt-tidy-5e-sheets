@@ -447,10 +447,6 @@
     "name": "装備済の矢弾のみ表示",
     "hint": "武器の矢弾セレクタで現在装備されている矢弾のみ表示します。"
   },
-  "TIDY5E.Settings.AlwaysShowSkills": {
-    "name": "常に技能を表示",
-    "hint": "未習熟技能の表示切替ボタンを削除し、すべて表示します。"
-  },
   "TIDY5E.Settings.ShowNPCSpellbookTab": {
     "name": "呪文書タブを表示",
     "hint": "NPCの呪文書タブを表示します。無効にすると、呪文書セクションが能力値タブに移動します。"
@@ -590,88 +586,6 @@
   "TIDY5E.Settings.ActionListIncludeConsumables": {
     "name": "消耗品をアクションに含める",
     "hint": "デフォルトでアクションリストに、起動コスト（アクション、ボーナスアクションなど）を持つ消耗品を含めます。"
-  },
-  "TIDY5E.Settings.ColorPickerEnabled": {
-    "name": "カスタムテーマカラーを使用",
-    "hint": "カスタムテーマカラーを表示"
-  },
-  "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-    "name": "主要アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerEquipped": {
-    "name": "装備中"
-  },
-  "TIDY5E.Settings.ColorPickerHpBar": {
-    "name": "HPバー"
-  },
-  "TIDY5E.Settings.ColorPickerEquippedOutline": {
-    "name": "装備中 アウトライン"
-  },
-  "TIDY5E.Settings.ColorPickerEquippedAccent": {
-    "name": "装備中 アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerPrepared": {
-    "name": "準備済み"
-  },
-  "TIDY5E.Settings.ColorPickerPreparedOutline": {
-    "name": "準備済み アウトライン"
-  },
-  "TIDY5E.Settings.ColorPickerPreparedAccent": {
-    "name": "準備済み アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerPact": {
-    "name": "契約"
-  },
-  "TIDY5E.Settings.ColorPickerPactOutline": {
-    "name": "契約 アウトライン"
-  },
-  "TIDY5E.Settings.ColorPickerPactAccent": {
-    "name": "契約 アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerAtWill": {
-    "name": "常に発動可能"
-  },
-  "TIDY5E.Settings.ColorPickerAtWillOutline": {
-    "name": "常に発動可能 アウトライン"
-  },
-  "TIDY5E.Settings.ColorPickerAtWillAccent": {
-    "name": "常に発動可能 アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnly": {
-    "name": "儀式のみ"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-    "name": "儀式のみ アウトライン"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-    "name": "儀式のみ アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerInnate": {
-    "name": "生得呪文"
-  },
-  "TIDY5E.Settings.ColorPickerInnateOutline": {
-    "name": "生得呪文 アウトライン"
-  },
-  "TIDY5E.Settings.ColorPickerInnateAccent": {
-    "name": "生得呪文 アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-    "name": "常に準備済み"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": "常に準備済み アウトライン"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": "常に準備済み アクセント"
-  },
-  "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-    "name": "スクロールバーつまみ"
-  },
-  "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-    "name": "スクロールバートラック"
-  },
-  "TIDY5E.Settings.ColorPickerMagicAccent": {
-    "name": "魔法のアイテム アクセント アウトライン"
   },
   "TIDY5E.Settings.UseTidySpellSchoolIcons": {
     "name": "Tidyの呪文系統アイコンを使用",

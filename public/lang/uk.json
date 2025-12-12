@@ -279,10 +279,6 @@
         "name": "Показувати лише споряджені боєприпаси",
         "hint": "Показує лише на цю мить споряджені боєприпаси в меню вибору боєприпасу на зброї."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Завжди показувати навички",
-        "hint": "Прибирає перемикач видимості для особливостей, якими персонаж не володіє, і завжди показує їх."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Показувати вкладку чар НІП",
         "hint": "Показує список чар для НІП окремою вкладкою. Вимкніть для переміщення розділу чар на вкладку атрибутів."
@@ -403,39 +399,6 @@
         "hint": "Не дозволяє нікому окрім ГМа змінювати кількість валюти персонажа."
     },
     "TIDY5E.Settings.ActionList.Header": "Список дії",
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Вроджені"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Тільки ритуал - контур"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Тільки ритуал - акцент"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Вроджені - контур"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Вроджені - акцент"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Завжди підготовлені"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Завжди підготовлені - контур"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Завжди підготовлені - акцент"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Каретка смужки прокрутки"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Доріжка смужки прокрутки"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Магічний предмет - акцент контуру"
-    },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
         "name": "Використовувати смужку перенавантаження для НІП",
         "hint": "Показує смужку перенавантаження на аркушах НІП."
@@ -484,39 +447,6 @@
         "name": "Включити чари з активними ефектами до дій",
         "hint": "Показує чари що накладають активні ефекти (наприклад Дубова шкіра) на вкладці/панелі дій за замовчуванням."
     },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Основний акцент"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Споряджено"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Смужки здоров'я"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Підготовлені"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Договір"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "За бажанням"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "За бажанням - контур"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Договір - контур"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Підготовлені - контур"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Договір - акцент"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "За бажанням - акцент"
-    },
     "TIDY5E.ExhaustionLevelTooltip": "Рівень виснаження {level}",
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Використовувати смужку перенавантаження для персонажа",
@@ -525,22 +455,6 @@
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "Включити витратники до дій",
         "hint": "Показує витратники, що мають вартість активації (дією, бонусною дією тощо) в списку дій за замовчуванням."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "hint": "Показує власні кольори теми",
-        "name": "Використовувати власні кольори теми"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Споряджено - акцент"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Тільки ритуал"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Споряджено - контур"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Підготовлені - акцент"
     },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "Використовувати піктограми Tidy для шкіл чар",

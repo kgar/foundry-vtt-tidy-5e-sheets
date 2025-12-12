@@ -447,10 +447,6 @@
     "name": "Show Equipped Ammunition Only",
     "hint": "Shows only currently equipped ammunition in the weapon ammo selector."
   },
-  "TIDY5E.Settings.AlwaysShowSkills": {
-    "name": "Always Show Skills",
-    "hint": "Removes the visibility toggle button for non-proficient skills and shows all."
-  },
   "TIDY5E.Settings.ShowNPCSpellbookTab": {
     "name": "Show Spellbook Tab",
     "hint": "Shows a spellbook tab for NPCs. Disable to move the spellbook section to the Attributes tab."
@@ -590,88 +586,6 @@
   "TIDY5E.Settings.ActionListIncludeConsumables": {
     "name": "Include Consumables as Actions",
     "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
-  },
-  "TIDY5E.Settings.ColorPickerEnabled": {
-    "name": "Use Custom Theme Colors",
-    "hint": "Shows custom theme colors"
-  },
-  "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-    "name": "Primary Accent"
-  },
-  "TIDY5E.Settings.ColorPickerEquipped": {
-    "name": "Equipped"
-  },
-  "TIDY5E.Settings.ColorPickerHpBar": {
-    "name": "HP Bars"
-  },
-  "TIDY5E.Settings.ColorPickerEquippedOutline": {
-    "name": "Equipped Outline"
-  },
-  "TIDY5E.Settings.ColorPickerEquippedAccent": {
-    "name": "Equipped Accent"
-  },
-  "TIDY5E.Settings.ColorPickerPrepared": {
-    "name": "Prepared"
-  },
-  "TIDY5E.Settings.ColorPickerPreparedOutline": {
-    "name": "Prepared Outline"
-  },
-  "TIDY5E.Settings.ColorPickerPreparedAccent": {
-    "name": "Prepared Accent"
-  },
-  "TIDY5E.Settings.ColorPickerPact": {
-    "name": "Pact"
-  },
-  "TIDY5E.Settings.ColorPickerPactOutline": {
-    "name": "Pact Outline"
-  },
-  "TIDY5E.Settings.ColorPickerPactAccent": {
-    "name": "Pact Accent"
-  },
-  "TIDY5E.Settings.ColorPickerAtWill": {
-    "name": "At Will"
-  },
-  "TIDY5E.Settings.ColorPickerAtWillOutline": {
-    "name": "At Will Outline"
-  },
-  "TIDY5E.Settings.ColorPickerAtWillAccent": {
-    "name": "At Will Accent"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnly": {
-    "name": "Ritual Only"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-    "name": "Ritual Only Outline"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-    "name": "Ritual Only Accent"
-  },
-  "TIDY5E.Settings.ColorPickerInnate": {
-    "name": "Innate"
-  },
-  "TIDY5E.Settings.ColorPickerInnateOutline": {
-    "name": "Innate Outline"
-  },
-  "TIDY5E.Settings.ColorPickerInnateAccent": {
-    "name": "Innate Accent"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-    "name": "Always Prepared"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": "Always Prepared Outline"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": "Always Prepared Accent"
-  },
-  "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-    "name": "Scrollbar Thumb"
-  },
-  "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-    "name": "Scrollbar Track"
-  },
-  "TIDY5E.Settings.ColorPickerMagicAccent": {
-    "name": "Magic Item Accent Outline"
   },
   "TIDY5E.Settings.UseTidySpellSchoolIcons": {
     "name": "Use Tidy Spell School Icons",

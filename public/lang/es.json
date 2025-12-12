@@ -182,10 +182,6 @@
         "name": "Mostrar solo munición equipada",
         "hint": "Muestra solo la munición equipada actualmente en el selector de munición del arma."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Mostrar siempre las habilidades",
-        "hint": "Por defecto, las habilidades no competentes se ocultan mediante un botón de activación. Actívalo para no ocultarlo nunca."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Muestra la Pestaña de Hechizos",
         "hint": "Muestra la pestaña de hechizos para los NPCs. Desactivar para mover la sección de hechizos a la pestaña de atributos."
@@ -302,70 +298,6 @@
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Bloquear cantidad de objetos",
         "hint": "Previene a los no-DMs hacer cambios en la cantidad de objetos."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Utilizar colores de tema personalizados",
-        "hint": "Mostrar colores de tema personalizados"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Acento primario"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Equipado"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Barras de PS"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Trazado de Equipado"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Acento de Equipado"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Trazado de Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Acento de Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pacto"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Trazado de Pacto"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Acento de Pacto"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "A voluntad"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "Trazado de A Voluntad"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Acento de A Voluntad"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Innato"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Trazado de Innato"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Acento de Innato"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Siempre preparado"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Trazado de Siempre Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Acento de Siempre Preparado"
     },
     "TIDY5E.Settings.Reset": {
         "name": "Restablecer la configuración predeterminada",
@@ -619,12 +551,6 @@
             "explanation1": "La revisión de interfaz de usuario de Tidy 5e Sheets ha renovado el Diario para poseer tantas entradas como quieras. Para acomodar esto, se neesita migrar de la antigua estructura de Diarios a la nueva y extensible estructura. Información antigua de Diarios no será visible en las Tidy 5e Sheets renovadas."
         }
     },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Trayectoria de la barra de desplazamiento"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Cabezal de la barra de desplazamiento"
-    },
     "TIDY5E.Commands.CollapseAll": "Contraer todo",
     "TIDY5E.Commands.ExpandAll": "Expandir todo",
     "TIDY5E.WorldSettings.TabNpc": {
@@ -655,9 +581,6 @@
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ataque de Hechizo a Distancia",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Ataque de Hechizo a Distancia",
     "TIDY5E.ItemFilters.Filter.Other": "Otro",
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Esquema de acento del objeto mágico"
-    },
     "TIDY5E.Commands.ShowLegendaryToolbar": "Mostrar barra de herramientas legendaria",
     "TIDY5E.Commands.HideLegendaryToolbar": "Ocultar barra de herramientas legendaria",
     "TIDY5E.SortMode.ActionListDefault": "Forma de ordenar por defecto la lista de acciones",
@@ -728,15 +651,6 @@
     "TIDY5E.Utilities.ConfigureSections": "Configurar secciones",
     "TIDY5E.LocalizationTestKey": "Botón de ubicación de prueba",
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Mayús+Clic para saltar la tirada y recargar al instante) ",
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Solo rituales"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Trazado de Solo Rituales"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Acento de Solo Rituales"
-    },
     "TIDY5E.EmptyContainer": "Este contenedor está vacío.",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificador de Clase: {identifier}",
     "TIDY5E.SpellSourceIdentifierLabelHint": "El actor que tiene este hechizo no tiene la clase de origen que se especifica aquí.",

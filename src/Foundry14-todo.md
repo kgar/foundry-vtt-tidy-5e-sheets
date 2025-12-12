@@ -21,41 +21,41 @@
   - [x] sheets
   - [x] theme
   - [x] tooltips
-  - [ ] types
+  - [x] types
   - [ ] utils
 - [ ] Eliminate these loc keys
   - [x] TIDY5E.Settings.AllowHpMaxOverride.hint
-  - [ ] TIDY5E.Settings.AllowHpMaxOverride.name
-  - [ ] TIDY5E.Settings.AlwaysShowSkills.hint
-  - [ ] TIDY5E.Settings.AlwaysShowSkills.name
-  - [ ] TIDY5E.Settings.ColorPickerAlwaysPrepared.name
-  - [ ] TIDY5E.Settings.ColorPickerAlwaysPreparedAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerAlwaysPreparedOutline.name
-  - [ ] TIDY5E.Settings.ColorPickerAtWill.name
-  - [ ] TIDY5E.Settings.ColorPickerAtWillAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerAtWillOutline.name
-  - [ ] TIDY5E.Settings.ColorPickerEnabled.hint
-  - [ ] TIDY5E.Settings.ColorPickerEnabled.name
-  - [ ] TIDY5E.Settings.ColorPickerEquipped.name
-  - [ ] TIDY5E.Settings.ColorPickerEquippedAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerEquippedOutline.name
-  - [ ] TIDY5E.Settings.ColorPickerHpBar.name
-  - [ ] TIDY5E.Settings.ColorPickerInnate.name
-  - [ ] TIDY5E.Settings.ColorPickerInnateAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerInnateOutline.name
-  - [ ] TIDY5E.Settings.ColorPickerMagicAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerPact.name
-  - [ ] TIDY5E.Settings.ColorPickerPactAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerPactOutline.name
-  - [ ] TIDY5E.Settings.ColorPickerPrepared.name
-  - [ ] TIDY5E.Settings.ColorPickerPreparedAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerPreparedOutline.name
-  - [ ] TIDY5E.Settings.ColorPickerPrimaryAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerRitualOnly.name
-  - [ ] TIDY5E.Settings.ColorPickerRitualOnlyAccent.name
-  - [ ] TIDY5E.Settings.ColorPickerRitualOnlyOutline.name
-  - [ ] TIDY5E.Settings.ColorPickerScrollbarThumb.name
-  - [ ] TIDY5E.Settings.ColorPickerScrollbarTrack.name
+  - [x] TIDY5E.Settings.AllowHpMaxOverride.name
+  - [x] TIDY5E.Settings.AlwaysShowSkills.hint
+  - [x] TIDY5E.Settings.AlwaysShowSkills.name
+  - [x] TIDY5E.Settings.ColorPickerAlwaysPrepared.name
+  - [x] TIDY5E.Settings.ColorPickerAlwaysPreparedAccent.name
+  - [x] TIDY5E.Settings.ColorPickerAlwaysPreparedOutline.name
+  - [x] TIDY5E.Settings.ColorPickerAtWill.name
+  - [x] TIDY5E.Settings.ColorPickerAtWillAccent.name
+  - [x] TIDY5E.Settings.ColorPickerAtWillOutline.name
+  - [x] TIDY5E.Settings.ColorPickerEnabled.hint
+  - [x] TIDY5E.Settings.ColorPickerEnabled.name
+  - [x] TIDY5E.Settings.ColorPickerEquipped.name
+  - [x] TIDY5E.Settings.ColorPickerEquippedAccent.name
+  - [x] TIDY5E.Settings.ColorPickerEquippedOutline.name
+  - [x] TIDY5E.Settings.ColorPickerHpBar.name
+  - [x] TIDY5E.Settings.ColorPickerInnate.name
+  - [x] TIDY5E.Settings.ColorPickerInnateAccent.name
+  - [x] TIDY5E.Settings.ColorPickerInnateOutline.name
+  - [x] TIDY5E.Settings.ColorPickerMagicAccent.name
+  - [x] TIDY5E.Settings.ColorPickerPact.name
+  - [x] TIDY5E.Settings.ColorPickerPactAccent.name
+  - [x] TIDY5E.Settings.ColorPickerPactOutline.name
+  - [x] TIDY5E.Settings.ColorPickerPrepared.name
+  - [x] TIDY5E.Settings.ColorPickerPreparedAccent.name
+  - [x] TIDY5E.Settings.ColorPickerPreparedOutline.name
+  - [x] TIDY5E.Settings.ColorPickerPrimaryAccent.name
+  - [x] TIDY5E.Settings.ColorPickerRitualOnly.name
+  - [x] TIDY5E.Settings.ColorPickerRitualOnlyAccent.name
+  - [x] TIDY5E.Settings.ColorPickerRitualOnlyOutline.name
+  - [x] TIDY5E.Settings.ColorPickerScrollbarThumb.name
+  - [x] TIDY5E.Settings.ColorPickerScrollbarTrack.name
   - [ ] TIDY5E.Settings.HideDeathSavesFromPlayers.hint
   - [ ] TIDY5E.Settings.HideDeathSavesFromPlayers.name
   - [ ] TIDY5E.Settings.HideIfZero.hint

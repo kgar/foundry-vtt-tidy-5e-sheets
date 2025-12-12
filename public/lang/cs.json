@@ -166,10 +166,6 @@
         "name": "Zobrazovat pouze vybavenou munici?",
         "hint": "Ve výběru munice zbraně zobrazí pouze aktuálně vybavená munice."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Zobrazovat dovednosti vždy?",
-        "hint": "Odstraní přepínací tlačítko viditelnosti dovedností bez zdatnosti a zobrazí se všechny."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Zobrazovat kartu kouzel?",
         "hint": "Zobrazí kartu kouzel NP. Zakázáním přesuneš sekci kouzel do záložky rysy."
@@ -286,70 +282,6 @@
     "TIDY5E.Settings.LockItemQuantity": {
         "name": "Zamknout množství položek?",
         "hint": "Zabrání nePJům měnit množství u položky."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Používat volitelný barevný motiv?",
-        "hint": "Zobrazit barvy volitelného motivu"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Hlavní důraz"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Vybaveno"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Ukazatele BV"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Nástin vybavených"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Důraz na vybavené"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Připraveno"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Nástin připravených"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Důraz na připravené"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pakt"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Nástin paktů"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Důraz na pakt"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "Dle libosti"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "Nástin dle libosti"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Důraz dle libosti"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Vrozené"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Nástin vrozených"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Důraz na vrozené"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Vždy připravené"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Nástin vždy připravených"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Důraz na vždy připravené"
     },
     "TIDY5E.Settings.Reset": {
         "name": "Obnovení výchozího nastavení",
@@ -675,21 +607,6 @@
         "FinancialSupportHeader": "Způsoby podpory Deníků Tidy 5e",
         "logoAltText": "Protihaterský štít se čtyřmi hvězdami a nápisem „Tidy 5e“ na přední straně."
     },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Nástin rituálů"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Pouze rituál"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Důraz na rituály"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Ukazatel posuvníku"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Panel posuvníku"
-    },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "hint": "Použije ručně přiřazené ikony Tidy pro školy magie. Chceš-li přizpůsobit ikony škol kouzel prostřednictvím souboru CONFIG.DND5E nebo jiných modulů, tuto možnost zakaž. Chceš-li rozšířit vlastní ikony škol kouzel v Tidy, nahlédni do dokumentace API Tidy.",
         "name": "Používat ikony škol magie Tidy?"
@@ -718,9 +635,6 @@
     "TIDY5E.Utilities.IdentifyAll": "Identifikace všech položek",
     "TIDY5E.Utilities.GMTools": "Nástroje PJ",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Označit všechny položky jako neidentifikované",
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Důraz na nástin magických předmětů"
-    },
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - útok kouzlem na dálku",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - útok kouzlem",
     "TIDY5E.ActorSpellAttackFlavorText": "Útok kouzlem",

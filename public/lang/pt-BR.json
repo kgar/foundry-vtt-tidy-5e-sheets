@@ -295,10 +295,6 @@
         "name": "Mostrar Apenas Munição Equipada",
         "hint": "Mostra apenas a munição equipada no seletor de munição da arma."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Sempre Mostrar Perícias",
-        "hint": "Remove o botão de alternância de perícias vazias e exibe todas."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Mostrar Aba de Grimório",
         "hint": "Mostra uma aba de grimório para PNJs. Desative para mover a seção de grimório para a aba Atributos."
@@ -430,88 +426,6 @@
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "Incluir Consumíveis como Ações",
         "hint": "Por padrão, inclui consumíveis que têm um custo de ativação (Ação, Ação Bônus, etc.) na lista de Ações."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Usar Cores Personalizadas de Tema",
-        "hint": "Mostra cores personalizadas do tema"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Destaque Primário"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Equipado"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Barra de PV"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Contorno Equipado"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Destaque Equipado"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Contorno Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Destaque Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pacto"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Contorno Pacto"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Destaque Pacto"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "À Vontade"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "Contorno À Vontade"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Destaque À Vontade"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Apenas Ritual"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Contorno Apenas Ritual"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Destaque Apenas Ritual"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Inato"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Contorno Inato"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Destaque Inato"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Sempre Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Contorno Sempre Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Destaque Sempre Preparado"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Miniatura da Barra de Rolagem"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Faixa da Barra de Rolagem"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Contorno de Destaque de Item Mágico"
     },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "Usar Ícones de Escolas de Magia do Tidy",

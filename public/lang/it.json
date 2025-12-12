@@ -166,10 +166,6 @@
         "name": "Mostra solo le munizioni equipaggiate",
         "hint": "Mostra solo le munizioni attualmente equipaggiate nel selettore delle munizioni dell'arma."
     },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Mostra sempre le abilità",
-        "hint": "Per impostazione predefinita, le abilità non competenti sono nascoste da un pulsante di attivazione/disattivazione. Seleziona perché non siano mai nascosti."
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "Mostra la scheda Libro degli incantesimi",
         "hint": "Mostra una scheda del libro degli incantesimi per i PNG. Disabilita per spostare la sezione del libro degli incantesimi nella scheda Attributi."
@@ -287,70 +283,6 @@
         "name": "Blocca la quantità degli oggetti",
         "hint": "Impedisce ai non-DM di apportare modifiche alla quantità degli oggetti."
     },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Utilizza colori tema personalizzati",
-        "hint": "Mostra i colori del tema personalizzato"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Colore primario"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Equipaggiato"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Barre PF"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Bordo Equipaggiato"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Colore Equipaggiato"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Preparato"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Bordo Preparato"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Colore Preparato"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Patto"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Bordo Patto"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Colore Patto"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "A Volontà"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "Bordo a Volontà"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Colore A Volontà"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Innato"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Bordo Innato"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Colore Innato"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Sempre Preparato"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Bordo Sempre Preparato"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Colore Sempre Preparato"
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Ripristina le impostazioni predefinite",
         "hint": "Ciò ripristinerà tutte le impostazioni predefinite del sistema di gioco attivo. Ciò influisce solo sulle impostazioni con ambito \"mondo\", come le opzioni DM.",
@@ -462,12 +394,6 @@
         "name": "Includi oggetti consumabili come azioni",
         "hint": "Include i materiali di consumo che hanno un costo di attivazione (Azione, Azione bonus, ecc.) nell'elenco Azioni per impostazione predefinita."
     },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Testa Barra scorrimento"
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Traccia della barra di scorrimento"
-    },
     "TIDY5E.Settings.Migrations": {
         "name": "Migrazioni",
         "buttonLabel": "Migrare Dati di Tidy",
@@ -559,9 +485,6 @@
         }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Colore Bordo Oggetto Magico"
-    },
     "TIDY5E.Settings.About": {
         "buttonLabel": "Info Tidy 5e Sheets",
         "dialogTitle": "Info Tidy 5e Sheets",
@@ -756,15 +679,6 @@
         "hint": "Usa le icone selezionate da Tidy per le scuole di magia. Per personalizzare le icone della scuola di magia tramite CONFIG.DND5E o tramite altri moduli, disabilita questa opzione. Per estendere le icone personalizzate della scuola di magia di Tidy, fai riferimento alla documentazione dell'API Tidy."
     },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click per saltare il tiro e ricaricare subito) ",
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Bordo Solo Rituale"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Solo Rituale"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Colore Solo Rituale"
-    },
     "TIDY5E.EmptyContainer": "Questo contenitore è vuoto.",
     "TIDY5E.SpellSourceIdentifierLabelHint": "Il personaggio che possiede questo incantesimo non ha la classe sorgente specificata qui.",
     "TIDY5E.Utilities.Tools": "Strumenti",
