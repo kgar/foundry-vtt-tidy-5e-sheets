@@ -17,7 +17,6 @@
     "TIDY5E.Tidy5eSettings": "Configurações Tidy 5e Sheets",
     "TIDY5E.AddSpecific": "Adicionar {name}",
     "TIDY5E.ExhaustionLevelTooltip": "Exaustão Nível {level}",
-    "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.NoSpecialSenses": "Sem Sentidos Especiais",
     "TIDY5E.Group.NamePlaceholder": "Nome do Grupo",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostrar Painel de Info.",
@@ -30,12 +29,7 @@
     "TIDY5E.JournalTabName": "Diário",
     "TIDY5E.StatblockTabName": "Bloco de Estatísticas",
     "TIDY5E.Actions": {
-        "TabName": "Ações",
-        "OverriddenSetOverrideFalse": "Remover da Lista de Ações (Shift+Clique para limpar a substituição)",
-        "OverriddenSetOverrideTrue": "Adicionar à Lista de Ações (Shift+Clique para limpar a substituição)",
-        "SetOverrideFalse": "Remover da Lista de Ações",
-        "SetOverrideTrue": "Adicionar à Lista de Ações",
-        "ResetActionDefault": "Redefinir Ação Padrão"
+        "TabName": "Ações"
     },
     "TIDY5E.HitDC": "Acerto/CD",
     "TIDY5E.RestoreOnRest": "Restaurar em Descanso",
@@ -87,7 +81,6 @@
     "TIDY5E.EmptyFavorites": "Clique com o botão direito e adicione aos Favoritos, ou arraste qualquer coisa da sua ficha para cá para acesso rápido.",
     "TIDY5E.ShowNotProficientSkills": "Mostrar Não-Proficiente",
     "TIDY5E.HideNotProficientSkills": "Ocultar Não-Proficiente",
-    "TIDY5E.Abilities": "Atributos",
     "TIDY5E.Ability.EditScore.label": "Editar Valor",
     "TIDY5E.EmptyTools": "Sem proficiência em ferramentas.",
     "TIDY5E.Environment": "Ambiente",
@@ -97,8 +90,6 @@
     "TIDY5E.SearchHint": "Digite para exibir os resultados da procura",
     "TIDY5E.InfoCardInspectHint": "Inspecionar {inspectKey}",
     "TIDY5E.ItemCardsMouseHint": "Clique com o botão do meio do rato para visualizar/editar o elemento",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Gravar",
     "TIDY5E.AttackMod": "Mod. de Ataque",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Ataque Mágico",
     "TIDY5E.ActorSpellAttackFlavorText": "Ataque Mágico",
@@ -253,8 +244,7 @@
         "name": "Guias Padrão de Ficha",
         "hint": "Determina quais guias serão exibidas e em qual ordem, por padrão. Aplica-se quando nenhuma seleção de guia seja feita para um ator.",
         "AvailableHeader": "Guias Disponíveis",
-        "SelectedHeader": "Guias Selecionadas",
-        "AtLeastOneTabRequiredErrorMessage": "Guias padrão: pelo menos uma guia é necessária para cada tipo de ator."
+        "SelectedHeader": "Guias Selecionadas"
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Rolagem Padrão de Salvaguarda Contra Morte",

@@ -7,9 +7,7 @@
     "TIDY5E.Inventory.Weight.Tooltip": "எடை: {weight} {weightUnit}",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ContextMenuActionPrepare": "ஆயத்தம்",
-    "TIDY5E.Abilities": "திறன்கள்",
     "TIDY5E.InfoCardInspectHint": "{inspectKey} ஆய்வு",
-    "TIDY5E.AbbrMod": "மோட்",
     "TIDY5E.ActorSpellAttackFlavorText": "எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - கைகலப்பு எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.RangedSpellAttackMod": "வீச்சு எழுத்துப்பிழை தாக்குதல் மோட்",
@@ -57,8 +55,7 @@
         "hint": "எந்த தாவல்கள் காண்பிக்கப்படும், இயல்புநிலையாக எந்த வரிசையில் இருக்கும் என்பதை தீர்மானிக்கிறது. ஒரு நடிகருக்கு தாவல் தேர்வுகள் எதுவும் செய்யப்படாதபோது பொருந்தும்.",
         "name": "இயல்புநிலை தாள் தாவல்கள்",
         "AvailableHeader": "கிடைக்கும் தாவல்கள்",
-        "SelectedHeader": "தேர்ந்தெடுக்கப்பட்ட தாவல்கள்",
-        "AtLeastOneTabRequiredErrorMessage": "இயல்புநிலை தாவல்கள்: ஒவ்வொரு நடிகர் வகைக்கும் குறைந்தது ஒரு தாவல் தேவை."
+        "SelectedHeader": "தேர்ந்தெடுக்கப்பட்ட தாவல்கள்"
     },
     "TIDY5E.Settings.Reset": {
         "dialogs": {
@@ -240,7 +237,6 @@
     "TIDY5E.ShowItemArt": "படத்தைக் காட்டு",
     "TIDY5E.Tidy5eSettings": "நேர்த்தியான 5e தாள்கள் அமைப்புகள்",
     "TIDY5E.ExhaustionLevelTooltip": "சோர்வு நிலை {level}",
-    "TIDY5E.AbbrInitiative": "இனி",
     "TIDY5E.NoSpecialSenses": "சிறப்பு புலன்கள் இல்லை",
     "TIDY5E.Group.NamePlaceholder": "குழு பெயர்",
     "TIDY5E.Group.HideMemberTabInfoPanel": "செய்தி பேனலை மறைக்கவும்",
@@ -251,12 +247,7 @@
     "TIDY5E.HitDiceRollAverage": "வலது கிளிக்: சராசரியைப் பயன்படுத்துங்கள்",
     "TIDY5E.JournalTabName": "செய்தித் தாள்",
     "TIDY5E.Actions": {
-        "TabName": "செயல்கள்",
-        "OverriddenSetOverrideFalse": "செயல்கள் பட்டியலிலிருந்து அகற்று (மேலெழுதலை அழிக்க சிப்ட்+கிளிக் செய்க)",
-        "OverriddenSetOverrideTrue": "செயல்கள் பட்டியலில் சேர்க்கவும் (மேலெழுதலை அழிக்க சிப்ட்+கிளிக் செய்யவும்)",
-        "SetOverrideFalse": "செயல்கள் பட்டியலிலிருந்து அகற்று",
-        "ResetActionDefault": "செயல் இயல்புநிலையை மீட்டமை",
-        "SetOverrideTrue": "செயல்கள் பட்டியலில் சேர்க்கவும்"
+        "TabName": "செயல்கள்"
     },
     "TIDY5E.HitDC": "HIT / நேர்மின்னழுத்தம்",
     "TIDY5E.RestoreOnRest": "ஓய்வில் மீட்டமைக்கவும்",
@@ -294,7 +285,6 @@
     "TIDY5E.SearchClear": "தேடலை அழி",
     "TIDY5E.SearchHint": "தேடல் முடிவுகளைக் காட்ட தட்டச்சு செய்யத் தொடங்குங்கள்",
     "TIDY5E.ItemCardsMouseHint": "உருப்படியைக் காண/திருத்த நடுத்தர சுட்டி",
-    "TIDY5E.AbbrSavingThrow": "சேமி",
     "TIDY5E.AttackMod": "தாக்குதல் மோட்",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - எழுத்துப்பிழை தாக்குதல்",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "கைகலப்பு எழுத்துப்பிழை தாக்குதல்",

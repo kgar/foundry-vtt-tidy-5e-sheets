@@ -5,7 +5,6 @@
     "TIDY5E.ShowPortraitArt": "Mostrar Retrato",
     "TIDY5E.ShowItemImage": "Click Derecho: Mostrar Arte del Objeto",
     "TIDY5E.ShowItemArt": "Mostrar Imagen",
-    "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.RestHint": "Tomar un descanso",
     "TIDY5E.ShortRest": "Descanso Corto",
     "TIDY5E.LongRest": "Descanso Largo",
@@ -44,14 +43,11 @@
     "TIDY5E.RemoveFavorite": "Eliminar Favorito",
     "TIDY5E.ShowNotProficientSkills": "Mostrar no competente",
     "TIDY5E.HideNotProficientSkills": "Ocultar no competente",
-    "TIDY5E.Abilities": "Características",
     "TIDY5E.Environment": "Entorno",
     "TIDY5E.Search": "Buscar",
     "TIDY5E.SearchClear": "Borrar Búsqueda",
     "TIDY5E.SearchHint": "Comienza a escribir lo que estás buscando",
     "TIDY5E.ItemCardsMouseHint": "Botón central del ratón para ver/editar el objeto",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Salvación",
     "TIDY5E.SpellAttackMod": "Modificador de Ataque con Hechizos",
     "TIDY5E.TokenLinked": "Token vinculado a actor",
     "TIDY5E.TokenUnlinked": "Token no vinculado a actor",
@@ -196,8 +192,7 @@
         "AvailableHeader": "Pestañas disponibles",
         "SelectedHeader": "Pestañas seleccionadas",
         "name": "Pestaña predeterminada en hoja",
-        "hint": "Determina qué pestañas se mostrarán y en qué orden de forma predeterminada. Se aplica cuando no se han realizado selecciones de pestañas para un actor.",
-        "AtLeastOneTabRequiredErrorMessage": "Pestañas predeterminadas: se requiere al menos una pestaña para cada tipo de actor."
+        "hint": "Determina qué pestañas se mostrarán y en qué orden de forma predeterminada. Se aplica cuando no se han realizado selecciones de pestañas para un actor."
     },
     "TIDY5E.Settings.ActionList.Header": "Lista de acciones",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
@@ -218,12 +213,7 @@
         "name": "Incluir consumible como acciones"
     },
     "TIDY5E.Actions": {
-        "OverriddenSetOverrideTrue": "Añadir a la Lista de Acciones (Shift+Click para borrar la sustitución)",
-        "ResetActionDefault": "Restablecer Acción Predeterminada",
-        "TabName": "Acciones",
-        "OverriddenSetOverrideFalse": "Eliminar de la Lista de Acciones (Shift+Click para borrar la sustitución)",
-        "SetOverrideFalse": "Eliminar de la Lista de Acciones",
-        "SetOverrideTrue": "Añadir a la Lista de Acciones"
+        "TabName": "Acciones"
     },
     "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
     "TIDY5E.TabConfiguration": {

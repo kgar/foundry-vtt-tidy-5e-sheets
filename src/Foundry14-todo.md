@@ -11,146 +11,146 @@
   - [x] TIDY5E.Settings.Migrations.migrateGmSettingsButtonLabel
   - [x] TIDY5E.GridLayout
   - [x] TIDY5E.PreparedSpells
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.AtLeastOneTabRequiredErrorMessage
-  - [ ] TIDY5E.AbbrSavingThrow
-  - [ ] TIDY5E.AbbrMod
-  - [ ] TIDY5E.Utilities.MarkAllAsUnidentified
+  - [x] TIDY5E.Settings.DefaultSheetTabs.AtLeastOneTabRequiredErrorMessage
+  - [x] TIDY5E.AbbrSavingThrow
   - [x] (keep) TIDY5E.Settings.InitialSheetTab.name
-  - [ ] TIDY5E.Class.Warlock
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.token
-  - [ ] TIDY5E.SpellSourceIdentifierLabelHint
-  - [ ] TIDY5E.RestoreOnRest
-  - [ ] TIDY5E.SheetEdit.Disable.Hint
-  - [ ] TIDY5E.InfoCardInspectHint
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.hint
-  - [ ] TIDY5E.ItemCardsMouseHint
-  - [ ] TIDY5E.ContextMenuActionUnpinFromAttributes
-  - [ ] TIDY5E.ShowPortraitArt
-  - [ ] TIDY5E.UserSettings.TabNPCs.header
+  - [x] TIDY5E.AbbrInitiative
+  - [x] TIDY5E.AbbrMod
+  - [x] TIDY5E.Abilities
+  - [x] TIDY5E.Actions.OverriddenSetOverrideFalse
+  - [x] TIDY5E.Actions.OverriddenSetOverrideTrue
+  - [x] TIDY5E.Actions.ResetActionDefault
+  - [x] TIDY5E.Actions.SetOverrideFalse
+  - [x] TIDY5E.Actions.SetOverrideTrue
+  - [ ] TIDY5E.ActionsPerTurn
+  - [ ] TIDY5E.ActiveEffectsMarkerTitle
+  - [ ] TIDY5E.AttackMod
+  - [ ] TIDY5E.AttunementMax
+  - [ ] TIDY5E.AttunementWarning
   - [ ] TIDY5E.Class.Barbarian
+  - [ ] TIDY5E.Class.Custom
   - [ ] TIDY5E.Class.Fighter
-  - [ ] TIDY5E.SheetImageOptionsHint
-  - [ ] TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast
-  - [ ] TIDY5E.EmptySection
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.transparent
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.name
-  - [ ] TIDY5E.Abilities
-  - [ ] TIDY5E.Vehicle.Member.DraftAnimal.Label
-  - [ ] TIDY5E.ThemeSettings.Sheet.explanation
-  - [ ] TIDY5E.ThemeSettings.SheetMenu.hint
-  - [ ] TIDY5E.Commands.ShowLegendaryToolbar
-  - [ ] TIDY5E.ThemeSettings.Sheet.useDefaultDarkColors
-  - [ ] TIDY5E.ThemeSettings.Sheet.header
-  - [ ] TIDY5E.Actions.OverriddenSetOverrideTrue
-  - [ ] TIDY5E.Vehicle.Member.DraftAnimal.LabelPl
-  - [ ] TIDY5E.SheetEdit.Description
-  - [ ] TIDY5E.ShowItemImage
-  - [ ] TIDY5E.TogglePersonalityInfo
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.SelectedHeader
-  - [ ] TIDY5E.SheetLock.Description
-  - [ ] TIDY5E.SortMode.ActionListDefault
-  - [ ] TIDY5E.Encounter.NewPlaceholder.SubtitlePlaceholderText
-  - [ ] TIDY5E.GMOnlyEdit
-  - [ ] TIDY5E.Environment
-  - [ ] TIDY5E.Settings.Migrations.OptionOverwrite.Text
-  - [ ] TIDY5E.Settings.UseMulticlassSpellbookFilter.hint
-  - [ ] TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.round
-  - [ ] TIDY5E.LongRest
-  - [ ] TIDY5E.Section.Default
   - [ ] TIDY5E.Class.Monk
+  - [ ] TIDY5E.Class.Rogue
+  - [ ] TIDY5E.Class.Warlock
+  - [ ] TIDY5E.Commands.HideContainerPanel
+  - [ ] TIDY5E.Commands.HideLegendaryToolbar
+  - [ ] TIDY5E.Commands.ShowContainerPanel
+  - [ ] TIDY5E.Commands.ShowLegendaryToolbar
+  - [ ] TIDY5E.ContextMenuActionPinToAttributes
+  - [ ] TIDY5E.ContextMenuActionUnpinFromAttributes
+  - [ ] TIDY5E.EditSheetImageHint
+  - [ ] TIDY5E.EmptySection
+  - [ ] TIDY5E.Encounter.NewPlaceholder.SubtitlePlaceholderText
+  - [ ] TIDY5E.Encumbrance
+  - [ ] TIDY5E.Environment
+  - [ ] TIDY5E.EnvironmentTooltip
+  - [ ] TIDY5E.ExhaustionLevelTooltip
+  - [ ] TIDY5E.Favorite
+  - [ ] TIDY5E.FavoriteSpellLevelLabel
+  - [ ] TIDY5E.GMOnlyEdit
+  - [ ] TIDY5E.Group.HideMemberTabInfoPanel
+  - [ ] TIDY5E.Group.NamePlaceholder
+  - [ ] TIDY5E.Group.ShowMemberTabInfoPanel
+  - [ ] TIDY5E.HideNotProficientSkills
+  - [ ] TIDY5E.HitDC
+  - [ ] TIDY5E.InfoCardInspectHint
+  - [ ] TIDY5E.Inventory.Weight.Text
+  - [ ] TIDY5E.Inventory.Weight.Tooltip
+  - [ ] TIDY5E.ItemCardsMouseHint
+  - [ ] TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast
+  - [ ] TIDY5E.ItemImageTitle
+  - [ ] TIDY5E.JournalEntries
+  - [ ] TIDY5E.JournalLocationsOfInterest
+  - [ ] TIDY5E.JournalMisc
+  - [ ] TIDY5E.JournalPersonsOfInterest
+  - [ ] TIDY5E.LayoutNotSupported
+  - [ ] TIDY5E.ListLayout
+  - [ ] TIDY5E.LocalizationTestKey
+  - [ ] TIDY5E.LongRest
+  - [ ] TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip
+  - [ ] TIDY5E.MeleeSpellAttackMod
+  - [ ] TIDY5E.NoSpecialSenses
+  - [ ] TIDY5E.OriginSummaryConfig
   - [ ] TIDY5E.PlayerName
   - [ ] TIDY5E.PreviewSheetImageHint
-  - [ ] TIDY5E.UserSettings.TabVehicles.tabLabel
-  - [ ] TIDY5E.ItemImageTitle
-  - [ ] TIDY5E.Settings.Reset.dialogs.cancel
-  - [ ] TIDY5E.SheetMenu.label
-  - [ ] TIDY5E.ShowNotProficientSkills
-  - [ ] TIDY5E.NoSpecialSenses
-  - [ ] TIDY5E.Favorite
-  - [ ] TIDY5E.SheetEdit.Enable.Hint
-  - [ ] TIDY5E.Commands.HideLegendaryToolbar
-  - [ ] TIDY5E.TabConfiguration.UnsupportedDocumentErrorMessage
-  - [ ] TIDY5E.AttunementWarning
-  - [ ] TIDY5E.TabConfiguration.Explanation
-  - [ ] TIDY5E.RestHint
-  - [ ] TIDY5E.Tidy5eSettings
-  - [ ] TIDY5E.TabConfiguration.AtLeastOneRequiredErrorMessage
-  - [ ] TIDY5E.SearchClear
-  - [ ] TIDY5E.VehicleInMotion
-  - [ ] TIDY5E.JournalPersonsOfInterest
-  - [ ] TIDY5E.HitDC
-  - [ ] TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip
-  - [ ] TIDY5E.TokenLinked
-  - [ ] TIDY5E.ShortRest
-  - [ ] TIDY5E.OriginSummaryConfig
-  - [ ] TIDY5E.Actions.SetOverrideTrue
-  - [ ] TIDY5E.UserSettings.TabNPCs.tabLabel
-  - [ ] TIDY5E.EditSheetImageHint
-  - [ ] TIDY5E.EnvironmentTooltip
-  - [ ] TIDY5E.VehicleMotionless
-  - [ ] TIDY5E.Settings.Migrations.Journal.explanation1
-  - [ ] TIDY5E.SheetMenu.themeLabel
-  - [ ] TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip
-  - [ ] TIDY5E.ContextMenuActionPinToAttributes
-  - [ ] TIDY5E.JournalEntries
-  - [ ] TIDY5E.SheetLock.Unlock.Hint
-  - [ ] TIDY5E.LocalizationTestKey
-  - [ ] TIDY5E.ActionsPerTurn
-  - [ ] TIDY5E.JournalLocationsOfInterest
-  - [ ] TIDY5E.Settings.GlobalCustomSections.AddSection
-  - [ ] TIDY5E.ExhaustionLevelTooltip
-  - [ ] TIDY5E.AbbrInitiative
-  - [ ] TIDY5E.Settings.Migrations.OptionDeleteFlags.Text
-  - [ ] TIDY5E.Actions.ResetActionDefault
-  - [ ] TIDY5E.ThemeSettings.Sheet.menuLabel
-  - [ ] TIDY5E.Inventory.Weight.Tooltip
-  - [ ] TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip
-  - [ ] TIDY5E.HideNotProficientSkills
-  - [ ] TIDY5E.ThemeSettings.Sheet.useDefaultLightColors
-  - [ ] TIDY5E.TotalCrewCount
-  - [ ] TIDY5E.AttackMod
-  - [ ] TIDY5E.Encumbrance
-  - [ ] TIDY5E.Group.HideMemberTabInfoPanel
-  - [ ] TIDY5E.SheetPin.LabelPl
-  - [ ] TIDY5E.WorldSettings.TabVehicle.tabLabel
-  - [ ] TIDY5E.Utilities.IdentifyAll
-  - [ ] TIDY5E.AttunementMax
   - [ ] TIDY5E.RangedSpellAttackMod
-  - [ ] TIDY5E.MeleeSpellAttackMod
-  - [ ] TIDY5E.Commands.HideContainerPanel
-  - [ ] TIDY5E.JournalMisc
-  - [ ] TIDY5E.Utilities.ConfigureSections
-  - [ ] TIDY5E.SpellAttackMod
-  - [ ] TIDY5E.UserDefaultPrefix
+  - [ ] TIDY5E.RestHint
+  - [ ] TIDY5E.RestoreOnRest
+  - [ ] TIDY5E.SearchClear
   - [ ] TIDY5E.Section.ActionTooltip
-  - [ ] TIDY5E.SpellSourceIdentifierSelectText
-  - [ ] TIDY5E.Class.Rogue
-  - [ ] TIDY5E.ActiveEffectsMarkerTitle
-  - [ ] TIDY5E.Commands.ShowContainerPanel
-  - [ ] TIDY5E.UserSettings.TabVehicles.header
-  - [ ] TIDY5E.SheetLock.Lock.Hint
-  - [ ] TIDY5E.LayoutNotSupported
-  - [ ] TIDY5E.Class.Custom
-  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.square
-  - [ ] TIDY5E.Settings.DefaultSheetTabs.AvailableHeader
-  - [ ] TIDY5E.ShowItemArt
-  - [ ] TIDY5E.Actions.OverriddenSetOverrideFalse
-  - [ ] TIDY5E.WorldSettings.TabExhaustion.tabLabel
-  - [ ] TIDY5E.Group.ShowMemberTabInfoPanel
-  - [ ] TIDY5E.Group.NamePlaceholder
-  - [ ] TIDY5E.SortMenu.OptionAlphabetical
-  - [ ] TIDY5E.ListLayout
-  - [ ] TIDY5E.Inventory.Weight.Text
-  - [ ] TIDY5E.WorldSettings.TabIcons.tabLabel
-  - [ ] TIDY5E.Actions.SetOverrideFalse
-  - [ ] TIDY5E.Settings.Reset.dialogs.confirm
-  - [ ] TIDY5E.WorldSettings.TabNpc.tabLabel
-  - [ ] TIDY5E.FavoriteSpellLevelLabel
+  - [ ] TIDY5E.Section.Default
   - [ ] TIDY5E.Section.Tooltip
-  - [ ] TIDY5E.Utilities.GMTools
+  - [ ] TIDY5E.Settings.DefaultSheetTabs.AvailableHeader
+  - [ ] TIDY5E.Settings.DefaultSheetTabs.hint
+  - [ ] TIDY5E.Settings.DefaultSheetTabs.name
+  - [ ] TIDY5E.Settings.DefaultSheetTabs.SelectedHeader
+  - [ ] TIDY5E.Settings.GlobalCustomSections.AddSection
+  - [ ] TIDY5E.Settings.Migrations.Journal.explanation1
+  - [ ] TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel
+  - [ ] TIDY5E.Settings.Migrations.OptionDeleteFlags.Text
+  - [ ] TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip
+  - [ ] TIDY5E.Settings.Migrations.OptionOverwrite.Text
+  - [ ] TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip
+  - [ ] TIDY5E.Settings.Reset.dialogs.cancel
+  - [ ] TIDY5E.Settings.Reset.dialogs.confirm
+  - [ ] TIDY5E.Settings.UseMulticlassSpellbookFilter.hint
   - [ ] TIDY5E.Settings.UseMulticlassSpellbookFilter.name
+  - [ ] TIDY5E.SheetEdit.Description
+  - [ ] TIDY5E.SheetEdit.Disable.Hint
+  - [ ] TIDY5E.SheetEdit.Enable.Hint
+  - [ ] TIDY5E.SheetImageOptionsHint
+  - [ ] TIDY5E.SheetLock.Description
+  - [ ] TIDY5E.SheetLock.Lock.Hint
+  - [ ] TIDY5E.SheetLock.Unlock.Hint
+  - [ ] TIDY5E.SheetMenu.label
+  - [ ] TIDY5E.SheetMenu.themeLabel
   - [ ] TIDY5E.SheetPin.Label
+  - [ ] TIDY5E.SheetPin.LabelPl
+  - [ ] TIDY5E.ShortRest
+  - [ ] TIDY5E.ShowItemArt
+  - [ ] TIDY5E.ShowItemImage
+  - [ ] TIDY5E.ShowNotProficientSkills
+  - [ ] TIDY5E.ShowPortraitArt
+  - [ ] TIDY5E.SortMenu.OptionAlphabetical
+  - [ ] TIDY5E.SortMode.ActionListDefault
+  - [ ] TIDY5E.SpellAttackMod
+  - [ ] TIDY5E.SpellSourceIdentifierLabelHint
+  - [ ] TIDY5E.SpellSourceIdentifierSelectText
+  - [ ] TIDY5E.TabConfiguration.AtLeastOneRequiredErrorMessage
+  - [ ] TIDY5E.TabConfiguration.Explanation
+  - [ ] TIDY5E.TabConfiguration.UnsupportedDocumentErrorMessage
+  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.round
+  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.square
+  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.token
+  - [ ] TIDY5E.ThemeSettings.PortraitShape.option.transparent
+  - [ ] TIDY5E.ThemeSettings.Sheet.explanation
+  - [ ] TIDY5E.ThemeSettings.Sheet.header
+  - [ ] TIDY5E.ThemeSettings.Sheet.menuLabel
+  - [ ] TIDY5E.ThemeSettings.Sheet.useDefaultDarkColors
+  - [ ] TIDY5E.ThemeSettings.Sheet.useDefaultLightColors
+  - [ ] TIDY5E.ThemeSettings.SheetMenu.hint
+  - [ ] TIDY5E.Tidy5eSettings
+  - [ ] TIDY5E.TogglePersonalityInfo
+  - [ ] TIDY5E.TokenLinked
+  - [ ] TIDY5E.TotalCrewCount
+  - [ ] TIDY5E.UserDefaultPrefix
+  - [ ] TIDY5E.UserSettings.TabNPCs.header
+  - [ ] TIDY5E.UserSettings.TabNPCs.tabLabel
+  - [ ] TIDY5E.UserSettings.TabVehicles.header
+  - [ ] TIDY5E.UserSettings.TabVehicles.tabLabel
+  - [ ] TIDY5E.Utilities.ConfigureSections
+  - [ ] TIDY5E.Utilities.GMTools
+  - [ ] TIDY5E.Utilities.IdentifyAll
+  - [ ] TIDY5E.Utilities.MarkAllAsUnidentified
+  - [ ] TIDY5E.Vehicle.Member.DraftAnimal.Label
+  - [ ] TIDY5E.Vehicle.Member.DraftAnimal.LabelPl
+  - [ ] TIDY5E.VehicleInMotion
+  - [ ] TIDY5E.VehicleMotionless
+  - [ ] TIDY5E.WorldSettings.TabExhaustion.tabLabel
+  - [ ] TIDY5E.WorldSettings.TabIcons.tabLabel
+  - [ ] TIDY5E.WorldSettings.TabNpc.tabLabel
+  - [ ] TIDY5E.WorldSettings.TabVehicle.tabLabel
 
 ## To Do Gravayard
 

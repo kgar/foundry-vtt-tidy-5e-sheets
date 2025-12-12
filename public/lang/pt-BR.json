@@ -7,7 +7,6 @@
     "TIDY5E.ItemImageTitle": "Item: {subject}",
     "TIDY5E.ShowItemImage": "Clique Dir.: Mostrar Arte do Item",
     "TIDY5E.ShowItemArt": "Mostrar Imagem",
-    "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.NoSpecialSenses": "Sem Sentidos Especiais",
     "TIDY5E.Group.NamePlaceholder": "Nome do Grupo",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostrar Painel de Info.",
@@ -19,12 +18,7 @@
     "TIDY5E.HitDiceRollAverage": "Clique Direito: Aplicar Média",
     "TIDY5E.JournalTabName": "Diário",
     "TIDY5E.Actions": {
-        "TabName": "Ações",
-        "OverriddenSetOverrideFalse": "Remover da Lista de Ações (Shift+Clique para limpar a substituição)",
-        "OverriddenSetOverrideTrue": "Adicionar à Lista de Ações (Shift+Clique para limpar a substituição)",
-        "SetOverrideFalse": "Remover da Lista de Ações",
-        "SetOverrideTrue": "Adicionar à Lista de Ações",
-        "ResetActionDefault": "Redefinir Ação Padrão"
+        "TabName": "Ações"
     },
     "TIDY5E.HitDC": "Acerto/CD",
     "TIDY5E.RestoreOnRest": "Restaurar em Descanso",
@@ -63,15 +57,12 @@
     "TIDY5E.RemoveFavorite": "Remover dos Favoritos",
     "TIDY5E.ShowNotProficientSkills": "Mostrar Não-Proficiente",
     "TIDY5E.HideNotProficientSkills": "Ocultar Não-Proficiente",
-    "TIDY5E.Abilities": "Atributos",
     "TIDY5E.Environment": "Ambiente",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
     "TIDY5E.Search": "Procurar",
     "TIDY5E.SearchClear": "Limpar Pesquisa",
     "TIDY5E.SearchHint": "Digite para exibir os resultados da busca",
     "TIDY5E.ItemCardsMouseHint": "Clique com o botão do meio do mouse para visualizar/editar o item",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Salvaguarda",
     "TIDY5E.AttackMod": "Mod. de Ataque",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Ataque Mágico",
     "TIDY5E.ActorSpellAttackFlavorText": "Ataque Mágico",
@@ -193,8 +184,7 @@
         "name": "Abas Padrão de Ficha",
         "hint": "Determina quais abas serão exibidas e em qual ordem, por padrão. Aplica-se quando nenhuma seleção de aba seja feita para um ator.",
         "AvailableHeader": "Abas Disponíveis",
-        "SelectedHeader": "Abas Selecionadas",
-        "AtLeastOneTabRequiredErrorMessage": "Abas padrão: pelo menos uma aba é necessária para cada tipo de ator."
+        "SelectedHeader": "Abas Selecionadas"
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Usar Filtro de Grimório Multiclasse",

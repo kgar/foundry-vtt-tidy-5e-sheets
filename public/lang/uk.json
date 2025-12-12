@@ -1,17 +1,11 @@
 {
-    "TIDY5E.AbbrInitiative": "Іні",
     "TIDY5E.AttunementItems": "Налаштовано на предмети",
     "TIDY5E.ListLayout": "Показати списком",
     "TIDY5E.Group.NamePlaceholder": "Назва Групи",
     "TIDY5E.Group.HideMemberTabInfoPanel": "Сховати панель інформації",
     "TIDY5E.ShortRest": "Короткий Відпочинок",
     "TIDY5E.Actions": {
-        "TabName": "Дія",
-        "OverriddenSetOverrideTrue": "Додати до списку дій (Shift+Клік, щоб очистити перевизначення)",
-        "ResetActionDefault": "Скинути дію за замовчуванням",
-        "SetOverrideFalse": "Прибрати зі списку дій",
-        "SetOverrideTrue": "Додати до списку дій",
-        "OverriddenSetOverrideFalse": "Прибрати зі списку дій (Shift+Клік, щоб очистити перевизначення)"
+        "TabName": "Дія"
     },
     "TIDY5E.ShowNotProficientSkills": "Показувати відсутні володіння",
     "TIDY5E.HideNotProficientSkills": "Ховати відсутні володіння",
@@ -73,7 +67,6 @@
     "TIDY5E.AddFavorite": "Додати до обраних",
     "TIDY5E.Favorite": "Обране",
     "TIDY5E.RemoveFavorite": "Прибрати з обраних",
-    "TIDY5E.Abilities": "Здібності",
     "TIDY5E.Environment": "Середовище",
     "TIDY5E.ItemCardsMouseHint": "середня кнопка миші: перегляд/редагування",
     "TIDY5E.AttackMod": "Модифікатор Атаки",
@@ -197,8 +190,6 @@
     "TIDY5E.Search": "Пошук",
     "TIDY5E.SearchClear": "Очистити пошук",
     "TIDY5E.SearchHint": "Почніть вводити, щоб відобразити результати",
-    "TIDY5E.AbbrMod": "Мод",
-    "TIDY5E.AbbrSavingThrow": "Рят",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Атака Чарами",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Атака Чарами Ближнього Бою",
     "TIDY5E.ActorSpellAttackFlavorText": "Атака Чарами",
@@ -219,8 +210,7 @@
         "name": "Усталені вкладки аркуша",
         "hint": "Визначає, які вкладки та в якому порядку відображатимуться за замовчуванням. Застосовується, якщо для актора не було обрано жодної вкладки.",
         "AvailableHeader": "Доступні вкладки",
-        "SelectedHeader": "Вибрані вкладки",
-        "AtLeastOneTabRequiredErrorMessage": "Усталені вкладки: для кожного типу актора потрібна принаймні одна вкладка."
+        "SelectedHeader": "Вибрані вкладки"
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Блокування валюти",

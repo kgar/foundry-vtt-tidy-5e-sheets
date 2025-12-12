@@ -17,7 +17,6 @@
     "TIDY5E.Tidy5eSettings": "Tidy 5e 시트 설정",
     "TIDY5E.AddSpecific": "{name} 추가",
     "TIDY5E.ExhaustionLevelTooltip": "탈진 {level}단계",
-    "TIDY5E.AbbrInitiative": "우선권",
     "TIDY5E.NoSpecialSenses": "특수 감각 없음",
     "TIDY5E.Group.NamePlaceholder": "그룹 이름",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "정보 패널 보이기",
@@ -30,12 +29,7 @@
     "TIDY5E.JournalTabName": "저널",
     "TIDY5E.StatblockTabName": "능력치 블록",
     "TIDY5E.Actions": {
-        "TabName": "행동",
-        "OverriddenSetOverrideFalse": "행동 목록에서 제거(Shift+클릭으로 덮어쓰기)",
-        "OverriddenSetOverrideTrue": "행동 목록에 추가(Shift+클릭으로 덮어쓰기)",
-        "SetOverrideFalse": "행동 목록에서 제거",
-        "SetOverrideTrue": "행동 목록에 추가",
-        "ResetActionDefault": "행동 기본으로 복원"
+        "TabName": "행동"
     },
     "TIDY5E.HitDC": "명중 / DC",
     "TIDY5E.RestoreOnRest": "휴식시 복원",
@@ -85,7 +79,6 @@
     "TIDY5E.RemoveFavorite": "줄겨찾기에서 삭제",
     "TIDY5E.ShowNotProficientSkills": "비숙련 항목 표시",
     "TIDY5E.HideNotProficientSkills": "비숙련 항목 숨기기",
-    "TIDY5E.Abilities": "능력치",
     "TIDY5E.Ability.EditScore.label": "점수 편집",
     "TIDY5E.Environment": "환경",
     "TIDY5E.EnvironmentTooltip": "환경: {environment}",
@@ -94,8 +87,6 @@
     "TIDY5E.SearchHint": "찾고자 하는 것을 입력합니다.",
     "TIDY5E.InfoCardInspectHint": "{inspectKey} 점검",
     "TIDY5E.ItemCardsMouseHint": "마우스 휠 클릭을 통해 아이템 보기/편집",
-    "TIDY5E.AbbrMod": "수정치",
-    "TIDY5E.AbbrSavingThrow": "내성 굴림",
     "TIDY5E.AttackMod": "공격 수정치",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - 주문 공격",
     "TIDY5E.ActorSpellAttackFlavorText": "주문 공격",
@@ -250,8 +241,7 @@
         "name": "기본 시트 탭",
         "hint": "기본적으로 표시할 탭과 순서를 결정합니다. 액터에 대해 탭이 선택되지 않은 경우에 적용됩니다.",
         "AvailableHeader": "가능한 탭",
-        "SelectedHeader": "선택된 탭",
-        "AtLeastOneTabRequiredErrorMessage": "기본 탭: 각 액터 타입마다 최소 한 개의 탭이 필요합니다."
+        "SelectedHeader": "선택된 탭"
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "기본 죽음 내성 굴림",

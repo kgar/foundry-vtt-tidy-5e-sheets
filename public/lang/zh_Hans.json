@@ -15,7 +15,6 @@
     "TIDY5E.ShowItemArt": "显示图像",
     "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets 设置",
     "TIDY5E.ExhaustionLevelTooltip": "力竭等级 {level}",
-    "TIDY5E.AbbrInitiative": "先攻",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "显示信息面板",
     "TIDY5E.Group.HideMemberTabInfoPanel": "隐藏信息面板",
     "TIDY5E.RestHint": "休息",
@@ -24,12 +23,7 @@
     "TIDY5E.LongRest": "长休",
     "TIDY5E.JournalTabName": "日志",
     "TIDY5E.Actions": {
-        "TabName": "行动",
-        "OverriddenSetOverrideFalse": "从“动作”列表中移除（按住 Shift 键并单击以清除覆盖）",
-        "OverriddenSetOverrideTrue": "添加至“动作”列表（按住 Shift 键并点击以清除覆盖）",
-        "SetOverrideFalse": "从“动作”列表中移除",
-        "ResetActionDefault": "重置默认动作",
-        "SetOverrideTrue": "添加至“动作”列表"
+        "TabName": "行动"
     },
     "TIDY5E.HitDiceRollAverage": "右键单击：取平均值",
     "TIDY5E.HitDC": "命中/DC",
@@ -69,7 +63,6 @@
     "TIDY5E.RemoveFavorite": "取消收藏",
     "TIDY5E.ShowNotProficientSkills": "显示未熟练",
     "TIDY5E.HideNotProficientSkills": "隐藏未熟练",
-    "TIDY5E.Abilities": "属性",
     "TIDY5E.Environment": "环境",
     "TIDY5E.EnvironmentTooltip": "环境：{environment}",
     "TIDY5E.Search": "搜索",
@@ -84,7 +77,6 @@
     "TIDY5E.SpellSourceIdentifierLabelHint": "拥有此法术的角色不属于此处指定的源职业。",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - 法术攻击",
     "TIDY5E.ActorSpellAttackFlavorText": "法术攻击",
-    "TIDY5E.AbbrSavingThrow": "豁免",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "最大准备法术数配置：{documentName}",
         "ButtonTooltip": "配置最大准备法术数",
@@ -96,7 +88,6 @@
     "TIDY5E.SearchHint": "开始输入以显示搜索结果",
     "TIDY5E.InfoCardInspectHint": "{inspectKey} 查看",
     "TIDY5E.ItemCardsMouseHint": "中键查看/编辑项目",
-    "TIDY5E.AbbrMod": "调整值",
     "TIDY5E.AttackMod": "攻击调整值",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - 近战法术攻击",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "近战法术攻击",
@@ -215,7 +206,6 @@
         "name": "默认工作卡选项卡",
         "hint": "确定默认情况下哪些选项卡会显示以及显示的顺序。当尚未为某个角色选择选项卡时生效。",
         "AvailableHeader": "可用选项卡",
-        "AtLeastOneTabRequiredErrorMessage": "默认选项卡：每种角色类型至少需要一个选项卡。",
         "SelectedHeader": "已选选项卡"
     },
     "TIDY5E.Settings.InitialSheetTab": {

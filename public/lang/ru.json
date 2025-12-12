@@ -18,7 +18,6 @@
     "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Настройки",
     "TIDY5E.AddSpecific": "Добавить {name}",
     "TIDY5E.ExhaustionLevelTooltip": "{level}-й Уровень Истощения",
-    "TIDY5E.AbbrInitiative": "Иниц",
     "TIDY5E.NoSpecialSenses": "Никаких Особых Чувств",
     "TIDY5E.Group.NamePlaceholder": "Имя Группы",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Показать Информационную Панель",
@@ -31,12 +30,7 @@
     "TIDY5E.JournalTabName": "Журнал",
     "TIDY5E.StatblockTabName": "Статблок",
     "TIDY5E.Actions": {
-        "TabName": "Действия",
-        "OverriddenSetOverrideFalse": "Удалить из Списка Действий (Shift+Клик, чтобы отменить переопределение)",
-        "OverriddenSetOverrideTrue": "Добавить в Список Действий (Shift+Клик, чтобы отменить переопределение)",
-        "SetOverrideFalse": "Удалить из Списка Действий",
-        "SetOverrideTrue": "Добавить в Список Действий",
-        "ResetActionDefault": "Сбросить Действие по Умолчанию"
+        "TabName": "Действия"
     },
     "TIDY5E.HitDC": "Попадание / СЛ",
     "TIDY5E.RestoreOnRest": "Восстанавливать при Отдыхе",

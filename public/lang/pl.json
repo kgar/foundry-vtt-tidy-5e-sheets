@@ -32,7 +32,6 @@
     "TIDY5E.Favorite": "Ulubione",
     "TIDY5E.AddFavorite": "Dodaj do ulubionych",
     "TIDY5E.ItemCardsMouseHint": "środkowy przycisk myszy, żeby podejrzeć/edytować przedmiot",
-    "TIDY5E.AbbrMod": "Mod.",
     "TIDY5E.MeleeSpellAttackMod": "Modyfikator do rzutu na atak czarem wręcz",
     "TIDY5E.SpellClass": "Rodzaj czaru",
     "TIDY5E.Class.Bard": "Bard",
@@ -44,12 +43,7 @@
         "MoreFormulas": "Więcej wzorów"
     },
     "TIDY5E.Actions": {
-        "ResetActionDefault": "Zresetuj Akcje do domyślnych",
-        "TabName": "Akcje",
-        "OverriddenSetOverrideFalse": "Usuń z listy Akcji (Shift+LPM by wyczyścić zastąpienie)",
-        "OverriddenSetOverrideTrue": "Dodaj do listy Akcji (SHIFT+LPM by wyczyścić zastąpienie)",
-        "SetOverrideFalse": "Usuń z listy Akcji",
-        "SetOverrideTrue": "Dodaj do listy Akcji"
+        "TabName": "Akcje"
     },
     "TIDY5E.JournalLocationsOfInterest": "Ciekawe Lokacje",
     "TIDY5E.JournalMisc": "Różne",
@@ -87,13 +81,11 @@
     "TIDY5E.RemoveFavorite": "Usuń z ulubionych",
     "TIDY5E.ShowNotProficientSkills": "Pokaż niebiegłe",
     "TIDY5E.HideNotProficientSkills": "Ukryj niebiegłe",
-    "TIDY5E.Abilities": "Umiejętności",
     "TIDY5E.Environment": "Środowisko",
     "TIDY5E.EnvironmentTooltip": "Środowisko: {environment}",
     "TIDY5E.Search": "Szukaj",
     "TIDY5E.SearchClear": "Wyczyść wyszukiwanie",
     "TIDY5E.SearchHint": "Zacznij pisać, żeby pokazać wyniki zapytania",
-    "TIDY5E.AbbrSavingThrow": "Rz. Obr.",
     "TIDY5E.AttackMod": "Modyfikator do ataku",
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
     "TIDY5E.RangedSpellAttackMod": "Modyfikator do rzutu na atak czarem dystansowym",
@@ -129,7 +121,6 @@
         "header": "Karty NPC",
         "tabLabel": "NPC"
     },
-    "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.HitDC": "Trafienie/ST",
     "TIDY5E.FavoriteSpellLevelLabel": "Poziom Czaru {number}",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Różne",
@@ -383,7 +374,6 @@
         "AvailableHeader": "Dostępne zakładki",
         "SelectedHeader": "Wybrane zakładki",
         "hint": "Określa, które zakładki i w jakiej kolejności będą wyświetlane domyślnie. Ma zastosowanie, gdy nie dokonano wyboru zakładek dla postaci.",
-        "AtLeastOneTabRequiredErrorMessage": "Domyślne zakładki: dla każdego typu aktora wymagana jest co najmniej jedna zakładka.",
         "name": "Domyślne zakładki karty"
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {

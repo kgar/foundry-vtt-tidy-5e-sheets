@@ -5,7 +5,6 @@
     "TIDY5E.ShowPortraitArt": "Mostra Ritratto",
     "TIDY5E.ShowItemImage": "Tasto Destro: Mostra Immagine Oggetto",
     "TIDY5E.ShowItemArt": "Mostra Immagine",
-    "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.RestHint": "Riposati",
     "TIDY5E.ShortRest": "Riposo Breve",
     "TIDY5E.LongRest": "Riposo Lungo",
@@ -44,14 +43,11 @@
     "TIDY5E.RemoveFavorite": "Rimuovi dai Preferiti",
     "TIDY5E.ShowNotProficientSkills": "Mostra Non Competente",
     "TIDY5E.HideNotProficientSkills": "Nascondi Non Competente",
-    "TIDY5E.Abilities": "Caratteristiche",
     "TIDY5E.Environment": "Ambiente",
     "TIDY5E.Search": "Cerca",
     "TIDY5E.SearchClear": "Cancella Ricerca",
     "TIDY5E.SearchHint": "Inizia a digitare ciò che stai cercando",
     "TIDY5E.ItemCardsMouseHint": "Tasti centrale del mouse per vedere/modificare oggetti",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Salva",
     "TIDY5E.SpellAttackMod": "Mod Attacco con Incantesimo",
     "TIDY5E.TokenLinked": "Token collegato all'attore",
     "TIDY5E.TokenUnlinked": "Token non collegato all'attore",
@@ -177,12 +173,7 @@
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "Questo oggetto ha effetti attivi",
     "TIDY5E.Actions": {
-        "TabName": "Azioni",
-        "OverriddenSetOverrideFalse": "Rimuovi dalla Lista Azioni (Shift+Click per rimuovere la sovrascrittura)",
-        "OverriddenSetOverrideTrue": "Aggiungi alla Lista Azioni (Shift+Click per rimuovere la sovrascrittura)",
-        "SetOverrideFalse": "Rimuovi dalla Lista Azioni",
-        "SetOverrideTrue": "Aggiungi alla Lista Azioni",
-        "ResetActionDefault": "Ripristina azione predefinita"
+        "TabName": "Azioni"
     },
     "TIDY5E.HitDC": "Colpire / CD",
     "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
@@ -367,8 +358,7 @@
         "AvailableHeader": "Schede Disponibili",
         "SelectedHeader": "Schede Selezionate",
         "name": "Schede dei fogli predefinite",
-        "hint": "Determina quali schede verranno visualizzate e in quale ordine per impostazione predefinita. Si applica quando non è stata effettuata alcuna selezione nella scheda per un personaggio.",
-        "AtLeastOneTabRequiredErrorMessage": "Schede predefinite: è richiesta almeno una scheda per ciascun tipo di personaggio."
+        "hint": "Determina quali schede verranno visualizzate e in quale ordine per impostazione predefinita. Si applica quando non è stata effettuata alcuna selezione nella scheda per un personaggio."
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Elenco Azioni"

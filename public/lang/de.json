@@ -5,7 +5,6 @@
     "TIDY5E.ShowPortraitArt": "Portrait zeigen",
     "TIDY5E.ShowItemImage": "Rechtsklick: Gegenstands-Bild zeigen",
     "TIDY5E.ShowItemArt": "Bild zeigen",
-    "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.RestHint": "Rasten",
     "TIDY5E.ShortRest": "Kurze Rast",
     "TIDY5E.LongRest": "Lange Rast",
@@ -44,14 +43,11 @@
     "TIDY5E.RemoveFavorite": "Favorit löschen",
     "TIDY5E.ShowNotProficientSkills": "Nicht-fachkundige anzeigen",
     "TIDY5E.HideNotProficientSkills": "Nicht-fachkundige verbergen",
-    "TIDY5E.Abilities": "Fähigkeiten",
     "TIDY5E.Environment": "Umgebung",
     "TIDY5E.Search": "Suche",
     "TIDY5E.SearchClear": "Suche leeren",
     "TIDY5E.SearchHint": "Tippe ein wonach du suchst um Ergebnisse anzeigen zu lassen.",
     "TIDY5E.ItemCardsMouseHint": "Mittlere Maustaste zum ansehen/bearbeiten.",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Rettung",
     "TIDY5E.SpellAttackMod": "Zauberangriffs Modifikator",
     "TIDY5E.TokenLinked": "Figur mit Akteur verknüpft",
     "TIDY5E.TokenUnlinked": "Figur nicht mit Akteur verknüpft",
@@ -162,12 +158,7 @@
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.Actions": {
-        "TabName": "Aktionen",
-        "OverriddenSetOverrideTrue": "Zu Aktionsliste hinzufügen (Umschalt+Klick um Überschreibung zu löschen)",
-        "SetOverrideFalse": "Aus Aktionsliste entfernen",
-        "SetOverrideTrue": "Zu Aktionsliste hinzufügen",
-        "ResetActionDefault": "Standardaktion zurücksetzen",
-        "OverriddenSetOverrideFalse": "Aus Aktionsliste entfernen (Umschalt+Klick um Überschreibung zu löschen)"
+        "TabName": "Aktionen"
     },
     "TIDY5E.HitDC": "Treffer / SG",
     "TIDY5E.Inventory.Weight.Tooltip": "Gewicht: {weight} {weightUnit}",
@@ -232,8 +223,7 @@
         "name": "Standard-Bogenregisterkarten",
         "AvailableHeader": "Verfügbare Registerkarten",
         "SelectedHeader": "Ausgewählte Registerkarten",
-        "hint": "Bestimmt, welche Registerkarten standardmäßig angezeigt werden und in welcher Reihenfolge. Gilt, wenn für einen Akteur keine Registerkartenauswahl getroffen wurde.",
-        "AtLeastOneTabRequiredErrorMessage": "Standard-Registerkarten: Für jeden Akteurstyp ist mindestens eine Registerkarte erforderlich."
+        "hint": "Bestimmt, welche Registerkarten standardmäßig angezeigt werden und in welcher Reihenfolge. Gilt, wenn für einen Akteur keine Registerkartenauswahl getroffen wurde."
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filter",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Sonstiges",

@@ -36,8 +36,6 @@
 
   "TIDY5E.UserDefaultPrefix": "ユーザーデフォルト: {value}",
 
-  "TIDY5E.AbbrInitiative": "ｲﾆｼ",
-
   "TIDY5E.NoSpecialSenses": "特殊感覚なし",
 
   "TIDY5E.Group.NamePlaceholder": "グループ名",
@@ -56,12 +54,7 @@
   "TIDY5E.CombatTabName": "戦闘",
 
   "TIDY5E.Actions": {
-    "TabName": "アクション",
-    "OverriddenSetOverrideFalse": "アクションリストから削除 (Shift+Click to clear override)",
-    "OverriddenSetOverrideTrue": "アクションリストに追加 (Shift+Click to clear override)",
-    "SetOverrideFalse": "アクションリストから削除",
-    "SetOverrideTrue": "アクションリストに追加",
-    "ResetActionDefault": "アクションをデフォルトにリセット"
+    "TabName": "アクション"
   },
   "TIDY5E.LegendaryAbbr": "伝説",
   "TIDY5E.LairAbbr": "住処",
@@ -136,7 +129,6 @@
   "TIDY5E.ShowNotProficientSkills": "未習熟を表示",
   "TIDY5E.HideNotProficientSkills": "未習熟を隠す",
 
-  "TIDY5E.Abilities": "能力",
   "TIDY5E.Ability.EditScore.label": "値を編集",
 
   "TIDY5E.EmptyTools": "道具の習熟がありません。",
@@ -152,8 +144,6 @@
 
   "TIDY5E.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
 
-  "TIDY5E.AbbrMod": "修正",
-  "TIDY5E.AbbrSavingThrow": "セーヴ",
   "TIDY5E.AttackMod": "攻撃修正",
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - 呪文攻撃",
   "TIDY5E.ActorSpellAttackFlavorText": "呪文攻撃",
@@ -336,8 +326,7 @@
     "name": "デフォルトシートタブ",
     "hint": "デフォルトで表示するタブとその順序を決定します。キャラクターにタブ選択が行われていない場合に適用されます。",
     "AvailableHeader": "利用可能タブ",
-    "SelectedHeader": "選択中のタブ",
-    "AtLeastOneTabRequiredErrorMessage": "デフォルトタブ：各キャラクター種別に少なくとも1つのタブが必要です。"
+    "SelectedHeader": "選択中のタブ"
   },
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "デフォルトの死亡セーヴロール",

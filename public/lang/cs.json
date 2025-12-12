@@ -5,7 +5,6 @@
     "TIDY5E.ShowPortraitArt": "Zobrazit portrét",
     "TIDY5E.ShowItemImage": "Pravé tlačítko: Zobrazit ilustraci položky",
     "TIDY5E.ShowItemArt": "Zobrazit obrázek",
-    "TIDY5E.AbbrInitiative": "Inic.",
     "TIDY5E.RestHint": "Odpočinek",
     "TIDY5E.ShortRest": "Krátký odpočinek",
     "TIDY5E.LongRest": "Důkladný odpočinek",
@@ -44,14 +43,11 @@
     "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
     "TIDY5E.ShowNotProficientSkills": "Ukázat i ty bez zdatnosti",
     "TIDY5E.HideNotProficientSkills": "Skrýt ty bez zdatnosti",
-    "TIDY5E.Abilities": "Vlastnosti",
     "TIDY5E.Environment": "Prostředí",
     "TIDY5E.Search": "Vyhledat",
     "TIDY5E.SearchClear": "Vyčistit hledání",
     "TIDY5E.SearchHint": "Začni psát název toho, co hledáš...",
     "TIDY5E.ItemCardsMouseHint": "Střední tlačítko myši pro zobrazení/editaci položky",
-    "TIDY5E.AbbrMod": "Oprava",
-    "TIDY5E.AbbrSavingThrow": "Záchrana",
     "TIDY5E.SpellAttackMod": "Oprava útoku kouzlem",
     "TIDY5E.TokenLinked": "Token propojený s aktérem",
     "TIDY5E.TokenUnlinked": "Token nepropojený s aktérem",
@@ -287,8 +283,7 @@
         "name": "Výchozí karty deníků",
         "AvailableHeader": "Dostupné karty",
         "SelectedHeader": "Vybrané karty",
-        "hint": "Určuje, které karty se ve výchozím nastavení zobrazí a v jakém pořadí. Použijí se v případě, že nebyla vybrána žádná karta u aktéra.",
-        "AtLeastOneTabRequiredErrorMessage": "Výchozí karty: Pro každý typ aktéra je vyžadována alespoň jedna karta."
+        "hint": "Určuje, které karty se ve výchozím nastavení zobrazí a v jakém pořadí. Použijí se v případě, že nebyla vybrána žádná karta u aktéra."
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
     "TIDY5E.ButtonConfirm.Text": "Potvrdit",
@@ -350,12 +345,7 @@
     },
     "TIDY5E.LocalizationTestKey": "Testovací klíč lokalizace",
     "TIDY5E.Actions": {
-        "OverriddenSetOverrideTrue": "Přidat do seznamu akcí (Shift+klik pro vymazání přepisu)",
-        "SetOverrideFalse": "Odebrat ze seznamu akcí",
-        "TabName": "Akce",
-        "OverriddenSetOverrideFalse": "Odebrat ze seznamu akcí (Shift+klik pro vymazání přepisu)",
-        "SetOverrideTrue": "Přidat do seznamu akcí",
-        "ResetActionDefault": "Výchozí nastavení akcí"
+        "TabName": "Akce"
     },
     "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem na blízko",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {

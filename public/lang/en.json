@@ -36,8 +36,6 @@
 
   "TIDY5E.UserDefaultPrefix": "User Default: {value}",
 
-  "TIDY5E.AbbrInitiative": "Ini",
-
   "TIDY5E.NoSpecialSenses": "No Special Senses",
 
   "TIDY5E.Group.NamePlaceholder": "Group Name",
@@ -56,12 +54,7 @@
   "TIDY5E.CombatTabName": "Combat",
 
   "TIDY5E.Actions": {
-    "TabName": "Actions",
-    "OverriddenSetOverrideFalse": "Remove from Actions List (Shift+Click to clear override)",
-    "OverriddenSetOverrideTrue": "Add to Actions List (Shift+Click to clear override)",
-    "SetOverrideFalse": "Remove from Actions List",
-    "SetOverrideTrue": "Add to Actions List",
-    "ResetActionDefault": "Reset Action Default"
+    "TabName": "Actions"
   },
   "TIDY5E.LegendaryAbbr": "LA",
   "TIDY5E.LairAbbr": "Lair",
@@ -136,7 +129,6 @@
   "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
   "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
 
-  "TIDY5E.Abilities": "Abilities",
   "TIDY5E.Ability.EditScore.label": "Edit Score",
 
   "TIDY5E.EmptyTools": "No tool proficiencies.",
@@ -152,8 +144,6 @@
 
   "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item",
 
-  "TIDY5E.AbbrMod": "Mod",
-  "TIDY5E.AbbrSavingThrow": "Save",
   "TIDY5E.AttackMod": "Attack Mod",
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - Spell Attack",
   "TIDY5E.ActorSpellAttackFlavorText": "Spell Attack",
@@ -336,8 +326,7 @@
     "name": "Default Sheet Tabs",
     "hint": "Determines which tabs will show and in what order by default. Applies when no tab selections have been made for an actor.",
     "AvailableHeader": "Available Tabs",
-    "SelectedHeader": "Selected Tabs",
-    "AtLeastOneTabRequiredErrorMessage": "Default tabs: at least one tab is required for each actor type."
+    "SelectedHeader": "Selected Tabs"
   },
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "Default Death Save Roll",

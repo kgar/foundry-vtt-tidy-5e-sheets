@@ -5,7 +5,6 @@
     "TIDY5E.ShowPortraitArt": "portré mutatás",
     "TIDY5E.ShowItemImage": "right click: show item art",
     "TIDY5E.ShowItemArt": "show image",
-    "TIDY5E.AbbrInitiative": "Kez",
     "TIDY5E.RestHint": "Pihenő",
     "TIDY5E.ShortRest": "Rövid Pihenő",
     "TIDY5E.LongRest": "Hosszú Pihenő",
@@ -44,14 +43,11 @@
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.HideNotProficientSkills": "",
-    "TIDY5E.Abilities": "Tulajdonságok",
     "TIDY5E.Environment": "Környezet",
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "Kezdd el írni, amit keresel.",
     "TIDY5E.ItemCardsMouseHint": "középső egérgomb, hogy megnézed/szerkeszd.",
-    "TIDY5E.AbbrMod": "Mód.",
-    "TIDY5E.AbbrSavingThrow": "Mentő",
     "TIDY5E.SpellAttackMod": "Támadás Mód.",
     "TIDY5E.TokenLinked": "Aktorhoz linkelt token",
     "TIDY5E.TokenUnlinked": "Token nincs aktorhoz linkelve",
@@ -163,12 +159,7 @@
     "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.Actions": {
-        "ResetActionDefault": "",
-        "SetOverrideFalse": "",
-        "OverriddenSetOverrideTrue": "",
-        "TabName": "",
-        "OverriddenSetOverrideFalse": "",
-        "SetOverrideTrue": ""
+        "TabName": ""
     },
     "TIDY5E.Settings.Migrations": {
         "Notification": {
@@ -349,7 +340,6 @@
     },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "hint": "",
-        "AtLeastOneTabRequiredErrorMessage": "",
         "AvailableHeader": "",
         "name": "",
         "SelectedHeader": ""

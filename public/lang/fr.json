@@ -5,7 +5,6 @@
     "TIDY5E.ShowPortraitArt": "Voir le portrait",
     "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
     "TIDY5E.ShowItemArt": "Montrer l'image",
-    "TIDY5E.AbbrInitiative": "Ini",
     "TIDY5E.RestHint": "Se reposer",
     "TIDY5E.ShortRest": "Repos Court",
     "TIDY5E.LongRest": "Repos Long",
@@ -44,14 +43,11 @@
     "TIDY5E.Favorite": "Favori",
     "TIDY5E.ShowNotProficientSkills": "Indiquer comme non compétent",
     "TIDY5E.HideNotProficientSkills": "cacher comme non compétent",
-    "TIDY5E.Abilities": "Capacités",
     "TIDY5E.Environment": "Environnement",
     "TIDY5E.Search": "Chercher",
     "TIDY5E.SearchClear": "Vider la recherche",
     "TIDY5E.SearchHint": "Saisir votre recherche",
     "TIDY5E.ItemCardsMouseHint": "Clic central de la souris pour voir / éditer",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Sauvegarde",
     "TIDY5E.SpellAttackMod": "Bonus d'attaque",
     "TIDY5E.TokenLinked": "Token lié à l'acteur",
     "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
@@ -178,12 +174,7 @@
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "Cet objet a des effets actifs",
     "TIDY5E.Actions": {
-        "TabName": "Actions",
-        "OverriddenSetOverrideFalse": "Supprimer de la liste des actions (Shift+Click pour annuler)",
-        "OverriddenSetOverrideTrue": "Ajouter à la liste d'actions (Shift+Click pour annuler)",
-        "SetOverrideFalse": "Supprimer de la liste des actions",
-        "SetOverrideTrue": "Ajouter à la liste des actions",
-        "ResetActionDefault": "Réinitialisation action par défaut"
+        "TabName": "Actions"
     },
     "TIDY5E.Inventory.Weight.Tooltip": "Poids : {weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Environnement : {environnement}",
@@ -247,8 +238,7 @@
         "name": "Onglets de la feuille par défaut",
         "hint": "Détermine quels onglets seront affichés et dans quel ordre par défaut. S'applique lorsqu'aucun onglet n'a été sélectionné pour un acteur.",
         "AvailableHeader": "Onglets disponibles",
-        "SelectedHeader": "Onglets sélectionnés",
-        "AtLeastOneTabRequiredErrorMessage": "Onglets par défaut : au moins un onglet est requis pour chaque type d'acteur."
+        "SelectedHeader": "Onglets sélectionnés"
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Inclure les sorts à effets actifs dans les actions",
