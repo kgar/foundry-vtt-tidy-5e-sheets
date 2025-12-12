@@ -45,13 +45,13 @@
   - [x] TIDY5E.Encumbrance
   - [x] TIDY5E.Environment
   - [x] TIDY5E.EnvironmentTooltip
-  - [ ] TIDY5E.ExhaustionLevelTooltip
-  - [ ] TIDY5E.Favorite
-  - [ ] TIDY5E.FavoriteSpellLevelLabel
-  - [ ] TIDY5E.GMOnlyEdit
-  - [ ] TIDY5E.Group.HideMemberTabInfoPanel
-  - [ ] TIDY5E.Group.NamePlaceholder
-  - [ ] TIDY5E.Group.ShowMemberTabInfoPanel
+  - [x] TIDY5E.ExhaustionLevelTooltip
+  - [x] TIDY5E.Favorite
+  - [x] TIDY5E.FavoriteSpellLevelLabel
+  - [x] TIDY5E.GMOnlyEdit
+  - [x] TIDY5E.Group.HideMemberTabInfoPanel
+  - [x] TIDY5E.Group.NamePlaceholder
+  - [x] TIDY5E.Group.ShowMemberTabInfoPanel
   - [ ] TIDY5E.HideNotProficientSkills
   - [ ] TIDY5E.HitDC
   - [ ] TIDY5E.InfoCardInspectHint

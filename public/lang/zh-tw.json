@@ -29,12 +29,10 @@
     "TIDY5E.ContextMenuActionUnprepare": "",
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
-    "TIDY5E.GMOnlyEdit": "僅有你的 GM 可以編輯該區塊。",
     "TIDY5E.AttunementItems": "已同調物品",
     "TIDY5E.ListLayout": "列表佈局",
     "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.AddFavorite": "添加到收藏",
-    "TIDY5E.Favorite": "收藏",
     "TIDY5E.RemoveFavorite": "從收藏中移除",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.HideNotProficientSkills": "",
@@ -139,7 +137,6 @@
             "explanation": ""
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": "",
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
     "TIDY5E.VehicleInMotion": "",

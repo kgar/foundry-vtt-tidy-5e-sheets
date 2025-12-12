@@ -1,8 +1,6 @@
 {
     "TIDY5E.AttunementItems": "Налаштовано на предмети",
     "TIDY5E.ListLayout": "Показати списком",
-    "TIDY5E.Group.NamePlaceholder": "Назва Групи",
-    "TIDY5E.Group.HideMemberTabInfoPanel": "Сховати панель інформації",
     "TIDY5E.ShortRest": "Короткий Відпочинок",
     "TIDY5E.Actions": {
         "TabName": "Дія"
@@ -32,7 +30,6 @@
     "TIDY5E.OneDnDExhaustion9": "-9 до всіх кидків К20 та КС ряткидків від чарів",
     "TIDY5E.StandardVehicleExhaustion6": "Пункти Здоров'я падають до 0 і транспорт ламається",
     "TIDY5E.NoSpecialSenses": "Без Незвичайних Відчуттів",
-    "TIDY5E.Group.ShowMemberTabInfoPanel": "Показати панель інформації",
     "TIDY5E.Group.EmptyMembersTabHint": "Ця група порожня. Перетягніть актора з бічної панелі, щоб додати учасника.",
     "TIDY5E.RestHint": "Відпочинок",
     "TIDY5E.LongRest": "Довгий Відпочинок",
@@ -58,11 +55,9 @@
     "TIDY5E.ContextMenuActionAttune": "Налаштуватися",
     "TIDY5E.ContextMenuActionUnattune": "Перервати Налаштування",
     "TIDY5E.ContextMenuActionUnprepare": "Прибрати Підготовку",
-    "TIDY5E.GMOnlyEdit": "Тільки ваш ГМ може редагувати цей розділ.",
     "TIDY5E.EmptyContainer": "Цей контейнер пустий.",
     "TIDY5E.LayoutNotSupported": "Режим показу не підтримується",
     "TIDY5E.AddFavorite": "Додати до обраних",
-    "TIDY5E.Favorite": "Обране",
     "TIDY5E.RemoveFavorite": "Прибрати з обраних",
     "TIDY5E.ItemCardsMouseHint": "середня кнопка миші: перегляд/редагування",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Атака Чарами Дального Бою",
@@ -229,7 +224,6 @@
         "name": "Включити чари з активними ефектами до дій",
         "hint": "Показує чари що накладають активні ефекти (наприклад Дубова шкіра) на вкладці/панелі дій за замовчуванням."
     },
-    "TIDY5E.ExhaustionLevelTooltip": "Рівень виснаження {level}",
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "Включити витратники до дій",
         "hint": "Показує витратники, що мають вартість активації (дією, бонусною дією тощо) в списку дій за замовчуванням."
@@ -382,7 +376,6 @@
         "ActorHeaderBackground.title": "Фон заголовка актора",
         "ItemSidebarBackground.title": "Фон бічної панелі елемента"
     },
-    "TIDY5E.FavoriteSpellLevelLabel": "Чари рівня {number}",
     "TIDY5E.TotalCrewCount": "Всього екіпажу",
     "TIDY5E.SheetMenu": {
         "label": "Меню",

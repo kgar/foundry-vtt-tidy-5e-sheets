@@ -29,12 +29,10 @@
     "TIDY5E.ContextMenuActionUnprepare": "Előkészítés Törlése",
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
-    "TIDY5E.GMOnlyEdit": "Csak a JM szerkesztheti ezt a szekciót.",
     "TIDY5E.AttunementItems": "Összehangolt Tárgyak",
     "TIDY5E.ListLayout": "Lista Elrendezés",
     "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.AddFavorite": "Hozzáadás a Kedvencekhez",
-    "TIDY5E.Favorite": "Kedvenc",
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.HideNotProficientSkills": "",
@@ -139,7 +137,6 @@
             "explanation": ""
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": "",
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
     "TIDY5E.VehicleInMotion": "",

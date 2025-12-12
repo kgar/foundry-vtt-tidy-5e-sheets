@@ -31,15 +31,10 @@
   "TIDY5E.LegendaryLairToolbar": "Legendary/Lair Toolbar",
   "TIDY5E.SpellbookSections": "Spellbook Sections",
 
-  "TIDY5E.ExhaustionLevelTooltip": "Exhaustion Level {level}",
-
   "TIDY5E.UserDefaultPrefix": "User Default: {value}",
 
   "TIDY5E.NoSpecialSenses": "No Special Senses",
 
-  "TIDY5E.Group.NamePlaceholder": "Group Name",
-  "TIDY5E.Group.ShowMemberTabInfoPanel": "Show Info Panel",
-  "TIDY5E.Group.HideMemberTabInfoPanel": "Hide Info Panel",
   "TIDY5E.Group.EmptyMembersTabHint": "This group is empty. Drop an actor from the sidebar to add a member.",
   "TIDY5E.Group.PrimaryParty.Label": "Primary Party",
 
@@ -106,7 +101,6 @@
   "TIDY5E.InspirationRemove": "Remove Inspiration",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
-  "TIDY5E.GMOnlyEdit": "Only your GM can edit this section.",
 
   "TIDY5E.AttunementItems": "Attuned Items",
 
@@ -114,7 +108,6 @@
   "TIDY5E.LayoutNotSupported": "Layout mode not supported",
 
   "TIDY5E.AddFavorite": "Add Favorite",
-  "TIDY5E.Favorite": "Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
   "TIDY5E.EmptyFavorites": "Right-click and Favorite, or drag anything from your sheet here to for quick access.",
 
@@ -481,7 +474,6 @@
     "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
     "SpellcastingMethodColors.title": "Spellcasting Method Colors"
   },
-  "TIDY5E.FavoriteSpellLevelLabel": "Spell Level {number}",
   "TIDY5E.ApplyChanges": "Apply Changes",
   "TIDY5E.SaveChanges": "Save Changes",
   "TIDY5E.UseDefault": "Use Default",

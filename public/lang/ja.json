@@ -31,15 +31,10 @@
   "TIDY5E.LegendaryLairToolbar": "伝説/住処ツールバー",
   "TIDY5E.SpellbookSections": "呪文書セクション",
 
-  "TIDY5E.ExhaustionLevelTooltip": "消耗状態 {level}段階",
-
   "TIDY5E.UserDefaultPrefix": "ユーザーデフォルト: {value}",
 
   "TIDY5E.NoSpecialSenses": "特殊感覚なし",
 
-  "TIDY5E.Group.NamePlaceholder": "グループ名",
-  "TIDY5E.Group.ShowMemberTabInfoPanel": "情報パネル表示",
-  "TIDY5E.Group.HideMemberTabInfoPanel": "情報パネル非表示",
   "TIDY5E.Group.EmptyMembersTabHint": "このグループは空です。サイドバーからキャラクターをドロップしてメンバーを追加してください。",
   "TIDY5E.Group.PrimaryParty.Label": "メインパーティ",
 
@@ -106,7 +101,6 @@
   "TIDY5E.InspirationRemove": "インスピレーション削除",
 
   "TIDY5E.EmptyContainer": "この容器は空です。",
-  "TIDY5E.GMOnlyEdit": "この項目を編集できるのはGMだけです。",
 
   "TIDY5E.AttunementItems": "同調アイテム",
 
@@ -114,7 +108,6 @@
   "TIDY5E.LayoutNotSupported": "レイアウトモードはサポートされていません",
 
   "TIDY5E.AddFavorite": "お気に入り追加",
-  "TIDY5E.Favorite": "お気に入り",
   "TIDY5E.RemoveFavorite": "お気に入りから削除",
   "TIDY5E.EmptyFavorites": "右クリックでお気に入りに追加するか、シートから何かをドラッグしてクイックアクセスできるようにしてください。",
 
@@ -481,7 +474,6 @@
     "SheetTheme.hint": "最良の結果を得るには、カラーパレットの中央付近の色を選択してください。",
     "SpellcastingMethodColors.title": "呪文発動方法別カラー"
   },
-  "TIDY5E.FavoriteSpellLevelLabel": "呪文レベル {number}",
   "TIDY5E.ApplyChanges": "適用",
   "TIDY5E.SaveChanges": "保存",
   "TIDY5E.UseDefault": "デフォルトを使用",
