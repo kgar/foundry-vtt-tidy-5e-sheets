@@ -33,13 +33,11 @@
     "TIDY5E.AttunementItems": "已同調物品",
     "TIDY5E.ListLayout": "列表佈局",
     "TIDY5E.LayoutNotSupported": "",
-    "TIDY5E.Encumbrance": "負重",
     "TIDY5E.AddFavorite": "添加到收藏",
     "TIDY5E.Favorite": "收藏",
     "TIDY5E.RemoveFavorite": "從收藏中移除",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.HideNotProficientSkills": "",
-    "TIDY5E.Environment": "環境",
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "輸入你想要搜索的東西就夠了。",
@@ -292,7 +290,6 @@
     "TIDY5E.Actions": {
         "TabName": ""
     },
-    "TIDY5E.EnvironmentTooltip": "",
     "TIDY5E.ActorRangedSpellAttackTitle": "",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "",
     "TIDY5E.TabConfiguration": {

@@ -113,8 +113,6 @@
   "TIDY5E.ListLayout": "リスト",
   "TIDY5E.LayoutNotSupported": "レイアウトモードはサポートされていません",
 
-  "TIDY5E.Encumbrance": "荷重",
-
   "TIDY5E.AddFavorite": "お気に入り追加",
   "TIDY5E.Favorite": "お気に入り",
   "TIDY5E.RemoveFavorite": "お気に入りから削除",
@@ -126,9 +124,6 @@
   "TIDY5E.Ability.EditScore.label": "値を編集",
 
   "TIDY5E.EmptyTools": "道具の習熟がありません。",
-
-  "TIDY5E.Environment": "環境",
-  "TIDY5E.EnvironmentTooltip": "環境: {environment}",
 
   "TIDY5E.Search": "検索",
   "TIDY5E.SearchClear": "検索クリア",

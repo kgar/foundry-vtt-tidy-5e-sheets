@@ -40,11 +40,11 @@
   - [x] TIDY5E.ContextMenuActionPinToAttributes
   - [x] TIDY5E.ContextMenuActionUnpinFromAttributes
   - [x] TIDY5E.EditSheetImageHint
-  - [ ] TIDY5E.EmptySection
-  - [ ] TIDY5E.Encounter.NewPlaceholder.SubtitlePlaceholderText
-  - [ ] TIDY5E.Encumbrance
-  - [ ] TIDY5E.Environment
-  - [ ] TIDY5E.EnvironmentTooltip
+  - [x] TIDY5E.EmptySection
+  - [x] (keep) TIDY5E.Encounter.NewPlaceholder.SubtitlePlaceholderText
+  - [x] TIDY5E.Encumbrance
+  - [x] TIDY5E.Environment
+  - [x] TIDY5E.EnvironmentTooltip
   - [ ] TIDY5E.ExhaustionLevelTooltip
   - [ ] TIDY5E.Favorite
   - [ ] TIDY5E.FavoriteSpellLevelLabel

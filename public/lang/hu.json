@@ -33,13 +33,11 @@
     "TIDY5E.AttunementItems": "Összehangolt Tárgyak",
     "TIDY5E.ListLayout": "Lista Elrendezés",
     "TIDY5E.LayoutNotSupported": "",
-    "TIDY5E.Encumbrance": "Terheltség",
     "TIDY5E.AddFavorite": "Hozzáadás a Kedvencekhez",
     "TIDY5E.Favorite": "Kedvenc",
     "TIDY5E.RemoveFavorite": "Törlés a Kedvencek közül",
     "TIDY5E.ShowNotProficientSkills": "",
     "TIDY5E.HideNotProficientSkills": "",
-    "TIDY5E.Environment": "Környezet",
     "TIDY5E.Search": "",
     "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "Kezdd el írni, amit keresel.",
@@ -395,6 +393,5 @@
     },
     "TIDY5E.Settings.ActionList.Header": "",
     "TIDY5E.ItemImageTitle": "",
-    "TIDY5E.EnvironmentTooltip": "",
     "TIDY5E.LocalizationTestKey": ""
 }

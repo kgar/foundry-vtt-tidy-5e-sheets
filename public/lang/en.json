@@ -113,8 +113,6 @@
   "TIDY5E.ListLayout": "List Layout",
   "TIDY5E.LayoutNotSupported": "Layout mode not supported",
 
-  "TIDY5E.Encumbrance": "Encumbrance",
-
   "TIDY5E.AddFavorite": "Add Favorite",
   "TIDY5E.Favorite": "Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
@@ -126,9 +124,6 @@
   "TIDY5E.Ability.EditScore.label": "Edit Score",
 
   "TIDY5E.EmptyTools": "No tool proficiencies.",
-
-  "TIDY5E.Environment": "Environment",
-  "TIDY5E.EnvironmentTooltip": "Environment: {environment}",
 
   "TIDY5E.Search": "Search",
   "TIDY5E.SearchClear": "Clear Search",
