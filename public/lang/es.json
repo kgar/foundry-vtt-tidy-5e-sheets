@@ -122,18 +122,6 @@
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
         "BuyMeACoffeeLink": "{urlStart}Cómprame un Coffee{urlEnd}"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Mostrar las Tarjetas de Información de Objetos en Todos los Diseños",
-        "hint": "Cuando esta opción está deshabilitada, las tarjetas de información de objeto solo se mostrarán en el diseño de cuadrícula."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Las tarjetas de información del objeto flotan junto al cursor",
-        "hint": "Actívalo para separar las tarjetas de información del objeto de la ficha y hacer que floten al lado del cursor. Recomendado: utilizar esta opción junto a un retardo."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Retardo en Mostrar Tarjetas de Objetos (ms)",
-        "hint": "Retardo Inicial para mostrar la Tarjeta de Información en milisegundos (0 = no hay retardo, 300 es el valor por defecto)."
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
         "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."
@@ -150,14 +138,6 @@
         "name": "Mostrar lista de clases",
         "hint": "Mostrar lista de clases bajo el nombre del personaje."
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Indicador de inspiración sin animación",
-        "hint": "Actívalo para quitar la animación de brillo del Indicador de inspiración."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Ocultar el medidor de cansancio e inspiración con 0",
-        "hint": "Actívalo para ocultar el medidor de cansancio e inspiración si se encuentra a 0. Se mostrará al pasar el ratón."
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Mostrar el indicador de inspiración sólo al pasar por encima",
         "hint": "Actívalo para mostrar el indicador de inspiración sólo al pasar el ratón por encima del retrato."
@@ -173,10 +153,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Utilizar superposición de salud",
         "hint": "Muestra una superposición de PS de colores."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Mover los rasgos debajo de los recursos",
-        "hint": "Permite mover los rasgos de la parte izquierda debajo de los recursos."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Mostrar solo munición equipada",
@@ -211,10 +187,6 @@
         "name": "Bloquear los campos sensibles",
         "hint": "Actívalo para evitar cambiar accidentalmente valores sensibles, en su mayoría estáticos."
     },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Sólo el DM puede editar los efectos activos",
-        "hint": "Actívalo para impedir que los jugadores editen los efectos activos en sus hojas. Seguirán viendo los efectos aplicados."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Utilizar seguimiento de inspiración",
         "hint": "Muestra un seguimiento de inspiración en le perfil del personaje."
@@ -247,10 +219,6 @@
         "name": "Pestaña inicial en hoja",
         "hint": "Muestra la pestaña indicada al abrir una hoja por primera vez."
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Ocultar salvaciones de muerte a los jugadores",
-        "hint": "Hace que los resultados de las salvaciones de muerte sean visibiles solo al GM. El botón de salvación de muerte permanece visible."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Usar la barra de carga de personaje",
         "hint": "Muestra una barra de carga en las hojas de personaje."
@@ -282,22 +250,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Bloquear moneda",
         "hint": "Previene a los no-DMs hacer cambios en las monedas."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Bloquear experiencia",
-        "hint": "Previene a los no-DMs hacer cambios en la experiencia."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Bloquear cambios a PS máximos",
-        "hint": "Previene a los no-DMs hacer cambios en los PS máximos."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Bloquear selector de nivel",
-        "hint": "Previene que los no-DMs cambien los niveles de jugador con el selector de nivel de clase."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Bloquear cantidad de objetos",
-        "hint": "Previene a los no-DMs hacer cambios en la cantidad de objetos."
     },
     "TIDY5E.Settings.Reset": {
         "name": "Restablecer la configuración predeterminada",
@@ -682,10 +634,6 @@
     "TIDY5E.SortMenu.OptionPrepared": "Preparado",
     "TIDY5E.SortMenu.OptionEquipped": "Equipado",
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expandir/contraer",
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "hint": "Presione esta tecla (por ejemplo, la tecla “t”) mientras visualiza una tarjeta de información para resaltarla.",
-        "name": "Clave de inspección de la tarjeta de información"
-    },
     "TIDY5E.InfoCardInspectHint": "Inspeccionar {inspectKey}",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Hoja de Personaje Tidy 5e",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Hoja de NPC Tidy 5e",

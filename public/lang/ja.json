@@ -363,21 +363,9 @@
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "用途"
   },
-  "TIDY5E.Settings.ItemCardsForAllItems": {
-    "name": "アイテムカードを全レイアウトで表示",
-    "hint": "この設定を無効にすると、アイテムカードはグリッド表示でのみ表示されます。"
-  },
   "TIDY5E.Settings.UseEffectCards": {
     "name": "アクティブ効果情報カードを表示",
     "hint": "有効にすると、アクティブ効果を持つすべてのキャラクターとアイテムに情報カードが表示されます。"
-  },
-  "TIDY5E.Settings.ItemCardsAreFloating": {
-    "name": "アイテム情報カードをカーソル横に表示",
-    "hint": "アイテム情報カードがカーソルの横に出現します。遅延を設定しておくと便利です。"
-  },
-  "TIDY5E.Settings.ItemCardsDelay": {
-    "name": "アイテム情報カードの表示遅延",
-    "hint": "ミリ秒単位で指定した時間後にアイテムにカーソルを合わせたところに情報が出現します。（0:遅延なし、300:デフォルト）"
   },
   "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
     "name": "アクセシブルキーボードサポート使用",
@@ -390,10 +378,6 @@
   "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
     "name": "デフォルトシートのHPキーボードタブ移動を使用",
     "hint": "デフォルトの5版シートは、現在のHP入力から現在の一時HP入力へキーボードでタブ移動できます。これを有効にすると、その動作を再現します。この設定は「アクセシブルキーボードサポート使用」がオフの場合は無視されます。"
-  },
-  "TIDY5E.Settings.InfoCardsInspectKey": {
-    "name": "情報カード 固定キー",
-    "hint": "情報カードを表示中にこのキーボードキー（例：\"t\"キー）を押すと、カードを固定します。"
   },
   "TIDY5E.Settings.UseClassicControls": {
     "name": "従来のアイテム操作を使用",
@@ -410,14 +394,6 @@
   "TIDY5E.Settings.ShowClassList": {
     "name": "クラスリスト表示",
     "hint": "キャラクター名の下にクラスリストを表示します。"
-  },
-  "TIDY5E.Settings.InspirationAnimation": {
-    "name": "インスピレーションアニメ",
-    "hint": "インスピレーションアイコンのアニメーションを有効にします。"
-  },
-  "TIDY5E.Settings.HideIfZero": {
-    "name": "消耗とインスピレーションが0の時､非表示",
-    "hint": "0の場合、消耗とインスピレーションは表示されなくなります。マウスカーソルを合わせたときだけ表示されます。"
   },
   "TIDY5E.Settings.ShowInspirationOnHover": {
     "name": "マウスオーバー時にインスピレーション表示",
@@ -438,10 +414,6 @@
   "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
     "name": "空の技能を切り替え",
     "hint": "空の技能の表示/非表示を切り替えるボタンを追加します。"
-  },
-  "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-    "name": "特徴を技能の右に移動",
-    "hint": "特徴を技能リストの右側、他のUIの上（例：お気に入り、NPC能力）に配置します。"
   },
   "TIDY5E.Settings.ShowEquippedAmmoOnly": {
     "name": "装備済の矢弾のみ表示",
@@ -474,10 +446,6 @@
   "TIDY5E.Settings.UseTotalSheetLock": {
     "name": "誤操作による変更をロック",
     "hint": "ほとんど変更されないフィールド（名前、習熟トグル）をロックし、シートがロックされているときに設定ボタンを隠します。"
-  },
-  "TIDY5E.Settings.LimitEffectsManagementToGM": {
-    "name": "GMだけがアクティブ効果を編集可能",
-    "hint": "アクティブ効果の編集または切り替え権限をGMのみに制限します。"
   },
   "TIDY5E.Settings.UseInspiration": {
     "name": "インスピレーション トラッカーを表示",
@@ -514,10 +482,6 @@
     "SelectedHeader": "選択中のタブ",
     "AtLeastOneTabRequiredErrorMessage": "デフォルトタブ：各キャラクター種別に少なくとも1つのタブが必要です。"
   },
-  "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-    "name": "PLから死亡セーヴを隠す",
-    "hint": "死亡セーヴの合計をGMのみ表示します。死亡セーヴロールボタンは引き続き表示されます。"
-  },
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "デフォルトの死亡セーヴロール",
     "hint": "死亡セーヴィング・スローをロールするときに使用するデフォルトのロールモードを決定します。"
@@ -549,22 +513,6 @@
   "TIDY5E.Settings.LockMoneyChanges": {
     "name": "所持金操作をロック",
     "hint": "GM以外が貨幣を変更できないようにします。"
-  },
-  "TIDY5E.Settings.LockExpChanges": {
-    "name": "経験点操作をロック",
-    "hint": "GM以外が経験点を変更できないようにします。"
-  },
-  "TIDY5E.Settings.LockHpMaxChanges": {
-    "name": "最大HP操作をロック",
-    "hint": "GM以外が最大HPを変更できないようにします。"
-  },
-  "TIDY5E.Settings.LockLevelSelector": {
-    "name": "レベル操作をロック",
-    "hint": "GM以外がクラスレベルセレクタでPCレベルを変更できないようにします。"
-  },
-  "TIDY5E.Settings.LockItemQuantity": {
-    "name": "アイテム数をロック",
-    "hint": "GM以外がアイテム数量を変更できないようにします。"
   },
   "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
     "name": "グループシートメンバーセキュリティを使用",

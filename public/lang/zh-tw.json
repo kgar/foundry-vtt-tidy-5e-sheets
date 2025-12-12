@@ -106,18 +106,6 @@
         "labelInventoryLocks": "",
         "labelFeaturesLocks": ""
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "列表視圖下使用舊版物品操作按鈕。",
         "hint": "始終顯示物品操作按鈕並禁用右鍵菜單。僅適用於 PC 物品和法術的列表視圖。"
@@ -134,14 +122,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "無效時隱藏力竭和激勵 (0).",
-        "hint": "如果想要力竭為 0 和沒有激勵時隱藏兩項請勾選該項，將會在鼠標懸停其上時顯示。"
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "僅在鼠標懸停時顯示激勵追踪器。",
         "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示激勵追踪器。"
@@ -155,10 +135,6 @@
         "hint": ""
     },
     "TIDY5E.Settings.UseHpOverlay": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
         "name": "",
         "hint": ""
     },
@@ -195,10 +171,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "",
         "hint": ""
@@ -231,10 +203,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "",
         "hint": ""
@@ -264,22 +232,6 @@
         "hint": ""
     },
     "TIDY5E.Settings.LockMoneyChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
         "name": "",
         "hint": ""
     },

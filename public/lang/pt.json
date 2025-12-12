@@ -279,21 +279,9 @@
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Atividades"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Mostrar Cartões de Elemento em Todos os Layouts",
-        "hint": "Se esta configuração estiver desativada, os cartões de elemento serão exibidos apenas na grade."
-    },
     "TIDY5E.Settings.UseEffectCards": {
         "name": "Mostrar Cartões de Info. de Efeitos",
         "hint": "Ative para mostrar cartões de informações para efeitos ativos em todos os atores e elementos com efeitos ativos."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Mostrar Cartões de Elemento Flutuantes",
-        "hint": "Ative para que os cartões de informações do elemento flutuem ao lado do cursor do rato. Recomendado: use o delay com este recurso."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Atraso do Cartão de Elemento (ms)",
-        "hint": "Atrasa a exibição de cartões de elementos para os milissegundos (ms) especificados. 0 significa que não há atraso. Padrão: 300."
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Use o Apoio de Teclado Acessível",
@@ -306,10 +294,6 @@
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Usar Tab Entre PVs da Ficha Padrão",
         "hint": "A ficha padrão permite o uso do tab do PV Atual para PV Temporário. A ativação dessa opção replica este comportamento. Esta configuração será ignorada se a opção \"Usar Apoio a Teclado Acessível\" estiver desativada."
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "Chave de Inspeção do Cartão de Info.",
-        "hint": "Pressione esta tecla (por exemplo, a tecla “t”) enquanto visualiza um cartão de informações para destacá-lo."
     },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Usar Lista Clássica de Controles",
@@ -326,14 +310,6 @@
     "TIDY5E.Settings.ShowClassList": {
         "name": "Mostrar Lista de Classes",
         "hint": "Mostra a lista de classes abaixo do nome do personagem."
-    },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Animar Rastreador de Inspiração",
-        "hint": "Mostra animação de brilho no rastreador de inspiração."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Ocultar o Rastreador de Exaustão e Inspiração em 0",
-        "hint": "Oculta exaustão e inspiração se cair a 0 PV, mas ainda aparece ao passar o rato."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Mostrar Indicador de Inspiração Apenas ao Passar o Cursor",
@@ -354,10 +330,6 @@
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "Alternar Investigações Vazias de Personagem",
         "hint": "Adiciona um botão de alternância para mostrar/ocultar investigações vazias."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Mover Traços Abaixo de Recursos",
-        "hint": "Posiciona os traços abaixo dos recursos de personagem."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Mostrar Apenas Munição Equipada",
@@ -390,10 +362,6 @@
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Travar Campos Sensíveis",
         "hint": "Bloqueia campos alterados com pouca frequência (nome, proficiência, etc) e oculta botões de configuração quando a ficha estiver bloqueada."
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Limitar Gestão de Efeitos Ativos ao Mestre",
-        "hint": "Limita a permissão de edição ou alternância de efeitos ativos apenas para Mestres."
     },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Usar Rastreador de Inspiração",
@@ -430,10 +398,6 @@
         "SelectedHeader": "Guias Selecionadas",
         "AtLeastOneTabRequiredErrorMessage": "Guias padrão: pelo menos uma guia é necessária para cada tipo de ator."
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Esconder Salvaguardas Contra a Morte dos Jogadores",
-        "hint": "Faz as marcações de salvaguarda contra a morte serem visíveis apenas para o Mestre. O botão de rolagem de Salvaguarda Contra Morte continua visível."
-    },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Rolagem Padrão de Salvaguarda Contra Morte",
         "hint": "Determina o tipo de rolagem padrão a ser usada ao realizar uma salvaguarda contra morte."
@@ -465,22 +429,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Bloquear Riqueza",
         "hint": "Impede que não-Mestres alterem a riqueza."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Bloquear Experiência",
-        "hint": "Impede que não-Mestres alterem a experiência."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Bloquear PV Máximo",
-        "hint": "Impede que não-Mestres alterem o PV máximo."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Bloquear Nível",
-        "hint": "Impede que não-Mestres alterem os níveis dos jogadores com o seletor de nível de classe."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Bloquear Quantidade de Elemento",
-        "hint": "Impede que não-Mestres alterem a quantidade do elemento."
     },
     "TIDY5E.Settings.ActionList.Header": "Lista de Ações",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {

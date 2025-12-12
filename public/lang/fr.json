@@ -106,18 +106,6 @@
         "labelInventoryLocks": "Verrouillage de l'inventaire",
         "labelFeaturesLocks": "Verrouillages des caractéristiques"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
-        "hint": "Désactiver cette option pour afficher la carte d'information uniquement en mode grille."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Carte d'information flottante",
-        "hint": "Activer cette option pour détacher la carte d'information et l'afficher près du curseur (fonctionne mieux avec un délai ou quand la fiche est en pop-up)."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Délai avant l'affichage de la carte d'information",
-        "hint": "La carte d'information s'affichera au survol d'un élément après un délai en millisecondes (0 = pas de délai, 300 par défaut)."
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Contrôles classiques en mode liste",
         "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
@@ -134,14 +122,6 @@
         "name": "Afficher la liste des classes",
         "hint": "Affiche la liste des classes sous le nom du personnage."
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Pas d'animation de l'indicateur d'inspiration",
-        "hint": "Activer cette option pour masquer l'animation lumineuse de l'indicateur d'inspiration."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Cacher l'épuisement et l'inspiration lorsqu'ils ne sont pas affectés",
-        "hint": "Activer cette option pour masquer l'épuisment si son niveau est de 0 et l'inspiration si elle n'est pas donnée."
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Afficher l'indicateur d'inspiration uniquement au survol",
         "hint": "Activer cette option pour rendre l'indicateur d'inspiration visible uniquement au survol du portrait avec la souris."
@@ -157,10 +137,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Utiliser la superposition de santé",
         "hint": "Affiche une superposition PV colorée."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Déplacer les traits sous les ressources",
-        "hint": "Activer cette option pour afficher les traits sous les ressources."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Montrer les munitions équipées uniquement",
@@ -195,10 +171,6 @@
         "name": "Verrouiller les champs sensibles",
         "hint": "Activer cette option pour prévenir les modifications de champs sensibles."
     },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Seul le MJ peut éditer les effets actifs",
-        "hint": "Activer cette option pour interdire aux joueurs de modifier les effets actifs sur leur feuille. Ils verront toujours les effets appliqués."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Utiliser le suivi de l'inspiration",
         "hint": "Affiche un indicateur d'inspiration sur le profil du personnage."
@@ -231,10 +203,6 @@
         "name": "Onglet initial de la feuille",
         "hint": "ffiche l'onglet indiqué lors de la première ouverture de la feuille."
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Cacher les jets de sauvegardes de mort aux joueurs",
-        "hint": "Rend les jets de sauvegardes de mort et les résultats des jets de sauvegardes de mort visibles uniquement par le MJ. Le bouton de jet de sauvegarde reste visible."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Utiliser la barre d'encombrement des personnages",
         "hint": "Affiche une barre d'encombrement sur les feuilles de personnage."
@@ -266,22 +234,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Verrouiller la monnaie",
         "hint": "Empêche les non-MJ d'apporter des modifications à la monnaie."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Verrouiller l'expérience",
-        "hint": "Empêche les non-MJ d'apporter des changements à l'expérience."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Verrouiller les changements de PV max",
-        "hint": "Empêche les non-MJ d'apporter des modifications aux PV max."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Verrouiller le sélecteur de niveaux",
-        "hint": "Empêche les non-MJ de modifier le niveau des joueurs à l'aide du sélecteur de niveau de classe."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Verrouiller la quantité d'objets",
-        "hint": "Empêche les non-MJ d'apporter des modifications à la quantité des objets."
     },
     "TIDY5E.Settings.Reset": {
         "name": "Rétablir les paramètres par défaut",
@@ -704,10 +656,6 @@
         "ShowWhenEmptyTooltip": "Tous les onglets comportant des tableaux d'éléments disposent d'un ensemble de sections par défaut qui sont toujours affichées, même lorsqu'il n'y a pas d'éléments dans la section. Toujours afficher cette section, même si elle est vide.",
         "LimitToSpecificTabsLabel": "Limiter la section affichée à des onglets spécifiques",
         "ShowWhenEmptyLabel": "Afficher la section lorsqu'elle est vide"
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "Clé de la Carte d'information",
-        "hint": "Appuyez sur ce caractère du clavier (par exemple, la touche \"t\") lorsque vous visualisez une carte d'information pour la détacher."
     },
     "TIDY5E.ContextMenuActionView": "Voir",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Afficher les utilisations limitées",

@@ -56,32 +56,32 @@
   - [x] TIDY5E.Settings.ColorPickerRitualOnlyOutline.name
   - [x] TIDY5E.Settings.ColorPickerScrollbarThumb.name
   - [x] TIDY5E.Settings.ColorPickerScrollbarTrack.name
-  - [ ] TIDY5E.Settings.HideDeathSavesFromPlayers.hint
-  - [ ] TIDY5E.Settings.HideDeathSavesFromPlayers.name
-  - [ ] TIDY5E.Settings.HideIfZero.hint
-  - [ ] TIDY5E.Settings.HideIfZero.name
-  - [ ] TIDY5E.Settings.InfoCardsInspectKey.hint
-  - [ ] TIDY5E.Settings.InfoCardsInspectKey.name
-  - [ ] TIDY5E.Settings.InspirationAnimation.hint
-  - [ ] TIDY5E.Settings.InspirationAnimation.name
-  - [ ] TIDY5E.Settings.ItemCardsAreFloating.hint
-  - [ ] TIDY5E.Settings.ItemCardsAreFloating.name
-  - [ ] TIDY5E.Settings.ItemCardsDelay.hint
-  - [ ] TIDY5E.Settings.ItemCardsDelay.name
-  - [ ] TIDY5E.Settings.ItemCardsForAllItems.hint
-  - [ ] TIDY5E.Settings.ItemCardsForAllItems.name
-  - [ ] TIDY5E.Settings.LimitEffectsManagementToGM.hint
-  - [ ] TIDY5E.Settings.LimitEffectsManagementToGM.name
-  - [ ] TIDY5E.Settings.LockExpChanges.hint
-  - [ ] TIDY5E.Settings.LockExpChanges.name
-  - [ ] TIDY5E.Settings.LockHpMaxChanges.hint
-  - [ ] TIDY5E.Settings.LockHpMaxChanges.name
-  - [ ] TIDY5E.Settings.LockItemQuantity.hint
-  - [ ] TIDY5E.Settings.LockItemQuantity.name
-  - [ ] TIDY5E.Settings.LockLevelSelector.hint
-  - [ ] TIDY5E.Settings.LockLevelSelector.name
-  - [ ] TIDY5E.Settings.MoveTraitsToRightOfSkills.hint
-  - [ ] TIDY5E.Settings.MoveTraitsToRightOfSkills.name
+  - [x] TIDY5E.Settings.HideDeathSavesFromPlayers.hint
+  - [x] TIDY5E.Settings.HideDeathSavesFromPlayers.name
+  - [x] TIDY5E.Settings.HideIfZero.hint
+  - [x] TIDY5E.Settings.HideIfZero.name
+  - [x] TIDY5E.Settings.InfoCardsInspectKey.hint
+  - [x] TIDY5E.Settings.InfoCardsInspectKey.name
+  - [x] TIDY5E.Settings.InspirationAnimation.hint
+  - [x] TIDY5E.Settings.InspirationAnimation.name
+  - [x] TIDY5E.Settings.ItemCardsAreFloating.hint
+  - [x] TIDY5E.Settings.ItemCardsAreFloating.name
+  - [x] TIDY5E.Settings.ItemCardsDelay.hint
+  - [x] TIDY5E.Settings.ItemCardsDelay.name
+  - [x] TIDY5E.Settings.ItemCardsForAllItems.hint
+  - [x] TIDY5E.Settings.ItemCardsForAllItems.name
+  - [x] TIDY5E.Settings.LimitEffectsManagementToGM.hint
+  - [x] TIDY5E.Settings.LimitEffectsManagementToGM.name
+  - [x] TIDY5E.Settings.LockExpChanges.hint
+  - [x] TIDY5E.Settings.LockExpChanges.name
+  - [x] TIDY5E.Settings.LockHpMaxChanges.hint
+  - [x] TIDY5E.Settings.LockHpMaxChanges.name
+  - [x] TIDY5E.Settings.LockItemQuantity.hint
+  - [x] TIDY5E.Settings.LockItemQuantity.name
+  - [x] TIDY5E.Settings.LockLevelSelector.hint
+  - [x] TIDY5E.Settings.LockLevelSelector.name
+  - [x] TIDY5E.Settings.MoveTraitsToRightOfSkills.hint
+  - [x] TIDY5E.Settings.MoveTraitsToRightOfSkills.name
   - [ ] TIDY5E.Settings.MulticlassSpellbookFilterLabel
   - [ ] TIDY5E.Settings.ShowActiveEffectsMarker.hint
   - [ ] TIDY5E.Settings.ShowActiveEffectsMarker.name

@@ -106,18 +106,6 @@
         "labelInventoryLocks": "Zámek inventáře",
         "labelFeaturesLocks": "Zámek schopností"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Zobrazovat karty položek ve všech rozvrženích?",
-        "hint": "Vypni, pokud chceš, aby se karty položek ukazovaly pouze v mřížkovém rozvržení."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Má karta položky plout vedle kurzoru?",
-        "hint": "Umožní odepnutí karty z deníku a její zobrazení jako plovoucího rámečku u kurzoru. Je to nejlepší používat s opožděným zobrazením."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Opoždění zobrazení karet položek (v ms)",
-        "hint": "Zpozdí zobrazení karet položek o zadané milisekundy (ms). 0 znamená bez zpoždění. Výchozí hodnota: 300."
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Používat klasické ovládací prvky seznamu?",
         "hint": "Zobrazí ovládací prvky v náhledu seznamu."
@@ -134,14 +122,6 @@
         "name": "Zobrazovat seznam povolání?",
         "hint": "Zobrazí seznam povolání pod jménem postavy."
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Animovat ukazatel Inspirace?",
-        "hint": "Zaškrtnutím deaktivuješ zářící animaci ukazatele inspirace."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Skrývat vyčerpání a Inspiraci, pokud je postava nemá?",
-        "hint": "Zaškrtnutí skryje únavu a inspiraci, pokud mají hodnotu 0. Objeví se při přejetí myší."
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Zobrazovat ukazatel Inspirace jen po přejetí myší?",
         "hint": "Zaškrtnutím bude ukazatel inspirace viditelný pouze při najetí myši na portrét."
@@ -157,10 +137,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Používat překryv výdrže?",
         "hint": "Zobrazí barevný překryv BV."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Přesunout rysy napravo od dovedností?",
-        "hint": "Zaškrtni pro přesunutí rysů z levé strany pod zdroje."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Zobrazovat pouze vybavenou munici?",
@@ -195,10 +171,6 @@
         "name": "Zamykat citlivá pole?",
         "hint": "Zaškrtni, aby se zabránilo nechtěné změně citlivých, povětšinou neměnných hodnot."
     },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Smí aktivní efekty upravovat pouze PJ?",
-        "hint": "Zaškrtnutí zakáže hráčům upravovat aktivní efekty ve svých denících. Aplikované efekty však pořád uvidí."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Používat ukazatel inspirace?",
         "hint": "Zobrazovat ukazatel inspirace v profilu postavy."
@@ -231,10 +203,6 @@
         "name": "Úvodní karta deníku",
         "hint": "Při prvním otevření deníku se zobrazí uvedená karta."
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Skrývat záchrany před smrtí před hráči?",
-        "hint": "Učiní výsledky záchran před smrtí viditelné pouze pro PJ. Tlačítko hodů zůstává viditelné."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Používat u postav panel zatížení?",
         "hint": "Zobrazí panel zatížení na denících postav."
@@ -266,22 +234,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Zamknout mince?",
         "hint": "Zabrání nePJům provádět změny mincí."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Zamknout zkušenosti?",
-        "hint": "Zabrání nePJům provádět změny u zkušeností."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Zamknout změny maximálního počtu BV?",
-        "hint": "Zabrání nePJům provádět změny u maxima BV."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Zamknout úrovně?",
-        "hint": "Zabrání nePJům nastavovat úroveň postav pomocí výběru úrovní."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Zamknout množství položek?",
-        "hint": "Zabrání nePJům měnit množství u položky."
     },
     "TIDY5E.Settings.Reset": {
         "name": "Obnovení výchozího nastavení",
@@ -676,10 +628,6 @@
         "tabLabel": "Vlastní sekce",
         "CustomizedIndicatorLabel": "Přizpůsobené",
         "ShowWhenEmptyLabel": "Zobrazit sekci, i když je prázdná"
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "Kontrolní klíč informační karty",
-        "hint": "Stisknutím tohoto znaku na klávesnici (například klávesy 't') při prohlížení informační karty bude karta vysunuta."
     },
     "TIDY5E.BrokenLink": "Přerušený odkaz",
     "TIDY5E.Settings.UseEffectCards": {

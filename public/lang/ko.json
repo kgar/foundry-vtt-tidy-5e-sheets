@@ -276,21 +276,9 @@
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "활동"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "모든 레이아웃에 아이템 정보 카드 표시",
-        "hint": "이 설정을 비활성화시, 아이템 카드는 격자 레이아웃으로만 표시됩니다."
-    },
     "TIDY5E.Settings.UseEffectCards": {
         "name": "활성 효과 정보 카드",
         "hint": "이 설정을 활성화하면 활성화된 효과가 있는 모든 액터와 아이템의 활성 효과에 대한 정보 카드를 표시할 수 있습니다."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "커서 옆에 아이템 정보 카드 띄우기",
-        "hint": "아이템 정보 카드를 시트에서 분리하여 커서 옆에 띄울 수 있습니다. 아래 지연 옵션과 함께 사용하는 것을 추천합니다. 시트를 팝아웃 시켰을 때에도 유용합니다."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "정보 카드 표시 지연",
-        "hint": "밀리초(0=지연 없음, 기본값 300)로 값을 지정한만큼 아이템 카드가 지연되어 표시됩니다."
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "접근 가능한 키보드 지원 사용",
@@ -303,10 +291,6 @@
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "기본 시트 HP 키보드 탭 사용",
         "hint": "기본 5e 시트는 현재 HP 입력에서 현재 임시 HP 입력으로 키보드 탭 이동을 허용합니다. 이 설정을 활성화하면 해당 동작이 복제됩니다. \"접근 가능한 키보드 지원 사용\"이 꺼져 있으면 이 설정은 무시됩니다."
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "정보 카드 점검 키",
-        "hint": "정보 카드를 보는 동안 이 키보드 문자(예: \"t\" 키)를 누르면 정보 카드가 나옵니다."
     },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "클래식 목록 제어 사용",
@@ -323,14 +307,6 @@
     "TIDY5E.Settings.ShowClassList": {
         "name": "클래스 목록 표시",
         "hint": "캐릭터 이름 아래에 클래스명을 표시합니다."
-    },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "고양감 추적기 애니메이션",
-        "hint": "고양감 추적기가 빛 효과로 애니메이션화된 것을 표시합니다."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "탈진과 고양감이 0이 되었을 경우 숨김.",
-        "hint": "탈진과 고양감이 0일 경우 숨기지만 마우스 호버하면 표시됩니다."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "호버시에만 고양감 추적기 표시",
@@ -351,10 +327,6 @@
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "빈 캐릭터 기술 전환 버튼",
         "hint": "비어있는 기술을 표시/숨기기 하는 전환 버튼을 추가합니다."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "특징을 자원 아래로 이동.",
-        "hint": "캐릭터 자원 아래에 특징을 표시합니다."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "장비된 탄약만 표시.",
@@ -387,10 +359,6 @@
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "중요 영역 잠금",
         "hint": "자주 변경하지 않는 필드(이름, 숙련 전환)를 잠그고 시트가 잠겨 있으면 설정 버튼을 숨깁니다."
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "GM만 활성화 효과를 편집 가능",
-        "hint": "활성 효과를 편집하거나 전환할 수 있는 권한을 GM으로 제한합니다."
     },
     "TIDY5E.Settings.UseInspiration": {
         "name": "고양감 추적기 사용",
@@ -427,10 +395,6 @@
         "SelectedHeader": "선택된 탭",
         "AtLeastOneTabRequiredErrorMessage": "기본 탭: 각 액터 타입마다 최소 한 개의 탭이 필요합니다."
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "죽음 내성 굴림을 플레이어로부터 숨김",
-        "hint": "활성화시 GM에게만 죽음 내성 굴림과 그 결과가 표시됩니다."
-    },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "기본 죽음 내성 굴림",
         "hint": "죽음 내성 굴림을 할 때의 기본 굴림을 지정합니다."
@@ -462,22 +426,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "금전 잠금",
         "hint": "GM이 아닌 사용자가 금전을 변경하는 것을 방지합니다."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "경험치 잠금",
-        "hint": "GM이 아닌 사용자가 경험치를 변경하는 것을 방지합니다."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "최대 HP 잠금",
-        "hint": "GM이 아닌 사용자가 최대 HP를 변경하는 것을 방지합니다."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "레벨 잠금",
-        "hint": "GM이 아닌 사용자가 클래스 레벨 선택기로 플레이어 레벨을 변경하는 것을 방지합니다."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "아이템 양 잠금",
-        "hint": "GM이 아닌 사용자가 아이템의 양을 변경하는 것을 방지합니다."
     },
     "TIDY5E.Settings.ActionList.Header": "행동 목록",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {

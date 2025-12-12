@@ -106,18 +106,6 @@
         "labelInventoryLocks": "",
         "labelFeaturesLocks": ""
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Minden elrendezésben mutassa az info kártyákat.",
-        "hint": "Kapcsold ki, ha rács elrendezésben is szeretnéd látni az info kártyákat."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Info kártyák a kurzor mellett lebegnek.",
-        "hint": "Kapcsold be, hogy leválaszd a lapról és a kurzor mellett lebegjenek az info kártyák. Késleltetéssel ajánlott használni. Hasznos, ha lap nincs rögzítve."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Info kártyák mutatása késleltetéssel.",
-        "hint": "A kurzort a kártya fölött kell tartanod bizonyos ideig, hogy előjöjjön (0 = nincs késleltetés, 300 az alapértelmezett (milliszekundum))."
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Klasszikus vezérlőelemek lista nézetben.",
         "hint": "Mindig mutassa a tételek vezérlését és kikapcsolja a jobb klikk menüt. Csak JK tárgy/varázslat készletre vonatkozik lista nézetben."
@@ -134,14 +122,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Statikus inspiráció követő.",
-        "hint": "Kapcsold be, hogy leállítsd az inspiráció követő fénylő animációját."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Kimerültség és inspiráció követő elrejtése 0-n.",
-        "hint": "Kapcsold be, hogy elrejtsd a kimerültség és inspiráció követőt, ha 0-n állnak. Ha ráviszed az egeret, látszódni fog."
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Inspiráció követő mutatása csak egérmutatóval.",
         "hint": "Kapcsold be, hogy csak akkor mutassa az inspiráció követőt, ha ráviszed az egeret a portréra."
@@ -157,10 +137,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "",
         "hint": ""
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Jellemzők az erőforrások alá.",
-        "hint": "Kapcsold be, hogy a jellemzőket a bal oldalról átmozgasd az erőforrások alá."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Csak felszerelt lőszer mutatása.",
@@ -195,10 +171,6 @@
         "name": "Érzékeny mezők lezárása.",
         "hint": "Kapcsold be, hogy véletlenül ne lehessen megváltoztatni érzékny, főleg statikus értékeket."
     },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Csak JM szerkesztheti az aktív hatásokat.",
-        "hint": "Kapcsold be, hogy elutasítsa a játékosok aktív hatás szerkesztési szándékait a lapjaikon. Ettől még látni fogják az aktív hatásokat."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "",
         "hint": ""
@@ -231,10 +203,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Halál elleni mentők elrejtése a Játékosok elől.",
-        "hint": "Kapcsold be, hogy a halál elleni mentőket csak a JM láthassa."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "",
         "hint": ""
@@ -264,22 +232,6 @@
         "hint": ""
     },
     "TIDY5E.Settings.LockMoneyChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
         "name": "",
         "hint": ""
     },

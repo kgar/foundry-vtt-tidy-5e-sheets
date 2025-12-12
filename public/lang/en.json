@@ -363,21 +363,9 @@
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "Activities"
   },
-  "TIDY5E.Settings.ItemCardsForAllItems": {
-    "name": "Show Item Cards in All Layouts",
-    "hint": "When this setting is disabled, item cards only show in the grid."
-  },
   "TIDY5E.Settings.UseEffectCards": {
     "name": "Show Active Effect Info Cards",
     "hint": "Enable to show info cards for active effects on all actors and items with active effects."
-  },
-  "TIDY5E.Settings.ItemCardsAreFloating": {
-    "name": "Show Floating Item Cards",
-    "hint": "Enable to have item info cards float next to the mouse cursor. Recommended: use delay with this feature."
-  },
-  "TIDY5E.Settings.ItemCardsDelay": {
-    "name": "Item Card Delay (ms)",
-    "hint": "Delays showing item cards for the specified milliseconds (ms). 0 means no delay. Default: 300."
   },
   "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
     "name": "Use Accessible Keyboard Support",
@@ -390,10 +378,6 @@
   "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
     "name": "Use default sheet HP keyboard tabbing",
     "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-  },
-  "TIDY5E.Settings.InfoCardsInspectKey": {
-    "name": "Info Card Inspect Key",
-    "hint": "Press this keyboard character (for example, the \"t\" key) while viewing an info card to pop it out."
   },
   "TIDY5E.Settings.UseClassicControls": {
     "name": "Use Classic List Controls",
@@ -410,14 +394,6 @@
   "TIDY5E.Settings.ShowClassList": {
     "name": "Show Class List",
     "hint": "Shows the class list below the character's name."
-  },
-  "TIDY5E.Settings.InspirationAnimation": {
-    "name": "Animate Inspiration Tracker",
-    "hint": "Shows inspiration tracker glow animation."
-  },
-  "TIDY5E.Settings.HideIfZero": {
-    "name": "Hide Exhaustion and Inspiration Tracker on 0",
-    "hint": "Hides exhaustion and inspiration if 0 but still shows on hover."
   },
   "TIDY5E.Settings.ShowInspirationOnHover": {
     "name": "Show Inspiration Indicator Only on Hover",
@@ -438,10 +414,6 @@
   "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
     "name": "Toggle Empty Character Skills",
     "hint": "Adds a toggle button for showing/hiding empty skills."
-  },
-  "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-    "name": "Move Traits to Right of Skills",
-    "hint": "Positions traits to the right of the skill list, above most other UIs on the right side (e.g. Favorites, NPC Abilities)."
   },
   "TIDY5E.Settings.ShowEquippedAmmoOnly": {
     "name": "Show Equipped Ammunition Only",
@@ -474,10 +446,6 @@
   "TIDY5E.Settings.UseTotalSheetLock": {
     "name": "Lock Down Sensitive Fields",
     "hint": "Locks infrequently changed fields (name, proficiency toggles) and hides configuration buttons when the sheet is locked."
-  },
-  "TIDY5E.Settings.LimitEffectsManagementToGM": {
-    "name": "Limit Active Effects Management to GMs",
-    "hint": "Limits permission to edit or toggle active effects to GMs only."
   },
   "TIDY5E.Settings.UseInspiration": {
     "name": "Use Inspiration Tracker",
@@ -514,10 +482,6 @@
     "SelectedHeader": "Selected Tabs",
     "AtLeastOneTabRequiredErrorMessage": "Default tabs: at least one tab is required for each actor type."
   },
-  "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-    "name": "Hide Death Saves From Players",
-    "hint": "Makes death save totals visible only to the GM. The death save roll button remains visible."
-  },
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "Default Death Save Roll",
     "hint": "Determines the default roll type to use when rolling a death saving throw."
@@ -549,22 +513,6 @@
   "TIDY5E.Settings.LockMoneyChanges": {
     "name": "Lock Currency",
     "hint": "Prevents non-GMs from making changes to currency."
-  },
-  "TIDY5E.Settings.LockExpChanges": {
-    "name": "Lock Experience",
-    "hint": "Prevents non-GMs from making changes to experience."
-  },
-  "TIDY5E.Settings.LockHpMaxChanges": {
-    "name": "Lock Max HP Changes",
-    "hint": "Prevents non-GMs from making changes to max HP."
-  },
-  "TIDY5E.Settings.LockLevelSelector": {
-    "name": "Lock Level Selector",
-    "hint": "Prevents non-GMs from changing player levels with the class level selector."
-  },
-  "TIDY5E.Settings.LockItemQuantity": {
-    "name": "Lock Item Quantity",
-    "hint": "Prevents non-GMs from making changes to item quantity."
   },
   "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
     "name": "Use Group Sheet Member Security",

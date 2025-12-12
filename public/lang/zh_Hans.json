@@ -241,21 +241,9 @@
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "行动"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "在所有视图中显示物品卡片",
-        "hint": "当此设置被禁用时，物品卡片仅在网格中显示。"
-    },
     "TIDY5E.Settings.UseEffectCards": {
         "name": "显示主动效应信息卡片",
         "hint": "启用显示所有具有主动效应的角色和物品的主动效应信息卡片。"
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "hint": "启用物品信息卡片在鼠标指针旁浮动显示。建议：使用此功能时启用延迟。",
-        "name": "显示浮动物品卡片"
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "物品卡片延迟（ms）",
-        "hint": "指定显示物品卡片的延迟时间（ms）。0 表示无延迟。默认值：300。"
     },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "使用无障碍键盘支持",
@@ -268,10 +256,6 @@
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "hint": "默认 5e 角色卡允许通过键盘的 `Tab` 键从当前生命值（HP）输入框直接跳转到临时生命值输入框。启用此选项将重现该行为。若未启用“使用无障碍键盘支持”，则此设置无效。",
         "name": "使用默认卡键盘切换HP"
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "信息卡片检查键",
-        "hint": "查看信息卡片时，按住此键盘字符（例如“t”键）可将其弹出。"
     },
     "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "玩家",
@@ -293,14 +277,6 @@
         "name": "显示职业列表",
         "hint": "在角色名称下方显示其职业列表。"
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "hint": "显示激励追踪器发光动画。",
-        "name": "动画激励追踪器"
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "数值为0时隐藏力竭和激励追踪器",
-        "hint": "数值为0时隐藏力竭和激励追踪器，悬停仍显示。"
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "仅在悬浮时显示激励指示器",
         "hint": "仅在鼠标悬停于头像上时显示激励指示器。"
@@ -320,10 +296,6 @@
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "切换空角色技能",
         "hint": "添加了一个切换按钮，用于显示/隐藏空技能。"
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "将特质移至技能右侧",
-        "hint": "将“职位特性”置于技能列表的右侧，位于右侧的大多数其他用户界面（例如“收藏夹”、“非玩家角色属性”）上方。"
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "仅显示已装备弹药",
@@ -356,10 +328,6 @@
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "锁定敏感字段",
         "hint": "当工作卡被锁定时，很少更改的字段（名称、熟练切换按钮）会被锁定，并且隐藏配置按钮。"
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "仅限GM管理激活效果",
-        "hint": "仅限GM编辑或切换激活效果。"
     },
     "TIDY5E.Settings.UseInspiration": {
         "name": "使用激励追踪器",
@@ -432,10 +400,6 @@
         "name": "激励储蓄管理 - 仅GM",
         "hint": "启用此选项可将激励储蓄管理权限限制为GM。"
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "隐藏玩家死亡豁免",
-        "hint": "仅GM可见死亡豁免总数。死亡豁免掷骰按钮仍可见。"
-    },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "默认死亡豁免掷骰",
         "hint": "确定进行死亡豁免掷骰时所使用的默认骰子类型。"
@@ -468,22 +432,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "锁定货币",
         "hint": "不允许非GM更改货币。"
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "锁定经验值",
-        "hint": "不允许非GM更改经验值。"
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "锁定最大生命值变化",
-        "hint": "不允许非GM更改最大生命值。"
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "锁定等级选择器",
-        "hint": "不允许非GM使用角色等级选择器更改玩家等级。"
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "锁定物品数量",
-        "hint": "不允许非GM更改物品数量。"
     },
     "TIDY5E.Settings.ActionList.Header": "动作列表",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {

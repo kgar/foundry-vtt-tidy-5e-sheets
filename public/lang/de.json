@@ -106,18 +106,6 @@
         "labelInventoryLocks": "Inventarsperren",
         "labelFeaturesLocks": "Eigenschaftensperren"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Gegenstand-Infokarten in allen Ansichten anzeigen",
-        "hint": "Deaktivieren, um die Infokarten nur in der Rasteransicht anzuzeigen."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Schwebende Gegenstandskarten anzeigen",
-        "hint": "Aktivieren, um die Gegenstandsinfokarten neben dem Mauszeiger schweben zu lassen. Empfohlen: Bei Verwendung dieser Funktion Verzögerung einrichten."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Verzögerung zum Anzeigen der Gegenstandinfokarten (in ms)",
-        "hint": "Die Infokarte wird erst nach dieser Zeit in Millisekunden angezeigt (0 = sofort, 300 ist Standard)."
-    },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Klassische Listensteuerungen verwenden",
         "hint": "Zeigt die Steuerelemente in der Listenansicht an."
@@ -134,14 +122,6 @@
         "name": "Klassenliste anzeigen",
         "hint": "Zeigt die Klassenliste unter dem Namen des Charakters an."
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Inspirationsindikator animieren",
-        "hint": "Zeigt die Leuchtanimation des Inspirationsindikator."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Erschöpfungs- und Inspirationsanzeiger bei 0 ausblenden",
-        "hint": "Blendet Erschöpfung und Inspiration aus, wenn sie 0 sind. Erscheint bei Überschweben des Mauszeigers."
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Inspirationsindikator nur beim Überschweben anzeigen",
         "hint": "Zeigt die Inspirationsanzeige nur an, wenn der Mauszeiger über dem Porträt schwebt."
@@ -157,10 +137,6 @@
     "TIDY5E.Settings.UseHpOverlay": {
         "name": "Nutze Gesundheitsüberblende",
         "hint": "Zeigt eine farbige TP-Überblende."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Verschiebe Merkmale unter Ressourcen",
-        "hint": "Positioniert die Merkmale unter den Charakterressourcen."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Zeige nur ausgerüstete Munition",
@@ -195,10 +171,6 @@
         "name": "Sensible Felder sperren",
         "hint": "Sperrt selten geänderte Felder (Name, Fähigkeitserfahrungsstufenschalter) und blendet Konfigurationsschaltflächen aus, wenn der Bogen gesperrt ist."
     },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "\"Aktive Effekte\"-Management auf SL beschränken",
-        "hint": "Die Berechtigung, Aktive Effekte zu bearbeiten oder umzuschalten, wird auf SL beschränkt. Spieler sehen weiterhin die angewandten Effekte."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Inspirationsindikator verwenden",
         "hint": "Zeigt einen Inspirationsindikator auf dem Charakterprofil an."
@@ -231,10 +203,6 @@
         "name": "Initiale Bogenregisterkarte",
         "hint": "Zeigt die angegebene Registerkarte an, wenn ein Spielbogen zum ersten Mal geöffnet wird."
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Verberge Todesrettungswürfe vor Spielern",
-        "hint": "Macht Todesrettungswürfe und -ergebnisse nur für den SL sichtbar."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Charakterbelastungsleiste verwenden",
         "hint": "Zeigt einen Lastenbalken auf dem Charakterbogen an."
@@ -266,22 +234,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Währung sperren",
         "hint": "Verhindert, dass Nicht-SLs Änderungen an der Währung vornehmen."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Erfahrungspunkte sperren",
-        "hint": "Verhindert, dass Nicht-SLs Änderungen an Erfahrung vornehmen."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Änderung maximaler TP sperren",
-        "hint": "Verhindert, dass Nicht-SL Änderungen an den maximalen TP vornehmen."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Sperre Stufenauswahl",
-        "hint": "Verhindert, dass Nicht-SL die Spielerlevel mit der Klassenlevel-Auswahl ändern."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Gegenstandsmengen sperren",
-        "hint": "Verhindert, dass Nicht-SL Änderungen an der Gegenstandsmenge vornehmen."
     },
     "TIDY5E.Settings.Reset": {
         "name": "Einstellungen zurücksetzen",
@@ -719,9 +671,6 @@
     "TIDY5E.Settings.UseEffectCards": {
         "name": "Zeige Active Effect Informationskarten",
         "hint": "Aktivieren, um Informationskarten für aktive Effekte auf allen Figuren und Gegenständen mit aktiven Effekten anzuzeigen."
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "hint": "Drücken Sie diese Taste auf der Tastatur (z. B. die Taste „t“), während Sie eine Infokarte anzeigen, um sie hervorzuheben."
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Standard Todesrettungswurf",

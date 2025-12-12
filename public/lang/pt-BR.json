@@ -219,18 +219,6 @@
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista de Ações"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Mostrar Cartões de Item em Todos os Layouts",
-        "hint": "Se esta configuração estiver desativada, os cartões de item sserão exibidos apenas na grade."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Mostrar Cartões de Item Flutuantes",
-        "hint": "Habilite para que os cartões de informações do item flutuem ao lado do cursor do mouse. Recomendado: use o delay com esse recurso."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Atraso do Cartão de Item (ms)",
-        "hint": "Atrasa a exibição de cartões de itens para os milissegundos (ms) especificados. 0 significa que não há atraso. Padrão: 300."
-    },
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Use o Suporte de Teclado Acessível",
         "hint": "Permite que os usuários usem tab na maioria dos botões/comandos no Tidy 5e Sheet e os executem com teclas de atalho convencionais baseadas em botões do teclado. Observação: quando focado em um botão no Foundry, as associações de teclas de \"Configurar Controles\" não respondem. Se um módulo usar esse recurso do Foundry para controles nas fichas, como o uso de itens enquanto mantém pressionada uma tecla, a ativação dessa opção do Tidy 5e Sheets interferirá nessas associações de teclas."
@@ -259,14 +247,6 @@
         "name": "Mostrar Lista de Classes",
         "hint": "Mostra a lista de classes abaixo do nome do personagem."
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Animar Rastreador de Inspiração",
-        "hint": "Mostra animação de brilho no rastreador de inspiração."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Ocultar o Rastreador de Exaustão e Inspiração em 0",
-        "hint": "Oculta exaustão e inspiração se cair a 0 PV, mas ainda aparece ao passar o mouse."
-    },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Mostrar Indicador de Inspiração Apenas ao Passar o Cursor",
         "hint": "Mostra o indicador de inspiração somente ao passar o cursor sobre o retrato."
@@ -286,10 +266,6 @@
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "name": "Alternar Perícias Vazias de Personagem",
         "hint": "Adiciona um botão de alternância para mostrar/ocultar perícias vazias."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Mover Traços Abaixo de Recursos",
-        "hint": "Posiciona os traços abaixo dos recursos de personagem."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
         "name": "Mostrar Apenas Munição Equipada",
@@ -322,10 +298,6 @@
     "TIDY5E.Settings.UseTotalSheetLock": {
         "name": "Travar Campos Sensíveis",
         "hint": "Bloqueia campos alterados com pouca frequência (nome, proficiência, etc) e oculta botões de configuração quando a ficha estiver bloqueada."
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Limitar Gerenciamento de Efeitos Ativos ao Mestre",
-        "hint": "Limita a permissão de edição ou alternância de efeitos ativos apenas para Mestres."
     },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Usar Rastreador de Inspiração",
@@ -362,10 +334,6 @@
         "SelectedHeader": "Abas Selecionadas",
         "AtLeastOneTabRequiredErrorMessage": "Abas padrão: pelo menos uma aba é necessária para cada tipo de ator."
     },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Esconder Salvaguardas Contra Morte dos Jogadores",
-        "hint": "Faz as marcações de Salvaguarda Contra Morte serem visíveis apenas para o Mestre. O botão de rolagem de Salvaguarda Contra Morte continua visível."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Usar Barra de Carga para PJ",
         "hint": "Mostra uma barra de carga nas fichas de personagem."
@@ -393,22 +361,6 @@
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Bloquear Riqueza",
         "hint": "Impede que não-Mestres alterem a riqueza."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Bloquear Experiência",
-        "hint": "Impede que não-Mestres alterem a experiência."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Bloquear PV Máximo",
-        "hint": "Impede que não-Mestres alterem o PV máximo."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Bloquear Nível",
-        "hint": "Impede que não-Mestres alterem os níveis dos jogadores com o seletor de nível de classe."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Bloquear Quantidade de Item",
-        "hint": "Impede que não-Mestres alterem a quantidade do item."
     },
     "TIDY5E.Settings.ActionList.Header": "Lista de Ações",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
@@ -665,10 +617,6 @@
     "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
     "TIDY5E.Facilities.ContextMenuActionRemove": "Removido de {facilityName}",
     "TIDY5E.SortMenu.OptionEquipped": "Equipado",
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "Chave de Inspeção do Cartão de Info.",
-        "hint": "Pressione esta tecla (por exemplo, a tecla “t”) enquanto visualiza um cartão de informações para destacá-lo."
-    },
     "TIDY5E.SortMenu.OptionManual": "Manual",
     "TIDY5E.InfoCardInspectHint": "Inspecionar {inspectKey}",
     "TIDY5E.SortMenu.OptionPrepared": "Preparado",

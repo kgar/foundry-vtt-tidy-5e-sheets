@@ -380,10 +380,6 @@
         "hint": "Pokazuje kolorową nakładkę HP na portrecie postaci.",
         "name": "Użyj nakładki zdrowia"
     },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Pokaż karty przedmiotów we wszystkich układach",
-        "hint": "Jeśli to ustawienie jest wyłączone, karty przedmiotów wyświetlane są tylko w układzie siatki."
-    },
     "TIDY5E.Settings.UseVehicleMotion": {
         "name": "Użyj znacznika ruchu pojazdu",
         "hint": "Pokazuje znacznik ruchu w profilu pojazdu."
@@ -474,29 +470,13 @@
         "name": "Pozwól przygotowywać sztuczki",
         "hint": "Opcjonalna zasada „formuły sztuczek” z Tasha's Cauldron of Everything pozwala magom przygotowywać sztuczki po długim odpoczynku w taki sam sposób, w jaki robią to z zaklęciami poziomowymi. Przygotowane sztuczki nie wliczają się do całkowitej liczby przygotowanych zaklęć."
     },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "hint": "Zapobiega zmianom maksymalnego HP przez graczy niebędących MG.",
-        "name": "Zablokuj zmiany maksymalnego HP"
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "hint": "Włącz, aby karty z informacjami o przedmiotach unosiły się obok kursora myszy. Zalecane: użyj opóźnienia z tą funkcją.",
-        "name": "Pokaż pływające karty przedmiotów"
-    },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
         "name": "Użyj domyślnego przejścia klawiszem Tab dla atrybutów karty",
         "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawiatury z jednego atrybutu do następnego, ukrywając elementy sterujące przed kolejności tabulacji. Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "hint": "Umieszcza atrybuty po prawej stronie listy umiejętności, nad większością innych elementów interfejsu (np. Ulubione, Zdolności NPC).",
-        "name": "Przenieś atrybuty na prawo od umiejętności"
-    },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "hint": "Pokazuje zakładkę księgi czarów dla NPC-ów. Wyłącz, aby przenieść sekcję księgi czarów do zakładki Atrybuty.",
         "name": "Pokaż zakładkę Księgi Czarów"
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Ogranicz zarządzanie aktywnymi efektami tylko do MG",
-        "hint": "Ogranicza uprawnienia do edycji i przełączania aktywnych efektów wyłącznie do MG."
     },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "AvailableHeader": "Dostępne zakładki",
@@ -516,14 +496,6 @@
     "TIDY5E.Settings.UseSpellClassIcons": {
         "name": "Użyj ikony klasy dla zaklęć",
         "hint": "Pokazuje ikonę klasy na zaklęciach zamiast ikony samego zaklęcia. Zaklęcie musi być powiązane z klasą za pomocą selektora klasy na arkuszu edycji zaklęcia. w przypadku postaci wieloklasowych ta funkcja pozwala łatwo rozróżnić, które zaklęcia należą do której klasy."
-    },
-    "TIDY5E.Settings.LockExpChanges": {
-        "hint": "Zapobiega zmianom w doświadczeniu przez graczy niebędących MG.",
-        "name": "Zablokuj doświadczenie"
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "hint": "Zapobiega zmianom poziomu postaci przez graczy niebędących MG.",
-        "name": "Zablokuj selektor poziomu"
     },
     "TIDY5E.Settings.ActionList.Header": "Lista akcji",
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
@@ -551,33 +523,13 @@
         "name": "Konfiguracja wyczerpania pojazdu",
         "hint": "Ustala w jaki sposób wyczerpanie pojazdów jest konfigurowane i pokazane na kartach pojazdu."
     },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Opóźnienie kart przedmiotów (ms)",
-        "hint": "Opóźnia wyświetlanie kart przedmiotów o określoną liczbę milisekund (ms). 0 oznacza brak opóźnienia. Domyślnie: 300."
-    },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
         "name": "Użyj domyślnego przejścia klawiszem Tab dla HP",
         "hint": "Domyślna karta 5e umożliwia przechodzenie za pomocą klawisza Tab z pola obecne HP do pola obecne tymczasowe HP.Włączenie tej opcji powiela to zachowanie. To ustawienie jest ignorowane, jeśli opcja „Użyj przystępnego wsparcia dla klawiatury” jest wyłączona."
     },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "hint": "Pokazuje animację świecącego znacznika inspiracji.",
-        "name": "Animacja znacznika inspiracji"
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Ukryj znacznik wyczerpania i inspiracji na poziomie 0",
-        "hint": "Ukrywa wyczerpanie i inspirację, jeśli ich wartość wynosi 0, ale nadal wyświetla je po najechaniu kursorem."
-    },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
         "hint": "Wyświetla całą kartę (bez dziennika) graczom z ograniczonymi uprawnieniami.",
         "name": "Pokaż rozszerzony, ograniczony widok"
-    },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Ukryj rzuty przeciw śmierci przed graczami",
-        "hint": "Powoduje, że rzut przeciw śmierć jest widoczny tylko dla MG. Przycisk rzutu przeciw śmierć pozostaje widoczny."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Zablokuj ilość przedmiotu",
-        "hint": "Zapobiega zmianom ilości przedmiotów przez graczy niebędących MG."
     },
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "hint": "Użyj specjalnie wybranych ikon Tidy dla szkół magii. Aby dostosować ikony szkół magii przez CONFIG.DND5E lub przez inne moduły, wyłącz tę opcję. Aby rozszerzyć niestandardowe ikony Tidy dla szkół magii , zapoznaj się z dokumentacją API Tidy.",
@@ -678,10 +630,6 @@
         "hint": "Włącz wyświetlanie kart informacyjnych aktywnych efektów dla wszystkich postaci i przedmiotów z aktywnymi efektami."
     },
     "TIDY5E.InfoCardInspectHint": "{inspectKey} Sprawdź",
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "Przycisk sprawdzania karty informacyjnej",
-        "hint": "Naciśnij ten przycisk (na przykład klawisz „t”) podczas przeglądania karty informacyjnej, aby otworzyć ją w nowym oknie."
-    },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Domyślny rzut przeciw śmierć",
         "hint": "Określa domyślny typ rzutu używany podczas rzutu przeciw śmiercią."
