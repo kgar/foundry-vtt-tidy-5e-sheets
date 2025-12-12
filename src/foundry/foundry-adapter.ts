@@ -68,52 +68,12 @@ export const FoundryAdapter = {
       settingName
     );
   },
-  async setGameSetting(
-    namespace: string,
-    key: string,
-    value: unknown
-  ): Promise<void> {
-    await game.settings.set(namespace, key, value);
-  },
-  onGetActiveEffectContextOptions(func: (...args: any[]) => void) {
-    Hooks.on('dnd5e.getActiveEffectContextOptions', func);
-  },
-  getTemplate(templateName: string) {
-    return `modules/${CONSTANTS.MODULE_ID}/templates/${templateName}`;
-  },
   localize(value: string, options?: Record<string, unknown>) {
     if (options) {
       return game.i18n.format(value, options);
     }
 
     return game.i18n.localize(value);
-  },
-  // TODO: Extract a dedicated ActiveEffectManager or the like
-  addEffect(effectType: string, parent: any) {
-    const isActor = parent instanceof Actor;
-
-    const effectData = {
-      name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
-      icon: isActor ? 'icons/svg/aura.svg' : parent.img,
-      origin: parent.uuid,
-      'duration.rounds': effectType === 'temporary' ? 1 : undefined,
-      disabled: effectType === 'inactive',
-    };
-
-    if (
-      !TidyHooks.tidy5eSheetsPreCreateActiveEffect(
-        parent,
-        effectData,
-        game.user.id
-      )
-    ) {
-      return;
-    }
-
-    return ActiveEffect.implementation.create(effectData, {
-      parent: parent,
-      renderSheet: true,
-    });
   },
   /** A spell can be prepared if its method is prepareable and it is not Always Prepared. */
   canPrepareSpell(item: Item5e) {
@@ -127,90 +87,11 @@ export const FoundryAdapter = {
       (s) => s.value === item.system.prepared
     )?.label;
   },
-  /**
-   *
-   * @param content           - the editor content to include
-   * @param targetDataField   - the data field to update when this editor is saved
-   * @param editable          - whether the editor should allow editing
-   * @returns
-   */
-  createEditorHtml(
-    content: string,
-    targetDataField: string,
-    editable: boolean
-  ) {
-    return foundry.applications.handlebars.editor(content, {
-      hash: {
-        target: targetDataField,
-        button: true,
-        engine: 'prosemirror',
-        collaborate: false,
-        editable,
-      },
-    });
-  },
   mergeObject<T>(original: T, ...args: any[]) {
     return foundry.utils.mergeObject(original, ...args) as T;
   },
   expandObject(data: any) {
     return foundry.utils.expandObject(data);
-  },
-  isEmpty(obj: any) {
-    return foundry.utils.isEmpty(obj);
-  },
-  getClassIdentifier(item: Item5e): string {
-    return item.system.identifier || item.name.slugify({ strict: true });
-  },
-  getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
-    return actor.items.reduce(
-      (map: Map<string, ClassSummary>, item: Item5e) => {
-        if (item.type === 'class') {
-          const identifier = FoundryAdapter.getClassIdentifier(item);
-          const data: ClassSummary = map.get(identifier) ?? {};
-          data.class = item.name;
-          data.level = item.system.levels?.toString();
-          map.set(identifier, data);
-        }
-
-        if (
-          item.type === 'subclass' &&
-          item.system.classIdentifier !== undefined
-        ) {
-          const data: ClassSummary = map.get(item.system.classIdentifier) ?? {};
-          data.subclass = item.name;
-          if (item.system.classIdentifier !== undefined) {
-            map.set(item.system.classIdentifier, data);
-          }
-        }
-
-        return map;
-      },
-      new Map<string, ClassSummary>()
-    );
-  },
-  getActorCharacterSummaryEntries(actorContext: any): string[] {
-    const entries: string[] = [];
-
-    if (actorContext.system.details.race?.name) {
-      entries.push(actorContext.system.details.race.name);
-    } else if (actorContext.system.details.race) {
-      entries.push(actorContext.system.details.race);
-    }
-
-    if (actorContext.system.details.background?.name) {
-      entries.push(actorContext.system.details.background.name);
-    } else if (actorContext.system.details.background) {
-      entries.push(actorContext.system.details.background);
-    }
-
-    if (actorContext.system.details.alignment) {
-      entries.push(actorContext.system.details.alignment);
-    }
-
-    return entries;
-  },
-  getCurrentLang() {
-    return game.i18n.lang;
   },
   doActionOnMiddleClick(event: MouseEvent, action: () => any) {
     if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
@@ -364,99 +245,6 @@ export const FoundryAdapter = {
   getProperty<T = unknown>(obj: any, path: string): T | undefined {
     return foundry.utils.getProperty(obj, path);
   },
-  getInventoryRowClasses(item: Item5e, ctx?: any, extras?: string[]): string {
-    const itemClasses: string[] = [];
-
-    if (item?.system?.properties?.has('mgc')) {
-      itemClasses.push('magic-item');
-    }
-
-    if (ctx?.attunement?.cls && !FoundryAdapter.concealDetails(item)) {
-      itemClasses.push(ctx.attunement.cls);
-    }
-
-    if (item?.system?.equipped) {
-      itemClasses.push('equipped');
-    }
-
-    if (extras?.length) {
-      itemClasses.push(...extras);
-    }
-
-    return itemClasses.join(' ');
-  },
-  getSpellRowClasses(spell: any): string {
-    const classes: string[] = [];
-    const method = FoundryAdapter.getSpellMethodConfig(spell).key;
-
-    if (spell.system.canPrepare) {
-      classes.push('can-prepare');
-    } else {
-      classes.push('cannot-prepare');
-    }
-
-    if (
-      spell.system.prepared ===
-      CONFIG.DND5E.spellPreparationStates.prepared.value
-    ) {
-      classes.push('prepared');
-    }
-
-    if (
-      spell.system.prepared ===
-      CONFIG.DND5E.spellPreparationStates.unprepared.value
-    ) {
-      classes.push('unprepared');
-    }
-
-    if (
-      spell.system.prepared === CONFIG.DND5E.spellPreparationStates.always.value
-    ) {
-      classes.push('always');
-    }
-
-    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_SPELL) {
-      classes.push('method-spell');
-    }
-
-    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_PACT) {
-      classes.push('method-pact');
-    }
-
-    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_ATWILL) {
-      classes.push('method-atwill');
-    }
-
-    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_RITUAL) {
-      classes.push('method-ritual');
-    }
-
-    if (method === CONSTANTS.SPELL_PREPARATION_METHOD_INNATE) {
-      classes.push('method-innate');
-    }
-
-    return classes.join(' ');
-  },
-  cycleProficiency(
-    actor: Actor5e,
-    key: string,
-    currentValue: number | undefined,
-    systemFieldName: string,
-    reverse: boolean = false
-  ): Promise<any | undefined> {
-    // TODO: Check for active effects and prevent if applicable.
-
-    if (currentValue === null || currentValue === undefined) {
-      return Promise.resolve(undefined);
-    }
-
-    const levels = [0, 1, 0.5, 2];
-    const idx = levels.indexOf(currentValue);
-    const next = idx + (reverse ? 3 : 1);
-    return actor.update({
-      [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
-    });
-  },
   getProficiencyIconClass(level: number) {
     const icons: Record<number, string> = {
       0: 'far fa-circle color-text-gold',
@@ -465,26 +253,6 @@ export const FoundryAdapter = {
       2: 'fas fa-circle-star color-text-gold-light',
     };
     return icons[level] || icons[0];
-  },
-  searchActors(searchCriteria: string, actors: Actor5e[]) {
-    return new Set(
-      actors
-        .filter((actor) => FoundryAdapter.searchActor(searchCriteria, actor))
-        .map((actor) => actor.uuid)
-    );
-  },
-  searchActor(searchCriteria: string, actor: Actor5e) {
-    return (
-      searchCriteria.trim() === '' ||
-      actor.name.toLowerCase().includes(searchCriteria.toLowerCase())
-    );
-  },
-  searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
-    return new Set(
-      items
-        .filter((item) => FoundryAdapter.searchItem(item, searchCriteria))
-        .map((item) => item.uuid)
-    );
   },
   searchItem(item: any, searchCriteria: string): boolean {
     return (
@@ -497,58 +265,7 @@ export const FoundryAdapter = {
         item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
     );
   },
-  searchEffects(
-    searchCriteria: string,
-    effects: ActiveEffect5e[]
-  ): Set<string> {
-    return new Set(
-      effects
-        .filter(
-          (effect: any) =>
-            searchCriteria.trim() === '' ||
-            effect.name.toLowerCase().includes(searchCriteria.toLowerCase())
-        )
-        .map((effect) => effect.id)
-    );
-  },
-  searchActivities(
-    searchCriteria: string,
-    activities: Activity5e[]
-  ): Set<string> {
-    return new Set(
-      activities
-        .filter(
-          (activities: any) =>
-            searchCriteria.trim() === '' ||
-            activities.name.toLowerCase().includes(searchCriteria.toLowerCase())
-        )
-        .map((activities) => activities.uuid)
-    );
-  },
-  getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
-    return items.filter(
-      (x: ActionItem) =>
-        searchCriteria.trim() === '' ||
-        x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())
-    );
-  },
-  parseAdditionalClassesDropDownItems(
-    spellClassFilterAdditionalClassesText: string
-  ) {
-    return spellClassFilterAdditionalClassesText
-      .split(',')
-      .reduce((arr: DropdownListOption[], x: string) => {
-        const pieces = x.split('|');
-        if (pieces.length !== 2) {
-          return arr;
-        }
-        arr.push({
-          value: pieces[0],
-          text: pieces[1],
-        });
-        return arr;
-      }, []);
-  },
+  // todo: resume here.
   getNewCargo() {
     return { name: '', quantity: 1 };
   },
