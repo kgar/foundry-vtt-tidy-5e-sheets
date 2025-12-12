@@ -4,7 +4,7 @@
   import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { manageSecrets } from 'src/actions/manage-secrets.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { getContext } from 'svelte';
   import type { ExpansionTracker } from 'src/features/expand-collapse/ExpansionTracker.svelte';

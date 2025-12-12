@@ -4,7 +4,6 @@ import type {
   UserSheetTypeTabPreferences,
   UserSheetPreference,
 } from './user-preferences.types';
-import UserPreferencesService from './UserPreferencesService';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 /**

@@ -164,7 +164,7 @@ An alternate view of items that brings more functionality to the surface.
 
 ## Vehicle Sheets
 
-![Vehicle Sheet](readme-assets/vehicle-sheet.png)
+(Picture coming soon)
 
 ### What's unique about Tidy's Vehicle sheets?
 

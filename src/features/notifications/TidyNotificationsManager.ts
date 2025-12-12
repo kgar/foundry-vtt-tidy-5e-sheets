@@ -26,12 +26,6 @@ export class TidyNotificationsManager {
       this.sendTidyChatMessageToGm(`<p>${message}</p>`);
       notifications.firstTimeWelcome = true;
     }
-
-    if (game.release.generation < 14 && !notifications.classicRetirementImminent) {
-      const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetirementImminent');
-      this.sendTidyChatMessageToGm(`<p>${message}</p>`);
-      notifications.classicRetirementImminent = true;
-    }
     
     if (game.release.generation >= 14 && !notifications.classicRetired) {
       const message = FoundryAdapter.localize('TIDY5E.Notifications.ClassicsRetired');

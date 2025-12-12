@@ -9,7 +9,7 @@ import type { ActorSheetQuadroneRuntime } from 'src/runtime/ActorSheetQuadroneRu
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { SettingsProvider } from 'src/settings/settings.svelte';
-import type { CustomTabTitle } from 'src/api';
+import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
 
 export function getItemTabContext(
   type: string,

@@ -5,7 +5,7 @@ import type {
 import type { RegisteredContent, RegisteredTab } from '../types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { CustomContent, Tab } from 'src/types/types';
+import type { CustomContent } from 'src/types/types';
 import { Activities } from 'src/features/activities/activities';
 import ItemActivitiesQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
 import ItemAdvancementQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';
@@ -45,8 +45,9 @@ import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
-import type { ItemTabRegistrationOptions } from 'src/api';
+import type { ItemTabRegistrationOptions } from 'src/api/api.types';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+import type { RegisteredEquipmentTypeGroup } from './item.types';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -57,6 +58,7 @@ class ItemSheetQuadroneRuntimeImpl {
   private _content = $state<RegisteredContent<ItemSheetQuadroneContext>[]>([]);
   private _tabs = $state<RegisteredTab<ItemSheetQuadroneContext>[]>([]);
   private _sheetMap: SvelteMap<string, ItemSheetInfo>;
+  private _customItemEquipmentTypeGroups: RegisteredEquipmentTypeGroup[] = [];
 
   constructor(
     nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
@@ -268,6 +270,14 @@ class ItemSheetQuadroneRuntimeImpl {
     if (options?.includeAsDefault ?? true) {
       this._sheetMap.get(subtype)?.defaultTabs;
     }
+  }
+
+  registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
+    this._customItemEquipmentTypeGroups.push(group);
+  }
+
+  getCustomEquipmentTypeGroups() {
+    return [...this._customItemEquipmentTypeGroups];
   }
 }
 

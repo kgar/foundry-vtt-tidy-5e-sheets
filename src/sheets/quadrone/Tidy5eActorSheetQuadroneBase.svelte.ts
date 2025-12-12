@@ -59,7 +59,8 @@ import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTyp
 import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
-import type { SheetPinFlag } from 'src/api';
+import type { SheetPinFlag } from 'src/foundry/TidyFlags.types';
+import { Tidy5eContainerSheetQuadrone } from './Tidy5eContainerSheetQuadrone.svelte';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -393,7 +394,9 @@ export function Tidy5eActorSheetQuadroneBase<
         src,
         token: showToken,
         path: showToken ? 'prototypeToken.texture.src' : 'img',
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
+        shape: showToken
+          ? 'token'
+          : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
         isVideo,
         isRandom,
       };
@@ -810,7 +813,9 @@ export function Tidy5eActorSheetQuadroneBase<
         this.actor.system._source.attributes?.movement ?? {};
 
       function excludeSpeed(key: string) {
-        return isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '');
+        return (
+          isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '')
+        );
       }
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
@@ -827,7 +832,9 @@ export function Tidy5eActorSheetQuadroneBase<
           acc.push({
             key,
             label: config.label,
-            value: FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ?? '',
+            value:
+              FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ??
+              '',
             units:
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,
@@ -1265,6 +1272,19 @@ export function Tidy5eActorSheetQuadroneBase<
       const actor = this.actor;
       const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
       if (allowed === false) return;
+
+      // Nested Container Drop
+      const nestedContainerUuid = event.target
+        .closest('[data-tidy-nested-container-uuid]')
+        ?.getAttribute('data-tidy-nested-container-uuid');
+
+      if (nestedContainerUuid) {
+        const container = await fromUuid(nestedContainerUuid);
+        const containerSheet = new Tidy5eContainerSheetQuadrone({
+          document: container,
+        });
+        return await containerSheet._onDrop(event);
+      }
 
       // Sheet Pins
       const doc = await fromUuid(data.uuid);

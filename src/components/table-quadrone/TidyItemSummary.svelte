@@ -103,6 +103,5 @@
   </div>
 </div>
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
-  <!-- <HorizontalLineSeparator /> -->
   <TidyInlineActivitiesList {item} {activities} />
 {/if}

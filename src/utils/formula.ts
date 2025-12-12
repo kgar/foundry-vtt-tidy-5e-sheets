@@ -371,11 +371,6 @@ function getSpellAttackRoll(
   const parts: string[] = [];
 
   // Ability score modifier
-  const filteredClass = actor.sheet.classSpellbookFilter;
-
-  spellcastingAbility ??=
-    actor.classes?.[filteredClass]?.system.spellcasting?.ability;
-
   const spellcastingMod = actor.system.abilities[spellcastingAbility!]?.mod;
 
   if (spellcastingAbility !== 'none' && spellcastingMod) {

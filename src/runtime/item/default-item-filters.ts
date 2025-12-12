@@ -104,7 +104,6 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
     text: 'DND5E.Concentration',
     abbreviation: 'DND5E.AbbreviationConc',
     pinnedFilterClass: 'hide-under-400',
-    useLegacyAbbreviation: true,
   },
   [CONSTANTS.FILTER_VERBAL]: {
     name: 'verbal',

@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnHeaderProps } from 'src/runtime/types';
   import type { ActiveEffectSection } from 'src/types/types';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   let {
     sheetDocument,
@@ -11,7 +12,7 @@
   let localize = FoundryAdapter.localize;
 
   function onAddClicked(section: ActiveEffectSection) {
-    return FoundryAdapter.addEffect(section.type, sheetDocument);
+    return ActiveEffectsHelper.addEffect(section.type, sheetDocument);
   }
 </script>
 

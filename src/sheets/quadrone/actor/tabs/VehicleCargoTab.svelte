@@ -79,7 +79,7 @@
   />
 
   <div class="vehicle-footer">
-    {#if settings.value.useVehicleEncumbranceBar && context.encumbrance}
+    {#if context.encumbrance}
       <div class="encumbrance-container">
         <ActorEncumbranceBar actor={context.actor} />
       </div>

@@ -2,7 +2,6 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActiveEffect5e, EffectSummaryData } from 'src/types/types';
-  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   interface Props {

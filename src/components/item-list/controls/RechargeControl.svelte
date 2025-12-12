@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settings } from 'src/settings/settings.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { ActorSheetContextV1 } from 'src/types/types';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
 
   interface Props {
     document: any;
@@ -20,7 +20,7 @@
     }),
   );
 
-  let context = $derived(getSheetContext<ActorSheetContextV1>());
+  let context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   let recovery = $derived(uses?.recovery[0]);
 

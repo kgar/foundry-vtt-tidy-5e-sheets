@@ -1,5 +1,7 @@
+import { warn } from 'src/utils/logging';
 import type { PortraitMenuCommand } from '../..';
-import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
+
+let warned = false;
 
 /**
  * API functionality related to Actor portraits.
@@ -32,6 +34,11 @@ export class ActorPortraitApi {
    * ```
    */
   registerMenuCommands(commands: PortraitMenuCommand[]) {
-    ActorPortraitRuntime.registerMenuCommands([...commands]);
+    warn(
+      `The API ${ActorPortraitApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
+    );
   }
 }
