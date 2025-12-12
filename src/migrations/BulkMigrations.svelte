@@ -4,21 +4,12 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import CcssToTidyMigration from './v3/CcssToTidyMigration.svelte';
-  import JournalEntryClassicToJournalEntryQuadrone from './v10/JournalEntryClassicToJournalEntryQuadrone.svelte';
 
   let selectedTabId = $state('');
 
   const localize = FoundryAdapter.localize;
 
   const tabs: Tab[] = [
-    {
-      id: 'classic-journal-to-quadrone',
-      title: 'SIDEBAR.TabJournal',
-      content: {
-        component: JournalEntryClassicToJournalEntryQuadrone,
-        type: 'svelte',
-      },
-    },
     {
       id: 'ccss-to-tidy',
       title: 'TIDY5E.Settings.Migrations.CcssToTidy.sectionTitle',
