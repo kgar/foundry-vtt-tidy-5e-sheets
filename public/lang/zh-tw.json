@@ -81,10 +81,6 @@
         "label": "卡片設定",
         "title": ""
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "",
-        "header": ""
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "",
         "header": ""
@@ -98,20 +94,11 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "",
-        "header": "",
-        "hint": "",
-        "hint2": "",
-        "labelGeneralLocks": "",
-        "labelInventoryLocks": "",
-        "labelFeaturesLocks": ""
+        "header": ""
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": null,
         "hint": null
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "",
-        "hint": ""
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "",
@@ -186,12 +173,6 @@
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "",
         "name": ""
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "hint": "",
-        "AtLeastOneLevelRequiredErrorMessage": "",
-        "name": "",
-        "Header": ""
     },
     "TIDY5E.Settings.Migrations": {
         "Notification": {
@@ -288,19 +269,6 @@
     },
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": ""
-    },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "name": "",
-        "AtLeastOneLevelRequiredErrorMessage": "",
-        "Header": "",
-        "options.specific.levels.hint": "",
-        "options.specific.text": "",
-        "options.specific.levels.name": "",
-        "hint": "",
-        "options.specific.levels.tooltip.name": "",
-        "options.specific.levels.tooltip.hint": "",
-        "options.open.text": "",
-        "options.open.explanation": ""
     },
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": ""

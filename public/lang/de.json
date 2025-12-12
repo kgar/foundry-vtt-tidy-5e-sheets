@@ -81,10 +81,6 @@
         "label": "Benutzereinstellungen",
         "title": "Benutzereinstellungen: {userName}"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Spieler",
-        "header": "Spieler Charakterbögen"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "NSCe",
         "header": "NSC-Bögen"
@@ -98,20 +94,11 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Bogensperre",
-        "header": "Sperroptionen",
-        "hint": "Verhindern, dass Spieler Änderungen an Aspekten ihres Charakterbogens vornehmen, die sich nur selten ändern sollten. Optional einige Elemente ausblenden, die gar nicht verwenden werden.",
-        "hint2": "Wichtig: Die Sperrfunktionen für Spielbögen sind dazu gedacht, die Spieler bei der Verwendung von Spielbögen zu unterstützen und Fehler zu vermeiden, wie z. B. das versehentliche Hinzufügen/Entfernen einer Rettungswurf-Fähigkeit. Die Einstellungen der Bogensperre bieten keinen sicheren Schutz vor Spielern mit böswilligen Absichten.",
-        "labelGeneralLocks": "Allgemeine Sperren",
-        "labelInventoryLocks": "Inventarsperren",
-        "labelFeaturesLocks": "Eigenschaftensperren"
+        "header": "Sperroptionen"
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "NSC-Rast verwenden",
         "hint": "Ermöglicht kurze und lange Rast für NSCe."
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Zeige NSC-Rast im Dialog",
-        "hint": "Zeigt eine Dialogkarte an, wenn ein NSC rastet."
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Initiale Bogenregisterkarte",
@@ -212,12 +199,6 @@
         "MoveUp": "Nach oben bewegen (Alt + Pfeiltaste nach oben)",
         "MoveDown": "Nach unten bewegen (Alt + Pfeiltaste nach unten)"
     },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "AtLeastOneLevelRequiredErrorMessage": "Es ist mindestens ein Fahrzeugverschleißgrad erforderlich.",
-        "Header": "Fahrzeugverschleiß",
-        "name": "Konfiguration Fahrzeugverschleiß",
-        "hint": "Legt fest, wie der Fahrzeugverschleiß konfiguriert und auf dem Fahrzeugbogen dargestellt wird."
-    },
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Zauberangriff",
     "TIDY5E.ActorSpellAttackFlavorText": "Zauberangriff",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Nahkampf-Zauberangriff",
@@ -240,19 +221,6 @@
     },
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Erschöpfung"
-    },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "hint": "Legt fest, wie die Erschöpfung von Nicht-Fahrzeugen konfiguriert und auf den Charakter- und NSC-Bögen dargestellt wird.",
-        "Header": "Charakter-/NSC-Erschöpfung",
-        "name": "Konfiguration Erschöpfungszustand",
-        "options.specific.levels.name": "Gesamtanzahl Grade",
-        "options.specific.levels.hint": "Bestimmt die maximale Anzahl von Erschöpfungsgraden.",
-        "options.specific.levels.tooltip.name": "Erschöpfungsgrad {level} Schnellinfo",
-        "options.specific.levels.tooltip.hint": "Schnellinfo für diesen Erschöpfungsgrad. Die Lokalisierungstasten funktionieren ebenfalls.",
-        "options.open.text": "Offene Nummerneingabe",
-        "options.open.explanation": "Zeigt dem Benutzer eine numerische Eingabe für die Eingabe von Erschöpfungsgraden.",
-        "AtLeastOneLevelRequiredErrorMessage": "Es ist mindestens ein Erschöpfungsgrad erforderlich.",
-        "options.specific.text": "Spezifische Grade"
     },
     "TIDY5E.WorldSettings.Menu": {
         "hint": "Die Einstellungen auf Weltebene anpassen, um die \"Tidy 5e Sheets\"-Erfahrung anzupassen. Diese Einstellungen werden in dieser Foundry-Welt gespeichert und gelten für alle relevanten \"Tidy 5e Sheets\"-Inhalte.",

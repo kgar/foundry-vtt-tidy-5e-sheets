@@ -81,10 +81,6 @@
         "label": "Opciones de Usuario",
         "title": "Opciones de Usuario: {userName}"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Jugadores",
-        "header": "Hojas de los Personajes Jugadores"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "NPCs",
         "header": "Hojas de NPC"
@@ -98,12 +94,7 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Bloqueo de las Hojas",
-        "header": "Opciones de Bloqueo",
-        "hint": "Evita que los jugadores realicen cambios en aspectos de sus hojas de personaje que deberían cambiar con poca frecuencia. Opcionalmente, oculta algunos elementos que no desees utilizar en absoluto.",
-        "hint2": "Importante: las funciones de bloqueo de las hojas están destinadas a guiar el uso de las hojas del jugador y ayudar a evitar errores como agregar o quitar accidentalmente una competencia de tirada de salvación. La configuración de bloqueo de las hojas no proporciona un bloqueo seguro contra jugadores con intenciones maliciosas.",
-        "labelGeneralLocks": "Bloqueos Generales",
-        "labelInventoryLocks": "Bloqueos de Inventario",
-        "labelFeaturesLocks": "Bloqueos de Rasgos"
+        "header": "Opciones de Bloqueo"
     },
     "TIDY5E.Settings.About": {
         "name": "Acerca de",
@@ -124,10 +115,6 @@
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Descanso para los PNJs",
         "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Mostrar Descanso de NPC en el Chat",
-        "hint": "Muestra una tarjeta de chat cuando un NPC descansa."
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Pestaña inicial en hoja",
@@ -226,19 +213,6 @@
         "name": "Incluir hechizos con efectos activos como acciones",
         "hint": "Incluye hechizos con efectos activos adjuntos (por ejemplo, Piel de corteza) en la pestaña/panel de acciones de forma predeterminada."
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento.",
-        "options.specific.levels.hint": "Determina el número máximo de niveles de agotamiento.",
-        "options.specific.levels.tooltip.hint": "Información para este nivel de agotamiento. Las claves de localización también funcionan.",
-        "options.open.text": "Entrada de Número Abierto",
-        "options.open.explanation": "Muestra al usuario una entrada numérica para insertar niveles de agotamiento.",
-        "Header": "Agotamiento del Personaje/NPC",
-        "name": "Configuración de Agotamiento",
-        "hint": "Determina cómo se configura y presenta el agotamiento no vehicular en las hojas de personajes y NPC.",
-        "options.specific.text": "Niveles Específicos",
-        "options.specific.levels.name": "Niveles Totales",
-        "options.specific.levels.tooltip.name": "Información de Nivel de Agotamiento {level}"
-    },
     "TIDY5E.UseDefault": "Utilizar predeterminado",
     "TIDY5E.Reset": "Restablecer",
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
@@ -274,12 +248,6 @@
         "MoveDown": "Mover abajo (Alt + Flecha abajo)",
         "MoveLeft": "Mover izquierda (Espacio)",
         "MoveRight": "Mover derecha (Espacio)"
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "name": "Configuración de Agotamiento Vehicular",
-        "hint": "Determina cómo se configura y presenta el agotamiento del vehículo en la ficha del vehículo.",
-        "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento del vehículo.",
-        "Header": "Agotamiento del Vehículo"
     },
     "TIDY5E.HitDC": "Impacto / CD",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",

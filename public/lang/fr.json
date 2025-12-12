@@ -81,10 +81,6 @@
         "label": "Configuration des feuilles",
         "title": "Configuration des feuilles Tidy5e"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Joueur",
-        "header": "Option des feuilles de joueur"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "PNJs",
         "header": "Feuilles PNJ"
@@ -98,20 +94,11 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Verrouillage de la feuille",
-        "header": "Options de verrouillage",
-        "hint": "Empêcher les joueurs de modifier des aspects de leur feuille de personnage qui devraient changer rarement. Cachez éventuellement certains éléments que vous ne souhaitez pas utiliser du tout.",
-        "hint2": "Important : les fonctions de verrouillage des feuilles sont destinées à guider l'utilisation des feuilles par les joueurs et à éviter les erreurs telles que l'ajout ou la suppression accidentelle d'une compétence ou de jet de sauvegarde. Les paramètres de verrouillage des feuilles n'offrent pas de protection contre les joueurs mal intentionnés.",
-        "labelGeneralLocks": "Verrouillages général",
-        "labelInventoryLocks": "Verrouillage de l'inventaire",
-        "labelFeaturesLocks": "Verrouillages des caractéristiques"
+        "header": "Options de verrouillage"
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Repos pour les PNJs",
         "hint": "Activer cette option pour afficher le bouton de repos sur les feuilles de PNJs."
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Afficher le repos du PNJ dans le chat",
-        "hint": "Affiche un message dans le chat lorsqu'un PNJ se repose."
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Onglet initial de la feuille",
@@ -228,19 +215,6 @@
         "MoveAllRight": "Déplacer tout vers la droite",
         "MoveLeft": "Déplacement vers la gauche (Espace)"
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "options.specific.levels.tooltip.name": "Niveau d'épuisement {level} Info-bulle",
-        "options.specific.levels.tooltip.hint": "Infobulle pour ce niveau d'épuisement. Les touches de localisation fonctionnent également.",
-        "Header": "Personnage/PNJ Épuisement",
-        "name": "Configuration de l'épuisement",
-        "hint": "Détermine comment l'épuisement hors véhicule est configuré et présenté sur les feuilles de personnage et de PNJ.",
-        "options.specific.text": "Niveaux spécifiques",
-        "options.specific.levels.name": "Niveaux totaux",
-        "options.specific.levels.hint": "Détermine le nombre maximum de niveaux d'épuisement.",
-        "options.open.explanation": "Présente à l'utilisateur une entrée numérique pour saisir les niveaux d'épuisement.",
-        "AtLeastOneLevelRequiredErrorMessage": "Au moins un niveau d'épuisement est requis.",
-        "options.open.text": "Entrer un nombre au choix"
-    },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Configuration Max de sorts préparer : {documentName}",
         "ExamplesHeader": "Exemple de formules",
@@ -267,12 +241,6 @@
     },
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Épuisement"
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "Épuisement du véhicule",
-        "name": "Configuration de l'épuisement des véhicules",
-        "hint": "Détermine comment l'épuisement du véhicule est configuré et présenté sur la fiche du véhicule.",
-        "AtLeastOneLevelRequiredErrorMessage": "Au moins un niveau d'épuisement du véhicule est requis."
     },
     "TIDY5E.WorldSettings.Menu": {
         "name": "Paramètres du monde",

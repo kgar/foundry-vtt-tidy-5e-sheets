@@ -146,19 +146,6 @@
         "MoveAllLeft": "全部左移",
         "MoveAllRight": "全部右移"
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "options.specific.levels.tooltip.name": "力竭等级 {level} 提示信息",
-        "AtLeastOneLevelRequiredErrorMessage": "至少需要 1 级力竭等级。",
-        "Header": "角色/NPC 力竭",
-        "name": "力竭配置",
-        "hint": "确定角色卡和NPC卡上，有关非载具的力竭情况是如何配置和展示。",
-        "options.specific.text": "具体等级",
-        "options.specific.levels.name": "共计等级",
-        "options.specific.levels.hint": "确定最大力竭等级数。",
-        "options.specific.levels.tooltip.hint": "该力竭等级的提示。本地化键同样适用。",
-        "options.open.text": "开放数字输入",
-        "options.open.explanation": "向用户显示一个数字输入框，用于输入力竭等级。"
-    },
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "角色"
     },
@@ -181,23 +168,12 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "力竭"
     },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "载具力竭",
-        "name": "载具力竭配置",
-        "hint": "确定载具力竭在载具卡上的配置和展示方式。",
-        "AtLeastOneLevelRequiredErrorMessage": "至少需要 1 级力竭等级。"
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "物品"
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "锁定卡",
-        "header": "锁定选项",
-        "labelFeaturesLocks": "特性锁定",
-        "hint": "防止玩家对角色卡中那些应很少变动的部分进行修改。可选择隐藏那些你完全不想使用的元素。",
-        "hint2": "重要提示：角色卡锁定功能旨在引导玩家正确使用角色卡，并帮助防止诸如意外添加/移除豁免熟练之类的错误。角色卡锁定设置并不能对怀有恶意的玩家提供安全防护。",
-        "labelGeneralLocks": "全部锁定",
-        "labelInventoryLocks": "所持物锁定"
+        "header": "锁定选项"
     },
     "TIDY5E.AddSpecific": "添加 {name}",
     "TIDY5E.WorldSettings.TabMisc": {
@@ -239,14 +215,6 @@
     },
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "行动"
-    },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "玩家",
-        "header": "玩家角色卡"
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "在聊天中显示NPC的休息状态",
-        "hint": "当非玩家角色休息时，会显示一张聊天卡片。"
     },
     "TIDY5E.Settings.DefaultSheetTabs": {
         "name": "默认工作卡选项卡",

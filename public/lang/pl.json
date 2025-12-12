@@ -26,12 +26,7 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Blokady",
-        "header": "Ustawienia blokad",
-        "hint2": "Ważne: funkcje blokowania mają na celu kierowanie kartą postaci gracza i zapobieganie błędom, takim jak przypadkowe dodanie/usunięcie biegłości w rzucie obronnym. Ustawienia te nie zapewniają bezpiecznej blokady przed graczami o złośliwych zamiarach.",
-        "labelFeaturesLocks": "Blokady zdolności",
-        "hint": "Zapobiegaj wprowadzaniu przez graczy zmian w aspektach ich kart postaci, które powinny zmieniać się rzadko. Opcjonalnie ukryj niektóre elementy, których w ogóle nie chcesz używać.",
-        "labelGeneralLocks": "Blokady ogólne",
-        "labelInventoryLocks": "Blokady ekwipunku"
+        "header": "Ustawienia blokad"
     },
     "TIDY5E.AttunementItems": "Zestrojone przedmioty",
     "TIDY5E.AttunementMax": "Maksymalna liczba zestrojeń",
@@ -134,10 +129,6 @@
         "label": "Ustawienia użytkownika",
         "title": "Ustawienia użytkownika: {userName}"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Gracze",
-        "header": "Karty Postaci Graczy"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "header": "Karty NPC",
         "tabLabel": "NPC"
@@ -156,19 +147,6 @@
     },
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Test Ataku Czarem Wręcz",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Test Ataku Czarem Wręcz",
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "options.open.explanation": "Pokazuje użytkownikowi liczbową wartość przy wprowadzaniu poziomu Wyczerpania.",
-        "Header": "Wyczerpanie Postać/NPC",
-        "name": "Konfiguracja Wyczerpania",
-        "hint": "Ustala w jaki sposób Wyczerpanie nie-pojazdów jest konfigurowane i pokazane na kartach postaci graczy i NPC.",
-        "options.specific.text": "Dane Poziomy",
-        "options.specific.levels.name": "Całkowite Poziomy",
-        "options.specific.levels.hint": "Ustawia maksymalną wartość poziomów Wyczerpania.",
-        "options.specific.levels.tooltip.name": "Opis Poziomu {level} Wyczerpania",
-        "options.specific.levels.tooltip.hint": "Opis dla tego poziomu Wyczerpania. Klucze lokalizacyjne również działają.",
-        "options.open.text": "Wprowadź poziom ręcznie",
-        "AtLeastOneLevelRequiredErrorMessage": "Wymagany jest co najmniej jeden poziom wyczerpania."
-    },
     "TIDY5E.ActionsPerTurn": "Akcje na Turę",
     "TIDY5E.SheetMenu": {
         "label": "Menu",
@@ -384,10 +362,6 @@
         "name": "Początkowa zakładka karty",
         "hint": "Pokazuje wskazaną zakładkę przy pierwszym otwarciu karty."
     },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "hint": "Wyświetla wiadomość na czacie, gdy NPC korzysta z odpoczynku.",
-        "name": "Pokaż odpoczynek NPC na czacie"
-    },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "Zamiast domyślnie pokazywać wszystkie zaklęcia, które zadają obrażenia w zakładce/panelu Akcje, umieszcza tam tylko sztuczki. To domyślne zachowanie D&D Beyond.",
         "name": "Ogranicz akcje do sztuczek"
@@ -440,12 +414,6 @@
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Pokaż tylko nieprzypisane",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Tutaj pojawia się identyfikator klasy źródłowej zaklęcia. Aby przypisać identyfikator, którego postać nie posiada, wprowadź identyfikator klasy w tym polu tekstowym.",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Przypisz czary do klas",
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "Wyczerpanie pojazdu",
-        "AtLeastOneLevelRequiredErrorMessage": "Wymagany jest co najmniej jeden poziom wyczerpania pojazdu.",
-        "name": "Konfiguracja wyczerpania pojazdu",
-        "hint": "Ustala w jaki sposób wyczerpanie pojazdów jest konfigurowane i pokazane na kartach pojazdu."
-    },
     "TIDY5E.Section": {
         "Default": "Domyślna sekcja",
         "Label": "Sekcja",

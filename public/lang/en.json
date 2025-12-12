@@ -240,25 +240,6 @@
   "TIDY5E.WorldSettings.TabExhaustion": {
     "tabLabel": "Exhaustion"
   },
-  "TIDY5E.WorldSettings.Exhaustion": {
-    "Header": "Character/NPC Exhaustion",
-    "name": "Exhaustion Configuration",
-    "hint": "Determines how non-vehicle exhaustion is configured and presented on the character and NPC sheets.",
-    "options.specific.text": "Specific Levels",
-    "options.specific.levels.name": "Total Levels",
-    "options.specific.levels.hint": "Determines the maximum number of levels of exhaustion.",
-    "options.specific.levels.tooltip.name": "Exhaustion Level {level} Tooltip",
-    "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
-    "options.open.text": "Open Number Input",
-    "options.open.explanation": "Shows the user a numeric input for entering levels of exhaustion.",
-    "AtLeastOneLevelRequiredErrorMessage": "At least one exhaustion level is required."
-  },
-  "TIDY5E.WorldSettings.VehicleExhaustion": {
-    "Header": "Vehicle Exhaustion",
-    "name": "Vehicular Exhaustion Configuration",
-    "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet.",
-    "AtLeastOneLevelRequiredErrorMessage": "At least one vehicle exhaustion level is required."
-  },
   "TIDY5E.WorldSettings.TabItem": {
     "tabLabel": "Item"
   },
@@ -274,12 +255,7 @@
   },
   "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": "Sheet Lock",
-    "header": "Lock Options",
-    "hint": "Prevent players from making changes to aspects of their character sheets that should change infrequently. Optionally hide some elements that you don't want to use at all.",
-    "hint2": "Important: sheet lock features are intended to guide player sheet use and to help prevent mistakes such as accidentally adding/removing a saving throw proficiency. Sheet lock settings do not provide a secure lockdown against players with malicious intent.",
-    "labelGeneralLocks": "General Locks",
-    "labelInventoryLocks": "Inventory Locks",
-    "labelFeaturesLocks": "Features Locks"
+    "header": "Lock Options"
   },
   "TIDY5E.WorldSettings.TabMisc": {
     "tabLabel": "GM Options"
@@ -343,10 +319,6 @@
     "label": "User Settings",
     "title": "User Settings: {userName}"
   },
-  "TIDY5E.UserSettings.TabPlayers": {
-    "tabLabel": "Players",
-    "header": "Player Character Sheets"
-  },
   "TIDY5E.UserSettings.TabNPCs": {
     "tabLabel": "NPCs",
     "header": "NPC Sheets"
@@ -360,10 +332,6 @@
   },
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "Activities"
-  },
-  "TIDY5E.Settings.ShowNPCRestInChat": {
-    "name": "Show NPC Rest in Chat",
-    "hint": "Shows a chat card when an NPC rests."
   },
   "TIDY5E.Settings.InitialSheetTab": {
     "name": "Initial Sheet Tab",

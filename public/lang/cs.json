@@ -81,10 +81,6 @@
         "label": "Uživatelská nastavení",
         "title": "Uživatelské nastavení: {userName}"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Hráči",
-        "header": "Deníky postav hráčů"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "NP",
         "header": "Deníky NP"
@@ -98,20 +94,11 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Zámek deníku",
-        "header": "Možnosti uzamčení",
-        "hint": "Zabrání hráčům ve změnách těch aspektů jejich postav, které by se měly měnit jen zřídka. Volitelně umožní i skrýt některé elementy, které nechceš vůbec používat.",
-        "hint2": "Důležité: funkce zámku deníku slouží jako vodítko pro používání deníku hráči a pomáhá předcházet chybám, jako je náhodné přidání/odstranění zdatnosti či záchrany. Nastavení zámku deníku neposkytuje bezpečné uzamčení proti hráčům se zlými úmysly.",
-        "labelGeneralLocks": "Celkový zámek",
-        "labelInventoryLocks": "Zámek inventáře",
-        "labelFeaturesLocks": "Zámek schopností"
+        "header": "Možnosti uzamčení"
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Odpočinek pro CP.",
         "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Zobrazovat odpočinek NP v chatu?",
-        "hint": "Zobrazí kartu chatu odpočinku NP."
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Úvodní karta deníku",
@@ -310,26 +297,7 @@
         "hint": "Určuje, které karty se ve výchozím nastavení zobrazí a v jakém pořadí. Použijí se v případě, že nebyla vybrána žádná karta u aktéra.",
         "AtLeastOneTabRequiredErrorMessage": "Výchozí karty: Pro každý typ aktéra je vyžadována alespoň jedna karta."
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "options.specific.levels.hint": "Určuje maximální počet úrovní vyčerpání.",
-        "options.open.explanation": "Zobrazí uživateli číselný vstup pro zadání úrovně vyčerpání.",
-        "options.specific.levels.tooltip.hint": "Popisek pro tuto úroveň vyčerpání. Fungují též lokalizační klávesy.",
-        "options.specific.levels.name": "Úrovně celkem",
-        "options.specific.levels.tooltip.name": "Popisek úrovně vyčerpání {level}",
-        "AtLeastOneLevelRequiredErrorMessage": "Je vyžadována alespoň jedna úroveň vyčerpání.",
-        "Header": "Vyčerpání postavy/NP",
-        "options.open.text": "Otevřený číselný vstup",
-        "hint": "Určuje, jak je vyčerpání mimo dopravní prostředky nastaveno a prezentováno na denících postav a NP.",
-        "name": "Nastavení vyčerpání",
-        "options.specific.text": "Určité úrovně"
-    },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "AtLeastOneLevelRequiredErrorMessage": "Je vyžadována alespoň jedna úroveň vyčerpání dopravního prostředku.",
-        "hint": "Určuje nastavení a zobrazení vyčerpání dopravního prostředku na deníku dopravního prostředku.",
-        "name": "Nastavení vyčerpání dopravního prostředku",
-        "Header": "Vyčerpání dopravního prostředku"
-    },
     "TIDY5E.ButtonConfirm.Text": "Potvrdit",
     "TIDY5E.Section": {
         "ConfigDialog": {

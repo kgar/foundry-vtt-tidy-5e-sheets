@@ -81,10 +81,6 @@
         "label": "Lap Beállítások",
         "title": "Tidy5e Lap Beállítások"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Játékosok",
-        "header": "Játékos Karakterlapok"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "",
         "header": ""
@@ -98,20 +94,11 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "",
-        "header": "",
-        "hint": "",
-        "hint2": "",
-        "labelGeneralLocks": "",
-        "labelInventoryLocks": "",
-        "labelFeaturesLocks": ""
+        "header": ""
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Pihenés az NJK-knak.",
         "hint": "Kapcsold be, hogy mutasson pihenés ikont/gombokat az NJK lapokon."
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "",
-        "hint": ""
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "",
@@ -270,12 +257,6 @@
         "migrationErrorMessage": "",
         "OptionDeleteFlags.Text": ""
     },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "hint": "",
-        "Header": "",
-        "AtLeastOneLevelRequiredErrorMessage": "",
-        "name": ""
-    },
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "options.GmOnly": "",
         "name": "",
@@ -287,19 +268,6 @@
         "name": ""
     },
     "TIDY5E.HitDC": "",
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "AtLeastOneLevelRequiredErrorMessage": "",
-        "Header": "",
-        "options.specific.levels.name": "",
-        "options.specific.text": "",
-        "options.specific.levels.tooltip.name": "",
-        "options.specific.levels.tooltip.hint": "",
-        "hint": "",
-        "name": "",
-        "options.specific.levels.hint": "",
-        "options.open.text": "",
-        "options.open.explanation": ""
-    },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "hint": "",
         "name": ""

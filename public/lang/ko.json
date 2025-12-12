@@ -166,25 +166,6 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "탈진"
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "Header": "캐릭터/NPC 탈진",
-        "name": "탈진 설정",
-        "hint": "캐릭터 및 NPC 시트에 탑승물이 아닌 대상의 탈진을 설정하고 표시하는 방식을 결정합니다.",
-        "options.specific.text": "특정 단계",
-        "options.specific.levels.name": "전체 단계",
-        "options.specific.levels.hint": "탈진 단계 최대값을 설정합니다.",
-        "options.specific.levels.tooltip.name": "탈진 {level}단계 설명",
-        "options.specific.levels.tooltip.hint": "이 탈진 단계에 대한 설명입니다. 번역 키도 작동합니다.",
-        "options.open.text": "숫자 입력 열기",
-        "options.open.explanation": "사용자가 탈진 단계 입력창을 볼 수 있도록 합니다.",
-        "AtLeastOneLevelRequiredErrorMessage": "최소 한 단계의 탈진이 필요합니다."
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "탑승물 탈진",
-        "name": "탑승물 탈진 설정",
-        "hint": "탑승물 시트에 탑승물 탈진을 설정하고 표시하는 방법을 결정합니다.",
-        "AtLeastOneLevelRequiredErrorMessage": "최소 한 단계의 탑승물 탈진이 필요합니다."
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "아이템"
     },
@@ -200,12 +181,7 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "시트 잠금",
-        "header": "잠금 옵션",
-        "hint": "플레이어가 자주 변경해야 하는 캐릭터 시트의 요소를 변경하지 못하도록 방지합니다. 원하지 않는 일부 요소는 선택적으로 숨길 수 있습니다.",
-        "hint2": "중요: 시트 잠금은 플레이어 시트 사용을 안내하고 실수로 내성 굴림 숙련도를 추가/제거하는 등의 실수를 방지하는 데 도움을 주기 위한 기능입니다. 시트 잠금 설정은 악의적인 의도를 가진 플레이어에 대한 안전한 잠금 기능을 제공하지 않습니다.",
-        "labelGeneralLocks": "일반 잠금",
-        "labelInventoryLocks": "인벤토리 잠금",
-        "labelFeaturesLocks": "특성 잠금"
+        "header": "잠금 옵션"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "GM 옵션"
@@ -257,10 +233,6 @@
         "label": "시트 설정",
         "title": "Tidy5e 시트 설정"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "플레이어",
-        "header": "플레이어 캐릭터 시트"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "NPC",
         "header": "NPC 시트"
@@ -274,10 +246,6 @@
     },
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "활동"
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "채팅에 NPC 휴식 표시",
-        "hint": "NPC가 휴식할 경우 챗에 띄웁니다."
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "개시 시트 탭",

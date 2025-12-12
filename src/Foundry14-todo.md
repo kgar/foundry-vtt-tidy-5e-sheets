@@ -148,16 +148,16 @@
   - [x] TIDY5E.Settings.UseVehicleEncumbranceBar.name
   - [x] TIDY5E.Settings.UseVehicleMotion.hint
   - [x] TIDY5E.Settings.UseVehicleMotion.name
-  - [ ] TIDY5E.UserSettings.TabPlayers.header
-  - [ ] TIDY5E.WorldSettings.Exhaustion.Header
-  - [ ] TIDY5E.WorldSettings.Exhaustion.hint
-  - [ ] TIDY5E.WorldSettings.Exhaustion.name
-  - [ ] TIDY5E.WorldSettings.TabSheetLock.hint
-  - [ ] TIDY5E.WorldSettings.TabSheetLock.hint2
-  - [ ] TIDY5E.WorldSettings.TabSheetLock.labelInventoryLocks
-  - [ ] TIDY5E.WorldSettings.VehicleExhaustion.Header
-  - [ ] TIDY5E.WorldSettings.VehicleExhaustion.hint
-  - [ ] TIDY5E.WorldSettings.VehicleExhaustion.name
-  - [ ] TIDY5E.Settings.ShowNPCRestInChat.name
-  - [ ] TIDY5E.Settings.ShowNPCRestInChat.hint
+  - [x] TIDY5E.UserSettings.TabPlayers.header
+  - [x] TIDY5E.WorldSettings.Exhaustion.Header
+  - [x] TIDY5E.WorldSettings.Exhaustion.hint
+  - [x] TIDY5E.WorldSettings.Exhaustion.name
+  - [x] TIDY5E.WorldSettings.TabSheetLock.hint
+  - [x] TIDY5E.WorldSettings.TabSheetLock.hint2
+  - [x] TIDY5E.WorldSettings.TabSheetLock.labelInventoryLocks
+  - [x] TIDY5E.WorldSettings.VehicleExhaustion.Header
+  - [x] TIDY5E.WorldSettings.VehicleExhaustion.hint
+  - [x] TIDY5E.WorldSettings.VehicleExhaustion.name
+  - [x] TIDY5E.Settings.ShowNPCRestInChat.name
+  - [x] TIDY5E.Settings.ShowNPCRestInChat.hint
           

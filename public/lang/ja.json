@@ -240,25 +240,6 @@
   "TIDY5E.WorldSettings.TabExhaustion": {
     "tabLabel": "消耗状態"
   },
-  "TIDY5E.WorldSettings.Exhaustion": {
-    "Header": "PC/NPCの消耗状態",
-    "name": "消耗状態設定",
-    "hint": "PC/NPCシートで消耗状態がどのように設定され、表示されるかを決定します。",
-    "options.specific.text": "特定レベル",
-    "options.specific.levels.name": "合計段階数",
-    "options.specific.levels.hint": "消耗状態の最大段階数を決定します。",
-    "options.specific.levels.tooltip.name": "消耗状態 {level}段階 ツールチップ",
-    "options.specific.levels.tooltip.hint": "この消耗段階のツールチップです。翻訳キーも使用できます。",
-    "options.open.text": "数値入力を開く",
-    "options.open.explanation": "消耗状態の段階を入力するための数値入力欄をユーザーに表示します。",
-    "AtLeastOneLevelRequiredErrorMessage": "少なくとも1段階の消耗状態が必要です。"
-  },
-  "TIDY5E.WorldSettings.VehicleExhaustion": {
-    "Header": "乗り物の消耗状態",
-    "name": "乗り物の消耗状態設定",
-    "hint": "乗り物シートで乗り物の消耗状態がどのように設定され、表示されるかを決定します。",
-    "AtLeastOneLevelRequiredErrorMessage": "少なくとも1段階の乗り物消耗状態が必要です。"
-  },
   "TIDY5E.WorldSettings.TabItem": {
     "tabLabel": "アイテム"
   },
@@ -274,12 +255,7 @@
   },
   "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": "ロック",
-    "header": "ロック設定",
-    "hint": "シートの中であんまり使わない場所をPLが間違って変更するのを防いだり、そもそも表示したくないものを隠すためのオプションをここで提供しています。何をロックするのか、誰が使って良いのかを権限で完全に管理できます。",
-    "hint2": "注意：やろうと思えばこのロックを迂回する方法は存在します。悪意を持ったPLから完全に身を守ることはできません。あくまでも初心者やミスしやすい操作をさせない等、特定の経験を提供したいDMのためのものです。",
-    "labelGeneralLocks": "全般ロック",
-    "labelInventoryLocks": "所持品ロック",
-    "labelFeaturesLocks": "機能ロック"
+    "header": "ロック設定"
   },
   "TIDY5E.WorldSettings.TabMisc": {
     "tabLabel": "GMオプション"
@@ -343,10 +319,6 @@
     "label": "ユーザー設定",
     "title": "ユーザー設定: {userName}"
   },
-  "TIDY5E.UserSettings.TabPlayers": {
-    "tabLabel": "PC",
-    "header": "プレイヤーキャラクターシート"
-  },
   "TIDY5E.UserSettings.TabNPCs": {
     "tabLabel": "NPC",
     "header": "NPCシート"
@@ -360,10 +332,6 @@
   },
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "用途"
-  },
-  "TIDY5E.Settings.ShowNPCRestInChat": {
-    "name": "NPCの休憩をチャットに表示",
-    "hint": "NPCが休憩したときにチャットカードを表示します。"
   },
   "TIDY5E.Settings.InitialSheetTab": {
     "name": "初期シートタブ",

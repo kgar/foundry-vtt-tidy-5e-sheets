@@ -81,10 +81,6 @@
         "label": "Impostazioni Scheda",
         "title": "Impostazioni Utente: {userName}"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Giocatori",
-        "header": "Schede dei personaggi dei giocatori"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "PNGs",
         "header": "Schede PNG"
@@ -98,20 +94,11 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Scheda Bloccata",
-        "header": "Opzioni di Blocco",
-        "hint": "Impedisci ai giocatori di apportare modifiche ad aspetti delle loro schede personaggio che dovrebbero cambiare raramente. Facoltativamente nascondi alcuni elementi che non desideri utilizzare affatto.",
-        "hint2": "Importante: le funzionalità di blocco della scheda hanno lo scopo di guidare l'uso della scheda del giocatore e di aiutare a prevenire errori come l'aggiunta/rimozione accidentale di una competenza nei tiri salvezza. Le impostazioni di blocco dei fogli non forniscono un blocco sicuro contro i giocatori con intenti dannosi.",
-        "labelGeneralLocks": "Blocchi generali",
-        "labelInventoryLocks": "Blocca Inventario",
-        "labelFeaturesLocks": "Blocca Privilegi"
+        "header": "Opzioni di Blocco"
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Riposo per i PNG",
         "hint": "Seleziona per mostrare l'icona/i pulsanti di riposo sulle schede dei PNG."
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Mostra il riposo dell'NPC nella chat",
-        "hint": "Mostra un messaggio in chat quando un PNG riposa."
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Pagina Iniziale Scheda",
@@ -369,19 +356,6 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Indebolimento"
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "name": "Configurazione Indebolimento",
-        "Header": "Indebolimento Personaggio/PNG",
-        "hint": "Determina come viene configurato e presentato l'indebolimento non legato ai veicoli sulle schede dei personaggi e degli NPC.",
-        "options.specific.text": "Livelli Specifici",
-        "options.specific.levels.name": "Livelli Totali",
-        "options.specific.levels.hint": "Determina il massimo numero dei livelli di indebolimento.",
-        "options.specific.levels.tooltip.name": "Livello di Indebolimento {level} Suggerimenti",
-        "options.specific.levels.tooltip.hint": "Descrizione per questo livello di indebolimento. Funzionano anche i tasti di localizzazione.",
-        "options.open.text": "Inserimento numero libero",
-        "AtLeastOneLevelRequiredErrorMessage": "Almeno un livello di indebolimento è richiesto.",
-        "options.open.explanation": "Mostra all'utente un input numerico per inserire i livelli di indebolimento."
-    },
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Attacco con Incantesimo",
     "TIDY5E.ActorSpellAttackFlavorText": "Attacco con Incantesimo",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Attacco in Mischia con Incantesimo",
@@ -390,12 +364,6 @@
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Attacco a Distanza con Incantesimo",
     "TIDY5E.MeleeSpellAttackMod": "Mod Attacco in Mischia con Incantesimo",
     "TIDY5E.RangedSpellAttackMod": "Mod Attacco a Distanza con Incantesimo",
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "Indebolimento Veicolo",
-        "name": "Configurazione Indebolimento Veicolo",
-        "hint": "Determina come viene configurato e presentato l'indebolimento sulla scheda del veicolo.",
-        "AtLeastOneLevelRequiredErrorMessage": "Almeno un livello di indebolimento del veicolo è richiesto."
-    },
     "TIDY5E.WorldSettings.Menu": {
         "name": "Impostazioni del mondo",
         "hint": "Regola le impostazioni a livello mondiale per personalizzare l'esperienza di Tidy 5e Sheets. Queste impostazioni vengono salvate in questo mondo Foundry e si applicano a tutti i contenuti rilevanti di Tidy 5e Sheets.",

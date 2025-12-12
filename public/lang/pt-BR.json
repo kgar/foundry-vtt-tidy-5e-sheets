@@ -144,25 +144,6 @@
     "TIDY5E.WorldSettings.TabExhaustion": {
         "tabLabel": "Exaustão"
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "Header": "Exaustão de Personagem/PNJ",
-        "name": "Configuração de Exaustão",
-        "hint": "Determina como a exaustão não relacionada a veículos é configurada e apresentada nas fichas de personagem e de PNJs.",
-        "options.specific.text": "Níveis Específicos",
-        "options.specific.levels.name": "Níveis Totais",
-        "options.specific.levels.hint": "Determina o número máximo de níveis de exaustão.",
-        "options.specific.levels.tooltip.name": "Dica de Exaustão nível {level}",
-        "options.specific.levels.tooltip.hint": "Dica para esse nível de exaustão. As chaves de localização também funcionam.",
-        "options.open.text": "Abrir Entrada de Número",
-        "options.open.explanation": "Mostra ao usuário uma entrada numérica para inserir níveis de exaustão.",
-        "AtLeastOneLevelRequiredErrorMessage": "É necessário pelo menos um nível de exaustão."
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "Exaustão de Veículo",
-        "name": "Configuração de Exaustão de Veículo",
-        "hint": "Determina como a exaustão do veículo é configurada e apresentada na ficha de veículo.",
-        "AtLeastOneLevelRequiredErrorMessage": "É necessário pelo menos um nível de exaustão de veículo."
-    },
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Item"
     },
@@ -178,12 +159,7 @@
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Bloqueio de Ficha",
-        "header": "Opções de Bloqueio",
-        "hint": "Impede que os jogadores façam alterações em aspectos de suas fichas que não devem ser alterados com frequência. Opcionalmente, oculte alguns elementos que você não deseja usar.",
-        "hint2": "Importante: Os recursos de bloqueio de ficha servem para orientar o uso da ficha de jogador e ajudar a evitar erros, como adicionar/remover acidentalmente uma proficiência de salvaguarda. As configurações de bloqueio de ficha não oferecem um bloqueio seguro contra jogadores maliciosos.",
-        "labelGeneralLocks": "Bloqueios Gerais",
-        "labelInventoryLocks": "Bloqueios de Inventário",
-        "labelFeaturesLocks": "Bloqueios de Recursos"
+        "header": "Opções de Bloqueio"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Opções de Mestre"
@@ -203,10 +179,6 @@
         "label": "Configurações de Usuário",
         "title": "Configurações de Usuário: {userName}"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Jogadores",
-        "header": "Fichas de Personagem de Jogador"
-    },
     "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "PNJs",
         "header": "Fichas de PNJs"
@@ -217,10 +189,6 @@
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista de Ações"
-    },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Mostrar Descanso do PNJ no Chat",
-        "hint": "Mostra um cartão no chat quando um PNJ descansa."
     },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Aba Inicial da Ficha",
