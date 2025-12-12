@@ -5,7 +5,7 @@
   - [x] api
   - [x] applications
   - [x] application-quadrone
-  - [ ] attachments
+  - [x] attachments
   - [ ] components
   - [ ] context-menu
   - [ ] events
