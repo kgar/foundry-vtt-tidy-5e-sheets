@@ -8,7 +8,6 @@
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Group Sheet",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Encounter Sheet",
   "TIDY5E.PlayerName": "Player Name",
-  "TIDY5E.EditSheetImageHint": "Left Click: Edit Image",
   "TIDY5E.PreviewSheetImageHint": "Left Click: Preview Image",
   "TIDY5E.SheetImageOptionsHint": "Right Click: Show Image Options",
   "TIDY5E.ShowPortraitArt": "Show Portrait",
@@ -93,8 +92,6 @@
   "TIDY5E.ContextMenuActionEdit": "Edit",
   "TIDY5E.ContextMenuActionView": "View",
   "TIDY5E.ContextMenuActionDelete": "Delete",
-  "TIDY5E.ContextMenuActionPinToAttributes": "Pin to Attributes",
-  "TIDY5E.ContextMenuActionUnpinFromAttributes": "Unpin from Attributes",
   "TIDY5E.ContextMenuActionPin": "Pin to top",
   "TIDY5E.ContextMenuActionUnpin": "Unpin from top",
   "TIDY5E.ContextMenuActionShowLimitedUses": "Show Limited Uses",
@@ -109,12 +106,9 @@
   "TIDY5E.InspirationRemove": "Remove Inspiration",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
-  "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",
   "TIDY5E.GMOnlyEdit": "Only your GM can edit this section.",
 
-  "TIDY5E.AttunementWarning": "Attunement: Unable to attune to more than {number} items.",
   "TIDY5E.AttunementItems": "Attuned Items",
-  "TIDY5E.AttunementMax": "Attunement Maximum",
 
   "TIDY5E.ListLayout": "List Layout",
   "TIDY5E.LayoutNotSupported": "Layout mode not supported",
@@ -144,7 +138,6 @@
 
   "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item",
 
-  "TIDY5E.AttackMod": "Attack Mod",
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - Spell Attack",
   "TIDY5E.ActorSpellAttackFlavorText": "Spell Attack",
   "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Melee Spell Attack",
@@ -502,20 +495,14 @@
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals",
   "TIDY5E.TotalCrewCount": "Total Crew",
-  "TIDY5E.ActionsPerTurn": "Actions Per Turn",
   "TIDY5E.SheetMenu": {
     "label": "Menu",
     "themeLabel": "Theme"
   },
-  "TIDY5E.ActiveEffectsMarkerTitle": "This item has active effects",
   "TIDY5E.SortMode.ActionListDefault": "Default Action List Sort",
   "TIDY5E.Commands.ExpandAll": "Expand All",
   "TIDY5E.Commands.CollapseAll": "Collapse All",
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",
-  "TIDY5E.Commands.ShowLegendaryToolbar": "Show Legendary Toolbar",
-  "TIDY5E.Commands.HideLegendaryToolbar": "Hide Legendary Toolbar",
-  "TIDY5E.Commands.ShowContainerPanel": "Show Container Panel",
-  "TIDY5E.Commands.HideContainerPanel": "Hide Container Panel",
   "TIDY5E.ItemFilters.CanCast": "Can Cast",
   "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Include Rituals in \"Can Cast\"",
   "TIDY5E.ItemFilters.CanUse": "Can Use",

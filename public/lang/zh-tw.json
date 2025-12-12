@@ -1,6 +1,5 @@
 {
     "TIDY5E.PlayerName": "Player Name",
-    "TIDY5E.EditSheetImageHint": "編輯圖片",
     "TIDY5E.SheetImageOptionsHint": "右鍵單擊: 顯示角色立繪",
     "TIDY5E.ShowPortraitArt": "顯示立繪",
     "TIDY5E.ShowItemImage": "right click: show item art",
@@ -30,11 +29,8 @@
     "TIDY5E.ContextMenuActionUnprepare": "",
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
-    "TIDY5E.EmptySection": "該區塊沒有內容。解鎖該卡片以編輯。",
     "TIDY5E.GMOnlyEdit": "僅有你的 GM 可以編輯該區塊。",
-    "TIDY5E.AttunementWarning": "同調警告: 你不可以同調超過 {number} 件物品!",
     "TIDY5E.AttunementItems": "已同調物品",
-    "TIDY5E.AttunementMax": "同調上限",
     "TIDY5E.ListLayout": "列表佈局",
     "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.Encumbrance": "負重",
@@ -151,12 +147,10 @@
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
     "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.ActionsPerTurn": "",
     "TIDY5E.SheetMenu": {
         "label": "",
         "themeLabel": ""
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "hint": "",
         "name": ""
@@ -299,7 +293,6 @@
         "TabName": ""
     },
     "TIDY5E.EnvironmentTooltip": "",
-    "TIDY5E.AttackMod": "",
     "TIDY5E.ActorRangedSpellAttackTitle": "",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "",
     "TIDY5E.TabConfiguration": {
@@ -375,10 +368,7 @@
         "name": ""
     },
     "TIDY5E.UseDefault": "",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "",
-    "TIDY5E.Commands.ShowContainerPanel": "",
     "TIDY5E.ItemFilters.ClearAll": "",
-    "TIDY5E.Commands.HideLegendaryToolbar": "",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "",
     "TIDY5E.Utilities.GMTools": "",
     "TIDY5E.Utilities.IdentifyAll": "",
@@ -398,7 +388,6 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Commands.HideContainerPanel": "",
     "TIDY5E.ItemFilters.CanUse": "",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "",
     "TIDY5E.ActorSpellAttackTitle": "",

@@ -1,5 +1,4 @@
 {
-    "TIDY5E.EditSheetImageHint": "Lewy przycisk myszy: edytuj obraz",
     "TIDY5E.SheetImageOptionsHint": "Prawy przycisk myszy: pokaż opcje obrazu",
     "TIDY5E.ShowItemImage": "Prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "Pokaż obraz",
@@ -28,7 +27,6 @@
         "header": "Ustawienia blokad"
     },
     "TIDY5E.AttunementItems": "Zestrojone przedmioty",
-    "TIDY5E.AttunementMax": "Maksymalna liczba zestrojeń",
     "TIDY5E.Favorite": "Ulubione",
     "TIDY5E.AddFavorite": "Dodaj do ulubionych",
     "TIDY5E.ItemCardsMouseHint": "środkowy przycisk myszy, żeby podejrzeć/edytować przedmiot",
@@ -72,9 +70,7 @@
     "TIDY5E.ContextMenuActionUnprepare": "Zrezygnuj z przygotowania",
     "TIDY5E.ContextMenuActionEdit": "Edytuj",
     "TIDY5E.ContextMenuActionDelete": "Usuń",
-    "TIDY5E.EmptySection": "Ta sekcja jest pusta. Odblokuj kartę, w celu edycji.",
     "TIDY5E.GMOnlyEdit": "Tylko MG może edytować tę sekcję.",
-    "TIDY5E.AttunementWarning": "Zestrojenie: Nie można zestroić się z więcej niż {number} przedmiotami.",
     "TIDY5E.ListLayout": "Układ listy",
     "TIDY5E.LayoutNotSupported": "Układ nie jest wspierany",
     "TIDY5E.Encumbrance": "Obciążenie",
@@ -86,7 +82,6 @@
     "TIDY5E.Search": "Szukaj",
     "TIDY5E.SearchClear": "Wyczyść wyszukiwanie",
     "TIDY5E.SearchHint": "Zacznij pisać, żeby pokazać wyniki zapytania",
-    "TIDY5E.AttackMod": "Modyfikator do ataku",
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
     "TIDY5E.RangedSpellAttackMod": "Modyfikator do rzutu na atak czarem dystansowym",
     "TIDY5E.TokenLinked": "Token przypisany do aktora",
@@ -134,7 +129,6 @@
     },
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Test Ataku Czarem Wręcz",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Test Ataku Czarem Wręcz",
-    "TIDY5E.ActionsPerTurn": "Akcje na Turę",
     "TIDY5E.SheetMenu": {
         "label": "Menu",
         "themeLabel": "Motyw"
@@ -155,12 +149,9 @@
     "TIDY5E.VehicleInMotion": "Pojazd w ruchu",
     "TIDY5E.VehicleMotionless": "Pojazd w bezruchu",
     "TIDY5E.TotalCrewCount": "Całkowita załoga",
-    "TIDY5E.ActiveEffectsMarkerTitle": "Ten przedmiot ma aktywne efekty",
     "TIDY5E.Commands.ExpandAll": "Rozwiń wszystko",
     "TIDY5E.SortMode.ActionListDefault": "Domyślne sortowanie listy Akcji",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "Pokaż pasek zdolności Legendarnych",
-    "TIDY5E.Commands.HideLegendaryToolbar": "Ukryj pasek zdolności Legendarnych",
     "TIDY5E.ItemFilters.ClearAll": "Wyczyść wszystko",
     "TIDY5E.ItemFilters.Filter.Other": "Inne",
     "TIDY5E.Settings.Reset": {
@@ -333,8 +324,6 @@
         "name": "Ustaw Tidy 5e jako domyślną kartę"
     },
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
-    "TIDY5E.Commands.ShowContainerPanel": "Pokaż panel pojemnika",
-    "TIDY5E.Commands.HideContainerPanel": "Ukryj panel pojemnika",
     "TIDY5E.ItemImageTitle": "Przedmiot: {subject}",
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
@@ -495,8 +484,6 @@
         "hint": "Podczas rozwijania elementu wyświetlane są aktywności tego elementu. Użyj tego ustawienia, aby określić, czy aktywności są umieszczane na górze, przed opisem elementu, czy na dole, pod opisem elementu, przyciskami i tagami."
     },
     "TIDY5E.ContextMenuActionShowLimitedUses": "Pokaż ograniczone użycia",
-    "TIDY5E.ContextMenuActionPinToAttributes": "Przypnij do atrybutów",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Odepnij od atrybutów",
     "TIDY5E.ContextMenuActionShowQuantity": "Pokaż ilość",
     "TIDY5E.ContextMenuActionView": "Podgląd",
     "TIDY5E.SortMenu.OptionPriority": "Priorytet",

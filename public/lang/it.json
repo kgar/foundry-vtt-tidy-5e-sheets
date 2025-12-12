@@ -1,6 +1,5 @@
 {
     "TIDY5E.PlayerName": "Nome del Giocatore",
-    "TIDY5E.EditSheetImageHint": "Tasto Sinistro: Modifica Immagine",
     "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
     "TIDY5E.ShowPortraitArt": "Mostra Ritratto",
     "TIDY5E.ShowItemImage": "Tasto Destro: Mostra Immagine Oggetto",
@@ -30,11 +29,8 @@
     "TIDY5E.ContextMenuActionUnprepare": "Non preparare",
     "TIDY5E.ContextMenuActionEdit": "Modifica",
     "TIDY5E.ContextMenuActionDelete": "Cancella",
-    "TIDY5E.EmptySection": "Questa sezione è vuota. Sblocca il foglio per modificare.",
     "TIDY5E.GMOnlyEdit": "Solo il tuo GM può modificare questa sezione.",
-    "TIDY5E.AttunementWarning": "Sintonizzazione: non puoi sintonizzarti su più di {number} oggetti.",
     "TIDY5E.AttunementItems": "Oggetti Sintonizzati",
-    "TIDY5E.AttunementMax": "Massimi Sintonizzati",
     "TIDY5E.ListLayout": "Layout ad Elenco",
     "TIDY5E.LayoutNotSupported": "Modalità Layout non supportata",
     "TIDY5E.Encumbrance": "Ingombro",
@@ -166,12 +162,10 @@
     "TIDY5E.VehicleInMotion": "Il Veicolo è in movimento",
     "TIDY5E.VehicleMotionless": "Il Veicolo è fermo",
     "TIDY5E.TotalCrewCount": "Equipaggio totale",
-    "TIDY5E.ActionsPerTurn": "Azioni per Turno",
     "TIDY5E.SheetMenu": {
         "label": "Menu",
         "themeLabel": "Tema"
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": "Questo oggetto ha effetti attivi",
     "TIDY5E.Actions": {
         "TabName": "Azioni"
     },
@@ -179,7 +173,6 @@
     "TIDY5E.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
-    "TIDY5E.AttackMod": "Mod Attacco",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ExamplesHeader": "Formule di Esempio",
         "Title": "Configurazione Massimi Incantesimi Preparati: {documentName}",
@@ -370,8 +363,6 @@
     },
     "TIDY5E.ItemFilters.Filter.Other": "Altro",
     "TIDY5E.SortMode.ActionListDefault": "Ordinamento elenco azioni predefinito",
-    "TIDY5E.Commands.HideLegendaryToolbar": "Nascondi Barra Leggendaria",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "Mostra Barra Leggendaria",
     "TIDY5E.GMOnly.Message": "Solo per il DM: {message}",
     "TIDY5E.SheetMigrations": {
         "Notification.SheetMigrationsAvailable.Title": "Schede Tidy 5e: Migrazioni Disponibili",
@@ -409,8 +400,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Oggetto"
     },
-    "TIDY5E.Commands.ShowContainerPanel": "Mostra Pannello Contenitori",
-    "TIDY5E.Commands.HideContainerPanel": "Nascondi Pannello Contenitori",
     "TIDY5E.Utilities.GMTools": "Strumenti DM",
     "TIDY5E.Utilities.IdentifyAll": "Identifica tutti gli Oggetti",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Contrassegna tutti gli oggetti come non identificati",
@@ -525,8 +514,6 @@
     },
     "TIDY5E.BrokenLink": "Link non funzionante",
     "TIDY5E.ContextMenuActionView": "Visualizza",
-    "TIDY5E.ContextMenuActionPinToAttributes": "Fissa su Attributi",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Rimuovi da Attributi",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Mostra Usi Limitati",
     "TIDY5E.ContextMenuActionShowQuantity": "Mostra Quantità",
     "TIDY5E.RollRecharge.Label": "Ricarica",

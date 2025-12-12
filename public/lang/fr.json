@@ -1,6 +1,5 @@
 {
     "TIDY5E.PlayerName": "Nom du joueur",
-    "TIDY5E.EditSheetImageHint": "Clic gauche : éditer l'image",
     "TIDY5E.SheetImageOptionsHint": "Clic droit : voir les options de l'image",
     "TIDY5E.ShowPortraitArt": "Voir le portrait",
     "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
@@ -30,11 +29,8 @@
     "TIDY5E.ContextMenuActionUnprepare": "Supprimer la préparation",
     "TIDY5E.ContextMenuActionEdit": "Editer",
     "TIDY5E.ContextMenuActionDelete": "Effacer",
-    "TIDY5E.EmptySection": "Cette section est vide. Déverrouiller la feuille pour la modifier.",
     "TIDY5E.GMOnlyEdit": "Seul votre MJ peut modifier cette section.",
-    "TIDY5E.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !.",
     "TIDY5E.AttunementItems": "Objets liés",
-    "TIDY5E.AttunementMax": "Liens maximum",
     "TIDY5E.ListLayout": "Affichage liste",
     "TIDY5E.LayoutNotSupported": "Mise en page non supporter",
     "TIDY5E.Encumbrance": "Encombrement",
@@ -167,12 +163,10 @@
     "TIDY5E.VehicleInMotion": "Le véhicule est en mouvement",
     "TIDY5E.VehicleMotionless": "Le véhicule n'a pas de mouvement",
     "TIDY5E.TotalCrewCount": "Équipage total",
-    "TIDY5E.ActionsPerTurn": "Actions par tour",
     "TIDY5E.SheetMenu": {
         "label": "Menu",
         "themeLabel": "Thème"
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": "Cet objet a des effets actifs",
     "TIDY5E.Actions": {
         "TabName": "Actions"
     },
@@ -212,7 +206,6 @@
     },
     "TIDY5E.MeleeSpellAttackMod": "Modificateur d'attaque de sort",
     "TIDY5E.HitDC": "Dés de vie",
-    "TIDY5E.AttackMod": "Modificateur d'attaque",
     "TIDY5E.RangedSpellAttackMod": "Modificateur d'attaque de sort à distance",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Attaque sort de mêlée",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Attaque de sort à distance",
@@ -367,9 +360,7 @@
         "name": "Limiter les actions au sorts mineurs (Cantrips)",
         "hint": "Au lieu d'afficher tous les sorts qui infligent des dégâts dans l'onglet/panneau Actions par défaut, limite aux seuls cantrips (sorts mineurs). C'est le comportement par défaut de D&D Beyond."
     },
-    "TIDY5E.Commands.ShowLegendaryToolbar": "Afficher la barre d'actions légendaire",
     "TIDY5E.SortMode.ActionListDefault": "Tri par défaut de la liste d'actions",
-    "TIDY5E.Commands.HideLegendaryToolbar": "Cacher la barre d'actions légendaires",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Divers",
     "TIDY5E.ItemFilters.Filter.Other": "Autre",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
@@ -410,8 +401,6 @@
         "options.GmOnly": "MJ seulement",
         "options.GmAndOwners": "MJ et propriétaires des objets"
     },
-    "TIDY5E.Commands.ShowContainerPanel": "Afficher le panneau conteneur",
-    "TIDY5E.Commands.HideContainerPanel": "Masquer le panneau conteneur",
     "TIDY5E.Utilities.GMTools": "Outils du MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés",
@@ -488,7 +477,6 @@
     "TIDY5E.ContextMenuActionView": "Voir",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Afficher les utilisations limitées",
     "TIDY5E.ContextMenuActionShowQuantity": "Afficher la quantité",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "décrocher des attributs",
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Activités"
     },
@@ -507,7 +495,6 @@
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Feuille de conteneur Tidy 5e",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Feuille d'objet Tidy 5e",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Feuille de personnage Tidy5e",
-    "TIDY5E.ContextMenuActionPinToAttributes": "Accrocher des Attributs",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Feuille de véhicule Tidy 5e",
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "hint": "Détermine le type de jet par défaut à utiliser lors d'un jet de sauvegarde contre la mort.",

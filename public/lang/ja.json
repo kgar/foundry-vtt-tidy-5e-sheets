@@ -8,7 +8,6 @@
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e グループシート",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e 遭遇シート",
   "TIDY5E.PlayerName": "プレイヤー名",
-  "TIDY5E.EditSheetImageHint": "左クリック: 画像変更",
   "TIDY5E.PreviewSheetImageHint": "右クリック: 画像プレビュー",
   "TIDY5E.SheetImageOptionsHint": "右クリック: 画像オプション表示",
   "TIDY5E.ShowPortraitArt": "画像表示",
@@ -93,8 +92,6 @@
   "TIDY5E.ContextMenuActionEdit": "編集",
   "TIDY5E.ContextMenuActionView": "閲覧",
   "TIDY5E.ContextMenuActionDelete": "削除",
-  "TIDY5E.ContextMenuActionPinToAttributes": "能力値にピン留め",
-  "TIDY5E.ContextMenuActionUnpinFromAttributes": "能力値からピン留め解除",
   "TIDY5E.ContextMenuActionPin": "上にピン留め",
   "TIDY5E.ContextMenuActionUnpin": "ピン留め解除",
   "TIDY5E.ContextMenuActionShowLimitedUses": "使用制限を表示",
@@ -109,12 +106,9 @@
   "TIDY5E.InspirationRemove": "インスピレーション削除",
 
   "TIDY5E.EmptyContainer": "この容器は空です。",
-  "TIDY5E.EmptySection": "シートがロックされているため新規作成ができません。シートロックを解除して編集してください。",
   "TIDY5E.GMOnlyEdit": "この項目を編集できるのはGMだけです。",
 
-  "TIDY5E.AttunementWarning": "警告：同調が最大数である{number}に達しています。",
   "TIDY5E.AttunementItems": "同調アイテム",
-  "TIDY5E.AttunementMax": "同調上限",
 
   "TIDY5E.ListLayout": "リスト",
   "TIDY5E.LayoutNotSupported": "レイアウトモードはサポートされていません",
@@ -144,7 +138,6 @@
 
   "TIDY5E.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
 
-  "TIDY5E.AttackMod": "攻撃修正",
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - 呪文攻撃",
   "TIDY5E.ActorSpellAttackFlavorText": "呪文攻撃",
   "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - 近接呪文攻撃",
@@ -502,20 +495,14 @@
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "ドラフト･アニマル",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "ドラフト･アニマル",
   "TIDY5E.TotalCrewCount": "総乗組員数",
-  "TIDY5E.ActionsPerTurn": "ターンごとのアクション",
   "TIDY5E.SheetMenu": {
     "label": "メニュー",
     "themeLabel": "テーマ"
   },
-  "TIDY5E.ActiveEffectsMarkerTitle": "このアイテムにはアクティブ効果があります",
   "TIDY5E.SortMode.ActionListDefault": "デフォルトのアクションソート",
   "TIDY5E.Commands.ExpandAll": "すべて展開",
   "TIDY5E.Commands.CollapseAll": "すべて縮小",
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "フィルター",
-  "TIDY5E.Commands.ShowLegendaryToolbar": "伝説ツールバーを表示",
-  "TIDY5E.Commands.HideLegendaryToolbar": "伝説ツールバーを隠す",
-  "TIDY5E.Commands.ShowContainerPanel": "容器ツールバーを表示",
-  "TIDY5E.Commands.HideContainerPanel": "容器ツールバーを隠す",
   "TIDY5E.ItemFilters.CanCast": "発動可能",
   "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "「発動可能」に儀式呪文を含める",
   "TIDY5E.ItemFilters.CanUse": "使用可能",

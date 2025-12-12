@@ -1,6 +1,5 @@
 {
     "TIDY5E.PlayerName": "Játékosnév",
-    "TIDY5E.EditSheetImageHint": "bal klikk: kép szerkesztés",
     "TIDY5E.SheetImageOptionsHint": "jobb klikk: karakterkép mutatás",
     "TIDY5E.ShowPortraitArt": "portré mutatás",
     "TIDY5E.ShowItemImage": "right click: show item art",
@@ -30,11 +29,8 @@
     "TIDY5E.ContextMenuActionUnprepare": "Előkészítés Törlése",
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
-    "TIDY5E.EmptySection": "Ez a szekció üres. Tedd a karakterlapot szerkeszthetővé.",
     "TIDY5E.GMOnlyEdit": "Csak a JM szerkesztheti ezt a szekciót.",
-    "TIDY5E.AttunementWarning": "Összehangolódás figyelmeztetés: Nem tudsz több, mint {number} tárggyal összehangolódni!",
     "TIDY5E.AttunementItems": "Összehangolt Tárgyak",
-    "TIDY5E.AttunementMax": "Összehangolódás Maximum",
     "TIDY5E.ListLayout": "Lista Elrendezés",
     "TIDY5E.LayoutNotSupported": "",
     "TIDY5E.Encumbrance": "Terheltség",
@@ -151,12 +147,10 @@
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
     "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.ActionsPerTurn": "",
     "TIDY5E.SheetMenu": {
         "label": "",
         "themeLabel": ""
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.Actions": {
         "TabName": ""
@@ -345,7 +339,6 @@
         "SelectedHeader": ""
     },
     "TIDY5E.ItemFilters.Filter.Other": "",
-    "TIDY5E.Commands.HideLegendaryToolbar": "",
     "TIDY5E.Utilities.GMTools": "",
     "TIDY5E.ItemFilters.CanUse": "",
     "TIDY5E.ItemFilters.CanCast": "",
@@ -356,7 +349,6 @@
         "buttonLabel": ""
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "",
     "TIDY5E.UseDefaultDialog": {
         "title": "",
         "text": ""
@@ -388,8 +380,6 @@
     "TIDY5E.Utilities.IdentifyAll": "",
     "TIDY5E.UseDefault": "",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "",
-    "TIDY5E.Commands.HideContainerPanel": "",
-    "TIDY5E.Commands.ShowContainerPanel": "",
     "TIDY5E.GenericErrorNotification": "",
     "TIDY5E.ActorSpellAttackTitle": "",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "",
@@ -406,6 +396,5 @@
     "TIDY5E.Settings.ActionList.Header": "",
     "TIDY5E.ItemImageTitle": "",
     "TIDY5E.EnvironmentTooltip": "",
-    "TIDY5E.AttackMod": "",
     "TIDY5E.LocalizationTestKey": ""
 }

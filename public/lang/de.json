@@ -1,6 +1,5 @@
 {
     "TIDY5E.PlayerName": "Spieler Name",
-    "TIDY5E.EditSheetImageHint": "Linksklick: Bild bearbeiten",
     "TIDY5E.SheetImageOptionsHint": "Rechtsklick: Charakter-Bilder zeigen",
     "TIDY5E.ShowPortraitArt": "Portrait zeigen",
     "TIDY5E.ShowItemImage": "Rechtsklick: Gegenstands-Bild zeigen",
@@ -30,11 +29,8 @@
     "TIDY5E.ContextMenuActionUnprepare": "Vorbereitung entfernen",
     "TIDY5E.ContextMenuActionEdit": "Bearbeiten",
     "TIDY5E.ContextMenuActionDelete": "Löschen",
-    "TIDY5E.EmptySection": "Dieser Bereich ist leer. Entsperre den Charakterbogen zum Bearbeiten.",
     "TIDY5E.GMOnlyEdit": "Nur der Spielleiter kann diesen Bereich bearbeiten.",
-    "TIDY5E.AttunementWarning": "Einstimmungs-Warnung: Du kannst dich maximal auf {number} Gegenstände einstimmen!",
     "TIDY5E.AttunementItems": "Eingestimmte Gegenstände",
-    "TIDY5E.AttunementMax": "Maximale Einstimmungen",
     "TIDY5E.ListLayout": "Listen-Ansicht",
     "TIDY5E.LayoutNotSupported": "Layoutmodus wird nicht unterstützt",
     "TIDY5E.Encumbrance": "Traglast",
@@ -151,19 +147,16 @@
     "TIDY5E.VehicleInMotion": "",
     "TIDY5E.VehicleMotionless": "",
     "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.ActionsPerTurn": "Aktionen pro Zug",
     "TIDY5E.SheetMenu": {
         "label": "Menü",
         "themeLabel": ""
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.Actions": {
         "TabName": "Aktionen"
     },
     "TIDY5E.HitDC": "Treffer / SG",
     "TIDY5E.Inventory.Weight.Tooltip": "Gewicht: {weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Habitat: {environment}",
-    "TIDY5E.AttackMod": "Angriffsmodifikator",
     "TIDY5E.MeleeSpellAttackMod": "Nahkampf-Zauberangriffs Modifikator",
     "TIDY5E.RangedSpellAttackMod": "Fernkampf-Zauberangriffs Modifikator",
     "TIDY5E.TabConfiguration": {
@@ -364,13 +357,11 @@
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.ReminderToBackUp": "",
-    "TIDY5E.Commands.HideLegendaryToolbar": "",
     "TIDY5E.UseDefaultDialog": {
         "text": "",
         "title": ""
     },
     "TIDY5E.UseDefault": "",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "",
     "TIDY5E.Section": {
         "ConfigDialog": {
             "showTooltip": "",
@@ -398,8 +389,6 @@
         "hint": "",
         "explanation": ""
     },
-    "TIDY5E.Commands.HideContainerPanel": "",
-    "TIDY5E.Commands.ShowContainerPanel": "",
     "TIDY5E.ItemFilters.ClearAll": "",
     "TIDY5E.ItemFilters.CanCast": "",
     "TIDY5E.LocalizationTestKey": "",
@@ -433,8 +422,6 @@
     "TIDY5E.JournalEntry.NewTitle": "Journal Eintrag {number}",
     "TIDY5E.SheetLock.Empty.Hint": "Beginne, indem du eine Klasse und deine ersten Gegenstände hinzufügst. Dann, verwende das Gegenstands-Menü oder Rechtsklick und wähle „Zu Bogenregistrierkarte hinzufügen“, um sie hier hinzuzufügen.",
     "TIDY5E.ContextMenuActionView": "Ansicht",
-    "TIDY5E.ContextMenuActionPinToAttributes": "An Attribute anheften",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "von Attributen loslösen",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Begrenzte Nutzungen anzeigen",
     "TIDY5E.ContextMenuActionShowQuantity": "Menge anzeigen",
     "TIDY5E.ContextMenuActionSetAsInspirationSource": "Als Inspirationsquelle festlegen",

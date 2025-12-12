@@ -22,24 +22,24 @@
   - [x] TIDY5E.Actions.ResetActionDefault
   - [x] TIDY5E.Actions.SetOverrideFalse
   - [x] TIDY5E.Actions.SetOverrideTrue
-  - [ ] TIDY5E.ActionsPerTurn
-  - [ ] TIDY5E.ActiveEffectsMarkerTitle
-  - [ ] TIDY5E.AttackMod
-  - [ ] TIDY5E.AttunementMax
-  - [ ] TIDY5E.AttunementWarning
-  - [ ] TIDY5E.Class.Barbarian
-  - [ ] TIDY5E.Class.Custom
-  - [ ] TIDY5E.Class.Fighter
-  - [ ] TIDY5E.Class.Monk
-  - [ ] TIDY5E.Class.Rogue
-  - [ ] TIDY5E.Class.Warlock
-  - [ ] TIDY5E.Commands.HideContainerPanel
-  - [ ] TIDY5E.Commands.HideLegendaryToolbar
-  - [ ] TIDY5E.Commands.ShowContainerPanel
-  - [ ] TIDY5E.Commands.ShowLegendaryToolbar
-  - [ ] TIDY5E.ContextMenuActionPinToAttributes
-  - [ ] TIDY5E.ContextMenuActionUnpinFromAttributes
-  - [ ] TIDY5E.EditSheetImageHint
+  - [x] TIDY5E.ActionsPerTurn
+  - [x] TIDY5E.ActiveEffectsMarkerTitle
+  - [x] TIDY5E.AttackMod
+  - [x] TIDY5E.AttunementMax
+  - [x] TIDY5E.AttunementWarning
+  - [x] (keep) TIDY5E.Class.Barbarian
+  - [x] (keep) TIDY5E.Class.Custom
+  - [x] (keep) TIDY5E.Class.Fighter
+  - [x] (keep) TIDY5E.Class.Monk
+  - [x] (keep) TIDY5E.Class.Rogue
+  - [x] (keep) TIDY5E.Class.Warlock
+  - [x] TIDY5E.Commands.HideContainerPanel
+  - [x] TIDY5E.Commands.HideLegendaryToolbar
+  - [x] TIDY5E.Commands.ShowContainerPanel
+  - [x] TIDY5E.Commands.ShowLegendaryToolbar
+  - [x] TIDY5E.ContextMenuActionPinToAttributes
+  - [x] TIDY5E.ContextMenuActionUnpinFromAttributes
+  - [x] TIDY5E.EditSheetImageHint
   - [ ] TIDY5E.EmptySection
   - [ ] TIDY5E.Encounter.NewPlaceholder.SubtitlePlaceholderText
   - [ ] TIDY5E.Encumbrance

@@ -1,6 +1,5 @@
 {
     "TIDY5E.PlayerName": "Jméno hráče",
-    "TIDY5E.EditSheetImageHint": "Levé tlačítko myši: Upravit obrázek",
     "TIDY5E.SheetImageOptionsHint": "Pravé tlačítko myši: Ukázat obrázek postavy",
     "TIDY5E.ShowPortraitArt": "Zobrazit portrét",
     "TIDY5E.ShowItemImage": "Pravé tlačítko: Zobrazit ilustraci položky",
@@ -30,11 +29,8 @@
     "TIDY5E.ContextMenuActionUnprepare": "Odebrat z připravených",
     "TIDY5E.ContextMenuActionEdit": "Upravit",
     "TIDY5E.ContextMenuActionDelete": "Odstranit",
-    "TIDY5E.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkni deník.",
     "TIDY5E.GMOnlyEdit": "Tuto sekci může upravovat pouze PJ.",
-    "TIDY5E.AttunementWarning": "Sladění: Nemůžeš se sladit s více než s {number} předměty.",
     "TIDY5E.AttunementItems": "Sladěné předměty",
-    "TIDY5E.AttunementMax": "Maximum sladění",
     "TIDY5E.ListLayout": "Seznamové rozvržení",
     "TIDY5E.LayoutNotSupported": "Režim rozvržení není podporován",
     "TIDY5E.Encumbrance": "Zatížení",
@@ -166,12 +162,10 @@
     "TIDY5E.VehicleInMotion": "Dopravní prostředek je v pohybu",
     "TIDY5E.VehicleMotionless": "Dopravní prostředek je nehybný",
     "TIDY5E.TotalCrewCount": "Posádka celkem",
-    "TIDY5E.ActionsPerTurn": "Akcí za kolo",
     "TIDY5E.SheetMenu": {
         "label": "Nabídka",
         "themeLabel": "Motiv"
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": "Tato položka má aktivní efekty",
     "TIDY5E.GMOnly.Message": "Pouze pro PJ: {message}",
     "TIDY5E.WorldSettings.ItemIdentificationPermission": {
         "options.GmAndOwners": "PJ a vlastníci položky",
@@ -338,7 +332,6 @@
         "hint": "Ve výchozím nastavení zahrne jednorázové položky, které mají aktivační náklady (akce, bonusová akce atd.), do akcí.",
         "name": "Zahrnout jednorázové položky do akcí?"
     },
-    "TIDY5E.Commands.ShowContainerPanel": "Zobrazit panel kontejnerů",
     "TIDY5E.UseDefaultDialog": {
         "text": "Jsi si jistý(á), že chceš použít výchozí nastavení?",
         "title": "Potvrdit: Použít výchozí nastavení"
@@ -363,7 +356,6 @@
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Zobrazit pouze nepřiřazené",
     "TIDY5E.HitDC": "Zásah / SO",
     "TIDY5E.Inventory.Weight.Tooltip": "Váha: {weight} {weightUnit}",
-    "TIDY5E.AttackMod": "Oprava útoku",
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Postava"
     },
@@ -400,7 +392,6 @@
         "FinancialSupportHeader": "Způsoby podpory Deníků Tidy 5e",
         "logoAltText": "Protihaterský štít se čtyřmi hvězdami a nápisem „Tidy 5e“ na přední straně."
     },
-    "TIDY5E.Commands.HideContainerPanel": "Skrýt panel kontejnerů",
     "TIDY5E.ItemFilters.CanCast": "Lze seslat",
     "TIDY5E.WorldSettings.TabIcons": {
         "tabLabel": "Ikony"
@@ -426,8 +417,6 @@
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Útok kouzlem na dálku",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Útok kouzlem na blízko",
     "TIDY5E.UseDefault": "Použít výchozí",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "Zobrazit panel nástrojů legendárních předmětů",
-    "TIDY5E.Commands.HideLegendaryToolbar": "Skrýt panel legendárních předmětů",
     "TIDY5E.RangedSpellAttackMod": "Oprava útoku kouzlem na dálku",
     "TIDY5E.WorldSettings.TabNpc": {
         "tabLabel": "NP"
@@ -459,8 +448,6 @@
     },
     "TIDY5E.BrokenLink": "Přerušený odkaz",
     "TIDY5E.ContextMenuActionView": "Náhled",
-    "TIDY5E.ContextMenuActionPinToAttributes": "Připnout k rysům",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "Odepnout od rysů",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Zobrazit omezená použití",
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Aktivity"
