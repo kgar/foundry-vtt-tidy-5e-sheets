@@ -11,6 +11,7 @@ import type {
   ActorSheetQuadroneContext,
   InventorySection,
   ActorInventoryTypes,
+  DraftAnimalSection,
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
@@ -126,7 +127,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           enrichmentArgs
         ),
       },
-      features: [],
       passengers: this.actor.system.cargo.passengers,
       scale: this.actor.system.attributes.scale,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
@@ -141,6 +141,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       speeds: super._getMovementSpeeds(),
+      statblock: [],
       traits: this._prepareTraits(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
       utilities: {},
@@ -151,6 +152,46 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     // Prepare owned items
     await this._prepareItems(context);
+
+    // Prepare draft animals
+    // system.draft.value
+    const drafted: DraftAnimalSection = {
+      ...SheetSections.EMPTY,
+      type: 'draft',
+      key: 'draft',
+      label: 'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
+      members: await Promise.all(
+        this.actor.system.draft.value.map(async (uuid: string) => {
+          const actor = await fromUuid(uuid);
+          return { actor };
+        })
+      ),
+    };
+
+    context.statblock.push(drafted);
+
+    // Section Actions
+    context.statblock.forEach((section) => {
+      if (section.type === CONSTANTS.SECTION_TYPE_INVENTORY) {
+        section.sectionActions = SectionActions.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+      } else {
+        // TODO: Draft Animal item header actions?
+      }
+    });
+
+    context.inventory.forEach((section) => {
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section
+      );
+    });
 
     // Custom content
     context.customContent = await VehicleSheetQuadroneRuntime.getContent(
@@ -249,34 +290,13 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           statblockTypes,
           {
             canCreate: false,
-            rowActions: statblockRowActions
+            rowActions: statblockRowActions,
           },
           CONSTANTS.ITEM_TYPE_FEAT
         );
       }
 
-      // TODO: Custom sections?
-
-      context.features = Object.values(statblock);
-      context.inventory = Object.values(inventory);
-
-      context.features.forEach((section) => {
-        section.sectionActions = SectionActions.getStandardItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
-      });
-
-      context.inventory.forEach((section) => {
-        section.sectionActions = SectionActions.getStandardItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
-      });
+      context.statblock.push(...Object.values(statblock));
 
       SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
         context.actor,
@@ -287,6 +307,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           rowActions: inventoryRowActions,
         });
       });
+
+      context.inventory = Object.values(inventory);
     }
   }
 

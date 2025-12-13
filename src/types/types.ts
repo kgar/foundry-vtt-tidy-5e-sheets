@@ -1538,6 +1538,16 @@ export type EncounterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
+export type DraftAnimalContext = {
+  actor: Actor5e;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+};
+
+export type DraftAnimalSection = {
+  type: 'draft';
+  members: DraftAnimalContext[];
+} & TidySectionBase;
+
 export type VehicleSheetQuadroneContext = {
   enriched: {
     biography: string;
@@ -1548,7 +1558,6 @@ export type VehicleSheetQuadroneContext = {
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
-  features: InventorySection[];
   inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
   passengers: number;
@@ -1556,6 +1565,7 @@ export type VehicleSheetQuadroneContext = {
   size: ActorSizeContext;
   showContainerPanel: boolean;
   speeds: ActorSpeedSenseEntryContext[];
+  statblock: (InventorySection | DraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
   useActionsFeature?: boolean;

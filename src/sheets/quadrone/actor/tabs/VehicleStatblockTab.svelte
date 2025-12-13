@@ -47,41 +47,34 @@
     ) ?? true,
   );
 
-  let features = $derived(
-    SheetSections.configureInventory(
-      context.features,
-      tabId,
-      UserSheetPreferencesService.getByType(context.actor.type),
-      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    ),
-  );
+  // let features = $derived(
+  //   SheetSections.configureInventory(
+  //     context.statblock,
+  //     tabId,
+  //     UserSheetPreferencesService.getByType(context.actor.type),
+  //     TidyFlags.sectionConfig.get(context.actor)?.[tabId],
+  //   ),
+  // );
 
-  $effect(() => {
-    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-      criteria: searchCriteria,
-      itemContext: context.itemContext,
-      sections: features,
-      tabId: tabId,
-    });
-  });
+  // $effect(() => {
+  //   searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+  //     criteria: searchCriteria,
+  //     itemContext: context.itemContext,
+  //     sections: features,
+  //     tabId: tabId,
+  //   });
+  // });
 </script>
 
-<ItemsActionBar
+<!-- <ItemsActionBar
   bind:searchCriteria
   sections={features}
   {tabId}
   {tabOptionGroups}
-/>
+/> -->
 
 {#if showSheetPins}
   <SheetPins />
 {/if}
 
-<InventoryTables
-  sections={features}
-  {inlineToggleService}
-  itemContext={context.itemContext}
-  {searchCriteria}
-  sheetDocument={context.actor}
-  editable={context.editable}
-/>
+<!-- TODO: make tables component that accommodates Inventory tables and  -->
