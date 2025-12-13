@@ -977,5 +977,10 @@
     "TIDY5E.LegendaryAbbr": "LA",
     "TIDY5E.LairAbbr": "Лігво",
     "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Тяглова тварина",
-    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Тяглові тварини"
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Тяглові тварини",
+    "TIDY5E.AddCustom": "Додати користувацький {name}",
+    "TIDY5E.CompendiumBrowser": "Додати {name} з Компендіуму",
+    "TIDY5E.SheetMode.Edit": "Перейти в режим відтворення",
+    "TIDY5E.SheetMode.Play": "Перейти в режим редагування",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Переказати всю валюту батьківському актору"
 }

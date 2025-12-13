@@ -983,5 +983,12 @@
     "TIDY5E.InspirationAdd": "Aggiungi Ispirazione",
     "TIDY5E.InspirationRemove": "Rimuovi Ispirazione",
     "TIDY5E.LegendaryAbbr": "Leg",
-    "TIDY5E.LairAbbr": "Tana"
+    "TIDY5E.LairAbbr": "Tana",
+    "TIDY5E.AddCustom": "Aggiungi {name} Personalizzato",
+    "TIDY5E.CompendiumBrowser": "Aggiungi {name} dal Compendio",
+    "TIDY5E.SheetMode.Edit": "Passa a Modalità Gioco",
+    "TIDY5E.SheetMode.Play": "Passa a Modalità Modifica",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animale da tiro",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animali da tiro",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Trasferisci tutta la valuta al personaggio"
 }
