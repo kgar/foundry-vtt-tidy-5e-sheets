@@ -50,6 +50,7 @@ import type {
   TabEnabledCallbackFunctionOverrideOptions,
 } from 'src/api';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { isNil } from 'src/utils/data';
 
@@ -319,13 +320,9 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
-        (
-          Activities.getVisibleActivities(
-            context.document,
-            context.document.system.activities,
-            true
-          ) ?? []
-        ).filter((x) => Activities.isConfigurable(x)).length,
+        (context.document.system.activities ?? []).filter((a: Activity5e) =>
+          Activities.isConfigurable(a)
+        ).length,
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
       content: {
