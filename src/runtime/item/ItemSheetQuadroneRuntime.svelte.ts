@@ -27,7 +27,7 @@ import ItemToolDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemToolDe
 import ItemWeaponDetailsQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemWeaponDetailsTab.svelte';
 import { CustomContentManager } from '../content/CustomContentManager';
 import { TabManager } from '../tab/TabManager';
-import { SvelteMap } from 'svelte/reactivity';
+import { SvelteMap, SvelteSet } from 'svelte/reactivity';
 import type { Component } from 'svelte';
 import BackgroundSheet from 'src/sheets/quadrone/item/BackgroundSheet.svelte';
 import ClassSheet from 'src/sheets/quadrone/item/ClassSheet.svelte';
@@ -45,8 +45,13 @@ import WeaponSheet from 'src/sheets/quadrone/item/WeaponSheet.svelte';
 import { error } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
-import type { ItemTabRegistrationOptions } from 'src/api';
+import type {
+  ItemTabRegistrationOptions,
+  TabEnabledCallbackFunctionOverrideOptions,
+} from 'src/api';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+import { mapGetOrInsertComputed } from 'src/utils/map';
+import { isNil } from 'src/utils/data';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -57,6 +62,11 @@ class ItemSheetQuadroneRuntimeImpl {
   private _content = $state<RegisteredContent<ItemSheetQuadroneContext>[]>([]);
   private _tabs = $state<RegisteredTab<ItemSheetQuadroneContext>[]>([]);
   private _sheetMap: SvelteMap<string, ItemSheetInfo>;
+  private _registeredSubtypeTabConditions: SvelteMap<
+    string,
+    TabEnabledCallbackFunctionOverrideOptions[]
+  >;
+  private _tabIdsWithSubtypeConditions: SvelteSet<string>;
 
   constructor(
     nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
@@ -64,6 +74,8 @@ class ItemSheetQuadroneRuntimeImpl {
   ) {
     this._tabs = nativeTabs;
     this._sheetMap = new SvelteMap(nativeSheets);
+    this._registeredSubtypeTabConditions = new SvelteMap();
+    this._tabIdsWithSubtypeConditions = new SvelteSet<string>();
   }
 
   async registerItemSheet(
@@ -171,6 +183,45 @@ class ItemSheetQuadroneRuntimeImpl {
     ];
   }
 
+  isSubtypeTabEnabled(
+    context: ItemSheetQuadroneContext,
+    enabledFn: RegisteredTab<ItemSheetQuadroneContext>['enabled']
+  ) {
+    let enabled =
+      isNil(enabledFn) ||
+      (typeof enabledFn === 'function' && enabledFn(context));
+
+    const subtypePredicates = this._registeredSubtypeTabConditions.get(
+      context.document.type
+    );
+
+    if (!subtypePredicates) {
+      return enabled;
+    }
+
+    return subtypePredicates.reduce<boolean>(
+      (prev: boolean, options: TabEnabledCallbackFunctionOverrideOptions) => {
+        let mode = options?.mode ?? 'or';
+
+        const subtypePredicate = options.predicate;
+
+        if (mode === 'or') {
+          // Provide an additional reason to enable the tab
+          return prev || subtypePredicate(context);
+        } else if (mode === 'and') {
+          // Provide additional criteria that must be met to enable the tab
+          return prev && subtypePredicate(context);
+        } else if (mode === 'overwrite') {
+          // Discard all other logic and use just this logic to determine whether to enable the tab.
+          return subtypePredicate(context);
+        }
+
+        return prev;
+      },
+      enabled
+    );
+  }
+
   getAllRegisteredTabs(
     type: string
   ): RegisteredTab<ItemSheetQuadroneContext>[] {
@@ -230,10 +281,7 @@ class ItemSheetQuadroneRuntimeImpl {
     tabId: string,
     options?: {
       includeAsDefault?: boolean;
-      tabCondition?: {
-        predicate: (context: any) => boolean;
-        mode?: 'and' | 'or' | 'overwrite';
-      };
+      tabCondition?: TabEnabledCallbackFunctionOverrideOptions;
     }
   ) {
     const tab = this._tabs.find((t) => t.id === tabId);
@@ -243,25 +291,20 @@ class ItemSheetQuadroneRuntimeImpl {
 
     // Modify the rules for whether to enable the tab.
     if (tab && options?.tabCondition?.predicate) {
-      let mode = options?.tabCondition.mode ?? 'or';
+      const subtypePredicates = mapGetOrInsertComputed(
+        this._registeredSubtypeTabConditions,
+        subtype,
+        () => []
+      );
 
-      tab.enabled ??= (_context: ItemSheetQuadroneContext) => true;
-
-      const original = tab.enabled;
-      const newPredicate = options.tabCondition.predicate;
-
-      if (mode === 'or') {
-        // Provide an additional reason to enable the tab
-        tab.enabled = (context: ItemSheetQuadroneContext) =>
-          original(context) || newPredicate(context);
-      } else if (mode === 'and') {
-        // Provide additional criteria that must be met to enable the tab
-        tab.enabled = (context: ItemSheetQuadroneContext) =>
-          original(context) && newPredicate(context);
-      } else if (mode === 'overwrite') {
-        // Discard all other logic and use just this logic to determine whether to enable the tab.
-        tab.enabled = newPredicate;
+      if (!this._tabIdsWithSubtypeConditions.has(tabId)) {
+        this._tabIdsWithSubtypeConditions.add(tabId);
+        const originalEnabled = tab.enabled;
+        tab.enabled = (context) =>
+          this.isSubtypeTabEnabled(context, originalEnabled);
       }
+
+      subtypePredicates.push(options.tabCondition);
     }
 
     // Handle including the tab for first time use and when Use Default is selected for tab configuration.
