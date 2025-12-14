@@ -47,6 +47,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { settings } from 'src/settings/settings.svelte';
 import type { ItemTabRegistrationOptions } from 'src/api';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
+import type { Activity5e } from 'src/foundry/dnd5e.types';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -276,13 +277,9 @@ export const ItemSheetQuadroneRuntime = new ItemSheetQuadroneRuntimeImpl(
     {
       id: CONSTANTS.TAB_ITEM_ACTIVITIES,
       itemCount: (context) =>
-        (
-          Activities.getVisibleActivities(
-            context.document,
-            context.document.system.activities,
-            true
-          ) ?? []
-        ).filter((x) => Activities.isConfigurable(x)).length,
+        (context.document.system.activities ?? []).filter((a: Activity5e) =>
+          Activities.isConfigurable(a)
+        ).length,
       layout: 'quadrone',
       title: 'DND5E.ACTIVITY.Title.other',
       content: {
