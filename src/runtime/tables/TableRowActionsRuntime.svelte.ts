@@ -10,19 +10,18 @@ import type {
   DocumentSheetQuadroneContext,
   EncounterSheetQuadroneContext,
   FeatureSection,
-  GroupSheetQuadroneContext,
   InventorySection,
   NpcSheetQuadroneContext,
   SpellbookSection,
   TidyItemSectionBase,
   TidySectionBase,
+  VehicleSheetQuadroneContext,
 } from 'src/types/types';
 import type { Component } from 'svelte';
 import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
 import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/ActionsTabToggleButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
-import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import type { ContainerContentsRowActionsContext } from '../types';
 import ChooseAButton from 'src/components/table-quadrone/table-buttons/ChooseAButton.svelte';
@@ -34,6 +33,7 @@ import EncounterCombatInclusionToggle from 'src/components/table-quadrone/table-
 import EncounterAddAsCombatPlaceholder from 'src/components/table-quadrone/table-buttons/EncounterAddAsCombatPlaceholder.svelte';
 import EncounterCombatVisibilityToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatVisibilityToggle.svelte';
 import DeleteEncounterEntityButton from 'src/components/table-quadrone/table-buttons/DeleteEncounterEntityButton.svelte';
+import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -497,6 +497,40 @@ class TableRowActionsRuntime {
     });
 
     return rowActions;
+  }
+
+  getDraftAnimalRowActions(context: VehicleSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Actor5e,
+      TidySectionBase
+    >;
+
+    let result: TableAction<any>[] = [];
+
+    if (context.owner) {
+      if (context.unlocked) {
+        result.push({
+          component: DeleteButton,
+          props: (args) => ({
+            rowContext: args.rowContext,
+            deleteFn: () => {
+              context.sheet.removeDraftAnimal(args.data.uuid);
+            },
+            doc: context.document,
+          }),
+        } satisfies TableAction<typeof DeleteButton>);
+      }
+    }
+
+    result.push({
+      component: MenuButton,
+      props: () => ({
+        targetSelector: '[data-context-menu]',
+      }),
+    } satisfies TableAction<typeof MenuButton>);
+
+    return result;
   }
 
   getEncounterCombatRowActions(context: EncounterSheetQuadroneContext) {
