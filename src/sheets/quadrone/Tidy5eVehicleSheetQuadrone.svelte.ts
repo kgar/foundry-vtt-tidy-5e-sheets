@@ -154,21 +154,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     await this._prepareItems(context);
 
     // Prepare draft animals
-    // system.draft.value
-    const drafted: DraftAnimalSection = {
-      ...SheetSections.EMPTY,
-      type: 'draft',
-      key: 'draft',
-      label: 'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
-      members: await Promise.all(
-        this.actor.system.draft.value.map(async (uuid: string) => {
-          const actor = await fromUuid(uuid);
-          return { actor };
-        })
-      ),
-    };
-
-    context.statblock.push(drafted);
+    await this._prepareDraftAnimals(context);
 
     // Section Actions
     context.statblock.forEach((section) => {
@@ -202,6 +188,24 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     context.tabs = await VehicleSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  private async _prepareDraftAnimals(context: VehicleSheetQuadroneContext) {
+    const drafted: DraftAnimalSection = {
+      ...SheetSections.EMPTY,
+      type: 'draft',
+      key: 'draft',
+      label: 'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
+      members: await Promise.all(
+        this.actor.system.draft.value.map(async (uuid: string) => {
+          const actor = await fromUuid(uuid);
+          return { actor };
+        })
+      ),
+      rowActions: TableRowActionsRuntime.getDraftAnimalRowActions(context),
+    };
+
+    context.statblock.push(drafted);
   }
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
@@ -295,21 +299,21 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           CONSTANTS.ITEM_TYPE_FEAT
         );
       }
-
-      context.statblock.push(...Object.values(statblock));
-
-      SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-        context.actor,
-        CONSTANTS.TAB_ACTOR_INVENTORY
-      ).forEach((s) => {
-        inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-          canCreate: true,
-          rowActions: inventoryRowActions,
-        });
-      });
-
-      context.inventory = Object.values(inventory);
     }
+
+    context.statblock.push(...Object.values(statblock));
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+        canCreate: true,
+        rowActions: inventoryRowActions,
+      });
+    });
+
+    context.inventory = Object.values(inventory);
   }
 
   protected async _prepareItem(
@@ -393,5 +397,14 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
 
     return tabIds;
+  }
+
+  async removeDraftAnimal(uuid: string) {
+    const draft = [...this.actor.system.draft.value];
+    const removed = draft.findSplice((u) => u === uuid);
+    
+    if (removed) {
+      return await this.actor.update({ 'system.draft.value': draft });
+    }
   }
 }
