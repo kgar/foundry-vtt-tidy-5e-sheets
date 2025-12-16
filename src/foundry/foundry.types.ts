@@ -48,7 +48,6 @@ export interface BasicRollDialogConfiguration {
   options?: Record<string, any>;
 }
 
-
 /* -------------------------------------------- */
 
 /**
@@ -67,3 +66,7 @@ export type D20Roll = {
     message: BasicRollMessageConfiguration
   ): D20Roll;
 };
+
+/* -------------------------------------------- */
+
+export type CrewArea5e = 'draft' | 'crew' | 'passengers' | (string & {});
