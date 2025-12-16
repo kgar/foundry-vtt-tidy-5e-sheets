@@ -17,6 +17,9 @@ export const VehicleSheetQuadroneRuntime =
           component: VehicleStatblockTab,
           type: 'svelte',
         },
+        tabContentsAttributes: {
+          ['data-area']: 'draft',
+        },
         layout: 'quadrone',
         iconClass: 'fa-solid fa-wreath-laurel',
       },
