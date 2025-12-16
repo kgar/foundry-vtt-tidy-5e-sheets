@@ -56,4 +56,5 @@
   role="tabpanel"
   data-tidy-sheet-part="tab-content"
   bind:this={tidyTab.value}
+  {...tab.attributes}
 ></div>
