@@ -13,6 +13,7 @@ import type {
   ActorInventoryTypes,
   DraftAnimalSection,
   Actor5e,
+  PassengerMemberContext,
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
@@ -115,7 +116,22 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     const context: VehicleSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       inventory: [],
-      crew: this.actor.system.cargo.crew,
+      crew: {
+        assigned: {
+          ...SheetSections.EMPTY,
+          type: 'crew',
+          label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
+          members: [],
+          key: 'assigned',
+        },
+        unassigned: {
+          ...SheetSections.EMPTY,
+          type: 'crew',
+          label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+          members: [],
+          key: 'unassigned',
+        },
+      },
       conditions: conditions,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -129,7 +145,13 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           enrichmentArgs
         ),
       },
-      passengers: this.actor.system.cargo.passengers,
+      passengers: {
+        ...SheetSections.EMPTY,
+        type: 'passengers',
+        label: 'DND5E.VEHICLE.Crew.Passengers',
+        members: [],
+        key: 'passengers',
+      },
       scale: this.actor.system.attributes.scale,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       size: {
@@ -152,13 +174,16 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     context.useActionsFeature = actorUsesActionFeature(this.actor);
 
-    // Prepare owned items
     await this._prepareItems(context);
 
-    // Prepare draft animals
     await this._prepareDraftAnimals(context);
 
+    await this._prepareCrew(context);
+
+    await this._preparePassengers(context);
+
     // Section Actions
+
     context.statblock.forEach((section) => {
       if (section.type === CONSTANTS.SECTION_TYPE_INVENTORY) {
         section.sectionActions = SectionActions.getStandardItemHeaderActions(
@@ -208,6 +233,24 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     };
 
     context.statblock.push(drafted);
+  }
+
+  private async _prepareCrew(context: VehicleSheetQuadroneContext) {
+    // assigned
+    // unassigned
+  }
+
+  private async _preparePassengers(context: VehicleSheetQuadroneContext) {
+    const uuids: string[] = context.system.passengers.value;
+    context.passengers.members = (
+      await Promise.all(
+        uuids.map(async (uuid) => {
+          return {
+            actor: await fromUuid(uuid),
+          } satisfies PassengerMemberContext;
+        })
+      )
+    ).filter((ctx) => !!ctx.actor);
   }
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
@@ -414,8 +457,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 
-  /** 
-   * Prepare vehicle-specific drag operations so 
+  /**
+   * Prepare vehicle-specific drag operations so
    * the vehicle sheet can properly handle
    * crew assignment and adjustment.
    * This drag logic is intended to be compatible with default

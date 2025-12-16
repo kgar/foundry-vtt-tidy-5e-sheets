@@ -1548,19 +1548,44 @@ export type DraftAnimalSection = {
   members: DraftAnimalContext[];
 } & TidySectionBase;
 
+export type CrewMemberContext = {
+  actor: Actor5e;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+};
+
+export type CrewSection = {
+  type: 'crew';
+  members: CrewMemberContext[];
+} & TidySectionBase;
+
+export type CrewSections = {
+  assigned: CrewSection;
+  unassigned: CrewSection;
+};
+
+export type PassengerMemberContext = {
+  actor: Actor5e;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+};
+
+export type PassengerSection = {
+  type: 'passengers';
+  members: PassengerMemberContext[];
+} & TidySectionBase;
+
 export type VehicleSheetQuadroneContext = {
   enriched: {
     biography: string;
   };
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
-  crew: GroupMembersQuadroneContext;
+  crew: CrewSections;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
   inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
-  passengers: number;
+  passengers: PassengerSection;
   scale: number;
   size: ActorSizeContext;
   showContainerPanel: boolean;

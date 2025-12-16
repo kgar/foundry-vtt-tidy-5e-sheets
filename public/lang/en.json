@@ -825,6 +825,8 @@
   "TIDY5E.Reset": "Reset",
   "TIDY5E.VehicleInMotion": "Vehicle is in motion",
   "TIDY5E.VehicleMotionless": "Vehicle is motionless",
+  "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Assigned Crew",
+  "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Unassigned Crew",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals",
   "TIDY5E.TotalCrewCount": "Total Crew",
