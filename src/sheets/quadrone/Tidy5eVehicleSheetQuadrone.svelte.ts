@@ -12,6 +12,7 @@ import type {
   InventorySection,
   ActorInventoryTypes,
   DraftAnimalSection,
+  Actor5e,
 } from 'src/types/types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
@@ -29,6 +30,7 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import type { CrewArea5e } from 'src/foundry/foundry.types';
 
 const localize = FoundryAdapter.localize;
 
@@ -402,9 +404,89 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   async removeDraftAnimal(uuid: string) {
     const draft = [...this.actor.system.draft.value];
     const removed = draft.findSplice((u) => u === uuid);
-    
+
     if (removed) {
       return await this.actor.update({ 'system.draft.value': draft });
+    }
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+
+  /** 
+   * Prepare vehicle-specific drag operations so 
+   * the vehicle sheet can properly handle
+   * crew assignment and adjustment.
+   * This drag logic is intended to be compatible with default
+   * vehicle sheets.
+   */
+  async _onDragStart(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
+    const { area } =
+      event.target.closest<HTMLElement>('[data-area]')?.dataset ?? {};
+    const { uuid } =
+      event.target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+    const { itemId } =
+      event.target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+    const { type } = foundry.utils.parseUuid(uuid) ?? {};
+
+    if (!area || type !== 'Actor') {
+      return super._onDragStart(event);
+    }
+
+    event.dataTransfer?.setData(
+      'text/plain',
+      JSON.stringify({ area, itemId, type, uuid })
+    );
+  }
+
+  async _onDropActor(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    document: Actor5e
+  ) {
+    if (!document.system.isCreature) {
+      return;
+    }
+
+    let { area: src, itemId /* later, for assignment drops */ } =
+      foundry.applications.ux.TextEditor.getDragEventData(event);
+
+    const { area: dest = 'crew' } =
+      event.target?.closest<HTMLElement>('[data-area]')?.dataset ?? {};
+
+    if (src === dest) {
+      // Try Sort?
+      return;
+    }
+
+    // TODO: Handle Assignment, if relevant, instead of adjusting crew
+
+    return this._onAdjustCrew(document, dest, { src });
+  }
+
+  _onAdjustCrew(
+    actor: Actor5e,
+    dest: CrewArea5e,
+    { src }: { src?: CrewArea5e } = {}
+  ) {
+    const updates = {};
+
+    if (src) {
+      Object.assign(
+        updates,
+        this.actor.system.getCrewUpdates(src, actor.uuid, '-1')
+      );
+    }
+
+    Object.assign(
+      updates,
+      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1')
+    );
+
+    if (!foundry.utils.isEmpty(updates)) {
+      this.actor.update(updates);
     }
   }
 }
