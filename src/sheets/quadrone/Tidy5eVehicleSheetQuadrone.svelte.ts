@@ -236,8 +236,29 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   }
 
   private async _prepareCrew(context: VehicleSheetQuadroneContext) {
-    // assigned
-    // unassigned
+    if (!context.system.crew.value.length) {
+      return;
+    }
+    const crew = this.groupCrew(context.system.crew.value);
+    const unassigned = { ...crew };
+    const vehicleItems = context.items.filter((i) => i.system.isMountable);
+    const assigned = vehicleItems
+      .flatMap((i) => i.system.crew.value)
+      .reduce<Record<string, number>>((obj, uuid) => {
+        const max = crew[uuid];
+        if (!max) return obj;
+        obj[uuid] ??= 0;
+        obj[uuid]++;
+        unassigned[uuid]--;
+        return obj;
+      }, {} as Record<string, number>);
+
+    context.crew.assigned.members = (
+      await this.resolveCrewMemberContext(assigned)
+    ).value;
+    context.crew.unassigned.members = (
+      await this.resolveCrewMemberContext(unassigned, crew)
+    ).value;
   }
 
   private async _preparePassengers(context: VehicleSheetQuadroneContext) {
@@ -531,5 +552,78 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     if (!foundry.utils.isEmpty(updates)) {
       this.actor.update(updates);
     }
+  }
+
+  /* -------------------------------------------- */
+  /*  Helpers                                     */
+  /* -------------------------------------------- */
+
+  /**
+   * Group crew by UUID.
+   */
+  groupCrew(crew: string[]): Record<string, number> {
+    return crew.reduce((obj, uuid) => {
+      obj[uuid] ??= 0;
+      obj[uuid]++;
+      return obj;
+    }, {} as Record<string, number>);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Resolve crew UUIDs.
+   */
+  async resolveCrewMemberContext(
+    group: Record<string, number>,
+    counts?: Record<string, number>
+  ): Promise<{
+    total: number;
+    value: Array<{ actor: object; quantity: number; uuid: string }>;
+  }> {
+    let total = 0;
+
+    const value = Object.entries(group)
+      .filter(([, quantity]) => quantity)
+      .map(async ([uuid, quantity]) => {
+        total += quantity;
+        const actor = await fromUuid(uuid);
+        const { img, name, system } = actor;
+        const cr = system.details?.cr ?? system.details?.level;
+        const subtitle = [
+          CONFIG.DND5E.actorSizes[system.traits?.size]?.label,
+          system.details?.type?.label,
+          system.details?.cr
+            ? game.i18n.format('DND5E.CRLabel', {
+                cr: dnd5e.utils.formatCR(system.details.cr),
+              })
+            : null,
+          system.details?.level
+            ? game.i18n.format('DND5E.LevelNumber', {
+                level: system.details.level,
+              })
+            : null,
+        ].filterJoin(' • ');
+        return {
+          uuid,
+          quantity,
+          actor,
+          diff: (counts?.[uuid] ?? 0) - quantity,
+          cr,
+          img,
+          name,
+          subtitle,
+        };
+      });
+    return {
+      total,
+      value: (await Promise.all(value)).sort((a, b) => {
+        return (
+          (b.cr ?? 0) - (a.cr ?? 0) ||
+          a.quantity - b.quantity ||
+          a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
+        );
+      }),
+    };
   }
 }
