@@ -1,84 +1,226 @@
-.tidy5e-sheet.application:where(.quadrone.npc) {
-
-  background: var(--t5e-component-card-darker);
-  @banner-npc-dark : '../../systems/dnd5e/ui/official/banner-npc-dark.webp';
-  --t5e-sheet-header-bg: url('@{banner-npc-dark}');
-
-  &.actor::before {
-    // opacity: 0.2;
-    @texture-gray-1 : '../../modules/tidy5e-sheet/images/texture-gray-1.webp';
-    background-image: url('@{texture-gray-1}');
-    filter: none;
-    opacity: 1;
-    mix-blend-mode: normal;
-  }
-
-  &.actor .sheet-body {
-    @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
-    background-image: url('@{texture-gray-2}');
-  }
-
-  &::after {
-    background: none;
-  }
-
-  .window-content .sheet-body::before {
-    content: none;
-  }
-
-  // ::selection {
-  //   background-color: var(--t5e-component-card-darker);
-  // }
-
+.tidy5e-sheet.application:where(.quadrone.npc),
+.tidy5e-sheet.application:where(.quadrone.vehicle) {
   .sheet-header {
-    background: none;
 
-    .actor-name,
-    .actor-subtitle,
-    .ability .ability-save {
-      text-shadow: none;
+    .actor-vitals {
+      --t5e-actor-vitals-offset: 1.75rem;
+      margin-left: var(--t5e-actor-vitals-offset);
+      width: calc(100% - var(--t5e-actor-vitals-offset) + 0.5rem);
+      padding: 0;
+
+      .roll-hp i {
+        color: var(--t5e-vitals-button-icon-color);
+      }
+
+      .max-hp {
+        flex: 1;
+        color: var(--t5e-vitals-button-icon-color);
+
+        &:hover {
+          color: var(--t5e-color-text-default);
+        }
+      }
+
+      .actor-vitals-row {
+        padding-left: 1rem;
+      }
+
+      .hp-row {
+        padding-left: .5rem;
+
+
+        .hp-overlay-bar {
+          padding-left: 1.5rem;
+          right: calc((var(--t5e-field-size-default) + 0.125rem)*-1.75);
+        }
+
+        .font-medium {
+          font-size: 1rem;
+        }
+
+        .font-small {
+          font-size: 0.875rem;
+        }
+
+
+        .meter .label {
+          gap: 0.125rem;
+          padding-right: 0.25rem;
+        }
+
+        // .meter .label,
+        // input[type="text"] {
+        //   padding-left: 1rem;
+        // }
+
+        .temp-hp {
+          padding: 0 0.25rem;
+        }
+
+        // input[type="text"].hp-temp-input {
+        //   padding-left: 0;
+        //   max-width: 3.5rem;
+        // }
+
+        .hit-points {
+          position: relative;
+
+          &.meter .label {
+            padding-inline-start: 1rem;
+          }
+
+          .max-hp-override-indicator {
+            font-size: 0.375rem;
+            margin: 0 0 0.5rem -0.0625rem;
+          }
+        }
+      }
+
+      .exhaustion {
+        transition: all var(--t5e-transition-default);
+      }
+
+      .exhaustion.exhausted {
+        margin-left: -1rem;
+        padding-left: 0.75rem;
+      }
+
+      .exhaustion-bar {
+        z-index: auto;
+        left: 0;
+        padding-left: 1rem;
+      }
+
+      &.view-only {
+        margin-bottom: 0.75rem;
+      }
     }
 
-    .ability-save,
-    .ability-roll-button {
-      box-shadow: none;
+    .actor-vitals-container {
+      padding-bottom: 1.75rem;
+      max-width: 10.5rem;
+
+      .actor-image {
+        max-width: 10.5rem;
+        max-height: 10.5rem;
+      }
+
+      .shield {
+        position: absolute;
+        width: 3.5rem;
+        left: -0.5rem;
+        bottom: -0.375rem;
+        text-align: center;
+        align-items: center;
+        @badge_ac_npc_light : '../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg';
+        background-image: url('@{badge_ac_npc_light}');
+        z-index: 2;
+
+        .button-config {
+          position: absolute;
+          top: 0.125rem;
+          left: -0.1875rem;
+        }
+      }
+
+      .ac-label {
+        display: inherit;
+      }
+
+      .ac-value {
+        margin: -0.125rem 0 0.1875rem -0.125rem;
+      }
+    }
+
+    .actor-name {
+      margin-top: -0.25rem;
+    }
+
+    .actor-details-subtitle-row {
+      align-items: center;
+    }
+
+    input[type="text"]:not(:disabled):not(.uninput).h2.actor-name {
+      font-size: var(--font-size-46);
+      max-height: var(--font-size-46);
+    }
+
+    input[type="text"]:not(:disabled):not(.uninput) {
+
+      &.actor-name {
+        margin-top: -0.25rem;
+      }
+
+      &.xp-value,
+      &.actor-name {
+        --t5e-field-background-color: rgba(0, 0, 0, 0.2);
+      }
+
+      &.xp-value {
+        text-align: left;
+        padding-bottom: 0;
+        padding-left: 0.25rem;
+
+        &:not(:focus, :active) {
+          background-color: transparent;
+          box-shadow: none;
+        }
+      }
     }
   }
 
-  .challenge-rating {
-    border: 0.125rem solid var(--t5e-color-palette-gold-62);
-    border-radius: 0.1875rem;
-    background-color: var(--t5e-component-card-default);
-    height: 3.25rem;
-    width: 3.25rem;
-    flex-basis: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-right: var(--t5e-size-2x);
-    margin-top: 0.4375rem;
-    gap: 0;
+  .actor-context-row {
+    align-items: flex-start;
+  }
 
-    &:has(.challenge-rating-input) .label {
-      margin: 0.0625rem 0 -0.0625rem;
-    }
+  .sheet-header-actions {
+    margin-top: 0;
+    margin-right: var(--t5e-size-2x);
+  }
+
+  .actor-subtitle {
 
     >* {
-      flex: 0;
+      height: 1rem;
     }
 
-    .value {
-      margin: -0.25rem 0 -0.25rem;
-    }
+    .xp-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      flex: 0 1 fit-content;
+      flex-wrap: nowrap;
+      max-height: 1rem;
+      flex-direction: row;
 
-    input[type="text"].challenge-rating-input {
-      text-align: center;
-      box-shadow: none;
-
-      &:focus {
-        border: 1px solid red;
+      .label {
+        margin: 0;
       }
+    }
+
+    .concentration {
+      flex: 0 0 auto;
+      height: var(--font-size-15);
+      align-content: center;
+
+      .concentration-roll-button>* {
+        flex-wrap: nowrap;
+      }
+    }
+  }
+
+  .proficiency-bonus {
+    height: 1rem;
+    margin: 0 var(--t5e-size-2x) 0 var(--t5e-size-1x);
+    align-self: flex-start;
+
+    >* {
+      line-height: 1rem;
+    }
+
+    .label {
+      margin-right: 0.25rem;
     }
   }
 
@@ -544,33 +686,120 @@
   }
 
   &.theme-dark {
-    @denim065 : '../../modules/tidy5e-sheet/images/denim065.png';
-    background: url('@{denim065}'),
-      var(--t5e-component-card-dark-darker);
-    background-position: top center, center;
-    background-repeat: repeat, no-repeat;
-    background-size: auto, cover;
+    // @denim065 : '../../modules/tidy5e-sheet/images/denim065.png';
+    // background: url('@{denim065}'),
+    //   var(--t5e-component-card-dark-darker);
+    // background-position: top center, center;
+    // background-repeat: repeat, no-repeat;
+    // background-size: auto, cover;
 
-    &::before {
-      opacity: 0.24;
-    }
+    // &::before {
+    //   opacity: 0.24;
+    // }
 
-    &::after {
-      @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
-      background-image: url('@{texture-gray-2}');
-      background-position: bottom center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      mix-blend-mode: normal;
-      opacity: 0.12;
-    }
+    // &::after {
+    //   @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
+    //   background-image: url('@{texture-gray-2}');
+    //   background-position: bottom center;
+    //   background-repeat: no-repeat;
+    //   background-size: cover;
+    //   mix-blend-mode: normal;
+    //   opacity: 0.12;
+    // }
 
-    .sheet-body {
-      background: none;
+    // .sheet-body {
+    //   background: none;
 
+    // }
+
+    .sheet-header {
+      .actor-vitals-container .shield {
+        @badge_ac_npc_dark : '../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg';
+        background-image: url('@{badge_ac_npc_dark}');
+      }
+
+      .abilities-container.ability-collapsed .abilities-container-inner {
+
+        .ability:has(.proficient),
+        .initiative-container {
+          background: var(--collapse-bg-dark);
+          outline-color: var(--t5e-color-palette-grey-11);
+        }
+      }
     }
   }
 
   &.theme-light {
+    --color-text-selection: var(--t5e-color-text-oninverse-default);
+    --color-text-selection-bg: var(--t5e-theme-color-default);
+
+    .sheet-header {
+      .initiative-container .initiative.score {
+        @badge_init_light : '../../modules/tidy5e-sheet/images/badge_init_light.webp';
+        background-image: url('@{badge_init_light}');
+
+        .initiative-roll-button {
+          &:hover {
+            color: var(--t5e-color-text-gold-emphasis);
+          }
+        }
+
+      }
+
+      .color-text-gold {
+        color: var(--t5e-color-text-gold-emphasis);
+      }
+
+      .ability {
+        .ability-score {
+          @badge_ability_light : '../../modules/tidy5e-sheet/images/badge_ability_light.webp';
+          background-image: url('@{badge_ability_light}');
+          background-position: top center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+
+        .ability-roll-button {
+
+          &:hover,
+          &:active,
+          &:focus {
+            color: var(--t5e-color-text-gold-emphasis);
+          }
+        }
+      }
+
+      .sheet-header-actions {
+        .button-gold {
+          border-color: var(--t5e-color-palette-gold-62);
+          box-shadow: var(--t5e-drop-shadow-field);
+
+          i {
+            color: var(--t5e-color-palette-gold-56);
+          }
+
+          &:hover,
+          &:active,
+          &:focus {
+            border-color: var(--t5e-color-palette-gold-56);
+            box-shadow: var(--t5e-drop-shadow-field-hover);
+
+            i {
+              color: var(--t5e-color-palette-gold-56);
+            }
+          }
+        }
+      }
+
+      .bonus-container {
+        @badge_ability_light : '../../modules/tidy5e-sheet/images/badge_ability_light.webp';
+        background-image: url('@{badge_ability_light}');
+
+        &.proficient {
+          @badge_ability_light_prof : '../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp';
+          background-image: url('@{badge_ability_light_prof}');
+        }
+      }
+    }
   }
 }

@@ -61,6 +61,10 @@
 
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
+  
+  <div class="encumbrance-container">
+    <ActorEncumbranceBar actor={context.actor} />
+  </div>
 
   {#if showSheetPins}
     <SheetPins />
@@ -84,9 +88,6 @@
   />
 
   <div class="vehicle-footer">
-    <div class="encumbrance-container">
-      <ActorEncumbranceBar actor={context.actor} />
-    </div>
     <ActorInventoryFooter useAttunement={false} />
   </div>
 </div>

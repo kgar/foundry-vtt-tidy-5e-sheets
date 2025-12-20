@@ -1557,6 +1557,15 @@ export type VehicleSheetQuadroneContext = {
   showContainerPanel: boolean;
   speeds: ActorSpeedSenseEntryContext[];
   traits: Record<string, ActorTraitContext[]>;
+  travel: {
+    currentPace: TravelPaceConfigEntry;
+    paces: TravelPaceConfigEntry[];
+    /** 1 (slow), 2 (normal), or 3 (fast), corresponding to the slowest speed, any speed in between, and the fastest speed, respectively. */
+    speed: number;
+    units: {
+      label: string;
+    };
+  };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
   useActionsFeature?: boolean;
   utilities: Utilities<VehicleSheetQuadroneContext>;

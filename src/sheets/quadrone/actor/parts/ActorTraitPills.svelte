@@ -61,6 +61,7 @@
           ? aggregateIcons?.pillClass
           : undefined,
       ]}
+      data-tooltip={value.tooltip}
       data-tooltip-direction="UP"
       onmouseover={(ev) => onHover(ev, value)}
       onfocus={(ev) => onHover(ev, value)}

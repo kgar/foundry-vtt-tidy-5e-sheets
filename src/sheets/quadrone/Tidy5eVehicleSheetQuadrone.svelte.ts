@@ -44,6 +44,14 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
+    // classes: [
+    //   CONSTANTS.MODULE_ID,
+    //   'sheet',
+    //   'actor',
+    //   CONSTANTS.SHEET_TYPE_VEHICLE,
+    //   CONSTANTS.SHEET_TYPE_NPC,
+    //   CONSTANTS.SHEET_LAYOUT_QUADRONE,
+    // ],
     position: {
       width: 740,
       height: 810,
