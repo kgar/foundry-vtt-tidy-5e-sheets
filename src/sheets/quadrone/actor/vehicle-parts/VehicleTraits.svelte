@@ -28,7 +28,13 @@
 
   // Build travel pace entries for the trait list
   let travelPaceEntries = $derived.by(() => {
-    const entries: { key: string; label: string; value: number; units: string; tooltip: string }[] = [];
+    const entries: {
+      key: string;
+      label: string;
+      value: number;
+      units: string;
+      measurement: string;
+    }[] = [];
     const paces = context.actor.system.attributes.travel?.paces;
     const unitsLabel = context.travel?.units?.label ?? '';
 
@@ -38,7 +44,7 @@
         label: localize('DND5E.TRAVEL.Type.Land'),
         value: paces.land,
         units: unitsLabel,
-        tooltip: `${paces.land} ${unitsLabel}`,
+        measurement: `${paces.land} ${unitsLabel}`,
       });
     }
     if (paces?.air > 0) {
@@ -47,7 +53,7 @@
         label: localize('DND5E.TRAVEL.Type.Air'),
         value: paces.air,
         units: unitsLabel,
-        tooltip: `${paces.air} ${unitsLabel}`,
+        measurement: `${paces.air} ${unitsLabel}`,
       });
     }
     if (paces?.water > 0) {
@@ -56,7 +62,7 @@
         label: localize('DND5E.TRAVEL.Type.Water'),
         value: paces.water,
         units: unitsLabel,
-        tooltip: `${paces.water} ${unitsLabel}`,
+        measurement: `${paces.water} ${unitsLabel}`,
       });
     }
     return entries;
@@ -91,7 +97,10 @@
               field="system.details.type"
               value={context.system.details.type}
             >
-              <SelectOptions data={context.config.vehicleTypes} labelProp="label" />
+              <SelectOptions
+                data={context.config.vehicleTypes}
+                labelProp="label"
+              />
             </SelectQuadrone>
             <i class="fa-solid fa-cog" aria-hidden="true"></i>
           </label>
@@ -104,7 +113,9 @@
               values={[
                 {
                   key: 'type',
-                  label: localize(`DND5E.VEHICLE.Type.${context.system.details.type.capitalize()}.label`),
+                  label: localize(
+                    `DND5E.VEHICLE.Type.${context.system.details.type.capitalize()}.label`,
+                  ),
                 },
               ]}
             />
@@ -129,7 +140,9 @@
         >
         {#if context.unlocked}
           <button
-            aria-label={localize('DND5E.TraitConfig', { trait: localize('DND5E.Weight') })}
+            aria-label={localize('DND5E.TraitConfig', {
+              trait: localize('DND5E.Weight'),
+            })}
             type="button"
             class="button button-borderless button-icon-only button-config flexshrink"
             data-tooltip
@@ -142,10 +155,14 @@
     </div>
   </div>
 
-  <div class="list-entry trait-hit-dice">
+  <!-- Keel -->
+  <div class="list-entry trait-keel">
     <div class="list-label flexrow">
       <h4 class="font-weight-label">
-        <i class="fa-solid fa-arrows-left-right-to-line" style="transform: rotate(90deg) translateY(1px);"></i>
+        <i
+          class="fa-solid fa-arrows-left-right-to-line"
+          style="transform: rotate(90deg) translateY(1px);"
+        ></i>
         {localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label')}
       </h4>
       <div class="flexshrink keel-container">
@@ -157,7 +174,9 @@
         >
         {#if context.unlocked}
           <button
-            aria-label={localize('DND5E.TraitConfig', { trait: localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label') })}
+            aria-label={localize('DND5E.TraitConfig', {
+              trait: localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label'),
+            })}
             type="button"
             class="button button-borderless button-icon-only button-config flexshrink"
             data-tooltip
@@ -170,7 +189,8 @@
     </div>
   </div>
 
-  <div class="list-entry trait-hit-dice">
+  <!-- Beam -->
+  <div class="list-entry trait-beam">
     <div class="list-label flexrow">
       <h4 class="font-weight-label">
         <i class="fa-solid fa-arrows-left-right-to-line"></i>
@@ -185,7 +205,9 @@
         >
         {#if context.unlocked}
           <button
-            aria-label={localize('DND5E.TraitConfig', { trait: localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label') })}
+            aria-label={localize('DND5E.TraitConfig', {
+              trait: localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label'),
+            })}
             type="button"
             class="button button-borderless button-icon-only button-config flexshrink"
             data-tooltip
@@ -198,6 +220,9 @@
     </div>
   </div>
 
+  <!-- Size -->
+  <ActorTraitSize />
+
   <!-- Travel Pace -->
   <div class={['list-entry traits-travel-pace']}>
     <div class="list-label flexrow">
@@ -205,51 +230,48 @@
         <i class="fa-solid fa-route"></i>
         {localize('DND5E.TRAVEL.Label')}
       </h4>
-      {#if context.unlocked}
-        <label
-          class="select-button button button-borderless button-icon-only button-config flexshrink"
-          for="{appId}-travel-pace"
-          aria-label={localize('DND5E.TRAVEL.Label')}
-        >
-          <SelectQuadrone
-            class="native-select-overlay"
-            id="{appId}-travel-pace"
-            document={context.actor}
-            field="system.details.type"
-            value={context.system.details.type}
-          >
-            <SelectOptions data={context.config.vehicleTypes} labelProp="label" />
-          </SelectQuadrone>
-          <i class="fa-solid fa-cog" aria-hidden="true"></i>
-        </label>
-      {/if}
     </div>
-    <div class="list-content">
-      <div class="list-values">
-        {#if context.system.details.type && context.config.vehicleTypes[context.system.details.type]}
-          <ActorTraitPills
-            values={[
-              {
-                key: 'type',
-                label: localize(`DND5E.VEHICLE.Type.${context.system.details.type.capitalize()}.label`),
-              },
-            ]}
-          />
-        {/if}
+    {#if !!context.travel.currentPace}
+      <div class="list-content">
+        <div class="list-values">
+          <ul class="pills">
+            {#each travelPaceEntries as travelPace}
+              <li class={['pill pill medium trait-pill']}>
+                <span class="font-label-medium">
+                  {travelPace.label}
+                </span>
+                <span class="font-data-medium">
+                  {travelPace.value}
+                </span>
+                <span class="font-label-medium color-text-lighter">
+                  {travelPace.units}
+                </span>
+              </li>
+            {/each}
+          </ul>
+          {#if context.unlocked}
+            <span class="config-speeds">
+              <button
+                aria-label={localize('DND5E.MOVEMENT.Action.Configure')}
+                type="button"
+                class={[
+                  'button button-borderless button-icon-only button-config flexshrink',
+                ]}
+                onclick={() =>
+                  FoundryAdapter.renderMovementSensesConfig(
+                    context.actor,
+                    'movement',
+                  )}
+                data-tidy-sheet-part="ability-configuration-control"
+              >
+                <i class="fas fa-cog"></i>
+              </button>
+            </span>
+          {/if}
+        </div>
       </div>
-    </div>
+    {/if}
   </div>
-
-  <ActorTraitConfigurableListEntry
-    configButtonLocation="label"
-    label={localize('DND5E.TRAVEL.Label')}
-    entries={travelPaceEntries}
-    onconfig={() =>
-      FoundryAdapter.renderTravelConfig(context.actor)}
-    icon="fa-solid fa-route"
-    traitClass="traits-travel-pace"
-    pillClass="trait-travel-pace"
-  />
 
   <!-- Speed -->
   <ActorTraitConfigurableListEntry
@@ -262,10 +284,6 @@
     traitClass="traits-speeds"
     pillClass="trait-speed"
   />
-
-  <!-- Size -->
-  <ActorTraitSize />
-  
 
   <!-- Resistances -->
   <ActorTraitConfigurableListEntry

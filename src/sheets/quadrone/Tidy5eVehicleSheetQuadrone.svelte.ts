@@ -3,15 +3,16 @@ import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import VehicleSheet from './actor/VehicleSheet.svelte';
-import { mount } from 'svelte';
 import type {
-  VehicleItemContext,
-  VehicleSheetQuadroneContext,
+  ActorInventoryTypes,
   ActorSheetQuadroneContext,
   InventorySection,
-  ActorInventoryTypes,
+  TravelPaceConfigEntry,
+  VehicleItemContext,
+  VehicleSheetQuadroneContext,
 } from 'src/types/types';
+import VehicleSheet from './actor/VehicleSheet.svelte';
+import { mount } from 'svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
@@ -44,19 +45,19 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    // classes: [
-    //   CONSTANTS.MODULE_ID,
-    //   'sheet',
-    //   'actor',
-    //   CONSTANTS.SHEET_TYPE_VEHICLE,
-    //   CONSTANTS.SHEET_TYPE_NPC,
-    //   CONSTANTS.SHEET_LAYOUT_QUADRONE,
-    // ],
-    position: {
-      width: 740,
-      height: 810,
-    },
-  };
+      // classes: [
+      //   CONSTANTS.MODULE_ID,
+      //   'sheet',
+      //   'actor',
+      //   CONSTANTS.SHEET_TYPE_VEHICLE,
+      //   CONSTANTS.SHEET_TYPE_NPC,
+      //   CONSTANTS.SHEET_LAYOUT_QUADRONE,
+      // ],
+      position: {
+        width: 740,
+        height: 810,
+      },
+    };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -111,6 +112,17 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       })
     );
 
+    const paces: TravelPaceConfigEntry[] = Object.entries(
+      CONFIG.DND5E.travelPace
+    )
+      .toSorted((a, b) => a[1].multiplier - b[1].multiplier)
+      .map(([key, config], index) => ({ key, config, index }));
+
+    const currentPace =
+      paces.find(
+        (pace) => pace.key === this.actor.system.attributes.travel.pace
+      ) ?? paces[0];
+
     const enrichmentArgs = {
       secrets: this.actor.isOwner,
       rollData: actorContext.rollData,
@@ -150,6 +162,22 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       },
       speeds: super._getMovementSpeeds(),
       traits: this._prepareTraits(),
+      travel: {
+        paces,
+        currentPace,
+        speed:
+          currentPace.index === 0
+            ? 1 // Slow
+            : currentPace.index > 0 && currentPace.index >= paces.length - 1
+              ? 3 // Fast
+              : 2, // Normal
+        units: {
+          label:
+            CONFIG.DND5E.travelUnits[
+              this.actor.system.attributes.travel.units
+            ]?.abbreviationDay ?? this.actor.system.attributes.travel.units,
+        },
+      },
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
       utilities: {},
       ...actorContext,
@@ -379,5 +407,20 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
 
     return tabIds;
+  }
+
+  /* -------------------------------------------- */
+  /*  Sheet Actions                               */
+  /* -------------------------------------------- */
+
+  changePace(increment: number) {
+    if (Number.isNaN(increment)) return;
+    const paces = Object.keys(CONFIG.DND5E.travelPace);
+    const current = paces.indexOf(
+      this.actor.system._source.attributes.travel.pace
+    );
+    const next =
+      (((current + increment) % paces.length) + paces.length) % paces.length;
+    this.actor.update({ 'system.attributes.travel.pace': paces[next] });
   }
 }
