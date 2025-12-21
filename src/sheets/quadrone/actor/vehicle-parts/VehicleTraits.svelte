@@ -33,7 +33,7 @@
     iconClass: string;
     label: string;
     value: string | number;
-    units: string;
+    units?: string;
     traitClass: string;
     onconfig?: () => void;
   };
@@ -48,7 +48,9 @@
       </h4>
       <div class="flexshrink">
         <span class="value font-label-medium">{config.value}</span>
-        <span class="units font-label-medium color-text-lighter">{config.units}</span>
+        {#if config.units}
+          <span class="units font-label-medium color-text-lighter">{config.units}</span>
+        {/if}
         {#if context.unlocked && config.onconfig}
         <!-- TODO switch to inputs -->
           <button
@@ -142,10 +144,32 @@
   })}
 
   <!-- Cargo Capacity -->
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-box',
+    label: localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label'),
+    value: context.cargoCapacity,
+    units: context.system.attributes.capacity.cargo.units,
+    traitClass: 'trait-cargo-capacity',
+    onconfig: () => alert('TODO: Implement cargo capacity config'),
+  })}
 
   <!-- Crew Capacity -->
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-people-carry-box',
+    label: localize('DND5E.VEHICLE.FIELDS.crew.max.label'),
+    value: context.crewCapacity,
+    traitClass: 'trait-crew-capacity',
+    onconfig: () => alert('TODO: Implement crew capacity config'),
+  })}
 
   <!-- Passenger Capacity -->
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-people-group',
+    label: localize('DND5E.VEHICLE.FIELDS.passengers.max.label'),
+    value: context.passengerCapacity,
+    traitClass: 'trait-passenger-capacity',
+    onconfig: () => alert('TODO: Implement passenger capacity config'),
+  })}
 
   <!-- Size -->
   <ActorTraitSize />
@@ -161,8 +185,23 @@
   })}
 
   <!-- Quality -->
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-star',
+    label: localize('DND5E.Quality'),
+    value: context.quality,
+    traitClass: 'trait-quality',
+    onconfig: () => alert('TODO: Implement quality config'),
+  })}
 
   <!-- Cost -->
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-coins',
+    label: localize('DND5E.Cost'),
+    value: context.cost.value,
+    units: context.cost.denomination,
+    traitClass: 'trait-cost',
+    onconfig: () => alert('TODO: Implement cost config'),
+  })}
 
   <!-- Travel Pace -->
   <div class={['list-entry traits-travel-pace']}>

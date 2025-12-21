@@ -1539,22 +1539,30 @@ export type EncounterSheetQuadroneContext = {
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
 export type VehicleSheetQuadroneContext = {
-  enriched: {
-    biography: string;
-  };
+  cargoCapacity: number;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  cost: {
+    value: number;
+    denomination: string;
+  };
   crew: GroupMembersQuadroneContext;
+  crewCapacity: number;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
+  enriched: {
+    biography: string;
+  };
   features: InventorySection[];
   inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
   passengers: number;
+  passengerCapacity: number;
+  quality: number;
   scale: number;
-  size: ActorSizeContext;
   showContainerPanel: boolean;
+  size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {
