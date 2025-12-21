@@ -50,52 +50,20 @@
         {vehicleTypeLabel ?? context.system.details.type}
       </span>
     </span>
-    {#if context.travel.currentPace}
+    {#if context.travelSpeeds.currentSpeed}
       <div class="divider-dot"></div>
-      <div class="span separated-list travel-pace">
-        <button
-          class="button button-borderless button-icon-only"
-          onclick={() => context.sheet.changePace(-1)}
-          disabled={context.travel.speed === 1}
-        >
-          <i
-            class="{context.travel.speed === 1
-              ? 'fa-regular '
-              : 'fa-solid'} fa-backward"
-          ></i>
-        </button>
-        <i
-          class="fa-solid color-text-gold {context.travel.speed === 1
-            ? 'fa-gauge-simple-min'
-            : context.travel.speed === 2
-              ? 'fa-gauge-simple'
-              : 'fa-gauge-simple-max'}"
-        ></i>
-        <button
-          class="button button-borderless button-icon-only"
-          onclick={() => context.sheet.changePace(1)}
-          disabled={context.travel.speed === 3}
-        >
-          <i
-            class="{context.travel.speed === 3
-              ? 'fa-regular '
-              : 'fa-solid'} fa-forward"
-          ></i>
-        </button>
-        <div>
-          <span class="font-label-medium color-text-gold">
-            {localize('DND5E.TRAVEL.Label')}
-          </span>
-          <span class="label font-label-medium color-text-default flexshrink">
-            {context.travel.currentPace.config.label}
-          </span>
-        </div>
-      </div>
+      <span class="vehicle-travel-pace">
+        <span class="font-label-medium">
+          {context.travelSpeeds.currentSpeed.label}
+        </span>
+        <span class="font-data-medium">
+          {context.travelSpeeds.currentSpeed.valueDay}
+        </span>
+        <span class="font-label-medium color-text-lighter">
+          {context.travelSpeeds.currentSpeed.unitsDay}
+        </span>
+      </span>
     {/if}
-    {#each context.speeds as speed}
-      <div class="divider-dot"></div>
-      {@render speedSenseSummary(speed, 'speed')}
-    {/each}
     <div class="divider-dot"></div>
     <span class="vehicle-quality">
       <span class="font-label-medium color-text-gold">

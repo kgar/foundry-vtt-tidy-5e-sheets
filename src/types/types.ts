@@ -1557,13 +1557,12 @@ export type VehicleSheetQuadroneContext = {
   showContainerPanel: boolean;
   speeds: ActorSpeedSenseEntryContext[];
   traits: Record<string, ActorTraitContext[]>;
-  travel: {
-    currentPace: TravelPaceConfigEntry;
-    paces: TravelPaceConfigEntry[];
-    /** 1 (slow), 2 (normal), or 3 (fast), corresponding to the slowest speed, any speed in between, and the fastest speed, respectively. */
-    speed: number;
+  travelSpeeds: {
+    currentSpeed: TravelSpeedConfigEntry;
+    travelSpeeds: TravelSpeedConfigEntry[];
     units: {
-      label: string;
+      day: string;
+      hour: string;
     };
   };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
@@ -1571,6 +1570,17 @@ export type VehicleSheetQuadroneContext = {
   utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
+
+
+
+export type TravelSpeedConfigEntry = {
+  key: string;
+  label: string;
+  valueDay: number;
+  valueHour: number;
+  unitsDay: string;
+  unitsHour: string;
+};
 
 /* Misc - Svelte */
 

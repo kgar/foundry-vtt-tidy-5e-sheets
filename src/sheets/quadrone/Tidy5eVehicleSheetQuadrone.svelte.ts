@@ -8,6 +8,7 @@ import type {
   ActorSheetQuadroneContext,
   InventorySection,
   TravelPaceConfigEntry,
+  TravelSpeedConfigEntry,
   VehicleItemContext,
   VehicleSheetQuadroneContext,
 } from 'src/types/types';
@@ -162,22 +163,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       },
       speeds: super._getMovementSpeeds(),
       traits: this._prepareTraits(),
-      travel: {
-        paces,
-        currentPace,
-        speed:
-          currentPace.index === 0
-            ? 1 // Slow
-            : currentPace.index > 0 && currentPace.index >= paces.length - 1
-              ? 3 // Fast
-              : 2, // Normal
-        units: {
-          label:
-            CONFIG.DND5E.travelUnits[
-              this.actor.system.attributes.travel.units
-            ]?.abbreviationDay ?? this.actor.system.attributes.travel.units,
-        },
-      },
+      travelSpeeds: this._prepareTravelSpeeds(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
       utilities: {},
       ...actorContext,
@@ -409,18 +395,77 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     return tabIds;
   }
 
-  /* -------------------------------------------- */
-  /*  Sheet Actions                               */
-  /* -------------------------------------------- */
+  _prepareTravelSpeeds(): VehicleSheetQuadroneContext['travelSpeeds'] {
+    const travelUnits = this.actor.system.attributes.travel?.units;
+    const travelPaceEntries = this._buildTravelPaceEntries();
 
-  changePace(increment: number) {
-    if (Number.isNaN(increment)) return;
-    const paces = Object.keys(CONFIG.DND5E.travelPace);
-    const current = paces.indexOf(
-      this.actor.system._source.attributes.travel.pace
-    );
-    const next =
-      (((current + increment) % paces.length) + paces.length) % paces.length;
-    this.actor.update({ 'system.attributes.travel.pace': paces[next] });
+    const unitsDay =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationDay ?? travelUnits;
+    const unitsHour =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationHour ?? travelUnits;
+
+    // Determine the current/primary travel speed
+    const currentSpeed = travelPaceEntries[0] ?? {
+      key: '',
+      label: '',
+      valueDay: 0,
+      valueHour: 0,
+      unitsDay,
+      unitsHour,
+    };
+
+    return {
+      currentSpeed,
+      travelSpeeds: travelPaceEntries,
+      units: {
+        day: unitsDay,
+        hour: unitsHour,
+      },
+    };
+  }
+
+  _buildTravelPaceEntries(): TravelSpeedConfigEntry[] {
+    const entries: TravelSpeedConfigEntry[] = [];
+    const paces = this.actor.system.attributes.travel?.paces;
+    const speeds = this.actor.system.attributes.travel?.speeds;
+    const travelUnits = this.actor.system.attributes.travel?.units;
+
+    const unitsDay =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationDay ?? travelUnits;
+    const unitsHour =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationHour ?? travelUnits;
+
+    if (paces?.land > 0) {
+      entries.push({
+        key: 'land',
+        label: localize('DND5E.TRAVEL.Type.Land'),
+        valueDay: paces.land,
+        valueHour: speeds.land,
+        unitsDay,
+        unitsHour,
+      });
+    }
+    if (paces?.air > 0) {
+      entries.push({
+        key: 'air',
+        label: localize('DND5E.TRAVEL.Type.Air'),
+        valueDay: paces.air,
+        valueHour: speeds.air,
+        unitsDay,
+        unitsHour,
+      });
+    }
+    if (paces?.water > 0) {
+      entries.push({
+        key: 'water',
+        label: localize('DND5E.TRAVEL.Type.Water'),
+        valueDay: paces.water,
+        valueHour: speeds.water,
+        unitsDay,
+        unitsHour,
+      });
+    }
+
+    return entries;
   }
 }

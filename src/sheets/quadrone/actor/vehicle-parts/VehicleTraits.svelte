@@ -26,48 +26,45 @@
     }
   });
 
-  // Build travel pace entries for the trait list
-  let travelPaceEntries = $derived.by(() => {
-    const entries: {
-      key: string;
-      label: string;
-      value: number;
-      units: string;
-      measurement: string;
-    }[] = [];
-    const paces = context.actor.system.attributes.travel?.paces;
-    const unitsLabel = context.travel?.units?.label ?? '';
+  // Travel pace entries from context
+  let travelSpeedEntries = $derived(context.travelSpeeds?.travelSpeeds ?? []);
 
-    if (paces?.land > 0) {
-      entries.push({
-        key: 'land',
-        label: localize('DND5E.TRAVEL.Type.Land'),
-        value: paces.land,
-        units: unitsLabel,
-        measurement: `${paces.land} ${unitsLabel}`,
-      });
-    }
-    if (paces?.air > 0) {
-      entries.push({
-        key: 'air',
-        label: localize('DND5E.TRAVEL.Type.Air'),
-        value: paces.air,
-        units: unitsLabel,
-        measurement: `${paces.air} ${unitsLabel}`,
-      });
-    }
-    if (paces?.water > 0) {
-      entries.push({
-        key: 'water',
-        label: localize('DND5E.TRAVEL.Type.Water'),
-        value: paces.water,
-        units: unitsLabel,
-        measurement: `${paces.water} ${unitsLabel}`,
-      });
-    }
-    return entries;
-  });
+  type DimensionTraitConfig = {
+    iconClass: string;
+    label: string;
+    value: string | number;
+    units: string;
+    traitClass: string;
+    onconfig?: () => void;
+  };
 </script>
+
+{#snippet dimensionTrait(config: DimensionTraitConfig)}
+  <div class={['list-entry', config.traitClass]}>
+    <div class="list-label flexrow">
+      <h4 class="font-weight-label">
+        <i class={config.iconClass}></i>
+        {config.label}
+      </h4>
+      <div class="flexshrink">
+        <span class="value font-label-medium">{config.value}</span>
+        <span class="units font-label-medium color-text-lighter">{config.units}</span>
+        {#if context.unlocked && config.onconfig}
+        <!-- TODO switch to inputs -->
+          <button
+            aria-label={localize('DND5E.TraitConfig', { trait: config.label })}
+            type="button"
+            class="button button-borderless button-icon-only button-config flexshrink"
+            data-tooltip
+            onclick={config.onconfig}
+          >
+            <i class="fa-solid fa-cog"></i>
+          </button>
+        {/if}
+      </div>
+    </div>
+  </div>
+{/snippet}
 
 <!-- TODO: Implement Quadrone-styled vehicle traits:
   - Damage immunities
@@ -124,104 +121,48 @@
       </div>
     </div>
   {/if}
-
-  <div class="list-entry trait-hit-dice">
-    <div class="list-label flexrow">
-      <h4 class="font-weight-label">
-        <i class="fa-solid fa-weight-hanging"></i>
-        {localize('DND5E.Weight')}
-      </h4>
-      <div class="flexshrink weight-container">
-        <span class="value font-label-medium"
-          >{context.system.traits.weight.value}</span
-        >
-        <span class="units font-label-medium color-text-lighter"
-          >{context.system.traits.weight.units}</span
-        >
-        {#if context.unlocked}
-          <button
-            aria-label={localize('DND5E.TraitConfig', {
-              trait: localize('DND5E.Weight'),
-            })}
-            type="button"
-            class="button button-borderless button-icon-only button-config flexshrink"
-            data-tooltip
-            onclick={(ev) => alert('TODO: Implement weight config')}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
-        {/if}
-      </div>
-    </div>
-  </div>
-
   <!-- Keel -->
-  <div class="list-entry trait-keel">
-    <div class="list-label flexrow">
-      <h4 class="font-weight-label">
-        <i
-          class="fa-solid fa-arrows-left-right-to-line"
-          style="transform: rotate(90deg) translateY(1px);"
-        ></i>
-        {localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label')}
-      </h4>
-      <div class="flexshrink keel-container">
-        <span class="value font-label-medium"
-          >{context.system.traits.keel.value}</span
-        >
-        <span class="units font-label-medium color-text-lighter"
-          >{context.system.traits.keel.units}</span
-        >
-        {#if context.unlocked}
-          <button
-            aria-label={localize('DND5E.TraitConfig', {
-              trait: localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label'),
-            })}
-            type="button"
-            class="button button-borderless button-icon-only button-config flexshrink"
-            data-tooltip
-            onclick={(ev) => alert('TODO: Implement keel config')}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
-        {/if}
-      </div>
-    </div>
-  </div>
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-arrows-left-right-to-line trait-icon-keel',
+    label: localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label'),
+    value: context.system.traits.keel.value,
+    units: context.system.traits.keel.units,
+    traitClass: 'trait-keel',
+    onconfig: () => alert('TODO: Implement keel config'),
+  })}
 
   <!-- Beam -->
-  <div class="list-entry trait-beam">
-    <div class="list-label flexrow">
-      <h4 class="font-weight-label">
-        <i class="fa-solid fa-arrows-left-right-to-line"></i>
-        {localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label')}
-      </h4>
-      <div class="flexshrink beam-container">
-        <span class="value font-label-medium"
-          >{context.system.traits.beam.value}</span
-        >
-        <span class="units font-label-medium color-text-lighter"
-          >{context.system.traits.beam.units}</span
-        >
-        {#if context.unlocked}
-          <button
-            aria-label={localize('DND5E.TraitConfig', {
-              trait: localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label'),
-            })}
-            type="button"
-            class="button button-borderless button-icon-only button-config flexshrink"
-            data-tooltip
-            onclick={(ev) => alert('TODO: Implement beam config')}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
-        {/if}
-      </div>
-    </div>
-  </div>
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-arrows-left-right-to-line',
+    label: localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label'),
+    value: context.system.traits.beam.value,
+    units: context.system.traits.beam.units,
+    traitClass: 'trait-beam',
+    onconfig: () => alert('TODO: Implement beam config'),
+  })}
+
+  <!-- Cargo Capacity -->
+
+  <!-- Crew Capacity -->
+
+  <!-- Passenger Capacity -->
 
   <!-- Size -->
   <ActorTraitSize />
+  
+  <!-- Weight -->
+  {@render dimensionTrait({
+    iconClass: 'fa-solid fa-weight-hanging',
+    label: localize('DND5E.Weight'),
+    value: context.system.traits.weight.value,
+    units: context.system.traits.weight.units,
+    traitClass: 'trait-weight',
+    onconfig: () => alert('TODO: Implement weight config'),
+  })}
+
+  <!-- Quality -->
+
+  <!-- Cost -->
 
   <!-- Travel Pace -->
   <div class={['list-entry traits-travel-pace']}>
@@ -230,60 +171,92 @@
         <i class="fa-solid fa-route"></i>
         {localize('DND5E.TRAVEL.Label')}
       </h4>
+      {#if context.unlocked}
+        <button
+          aria-label={localize('DND5E.MOVEMENT.Action.Configure')}
+          type="button"
+          class={[
+            'button button-borderless button-icon-only button-config flexshrink',
+          ]}
+          onclick={() =>
+            FoundryAdapter.renderMovementSensesConfig(
+              context.actor,
+              'movement',
+            )}
+          data-tidy-sheet-part="ability-configuration-control"
+        >
+          <i class="fas fa-cog"></i>
+        </button>
+      {/if}
     </div>
-    {#if !!context.travel.currentPace}
+    {#if !!context.travelSpeeds.currentSpeed}
       <div class="list-content">
         <div class="list-values">
           <ul class="pills">
-            {#each travelPaceEntries as travelPace}
+            {#each travelSpeedEntries as travelPace}
               <li class={['pill pill medium trait-pill']}>
                 <span class="font-label-medium">
                   {travelPace.label}
                 </span>
-                <span class="font-data-medium">
-                  {travelPace.value}
-                </span>
-                <span class="font-label-medium color-text-lighter">
-                  {travelPace.units}
+                <span>
+                  <span class="value font-data-medium">{travelPace.valueDay}</span><span class="units font-default-medium color-text-lighter">{travelPace.unitsDay}</span>
                 </span>
               </li>
             {/each}
           </ul>
-          {#if context.unlocked}
-            <span class="config-speeds">
-              <button
-                aria-label={localize('DND5E.MOVEMENT.Action.Configure')}
-                type="button"
-                class={[
-                  'button button-borderless button-icon-only button-config flexshrink',
-                ]}
-                onclick={() =>
-                  FoundryAdapter.renderMovementSensesConfig(
-                    context.actor,
-                    'movement',
-                  )}
-                data-tidy-sheet-part="ability-configuration-control"
-              >
-                <i class="fas fa-cog"></i>
-              </button>
-            </span>
-          {/if}
         </div>
       </div>
     {/if}
   </div>
 
-  <!-- Speed -->
-  <ActorTraitConfigurableListEntry
-    configButtonLocation="label"
-    label={localize('DND5E.Speed')}
-    entries={context.speeds}
-    onconfig={() =>
-      FoundryAdapter.renderMovementSensesConfig(context.actor, 'movement')}
-    icon={vehicleTypeIcon()}
-    traitClass="traits-speeds"
-    pillClass="trait-speed"
-  />
+  <!-- Speeds -->
+  <div class="list-entry trait-speed">
+    <div class="list-label flexrow">
+      <h4 class="font-weight-label">
+        <i class={`fa-solid ${vehicleTypeIcon()}`}></i>
+        {localize('DND5E.Speed')}
+      </h4>
+      {#if context.unlocked}
+        <button
+          aria-label={localize('DND5E.MOVEMENT.Action.Configure', {
+            action: localize('DND5E.Speed'),
+          })}
+          type="button"
+          class="button button-borderless button-icon-only button-config flexshrink"
+          data-tooltip
+          onclick={(ev) => alert('TODO: Implement keel config')}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button> 
+      {/if}
+    </div>
+    <div class="list-content">
+      <div class="list-values">
+        <ul class="pills">
+          <!-- Travel Speeds -->
+          {#each travelSpeedEntries as travelSpeed}
+          <li class="pill">
+            <span class="font-label-medium">{travelSpeed.label}</span>
+            <span>
+              <span class="value font-data-medium">{travelSpeed.valueHour}</span><span class="units font-default-medium color-text-lighter">{travelSpeed.unitsHour}</span>
+            </span>
+          </li>
+          {/each}
+
+          <!-- Combat Speed -->
+          {#if !!context.system.attributes. movement.max
+                || (context.editable && !!context.travelSpeeds.currentSpeed && !!context.travelSpeeds.travelSpeeds.length)}
+            <li class="pill">
+              <span class="font-label-medium">{localize('DND5E.MOVEMENT.Speed')}</span>
+              <span>
+                <span class="value font-data-medium">{context.system.attributes.movement.max}</span><span class="units font-default-medium color-text-lighter">{context.system.attributes.movement.units}</span>
+              </span>
+            </li>
+          {/if}
+        </ul>
+      </div>
+    </div>
+  </div>
 
   <!-- Resistances -->
   <ActorTraitConfigurableListEntry
