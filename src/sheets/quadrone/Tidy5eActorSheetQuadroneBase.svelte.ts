@@ -1156,7 +1156,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /* -------------------------------------------- */
-    /*  Drag and Drop
+    /*  Drag and Drop                               */
     /* -------------------------------------------- */
 
     _allowedDropBehaviors(

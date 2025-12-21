@@ -4,9 +4,12 @@ import type {
   ApplicationRenderOptions,
 } from 'src/types/application.types';
 import type {
+  Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  DraftAnimalSection,
   InventorySection,
+  PassengerMemberContext,
   TravelPaceConfigEntry,
   TravelSpeedConfigEntry,
   VehicleItemContext,
@@ -30,6 +33,7 @@ import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.sv
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import type { CrewArea5e } from 'src/foundry/foundry.types';
 
 const localize = FoundryAdapter.localize;
 
@@ -144,7 +148,22 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           this.actor.system.attributes.price?.denomination ??
           'gp',
       },
-      crew: this.actor.system.cargo.crew,
+      crew: {
+        assigned: {
+          ...SheetSections.EMPTY,
+          type: 'crew',
+          label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
+          members: [],
+          key: 'assigned',
+        },
+        unassigned: {
+          ...SheetSections.EMPTY,
+          type: 'crew',
+          label: 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label',
+          members: [],
+          key: 'unassigned',
+        },
+      },
       crewCapacity: this.actor.system.crew?.max ?? 0,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
@@ -159,7 +178,13 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         ),
       },
       features: [],
-      passengers: this.actor.system.cargo.passengers,
+      passengers: {
+        ...SheetSections.EMPTY,
+        type: 'passengers',
+        label: 'DND5E.VEHICLE.Crew.Passengers',
+        members: [],
+        key: 'passengers',
+      },
       passengerCapacity: this.actor.system.passengers?.max ?? 0,
       quality: this.actor.system.attributes.quality?.value ?? 0,
       scale: this.actor.system.attributes.scale,
@@ -175,6 +200,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         mod: this.actor.system.attributes.encumbrance.mod,
       },
       speeds: super._getMovementSpeeds(),
+      statblock: [],
       traits: this._prepareTraits(),
       travelSpeeds: this._prepareTravelSpeeds(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
@@ -184,8 +210,37 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     context.useActionsFeature = actorUsesActionFeature(this.actor);
 
-    // Prepare owned items
     await this._prepareItems(context);
+
+    await this._prepareDraftAnimals(context);
+
+    await this._prepareCrew(context);
+
+    await this._preparePassengers(context);
+
+    // Section Actions
+
+    context.statblock.forEach((section) => {
+      if (section.type === CONSTANTS.SECTION_TYPE_INVENTORY) {
+        section.sectionActions = SectionActions.getStandardItemHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section
+        );
+      } else {
+        // TODO: Draft Animal item header actions?
+      }
+    });
+
+    context.inventory.forEach((section) => {
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section
+      );
+    });
 
     // Custom content
     context.customContent = await VehicleSheetQuadroneRuntime.getContent(
@@ -196,6 +251,63 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     context.tabs = await VehicleSheetQuadroneRuntime.getTabs(context);
 
     return context;
+  }
+
+  private async _prepareDraftAnimals(context: VehicleSheetQuadroneContext) {
+    const drafted: DraftAnimalSection = {
+      ...SheetSections.EMPTY,
+      type: 'draft',
+      key: 'draft',
+      label: 'TIDY5E.Vehicle.Member.DraftAnimal.LabelPl',
+      members: await Promise.all(
+        this.actor.system.draft.value.map(async (uuid: string) => {
+          const actor = await fromUuid(uuid);
+          return { actor };
+        })
+      ),
+      rowActions: TableRowActionsRuntime.getDraftAnimalRowActions(context),
+    };
+
+    context.statblock.push(drafted);
+  }
+
+  private async _prepareCrew(context: VehicleSheetQuadroneContext) {
+    if (!context.system.crew.value.length) {
+      return;
+    }
+    const crew = this.groupCrew(context.system.crew.value);
+    const unassigned = { ...crew };
+    const vehicleItems = context.items.filter((i) => i.system.isMountable);
+    const assigned = vehicleItems
+      .flatMap((i) => i.system.crew.value)
+      .reduce<Record<string, number>>((obj, uuid) => {
+        const max = crew[uuid];
+        if (!max) return obj;
+        obj[uuid] ??= 0;
+        obj[uuid]++;
+        unassigned[uuid]--;
+        return obj;
+      }, {} as Record<string, number>);
+
+    context.crew.assigned.members = (
+      await this.resolveCrewMemberContext(assigned)
+    ).value;
+    context.crew.unassigned.members = (
+      await this.resolveCrewMemberContext(unassigned, crew)
+    ).value;
+  }
+
+  private async _preparePassengers(context: VehicleSheetQuadroneContext) {
+    const uuids: string[] = context.system.passengers.value;
+    context.passengers.members = (
+      await Promise.all(
+        uuids.map(async (uuid) => {
+          return {
+            actor: await fromUuid(uuid),
+          } satisfies PassengerMemberContext;
+        })
+      )
+    ).filter((ctx) => !!ctx.actor);
   }
 
   async _prepareItems(context: VehicleSheetQuadroneContext): Promise<void> {
@@ -284,45 +396,26 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           statblockTypes,
           {
             canCreate: false,
-            rowActions: statblockRowActions
+            rowActions: statblockRowActions,
           },
           CONSTANTS.ITEM_TYPE_FEAT
         );
       }
-
-      // TODO: Custom sections?
-
-      context.features = Object.values(statblock);
-      context.inventory = Object.values(inventory);
-
-      context.features.forEach((section) => {
-        section.sectionActions = SectionActions.getStandardItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
-      });
-
-      context.inventory.forEach((section) => {
-        section.sectionActions = SectionActions.getStandardItemHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          context.unlocked,
-          section
-        );
-      });
-
-      SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-        context.actor,
-        CONSTANTS.TAB_ACTOR_INVENTORY
-      ).forEach((s) => {
-        inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-          canCreate: true,
-          rowActions: inventoryRowActions,
-        });
-      });
     }
+
+    context.statblock.push(...Object.values(statblock));
+
+    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
+      context.actor,
+      CONSTANTS.TAB_ACTOR_INVENTORY
+    ).forEach((s) => {
+      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
+        canCreate: true,
+        rowActions: inventoryRowActions,
+      });
+    });
+
+    context.inventory = Object.values(inventory);
   }
 
   protected async _prepareItem(
@@ -480,5 +573,165 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
 
     return entries;
+  async removeDraftAnimal(uuid: string) {
+    const draft = [...this.actor.system.draft.value];
+    const removed = draft.findSplice((u) => u === uuid);
+
+    if (removed) {
+      return await this.actor.update({ 'system.draft.value': draft });
+    }
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag and Drop                               */
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare vehicle-specific drag operations so
+   * the vehicle sheet can properly handle
+   * crew assignment and adjustment.
+   * This drag logic is intended to be compatible with default
+   * vehicle sheets.
+   */
+  async _onDragStart(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement }
+  ) {
+    const { area } =
+      event.target.closest<HTMLElement>('[data-area]')?.dataset ?? {};
+    const { uuid } =
+      event.target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
+    const { itemId } =
+      event.target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+    const { type } = foundry.utils.parseUuid(uuid) ?? {};
+
+    if (!area || type !== 'Actor') {
+      return super._onDragStart(event);
+    }
+
+    event.dataTransfer?.setData(
+      'text/plain',
+      JSON.stringify({ area, itemId, type, uuid })
+    );
+  }
+
+  async _onDropActor(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+    document: Actor5e
+  ) {
+    if (!document.system.isCreature) {
+      return;
+    }
+
+    let { area: src, itemId /* later, for assignment drops */ } =
+      foundry.applications.ux.TextEditor.getDragEventData(event);
+
+    const { area: dest = 'crew' } =
+      event.target?.closest<HTMLElement>('[data-area]')?.dataset ?? {};
+
+    if (src === dest) {
+      // Try Sort?
+      return;
+    }
+
+    // TODO: Handle Assignment, if relevant, instead of adjusting crew
+
+    return this._onAdjustCrew(document, dest, { src });
+  }
+
+  _onAdjustCrew(
+    actor: Actor5e,
+    dest: CrewArea5e,
+    { src }: { src?: CrewArea5e } = {}
+  ) {
+    const updates = {};
+
+    if (src) {
+      Object.assign(
+        updates,
+        this.actor.system.getCrewUpdates(src, actor.uuid, '-1')
+      );
+    }
+
+    Object.assign(
+      updates,
+      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1')
+    );
+
+    if (!foundry.utils.isEmpty(updates)) {
+      this.actor.update(updates);
+    }
+  }
+
+  /* -------------------------------------------- */
+  /*  Helpers                                     */
+  /* -------------------------------------------- */
+
+  /**
+   * Group crew by UUID.
+   */
+  groupCrew(crew: string[]): Record<string, number> {
+    return crew.reduce((obj, uuid) => {
+      obj[uuid] ??= 0;
+      obj[uuid]++;
+      return obj;
+    }, {} as Record<string, number>);
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Resolve crew UUIDs.
+   */
+  async resolveCrewMemberContext(
+    group: Record<string, number>,
+    counts?: Record<string, number>
+  ): Promise<{
+    total: number;
+    value: Array<{ actor: object; quantity: number; uuid: string }>;
+  }> {
+    let total = 0;
+
+    const value = Object.entries(group)
+      .filter(([, quantity]) => quantity)
+      .map(async ([uuid, quantity]) => {
+        total += quantity;
+        const actor = await fromUuid(uuid);
+        const { img, name, system } = actor;
+        const cr = system.details?.cr ?? system.details?.level;
+        const subtitle = [
+          CONFIG.DND5E.actorSizes[system.traits?.size]?.label,
+          system.details?.type?.label,
+          system.details?.cr
+            ? game.i18n.format('DND5E.CRLabel', {
+                cr: dnd5e.utils.formatCR(system.details.cr),
+              })
+            : null,
+          system.details?.level
+            ? game.i18n.format('DND5E.LevelNumber', {
+                level: system.details.level,
+              })
+            : null,
+        ].filterJoin(' • ');
+        return {
+          uuid,
+          quantity,
+          actor,
+          diff: (counts?.[uuid] ?? 0) - quantity,
+          cr,
+          img,
+          name,
+          subtitle,
+        };
+      });
+    return {
+      total,
+      value: (await Promise.all(value)).sort((a, b) => {
+        return (
+          (b.cr ?? 0) - (a.cr ?? 0) ||
+          a.quantity - b.quantity ||
+          a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
+        );
+      }),
+    };
   }
 }

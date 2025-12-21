@@ -39,6 +39,7 @@ export const CONSTANTS = {
   SECTION_TYPE_FACILITY: 'facility',
   SECTION_TYPE_FEATURE: 'feature',
   SECTION_TYPE_INVENTORY: 'inventory',
+  SECTION_TYPE_DRAFT_ANIMALS: 'draft',
   SECTION_TYPE_SPELLBOOK: 'spellbook',
   FILTER_ACTIVATION_COST_ACTION: 'activationCostAction',
   FILTER_ACTIVATION_COST_BONUS: 'activationCostBonus',

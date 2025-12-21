@@ -1538,6 +1538,41 @@ export type EncounterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
+export type DraftAnimalContext = {
+  actor: Actor5e;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+};
+
+export type DraftAnimalSection = {
+  type: 'draft';
+  members: DraftAnimalContext[];
+} & TidySectionBase;
+
+export type CrewMemberContext = {
+  actor: Actor5e;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+};
+
+export type CrewSection = {
+  type: 'crew';
+  members: CrewMemberContext[];
+} & TidySectionBase;
+
+export type CrewSections = {
+  assigned: CrewSection;
+  unassigned: CrewSection;
+};
+
+export type PassengerMemberContext = {
+  actor: Actor5e;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+};
+
+export type PassengerSection = {
+  type: 'passengers';
+  members: PassengerMemberContext[];
+} & TidySectionBase;
+
 export type VehicleSheetQuadroneContext = {
   cargoCapacity: number;
   conditions: Dnd5eActorCondition[];
@@ -1546,7 +1581,7 @@ export type VehicleSheetQuadroneContext = {
     value: number;
     denomination: string;
   };
-  crew: GroupMembersQuadroneContext;
+  crew: CrewSections;
   crewCapacity: number;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
@@ -1557,13 +1592,15 @@ export type VehicleSheetQuadroneContext = {
   features: InventorySection[];
   inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
-  passengers: number;
+  passengers: PassengerSection;
   passengerCapacity: number;
   quality: number;
   scale: number;
   showContainerPanel: boolean;
   size: ActorSizeContext;
+  showContainerPanel: boolean;
   speeds: ActorSpeedSenseEntryContext[];
+  statblock: (InventorySection | DraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
   travelSpeeds: {
     currentSpeed: TravelSpeedConfigEntry;
