@@ -1574,29 +1574,58 @@ export type PassengerSection = {
 } & TidySectionBase;
 
 export type VehicleSheetQuadroneContext = {
-  enriched: {
-    biography: string;
-  };
+  cargoCapacity: number;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
+  cost: {
+    value: number;
+    denomination: string;
+  };
   crew: CrewSections;
+  crewCapacity: number;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
+  enriched: {
+    biography: string;
+  };
+  features: InventorySection[];
   inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
   passengers: PassengerSection;
+  passengerCapacity: number;
+  quality: number;
   scale: number;
+  showContainerPanel: boolean;
   size: ActorSizeContext;
   showContainerPanel: boolean;
   speeds: ActorSpeedSenseEntryContext[];
   statblock: (InventorySection | DraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
+  travelSpeeds: {
+    currentSpeed: TravelSpeedConfigEntry;
+    travelSpeeds: TravelSpeedConfigEntry[];
+    units: {
+      day: string;
+      hour: string;
+    };
+  };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
   useActionsFeature?: boolean;
   utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
+
+
+
+export type TravelSpeedConfigEntry = {
+  key: string;
+  label: string;
+  valueDay: number;
+  valueHour: number;
+  unitsDay: string;
+  unitsHour: string;
+};
 
 /* Misc - Svelte */
 

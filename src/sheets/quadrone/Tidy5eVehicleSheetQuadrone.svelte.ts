@@ -3,18 +3,20 @@ import type {
   ApplicationConfiguration,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
-import VehicleSheet from './actor/VehicleSheet.svelte';
-import { mount } from 'svelte';
 import type {
+  Actor5e,
+  ActorInventoryTypes,
+  ActorSheetQuadroneContext,
+  DraftAnimalSection,
+  InventorySection,
+  PassengerMemberContext,
+  TravelPaceConfigEntry,
+  TravelSpeedConfigEntry,
   VehicleItemContext,
   VehicleSheetQuadroneContext,
-  ActorSheetQuadroneContext,
-  InventorySection,
-  ActorInventoryTypes,
-  DraftAnimalSection,
-  Actor5e,
-  PassengerMemberContext,
 } from 'src/types/types';
+import VehicleSheet from './actor/VehicleSheet.svelte';
+import { mount } from 'svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
@@ -48,11 +50,19 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    position: {
-      width: 740,
-      height: 810,
-    },
-  };
+      // classes: [
+      //   CONSTANTS.MODULE_ID,
+      //   'sheet',
+      //   'actor',
+      //   CONSTANTS.SHEET_TYPE_VEHICLE,
+      //   CONSTANTS.SHEET_TYPE_NPC,
+      //   CONSTANTS.SHEET_LAYOUT_QUADRONE,
+      // ],
+      position: {
+        width: 740,
+        height: 810,
+      },
+    };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -107,6 +117,17 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       })
     );
 
+    const paces: TravelPaceConfigEntry[] = Object.entries(
+      CONFIG.DND5E.travelPace
+    )
+      .toSorted((a, b) => a[1].multiplier - b[1].multiplier)
+      .map(([key, config], index) => ({ key, config, index }));
+
+    const currentPace =
+      paces.find(
+        (pace) => pace.key === this.actor.system.attributes.travel.pace
+      ) ?? paces[0];
+
     const enrichmentArgs = {
       secrets: this.actor.isOwner,
       rollData: actorContext.rollData,
@@ -116,6 +137,17 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     const context: VehicleSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       inventory: [],
+      cargoCapacity: this.actor.system.attributes.capacity.cargo.value,
+      conditions: conditions,
+      cost: {
+        value: this.actor.system.attributes.price?.value ?? 0,
+        denomination:
+          CONFIG.DND5E.currencies[
+            this.actor.system.attributes.price?.denomination
+          ]?.abbreviation ??
+          this.actor.system.attributes.price?.denomination ??
+          'gp',
+      },
       crew: {
         assigned: {
           ...SheetSections.EMPTY,
@@ -132,7 +164,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           key: 'unassigned',
         },
       },
-      conditions: conditions,
+      crewCapacity: this.actor.system.crew?.max ?? 0,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
       ),
@@ -145,6 +177,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           enrichmentArgs
         ),
       },
+      features: [],
       passengers: {
         ...SheetSections.EMPTY,
         type: 'passengers',
@@ -152,6 +185,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         members: [],
         key: 'passengers',
       },
+      passengerCapacity: this.actor.system.passengers?.max ?? 0,
+      quality: this.actor.system.attributes.quality?.value ?? 0,
       scale: this.actor.system.attributes.scale,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       size: {
@@ -167,6 +202,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       speeds: super._getMovementSpeeds(),
       statblock: [],
       traits: this._prepareTraits(),
+      travelSpeeds: this._prepareTravelSpeeds(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
       utilities: {},
       ...actorContext,
@@ -465,6 +501,78 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     return tabIds;
   }
 
+  _prepareTravelSpeeds(): VehicleSheetQuadroneContext['travelSpeeds'] {
+    const travelUnits = this.actor.system.attributes.travel?.units;
+    const travelPaceEntries = this._buildTravelPaceEntries();
+
+    const unitsDay =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationDay ?? travelUnits;
+    const unitsHour =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationHour ?? travelUnits;
+
+    // Determine the current/primary travel speed
+    const currentSpeed = travelPaceEntries[0] ?? {
+      key: '',
+      label: '',
+      valueDay: 0,
+      valueHour: 0,
+      unitsDay,
+      unitsHour,
+    };
+
+    return {
+      currentSpeed,
+      travelSpeeds: travelPaceEntries,
+      units: {
+        day: unitsDay,
+        hour: unitsHour,
+      },
+    };
+  }
+
+  _buildTravelPaceEntries(): TravelSpeedConfigEntry[] {
+    const entries: TravelSpeedConfigEntry[] = [];
+    const paces = this.actor.system.attributes.travel?.paces;
+    const speeds = this.actor.system.attributes.travel?.speeds;
+    const travelUnits = this.actor.system.attributes.travel?.units;
+
+    const unitsDay =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationDay ?? travelUnits;
+    const unitsHour =
+      CONFIG.DND5E.travelUnits[travelUnits]?.abbreviationHour ?? travelUnits;
+
+    if (paces?.land > 0) {
+      entries.push({
+        key: 'land',
+        label: localize('DND5E.TRAVEL.Type.Land'),
+        valueDay: paces.land,
+        valueHour: speeds.land,
+        unitsDay,
+        unitsHour,
+      });
+    }
+    if (paces?.air > 0) {
+      entries.push({
+        key: 'air',
+        label: localize('DND5E.TRAVEL.Type.Air'),
+        valueDay: paces.air,
+        valueHour: speeds.air,
+        unitsDay,
+        unitsHour,
+      });
+    }
+    if (paces?.water > 0) {
+      entries.push({
+        key: 'water',
+        label: localize('DND5E.TRAVEL.Type.Water'),
+        valueDay: paces.water,
+        valueHour: speeds.water,
+        unitsDay,
+        unitsHour,
+      });
+    }
+
+    return entries;
   async removeDraftAnimal(uuid: string) {
     const draft = [...this.actor.system.draft.value];
     const removed = draft.findSplice((u) => u === uuid);
