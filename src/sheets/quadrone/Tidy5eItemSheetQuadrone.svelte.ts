@@ -304,7 +304,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     const context: ItemSheetQuadroneContext = {
       activities: (this.document.system.activities ?? [])
         .filter((a: any) => {
-          return Activities.isConfigurable(a) && a.canUse;
+          return Activities.isConfigurable(a);
         })
         ?.map(Activities.getActivityItemContext)
         .sort((a: any, b: any) => a.sort - b.sort),

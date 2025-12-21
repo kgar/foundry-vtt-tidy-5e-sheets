@@ -25,7 +25,7 @@ Completely rewritten from the ground up, based on the original [Tidy5e Sheet](ht
 
 ## Get Involved
 
-Tidy runs on community feedback! If you like something you see, reach out in the [Tidy 5e Sheets community Discord](https://discord.gg/865zzNscRA), or put in a [GitHub issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) if you find something amiss.
+Tidy runs on community feedback! If you like something you see, reach out in the [Tidy 5e Sheets community Discord](https://discord.gg/dQWAnm59vq), or put in a [GitHub issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) if you find something amiss.
 
 
 ### **kgar**  • 📜 The Keeper of Sheets, Head Modron 👨‍💻 development, ✨ some design
