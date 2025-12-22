@@ -9,7 +9,7 @@
   import type { CrewSection, PassengerSection } from 'src/types/types';
   import type { Snippet } from 'svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { VehicleCrewMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
+  import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getVehicleSheetQuadroneContext());
@@ -69,7 +69,7 @@
 )}
   {#if section.members.length || noMembersView}
     {@const columns = new ColumnsLoadout(
-      VehicleCrewMemberColumnRuntime.getConfiguredColumnSpecifications({
+      VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: context.document.type,
         tabId: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
         sectionKey: section.key,
@@ -79,7 +79,7 @@
       }),
     )}
     {@const hiddenColumns =
-      VehicleCrewMemberColumnRuntime.determineHiddenColumns(
+      VehicleMemberColumnRuntime.determineHiddenColumns(
         sectionsInlineWidth,
         columns,
       )}

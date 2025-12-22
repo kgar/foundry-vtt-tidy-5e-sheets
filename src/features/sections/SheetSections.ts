@@ -483,7 +483,7 @@ export class SheetSections {
       if (section.type === 'inventory') {
         section.items = ItemUtils.getSortedItems(section.items, sortMode);
       } else if (
-        section.type === 'draft' &&
+        section.type === CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS &&
         (
           [
             CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING,

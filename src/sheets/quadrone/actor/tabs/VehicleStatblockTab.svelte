@@ -1,15 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import {
-    createSearchResultsState,
-    setSearchResultsContext,
-  } from 'src/features/search/search.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
-  import InventoryTables from '../../shared/InventoryTables.svelte';
-  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
@@ -25,7 +18,7 @@
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
-  import { DraftAnimalColumnRuntime } from 'src/runtime/tables/DraftAnimalColumnRuntime.svelte';
+  import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -263,7 +256,7 @@
       {/if}
     {:else if section.type === 'draft'}
       {@const columns = new ColumnsLoadout(
-        DraftAnimalColumnRuntime.getConfiguredColumnSpecifications({
+        VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
           sheetType: context.document.type,
           tabId: tabId,
           sectionKey: section.key,

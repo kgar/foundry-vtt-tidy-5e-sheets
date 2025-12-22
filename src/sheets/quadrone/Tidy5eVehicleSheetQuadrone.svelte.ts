@@ -154,7 +154,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           type: 'crew',
           label: 'TIDY5E.Vehicle.Section.Crew.Assigned.Label',
           members: [],
-          key: 'assigned',
+          key: CONSTANTS.SECTION_KEY_ASSIGNED,
         },
         unassigned: {
           ...SheetSections.EMPTY,

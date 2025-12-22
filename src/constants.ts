@@ -15,6 +15,9 @@ export const CONSTANTS = {
     'default section key fallback for column specs',
   COLUMN_SPEC_TAB_KEY_DEFAULT: 'default tab key fallback for column specs',
   COLUMN_SPEC_TYPE_KEY_DEFAULT: 'default sheet type fallback for column specs',
+  SECTION_KEY_ASSIGNED: 'assigned',
+  SECTION_KEY_UNASSIGNED: 'unassigned',
+  SECTION_KEY_PASSENGERS: 'passengers',
   DOCUMENT_NAME_ACTOR: 'Actor',
   DOCUMENT_NAME_ACTIVE_EFFECT: 'ActiveEffect',
   DOCUMENT_NAME_ACTIVITY: 'Activity',
@@ -39,6 +42,8 @@ export const CONSTANTS = {
   SECTION_TYPE_FACILITY: 'facility',
   SECTION_TYPE_FEATURE: 'feature',
   SECTION_TYPE_INVENTORY: 'inventory',
+  SECTION_TYPE_CREW: 'crew',
+  SECTION_TYPE_PASSENGERS: 'passengers',
   SECTION_TYPE_DRAFT_ANIMALS: 'draft',
   SECTION_TYPE_SPELLBOOK: 'spellbook',
   FILTER_ACTIVATION_COST_ACTION: 'activationCostAction',
@@ -225,7 +230,8 @@ export const CONSTANTS = {
   SPELL_SLOT_TRACKER_MODE_PIPS: 'pips',
   SPELL_SLOT_TRACKER_MODE_VALUE_MAX: 'value-max',
   SHOW_LEGENDARIES_ON_NPC_STATBLOCK_PREFERENCE: 'showLegendariesOnNpcStatblock',
-  INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE: 'includeSpellbookInNpcStatblockTab',
+  INCLUDE_SPELLBOOK_IN_NPC_STATBLOCK_PREFERENCE:
+    'includeSpellbookInNpcStatblockTab',
   CLASS_ACTOR_SHEET_5E: 'ActorSheet5e',
   HTML_DYNAMIC_RENDERING_ATTRIBUTE: 'data-tidy-render-scheme="handlebars"',
   HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR:
