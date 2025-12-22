@@ -50,19 +50,19 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-      // classes: [
-      //   CONSTANTS.MODULE_ID,
-      //   'sheet',
-      //   'actor',
-      //   CONSTANTS.SHEET_TYPE_VEHICLE,
-      //   CONSTANTS.SHEET_TYPE_NPC,
-      //   CONSTANTS.SHEET_LAYOUT_QUADRONE,
-      // ],
-      position: {
-        width: 740,
-        height: 810,
-      },
-    };
+    // classes: [
+    //   CONSTANTS.MODULE_ID,
+    //   'sheet',
+    //   'actor',
+    //   CONSTANTS.SHEET_TYPE_VEHICLE,
+    //   CONSTANTS.SHEET_TYPE_NPC,
+    //   CONSTANTS.SHEET_LAYOUT_QUADRONE,
+    // ],
+    position: {
+      width: 740,
+      height: 810,
+    },
+  };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -304,6 +304,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         uuids.map(async (uuid) => {
           return {
             actor: await fromUuid(uuid),
+            subtitle: 'Passenger subtitle here',
           } satisfies PassengerMemberContext;
         })
       )
@@ -573,6 +574,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
 
     return entries;
+  }
+
   async removeDraftAnimal(uuid: string) {
     const draft = [...this.actor.system.draft.value];
     const removed = draft.findSplice((u) => u === uuid);
@@ -687,7 +690,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     counts?: Record<string, number>
   ): Promise<{
     total: number;
-    value: Array<{ actor: object; quantity: number; uuid: string }>;
+    value: Array<{
+      actor: object;
+      quantity: number;
+      uuid: string;
+      subtitle: string;
+    }>;
   }> {
     let total = 0;
 

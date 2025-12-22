@@ -1550,6 +1550,7 @@ export type DraftAnimalSection = {
 
 export type CrewMemberContext = {
   actor: Actor5e;
+  subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
 };
 
@@ -1565,6 +1566,7 @@ export type CrewSections = {
 
 export type PassengerMemberContext = {
   actor: Actor5e;
+  subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
 };
 
@@ -1598,7 +1600,6 @@ export type VehicleSheetQuadroneContext = {
   scale: number;
   showContainerPanel: boolean;
   size: ActorSizeContext;
-  showContainerPanel: boolean;
   speeds: ActorSpeedSenseEntryContext[];
   statblock: (InventorySection | DraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
@@ -1615,8 +1616,6 @@ export type VehicleSheetQuadroneContext = {
   utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
-
-
 
 export type TravelSpeedConfigEntry = {
   key: string;

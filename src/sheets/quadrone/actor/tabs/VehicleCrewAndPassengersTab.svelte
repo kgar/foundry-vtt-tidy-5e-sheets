@@ -6,6 +6,11 @@
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
+  import type { CrewSection, PassengerSection } from 'src/types/types';
+  import type { Snippet } from 'svelte';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { VehicleCrewMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
+  import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -34,63 +39,87 @@
 
 <!-- TODO: Static "Pins" for Crew and Passengers -->
 <div class="tidy-table-container" bind:this={sectionsContainer}>
-  {#if context.crew.unassigned.members.length || noCrew}
-    {@const section = context.crew.unassigned}
-    <TidyTable key="unassigned" data-key="crew">
+  {@render CrewPassengerTable(
+    context.crew.unassigned,
+    false,
+    UnassignedNoCrewView,
+  )}
+
+  {#snippet UnassignedNoCrewView(section: CrewSection | PassengerSection)}
+    Unassigned Empty State here
+  {/snippet}
+
+  {@render CrewPassengerTable(context.crew.assigned, true)}
+
+  {@render CrewPassengerTable(
+    context.passengers,
+    false,
+    UnassignedNoPassengerView,
+  )}
+
+  {#snippet UnassignedNoPassengerView(section: CrewSection | PassengerSection)}
+    Passenger Empty State here
+  {/snippet}
+</div>
+
+{#snippet CrewPassengerTable(
+  section: CrewSection | PassengerSection,
+  showCount: boolean,
+  noMembersView?: Snippet<[CrewSection | PassengerSection]>,
+)}
+  {#if section.members.length || noMembersView}
+    {@const columns = new ColumnsLoadout(
+      VehicleCrewMemberColumnRuntime.getConfiguredColumnSpecifications({
+        sheetType: context.document.type,
+        tabId: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
+        sectionKey: section.key,
+        rowActions: section.rowActions,
+        section: section,
+        sheetDocument: context.document,
+      }),
+    )}
+    {@const hiddenColumns =
+      VehicleCrewMemberColumnRuntime.determineHiddenColumns(
+        sectionsInlineWidth,
+        columns,
+      )}
+    <TidyTable key={section.key} data-key={section.type}>
       {#snippet header(expanded)}
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true} class="header-label-cell">
             <h3>
               {localize(section.label)}
             </h3>
+            {#if showCount}
+              <span class="table-header-count">{section.members.length}</span>
+            {/if}
           </TidyTableHeaderCell>
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each context.crew.unassigned.members as member}
-          <!-- Unassigned table -->
+          {#each columns.ordered as column}
+            {@const hidden = hiddenColumns.has(column.key)}
 
-          <TidyTableRow>
-            <img
-              class="item-image"
-              alt={member.actor.name}
-              src={member.actor.img}
-            />
-
-            <TidyTableCell primary={true} class="item-label text-cell">
-              <a
-                class="item-name"
-                role="button"
-                data-keyboard-focus
-                tabindex="0"
-              >
-                <span class="cell-text">
-                  <span class="cell-name">{member.actor.name}</span>
-                  <span class="cell-context">TODO: Subtitle</span>
-                </span>
-              </a>
-            </TidyTableCell>
-          </TidyTableRow>
-        {/each}
-        {#if noCrew}
-          <!-- Unassigned Empty State -->
-        {/if}
-      {/snippet}
-    </TidyTable>
-  {/if}
-
-  <!-- Assigned table -->
-  {#if context.crew.assigned.members.length}
-    {@const section = context.crew.assigned}
-    <TidyTable key="assigned" data-key="crew">
-      {#snippet header(expanded)}
-        <TidyTableHeaderRow class="theme-dark">
-          <TidyTableHeaderCell primary={true} class="header-label-cell">
-            <h3>
-              {localize(section.label)}
-            </h3>
-            <span class="table-header-count">{section.members.length}</span>
-          </TidyTableHeaderCell>
+            <TidyTableHeaderCell
+              class={[column.headerClasses, { hidden: hidden }]}
+              columnWidth="{column.widthRems}rem"
+              data-tidy-column-key={column.key}
+            >
+              {#if !!column.headerContent}
+                {#if column.headerContent.type === 'callback'}
+                  {@html column.headerContent.callback?.(
+                    context.document,
+                    context,
+                  )}
+                {:else if column.headerContent.type === 'component'}
+                  <column.headerContent.component
+                    sheetContext={context}
+                    sheetDocument={context.document}
+                    {section}
+                  />
+                {:else if column.headerContent.type === 'html'}
+                  {@html column.headerContent.html}
+                {/if}
+              {/if}
+            </TidyTableHeaderCell>
+          {/each}
         </TidyTableHeaderRow>
       {/snippet}
       {#snippet body()}
@@ -101,6 +130,7 @@
               alt={member.actor.name}
               src={member.actor.img}
             />
+
             <TidyTableCell primary={true} class="item-label text-cell">
               <a
                 class="item-name"
@@ -110,51 +140,40 @@
               >
                 <span class="cell-text">
                   <span class="cell-name">{member.actor.name}</span>
-                  <span class="cell-context">TODO: Subtitle</span>
+                  <span class="cell-context">{member.subtitle}</span>
                 </span>
               </a>
             </TidyTableCell>
+            {#each columns.ordered as column}
+              {@const hidden = hiddenColumns.has(column.key)}
+
+              <TidyTableCell
+                columnWidth="{column.widthRems}rem"
+                class={[column.cellClasses, { hidden }]}
+                attributes={{ ['data-tidy-column-key']: column.key }}
+              >
+                {#if column.cellContent.type === 'callback'}
+                  {@html column.cellContent.callback?.(
+                    context.document,
+                    context,
+                  )}
+                {:else if column.cellContent.type === 'component'}
+                  <column.cellContent.component
+                    rowContext={member}
+                    rowDocument={member.actor}
+                    {section}
+                  />
+                {/if}
+              </TidyTableCell>
+            {/each}
           </TidyTableRow>
+        {:else}
+          {@render noMembersView?.(section)}
         {/each}
+        {#if noCrew}
+          <!-- Unassigned Empty State -->
+        {/if}
       {/snippet}
     </TidyTable>
   {/if}
-
-  <TidyTable key="passengers" data-key="passengers">
-    {#snippet header(expanded)}
-      <TidyTableHeaderRow class="theme-dark">
-        <TidyTableHeaderCell primary={true} class="header-label-cell">
-          <h3>
-            {localize(context.passengers.label)}
-          </h3>
-          <span class="table-header-count"
-            >{context.passengers.members.length}</span
-          >
-        </TidyTableHeaderCell>
-      </TidyTableHeaderRow>
-    {/snippet}
-    {#snippet body()}
-      {#each context.passengers.members as member}
-        <TidyTableRow>
-          <img
-            class="item-image"
-            alt={member.actor.name}
-            src={member.actor.img}
-          />
-          <TidyTableCell primary={true} class="item-label text-cell">
-            <a class="item-name" role="button" data-keyboard-focus tabindex="0">
-              <span class="cell-text">
-                <span class="cell-name">{member.actor.name}</span>
-                <span class="cell-context">TODO: Subtitle</span>
-              </span>
-            </a>
-          </TidyTableCell>
-        </TidyTableRow>
-      {/each}
-    {/snippet}
-  </TidyTable>
-
-  <!-- TODO: Crew: Empty State UI -->
-</div>
-
-<!-- TODO: Use snippets like Group sheet which are accent-color-aware for hover states, etc. -->
+{/snippet}
