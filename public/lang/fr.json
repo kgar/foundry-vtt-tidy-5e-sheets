@@ -983,5 +983,12 @@
     "TIDY5E.LegendaryAbbr": "AL",
     "TIDY5E.LairAbbr": "Antre",
     "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animal de trait",
-    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animaux de trait"
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animaux de trait",
+    "TIDY5E.AddCustom": "Ajouter un {name} personalisé",
+    "TIDY5E.CompendiumBrowser": "Ajouter un {name} à partir du Compendium",
+    "TIDY5E.SheetMode.Edit": "Passer en mode lecture",
+    "TIDY5E.SheetMode.Play": "Passer en mode édition",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Transférer toutes les devises à l'acteur parent",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Avis</strong> : Tidy 5e's <strong>fiches classiques</strong> seront supprimé du module Tidy 5e Sheets dans Foundry v14.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Avis</strong> : Tidy 5e's <strong>fiches classiques</strong>ont été supprimés du module Tidy 5e Sheets à partir de Foundry v14."
 }
