@@ -24,10 +24,11 @@
     - [ ] Contains 
       - [ ] Action Bar
         - [ ] Search
-      - [ ] Sheet pins?
-      - [ ] Crew
-      - [ ] Passengers
-      - [ ] Draft Animals
+      - [x] ~~Sheet pins?~~
+      - [x] Crew
+      - [x] Passengers
+      - [x] ~~Draft Animals~~
+    - [ ] Refactor and streamline
     - [ ] Column spec scaffolding
   - [x] Cargo
     - [x] Runtime, component
@@ -78,6 +79,7 @@
 
 ### Short List
 
+- [ ] Possibly fix usability complaint for Loyalty Score setup: https://discord.com/channels/@me/1243307347682529423/1451341294881341480
 - [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
