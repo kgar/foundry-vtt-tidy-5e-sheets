@@ -68,15 +68,29 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         _event: MouseEvent,
         target: HTMLElement
       ) {
-        // TODO: Change to "Choose One", and apply to closest data-area, else crew
-        new dnd5e.applications.CompendiumBrowser({
+        const area =
+          target.closest('[data-area]')?.getAttribute('data-area') ?? 'crew';
+
+        const result = await dnd5e.applications.CompendiumBrowser.selectOne({
           filters: {
             locked: {
               documentClass: 'Actor',
               types: new Set(['npc']),
             },
           },
-        }).render({ force: true });
+        });
+
+        if (!result) {
+          return;
+        }
+
+        const actor = await fromUuid(result);
+
+        if (!actor) {
+          return;
+        }
+
+        this._onAdjustCrew(actor, area);
       },
     },
   };
