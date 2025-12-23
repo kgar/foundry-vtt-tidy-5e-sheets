@@ -62,6 +62,23 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       width: 740,
       height: 810,
     },
+    actions: {
+      browseActors: async function (
+        this: Tidy5eVehicleSheetQuadrone,
+        _event: MouseEvent,
+        target: HTMLElement
+      ) {
+        // TODO: Change to "Choose One", and apply to closest data-area, else crew
+        new dnd5e.applications.CompendiumBrowser({
+          filters: {
+            locked: {
+              documentClass: 'Actor',
+              types: new Set(['npc']),
+            },
+          },
+        }).render({ force: true });
+      },
+    },
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
@@ -585,6 +602,30 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
   }
 
+  _onAdjustCrew(
+    actor: Actor5e,
+    dest: CrewArea5e,
+    { src }: { src?: CrewArea5e } = {}
+  ) {
+    const updates = {};
+
+    if (src) {
+      Object.assign(
+        updates,
+        this.actor.system.getCrewUpdates(src, actor.uuid, '-1')
+      );
+    }
+
+    Object.assign(
+      updates,
+      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1')
+    );
+
+    if (!foundry.utils.isEmpty(updates)) {
+      this.actor.update(updates);
+    }
+  }
+
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
@@ -639,30 +680,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     // TODO: Handle Assignment, if relevant, instead of adjusting crew
 
     return this._onAdjustCrew(document, dest, { src });
-  }
-
-  _onAdjustCrew(
-    actor: Actor5e,
-    dest: CrewArea5e,
-    { src }: { src?: CrewArea5e } = {}
-  ) {
-    const updates = {};
-
-    if (src) {
-      Object.assign(
-        updates,
-        this.actor.system.getCrewUpdates(src, actor.uuid, '-1')
-      );
-    }
-
-    Object.assign(
-      updates,
-      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1')
-    );
-
-    if (!foundry.utils.isEmpty(updates)) {
-      this.actor.update(updates);
-    }
   }
 
   /* -------------------------------------------- */

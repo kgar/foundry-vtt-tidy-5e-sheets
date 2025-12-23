@@ -39,7 +39,7 @@
 </script>
 
 <div class="sheet-pins" data-tidy-sheet-part="sheet-pins">
-  <div class="sheet-pin">
+  <div class="sheet-pin" data-area="crew">
     <div class="pin-details">
       <div class="pin-name-container">
         <span
@@ -73,14 +73,14 @@
     {#if context.system.crew.max > 0}
       <a
         class="button button-icon-only button-borderless highlight-on-hover"
-        onclick={(ev) => alert('TODO: open compendium to add PCs / NPCs')}
+        data-action="browseActors"
       >
         <i class="fas fa-plus"></i>
       </a>
     {/if}
   </div>
 
-  <div class="sheet-pin">
+  <div class="sheet-pin" data-area="passengers">
     <div class="pin-details">
       <div class="pin-name-container">
         <span
@@ -114,7 +114,7 @@
     {#if context.system.passengers.max > 0}
       <a
         class="button button-icon-only button-borderless highlight-on-hover"
-        onclick={(ev) => alert('TODO: open compendium to add PCs / NPCs')}
+        data-action="browseActors"
       >
         <i class="fas fa-plus"></i>
       </a>
@@ -166,7 +166,7 @@
       sectionsInlineWidth,
       columns,
     )}
-    <TidyTable key={section.key} data-key={section.type}>
+    <TidyTable key={section.key} data-area={section.type}>
       {#snippet header(expanded)}
         <TidyTableHeaderRow class="theme-dark">
           <TidyTableHeaderCell primary={true} class="header-label-cell">
