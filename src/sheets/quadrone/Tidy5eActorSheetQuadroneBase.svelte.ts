@@ -393,7 +393,9 @@ export function Tidy5eActorSheetQuadroneBase<
         src,
         token: showToken,
         path: showToken ? 'prototypeToken.texture.src' : 'img',
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
+        shape: showToken
+          ? 'token'
+          : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
         isVideo,
         isRandom,
       };
@@ -438,10 +440,10 @@ export function Tidy5eActorSheetQuadroneBase<
 
       return Object.entries(characterFlags)
         .filter(
-          ([name]) => name in dnd5eFlags && !isNil(dnd5eFlags[name], false)
+          ([name]) => name in dnd5eFlags && !isNil(dnd5eFlags[name], false, '')
         )
         .map<ActorTraitContext>(([key, val]) => {
-          if ('type' in val && val.type === Number) {
+          if ('type' in val && [Number, String].includes(val.type)) {
             return {
               label: val.name,
               value: dnd5eFlags[key],
@@ -810,7 +812,9 @@ export function Tidy5eActorSheetQuadroneBase<
         this.actor.system._source.attributes?.movement ?? {};
 
       function excludeSpeed(key: string) {
-        return isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '');
+        return (
+          isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '')
+        );
       }
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
@@ -827,7 +831,9 @@ export function Tidy5eActorSheetQuadroneBase<
           acc.push({
             key,
             label: config.label,
-            value: FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ?? '',
+            value:
+              FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ??
+              '',
             units:
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,
