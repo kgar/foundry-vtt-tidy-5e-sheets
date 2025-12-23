@@ -11,6 +11,7 @@
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -37,7 +38,90 @@
   );
 </script>
 
-<!-- TODO: Static "Pins" for Crew and Passengers -->
+<div class="sheet-pins" data-tidy-sheet-part="sheet-pins">
+  <div class="sheet-pin">
+    <div class="pin-details">
+      <div class="pin-name-container">
+        <span
+          class="font-label-medium pin-name truncate flex1"
+          data-tooltip="DND5E.VEHICLE.FIELDS.crew.max.label"
+        >
+          {localize('DND5E.VEHICLE.FIELDS.crew.max.label')}
+        </span>
+      </div>
+      <span class="inline-uses color-text-default">
+        <span
+          class={[
+            'uses-value',
+            { diminished: context.system.crew.value.length < 1 },
+          ]}
+        >
+          {context.system.crew.value.length}
+        </span>
+        <span class="divider color-text-gold-emphasis">/</span>
+        <TextInput
+          class={[
+            'uninput uses-max',
+            { diminished: context.system.crew.max < 1 },
+          ]}
+          document={context.document}
+          field="system.crew.max"
+          value={context.system.crew.max}
+        />
+      </span>
+    </div>
+    {#if context.system.crew.max > 0}
+      <a
+        class="button button-icon-only button-borderless highlight-on-hover"
+        onclick={(ev) => alert('TODO: open compendium to add PCs / NPCs')}
+      >
+        <i class="fas fa-plus"></i>
+      </a>
+    {/if}
+  </div>
+
+  <div class="sheet-pin">
+    <div class="pin-details">
+      <div class="pin-name-container">
+        <span
+          class="font-label-medium pin-name truncate flex1"
+          data-tooltip="DND5E.VEHICLE.FIELDS.passengers.max.label"
+        >
+          {localize('DND5E.VEHICLE.FIELDS.passengers.max.label')}
+        </span>
+      </div>
+      <span class="inline-uses color-text-default">
+        <span
+          class={[
+            'uses-value',
+            { diminished: context.system.passengers.value.length < 1 },
+          ]}
+        >
+          {context.system.passengers.value.length}
+        </span>
+        <span class="divider color-text-gold-emphasis">/</span>
+        <TextInput
+          class={[
+            'uninput uses-max',
+            { diminished: context.system.passengers.max < 1 },
+          ]}
+          document={context.document}
+          field="system.passengers.max"
+          value={context.system.passengers.max}
+        />
+      </span>
+    </div>
+    {#if context.system.passengers.max > 0}
+      <a
+        class="button button-icon-only button-borderless highlight-on-hover"
+        onclick={(ev) => alert('TODO: open compendium to add PCs / NPCs')}
+      >
+        <i class="fas fa-plus"></i>
+      </a>
+    {/if}
+  </div>
+</div>
+
 <div class="tidy-table-container" bind:this={sectionsContainer}>
   {@render CrewPassengerTable(
     context.crew.unassigned,
@@ -78,11 +162,10 @@
         sheetDocument: context.document,
       }),
     )}
-    {@const hiddenColumns =
-      VehicleMemberColumnRuntime.determineHiddenColumns(
-        sectionsInlineWidth,
-        columns,
-      )}
+    {@const hiddenColumns = VehicleMemberColumnRuntime.determineHiddenColumns(
+      sectionsInlineWidth,
+      columns,
+    )}
     <TidyTable key={section.key} data-key={section.type}>
       {#snippet header(expanded)}
         <TidyTableHeaderRow class="theme-dark">
