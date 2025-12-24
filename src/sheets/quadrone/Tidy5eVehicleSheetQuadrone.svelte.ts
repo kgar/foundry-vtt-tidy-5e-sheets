@@ -310,22 +310,30 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     const crew = this.groupCrew(context.system.crew.value);
     const unassigned = { ...crew };
     const vehicleItems = context.items.filter((i) => i.system.isMountable);
-    const assigned = vehicleItems
-      .flatMap((i) => i.system.crew.value)
-      .reduce<Record<string, number>>((obj, uuid) => {
+
+    const assignments: Record<string, Item5e[]> = {};
+    const assigned: Record<string, number> = {};
+
+    for (const item of vehicleItems) {
+      for (const uuid of item.system.crew.value) {
         const max = crew[uuid];
-        if (!max) return obj;
-        obj[uuid] ??= 0;
-        obj[uuid]++;
+        if (!max) {
+          continue;
+        }
+        assigned[uuid] ??= 0;
+        assigned[uuid]++;
         unassigned[uuid]--;
-        return obj;
-      }, {} as Record<string, number>);
+
+        assignments[uuid] ??= [];
+        assignments[uuid].push(item);
+      }
+    }
 
     context.crew.assigned.members = (
-      await this.resolveCrewMemberContext(assigned)
+      await this.resolveCrewMemberContext(assigned, assignments)
     ).value;
     context.crew.unassigned.members = (
-      await this.resolveCrewMemberContext(unassigned, crew)
+      await this.resolveCrewMemberContext(unassigned)
     ).value;
   }
 
@@ -779,40 +787,59 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
    */
   async resolveCrewMemberContext(
     group: Record<string, number>,
-    counts?: Record<string, number>
+    // Actor UUID to Item UUIDs set
+    actorToItemAssignments?: Record<string, string[]>
   ): Promise<{
-    total: number;
-    value: Array<{
-      actor: object;
+    value: {
+      actor: Actor5e;
       quantity: number;
       uuid: string;
       subtitle: string;
-    }>;
+    }[];
   }> {
-    let total = 0;
+    const value: {
+      actor: Actor5e;
+      quantity: number;
+      uuid: string;
+      subtitle: string;
+      cr?: number;
+      assignedTo?: Item5e;
+    }[] = [];
 
-    const value = Object.entries(group)
-      .filter(([, quantity]) => quantity)
-      .map(async ([uuid, quantity]) => {
-        total += quantity;
-        const actor = await fromUuid(uuid);
-        const { img, name, system } = actor;
-        const cr = system.details?.cr ?? system.details?.level;
-        const subtitle = this._getSubtitle(actor);
-        return {
+    for (const [uuid, quantity] of Object.entries(group)) {
+      if (!quantity) {
+        continue;
+      }
+
+      const actor = await fromUuid(uuid);
+      const { system } = actor;
+      const cr = system.details?.cr ?? system.details?.level;
+      const subtitle = this._getSubtitle(actor);
+
+      if (actorToItemAssignments?.[uuid]) {
+        for (const item of actorToItemAssignments[uuid]) {
+          value.push({
+            uuid,
+            quantity,
+            actor,
+            cr,
+            subtitle,
+            assignedTo: item,
+          });
+        }
+      } else {
+        value.push({
           uuid,
           quantity,
           actor,
-          diff: (counts?.[uuid] ?? 0) - quantity,
           cr,
-          img,
-          name,
           subtitle,
-        };
-      });
+        });
+      }
+    }
+
     return {
-      total,
-      value: (await Promise.all(value)).sort((a, b) => {
+      value: value.sort((a, b) => {
         return (
           (b.cr ?? 0) - (a.cr ?? 0) ||
           a.quantity - b.quantity ||

@@ -6,4 +6,15 @@
     $props();
 </script>
 
-Assigned col here
+{#if rowContext.assignedTo}
+  <img
+    class="item-image"
+    alt={rowContext.assignedTo.name}
+    src={rowContext.assignedTo.img}
+  />
+  <a class="item-name" role="button" data-keyboard-focus tabindex="0">
+    <span class="cell-text">
+      <span class="cell-name">{rowContext.assignedTo.name}</span>
+    </span>
+  </a>
+{/if}
