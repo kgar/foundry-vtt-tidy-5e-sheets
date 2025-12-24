@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/types';
   import type {
     CrewMemberContext,
@@ -12,4 +14,8 @@
     $props();
 </script>
 
-CR col here
+{#if rowDocument.type === CONSTANTS.SHEET_TYPE_NPC}
+  <span class="cr-value font-label-large color-text-default"
+    >{FoundryAdapter.formatCr(rowDocument.system.details.cr)}</span
+  >
+{/if}

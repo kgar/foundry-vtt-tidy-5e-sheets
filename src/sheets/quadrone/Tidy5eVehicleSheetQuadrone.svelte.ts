@@ -293,7 +293,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       members: await Promise.all(
         this.actor.system.draft.value.map(async (uuid: string) => {
           const actor = await fromUuid(uuid);
-          return { actor };
+          return { actor, quantity: 1 };
         })
       ),
       rowActions: TableRowActionsRuntime.getDraftAnimalRowActions(context),
@@ -330,12 +330,15 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
   private async _preparePassengers(context: VehicleSheetQuadroneContext) {
     const uuids: string[] = context.system.passengers.value;
+    const groups = this.groupCrew(uuids);
     context.passengers.members = (
       await Promise.all(
-        uuids.map(async (uuid) => {
+        Object.keys(groups).map(async (uuid) => {
+          const actor = await fromUuid(uuid);
           return {
-            actor: await fromUuid(uuid),
-            subtitle: 'Passenger subtitle here',
+            actor,
+            subtitle: this._getSubtitle(actor),
+            quantity: groups[uuid],
           } satisfies PassengerMemberContext;
         })
       )
@@ -641,6 +644,27 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   }
 
   /* -------------------------------------------- */
+  /*  Application Lifecycle Functions             */
+  /* -------------------------------------------- */
+
+  async _onChangeForm(formConfig: unknown, event: any) {
+    const target = event.target;
+    if (
+      target instanceof HTMLInputElement &&
+      target.closest('[data-member-quantity]')
+    ) {
+      const area =
+        target.closest('[data-area]')?.getAttribute('data-area') ?? 'crew';
+      const uuid = target.closest('[data-uuid]')?.getAttribute('data-uuid');
+      const value = target.value;
+      this.actor.system.adjustCrew(area, uuid, value);
+      return;
+    }
+
+    super._onChangeForm(formConfig, event);
+  }
+
+  /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
 
@@ -737,20 +761,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         const actor = await fromUuid(uuid);
         const { img, name, system } = actor;
         const cr = system.details?.cr ?? system.details?.level;
-        const subtitle = [
-          CONFIG.DND5E.actorSizes[system.traits?.size]?.label,
-          system.details?.type?.label,
-          system.details?.cr
-            ? game.i18n.format('DND5E.CRLabel', {
-                cr: dnd5e.utils.formatCR(system.details.cr),
-              })
-            : null,
-          system.details?.level
-            ? game.i18n.format('DND5E.LevelNumber', {
-                level: system.details.level,
-              })
-            : null,
-        ].filterJoin(' • ');
+        const subtitle = this._getSubtitle(actor);
         return {
           uuid,
           quantity,
@@ -772,5 +783,24 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         );
       }),
     };
+  }
+
+  private _getSubtitle(actor: Actor5e) {
+    const system = actor.system;
+
+    return [
+      CONFIG.DND5E.actorSizes[system.traits?.size]?.label,
+      system.details?.type?.label,
+      system.details?.cr
+        ? game.i18n.format('DND5E.CRLabel', {
+            cr: dnd5e.utils.formatCR(system.details.cr),
+          })
+        : null,
+      system.details?.level
+        ? game.i18n.format('DND5E.LevelNumber', {
+            level: system.details.level,
+          })
+        : null,
+    ].filterJoin(' • ');
   }
 }

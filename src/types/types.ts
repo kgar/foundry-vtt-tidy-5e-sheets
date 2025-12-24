@@ -1552,6 +1552,7 @@ export type CrewMemberContext = {
   actor: Actor5e;
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
 };
 
 export type CrewSection = {
@@ -1568,6 +1569,7 @@ export type PassengerMemberContext = {
   actor: Actor5e;
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
 };
 
 export type PassengerSection = {

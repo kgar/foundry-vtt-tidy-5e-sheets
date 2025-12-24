@@ -11,6 +11,7 @@ import VehicleCrewMemberAssignedColumn from 'src/sheets/quadrone/item/columns/Ve
 import VehicleCrewAssignToColumn from 'src/sheets/quadrone/item/columns/VehicleCrewAssignToColumn.svelte';
 import { getDefaultItemColumns } from './default-item-columns';
 import DraftAnimalTestColumn from 'src/sheets/quadrone/item/columns/DraftAnimalTestColumn.svelte';
+import VehicleMemberHpColumn from 'src/sheets/quadrone/item/columns/VehicleMemberHpColumn.svelte';
 
 type ColumnSpecificationBase = Omit<ColumnSpecification, 'priority' | 'order'>;
 
@@ -39,9 +40,9 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       },
       cellContent: {
         type: 'component',
-        component: VehicleMemberCrColumn,
+        component: VehicleMemberHpColumn,
       },
-      widthRems: 3,
+      widthRems: 4,
     };
 
     const assignToColumn: ColumnSpecificationBase = {
@@ -65,7 +66,7 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: VehicleMemberQuantityColumn,
       },
-      widthRems: 3,
+      widthRems: 5,
     };
 
     const assignedColumn: ColumnSpecificationBase = {
