@@ -440,10 +440,10 @@ export function Tidy5eActorSheetQuadroneBase<
 
       return Object.entries(characterFlags)
         .filter(
-          ([name]) => name in dnd5eFlags && !isNil(dnd5eFlags[name], false)
+          ([name]) => name in dnd5eFlags && !isNil(dnd5eFlags[name], false, '')
         )
         .map<ActorTraitContext>(([key, val]) => {
-          if ('type' in val && val.type === Number) {
+          if ('type' in val && [Number, String].includes(val.type)) {
             return {
               label: val.name,
               value: dnd5eFlags[key],
