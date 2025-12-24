@@ -97,7 +97,7 @@
   let extraTabs = new SvelteSet<string>();
 </script>
 
-<header class="sheet-header flexcol">
+<header class="sheet-header flexcol theme-parchment">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div class="actor-context-row flexrow">
