@@ -1553,6 +1553,7 @@ export type CrewMemberContext = {
   subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
   quantity: number;
+  assignedTo?: Item5e;
 };
 
 export type CrewSection = {
@@ -1596,6 +1597,15 @@ export type VehicleSheetQuadroneContext = {
   features: InventorySection[];
   inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
+  mountableItems: Record<
+    string,
+    {
+      img: string;
+      name: string;
+      uuid: string;
+      crew: { value: number; max: number };
+    }
+  >;
   passengers: PassengerSection;
   passengerCapacity: number;
   quality: number;

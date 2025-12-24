@@ -54,7 +54,7 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
         type: 'component',
         component: VehicleCrewAssignToColumn,
       },
-      widthRems: 3,
+      widthRems: 10,
     };
 
     const qtyColumn: ColumnSpecificationBase = {

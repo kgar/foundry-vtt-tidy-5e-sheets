@@ -1,9 +1,12 @@
 <script lang="ts">
   import InlineQuantityTracker from 'src/components/trackers/InlineQuantityTracker.svelte';
   import type { ColumnCellProps } from 'src/runtime/types';
+  import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type {
     CrewMemberContext,
+    CrewSection,
     PassengerMemberContext,
+    PassengerSection,
   } from 'src/types/types';
 
   let {
@@ -13,12 +16,17 @@
   }: ColumnCellProps<any, CrewMemberContext | PassengerMemberContext> =
     $props();
 
-  const type = $derived('type' in section ? section.type : 'crew');
+  const context = $derived(getVehicleSheetQuadroneContext());
+
+  function handleChange(delta: string) {
+    const type = (section as CrewSection | PassengerSection).type;
+
+    context.sheet.applyDeltaToCrew(type, rowDocument.uuid, delta);
+  }
 </script>
 
 <InlineQuantityTracker
   value={rowContext.quantity}
-  data-member-quantity
-  data-area={type}
-  data-uuid={rowDocument.uuid}
+  onIncrement={() => handleChange('+1')}
+  onDecrement={() => handleChange('-1')}
 />

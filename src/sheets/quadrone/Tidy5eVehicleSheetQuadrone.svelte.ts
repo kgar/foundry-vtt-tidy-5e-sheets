@@ -209,6 +209,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         ),
       },
       features: [],
+      mountableItems: {},
       passengers: {
         ...SheetSections.EMPTY,
         type: 'passengers',
@@ -415,7 +416,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     for (const item of context.items) {
       const ctx = (context.itemContext[item.id] ??= {});
-      await this._prepareItem(item, ctx);
+      await this._prepareItem(item, ctx, context);
 
       // partition to section
       if (Inventory.isItemInventoryType(item) && !item.system.isMountable) {
@@ -455,7 +456,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
   protected async _prepareItem(
     item: any,
-    ctx: VehicleItemContext
+    ctx: VehicleItemContext,
+    context: VehicleSheetQuadroneContext
   ): Promise<void> {
     const { uses } = item.system;
     ctx.hasUses = uses && uses.max > 0;
@@ -484,6 +486,18 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           }
         )
       );
+
+      if (item.system.crew.max) {
+        context.mountableItems[item.uuid] = {
+          uuid: item.uuid,
+          img: item.img,
+          name: item.name,
+          crew: {
+            value: ctx.crew.filter((c) => !!c.actor).length,
+            max: item.system.crew.max,
+          },
+        };
+      }
     }
   }
 
@@ -643,25 +657,48 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
   }
 
-  /* -------------------------------------------- */
-  /*  Application Lifecycle Functions             */
-  /* -------------------------------------------- */
+  /**
+   * Handle assigning a crew member to a station.
+   * @param actor            The actor.
+   * @param item              The station.
+   * @param options.src An optional area the crew member came from.
+   * @protected
+   */
+  async _assignCrew(
+    actor: Actor5e,
+    item: Item5e,
+    { src }: { src?: CrewArea5e } = {}
+  ): Promise<void> {
+    const itemUpdates = { _id: item.id };
+    const actorUpdates = { items: [itemUpdates] };
+    let crew = foundry.utils.getProperty(item, 'system.crew.value');
 
-  async _onChangeForm(formConfig: unknown, event: any) {
-    const target = event.target;
-    if (
-      target instanceof HTMLInputElement &&
-      target.closest('[data-member-quantity]')
-    ) {
-      const area =
-        target.closest('[data-area]')?.getAttribute('data-area') ?? 'crew';
-      const uuid = target.closest('[data-uuid]')?.getAttribute('data-uuid');
-      const value = target.value;
-      this.actor.system.adjustCrew(area, uuid, value);
+    // Prevent assigning a non-crew-member.
+    if (src && src !== 'crew') {
       return;
     }
 
-    super._onChangeForm(formConfig, event);
+    // The actor may not be a crew member yet. If so, add them to the crew.
+    if (!src) {
+      Object.assign(
+        actorUpdates,
+        this.actor.system.getCrewUpdates('crew', actor.uuid, '+1')
+      );
+    }
+
+    foundry.utils.setProperty(
+      itemUpdates,
+      'system.crew.value',
+      crew.concat(actor.uuid)
+    );
+
+    await this.actor.update(actorUpdates);
+  }
+
+  async applyDeltaToCrew(area: CrewArea5e, uuid: string, delta: string) {
+    let updates = {};
+    Object.assign(updates, this.actor.system.getCrewUpdates(area, uuid, delta));
+    await this.actor.update(updates);
   }
 
   /* -------------------------------------------- */
