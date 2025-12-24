@@ -93,8 +93,8 @@
     }
 
     .sheet-body {
-      @parchment-texture-top: '../../modules/tidy5e-sheet/images/parchment-texture-top.webp';
-      @parchment-texture-bottom: '../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp';
+      --t5e-background-image-top: url('../../modules/tidy5e-sheet/images/parchment-texture-top.webp');
+      --t5e-background-image-bottom: url('../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp');
 
       display: flex;
       flex: 1;
@@ -105,7 +105,7 @@
       z-index: 0;
 
       background-color: var(--t5e-component-card-default);
-      background-image: url('@{parchment-texture-bottom}');
+      background-image: var(--t5e-background-image-bottom);
       background-position: bottom center;
       background-repeat: no-repeat;
       background-size: cover;
@@ -118,7 +118,7 @@
         left: 0;
         right: 0;
         z-index: -1;
-        background-image: url('@{parchment-texture-top}');
+        background-image: var(--t5e-background-image-top);
         background-position: top center;
         background-repeat: no-repeat;
       }
@@ -191,6 +191,64 @@
         h3 {
           color: var(--t5e-color-text-lighter);
         }
+      }
+    }
+  }
+
+  &:has(.sheet-header.sheet-themed) {}
+
+  &:has(.sheet-header.sheet-parchment) {
+    background: var(--t5e-component-card-darker);
+    @banner-npc-dark : '../../systems/dnd5e/ui/official/banner-npc-dark.webp';
+    --t5e-sheet-header-bg: url('@{banner-npc-dark}');
+
+    &.actor::before {
+      // opacity: 0.2;
+      @texture-gray-1 : '../../modules/tidy5e-sheet/images/texture-gray-1.webp';
+      background-image: url('@{texture-gray-1}');
+      filter: none;
+      opacity: 1;
+      mix-blend-mode: normal;
+    }
+
+    &.actor .sheet-body {
+      @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
+      background-image: url('@{texture-gray-2}');
+    }
+
+    &::after {
+      background: none;
+    }
+
+    .window-content .sheet-body::before {
+      content: none;
+    }
+
+    &.theme-dark {
+      @denim065 : '../../modules/tidy5e-sheet/images/denim065.png';
+      background: url('@{denim065}'),
+      var(--t5e-component-card-dark-darker);
+      background-position: top center, center;
+      background-repeat: repeat, no-repeat;
+      background-size: auto, cover;
+
+      &::before {
+        opacity: 0.24;
+      }
+
+      &::after {
+        @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
+        background-image: url('@{texture-gray-2}');
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        mix-blend-mode: normal;
+        opacity: 0.12;
+      }
+
+      .sheet-body {
+        background: none;
+
       }
     }
   }

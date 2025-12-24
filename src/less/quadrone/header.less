@@ -1,11 +1,15 @@
 .tidy5e-sheet.application:where(.quadrone.actor) {
+  --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-character.webp');
 
   .sheet-header {
     --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_dark.webp');
-    --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_score_dark.webp');
-    --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_dark_prof.webp');
-    --t5e-save-image: url('../../modules/tidy5e-sheet/images/badge_score_dark.webp');
+    --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_dark.webp');
+    --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp');
+    --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_dark.webp');
     --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_dark.svg');
+    --t5e-inspiration-image-single: url('../../modules/tidy5e-sheet/images/badge_inspiration_single.webp');
+    --t5e-inspiration-image-stacked: url('../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp');
+    --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_dark.webp');
 
     --t5e-badge-border-color: var(--t5e-color-gold);
     --t5e-badge-text-color: var(--t5e-color-text-oninverse-default);
@@ -57,11 +61,6 @@
       height: 100%;
     }
 
-    .sheet-body {
-      @parchment-texture-top: '../../modules/tidy5e-sheet/images/parchment-texture-top.webp';
-      @parchment-texture-bottom: '../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp';
-    }
-
     .window-header {}
   }
 
@@ -71,13 +70,75 @@
     --t5e-sheet-header-bg: url('@{banner-npc-dark}');
 
     &.theme-light {
-      --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
-      --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
-      --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_score_light_prof.webp');
-      --t5e-save-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
-      --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg');
 
-      --t5e-badge-text-color: var(--t5e-color-text-default);
+      .sheet-header {
+        --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
+        --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
+        --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
+        --t5e-score-image: url('../../modules/tidy5e-sheet/images/badge_score_light.webp');
+        --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.svg');
+        --t5e-inspiration-image-single: url('../../modules/tidy5e-sheet/images/badge_inspiration_single_light.webp');
+        --t5e-inspiration-image-stacked: url('../../modules/tidy5e-sheet/images/badge_inspiration_stacked_light.webp');
+        --t5e-level-image: url('../../modules/tidy5e-sheet/images/badge_level_light.webp');
+
+        --t5e-badge-text-color: var(--t5e-color-text-default);
+      }
+
+      --color-text-selection: var(--t5e-color-text-oninverse-default);
+      --color-text-selection-bg: var(--t5e-theme-color-default);
+      // --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
+      // --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
+      // --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
+      // --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.webp');
+
+      .initiative-container .initiative.score {
+        background-image: var(--t5e-initiative-image);
+
+        .initiative-roll-button {
+          &:hover {
+            color: var(--t5e-color-text-gold-emphasis);
+          }
+        }
+
+      }
+
+      .color-text-gold {
+        color: var(--t5e-color-text-gold-emphasis);
+      }
+
+      .ability {
+        .ability-score {
+          // background-image: var(--t5e-ability-image);
+          background-position: top center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+      }
+
+      .sheet-header-actions {
+        .button-gold {
+          --t5e-button-text-color: var(--t5e-color-palette-gold-56);
+          border-color: var(--t5e-color-palette-gold-62);
+          box-shadow: var(--t5e-drop-shadow-field);
+          color: var(--t5e-color-palette-gold-62);
+
+          &:hover,
+          &:active,
+          &:focus {
+            --t5e-button-text-color: var(--t5e-color-palette-gold-56);
+            border-color: var(--t5e-color-palette-gold-56);
+            box-shadow: var(--t5e-drop-shadow-field-hover);
+          }
+        }
+
+        .bonus-container {
+          background-image: var(--t5e-ability-image);
+
+          &.proficient {
+            background-image: var(--t5e-ability-proficient-image);
+          }
+        }
+      }
     }
 
     &.actor::before {
@@ -202,33 +263,33 @@
       }
     }
 
+    // Actor name and subtitle
+    .actor-details {
+      &-name-row {
+        display: flex;
+        flex-direction: row;
+
+      }
+
+      &-subtitle-row {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+      }
+    }
+
+    .actor-name {
+      flex-grow: 1;
+      margin: 0 0 0 var(--header-padding);
+      text-shadow: var(--header-shadow);
+      line-height: 100%;
+      text-wrap: nowrap;
+      overflow: hidden;
+    }
+
     &.sheet-themed {}
 
     &.sheet-parchment {}
-  }
-
-  // Actor name and subtitle
-  .actor-details {
-    &-name-row {
-      display: flex;
-      flex-direction: row;
-
-    }
-
-    &-subtitle-row {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-end;
-    }
-  }
-
-  .actor-name {
-    flex-grow: 1;
-    margin: 0 0 0 var(--header-padding);
-    text-shadow: var(--header-shadow);
-    line-height: 100%;
-    text-wrap: nowrap;
-    overflow: hidden;
   }
 
   .actor-subtitle {
@@ -675,7 +736,7 @@
         position: absolute;
         block-size: 100%;
         left: calc(var(--bar-percentage, 0%));
-        transition: all var(--t5e-transition-slow);
+        transition: all 0.5s ease;
         border-radius: var(--t5e-radius-card);
         inline-size: calc(var(--bar-adjusted, 0%));
         opacity: 50%;
@@ -1130,8 +1191,7 @@
 
       // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
       &.single.single.single {
-        @badge_inspiration_single : '../../modules/tidy5e-sheet/images/badge_inspiration_single.webp';
-        background: url('@{badge_inspiration_single}') center / contain no-repeat;
+        background: var(--t5e-inspiration-image-single) center / contain no-repeat;
 
         &::before {
           transition: all var(--t5e-transition-default);
@@ -1154,7 +1214,7 @@
         &:hover,
         &:focus,
         &:active {
-          background: url('@{badge_inspiration_single}') center / contain no-repeat;
+          background: var(--t5e-inspiration-image-single) center / contain no-repeat;
           filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
         }
 
@@ -1173,8 +1233,7 @@
 
       // TODO: Deal with specificity issues that are requiring this extra arbitrary specificity
       &.stacked.stacked.stacked {
-        @badge_inspiration_stacked : '../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp';
-        background: url('@{badge_inspiration_stacked}') center / contain no-repeat;
+        background: var(--t5e-inspiration-image-stacked) center / contain no-repeat;
         width: 2.75rem;
         height: 2.75rem;
 
@@ -1208,7 +1267,7 @@
         &:hover,
         &:focus,
         &:active {
-          background: url('@{badge_inspiration_stacked}') center / contain no-repeat;
+          background: var(--t5e-inspiration-image-stacked) center / contain no-repeat;
           filter: drop-shadow(0 0 0.375rem var(--t5e-theme-color-highlight));
         }
       }
@@ -1279,8 +1338,7 @@
   }
 
   .level-block {
-    @badge_level_dark : '../../modules/tidy5e-sheet/images/badge_level_dark.webp';
-    background: url('@{badge_level_dark}') top center / auto no-repeat;
+    background: var(--t5e-level-image) top center / auto no-repeat;
     background-size: contain;
     margin-left: 1.1875rem;
     margin-right: var(--t5e-size-2x);
@@ -1404,8 +1462,7 @@
 
     .bonus-container {
       aspect-ratio: 1/1.125;
-      @badge_ability_dark : '../../modules/tidy5e-sheet/images/badge_ability_dark.webp';
-      background: url('@{badge_ability_dark}') top center / auto no-repeat;
+      background: var(--t5e-ability-image) top center / auto no-repeat;
       background-size: contain;
       padding-top: var(--t5e-size-halfx);
       position: relative;
@@ -1421,8 +1478,7 @@
       justify-content: center;
 
       &.proficient {
-        @badge_ability_dark_prof : '../../modules/tidy5e-sheet/images/badge_ability_dark_prof.webp';
-        background: url('@{badge_ability_dark_prof}') top center / auto no-repeat;
+        background: var(--t5e-ability-proficient-image) top center / auto no-repeat;
         background-size: contain;
       }
 
@@ -1464,8 +1520,7 @@
     }
 
     .ability-score {
-      @badge_score_dark : '../../modules/tidy5e-sheet/images/badge_score_dark.webp';
-      background: url('@{badge_score_dark}') top center / auto no-repeat;
+      background: var(--t5e-ability-image) top center / auto no-repeat;
       background-size: contain;
       height: 2rem;
       margin-top: -0.75rem;
@@ -1569,8 +1624,7 @@
     position: relative;
 
     .initiative.score {
-      @badge_init_dark : '../../modules/tidy5e-sheet/images/badge_init_dark.webp';
-      background: url('@{badge_init_dark}') top center / auto no-repeat;
+      background: var(--t5e-initiative-image) top center / auto no-repeat;
       background-size: contain;
       border-radius: var(--t5e-size-1x);
       height: 3.75rem;
@@ -2229,10 +2283,10 @@
       &.theme-light .sheet-parchment {
         --color-text-selection: var(--t5e-color-text-oninverse-default);
         --color-text-selection-bg: var(--t5e-theme-color-default);
-        --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
-        --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
-        --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
-        --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.webp');
+        // --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
+        // --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
+        // --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
+        // --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.webp');
 
         .initiative-container .initiative.score {
           background-image: var(--t5e-initiative-image);
@@ -2275,12 +2329,10 @@
           }
 
           .bonus-container {
-            @badge_ability_light : '../../modules/tidy5e-sheet/images/badge_ability_light.webp';
-            background-image: url('@{badge_ability_light}');
+            background-image: var(--t5e-ability-image);
 
             &.proficient {
-              @badge_ability_light_prof : '../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp';
-              background-image: url('@{badge_ability_light_prof}');
+              background-image: var(--t5e-ability-proficient-image);
             }
           }
         }
