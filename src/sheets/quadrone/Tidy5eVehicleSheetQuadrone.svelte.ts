@@ -573,6 +573,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
 
     return entries;
+  }
+
   async removeDraftAnimal(uuid: string) {
     const draft = [...this.actor.system.draft.value];
     const removed = draft.findSplice((u) => u === uuid);
@@ -703,13 +705,13 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           system.details?.type?.label,
           system.details?.cr
             ? game.i18n.format('DND5E.CRLabel', {
-                cr: dnd5e.utils.formatCR(system.details.cr),
-              })
+              cr: dnd5e.utils.formatCR(system.details.cr),
+            })
             : null,
           system.details?.level
             ? game.i18n.format('DND5E.LevelNumber', {
-                level: system.details.level,
-              })
+              level: system.details.level,
+            })
             : null,
         ].filterJoin(' • ');
         return {

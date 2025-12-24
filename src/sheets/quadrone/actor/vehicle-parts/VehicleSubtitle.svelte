@@ -53,10 +53,10 @@
     {#if context.travelSpeeds.currentSpeed}
       <div class="divider-dot"></div>
       <span class="vehicle-travel-pace">
-        <span class="font-label-medium">
+        <span class="font-label-medium color-text-gold">
           {context.travelSpeeds.currentSpeed.label}
         </span>
-        <span class="font-data-medium">
+        <span class="font-data-medium color-text-default">
           {context.travelSpeeds.currentSpeed.valueDay}
         </span>
         <span class="font-label-medium color-text-lighter">
