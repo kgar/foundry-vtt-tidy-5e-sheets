@@ -220,6 +220,7 @@
                 role="button"
                 data-keyboard-focus
                 tabindex="0"
+                onclick={() => member.actor.sheet.render({ force: true })}
               >
                 <span class="cell-text">
                   <span class="cell-name">{member.actor.name}</span>
