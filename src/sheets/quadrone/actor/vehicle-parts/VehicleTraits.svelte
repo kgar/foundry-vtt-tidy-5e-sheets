@@ -49,10 +49,12 @@
       <div class="flexshrink">
         <span class="value font-label-medium">{config.value}</span>
         {#if config.units}
-          <span class="units font-label-medium color-text-lighter">{config.units}</span>
+          <span class="units font-label-medium color-text-lighter"
+            >{config.units}</span
+          >
         {/if}
         {#if context.unlocked && config.onconfig}
-        <!-- TODO switch to inputs -->
+          <!-- TODO switch to inputs -->
           <button
             aria-label={localize('DND5E.TraitConfig', { trait: config.label })}
             type="button"
@@ -146,7 +148,9 @@
   <!-- Cargo Capacity -->
   {@render dimensionTrait({
     iconClass: 'fa-solid fa-box',
-    label: localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label'),
+    label: localize(
+      'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
+    ),
     value: context.cargoCapacity,
     units: context.system.attributes.capacity.cargo.units,
     traitClass: 'trait-cargo-capacity',
@@ -173,7 +177,7 @@
 
   <!-- Size -->
   <ActorTraitSize />
-  
+
   <!-- Weight -->
   {@render dimensionTrait({
     iconClass: 'fa-solid fa-weight-hanging',
@@ -238,7 +242,11 @@
                   {travelPace.label}
                 </span>
                 <span>
-                  <span class="value font-data-medium">{travelPace.valueDay}</span><span class="units font-default-medium color-text-lighter">{travelPace.unitsDay}</span>
+                  <span class="value font-data-medium"
+                    >{travelPace.valueDay}</span
+                  ><span class="units font-default-medium color-text-lighter"
+                    >{travelPace.unitsDay}</span
+                  >
                 </span>
               </li>
             {/each}
@@ -263,10 +271,14 @@
           type="button"
           class="button button-borderless button-icon-only button-config flexshrink"
           data-tooltip
-          onclick={(ev) => alert('TODO: Implement keel config')}
+          onclick={() =>
+            FoundryAdapter.renderMovementSensesConfig(
+              context.actor,
+              'movement',
+            )}
         >
           <i class="fa-solid fa-cog"></i>
-        </button> 
+        </button>
       {/if}
     </div>
     <div class="list-content">
@@ -274,21 +286,30 @@
         <ul class="pills">
           <!-- Travel Speeds -->
           {#each travelSpeedEntries as travelSpeed}
-          <li class="pill">
-            <span class="font-label-medium">{travelSpeed.label}</span>
-            <span>
-              <span class="value font-data-medium">{travelSpeed.valueHour}</span><span class="units font-default-medium color-text-lighter">{travelSpeed.unitsHour}</span>
-            </span>
-          </li>
+            <li class="pill">
+              <span class="font-label-medium">{travelSpeed.label}</span>
+              <span>
+                <span class="value font-data-medium"
+                  >{travelSpeed.valueHour}</span
+                ><span class="units font-default-medium color-text-lighter"
+                  >{travelSpeed.unitsHour}</span
+                >
+              </span>
+            </li>
           {/each}
 
           <!-- Combat Speed -->
-          {#if !!context.system.attributes. movement.max
-                || (context.editable && !!context.travelSpeeds.currentSpeed && !!context.travelSpeeds.travelSpeeds.length)}
+          {#if !!context.system.attributes.movement.max || (context.editable && !!context.travelSpeeds.currentSpeed && !!context.travelSpeeds.travelSpeeds.length)}
             <li class="pill">
-              <span class="font-label-medium">{localize('DND5E.MOVEMENT.Speed')}</span>
+              <span class="font-label-medium"
+                >{localize('DND5E.MOVEMENT.Speed')}</span
+              >
               <span>
-                <span class="value font-data-medium">{context.system.attributes.movement.max}</span><span class="units font-default-medium color-text-lighter">{context.system.attributes.movement.units}</span>
+                <span class="value font-data-medium"
+                  >{context.system.attributes.movement.max}</span
+                ><span class="units font-default-medium color-text-lighter"
+                  >{context.system.attributes.movement.units}</span
+                >
               </span>
             </li>
           {/if}
