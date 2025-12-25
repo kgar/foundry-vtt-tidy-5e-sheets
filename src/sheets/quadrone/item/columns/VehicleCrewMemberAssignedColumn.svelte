@@ -12,7 +12,13 @@
     alt={rowContext.assignedTo.name}
     src={rowContext.assignedTo.img}
   />
-  <a class="item-name" role="button" data-keyboard-focus tabindex="0">
+  <a
+    class="item-name"
+    role="button"
+    data-keyboard-focus
+    tabindex="0"
+    onclick={() => rowContext.assignedTo.sheet.render({ force: true })}
+  >
     <span class="cell-text">
       <span class="cell-name">{rowContext.assignedTo.name}</span>
     </span>
