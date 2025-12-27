@@ -89,7 +89,7 @@
     class:highlight={hoveredFacilityOccupant.value ===
       `${facilityId}-${index}-${uuid}`}
     class:unlocked={context.unlocked}
-    class="slot occupant-slot {type} {imageTypeClassName} occupant-with-menu"
+    class="slot member-slot {type} {imageTypeClassName} occupant-with-menu"
     data-actor-uuid={uuid}
     data-tooltip={name}
     data-facility-id={facilityId}
@@ -114,7 +114,7 @@
     </a>
   </li>
 {:else}
-  <li class="slot occupant-slot {type} empty" data-index={index}>
+  <li class="slot member-slot {type} empty" data-index={index}>
     <a onclick={(ev) => context.editable && onSlotClick(ev)}
       class="button button-tertiary button-icon-only">
       <i class={iconClass}></i>

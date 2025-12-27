@@ -2868,6 +2868,49 @@
   @import './character-parts/tab-effects.less';
   @import './character-parts/tab-biography.less';
 
+  /* Member Slots */
+
+  .slots {
+    display: flex;
+    flex-direction: row;
+    gap: var(--t5e-size-1x);
+    flex-wrap: wrap;
+    margin-block-start: var(--t5e-size-1x);
+    padding: 0;
+  }
+
+  .slot.member-slot {
+    --img-size: var(--t5e-field-size-default);
+    width: var(--img-size);
+    height: var(--img-size);
+    border-radius: 0.125rem;
+    display: inline-flex;
+    position: relative;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    img {
+      width: var(--img-size);
+      height: var(--img-size);
+    }
+
+    .broken-link-icon {
+      font-size: calc(var(--img-size) * 0.75);
+      color: var(--t5e-warning-accent-color);
+      display: inline-flex;
+      align-self: center;
+      justify-content: center;
+    }
+
+    li {
+      border-radius: 0.125rem;
+    }
+  }
+
   &.theme-dark,
   .theme-dark {
     --t5e-color-gold: var(--t5e-color-palette-gold-45);
