@@ -794,30 +794,38 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       subtitle: string;
     }[];
   }> {
-    let total = 0;
+    const value: {
+      actor: Actor5e;
+      quantity: number;
+      uuid: string;
+      subtitle: string;
+      cr?: number;
+      assignedTo?: Item5e;
+    }[] = [];
 
-    const value = Object.entries(group)
-      .filter(([, quantity]) => quantity)
-      .map(async ([uuid, quantity]) => {
-        total += quantity;
-        const actor = await fromUuid(uuid);
-        const { img, name, system } = actor;
-        const cr = system.details?.cr ?? system.details?.level;
-        const subtitle = [
-          CONFIG.DND5E.actorSizes[system.traits?.size]?.label,
-          system.details?.type?.label,
-          system.details?.cr
-            ? game.i18n.format('DND5E.CRLabel', {
-              cr: dnd5e.utils.formatCR(system.details.cr),
-            })
-            : null,
-          system.details?.level
-            ? game.i18n.format('DND5E.LevelNumber', {
-              level: system.details.level,
-            })
-            : null,
-        ].filterJoin(' • ');
-        return {
+    for (const [uuid, quantity] of Object.entries(group)) {
+      if (!quantity) {
+        continue;
+      }
+
+      const actor = await fromUuid(uuid);
+      const { system } = actor;
+      const cr = system.details?.cr ?? system.details?.level;
+      const subtitle = this._getSubtitle(actor);
+
+      if (actorToItemAssignments?.[uuid]) {
+        for (const item of actorToItemAssignments[uuid]) {
+          value.push({
+            uuid,
+            quantity,
+            actor,
+            cr,
+            subtitle,
+            assignedTo: item,
+          });
+        }
+      } else {
+        value.push({
           uuid,
           quantity,
           actor,
