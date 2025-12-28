@@ -825,7 +825,7 @@
       gap: var(--t5e-size-halfx);
       position: relative;
 
-      .label {
+      .label, .value {
         font-size: var(--font-size-14);
         line-height: var(--line-height-16);
       }
@@ -1080,7 +1080,10 @@
         }
       }
 
-      .button-config {
+      .button-config,
+      .button-config:hover,
+      .button-config:focus,
+      .button-config:active {
         border-left: 0.125rem solid var(--t5e-color-gold);
       }
 
@@ -1792,7 +1795,7 @@
           }
 
           input[type="text"].hp-temp-input {
-            padding-left: 0;
+            padding-left: 0.25rem;
             max-width: 3.5rem;
           }
 
@@ -1843,12 +1846,18 @@
           text-align: center;
           align-items: center;
           background-image: var(--t5e-shield-image);
+          z-index: 1;
 
           .button-config {
             position: absolute;
             top: 0.125rem;
             left: -0.1875rem;
           }
+        }
+
+        .hp-overlay-bar {
+          padding-left: 1.5rem;
+          right: -3rem;
         }
 
         .ac-label {
@@ -1872,6 +1881,7 @@
       input[type="text"]:not(:disabled):not(.uninput).h2.actor-name {
         font-size: var(--font-size-46);
         max-height: var(--font-size-46);
+        margin-left: var(--t5e-size-4x);
         // margin-bottom: 0.0625rem;
       }
 
@@ -1889,7 +1899,7 @@
         &.xp-value {
           text-align: left;
           padding-bottom: 0;
-          padding-left: 0.25rem;
+          padding-left: var(--t5e-size-1x);
 
           &:not(:focus, :active) {
             background-color: transparent;
