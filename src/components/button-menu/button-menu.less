@@ -10,7 +10,7 @@
     color: var(--t5e-secondary-color);
     border: none;
     text-align: center;
-    transition: background-color, 0.3s;
+    transition: background-color var(--t5e-transition-default);
 
     &.primary {
       color: var(--t5e-primary-color);
@@ -90,7 +90,7 @@
           background: var(--t5e-button-menu-hover-color);
         }
 
-        > .icon-container {
+        >.icon-container {
           width: 1.25rem;
           display: inline-block;
         }
@@ -99,11 +99,9 @@
   }
 
   .button-menu-divider {
-    background: linear-gradient(
-      90deg,
-      var(--t5e-button-menu-divider-color),
-      transparent
-    );
+    background: linear-gradient(90deg,
+        var(--t5e-button-menu-divider-color),
+        transparent);
     background: var(--t5e-button-menu-divider-color);
     height: 0.0625rem;
     border-radius: 0.0625rem;

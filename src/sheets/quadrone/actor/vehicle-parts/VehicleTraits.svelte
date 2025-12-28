@@ -1,6 +1,7 @@
-<script lang="ts">
+in <script lang="ts">
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import ActorTraitSize from '../parts/ActorTraitSize.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
@@ -30,8 +31,88 @@
 
   // Travel pace entries from context
   let travelSpeedEntries = $derived(context.travelSpeeds?.travelSpeeds ?? []);
+
+  type DimensionTraitConfig = {
+    iconClass: string;
+    label: string;
+    value: string | number;
+    units?: string;
+    traitClass: string;
+    onconfig?: (value: string | number) => void;
+  };
 </script>
 
+{#snippet dimensionTrait(config: DimensionTraitConfig)}
+  <div class={['list-entry', config.traitClass]}>
+    <div class="list-label flexrow">
+      <h4 class="font-weight-label">
+        <i class={config.iconClass}></i>
+        {config.label}
+      </h4>
+      <div class="flexshrink">
+        <span class="value font-label-medium">{config.value}</span>
+        {#if config.units}
+          <span class="units font-label-medium color-text-lighter">{config.units}</span>
+        {/if}
+        {#if context.unlocked && config.onconfig}
+        <!-- TODO switch to inputs -->
+          <button
+            aria-label={localize('DND5E.TraitConfig', { trait: config.label })}
+            type="button"
+            class="button button-borderless button-icon-only button-config flexshrink"
+            data-tooltip
+            onclick={(ev) => config.onconfig?.(ev.currentTarget.value)}
+          >
+            <i class="fa-solid fa-cog"></i>
+          </button>
+        {/if}
+      </div>
+    </div>
+  </div>
+{/snippet}
+
+{#snippet dimensionTraitEditable(config: DimensionTraitConfig)}
+  <div class={['list-entry', config.traitClass]}>
+    <div class="list-label flexrow">
+      <h4 class="font-weight-label">
+        <i class={config.iconClass}></i>
+        {config.label}
+      </h4>
+      <div class="trait-editable flexshrink flexrow gap-1">
+        <TextInputQuadrone
+          class="flex"
+          document={context.actor}
+          field={`system.traits.${config.traitClass}.value`}
+          value={config.value}
+          onSaveChange={(ev: Event & { currentTarget: HTMLInputElement }) => {
+            config.onconfig?.(ev.currentTarget.value);
+            return true;
+          }}
+        />
+        {#if config.units}
+          <SelectQuadrone
+            document={context.actor}
+            field={`system.traits.${config.traitClass}.units`}
+            value={config.units}
+          >
+            <SelectOptions
+              data={context.config.vehicleTypes}
+              labelProp="label"
+            />
+          </SelectQuadrone>
+        {/if}
+      </div>
+    </div>
+  </div>
+{/snippet}
+
+<!-- TODO: Implement Quadrone-styled vehicle traits:
+  - Damage immunities
+  - Damage resistances
+  - Damage vulnerabilities
+  - Condition immunities
+  - Proper Quadrone card/section styling
+-->
 <div class="list traits">
   {#if context.unlocked}
     <div class={['list-entry traits-vehicle-type']}>

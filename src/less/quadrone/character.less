@@ -204,8 +204,13 @@
     position: relative;
 
     .shield {
-      @badge_ac_dark : '../../modules/tidy5e-sheet/images/badge_ac_dark.webp';
-      background-image: url('@{badge_ac_dark}');
+      .ac-label {
+        display: initial;
+      }
+
+      .ac-value {
+        margin: -0.125rem 0 0;
+      }
     }
 
     .button-config {

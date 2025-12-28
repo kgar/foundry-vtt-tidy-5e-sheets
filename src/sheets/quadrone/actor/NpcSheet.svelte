@@ -8,6 +8,7 @@
   import AbilityScoreNPC from './character-parts/AbilityScoreNPC.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import ActorExhaustionBar from './parts/ActorExhaustionBar.svelte';
+  import ActorHealthBar from './parts/ActorHealthBar.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import NpcSidebar from './npc-parts/NpcSidebar.svelte';
@@ -44,24 +45,7 @@
     );
   });
 
-  let hpValueInputFocused = $state(false);
-  let hpTempInputFocused = $state(false);
   let exhaustionBarFocused = $state(false);
-
-  let hpValueInput = $state<TextInputQuadrone>();
-  let hpTempInput = $state<TextInputQuadrone>();
-
-  let hpValue = $derived(context.system.attributes?.hp?.value ?? 0);
-
-  let effectiveMaxHp = $derived(
-    context.system.attributes?.hp?.effectiveMax ?? 0,
-  );
-  let hpMax = $derived(context.system.attributes?.hp?.max ?? 0);
-
-  let hpPct = $derived(context.system.attributes?.hp?.pct ?? 0);
-  let hpTemp = $derived(context.system.attributes?.hp?.temp ?? 0);
-  let hpTempMax = $derived(context.system.attributes?.hp?.tempMax ?? 0);
-
   let exhaustionLevel = $derived(context.system.attributes.exhaustion);
 
   let ini = $derived(getModifierData(context.system.attributes.init.total));
@@ -95,9 +79,15 @@
   }
 
   let extraTabs = new SvelteSet<string>();
+
+  let sheetTheme = $derived(
+    context.themeSettings.actorHeaderBackground !== ''
+      ? 'theme-dark sheet-themed'
+      : 'sheet-parchment',
+  );
 </script>
 
-<header class="sheet-header flexcol">
+<header class={['sheet-header', 'flexcol', sheetTheme]}>
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div class="actor-context-row flexrow">
@@ -258,157 +248,8 @@
           { 'view-only': !context.editable },
         ]}
       >
-        <div class="hp-row flexrow">
-          <div
-            class="meter progress hit-points"
-            style="--bar-percentage: {hpPct.toFixed(0)}%"
-          >
-            <button
-              type="button"
-              class="label pointer"
-              hidden={hpValueInputFocused}
-              onclick={async (ev) => {
-                hpValueInputFocused = true;
-                hpValueInput?.selectText();
-              }}
-              disabled={!context.editable}
-            >
-              <div
-                class="value {hpTemp > 999 || hpValue > 999
-                  ? 'font-small'
-                  : hpTemp > 99 || hpValue > 999
-                    ? 'font-medium'
-                    : 'font-data-large'}"
-                aria-label={localize('DND5E.HitPointsCurrent')}
-              >
-                {hpValue}
-              </div>
-              <div
-                class="separator {hpTemp > 999 || hpValue > 999
-                  ? 'font-small'
-                  : hpTemp > 99 || hpValue > 999
-                    ? 'font-medium'
-                    : 'font-default-large'}"
-              >
-                /
-              </div>
-              <div
-                class="max {hpTemp > 999 || hpValue > 999
-                  ? 'font-small'
-                  : hpTemp > 99 || hpValue > 999
-                    ? 'font-medium'
-                    : 'font-data-large'}"
-                aria-label={localize('DND5E.HitPointsMax')}
-              >
-                {effectiveMaxHp}
-              </div>
 
-              {#if effectiveMaxHp !== hpMax}
-                <i class="fas fa-asterisk max-hp-override-indicator"></i>
-                <!-- TODO: hightouch - relatively positioned tiny pencil to denote altered max HP -->
-              {/if}
-            </button>
-            <TextInputQuadrone
-              bind:this={hpValueInput}
-              id="{appId}-system-attributes-hp"
-              document={context.actor}
-              field="system.attributes.hp.value"
-              class="hp-input"
-              value={hpValue}
-              selectOnFocus={true}
-              enableDeltaChanges={true}
-              onfocus={() => (hpValueInputFocused = true)}
-              onblur={() => (hpValueInputFocused = false)}
-              blurAfterChange={true}
-              hidden={!hpValueInputFocused}
-            />
-          </div>
-          {#if !context.unlocked}
-            {#if hpTemp > 0 || hpTempInputFocused}
-              <!-- TODO: Convert to buttons -->
-              <div
-                class="temp-hp label pointer"
-                role="button"
-                data-keyboard-focus
-                tabindex="0"
-                hidden={hpTempInputFocused}
-                onclick={async (ev) => {
-                  if (!context.editable) return;
-                  hpTempInputFocused = true;
-                  hpTempInput?.selectText();
-                }}
-                onkeydown={async (ev) => {
-                  if (!context.editable) return;
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    hpTempInputFocused = true;
-                    hpTempInput?.selectText();
-                  }
-                }}
-              >
-                <span
-                  class="modifier {hpTemp > 999 || hpValue > 999
-                    ? 'font-small font-label-medium'
-                    : hpTemp > 99 || hpValue > 999
-                      ? 'font-medium font-label-medium'
-                      : 'font-label-large'} color-text-lighter">+</span
-                >
-                <span
-                  class="value {hpTemp > 999 || hpValue > 999
-                    ? 'font-small font-data-medium'
-                    : hpTemp > 99 || hpValue > 999
-                      ? 'font-medium font-data-medium'
-                      : 'font-data-large'} color-text-default"
-                  data-tooltip="DND5E.HitPointsTemp">{hpTemp}</span
-                >
-              </div>
-            {:else if context.editable}
-              <button
-                aria-label={localize('DND5E.HitPointsTemp')}
-                data-tooltip="DND5E.HitPointsTemp"
-                type="button"
-                class="button button-borderless button-icon-only temp-hp"
-                onclick={async (ev) => {
-                  hpTempInputFocused = true;
-                  hpTempInput?.selectText();
-                }}
-                disabled={!context.editable}
-              >
-                <i class="fas fa-hand-holding-heart"></i>
-              </button>
-            {/if}
-            <TextInputQuadrone
-              bind:this={hpTempInput}
-              id="{appId}-system-attributes-hp-temp"
-              document={context.actor}
-              field="system.attributes.hp.temp"
-              class="hp-temp-input"
-              value={hpTemp}
-              selectOnFocus={true}
-              enableDeltaChanges={true}
-              onfocus={() => (hpTempInputFocused = true)}
-              onblur={() => (hpTempInputFocused = false)}
-              blurAfterChange={true}
-              hidden={!hpTempInputFocused}
-            />
-          {:else if context.editable}
-            <button
-              onclick={() =>
-                FoundryAdapter.renderHitPointsDialog(context.actor)}
-              aria-label={localize('DND5E.HitPointsConfig')}
-              data-tooltip="DND5E.HitPointsConfig"
-              type="button"
-              class={[
-                'button',
-                'button-borderless',
-                'button-icon-only',
-                'button-config',
-                { editMode: context.unlocked },
-              ]}
-            >
-              <i class="fas fa-cog"></i>
-            </button>
-          {/if}
-        </div>
+      <ActorHealthBar />
         {#if context.editable}
           <div class="actor-vitals-row">
             {#if exhaustionBarFocused}

@@ -46,7 +46,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<header class="sheet-header flexcol">
+<header class="sheet-header flexcol sheet-themed theme-dark">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div class="actor-context-row flexrow">
@@ -69,23 +69,14 @@
               {#if context.editable}
                 <button
                   type="button"
-                  class="button button-icon-only short-rest button-gold"
-                  data-tooltip="DND5E.REST.Short.Label"
-                  aria-label={localize('DND5E.REST.Short.Label')}
-                  onclick={() => context.actor.shortRest()}
+                  class="button repair-vehicle button-gold"
+                  data-tooltip="TIDY5E.Vehicle.Repair.Label"
+                  aria-label={localize('TIDY5E.Vehicle.Repair.Label')}
+                  onclick={() => context.actor.repair()}
                   disabled={!context.editable}
                 >
-                  <i class="fas fa-utensils"></i>
-                </button>
-                <button
-                  type="button"
-                  class="button button-icon-only long-rest button-gold"
-                  data-tooltip="DND5E.REST.Long.Label"
-                  aria-label={localize('DND5E.REST.Long.Label')}
-                  onclick={() => context.actor.longRest()}
-                  disabled={!context.editable}
-                >
-                  <i class="fas fa-campground"></i>
+                  <i class="fas fa-wrench"></i>
+                  {localize('TIDY5E.Vehicle.Repair.Label')}
                 </button>
               {/if}
             </div>
