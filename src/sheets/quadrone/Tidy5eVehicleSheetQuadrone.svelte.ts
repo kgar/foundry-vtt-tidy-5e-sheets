@@ -796,36 +796,37 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   }> {
     let total = 0;
 
-    const value = Object.entries(group)
-      .filter(([, quantity]) => quantity)
-      .map(async ([uuid, quantity]) => {
-        total += quantity;
-        const actor = await fromUuid(uuid);
-        const { img, name, system } = actor;
-        const cr = system.details?.cr ?? system.details?.level;
-        const subtitle = [
-          CONFIG.DND5E.actorSizes[system.traits?.size]?.label,
-          system.details?.type?.label,
-          system.details?.cr
-            ? game.i18n.format('DND5E.CRLabel', {
-              cr: dnd5e.utils.formatCR(system.details.cr),
-            })
-            : null,
-          system.details?.level
-            ? game.i18n.format('DND5E.LevelNumber', {
-              level: system.details.level,
-            })
-            : null,
-        ].filterJoin(' • ');
-        return {
-          uuid,
-          quantity,
-          actor,
-          cr,
-          subtitle,
-        });
-      }
-    }
+    const value = await Promise.all(
+      Object.entries(group)
+        .filter(([, quantity]) => quantity)
+        .map(async ([uuid, quantity]) => {
+          total += quantity;
+          const actor = await fromUuid(uuid);
+          const { system } = actor;
+          const cr = system.details?.cr ?? system.details?.level;
+          const subtitle = [
+            CONFIG.DND5E.actorSizes[system.traits?.size]?.label,
+            system.details?.type?.label,
+            system.details?.cr
+              ? game.i18n.format('DND5E.CRLabel', {
+                  cr: dnd5e.utils.formatCR(system.details.cr),
+                })
+              : null,
+            system.details?.level
+              ? game.i18n.format('DND5E.LevelNumber', {
+                  level: system.details.level,
+                })
+              : null,
+          ].filterJoin(' • ');
+          return {
+            uuid,
+            quantity,
+            actor,
+            cr,
+            subtitle,
+          };
+        })
+    );
 
     return {
       value: value.sort((a, b) => {

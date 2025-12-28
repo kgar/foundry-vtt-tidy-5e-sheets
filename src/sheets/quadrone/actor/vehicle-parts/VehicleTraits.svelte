@@ -1,7 +1,6 @@
 in <script lang="ts">
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import ActorTraitSize from '../parts/ActorTraitSize.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
@@ -31,80 +30,7 @@ in <script lang="ts">
 
   // Travel pace entries from context
   let travelSpeedEntries = $derived(context.travelSpeeds?.travelSpeeds ?? []);
-
-  type DimensionTraitConfig = {
-    iconClass: string;
-    label: string;
-    value: string | number;
-    units?: string;
-    traitClass: string;
-    onconfig?: (value: string | number) => void;
-  };
 </script>
-
-{#snippet dimensionTrait(config: DimensionTraitConfig)}
-  <div class={['list-entry', config.traitClass]}>
-    <div class="list-label flexrow">
-      <h4 class="font-weight-label">
-        <i class={config.iconClass}></i>
-        {config.label}
-      </h4>
-      <div class="flexshrink">
-        <span class="value font-label-medium">{config.value}</span>
-        {#if config.units}
-          <span class="units font-label-medium color-text-lighter">{config.units}</span>
-        {/if}
-        {#if context.unlocked && config.onconfig}
-        <!-- TODO switch to inputs -->
-          <button
-            aria-label={localize('DND5E.TraitConfig', { trait: config.label })}
-            type="button"
-            class="button button-borderless button-icon-only button-config flexshrink"
-            data-tooltip
-            onclick={(ev) => config.onconfig?.(ev.currentTarget.value)}
-          >
-            <i class="fa-solid fa-cog"></i>
-          </button>
-        {/if}
-      </div>
-    </div>
-  </div>
-{/snippet}
-
-{#snippet dimensionTraitEditable(config: DimensionTraitConfig)}
-  <div class={['list-entry', config.traitClass]}>
-    <div class="list-label flexrow">
-      <h4 class="font-weight-label">
-        <i class={config.iconClass}></i>
-        {config.label}
-      </h4>
-      <div class="trait-editable flexshrink flexrow gap-1">
-        <TextInputQuadrone
-          class="flex"
-          document={context.actor}
-          field={`system.traits.${config.traitClass}.value`}
-          value={config.value}
-          onSaveChange={(ev: Event & { currentTarget: HTMLInputElement }) => {
-            config.onconfig?.(ev.currentTarget.value);
-            return true;
-          }}
-        />
-        {#if config.units}
-          <SelectQuadrone
-            document={context.actor}
-            field={`system.traits.${config.traitClass}.units`}
-            value={config.units}
-          >
-            <SelectOptions
-              data={context.config.vehicleTypes}
-              labelProp="label"
-            />
-          </SelectQuadrone>
-        {/if}
-      </div>
-    </div>
-  </div>
-{/snippet}
 
 <!-- TODO: Implement Quadrone-styled vehicle traits:
   - Damage immunities
@@ -168,7 +94,7 @@ in <script lang="ts">
     label={localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label')}
     value={context.system.traits.keel.value}
     units={context.system.traits.keel.units}
-    traitClass="trait-keel"
+    traitClass="trait-keel trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
@@ -204,7 +130,7 @@ in <script lang="ts">
     label={localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label')}
     value={context.system.traits.beam.value}
     units={context.system.traits.beam.units}
-    traitClass="trait-beam"
+    traitClass="trait-beam trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
@@ -242,7 +168,7 @@ in <script lang="ts">
     )}
     value={context.system.attributes.capacity.cargo.value}
     units={context.system.attributes.capacity.cargo.units}
-    traitClass="trait-cargo-capacity"
+    traitClass="trait-cargo-capacity trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
@@ -277,7 +203,7 @@ in <script lang="ts">
     iconClass="fa-solid fa-people-carry-box"
     label={localize('DND5E.VEHICLE.FIELDS.crew.max.label')}
     value={context.system.crew.max}
-    traitClass="trait-crew-capacity"
+    traitClass="trait-crew-capacity trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
@@ -299,7 +225,7 @@ in <script lang="ts">
     iconClass="fa-solid fa-people-group"
     label={localize('DND5E.VEHICLE.FIELDS.passengers.max.label')}
     value={context.system.passengers.max}
-    traitClass="trait-passengers-capacity"
+    traitClass="trait-passengers-capacity trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
@@ -325,7 +251,7 @@ in <script lang="ts">
     label={localize('DND5E.Weight')}
     value={context.system.traits.weight.value}
     units={context.system.traits.weight.units}
-    traitClass="trait-weight"
+    traitClass="trait-weight trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
@@ -360,7 +286,7 @@ in <script lang="ts">
     iconClass="fa-solid fa-star"
     label={localize('DND5E.Quality')}
     value={context.system.attributes.quality.value}
-    traitClass="trait-quality"
+    traitClass="trait-quality trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
@@ -383,7 +309,7 @@ in <script lang="ts">
     label={localize('DND5E.Cost')}
     value={context.system.attributes.price.value}
     units={context.system.attributes.price.denomination}
-    traitClass="trait-weight"
+    traitClass="trait-weight trait-editable"
     unlocked={context.unlocked}
   >
     {#snippet editableValues()}
