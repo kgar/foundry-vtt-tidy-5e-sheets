@@ -1579,7 +1579,6 @@ export type PassengerSection = {
 } & TidySectionBase;
 
 export type VehicleSheetQuadroneContext = {
-  cargoCapacity: number;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   cost: {
@@ -1587,7 +1586,6 @@ export type VehicleSheetQuadroneContext = {
     denomination: string;
   };
   crew: CrewSections;
-  crewCapacity: number;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
@@ -1607,7 +1605,6 @@ export type VehicleSheetQuadroneContext = {
     }
   >;
   passengers: PassengerSection;
-  passengerCapacity: number;
   quality: number;
   scale: number;
   showContainerPanel: boolean;

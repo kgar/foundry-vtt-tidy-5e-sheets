@@ -168,7 +168,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     const context: VehicleSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       inventory: [],
-      cargoCapacity: this.actor.system.attributes.capacity.cargo.value,
       conditions: conditions,
       cost: {
         value: this.actor.system.attributes.price?.value ?? 0,
@@ -195,7 +194,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           key: 'unassigned',
         },
       },
-      crewCapacity: this.actor.system.crew?.max ?? 0,
       containerPanelItems: await Inventory.getContainerPanelItems(
         actorContext.items
       ),
@@ -217,7 +215,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         members: [],
         key: 'passengers',
       },
-      passengerCapacity: this.actor.system.passengers?.max ?? 0,
       quality: this.actor.system.attributes.quality?.value ?? 0,
       scale: this.actor.system.attributes.scale,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,

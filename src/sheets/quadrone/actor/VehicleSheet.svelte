@@ -16,7 +16,6 @@
   import { getModifierData } from 'src/utils/formatting';
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let appId = $derived(context.actor.uuid.slugify());
 
   let selectedTabId: string = $derived(context.currentTabId);
   let extraTabs = new SvelteSet<string>();
@@ -171,13 +170,11 @@
           { 'view-only': !context.editable },
         ]}
       >
-      <ActorHealthBar />
+        <ActorHealthBar />
         {#if context.editable}
           <div class="actor-vitals-row">
             <div class="dr-container">
-              <span class="label font-label-medium color-text-gold">
-                DR
-              </span>
+              <span class="label font-label-medium color-text-gold"> DR </span>
               <span class="value font-data-medium color-text-default">
                 15
               </span>
@@ -263,7 +260,7 @@
     <div class={['sidebar flexcol', { expanded: sidebarExpanded }]}>
       <VehicleSidebar />
     </div>
-    
+
     <TabContents
       tabs={context.tabs}
       {selectedTabId}
