@@ -32,28 +32,6 @@ const ApiConstants = {
    * <div class="actor-name" data-tidy-sheet-part="name-container">...</div>
    * ```
    *
-   * @example targeting a sheet part for content injection during Tidy render
-   * ```js
-   * // Every time Tidy renders, whether a full render or a partial
-   * Hooks.on("tidy5e-sheet.renderActorSheet", (sheet, element, data) => {
-   *   const api = game.modules.get('tidy5e-sheet').api;
-   *   const selector = api.getSheetPartSelector(
-   *     api.constants.SHEET_PARTS.NAME_CONTAINER
-   *   );
-   *   // get the name container of the target actor sheet
-   *   element
-   *     .querySelector(selector)
-   *     // inject some HTML
-   *     ?.insertAdjacentHTML(
-   *       // put it as the first element inside the name container; see https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#afterbegin
-   *       "afterbegin",
-   *       // here's my content
-   *       // pro tip: `data-tidy-render-scheme="handlebars"` causes this content to re-render on every Tidy render, full or partial
-   *       `<h2 type="button" style="width: 100%;" data-tidy-render-scheme="handlebars"><i class="fa-solid fa-star"></i></h2>`
-   *     );
-   * });
-   * ```
-   *
    * @remarks
    * Tidy 5e Sheets are tagged with `data-tidy-sheet-part` attributes
    * so that most parts of the sheet can be generally identified.
