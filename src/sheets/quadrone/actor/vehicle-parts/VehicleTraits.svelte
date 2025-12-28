@@ -1,6 +1,7 @@
-<script lang="ts">
+in <script lang="ts">
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
   import ActorTraitSize from '../parts/ActorTraitSize.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
@@ -35,7 +36,7 @@
     value: string | number;
     units?: string;
     traitClass: string;
-    onconfig?: () => void;
+    onconfig?: (value: string | number) => void;
   };
 </script>
 
@@ -58,10 +59,45 @@
             type="button"
             class="button button-borderless button-icon-only button-config flexshrink"
             data-tooltip
-            onclick={config.onconfig}
+            onclick={(ev) => config.onconfig?.(ev.currentTarget.value)}
           >
             <i class="fa-solid fa-cog"></i>
           </button>
+        {/if}
+      </div>
+    </div>
+  </div>
+{/snippet}
+
+{#snippet dimensionTraitEditable(config: DimensionTraitConfig)}
+  <div class={['list-entry', config.traitClass]}>
+    <div class="list-label flexrow">
+      <h4 class="font-weight-label">
+        <i class={config.iconClass}></i>
+        {config.label}
+      </h4>
+      <div class="trait-editable flexshrink flexrow gap-1">
+        <TextInputQuadrone
+          class="flex"
+          document={context.actor}
+          field={`system.traits.${config.traitClass}.value`}
+          value={config.value}
+          onSaveChange={(ev: Event & { currentTarget: HTMLInputElement }) => {
+            config.onconfig?.(ev.currentTarget.value);
+            return true;
+          }}
+        />
+        {#if config.units}
+          <SelectQuadrone
+            document={context.actor}
+            field={`system.traits.${config.traitClass}.units`}
+            value={config.units}
+          >
+            <SelectOptions
+              data={context.config.vehicleTypes}
+              labelProp="label"
+            />
+          </SelectQuadrone>
         {/if}
       </div>
     </div>
@@ -124,7 +160,7 @@
     </div>
   {/if}
   <!-- Keel -->
-  {@render dimensionTrait({
+  {@render dimensionTraitEditable({
     iconClass: 'fa-solid fa-arrows-left-right-to-line trait-icon-keel',
     label: localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label'),
     value: context.system.traits.keel.value,
