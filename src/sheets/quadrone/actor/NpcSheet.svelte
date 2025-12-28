@@ -95,6 +95,12 @@
   }
 
   let extraTabs = new SvelteSet<string>();
+
+  let sheetTheme = $derived(
+    context.themeSettings.actorHeaderBackground !== ''
+      ? 'theme-dark sheet-themed'
+      : 'sheet-parchment',
+  );
 </script>
 
 <header class="sheet-header flexcol sheet-parchment">

@@ -4,8 +4,8 @@
   }
 
   &::before {
-    --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-character.webp');
-    background-image: var(--t5e-sheet-header-bg, --t5e-background-image);
+    @banner-character : '../../modules/tidy5e-sheet/images/banner-character.webp';
+    background-image: var(--t5e-sheet-header-bg, url('@{banner-character}'));
     background-position: top center;
     background-size: auto;
     background-repeat: no-repeat;
@@ -203,10 +203,15 @@
     max-width: 5rem;
     position: relative;
 
-    // .shield {
-    //   @badge_ac_dark : '../../modules/tidy5e-sheet/images/badge_ac_dark.webp';
-    //   background-image: url('@{badge_ac_dark}');
-    // }
+    .shield {
+      .ac-label {
+        display: initial;
+      }
+
+      .ac-value {
+        margin: -0.125rem 0 0;
+      }
+    }
 
     .button-config {
       position: absolute;
