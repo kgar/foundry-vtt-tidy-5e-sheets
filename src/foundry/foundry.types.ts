@@ -1,3 +1,5 @@
+import type { CONSTANTS } from 'src/constants';
+
 export type ContextMenuEntry = {
   name?: string;
   icon?: string;
@@ -69,4 +71,8 @@ export type D20Roll = {
 
 /* -------------------------------------------- */
 
-export type CrewArea5e = 'draft' | 'crew' | 'passengers' | (string & {});
+export type CrewArea5e =
+  | [typeof CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS]
+  | [typeof CONSTANTS.SECTION_TYPE_CREW]
+  | [typeof CONSTANTS.SECTION_TYPE_PASSENGERS]
+  | (string & {});

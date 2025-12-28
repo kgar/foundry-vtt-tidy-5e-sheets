@@ -19,17 +19,15 @@
       - [x] Siege Weapons
       - [x] Vehicle Equipment
     - [x] Column spec scaffolding
-  - [ ] Crew & Passengers
+  - [x] Crew & Passengers
     - [x] Runtime, component
-    - [ ] Contains 
-      - [ ] Action Bar
-        - [ ] Search
+    - [x] Contains 
       - [x] ~~Sheet pins?~~
       - [x] Crew
       - [x] Passengers
       - [x] ~~Draft Animals~~
-    - [ ] Refactor and streamline
-    - [ ] Column spec scaffolding
+    - [x] Column spec scaffolding
+    - [x] Column spec implementation
   - [x] Cargo
     - [x] Runtime, component
     - [x] Contains
@@ -56,20 +54,63 @@
   - [ ] Actions max
   - [ ] system.attributes.actions.spent (shown as Actions pips in default)
   - [ ] Action thresholds
-  - [ ] Armor class, Armor class config
-  - [ ] Cost / units
-  - [ ] Size
-  - [ ] Weight / units
-  - [ ] Keel / units
-  - [ ] Beam / units
-  - [ ] Crew Max
-  - [ ] Passenger Max
-  - [ ] Quality tracking (quality toggle?)
-- [ ] Put Source in sheet header
+  - [x] Armor class, Armor class config
+  - [x] Cost / units
+  - [x] Size
+  - [x] Weight / units
+  - [x] Keel / units
+  - [x] Beam / units
+  - [x] Crew Max
+  - [x] Passenger Max
+  - [x] Quality tracking (quality toggle?)
+- [x] Put Source in sheet header
+- [ ] Statblock implementation
+  - [ ] Add Members / slots to item summaries below Activities table when Crew Max or Assigned are greater than 0.
+  - [ ] Locked behaviors
+    - [ ] On assigned slot clicked, open actor sheet
+    - [ ] On unassigned slot clicked, show context menu with available assignee options
+    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
+    - [ ] On broken link slot clicked, unassign
+  - [ ] Unlocked behaviors
+    - [ ] On assigned slot hover, show trash icon with tooltip "Unassign"
+    - [ ] On assigned slot clicked, unassign
+    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
+    - [ ] On broken link slot clicked, unassign
+    - [ ] On unassigned slot clicked, show context menu with available assignee options
+- [ ] Implement Sidebar parts
+  - [x] Vehicle Type
+  - [ ] Keel
+  - [ ] Beam
+  - [ ] Cargo
+  - [ ] Crew
+  - [ ] Passengers
+  - [x] Size
+  - [ ] Weight
+  - [ ] Quality
+  - [ ] Cost
+  - [x] Travel Pace
+  - [x] Speed
+  - [ ] Resistances
+  - [ ] Damage Immunities
+  - [ ] Condition Immunities
+  - [ ] Vulnerabilities
 - [ ] Handle use cases
   - [ ] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
+    - [x] "Assign To" column on Unassigned Crew table
+    - [ ] 💡 Dropdown and/or context menu (ctx menu generally more performant, less static HTML lingering around) when interacting with empty slot in Vehicle Item Expanded UI
   - [ ] Unassign crew member from crew-able vehicle item
+    - [ ] 💡 X icon row action on Assigned Crew row
+    - [ ] 💡 context menu option on Assigned Crew row
+    - [ ] 💡 X / Trash icon on Assigned Member square in Vehicle Item Expanded UI, when unlocked, else open actor sheet
+    - [ ] 💡 context menu option on Assigned Member square in Vehicle Item Expanded UI
   - [ ] Be able to see crew member assignments
+    - [x] Assigned Crew section, Assigned column
+    - [ ] Vehicle Item table row, crew column; expand item on click
+    - [ ] Vehicle Item Expanded UI
+- [ ] 💡 Mountable Items (Vehicle Items)
+  - [ ] 💡 Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
+  - [ ] 💡 Allow unassignment when unlocked, Facility Member style
+  - [ ] 💡 Visualize broken links for repairability
 
 
 ### Vehicle Sheet Questions
@@ -224,7 +265,7 @@
 - [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
-
+- [ ] There are some layout changes to Rider effects: https://discord.com/channels/170995199584108546/670336046164213761/1453597835550396529 ; what is Tidy doing currently, and can we do something differently?
 
 ## hightouch To Do
 

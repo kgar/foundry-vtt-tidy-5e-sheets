@@ -12,13 +12,15 @@
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
   import PropertyTag from '../properties/PropertyTag.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     chatData: ItemChatData;
     item?: Item5e | undefined;
+    afterInlineActivities?: Snippet<[Item5e]>;
   }
 
-  let { chatData, item }: Props = $props();
+  let { chatData, item, afterInlineActivities }: Props = $props();
 
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
@@ -52,6 +54,7 @@
 
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
   <TidyInlineActivitiesList {item} {activities} />
+  {@render afterInlineActivities?.(item)}
 {/if}
 <div
   class="editor-rendered-content"
@@ -105,4 +108,5 @@
 {#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
   <!-- <HorizontalLineSeparator /> -->
   <TidyInlineActivitiesList {item} {activities} />
+  {@render afterInlineActivities?.(item)}
 {/if}

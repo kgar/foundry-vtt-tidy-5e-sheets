@@ -16,7 +16,6 @@
   import { getModifierData } from 'src/utils/formatting';
 
   let context = $derived(getVehicleSheetQuadroneContext());
-  let appId = $derived(context.actor.uuid.slugify());
 
   let selectedTabId: string = $derived(context.currentTabId);
   let extraTabs = new SvelteSet<string>();

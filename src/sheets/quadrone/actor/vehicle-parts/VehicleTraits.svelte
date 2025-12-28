@@ -7,6 +7,8 @@ in <script lang="ts">
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import ActorTraitPills from '../parts/ActorTraitPills.svelte';
+  import VehicleTrait from './VehicleTrait.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let appId = $derived(context.document.id);
@@ -122,12 +124,12 @@ in <script lang="ts">
         {#if context.unlocked}
           <label
             class="select-button button button-borderless button-icon-only button-config flexshrink"
-            for="{appId}-vehicle-type"
+            for="{appId}-sidebar-vehicle-type"
             aria-label={localize('DND5E.VEHICLE.Type.label')}
           >
             <SelectQuadrone
               class="native-select-overlay"
-              id="{appId}-vehicle-type"
+              id="{appId}-sidebar-vehicle-type"
               document={context.actor}
               field="system.details.type"
               value={context.system.details.type}
@@ -159,85 +161,257 @@ in <script lang="ts">
       </div>
     </div>
   {/if}
+
   <!-- Keel -->
-  {@render dimensionTraitEditable({
-    iconClass: 'fa-solid fa-arrows-left-right-to-line trait-icon-keel',
-    label: localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label'),
-    value: context.system.traits.keel.value,
-    units: context.system.traits.keel.units,
-    traitClass: 'trait-keel',
-    onconfig: () => alert('TODO: Implement keel config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-arrows-left-right-to-line trait-icon-keel"
+    label={localize('DND5E.VEHICLE.FIELDS.traits.keel.value.label')}
+    value={context.system.traits.keel.value}
+    units={context.system.traits.keel.units}
+    traitClass="trait-keel"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-keel-value"
+        document={context.actor}
+        field="system.traits.keel.value"
+        value={context.system.traits.keel.value}
+        min="0"
+        placeholder="—"
+        selectOnFocus={true}
+        disabled={!context.editable}
+      />
+
+      <SelectQuadrone
+        id="{appId}-sidebar-keel-units"
+        document={context.actor}
+        field="system.traits.keel.units"
+        value={context.system.traits.keel.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.movementUnits}
+          labelProp="abbreviation"
+        />
+      </SelectQuadrone>
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Beam -->
-  {@render dimensionTrait({
-    iconClass: 'fa-solid fa-arrows-left-right-to-line',
-    label: localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label'),
-    value: context.system.traits.beam.value,
-    units: context.system.traits.beam.units,
-    traitClass: 'trait-beam',
-    onconfig: () => alert('TODO: Implement beam config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-arrows-left-right-to-line"
+    label={localize('DND5E.VEHICLE.FIELDS.traits.beam.value.label')}
+    value={context.system.traits.beam.value}
+    units={context.system.traits.beam.units}
+    traitClass="trait-beam"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-beam-value"
+        document={context.actor}
+        field="system.traits.beam.value"
+        value={context.system.traits.beam.value}
+        min="0"
+        placeholder="—"
+        selectOnFocus={true}
+        disabled={!context.editable}
+      />
+
+      <SelectQuadrone
+        id="{appId}-sidebar-beam-units"
+        document={context.actor}
+        field="system.traits.beam.units"
+        value={context.system.traits.beam.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.movementUnits}
+          labelProp="abbreviation"
+        />
+      </SelectQuadrone>
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Cargo Capacity -->
-  {@render dimensionTrait({
-    iconClass: 'fa-solid fa-box',
-    label: localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label'),
-    value: context.cargoCapacity,
-    units: context.system.attributes.capacity.cargo.units,
-    traitClass: 'trait-cargo-capacity',
-    onconfig: () => alert('TODO: Implement cargo capacity config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-box"
+    label={localize(
+      'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
+    )}
+    value={context.system.attributes.capacity.cargo.value}
+    units={context.system.attributes.capacity.cargo.units}
+    traitClass="trait-cargo-capacity"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-cargo-value"
+        document={context.actor}
+        field="system.attributes.capacity.cargo.value"
+        value={context.system.attributes.capacity.cargo.value}
+        min="0"
+        placeholder="—"
+        selectOnFocus={true}
+        disabled={!context.editable}
+      />
+
+      <SelectQuadrone
+        id="{appId}-sidebar-cargo-units"
+        document={context.actor}
+        field="system.attributes.capacity.cargo.units"
+        value={context.system.attributes.capacity.cargo.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.weightUnits}
+          labelProp="abbreviation"
+        />
+      </SelectQuadrone>
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Crew Capacity -->
-  {@render dimensionTrait({
-    iconClass: 'fa-solid fa-people-carry-box',
-    label: localize('DND5E.VEHICLE.FIELDS.crew.max.label'),
-    value: context.crewCapacity,
-    traitClass: 'trait-crew-capacity',
-    onconfig: () => alert('TODO: Implement crew capacity config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-people-carry-box"
+    label={localize('DND5E.VEHICLE.FIELDS.crew.max.label')}
+    value={context.system.crew.max}
+    traitClass="trait-crew-capacity"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-crew-max"
+        document={context.actor}
+        field="system.crew.max"
+        value={context.system.crew.max}
+        min="0"
+        selectOnFocus={true}
+        placeholder="—"
+        disabled={!context.editable}
+      />
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Passenger Capacity -->
-  {@render dimensionTrait({
-    iconClass: 'fa-solid fa-people-group',
-    label: localize('DND5E.VEHICLE.FIELDS.passengers.max.label'),
-    value: context.passengerCapacity,
-    traitClass: 'trait-passenger-capacity',
-    onconfig: () => alert('TODO: Implement passenger capacity config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-people-group"
+    label={localize('DND5E.VEHICLE.FIELDS.passengers.max.label')}
+    value={context.system.passengers.max}
+    traitClass="trait-passengers-capacity"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-passengers-max"
+        document={context.actor}
+        field="system.passengers.max"
+        value={context.system.passengers.max}
+        min="0"
+        selectOnFocus={true}
+        placeholder="—"
+        disabled={!context.editable}
+      />
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Size -->
   <ActorTraitSize />
-  
+
   <!-- Weight -->
-  {@render dimensionTrait({
-    iconClass: 'fa-solid fa-weight-hanging',
-    label: localize('DND5E.Weight'),
-    value: context.system.traits.weight.value,
-    units: context.system.traits.weight.units,
-    traitClass: 'trait-weight',
-    onconfig: () => alert('TODO: Implement weight config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-weight-hanging"
+    label={localize('DND5E.Weight')}
+    value={context.system.traits.weight.value}
+    units={context.system.traits.weight.units}
+    traitClass="trait-weight"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-weight-value"
+        document={context.actor}
+        field="system.traits.weight.value"
+        value={context.system.traits.weight.value}
+        min="0"
+        placeholder="—"
+        selectOnFocus={true}
+        disabled={!context.editable}
+      />
+
+      <SelectQuadrone
+        id="{appId}-sidebar-weight-units"
+        document={context.actor}
+        field="system.traits.weight.units"
+        value={context.system.traits.weight.units}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.weightUnits}
+          labelProp="abbreviation"
+        />
+      </SelectQuadrone>
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Quality -->
-  {@render dimensionTrait({
-    iconClass: 'fa-solid fa-star',
-    label: localize('DND5E.Quality'),
-    value: context.quality,
-    traitClass: 'trait-quality',
-    onconfig: () => alert('TODO: Implement quality config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-star"
+    label={localize('DND5E.Quality')}
+    value={context.system.attributes.quality.value}
+    traitClass="trait-quality"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-quality-value"
+        document={context.actor}
+        field="system.attributes.quality.value"
+        value={context.system.attributes.quality.value}
+        min="0"
+        selectOnFocus={true}
+        placeholder="—"
+        disabled={!context.editable}
+      />
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Cost -->
-  {@render dimensionTrait({
-    iconClass: 'fa-solid fa-coins',
-    label: localize('DND5E.Cost'),
-    value: context.cost.value,
-    units: context.cost.denomination,
-    traitClass: 'trait-cost',
-    onconfig: () => alert('TODO: Implement cost config'),
-  })}
+  <VehicleTrait
+    iconClass="fa-solid fa-coins"
+    label={localize('DND5E.Cost')}
+    value={context.system.attributes.price.value}
+    units={context.system.attributes.price.denomination}
+    traitClass="trait-weight"
+    unlocked={context.unlocked}
+  >
+    {#snippet editableValues()}
+      <NumberInputQuadrone
+        id="{appId}-sidebar-price-value"
+        document={context.actor}
+        field="system.attributes.price.value"
+        value={context.system.attributes.price.value}
+        min="0"
+        placeholder="—"
+        selectOnFocus={true}
+        disabled={!context.editable}
+      />
+
+      <SelectQuadrone
+        id="{appId}-sidebar-price-denomination"
+        document={context.actor}
+        field="system.attributes.price.denomination"
+        value={context.system.attributes.price.denomination}
+        class="flex0"
+      >
+        <SelectOptions
+          data={context.config.currencies}
+          labelProp="abbreviation"
+        />
+      </SelectQuadrone>
+    {/snippet}
+  </VehicleTrait>
 
   <!-- Travel Pace -->
   <div class={['list-entry traits-travel-pace']}>
@@ -274,7 +448,11 @@ in <script lang="ts">
                   {travelPace.label}
                 </span>
                 <span>
-                  <span class="value font-data-medium">{travelPace.valueDay}</span><span class="units font-default-medium color-text-lighter">{travelPace.unitsDay}</span>
+                  <span class="value font-data-medium"
+                    >{travelPace.valueDay}</span
+                  ><span class="units font-default-medium color-text-lighter"
+                    >{travelPace.unitsDay}</span
+                  >
                 </span>
               </li>
             {/each}
@@ -299,10 +477,14 @@ in <script lang="ts">
           type="button"
           class="button button-borderless button-icon-only button-config flexshrink"
           data-tooltip
-          onclick={(ev) => alert('TODO: Implement keel config')}
+          onclick={() =>
+            FoundryAdapter.renderMovementSensesConfig(
+              context.actor,
+              'movement',
+            )}
         >
           <i class="fa-solid fa-cog"></i>
-        </button> 
+        </button>
       {/if}
     </div>
     <div class="list-content">
@@ -310,21 +492,30 @@ in <script lang="ts">
         <ul class="pills">
           <!-- Travel Speeds -->
           {#each travelSpeedEntries as travelSpeed}
-          <li class="pill">
-            <span class="font-label-medium">{travelSpeed.label}</span>
-            <span>
-              <span class="value font-data-medium">{travelSpeed.valueHour}</span><span class="units font-default-medium color-text-lighter">{travelSpeed.unitsHour}</span>
-            </span>
-          </li>
+            <li class="pill">
+              <span class="font-label-medium">{travelSpeed.label}</span>
+              <span>
+                <span class="value font-data-medium"
+                  >{travelSpeed.valueHour}</span
+                ><span class="units font-default-medium color-text-lighter"
+                  >{travelSpeed.unitsHour}</span
+                >
+              </span>
+            </li>
           {/each}
 
           <!-- Combat Speed -->
-          {#if !!context.system.attributes. movement.max
-                || (context.editable && !!context.travelSpeeds.currentSpeed && !!context.travelSpeeds.travelSpeeds.length)}
+          {#if !!context.system.attributes.movement.max || (context.editable && !!context.travelSpeeds.currentSpeed && !!context.travelSpeeds.travelSpeeds.length)}
             <li class="pill">
-              <span class="font-label-medium">{localize('DND5E.MOVEMENT.Speed')}</span>
+              <span class="font-label-medium"
+                >{localize('DND5E.MOVEMENT.Speed')}</span
+              >
               <span>
-                <span class="value font-data-medium">{context.system.attributes.movement.max}</span><span class="units font-default-medium color-text-lighter">{context.system.attributes.movement.units}</span>
+                <span class="value font-data-medium"
+                  >{context.system.attributes.movement.max}</span
+                ><span class="units font-default-medium color-text-lighter"
+                  >{context.system.attributes.movement.units}</span
+                >
               </span>
             </li>
           {/if}

@@ -1,15 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import {
-    createSearchResultsState,
-    setSearchResultsContext,
-  } from 'src/features/search/search.svelte';
-  import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
-  import InventoryTables from '../../shared/InventoryTables.svelte';
-  import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
@@ -25,7 +18,8 @@
   import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
-  import { DraftAnimalColumnRuntime } from 'src/runtime/tables/DraftAnimalColumnRuntime.svelte';
+  import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
+  import type { VehicleItemContext } from 'src/types/types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -96,7 +90,19 @@
     }, 0),
   );
 
+  function onSlotClick(
+    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+  ): any {
+    ui.notifications.info('TODO: Show options to assign someone.');
+  }
+
   const localize = FoundryAdapter.localize;
+
+  function onOccupantClick(
+    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+  ): any {
+    ui.notifications.info('TODO');
+  }
 </script>
 
 <!-- <ItemsActionBar
@@ -172,7 +178,7 @@
           {#snippet body()}
             {@const itemEntries = section.items.map((item) => ({
               item,
-              ctx: context.itemContext[item.id],
+              ctx: context.itemContext[item.id] as VehicleItemContext,
             }))}
             {#each itemEntries as { item, ctx }, i (item.id)}
               <TidyItemTableRow
@@ -220,19 +226,6 @@
                       </span>
                     </a>
                   </TidyTableCell>
-                  {#if ctx.attunement}
-                    {@const iconClass = item.system.attuned
-                      ? 'fa-solid fa-sun color-text-highlight highlighted'
-                      : 'fa-regular fa-sun color-text-lighter'}
-
-                    {@const title = localize(ctx.attunement.title)}
-
-                    <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
-                    <i
-                      class={[iconClass, 'item-state-indicator']}
-                      data-tooltip={title}
-                    ></i>
-                  {/if}
                   {#each columns.ordered as column}
                     {@const hidden = hiddenColumns.has(column.key)}
 
@@ -256,6 +249,56 @@
                     </TidyTableCell>
                   {/each}
                 {/snippet}
+
+                {#snippet afterInlineActivities(item)}
+                  <TidyTable key="assigned" toggleable={false}>
+                    {#snippet header()}
+                      <TidyTableHeaderRow class="theme-dark">
+                        <TidyTableHeaderCell
+                          primary={true}
+                          class="header-label-cell"
+                        >
+                          <h3>
+                            {localize('DND5E.VEHICLE.Crew.Label')}
+                          </h3>
+                        </TidyTableHeaderCell>
+                      </TidyTableHeaderRow>
+                    {/snippet}
+                    {#snippet body()}
+                      <TidyTableRow>
+                        <TidyTableCell primary={true}>
+                          <ul class="slots assigned unlist">
+                            {#each ctx.crew as slot}
+                              {#if slot.actor}
+                                <li class="slot member-slot">
+                                  <a
+                                    onclick={(ev) =>
+                                      context.editable && onOccupantClick(ev)}
+                                  >
+                                    <img
+                                      src={slot.actor.img}
+                                      alt={slot.actor.name}
+                                    />
+                                  </a>
+                                </li>
+                              {:else}
+                                <li class="slot member-slot empty">
+                                  <a
+                                    onclick={(ev) =>
+                                      context.editable && onSlotClick(ev)}
+                                    class="button button-tertiary button-icon-only"
+                                  >
+                                    <i class="far fa-user"></i>
+                                  </a>
+                                </li>
+                              {/if}
+                            {/each}
+                          </ul>
+                        </TidyTableCell>
+                      </TidyTableRow>
+                    {/snippet}
+                  </TidyTable>
+                {/snippet}
               </TidyItemTableRow>
             {/each}
           {/snippet}
@@ -263,7 +306,7 @@
       {/if}
     {:else if section.type === 'draft'}
       {@const columns = new ColumnsLoadout(
-        DraftAnimalColumnRuntime.getConfiguredColumnSpecifications({
+        VehicleMemberColumnRuntime.getConfiguredColumnSpecifications({
           sheetType: context.document.type,
           tabId: tabId,
           sectionKey: section.key,

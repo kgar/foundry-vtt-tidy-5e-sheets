@@ -560,6 +560,7 @@ export type NpcSheetContext = {
 
 export type VehicleItemCrewAssignment = {
   actor: Actor5e | undefined;
+  brokenLink?: boolean;
 };
 
 export type VehicleItemContext = {
@@ -1550,7 +1551,10 @@ export type DraftAnimalSection = {
 
 export type CrewMemberContext = {
   actor: Actor5e;
+  subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
+  assignedTo?: Item5e;
 };
 
 export type CrewSection = {
@@ -1565,7 +1569,9 @@ export type CrewSections = {
 
 export type PassengerMemberContext = {
   actor: Actor5e;
+  subtitle: string;
   // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
 };
 
 export type PassengerSection = {
@@ -1574,7 +1580,6 @@ export type PassengerSection = {
 } & TidySectionBase;
 
 export type VehicleSheetQuadroneContext = {
-  cargoCapacity: number;
   conditions: Dnd5eActorCondition[];
   containerPanelItems: ContainerPanelItemContext[];
   cost: {
@@ -1582,7 +1587,6 @@ export type VehicleSheetQuadroneContext = {
     denomination: string;
   };
   crew: CrewSections;
-  crewCapacity: number;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
@@ -1592,8 +1596,16 @@ export type VehicleSheetQuadroneContext = {
   features: InventorySection[];
   inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
+  mountableItems: Record<
+    string,
+    {
+      img: string;
+      name: string;
+      uuid: string;
+      crew: { value: number; max: number };
+    }
+  >;
   passengers: PassengerSection;
-  passengerCapacity: number;
   quality: number;
   scale: number;
   showContainerPanel: boolean;
@@ -1614,8 +1626,6 @@ export type VehicleSheetQuadroneContext = {
   utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
-
-
 
 export type TravelSpeedConfigEntry = {
   key: string;

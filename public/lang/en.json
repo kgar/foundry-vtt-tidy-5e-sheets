@@ -829,6 +829,8 @@
   "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Unassigned Crew",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals",
+  "TIDY5E.Vehicle.Member.AssignTo.Label": "Assign to",
+  "TIDY5E.Vehicle.Member.Assigned.Label": "Assigned",
   "TIDY5E.Vehicle.Repair.Label": "Repair",
   "TIDY5E.TotalCrewCount": "Total Crew",
   "TIDY5E.ActionsPerTurn": "Actions Per Turn",
