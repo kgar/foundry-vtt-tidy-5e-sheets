@@ -262,7 +262,7 @@
       <SelectQuadrone
         id="{appId}-sidebar-weight-units"
         document={context.actor}
-        field="system.system.traits.weight.units"
+        field="system.traits.weight.units"
         value={context.system.traits.weight.units}
         class="flex0"
       >
@@ -320,7 +320,7 @@
       <SelectQuadrone
         id="{appId}-sidebar-price-denomination"
         document={context.actor}
-        field="system.system.attributes.price.denomination"
+        field="system.attributes.price.denomination"
         value={context.system.attributes.price.denomination}
         class="flex0"
       >

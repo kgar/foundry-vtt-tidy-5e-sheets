@@ -560,6 +560,7 @@ export type NpcSheetContext = {
 
 export type VehicleItemCrewAssignment = {
   actor: Actor5e | undefined;
+  brokenLink?: boolean;
 };
 
 export type VehicleItemContext = {
