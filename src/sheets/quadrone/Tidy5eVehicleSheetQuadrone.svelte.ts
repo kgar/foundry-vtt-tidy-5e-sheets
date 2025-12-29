@@ -700,6 +700,18 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     await this.actor.update(actorUpdates);
   }
 
+  async _unassignCrew(actor: { uuid: string }, item: Item5e) {
+    let crew = foundry.utils.getProperty(item, 'system.crew.value');
+
+    crew = [...crew];
+
+    if (!crew.findSplice((u: string) => u === actor.uuid)) {
+      return;
+    }
+
+    await item.update({ 'system.crew.value': crew });
+  }
+
   async applyDeltaToCrew(area: CrewArea5e, uuid: string, delta: string) {
     let updates = {};
     Object.assign(updates, this.actor.system.getCrewUpdates(area, uuid, delta));
