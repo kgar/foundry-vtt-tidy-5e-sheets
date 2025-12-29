@@ -65,7 +65,6 @@
     slot: VehicleItemCrewAssignment,
     item: Item5e,
   ): any {
-    ui.notifications.info('TODO: Unassign this UUID');
     if (slot.actor?.uuid) {
       context.sheet._unassignCrew(slot.actor, item);
     }
