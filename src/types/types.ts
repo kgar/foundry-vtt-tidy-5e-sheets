@@ -559,7 +559,8 @@ export type NpcSheetContext = {
 } & ActorSheetContextV1;
 
 export type VehicleItemCrewAssignment = {
-  actor: Actor5e | undefined;
+  // TODO: reconsider doing this?
+  actor: Actor5e | { uuid: string } | undefined;
   brokenLink?: boolean;
 };
 
