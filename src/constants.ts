@@ -116,6 +116,7 @@ export const CONSTANTS = {
   CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER: 'encounter-member',
   CONTEXT_MENU_TYPE_ENCOUNTER_PLACEHOLDER: 'encounter-placeholder',
   CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS: 'facility-occupants',
+  CONTEXT_MENU_TYPE_VEHICLE_MEMBER: 'vehicle-member',
   CONTEXT_MENU_TYPE_GROUP_MEMBER: 'group-member',
   CONTEXT_MENU_TYPE_KEYED_FAVORITE: 'keyed-favorite',
   CONTEXT_MENU_TYPE_ITEMS: 'items',
