@@ -52,10 +52,13 @@
   let showGmOnlyUi = $derived(!identified && gmEditMode);
 </script>
 
-{#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
-  <TidyInlineActivitiesList {item} {activities} />
+{#if settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
+  {#if activities.length > 0}
+    <TidyInlineActivitiesList {item} {activities} />
+  {/if}
   {@render afterInlineActivities?.(item)}
 {/if}
+
 <div
   class="editor-rendered-content"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
@@ -105,8 +108,9 @@
     </div>
   </div>
 </div>
-{#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
-  <!-- <HorizontalLineSeparator /> -->
-  <TidyInlineActivitiesList {item} {activities} />
+{#if settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
+  {#if activities.length > 0}
+    <TidyInlineActivitiesList {item} {activities} />
+  {/if}
   {@render afterInlineActivities?.(item)}
 {/if}

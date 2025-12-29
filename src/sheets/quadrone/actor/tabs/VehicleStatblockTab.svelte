@@ -24,6 +24,9 @@
     VehicleItemCrewAssignment,
   } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
+  import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
+
+  const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -93,43 +96,6 @@
       return count + documentCount;
     }, 0),
   );
-
-  function onSlotClick(
-    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-    item: Item5e,
-  ): any {
-    ui.notifications.info('TODO: Show options to assign someone.');
-    // Show context options to select an available crewmate; include option Add from Compendium
-  }
-
-  const localize = FoundryAdapter.localize;
-
-  function onMemberClick(
-    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-    slot: VehicleItemCrewAssignment,
-    item: Item5e,
-  ): any {
-    if (!slot.actor) {
-      return;
-    }
-
-    if (context.unlocked) {
-      return context.sheet._unassignCrew(slot.actor, item);
-    }
-
-    return slot.actor.sheet.render({ force: true });
-  }
-
-  function onBrokenLinkClick(
-    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
-    slot: VehicleItemCrewAssignment,
-    item: Item5e,
-  ): any {
-    ui.notifications.info('TODO: Unassign this UUID');
-    if (slot.actor?.uuid) {
-      context.sheet._unassignCrew(slot.actor, item);
-    }
-  }
 </script>
 
 <!-- <ItemsActionBar
@@ -278,66 +244,9 @@
                 {/snippet}
 
                 {#snippet afterInlineActivities(item)}
-                  <TidyTable key="assigned" toggleable={false}>
-                    {#snippet header()}
-                      <TidyTableHeaderRow class="theme-dark">
-                        <TidyTableHeaderCell
-                          primary={true}
-                          class="header-label-cell"
-                        >
-                          <h3>
-                            {localize('DND5E.VEHICLE.Crew.Label')}
-                          </h3>
-                        </TidyTableHeaderCell>
-                      </TidyTableHeaderRow>
-                    {/snippet}
-                    {#snippet body()}
-                      <TidyTableRow>
-                        <TidyTableCell primary={true}>
-                          <ul class="slots assigned unlist">
-                            {#each ctx.crew as slot}
-                              {#if slot.brokenLink}
-                                <li class="slot member-slot">
-                                  <a
-                                    onclick={(ev) =>
-                                      context.editable &&
-                                      onBrokenLinkClick(ev, slot, item)}
-                                  >
-                                    <i
-                                      class="fa-solid fa-link-slash broken-link-icon"
-                                    ></i>
-                                  </a>
-                                </li>
-                              {:else if slot.actor}
-                                <li class="slot member-slot">
-                                  <a
-                                    onclick={(ev) =>
-                                      context.editable &&
-                                      onMemberClick(ev, slot, item)}
-                                  >
-                                    <img
-                                      src={slot.actor.img}
-                                      alt={slot.actor.name}
-                                    />
-                                  </a>
-                                </li>
-                              {:else}
-                                <li class="slot member-slot empty">
-                                  <a
-                                    onclick={(ev) =>
-                                      context.editable && onSlotClick(ev, item)}
-                                    class="button button-tertiary button-icon-only"
-                                  >
-                                    <i class="far fa-user"></i>
-                                  </a>
-                                </li>
-                              {/if}
-                            {/each}
-                          </ul>
-                        </TidyTableCell>
-                      </TidyTableRow>
-                    {/snippet}
-                  </TidyTable>
+                  {#if ctx.crew?.length}
+                    <VehicleItemCrewAssignments {ctx} {item} />
+                  {/if}
                 {/snippet}
               </TidyItemTableRow>
             {/each}
