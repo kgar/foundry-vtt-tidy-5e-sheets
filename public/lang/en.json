@@ -120,6 +120,8 @@
   "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remove as Inspiration Source",
   "TIDY5E.ContextMenuActionAddToSheetTab": "Add to Sheet tab",
   "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
+  "TIDY5E.ContextMenuActionUnassign": "Unassign",
+  "TIDY5E.ContextMenuActionAssignToEntity": "Assign to {entityName}",
 
   "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
   "TIDY5E.InspirationAdd": "Add Inspiration",
