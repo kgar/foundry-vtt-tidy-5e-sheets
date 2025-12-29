@@ -19,7 +19,11 @@
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
-  import type { VehicleItemContext } from 'src/types/types';
+  import type {
+    VehicleItemContext,
+    VehicleItemCrewAssignment,
+  } from 'src/types/types';
+  import type { Item5e } from 'src/types/item.types';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -92,16 +96,39 @@
 
   function onSlotClick(
     ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+    item: Item5e,
   ): any {
     ui.notifications.info('TODO: Show options to assign someone.');
+    // Show context options to select an available crewmate; include option Add from Compendium
   }
 
   const localize = FoundryAdapter.localize;
 
-  function onOccupantClick(
+  function onMemberClick(
     ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+    slot: VehicleItemCrewAssignment,
+    item: Item5e,
   ): any {
-    ui.notifications.info('TODO');
+    if (!slot.actor) {
+      return;
+    }
+
+    if (context.unlocked) {
+      return context.sheet._unassignCrew(slot.actor, item);
+    }
+
+    return slot.actor.sheet.render({ force: true });
+  }
+
+  function onBrokenLinkClick(
+    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+    slot: VehicleItemCrewAssignment,
+    item: Item5e,
+  ): any {
+    ui.notifications.info('TODO: Unassign this UUID');
+    if (slot.actor?.uuid) {
+      context.sheet._unassignCrew(slot.actor, item);
+    }
   }
 </script>
 
@@ -269,11 +296,24 @@
                         <TidyTableCell primary={true}>
                           <ul class="slots assigned unlist">
                             {#each ctx.crew as slot}
-                              {#if slot.actor}
+                              {#if slot.brokenLink}
                                 <li class="slot member-slot">
                                   <a
                                     onclick={(ev) =>
-                                      context.editable && onOccupantClick(ev)}
+                                      context.editable &&
+                                      onBrokenLinkClick(ev, slot, item)}
+                                  >
+                                    <i
+                                      class="fa-solid fa-link-slash broken-link-icon"
+                                    ></i>
+                                  </a>
+                                </li>
+                              {:else if slot.actor}
+                                <li class="slot member-slot">
+                                  <a
+                                    onclick={(ev) =>
+                                      context.editable &&
+                                      onMemberClick(ev, slot, item)}
                                   >
                                     <img
                                       src={slot.actor.img}
@@ -285,7 +325,7 @@
                                 <li class="slot member-slot empty">
                                   <a
                                     onclick={(ev) =>
-                                      context.editable && onSlotClick(ev)}
+                                      context.editable && onSlotClick(ev, item)}
                                     class="button button-tertiary button-icon-only"
                                   >
                                     <i class="far fa-user"></i>
