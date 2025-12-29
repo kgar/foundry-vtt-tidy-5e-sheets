@@ -311,7 +311,13 @@
 
         {#snippet body()}
           {#each section.members as member}
-            <TidyTableRow>
+            <TidyTableRow
+              rowContainerAttributes={{
+                ['data-context-menu']:
+                  CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
+                ['data-member-uuid']: member.actor.uuid,
+              }}
+            >
               {#snippet children()}
                 <div class="highlight"></div>
                 <a

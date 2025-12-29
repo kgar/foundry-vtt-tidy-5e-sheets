@@ -1,8 +1,11 @@
 import { ActorItemRuntime } from '../../runtime/ActorItemRuntime';
 import type {
   Actor5e,
+  CrewSection,
+  DraftAnimalSection,
   GroupMemberQuadroneContext,
   GroupMemberSection,
+  PassengerSection,
   SectionCommand,
   TidyItemSectionBase,
 } from 'src/types/types';
@@ -206,6 +209,32 @@ class SectionActions {
     }
 
     return controls;
+  }
+
+  getVehicleMemberHeaderActions(
+    section: CrewSection | PassengerSection | DraftAnimalSection
+  ): SectionCommand[] {
+    const entityNameKey =
+      section.type === 'crew'
+        ? 'DND5E.VEHICLE.Crew.Label'
+        : section.type === 'draft'
+        ? 'TIDY5E.Vehicle.Member.DraftAnimal.Label'
+        : 'TIDY5E.Vehicle.Member.Passenger.Label';
+
+    const addSpecificLabel = FoundryAdapter.localize('TIDY5E.AddSpecific', {
+      name: FoundryAdapter.localize(entityNameKey),
+    });
+
+    return [
+      {
+        label: addSpecificLabel,
+        iconClass: 'fa-solid fa-plus',
+        tooltip: addSpecificLabel,
+        attributes: {
+          ['data-action']: 'browseActors',
+        },
+      },
+    ];
   }
 
   getCreateItemHeaderSectionAction(): SectionCommand {

@@ -32,9 +32,17 @@ function getVehicleMemberContextOptionsQuadrone(
     .closest('[data-item-id]')
     ?.getAttribute('data-item-id');
 
+  const area = element.closest('[data-area]')?.getAttribute('data-area') as
+    | CrewArea5e
+    | undefined;
+
   let options: ContextMenuEntry[] = vehicleItemId
     ? getVehicleItemMemberOptions(element, app, vehicleItemId)
-    : getCrewMemberOptions(element, app);
+    : area === 'crew'
+    ? getCrewMemberOptions(element, app)
+    : area === 'draft'
+    ? getDraftMemberOptions(element, app)
+    : [];
 
   return options;
 }
@@ -60,18 +68,37 @@ function getVehicleItemMemberOptions(
   // - Assign To Items List (if Crew); moves assignment, filters out current item from list
   // - Assign {CrewNameHere} (if empty slot); list of unassigned crewmates, grouped by UUID
   // - Compendium (if empty slot); show compendium selectOne, on successful select then add crew member and then assign
-  // - Remove Draft Animal
 
   throw new Error('Function not implemented.');
+}
+
+function getDraftMemberOptions(
+  element: HTMLElement,
+  app: Tidy5eVehicleSheetQuadrone
+): ContextMenuEntry[] {
+  const canChange = canChangeDocument(app);
+
+  const memberUuid = getMemberUuid(element);
+
+  return [
+    {
+      name: 'TIDY5E.ContextMenuActionRemoveDraftAnimal',
+      icon: '<i class="fa-solid fa-trash"></i>',
+      condition: () => canChange,
+      callback: async () => {
+        if (memberUuid) {
+          await app.removeDraftAnimal(memberUuid);
+        }
+      },
+    },
+  ];
 }
 
 function getCrewMemberOptions(
   element: HTMLElement,
   app: Tidy5eVehicleSheetQuadrone
 ): ContextMenuEntry[] {
-  const memberUuid = element
-    .closest('[data-member-uuid]')
-    ?.getAttribute('data-member-uuid');
+  const memberUuid = getMemberUuid(element);
 
   const assigned = !!element.closest(
     '[data-area="crew"][data-tidy-section-key="assigned"]'
@@ -93,8 +120,7 @@ function getCrewMemberOptions(
     | CrewArea5e
     | undefined;
 
-  const canChange =
-    app.document.isOwner && !FoundryAdapter.isLockedInCompendium(app.document);
+  const canChange = canChangeDocument(app);
 
   const assignableItemOptions: ContextMenuEntry[] = Object.values(
     assignableItems
@@ -150,4 +176,15 @@ function getCrewMemberOptions(
     },
     ...assignableItemOptions,
   ];
+}
+function getMemberUuid(element: HTMLElement) {
+  return element
+    .closest('[data-member-uuid]')
+    ?.getAttribute('data-member-uuid');
+}
+
+function canChangeDocument(app: Tidy5eVehicleSheetQuadrone) {
+  return (
+    app.document.isOwner && !FoundryAdapter.isLockedInCompendium(app.document)
+  );
 }

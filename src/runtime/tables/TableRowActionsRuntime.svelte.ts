@@ -518,10 +518,32 @@ class TableRowActionsRuntime {
               context.sheet.removeDraftAnimal(args.data.uuid);
             },
             doc: context.document,
+            tooltip: FoundryAdapter.localize(
+              'TIDY5E.ContextMenuActionRemoveDraftAnimal'
+            ),
           }),
         } satisfies TableAction<typeof DeleteButton>);
       }
     }
+
+    result.push({
+      component: MenuButton,
+      props: () => ({
+        targetSelector: '[data-context-menu]',
+      }),
+    } satisfies TableAction<typeof MenuButton>);
+
+    return result;
+  }
+
+  getCrewPassengerRowActions(context: VehicleSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Actor5e,
+      TidySectionBase
+    >;
+
+    let result: TableAction<any>[] = [];
 
     result.push({
       component: MenuButton,

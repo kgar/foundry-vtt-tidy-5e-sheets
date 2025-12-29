@@ -31,7 +31,12 @@
 
 {#if section.sectionActions.length <= sectionActionLimit}
   {#each reversedSectionActions as action}
-    <SectionActionHeaderControl {action} {section} {sheetDocument} />
+    <SectionActionHeaderControl
+      {action}
+      {section}
+      {sheetDocument}
+      {...action.attributes}
+    />
   {/each}
 {:else}
   <SectionActionHeaderControl

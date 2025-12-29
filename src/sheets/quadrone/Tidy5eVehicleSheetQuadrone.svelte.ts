@@ -258,7 +258,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           section
         );
       } else {
-        // TODO: Draft Animal item header actions?
+        section.sectionActions =
+          SectionActions.getVehicleMemberHeaderActions(section);
       }
     });
 
@@ -270,6 +271,19 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         section
       );
     });
+
+    context.crew.assigned.rowActions =
+      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+
+    context.crew.unassigned.rowActions =
+      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+    context.crew.unassigned.sectionActions =
+      SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
+
+    context.passengers.rowActions =
+      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+    context.passengers.sectionActions =
+      SectionActions.getVehicleMemberHeaderActions(context.passengers);
 
     // Custom content
     context.customContent = await VehicleSheetQuadroneRuntime.getContent(
