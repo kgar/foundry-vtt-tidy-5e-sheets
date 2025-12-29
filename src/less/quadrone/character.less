@@ -195,17 +195,6 @@
     }
   }
 
-  @container character-sheet (width < 43.75rem) {
-    .sheet-header .actor-vitals-container {
-      max-width: 10rem;
-
-      .actor-image img {
-        height: 10rem;
-        width: 10rem;
-      }
-    }
-  }
-
   .ability-smaller() {
     --collapse-font-medium: 1.4375rem;
 
@@ -289,11 +278,7 @@
     .ability:has(.proficient),
     .initiative-container {
       background: var(--collapse-bg-dark);
-    }
-
-
-    .ability:has(.proficient) {
-      outline-color: rgba(0, 0, 0, 0.64);
+      outline-color: oklch(from var(--t5e-color-gold) l c h / 0.4);
     }
 
     .ability .bonus-container,

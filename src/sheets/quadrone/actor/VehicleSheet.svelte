@@ -46,7 +46,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<header class="sheet-header flexcol sheet-parchment">
+<header class="sheet-header flexcol sheet-themed theme-dark">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div class="actor-context-row flexrow">
