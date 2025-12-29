@@ -64,12 +64,42 @@ function getVehicleItemMemberOptions(
     return [];
   }
 
-  // - Unassign (if Assigned or Broken Link); removes one from target item (-1)
-  // - Assign To Items List (if Crew); moves assignment, filters out current item from list
-  // - Assign {CrewNameHere} (if empty slot); list of unassigned crewmates, grouped by UUID
-  // - Compendium (if empty slot); show compendium selectOne, on successful select then add crew member and then assign
+  return [
+    {
+      name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+      condition: () => !!memberUuid,
+      icon: '<i class="fa-solid fa-trash"></i>',
+      callback: async () => {
+        const actor = await fromUuid(memberUuid);
 
-  throw new Error('Function not implemented.');
+        if (item) {
+          await app._unassignCrew(actor, item);
+        }
+      },
+    },
+    {
+      name: FoundryAdapter.localize('TIDY5E.AddSpecific', {
+        name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
+      }),
+      condition: () => empty,
+      icon: '<i class="fa-solid fa-book-open-reader"></i>',
+      callback: async () => {
+        const newCrewmateUuid = await app.browseActors();
+
+        const actor = await fromUuid(newCrewmateUuid);
+
+        if (!actor) {
+          return;
+        }
+
+        await app._assignCrew(actor, item);
+      },
+    },
+
+    // - Assign To Items List (if Crew); moves assignment, filters out current item from list
+    // - Assign {CrewNameHere} (if empty slot); list of unassigned crewmates, grouped by UUID
+    // - Compendium (if empty slot); show compendium selectOne, on successful select then add crew member and then assign
+  ];
 }
 
 function getDraftMemberOptions(
@@ -145,7 +175,7 @@ function getCrewMemberOptions(
             currentlyAssignedItemId
           );
 
-          if (currentlyAssignedItemId) {
+          if (currentlyAssignedItem) {
             await app._unassignCrew(actor, currentlyAssignedItem);
           }
 
@@ -160,7 +190,7 @@ function getCrewMemberOptions(
   return [
     {
       name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
-      icon: '<i class="fa-solid fa-xmark fa-fw"></i>',
+      icon: '<i class="fa-solid fa-trash fa-fw"></i>',
       condition: () => !!currentlyAssignedItemId && canChange,
       callback: async () => {
         const actor = await fromUuid(memberUuid);

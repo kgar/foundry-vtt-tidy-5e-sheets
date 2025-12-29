@@ -50,20 +50,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    // classes: [
-    //   CONSTANTS.MODULE_ID,
-    //   'sheet',
-    //   'actor',
-    //   CONSTANTS.SHEET_TYPE_VEHICLE,
-    //   CONSTANTS.SHEET_TYPE_NPC,
-    //   CONSTANTS.SHEET_LAYOUT_QUADRONE,
-    // ],
     position: {
       width: 740,
       height: 810,
     },
     actions: {
-      browseActors: async function (
+      browseActors: function (
         this: Tidy5eVehicleSheetQuadrone,
         _event: MouseEvent,
         target: HTMLElement
@@ -71,29 +63,39 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         const area =
           target.closest('[data-area]')?.getAttribute('data-area') ?? 'crew';
 
-        const result = await dnd5e.applications.CompendiumBrowser.selectOne({
-          filters: {
-            locked: {
-              documentClass: 'Actor',
-              types: new Set(['npc']),
-            },
-          },
-        });
-
-        if (!result) {
-          return;
-        }
-
-        const actor = await fromUuid(result);
-
-        if (!actor) {
-          return;
-        }
-
-        this._onAdjustCrew(actor, area);
+        return this.browseAddActor(area);
       },
     },
   };
+
+  browseActors(): Promise<Actor5e | undefined> {
+    return dnd5e.applications.CompendiumBrowser.selectOne({
+      filters: {
+        locked: {
+          documentClass: 'Actor',
+          types: new Set(['npc']),
+        },
+      },
+    });
+  }
+
+  async browseAddActor(area: CrewArea5e) {
+    const result = await this.browseActors();
+
+    if (!result) {
+      return;
+    }
+
+    const actor = await fromUuid(result);
+
+    if (!actor) {
+      return;
+    }
+
+    await this._onAdjustCrew(actor, area);
+
+    return actor;
+  }
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -658,7 +660,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
   }
 
-  _onAdjustCrew(
+  async _onAdjustCrew(
     actor: Actor5e,
     dest: CrewArea5e,
     { src }: { src?: CrewArea5e } = {}
@@ -678,7 +680,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     );
 
     if (!foundry.utils.isEmpty(updates)) {
-      this.actor.update(updates);
+      await this.actor.update(updates);
     }
   }
 
@@ -845,6 +847,11 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       }
 
       const actor = await fromUuid(uuid);
+
+      if (!actor) {
+        continue;
+      }
+
       const { system } = actor;
       const cr = system.details?.cr ?? system.details?.level;
       const subtitle = this._getSubtitle(actor);
