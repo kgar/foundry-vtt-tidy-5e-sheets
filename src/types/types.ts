@@ -1603,6 +1603,7 @@ export type VehicleSheetQuadroneContext = {
       img: string;
       name: string;
       uuid: string;
+      id: string;
       crew: { value: number; max: number };
     }
   >;

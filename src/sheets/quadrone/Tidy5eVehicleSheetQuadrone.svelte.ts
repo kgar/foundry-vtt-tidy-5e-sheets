@@ -487,7 +487,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         Array.fromRange(Math.max(crew.max ?? 0, crew.value.length)).map(
           async (index) => {
             const uuid = crew.value[index];
-            return { actor: uuid ? await fromUuid(uuid) : undefined };
+            let actor = uuid ? await fromUuid(uuid) : undefined;
+            const brokenLink = uuid && !actor;
+            if (brokenLink) {
+              actor = { uuid };
+            }
+            return { actor: actor, brokenLink };
           }
         )
       );
@@ -495,6 +500,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       if (item.system.crew.max) {
         context.mountableItems[item.uuid] = {
           uuid: item.uuid,
+          id: item.id,
           img: item.img,
           name: item.name,
           crew: {
@@ -716,6 +722,10 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     let updates = {};
     Object.assign(updates, this.actor.system.getCrewUpdates(area, uuid, delta));
     await this.actor.update(updates);
+  }
+
+  getAssignableItems(): VehicleSheetQuadroneContext['mountableItems'] {
+    return { ...this._context.data?.mountableItems };
   }
 
   /* -------------------------------------------- */
