@@ -1,0 +1,1 @@
+This documentation is maintained by volunteer contributors. Thanks for your patience as we build out these guides. Please [add an issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues/new/choose) if there's something you'd like more information on!
