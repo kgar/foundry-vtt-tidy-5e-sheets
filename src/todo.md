@@ -49,6 +49,21 @@
     - [x] Runtime, component
     - [x] Implement
 - [x] Implement VehicleTraits.svelte
+- [x] Put Source in sheet header
+- [ ] Statblock implementation
+  - [x] Add Members / slots to item summaries below Activities table when Crew Max or Assigned are greater than 0.
+  - [ ] Data prep: handle brokenLink property in item context prep.
+  - [ ] Locked behaviors
+    - [ ] On assigned slot clicked, open actor sheet
+    - [ ] On unassigned slot clicked, show context menu with available assignee options
+    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
+    - [ ] On broken link slot clicked, unassign
+  - [ ] Unlocked behaviors
+    - [ ] On assigned slot hover, show trash icon with tooltip "Unassign"
+    - [ ] On assigned slot clicked, unassign
+    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
+    - [ ] On broken link slot clicked, unassign
+    - [ ] On unassigned slot clicked, show context menu with available assignee options
 - [ ] Determine where fields will go
   - [ ] system.attributes.actions.stations toggle
   - [ ] Actions max
@@ -63,37 +78,23 @@
   - [x] Crew Max
   - [x] Passenger Max
   - [x] Quality tracking (quality toggle?)
-- [x] Put Source in sheet header
-- [ ] Statblock implementation
-  - [ ] Add Members / slots to item summaries below Activities table when Crew Max or Assigned are greater than 0.
-  - [ ] Locked behaviors
-    - [ ] On assigned slot clicked, open actor sheet
-    - [ ] On unassigned slot clicked, show context menu with available assignee options
-    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
-    - [ ] On broken link slot clicked, unassign
-  - [ ] Unlocked behaviors
-    - [ ] On assigned slot hover, show trash icon with tooltip "Unassign"
-    - [ ] On assigned slot clicked, unassign
-    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
-    - [ ] On broken link slot clicked, unassign
-    - [ ] On unassigned slot clicked, show context menu with available assignee options
-- [ ] Implement Sidebar parts
+- [x] Implement Sidebar parts
   - [x] Vehicle Type
-  - [ ] Keel
-  - [ ] Beam
-  - [ ] Cargo
-  - [ ] Crew
-  - [ ] Passengers
+  - [x] Keel
+  - [x] Beam
+  - [x] Cargo
+  - [x] Crew
+  - [x] Passengers
   - [x] Size
-  - [ ] Weight
-  - [ ] Quality
-  - [ ] Cost
+  - [x] Weight
+  - [x] Quality
+  - [x] Cost
   - [x] Travel Pace
   - [x] Speed
-  - [ ] Resistances
-  - [ ] Damage Immunities
-  - [ ] Condition Immunities
-  - [ ] Vulnerabilities
+  - [x] Resistances
+  - [x] Damage Immunities
+  - [x] Condition Immunities
+  - [x] Vulnerabilities
 - [ ] Handle use cases
   - [ ] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
     - [x] "Assign To" column on Unassigned Crew table
