@@ -1,10 +1,11 @@
 .tidy5e-sheet.application:where(.quadrone.vehicle) {
+  --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-vehicle.webp');
 
-  &::before {
-    @banner-vehicle : '../../modules/tidy5e-sheet/images/banner-vehicle.webp';
-    background-image: var(--t5e-sheet-header-bg, url('@{banner-vehicle}'));
-    // mix-blend-mode: darken;
-  }
+  // &::before {
+  //   @banner-vehicle : '../../modules/tidy5e-sheet/images/banner-vehicle.webp';
+  //   background-image: var(--t5e-sheet-header-bg, url('@{banner-vehicle}'));
+  //   // mix-blend-mode: darken;
+  // }
 
   .dr-container {
     flex: 1;
@@ -34,6 +35,29 @@
       border-bottom: 0.0625rem solid var(--t5e-color-gold);
       padding: 0.25rem 0;
       margin-bottom: 0.25rem;
+    }
+
+    .trait-editable {
+      flex-direction: row;
+      align-items: center;
+      max-height: 1.25rem;
+
+      .list-label {
+        flex: 2;
+      }
+
+      .trait-values {
+        display: flex;
+        flex: 3;
+        gap: 0.25rem;
+        justify-content: flex-end;
+      }
+      input { 
+        flex: 2;
+      }
+      select {
+        flex: 1 0 fit-content;
+      }
     }
 
     .trait-hit-dice {
