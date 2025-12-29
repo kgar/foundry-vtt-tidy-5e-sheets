@@ -1,49 +1,6 @@
 .tidy5e-sheet.application:where(.quadrone.npc) {
   --t5e-background-image: url('../../systems/dnd5e/ui/official/banner-npc-dark.webp');
 
-  background: var(--t5e-component-card-darker);
-
-  &.actor::before {
-    // opacity: 0.2;
-    @texture-gray-1 : '../../modules/tidy5e-sheet/images/texture-gray-1.webp';
-    background-image: url('@{texture-gray-1}');
-    filter: none;
-    opacity: 1;
-    mix-blend-mode: normal;
-  }
-
-  &.actor .sheet-body {
-    @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
-    background-image: url('@{texture-gray-2}');
-  }
-
-  &::after {
-    background: none;
-  }
-
-  .window-content .sheet-body::before {
-    content: none;
-  }
-
-  // ::selection {
-  //   background-color: var(--t5e-component-card-darker);
-  // }
-
-  .sheet-header {
-    background: none;
-
-    .actor-name,
-    .actor-subtitle,
-    .ability .ability-save {
-      text-shadow: none;
-    }
-
-    .ability-save,
-    .ability-roll-button {
-      box-shadow: none;
-    }
-  }
-
   .challenge-rating {
     border: 0.125rem solid var(--t5e-color-palette-gold-62);
     border-radius: 0.1875rem;
@@ -541,34 +498,4 @@
       }
     }
   }
-
-  &.theme-dark {
-    @denim065 : '../../modules/tidy5e-sheet/images/denim065.png';
-    background: url('@{denim065}'),
-    var(--t5e-component-card-dark-darker);
-    background-position: top center, center;
-    background-repeat: repeat, no-repeat;
-    background-size: auto, cover;
-
-    &::before {
-      opacity: 0.24;
-    }
-
-    &::after {
-      @texture-gray-2 : '../../modules/tidy5e-sheet/images/texture-gray-2.webp';
-      background-image: url('@{texture-gray-2}');
-      background-position: bottom center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      mix-blend-mode: normal;
-      opacity: 0.12;
-    }
-
-    .sheet-body {
-      background: none;
-
-    }
-  }
-
-  &.theme-light {}
 }

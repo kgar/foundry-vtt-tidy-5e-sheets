@@ -96,7 +96,7 @@
   });
 </script>
 
-<header class="sheet-header flexcol theme-dark">
+<header class="sheet-header flexcol theme-dark sheet-themed">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div

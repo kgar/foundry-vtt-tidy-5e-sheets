@@ -248,8 +248,7 @@
           { 'view-only': !context.editable },
         ]}
       >
-
-      <ActorHealthBar />
+        <ActorHealthBar />
         {#if context.editable}
           <div class="actor-vitals-row">
             {#if exhaustionBarFocused}
