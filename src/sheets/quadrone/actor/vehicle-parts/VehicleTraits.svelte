@@ -1,4 +1,4 @@
-in <script lang="ts">
+<script lang="ts">
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ActorTraitConfigurableListEntry from '../parts/ActorTraitConfigurableListEntry.svelte';
