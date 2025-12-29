@@ -207,7 +207,15 @@
       {/snippet}
       {#snippet body()}
         {#each section.members as member}
-          <TidyTableRow>
+          {@const assignedItemId =
+            'assignedTo' in member ? member.assignedTo?.id : undefined}
+          <TidyTableRow
+            rowContainerAttributes={{
+              ['data-assigned-item-id']: assignedItemId,
+              ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
+              ['data-member-uuid']: member.actor.uuid,
+            }}
+          >
             <img
               class="item-image"
               alt={member.actor.name}
