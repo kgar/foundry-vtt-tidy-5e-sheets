@@ -52,18 +52,15 @@
 - [x] Put Source in sheet header
 - [ ] Statblock implementation
   - [x] Add Members / slots to item summaries below Activities table when Crew Max or Assigned are greater than 0.
-  - [ ] Data prep: handle brokenLink property in item context prep.
-  - [ ] Locked behaviors
-    - [ ] On assigned slot clicked, open actor sheet
-    - [ ] On unassigned slot clicked, show context menu with available assignee options
-    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
-    - [ ] On broken link slot clicked, unassign
-  - [ ] Unlocked behaviors
-    - [ ] On assigned slot hover, show trash icon with tooltip "Unassign"
-    - [ ] On assigned slot clicked, unassign
-    - [ ] On broken link slot hover, show trash icon with tooltip "Unassign"
-    - [ ] On broken link slot clicked, unassign
-    - [ ] On unassigned slot clicked, show context menu with available assignee options
+  - [x] Data prep: handle brokenLink property in item context prep.
+  - [ ] Context menu for slots (left or right click works)
+    - [ ] Assigned
+      - [ ] View
+      - [ ] Unassign
+    - [ ] Unassigned
+      - [ ] Add Crew (from Compendium Browser)
+    - [ ] Broken Link
+      - [ ] Unassign
 - [ ] Determine where fields will go
   - [ ] system.attributes.actions.stations toggle
   - [ ] Actions max
@@ -96,18 +93,18 @@
   - [x] Condition Immunities
   - [x] Vulnerabilities
 - [ ] Handle use cases
-  - [ ] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
+  - [x] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
     - [x] "Assign To" column on Unassigned Crew table
-    - [ ] 💡 Dropdown and/or context menu (ctx menu generally more performant, less static HTML lingering around) when interacting with empty slot in Vehicle Item Expanded UI
+    - [x] 💡 Dropdown and/or context menu (ctx menu generally more performant, less static HTML lingering around) when interacting with empty slot in Vehicle Item Expanded UI
   - [ ] Unassign crew member from crew-able vehicle item
-    - [ ] 💡 X icon row action on Assigned Crew row
+    - [x] ~~💡 X icon row action on Assigned Crew row~~
     - [ ] 💡 context menu option on Assigned Crew row
-    - [ ] 💡 X / Trash icon on Assigned Member square in Vehicle Item Expanded UI, when unlocked, else open actor sheet
+    - [x] ~~💡 X / Trash icon on Assigned Member square in Vehicle Item Expanded UI, when unlocked, else open actor sheet~~
     - [ ] 💡 context menu option on Assigned Member square in Vehicle Item Expanded UI
-  - [ ] Be able to see crew member assignments
+  - [x] Be able to see crew member assignments
     - [x] Assigned Crew section, Assigned column
-    - [ ] Vehicle Item table row, crew column; expand item on click
-    - [ ] Vehicle Item Expanded UI
+    - [x] Vehicle Item table row, crew column; expand item on click
+    - [x] Vehicle Item Expanded UI
 - [ ] 💡 Mountable Items (Vehicle Items)
   - [ ] 💡 Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
   - [ ] 💡 Allow unassignment when unlocked, Facility Member style
