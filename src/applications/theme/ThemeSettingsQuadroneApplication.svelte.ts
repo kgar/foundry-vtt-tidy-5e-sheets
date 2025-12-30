@@ -127,6 +127,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   }
 
   _getSettings(settingsOverride?: ThemeSettingsV3) {
+    let worldSettings = ThemeQuadrone.getWorldThemeSettings();
+
     let themeSettings =
       settingsOverride ??
       structuredClone(
@@ -134,8 +136,11 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
           ? ThemeQuadrone.getSheetThemeSettings({
               doc: this.document,
               applyWorldThemeSetting: false,
+              alternateDefaults: {
+                useHeaderBackground: worldSettings.useHeaderBackground,
+              },
             })
-          : ThemeQuadrone.getWorldThemeSettings()
+          : worldSettings
       );
 
     let context: ThemeSettingsContext = this._mapSettings(themeSettings);
