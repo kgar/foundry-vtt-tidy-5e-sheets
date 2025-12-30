@@ -11,7 +11,10 @@ import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivi
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
-import type { ThemeSettingsConfigurationOptions, ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import type {
+  ThemeSettingsConfigurationOptions,
+  ThemeSettingsV3,
+} from 'src/theme/theme-quadrone.types';
 import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { EventHelper } from 'src/utils/events';
@@ -68,7 +71,8 @@ export function SvelteApplicationMixin<
     themeConfigOptions(): ThemeSettingsConfigurationOptions {
       return {
         doc: this.document,
-        callback: ({ settingsOverride }) => this.onThemeConfigChanged(settingsOverride),
+        callback: ({ settingsOverride }) =>
+          this.onThemeConfigChanged(settingsOverride),
       };
     }
 
@@ -134,26 +138,32 @@ export function SvelteApplicationMixin<
 
     async _renderFrame(options: ApplicationRenderOptions) {
       const element = await super._renderFrame(options);
-      const themeConfigOptions = this.themeConfigOptions();
 
       EventHelper.subscribeToDynamicContentRenderEvents(element, () => {
         this.#throttleSoftRendering();
       });
 
-      applyThemeToApplication(element, themeConfigOptions.doc ?? this.document);
-
-      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
+      this.applyTidyTheming(element);
 
       this._hookSubscriptions.push(
         Hooks.on('updateSetting', (setting: any) => {
           if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
             debug('Tidy setting update detected. Requesting sheet re-render');
             this.#debouncedRerenderForSettings();
+            this.applyTidyTheming();
           }
         })
       );
 
       return element;
+    }
+
+    applyTidyTheming(element: HTMLElement = this.element) {
+      const themeConfigOptions = this.themeConfigOptions();
+
+      applyThemeToApplication(element, themeConfigOptions.doc ?? this.document);
+
+      ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(themeConfigOptions);
     }
 
     _updateFrame(options: ApplicationRenderOptions) {
