@@ -53,12 +53,14 @@ export type ThemeSettingsConfigurationOptions = {
    * their own style declarations related to their related document.
    */
   idOverride?: string;
-  /** 
+  /**
    * Use world theme settings as a baseline when deriving the final styles.
-   * Set to false when performing activities like presenting a Sheet-specific Theme Settings form. 
+   * Set to false when performing activities like presenting a Sheet-specific Theme Settings form.
    * default: true
    */
   applyWorldThemeSetting?: boolean;
+  /** Optional callback to use after settings have been applied. */
+  callback?: (params: { settingsOverride?: ThemeSettingsV3 }) => void;
 };
 
 export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';

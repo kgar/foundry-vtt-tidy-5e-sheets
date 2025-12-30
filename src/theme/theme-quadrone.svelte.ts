@@ -193,7 +193,7 @@ export class ThemeQuadrone {
     options: ThemeSettingsConfigurationOptions
   ): Unsubscribable {
     const hookId = TidyHooks.tidy5eSheetsThemeSettingsChangedSubscribe(
-      (doc?: any) => {
+      (doc?: any, liveThemeOverride?: ThemeSettingsV3) => {
         const appliesToThisSheet =
           !!doc &&
           options.doc &&
@@ -201,7 +201,11 @@ export class ThemeQuadrone {
             doc.uuid === options.doc.parent?.uuid);
 
         if (appliesToThisSheet) {
-          ThemeQuadrone.applyCurrentThemeSettingsToStylesheet(options);
+          ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
+            ...options,
+            settingsOverride: liveThemeOverride,
+          });
+          options.callback?.({ settingsOverride: liveThemeOverride });
         }
       }
     );

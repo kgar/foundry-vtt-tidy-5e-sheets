@@ -20,6 +20,7 @@ import type {
 import type { Encounter5e, Group5e } from 'src/types/group.types';
 import type { Activity5e } from './dnd5e.types';
 import type { TidyExtensibleDocumentSheetMixinInstance } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -612,12 +613,12 @@ export class TidyHooks {
    * Alternatively, themes are being previewed, and relevant subscribers need to refresh their settings.
    * @param doc when dealing with a specific sheet's theme changes, this is the affected document
    */
-  static tidy5eSheetsThemeSettingsChanged(doc?: any) {
-    Hooks.callAll(this.tidy5eSheetsThemeSettingsChangedHook, doc);
+  static tidy5eSheetsThemeSettingsChanged(doc?: any, liveThemeOverride?: ThemeSettingsV3) {
+    Hooks.callAll(this.tidy5eSheetsThemeSettingsChangedHook, doc, liveThemeOverride);
   }
 
   static tidy5eSheetsThemeSettingsChangedSubscribe(
-    callback: (doc?: any) => void
+    callback: (doc?: any, liveThemeOverride?: ThemeSettingsV3) => void
   ): number {
     return Hooks.on(
       this.tidy5eSheetsThemeSettingsChangedHook,
