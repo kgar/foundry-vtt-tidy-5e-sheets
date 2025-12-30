@@ -16,6 +16,7 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
   import { CONSTANTS } from 'src/constants';
+  import clsx from 'clsx';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -96,7 +97,11 @@
   });
 </script>
 
-<header class="sheet-header flexcol theme-dark sheet-themed">
+<header
+  class={clsx('sheet-header', 'flexcol', {
+    'theme-dark': context.themeSettings.useHeaderBackground,
+  })}
+>
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div
