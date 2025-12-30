@@ -1956,10 +1956,13 @@
   .sidebar {
     .list-entry {
       gap: 0.1875rem;
-      
-      &:not(.favorite) {
-        flex-direction: column;
+      flex-direction: column;
+
+      &.favorite,
+      &.trait-editable { 
+        flex-direction: row;
       }
+
     }
     
     .traits {

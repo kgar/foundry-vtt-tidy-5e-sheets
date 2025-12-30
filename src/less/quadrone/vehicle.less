@@ -149,6 +149,20 @@
 
 
     }
+
+    .tidy-table-cell[data-tidy-column-key="qty"] {
+      padding-left: 0;
+      padding-right: 0;
+
+      .command {
+        opacity: 0;
+        transition: opacity var(--t5e-transition-default);
+      }
+
+      &:hover .command {
+        opacity: 1;
+      }
+    }
   }
 
   .spellbook-footer {

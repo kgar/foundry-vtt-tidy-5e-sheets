@@ -101,9 +101,9 @@
       (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
     onmouseleave={() => (hoveredFacilityOccupant.value = '')}
   >
-    <a onclick={(ev) => context.editable && onOccupantClick(ev)}>
+    <a class="item-image-link" onclick={(ev) => context.editable && onOccupantClick(ev)}>
       {#if occupant}
-        <img src={imageSrc} alt={name} />
+        <img class="item-image" src={imageSrc} alt={name} />
       {:else}
         <i class="fa-solid fa-link-slash broken-link-icon"></i>
       {/if}

@@ -295,6 +295,9 @@
 
   .occupant-with-menu {
     position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
 
     a {
       position: absolute;
@@ -303,6 +306,8 @@
 
     img {
       border: 0.0625rem solid var(--t5e-color-gold);
+      align-self: stretch;
+      justify-self: stretch;
     }
 
     &.unlocked:not(.empty):hover {
@@ -321,11 +326,8 @@
 
   .occupant-menu-icon {
     opacity: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: var(--t5e-color-text-gold-emphasis);
+    text-shadow: var(--t5e-drop-shadow-card);
     font-size: 1rem;
   }
 

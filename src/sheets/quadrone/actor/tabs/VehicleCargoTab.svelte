@@ -17,9 +17,10 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
-    import ContainerPanel from '../../shared/ContainerPanel.svelte';
+  import ContainerPanel from '../../shared/ContainerPanel.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
+  const localize = FoundryAdapter.localize;
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
@@ -62,7 +63,19 @@
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
   
-  <div class="encumbrance-container">
+  <div class="encumbrance-container pills flexrow">
+    <div class="pill flexshrink">
+      <span class="text-normal">{localize(
+          'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
+        )}
+      </span>
+      <span class="">
+        {context.system.attributes.capacity.cargo.value}
+      </span>
+      <span class="text-normal">
+        {context.system.attributes.capacity.cargo.units}
+      </span>
+    </div>
     <ActorEncumbranceBar actor={context.actor} />
   </div>
 
