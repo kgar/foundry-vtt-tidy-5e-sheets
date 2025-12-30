@@ -10,12 +10,13 @@ import type {
 } from './theme-quadrone.types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { settings } from 'src/settings/settings.svelte';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { coalesce } from 'src/utils/formatting';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
 import { ThemeStylesProvider } from './theme-styles-provider';
 import { CONSTANTS } from 'src/constants';
+import { isNil } from 'src/utils/data';
 
 export type ThemeableSheetType =
   | Tidy5eCharacterSheetQuadrone
@@ -51,8 +52,10 @@ export class ThemeQuadrone {
     });
   }
 
-  static getDefaultThemeSettings(): ThemeSettingsV3 {
-    return {
+  static getDefaultThemeSettings(
+    alternateDefaults: Partial<ThemeSettingsV3> = {}
+  ): ThemeSettingsV3 {
+    const defaults = {
       accentColor: '',
       useHeaderBackground: true,
       actorHeaderBackground: '',
@@ -61,12 +64,14 @@ export class ThemeQuadrone {
       rarityColors: {},
       spellPreparationMethodColors: {},
     };
+
+    return foundry.utils.mergeObject(defaults, alternateDefaults);
   }
 
   static getWorldThemeSettings(): ThemeSettingsV3 {
     return foundry.utils.mergeObject(
       this.getDefaultThemeSettings(),
-      settings.value.worldThemeSettings
+      SettingsProvider.settings.worldThemeSettings.get()
     );
   }
 
@@ -83,7 +88,7 @@ export class ThemeQuadrone {
 
     let defaultSettings = options.applyWorldThemeSetting
       ? this.getWorldThemeSettings()
-      : this.getDefaultThemeSettings();
+      : this.getDefaultThemeSettings(options.alternateDefaults);
 
     if (options.doc?.parent) {
       let parentSettings = this.getSheetThemeSettings({
@@ -97,9 +102,20 @@ export class ThemeQuadrone {
       );
     }
 
+    const sheetFlagSettings: Record<string, any> =
+      options.settingsOverride ??
+      TidyFlags.sheetThemeSettings.get(options.doc) ??
+      {};
+
+    for (const [key, value] of Object.entries(sheetFlagSettings)) {
+      if (isNil(value, '')) {
+        delete sheetFlagSettings[key];
+      }
+    }
+
     const preferences = foundry.utils.mergeObject(
       defaultSettings,
-      TidyFlags.sheetThemeSettings.get(options.doc)
+      sheetFlagSettings
     ) as ThemeSettingsV3;
 
     if (
@@ -115,6 +131,7 @@ export class ThemeQuadrone {
   static async saveSheetThemeSettings(doc: any, settings: ThemeSettingsV3) {
     const toSave = { ...settings };
 
+    // TODO: Figure out how to do this with a single call. Currently, it does not fully replace the information.
     await TidyFlags.sheetThemeSettings.unset(doc);
     const result = await TidyFlags.sheetThemeSettings.set(doc, toSave);
 
@@ -228,7 +245,7 @@ export class ThemeQuadrone {
   static getActorPortraitShape(doc: any): PortraitShape {
     return coalesce(
       TidyFlags.sheetThemeSettings.get(doc)?.portraitShape,
-      settings.value.worldThemeSettings?.portraitShape,
+      SettingsProvider.settings.worldThemeSettings.get()?.portraitShape,
       this.DEFAULT_PORTRAIT_SHAPE
     ) as PortraitShape;
   }
