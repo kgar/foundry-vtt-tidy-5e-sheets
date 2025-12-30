@@ -46,7 +46,7 @@
   );
 </script>
 
-<header class="sheet-header theme-dark flexcol">
+<header class="sheet-header theme-dark flexcol sheet-themed">
   <div class="sheet-header-content flexrow">
     <div class="flexcol">
       <div class="flexrow">
