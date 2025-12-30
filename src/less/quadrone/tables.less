@@ -181,7 +181,7 @@
     .item-image {
       width: var(--t5e-icon-size-7x);
       height: var(--t5e-icon-size-7x);
-      align-self: stretch;
+      align-self: center;
       object-fit: cover;
       object-position: top center;
 
@@ -698,20 +698,16 @@
     display: flex;
     align-items: center;
 
-    &:focus-within {
-      .divider {
-        opacity: 0.24;
-      }
-    }
-
     input[type="text"]:disabled {
       background: none;
     }
 
-    >input[type="text"].uses-value {
-      // color: var(--t5e-color-text-default);
+    >.uses-value {
       text-align: right;
       flex: 1;
+    }
+
+    >input[type="text"].uses-value {
       padding-right: 0.125rem;
       margin-right: -0.125rem;
 
@@ -728,7 +724,6 @@
     }
 
     >.uses-max {
-      // color: var(--t5e-color-text-lighter);
       text-align: left;
       flex: 1;
     }

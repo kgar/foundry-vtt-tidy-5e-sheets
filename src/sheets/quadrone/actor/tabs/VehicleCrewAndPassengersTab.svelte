@@ -75,7 +75,7 @@
         class="button button-icon-only button-borderless highlight-on-hover"
         data-action="browseActors"
       >
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-user-magnifying-glass"></i>
       </a>
     {/if}
   </div>
@@ -116,7 +116,7 @@
         class="button button-icon-only button-borderless highlight-on-hover"
         data-action="browseActors"
       >
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-user-magnifying-glass"></i>
       </a>
     {/if}
   </div>
