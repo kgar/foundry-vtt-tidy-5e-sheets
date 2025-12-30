@@ -73,7 +73,7 @@
     {/await}
   {/if}
 
-  <div class={{ callout: showGmOnlyUi }}>
+  <div class={['user-select-text', { callout: showGmOnlyUi }]}>
     {#if showGmOnlyUi}
       <div class="gm-only color-text-lighter">
         {localize(
@@ -85,7 +85,7 @@
   </div>
 
   <div
-    class="inline-wrapped-elements"
+    class="inline-wrapped-elements user-select-text"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
   >
     <div class="left-aligned-elements">
