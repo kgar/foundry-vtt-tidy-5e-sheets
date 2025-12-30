@@ -1083,11 +1083,18 @@ export function Tidy5eActorSheetQuadroneBase<
         );
       }
 
-      const types = this._addDocumentItemTypes(args.tabId).filter(
+      let types = this._addDocumentItemTypes(args.tabId).filter(
         (type) =>
           !CONFIG.Item.dataModels[type].metadata?.singleton ||
           !this.actor.itemTypes[type].length
       );
+
+      if (datasetType) {
+        const proposedTypes = types.filter((t) => t === datasetType);
+        if (proposedTypes.length) {
+          types = proposedTypes;
+        }
+      }
 
       if (types.length > 1) {
         let dialogV1HookId: number | null = null;
@@ -1136,7 +1143,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * @returns {string[]}  Types of items to allow to create.
      */
     _addDocumentItemTypes(tab: string): string[] {
-      return TabDocumentItemTypesRuntime.getTypes(tab);
+      return TabDocumentItemTypesRuntime.getTypes(tab, this.document);
     }
 
     private async setExpandedItemData() {
