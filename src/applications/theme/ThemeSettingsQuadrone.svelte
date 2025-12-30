@@ -13,6 +13,7 @@
   import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
+  import { TidyHooks } from 'src/api';
 
   interface Props {
     app: ThemeSettingsQuadroneApplication;
@@ -61,10 +62,10 @@
 
   $effect(() => {
     const liveSettings = app.mapContextToSettings(context);
-    ThemeQuadrone.applyCurrentThemeSettingsToStylesheet({
-      doc: app.document,
-      settingsOverride: liveSettings,
-    });
+    if (app.document) {
+      // Live Preview is only sanely feasible for sheet-specific theming.
+      TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, liveSettings);
+    }
   });
 
   async function onDrop(
