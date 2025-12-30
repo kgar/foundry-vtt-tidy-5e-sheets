@@ -61,11 +61,17 @@
   }
 
   $effect(() => {
-    const liveSettings = app.mapContextToSettings(context);
-    if (app.document) {
-      // Live Preview is only sanely feasible for sheet-specific theming.
-      TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, liveSettings);
+    // Live Preview is only sanely feasible for sheet-specific theming.
+    if (!app.document) {
+      return;
     }
+
+    const liveSettings = ThemeQuadrone.getSheetThemeSettings({
+      doc: app.document,
+      settingsOverride: app.mapContextToSettings(context),
+    });
+
+    TidyHooks.tidy5eSheetsThemeSettingsChanged(app.document, liveSettings);
   });
 
   async function onDrop(

@@ -37,6 +37,7 @@ export type ThemeQuadroneStyleDeclaration = {
   identifier: string;
 };
 
+// TODO: Identify the various usages of this Options type and extract multiple alternatives based on their unique uses. There is too much sharing here.
 export type ThemeSettingsConfigurationOptions = {
   /**
    * Optional document whose theming is being configured.
@@ -61,6 +62,8 @@ export type ThemeSettingsConfigurationOptions = {
   applyWorldThemeSetting?: boolean;
   /** Optional callback to use after settings have been applied. */
   callback?: (params: { settingsOverride?: ThemeSettingsV3 }) => void;
+  /** Alternative default settings. */
+  alternateDefaults?: Partial<ThemeSettingsV3>;
 };
 
 export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';
