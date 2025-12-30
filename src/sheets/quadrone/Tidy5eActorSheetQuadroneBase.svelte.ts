@@ -1079,6 +1079,16 @@ export function Tidy5eActorSheetQuadroneBase<
         element.dataset.tooltipClass = 'property-attribution';
     }
 
+    onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
+      const themeSettings =
+        settingsOverride ??
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+        });
+
+      this._applySheetThemeClasses(themeSettings);
+    }
+
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */

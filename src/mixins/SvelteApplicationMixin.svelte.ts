@@ -11,7 +11,7 @@ import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivi
 import { applyThemeToApplication } from 'src/utils/applications.svelte';
 import { ThemeQuadrone } from 'src/theme/theme-quadrone.svelte';
 import type { Unsubscribable } from 'src/foundry/TidyHooks.types';
-import type { ThemeSettingsConfigurationOptions } from 'src/theme/theme-quadrone.types';
+import type { ThemeSettingsConfigurationOptions, ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 import { CONSTANTS } from 'src/constants';
 import type { Ref } from 'src/features/reactivity/reactivity.types';
 import { EventHelper } from 'src/utils/events';
@@ -68,8 +68,11 @@ export function SvelteApplicationMixin<
     themeConfigOptions(): ThemeSettingsConfigurationOptions {
       return {
         doc: this.document,
+        callback: ({ settingsOverride }) => this.onThemeConfigChanged(settingsOverride),
       };
     }
+
+    protected onThemeConfigChanged(_settingsOverride?: ThemeSettingsV3) {}
 
     /* -------------------------------------------- */
     /*  Svelte-specific                             */
