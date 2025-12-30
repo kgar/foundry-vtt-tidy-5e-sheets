@@ -5,6 +5,10 @@ import type {
 import { CONSTANTS } from 'src/constants';
 import { getDefaultItemColumns } from './default-item-columns';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import VehicleItemHpColumn from 'src/sheets/quadrone/item/columns/VehicleItemHpColumn.svelte';
+import VehicleItemUsesColumn from 'src/sheets/quadrone/item/columns/VehicleItemUsesColumn.svelte';
+import VehicleItemCrewColumn from 'src/sheets/quadrone/item/columns/VehicleItemCrewColumn.svelte';
 
 class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
   getDefaultColumns(): ColumnSpecDocumentTypesToTabs {
@@ -190,6 +194,49 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
       [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
     };
 
+    const vehicleItemColumns = {
+      hp: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.HP'),
+        },
+        cellContent: {
+          type: 'component',
+          component: VehicleItemHpColumn,
+        },
+        order: 10,
+        priority: 100,
+        widthRems: 8,
+      },
+      uses: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.Uses'),
+        },
+        cellContent: {
+          type: 'component',
+          component: VehicleItemUsesColumn,
+        },
+        widthRems: 5,
+        order: 20,
+        priority: 90,
+      },
+      crew: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
+        },
+        cellContent: {
+          type: 'component',
+          component: VehicleItemCrewColumn,
+        },
+        widthRems: 4,
+        order: 30,
+        priority: 80,
+      },
+      actions: standardItemActionsColumn,
+    } satisfies Record<string, ColumnSpecification>;
+
     return {
       [CONSTANTS.SHEET_TYPE_CONTAINER]: {
         [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
@@ -238,6 +285,8 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
       },
       [CONSTANTS.SHEET_TYPE_VEHICLE]: {
         [CONSTANTS.TAB_STATBLOCK]: {
+          [CONSTANTS.ITEM_TYPE_WEAPON]: vehicleItemColumns,
+          [CONSTANTS.ITEM_TYPE_EQUIPMENT]: vehicleItemColumns,
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { ...columns.recovery, order: 100, priority: 400 },
             uses: { ...columns.uses, order: 200, priority: 600 },
