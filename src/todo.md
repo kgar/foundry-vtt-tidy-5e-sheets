@@ -2,7 +2,8 @@
 
 ### Vehicle Sheet
 
-- [ ] Ensure the following tabs exist
+- [ ] TabDocumentItemTypesRuntime is preventing us from adding Weapons and Equipment to Vehicle Statblock page. This is because vehicle statblock shares the same tab ID as NPC statblock tab, but they are used differently. This feature worked for inventory, spellbook, etc., but it falls apart when unrelated tabs have the same ID but different use cases. Decide whether to simply make the tab ID unique for Vehicles or find a way to provide an exception for vehicle statblock tab. Expanding the items beyond just feats for statblock tab will make it frustrating to use NPC Statblock tab.
+- [x] Ensure the following tabs exist
   - [x] Statblock
     - [x] Runtime, component
     - [x] Prep
@@ -50,17 +51,17 @@
     - [x] Implement
 - [x] Implement VehicleTraits.svelte
 - [x] Put Source in sheet header
-- [ ] Statblock implementation
+- [x] Statblock implementation
   - [x] Add Members / slots to item summaries below Activities table when Crew Max or Assigned are greater than 0.
   - [x] Data prep: handle brokenLink property in item context prep.
-  - [ ] Context menu for slots (left or right click works)
-    - [ ] Assigned
-      - [ ] View
-      - [ ] Unassign
-    - [ ] Unassigned
-      - [ ] Add Crew (from Compendium Browser)
-    - [ ] Broken Link
-      - [ ] Unassign
+  - [x] Context menu for slots (left or right click works)
+    - [x] Assigned
+      - [x] View
+      - [x] Unassign
+    - [x] Unassigned
+      - [x] Add Crew (from Compendium Browser)
+    - [x] Broken Link
+      - [x] Unassign
 - [ ] Determine where fields will go
   - [ ] system.attributes.actions.stations toggle
   - [ ] Actions max
