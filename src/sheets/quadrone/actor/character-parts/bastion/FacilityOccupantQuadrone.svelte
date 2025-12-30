@@ -109,7 +109,7 @@
       {/if}
 
       {#if context.unlocked}
-        <i class="fa-solid fa-cog occupant-menu-icon"></i>
+        <i class="fa-solid fa-ellipsis-vertical occupant-menu-icon"></i>
       {/if}
     </a>
   </li>
