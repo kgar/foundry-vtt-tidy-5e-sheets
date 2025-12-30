@@ -807,6 +807,8 @@
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor.title": "Accent Color",
+    "UseHeaderBackground.title": "Use Header Background",
+    "UseHeaderBackground.hint": "Includes styles that support a colorful sheet header with an image background.",
     "ActorHeaderBackground.title": "Actor Header Background",
     "ItemSidebarBackground.title": "Item Sidebar Background",
     "PortraitShape": {

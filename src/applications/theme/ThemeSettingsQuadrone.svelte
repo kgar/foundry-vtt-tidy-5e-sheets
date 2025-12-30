@@ -10,7 +10,6 @@
   import { CONSTANTS } from 'src/constants';
   import { isNil } from 'src/utils/data';
   import { getSingleFileFromDropEvent } from 'src/utils/file';
-  import { settings } from 'src/settings/settings.svelte';
   import { ThemeQuadroneImportService } from 'src/theme/theme-import-service';
   import ImportButton from './parts/ImportButton.svelte';
   import ImagePickerButton from './parts/ImagePickerButton.svelte';
@@ -88,10 +87,7 @@
   }
 </script>
 
-<div class="dialog-content-container flexcol"
-  ondrop={onDrop}
-  role="region"
->
+<div class="dialog-content-container flexcol" ondrop={onDrop} role="region">
   <div class="flexrow flexgap-1">
     <h2>
       {localize('TIDY5E.ThemeSettings.SheetMenu.name')}
@@ -151,23 +147,41 @@
 
     {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
       <div class="form-group">
-        <label for="{idPrefix}-actor-header-background">
-          {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
+        <label for="{idPrefix}-use-header-background">
+          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
         </label>
         <div class="form-fields">
           <input
-            id="{idPrefix}-actor-header-background"
-            type="text"
-            bind:value={context.value.actorHeaderBackground}
-            placeholder={placeholders?.value.actorHeaderBackground}
-          />
-          <ImagePickerButton
-            current={context.value.actorHeaderBackground}
-            onimagepicked={(image) =>
-              (context.value.actorHeaderBackground = image)}
+            id="{idPrefix}-use-header-background"
+            type="checkbox"
+            bind:checked={context.value.useHeaderBackground}
           />
         </div>
+        <p class="hint">
+          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.hint')}
+        </p>
       </div>
+
+      {#if context.value.useHeaderBackground}
+        <div class="form-group">
+          <label for="{idPrefix}-actor-header-background">
+            {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
+          </label>
+          <div class="form-fields">
+            <input
+              id="{idPrefix}-actor-header-background"
+              type="text"
+              bind:value={context.value.actorHeaderBackground}
+              placeholder={placeholders?.value.actorHeaderBackground}
+            />
+            <ImagePickerButton
+              current={context.value.actorHeaderBackground}
+              onimagepicked={(image) =>
+                (context.value.actorHeaderBackground = image)}
+            />
+          </div>
+        </div>
+      {/if}
     {/if}
 
     <!-- TODO: Add item sidebar background setting -->

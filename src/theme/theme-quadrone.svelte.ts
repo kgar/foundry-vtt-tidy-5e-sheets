@@ -54,6 +54,7 @@ export class ThemeQuadrone {
   static getDefaultThemeSettings(): ThemeSettingsV3 {
     return {
       accentColor: '',
+      useHeaderBackground: true,
       actorHeaderBackground: '',
       itemSidebarBackground: '',
       portraitShape: undefined,

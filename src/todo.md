@@ -2,7 +2,10 @@
 
 ### Vehicle Sheet
 
-- [ ] TabDocumentItemTypesRuntime is preventing us from adding Weapons and Equipment to Vehicle Statblock page. This is because vehicle statblock shares the same tab ID as NPC statblock tab, but they are used differently. This feature worked for inventory, spellbook, etc., but it falls apart when unrelated tabs have the same ID but different use cases. Decide whether to simply make the tab ID unique for Vehicles or find a way to provide an exception for vehicle statblock tab. Expanding the items beyond just feats for statblock tab will make it frustrating to use NPC Statblock tab.
+- [x] Those with Header Background option only: Add theme setting for Use Header Background (default: true); when checked, show Actor Header Background field; when unchecked, hide and ignore background setting
+- [x] Actor Base: Apply sheet-parchment class to sheet form element "Use Header Background" is false
+- [ ] Ensure open sheets respond to live theme updates by toggling the relevant sheet theme classes via the shared class method.
+- [x] TabDocumentItemTypesRuntime is preventing us from adding Weapons and Equipment to Vehicle Statblock page. This is because vehicle statblock shares the same tab ID as NPC statblock tab, but they are used differently. This feature worked for inventory, spellbook, etc., but it falls apart when unrelated tabs have the same ID but different use cases. Decide whether to simply make the tab ID unique for Vehicles or find a way to provide an exception for vehicle statblock tab. Expanding the items beyond just feats for statblock tab will make it frustrating to use NPC Statblock tab.
 - [x] Ensure the following tabs exist
   - [x] Statblock
     - [x] Runtime, component

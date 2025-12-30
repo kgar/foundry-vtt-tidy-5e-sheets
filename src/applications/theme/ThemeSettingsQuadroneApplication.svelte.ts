@@ -26,6 +26,7 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 export type ThemeSettingsContext = {
   value: {
     accentColor: string;
+    useHeaderBackground: boolean;
     actorHeaderBackground: string;
     itemSidebarBackground: string;
     portraitShape: PortraitShape | undefined;
@@ -44,6 +45,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   _settings: ThemeSettingsContext = $state({
     value: {
       accentColor: '',
+      useHeaderBackground: true,
       actorHeaderBackground: '',
       itemSidebarBackground: '',
       portraitShape: undefined,
@@ -145,6 +147,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {
       value: {
         accentColor: themeSettings.accentColor,
+        useHeaderBackground: themeSettings.useHeaderBackground,
         actorHeaderBackground: themeSettings.actorHeaderBackground,
         itemSidebarBackground: themeSettings.itemSidebarBackground,
         portraitShape: themeSettings.portraitShape,
@@ -194,6 +197,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   mapContextToSettings(context: ThemeSettingsContext): ThemeSettingsV3 {
     return {
       accentColor: context.value.accentColor ?? '',
+      useHeaderBackground: context.value.useHeaderBackground,
       actorHeaderBackground: context.value.actorHeaderBackground,
       itemSidebarBackground: context.value.itemSidebarBackground,
       portraitShape: context.value.portraitShape,

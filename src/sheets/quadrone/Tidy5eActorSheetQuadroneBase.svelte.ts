@@ -60,6 +60,7 @@ import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -1030,6 +1031,25 @@ export function Tidy5eActorSheetQuadroneBase<
         .insertAdjacentElement('afterend', postWindowTitleComponentAnchor);
 
       return html;
+    }
+
+    _updateFrame(options: ApplicationRenderOptions) {
+      super._updateFrame(options);
+
+      const themeSettings =
+        this._context.data?.themeSettings ??
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+        });
+
+      this._applySheetThemeClasses(themeSettings);
+    }
+
+    _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+      this.element.classList.toggle(
+        'sheet-parchment',
+        !themeSettings.useHeaderBackground
+      );
     }
 
     async _onRender(
