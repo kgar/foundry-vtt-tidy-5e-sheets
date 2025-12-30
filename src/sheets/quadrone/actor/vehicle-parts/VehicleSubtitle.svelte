@@ -43,9 +43,9 @@
 >
   <div class="actor-subtitle flexrow" data-tidy-sheet-part="subtitle-row">
     <span class="vehicle-quality">
-      <span class="font-label-medium color-text-gold">
+      <!-- <span class="font-label-medium color-text-gold">
         {localize('DND5E.VEHICLE.Type.label')}
-      </span>
+      </span> -->
       <span class="font-label-medium color-text-default">
         {vehicleTypeLabel ?? context.system.details.type}
       </span>
@@ -76,13 +76,13 @@
     {#if size}
       <div class="divider-dot"></div>
       <span class="size">
-        <span class="font-label-medium color-text-gold">{size}</span>
+        <span class="font-label-medium color-text-default">{size}</span>
       </span>
     {/if}
     {#if !isNil(context.system.details.type.label, '')}
       <div class="divider-dot"></div>
       <span class="creature-type">
-        <span class="font-label-medium color-text-gold">
+        <span class="font-label-medium color-text-default">
           {context.system.details.type.label}
         </span>
       </span>
