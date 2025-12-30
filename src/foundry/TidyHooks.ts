@@ -10,7 +10,7 @@ import type {
   ActorSheetQuadroneContext,
   GroupSkillRollProcessConfiguration,
 } from 'src/types/types';
-import type { ContextMenuEntry } from './foundry.types';
+import type { ContextMenuEntry, CrewArea5e } from './foundry.types';
 import type {
   ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
@@ -261,6 +261,44 @@ export class TidyHooks {
       'tidy5e-sheet.getGroupMemberContextOptions',
       group,
       member,
+      contextOptions
+    );
+  }
+
+  /**
+   * The vehicle member context menu has established its options and is about to show.
+   * This can be for a member with a UUID or an empty slot where a member can go.
+   * @param vehicle           The affected group document instance.
+   * @param target            The HTML element where the context menu trigger occurred.
+   * @param memberUuid        The potential actor UUID which is a crew member of the vehicle.
+   * @param vehicleItemId     The potential ID for the crewable item for which this context menu was triggered.
+   * @param area              Where the trigger occurred—draft, crew, or passengers.
+   * @param contextOptions    The menu items for this encounter member.
+   *
+   * @returns {boolean}       `true` to allow the menu to show, `false` to prevent the default menu from showing.
+   *
+   * @example
+   * ```js
+   * Hooks.on('tidy5e-sheet.getVehicleMemberContextOptions', (vehicle, target, memberUuid, vehicleItemId, area, contextOptions) => {
+   *    // Your code here
+   * });
+   * ```
+   */
+  static tidy5eSheetsGetVehicleMemberContextOptions(
+    vehicle: Actor5e,
+    target: HTMLElement,
+    memberUuid: string | undefined,
+    vehicleItemId: string | undefined,
+    area: CrewArea5e | undefined,
+    contextOptions: ContextMenuEntry[]
+  ): boolean {
+    return Hooks.call(
+      'tidy5e-sheet.getVehicleMemberContextOptions',
+      vehicle,
+      target,
+      memberUuid,
+      vehicleItemId,
+      area,
       contextOptions
     );
   }

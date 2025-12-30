@@ -68,6 +68,18 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     },
   };
 
+  async browseAssignActor(item: Item5e) {
+    const newCrewmateUuid = await this.browseActors();
+
+    const actor = await fromUuid(newCrewmateUuid);
+
+    if (!actor) {
+      return;
+    }
+
+    await this._assignCrew(actor, item);
+  }
+
   browseActors(): Promise<Actor5e | undefined> {
     return dnd5e.applications.CompendiumBrowser.selectOne({
       filters: {

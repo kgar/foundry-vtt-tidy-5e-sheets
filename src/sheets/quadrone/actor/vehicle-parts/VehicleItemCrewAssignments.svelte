@@ -7,7 +7,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
-  import type { VehicleItemContext } from 'src/types/types';
+  import type { Actor5e, VehicleItemContext } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
   import { EventHelper } from 'src/utils/events';
 
@@ -21,6 +21,29 @@
   const localize = FoundryAdapter.localize;
 
   let context = $derived(getVehicleSheetQuadroneContext());
+
+  function onEmptySlotClicked(
+    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+  ): any {
+    if (context.unlocked) {
+      EventHelper.triggerContextMenu(ev);
+      return;
+    }
+
+    context.sheet.browseAssignActor(item);
+  }
+
+  function onMemberClicked(
+    ev: MouseEvent & { currentTarget: EventTarget & HTMLAnchorElement },
+    actor: Actor5e,
+  ): any {
+    if (context.unlocked) {
+      EventHelper.triggerContextMenu(ev);
+      return;
+    }
+
+    actor.sheet.render({ force: true });
+  }
 </script>
 
 <TidyTable key="assigned" toggleable={false}>
@@ -46,7 +69,9 @@
               >
                 <a
                   onclick={(ev) =>
-                    context.editable && EventHelper.triggerContextMenu(ev)}
+                    context.editable &&
+                    context.unlocked &&
+                    EventHelper.triggerContextMenu(ev)}
                 >
                   <i class="fa-solid fa-link-slash broken-link-icon"></i>
                 </a>
@@ -59,7 +84,7 @@
               >
                 <a
                   onclick={(ev) =>
-                    context.editable && EventHelper.triggerContextMenu(ev)}
+                    context.editable && onMemberClicked(ev, slot.actor)}
                 >
                   <img src={slot.actor.img} alt={slot.actor.name} />
                 </a>
@@ -70,8 +95,7 @@
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
                 <a
-                  onclick={(ev) =>
-                    context.editable && EventHelper.triggerContextMenu(ev)}
+                  onclick={(ev) => context.editable && onEmptySlotClicked(ev)}
                   class="button button-tertiary button-icon-only"
                 >
                   <i class="far fa-user"></i>

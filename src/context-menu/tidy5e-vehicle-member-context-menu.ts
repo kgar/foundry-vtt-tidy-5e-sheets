@@ -2,8 +2,6 @@ import { TidyHooks } from 'src/api';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry, CrewArea5e } from 'src/foundry/foundry.types';
 import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
-import type { Item5e } from 'src/types/item.types';
-import type { Actor5e } from 'src/types/types';
 
 export function configureVehicleMemberContextMenu(
   element: HTMLElement,
@@ -11,11 +9,14 @@ export function configureVehicleMemberContextMenu(
 ) {
   ui.context.menuItems = getVehicleMemberContextOptionsQuadrone(element, app);
 
-  //   TidyHooks.tidy5eSheetsGetGroupMemberContextOptions(
-  //     app.document,
-  //     actor: ,
-  //     ui.context.menuItems
-  //   );
+  TidyHooks.tidy5eSheetsGetVehicleMemberContextOptions(
+    app.document,
+    element,
+    getMemberUuid(element),
+    getVehicleItemId(element),
+    getCrewArea(element),
+    ui.context.menuItems
+  );
 }
 
 /**
@@ -28,13 +29,9 @@ function getVehicleMemberContextOptionsQuadrone(
   element: HTMLElement,
   app: Tidy5eVehicleSheetQuadrone
 ) {
-  const vehicleItemId = element
-    .closest('[data-item-id]')
-    ?.getAttribute('data-item-id');
+  const vehicleItemId = getVehicleItemId(element);
 
-  const area = element.closest('[data-area]')?.getAttribute('data-area') as
-    | CrewArea5e
-    | undefined;
+  const area = getCrewArea(element);
 
   let options: ContextMenuEntry[] = vehicleItemId
     ? getVehicleItemMemberOptions(element, app, vehicleItemId)
@@ -45,6 +42,17 @@ function getVehicleMemberContextOptionsQuadrone(
     : [];
 
   return options;
+}
+
+function getCrewArea(element: HTMLElement) {
+  return element.closest('[data-area]')?.getAttribute('data-area') as CrewArea5e |
+    undefined;
+}
+
+function getVehicleItemId(element: HTMLElement) {
+  return element.closest('[data-item-id]')?.getAttribute('data-item-id') as
+    | string
+    | undefined;
 }
 
 function getVehicleItemMemberOptions(
@@ -66,6 +74,19 @@ function getVehicleItemMemberOptions(
 
   return [
     {
+      name: 'TIDY5E.ContextMenuActionEdit',
+      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
+      callback: async () => {
+        const actor = await fromUuid(memberUuid);
+        actor?.sheet.render(true);
+      },
+      condition: () =>
+        !empty &&
+        !brokenLink &&
+        app.actor.isOwner &&
+        !FoundryAdapter.isLockedInCompendium(app.actor),
+    },
+    {
       name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
       condition: () => !!memberUuid,
       icon: '<i class="fa-solid fa-trash"></i>',
@@ -83,22 +104,8 @@ function getVehicleItemMemberOptions(
       }),
       condition: () => empty,
       icon: '<i class="fa-solid fa-book-open-reader"></i>',
-      callback: async () => {
-        const newCrewmateUuid = await app.browseActors();
-
-        const actor = await fromUuid(newCrewmateUuid);
-
-        if (!actor) {
-          return;
-        }
-
-        await app._assignCrew(actor, item);
-      },
+      callback: () => app.browseAssignActor(item),
     },
-
-    // - Assign To Items List (if Crew); moves assignment, filters out current item from list
-    // - Assign {CrewNameHere} (if empty slot); list of unassigned crewmates, grouped by UUID
-    // - Compendium (if empty slot); show compendium selectOne, on successful select then add crew member and then assign
   ];
 }
 
@@ -210,7 +217,7 @@ function getCrewMemberOptions(
 function getMemberUuid(element: HTMLElement) {
   return element
     .closest('[data-member-uuid]')
-    ?.getAttribute('data-member-uuid');
+    ?.getAttribute('data-member-uuid') as string | undefined;
 }
 
 function canChangeDocument(app: Tidy5eVehicleSheetQuadrone) {
