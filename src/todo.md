@@ -2,10 +2,10 @@
 
 ### Vehicle Sheet
 
-- [ ] Implement Statblock columns
-  - [ ] Vehicle HP
-  - [ ] Vehicle Uses
-  - [ ] Vehicle Crew
+- [x] Implement Statblock columns
+  - [x] Vehicle Item HP
+  - [x] Vehicle Item Uses
+  - [x] Vehicle Item Crew
 - [ ] Determine where fields will go
   - [ ] system.attributes.actions.stations toggle
   - [ ] Actions max
