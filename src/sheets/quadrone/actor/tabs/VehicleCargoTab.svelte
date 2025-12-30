@@ -73,7 +73,7 @@
         {context.system.attributes.capacity.cargo.value}
       </span>
       <span class="text-normal">
-        {context.system.attributes.capacity.cargo.units}
+        {CONFIG.DND5E.weightUnits[context.system.attributes.capacity.cargo.units]?.abbreviation}
       </span>
     </div>
     <ActorEncumbranceBar actor={context.actor} />
