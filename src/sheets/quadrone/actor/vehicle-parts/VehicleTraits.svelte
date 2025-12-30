@@ -167,7 +167,7 @@
       'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
     )}
     value={context.system.attributes.capacity.cargo.value}
-    units={context.system.attributes.capacity.cargo.units}
+    units={CONFIG.DND5E.weightUnits[context.system.attributes.capacity.cargo.units]?.abbreviation}
     traitClass="trait-cargo-capacity trait-editable"
     unlocked={context.unlocked}
   >

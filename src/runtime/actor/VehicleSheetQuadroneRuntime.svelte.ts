@@ -31,7 +31,7 @@ export const VehicleSheetQuadroneRuntime =
           type: 'svelte',
         },
         layout: 'quadrone',
-        iconClass: 'fa-solid fa-boxes-packing',
+        iconClass: 'fa-solid fa-container-storage',
       },
       {
         id: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
@@ -41,7 +41,7 @@ export const VehicleSheetQuadroneRuntime =
           type: 'svelte',
         },
         layout: 'quadrone',
-        iconClass: 'fa-solid fa-poo-storm',
+        iconClass: 'fa-solid fa-people-group',
       },
       {
         id: CONSTANTS.TAB_EFFECTS,

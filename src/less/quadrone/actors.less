@@ -1955,8 +1955,14 @@
 
   .sidebar {
     .list-entry {
-      flex-direction: column;
       gap: 0.1875rem;
+      flex-direction: column;
+
+      &.favorite,
+      &.trait-editable { 
+        flex-direction: row;
+      }
+
     }
     
     .traits {
