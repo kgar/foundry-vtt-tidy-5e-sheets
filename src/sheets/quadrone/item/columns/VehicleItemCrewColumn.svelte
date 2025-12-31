@@ -15,6 +15,8 @@
   <span class="inline-crew-count">
     <span class="uses-value color-text-default">
       {value}
-    </span>/<span class="uses-max color-text-lighter">{max ?? "?"}</span>
+    </span>/<span class="uses-max color-text-lighter"
+      >{max ?? '—'}</span
+    >
   </span>
 {/if}

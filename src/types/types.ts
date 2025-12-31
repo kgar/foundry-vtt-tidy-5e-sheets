@@ -1605,7 +1605,7 @@ export type VehicleSheetQuadroneContext = {
       name: string;
       uuid: string;
       id: string;
-      crew: { value: number; max: number };
+      crew: { value: number; max: number | undefined };
     }
   >;
   passengers: PassengerSection;

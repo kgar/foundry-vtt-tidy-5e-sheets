@@ -333,7 +333,7 @@
               rowContainerAttributes={{
                 ['data-context-menu']:
                   CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
-                ['data-member-uuid']: member.actor.uuid,
+                ['data-uuid']: member.actor.uuid,
               }}
             >
               {#snippet children()}

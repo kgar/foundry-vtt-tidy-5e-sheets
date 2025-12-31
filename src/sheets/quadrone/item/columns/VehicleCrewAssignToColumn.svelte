@@ -12,6 +12,8 @@
 
   let uuid = $state('');
 
+  const mountableItems = $derived(Object.values(context.mountableItems));
+
   async function handleChange(
     event: Event & { currentTarget: EventTarget & HTMLSelectElement },
   ) {
@@ -24,12 +26,16 @@
   }
 </script>
 
-<select bind:value={uuid} onchange={handleChange}>
-  <option value="">{localize('CONTROLS.CommonSelect')}</option>
-  {#each Object.values(context.mountableItems) as item}
-    <option value={item.uuid}>
-      {item.name}
-      {item.crew.value}/{item.crew.max}
-    </option>
-  {/each}
-</select>
+{#if mountableItems.length}
+  <select bind:value={uuid} onchange={handleChange}>
+    <option value="">{localize('CONTROLS.CommonSelect')}</option>
+    {#each mountableItems as item}
+      <option value={item.uuid}>
+        {item.name}
+        {item.crew.value}/{item.crew.max ?? '—'}
+      </option>
+    {/each}
+  </select>
+{:else}
+  <span class="color-text-disabled">—</span>
+{/if}
