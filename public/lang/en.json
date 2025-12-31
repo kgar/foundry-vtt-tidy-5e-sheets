@@ -29,6 +29,7 @@
   "TIDY5E.AddSpecific": "Add {name}",
   "TIDY5E.AddCustom": "Add Custom {name}",
   "TIDY5E.CompendiumBrowser": "Add {name} from Compendium",
+  "TIDY5E.RemoveSpecific": "Remove {name}",
 
   "TIDY5E.SheetPin": {
     "Label": "Sheet Pin",
@@ -119,7 +120,6 @@
   "TIDY5E.ContextMenuActionSetAsInspirationSource": "Set as Inspiration Source",
   "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remove as Inspiration Source",
   "TIDY5E.ContextMenuActionAddToSheetTab": "Add to Sheet tab",
-  "TIDY5E.ContextMenuActionRemoveDraftAnimal": "Remove Draft Animal",
   "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
   "TIDY5E.ContextMenuActionUnassign": "Unassign",
   "TIDY5E.ContextMenuActionAssignToEntity": "Assign to {entityName}",

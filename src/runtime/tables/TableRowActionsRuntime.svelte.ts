@@ -34,6 +34,8 @@ import EncounterAddAsCombatPlaceholder from 'src/components/table-quadrone/table
 import EncounterCombatVisibilityToggle from 'src/components/table-quadrone/table-buttons/EncounterCombatVisibilityToggle.svelte';
 import DeleteEncounterEntityButton from 'src/components/table-quadrone/table-buttons/DeleteEncounterEntityButton.svelte';
 import DeleteButton from 'src/components/table-quadrone/table-buttons/DeleteButton.svelte';
+import type { CrewArea5e } from 'src/foundry/foundry.types';
+import GenericActionButton from 'src/components/table-quadrone/table-buttons/GenericActionButton.svelte';
 
 // TODO: Set up a proper runtime where table actions can be fed to specific tab types.
 
@@ -508,22 +510,22 @@ class TableRowActionsRuntime {
 
     let result: TableAction<any>[] = [];
 
-    if (context.owner) {
-      if (context.unlocked) {
-        result.push({
-          component: DeleteButton,
-          props: (args) => ({
-            rowContext: args.rowContext,
-            deleteFn: () => {
-              context.sheet.removeDraftAnimal(args.data.uuid);
-            },
-            doc: context.document,
-            tooltip: FoundryAdapter.localize(
-              'TIDY5E.ContextMenuActionRemoveDraftAnimal'
+    if (context.owner && context.unlocked) {
+      result.push({
+        component: DeleteButton,
+        props: (args) => ({
+          rowContext: args.rowContext,
+          deleteFn: () => {
+            context.sheet.removeDraftAnimal(args.data.uuid);
+          },
+          doc: context.document,
+          tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+            name: FoundryAdapter.localize(
+              'TIDY5E.Vehicle.Member.DraftAnimal.Label'
             ),
           }),
-        } satisfies TableAction<typeof DeleteButton>);
-      }
+        }),
+      } satisfies TableAction<typeof DeleteButton>);
     }
 
     result.push({
@@ -536,7 +538,10 @@ class TableRowActionsRuntime {
     return result;
   }
 
-  getCrewPassengerRowActions(context: VehicleSheetQuadroneContext) {
+  getUnassignedCrewPassengerRowActions(
+    context: VehicleSheetQuadroneContext,
+    area: CrewArea5e
+  ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Actor5e,
@@ -544,6 +549,67 @@ class TableRowActionsRuntime {
     >;
 
     let result: TableAction<any>[] = [];
+
+    if (context.owner && context.unlocked) {
+      const memberTypeKey =
+        area === 'crew'
+          ? 'TIDY5E.Vehicle.Section.Crew.Unassigned.Label'
+          : area === 'passengers'
+          ? 'DND5E.VEHICLE.Crew.Passengers'
+          : '';
+
+      result.push({
+        component: DeleteButton,
+        props: (args) => ({
+          doc: context.document,
+          deleteFn: () => {
+            if (area === 'crew') {
+              return context.sheet.removeUnassignedCrew(args.data.uuid);
+            } else if (area === 'passengers') {
+              return context.sheet.removePassengers(args.data.uuid);
+            }
+          },
+          tooltip: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+            name: FoundryAdapter.localize(memberTypeKey),
+          }),
+        }),
+      });
+    }
+
+    result.push({
+      component: MenuButton,
+      props: () => ({
+        targetSelector: '[data-context-menu]',
+      }),
+    } satisfies TableAction<typeof MenuButton>);
+
+    return result;
+  }
+
+  getAssignedCrewRowActions(context: VehicleSheetQuadroneContext) {
+    type TableAction<TComponent extends Component<any>> = TidyTableAction<
+      TComponent,
+      Actor5e,
+      TidySectionBase
+    >;
+
+    let result: TableAction<any>[] = [];
+
+    if (context.owner && context.unlocked) {
+      result.push({
+        component: GenericActionButton,
+        props: (args) => ({
+          callback: () => {
+            return context.sheet._unassignCrew(
+              args.data,
+              args.rowContext.assignedTo
+            );
+          },
+          iconClasses: 'fa-solid fa-user-minus',
+          tooltip: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
+        }),
+      });
+    }
 
     result.push({
       component: MenuButton,

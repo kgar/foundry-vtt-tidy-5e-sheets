@@ -2,42 +2,12 @@
 
 ### Vehicle Sheet
 
-- [x] Implement Statblock columns
-  - [x] Vehicle Item HP
-  - [x] Vehicle Item Uses
-  - [x] Vehicle Item Crew
 - [ ] Determine where fields will go
   - [ ] system.attributes.actions.stations toggle
   - [ ] Actions max
   - [ ] system.attributes.actions.spent (shown as Actions pips in default)
   - [ ] Action thresholds
-  - [x] Armor class, Armor class config
-  - [x] Cost / units
-  - [x] Size
-  - [x] Weight / units
-  - [x] Keel / units
-  - [x] Beam / units
-  - [x] Crew Max
-  - [x] Passenger Max
-  - [x] Quality tracking (quality toggle?)
-- [x] Handle use cases
-  - [x] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
-    - [x] "Assign To" column on Unassigned Crew table
-    - [x] 💡 Dropdown and/or context menu (ctx menu generally more performant, less static HTML lingering around) when interacting with empty slot in Vehicle Item Expanded UI
-  - [x] Unassign crew member from crew-able vehicle item
-    - [x] ~~💡 X icon row action on Assigned Crew row~~
-    - [x] 💡 context menu option on Assigned Crew row
-    - [x] ~~💡 X / Trash icon on Assigned Member square in Vehicle Item Expanded UI, when unlocked, else open actor sheet~~
-    - [x] 💡 context menu option on Assigned Member square in Vehicle Item Expanded UI
-  - [x] Be able to see crew member assignments
-    - [x] Assigned Crew section, Assigned column
-    - [x] Vehicle Item table row, crew column; expand item on click
-    - [x] Vehicle Item Expanded UI
-- [ ] 💡 Mountable Items (Vehicle Items)
-  - [ ] 💡 Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
-  - [x] ~~💡 Allow unassignment when unlocked, Facility Member style~~
-  - [x] 💡 Visualize broken links for repairability
-
+- [ ] 💡 Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
 
 ### Vehicle Sheet To Done
 
@@ -121,7 +91,45 @@
   - [x] Damage Immunities
   - [x] Condition Immunities
   - [x] Vulnerabilities
-      
+- [x] Handle use cases
+  - [x] Assign crew member to crew-able vehicle item (siege weapon or vehicle equipment with crew max greater than 0)
+    - [x] "Assign To" column on Unassigned Crew table
+    - [x] 💡 Dropdown and/or context menu (ctx menu generally more performant, less static HTML lingering around) when interacting with empty slot in Vehicle Item Expanded UI
+  - [x] Unassign crew member from crew-able vehicle item
+    - [x] ~~💡 X icon row action on Assigned Crew row~~
+    - [x] 💡 context menu option on Assigned Crew row
+    - [x] ~~💡 X / Trash icon on Assigned Member square in Vehicle Item Expanded UI, when unlocked, else open actor sheet~~
+    - [x] 💡 context menu option on Assigned Member square in Vehicle Item Expanded UI
+  - [x] Be able to see crew member assignments
+    - [x] Assigned Crew section, Assigned column
+    - [x] Vehicle Item table row, crew column; expand item on click
+    - [x] Vehicle Item Expanded UI
+- [x] 💡 Mountable Items (Vehicle Items)
+  - [x] ~~💡 Allow unassignment when unlocked, Facility Member style~~
+  - [x] 💡 Visualize broken links for repairability
+- [x] Unassigned Crew/Passenger Drag/Drop
+  - [x] On drop to other dest, transfer
+  - [x] Default dest: "crew"
+- [x] Crew/Passenger Context Menu
+  - [x] Remove {EntityName} - removes all instances that aren't assigned
+- [x] emdash for undefined crew max
+- [x] remove {name} row actions for Unassigned Crew and Passengers, unlocked
+- [x] unassign {name} row action for Assigned Crew, unlocked
+- [x] Implement Statblock columns
+  - [x] Vehicle Item HP
+  - [x] Vehicle Item Uses
+  - [x] Vehicle Item Crew      
+- [x] Determine where fields will go
+  - [x] Armor class, Armor class config
+  - [x] Cost / units
+  - [x] Size
+  - [x] Weight / units
+  - [x] Keel / units
+  - [x] Beam / units
+  - [x] Crew Max
+  - [x] Passenger Max
+  - [x] Quality tracking (quality toggle?)
+
 
 ### Vehicle Sheet Questions
 

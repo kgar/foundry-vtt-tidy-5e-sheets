@@ -287,15 +287,21 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     });
 
     context.crew.assigned.rowActions =
-      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+      TableRowActionsRuntime.getAssignedCrewRowActions(context);
 
     context.crew.unassigned.rowActions =
-      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+        context,
+        'crew'
+      );
     context.crew.unassigned.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
 
     context.passengers.rowActions =
-      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+        context,
+        'passengers'
+      );
     context.passengers.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.passengers);
 
@@ -525,18 +531,16 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         )
       );
 
-      if (item.system.crew.max) {
-        context.mountableItems[item.uuid] = {
-          uuid: item.uuid,
-          id: item.id,
-          img: item.img,
-          name: item.name,
-          crew: {
-            value: ctx.crew.filter((c) => !!c.actor).length,
-            max: item.system.crew.max,
-          },
-        };
-      }
+      context.mountableItems[item.uuid] = {
+        uuid: item.uuid,
+        id: item.id,
+        img: item.img,
+        name: item.name,
+        crew: {
+          value: ctx.crew.filter((c) => !!c.actor).length,
+          max: item.system.crew.max,
+        },
+      };
     }
   }
 
@@ -672,23 +676,48 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     }
   }
 
+  async removeUnassignedCrew(uuid: string) {
+    const context = await this._prepareContext({ soft: true });
+
+    const numberToRemove =
+      context.crew.unassigned.members.find((m) => m.actor.uuid === uuid)
+        ?.quantity ?? 0;
+
+    if (!numberToRemove) {
+      return;
+    }
+
+    await this.applyDeltaToCrew('crew', uuid, `-${numberToRemove}`);
+  }
+
+  async removePassengers(uuid: string) {
+    const passengers = [...this.actor.system.passengers.value];
+    const remaining = passengers.filter((u) => u !== uuid);
+
+    return await this.actor.update({ 'system.passengers.value': remaining });
+  }
+
   async _onAdjustCrew(
     actor: Actor5e,
     dest: CrewArea5e,
-    { src }: { src?: CrewArea5e } = {}
+    {
+      src,
+      quantity,
+    }: { src?: CrewArea5e; quantity?: number | string | null } = {}
   ) {
+    const adjustment = quantity ?? 1;
     const updates = {};
 
     if (src) {
       Object.assign(
         updates,
-        this.actor.system.getCrewUpdates(src, actor.uuid, '-1')
+        this.actor.system.getCrewUpdates(src, actor.uuid, `-${adjustment}`)
       );
     }
 
     Object.assign(
       updates,
-      this.actor.system.getCrewUpdates(dest, actor.uuid, '+1')
+      this.actor.system.getCrewUpdates(dest, actor.uuid, `+${adjustment}`)
     );
 
     if (!foundry.utils.isEmpty(updates)) {
@@ -776,6 +805,10 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       event.target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
     const { itemId } =
       event.target.closest<HTMLElement>('[data-item-id]')?.dataset ?? {};
+    const { tidySectionKey: sectionKey } =
+      event.target.closest<HTMLElement>('[data-tidy-section-key]')?.dataset ??
+      {};
+
     const { type } = foundry.utils.parseUuid(uuid) ?? {};
 
     if (!area || type !== 'Actor') {
@@ -784,7 +817,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     event.dataTransfer?.setData(
       'text/plain',
-      JSON.stringify({ area, itemId, type, uuid })
+      JSON.stringify({ area, itemId, type, uuid, sectionKey })
     );
   }
 
@@ -796,20 +829,52 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       return;
     }
 
-    let { area: src, itemId /* later, for assignment drops */ } =
-      foundry.applications.ux.TextEditor.getDragEventData(event);
+    let {
+      area: src,
+      itemId /* later, for assignment drops */,
+      sectionKey,
+    } = foundry.applications.ux.TextEditor.getDragEventData(event);
 
     const { area: dest = 'crew' } =
       event.target?.closest<HTMLElement>('[data-area]')?.dataset ?? {};
 
-    if (src === dest) {
-      // Try Sort?
+    const { tidySectionKey: destKey } =
+      event.target?.closest<HTMLElement>('[data-tidy-section-key]')?.dataset ??
+      {};
+
+    // Same Crew Area, same section
+    if (src === dest && sectionKey === destKey) {
       return;
     }
 
+    const context = await this._prepareContext({ soft: true });
+
+    // From Assigned Crew, dropping away from Assigned
+    if (src === 'crew' && sectionKey === 'assigned' && destKey !== 'assigned') {
+      const currentAssignedItem = context.crew.assigned.members.find(
+        (m) => m.actor.uuid === document.uuid
+      )?.assignedTo;
+
+      await this._unassignCrew(document, currentAssignedItem);
+    }
+
+    if (src === dest) {
+      return;
+    }
+
+    const quantity =
+      src === 'passenger'
+        ? context.passengers.members.find((m) => m.actor.uuid === document.uuid)
+            ?.quantity
+        : src === 'crew' && sectionKey === 'unassigned'
+        ? context.crew.unassigned.members.find(
+            (m) => m.actor.uuid === document.uuid
+          )?.quantity
+        : undefined;
+
     // TODO: Handle Assignment, if relevant, instead of adjusting crew
 
-    return this._onAdjustCrew(document, dest, { src });
+    return this._onAdjustCrew(document, dest, { src, quantity });
   }
 
   /* -------------------------------------------- */
