@@ -167,7 +167,9 @@
       'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
     )}
     value={context.system.attributes.capacity.cargo.value}
-    units={CONFIG.DND5E.weightUnits[context.system.attributes.capacity.cargo.units]?.abbreviation}
+    units={CONFIG.DND5E.weightUnits[
+      context.system.attributes.capacity.cargo.units
+    ]?.abbreviation}
     traitClass="trait-cargo-capacity trait-editable"
     unlocked={context.unlocked}
   >
@@ -296,6 +298,7 @@
         field="system.attributes.quality.value"
         value={context.system.attributes.quality.value}
         min="0"
+        valueRequired={true}
         selectOnFocus={true}
         placeholder="—"
         disabled={!context.editable}
