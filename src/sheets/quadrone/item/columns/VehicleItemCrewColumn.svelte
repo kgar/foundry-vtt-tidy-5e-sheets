@@ -12,11 +12,9 @@
 </script>
 
 {#if max !== undefined || value > 0}
-  <span class="inline-crew-count">
-    <span class="uses-value color-text-default">
+  <span class={['inline-crew-count', { 'crew-warning': value > max }]}>
+    <span class="uses-value">
       {value}
-    </span>/<span class="uses-max color-text-lighter"
-      >{max ?? '—'}</span
-    >
+    </span>/<span class="uses-max color-text-lighter">{max ?? '—'}</span>
   </span>
 {/if}
