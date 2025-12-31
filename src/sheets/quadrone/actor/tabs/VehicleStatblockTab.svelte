@@ -169,87 +169,105 @@
           {/snippet}
 
           {#snippet body()}
-            {@const itemEntries = section.items.map((item) => ({
-              item,
-              ctx: context.itemContext[item.id] as VehicleItemContext,
-            }))}
-            {#each itemEntries as { item, ctx }, i (item.id)}
-              <TidyItemTableRow
-                {item}
-                contextMenu={{
-                  type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                  uuid: item.uuid,
-                }}
-              >
-                {#snippet children({ toggleSummary, expanded })}
-                  <div class="highlight"></div>
-                  <a
-                    class={[
-                      'tidy-table-row-use-button',
-                      { disabled: !context.editable },
-                    ]}
-                    onclick={(ev) =>
-                      context.editable &&
-                      FoundryAdapter.actorTryUseItem(item, ev)}
-                    data-has-roll-modes
-                  >
-                    <img class="item-image" alt={item.name} src={item.img} />
-                    <span class="roll-prompt">
-                      <i class="fa fa-dice-d20"></i>
-                    </span>
-                  </a>
-
-                  <TidyTableCell primary={true} class="item-label text-cell">
+            {#if section.key === 'equipment' && section.items.length === 0}
+              <div class="inventory-empty empty-state-container">
+                <button
+                  type="button"
+                  class="button button-tertiary"
+                  title={localize('TIDY5E.Vehicle.Equipment.EmptyState')}
+                  aria-label={localize('TIDY5E.Vehicle.Equipment.EmptyState')}
+                  onclick={() =>
+                    context.document.sheet._addDocument({
+                      tabId,
+                    })}
+                >
+                  <i class="fas fa-plus"></i>
+                  {localize('TIDY5E.Vehicle.Equipment.EmptyState')}
+                </button>
+              </div>
+            {:else}
+              {@const itemEntries = section.items.map((item) => ({
+                item,
+                ctx: context.itemContext[item.id] as VehicleItemContext,
+              }))}
+              {#each itemEntries as { item, ctx }, i (item.id)}
+                <TidyItemTableRow
+                  {item}
+                  contextMenu={{
+                    type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                    uuid: item.uuid,
+                  }}
+                >
+                  {#snippet children({ toggleSummary, expanded })}
+                    <div class="highlight"></div>
                     <a
-                      class="item-name"
-                      role="button"
-                      data-keyboard-focus
-                      tabindex="0"
-                      onclick={(ev) => toggleSummary()}
+                      class={[
+                        'tidy-table-row-use-button',
+                        { disabled: !context.editable },
+                      ]}
+                      onclick={(ev) =>
+                        context.editable &&
+                        FoundryAdapter.actorTryUseItem(item, ev)}
+                      data-has-roll-modes
                     >
-                      <span class="cell-text">
-                        <span class="cell-name">{item.name}</span>
-                      </span>
-                      <span class="row-detail-expand-indicator">
-                        <i
-                          class="fa-solid fa-angle-right expand-indicator"
-                          class:expanded
-                        >
-                        </i>
+                      <img class="item-image" alt={item.name} src={item.img} />
+                      <span class="roll-prompt">
+                        <i class="fa fa-dice-d20"></i>
                       </span>
                     </a>
-                  </TidyTableCell>
-                  {#each columns.ordered as column}
-                    {@const hidden = hiddenColumns.has(column.key)}
 
-                    <TidyTableCell
-                      columnWidth="{column.widthRems}rem"
-                      class={[column.cellClasses, { hidden }]}
-                      attributes={{ ['data-tidy-column-key']: column.key }}
-                    >
-                      {#if column.cellContent.type === 'callback'}
-                        {@html column.cellContent.callback?.(
-                          context.document,
-                          context,
-                        )}
-                      {:else if column.cellContent.type === 'component'}
-                        <column.cellContent.component
-                          rowContext={ctx}
-                          rowDocument={item}
-                          {section}
-                        />
-                      {/if}
+                    <TidyTableCell primary={true} class="item-label text-cell">
+                      <a
+                        class="item-name"
+                        role="button"
+                        data-keyboard-focus
+                        tabindex="0"
+                        onclick={(ev) => toggleSummary()}
+                      >
+                        <span class="cell-text">
+                          <span class="cell-name">{item.name}</span>
+                        </span>
+                        <span class="row-detail-expand-indicator">
+                          <i
+                            class="fa-solid fa-angle-right expand-indicator"
+                            class:expanded
+                          >
+                          </i>
+                        </span>
+                      </a>
                     </TidyTableCell>
-                  {/each}
-                {/snippet}
+                    {#each columns.ordered as column}
+                      {@const hidden = hiddenColumns.has(column.key)}
 
-                {#snippet afterInlineActivities(item)}
-                  {#if ctx.crew?.length}
-                    <VehicleItemCrewAssignments {ctx} {item} />
-                  {/if}
-                {/snippet}
-              </TidyItemTableRow>
-            {/each}
+                      <TidyTableCell
+                        columnWidth="{column.widthRems}rem"
+                        class={[column.cellClasses, { hidden }]}
+                        attributes={{ ['data-tidy-column-key']: column.key }}
+                      >
+                        {#if column.cellContent.type === 'callback'}
+                          {@html column.cellContent.callback?.(
+                            context.document,
+                            context,
+                          )}
+                        {:else if column.cellContent.type === 'component'}
+                          <column.cellContent.component
+                            rowContext={ctx}
+                            rowDocument={item}
+                            {section}
+                          />
+                        {/if}
+                      </TidyTableCell>
+                    {/each}
+                  {/snippet}
+
+                  {#snippet afterInlineActivities(item)}
+                    {#if ctx.crew?.length}
+                      <VehicleItemCrewAssignments {ctx} {item} />
+                    {/if}
+                  {/snippet}
+                </TidyItemTableRow>
+              {/each}
+            {/if}
           {/snippet}
         </TidyTable>
       {/if}

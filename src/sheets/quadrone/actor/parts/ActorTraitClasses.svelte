@@ -123,7 +123,7 @@
               type: 'class',
             })}
         >
-          <i class="fa-solid fa-book-open-reader"></i>
+          <i class="fa-solid fa-book-atlas"></i>
           {localize('DND5E.ClassAdd')}
         </button>
         <div class="list-values trait-item">
@@ -163,9 +163,9 @@
             <a
               role="button"
               tabindex="0"
-              aria-label="{localize('DND5E.DescriptionView', {
+              aria-label={localize('DND5E.DescriptionView', {
                 description: localize('TYPES.Item.class'),
-              })}"
+              })}
               class="item-image-link"
               data-keyboard-focus
               onclick={() =>
@@ -222,7 +222,7 @@
               <i class="fa-solid fa-edit"></i>
             </button>
             <button
-              aria-label="{localize('Tidy5E.ContextMenu')}"
+              aria-label={localize('Tidy5E.ContextMenu')}
               type="button"
               class="button button-borderless button-icon-only"
               onclick={(ev) =>
@@ -296,7 +296,9 @@
     <div class="list-content">
       <div class="list-values">
         {#if !orphaned}
-          <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"></i>
+          <i
+            class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"
+          ></i>
         {:else}
           <i
             data-tooltip="DND5E.SubclassMismatchWarn"
@@ -305,7 +307,7 @@
         {/if}
         <!-- svelte-ignore a11y_missing_attribute -->
         <a
-          aria-label="{localize('DND5E.ItemSubclassDetails')}"
+          aria-label={localize('DND5E.ItemSubclassDetails')}
           class="item-image-link"
           role="button"
           tabindex="0"
@@ -350,7 +352,7 @@
             <i class="fa-solid fa-edit"></i>
           </button>
           <button
-            aria-label="{localize('Tidy5E.ContextMenu')}"
+            aria-label={localize('Tidy5E.ContextMenu')}
             type="button"
             class="button button-borderless button-icon-only"
             onclick={(ev) =>
@@ -369,7 +371,9 @@
     <div class="list-label">{localize('TYPES.Item.subclass')}</div>
     <div class="list-content">
       <div class="list-values trait-item">
-        <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"></i>
+        <i
+          class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"
+        ></i>
         <button
           aria-label={localize('TIDY5E.CompendiumBrowser', {
             name: localize('TYPES.Item.subclass'),
@@ -384,7 +388,7 @@
               classIdentifier: cls.system.identifier,
             })}
         >
-          <i class="fa-solid fa-book-open-reader"></i>
+          <i class="fa-solid fa-book-atlas"></i>
           {localize('DND5E.SubclassAdd')}
         </button>
         <button

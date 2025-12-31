@@ -39,7 +39,16 @@
 </script>
 
 <div class="sheet-pins" data-tidy-sheet-part="sheet-pins">
-  <div class="sheet-pin" data-area="crew">
+  <div
+    class={[
+      'sheet-pin',
+      {
+        'pin-warning':
+          context.system.crew.value.length > context.system.crew.max,
+      },
+    ]}
+    data-area="crew"
+  >
     <div class="pin-details">
       <div class="pin-name-container">
         <span
@@ -71,16 +80,35 @@
       </span>
     </div>
     {#if context.system.crew.max > 0}
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
+        role="button"
+        tabindex="0"
         class="button button-icon-only button-borderless highlight-on-hover"
         data-action="browseActors"
+        aria-label={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
+          name: FoundryAdapter.localize('TIDY5E.Vehicle.Member.Crew.Label'),
+        })}
+        data-tooltip={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
+          name: FoundryAdapter.localize('TIDY5E.Vehicle.Member.Crew.Label'),
+        })}
       >
         <i class="fas fa-user-magnifying-glass"></i>
       </a>
     {/if}
   </div>
 
-  <div class="sheet-pin" data-area="passengers">
+  <div
+    class={[
+      'sheet-pin',
+      {
+        'pin-warning':
+          context.system.passengers.value.length >
+          context.system.passengers.max,
+      },
+    ]}
+    data-area="passengers"
+  >
     <div class="pin-details">
       <div class="pin-name-container">
         <span
@@ -112,9 +140,22 @@
       </span>
     </div>
     {#if context.system.passengers.max > 0}
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
+        role="button"
+        tabindex="0"
         class="button button-icon-only button-borderless highlight-on-hover"
         data-action="browseActors"
+        aria-label={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
+          name: FoundryAdapter.localize(
+            'TIDY5E.Vehicle.Member.Passenger.Label',
+          ),
+        })}
+        data-tooltip={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
+          name: FoundryAdapter.localize(
+            'TIDY5E.Vehicle.Member.Passenger.Label',
+          ),
+        })}
       >
         <i class="fas fa-user-magnifying-glass"></i>
       </a>
@@ -130,7 +171,18 @@
   )}
 
   {#snippet UnassignedNoCrewView(section: CrewSection | PassengerSection)}
-    Unassigned Empty State here
+    <div class="inventory-empty empty-state-container">
+      <button
+        type="button"
+        class="button button-tertiary"
+        title={localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
+        aria-label={localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
+        data-action="browseActors"
+      >
+        <i class="fas fa-plus"></i>
+        {localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
+      </button>
+    </div>
   {/snippet}
 
   {@render CrewPassengerTable(context.crew.assigned, true)}
@@ -142,7 +194,18 @@
   )}
 
   {#snippet UnassignedNoPassengerView(section: CrewSection | PassengerSection)}
-    Passenger Empty State here
+    <div class="inventory-empty empty-state-container">
+      <button
+        type="button"
+        class="button button-tertiary"
+        title={localize('TIDY5E.Vehicle.Passenger.EmptyState')}
+        aria-label={localize('TIDY5E.Vehicle.Passenger.EmptyState')}
+        data-action="browseActors"
+      >
+        <i class="fas fa-plus"></i>
+        {localize('TIDY5E.Vehicle.Passenger.EmptyState')}
+      </button>
+    </div>
   {/snippet}
 </div>
 

@@ -148,7 +148,12 @@
 
       }
 
-
+      .tidy-table-cell:has(.meter) {
+        flex-direction: column;
+        gap: var(--t5e-size-1x);
+        padding-block-start: 0.5rem;
+        padding-block-end: 0.5rem;
+      }
     }
 
     .tidy-table-cell[data-tidy-column-key="qty"] {
@@ -163,6 +168,15 @@
       &:hover .command {
         opacity: 1;
       }
+    }
+  }
+
+  .sheet-pin.pin-warning {
+    border-color: var(--t5e-color-palette-orange-70);
+
+    .uses-value {
+      color: var(--t5e-color-palette-orange-70);
+      font-weight: var(--font-weight-label);
     }
   }
 
