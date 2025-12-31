@@ -35,7 +35,7 @@ function getVehicleMemberContextOptionsQuadrone(
 
   let options: ContextMenuEntry[] = vehicleItemId
     ? getVehicleItemMemberOptions(element, app, vehicleItemId)
-    : area === 'crew'
+    : area === 'crew' || area === 'passengers'
     ? getCrewMemberOptions(element, app)
     : area === 'draft'
     ? getDraftMemberOptions(element, app)
@@ -45,8 +45,9 @@ function getVehicleMemberContextOptionsQuadrone(
 }
 
 function getCrewArea(element: HTMLElement) {
-  return element.closest('[data-area]')?.getAttribute('data-area') as CrewArea5e |
-    undefined;
+  return element.closest('[data-area]')?.getAttribute('data-area') as
+    | CrewArea5e
+    | undefined;
 }
 
 function getVehicleItemId(element: HTMLElement) {
@@ -89,7 +90,7 @@ function getVehicleItemMemberOptions(
     {
       name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
       condition: () => !!memberUuid,
-      icon: '<i class="fa-solid fa-trash"></i>',
+      icon: '<i class="fa-solid fa-user-minus"></i>',
       callback: async () => {
         const actor = await fromUuid(memberUuid);
 
@@ -119,7 +120,11 @@ function getDraftMemberOptions(
 
   return [
     {
-      name: 'TIDY5E.ContextMenuActionRemoveDraftAnimal',
+      name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+        name: FoundryAdapter.localize(
+          'TIDY5E.Vehicle.Member.DraftAnimal.Label'
+        ),
+      }),
       icon: '<i class="fa-solid fa-trash"></i>',
       condition: () => canChange,
       callback: async () => {
@@ -162,18 +167,15 @@ function getCrewMemberOptions(
   const assignableItemOptions: ContextMenuEntry[] = Object.values(
     assignableItems
   )
-    .filter(
-      (mountableItem) =>
-        mountableItem.id !== currentlyAssignedItemId &&
-        mountableItem.crew.value < mountableItem.crew.max
-    )
     .map((mountableItem) => {
       return {
         name: `${FoundryAdapter.localize(
           'TIDY5E.ContextMenuActionAssignToEntity',
           { entityName: mountableItem.name }
-        )} ${mountableItem.crew.value}/${mountableItem.crew.max}`,
-        icon: '<i class="fa-solid fa-user fa-fw"></i>',
+        )} ${mountableItem.crew?.value ?? '0'}/${
+          mountableItem.crew?.max ?? '—'
+        }`,
+        icon: '<i class="fa-solid fa-user-plus fa-fw"></i>',
         condition: () => area === 'crew' && canChange,
         callback: async () => {
           const actor = await fromUuid(memberUuid);
@@ -197,7 +199,7 @@ function getCrewMemberOptions(
   return [
     {
       name: FoundryAdapter.localize('TIDY5E.ContextMenuActionUnassign'),
-      icon: '<i class="fa-solid fa-trash fa-fw"></i>',
+      icon: '<i class="fa-solid fa-user-minus fa-fw"></i>',
       condition: () => !!currentlyAssignedItemId && canChange,
       callback: async () => {
         const actor = await fromUuid(memberUuid);
@@ -212,6 +214,32 @@ function getCrewMemberOptions(
       },
     },
     ...assignableItemOptions,
+    {
+      name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+        name: FoundryAdapter.localize(
+          'TIDY5E.Vehicle.Section.Crew.Unassigned.Label'
+        ),
+      }),
+      icon: '<i class="fa-solid fa-trash"></i>',
+      condition: () => area === 'crew' && unassigned && canChange,
+      callback: async () => {
+        if (memberUuid) {
+          app.removeUnassignedCrew(memberUuid);
+        }
+      },
+    },
+    {
+      name: FoundryAdapter.localize('TIDY5E.RemoveSpecific', {
+        name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Passengers'),
+      }),
+      icon: '<i class="fa-solid fa-trash"></i>',
+      condition: () => area === 'passengers' && canChange,
+      callback: async () => {
+        if (memberUuid) {
+          app.removePassengers(memberUuid);
+        }
+      },
+    },
   ];
 }
 function getMemberUuid(element: HTMLElement) {

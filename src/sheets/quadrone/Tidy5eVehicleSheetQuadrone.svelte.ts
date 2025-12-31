@@ -287,15 +287,21 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     });
 
     context.crew.assigned.rowActions =
-      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+      TableRowActionsRuntime.getAssignedCrewRowActions(context);
 
     context.crew.unassigned.rowActions =
-      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+        context,
+        'crew'
+      );
     context.crew.unassigned.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.crew.unassigned);
 
     context.passengers.rowActions =
-      TableRowActionsRuntime.getCrewPassengerRowActions(context);
+      TableRowActionsRuntime.getUnassignedCrewPassengerRowActions(
+        context,
+        'passengers'
+      );
     context.passengers.sectionActions =
       SectionActions.getVehicleMemberHeaderActions(context.passengers);
 
@@ -525,18 +531,16 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         )
       );
 
-      if (item.system.crew.max) {
-        context.mountableItems[item.uuid] = {
-          uuid: item.uuid,
-          id: item.id,
-          img: item.img,
-          name: item.name,
-          crew: {
-            value: ctx.crew.filter((c) => !!c.actor).length,
-            max: item.system.crew.max,
-          },
-        };
-      }
+      context.mountableItems[item.uuid] = {
+        uuid: item.uuid,
+        id: item.id,
+        img: item.img,
+        name: item.name,
+        crew: {
+          value: ctx.crew.filter((c) => !!c.actor).length,
+          max: item.system.crew.max,
+        },
+      };
     }
   }
 
@@ -670,6 +674,27 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     if (removed) {
       return await this.actor.update({ 'system.draft.value': draft });
     }
+  }
+
+  async removeUnassignedCrew(uuid: string) {
+    const context = await this._prepareContext({ soft: true });
+
+    const numberToRemove =
+      context.crew.unassigned.members.find((m) => m.actor.uuid === uuid)
+        ?.quantity ?? 0;
+
+    if (!numberToRemove) {
+      return;
+    }
+
+    await this.applyDeltaToCrew('crew', uuid, `-${numberToRemove}`);
+  }
+
+  async removePassengers(uuid: string) {
+    const passengers = [...this.actor.system.passengers.value];
+    const remaining = passengers.filter((u) => u !== uuid);
+
+    return await this.actor.update({ 'system.passengers.value': remaining });
   }
 
   async _onAdjustCrew(
