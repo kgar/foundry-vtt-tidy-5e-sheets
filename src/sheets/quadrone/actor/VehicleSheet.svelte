@@ -14,7 +14,6 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { getModifierData } from 'src/utils/formatting';
-  import clsx from 'clsx';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -47,11 +46,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<header
-  class={clsx('sheet-header', 'flexcol', {
-    'theme-dark': context.themeSettings.useHeaderBackground,
-  })}
->
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div class="actor-context-row flexrow">
