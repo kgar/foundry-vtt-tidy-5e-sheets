@@ -83,7 +83,7 @@
                 type: 'background',
               })}
           >
-            <i class="fa-solid fa-book-open-reader"></i>
+            <i class="fa-solid fa-book-atlas"></i>
             {localize('DND5E.BackgroundAdd')}
           </button>
           <button

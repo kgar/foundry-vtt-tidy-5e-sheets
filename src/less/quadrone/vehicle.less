@@ -148,7 +148,20 @@
 
       }
 
+      .tidy-table-cell:has(.meter) {
+        flex-direction: column;
+        padding-block-start: 0.5rem;
+        padding-block-end: 0.5rem;
+      }
 
+      .tidy-table-cell:has(.inline-hp) {
+        padding-block-start: 0.625rem;
+      }
+
+      .inline-hp,
+      .inline-uses {
+        margin-bottom: -0.25rem;
+      }
     }
 
     .tidy-table-cell[data-tidy-column-key="qty"] {
@@ -163,6 +176,15 @@
       &:hover .command {
         opacity: 1;
       }
+    }
+  }
+
+  .sheet-pin.pin-warning {
+    border-color: var(--t5e-color-palette-orange-70);
+
+    .uses-value {
+      color: var(--t5e-color-palette-orange-70);
+      font-weight: var(--font-weight-label);
     }
   }
 

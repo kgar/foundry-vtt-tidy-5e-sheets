@@ -35,11 +35,11 @@ function getVehicleMemberContextOptionsQuadrone(
 
   let options: ContextMenuEntry[] = vehicleItemId
     ? getVehicleItemMemberOptions(element, app, vehicleItemId)
-    : area === 'crew' || area === 'passengers'
-    ? getCrewMemberOptions(element, app)
-    : area === 'draft'
-    ? getDraftMemberOptions(element, app)
-    : [];
+    : area === 'crew'
+      ? getCrewMemberOptions(element, app)
+      : area === 'draft'
+        ? getDraftMemberOptions(element, app)
+        : [];
 
   return options;
 }
@@ -102,7 +102,7 @@ function getVehicleItemMemberOptions(
         name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
       }),
       condition: () => empty,
-      icon: '<i class="fa-solid fa-book-open-reader"></i>',
+      icon: '<i class="fa-solid fa-book-atlas"></i>',
       callback: () => app.browseAssignActor(item),
     },
   ];
@@ -152,8 +152,8 @@ function getCrewMemberOptions(
 
   const currentlyAssignedItemId = assigned
     ? element
-        .closest('[data-assigned-item-id]')
-        ?.getAttribute('data-assigned-item-id')
+      .closest('[data-assigned-item-id]')
+      ?.getAttribute('data-assigned-item-id')
     : undefined;
 
   const area = element.closest('[data-area]')?.getAttribute('data-area') as
