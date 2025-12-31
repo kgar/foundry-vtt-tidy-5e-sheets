@@ -164,7 +164,7 @@
             actor={context.actor}
             inspirationSource={context.inspirationSource}
           />
-          <div class="level-block">
+          <div class="level-block theme-dark">
             <span
               class="level bonus font-data-xlarge color-text-default"
               data-tooltip="DND5E.Level"
@@ -336,7 +336,7 @@
     <div class="actor-vitals-container">
       <!-- TODO: Add switch for size -->
       <ActorPortrait />
-      <div class="actor-vitals">
+      <div class="actor-vitals theme-dark">
         <div class="hp-row flexrow">
           <div
             class="meter progress hit-points"
