@@ -213,7 +213,11 @@
             rowContainerAttributes={{
               ['data-assigned-item-id']: assignedItemId,
               ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
-              ['data-member-uuid']: member.actor.uuid,
+              ['data-uuid']: member.actor.uuid,
+              ['data-quantity']: member.quantity
+            }}
+            rowAttributes={{
+              ['data-tidy-draggable']: true,
             }}
           >
             <img

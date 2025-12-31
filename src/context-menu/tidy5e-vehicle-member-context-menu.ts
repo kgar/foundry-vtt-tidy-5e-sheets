@@ -63,9 +63,7 @@ function getVehicleItemMemberOptions(
 ): ContextMenuEntry[] {
   const brokenLink = !!element.closest('.broken');
   const empty = !!element.closest('.empty');
-  const memberUuid = element
-    .closest('[data-member-uuid]')
-    ?.getAttribute('data-member-uuid');
+  const memberUuid = element.closest('[data-uuid]')?.getAttribute('data-uuid');
 
   const item = app.document.items.get(vehicleItemId);
 
@@ -243,9 +241,9 @@ function getCrewMemberOptions(
   ];
 }
 function getMemberUuid(element: HTMLElement) {
-  return element
-    .closest('[data-member-uuid]')
-    ?.getAttribute('data-member-uuid') as string | undefined;
+  return element.closest('[data-uuid]')?.getAttribute('data-uuid') as
+    | string
+    | undefined;
 }
 
 function canChangeDocument(app: Tidy5eVehicleSheetQuadrone) {

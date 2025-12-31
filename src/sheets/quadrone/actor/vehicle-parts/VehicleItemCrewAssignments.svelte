@@ -64,7 +64,7 @@
             {#if slot.brokenLink}
               <li
                 class="slot member-slot broken"
-                data-member-uuid={slot.actor.uuid}
+                data-uuid={slot.actor.uuid}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
                 <a
@@ -79,7 +79,7 @@
             {:else if slot.actor}
               <li
                 class="slot member-slot"
-                data-member-uuid={slot.actor.uuid}
+                data-uuid={slot.actor.uuid}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
               >
                 <a
