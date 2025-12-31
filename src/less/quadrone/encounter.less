@@ -1,5 +1,6 @@
 .tidy5e-sheet.application:where(.quadrone.encounter) {
-  --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-encounter.jpg');
+  @banner-encounter: '../../modules/tidy5e-sheet/images/banner-encounter.jpg';
+  --t5e-background-image: url('@{banner-encounter}');
   --difficulty-diplay-size: 6rem;
 
   .sheet-header {

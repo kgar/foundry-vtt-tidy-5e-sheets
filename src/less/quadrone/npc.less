@@ -1,5 +1,6 @@
 .tidy5e-sheet.application:where(.quadrone.npc) {
-  --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-npc.jpg');
+  @banner-npc: '../../modules/tidy5e-sheet/images/banner-npc.jpg';
+  --t5e-background-image: url('@{banner-npc}');
 
   .challenge-rating {
     border: 0.125rem solid var(--t5e-color-palette-gold-62);

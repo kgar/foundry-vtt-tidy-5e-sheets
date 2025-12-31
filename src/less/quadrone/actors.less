@@ -50,8 +50,10 @@
     }
 
     .sheet-body {
-      --t5e-background-image-top: url('../../modules/tidy5e-sheet/images/parchment-texture-top.webp');
-      --t5e-background-image-bottom: url('../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp');
+      @parchment-texture-top: '../../modules/tidy5e-sheet/images/parchment-texture-top.webp';
+      --t5e-background-image-top: url('@{parchment-texture-top}');
+      @parchment-texture-bottom: '../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp';
+      --t5e-background-image-bottom: url('@{parchment-texture-bottom}');
 
       display: flex;
       flex: 1;
