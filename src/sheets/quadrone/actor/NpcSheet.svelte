@@ -15,8 +15,7 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { untrack } from 'svelte';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
-  import clsx from 'clsx';
-
+  
   let context = $derived(getNpcSheetQuadroneContext());
 
   let appId = $derived(context.actor.uuid.slugify());
@@ -82,11 +81,7 @@
   let extraTabs = new SvelteSet<string>();
 </script>
 
-<header
-  class={clsx('sheet-header', 'flexcol', {
-    'theme-dark': context.themeSettings.useHeaderBackground,
-  })}
->
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div class="actor-context-row flexrow">

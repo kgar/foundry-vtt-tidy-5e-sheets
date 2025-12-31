@@ -8,7 +8,6 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import EncounterSubtitle from './encounter-parts/EncounterSubtitle.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
-  import clsx from 'clsx';
 
   let context = $derived(getEncounterSheetQuadroneContext());
 
@@ -47,11 +46,7 @@
   );
 </script>
 
-<header
-  class={clsx('sheet-header', 'flexcol', {
-    'theme-dark': context.themeSettings.useHeaderBackground,
-  })}
->
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div class="flexcol">
       <div class="flexrow">
@@ -88,7 +83,7 @@
         </div>
 
         {#if context.difficulty.label}
-          <div class="difficulty-block">
+          <div class="difficulty-block theme-dark">
             <span class="label difficulty font-label-medium color-text-default">
               {context.difficulty.label}
             </span>

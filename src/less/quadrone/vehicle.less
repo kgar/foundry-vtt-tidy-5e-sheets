@@ -1,5 +1,6 @@
 .tidy5e-sheet.application:where(.quadrone.vehicle) {
-  --t5e-background-image: url('../../modules/tidy5e-sheet/images/banner-vehicle.webp');
+  @banner-vehicle: '../../modules/tidy5e-sheet/images/banner-vehicle.webp';
+  --t5e-background-image: url('@{banner-vehicle}');
 
   // &::before {
   //   @banner-vehicle : '../../modules/tidy5e-sheet/images/banner-vehicle.webp';

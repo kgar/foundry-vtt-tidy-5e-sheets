@@ -16,7 +16,6 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
   import { CONSTANTS } from 'src/constants';
-  import clsx from 'clsx';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -97,11 +96,7 @@
   });
 </script>
 
-<header
-  class={clsx('sheet-header', 'flexcol', {
-    'theme-dark': context.themeSettings.useHeaderBackground,
-  })}
->
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div
@@ -169,7 +164,7 @@
             actor={context.actor}
             inspirationSource={context.inspirationSource}
           />
-          <div class="level-block">
+          <div class="level-block theme-dark">
             <span
               class="level bonus font-data-xlarge color-text-default"
               data-tooltip="DND5E.Level"
@@ -341,7 +336,7 @@
     <div class="actor-vitals-container">
       <!-- TODO: Add switch for size -->
       <ActorPortrait />
-      <div class="actor-vitals">
+      <div class="actor-vitals theme-dark">
         <div class="hp-row flexrow">
           <div
             class="meter progress hit-points"
