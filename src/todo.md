@@ -2,11 +2,14 @@
 
 ### Vehicle Sheet
 
-- [ ] Crew/Passenger Context Menu
-  - [ ] Remove {EntityName} - removes all instances that aren't assigned
 - [ ] Unassigned Crew/Passenger Drag/Drop
   - [ ] On drop to other dest, transfer
   - [ ] Default dest: "crew"
+- [x] Crew/Passenger Context Menu
+  - [x] Remove {EntityName} - removes all instances that aren't assigned
+- [x] emdash for undefined crew max
+- [x] remove {name} row actions for Unassigned Crew and Passengers, unlocked
+- [x] unassign {name} row action for Assigned Crew, unlocked
 - [x] Implement Statblock columns
   - [x] Vehicle Item HP
   - [x] Vehicle Item Uses
