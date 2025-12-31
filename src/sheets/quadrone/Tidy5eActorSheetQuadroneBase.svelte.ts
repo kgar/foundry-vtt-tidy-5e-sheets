@@ -208,8 +208,9 @@ export function Tidy5eActorSheetQuadroneBase<
     /** @inheritdoc */
     get title() {
       if (!this.actor.isToken) return this.actor.name;
-      return `[${game.i18n.localize(TokenDocument.metadata.label)}] ${this.actor.name
-        }`;
+      return `[${game.i18n.localize(TokenDocument.metadata.label)}] ${
+        this.actor.name
+      }`;
     }
 
     selectTab(tabId: string) {
@@ -372,7 +373,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const themeSettings = ThemeQuadrone.getSheetThemeSettings({ doc: actor });
       const showToken =
         actor.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===
-        true || themeSettings.portraitShape === 'token';
+          true || themeSettings.portraitShape === 'token';
       const effectiveToken = actor.isToken ? actor.token : actor.prototypeToken;
       const isRandom = !!effectiveToken?.randomImg;
       const rawSrc = showToken
@@ -506,12 +507,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
           const spellcasting = cls.system.spellcasting
             ? {
-              dc: cls.system.spellcasting.save,
-              ability: (
-                CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
-                  ?.abbreviation ?? cls.system.spellcasting.ability
-              )?.toLocaleUpperCase(),
-            }
+                dc: cls.system.spellcasting.save,
+                ability: (
+                  CONFIG.DND5E.abilities[cls.system.spellcasting.ability]
+                    ?.abbreviation ?? cls.system.spellcasting.ability
+                )?.toLocaleUpperCase(),
+              }
             : undefined;
 
           const subclass = subclasses.findSplice(
@@ -847,8 +848,8 @@ export function Tidy5eActorSheetQuadroneBase<
           left.key === CONSTANTS.MOVEMENT_WALK
             ? -1
             : right.key === CONSTANTS.MOVEMENT_WALK
-              ? 1
-              : +(right.value ?? 0) - +(left.value ?? 0)
+            ? 1
+            : +(right.value ?? 0) - +(left.value ?? 0)
         );
 
       if (speeds.length === 0) {
@@ -906,8 +907,8 @@ export function Tidy5eActorSheetQuadroneBase<
         left.key === 'darkvision'
           ? -1
           : right.key === 'darkvision'
-            ? 1
-            : +right.value - +left.value
+          ? 1
+          : +right.value - +left.value
       );
     }
 
@@ -1050,9 +1051,11 @@ export function Tidy5eActorSheetQuadroneBase<
         !themeSettings.useHeaderBackground
       );
 
-      this.element
-        .querySelector('.window-header')
-        ?.classList.toggle('theme-dark', themeSettings.useHeaderBackground);
+      for (const node of this.element.querySelectorAll(
+        '.window-header, .sheet-header'
+      )) {
+        node.classList.toggle('theme-dark', themeSettings.useHeaderBackground);
+      }
     }
 
     async _onRender(
@@ -1354,8 +1357,8 @@ export function Tidy5eActorSheetQuadroneBase<
         data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ITEM
           ? 'item'
           : data.doc.documentName === CONSTANTS.DOCUMENT_NAME_ACTIVITY
-            ? 'activity'
-            : undefined;
+          ? 'activity'
+          : undefined;
 
       if (!pinType) {
         return;
@@ -1744,7 +1747,7 @@ export function Tidy5eActorSheetQuadroneBase<
         // Ensure that this item isn't violating the singleton rule
         const dataModel =
           CONFIG.Item.dataModels[
-          itemData.type as keyof typeof CONFIG.Item.dataModels
+            itemData.type as keyof typeof CONFIG.Item.dataModels
           ];
         const singleton = dataModel?.metadata.singleton ?? false;
         if (singleton && this.actor.itemTypes[itemData.type].length) {
