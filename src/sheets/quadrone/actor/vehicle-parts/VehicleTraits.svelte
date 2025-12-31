@@ -8,6 +8,7 @@
   import ActorTraitPills from '../parts/ActorTraitPills.svelte';
   import VehicleTrait from './VehicleTrait.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let appId = $derived(context.document.id);
@@ -452,6 +453,45 @@
       </div>
     </div>
   </div>
+
+  <!-- Stations -->
+  {#if context.unlocked}
+    {@const stations = context.system.attributes.actions.stations}
+    <div class="list-entry trait-stations trait-horizontal">
+      <div class="list-label flexrow">
+        <h4 class="font-weight-label">
+          <i class="fa-solid fa-gauge-high"></i>
+          {localize('DND5E.VEHICLE.FIELDS.attributes.actions.stations.label')}
+        </h4>
+      </div>
+      <div class="trait-values">
+        <a
+          class={[
+            'tidy-table-button tidy-table-toggle',
+            { disabled: !context.editable },
+          ]}
+          data-tooltip={localize(
+            'DND5E.VEHICLE.FIELDS.attributes.actions.stations.label',
+          )}
+          onclick={() =>
+            context.editable &&
+            context.actor.update({
+              'system.attributes.actions.stations': !stations,
+            })}
+        >
+          <i
+            class={[
+              'fa-solid',
+              {
+                ['fa-toggle-off']: !stations,
+                ['fa-toggle-large-on enabled']: stations,
+              },
+            ]}
+          ></i>
+        </a>
+      </div>
+    </div>
+  {/if}
 
   <!-- Resistances -->
   <ActorTraitConfigurableListEntry
