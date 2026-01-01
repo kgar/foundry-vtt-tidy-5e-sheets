@@ -815,7 +815,7 @@
       flex: 1;
       min-width: 10rem;
       max-width: calc(50% - var(--t5e-size-1x));
-      padding: 0 0.75rem 0.5rem;
+      padding: 0 0.75rem 0.25rem;
       transition: box-shadow var(--t5e-transition-default);
 
       .card-header {
@@ -1165,6 +1165,37 @@
         --icon-width: 1.125rem;
         --icon-height: 1.125rem;
       }
+    }
+  }
+
+  .npc-score-tracker {
+    input {
+      font-size: var(--font-size-18);
+      font-weight: var(--font-weight-bold);
+
+      &:first-child {
+        text-align: right;
+      }
+
+      &:last-child {
+        text-align: left;
+      }
+    }
+
+    .lair-initiative {
+      gap: var(--t5e-size-2x);
+
+      >* {
+        line-height: var(--font-size-20);
+      }
+    }
+
+    .button i {
+      font-size: var(--font-size-14);
+    }
+
+    .uses {
+      gap: 0.25rem;
     }
   }
 

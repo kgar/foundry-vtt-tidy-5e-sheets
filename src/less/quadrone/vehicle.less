@@ -75,6 +75,17 @@
       }
     }
 
+    .trait-actions {
+      .trait-values {
+        flex: 1;
+      }
+    }
+
+    .trait-thresholds .threshold-values {
+      gap: 0.25rem;
+    }
+
+
     .skills,
     .tools {
       padding: 0;
@@ -192,12 +203,20 @@
     }
   }
 
-  .sheet-pin.pin-warning {
-    border-color: var(--t5e-text-warning);
 
-    .uses-value {
-      color: var(--t5e-text-warning);
-      font-weight: var(--font-weight-label);
+  /* Vehicle Actions Tracker */
+  .npc-score-tracker.vehicle-actions-tracker {
+    margin-bottom: var(--t5e-size-4x);
+
+    &.tracker-warning {
+      .value {
+        color: var(--t5e-text-warning);
+        font-weight: var(--font-weight-label);
+      }
+
+      h4 {
+        border-color: var(--t5e-text-warning);
+      }
     }
   }
 
@@ -235,7 +254,7 @@
       }
     }
 
-    .sheet-pin.pin-warning {
+    .npc-score-tracker.tracker-warning {
       --t5e-text-warning: var(--t5e-color-palette-orange-55);
     }
   }
