@@ -13,10 +13,7 @@
 
   const localize = FoundryAdapter.localize;
   let totalCrew = $derived(
-    context.system.cargo.crew.reduce(
-      (count: number, c: { quantity: number }) => count + c.quantity,
-      0,
-    ),
+    context.system.crew.value.length,
   );
   let totalActions = $derived(context.system.attributes.actions.value ?? 0);
   let actionsPerTurn = $derived(
