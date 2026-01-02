@@ -29,6 +29,7 @@
   "TIDY5E.AddSpecific": "Add {name}",
   "TIDY5E.AddCustom": "Add Custom {name}",
   "TIDY5E.CompendiumBrowser": "Add {name} from Compendium",
+  "TIDY5E.RemoveSpecific": "Remove {name}",
 
   "TIDY5E.SheetPin": {
     "Label": "Sheet Pin",
@@ -120,6 +121,8 @@
   "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remove as Inspiration Source",
   "TIDY5E.ContextMenuActionAddToSheetTab": "Add to Sheet tab",
   "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
+  "TIDY5E.ContextMenuActionUnassign": "Unassign",
+  "TIDY5E.ContextMenuActionAssignToEntity": "Assign to {entityName}",
 
   "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
   "TIDY5E.InspirationAdd": "Add Inspiration",
@@ -804,6 +807,8 @@
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor.title": "Accent Color",
+    "UseHeaderBackground.title": "Use Header Background",
+    "UseHeaderBackground.hint": "Includes styles that support a colorful sheet header with an image background.",
     "ActorHeaderBackground.title": "Actor Header Background",
     "ItemSidebarBackground.title": "Item Sidebar Background",
     "PortraitShape": {
@@ -825,8 +830,18 @@
   "TIDY5E.Reset": "Reset",
   "TIDY5E.VehicleInMotion": "Vehicle is in motion",
   "TIDY5E.VehicleMotionless": "Vehicle is motionless",
+  "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Assigned Crew",
+  "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Unassigned Crew",
+  "TIDY5E.Vehicle.Member.Passenger.Label": "Passenger",
   "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal",
   "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals",
+  "TIDY5E.Vehicle.Member.AssignTo.Label": "Assign to",
+  "TIDY5E.Vehicle.Member.Assigned.Label": "Assigned",
+  "TIDY5E.Vehicle.Repair.Label": "Repair",
+  "TIDY5E.Vehicle.Equipment.EmptyState": "Drag and drop equipment here, or click to add from a compendium. Crew can then be assigned to vehicle equipment.",
+  "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. HP",
+  "TIDY5E.Vehicle.Unassigned.EmptyState": "Drag and drop crew here, or click to add from a compendium. Crew can then be assigned to vehicle equipment or features.",
+  "TIDY5E.Vehicle.Passenger.EmptyState": "Drag and drop passengers here, or click to add from a compendium.",
   "TIDY5E.TotalCrewCount": "Total Crew",
   "TIDY5E.ActionsPerTurn": "Actions Per Turn",
   "TIDY5E.SheetMenu": {

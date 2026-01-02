@@ -25,7 +25,7 @@
   }
 </script>
 
-<div class="group-tab-content group-description-content flexcol">
+<div class="vehicle-tab-content vehicle-description-content flexcol">
   {#if editing}
     {#key contentToEdit}
       <article class="flexible-editor-container singleton">
@@ -45,35 +45,6 @@
     {/key}
   {/if}
 
-  <article class="summary-editor-container" class:hidden={editing}>
-    <div class="summary-editor-title">
-      <h3 class="font-title-small flexrow">
-        <i class="fa-solid fa-note-sticky flexshrink"></i>
-        <span class="flex1">{localize('DND5E.Summary')}</span>
-        {#if context.editable}
-          <a
-            class={['button button-borderless button-icon-only flexshrink']}
-            onclick={() =>
-              edit(
-                context.actor.system.details.biography.value,
-                context.enriched.biography,
-                'system.details.biography.value',
-              )}
-          >
-            <i class="fa-solid fa-feather"></i>
-          </a>
-        {/if}
-      </h3>
-      <tidy-gold-header-underline></tidy-gold-header-underline>
-    </div>
-    {#key context.enriched.biography}
-      <div class="editor" use:manageSecrets={{ document: context.actor }}>
-        <div data-field="system.description.summary" class="user-select-text">
-          {@html context.enriched.biography}
-        </div>
-      </div>
-    {/key}
-  </article>
   <article class="description-editor-container" class:hidden={editing}>
     <div class="description-editor-title">
       <h3 class="font-title-small flexrow">
@@ -97,7 +68,10 @@
     </div>
     {#key context.enriched.biography}
       <div class="editor" use:manageSecrets={{ document: context.actor }}>
-        <div data-field="system.details.biography.value" class="user-select-text">
+        <div
+          data-field="system.details.biography.value"
+          class="user-select-text"
+        >
           {@html context.enriched.biography}
         </div>
       </div>

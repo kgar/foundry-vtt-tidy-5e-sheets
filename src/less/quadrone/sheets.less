@@ -128,7 +128,7 @@
       background-color: var(--t5e-light-color);
       background-size: cover;
       background-position: 50% 0;
-      transition: filter 0.75s;
+      transition: filter var(--t5e-transition-slow);
 
       &.conceal {
         filter: grayscale(100%);
@@ -175,7 +175,7 @@
       text-align: center;
       flex: 0 1 fit-content;
 
-      transition: color 0.3s ease;
+      transition: color var(--t5e-transition-default);
 
       &:hover {
         color: var(--t5e-color-text-default);

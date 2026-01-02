@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settings } from 'src/settings/settings.svelte';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import ActorInventoryFooter from 'src/sheets/quadrone/actor/parts/ActorInventoryFooter.svelte';
   import ActorEncumbranceBar from 'src/sheets/quadrone/actor/parts/ActorEncumbranceBar.svelte';
@@ -18,11 +17,13 @@
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
+  import ContainerPanel from '../../shared/ContainerPanel.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
+  const localize = FoundryAdapter.localize;
 
   let tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-    
+
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
@@ -31,19 +32,17 @@
 
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
-    
-    let cargo = $derived(
-      SheetSections.configureInventory(
-        context.items,
-        tabId,
-        UserSheetPreferencesService.getByType(context.actor.type),
-        TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-      ),
-    );
 
-  const localize = FoundryAdapter.localize;
+  let cargo = $derived(
+    SheetSections.configureInventory(
+      context.inventory,
+      tabId,
+      UserSheetPreferencesService.getByType(context.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[tabId],
+    ),
+  );
 
-  let showSheetPin = $derived(
+  let showSheetPins = $derived(
     UserSheetPreferencesService.getDocumentTypeTabPreference(
       context.document.type,
       tabId,
@@ -61,15 +60,38 @@
   });
 </script>
 
-<div class="vehicle-tab-content vehicle-cargo-content">
+<div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
+  
+  <div class="encumbrance-container pills flexrow">
+    <div class="pill flexshrink">
+      <span class="text-normal">{localize(
+          'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
+        )}
+      </span>
+      <span class="">
+        {context.system.attributes.capacity.cargo.value}
+      </span>
+      <span class="text-normal">
+        {CONFIG.DND5E.weightUnits[context.system.attributes.capacity.cargo.units]?.abbreviation}
+      </span>
+    </div>
+    <ActorEncumbranceBar actor={context.actor} />
+  </div>
 
-  {#if showSheetPin}
+  {#if showSheetPins}
     <SheetPins />
   {/if}
 
-  <InventoryTables 
-    sections={context.cargo}
+    {#if context.showContainerPanel && !!context.containerPanelItems.length}
+    <ContainerPanel
+      {searchCriteria}
+      containerPanelItems={context.containerPanelItems}
+    />
+  {/if}
+
+  <InventoryTables
+    sections={cargo}
     editable={context.editable}
     {searchCriteria}
     itemContext={context.itemContext}
@@ -79,11 +101,6 @@
   />
 
   <div class="vehicle-footer">
-    {#if settings.value.useVehicleEncumbranceBar && context.encumbrance}
-      <div class="encumbrance-container">
-        <ActorEncumbranceBar actor={context.actor} />
-      </div>
-    {/if}
     <ActorInventoryFooter useAttunement={false} />
   </div>
 </div>

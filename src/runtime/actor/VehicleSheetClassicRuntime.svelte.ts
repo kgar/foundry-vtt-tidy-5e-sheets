@@ -29,7 +29,7 @@ const defaultVehicleClassicTabs: RegisteredTab<VehicleSheetContext>[] = [
     layout: 'classic',
   },
   {
-    id: CONSTANTS.TAB_VEHICLE_PASSENGERS_AND_CREW,
+    id: CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
     title: 'DND5E.VEHICLE.Tabs.CrewPassengers',
     content: {
       component: VehiclePassengersAndCrewTab,
@@ -38,7 +38,7 @@ const defaultVehicleClassicTabs: RegisteredTab<VehicleSheetContext>[] = [
     layout: 'classic',
   },
   {
-    id: CONSTANTS.TAB_VEHICLE_CARGO,
+    id: CONSTANTS.TAB_VEHICLE_CARGO_LEGACY,
     title: 'DND5E.VEHICLE.Tabs.Cargo',
     content: {
       component: VehicleCargoTab,

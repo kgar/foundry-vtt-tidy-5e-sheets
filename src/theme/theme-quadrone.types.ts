@@ -17,6 +17,7 @@ export type ThemeSettingsV2Old = {
 
 export type ThemeSettingsV3 = {
   accentColor: string;
+  useHeaderBackground: boolean;
   actorHeaderBackground: string;
   itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;
@@ -36,6 +37,7 @@ export type ThemeQuadroneStyleDeclaration = {
   identifier: string;
 };
 
+// TODO: Identify the various usages of this Options type and extract multiple alternatives based on their unique uses. There is too much sharing here.
 export type ThemeSettingsConfigurationOptions = {
   /**
    * Optional document whose theming is being configured.
@@ -52,12 +54,16 @@ export type ThemeSettingsConfigurationOptions = {
    * their own style declarations related to their related document.
    */
   idOverride?: string;
-  /** 
+  /**
    * Use world theme settings as a baseline when deriving the final styles.
-   * Set to false when performing activities like presenting a Sheet-specific Theme Settings form. 
+   * Set to false when performing activities like presenting a Sheet-specific Theme Settings form.
    * default: true
    */
   applyWorldThemeSetting?: boolean;
+  /** Optional callback to use after settings have been applied. */
+  callback?: (params: { settingsOverride?: ThemeSettingsV3 }) => void;
+  /** Alternative default settings. */
+  alternateDefaults?: Partial<ThemeSettingsV3>;
 };
 
 export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';

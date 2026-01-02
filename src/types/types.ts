@@ -202,6 +202,7 @@ export type SectionCommand = {
   iconClass?: string;
   tooltip?: string;
   execute?: (params: SectionCommandExecuteParams) => void;
+  attributes?: HTMLAttributes<HTMLElement>;
 };
 
 export type SectionCommandExecuteParams = {
@@ -229,9 +230,9 @@ export type ActivitySection = {
 } & TidySectionBase;
 
 export type VehicleFeatureSection = {
-  crewable?: boolean;
-  columns?: SimpleEditableColumn[];
-} & FeatureSection;
+  type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
+  items: Item5e[];
+} & TidySectionBase;
 
 export type SimpleEditableColumn = {
   label: string;
@@ -558,12 +559,18 @@ export type NpcSheetContext = {
   utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContextV1;
 
+export type VehicleItemCrewAssignment = {
+  // TODO: reconsider doing this?
+  actor: Actor5e | { uuid: string } | undefined;
+  brokenLink?: boolean;
+};
+
 export type VehicleItemContext = {
   actionSubtitle?: string;
   activities?: ActivityItemContext[];
-  canToggle?: boolean;
   containerContents?: ContainerContents;
   cover?: string;
+  crew?: VehicleItemCrewAssignment[];
   hasUses?: boolean;
   save?: ItemSaveContext;
   toHit?: number | null;
@@ -1534,28 +1541,102 @@ export type EncounterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
+export type DraftAnimalContext = {
+  actor: Actor5e;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+};
+
+export type DraftAnimalSection = {
+  type: 'draft';
+  members: DraftAnimalContext[];
+} & TidySectionBase;
+
+export type CrewMemberContext = {
+  actor: Actor5e;
+  subtitle: string;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
+  assignedTo?: Item5e;
+};
+
+export type CrewSection = {
+  type: 'crew';
+  members: CrewMemberContext[];
+} & TidySectionBase;
+
+export type CrewSections = {
+  assigned: CrewSection;
+  unassigned: CrewSection;
+};
+
+export type PassengerMemberContext = {
+  actor: Actor5e;
+  subtitle: string;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
+};
+
+export type PassengerSection = {
+  type: 'passengers';
+  members: PassengerMemberContext[];
+} & TidySectionBase;
+
 export type VehicleSheetQuadroneContext = {
-  enriched: {
-    biography: string;
-  };
-  cargo: VehicleCargoSection[];
   conditions: Dnd5eActorCondition[];
-  crew: GroupMembersQuadroneContext;
+  containerPanelItems: ContainerPanelItemContext[];
+  cost: {
+    value: number;
+    denomination: string;
+  };
+  crew: CrewSections;
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   encumbrance: EncumbranceContext;
-  features: VehicleFeatureSection[];
+  enriched: {
+    biography: string;
+  };
+  features: InventorySection[];
+  inventory: InventorySection[];
   itemContext: Record<string, VehicleItemContext>;
-  passengers: number;
-  scale: number;
+  mountableItems: Record<
+    string,
+    {
+      img: string;
+      name: string;
+      uuid: string;
+      id: string;
+      crew: { value: number; max: number | undefined };
+    }
+  >;
+  passengers: PassengerSection;
+  quality: number;
+  showContainerPanel: boolean;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
+  statblock: (InventorySection | DraftAnimalSection)[];
   traits: Record<string, ActorTraitContext[]>;
+  travelSpeeds: {
+    currentSpeed: TravelSpeedConfigEntry;
+    travelSpeeds: TravelSpeedConfigEntry[];
+    units: {
+      day: string;
+      hour: string;
+    };
+  };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
   useActionsFeature?: boolean;
   utilities: Utilities<VehicleSheetQuadroneContext>;
   lockSensitiveFields?: boolean;
 } & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
+
+export type TravelSpeedConfigEntry = {
+  key: string;
+  label: string;
+  valueDay: number;
+  valueHour: number;
+  unitsDay: string;
+  unitsHour: string;
+};
 
 /* Misc - Svelte */
 

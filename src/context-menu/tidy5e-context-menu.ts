@@ -11,6 +11,7 @@ import { configureActorJournalContextMenu } from './tidy5e-journal-context-menu'
 import { configureEncounterContextMenu } from './tidy5e-encounter-context.menu';
 import { configureEncounterPlaceholderContextMenu } from './tidy5e-encounter-placeholder-context-menu';
 import { configureSectionContextMenu as configureSectionContextMenu } from './tidy5e-section-context-menu-quadrone';
+import { configureVehicleMemberContextMenu } from './tidy5e-vehicle-member-context-menu';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -55,6 +56,9 @@ function onDocumentContextOpened(this: any, element: HTMLElement) {
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_FACILITY_OCCUPANTS:
       configureFacilityContextMenu(element, app);
+      break;
+    case CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER:
+      configureVehicleMemberContextMenu(element, app);
       break;
     case CONSTANTS.CONTEXT_MENU_TYPE_GROUP_MEMBER:
       configureGroupContextMenu(element, app);

@@ -5,6 +5,10 @@ import type {
 import { CONSTANTS } from 'src/constants';
 import { getDefaultItemColumns } from './default-item-columns';
 import { TableColumnRuntimeBase } from './TableColumnRuntimeBase.svelte';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import VehicleItemHpColumn from 'src/sheets/quadrone/item/columns/VehicleItemHpColumn.svelte';
+import VehicleItemUsesColumn from 'src/sheets/quadrone/item/columns/VehicleItemUsesColumn.svelte';
+import VehicleItemCrewColumn from 'src/sheets/quadrone/item/columns/VehicleItemCrewColumn.svelte';
 
 class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
   getDefaultColumns(): ColumnSpecDocumentTypesToTabs {
@@ -190,6 +194,49 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
       [CONSTANTS.ITEM_TYPE_WEAPON]: standardWeaponColumns,
     };
 
+    const vehicleItemColumns = {
+      hp: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.HP'),
+        },
+        cellContent: {
+          type: 'component',
+          component: VehicleItemHpColumn,
+        },
+        order: 10,
+        priority: 100,
+        widthRems: 5,
+      },
+      uses: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.Uses'),
+        },
+        cellContent: {
+          type: 'component',
+          component: VehicleItemUsesColumn,
+        },
+        widthRems: 5,
+        order: 20,
+        priority: 100,
+      },
+      crew: {
+        headerContent: {
+          type: 'html',
+          html: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
+        },
+        cellContent: {
+          type: 'component',
+          component: VehicleItemCrewColumn,
+        },
+        widthRems: 4,
+        order: 30,
+        priority: 80,
+      },
+      actions: standardItemActionsColumn,
+    } satisfies Record<string, ColumnSpecification>;
+
     return {
       [CONSTANTS.SHEET_TYPE_CONTAINER]: {
         [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
@@ -219,7 +266,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
       },
       [CONSTANTS.SHEET_TYPE_NPC]: {
-        [CONSTANTS.TAB_NPC_STATBLOCK]: {
+        [CONSTANTS.TAB_STATBLOCK]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             recovery: { ...columns.recovery, order: 100, priority: 400 },
             uses: { ...columns.uses, order: 200, priority: 600 },
@@ -236,23 +283,29 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardSpellColumns,
         },
       },
-      [CONSTANTS.SHEET_TYPE_GROUP]: {
-        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
-          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
-          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
-          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
-        },
-      },
-      [CONSTANTS.SHEET_TYPE_ENCOUNTER]: {
-        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
-          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
-          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
-          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
-          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
+      [CONSTANTS.SHEET_TYPE_VEHICLE]: {
+        [CONSTANTS.TAB_STATBLOCK]: {
+          [CONSTANTS.ITEM_TYPE_WEAPON]: vehicleItemColumns,
+          [CONSTANTS.ITEM_TYPE_EQUIPMENT]: vehicleItemColumns,
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
+            recovery: { ...columns.recovery, order: 100, priority: 400 },
+            uses: { ...columns.uses, order: 200, priority: 600 },
+            roll: { ...columns.roll, order: 300, priority: 800 },
+            formula: { ...columns.formula, order: 400, priority: 700 },
+            range: { ...columns.range, order: 500, priority: 300 },
+            target: { ...columns.target, order: 600, priority: 800 },
+            time: { ...columns.time, order: 700, priority: 800 },
+            actions: { ...columns.actions, order: 1000, priority: 1000 },
+          },
         },
       },
       [CONSTANTS.COLUMN_SPEC_TYPE_KEY_DEFAULT]: {
+        [CONSTANTS.TAB_ACTOR_INVENTORY]: {
+          [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: standardInventoryColumns,
+          [CONSTANTS.ITEM_TYPE_CONSUMABLE]: standardConsumableColumns,
+          [CONSTANTS.ITEM_TYPE_CONTAINER]: standardContainerColumns,
+          [CONSTANTS.ITEM_TYPE_LOOT]: standardLootColumns,
+        },
         [CONSTANTS.TAB_ACTOR_ACTIONS]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
             charges: { ...columns.uses, order: 100, priority: 500 },

@@ -2,6 +2,7 @@
 
 ### Short List
 
+- [ ] Possibly fix usability complaint for Loyalty Score setup: https://discord.com/channels/@me/1243307347682529423/1451341294881341480
 - [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
@@ -146,7 +147,8 @@
 - [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
-
+- [ ] There are some layout changes to Rider effects: https://discord.com/channels/170995199584108546/670336046164213761/1453597835550396529 ; what is Tidy doing currently, and can we do something differently?
+- [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
 
 ## hightouch To Do
 
@@ -195,111 +197,6 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 
 - [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 
-### More Sheet Pins
 
-- [x] Set up the Show Sheet Pins per tab as a Global User Preference. No sheet-local override.
-- [x] Propagate UI for saving sheet pin visibility (local and global) to the relevant tabs.
-  - [x] Inventory (all of em)
-  - [x] Spellbook
-  - [x] Features
-  - [x] Statblock
-  - [x] Sheet
-- [x] Update all sheet pin component references to honor user setting value.
-- [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
-- [x] Stretch: Sheet Pins / Multi-actor Members tab upgrade
-  - [x] Add action bar with search, sort, and config
-  - [x] Enable custom sections for members tabs
-  - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
-  - [x] Add Context menu "Choose a section" (or whatever)
-  - [x] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
-  - [x] Enable Search
-  - [x] Implement Show Sheet Pins option
-  - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
-  - [x] Make custom action bar for Group Members to exclude filters and sorting.
-- [x] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
-- [x] Ditto for document-tags: check on Facility details document-tags usage.
-- [x] Evolve the hands-free data field input to its own component that uses the ~~HTMLElement adapter~~ outerHTML approach. 
-  - Like Foundry, we can simply slam down outerHTML and call it a day, because the form will handle form submission.
-- [x] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
-- [x] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
-- [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
-- [x] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
-  - [x] Convert Item Sheet Details tabs to vet this out
-    - [x] Background
-    - [x] Class
-    - [x] .. DetailsSpellcasting
-    - [x] .. ItemStartingEquipment
-    - [x] Consumable
-    - [x] .. QuantityWeightPriceFormGroups
-    - [x] .. FieldDamage
-    - [x] .. FieldUses
-    - [x] Equipment
-    - [x] .. DetailsMountable
-    - [x] Facility
-    - [x] Feat
-    - [x] Loot
-    - [x] Species
-    - [x] Spell
-    - [x] .. FieldActivation
-    - [x] .. FieldRange
-    - [x] .. FieldDuration
-    - [x] .. FieldTargets
-    - [x] Subclass
-    - [x] Tool
-    - [x] Weapon
-    - [x] Tattoo
-    - [x] ~~MCDM Power?~~ Let Michael do it if he wishes.
-  - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
-  - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
-  - [x] Rename FormGroup `blank` prop to `blankLabel`
-  - [x] If a FormGroup is supplied a blank label, then consider usesBlank to be true
-- [x] Create string-tags replacement
-  - [x] Plug in to Required Items
-- [x] Create document-tags replacement for single documents as DocumentTag.
-  - [x] Support single tag
-    - [x] Plug into Facility details
-- [x] Container details - roll out FormGroup
-- [x] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
-- [x] ~~Investigate `dnd5e.prepareSheetContext` and determine if I need to do something about this. realistically, what is my part ID for "all the context"?~~ We don't need it.
-- [x] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
-- [x] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
-- [x] Update sheet header commands column to leverage API ~~and place options in reverse order~~, favoring tidy default content on the far right. ~~Flex row-reverse might suffice for this.~~
-- [x] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
-  - [x] // TODO: add headerActions here
-  - [x] Sheet tab - section rename (unlocked only), API commands
-  - [x] Quadrone Character Feature Sections
-  - [x] Quadrone NPC Feature Sections
-  - [x] Quadrone Inventory Sections
-  - [x] Quadrone Spellbook Sections
-    - [x] Include slots config when usesSlots is true
-  - [x] MCDM Powers (be conservative about this one, just use the add control)
-  - [x] Group Sheet Members
-  - [x] NPC Statblock Section
-- [x] Consider renaming them "sectionActions"
-- [x] Ensure Quick Insert shows magnifying glass per configuration
-- [x] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
-- [x] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
-- [x] ~~Ensure context menu options are always available regardless of lock state~~ Nah. If the caller doesn't want it seen, we don't show it. The model should account for the alternate enabled state, perhaps through the enabled params ‼️.
-- [x] Convert all section actions to the API model. Render them into the custom action component at render time, using the data.
-- [x] Implement Overflow control 
-  - [x] When 4+ commands, replace all header actions with single 3-dots menu button that opens context menu. All enabled options should be present. This can trivially be done in the component where section actions are rendered.
-- [x] ~~Add context menu support to the section header at large with same behavior~~ Not worth it.
-- [x] ~~Need to Handle: be able to show a field in the context menu even when locked. Take some time to think how to do this one. Example: Section Rename option should always be available in the menu but not available in the header controls when unlocked.~~ Not worth it.
-- [x] ~~Implement section rename command in context menu as always available, even when locked~~ Standalone context menu abandoned. Not worth it.
-- [x] When unlocked, show section rename control in table head
-- [x] Review the section command API to determine if there's more information that can be included in the enabled callback
-- [x] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
-- [x] Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
-- [x] Reorder the header actions to put them in the ideal order of importance. Then use flex reverse or a reverse array iteration to put the header actions from highest to lowest index.
-- [x] #1422 - Test and look for trouble
-  - [x] Character - Sheet, Inventory, Spellbook, Features, Effects
-  - [x] NPC - Statblock, Inventory, Spellbook
-  - [x] Group - Members, Inventory
-  - [x] Encounter - Loot
-  - [x] Container - Contents
-  - [x] Item - Effects, Activities
-- [x] Bulk Section title override - Use the section name instead of the first item's name in the title.
-- [x] Bug: Setting default sheet preference is reportedly resetting. 
-- [x] Always show the spell icon in spellbook, whether locked or unlocked
-- [x] Trigger `tidy5e.prepareSheetContext` hook to provide visibility into Tidy's prepared context. Provide all relevant info. This is not a parts-based prep hook like `dnd5e.prepareSheetContext`
-- [x] Eliminate scoped CSS styles from ExpandableContainer.svelte. Ensure Quadrone sheets have the CSS they need for it.
+## To Do Graveyard
+

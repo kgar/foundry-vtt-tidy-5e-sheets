@@ -89,7 +89,7 @@
     class:highlight={hoveredFacilityOccupant.value ===
       `${facilityId}-${index}-${uuid}`}
     class:unlocked={context.unlocked}
-    class="slot occupant-slot {type} {imageTypeClassName} occupant-with-menu"
+    class="slot member-slot {type} {imageTypeClassName} occupant-with-menu"
     data-actor-uuid={uuid}
     data-tooltip={name}
     data-facility-id={facilityId}
@@ -101,20 +101,20 @@
       (hoveredFacilityOccupant.value = `${facilityId}-${index}-${uuid}`)}
     onmouseleave={() => (hoveredFacilityOccupant.value = '')}
   >
-    <a onclick={(ev) => context.editable && onOccupantClick(ev)}>
+    <a class="item-image-link" onclick={(ev) => context.editable && onOccupantClick(ev)}>
       {#if occupant}
-        <img src={imageSrc} alt={name} />
+        <img class="item-image" src={imageSrc} alt={name} />
       {:else}
         <i class="fa-solid fa-link-slash broken-link-icon"></i>
       {/if}
 
       {#if context.unlocked}
-        <i class="fa-solid fa-cog occupant-menu-icon"></i>
+        <i class="fa-solid fa-ellipsis-vertical occupant-menu-icon"></i>
       {/if}
     </a>
   </li>
 {:else}
-  <li class="slot occupant-slot {type} empty" data-index={index}>
+  <li class="slot member-slot {type} empty" data-index={index}>
     <a onclick={(ev) => context.editable && onSlotClick(ev)}
       class="button button-tertiary button-icon-only">
       <i class={iconClass}></i>

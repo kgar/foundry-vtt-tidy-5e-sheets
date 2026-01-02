@@ -1,57 +1,261 @@
 .tidy5e-sheet.application:where(.quadrone.vehicle) {
+  @banner-vehicle: '../../modules/tidy5e-sheet/images/banner-vehicle.webp';
+  --t5e-background-image: url('@{banner-vehicle}');
+  --t5e-text-warning: var(--t5e-color-palette-orange-70);
 
-
-  .vehicle-attributes-content {
+  .dr-container {
     flex: 1;
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    padding-right: 0.75rem;
-    overflow-y: scroll;
+    align-items: center;
+    padding-left: 0.5rem;
+  }
 
-    .main-panel {
-      flex: 1;
+  .sidebar {
+    gap: var(--t5e-size-2x);
+
+    > :last-child {
+      margin-bottom: var(--t5e-size-8x);
     }
 
-    :global(.items-header-item-threshold) {
-      align-self: flex-start;
+    h4,
+    h3 {
+      color: var(--t5e-color-text-lighter);
+
+      i {
+        font-size: var(--font-size-12);
+        margin-right: 0.1875rem;
+        color: var(--t5e-color-icon-button);
+      }
     }
 
-    .item-hp {
-      align-self: center;
-      position: relative;
-      width: calc(100% - 0.25rem);
-      margin-left: 0.125rem;
-      margin-right: 0.125rem;
-      height: 1.325rem;
-      display: flex;
-      justify-content: center;
+    h4.bordered {
+      border-bottom: 0.0625rem solid var(--t5e-color-gold);
+      padding: 0.25rem 0;
+      margin-bottom: 0.25rem;
+    }
+
+    .trait-editable {
+      flex-direction: row;
       align-items: center;
+      max-height: 1.25rem;
+
+      .list-label {
+        flex: 2;
+      }
+
+      .trait-values {
+        display: flex;
+        flex: 3;
+        gap: 0.25rem;
+        justify-content: flex-end;
+      }
+
+      input {
+        flex: 2;
+      }
+
+      select {
+        flex: 1 0 fit-content;
+      }
+    }
+
+    .trait-horizontal {
+      flex-direction: row;
+      align-items: center;
+
+      .trait-values {
+        --t5e-table-button-width: var(--t5e-field-size-default);
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
+    .trait-hit-dice {
+      .hit-dice-container {
+        padding-right: 0.5rem;
+      }
+    }
+
+    .trait-actions {
+      .trait-values {
+        flex: 1;
+      }
+    }
+
+    .trait-thresholds .threshold-values {
+      gap: 0.25rem;
+    }
+
+
+    .skills,
+    .tools {
+      padding: 0;
+      background: none;
+
+      .skill-expand-button {
+        padding: 0;
+      }
+
+      .skill-list,
+      .tool-list {
+
+        li {
+          width: auto;
+
+          .passive,
+          .modifier {
+            padding-right: 0.25rem;
+          }
+        }
+      }
+    }
+
+    .npc-score-tracker {
+
+      .card-header h3 {
+        padding-top: 0;
+      }
+
+      .uses {
+
+        .max,
+        .value {
+          width: 1.5rem;
+        }
+      }
     }
   }
 
-  .vehicle-cargo-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  .trait-icon-keel {
+    transform: rotate(90deg) translateY(1px);
+  }
 
-    .scroll-container {
-      flex: 1;
-      overflow-y: scroll;
-      padding-right: 0.75rem;
+  /* TABS */
+  /* ----- */
+  .tidy-tab {
+    &.statblock {
+      &:has(.character-traits) {
+        .tidy-table-container {
+          padding-block-end: 0;
+          flex: 0 1 auto;
+        }
+
+        .character-traits {
+          padding-bottom: var(--t5e-size-4x);
+
+          .tidy-table-header-row {
+            h3 {
+              padding: 0 0 0.125rem 0.5rem;
+            }
+          }
+
+          .list-label {
+            padding-left: 0.5rem;
+            flex: 0.75;
+          }
+        }
+
+        .list-entry {
+          border-radius: 0.125rem;
+          border-width: 0 0 0.0625rem 0;
+          border-style: solid;
+          border-image: var(--t5e-table-row-border-image);
+
+          padding: var(--t5e-size-1x) 0;
+        }
+
+      }
+
+      .tidy-table-cell:has(.meter) {
+        flex-direction: column;
+        padding-block-start: 0.5rem;
+        padding-block-end: 0.5rem;
+      }
+
+      .tidy-table-cell:has(.inline-hp) {
+        padding-block-start: 0.625rem;
+      }
+
+      .inline-hp,
+      .inline-uses {
+        margin-bottom: -0.25rem;
+      }
     }
 
-    .vehicle-footer {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-    }
+    .tidy-table-cell[data-tidy-column-key="qty"] {
+      padding-left: 0;
+      padding-right: 0;
 
-    .encumbrance-container {
-      padding: 0 0.25rem;
+      .command {
+        opacity: 0;
+        transition: opacity var(--t5e-transition-default);
+      }
+
+      &:hover .command {
+        opacity: 1;
+      }
     }
   }
 
+  .crew-warning {
+    .uses-value {
+      color: var(--t5e-text-warning);
+      font-weight: var(--font-weight-label);
+    }
+  }
+
+
+  /* Vehicle Actions Tracker */
+  .npc-score-tracker.vehicle-actions-tracker {
+    margin-bottom: var(--t5e-size-4x);
+
+    &.tracker-warning {
+      .value {
+        color: var(--t5e-text-warning);
+        font-weight: var(--font-weight-label);
+      }
+
+      h4 {
+        border-color: var(--t5e-text-warning);
+      }
+    }
+  }
+
+  .spellbook-footer {
+    .spellcasting-ability {
+      select {
+        height: 1.5rem;
+      }
+    }
+
+    .level {
+      input[type="number"] {
+        height: 1.5rem;
+        max-width: 2.5rem;
+      }
+    }
+
+    .pill.borderless {
+      padding: 0;
+      border: none;
+
+      &.level {
+        padding-left: 0.5rem;
+      }
+    }
+  }
+
+  &.theme-dark {}
+
+  &.theme-light {
+
+    .crew-warning {
+      .uses-value {
+        --t5e-text-warning: var(--t5e-color-palette-orange-55);
+      }
+    }
+
+    .npc-score-tracker.tracker-warning {
+      --t5e-text-warning: var(--t5e-color-palette-orange-55);
+    }
+  }
 }

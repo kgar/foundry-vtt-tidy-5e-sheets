@@ -10,6 +10,7 @@ import type {
   CharacterSheetContext,
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
+  DraftAnimalSection,
   FavoriteSection,
   FeatureSection,
   GroupMemberSection,
@@ -468,6 +469,39 @@ export class SheetSections {
     return section.key;
   }
 
+  static configureVehicleStatblockSections(
+    sections: (InventorySection | DraftAnimalSection)[],
+    tabId: string,
+    sheetPreferences: UserSheetPreference,
+    sectionConfig?: Record<string, SectionConfig>
+  ) {
+    sections = SheetSections.sortKeyedSections(sections, sectionConfig);
+
+    const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
+
+    return sections.map(({ ...section }) => {
+      if (section.type === 'inventory') {
+        section.items = ItemUtils.getSortedItems(section.items, sortMode);
+      } else if (
+        section.type === CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS &&
+        (
+          [
+            CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING,
+            CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING,
+          ] as string[]
+        ).includes(sortMode)
+      ) {
+        // TODO: Figure out how to generically support sorting for a mixture of different document types and subtypes.
+        ItemUtils.sortItems(section.members, sortMode);
+      }
+
+      // Apply visibility from configuration
+      section.show = sectionConfig?.[section.key]?.show !== false;
+
+      return section;
+    });
+  }
+
   static configureInventory(
     sections: InventorySection[],
     tabId: string,
@@ -881,16 +915,16 @@ export class SheetSections {
   }
 
   static showInFeatures(item: Item5e) {
-      return (
-        !item.type.includes([
-          CONSTANTS.ITEM_TYPE_CONTAINER,
-          CONSTANTS.ITEM_TYPE_SPELL,
-          CONSTANTS.ITEM_TYPE_BACKGROUND,
-          CONSTANTS.ITEM_TYPE_CLASS,
-          CONSTANTS.ITEM_TYPE_SUBCLASS,
-          CONSTANTS.ITEM_TYPE_RACE,
-          CONSTANTS.ITEM_TYPE_FACILITY,
-        ]) && !Inventory.isItemInventoryType(item)
-      );
-    }
+    return (
+      !item.type.includes([
+        CONSTANTS.ITEM_TYPE_CONTAINER,
+        CONSTANTS.ITEM_TYPE_SPELL,
+        CONSTANTS.ITEM_TYPE_BACKGROUND,
+        CONSTANTS.ITEM_TYPE_CLASS,
+        CONSTANTS.ITEM_TYPE_SUBCLASS,
+        CONSTANTS.ITEM_TYPE_RACE,
+        CONSTANTS.ITEM_TYPE_FACILITY,
+      ]) && !Inventory.isItemInventoryType(item)
+    );
+  }
 }

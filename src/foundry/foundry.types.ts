@@ -1,3 +1,5 @@
+import type { CONSTANTS } from 'src/constants';
+
 export type ContextMenuEntry = {
   name?: string;
   icon?: string;
@@ -48,7 +50,6 @@ export interface BasicRollDialogConfiguration {
   options?: Record<string, any>;
 }
 
-
 /* -------------------------------------------- */
 
 /**
@@ -67,3 +68,11 @@ export type D20Roll = {
     message: BasicRollMessageConfiguration
   ): D20Roll;
 };
+
+/* -------------------------------------------- */
+
+export type CrewArea5e =
+  | [typeof CONSTANTS.SECTION_TYPE_DRAFT_ANIMALS]
+  | [typeof CONSTANTS.SECTION_TYPE_CREW]
+  | [typeof CONSTANTS.SECTION_TYPE_PASSENGERS]
+  | (string & {});

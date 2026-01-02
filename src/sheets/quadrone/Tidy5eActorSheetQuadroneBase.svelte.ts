@@ -60,6 +60,7 @@ import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -1032,6 +1033,31 @@ export function Tidy5eActorSheetQuadroneBase<
       return html;
     }
 
+    _updateFrame(options: ApplicationRenderOptions) {
+      super._updateFrame(options);
+
+      const themeSettings =
+        this._context.data?.themeSettings ??
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+        });
+
+      this._applySheetThemeClasses(themeSettings);
+    }
+
+    _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+      this.element.classList.toggle(
+        'sheet-parchment',
+        !themeSettings.useHeaderBackground
+      );
+
+      for (const node of this.element.querySelectorAll(
+        '.window-header, .sheet-header'
+      )) {
+        node.classList.toggle('theme-dark', themeSettings.useHeaderBackground);
+      }
+    }
+
     async _onRender(
       context: ActorSheetQuadroneContext,
       options: TidyDocumentSheetRenderOptions
@@ -1059,6 +1085,16 @@ export function Tidy5eActorSheetQuadroneBase<
         element.dataset.tooltipClass = 'property-attribution';
     }
 
+    onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
+      const themeSettings =
+        settingsOverride ??
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+        });
+
+      this._applySheetThemeClasses(themeSettings);
+    }
+
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
@@ -1083,11 +1119,18 @@ export function Tidy5eActorSheetQuadroneBase<
         );
       }
 
-      const types = this._addDocumentItemTypes(args.tabId).filter(
+      let types = this._addDocumentItemTypes(args.tabId).filter(
         (type) =>
           !CONFIG.Item.dataModels[type].metadata?.singleton ||
           !this.actor.itemTypes[type].length
       );
+
+      if (datasetType) {
+        const proposedTypes = types.filter((t) => t === datasetType);
+        if (proposedTypes.length) {
+          types = proposedTypes;
+        }
+      }
 
       if (types.length > 1) {
         let dialogV1HookId: number | null = null;
@@ -1136,7 +1179,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * @returns {string[]}  Types of items to allow to create.
      */
     _addDocumentItemTypes(tab: string): string[] {
-      return TabDocumentItemTypesRuntime.getTypes(tab);
+      return TabDocumentItemTypesRuntime.getTypes(tab, this.document);
     }
 
     private async setExpandedItemData() {
@@ -1156,7 +1199,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /* -------------------------------------------- */
-    /*  Drag and Drop
+    /*  Drag and Drop                               */
     /* -------------------------------------------- */
 
     _allowedDropBehaviors(

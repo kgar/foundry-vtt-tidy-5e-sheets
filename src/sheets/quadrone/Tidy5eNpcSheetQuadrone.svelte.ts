@@ -39,7 +39,6 @@ import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { settings } from 'src/settings/settings.svelte';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -49,7 +48,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_NPC_STATBLOCK;
+    this.currentTabId = CONSTANTS.TAB_STATBLOCK;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -461,7 +460,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       this.actor,
-      CONSTANTS.TAB_NPC_STATBLOCK
+      CONSTANTS.TAB_STATBLOCK
     ).forEach((sectionName) => {
       featureSections[sectionName] ??= createNewStatblockSection(
         sectionName,
@@ -605,7 +604,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   }
 
   protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [CONSTANTS.TAB_NPC_STATBLOCK];
+    const tabIds: string[] = [CONSTANTS.TAB_STATBLOCK];
 
     const originTab = Inventory.isItemInventoryType(item)
       ? CONSTANTS.TAB_ACTOR_INVENTORY
@@ -636,14 +635,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
 
-  async _renderFrame(options: TidyDocumentSheetRenderOptions) {
-    const element = await super._renderFrame(options);
-
-    const theme = getThemeV2(this.actor);
-    element.querySelector('.window-header').classList.add(`theme-${theme}`);
-
-    return element;
-  }
 
   async _preRender(
     context: NpcSheetQuadroneContext,

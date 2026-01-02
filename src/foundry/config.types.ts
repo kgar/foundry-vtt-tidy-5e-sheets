@@ -3656,6 +3656,11 @@ export type CONFIG = {
       m: MovementUnitConfig;
       km: MovementUnitConfig;
     } & Record<string, MovementUnitConfig>;
+    travelSpeedTypes: {
+      land: string;
+      air: string;
+      water: string;
+    };
     travelUnits: {
       mph: TravelUnitConfig;
       kph: TravelUnitConfig;

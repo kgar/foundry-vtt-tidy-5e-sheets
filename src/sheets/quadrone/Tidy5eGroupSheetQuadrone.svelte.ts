@@ -59,11 +59,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    position: {
-      width: 740,
-      height: 810,
-    },
-  };
+      position: {
+        width: 740,
+        height: 810,
+      },
+    };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -131,8 +131,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           currentPace.index === 0
             ? 1 // Slow
             : currentPace.index > 0 && currentPace.index >= paces.length - 1
-            ? 3 // Fast
-            : 2, // Normal
+              ? 3 // Fast
+              : 2, // Normal
         units: {
           label:
             CONFIG.DND5E.travelUnits[

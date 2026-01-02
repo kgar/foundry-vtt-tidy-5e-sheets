@@ -69,7 +69,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 
 ## Tidy 5e Sheets UI
 
-⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, has begun, and we are gradually releasing new sheets into the beta. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
+⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, is complete. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
 
 [![New Tidy 5e Sheets Trailer](https://img.youtube.com/vi/Rrfd9VPGQNA/0.jpg)](https://www.youtube.com/watch?v=Rrfd9VPGQNA)
 
@@ -85,7 +85,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | ✅ Class  | ✅ NPC |
 | ✅ Consumable  | ✅ Group  |
 | ✅ Container  | ✅ Encounter |
-| ✅ Equipment | ⬜ Vehicle |
+| ✅ Equipment | ✅ Vehicle |
 | ✅ Facility | |
 | ✅ Feat | |
 | ✅ Loot | |
