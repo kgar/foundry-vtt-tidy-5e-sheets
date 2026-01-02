@@ -292,6 +292,8 @@
                   onclick={() =>
                     context.document.sheet._addDocument({
                       tabId,
+                      creationItemTypes: [CONSTANTS.ITEM_TYPE_EQUIPMENT],
+                      data: section.dataset
                     })}
                 >
                   <i class="fas fa-plus"></i>
