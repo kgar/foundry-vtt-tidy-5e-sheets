@@ -292,6 +292,8 @@
                   onclick={() =>
                     context.document.sheet._addDocument({
                       tabId,
+                      creationItemTypes: [CONSTANTS.ITEM_TYPE_EQUIPMENT],
+                      data: section.dataset
                     })}
                 >
                   <i class="fas fa-plus"></i>
@@ -504,6 +506,18 @@
                 {/each}
               {/snippet}
             </TidyTableRow>
+          {:else}
+            <div class="inventory-empty empty-state-container">
+              <button
+                type="button"
+                class="button button-tertiary"
+                aria-label={localize('TIDY5E.Vehicle.DraftAnimal.EmptyState')}
+                data-action="browseActors"
+              >
+                <i class="fas fa-plus"></i>
+                {localize('TIDY5E.Vehicle.DraftAnimal.EmptyState')}
+              </button>
+            </div>
           {/each}
         {/snippet}
       </TidyTable>

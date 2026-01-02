@@ -77,6 +77,7 @@
           document={context.document}
           field="system.crew.max"
           value={context.system.crew.max}
+          placeholder="—"
         />
       </span>
     </div>
@@ -137,6 +138,7 @@
           document={context.document}
           field="system.passengers.max"
           value={context.system.passengers.max}
+          placeholder="—"
         />
       </span>
     </div>
@@ -176,7 +178,6 @@
       <button
         type="button"
         class="button button-tertiary"
-        title={localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
         aria-label={localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
         data-action="browseActors"
       >
@@ -199,7 +200,6 @@
       <button
         type="button"
         class="button button-tertiary"
-        title={localize('TIDY5E.Vehicle.Passenger.EmptyState')}
         aria-label={localize('TIDY5E.Vehicle.Passenger.EmptyState')}
         data-action="browseActors"
       >
