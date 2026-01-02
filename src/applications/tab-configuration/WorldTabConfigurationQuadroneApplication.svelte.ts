@@ -123,16 +123,14 @@ export class WorldTabConfigurationQuadroneApplication extends SvelteApplicationM
       )
     );
 
-    if (settings.value.truesight) {
-      config.push(
-        getActorTabContext(
-          VehicleSheetQuadroneRuntime,
-          CONSTANTS.SHEET_TYPE_VEHICLE,
-          actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE],
-          false
-        )
-      );
-    }
+    config.push(
+      getActorTabContext(
+        VehicleSheetQuadroneRuntime,
+        CONSTANTS.SHEET_TYPE_VEHICLE,
+        actorConfigs?.[CONSTANTS.SHEET_TYPE_VEHICLE],
+        false
+      )
+    );
 
     let itemConfigs = setting?.[CONSTANTS.DOCUMENT_NAME_ITEM];
 

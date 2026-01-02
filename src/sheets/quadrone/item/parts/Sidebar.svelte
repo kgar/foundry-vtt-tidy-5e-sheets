@@ -245,9 +245,8 @@
   </div>
 
   <!-- Item States -->
-  <!-- TODO: Possibly extract component, make into snippets, stack into array, and don't render if there are no state pills. -->
   <ul class="pills stacked">
-    {#if /* hightouch, please make this nice, lol */ settings.value.truesight && !isNil(context.system.hp?.max, 0)}
+    {#if !isNil(context.system.hp?.max, 0)}
       {@const effectiveHpValue = context.system.hp.value ?? 0}
       {@const effectiveHpMax = context.system.hp.max ?? 0}
       {@const pct =
