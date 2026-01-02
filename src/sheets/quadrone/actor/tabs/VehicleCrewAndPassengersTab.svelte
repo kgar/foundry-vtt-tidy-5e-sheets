@@ -12,6 +12,7 @@
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -277,7 +278,7 @@
               ['data-assigned-item-id']: assignedItemId,
               ['data-context-menu']: CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER,
               ['data-uuid']: member.actor.uuid,
-              ['data-quantity']: member.quantity
+              ['data-quantity']: member.quantity,
             }}
             rowAttributes={{
               ['data-tidy-draggable']: true,

@@ -8,6 +8,7 @@
     iconClass?: ClassValue;
     label?: string;
     onconfig?: () => void;
+    showIfEmpty?: boolean;
     traitClass?: ClassValue;
     units?: string;
     unlocked?: boolean;
@@ -19,6 +20,7 @@
     iconClass,
     label,
     onconfig,
+    showIfEmpty = false,
     traitClass,
     units,
     unlocked,
@@ -28,34 +30,39 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class={['list-entry', traitClass]}>
-  <div class="list-label flexrow">
-    <h4 class="font-weight-label">
-      <i class={iconClass}></i>
-      {label}
-    </h4>
-  </div>
-  <div class={['trait-values', { flexrow: unlocked }]}>
-    {#if unlocked}
-      {@render editableValues?.()}
-    {:else}
-      <span class="value font-label-medium">{value ?? '—'}</span>
-      {#if units}
-        <span class="units font-label-medium color-text-lighter">{units}</span
+{#if showIfEmpty || unlocked || value}
+  <div class={['list-entry', traitClass]}>
+    <div class="list-label flexrow">
+      <h4 class="font-weight-label">
+        <i class={iconClass}></i>
+        {label}
+      </h4>
+    </div>
+    <div class={['trait-values', { flexrow: unlocked }]}>
+      {#if unlocked}
+        {@render editableValues?.()}
+      {:else}
+        <span
+          class={['value font-label-medium', { 'color-text-disabled': !value }]}
+          >{value ?? '—'}</span
         >
+        {#if units}
+          <span class="units font-label-medium color-text-lighter">{units}</span
+          >
+        {/if}
       {/if}
-    {/if}
 
-    {#if unlocked && onconfig}
-      <button
-        aria-label={localize('DND5E.TraitConfig', { trait: label })}
-        type="button"
-        class="button button-borderless button-icon-only button-config flexshrink"
-        data-tooltip
-        onclick={onconfig}
-      >
-        <i class="fa-solid fa-cog"></i>
-      </button>
-    {/if}
+      {#if unlocked && onconfig}
+        <button
+          aria-label={localize('DND5E.TraitConfig', { trait: label })}
+          type="button"
+          class="button button-borderless button-icon-only button-config flexshrink"
+          data-tooltip
+          onclick={onconfig}
+        >
+          <i class="fa-solid fa-cog"></i>
+        </button>
+      {/if}
+    </div>
   </div>
-</div>
+{/if}

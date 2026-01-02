@@ -36,7 +36,7 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
     const hpColumn: ColumnSpecificationBase = {
       headerContent: {
         type: 'html',
-        html: localize('DND5E.HP'), // TODO: make loc key for "Avg. HP"?
+        html: localize('TIDY5E.Vehicle.Equipment.HP.Label'),
       },
       cellContent: {
         type: 'component',
