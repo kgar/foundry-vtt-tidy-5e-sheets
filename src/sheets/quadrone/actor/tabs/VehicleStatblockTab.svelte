@@ -23,7 +23,7 @@
     VehicleItemContext,
     VehicleItemCrewAssignment,
   } from 'src/types/types';
-  import type { Item5e } from 'src/types/item.types';
+  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
 
   const localize = FoundryAdapter.localize;
@@ -96,6 +96,54 @@
       return count + documentCount;
     }, 0),
   );
+
+  // Vehicle Actions calculations (when stations are OFF)
+  let showActionsPin = $derived(
+    !context.system.attributes.actions.stations, //&& (context.system.attributes.actions.value ?? 0) > 0,
+  );
+
+  let totalCrew = $derived(
+    context.crew.assigned.members.reduce((sum, m) => sum + m.quantity, 0) +
+      context.crew.unassigned.members.reduce((sum, m) => sum + m.quantity, 0),
+  );
+
+  let totalActions = $derived(context.system.attributes.actions.value ?? 0);
+  let thresholds = $derived(context.system.attributes.actions.thresholds);
+
+  let actionsPerTurn = $derived(
+    totalCrew >= (thresholds?.['2'] ?? 0)
+      ? totalActions
+      : totalCrew >= (thresholds?.['1'] ?? 0)
+        ? Math.max(totalActions - 1, 0)
+        : totalCrew >= (thresholds?.['0'] ?? 0)
+          ? Math.max(totalActions - 2, 0)
+          : 0,
+  );
+
+  let crewTallyDescription = $derived(
+    actionsPerTurn === totalActions
+      ? localize('DND5E.VehicleActionThresholdsFull')
+      : actionsPerTurn === totalActions - 1
+        ? localize('DND5E.VehicleActionThresholdsMid')
+        : actionsPerTurn === totalActions - 2
+          ? localize('DND5E.VehicleActionThresholdsMin')
+          : localize('DND5E.VehicleActionThresholdsMin'),
+  );
+
+  // Track used actions (resets each session/refresh as these are per-turn resources)
+  let usedActions = $state(0);
+
+  let availableActions = $derived(actionsPerTurn - usedActions);
+
+  function decrementActions() {
+    if (!context.editable || availableActions <= 0) return;
+    usedActions = Math.min(actionsPerTurn, usedActions + 1);
+  }
+
+  function incrementActions() {
+    if (!context.editable || usedActions <= 0) return;
+    usedActions = Math.max(0, usedActions - 1);
+  }
 </script>
 
 <!-- <ItemsActionBar
@@ -107,6 +155,63 @@
 
 {#if showSheetPins}
   <SheetPins />
+{/if}
+
+<!-- Vehicle Actions Tracker (when stations are OFF) -->
+{#if showActionsPin}
+  <div class="cards-container">
+    <div
+      class={[
+        'npc-score-tracker card vehicle-actions-tracker',
+        { 'tracker-warning': actionsPerTurn === 0 && totalActions > 0 },
+      ]}
+      data-tooltip={crewTallyDescription}
+    >
+      <div class="card-header flexrow">
+        <h3>
+          {localize('DND5E.ActionPl')}
+        </h3>
+      </div>
+      <div class="card-content flexrow">
+        <button
+          type="button"
+          class="button button-icon-only button-borderless flexshrink"
+          disabled={availableActions <= 0 || !context.editable}
+          onclick={decrementActions}
+          aria-label={localize('DND5E.Subtract', { value: 1 })}
+        >
+          <i class="fa-solid fa-hexagon-minus"></i>
+        </button>
+        <span class="uses flexrow flexshrink">
+          <span
+            class={[
+              'value',
+              'color-text-default',
+              'font-label-large',
+              {
+                'color-text-warning': actionsPerTurn === 0 && totalActions > 0,
+              },
+            ]}
+          >
+            {availableActions}
+          </span>
+          <span class="separator color-text-lightest flexshrink">/</span>
+          <span class="max color-text-default font-label-large">
+            {actionsPerTurn}
+          </span>
+        </span>
+        <button
+          type="button"
+          class="button button-icon-only button-borderless flexshrink"
+          disabled={usedActions <= 0 || !context.editable}
+          onclick={incrementActions}
+          aria-label={localize('DND5E.Add', { value: 1 })}
+        >
+          <i class="fa-solid fa-hexagon-plus"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 {/if}
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>

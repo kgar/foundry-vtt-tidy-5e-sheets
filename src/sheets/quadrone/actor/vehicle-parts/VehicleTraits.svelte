@@ -8,6 +8,7 @@
   import ActorTraitPills from '../parts/ActorTraitPills.svelte';
   import VehicleTrait from './VehicleTrait.svelte';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import TidySwitch from 'src/components/toggles/TidySwitch.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
   let appId = $derived(context.document.id);
@@ -167,7 +168,9 @@
       'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
     )}
     value={context.system.attributes.capacity.cargo.value}
-    units={CONFIG.DND5E.weightUnits[context.system.attributes.capacity.cargo.units]?.abbreviation}
+    units={CONFIG.DND5E.weightUnits[
+      context.system.attributes.capacity.cargo.units
+    ]?.abbreviation}
     traitClass="trait-cargo-capacity trait-editable"
     unlocked={context.unlocked}
   >
@@ -296,6 +299,7 @@
         field="system.attributes.quality.value"
         value={context.system.attributes.quality.value}
         min="0"
+        valueRequired={true}
         selectOnFocus={true}
         placeholder="—"
         disabled={!context.editable}
@@ -449,6 +453,126 @@
       </div>
     </div>
   </div>
+
+  <!-- Stations and actions -->
+  {#if context.unlocked}
+    <!-- Stations -->
+    {@const stations = context.system.attributes.actions.stations}
+    <div class="list-entry trait-stations trait-horizontal">
+      <div class="list-label flexrow">
+        <h4 class="font-weight-label">
+          <i class="fa-solid fa-tower-control"></i>
+          {localize('DND5E.VEHICLE.FIELDS.attributes.actions.stations.label')}
+        </h4>
+      </div>
+      <div class="trait-values">
+        <a
+          class={[
+            'tidy-table-button tidy-table-toggle',
+            { disabled: !context.editable },
+          ]}
+          data-tooltip={localize(
+            'DND5E.VEHICLE.FIELDS.attributes.actions.stations.label',
+          )}
+          onclick={() =>
+            context.editable &&
+            context.actor.update({
+              'system.attributes.actions.stations': !stations,
+            })}
+        >
+          <i
+            class={[
+              'fa-solid',
+              {
+                ['fa-toggle-off']: !stations,
+                ['fa-toggle-large-on enabled']: stations,
+              },
+            ]}
+          ></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    {#if !context.system.attributes.actions.stations}
+      <VehicleTrait
+        iconClass="fa-solid fa-bolt"
+        label={localize('DND5E.VEHICLE.FIELDS.attributes.actions.max.label')}
+        value={context.system.attributes.actions.value}
+        traitClass="trait-actions trait-editable"
+        unlocked={context.unlocked}
+      >
+        {#snippet editableValues()}
+          <NumberInputQuadrone
+            id="{appId}-sidebar-actions-value"
+            document={context.actor}
+            field="system.attributes.actions.value"
+            value={context.system.attributes.actions.value}
+            min="0"
+            max="3"
+            placeholder="—"
+            selectOnFocus={true}
+            disabled={!context.editable}
+          />
+        {/snippet}
+      </VehicleTrait>
+    {/if}
+
+    <!-- Thresholds -->
+    {#if !context.system.attributes.actions.stations}
+      <div class="list-entry trait-thresholds">
+        <div class="list-label flexrow">
+          <h4 class="font-weight-label">
+            <i class="fa-solid fa-bolt-auto"></i>
+            {localize(
+              'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.label',
+            )}
+          </h4>
+        </div>
+        <div class="threshold-values flexrow">
+          <span class="sep color-text-lighter flexshrink">&lt;</span>
+          <NumberInputQuadrone
+            id="{appId}-sidebar-threshold-2"
+            class="flex1"
+            document={context.actor}
+            field="system.attributes.actions.thresholds.2"
+            value={context.system.attributes.actions.thresholds['2']}
+            min="0"
+            placeholder="—"
+            selectOnFocus={true}
+            disabled={!context.editable}
+            data-tooltip={localize('DND5E.VehicleActionThresholdsFull')}
+          />
+          <span class="sep color-text-lighter flexshrink">&lt;</span>
+          <NumberInputQuadrone
+            id="{appId}-sidebar-threshold-1"
+            class="flex1"
+            document={context.actor}
+            field="system.attributes.actions.thresholds.1"
+            value={context.system.attributes.actions.thresholds['1']}
+            min="0"
+            placeholder="—"
+            selectOnFocus={true}
+            disabled={!context.editable}
+            data-tooltip={localize('DND5E.VehicleActionThresholdsMid')}
+          />
+          <span class="sep color-text-lighter flexshrink">&lt;</span>
+          <NumberInputQuadrone
+            id="{appId}-sidebar-threshold-0"
+            class="flex1"
+            document={context.actor}
+            field="system.attributes.actions.thresholds.0"
+            value={context.system.attributes.actions.thresholds['0']}
+            min="0"
+            placeholder="—"
+            selectOnFocus={true}
+            disabled={!context.editable}
+            data-tooltip={localize('DND5E.VehicleActionThresholdsMin')}
+          />
+        </div>
+      </div>
+    {/if}
+  {/if}
 
   <!-- Resistances -->
   <ActorTraitConfigurableListEntry

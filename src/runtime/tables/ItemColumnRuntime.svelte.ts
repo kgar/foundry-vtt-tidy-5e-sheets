@@ -206,7 +206,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
         order: 10,
         priority: 100,
-        widthRems: 8,
+        widthRems: 5,
       },
       uses: {
         headerContent: {
@@ -219,7 +219,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
         },
         widthRems: 5,
         order: 20,
-        priority: 90,
+        priority: 100,
       },
       crew: {
         headerContent: {

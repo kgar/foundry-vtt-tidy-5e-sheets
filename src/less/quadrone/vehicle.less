@@ -1,12 +1,7 @@
 .tidy5e-sheet.application:where(.quadrone.vehicle) {
   @banner-vehicle: '../../modules/tidy5e-sheet/images/banner-vehicle.webp';
   --t5e-background-image: url('@{banner-vehicle}');
-
-  // &::before {
-  //   @banner-vehicle : '../../modules/tidy5e-sheet/images/banner-vehicle.webp';
-  //   background-image: var(--t5e-sheet-header-bg, url('@{banner-vehicle}'));
-  //   // mix-blend-mode: darken;
-  // }
+  --t5e-text-warning: var(--t5e-color-palette-orange-70);
 
   .dr-container {
     flex: 1;
@@ -63,11 +58,33 @@
       }
     }
 
+    .trait-horizontal {
+      flex-direction: row;
+      align-items: center;
+
+      .trait-values {
+        --t5e-table-button-width: var(--t5e-field-size-default);
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+
     .trait-hit-dice {
       .hit-dice-container {
         padding-right: 0.5rem;
       }
     }
+
+    .trait-actions {
+      .trait-values {
+        flex: 1;
+      }
+    }
+
+    .trait-thresholds .threshold-values {
+      gap: 0.25rem;
+    }
+
 
     .skills,
     .tools {
@@ -179,12 +196,27 @@
     }
   }
 
-  .sheet-pin.pin-warning {
-    border-color: var(--t5e-color-palette-orange-70);
-
+  .crew-warning {
     .uses-value {
-      color: var(--t5e-color-palette-orange-70);
+      color: var(--t5e-text-warning);
       font-weight: var(--font-weight-label);
+    }
+  }
+
+
+  /* Vehicle Actions Tracker */
+  .npc-score-tracker.vehicle-actions-tracker {
+    margin-bottom: var(--t5e-size-4x);
+
+    &.tracker-warning {
+      .value {
+        color: var(--t5e-text-warning);
+        font-weight: var(--font-weight-label);
+      }
+
+      h4 {
+        border-color: var(--t5e-text-warning);
+      }
     }
   }
 
@@ -214,5 +246,16 @@
 
   &.theme-dark {}
 
-  &.theme-light {}
+  &.theme-light {
+
+    .crew-warning {
+      .uses-value {
+        --t5e-text-warning: var(--t5e-color-palette-orange-55);
+      }
+    }
+
+    .npc-score-tracker.tracker-warning {
+      --t5e-text-warning: var(--t5e-color-palette-orange-55);
+    }
+  }
 }

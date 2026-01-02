@@ -62,7 +62,7 @@
             {:else}
               <h1 class="actor-name flex1">{context.actor.name}</h1>
             {/if}
-            <div
+            <!-- <div
               class={['sheet-header-actions', 'flexrow']}
               data-tidy-sheet-part="sheet-header-actions-container"
             >
@@ -79,7 +79,7 @@
                   {localize('TIDY5E.Vehicle.Repair.Label')}
                 </button>
               {/if}
-            </div>
+            </div> -->
           </div>
           <VehicleSubtitle />
         </div>
