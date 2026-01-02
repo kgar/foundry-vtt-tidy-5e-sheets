@@ -541,7 +541,7 @@
             placeholder="—"
             selectOnFocus={true}
             disabled={!context.editable}
-            data-tooltip={localize('DND5E.VehicleActionThresholdsFull')}
+            data-tooltip={localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.full.label')}
           />
           <span class="sep color-text-lighter flexshrink">&lt;</span>
           <NumberInputQuadrone
@@ -554,7 +554,7 @@
             placeholder="—"
             selectOnFocus={true}
             disabled={!context.editable}
-            data-tooltip={localize('DND5E.VehicleActionThresholdsMid')}
+            data-tooltip={localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.mid.label')}
           />
           <span class="sep color-text-lighter flexshrink">&lt;</span>
           <NumberInputQuadrone
@@ -567,7 +567,7 @@
             placeholder="—"
             selectOnFocus={true}
             disabled={!context.editable}
-            data-tooltip={localize('DND5E.VehicleActionThresholdsMin')}
+            data-tooltip={localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.min.label')}
           />
         </div>
       </div>

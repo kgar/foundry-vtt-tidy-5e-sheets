@@ -122,12 +122,20 @@
 
   let crewTallyDescription = $derived(
     actionsPerTurn === totalActions
-      ? localize('DND5E.VehicleActionThresholdsFull')
+      ? localize(
+          'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.full.label',
+        )
       : actionsPerTurn === totalActions - 1
-        ? localize('DND5E.VehicleActionThresholdsMid')
+        ? localize(
+            'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.mid.label',
+          )
         : actionsPerTurn === totalActions - 2
-          ? localize('DND5E.VehicleActionThresholdsMin')
-          : localize('DND5E.VehicleActionThresholdsMin'),
+          ? localize(
+              'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.min.label',
+            )
+          : localize(
+              'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.min.label',
+            ),
   );
 
   // Track used actions (resets each session/refresh as these are per-turn resources)
