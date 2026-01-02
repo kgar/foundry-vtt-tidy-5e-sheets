@@ -77,6 +77,7 @@
           document={context.document}
           field="system.crew.max"
           value={context.system.crew.max}
+          placeholder="—"
         />
       </span>
     </div>
@@ -137,6 +138,7 @@
           document={context.document}
           field="system.passengers.max"
           value={context.system.passengers.max}
+          placeholder="—"
         />
       </span>
     </div>
