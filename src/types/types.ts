@@ -1610,7 +1610,6 @@ export type VehicleSheetQuadroneContext = {
   >;
   passengers: PassengerSection;
   quality: number;
-  scale: number;
   showContainerPanel: boolean;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];

@@ -230,7 +230,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         key: 'passengers',
       },
       quality: this.actor.system.attributes.quality?.value ?? 0,
-      scale: this.actor.system.attributes.scale,
       showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       size: {
         key: this.actor.system.traits.size,
