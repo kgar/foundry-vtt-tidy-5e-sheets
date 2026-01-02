@@ -11,8 +11,7 @@
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -69,7 +68,7 @@
           {context.system.crew.value.length}
         </span>
         <span class="divider color-text-gold-emphasis">/</span>
-        <TextInput
+        <TextInputQuadrone
           class={[
             'uninput uses-max',
             { diminished: context.system.crew.max < 1 },
@@ -129,7 +128,7 @@
           {context.system.passengers.value.length}
         </span>
         <span class="divider color-text-gold-emphasis">/</span>
-        <TextInput
+        <TextInputQuadrone
           class={[
             'uninput uses-max',
             { diminished: context.system.passengers.max < 1 },

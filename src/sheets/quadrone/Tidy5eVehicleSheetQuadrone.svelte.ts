@@ -32,6 +32,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
+import { Inventory } from 'src/features/sections/Inventory';
 
 const localize = FoundryAdapter.localize;
 
@@ -246,8 +247,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
       ...actorContext,
     };
-
-    context.useActionsFeature = actorUsesActionFeature(this.actor);
 
     await this._prepareItems(context);
 
