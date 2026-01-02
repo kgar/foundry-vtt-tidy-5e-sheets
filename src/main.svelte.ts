@@ -123,18 +123,18 @@ Hooks.once('init', () => {
     }
   );
 
+  documentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eVehicleSheetQuadrone,
+    {
+      types: [CONSTANTS.SHEET_TYPE_VEHICLE],
+      label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
+    }
+  );
+  
   /* FOR THOSE WITH TRUE SIGHT */
   if (settings.value.truesight) {
-    documentSheetConfig.registerSheet(
-      Actor,
-      CONSTANTS.DND5E_SYSTEM_ID,
-      Tidy5eVehicleSheetQuadrone,
-      {
-        types: [CONSTANTS.SHEET_TYPE_VEHICLE],
-        label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
-      }
-    );
-
     documentSheetConfig.registerSheet(
       Item,
       CONSTANTS.DND5E_SYSTEM_ID,

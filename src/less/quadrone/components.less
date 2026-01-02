@@ -24,13 +24,13 @@
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: 0fr;
-    transition: grid-template-rows 0.2s ease;
+    transition: grid-template-rows var(--t5e-transition-default);
 
     &.expanded {
       grid-template-rows: 1fr;
     }
 
-    &.overflow-y-hidden > * {
+    &.overflow-y-hidden>* {
       overflow-y: hidden;
     }
   }

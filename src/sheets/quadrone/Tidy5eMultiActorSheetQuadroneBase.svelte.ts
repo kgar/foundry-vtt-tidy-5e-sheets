@@ -623,8 +623,11 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       const { uuid } =
         event.target.closest<HTMLElement>('[data-uuid]')?.dataset ?? {};
       const target = await fromUuid(uuid);
-      if (target instanceof foundry.documents.Actor)
+      
+      if (target instanceof foundry.documents.Actor) {
         return target.sheet._onDropCreateItems(event, [item]);
+      }
+
       return super._onDropItem(event, item);
     }
 

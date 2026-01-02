@@ -438,5 +438,7 @@
     "TIDY5E.SheetMode.Play": "Passa a Modalità Modifica",
     "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animale da tiro",
     "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animali da tiro",
-    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Trasferisci tutta la valuta al personaggio"
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Trasferisci tutta la valuta al personaggio",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Avviso</strong>: le <strong>Schede Classiche</strong> di Tidy 5e verranno rimosse dal modulo Tidy 5e Sheets in Foundry v14.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Avviso</strong>: le <strong>Schede Classiche</strong> di Tidy 5e sono state rimosse dal modulo Tidy 5e Sheets a partire da Foundry v14."
 }

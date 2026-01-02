@@ -415,5 +415,19 @@
     "TIDY5E.SheetPin": {
         "Label": "Przypięcie karty",
         "LabelPl": "Przypięcia karty"
-    }
+    },
+    "TIDY5E.CompendiumBrowser": "Dodaj {name} z kompendium",
+    "TIDY5E.LegendaryAbbr": "AL",
+    "TIDY5E.LairAbbr": "Leże",
+    "TIDY5E.AddCustom": "Dodaj własny",
+    "TIDY5E.InspirationAdd": "Dodaj inspirację",
+    "TIDY5E.InspirationRemove": "Usuń inspirację",
+    "TIDY5E.SheetMode.Edit": "Przełącz na tryb rozgrywki",
+    "TIDY5E.SheetMode.Play": "Przełącz na tryb edycji",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Zwierzę pociągowe",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Zwierzęta pociągowe",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Przenieś całą walutę do postaci nadrzędnej",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Uwaga</strong>: <strong>Klasyczne karty</strong> Tidy 5e zostaną usunięte z modułu Tidy 5e Sheets w Foundry v14.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Uwaga</strong>: <strong>Klasyczne karty</strong> Tidy 5e zostały usunięte z modułu Tidy 5e Sheets od wersji Foundry v14.",
+    "TIDY5E.UserDefaultPrefix": "Domyślne użytkownika: {value}"
 }

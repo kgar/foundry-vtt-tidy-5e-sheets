@@ -18,7 +18,7 @@ const ApiConstants = {
   TAB_ID_NPC_BIOGRAPHY: CONSTANTS.TAB_ACTOR_BIOGRAPHY,
   TAB_ID_NPC_JOURNAL: CONSTANTS.TAB_NPC_JOURNAL,
   TAB_ID_VEHICLE_ATTRIBUTES: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-  TAB_ID_VEHICLE_CARGO_AND_CREW: CONSTANTS.TAB_VEHICLE_CARGO,
+  TAB_ID_VEHICLE_CARGO_AND_CREW: CONSTANTS.TAB_VEHICLE_CARGO_LEGACY,
   TAB_ID_VEHICLE_EFFECTS: CONSTANTS.TAB_EFFECTS,
   TAB_ID_VEHICLE_DESCRIPTION: CONSTANTS.TAB_VEHICLE_DESCRIPTION_LEGACY,
   TAB_ID_ACTOR_ACTIONS: CONSTANTS.TAB_ACTOR_ACTIONS,
@@ -30,28 +30,6 @@ const ApiConstants = {
    * @example an element which is tagged with a sheet part value
    * ```html
    * <div class="actor-name" data-tidy-sheet-part="name-container">...</div>
-   * ```
-   *
-   * @example targeting a sheet part for content injection during Tidy render
-   * ```js
-   * // Every time Tidy renders, whether a full render or a partial
-   * Hooks.on("tidy5e-sheet.renderActorSheet", (sheet, element, data) => {
-   *   const api = game.modules.get('tidy5e-sheet').api;
-   *   const selector = api.getSheetPartSelector(
-   *     api.constants.SHEET_PARTS.NAME_CONTAINER
-   *   );
-   *   // get the name container of the target actor sheet
-   *   element
-   *     .querySelector(selector)
-   *     // inject some HTML
-   *     ?.insertAdjacentHTML(
-   *       // put it as the first element inside the name container; see https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#afterbegin
-   *       "afterbegin",
-   *       // here's my content
-   *       // pro tip: `data-tidy-render-scheme="handlebars"` causes this content to re-render on every Tidy render, full or partial
-   *       `<h2 type="button" style="width: 100%;" data-tidy-render-scheme="handlebars"><i class="fa-solid fa-star"></i></h2>`
-   *     );
-   * });
    * ```
    *
    * @remarks

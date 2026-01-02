@@ -46,7 +46,7 @@
   );
 </script>
 
-<header class="sheet-header theme-dark flexcol">
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div class="flexcol">
       <div class="flexrow">
@@ -83,7 +83,7 @@
         </div>
 
         {#if context.difficulty.label}
-          <div class="difficulty-block">
+          <div class="difficulty-block theme-dark">
             <span class="label difficulty font-label-medium color-text-default">
               {context.difficulty.label}
             </span>

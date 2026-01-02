@@ -52,11 +52,7 @@
           onkeydown={(ev) =>
             ev.key === 'Enter' && openSheet(CONSTANTS.SHEET_MODE_PLAY)}
         >
-          <img
-            src={species.img}
-            alt={species.name}
-            class="item-image flex0"
-          />
+          <img src={species.img} alt={species.name} class="item-image flex0" />
         </a>
         <span class="font-weight-label trait-name">
           {species.name}
@@ -77,8 +73,8 @@
               type: 'race',
             })}
         >
-          <i class="fa-solid fa-book-open-reader"></i>
-        {localize('DND5E.Species.Add')}
+          <i class="fa-solid fa-book-atlas"></i>
+          {localize('DND5E.Species.Add')}
         </button>
         <button
           aria-label={localize('TIDY5E.AddCustom', {
@@ -89,9 +85,9 @@
           onclick={(ev) =>
             FoundryAdapter.createItem({ type: 'race' }, context.actor)}
         >
-        {localize('TIDY5E.AddCustom', {
-          name: localize('TYPES.Item.race'),
-        })}
+          {localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.race'),
+          })}
         </button>
       {/if}
     </div>
@@ -110,8 +106,7 @@
           aria-label="{localize('TYPES.Item.race')} Context Menu"
           type="button"
           class="button button-borderless button-icon-only"
-          onclick={(ev) =>
-            EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+          onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
         >
           <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
         </button>

@@ -25,7 +25,7 @@ Completely rewritten from the ground up, based on the original [Tidy5e Sheet](ht
 
 ## Get Involved
 
-Tidy runs on community feedback! If you like something you see, reach out in the [Tidy 5e Sheets community Discord](https://discord.gg/865zzNscRA), or put in a [GitHub issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) if you find something amiss.
+Tidy runs on community feedback! If you like something you see, reach out in the [Tidy 5e Sheets community Discord](https://discord.gg/dQWAnm59vq), or put in a [GitHub issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) if you find something amiss.
 
 
 ### **kgar**  • 📜 The Keeper of Sheets, Head Modron 👨‍💻 development, ✨ some design
@@ -69,7 +69,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 
 ## Tidy 5e Sheets UI
 
-⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, has begun, and we are gradually releasing new sheets into the beta. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
+⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, is complete. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
 
 [![New Tidy 5e Sheets Trailer](https://img.youtube.com/vi/Rrfd9VPGQNA/0.jpg)](https://www.youtube.com/watch?v=Rrfd9VPGQNA)
 
@@ -85,7 +85,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | ✅ Class  | ✅ NPC |
 | ✅ Consumable  | ✅ Group  |
 | ✅ Container  | ✅ Encounter |
-| ✅ Equipment | ⬜ Vehicle |
+| ✅ Equipment | ✅ Vehicle |
 | ✅ Facility | |
 | ✅ Feat | |
 | ✅ Loot | |

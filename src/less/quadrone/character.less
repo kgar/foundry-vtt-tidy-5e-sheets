@@ -3,71 +3,7 @@
     min-width: 43.75rem;
   }
 
-  &::before {
-    @banner-character : '../../modules/tidy5e-sheet/images/banner-character.webp';
-    background-image: var(--t5e-sheet-header-bg, url('@{banner-character}'));
-    background-position: top center;
-    background-size: auto;
-    background-repeat: no-repeat;
-
-    filter: grayscale(100%);
-    mix-blend-mode: luminosity;
-    opacity: 0.4;
-    background-size: cover;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: -2;
-    width: 100%;
-    height: 18.75rem;
-  }
-
-  &::after {
-    background: linear-gradient(to bottom, rgba(159, 146, 117, 0.5), rgb(91, 78, 49));
-    mix-blend-mode: color-burn;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-  }
-
   .sheet-header {
-    .xp-container {
-      flex: 0 1 auto;
-      margin: 0 0.5rem 0.125rem 0;
-      gap: var(--t5e-size-1x);
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-
-      .label {
-        margin-right: var(--t5e-size-1x);
-      }
-
-      input[type="text"] {
-        max-width: 5rem;
-        width: fit-content;
-      }
-
-      .xp-bar {
-        --meter-height: 0.625rem;
-        background-color: var(--t5e-component-card-dark-darker);
-        border-radius: 0.375rem;
-        flex: auto;
-        min-width: 7rem;
-
-        &:before {
-          border-right: none;
-        }
-      }
-    }
 
     .show-xp {
       .actor-details-name-row {
@@ -204,8 +140,13 @@
     position: relative;
 
     .shield {
-      @badge_ac_dark : '../../modules/tidy5e-sheet/images/badge_ac_dark.webp';
-      background-image: url('@{badge_ac_dark}');
+      .ac-label {
+        display: initial;
+      }
+
+      .ac-value {
+        margin: -0.125rem 0 0;
+      }
     }
 
     .button-config {
@@ -251,17 +192,6 @@
       border: none;
       margin: var(--t5e-size-4x) 0;
       padding: 0 var(--t5e-size-4x);
-    }
-  }
-
-  @container character-sheet (width < 43.75rem) {
-    .sheet-header .actor-vitals-container {
-      max-width: 10rem;
-
-      .actor-image img {
-        height: 10rem;
-        width: 10rem;
-      }
     }
   }
 
@@ -348,11 +278,7 @@
     .ability:has(.proficient),
     .initiative-container {
       background: var(--collapse-bg-dark);
-    }
-
-
-    .ability:has(.proficient) {
-      outline-color: rgba(0, 0, 0, 0.64);
+      outline-color: oklch(from var(--t5e-color-gold) l c h / 0.4);
     }
 
     .ability .bonus-container,

@@ -451,5 +451,7 @@
     "TIDY5E.CompendiumBrowser": "Додати {name} з Компендіуму",
     "TIDY5E.SheetMode.Edit": "Перейти в режим відтворення",
     "TIDY5E.SheetMode.Play": "Перейти в режим редагування",
-    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Переказати всю валюту батьківському актору"
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Переказати всю валюту батьківському актору",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Примітка</strong>: <strong>Класичні аркуші</strong> Tidy 5e буде видалено з модуля Аркуші Tidy 5e у Foundry версії 14.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Примітка</strong>: <strong>Класичні аркуші</strong> Tidy 5e було видалено з модуля «Аркуші» Tidy 5e, починаючи з версії Foundry 14."
 }

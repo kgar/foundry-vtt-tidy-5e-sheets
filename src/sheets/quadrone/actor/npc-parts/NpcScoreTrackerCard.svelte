@@ -67,7 +67,7 @@
             placeholder="0"
             min="0"
             step="1"
-            class={['value', { uninput: unlocked }]}
+            class={['value', { uninput: !unlocked }]}
             data-tooltip={valueTooltip}
           />
         {:else}

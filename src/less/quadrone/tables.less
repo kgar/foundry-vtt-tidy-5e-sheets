@@ -181,7 +181,7 @@
     .item-image {
       width: var(--t5e-icon-size-7x);
       height: var(--t5e-icon-size-7x);
-      align-self: stretch;
+      align-self: center;
       object-fit: cover;
       object-position: top center;
 
@@ -484,6 +484,10 @@
 
   .tidy-table-header-cell {
     &.primary {
+      &:not(:has(.expand-button)) {
+        padding-inline-start: 0.5rem;
+      }
+
       h3 {
         flex: 1;
         margin-bottom: 0.0625rem;
@@ -698,20 +702,16 @@
     display: flex;
     align-items: center;
 
-    &:focus-within {
-      .divider {
-        opacity: 0.24;
-      }
-    }
-
     input[type="text"]:disabled {
       background: none;
     }
 
-    >input[type="text"].uses-value {
-      // color: var(--t5e-color-text-default);
+    >.uses-value {
       text-align: right;
       flex: 1;
+    }
+
+    >input[type="text"].uses-value {
       padding-right: 0.125rem;
       margin-right: -0.125rem;
 
@@ -728,7 +728,6 @@
     }
 
     >.uses-max {
-      // color: var(--t5e-color-text-lighter);
       text-align: left;
       flex: 1;
     }
@@ -786,6 +785,9 @@
     background: linear-gradient(120deg,
         var(--t5e-component-card-darker) 10%,
         var(--t5e-component-card-default) 120%);
+
+    padding-inline-start: 1rem;
+    padding-block-start: 0.25rem;
   }
 
   .empty-container {

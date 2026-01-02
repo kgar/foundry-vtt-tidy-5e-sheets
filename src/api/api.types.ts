@@ -501,9 +501,46 @@ export type HeaderControlRegistrationParams = {
   controls: CustomHeaderControlsEntry[];
 };
 
+/**
+ * The parameters needed for registering item types for a given tab,
+ * and optionally for a specific document type.
+ *
+ * @example Supplying parameters to add MCDM power item type to the powers tab
+ * ```js
+ * const params = {
+ *   tabId: 'mcdm-powers-tab',
+ *   documentItemTypes: ['mcdm-class-bundle.power'],
+ * };
+ * ```
+ *
+ * @example Supplying parameters to add features, weapons, and equipment specifically to the vehicle sheet statblock tab
+ * ```js
+ * const params = {
+ *   tabId: 'statblock',
+ *   documentItemTypes: ['feat', 'weapon', 'equipment'],
+ *   documentFilter: { documentName: 'Actor', documentType: 'vehicle' }
+ * };
+ * ```
+ */
 export type TabIdDocumentItemTypesParams = {
+  /** The tab ID for the registered item types. */
   tabId: string;
   documentItemTypes: string[];
+  /**
+   * An optional filter that will provide unique document types for a specific document name and type.
+   */
+  documentFilter?: {
+    /**
+     * The document name, found on any document as `document.documentName`.
+     * For example, "Actor" or "Item".
+     */
+    documentName: string;
+    /**
+     * The document subtype, found on any document as `document.type`.
+     * For example, "character", "npc", or "vehicle".
+     */
+    documentType: string;
+  };
 };
 
 export type TabIdDocumentItemTypesOptions = {

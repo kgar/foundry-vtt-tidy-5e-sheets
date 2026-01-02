@@ -8,7 +8,7 @@
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import GroupSubtitle from './group-parts/GroupSubtitle.svelte';
-
+  
   let context = $derived(getGroupSheetQuadroneContext());
 
   let localize = FoundryAdapter.localize;
@@ -38,7 +38,7 @@
   );
 </script>
 
-<header class="sheet-header flexcol theme-dark">
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div
       class="actor-details-container flexcol {context.enableXp

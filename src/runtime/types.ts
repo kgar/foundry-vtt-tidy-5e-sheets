@@ -18,7 +18,7 @@ import type {
 } from 'src/types/types';
 import type { Component } from 'svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-import type { ClassValue } from 'svelte/elements';
+import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 
 export type RegisteredContent<TContext> = {
   content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
@@ -40,6 +40,7 @@ export type RegisteredTab<TContext> = {
   content: SvelteTabContent | RenderableHtml | HandlebarsTemplateRenderer;
   onRender?: (args: OnRenderTabParams) => void;
   renderScheme?: RenderScheme;
+  tabContentsAttributes?: HTMLAttributes<HTMLElement>;
   tabContentsClasses?: string[];
   getData?: (data: any) => any | Promise<any>;
   autoHeight?: boolean;

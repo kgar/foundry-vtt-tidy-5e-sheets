@@ -12,13 +12,15 @@
   import { ItemProperties } from 'src/features/properties/ItemProperties.svelte';
   import PropertyTag from '../properties/PropertyTag.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     chatData: ItemChatData;
     item?: Item5e | undefined;
+    afterInlineActivities?: Snippet<[Item5e]>;
   }
 
-  let { chatData, item }: Props = $props();
+  let { chatData, item, afterInlineActivities }: Props = $props();
 
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
@@ -50,9 +52,13 @@
   let showGmOnlyUi = $derived(!identified && gmEditMode);
 </script>
 
-{#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
-  <TidyInlineActivitiesList {item} {activities} />
+{#if settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_TOP}
+  {#if activities.length > 0}
+    <TidyInlineActivitiesList {item} {activities} />
+  {/if}
+  {@render afterInlineActivities?.(item)}
 {/if}
+
 <div
   class="editor-rendered-content"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
@@ -67,7 +73,7 @@
     {/await}
   {/if}
 
-  <div class={{ callout: showGmOnlyUi }}>
+  <div class={['user-select-text', { callout: showGmOnlyUi }]}>
     {#if showGmOnlyUi}
       <div class="gm-only color-text-lighter">
         {localize(
@@ -79,7 +85,7 @@
   </div>
 
   <div
-    class="inline-wrapped-elements"
+    class="inline-wrapped-elements user-select-text"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
   >
     <div class="left-aligned-elements">
@@ -102,6 +108,9 @@
     </div>
   </div>
 </div>
-{#if activities.length > 0 && settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
-  <TidyInlineActivitiesList {item} {activities} />
+{#if settings.value.inlineActivitiesPosition === CONSTANTS.INLINE_ACTIVITIES_POSITION_BOTTOM}
+  {#if activities.length > 0}
+    <TidyInlineActivitiesList {item} {activities} />
+  {/if}
+  {@render afterInlineActivities?.(item)}
 {/if}

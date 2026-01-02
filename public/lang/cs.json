@@ -430,5 +430,7 @@
     "TIDY5E.SheetMode.Play": "Přepnout do režimu úprav",
     "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Tažné zvíře",
     "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Tažná zvířata",
-    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Převést veškeré mince nadřazenému aktérovi"
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Převést veškeré mince nadřazenému aktérovi",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e budou ve Foundry v14 z modulu Tidy 5e odstraněny.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e byly ve Foundry v14 z modulu Tidy 5e odstraněny."
 }

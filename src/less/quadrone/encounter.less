@@ -1,11 +1,7 @@
 .tidy5e-sheet.application:where(.quadrone.encounter) {
+  @banner-encounter: '../../modules/tidy5e-sheet/images/banner-encounter.jpg';
+  --t5e-background-image: url('@{banner-encounter}');
   --difficulty-diplay-size: 6rem;
-
-  &::before {
-    @banner-encounter : '../../modules/tidy5e-sheet/images/banner-encounter.jpg';
-    background-image: var(--t5e-sheet-header-bg, url('@{banner-encounter}'));
-    // mix-blend-mode: darken;
-  }
 
   .sheet-header {
 
