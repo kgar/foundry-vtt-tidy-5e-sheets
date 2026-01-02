@@ -1,5 +1,14 @@
 ## kgar To Do
 
+### Vehicle Finishing Touches
+
+- [ ] Review and refine empty states on the Statblock tab
+  - [ ] Weapons do not have an empty state.
+  - [ ] Equipment empty state says it pulls from the compendium browser but instead creates an item. It would be more familiar if it just claimed to create an item. Additionally, it presents the full Add Item dialog instead of just fast-forwarding creation to a correctly-configured Equipment vehicle item.
+  - [ ] Features do no have an empty state. 
+- [ ] Draft Animals need their own columns. The default sheets fixate on creature size and carrying capacity.
+
+
 ### Short List
 
 - [ ] Possibly fix usability complaint for Loyalty Score setup: https://discord.com/channels/@me/1243307347682529423/1451341294881341480
