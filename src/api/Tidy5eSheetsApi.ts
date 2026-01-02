@@ -1,9 +1,7 @@
 import { HandlebarsTab } from './tab/HandlebarsTab';
 import { HtmlTab } from './tab/HtmlTab';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { CustomTabBase } from './tab/CustomTabBase';
 import { warn } from 'src/utils/logging';
-import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
 import { SvelteTab } from './tab/SvelteTab';
@@ -27,16 +25,11 @@ import { ConfigApi } from './config/ConfigApi';
 import { HeaderControlsRuntime } from 'src/runtime/header-controls/HeaderControlsRuntime';
 import { ItemSheetQuadroneRuntime } from 'src/runtime/item/ItemSheetQuadroneRuntime.svelte';
 import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
-import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
 import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
-import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
-import VehicleSheetClassicRuntime from 'src/runtime/actor/VehicleSheetClassicRuntime.svelte';
-import { TidySvelteApi } from './svelte/TidySvelteApi';
 import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTypesRuntime';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
-import EncounterSheetClassicRuntime from 'src/runtime/actor/EncounterSheetClassicRuntime.svelte';
 import { EncounterSheetQuadroneRuntime } from 'src/runtime/actor/EncounterSheetQuadroneRuntime.svelte';
 
 /**
@@ -74,27 +67,6 @@ export class Tidy5eSheetsApi {
     return this._instance;
   }
 
-  /** {@inheritDoc ActionListApi} */
-  /** @deprecated api.actionList API has been moved to api.config.actionList */
-  get actionList() {
-    warn('api.actionList API has been moved to api.config.actionList');
-    return this.config.actionList;
-  }
-
-  /** {@inheritDoc ActorItemApi} */
-  /** @deprecated api.actorItem API has been moved to api.config.actorItem */
-  get actorItem() {
-    warn('api.actorItem API has been moved to api.config.actorItem');
-    return this.config.actorItem;
-  }
-
-  /** {@inheritDoc ActorPortraitApi} */
-  /** @deprecated api.actorPortrait API has been moved to api.config.actorPortrait */
-  get actorPortrait() {
-    warn('api.actorPortrait API has been moved to api.config.actorPortrait');
-    return this.config.actorPortrait;
-  }
-
   /** {@inheritDoc ConfigApi} */
   config = new ConfigApi();
 
@@ -115,13 +87,6 @@ export class Tidy5eSheetsApi {
    */
   getSheetPartSelector(sheetPart: string) {
     return `[${CONSTANTS.SHEET_PART_ATTRIBUTE}="${sheetPart}"]`;
-  }
-
-  /** {@inheritDoc ExhaustionApi} */
-  /** @deprecated api.exhaustion API has been moved to api.config.exhaustion */
-  get exhaustion() {
-    warn('api.exhaustion API has been moved to api.config.exhaustion');
-    return this.config.exhaustion;
   }
 
   /**
@@ -204,7 +169,7 @@ export class Tidy5eSheetsApi {
   /**{@inheritDoc ItemSummaryApi} */
   /** @deprecated api.itemSummary API has been moved to api.config.actorPortrait */
   get itemSummary() {
-    warn('api.itemSummary API has been moved to api.config.actorPortrait');
+    warn('api.itemSummary API has been moved to api.config.actorPortrait', false, undefined, true);
     return this.config.itemSummary;
   }
 
@@ -365,13 +330,6 @@ export class Tidy5eSheetsApi {
 
     for (let registeredTab of registeredTabs) {
       if (
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        CharacterSheetClassicRuntime.registerTab(registeredTab, options);
-      }
-
-      if (
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
@@ -396,13 +354,6 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredTab of registeredTabs) {
-      if (
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        EncounterSheetClassicRuntime.registerTab(registeredTab, options);
-      }
-
       if (
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
@@ -485,13 +436,6 @@ export class Tidy5eSheetsApi {
 
     for (let registeredTab of registeredTabs) {
       if (
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        GroupSheetClassicRuntime.registerTab(registeredTab, options);
-      }
-
-      if (
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
@@ -546,17 +490,6 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      if (
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        CharacterSheetClassicRuntime.registerContent(registeredContent);
-        EncounterSheetClassicRuntime.registerContent(registeredContent);
-        GroupSheetClassicRuntime.registerContent(registeredContent);
-        NpcSheetClassicRuntime.registerContent(registeredContent);
-        VehicleSheetClassicRuntime.registerContent(registeredContent);
-      }
-
       if (
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
@@ -617,13 +550,6 @@ export class Tidy5eSheetsApi {
 
     for (let registeredContent of registeredContents) {
       if (
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        CharacterSheetClassicRuntime.registerContent(registeredContent);
-      }
-
-      if (
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
@@ -647,13 +573,6 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      if (
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        EncounterSheetClassicRuntime.registerContent(registeredContent);
-      }
-
       if (
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
@@ -710,13 +629,6 @@ export class Tidy5eSheetsApi {
 
     for (let registeredContent of registeredContents) {
       if (
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        GroupSheetClassicRuntime.registerContent(registeredContent);
-      }
-
-      if (
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
@@ -771,13 +683,6 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      if (
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        ItemSheetRuntime.registerContent(registeredContent);
-      }
-
       if (
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
@@ -834,13 +739,6 @@ export class Tidy5eSheetsApi {
 
     for (let registeredContent of registeredContents) {
       if (
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        NpcSheetClassicRuntime.registerContent(registeredContent);
-      }
-
-      if (
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
@@ -895,13 +793,6 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredContent of registeredContents) {
-      if (
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        VehicleSheetClassicRuntime.registerContent(registeredContent);
-      }
-
       if (
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredContent.layout === CONSTANTS.SHEET_LAYOUT_ALL
@@ -1002,17 +893,6 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredTab of registeredTabs) {
-      if (options?.autoHeight) {
-        registeredTab.autoHeight = options.autoHeight;
-      }
-
-      if (
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        ItemSheetRuntime.registerTab(registeredTab);
-      }
-
       if (
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
@@ -1084,13 +964,6 @@ export class Tidy5eSheetsApi {
 
     for (let registeredTab of registeredTabs) {
       if (
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        NpcSheetClassicRuntime.registerTab(registeredTab, options);
-      }
-
-      if (
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
       ) {
@@ -1145,13 +1018,6 @@ export class Tidy5eSheetsApi {
     }
 
     for (let registeredTab of registeredTabs) {
-      if (
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_CLASSIC ||
-        registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
-      ) {
-        VehicleSheetClassicRuntime.registerTab(registeredTab, options);
-      }
-
       if (
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_QUADRONE ||
         registeredTab.layout === CONSTANTS.SHEET_LAYOUT_ALL
@@ -1447,54 +1313,6 @@ export class Tidy5eSheetsApi {
         documentTypes: [CONSTANTS.SHEET_TYPE_VEHICLE],
       }))
     );
-  }
-
-  /**
-   * Svelte-specific integration content. This content is currently experimental
-   * and may be subject to change based on integration efforts of other
-   * svelte-based modules.
-   */
-  svelte = TidySvelteApi;
-
-  /**
-   * Wraps the provided HTML so that Tidy will remove the content when handling document changes.
-   * @param html any HTML string that needs to be re-rendered in the style of Foundry Handlebars (usually, this is any time the target document or its embedded documents change).
-   * @returns the original HTML with a transparent element wrapped around which indicates to Tidy that this should be removed and re-rendered.
-   *
-   * @remarks
-   * The intended use of this function is to accompany the use of the `tidy5e-sheet.renderActorSheet` hook in App V1 (PCs, NPCs, Vehicles)
-   * or the standard sheet render hooks in App V2 (Items, Containers, Groups).
-   * Any content injected through those hooks needs to be wrapped in this way so that the old version
-   * of the HTML can be removed before adding it back in.
-   * Handlebars refreshes content in this way, but for Tidy purposes, the module needs to know when an arbitrary
-   * segment of HTML is meant to be removed. This function provides that information to Tidy for your HTML.
-   *
-   * @example Injecting dynamic HTML through Tidy actor sheet render hook
-   * ```js
-   * Hooks.on('tidy5e-sheet.renderActorSheet', (app, element, data) => {
-   *   const api = game.modules.get('tidy5e-sheet').api;
-   *   const actorEmoji = data.actor.system.currency.pp > 0 ? '💹' : '📉';
-   *   let iconHtml = api.useHandlebarsRendering(`<h1>${actorEmoji}</h1>`);
-   *   // 👆 This HTML looks like `<div style="display: contents;" data-tidy-render-scheme="handlebars"><h1>📉</h1></div>`
-   *   // if the actor doesn't have at least 1 platinum.
-   *   // Tidy will remove this each time the sheet would normally re-render, and it will add it back.
-   *   // When the actor have more than 0 platinum, stonks will rise.
-   *
-   *   let actorNameElement = element.querySelector(`[data-tidy-field="name"]`);
-   *   actorNameElement?.insertAdjacentHTML('afterend', iconHtml);
-   * });
-   * ```
-   *
-   * @deprecated
-   * Tidy is no longer going to use `div[style="display: contents"]` wrappers around your HTML.
-   * If you wish to have your content remove and re-render on each render cycle, put
-   * `data-tidy-render-scheme="handlebars"` on the top-level elements of your HTML to inject.
-   */
-  useHandlebarsRendering(html: string): string {
-    warn(
-      'api.useHandlebarsRendering is deprecated and will be removed in Tidy V13. For handlebars rendering, use `data-tidy-render-scheme="handlebars" on top-level elements when injecting outside of the content registration system.`'
-    );
-    return `<div style="display: contents;" ${CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE}>${html}</div>`;
   }
 
   /**

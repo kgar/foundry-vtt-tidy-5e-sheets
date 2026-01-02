@@ -1,4 +1,3 @@
-import { CONSTANTS } from 'src/constants';
 import { firstOfSet } from 'src/utils/set';
 
 export type DropEffectValue = 'copy' | 'move' | 'link' | 'none';

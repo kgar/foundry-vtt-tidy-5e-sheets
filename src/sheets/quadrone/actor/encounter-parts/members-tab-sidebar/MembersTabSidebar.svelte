@@ -12,7 +12,7 @@
   import GroupTraitTooltip from 'src/tooltips/GroupTraitTooltip.svelte';
   import type { ClassValue } from 'svelte/elements';
   import GroupTraitPill from '../../group-parts/GroupTraitPill.svelte';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import ActorCustomTraitListEntries from '../../parts/ActorCustomTraitListEntries.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());

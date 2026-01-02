@@ -55,7 +55,7 @@
               checked={allSelected}
               onclick={() => toggleAll()}
               title={localize(
-                'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
+                'TIDY5E.Selection.SelectAllNoneTooltip',
               )}
             />
             <!-- TODO: eliminate inline style -->
@@ -86,7 +86,7 @@
 </div>
 <div class="button-bar">
   <p>
-    {localize('TIDY5E.Settings.Migrations.Selection.TotalSelectedLabel', {
+    {localize('TIDY5E.Selection.TotalSelectedLabel', {
       total: totalSelected,
     })}
   </p>

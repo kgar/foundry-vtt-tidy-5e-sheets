@@ -13,9 +13,8 @@ import type {
   RenderableHtml,
   OnRenderTabParams,
   SvelteTabContent,
-  ActorSheetContextV1,
-  ActorSheetClassicContextV2,
   TidySectionBase,
+  ActorSheetQuadroneContext,
 } from 'src/types/types';
 import type { Component } from 'svelte';
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
@@ -55,7 +54,6 @@ export type RegisteredTab<TContext> = {
 /** @category Shared */
 export type SheetLayout =
   | typeof CONSTANTS.SHEET_LAYOUT_ALL
-  | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC
   | typeof CONSTANTS.SHEET_LAYOUT_QUADRONE;
 
 export type RegisteredItemSummaryCommand = {
@@ -72,22 +70,6 @@ export type RegisteredItemSummaryCommandEnabledParams = {
 export type RegisteredItemSummaryCommandExecuteParams = {
   event: PointerEvent | MouseEvent;
   item: Item5e;
-};
-
-export type RegisteredPortraitMenuCommand = {
-  label?: string;
-  iconClass?: string;
-  tooltip?: string;
-  enabled?: (params: RegisteredPortraitMenuCommandEnabledParams) => boolean;
-  execute?: (params: RegisteredPortraitMenuCommandExecuteParams) => void;
-};
-
-export type RegisteredPortraitMenuCommandEnabledParams = {
-  actor: Actor5e;
-};
-export type RegisteredPortraitMenuCommandExecuteParams = {
-  actor: Actor5e;
-  context: ActorSheetContextV1 | ActorSheetClassicContextV2;
 };
 
 export type RegisteredSectionCommand = {
@@ -118,7 +100,11 @@ export type RegisteredCustomActorTrait = {
   openConfigurationTooltip: string | undefined;
   enabled?: ((params: CustomTraitEnabledParams) => boolean) | undefined;
   iconClass: string | undefined;
-  pills: ((params: RegisteredCustomTraitRenderParams) => RegisteredCustomTraitEntry[]) | undefined;
+  pills:
+    | ((
+        params: RegisteredCustomTraitRenderParams
+      ) => RegisteredCustomTraitEntry[])
+    | undefined;
   content: ((params: RegisteredCustomTraitRenderParams) => string) | undefined;
 };
 

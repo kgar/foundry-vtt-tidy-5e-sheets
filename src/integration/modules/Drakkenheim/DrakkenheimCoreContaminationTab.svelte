@@ -1,18 +1,12 @@
 <script lang="ts">
   import Pips from 'src/components/pips/Pips.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    ActorSheetClassicContextV2,
-    ActorSheetQuadroneContext,
-  } from 'src/types/types';
+  import type { ActorSheetQuadroneContext } from 'src/types/types';
   import { DRAKKENHEIM_CORE_CONSTANTS } from './DrakkenheimCoreConstants';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
 
-  const context =
-    $derived(
-      getSheetContext<ActorSheetClassicContextV2 | ActorSheetQuadroneContext>(),
-    );
+  const context = $derived(getSheetContext<ActorSheetQuadroneContext>());
 
   const localize = FoundryAdapter.localize;
 

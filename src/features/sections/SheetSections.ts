@@ -2,21 +2,16 @@ import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import type {
-  ActionSectionClassic,
   Actor5e,
-  ActorSheetContextV1,
   ActorSheetQuadroneContext,
   CharacterFeatureSection,
-  CharacterSheetContext,
   CharacterSheetQuadroneContext,
   CustomSectionOptions,
   DraftAnimalSection,
-  FavoriteSection,
   FeatureSection,
   GroupMemberSection,
   InventorySection,
   NpcAbilitySection,
-  NpcSheetContext,
   NpcSheetQuadroneContext,
   SpellbookSection,
   SpellbookSectionLegacy,
@@ -28,12 +23,8 @@ import type { SectionConfig } from './sections.types';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { UserSheetPreferencesService } from '../user-preferences/SheetPreferencesService';
 import type { UserSheetPreference } from '../user-preferences/user-preferences.types';
-import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
-import {
-  getSortedActions,
-  getSortedActionsQuadrone,
-} from '../actions/actions.svelte';
+import { getSortedActionsQuadrone } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -156,10 +147,7 @@ export class SheetSections {
 
   // TODO: Fold into legacy?
   static prepareTidySpellbook(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
     options: Partial<SpellbookSection> = {}
@@ -221,7 +209,7 @@ export class SheetSections {
    * @protected
    */
   static _prepareSpellbookLegacy(
-    context: ActorSheetContextV1 | ActorSheetQuadroneContext,
+    context: ActorSheetQuadroneContext,
     items: Item5e[]
   ) {
     const owner = context.actor.isOwner;
@@ -358,11 +346,7 @@ export class SheetSections {
   }
 
   static prepareClassItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     classes: Item5e[],
     subclasses: Item5e[],
     actor: Actor5e
@@ -399,11 +383,7 @@ export class SheetSections {
   }
 
   static collocateSubItems(
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     items: Item5e[]
   ): Item5e[] {
     const itemContext = context.itemContext;
@@ -441,32 +421,6 @@ export class SheetSections {
 
       return result;
     }, []);
-  }
-
-  static accountForExternalSections(
-    props: string[],
-    data: Record<string, any>
-  ) {
-    props.forEach((prop) => {
-      const sectionCollection = data[prop];
-      sectionCollection?.forEach((section: any) => {
-        if (!isNil(section.key)) {
-          return;
-        }
-
-        section.key = SheetSections.getSectionKey(section);
-        section.canCreate = false;
-        section.show = true;
-      });
-    });
-  }
-
-  static getSectionKey(section: TidySectionBase) {
-    if (isNil(section.key)) {
-      return `${section.label}-external`;
-    }
-
-    return section.key;
   }
 
   static configureVehicleStatblockSections(
@@ -573,107 +527,7 @@ export class SheetSections {
     return sections;
   }
 
-  static configureFavorites(
-    favoriteSections: FavoriteSection[],
-    actor: Actor5e,
-    tabId: string,
-    sheetPreferences: UserSheetPreference,
-    sectionConfig?: Record<string, SectionConfig>
-  ) {
-    let configuredFavorites: FavoriteSection[] = [];
-
-    try {
-      configuredFavorites = SheetSections.sortKeyedSections(
-        favoriteSections,
-        sectionConfig
-      );
-
-      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-
-      const favoritesIdMap = actor.system.favorites.reduce(
-        (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
-          map.set(f.id, f);
-          return map;
-        },
-        new Map<string, CharacterFavorite>()
-      );
-
-      return (configuredFavorites as FavoriteSection[]).map(
-        ({ ...section }) => {
-          if ('effects' in section) {
-            let effectContexts = section.effects;
-
-            // Sort Favorite Effects
-            if (sortMode === 'm') {
-              const getSort = (effects: Item5e) =>
-                favoritesIdMap.get(effects.getRelativeUUID(actor))?.sort ??
-                Number.MAX_SAFE_INTEGER;
-
-              effectContexts = effectContexts.toSorted(
-                (a, b) => getSort(a.effect) - getSort(b.effect)
-              );
-            } else {
-              effectContexts = effectContexts.toSorted((a, b) =>
-                a.effect.name.localeCompare(b.effect.name, game.i18n.lang)
-              );
-            }
-
-            // TODO: Filter Favorite Effects ?
-          } else if ('activities' in section) {
-            let activities = section.activities;
-
-            // Sort Favorite Activities
-            if (sortMode === 'm') {
-              const getSort = (activity: Activity5e) =>
-                favoritesIdMap.get(activity.relativeUUID)?.sort ??
-                Number.MAX_SAFE_INTEGER;
-
-              activities = activities.toSorted(
-                (a, b) => getSort(a) - getSort(b)
-              );
-            } else {
-              activities = activities.toSorted((a, b) =>
-                a.name.localeCompare(b.name, game.i18n.lang)
-              );
-            }
-
-            // TODO: Filter Favorite Activities?
-          } else {
-            let items = section.items;
-            // Sort Favorites Items
-            if (sortMode === 'm') {
-              const getSort = (item: Item5e) =>
-                favoritesIdMap.get(item.getRelativeUUID(actor))?.sort ??
-                Number.MAX_SAFE_INTEGER;
-
-              items = items.toSorted((a, b) => getSort(a) - getSort(b));
-            } else {
-              items = ItemUtils.getSortedItems(items, sortMode);
-            }
-
-            // TODO: Collocate Favorite Sub Items
-
-            if ('spells' in section) {
-              section.items = items;
-            } else {
-              section.items = items;
-            }
-          }
-
-          // Apply visibility from configuration
-          section.show = sectionConfig?.[section.key]?.show !== false;
-
-          return section;
-        }
-      );
-    } catch (e) {
-      error('An error occurred while configuring favorites', false, e);
-    }
-
-    return configuredFavorites;
-  }
-
-  static configureStatblock<TSection extends FeatureSection | SpellbookSection>(
+ static configureStatblock<TSection extends FeatureSection | SpellbookSection>(
     sections: TSection[],
     context: NpcSheetQuadroneContext,
     tabId: string,
@@ -708,11 +562,7 @@ export class SheetSections {
       | NpcAbilitySection
   >(
     features: TSection[],
-    context:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | CharacterSheetQuadroneContext
-      | NpcSheetQuadroneContext,
+    context: CharacterSheetQuadroneContext | NpcSheetQuadroneContext,
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfig?: Record<string, SectionConfig>
@@ -739,31 +589,6 @@ export class SheetSections {
     }
 
     return features;
-  }
-
-  static configureActions(
-    sections: ActionSectionClassic[],
-    tabId: string,
-    sheetPreferences: UserSheetPreference,
-    sectionConfigs: Record<string, SectionConfig> | undefined
-  ) {
-    try {
-      sections = SheetSections.sortKeyedSections(sections, sectionConfigs);
-
-      const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
-
-      return sections.map(({ ...section }) => {
-        section.actions = getSortedActions(section, sortMode);
-
-        section.show = sectionConfigs?.[section.key]?.show !== false;
-
-        return section;
-      });
-    } catch (e) {
-      error('An error occurred while configuring actions', false, e);
-    }
-
-    return sections;
   }
 
   static configureActionsQuadrone(
@@ -881,7 +706,7 @@ export class SheetSections {
       : FoundryAdapter.localize('TIDY5E.Actions.TabName');
   }
 
-  // TODO: Consider just moving this to the sheet class now that there's no classic sheet equivalent.
+  // TODO: Consider just moving this to the sheet class.
   static configureGroupMembers(
     sections: GroupMemberSection[],
     tabId: string,

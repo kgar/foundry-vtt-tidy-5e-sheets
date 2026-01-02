@@ -2,17 +2,13 @@ import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import type {
   ActiveEffect5e,
   Actor5e,
-  ActorSheetContextV1,
-  ActorSheetClassicContextV2,
-  CharacterSheetContext,
-  NpcSheetContext,
-  VehicleSheetContext,
   ActorSheetQuadroneContext,
+  CharacterSheetQuadroneContext,
   GroupSkillRollProcessConfiguration,
+  NpcSheetQuadroneContext,
 } from 'src/types/types';
 import type { ContextMenuEntry, CrewArea5e } from './foundry.types';
 import type {
-  ContainerSheetClassicContext,
   ContainerSheetQuadroneContext,
   Item5e,
   ItemSheetQuadroneContext,
@@ -53,26 +49,6 @@ export class TidyHooks {
    */
   static dnd5eDropItemSheetData(item: Item5e, app: any, data: any): boolean {
     return Hooks.call('dnd5e.dropItemSheetData', item, app, data);
-  }
-
-  /**
-   * The context menu for the advancements list has been constructed.
-   * @param {jQuery} html The HTML element to which the context options are attached.
-   * @param {ContextMenuEntry[]} contextOptions The context menu entries.
-   * @returns {boolean} `true` to allow the menu to show, `false` to prevent the default menu from showing.
-   *
-   * @example
-   * ```js
-   * Hooks.on('dnd5e.getItemAdvancementContext', (html, contextOptions) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static dnd5eGetItemAdvancementContext(
-    html: any,
-    contextOptions: ContextMenuEntry[]
-  ): boolean {
-    return Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
   }
 
   /**
@@ -133,25 +109,6 @@ export class TidyHooks {
    */
   static foundryDropActorSheetData(actor: Actor5e, app: any, data: any) {
     return Hooks.call('dropActorSheetData', actor, app, data);
-  }
-
-  /**
-   * The context menu is about to show for a given item on a sheet.
-   * @param {Item5e} item The item document instance.
-   * @param {object} options The mouse event which triggered the context menu.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.actorItemUseContextMenu', (item, options) => {
-   *   // Your code here
-   * });
-   * ```
-   */
-  static tidy5eSheetsActorItemUseContextMenu(
-    item: Item5e,
-    options: { event: Event }
-  ) {
-    Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
   }
 
   /**
@@ -360,7 +317,7 @@ export class TidyHooks {
    * Sheet item/effect sections are about to be configured. Use this hook to inject additional items, sections, etc., or to adjust context data.
    * @param {any} app The sheet application instance.
    * @param {HTMLElement} element The sheet HTML element.
-   * @param {CharacterSheetContext | NpcSheetContext | ContainerSheetClassicContext} data The data context from `getData()`.
+   * @param {CharacterSheetQuadroneContext | NpcSheetQuadroneContext | ContainerSheetQuadroneContext} data The data context from `getData()`.
    *
    * @example
    * ```js
@@ -372,12 +329,7 @@ export class TidyHooks {
   static tidy5eSheetsPreConfigureSections(
     app: any,
     element: HTMLElement,
-    data:
-      | CharacterSheetContext
-      | NpcSheetContext
-      | ContainerSheetClassicContext
-      | ContainerSheetQuadroneContext
-      | ItemSheetQuadroneContext
+    data: ContainerSheetQuadroneContext | ItemSheetQuadroneContext
   ) {
     Hooks.callAll('tidy5e-sheet.preConfigureSections', app, element, data);
   }
@@ -433,33 +385,6 @@ export class TidyHooks {
     userId: string
   ): boolean {
     return Hooks.call('tidy5e-sheet.preCreateItem', owner, createData, userId);
-  }
-
-  /**
-   * The portrait picker is about to open.
-   * @param {ActorSheetContextV1 | ActorSheetClassicContextV2} context The actor sheet data from `getData()`.
-   * @param {MouseEvent & { currentTarget: EventTarget & HTMLElement }} event The triggering event.
-   * @returns {boolean} `true` to allow the picker to open, `false` to prevent it.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.preOpenActorPortraitFilePicker', (context, event) => {
-   *   return true;
-   * });
-   * ```
-   */
-  static tidy5eSheetsPreOpenActorPortraitFilePicker(
-    context:
-      | ActorSheetContextV1
-      | ActorSheetClassicContextV2
-      | ActorSheetQuadroneContext,
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
-  ): boolean {
-    return Hooks.call(
-      'tidy5e-sheet.preOpenActorPortraitFilePicker',
-      context,
-      event
-    );
   }
 
   /**
@@ -524,29 +449,6 @@ export class TidyHooks {
    */
   static tidy5eSheetsReady(api: Tidy5eSheetsApi): void {
     Hooks.callAll('tidy5e-sheet.ready', api);
-  }
-
-  /**
-   * The actor sheet has rendered all content and registered custom content. Is called on partial and full renders.
-   * @param {any} app The sheet application instance.
-   * @param {HTMLElement} element The sheet's HTML element.
-   * @param {CharacterSheetContext | NpcSheetContext | VehicleSheetContext} data The data context from `getData()`.
-   * @param {boolean} forced `true` when performing a full re-render; `false` when performing a partial re-render.
-   *
-   * @example
-   * ```js
-   * Hooks.on('tidy5e-sheet.renderActorSheet', (app, element, data, forced) => {
-   *   // Your code here
-   * });
-   * ```
-   */
-  static tidy5eSheetsRenderActorSheet(
-    app: any,
-    element: HTMLElement,
-    data: CharacterSheetContext | NpcSheetContext | VehicleSheetContext,
-    forced: boolean
-  ) {
-    Hooks.callAll('tidy5e-sheet.renderActorSheet', app, element, data, forced);
   }
 
   /**

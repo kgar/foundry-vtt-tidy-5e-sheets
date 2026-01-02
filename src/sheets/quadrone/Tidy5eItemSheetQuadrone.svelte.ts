@@ -13,7 +13,6 @@ import type {
   Item5e,
   ItemDescription,
   ItemFacilityOrdersContext,
-  ItemSheetContext,
   ItemSheetQuadroneContext,
   UsesRecoveryData,
 } from 'src/types/item.types';
@@ -36,7 +35,6 @@ import {
 } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
 import { ThemeSettingsQuadroneApplication } from 'src/applications/theme/ThemeSettingsQuadroneApplication.svelte';
 import type { SpellProgressionConfig } from 'src/foundry/config.types';
@@ -318,7 +316,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       currentTabId: this.currentTabId,
       customContent: [],
       customEquipmentTypeGroups:
-        ItemSheetRuntime.getCustomEquipmentTypeGroups(),
+        ItemSheetQuadroneRuntime.getCustomEquipmentTypeGroups(),
       data: this.document.toObject(false),
       defaultAbility: '',
       dimensions: target?.template?.dimensions,
@@ -347,7 +345,6 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       ),
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       labels: this.document.labels,
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       limited: this.document.limited,
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
       name: {
@@ -432,7 +429,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
           label,
           group: 'DND5E.Armor',
         })),
-        ...ItemSheetRuntime.getCustomEquipmentTypeGroups().reduce<
+        ...ItemSheetQuadroneRuntime.getCustomEquipmentTypeGroups().reduce<
           GroupableSelectOption[]
         >((prev, curr) => {
           for (let [key, typeLabel] of Object.entries(curr.types)) {
@@ -486,7 +483,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         (this.document.system.properties ?? []).map((p: string) => [p, true])
       ),
       options: (this.document.system.validProperties ?? []).reduce(
-        (arr: ItemSheetContext['properties']['options'], k: any) => {
+        (arr: ItemSheetQuadroneContext['properties']['options'], k: any) => {
           // @ts-ignore
           const { label } = CONFIG.DND5E.itemProperties[k];
           arr.push({

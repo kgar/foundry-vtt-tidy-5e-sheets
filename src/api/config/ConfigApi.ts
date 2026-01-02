@@ -1,7 +1,7 @@
 import { ActorItemApi } from './actor-item/ActorItemApi';
 import { ActorPortraitApi } from './actor-portrait/ActorPortraitApi';
 import { ActionListApi } from './action-list/ActionListApi';
-import { SpellSchoolApi } from './spell-school/SpellSchoolApi';
+import { SpellSchoolApi } from './spell-school-deprecated/SpellSchoolApi';
 import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
 import { ExhaustionApi } from './exhaustion/ExhaustionApi.svelte';
 import { ActorTraitsApi } from './actor-traits/ActorTraitsApi';

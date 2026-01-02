@@ -1,34 +1,6 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Character Sheet",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e NPC Sheet",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Item Sheet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
-    "TIDY5E.PlayerName": "Spieler Name",
-    "TIDY5E.EditSheetImageHint": "Linksklick: Bild bearbeiten",
-    "TIDY5E.SheetImageOptionsHint": "Rechtsklick: Charakter-Bilder zeigen",
-    "TIDY5E.ShowPortraitArt": "Portrait zeigen",
-    "TIDY5E.ShowTokenArt": "Token zeigen",
-    "TIDY5E.ShowItemImage": "Rechtsklick: Gegenstands-Bild zeigen",
-    "TIDY5E.ShowItemArt": "Bild zeigen",
-    "TIDY5E.AbbrInitiative": "Ini",
-    "TIDY5E.RestHint": "Rasten",
-    "TIDY5E.ShortRest": "Kurze Rast",
-    "TIDY5E.LongRest": "Lange Rast",
     "TIDY5E.HitDiceRollAverage": "Rechtsklick: Durchschnitt anwenden",
     "TIDY5E.JournalTabName": "Tagebuch",
-    "TIDY5E.RestoreOnRest": "Bei Rast regenerieren",
-    "TIDY5E.JournalPersonsOfInterest": "Interessante Personen",
-    "TIDY5E.JournalLocationsOfInterest": "Interessante Orte",
-    "TIDY5E.JournalQuests": "Aufträge",
-    "TIDY5E.JournalMisc": "Verschiedenes",
-    "TIDY5E.JournalEntries": "Tagebucheinträge",
-    "TIDY5E.TogglePersonalityInfo": "Persönlichkeits-Infos umschalten",
-    "TIDY5E.SheetEdit.Enable.Hint": "Editieren erlauben - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Bearbeiten deaktivieren - {description}",
-    "TIDY5E.SheetEdit.Description": "Schaltet Sichtbarkeit von Hinzufügen/Löschen Buttons und leeren Sektionen um.",
-    "TIDY5E.SheetLock.Unlock.Hint": "Entsperren - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Sperren - {description}",
-    "TIDY5E.SheetLock.Description": "Sperre für sensible Felder, die sich nicht oft ändern sollten, umschalten",
     "TIDY5E.ContextMenuActionEquip": "Gegenstand anlegen",
     "TIDY5E.ContextMenuActionUnequip": "Gegenstand Ablegen",
     "TIDY5E.ContextMenuActionAttune": "Gegenstand einstimmen",
@@ -37,31 +9,11 @@
     "TIDY5E.ContextMenuActionUnprepare": "Vorbereitung entfernen",
     "TIDY5E.ContextMenuActionEdit": "Bearbeiten",
     "TIDY5E.ContextMenuActionDelete": "Löschen",
-    "TIDY5E.EmptySection": "Dieser Bereich ist leer. Entsperre den Charakterbogen zum Bearbeiten.",
-    "TIDY5E.GMOnlyEdit": "Nur der Spielleiter kann diesen Bereich bearbeiten.",
-    "TIDY5E.AttunementWarning": "Einstimmungs-Warnung: Du kannst dich maximal auf {number} Gegenstände einstimmen!",
     "TIDY5E.AttunementItems": "Eingestimmte Gegenstände",
-    "TIDY5E.AttunementMax": "Maximale Einstimmungen",
-    "TIDY5E.GridLayout": "Raster-Ansicht",
-    "TIDY5E.ListLayout": "Listen-Ansicht",
-    "TIDY5E.LayoutNotSupported": "Layoutmodus wird nicht unterstützt",
-    "TIDY5E.Encumbrance": "Traglast",
     "TIDY5E.AddFavorite": "Favorit hinzufügen",
-    "TIDY5E.Favorite": "Favorit",
     "TIDY5E.RemoveFavorite": "Favorit löschen",
-    "TIDY5E.ShowNotProficientSkills": "Nicht-fachkundige anzeigen",
-    "TIDY5E.HideNotProficientSkills": "Nicht-fachkundige verbergen",
-    "TIDY5E.Abilities": "Fähigkeiten",
-    "TIDY5E.Environment": "Umgebung",
     "TIDY5E.Search": "Suche",
-    "TIDY5E.SearchClear": "Suche leeren",
     "TIDY5E.SearchHint": "Tippe ein wonach du suchst um Ergebnisse anzeigen zu lassen.",
-    "TIDY5E.ItemCardsMouseHint": "Mittlere Maustaste zum ansehen/bearbeiten.",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Rettung",
-    "TIDY5E.SpellAttackMod": "Zauberangriffs Modifikator",
-    "TIDY5E.PreparedSpells": "Vorbereitete Zauber",
-    "TIDY5E.TokenLinked": "Figur mit Akteur verknüpft",
     "TIDY5E.TokenUnlinked": "Figur nicht mit Akteur verknüpft",
     "TIDY5E.SpellClass": "Zauberspruchklasse",
     "TIDY5E.Class.Artificer": "Artifizient",
@@ -78,190 +30,26 @@
     "TIDY5E.Class.Sorcerer": "Zauberer",
     "TIDY5E.Class.Warlock": "Hexenmeister",
     "TIDY5E.Class.Wizard": "Magier",
-    "TIDY5E.OriginSummaryConfig": "Herkunftskonfiguration: {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Mehrfachklassen-Zauberbuchfilter",
     "TIDY5E.UserSettings.Menu": {
         "name": "Benutzereinstellungen",
         "hint": "Die eigene Version von \"Tidy 5e Sheets\" anpassen. Diese Einstellungen werden im Browser gespeichert und gelten für die eigenen Spielbögen.",
         "label": "Benutzereinstellungen",
         "title": "Benutzereinstellungen: {userName}"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Spieler",
-        "header": "Spieler Charakterbögen"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "NSCe",
-        "header": "NSC-Bögen"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Fahrzeuge",
-        "header": "Fahrzeugbögen"
-    },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "SL Einstellungen"
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Bogensperre",
-        "header": "Sperroptionen",
-        "hint": "Verhindern, dass Spieler Änderungen an Aspekten ihres Charakterbogens vornehmen, die sich nur selten ändern sollten. Optional einige Elemente ausblenden, die gar nicht verwenden werden.",
-        "hint2": "Wichtig: Die Sperrfunktionen für Spielbögen sind dazu gedacht, die Spieler bei der Verwendung von Spielbögen zu unterstützen und Fehler zu vermeiden, wie z. B. das versehentliche Hinzufügen/Entfernen einer Rettungswurf-Fähigkeit. Die Einstellungen der Bogensperre bieten keinen sicheren Schutz vor Spielern mit böswilligen Absichten.",
-        "labelGeneralLocks": "Allgemeine Sperren",
-        "labelInventoryLocks": "Inventarsperren",
-        "labelFeaturesLocks": "Eigenschaftensperren"
-    },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Gegenstand-Infokarten in allen Ansichten anzeigen",
-        "hint": "Deaktivieren, um die Infokarten nur in der Rasteransicht anzuzeigen."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Schwebende Gegenstandskarten anzeigen",
-        "hint": "Aktivieren, um die Gegenstandsinfokarten neben dem Mauszeiger schweben zu lassen. Empfohlen: Bei Verwendung dieser Funktion Verzögerung einrichten."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Verzögerung zum Anzeigen der Gegenstandinfokarten (in ms)",
-        "hint": "Die Infokarte wird erst nach dieser Zeit in Millisekunden angezeigt (0 = sofort, 300 ist Standard)."
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Klassische Listensteuerungen verwenden",
-        "hint": "Zeigt die Steuerelemente in der Listenansicht an."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Merkmalsbeschriftungen anzeigen",
-        "hint": "Zeigt Beschriftungen für SC-, NSC- und Fahrzeugeigenschaften. Deaktivieren, um nur Symbole anzuzeigen."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Spielername anzeigen",
-        "hint": "Zeigt ein Feld für den Spielernamen unter dem Namen des Charakters an."
-    },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Klassenliste anzeigen",
-        "hint": "Zeigt die Klassenliste unter dem Namen des Charakters an."
-    },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Inspirationsindikator animieren",
-        "hint": "Zeigt die Leuchtanimation des Inspirationsindikator."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Erschöpfungs- und Inspirationsanzeiger bei 0 ausblenden",
-        "hint": "Blendet Erschöpfung und Inspiration aus, wenn sie 0 sind. Erscheint bei Überschweben des Mauszeigers."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Inspirationsindikator nur beim Überschweben anzeigen",
-        "hint": "Zeigt die Inspirationsanzeige nur an, wenn der Mauszeiger über dem Porträt schwebt."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Erschöpfunganzeiger nur beim Überschweben anzeigen",
-        "hint": "Zeigt den Erschöpfungsindikator nur an, wenn der Mauszeiger über dem Porträt schwebt."
-    },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Nutze TP-Balken",
-        "hint": "Zeigt einen farbigen Balken mit den verbleibenden TP an. Die Trefferpunktzahlen sind weiterhin sichtbar."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Nutze Gesundheitsüberblende",
-        "hint": "Zeigt eine farbige TP-Überblende."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Verschiebe Merkmale unter Ressourcen",
-        "hint": "Positioniert die Merkmale unter den Charakterressourcen."
-    },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Zeige nur ausgerüstete Munition",
-        "hint": "Zeigt nur die aktuell ausgerüstete Munition in der Munitionsauswahl der Waffe an."
-    },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Zeige Fähigkeiten immer an",
-        "hint": "Entfernt die Umschalttaste für die Sichtbarkeit von ungeübten Fertigkeiten und zeigt alle an."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Zeige Zauberbuchreiter",
-        "hint": "Zeigt ein Zauberbuchreiter für NSCe. Deaktivieren, um das Zauberbuch in den Reiter \"Attribute\" zu verschieben."
-    },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Markierung für aktive Effekte anzeigen",
-        "hint": "Zeigt eine Markierung für Elemente der Listenansicht an, die Aktive Effekte haben."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Kontextmenü verwenden",
-        "hint": "Ermöglicht ein Rechtsklick-Kontextmenü für Elemente."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Zeige erweiterte eingeschränkte Ansicht",
-        "hint": "Zeigt Spielern mit eingeschränkter Berechtigung den gesamten Bogen (ohne das Journal) an."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Runde Portraits",
-        "hint": "Wähle runde Portraits/Symbole für Akteure.",
-        "all": "Alle Akteure",
-        "pc": "SCe",
-        "npc": "NSCe/Fahrzeuge",
-        "none": "Keine",
-        "default": "Keine"
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Sensible Felder sperren",
-        "hint": "Sperrt selten geänderte Felder (Name, Fähigkeitserfahrungsstufenschalter) und blendet Konfigurationsschaltflächen aus, wenn der Bogen gesperrt ist."
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "\"Aktive Effekte\"-Management auf SL beschränken",
-        "hint": "Die Berechtigung, Aktive Effekte zu bearbeiten oder umzuschalten, wird auf SL beschränkt. Spieler sehen weiterhin die angewandten Effekte."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Inspirationsindikator verwenden",
-        "hint": "Zeigt einen Inspirationsindikator auf dem Charakterprofil an."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Fahrzeugbewegungsindikator verwenden",
-        "hint": "Zeigt einen Bewegungsindikator auf dem Fahrzeugprofil an."
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Erschöpfungsindikator verwenden",
-        "hint": "Zeigt einen Erschöpfungs-/Verschleißindikator für Charaktere, NSCe und Fahrzeuge an."
+        "header": "Sperroptionen"
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "NSC-Rast verwenden",
         "hint": "Ermöglicht kurze und lange Rast für NSCe."
     },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Zeige NSC-Rast im Dialog",
-        "hint": "Zeigt eine Dialogkarte an, wenn ein NSC rastet."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Verknüpfte/unverknüpfte NSCe markieren",
-        "hint": "Fügt eine farbige Umrandung und ein Symbol zu verknüpften/unverknüpften NSC-Bögen hinzu.",
-        "default": "Kein Verknüpfungsmarker (standard)",
-        "unlinked": "Unverknüpfte Figuren hervorheben",
-        "linked": "Verknüpfte Figuren hervorheben",
-        "both": "Verknüpfte und unverknüpfte Figuren hervorheben"
-    },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Initiale Bogenregisterkarte",
         "hint": "Zeigt die angegebene Registerkarte an, wenn ein Spielbogen zum ersten Mal geöffnet wird."
-    },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Verberge Todesrettungswürfe vor Spielern",
-        "hint": "Macht Todesrettungswürfe und -ergebnisse nur für den SL sichtbar."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Charakterbelastungsleiste verwenden",
-        "hint": "Zeigt einen Lastenbalken auf dem Charakterbogen an."
-    },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "NSC-Belastungsleiste verwenden",
-        "hint": "Zeigt einen Lastenbalken auf NSC-Bögen an."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Fahrzeug-Beladungsleiste verwenden",
-        "hint": "Zeigt einen Beladungsbalken auf Fahrzeugbögen an."
-    },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Multiklassen-Zauberbuchfilter verwenden",
-        "hint": "Ermöglicht das Filtern von Zaubern nach Klassen in der Registerkarte Zauberbuch. Der Zauber muss einer Klasse zugeordnet werden, indem die Klassenauswahl auf dem Zauberbearbeitungsblatt verwendet wird."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Zauberklassensymbol für Zaubersprüche verwenden",
-        "hint": "Zeigt das Bild der Zauberklasse auf den Zaubersprüchen anstelle des eigenen Bildes des Zaubers. Der Zauber muss einer Klasse zugeordnet werden, indem der Klassenwähler auf dem Zauberbearbeitungsbogen benutzt wird. Bei Mehrfachklassen-Charaktere lässt sich mit dieser Funktion auf einen Blick erkennen, welche Zaubersprüche zu welcher Klasse gehören."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
@@ -275,98 +63,12 @@
         "name": "Währung sperren",
         "hint": "Verhindert, dass Nicht-SLs Änderungen an der Währung vornehmen."
     },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Erfahrungspunkte sperren",
-        "hint": "Verhindert, dass Nicht-SLs Änderungen an Erfahrung vornehmen."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Änderung maximaler TP sperren",
-        "hint": "Verhindert, dass Nicht-SL Änderungen an den maximalen TP vornehmen."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Sperre Stufenauswahl",
-        "hint": "Verhindert, dass Nicht-SL die Spielerlevel mit der Klassenlevel-Auswahl ändern."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Gegenstandsmengen sperren",
-        "hint": "Verhindert, dass Nicht-SL Änderungen an der Gegenstandsmenge vornehmen."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Benutzerdefinierte Designfarben verwenden",
-        "hint": "Zeigt benutzerdefinierte Designfarben an"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Primärer Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Ausgerüstet"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "TP Balken"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "„Ausgerüstet“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "„Ausgerüstet“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Vorbereitet"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "„Vorbereitet“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "„Vorbereitet“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pakt"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "\"Pakt\" Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "\"Pakt\" Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "Nach Belieben"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "„Nach Belieben“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "„Nach Belieben“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Angeboren"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "„Angeboren“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "„Angeboren“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Immer vorbereitet"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "„Immer Vorbereitet“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "„Immer Vorbereitet“ Akzent"
-    },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Überschreiben der maximalen TP erlauben",
-        "hint": "Erlaubt es dem SL maximale TP auf dem Charakterbogen zu überschreiben."
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Einstellungen zurücksetzen",
         "hint": "Dadurch werden alle Einstellungen auf die Standardeinstellungen des aktiven Spielsystems zurückgesetzt. Dies betrifft nur Einstellungen, die sich auf die „Welt“ beziehen, wie z. B. SL-Optionen.",
         "dialogs": {
             "title": "Modul Einstellungen zurücksetzen",
-            "content": "Möchtest du wirklich alle Moduleinstellungen auf die aktuellen Systemstandards zurücksetzen? <strong>Dieser Vorgang kann nicht rückgängig gemacht werden.</strong>",
-            "confirm": "Modul Einstellungen zurücksetzen",
-            "cancel": "Abbrechen"
+            "content": "Möchtest du wirklich alle Moduleinstellungen auf die aktuellen Systemstandards zurücksetzen? <strong>Dieser Vorgang kann nicht rückgängig gemacht werden.</strong>"
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -376,57 +78,26 @@
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "",
-            "buttonLabel": "",
-            "hint": ""
+            "buttonLabel": ""
         },
         "Sheet": {
             "title": "",
-            "header": "",
-            "useDefaultLightColors": "Standard Hell",
-            "useDefaultDarkColors": "Standard Dunkel",
             "export": "Exportieren",
             "import": "Importieren",
-            "importDropHint": "",
             "importError": "",
-            "importSuccess": "",
-            "menuLabel": "Menü",
-            "explanation": ""
+            "importSuccess": ""
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": "",
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
-    "TIDY5E.VehicleInMotion": "",
-    "TIDY5E.VehicleMotionless": "",
-    "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.ActionsPerTurn": "Aktionen pro Zug",
-    "TIDY5E.SheetMenu": {
-        "label": "Menü",
-        "themeLabel": ""
-    },
-    "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.Actions": {
-        "TabName": "Aktionen",
-        "OverriddenSetOverrideTrue": "Zu Aktionsliste hinzufügen (Umschalt+Klick um Überschreibung zu löschen)",
-        "SetOverrideFalse": "Aus Aktionsliste entfernen",
-        "SetOverrideTrue": "Zu Aktionsliste hinzufügen",
-        "ResetActionDefault": "Standardaktion zurücksetzen",
-        "OverriddenSetOverrideFalse": "Aus Aktionsliste entfernen (Umschalt+Klick um Überschreibung zu löschen)"
+        "TabName": "Aktionen"
     },
-    "TIDY5E.HitDC": "Treffer / SG",
-    "TIDY5E.Inventory.Weight.Tooltip": "Gewicht: {weight} {weightUnit}",
-    "TIDY5E.EnvironmentTooltip": "Habitat: {environment}",
-    "TIDY5E.AttackMod": "Angriffsmodifikator",
-    "TIDY5E.MeleeSpellAttackMod": "Nahkampf-Zauberangriffs Modifikator",
-    "TIDY5E.RangedSpellAttackMod": "Fernkampf-Zauberangriffs Modifikator",
     "TIDY5E.TabConfiguration": {
         "MenuOptionText": "Reiter Auswahl",
         "AvailableHeader": "Versteckte Reiter",
         "SelectedHeader": "Sichtbare Reiter",
-        "UnsupportedDocumentErrorMessage": "Der Dokumenttyp {documentType} ist derzeit nicht für die Reiterauswahl eingerichtet.",
-        "Explanation": "Alle Reiter, für die der Benutzer oder der Bogen so konfiguriert sind, dass sie nicht angezeigt werden (z. B. durch Deaktivieren des Journals in den Konfigurationseinstellungen), werden selbst dann nicht auf dem Bogen angezeigt, wenn sie ausgewählt sind.",
         "Title": "Reiter Auswahl: {documentName}",
-        "AtLeastOneRequiredErrorMessage": "Mindestens ein Reiter erforderlich.",
         "SelectionTab.Title": "Reiter-Auswahl",
         "VisibilityTab.Title": "Reiter Sichtbarkeit"
     },
@@ -438,24 +109,6 @@
         "MoveUp": "Nach oben bewegen (Alt + Pfeiltaste nach oben)",
         "MoveDown": "Nach unten bewegen (Alt + Pfeiltaste nach unten)"
     },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Unterstützung für barrierefreie Tastaturen verwenden",
-        "hint": "Ermöglicht es dem Benutzer, die meisten Schaltflächen/Befehle auf \"Tidy 5e Sheets\" mit der Tabulatortaste aufzurufen und sie mit herkömmlichen, auf Schaltflächen basierenden Tastenkombinationen auszuführen. Hinweis: Wenn der Fokus auf einer Schaltfläche in Foundry liegt, reagieren die Tastenkombinationen aus \"Steuerelemente konfigurieren\" nicht. Wenn ein Modul diese Foundry-Funktion für Steuerelemente auf den Spielbögen verwendet, wie z. B. die Verwendung von Elementen bei gedrückter Sondertaste, so wird jene Tastenbindungen durch die Aktivierung dieser \"Tidy 5e Sheets\"-Option beeinträchtigt."
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Standardbogen Tabulator-Wechsel für TP verwenden",
-        "hint": "Der 5e-Standardbogen erlaubt den Wechsel mittels Tabulator von der aktuellen TP-Eingabe zur aktuellen temporären TP-Eingabe. Durch Aktivierung, wird dieses Verhalten repliziert. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "Fügt eine Schaltfläche zum Ein- und Ausblenden von leeren Fertigkeiten hinzu.",
-        "name": "Leere Charakterfähigkeiten umschalten"
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "AtLeastOneLevelRequiredErrorMessage": "Es ist mindestens ein Fahrzeugverschleißgrad erforderlich.",
-        "Header": "Fahrzeugverschleiß",
-        "name": "Konfiguration Fahrzeugverschleiß",
-        "hint": "Legt fest, wie der Fahrzeugverschleiß konfiguriert und auf dem Fahrzeugbogen dargestellt wird."
-    },
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Zauberangriff",
     "TIDY5E.ActorSpellAttackFlavorText": "Zauberangriff",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Nahkampf-Zauberangriff",
@@ -464,33 +117,10 @@
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {documentName}",
         "ExamplesHeader": "Beispielformeln",
-        "ButtonTooltip": "Maximal vorbereitete Zaubersprüche konfigurieren",
         "MoreFormulas": "Mehr Formeln"
     },
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Charakter"
-    },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "NSC"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Fahrzeug"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Erschöpfung"
-    },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "hint": "Legt fest, wie die Erschöpfung von Nicht-Fahrzeugen konfiguriert und auf den Charakter- und NSC-Bögen dargestellt wird.",
-        "Header": "Charakter-/NSC-Erschöpfung",
-        "name": "Konfiguration Erschöpfungszustand",
-        "options.specific.levels.name": "Gesamtanzahl Grade",
-        "options.specific.levels.hint": "Bestimmt die maximale Anzahl von Erschöpfungsgraden.",
-        "options.specific.levels.tooltip.name": "Erschöpfungsgrad {level} Schnellinfo",
-        "options.specific.levels.tooltip.hint": "Schnellinfo für diesen Erschöpfungsgrad. Die Lokalisierungstasten funktionieren ebenfalls.",
-        "options.open.text": "Offene Nummerneingabe",
-        "options.open.explanation": "Zeigt dem Benutzer eine numerische Eingabe für die Eingabe von Erschöpfungsgraden.",
-        "AtLeastOneLevelRequiredErrorMessage": "Es ist mindestens ein Erschöpfungsgrad erforderlich.",
-        "options.specific.text": "Spezifische Grade"
     },
     "TIDY5E.WorldSettings.Menu": {
         "hint": "Die Einstellungen auf Weltebene anpassen, um die \"Tidy 5e Sheets\"-Erfahrung anzupassen. Diese Einstellungen werden in dieser Foundry-Welt gespeichert und gelten für alle relevanten \"Tidy 5e Sheets\"-Inhalte.",
@@ -501,104 +131,12 @@
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Aktionsliste"
     },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Standard-Tabulator für Bogenattribute verwenden",
-        "hint": "Der 5e-Standardbogen erlaubt das Wechseln von einer Attributeingabe zur nächsten, indem es die Steuerelemente um sie herum aus der Tabulatorreihenfolge ausblendet. Durch Aktivierung wird dieses Verhalten nachgebildet. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
-    },
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampf-Zauberangriff",
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Standard-Bogenregisterkarten",
-        "AvailableHeader": "Verfügbare Registerkarten",
-        "SelectedHeader": "Ausgewählte Registerkarten",
-        "hint": "Bestimmt, welche Registerkarten standardmäßig angezeigt werden und in welcher Reihenfolge. Gilt, wenn für einen Akteur keine Registerkartenauswahl getroffen wurde.",
-        "AtLeastOneTabRequiredErrorMessage": "Standard-Registerkarten: Für jeden Akteurstyp ist mindestens eine Registerkarte erforderlich."
-    },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filter",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Sonstiges",
-    "TIDY5E.Settings.Migrations": {
-        "name": "Migrationen",
-        "buttonLabel": "Tidy Daten migrieren",
-        "hint": "Falls du ein Nutzer des originalen Tidy 5e Sheet Moduls oder der Alpha Sheets warst, kannst du dieses Migrations Menü nutzen, um deine SL Einstellungen sowie deine Tidy Sheet Daten zu migrieren.",
-        "migrateConfirmMessage1": "Bist du dir sicher das du diese Migration ausführen möchtest?",
-        "migrationCompleteMessage": "Migration abgeschlossen.",
-        "dialogTitle": "Tidy Daten migrieren",
-        "migrationErrorMessage": "Ein Fehler ist aufgetreten. Weitere Details findest du in der Dev-Konsole.",
-        "migrateGmSettingsButtonLabel": "SL Einstellungen migrieren",
-        "migrateConfirmTitle": "Migration bestätigen",
-        "migrateConfirmButtonYes": "Migrieren",
-        "migrateConfirmButtonNo": "Abbrechen",
-        "migrationBeginningMessage": "Datenmigration. Bitte aktualisiere nicht die Seite bis die Migration abgeschlossen ist.",
-        "v1": {
-            "mainExplanation1": "Das Migrieren von Daten zu den neuen Tidy 5e Sheets ist zur Nutzung nicht erforderlich. Im schlimmsten Falle, solltest du ein Nutzer des originalen Tidy5e Sheets sein, und diesen Schritt überspringen, wirst du deine Einstellungen erneut abschließen müssen.",
-            "alphaHeader": "Alpha Tidy 5e Sheets",
-            "sectionTitle": "",
-            "originalExplanation": "",
-            "mainExplanation2": "",
-            "originalHeader": ""
-        },
-        "Notification": {
-            "Button.DoNotShowAgain": "Nicht erneut anzeigen",
-            "Explanation": "",
-            "Title": "",
-            "Explanation2": "",
-            "DoNotShowAgain.ConfirmMessage": ""
-        },
-        "OptionOverwrite.Text": "Überschreiben",
-        "MigrateCompendia.TotalEntriesLabel": "Gesamtzahl der Einträge",
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "NpcExhaustion": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "MigrateCompendia.CompendiumLabel": "Kompendium",
-        "UnlinkedExplanation": "",
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "MigrateCompendia.Title": "Kompendien migrieren",
-        "CcssToTidy": {
-            "overwriteTooltip": "",
-            "section": "",
-            "overwrite": "",
-            "deleteFlags": "",
-            "ccss": "",
-            "sectionTitle": "CCSS zu Tidy 5e",
-            "selectionDialogTitle": "",
-            "explanation1": "",
-            "deleteFlagsTooltip": ""
-        },
-        "MigrateCompendia.SelectionDialogTitle": "Zu migrierende Kompendien auswählen",
-        "NpcDeathSaves": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "Selection": {
-            "ToMigrate": "",
-            "TotalSelectedLabel": "",
-            "SelectAllNoneTooltip": ""
-        },
-        "Parent": "",
-        "CharacterBiography": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "migrateConfirmMessage2": "{boldStart}Hinweis{boldEnd}: Denke immer daran, {boldStart}deine Daten zu sichern{boldEnd}.",
-        "OptionDeleteFlags.Tooltip": "Bei der Migration von benutzerdefinierten Tidy-Flag-Daten zu offiziellen Systemdaten bleiben die Flags standardmäßig erhalten. Aktivieren Sie diese Option, um diese Flags zu entfernen.",
-        "FavoritesToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "migrateDocumentFlagsButtonLabel": "Dokumenten Flags migrieren",
-        "OptionsHeader": "Migrationsoptionen",
-        "ButtonMigration.Text": "Migrieren",
-        "OptionOverwrite.Tooltip": "Aktiviere diese Option, um vorhandene Daten des Bogens zu überschreiben. Wenn diese Option deaktiviert ist, werden nur leere Systemfelder mit migrierten Tidy-Daten gefüllt.",
-        "OptionDeleteFlags.Text": "Betroffene Tidy-Flags löschen",
-        "chatNotification": "Eine neue Migration für Tidy 5e Sheets ist verfügbar. Unter „Tidy 5e Sheets-Spieleinstellungen“ kannst du die verfügbaren Migrationen anzeigen."
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "",
+        "SelectAllNoneTooltip": ""
     },
     "TIDY5E.Settings.About": {
         "FinancialSupportHeader": "Tidy 5e Sheets unterstützen",
@@ -637,7 +175,6 @@
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": "Gegenstand"
     },
-    "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e Klassischer Behälter Bogen",
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Zauber mit aktiven Effekten als Aktionen einbeziehen",
         "hint": "Zeigt standardmäßig Zauber mit aktiven Effekten (z. B. Rindenhaut) im Reiter/Feld „Aktionen”."
@@ -646,38 +183,17 @@
         "hint": "Zeigt Zauber mit einer Dauer von einer Minute oder weniger (z. B. 1 Runde) und einer Aktivierungszeit von 1 Aktion oder 1 Bonusaktion (z. B. Segnen, Verderben, Befehl) standardmäßig im Reiter/Fenster „Aktionen“.",
         "name": "Minutenlange Zauber mit als Aktionen einbeziehen"
     },
-    "TIDY5E.SpellSourceIdentifierSelectText": "Klassenkennung: {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "Der Akteur er diesen Zauber hat, verfügt nicht über die hier angegebene Ursprungsklasse.",
     "TIDY5E.Utilities.Tools": "",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.ReminderToBackUp": "",
-    "TIDY5E.Commands.HideLegendaryToolbar": "",
     "TIDY5E.UseDefaultDialog": {
         "text": "",
         "title": ""
     },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Bildlaufleistenspur"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "„Nur als Ritual“ Akzent"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "„Nur als Ritual“ Umrandung"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Nur als Ritual"
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "name": "Verwende Tidy Spell School Symbole",
-        "hint": ""
-    },
     "TIDY5E.UseDefault": "",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "",
     "TIDY5E.Section": {
         "ConfigDialog": {
             "showTooltip": "",
@@ -685,50 +201,26 @@
             "title": ""
         },
         "ActionLabel": "",
-        "Label": "",
-        "Default": "",
-        "Tooltip": "",
-        "ActionTooltip": ""
+        "Label": ""
     },
     "TIDY5E.GMOnly.Message": "",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Symbole"
-    },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "hint": "Zeigt Verbrauchsgegenstände, die Aktivierungskosten (Aktion, Bonusaktion usw.) haben standardmäßig in der Aktionsliste.",
         "name": "Zeigt Verbrauchsmaterialien als Aktionen"
     },
-    "TIDY5E.Reset": "",
-    "TIDY5E.Utilities.ConfigureSections": "",
     "TIDY5E.Settings.SheetPreferences": {
         "buttonLabel": "",
         "name": "",
         "hint": "",
         "explanation": ""
     },
-    "TIDY5E.Commands.HideContainerPanel": "",
-    "TIDY5E.Commands.ShowContainerPanel": "",
     "TIDY5E.ItemFilters.ClearAll": "",
     "TIDY5E.ItemFilters.CanCast": "",
-    "TIDY5E.LocalizationTestKey": "",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Flags in die Erstellung von Zauberspruchrollen einbeziehen",
         "hint": "Zaubersprüche können manchmal spezielle Daten von anderen Modulen enthalten, die nützlich sein können, um in eine Zauberrolle zu übertragen. Aktivieren, um alle markenbasierten Daten bei der Erstellung in die Schriftrolle zu kopieren."
     },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Verschiebbarer Scrollgriff"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Magischer Gegenstand Akzent Umrandung"
-    },
     "TIDY5E.ItemFilters.CanUse": "",
-    "TIDY5E.Utilities.GMTools": "",
-    "TIDY5E.Utilities.IdentifyAll": "",
-    "TIDY5E.PortraitTitle": "Porträt: {subject}",
-    "TIDY5E.ItemImageTitle": "Gegenstand: {subject}",
-    "TIDY5E.SortMode.ActionListDefault": "",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e Klassischer Gruppenbogen",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e Klassischer Begegnungsbogen",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Charakterbogen",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC-Bogen",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Behälterbogen",
@@ -736,22 +228,13 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Fahrzeugbogen",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Gruppenbogen",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Begegnungsbogen",
-    "TIDY5E.PreviewSheetImageHint": "Linksklick: Vorschaubild",
-    "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Einstellungen",
     "TIDY5E.AddSpecific": "Hinzufügen {name}",
-    "TIDY5E.ExhaustionLevelTooltip": "Stufe der Erschöpfung {level}",
-    "TIDY5E.NoSpecialSenses": "Keine besonderen Sinne",
-    "TIDY5E.Group.NamePlaceholder": "Gruppenname",
-    "TIDY5E.Group.ShowMemberTabInfoPanel": "Infotafel anzeigen",
-    "TIDY5E.Group.HideMemberTabInfoPanel": "Infotafel verbergen",
     "TIDY5E.Group.EmptyMembersTabHint": "Diese Gruppe ist leer. Ziehe eine Figur von der Seitenleiste hinein, um ein Mitglied hinzuzufügen.",
     "TIDY5E.ModuleName": "Tidy 5e Sheets",
     "TIDY5E.StatblockTabName": "Wertekasten",
     "TIDY5E.JournalEntry.NewTitle": "Journal Eintrag {number}",
     "TIDY5E.SheetLock.Empty.Hint": "Beginne, indem du eine Klasse und deine ersten Gegenstände hinzufügst. Dann, verwende das Gegenstands-Menü oder Rechtsklick und wähle „Zu Bogenregistrierkarte hinzufügen“, um sie hier hinzuzufügen.",
     "TIDY5E.ContextMenuActionView": "Ansicht",
-    "TIDY5E.ContextMenuActionPinToAttributes": "An Attribute anheften",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "von Attributen loslösen",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Begrenzte Nutzungen anzeigen",
     "TIDY5E.ContextMenuActionShowQuantity": "Menge anzeigen",
     "TIDY5E.ContextMenuActionSetAsInspirationSource": "Als Inspirationsquelle festlegen",
@@ -762,7 +245,6 @@
     "TIDY5E.EmptyFavorites": "Rechtsklick und Favorisieren, oder ziehe etwas aus deinem Bogen hierher, für den Schnellzugriff.",
     "TIDY5E.Ability.EditScore.label": "Wert bearbeiten",
     "TIDY5E.EmptyTools": "Keine Werkzeugfachkenntnisse.",
-    "TIDY5E.InfoCardInspectHint": "{inspectKey} Inspizieren",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "tabLabel": "Benutzerdefinierte Abschnitte",
         "CustomizedIndicatorLabel": "Benutzerdefiniert",
@@ -775,7 +257,6 @@
     "TIDY5E.Hide": "Ausblenden",
     "TIDY5E.LegendaryLairToolbar": "Legendäre/Hort Toolbar",
     "TIDY5E.SpellbookSections": "Zauberbuchabschnitt",
-    "TIDY5E.UserDefaultPrefix": "Benutzerstandard: {value}",
     "TIDY5E.Group.PrimaryParty.Label": "Primäre Gruppe",
     "TIDY5E.CombatTabName": "Kampf",
     "TIDY5E.ContextMenuActionPin": "oben anpinnen",
@@ -812,13 +293,6 @@
     },
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Aktivitäten"
-    },
-    "TIDY5E.Settings.UseEffectCards": {
-        "name": "Zeige Active Effect Informationskarten",
-        "hint": "Aktivieren, um Informationskarten für aktive Effekte auf allen Figuren und Gegenständen mit aktiven Effekten anzuzeigen."
-    },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "hint": "Drücken Sie diese Taste auf der Tastatur (z. B. die Taste „t“), während Sie eine Infokarte anzeigen, um sie hervorzuheben."
     },
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "name": "Standard Todesrettungswurf",
