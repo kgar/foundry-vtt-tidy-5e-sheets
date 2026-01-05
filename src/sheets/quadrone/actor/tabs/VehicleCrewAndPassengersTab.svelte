@@ -11,8 +11,7 @@
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
   import { CONSTANTS } from 'src/constants';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(getVehicleSheetQuadroneContext());
 
@@ -69,7 +68,7 @@
           {context.system.crew.value.length}
         </span>
         <span class="divider color-text-gold-emphasis">/</span>
-        <TextInput
+        <TextInputQuadrone
           class={[
             'uses-max',
             { uninput: !context.unlocked },
@@ -92,9 +91,7 @@
         aria-label={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
           name: FoundryAdapter.localize('TIDY5E.Vehicle.Member.Crew.Label'),
         })}
-        data-tooltip={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
-          name: FoundryAdapter.localize('TIDY5E.Vehicle.Member.Crew.Label'),
-        })}
+        data-tooltip=""
       >
         <i class="fas fa-user-magnifying-glass"></i>
       </a>
@@ -131,7 +128,7 @@
           {context.system.passengers.value.length}
         </span>
         <span class="divider color-text-gold-emphasis">/</span>
-        <TextInput
+        <TextInputQuadrone
           class={[
             'uses-max',
             { uninput: !context.unlocked },
@@ -156,11 +153,7 @@
             'TIDY5E.Vehicle.Member.Passenger.Label',
           ),
         })}
-        data-tooltip={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
-          name: FoundryAdapter.localize(
-            'TIDY5E.Vehicle.Member.Passenger.Label',
-          ),
-        })}
+        data-tooltip=""
       >
         <i class="fas fa-user-magnifying-glass"></i>
       </a>
@@ -180,7 +173,6 @@
       <button
         type="button"
         class="button button-tertiary"
-        aria-label={localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
         data-action="browseActors"
       >
         <i class="fas fa-plus"></i>
@@ -202,7 +194,6 @@
       <button
         type="button"
         class="button button-tertiary"
-        aria-label={localize('TIDY5E.Vehicle.Passenger.EmptyState')}
         data-action="browseActors"
       >
         <i class="fas fa-plus"></i>
