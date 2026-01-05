@@ -457,7 +457,6 @@
   <!-- Stations and actions -->
   {#if context.unlocked}
     <!-- Stations -->
-    {@const stations = context.system.attributes.actions.stations}
     <div class="list-entry trait-stations trait-horizontal">
       <div class="list-label flexrow">
         <h4 class="font-weight-label">
@@ -466,7 +465,13 @@
         </h4>
       </div>
       <div class="trait-values">
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
+          aria-label={localize(
+            'DND5E.VEHICLE.FIELDS.attributes.actions.stations.label',
+          )}
+          role="button"
+          tabindex="0"
           class={[
             'tidy-table-button tidy-table-toggle',
             { disabled: !context.editable },
@@ -474,18 +479,26 @@
           data-tooltip={localize(
             'DND5E.VEHICLE.FIELDS.attributes.actions.stations.label',
           )}
-          onclick={() =>
+          onclick={async () =>
             context.editable &&
-            context.actor.update({
-              'system.attributes.actions.stations': !stations,
-            })}
+            (await context.actor.update({
+              'system.attributes.actions.stations':
+                !context.system.attributes.actions.stations,
+            }))}
+          onkeydown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              event.currentTarget.click();
+            }
+          }}
         >
           <i
             class={[
               'fa-solid',
               {
-                ['fa-toggle-off']: !stations,
-                ['fa-toggle-large-on enabled']: stations,
+                ['fa-toggle-off']: !context.system.attributes.actions.stations,
+                ['fa-toggle-large-on enabled']:
+                  context.system.attributes.actions.stations,
               },
             ]}
           ></i>
@@ -541,7 +554,9 @@
             placeholder="—"
             selectOnFocus={true}
             disabled={!context.editable}
-            data-tooltip={localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.full.label')}
+            data-tooltip={localize(
+              'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.full.label',
+            )}
           />
           <span class="sep color-text-lighter flexshrink">&lt;</span>
           <NumberInputQuadrone
@@ -554,7 +569,9 @@
             placeholder="—"
             selectOnFocus={true}
             disabled={!context.editable}
-            data-tooltip={localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.mid.label')}
+            data-tooltip={localize(
+              'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.mid.label',
+            )}
           />
           <span class="sep color-text-lighter flexshrink">&lt;</span>
           <NumberInputQuadrone
@@ -567,7 +584,9 @@
             placeholder="—"
             selectOnFocus={true}
             disabled={!context.editable}
-            data-tooltip={localize('DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.min.label')}
+            data-tooltip={localize(
+              'DND5E.VEHICLE.FIELDS.attributes.actions.thresholds.min.label',
+            )}
           />
         </div>
       </div>
