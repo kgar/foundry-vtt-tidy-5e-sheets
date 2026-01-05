@@ -304,8 +304,6 @@
                 <button
                   type="button"
                   class="button button-tertiary"
-                  title={localize('TIDY5E.Vehicle.Equipment.EmptyState')}
-                  aria-label={localize('TIDY5E.Vehicle.Equipment.EmptyState')}
                   onclick={() =>
                     context.document.sheet._addDocument({
                       tabId,
@@ -321,8 +319,6 @@
                 <button
                   type="button"
                   class="button button-tertiary"
-                  title={localize('TIDY5E.Vehicle.Features.EmptyState')}
-                  aria-label={localize('TIDY5E.Vehicle.Features.EmptyState')}
                   onclick={() =>
                     context.document.sheet._addDocument({
                       tabId,
@@ -338,8 +334,6 @@
                 <button
                   type="button"
                   class="button button-tertiary"
-                  title={localize('TIDY5E.Vehicle.Weapons.EmptyState')}
-                  aria-label={localize('TIDY5E.Vehicle.Weapons.EmptyState')}
                   onclick={() =>
                     context.document.sheet._addDocument({
                       tabId,
