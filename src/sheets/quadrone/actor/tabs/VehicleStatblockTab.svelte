@@ -152,6 +152,11 @@
     if (!context.editable || usedActions <= 0) return;
     usedActions = Math.max(0, usedActions - 1);
   }
+
+  function resetActions() {
+    if (!context.editable) return;
+    usedActions = 0;
+  }
 </script>
 
 <!-- <ItemsActionBar
@@ -218,6 +223,18 @@
           <i class="fa-solid fa-hexagon-plus"></i>
         </button>
       </div>
+      {#if context.unlocked}
+        <button
+          type="button"
+          class="button button-icon-only button-borderless flexshrink button-reset-actions"
+          disabled={usedActions <= 0 || !context.editable}
+          onclick={resetActions}
+          aria-label={localize('TIDY5E.Reset')}
+          data-tooltip={localize('TIDY5E.Reset')}
+        >
+          <i class="fas fa-rotate-right"></i>
+        </button>
+      {/if}
     </div>
   </div>
 {/if}
@@ -473,9 +490,11 @@
                     role="button"
                     data-keyboard-focus
                     tabindex="0"
+                    onclick={() => member.actor.sheet.render({ force: true })}
                   >
                     <span class="cell-text">
                       <span class="cell-name">{member.actor.name}</span>
+                      <span class="cell-context">{member.subtitle}</span>
                     </span>
                   </a>
                 </TidyTableCell>

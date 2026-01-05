@@ -206,7 +206,7 @@
 
   /* Vehicle Actions Tracker */
   .npc-score-tracker.vehicle-actions-tracker {
-    margin-bottom: var(--t5e-size-4x);
+    position: relative;
 
     &.tracker-warning {
       .value {
@@ -218,6 +218,12 @@
         border-color: var(--t5e-text-warning);
       }
     }
+  }
+
+  .button-reset-actions {
+    position: absolute;
+    top: calc(50% - 0.9375rem);
+    right: 0;
   }
 
   .spellbook-footer {
