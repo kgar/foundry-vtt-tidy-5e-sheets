@@ -9,7 +9,6 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import PillSwitch from 'src/components/toggles/PillSwitch.svelte';
   import Search from '../shared/Search.svelte';
-  import { preventNewlines } from 'src/actions/prevent-newlines';
   import ItemDescriptions from '../shared/ItemDescriptions.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import ItemName from './parts/header/ItemName.svelte';
@@ -1001,13 +1000,13 @@
       <div class="form-group">
         <label role="presentation"></label>
         <div class="form-fields">
-          <textarea
+          <!-- <textarea
             rows="2"
             value="A tiny ball of bat guano and sulfur"
             class="full-width"
             aria-multiline="false"
             use:preventNewlines
-          ></textarea>
+          ></textarea> -->
         </div>
       </div>
       <div class="form-group">

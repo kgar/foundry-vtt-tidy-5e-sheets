@@ -4,10 +4,7 @@
   import { TidyHooks } from 'src/foundry/TidyHooks';
   import type { Item5e } from 'src/types/item.types';
   import FacilityOrderProgressMeterQuadrone from './FacilityOrderProgressMeterQuadrone.svelte';
-  import {
-    getCharacterSheetContext,
-    getCharacterSheetQuadroneContext,
-  } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
 
   interface Props {
     chosen: ChosenFacilityContext;

@@ -1,15 +1,15 @@
 <script lang="ts">
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinItemContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
   import { coalesce } from 'src/utils/formatting';
   import SpellPip from 'src/components/pips/SpellPip.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -75,7 +75,7 @@
     }
   }
 
-  let context = $derived(getCharacterSheetContext());
+  let context = $derived(getCharacterSheetQuadroneContext());
 
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
@@ -204,7 +204,7 @@
   <div class="pin-details">
     {#if context.unlocked && isEditing}
       <div class="pin-name-container flexrow" title={ctx.document.name}>
-        <TextInput
+        <TextInputQuadrone
           class="pin-name"
           document={ctx.document}
           field="name"
@@ -270,7 +270,7 @@
             <RechargeControl document={ctx.document} field={spentProp} {uses} />
           {:else if pinType === 'limited-uses-recharged'}
             <span class="inline-uses color-text-default charged-text">
-              <TextInput
+              <TextInputQuadrone
                 class={['uninput uses-value', { diminished: value < 1 }]}
                 document={usesDocument}
                 field={spentProp}
@@ -296,7 +296,7 @@
             )}
           {:else if pinType === 'limited-uses'}
             <span class="inline-uses color-text-default">
-              <TextInput
+              <TextInputQuadrone
                 class={['uninput uses-value', { diminished: value < 1 }]}
                 document={usesDocument}
                 field={spentProp}
@@ -308,7 +308,7 @@
               <span class="uses-max">{maxText}</span>
             </span>
           {:else if pinType === 'quantity'}
-            <TextInput
+            <TextInputQuadrone
               class={['uninput uses-value centered', { diminished: value < 1 }]}
               document={ctx.document}
               field={'system.quantity'}

@@ -2,6 +2,7 @@ import type { ActiveEffect5e } from 'src/types/types';
 import { isNil } from './data';
 import { debug, error } from './logging';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class ActiveEffectsHelper {
   static isActiveEffectAppliedToField(document: any, field: string) {
@@ -58,5 +59,32 @@ export class ActiveEffectsHelper {
     }
 
     return FoundryAdapter.localize(`EFFECT.MODE_${entry[0]}`);
+  }
+
+  static addEffect(effectType: string, parent: any) {
+    const isActor = parent instanceof Actor;
+
+    const effectData = {
+      name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
+      icon: isActor ? 'icons/svg/aura.svg' : parent.img,
+      origin: parent.uuid,
+      'duration.rounds': effectType === 'temporary' ? 1 : undefined,
+      disabled: effectType === 'inactive',
+    };
+
+    if (
+      !TidyHooks.tidy5eSheetsPreCreateActiveEffect(
+        parent,
+        effectData,
+        game.user.id
+      )
+    ) {
+      return;
+    }
+
+    return ActiveEffect.implementation.create(effectData, {
+      parent: parent,
+      renderSheet: true,
+    });
   }
 }

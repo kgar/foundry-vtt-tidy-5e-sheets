@@ -20,7 +20,7 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
       return;
     }
 
-    import('./DrakkenheimContaminationTabClassic.less');
+    import('./DrakkenheimContaminationTab.less');
 
     const contaminationTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('DRAKKENHEIM.CONTAMINATION.tab'),
@@ -41,8 +41,8 @@ export class DrakkenheimCoreModuleIntegration implements ModuleIntegrationBase {
     });
 
     api.registerCharacterTab(contaminationTab, {
-      layout: ['classic', 'quadrone'],
+      layout: ['quadrone'],
     });
-    api.registerNpcTab(contaminationTab, { layout: ['classic', 'quadrone'] });
+    api.registerNpcTab(contaminationTab, { layout: ['quadrone'] });
   }
 }

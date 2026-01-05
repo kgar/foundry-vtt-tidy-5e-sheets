@@ -1,10 +1,7 @@
-import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { settings } from 'src/settings/settings.svelte';
-import { warn } from 'src/utils/logging';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import { TidyHooks } from 'src/foundry/TidyHooks';
-import { getActiveEffectContextOptionsQuadrone } from './tidy5e-active-effect-context-menu-quadrone';
+import { warn } from 'src/utils/logging';
 
 export function configureActiveEffectsContextMenu(
   element: HTMLElement,
@@ -25,28 +22,25 @@ export function configureActiveEffectsContextMenu(
     return;
   }
 
-  const isQuadroneSheet = element.closest('.quadrone');
-
-  ui.context.menuItems = isQuadroneSheet
-    ? getActiveEffectContextOptionsQuadrone(effect, app, element)
-    : getActiveEffectContextOptions(effect, app);
+  ui.context.menuItems = getActiveEffectContextOptionsQuadrone(
+    effect,
+    app,
+    element
+  );
   TidyHooks.dnd5eGetActiveEffectContextOptions(effect, ui.context.menuItems);
 }
 
-export function getActiveEffectContextOptions(effect: any, app: any) {
+function getActiveEffectContextOptionsQuadrone(
+  effect: any,
+  app: any,
+  element: HTMLElement
+) {
   const effectParent = effect.parent;
 
   // Assumption: Either the effect belongs to the character or is transferred from an item.
   const actor = effectParent.actor ?? effectParent;
 
-  if (!effectParent?.isOwner || !settings.value.useContextMenu) {
-    return [];
-  }
-
-  if (
-    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
-    !FoundryAdapter.allowCharacterEffectsManagement(actor)
-  ) {
+  if (!effectParent?.isOwner) {
     return [];
   }
 
@@ -55,35 +49,11 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
     app
   );
 
+  const isInFavorites = !!element.closest('.favorites');
+
   const isFav = FoundryAdapter.isEffectFavorited(effect, actor);
-  const favoriteIcon = 'fa-bookmark';
 
   let tidy5eKgarContextOptions: ContextMenuEntry[] = [
-    {
-      name: 'DND5E.ContextMenuActionEdit',
-      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-      callback: () => effect.sheet.render(true),
-    },
-    {
-      name: 'DND5E.ContextMenuActionDuplicate',
-      icon: "<i class='fas fa-copy fa-fw'></i>",
-      callback: () =>
-        effect.clone(
-          {
-            name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-              name: effect.name,
-            }),
-          },
-          { save: true }
-        ),
-      condition: () => canEditEffect(effect),
-    },
-    {
-      name: 'DND5E.ContextMenuActionDelete',
-      icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
-      callback: () => effect.deleteDialog(),
-      condition: () => canEditEffect(effect) && !isConcentrationEffect,
-    },
     {
       name: effect.disabled
         ? 'DND5E.ContextMenuActionEnable'
@@ -103,10 +73,16 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
       group: 'state',
     },
     {
+      name: 'DND5E.ContextMenuActionEdit',
+      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
+      callback: () => effect.sheet.render(true),
+      group: 'common',
+    },
+    {
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: isFav
-        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
-        : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
+        ? `<i class='fa-regular fa-star fa-fw'></i>`
+        : `<i class='fa-solid fa-star fa-fw inactive'></i>`,
       condition: () => 'favorites' in actor.system,
       callback: () => {
         if (!effect) {
@@ -115,7 +91,30 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
         }
         FoundryAdapter.toggleFavoriteEffect(effect);
       },
-      group: 'state',
+      group: 'common',
+    },
+    {
+      name: 'DND5E.ContextMenuActionDuplicate',
+      icon: "<i class='fas fa-copy fa-fw'></i>",
+      callback: () =>
+        effect.clone(
+          {
+            name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+              name: effect.name,
+            }),
+          },
+          { save: true }
+        ),
+      condition: () => !isInFavorites && canEditEffect(effect),
+      group: 'common',
+    },
+    {
+      name: 'DND5E.ContextMenuActionDelete',
+      icon: `<i class="fas fa-trash fa-fw" style='color: var(--t5e-warning-accent-color);'></i>`,
+      callback: () => effect.deleteDialog(),
+      condition: () =>
+        !isInFavorites && canEditEffect(effect) && !isConcentrationEffect,
+      group: 'be-careful',
     },
   ];
 

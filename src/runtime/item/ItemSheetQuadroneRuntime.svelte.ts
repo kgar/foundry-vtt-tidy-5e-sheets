@@ -5,7 +5,7 @@ import type {
 import type { RegisteredContent, RegisteredTab } from '../types';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { CustomContent, Tab } from 'src/types/types';
+import type { CustomContent } from 'src/types/types';
 import { Activities } from 'src/features/activities/activities';
 import ItemActivitiesQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemActivitiesTab.svelte';
 import ItemAdvancementQuadroneTab from 'src/sheets/quadrone/item/tabs/ItemAdvancementTab.svelte';
@@ -48,11 +48,12 @@ import { settings } from 'src/settings/settings.svelte';
 import type {
   ItemTabRegistrationOptions,
   TabEnabledCallbackFunctionOverrideOptions,
-} from 'src/api';
+} from 'src/api/api.types';
 import { VisibilityLevels } from 'src/features/visibility-levels/VisibilityLevels';
 import type { Activity5e } from 'src/foundry/dnd5e.types';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { isNil } from 'src/utils/data';
+import type { RegisteredEquipmentTypeGroup } from './item.types';
 
 export type ItemSheetInfo = {
   component: Component;
@@ -68,6 +69,7 @@ class ItemSheetQuadroneRuntimeImpl {
     TabEnabledCallbackFunctionOverrideOptions[]
   >;
   private _tabIdsWithSubtypeConditions: SvelteSet<string>;
+  private _customItemEquipmentTypeGroups: RegisteredEquipmentTypeGroup[] = [];
 
   constructor(
     nativeTabs: RegisteredTab<ItemSheetQuadroneContext>[],
@@ -312,6 +314,14 @@ class ItemSheetQuadroneRuntimeImpl {
     if (options?.includeAsDefault ?? true) {
       this._sheetMap.get(subtype)?.defaultTabs;
     }
+  }
+
+  registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
+    this._customItemEquipmentTypeGroups.push(group);
+  }
+
+  getCustomEquipmentTypeGroups() {
+    return [...this._customItemEquipmentTypeGroups];
   }
 }
 

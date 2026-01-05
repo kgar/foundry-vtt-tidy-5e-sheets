@@ -1,4 +1,5 @@
-import { TidyFlags, TidyHooks } from 'src/api';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ContextMenuEntry } from 'src/foundry/foundry.types';
 import type { Actor5e } from 'src/types/types';

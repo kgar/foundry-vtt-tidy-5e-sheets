@@ -1,9 +1,9 @@
 <script lang="ts">
-  import TextInput from 'src/components/inputs/TextInput.svelte';
+    import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinActivityContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
@@ -58,7 +58,7 @@
     }
   }
 
-  let context = $derived(getCharacterSheetContext());
+  let context = $derived(getCharacterSheetQuadroneContext());
 
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
@@ -120,7 +120,7 @@
         class="pin-name-container flexrow"
         title="{ctx.document.name} | {ctx.document.item.name}"
       >
-        <TextInput
+        <TextInputQuadrone
           class="pin-name"
           document={ctx.document}
           field="name"
@@ -176,7 +176,7 @@
       <div class="pin-context {ctx.resource}">
         {#if pinType === 'limited-uses'}
           <span class="inline-uses">
-            <TextInput
+            <TextInputQuadrone
               class={['uninput uses-value', { diminished: value < 1 }]}
               document={usesDocument}
               field="uses.spent"
@@ -188,7 +188,7 @@
             <span class="uses-max">{maxText}</span>
           </span>
         {:else if pinType === 'quantity'}
-          <TextInput
+          <TextInputQuadrone
             class={['uninput uses-value centered', { diminished: value < 1 }]}
             document={ctx.document}
             field={'system.quantity'}

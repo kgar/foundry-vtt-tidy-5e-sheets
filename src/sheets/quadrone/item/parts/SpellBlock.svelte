@@ -1,11 +1,11 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext, ItemSheetQuadroneContext } from 'src/types/item.types';
+  import type { ItemSheetQuadroneContext } from 'src/types/item.types';
 
   interface Props {
     fullWidth?: boolean;
-    context: ItemSheetContext | ItemSheetQuadroneContext;
+    context: ItemSheetQuadroneContext;
   }
 
   let { context, fullWidth }: Props = $props();

@@ -22,7 +22,7 @@ export class SebastianCrowesGuideToDrakkenheimModuleIntegration
       return;
     }
 
-    import('./DrakkenheimContaminationTabClassic.less');
+    import('./DrakkenheimContaminationTab.less');
 
     const contaminationTab = new api.models.SvelteTab({
       title: () => FoundryAdapter.localize('DRAKKENHEIM.CONTAMINATION.tab'),
@@ -43,8 +43,8 @@ export class SebastianCrowesGuideToDrakkenheimModuleIntegration
     });
 
     api.registerCharacterTab(contaminationTab, {
-      layout: ['classic', 'quadrone'],
+      layout: ['quadrone'],
     });
-    api.registerNpcTab(contaminationTab, { layout: ['classic', 'quadrone'] });
+    api.registerNpcTab(contaminationTab, { layout: ['quadrone'] });
   }
 }
