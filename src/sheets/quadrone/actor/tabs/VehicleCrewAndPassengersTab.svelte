@@ -71,7 +71,8 @@
         <span class="divider color-text-gold-emphasis">/</span>
         <TextInput
           class={[
-            'uninput uses-max',
+            'uses-max',
+            { uninput: !context.unlocked },
             { diminished: context.system.crew.max < 1 },
           ]}
           document={context.document}
@@ -132,7 +133,8 @@
         <span class="divider color-text-gold-emphasis">/</span>
         <TextInput
           class={[
-            'uninput uses-max',
+            'uses-max',
+            { uninput: !context.unlocked },
             { diminished: context.system.passengers.max < 1 },
           ]}
           document={context.document}

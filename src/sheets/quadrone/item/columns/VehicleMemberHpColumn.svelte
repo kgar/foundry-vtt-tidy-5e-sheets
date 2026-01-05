@@ -5,15 +5,18 @@
   import type {
     CrewMemberContext,
     PassengerMemberContext,
+    DraftAnimalContext,
   } from 'src/types/types';
 
   let {
     rowDocument,
     rowContext,
-  }: ColumnCellProps<any, CrewMemberContext | PassengerMemberContext> =
-    $props();
+  }: ColumnCellProps<
+    any,
+    CrewMemberContext | PassengerMemberContext | DraftAnimalContext
+  > = $props();
 </script>
 
-<span class="hp-value font-label-large color-text-default"
+<span class="hp-value font-default-medium color-text-default"
   >{FoundryAdapter.formatCr(rowDocument.system.attributes.hp.max)}</span
 >

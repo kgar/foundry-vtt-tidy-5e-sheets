@@ -5,17 +5,20 @@
   import type {
     CrewMemberContext,
     PassengerMemberContext,
+    DraftAnimalContext,
   } from 'src/types/types';
 
   let {
     rowDocument,
     rowContext,
-  }: ColumnCellProps<any, CrewMemberContext | PassengerMemberContext> =
-    $props();
+  }: ColumnCellProps<
+    any,
+    CrewMemberContext | PassengerMemberContext | DraftAnimalContext
+  > = $props();
 </script>
 
 {#if rowDocument.type === CONSTANTS.SHEET_TYPE_NPC}
-  <span class="cr-value font-label-large color-text-default"
+  <span class="cr-value font-default-medium color-text-default"
     >{FoundryAdapter.formatCr(rowDocument.system.details.cr)}</span
   >
 {/if}

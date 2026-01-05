@@ -85,6 +85,14 @@
       gap: 0.25rem;
     }
 
+    .tidy-table-toggle {
+      font-size: var(--font-size-16);
+
+      i.enabled {
+        color: var(--t5e-theme-color-highlight);
+      }
+    }
+
 
     .skills,
     .tools {
@@ -175,9 +183,12 @@
         padding-block-start: 0.625rem;
       }
 
-      .inline-hp,
-      .inline-uses {
-        margin-bottom: -0.25rem;
+      .tidy-table-cell {
+
+        .inline-hp,
+        .inline-uses {
+          margin-bottom: -0.25rem;
+        }
       }
     }
 
@@ -206,7 +217,7 @@
 
   /* Vehicle Actions Tracker */
   .npc-score-tracker.vehicle-actions-tracker {
-    margin-bottom: var(--t5e-size-4x);
+    position: relative;
 
     &.tracker-warning {
       .value {
@@ -218,6 +229,12 @@
         border-color: var(--t5e-text-warning);
       }
     }
+  }
+
+  .button-reset-actions {
+    position: absolute;
+    top: calc(50% - 0.9375rem);
+    right: 0;
   }
 
   .spellbook-footer {
