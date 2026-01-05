@@ -309,7 +309,6 @@
                   onclick={() =>
                     context.document.sheet._addDocument({
                       tabId,
-                      creationItemTypes: [CONSTANTS.ITEM_TYPE_EQUIPMENT],
                       data: section.dataset
                     })}
                 >
