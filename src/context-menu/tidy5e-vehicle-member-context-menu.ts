@@ -35,7 +35,7 @@ function getVehicleMemberContextOptionsQuadrone(
 
   let options: ContextMenuEntry[] = vehicleItemId
     ? getVehicleItemMemberOptions(element, app, vehicleItemId)
-    : area === 'crew'
+    : area === 'crew' || area === 'passengers'
       ? getCrewMemberOptions(element, app)
       : area === 'draft'
         ? getDraftMemberOptions(element, app)

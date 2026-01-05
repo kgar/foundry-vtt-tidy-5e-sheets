@@ -517,15 +517,15 @@ export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
-      options?: { includeInlineToggles?: boolean };
-    }
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+    options?: { includeInlineToggles?: boolean };
+  }
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
-      options?: { includeInlineToggles?: boolean };
-    };
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+    options?: { includeInlineToggles?: boolean };
+  };
 
 type ActorSave = {
   isConcentration: boolean;
@@ -1316,7 +1316,8 @@ export type EncounterSheetQuadroneContext = {
 
 export type DraftAnimalContext = {
   actor: Actor5e;
-  // TODO: Any calculations / subtitle material that is easier done in data context prep
+  subtitle: string;
+  quantity: number;
 };
 
 export type DraftAnimalSection = {

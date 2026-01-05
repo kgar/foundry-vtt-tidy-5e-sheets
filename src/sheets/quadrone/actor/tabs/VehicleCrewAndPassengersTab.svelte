@@ -70,12 +70,14 @@
         <span class="divider color-text-gold-emphasis">/</span>
         <TextInputQuadrone
           class={[
-            'uninput uses-max',
+            'uses-max',
+            { uninput: !context.unlocked },
             { diminished: context.system.crew.max < 1 },
           ]}
           document={context.document}
           field="system.crew.max"
           value={context.system.crew.max}
+          placeholder="—"
         />
       </span>
     </div>
@@ -87,11 +89,9 @@
         class="button button-icon-only button-borderless highlight-on-hover"
         data-action="browseActors"
         aria-label={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
-          name: FoundryAdapter.localize('TIDY5E.Vehicle.Member.Crew.Label'),
+          name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
         })}
-        data-tooltip={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
-          name: FoundryAdapter.localize('TIDY5E.Vehicle.Member.Crew.Label'),
-        })}
+        data-tooltip=""
       >
         <i class="fas fa-user-magnifying-glass"></i>
       </a>
@@ -130,12 +130,14 @@
         <span class="divider color-text-gold-emphasis">/</span>
         <TextInputQuadrone
           class={[
-            'uninput uses-max',
+            'uses-max',
+            { uninput: !context.unlocked },
             { diminished: context.system.passengers.max < 1 },
           ]}
           document={context.document}
           field="system.passengers.max"
           value={context.system.passengers.max}
+          placeholder="—"
         />
       </span>
     </div>
@@ -151,11 +153,7 @@
             'TIDY5E.Vehicle.Member.Passenger.Label',
           ),
         })}
-        data-tooltip={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
-          name: FoundryAdapter.localize(
-            'TIDY5E.Vehicle.Member.Passenger.Label',
-          ),
-        })}
+        data-tooltip=""
       >
         <i class="fas fa-user-magnifying-glass"></i>
       </a>
@@ -175,8 +173,6 @@
       <button
         type="button"
         class="button button-tertiary"
-        title={localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
-        aria-label={localize('TIDY5E.Vehicle.Unassigned.EmptyState')}
         data-action="browseActors"
       >
         <i class="fas fa-plus"></i>
@@ -198,8 +194,6 @@
       <button
         type="button"
         class="button button-tertiary"
-        title={localize('TIDY5E.Vehicle.Passenger.EmptyState')}
-        aria-label={localize('TIDY5E.Vehicle.Passenger.EmptyState')}
         data-action="browseActors"
       >
         <i class="fas fa-plus"></i>

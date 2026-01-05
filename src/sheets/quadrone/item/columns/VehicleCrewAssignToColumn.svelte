@@ -27,7 +27,11 @@
 </script>
 
 {#if mountableItems.length}
-  <select bind:value={uuid} onchange={handleChange}>
+  <select
+    bind:value={uuid}
+    onchange={handleChange}
+    class={[{ uninput: !context.unlocked }]}
+  >
     <option value="">{localize('CONTROLS.CommonSelect')}</option>
     {#each mountableItems as item}
       <option value={item.uuid}>

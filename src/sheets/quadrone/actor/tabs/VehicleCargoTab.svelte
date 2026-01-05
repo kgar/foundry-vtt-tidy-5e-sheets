@@ -62,10 +62,11 @@
 
 <div class="inventory-content">
   <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
-  
+
   <div class="encumbrance-container pills flexrow">
     <div class="pill flexshrink">
-      <span class="text-normal">{localize(
+      <span class="text-normal"
+        >{localize(
           'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
         )}
       </span>
@@ -73,7 +74,9 @@
         {context.system.attributes.capacity.cargo.value}
       </span>
       <span class="text-normal">
-        {CONFIG.DND5E.weightUnits[context.system.attributes.capacity.cargo.units]?.abbreviation}
+        {CONFIG.DND5E.weightUnits[
+          context.system.attributes.capacity.cargo.units
+        ]?.abbreviation}
       </span>
     </div>
     <ActorEncumbranceBar actor={context.actor} />
@@ -83,7 +86,7 @@
     <SheetPins />
   {/if}
 
-    {#if context.showContainerPanel && !!context.containerPanelItems.length}
+  {#if context.showContainerPanel && !!context.containerPanelItems.length}
     <ContainerPanel
       {searchCriteria}
       containerPanelItems={context.containerPanelItems}
@@ -99,8 +102,8 @@
     sheetDocument={context.actor}
     root={true}
   />
+</div>
 
-  <div class="vehicle-footer">
-    <ActorInventoryFooter useAttunement={false} />
-  </div>
+<div class="vehicle-footer">
+  <ActorInventoryFooter useAttunement={false} />
 </div>

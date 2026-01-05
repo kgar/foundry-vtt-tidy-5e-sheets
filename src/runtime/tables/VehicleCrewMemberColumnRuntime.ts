@@ -97,11 +97,8 @@ class VehicleMemberColumnRuntimeImpl extends TableColumnRuntimeBase {
       [CONSTANTS.SHEET_TYPE_VEHICLE]: {
         [CONSTANTS.TAB_STATBLOCK]: {
           [CONSTANTS.COLUMN_SPEC_SECTION_KEY_DEFAULT]: {
-            draftAnimalTestColumn: {
-              ...draftAnimalTestColumn,
-              order: 900,
-              priority: 900,
-            },
+            cr: { ...crColumn, priority: 10, order: 10 },
+            hp: { ...hpColumn, priority: 20, order: 20 },
             actions: {
               ...defaultItemColumns.actions,
               order: 1000,
