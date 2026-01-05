@@ -89,7 +89,7 @@
         class="button button-icon-only button-borderless highlight-on-hover"
         data-action="browseActors"
         aria-label={FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
-          name: FoundryAdapter.localize('TIDY5E.Vehicle.Member.Crew.Label'),
+          name: FoundryAdapter.localize('DND5E.VEHICLE.Crew.Label'),
         })}
         data-tooltip=""
       >
