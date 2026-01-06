@@ -978,8 +978,8 @@
     "TIDY5E.InspirationRemove": "Вилучити натхнення",
     "TIDY5E.LegendaryAbbr": "LA",
     "TIDY5E.LairAbbr": "Лігво",
-    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Тяглова тварина",
-    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Тяглові тварини",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Тяглова тварина / Робоча істота",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Тяглові тварини / Робочі істоти",
     "TIDY5E.AddCustom": "Додати користувацький {name}",
     "TIDY5E.CompendiumBrowser": "Додати {name} з Компендіуму",
     "TIDY5E.SheetMode.Edit": "Перейти в режим відтворення",
@@ -996,8 +996,11 @@
     "TIDY5E.Vehicle.Member.AssignTo.Label": "Призначити",
     "TIDY5E.Vehicle.Member.Assigned.Label": "Призначено",
     "TIDY5E.Vehicle.Repair.Label": "Ремонт",
-    "TIDY5E.Vehicle.Equipment.EmptyState": "Перетягніть обладнання сюди або натисніть, щоб додати його зі списку. Після цього екіпаж можна буде призначити до обладнання транспортного засобу.",
+    "TIDY5E.Vehicle.Equipment.EmptyState": "Перетягніть обладнання сюди або натисніть, щоб додати. Після цього екіпаж можна буде призначити до обладнання транспортного засобу.",
     "TIDY5E.Vehicle.Equipment.HP.Label": "Середня кількість кінських сил",
-    "TIDY5E.Vehicle.Unassigned.EmptyState": "Перетягніть екіпаж сюди або натисніть, щоб додати зі збірника. Екіпаж потім можна призначити до обладнання або функцій транспортного засобу.",
-    "TIDY5E.Vehicle.Passenger.EmptyState": "Перетягніть пасажирів сюди або натисніть, щоб додати їх зі списку."
+    "TIDY5E.Vehicle.Unassigned.EmptyState": "Перетягніть екіпаж сюди або натисніть, щоб додати. Екіпаж потім можна призначити до обладнання або функцій транспортного засобу.",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Перетягніть пасажирів сюди або натисніть, щоб додати.",
+    "TIDY5E.Vehicle.Features.EmptyState": "Перетягніть сюди елементи або натисніть, щоб додати.",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "Перетягніть зброю сюди або натисніть, щоб додати.",
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Перетягніть сюди тяглових тварин або робочих істот або натисніть, щоб додати."
 }
