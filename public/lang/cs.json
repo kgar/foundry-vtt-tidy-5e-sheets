@@ -1,6 +1,6 @@
 {
     "TIDY5E.Tidy5eCharacterSheetClassic": "Klasický deník postavy Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Klasický deník NP Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetClassic": "Klasický deník NPC Tidy 5e",
     "TIDY5E.Tidy5eItemSheetClassic": "Klasický deník položky Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetClassic": "Klasický deník dopravního prostředku Tidy 5e",
     "TIDY5E.PlayerName": "Jméno hráče",
@@ -764,7 +764,7 @@
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
     "TIDY5E.PreviewSheetImageHint": "Levé tlačítko myši: Náhled obrázku",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato volba uzamčení listu.",
-    "TIDY5E.ModuleName": "Deníky Tidy 5E",
+    "TIDY5E.ModuleName": "Deníky Tidy 5e",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "LimitToSpecificSheetsLabel": "Omezení zobrazených sekcí v konkrétním deníku",
         "ShowWhenEmptyTooltip": "Všechny karty s tabulkovými položkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když v sekci nejsou žádné položky. Sekce se vždy zobrazí, i když je prázdná.",
@@ -831,7 +831,7 @@
     "TIDY5E.Utilities.SpellPips": "Označení kouzel",
     "TIDY5E.Utilities.SpellValueMax": "Hodnota kouzla/Max",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Deník postavy Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetQuadrone": "Deník NP Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Deník NPC Tidy 5e",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Deník kontejneru Tidy 5e",
     "TIDY5E.Visible": "Viditelné",
     "TIDY5E.DisplayOptions.Title": "Zobrazit možnosti",
@@ -894,7 +894,7 @@
     "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Zobrazit legendární akce a akce doupěte v záložce statistik",
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Zahrnout sekci Kouzla do záložky statistik",
     "TIDY5E.UseSpecificDefaultValue.Label": "Použít výchozí ({value})",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí (NP) Tidy 5e",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "Klasický deník střetnutí Tidy 5e",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Deník střetnutí (NP) Tidy 5e",
     "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
         "name": "Použít zabezpečení členů skupiny",
