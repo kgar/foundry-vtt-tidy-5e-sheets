@@ -17,10 +17,10 @@
   async function handleChange(
     event: Event & { currentTarget: EventTarget & HTMLSelectElement },
   ) {
-    const item = await fromUuid(uuid);
     const src =
       event.currentTarget.closest('[data-area]')?.getAttribute('data-area') ??
       'crew';
+    const item = await fromUuid(uuid);
     await context.sheet._assignCrew(rowDocument, item, { src });
     uuid = '';
   }
