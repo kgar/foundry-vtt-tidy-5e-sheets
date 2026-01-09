@@ -141,7 +141,7 @@ An alternate view of items that brings more functionality to the surface.
 | Equip, attune, identify from the sidebar | Prominent rarity/spellcasting mode theming |
 | Container contents as powerful as Character inventory | Player identification optionally hidden |
 | Fully themed descriptions including statblocks | Feat origin source selection |
-| Resizable and responsive sheets | |
+| Resizable and responsive sheets | Quick temp and max HP editing |
 
 &nbsp;
 
@@ -159,19 +159,23 @@ An alternate view of items that brings more functionality to the surface.
 | Detailed tables with drag and drop, sorting, and filtering | Custom sections |
 | Statblock tab with all traits, actions, and spells in one place | NPC journal |
 | HP and vitals in one spot similar to character sheets | Roll HP |
+| NPC sheet theming | |
 
 &nbsp;
 
 ## Vehicle Sheets
 
-![Vehicle Sheet](readme-assets/vehicle-sheet.png)
+![Vehicle Sheet](readme-assets/t5e-vehicle-hero.webp)
+![Vehicle Sheet](readme-assets/t5e-vehicle-edit.webp)
 
 ### What's unique about Tidy's Vehicle sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
-| Sheets closely aligned with character sheet functionality | Combined attributes and features |
-| Detailed tables with drag and drop, sorting, and filtering |  |
+| Sheets closely aligned with character sheet functionality | Vehicle sheet theming |
+| Drag and drop organization, including crew, passengers, and working creatures | Easy crew assignment |
+| Structure mirroring all other sheets | Improved speeds display |
+
 
 &nbsp;
 
