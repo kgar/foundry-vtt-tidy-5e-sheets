@@ -970,7 +970,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       value: value.sort((a, b) => {
         return (
           (b.cr ?? 0) - (a.cr ?? 0) ||
-          a.quantity - b.quantity ||
           a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
         );
       }),
