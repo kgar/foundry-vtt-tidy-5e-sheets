@@ -25,6 +25,7 @@
   }
 </script>
 
+{#if context.unlocked || hpValue > 0 || item.system.hp?.max == 0 }
 <div
   class="meter meter-small progress hit-points"
   style="--bar-percentage: {hpPct.toFixed(0)}%"
@@ -41,3 +42,4 @@
   <span class="divider color-text-gold flexshrink">/</span>
   <span class="uses-max hp-max color-text-lighter">{effectiveMaxHp}</span>
 </div>
+{/if}

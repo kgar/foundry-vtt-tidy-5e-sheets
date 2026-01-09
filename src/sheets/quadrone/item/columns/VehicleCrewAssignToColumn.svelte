@@ -30,7 +30,7 @@
   <select
     bind:value={uuid}
     onchange={handleChange}
-    class={[{ uninput: !context.unlocked }]}
+    class={[{ 'select-diminished': !context.unlocked }]}
   >
     <option value="">{localize('CONTROLS.CommonSelect')}</option>
     {#each mountableItems as item}

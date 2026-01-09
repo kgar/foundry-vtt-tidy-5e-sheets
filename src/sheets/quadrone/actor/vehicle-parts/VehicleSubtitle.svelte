@@ -1,8 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getVehicleSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import type { ActorSpeedSenseEntryContext } from 'src/types/types';
-  import type { ClassValue } from 'svelte/elements';
   import { isNil } from 'src/utils/data';
 
   let context = $derived(getVehicleSheetQuadroneContext());
@@ -19,23 +17,32 @@
     const capitalizedType = type.charAt(0).toUpperCase() + type.slice(1);
     return localize(`DND5E.VEHICLE.Type.${capitalizedType}.label`);
   });
-</script>
 
-{#snippet speedSenseSummary(
-  speed: ActorSpeedSenseEntryContext,
-  clsx?: ClassValue,
-)}
-  <span class={clsx}>
-    <span class="color-text-gold font-label-medium">{speed.label}</span>
-    <span class="color-text-default font-data-medium">{speed.value}</span>
-    <span class="color-text-lighter font-label-medium">{speed.units}</span>
-    {#if speed.parenthetical}
-      <span class="color-text-gold font-label-medium"
-        >({speed.parenthetical})</span
-      >
-    {/if}
-  </span>
-{/snippet}
+  // Determine the appropriate travel speed based on vehicle type
+  let relevantTravelSpeed = $derived.by(() => {
+    const vehicleType = context.system.details.type?.toLowerCase();
+    const travelSpeeds = context.travelSpeeds.travelSpeeds;
+
+    // Try to match vehicle type to travel speed type
+    if (vehicleType) {
+      const matchingSpeed = travelSpeeds.find(
+        (speed) => speed.key === vehicleType,
+      );
+      if (matchingSpeed) {
+        return matchingSpeed;
+      }
+    }
+
+    // Fallback: prefer land, then first available
+    const landSpeed = travelSpeeds.find((speed) => speed.key === 'land');
+    if (landSpeed) {
+      return landSpeed;
+    }
+
+    // Return first available travel speed or the currentSpeed as ultimate fallback
+    return travelSpeeds[0] ?? context.travelSpeeds.currentSpeed;
+  });
+</script>
 
 <div
   class="actor-details-subtitle-row"
@@ -50,17 +57,17 @@
         {vehicleTypeLabel ?? context.system.details.type}
       </span>
     </span>
-    {#if context.travelSpeeds.currentSpeed}
+    {#if relevantTravelSpeed}
       <div class="divider-dot"></div>
       <span class="vehicle-travel-pace">
         <span class="font-label-medium color-text-gold">
-          {context.travelSpeeds.currentSpeed.label}
+          {relevantTravelSpeed.label}
         </span>
         <span class="font-data-medium color-text-default">
-          {context.travelSpeeds.currentSpeed.valueDay}
+          {relevantTravelSpeed.valueDay}
         </span>
         <span class="font-label-medium color-text-lighter">
-          {context.travelSpeeds.currentSpeed.unitsDay}
+          {relevantTravelSpeed.unitsDay}
         </span>
       </span>
     {/if}

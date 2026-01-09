@@ -205,6 +205,26 @@
         opacity: 1;
       }
     }
+    
+
+    .tidy-table-cell[data-tidy-column-key="assigned"] {
+      justify-content: flex-start;
+    }
+
+    
+    .tidy-table-cell[data-tidy-column-key="assignTo"] { 
+      .select-diminished {
+        border: none;
+        background-color: var(--t5e-component-card-darker);
+
+        &:hover,
+        &:focus-visible,
+        &:active {
+          box-shadow: none;
+          outline: none;
+        }
+      }
+    }
   }
 
   .crew-warning {
