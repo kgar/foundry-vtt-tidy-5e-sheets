@@ -16,6 +16,10 @@
 
   let background = $derived(context.background);
 
+  let backgroundItem = $derived(
+    background ? context.actor.items.get(background.id) : null,
+  );
+
   const localize = FoundryAdapter.localize;
 
   function openSheet(mode: number) {
@@ -47,74 +51,80 @@
       </h4>
     </div>
     <div class="list-content">
-      <div class="list-values trait-item">
-        {#if background}
+      {#if background}
+      <!-- svelte-ignore a11y_missing_attribute -->
+      <a
+        role="button"
+        tabindex="0"
+        aria-label={localize('DND5E.DescriptionView', {
+          description: localize('TYPES.Item.background'),
+        })}
+        data-keyboard-focus
+        class="list-values trait-item"
+        onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+        onmousedown={(event) =>
+          FoundryAdapter.editOnMiddleClick(event, backgroundItem)}
+        onkeydown={(e) =>
+          (e.key === 'Enter' || e.key === ' ') &&
+          openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+      >
           <!-- svelte-ignore a11y_missing_attribute -->
-          <a
-            role="button"
-            tabindex="0"
-            aria-label="View {localize('TYPES.Item.background')}"
-            class="item-image-link"
-            data-keyboard-focus
-            onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-            onkeydown={(ev) =>
-              ev.key === 'Enter' && openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-          >
+          <span class="item-image-link">
             <img
               src={background.img}
               alt={background.name}
               class="item-image flex0"
             />
-          </a>
+          </span>
           <span class="font-weight-label">
             {background.name}
           </span>
-        {:else if context.unlocked || !background}
-          <button
-            aria-label={localize('TIDY5E.CompendiumBrowser', {
-              name: localize('TYPES.Item.background'),
-            })}
-            type="button"
-            class="button button-primary"
-            data-tooltip
-            onclick={(ev) =>
-              context.actor.sheet.findItem({
-                event: ev,
-                type: 'background',
+        </a>
+        {#if context.unlocked}
+          <div class="list-controls">
+            <button
+              aria-label={localize('DND5E.DescriptionEdit', {
+                description: localize('TYPES.Item.background'),
               })}
-          >
-            <i class="fa-solid fa-book-atlas"></i>
-            {localize('DND5E.BackgroundAdd')}
-          </button>
-          <button
-            aria-label={localize('TIDY5E.AddCustom', {
-              name: localize('TYPES.Item.background'),
-            })}
-            type="button"
-            class="button button-secondary"
-            onclick={(ev) =>
-              FoundryAdapter.createItem({ type: 'background' }, context.actor)}
-          >
-            {localize('TIDY5E.AddCustom', {
-              name: localize('TYPES.Item.background'),
-            })}
-          </button>
+              type="button"
+              class="button button-borderless button-icon-only"
+              data-tooltip
+              onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
+            >
+              <i class="fa-solid fa-edit"></i>
+            </button>
+          </div>
         {/if}
-      </div>
-      {#if context.unlocked && background}
-        <div class="list-controls">
-          <button
-            aria-label={localize('DND5E.DescriptionEdit', {
-              description: localize('TYPES.Item.background'),
+      {:else}
+        <button
+          aria-label={localize('TIDY5E.CompendiumBrowser', {
+            name: localize('TYPES.Item.background'),
+          })}
+          type="button"
+          class="button button-primary"
+          data-tooltip
+          onclick={(ev) =>
+            context.actor.sheet.findItem({
+              event: ev,
+              type: 'background',
             })}
-            type="button"
-            class="button button-borderless button-icon-only"
-            data-tooltip
-            onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
-          >
-            <i class="fa-solid fa-edit"></i>
-          </button>
-        </div>
+        >
+          <i class="fa-solid fa-book-atlas"></i>
+          {localize('DND5E.BackgroundAdd')}
+        </button>
+        <button
+          aria-label={localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.background'),
+          })}
+          type="button"
+          class="button button-secondary"
+          onclick={(ev) =>
+            FoundryAdapter.createItem({ type: 'background' }, context.actor)}
+        >
+          {localize('TIDY5E.AddCustom', {
+            name: localize('TYPES.Item.background'),
+          })}
+        </button>
       {/if}
     </div>
   </div>

@@ -2,6 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { isUserInteractable } from 'src/utils/element';
   import { EventHelper } from 'src/utils/events';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -9,6 +10,10 @@
   const localize = FoundryAdapter.localize;
 
   let species = $derived(context.species?.id ? context.species : null);
+
+  let speciesItem = $derived(
+    species ? context.actor.items.get(species.id) : null,
+  );
 
   function openSheet(mode: number) {
     if (species) {
@@ -39,57 +44,31 @@
     </h4>
   </div>
   <div class="list-content">
-    <div class="list-values trait-item">
-      {#if species}
-        <!-- svelte-ignore a11y_missing_attribute -->
-        <a
-          role="button"
-          tabindex="0"
-          aria-label="View {localize('TYPES.Item.race')}"
-          class="item-image-link"
-          data-keyboard-focus
-          onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-          onkeydown={(ev) =>
-            ev.key === 'Enter' && openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-        >
+    {#if species}
+    <!-- svelte-ignore a11y_missing_attribute -->
+    <a
+      role="button"
+      tabindex="0"
+      aria-label={localize('DND5E.DescriptionView', {
+        description: localize('TYPES.Item.race'),
+      })}
+      data-keyboard-focus
+      class="list-values trait-item"
+      onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+      onmousedown={(event) =>
+        FoundryAdapter.editOnMiddleClick(event, speciesItem)}
+      onkeydown={(e) =>
+        (e.key === 'Enter' || e.key === ' ') &&
+        openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+    >
+        <span class="item-image-link">
           <img src={species.img} alt={species.name} class="item-image flex0" />
-        </a>
+        </span>
         <span class="font-weight-label trait-name">
           {species.name}
         </span>
-      {:else if context.unlocked || !species}
-        <button
-          aria-label={localize('TIDY5E.CompendiumBrowser', {
-            name: localize('TYPES.Item.race'),
-          })}
-          type="button"
-          class="button button-primary"
-          data-tooltip
-          onclick={(ev) =>
-            context.actor.sheet.findItem({
-              event: ev,
-              type: 'race',
-            })}
-        >
-          <i class="fa-solid fa-book-atlas"></i>
-          {localize('DND5E.Species.Add')}
-        </button>
-        <button
-          aria-label={localize('TIDY5E.AddCustom', {
-            name: localize('TYPES.Item.race'),
-          })}
-          type="button"
-          class="button button-secondary"
-          onclick={(ev) =>
-            FoundryAdapter.createItem({ type: 'race' }, context.actor)}
-        >
-          {localize('TIDY5E.AddCustom', {
-            name: localize('TYPES.Item.race'),
-          })}
-        </button>
-      {/if}
-    </div>
-    {#if context.unlocked && species}
+    </a>
+    {#if context.unlocked}
       <div class="list-controls">
         <button
           aria-label={localize('DND5E.DescriptionEdit', {
@@ -112,6 +91,37 @@
         </button>
       </div>
     {/if}
+    {:else}
+      <button
+        aria-label={localize('TIDY5E.CompendiumBrowser', {
+          name: localize('TYPES.Item.race'),
+        })}
+        type="button"
+        class="button button-primary"
+        data-tooltip
+        onclick={(ev) =>
+          context.actor.sheet.findItem({
+            event: ev,
+            type: 'race',
+          })}
+      >
+        <i class="fa-solid fa-book-atlas"></i>
+        {localize('DND5E.Species.Add')}
+      </button>
+      <button
+        aria-label={localize('TIDY5E.AddCustom', {
+          name: localize('TYPES.Item.race'),
+        })}
+        type="button"
+        class="button button-secondary"
+        onclick={(ev) =>
+          FoundryAdapter.createItem({ type: 'race' }, context.actor)}
+      >
+        {localize('TIDY5E.AddCustom', {
+          name: localize('TYPES.Item.race'),
+        })}
+      </button>
+    {/if}
   </div>
 </div>
 
@@ -123,7 +133,22 @@
     </h4>
   </div>
   <div class="list-content">
-    <div class="list-values trait-item">
+    <!-- svelte-ignore a11y_missing_attribute -->
+    <a
+      class="list-values trait-item {species ? '' : 'no-hover'}"
+      role="button"
+      tabindex="0"
+      aria-label={localize('DND5E.DescriptionView', {
+        description: localize('DND5E.CreatureType'),
+      })}
+      data-keyboard-focus
+      onclick={() => {if (species) FoundryAdapter.renderCreatureTypeConfig(context.actor);}}
+      onkeydown={(e) => { 
+        if (species) {
+          (e.key === 'Enter' || e.key === ' ') &&
+          FoundryAdapter.renderCreatureTypeConfig(context.actor)}
+        }}
+      >
       {#if species}
         <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right"></i>
       {/if}
@@ -135,7 +160,7 @@
           {context.creatureType.subtitle}
         </span>
       {/if}
-    </div>
+    </a>
     {#if context.unlocked && species}
       <div class="list-controls">
         <button
