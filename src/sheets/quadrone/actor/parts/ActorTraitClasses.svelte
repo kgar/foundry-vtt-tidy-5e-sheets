@@ -3,6 +3,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import LevelUpDropdown from 'src/sheets/classic/actor/LevelUpDropdown.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { isUserInteractable } from 'src/utils/element';
   import { EventHelper } from 'src/utils/events';
   import type {
     ActorClassEntryContext,
@@ -157,31 +158,40 @@
   <div class="list-content">
     <div class="class-item">
       <div class="flexrow">
-        <div class="list-values trait-class trait-item">
+        <!-- svelte-ignore a11y_missing_attribute -->
+        <a
+          role="button"
+          tabindex="0"
+          aria-label={localize('DND5E.DescriptionView', {
+            description: localize('TYPES.Item.class'),
+          })}
+          data-keyboard-focus
+          class="list-values trait-class trait-item"
+          onclick={() =>
+            cls?.item.sheet.render({
+              force: true,
+              mode: CONSTANTS.SHEET_MODE_PLAY,
+            })}
+          onmousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event, cls?.item)}
+          onkeydown={(e) =>
+            (e.key === 'Enter' || e.key === ' ') &&
+            cls?.item.sheet.render({
+              force: true,
+              mode: CONSTANTS.SHEET_MODE_PLAY,
+            })}
+        >
           {#if cls}
             <!-- svelte-ignore a11y_missing_attribute -->
-            <a
-              role="button"
-              tabindex="0"
+            <span
               aria-label={localize('DND5E.DescriptionView', {
                 description: localize('TYPES.Item.class'),
               })}
               class="item-image-link"
-              data-keyboard-focus
-              onclick={() =>
-                cls.item.sheet.render({
-                  force: true,
-                  mode: CONSTANTS.SHEET_MODE_PLAY,
-                })}
-              onkeydown={(e) =>
-                e.key === 'Enter' &&
-                cls.item.sheet.render({
-                  force: true,
-                  mode: CONSTANTS.SHEET_MODE_PLAY,
-                })}
+
             >
               <img src={cls.img} alt={cls.name} class="item-image flex0" />
-            </a>
+            </span>
             <span class="trait-name font-label-medium">
               {cls.name}
             </span>
@@ -203,7 +213,7 @@
               ></i>
             {/if}
           {/if}
-        </div>
+        </a>
         {#if context.unlocked && cls}
           <div class="list-controls">
             <button
@@ -294,7 +304,28 @@
   >
     <div class="list-label"></div>
     <div class="list-content">
-      <div class="list-values">
+      <div
+        class="list-values"
+        onclick={(event) =>
+          event.target instanceof HTMLElement &&
+          !isUserInteractable(event.target) &&
+          subclass.sheet.render({
+            force: true,
+            mode: CONSTANTS.SHEET_MODE_PLAY,
+          })}
+        onmousedown={(event) => {
+          if (
+            event.button === CONSTANTS.MOUSE_BUTTON_AUXILIARY &&
+            subclass.sheet.isEditable
+          ) {
+            event.preventDefault();
+            subclass.sheet.render({
+              force: true,
+              mode: CONSTANTS.SHEET_MODE_EDIT,
+            });
+          }
+        }}
+      >
         {#if !orphaned}
           <i
             class="sub-entry-icon fa-solid fa-arrow-turn-down-right color-text-lighter"
@@ -312,11 +343,6 @@
           role="button"
           tabindex="0"
           data-keyboard-focus
-          onclick={() =>
-            subclass.sheet.render({
-              force: true,
-              mode: CONSTANTS.SHEET_MODE_PLAY,
-            })}
           onkeydown={(e) =>
             e.key === 'Enter' &&
             subclass.sheet.render({
