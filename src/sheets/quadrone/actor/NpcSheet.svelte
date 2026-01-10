@@ -15,7 +15,7 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { untrack } from 'svelte';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
-  
+
   let context = $derived(getNpcSheetQuadroneContext());
 
   let appId = $derived(context.actor.uuid.slugify());
@@ -282,8 +282,8 @@
                   inputmode="numeric"
                   placeholder="+{localize('DND5E.Max')}"
                   class="max-hp uninput centered"
+                  data-tooltip="DND5E.HitPointsTempMax"
                   aria-label={localize('DND5E.HitPointsTempMax')}
-                  data-tooltip
                   disabled={!context.editable}
                 />
               </div>
