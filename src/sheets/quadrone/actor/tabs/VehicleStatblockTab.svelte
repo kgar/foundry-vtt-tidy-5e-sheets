@@ -97,6 +97,22 @@
     }, 0),
   );
 
+  // Count sections that have content
+  let sectionsWithContent = $derived(
+    sections.filter((s) => {
+      return s.type === 'inventory'
+        ? s.items.length > 0
+        : s.type === 'draft'
+          ? s.members.length > 0
+          : false;
+    }).length,
+  );
+
+  // Hide empty states when 2+ sections have content and sheet is locked
+  let hideEmptyStates = $derived(
+    sectionsWithContent >= 2 && !context.unlocked,
+  );
+
   // Vehicle Actions calculations (when stations are OFF)
   let showActionsPin = $derived(
     !context.system.attributes.actions.stations, //&& (context.system.attributes.actions.value ?? 0) > 0,
@@ -300,50 +316,56 @@
 
           {#snippet body()}
             {#if section.key === CONSTANTS.ITEM_TYPE_EQUIPMENT && section.items.length === 0}
-              <div class="inventory-empty empty-state-container">
-                <button
-                  type="button"
-                  class="button button-tertiary"
-                  onclick={() =>
-                    context.document.sheet._addDocument({
-                      tabId,
-                      data: section.dataset
-                    })}
-                >
-                  <i class="fas fa-plus"></i>
-                  {localize('TIDY5E.Vehicle.Equipment.EmptyState')}
-                </button>
-              </div>
+              {#if !hideEmptyStates}
+                <div class="inventory-empty empty-state-container">
+                  <button
+                    type="button"
+                    class="button button-tertiary"
+                    onclick={() =>
+                      context.document.sheet._addDocument({
+                        tabId,
+                        data: section.dataset
+                      })}
+                  >
+                    <i class="fas fa-plus"></i>
+                    {localize('TIDY5E.Vehicle.Equipment.EmptyState')}
+                  </button>
+                </div>
+              {/if}
             {:else if section.key === CONSTANTS.ITEM_TYPE_FEAT && section.items.length === 0}
-              <div class="inventory-empty empty-state-container">
-                <button
-                  type="button"
-                  class="button button-tertiary"
-                  onclick={() =>
-                    context.document.sheet._addDocument({
-                      tabId,
-                      data: section.dataset,
-                    })}
-                >
-                  <i class="fas fa-plus"></i>
-                  {localize('TIDY5E.Vehicle.Features.EmptyState')}
-                </button>
-              </div>
+              {#if !hideEmptyStates}
+                <div class="inventory-empty empty-state-container">
+                  <button
+                    type="button"
+                    class="button button-tertiary"
+                    onclick={() =>
+                      context.document.sheet._addDocument({
+                        tabId,
+                        data: section.dataset,
+                      })}
+                  >
+                    <i class="fas fa-plus"></i>
+                    {localize('TIDY5E.Vehicle.Features.EmptyState')}
+                  </button>
+                </div>
+              {/if}
             {:else if section.key === CONSTANTS.ITEM_TYPE_WEAPON && section.items.length === 0}
-              <div class="inventory-empty empty-state-container">
-                <button
-                  type="button"
-                  class="button button-tertiary"
-                  onclick={() =>
-                    context.document.sheet._addDocument({
-                      tabId,
-                      data: section.dataset,
-                    })}
-                >
-                  <i class="fas fa-plus"></i>
-                  {localize('TIDY5E.Vehicle.Weapons.EmptyState')}
-                </button>
-              </div>
+              {#if !hideEmptyStates}
+                <div class="inventory-empty empty-state-container">
+                  <button
+                    type="button"
+                    class="button button-tertiary"
+                    onclick={() =>
+                      context.document.sheet._addDocument({
+                        tabId,
+                        data: section.dataset,
+                      })}
+                  >
+                    <i class="fas fa-plus"></i>
+                    {localize('TIDY5E.Vehicle.Weapons.EmptyState')}
+                  </button>
+                </div>
+              {/if}
             {:else}
               {@const itemEntries = section.items.map((item) => ({
                 item,
@@ -488,18 +510,20 @@
 
         {#snippet body()}
           {#if section.members.length === 0}
-            <div class="inventory-empty empty-state-container">
-              <button
-                onclick={() => context.document.sheet.browseAddActor('draft')}
-                type="button"
-                class="button button-tertiary"
-                title={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
-                aria-label={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
-              >
-                <i class="fas fa-plus"></i>
-                {localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
-              </button>
-            </div>
+            {#if !hideEmptyStates}
+              <div class="inventory-empty empty-state-container">
+                <button
+                  onclick={() => context.document.sheet.browseAddActor('draft')}
+                  type="button"
+                  class="button button-tertiary"
+                  title={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                  aria-label={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                >
+                  <i class="fas fa-plus"></i>
+                  {localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                </button>
+              </div>
+            {/if}
           {:else}
             {#each section.members as member}
               <TidyTableRow

@@ -17,4 +17,6 @@
       {value}
     </span>/<span class="uses-max color-text-lighter">{max ?? '—'}</span>
   </span>
+{:else}
+  <span class="uses-max font-default-medium color-text-disabled">{max ?? '—'}</span>
 {/if}
