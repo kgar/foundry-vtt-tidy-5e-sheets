@@ -4,7 +4,7 @@
 
 - [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
   - [ ] Sortable with the others? Or fixed to the top?
-- [ ] Possibly fix usability complaint for Loyalty Score setup: https://discord.com/channels/@me/1243307347682529423/1451341294881341480
+- [ ] Possibly fix usability complaint for Loyalty Score setup: <https://discord.com/channels/@me/1243307347682529423/1451341294881341480>
 - [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
@@ -29,11 +29,11 @@
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
 - [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
-- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
+- [ ] Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
-- [ ] Tools card header - has cursor hover style without interactivity
+- [x] Tools card header - has cursor hover style without interactivity
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
@@ -43,15 +43,14 @@
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 - [ ] Extract and share: TidyTableRowUseButton
 - [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
-- [ ] Image blurriness again: https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082
+- [ ] Image blurriness again: <https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082>
 - [ ] PC and NPC Sheets
   - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
-- [ ] NPC: Add tools section to the sidebar if NPC sheets even supports it
+- [x] NPC: Add tools section to the sidebar if NPC sheets even supports it
 - [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
-- [ ] Show Currency "item table section" when the user has configured more than 5 currencies. https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876 - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
-
+- [ ] Show Currency "item table section" when the user has configured more than 5 currencies. <https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876> - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
 
 ### (Almost) Everything after the short list
 
@@ -61,7 +60,7 @@
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
 - [ ] Encounter XP bar with stops: add hook and API for passing in custom calculations. The hook should provide app and members with their quantities
-- [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437
+- [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: <https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437>
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
@@ -89,10 +88,6 @@
 - [ ] Add World Setting to disable ruletips in Tidy
 - [ ] Only show Action tab control when the action tab is in use.
   - This is way more difficult than it has any business being. The ActorSheetRuntime refactor might be needed to make this viable.
-- [ ] Scaffold the Group Sheet
-- [ ] Set up Group Sheet Tab Selection
-- [ ] Scaffold the Vehicle Sheet
-- [ ] Set up Vehicle Sheet Tab Selection
 - [ ] Propagate Table Row Actions to Activities tables
 - [ ] Propagate Table Row Actions to Effects tables
 - [ ] Propagate Data-Driven Columns to Activities tables
@@ -137,7 +132,7 @@
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
-- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
+- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: <https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904>
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
 - [ ] DocumentTag upgrade - show rich preview of found document
 - [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
@@ -148,7 +143,7 @@
 - [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
 - [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
 - [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
-- [ ] There are some layout changes to Rider effects: https://discord.com/channels/170995199584108546/670336046164213761/1453597835550396529 ; what is Tidy doing currently, and can we do something differently?
+- [ ] There are some layout changes to Rider effects: <https://discord.com/channels/170995199584108546/670336046164213761/1453597835550396529> ; what is Tidy doing currently, and can we do something differently?
 - [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
 
 ## hightouch To Do
@@ -159,7 +154,7 @@
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
 - [ ] Item sheet sidebar background image (low)
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
-- [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
+- [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: <https://discord.com/channels/@me/1243307347682529423/1409228016176992378>
 
 ### Huh?
 
@@ -181,7 +176,6 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 <https://discord.com/channels/@me/1243307347682529423/1363003038482038836>
 > The issue was that there's a Damages label that is empty with the absorbing tattoo. It is possibly just a weird setup. The fix I did for now was to filter out damage labels that are null/undefined/empty.
 
-
 ### Bonus
 
 - [ ] Activity card / summary: Activities can be summarized via activity.activationLabels
@@ -198,12 +192,11 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 
 - [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 
-
 ## To Do Graveyard
 
 - [x] Review and refine empty states on the Statblock tab
   - [x] Weapons do not have an empty state.
-  - [x] Equipment empty state says it pulls from the compendium browser but instead creates an item. It would be more familiar if it just claimed to create an item. 
+  - [x] Equipment empty state says it pulls from the compendium browser but instead creates an item. It would be more familiar if it just claimed to create an item.
     - [x] Additionally, it presents the full Add Item dialog instead of just fast-forwarding creation to a correctly-configured Equipment vehicle item.
-  - [x] Features do no have an empty state. 
+  - [x] Features do no have an empty state.
 - [x] Draft Animals need their own columns. The default sheets fixate on creature size and carrying capacity.
