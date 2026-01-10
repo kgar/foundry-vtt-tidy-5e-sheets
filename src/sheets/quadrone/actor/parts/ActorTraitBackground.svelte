@@ -52,22 +52,22 @@
     </div>
     <div class="list-content">
       {#if background}
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <a
-        role="button"
-        tabindex="0"
-        aria-label={localize('DND5E.DescriptionView', {
-          description: localize('TYPES.Item.background'),
-        })}
-        data-keyboard-focus
-        class="list-values trait-item"
-        onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-        onmousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event, backgroundItem)}
-        onkeydown={(e) =>
-          (e.key === 'Enter' || e.key === ' ') &&
-          openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-      >
+        <!-- svelte-ignore a11y_missing_attribute -->
+        <a
+          role="button"
+          tabindex="0"
+          aria-label={localize('DND5E.DescriptionView', {
+            description: localize('TYPES.Item.background'),
+          })}
+          data-keyboard-focus
+          class="list-values trait-item"
+          onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+          onmousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event, backgroundItem)}
+          onkeydown={(e) =>
+            (e.key === 'Enter' || e.key === ' ') &&
+            openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+        >
           <!-- svelte-ignore a11y_missing_attribute -->
           <span class="item-image-link">
             <img

@@ -45,52 +45,53 @@
   </div>
   <div class="list-content">
     {#if species}
-    <!-- svelte-ignore a11y_missing_attribute -->
-    <a
-      role="button"
-      tabindex="0"
-      aria-label={localize('DND5E.DescriptionView', {
-        description: localize('TYPES.Item.race'),
-      })}
-      data-keyboard-focus
-      class="list-values trait-item"
-      onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-      onmousedown={(event) =>
-        FoundryAdapter.editOnMiddleClick(event, speciesItem)}
-      onkeydown={(e) =>
-        (e.key === 'Enter' || e.key === ' ') &&
-        openSheet(CONSTANTS.SHEET_MODE_PLAY)}
-    >
+      <!-- svelte-ignore a11y_missing_attribute -->
+      <a
+        role="button"
+        tabindex="0"
+        aria-label={localize('DND5E.DescriptionView', {
+          description: localize('TYPES.Item.race'),
+        })}
+        data-keyboard-focus
+        class="list-values trait-item"
+        onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+        onmousedown={(event) =>
+          FoundryAdapter.editOnMiddleClick(event, speciesItem)}
+        onkeydown={(e) =>
+          (e.key === 'Enter' || e.key === ' ') &&
+          openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+      >
         <span class="item-image-link">
           <img src={species.img} alt={species.name} class="item-image flex0" />
         </span>
         <span class="font-weight-label trait-name">
           {species.name}
         </span>
-    </a>
-    {#if context.unlocked}
-      <div class="list-controls">
-        <button
-          aria-label={localize('DND5E.DescriptionEdit', {
-            description: localize('TYPES.Item.race'),
-          })}
-          type="button"
-          class="button button-borderless button-icon-only"
-          data-tooltip
-          onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
-        >
-          <i class="fa-solid fa-edit"></i>
-        </button>
-        <button
-          aria-label={localize('Tidy5E.ContextMenu')}
-          type="button"
-          class="button button-borderless button-icon-only"
-          onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
-        >
-          <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
-        </button>
-      </div>
-    {/if}
+      </a>
+      {#if context.unlocked}
+        <div class="list-controls">
+          <button
+            aria-label={localize('DND5E.DescriptionEdit', {
+              description: localize('TYPES.Item.race'),
+            })}
+            type="button"
+            class="button button-borderless button-icon-only"
+            data-tooltip
+            onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
+          >
+            <i class="fa-solid fa-edit"></i>
+          </button>
+          <button
+            aria-label={localize('Tidy5E.ContextMenu')}
+            type="button"
+            class="button button-borderless button-icon-only"
+            onclick={(ev) =>
+              EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+          >
+            <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
+          </button>
+        </div>
+      {/if}
     {:else}
       <button
         aria-label={localize('TIDY5E.CompendiumBrowser', {
@@ -135,20 +136,23 @@
   <div class="list-content">
     <!-- svelte-ignore a11y_missing_attribute -->
     <a
-      class="list-values trait-item {species ? '' : 'no-hover'}"
+      class="list-values trait-item"
       role="button"
       tabindex="0"
       aria-label={localize('DND5E.DescriptionView', {
         description: localize('DND5E.CreatureType'),
       })}
       data-keyboard-focus
-      onclick={() => {if (species) FoundryAdapter.renderCreatureTypeConfig(context.actor);}}
-      onkeydown={(e) => { 
+      onclick={() => {
+        if (species) FoundryAdapter.renderCreatureTypeConfig(context.actor);
+      }}
+      onkeydown={(e) => {
         if (species) {
           (e.key === 'Enter' || e.key === ' ') &&
-          FoundryAdapter.renderCreatureTypeConfig(context.actor)}
-        }}
-      >
+            FoundryAdapter.renderCreatureTypeConfig(context.actor);
+        }
+      }}
+    >
       {#if species}
         <i class="sub-entry-icon fa-solid fa-arrow-turn-down-right"></i>
       {/if}
