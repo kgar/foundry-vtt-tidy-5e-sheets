@@ -10,6 +10,10 @@
 
   let species = $derived(context.species);
 
+  let speciesItem = $derived(
+    species ? context.actor.items.get(species.id) : null,
+  );
+
   function openSheet(mode: number) {
     if (species) {
       context.actor.items.get(species.id).sheet.render({
@@ -41,7 +45,8 @@
   <div class="list-content">
     {#if species}
       <!-- svelte-ignore a11y_missing_attribute -->
-      <a role="button"
+      <a
+        role="button"
         tabindex="0"
         aria-label={localize('DND5E.DescriptionView', {
           description: localize('TYPES.Item.race'),
@@ -68,7 +73,7 @@
           {species.name}
         </span>
       </a>
-        
+
       {#if context.unlocked}
         <div class="list-controls">
           <button
@@ -84,7 +89,8 @@
             aria-label="{localize('TYPES.Item.race')} Context Menu"
             type="button"
             class="button button-borderless button-icon-only"
-            onclick={(ev) => EventHelper.triggerContextMenu(ev, '[data-item-id]')}
+            onclick={(ev) =>
+              EventHelper.triggerContextMenu(ev, '[data-item-id]')}
           >
             <i class="fa-solid fa-ellipsis-vertical fa-fw"></i>
           </button>
