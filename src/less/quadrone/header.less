@@ -17,6 +17,8 @@
     --t5e-inspiration-image-single: url('@{badge_inspiration_single}');
     @badge_inspiration_stacked: '../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp';
     --t5e-inspiration-image-stacked: url('@{badge_inspiration_stacked}');
+    @badge_loyalty_dark: '../../modules/tidy5e-sheet/images/badge_loyalty_dark.webp';
+    --t5e-loyalty-image: url('@{badge_loyalty_dark}');
     @badge_level_dark: '../../modules/tidy5e-sheet/images/badge_level_dark.webp';
     --t5e-level-image: url('@{badge_level_dark}');
 
@@ -151,6 +153,8 @@
         --t5e-inspiration-image-single: url('@{badge_inspiration_single}');
         @badge_inspiration_stacked: '../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp';
         --t5e-inspiration-image-stacked: url('@{badge_inspiration_stacked}');
+        @badge_loyalty_light: '../../modules/tidy5e-sheet/images/badge_loyalty_light.webp';
+        --t5e-loyalty-image: url('@{badge_loyalty_light}');
         @badge_level_dark: '../../modules/tidy5e-sheet/images/badge_level_dark.webp';
         --t5e-level-image: url('@{badge_level_dark}');
 
@@ -1620,7 +1624,51 @@
     padding: 0 .75rem 2rem;
   }
 
-  .initiative-container {
+  .initiative.score {
+    background: var(--t5e-initiative-image) top center / auto no-repeat;
+    background-size: contain;
+    border-radius: var(--t5e-size-1x);
+    height: 3.75rem;
+    margin-top: 0.3125rem;
+    padding-top: var(--t5e-size-halfx);
+    width: 3.25rem;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    flex-grow: 0;
+    justify-content: center;
+
+    .modifier,
+    .bonus {
+      display: inline-block;
+      font-size: 1.5rem;
+    }
+
+    .modifier {
+      color: var(--t5e-color-text-lightest);
+    }
+
+    .bonus {
+      font-weight: bold;
+    }
+
+    .button-config {
+      position: absolute;
+      bottom: -0.75rem;
+      right: -0.625rem;
+    }
+  }
+
+  .initiative-bonus {
+    margin-right: 0.125rem;
+    margin-top: -0.3125rem;
+    margin-bottom: -0.0625rem;
+  }
+
+  .initiative-container,
+  .loyalty-container {
     width: 3rem;
     max-width: 4rem;
     display: flex;
@@ -1628,62 +1676,18 @@
     align-items: center;
     gap: 0.325rem;
     position: relative;
+  }
 
-    .initiative.score {
-      background: var(--t5e-initiative-image) top center / auto no-repeat;
-      background-size: contain;
-      border-radius: var(--t5e-size-1x);
-      height: 3.75rem;
-      margin-top: 0.3125rem;
-      padding-top: var(--t5e-size-halfx);
-      width: 3.25rem;
-      position: relative;
+  .initiative-container .ability-labels {
+    align-items: center;
+    justify-content: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.4375rem;
 
-      display: flex;
-      align-items: center;
-      flex-direction: column-reverse;
-      flex-grow: 0;
-      justify-content: center;
-
-      .initiative-bonus {
-        margin-right: 0.125rem;
-        margin-top: -0.3125rem;
-        margin-bottom: -0.0625rem;
-      }
-
-      .modifier,
-      .bonus {
-        display: inline-block;
-        font-size: 1.5rem;
-      }
-
-      .modifier {
-        color: var(--t5e-color-text-lightest);
-      }
-
-      .bonus {
-        font-weight: bold;
-      }
-
-      .button-config {
-        position: absolute;
-        bottom: -0.75rem;
-        right: -0.625rem;
-      }
-    }
-
-
-    .ability-labels {
-      align-items: center;
-      justify-content: end;
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0.4375rem;
-
-      .divider {
-        width: 75%;
-      }
+    .divider {
+      width: 75%;
     }
   }
 
