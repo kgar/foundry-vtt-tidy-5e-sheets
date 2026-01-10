@@ -172,7 +172,10 @@
       >
         <div class="initiative-container flexcol">
           <div
-            class="initiative score bonus-container"
+            class={[
+              'initiative score bonus-container',
+              Number(ini.value) >= 10 ? 'double-digit' : '',
+            ]}
             data-tooltip="DND5E.Initiative"
           >
             <button
