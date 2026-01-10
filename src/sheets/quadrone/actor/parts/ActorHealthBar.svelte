@@ -2,6 +2,7 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
+  import { CONSTANTS } from 'src/constants';
   import type {
     CharacterSheetQuadroneContext,
     NpcSheetQuadroneContext,
@@ -86,7 +87,7 @@
       <div class="max" aria-label={localize('DND5E.HitPointsMax')}>
         {effectiveMaxHp}
       </div>
-      {#if effectiveMaxHp !== hpMax}
+      {#if effectiveMaxHp !== hpMax && context.actor.type !== CONSTANTS.SHEET_TYPE_NPC}
         <div class="max-hp-override-container">
           <span class="font-default-small color-text-lighter">
             {hpTempMax < 0 ? '-' : '+'}
