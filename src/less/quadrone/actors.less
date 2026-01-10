@@ -300,16 +300,17 @@
     }
   }
 
-  .tidy-tab {
+  .tools {
+    .tools-empty {
+      padding: var(--t5e-size-3x) var(--t5e-size-2x);
+      color: var(--t5e-color-text-lighter);
 
-    .tools {
-      .tools-empty {
-        padding: var(--t5e-size-3x) var(--t5e-size-2x);
-        color: var(--t5e-color-text-lighter);
+      &:hover {
+        color: var(--t5e-color-text-default);
+      }
 
-        &:hover {
-          color: var(--t5e-color-text-default);
-        }
+      &:is(.sidebar .tools-empty) {
+        padding-left: 0;
       }
     }
   }
