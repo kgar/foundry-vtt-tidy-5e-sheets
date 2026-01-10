@@ -15,8 +15,8 @@
   showFiligree={false}
   showProficiency={context.unlocked}
 />
-<LoyaltyTracker />
 <Legendaries showFiligree={false} />
+<LoyaltyTracker />
 
 {#if context.tools.length || context.unlocked}
   <ToolsCard showFiligree={false} showProficiency={context.unlocked} />

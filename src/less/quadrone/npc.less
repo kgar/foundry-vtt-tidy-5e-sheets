@@ -39,81 +39,40 @@
     }
   }
 
-  .abilities-container {
-    margin: var(--t5e-size-2x) var(--t5e-size-1x) 0 var(--t5e-size-3x);
-  }
+  .loyalty-container {
+    padding-top: 0.25rem;
 
-  .abilities-container-inner {
-    margin: 0;
-    overflow: hidden;
-  }
+    &:hover,
+    &:focus,
+    &:active {
+      .loyalty-modifier-container {
+        opacity: 1;
+      }
+    }
 
-  .ability {
-
-    >* {
-      display: flex;
+    .bonus-container {
+      background-image: var(--t5e-loyalty-image);
       position: relative;
-      width: 100%;
-      align-items: center;
-      justify-content: center;
     }
 
-    .ability-bonus-container {
-      min-width: 3.625rem;
-      max-width: 4rem;
+    .bonus {
+      margin-bottom: 0.5rem;
     }
 
-    .ability-score-container {
+    .label {
+      margin-top: -0.25rem;
+    }
+
+    .loyalty-modifier-container {
+      bottom: -0.25rem;
+      display: flex;
       flex-direction: row;
-      height: 2rem;
-      margin-top: -0.75rem;
+      opacity: 0;
+      position: absolute;
+      transition: opacity var(--t5e-transition-duration) var(--t5e-transition-timing-function);
 
-      .button-config {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: -50%;
-        margin-right: calc(50% - 0.4375rem);
-      }
-    }
-
-    .ability-score {
-      margin-top: auto;
-    }
-
-    .ability-save-container {
-      .ability-save {
-        width: 100%;
-        justify-content: center;
-
-        >* {
-          flex: 0;
-        }
-      }
-    }
-
-    .ability-roll-button:active {
-      border: none;
-    }
-
-    .ability-labels {
-      bottom: 0.5rem;
-    }
-  }
-
-  .initiative-container {
-    text-align: center;
-    align-items: center;
-
-    .ability-labels {
-      bottom: 0.4375rem;
-    }
-
-    .initiative-bonus {
-      margin-right: 0.25rem;
-
-      >* {
-        letter-spacing: -6%;
+      i {
+        font-size: var(--font-size-14);
       }
     }
   }
@@ -183,6 +142,15 @@
         .value {
           width: 1.5rem;
         }
+      }
+    }
+
+    .lair-tracker {
+      margin-top: var(--t5e-size-2x);
+
+      .card-content {
+        display: flex;
+        padding: var(--t5e-size-2x) var(--t5e-size-2x) 0 0;
       }
     }
   }

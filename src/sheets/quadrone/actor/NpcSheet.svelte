@@ -172,7 +172,10 @@
       >
         <div class="initiative-container flexcol">
           <div
-            class="initiative score bonus-container"
+            class={[
+              'initiative score bonus-container',
+              Number(ini.value) >= 10 ? 'double-digit' : '',
+            ]}
             data-tooltip="DND5E.Initiative"
           >
             <button
@@ -232,6 +235,42 @@
             disabled={!context.owner}
           />
         {/each}
+        {#if context.showLoyaltyTracker}
+          <div class="ability loyalty-container flexcol">
+            <div class="bonus-container">
+              <span class="bonus color-text-default font-data-xlarge">
+                {context.system.attributes.loyalty.value}
+              </span>
+              <div class="loyalty-modifier-container">
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only"
+                  onclick={async () =>
+                    await context.actor.update({
+                      'system.attributes.loyalty.value':
+                        (context.system.attributes.loyalty.value ?? 0) - 1,
+                    })}
+                >
+                  <i class="fas fa-hexagon-minus"></i>
+                </button>
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only"
+                  onclick={async () =>
+                    await context.actor.update({
+                      'system.attributes.loyalty.value':
+                        (context.system.attributes.loyalty.value ?? 0) + 1,
+                    })}
+                >
+                  <i class="fas fa-hexagon-plus"></i>
+                </button>
+              </div>
+            </div>
+            <span class="label font-label-medium color-text-gold"
+              >{localize('DND5E.Loyalty')}</span
+            >
+          </div>
+        {/if}
       </AbilitiesContainer>
     </div>
     <div class="actor-vitals-container">

@@ -17,6 +17,8 @@
     --t5e-inspiration-image-single: url('@{badge_inspiration_single}');
     @badge_inspiration_stacked: '../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp';
     --t5e-inspiration-image-stacked: url('@{badge_inspiration_stacked}');
+    @badge_loyalty_dark: '../../modules/tidy5e-sheet/images/badge_loyalty_dark.webp';
+    --t5e-loyalty-image: url('@{badge_loyalty_dark}');
     @badge_level_dark: '../../modules/tidy5e-sheet/images/badge_level_dark.webp';
     --t5e-level-image: url('@{badge_level_dark}');
 
@@ -151,6 +153,8 @@
         --t5e-inspiration-image-single: url('@{badge_inspiration_single}');
         @badge_inspiration_stacked: '../../modules/tidy5e-sheet/images/badge_inspiration_stacked.webp';
         --t5e-inspiration-image-stacked: url('@{badge_inspiration_stacked}');
+        @badge_loyalty_light: '../../modules/tidy5e-sheet/images/badge_loyalty_light.webp';
+        --t5e-loyalty-image: url('@{badge_loyalty_light}');
         @badge_level_dark: '../../modules/tidy5e-sheet/images/badge_level_dark.webp';
         --t5e-level-image: url('@{badge_level_dark}');
 
@@ -1616,11 +1620,55 @@
   }
 
   .ability-roll-button {
-    margin-bottom: -2.25rem;
+    margin-bottom: -2.1875rem;
     padding: 0 .75rem 2rem;
   }
 
-  .initiative-container {
+  .initiative.score {
+    background: var(--t5e-initiative-image) top center / auto no-repeat;
+    background-size: contain;
+    border-radius: var(--t5e-size-1x);
+    height: 3.75rem;
+    margin-top: 0.3125rem;
+    padding-top: var(--t5e-size-halfx);
+    width: 3.25rem;
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+    flex-grow: 0;
+    justify-content: center;
+
+    .modifier,
+    .bonus {
+      display: inline-block;
+      font-size: 1.5rem;
+    }
+
+    .modifier {
+      color: var(--t5e-color-text-lightest);
+    }
+
+    .bonus {
+      font-weight: bold;
+    }
+
+    .button-config {
+      position: absolute;
+      bottom: -0.75rem;
+      right: -0.625rem;
+    }
+  }
+
+  .initiative-bonus {
+    margin-right: 0.125rem;
+    margin-top: -0.3125rem;
+    margin-bottom: -0.0625rem;
+  }
+
+  .initiative-container,
+  .loyalty-container {
     width: 3rem;
     max-width: 4rem;
     display: flex;
@@ -1628,62 +1676,32 @@
     align-items: center;
     gap: 0.325rem;
     position: relative;
+  }
 
-    .initiative.score {
-      background: var(--t5e-initiative-image) top center / auto no-repeat;
-      background-size: contain;
-      border-radius: var(--t5e-size-1x);
-      height: 3.75rem;
-      margin-top: 0.3125rem;
-      padding-top: var(--t5e-size-halfx);
-      width: 3.25rem;
-      position: relative;
+  .initiative-container .ability-labels {
+    align-items: center;
+    justify-content: end;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.4375rem;
 
-      display: flex;
-      align-items: center;
-      flex-direction: column-reverse;
-      flex-grow: 0;
-      justify-content: center;
+    .divider {
+      width: 75%;
+    }
+  }
 
-      .initiative-bonus {
-        margin-right: 0.125rem;
-        margin-top: -0.3125rem;
-        margin-bottom: -0.0625rem;
-      }
+  .abilities-container:not(.ability-collapsed) .initiative.score.double-digit {
+    padding-top: var(--t5e-size-2x);
 
-      .modifier,
-      .bonus {
-        display: inline-block;
-        font-size: 1.5rem;
-      }
-
-      .modifier {
-        color: var(--t5e-color-text-lightest);
-      }
-
-      .bonus {
-        font-weight: bold;
-      }
-
-      .button-config {
-        position: absolute;
-        bottom: -0.75rem;
-        right: -0.625rem;
-      }
+    .initiative-roll-button {
+      margin-top: -2.125rem;
+      padding-top: 2.25rem;
     }
 
-
-    .ability-labels {
-      align-items: center;
-      justify-content: end;
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0.4375rem;
-
-      .divider {
-        width: 75%;
-      }
+    .modifier,
+    .bonus {
+      font: var(--t5e-font-label-large);
     }
   }
 
@@ -2073,6 +2091,7 @@
         }
       }
 
+      /* Smallest abilities that kick in with 2+ custom abilities */
       .collapse-abilities() {
         --collapse-bg-light: rgba(0, 0, 0, 0.20);
         --collapse-bg-dark: rgba(0, 0, 0, 0.4);
@@ -2104,8 +2123,6 @@
           outline-color: var(--t5e-color-palette-gold-62);
         }
 
-
-
         .ability .bonus-container,
         .ability .bonus-container.proficient,
         .initiative-container .initiative.score {
@@ -2114,6 +2131,10 @@
 
         .initiative-container {
           gap: 0.375rem;
+
+          .initiative-bonus {
+            margin-top: 0;
+          }
 
           .initiative.score {
             padding-top: 0.125rem;
@@ -2216,9 +2237,14 @@
             margin-left: 0;
           }
         }
+
+        .loyalty-container {
+          height: fit-content;
+          padding-bottom: var(--t5e-size-3x);
+        }
       }
 
-
+      /* Smaller abilities when sheet is smaller */
       .ability-smaller() {
         --collapse-font-medium: 1.4375rem;
 
@@ -2250,68 +2276,68 @@
         }
       }
 
-      .sheet-header .abilities-container.ability-smaller .abilities-container-inner {
+      .abilities-container.ability-smaller .abilities-container-inner {
         .ability-smaller();
       }
 
-      .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
+      .abilities-container.ability-collapsed .abilities-container-inner {
         .collapse-abilities();
       }
+    }
 
-      &.theme-light .sheet-parchment {
-        --color-text-selection: var(--t5e-color-text-oninverse-default);
-        --color-text-selection-bg: var(--t5e-theme-color-default);
-        // --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
-        // --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
-        // --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
-        // --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.webp');
+    &.theme-light .sheet-parchment {
+      --color-text-selection: var(--t5e-color-text-oninverse-default);
+      --color-text-selection-bg: var(--t5e-theme-color-default);
+      // --t5e-initiative-image: url('../../modules/tidy5e-sheet/images/badge_init_light.webp');
+      // --t5e-ability-image: url('../../modules/tidy5e-sheet/images/badge_ability_light.webp');
+      // --t5e-ability-proficient-image: url('../../modules/tidy5e-sheet/images/badge_ability_light_prof.webp');
+      // --t5e-shield-image: url('../../modules/tidy5e-sheet/images/badge_ac_npc_light.webp');
 
-        .initiative-container .initiative.score {
-          background-image: var(--t5e-initiative-image);
+      .initiative-container .initiative.score {
+        background-image: var(--t5e-initiative-image);
 
-          .initiative-roll-button {
-            &:hover {
-              color: var(--t5e-color-text-gold-emphasis);
-            }
-          }
-
-        }
-
-        .color-text-gold {
-          color: var(--t5e-color-text-gold-emphasis);
-        }
-
-        .ability {
-          .ability-score {
-            // background-image: var(--t5e-ability-image);
-            background-position: top center;
-            background-size: cover;
-            background-repeat: no-repeat;
+        .initiative-roll-button {
+          &:hover {
+            color: var(--t5e-color-text-gold-emphasis);
           }
         }
 
-        .sheet-header-actions {
-          .button-gold {
+      }
+
+      .color-text-gold {
+        color: var(--t5e-color-text-gold-emphasis);
+      }
+
+      .ability {
+        .ability-score {
+          // background-image: var(--t5e-ability-image);
+          background-position: top center;
+          background-size: cover;
+          background-repeat: no-repeat;
+        }
+      }
+
+      .sheet-header-actions {
+        .button-gold {
+          --t5e-button-text-color: var(--t5e-color-palette-gold-56);
+          border-color: var(--t5e-color-palette-gold-62);
+          box-shadow: var(--t5e-drop-shadow-field);
+          color: var(--t5e-color-palette-gold-62);
+
+          &:hover,
+          &:active,
+          &:focus {
             --t5e-button-text-color: var(--t5e-color-palette-gold-56);
-            border-color: var(--t5e-color-palette-gold-62);
-            box-shadow: var(--t5e-drop-shadow-field);
-            color: var(--t5e-color-palette-gold-62);
-
-            &:hover,
-            &:active,
-            &:focus {
-              --t5e-button-text-color: var(--t5e-color-palette-gold-56);
-              border-color: var(--t5e-color-palette-gold-56);
-              box-shadow: var(--t5e-drop-shadow-field-hover);
-            }
+            border-color: var(--t5e-color-palette-gold-56);
+            box-shadow: var(--t5e-drop-shadow-field-hover);
           }
+        }
 
-          .bonus-container {
-            background-image: var(--t5e-ability-image);
+        .bonus-container {
+          background-image: var(--t5e-ability-image);
 
-            &.proficient {
-              background-image: var(--t5e-ability-proficient-image);
-            }
+          &.proficient {
+            background-image: var(--t5e-ability-proficient-image);
           }
         }
       }
@@ -2443,23 +2469,23 @@
         }
       }
 
-      .ability-score-input {
-        font-size: var(--collapse-font-medium);
-      }
+      // .ability-score-input {
+      //   font-size: var(--collapse-font-medium);
+      // }
 
-      .save {
-        margin-right: var(--t5e-size-halfx);
-      }
+      // .save {
+      //   margin-right: var(--t5e-size-halfx);
+      // }
 
-      .bonus-container,
-      .initiative-bonus {
+      // .bonus-container,
+      // .initiative-bonus {
 
-        .modifier,
-        .bonus {
-          font-size: var(--collapse-font-medium);
-          margin-left: 0;
-        }
-      }
+      //   .modifier,
+      //   .bonus {
+      //     font-size: var(--collapse-font-medium);
+      //     margin-left: 0;
+      //   }
+      // }
     }
 
 
