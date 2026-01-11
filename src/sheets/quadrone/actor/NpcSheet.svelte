@@ -5,7 +5,7 @@
   import NpcSubtitle from './npc-parts/NpcSubtitle.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getModifierData } from 'src/utils/formatting';
-  import AbilityScoreNPC from './character-parts/AbilityScoreNPC.svelte';
+  import AbilityScore from './character-parts/AbilityScore.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import ActorExhaustionBar from './parts/ActorExhaustionBar.svelte';
   import ActorHealthBar from './parts/ActorHealthBar.svelte';
@@ -219,7 +219,7 @@
           </div>
         </div>
         {#each context.abilities as ability}
-          <AbilityScoreNPC
+          <AbilityScore
             {ability}
             unlocked={context.unlocked}
             onScoreChanged={(score) =>
@@ -235,7 +235,7 @@
             disabled={!context.owner}
           />
         {/each}
-        {#if context.showLoyaltyTracker}
+        {#if context.showLoyaltyTracker && context.system.attributes.loyalty.value != null && context.system.attributes.loyalty.value >= 0}
           <div class="ability loyalty-container flexcol">
             <div class="bonus-container">
               <span class="bonus color-text-default font-data-xlarge">
