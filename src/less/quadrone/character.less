@@ -222,6 +222,7 @@
     }
   }
 
+  /* Smallest abilities that kick in with 2+ custom abilities and narrow sheet */
   .ability-smaller() {
 
     .ac-container .shield{
@@ -250,6 +251,10 @@
       .initiative.score {
         min-height: 3.5rem;
         margin-top: 0.25rem;
+
+        // .button-config {
+        //   right: 0;
+        // }
       }
     }
 
@@ -263,6 +268,7 @@
     }
   }
 
+  /* Smallest abilities when sheet is extremely narrow and has custom abilities present. */
   .collapse-abilities() {
 
     .ability-smaller();
@@ -298,6 +304,15 @@
       }
     }
 
+    .ability-bonus-container {
+      padding-top: var(--t5e-size-1x);
+      padding-bottom: var(--t5e-size-1x);
+    }
+
+    .bonus-container {
+      aspect-ratio: auto;
+    }
+
     .initiative-container {
       gap: 0;
 
@@ -327,11 +342,19 @@
     }
   }
 
-  .sheet-header .abilities-container.ability-smaller .abilities-container-inner {
+  .sheet-header:has(.abilities-container.ability-collapsed) {
+    .level-container {
+      margin-top: var(--t5e-size-1x);
+    }
+  }
+    
+  .sheet-header .abilities-container.ability-smaller 
+  .abilities-container-inner {
     .ability-smaller();
   }
 
-  .sheet-header .abilities-container.ability-collapsed .abilities-container-inner {
+  .sheet-header .abilities-container.ability-collapsed 
+  .abilities-container-inner {
     .collapse-abilities();
   }
 

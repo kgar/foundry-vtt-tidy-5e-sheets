@@ -3,9 +3,9 @@
   --t5e-background-image: url('@{banner-character}');
 
   --ability-collapsed-bg: rgba(0, 0, 0, 0.24);
-  --ability-collapsed-bg-highlight: rgba(0, 0, 0, 0.4);
-  --ability-collapsed-outline: oklch(from var(--t5e-color-gold) calc(l * 0.72) calc(c * .56) h);
-  --ability-collapsed-outline-highlight: oklch(from var(--t5e-color-gold) calc(l * 0.88) calc(c * .8) h);
+  --ability-collapsed-bg-highlight: rgba(0, 0, 0, 0.56);
+  --ability-collapsed-outline: oklch(from var(--t5e-color-gold) calc(l * 0.70) calc(c * .56) h);
+  --ability-collapsed-outline-highlight: oklch(from var(--t5e-color-palette-gold-62) calc(l * 0.92) calc(c * .8) h);
   --input-background: rgba(0, 0, 0, 0.2);
   --input-background-hover: rgba(0, 0, 0, 0.4);
 
@@ -82,6 +82,10 @@
 
     .sheet-header {
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.65));
+
+      .abilities-container.ability-collapsed .abilities-container-inner .ability:has(.proficient) {
+        outline-color: var(--t5e-color-palette-gold-62);
+      }
     }
   }
 
@@ -232,7 +236,7 @@
         }
       }
       
-      .concentration .label {
+      .concentration .concentration-roll-button .label {
         color: var(--t5e-color-text-gold-emphasis);
       }
     }
@@ -305,37 +309,6 @@
 
       &::selection {
         background-color: var(--t5e-theme-color-default);
-      }
-    }
-
-    .ability-smaller() {
-      --collapse-font-medium: 1.4375rem;
-
-      .ability-bonus-container {
-        min-width: auto;
-      }
-
-      .ability .bonus-container,
-      .ability .bonus-container.proficient,
-      .initiative-container .initiative.score {
-        width: 100%;
-        height: auto;
-        min-width: auto;
-      }
-
-      .bonus-container,
-      .initiative-bonus {
-
-        .modifier,
-        .bonus {
-          font-size: var(--collapse-font-medium);
-          margin-left: 0;
-        }
-      }
-
-      .initiative-container .initiative.score {
-        margin: 0.125rem 0;
-        min-height: 3.75rem;
       }
     }
 
@@ -1500,6 +1473,7 @@
   }
 
   .ability {
+    
     max-width: 4.5rem;
 
     display: flex;
@@ -1507,10 +1481,34 @@
     align-items: center;
     text-align: center;
 
+    >* {
+      display: flex;
+      position: relative;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ability-bonus-container {
+      min-width: 3.625rem;
+      max-width: 4rem;
+    }
+
+    .ability-score-container {
+      position: relative;
+      flex-direction: row;
+      height: 2rem;
+      margin-top: -0.75rem;
+    }
+
+    .ability-score {
+      margin-top: auto;
+    }
+
     .button-config {
       position: absolute;
-      bottom: -0.625rem;
-      right: -0.5rem;
+      top: -0.125rem;
+      right: -0.25rem;
     }
 
     .bonus-container {
@@ -1575,7 +1573,7 @@
       background: var(--t5e-ability-image) top center / auto no-repeat;
       background-size: contain;
       height: 2rem;
-      margin-top: -0.75rem;
+      margin-top: auto;
       position: relative;
       width: 1.75rem;
 
@@ -1673,6 +1671,7 @@
     flex-direction: column;
     align-items: center;
     gap: 0.325rem;
+    overflow: hidden;
     position: relative;
   }
 
@@ -2040,17 +2039,23 @@
           height: 2rem;
           margin-top: -0.75rem;
 
-          .button-config {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: -50%;
-            margin-right: calc(50% - 0.4375rem);
-          }
+          // .button-config {
+          //   position: absolute;
+          //   top: 0;
+          //   bottom: 0;
+          //   right: -50%;
+          //   margin-right: calc(50% - 0.4375rem);
+          // }
         }
 
-        .ability-score {
-          margin-top: auto;
+        // .ability-score {
+        //   margin-top: auto;
+        // }
+
+        .button-config {
+          position: absolute;
+          top: -0.125rem;
+          right: -0.125rem;
         }
 
         .ability-save-container {
@@ -2091,15 +2096,22 @@
       }
 
       /* Smallest abilities that kick in with 2+ custom abilities */
-      .collapse-abilities() {
+      .abilities-container.ability-collapsed {
 
-        .initiative-container {
+        .abilities-container-inner {
+          .bonus-container {
+            aspect-ratio: 1 / 1;
+          }
+      
+          .initiative-container {
 
-          .initiative-bonus {
-            margin-top: 0;
+            .initiative-bonus {
+              margin-top: 0;
+            }
           }
         }
-      }
+
+      } 
     }
   }
 
@@ -2121,6 +2133,10 @@
       min-width: 2.5rem;
     }
 
+    .ability-bonus-container {
+      min-width: auto;
+    }
+
     .ability:has(.proficient),
     .ac-container,
     .initiative-container {
@@ -2133,6 +2149,7 @@
     .ac-container .shield,
     .initiative-container .initiative.score {
       background: none;
+      min-width: auto; 
     }
 
     .initiative-container {
@@ -2151,7 +2168,7 @@
     }
 
 
-    .ability {
+    .ability {      
       .ability-score {
         margin-top: -0.25rem;
       }
@@ -2175,18 +2192,14 @@
       }
     }
 
-    .bonus-container {
-      aspect-ratio: 1 / 1;
-    }
-
-    .ability-bonus-container {
-      min-width: auto;
-      max-width: auto;
-    }
-
     .ability-score-container {
+      align-items: center;
+      display: flex;
       height: 2rem;
+      justify-content: center;
       margin: -0.125rem auto 0;
+      position: relative;
+      width: 100%;
 
       &::before,
       &::after {
@@ -2212,7 +2225,7 @@
         top: auto;
         bottom: auto;
         right: auto;
-        margin: 0 -0.1875rem 0 -0.4375rem;
+        margin: 0 -0.25rem 0 -0.5rem;
       }
     }
 
@@ -2237,15 +2250,24 @@
     --collapse-font-medium: 1.4375rem;
 
     .ability-bonus-container {
-      min-width: auto;
+      min-width: 3.25rem;
+      max-width: 3.75rem;
     }
 
     .ability .bonus-container,
     .ability .bonus-container.proficient,
+    .ac-container .shield,
     .initiative-container .initiative.score {
       width: 100%;
       height: auto;
       min-width: auto;
+    }
+
+    .ability {
+      .button-config {
+        right: -0.625rem;
+        top: -0.125rem;
+      }
     }
 
     .bonus-container,
@@ -2261,6 +2283,10 @@
     .initiative-container .initiative.score {
       margin: 0.125rem 0;
       min-height: 3.75rem;
+      
+      .button-config {
+        right: -0.25rem;
+      }
     }
   }
 

@@ -42,7 +42,7 @@
   - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
 - [ ] Extract and share: TidyTableRowUseButton
-- [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
+- [x] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
 - [ ] Image blurriness again: <https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082>
 - [ ] PC and NPC Sheets
   - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
