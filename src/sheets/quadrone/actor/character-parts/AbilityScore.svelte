@@ -73,60 +73,78 @@
 </script>
 
 <div class={['ability', ability.key]} data-tidy-sheet-part="ability-container">
-  <div
-    class={[
-      'bonus-container',
-      { proficient: ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT },
-    ]}
-    data-tidy-sheet-part="ability-mod-container"
-  >
-    <button
-      type="button"
-      onclick={(ev) => onRollAbility?.(ev, ability.key)}
-      data-tooltip={localize('DND5E.AbilityPromptTitle', {
-        ability: ability.label,
-      })}
-      class="button-borderless ability-roll-button label font-label-medium color-text-gold"
-      data-tidy-sheet-part="ability-roller"
-      data-has-roll-modes
-      {disabled}
+  <div class="ability-bonus-container">
+    <div
+      class={[
+        'bonus-container',
+        { proficient: ability.proficient === CONSTANTS.PROFICIENCY_PROFICIENT },
+      ]}
+      data-tidy-sheet-part="ability-mod-container"
     >
-      {ability.abbr}
-    </button>
-    <div class={['flexrow']}>
-      <span
-        class={[
-          'modifier font-label-xlarge color-text-lightest',
-          { invisible: editingScore },
-        ]}
-        data-tidy-sheet-part="ability-mod">{mod.sign}</span
+      <button
+        type="button"
+        onclick={(ev) => onRollAbility?.(ev, ability.key)}
+        data-tooltip={localize('DND5E.AbilityPromptTitle', {
+          ability: ability.label,
+        })}
+        class="button-borderless ability-roll-button label font-label-medium color-text-gold"
+        data-tidy-sheet-part="ability-roller"
+        data-has-roll-modes
+        {disabled}
       >
-      <span
-        class={[
-          'value bonus font-data-xlarge color-text-default',
-          { invisible: editingScore },
-        ]}
-        data-tidy-sheet-part="ability-value">{mod.value}</span
-      >
-
-      {#if unlocked}
-        <input
-          id={abilityInputId}
-          type="text"
-          value={sourceValue}
+        {ability.abbr}
+      </button>
+      <div class={['flexrow']}>
+        <span
           class={[
-            'ability-score-input',
-            'uninput',
-            { ['editing-score']: editingScore },
+            'modifier font-label-xlarge color-text-lightest',
+            { invisible: editingScore },
           ]}
-          data-tooltip={ability.label}
-          onchange={onScoreChange}
-          onfocus={(ev) => onScoreInputFocused(ev)}
-          onblur={(ev) => onScoreInputBlurred(ev)}
-          data-tidy-sheet-part="ability-score-input"
-        />
+          data-tidy-sheet-part="ability-mod">{mod.sign}</span
+        >
+        <span
+          class={[
+            'value bonus font-data-xlarge color-text-default',
+            { invisible: editingScore },
+          ]}
+          data-tidy-sheet-part="ability-value">{mod.value}</span
+        >
+        {#if unlocked}
+          <input
+            id={abilityInputId}
+            type="text"
+            value={sourceValue}
+            class={[
+              'ability-score-input',
+              'uninput',
+              { ['editing-score']: editingScore },
+            ]}
+            data-tooltip={ability.label}
+            onchange={onScoreChange}
+            onfocus={(ev) => onScoreInputFocused(ev)}
+            onblur={(ev) => onScoreInputBlurred(ev)}
+            data-tidy-sheet-part="ability-score-input"
+          />
+        {/if}
+      </div>
+      {#if unlocked && editingScore}
+        <span class="editing-score-label font-label-medium color-text-default">
+          {localize('TIDY5E.Ability.EditScore.label')}
+        </span>
       {/if}
     </div>
+  </div>
+  <div class="ability-score-container">
+    <label
+      class={['ability-score', { invisible: editingScore }]}
+      data-tooltip={localize('DND5E.ABILITY.SECTIONS.Score', {
+        ability: ability.label,
+      })}
+      for={abilityInputId}
+      data-tidy-sheet-part="ability-score"
+    >
+      <span class="font-title-small color-text-default">{ability.value}</span>
+    </label>
     {#if unlocked}
       <button
         aria-label={configButtonTooltip}
@@ -142,41 +160,28 @@
         <i class="fas fa-cog"></i>
       </button>
     {/if}
-    {#if unlocked && editingScore}
-      <span class="editing-score-label font-label-medium color-text-default">
-        {localize('TIDY5E.Ability.EditScore.label')}
-      </span>
-    {/if}
   </div>
-  <label
-    class={['ability-score', { invisible: editingScore }]}
-    data-tooltip={localize('DND5E.ABILITY.SECTIONS.Score', {
-      ability: ability.label,
-    })}
-    for={abilityInputId}
-    data-tidy-sheet-part="ability-score"
-  >
-    <span class="font-title-small color-text-default">{ability.value}</span>
-  </label>
-  <button
-    type="button"
-    aria-label={localize('DND5E.SavingThrowRoll', { ability: ability.label })}
-    data-tooltip
-    class={[
-      'button-borderless ability-save flexrow',
-      { invisible: editingScore },
-    ]}
-    onclick={(ev) => onRollSave?.(ev, ability.key)}
-    data-tidy-sheet-part="ability-save-roller"
-    data-has-roll-modes
-    {disabled}
-  >
-    <span class="modifier font-label-medium color-text-lightest"
-      >{save.sign}</span
+  <div class="ability-save-container">
+    <button
+      type="button"
+      aria-label={localize('DND5E.SavingThrowRoll', { ability: ability.label })}
+      data-tooltip
+      class={[
+        'button-borderless ability-save flexrow',
+        { invisible: editingScore },
+      ]}
+      onclick={(ev) => onRollSave?.(ev, ability.key)}
+      data-tidy-sheet-part="ability-save-roller"
+      data-has-roll-modes
+      {disabled}
     >
-    <span class="value save font-data-medium color-text-default"
-      >{save.value}</span
-    >
-    <span class="icon"><i class="fas fa-shield-heart"></i></span>
-  </button>
+      <span class="modifier font-label-medium color-text-lightest"
+        >{save.sign}</span
+      >
+      <span class="value save font-data-medium color-text-default"
+        >{save.value}</span
+      >
+      <span class="icon"><i class="fas fa-shield-heart"></i></span>
+    </button>
+  </div>
 </div>

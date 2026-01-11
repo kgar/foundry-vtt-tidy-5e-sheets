@@ -10,7 +10,7 @@
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import ActorHealthBar from './parts/ActorHealthBar.svelte';
-  import AbilityScoreNPC from './character-parts/AbilityScoreNPC.svelte';
+  import AbilityScore from './character-parts/AbilityScore.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { getModifierData } from 'src/utils/formatting';
@@ -135,7 +135,7 @@
           </div>
         </div>
         {#each context.abilities as ability}
-          <AbilityScoreNPC
+          <AbilityScore
             {ability}
             unlocked={context.unlocked}
             onScoreChanged={(score) =>
