@@ -140,12 +140,15 @@
     position: relative;
 
     .shield {
+      @badge_ac_dark: '../../modules/tidy5e-sheet/images/badge_ac_dark.webp';
+      --t5e-shield-image: url('@{badge_ac_dark}');
+      
       .ac-label {
-        display: initial;
+        display: none;
       }
 
       .ac-value {
-        margin: -0.25rem 0 0;
+        margin: -0.3125rem 0 0;
       }
     }
 
@@ -153,6 +156,30 @@
       position: absolute;
       bottom: -0.875rem;
       right: -0.5rem;
+    }
+  }
+
+  .level-block {
+    background: var(--t5e-level-image) top center / auto no-repeat;
+    background-size: contain;
+    margin-left: 1.1875rem;
+    margin-right: var(--t5e-size-2x);
+    min-width: 4.75rem;
+    min-height: 4.75rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .level {
+      margin: -0.25rem 0 -0.25rem 0;
+    }
+
+    .proficiency-bonus {
+      .label {
+        margin-right: var(--t5e-size-halfx);
+      }
     }
   }
 
@@ -196,33 +223,12 @@
   }
 
   .ability-smaller() {
-    --collapse-font-medium: 1.4375rem;
 
-    .ac-container,
-    .ability:has(.proficient),
-    .initiative-container {
-      width: auto;
-      flex: 1;
-    }
-
-    .ability .bonus-container,
-    .ability .bonus-container.proficient,
-    .ac-container .shield,
-    .initiative-container .initiative.score {
+    .ac-container .shield{
       width: 100%;
       height: auto;
       min-height: 3.25rem;
       min-width: auto;
-    }
-
-    .bonus-container,
-    .initiative-bonus {
-
-      .modifier,
-      .bonus {
-        font-size: var(--collapse-font-medium);
-        margin-left: 0;
-      }
     }
 
     .ac-container {
@@ -258,49 +264,17 @@
   }
 
   .collapse-abilities() {
-    --collapse-bg-light: rgba(0, 0, 0, 0.20);
-    --collapse-bg-dark: rgba(0, 0, 0, 0.56);
-    --collapse-outline: 0.0625rem solid rgba(0, 0, 0, 0.16);
-    --collapse-font-medium: 1.25rem;
-    --collapse-font-large: 1.5rem;
-
-    gap: var(--t5e-size-halfx);
 
     .ability-smaller();
-
-    >* {
-      background: var(--collapse-bg-light);
-      outline: var(--collapse-outline);
-      outline-offset: -0.0625rem;
-      border-radius: var(--t5e-size-1x);
-      max-width: initial;
-      width: auto;
-      min-width: 2.5rem;
-    }
-
-
-    .ac-container,
-    .ability:has(.proficient),
-    .initiative-container {
-      background: var(--collapse-bg-dark);
-      outline-color: oklch(from var(--t5e-color-gold) l c h / 0.4);
-    }
-
-    .ability .bonus-container,
-    .ability .bonus-container.proficient,
-    .ac-container .shield,
-    .initiative-container .initiative.score {
-      background: none;
-    }
 
     .ac-container {
       gap: 0.4375rem;
 
       .shield {
+        margin-top: 0;
+
         .ac-value {
           font-size: var(--collapse-font-medium);
-          margin-top: .25rem;
-          margin-bottom: 0;
         }
       }
 
@@ -308,21 +282,19 @@
         display: initial;
         margin-top: -0.125rem;
       }
+
+      .button-config {  
+        bottom: -0.625rem;
+        right: calc(50% - 0.875rem);
+      }
     }
+    
 
-    .ability {
-      .ability-score {
-        margin-top: -0.25rem;
-      }
+    .ability-labels  {
+      bottom: 0.5625rem;
 
-      .ability-roll-button {
-        margin-bottom: -2.125rem;
-      }
-
-      .bonus-container .ability-score-input {
-        height: calc(100% - 1.5rem);
-        top: 1.375rem;
-        background: var(--t5e-component-field-background-hover);
+      .divider {
+        margin-top: 0.4375rem;
       }
     }
 
@@ -332,22 +304,16 @@
       .initiative.score {
         padding-top: 0.25rem;
         margin-top: 0;
+      
+        .button-config {
+          bottom: -1rem;
+        }
       }
     }
 
     .save {
       margin-right: var(--t5e-size-halfx);
     }
-
-    // .bonus-container,
-    // .initiative-bonus {
-
-    //   .modifier,
-    //   .bonus {
-    //     font-size: var(--collapse-font-medium);
-    //     margin-left: 0;
-    //   }
-    // }
 
     .concentration {
       padding: 0 0.25rem;
@@ -375,7 +341,6 @@
 
   @container character-sheet (width < 50rem) {
     .sheet-header-content {
-      // flex-direction: column-reverse;
       flex-wrap: wrap;
     }
 
@@ -491,6 +456,22 @@
   }
 
   @import './character-parts/tab-bastion.less';
+
+  &.theme-light.sheet-parchment {
+    .sheet-header {
+      .level-block {
+        @badge_level_light: '../../modules/tidy5e-sheet/images/badge_level_light.webp';
+        --t5e-level-image: url('@{badge_level_light}');
+      }
+      
+      .ac-container {
+        .shield {
+          @badge_ac_light: '../../modules/tidy5e-sheet/images/badge_ac_light.webp';
+          --t5e-shield-image: url('@{badge_ac_light}');
+        }
+      }
+    }
+  }
 
 
   &.theme-dark,

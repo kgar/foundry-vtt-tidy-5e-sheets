@@ -235,7 +235,7 @@
             disabled={!context.owner}
           />
         {/each}
-        {#if context.showLoyaltyTracker}
+        {#if context.showLoyaltyTracker && context.system.attributes.loyalty.value != null && context.system.attributes.loyalty.value >= 0}
           <div class="ability loyalty-container flexcol">
             <div class="bonus-container">
               <span class="bonus color-text-default font-data-xlarge">
