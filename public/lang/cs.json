@@ -175,8 +175,8 @@
         "hint": "Odstraní přepínací tlačítko viditelnosti dovedností bez zdatnosti a zobrazí se všechny."
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Zobrazovat kartu kouzel?",
-        "hint": "Zobrazí kartu kouzel NP. Zakázáním přesuneš sekci kouzel do záložky rysy."
+        "name": "Zobrazovat záložku kouzel?",
+        "hint": "Zobrazí záložku kouzel NP. Zakázáním přesuneš sekci kouzel do záložky rysy."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "Zobrazovat značku aktivního efektu?",
@@ -236,8 +236,8 @@
         "both": "Zvýraznit propojené a nepropojené tokeny"
     },
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": "Úvodní karta deníku",
-        "hint": "Při prvním otevření deníku se zobrazí uvedená karta."
+        "name": "Úvodní záložka deníku",
+        "hint": "Při prvním otevření deníku se zobrazí uvedená záložka."
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
         "name": "Skrývat záchrany před smrtí před hráči?",
@@ -257,11 +257,11 @@
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Používat filtr kouzel multipovolání",
-        "hint": "Umožňuje filtrovat kouzla podle povolání na kartě kouzel. Kouzlo musí být přiřazeno k povolání pomocí úpravy kouzla na kartě kouzla."
+        "hint": "Umožňuje filtrovat kouzla v záložce kouzel podle povolání. Kouzlo musí být přiřazeno k povolání pomocí úpravy na kartě kouzla."
     },
     "TIDY5E.Settings.UseSpellClassIcons": {
         "name": "Používat ikonu povolání u kouzel?",
-        "hint": "Zobrazí u kouzel ikony povolání namísto vlastní ikony kouzla. Kouzlo musí být přiřazeno k povolání pomocí úpravy kouzla na kartě kouzla. Při multipovoláních pak tato funkce na první pohled rozlišuje, která kouzla patří ke kterému povolání."
+        "hint": "Zobrazí u kouzel ikony povolání namísto vlastní ikony kouzla. Kouzlo musí být přiřazeno k povolání pomocí úpravy na kartě kouzla. Při multipovoláních pak tato funkce na první pohled rozlišuje, která kouzla patří kterému povolání."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
@@ -433,13 +433,13 @@
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ItemFilters.Filter.Other": "Další",
     "TIDY5E.TabConfiguration": {
-        "SelectedHeader": "Viditelné karty",
-        "Explanation": "Jakékoli karty, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
-        "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není aktuálně nastaven pro výběr karty.",
-        "Title": "Výběr karty: {documentName}",
-        "MenuOptionText": "Výběr karet",
-        "AtLeastOneRequiredErrorMessage": "Je vyžadována alespoň jedna karta.",
-        "AvailableHeader": "Skryté karty",
+        "SelectedHeader": "Viditelné záložky",
+        "Explanation": "Jakékoli záložky, které uživatel či deník nastavili tak, aby se nezobrazovaly (např. zakázáním deníku v nastavení), se na deníku nezobrazí, i když jsou vybrány.",
+        "UnsupportedDocumentErrorMessage": "Typ dokumentu {documentType} není pro výběr záložek aktuálně nastaven.",
+        "Title": "Výběr záložky: {documentName}",
+        "MenuOptionText": "Nastavení záložek",
+        "AtLeastOneRequiredErrorMessage": "Je vyžadována alespoň jedna záložka.",
+        "AvailableHeader": "Skryté záložky",
         "SelectionTab.Title": "Výběr záložky",
         "VisibilityTab.Title": "Viditelnost záložky"
     },
@@ -532,11 +532,11 @@
     },
     "TIDY5E.SpellSourceIdentifierLabelHint": "Aktér, který má toto kouzlo, nemá zdrojové povolání u tohoto kouzla uvedené.",
     "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Výchozí karty deníků",
-        "AvailableHeader": "Dostupné karty",
-        "SelectedHeader": "Vybrané karty",
-        "hint": "Určuje, které karty se ve výchozím nastavení zobrazí a v jakém pořadí. Použijí se v případě, že nebyla vybrána žádná karta u aktéra.",
-        "AtLeastOneTabRequiredErrorMessage": "Výchozí karty: Pro každý typ aktéra je vyžadována alespoň jedna karta."
+        "name": "Výchozí záložky deníků",
+        "AvailableHeader": "Dostupné záložky",
+        "SelectedHeader": "Vybrané záložky",
+        "hint": "Určuje, které záložky se zobrazí ve výchozím nastavení a v jakém pořadí. Použije se v případě, že nebyly navoleny u aktéra.",
+        "AtLeastOneTabRequiredErrorMessage": "Výchozí záložky: U každého typu aktéra je vyžadována alespoň jedna záložka."
     },
     "TIDY5E.WorldSettings.Exhaustion": {
         "options.specific.levels.hint": "Určuje maximální počet úrovní vyčerpání.",
@@ -566,7 +566,7 @@
             "title": "Nastavení sekce: {tabTitle}"
         },
         "ActionLabel": "Sekce akcí",
-        "ActionTooltip": "Po umístění na kartu Akce vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
+        "ActionTooltip": "Po umístění záložky Akce vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
         "Label": "Sekce",
         "Default": "Výchozí sekce",
         "Tooltip": "Po umístění do deníku aktéra vytvoř pro tuto položku vlastní sekci, nebo ji ponech prázdnou pro výchozí chování.",
@@ -627,14 +627,14 @@
     "TIDY5E.MeleeSpellAttackMod": "Oprava útoku kouzlem na blízko",
     "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
         "name": "Používat klávesové zkratky?",
-        "hint": "Umožní uživatelům procházet na kartě většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z 'Konfigurace ovládacích prvků' nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
+        "hint": "Umožní uživatelům tabelovat na deníku většinu tlačítek/příkazů v denících Tidy 5e a spouštět je pomocí běžných klávesových zkratek. Poznámka: když se použije klávesová zkratka používaná samotným Foundry, pak zkratky z 'Konfigurace ovládacích prvků' nefungují. Pokud modul používá tuto funkci Foundry pro ovládací prvky na denících, například pro alternativní používání položek při přidržení speciální klávesy, pak zapnutí této volby deníků Tidy 5e bude s těmito nastaveními interferovat."
     },
     "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
         "name": "Tabelovat výchozí rysy pomocí tabulátoru na klávesnici?",
         "hint": "Výchozí deník 5e umožňuje přecházet z jednoho vstupu rysů na druhý pomocí klávesnice tak, že se ovládací prvky kolem nich skryjí z pořadí tabulátoru. Povolením této funkce se toto chování napodobuje. Toto nastavení je ignorováno, pokud je vypnuta volba 'Používání klávesových zkratek'."
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
-        "hint": "Místo toho, aby se na kartě/panelu akce ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
+        "hint": "Místo toho, aby se v záložce/panelu akcí ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
         "name": "Omezit akce na triky?"
     },
     "TIDY5E.Settings.SheetPreferences": {
@@ -663,10 +663,10 @@
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Zahrnout kouzla do minuty do akcí?",
-        "hint": "Ve výchozím nastavení zahrne karty/panely akcí kouzla s dobou trvání do jedné minuty (např. 1 kolo) a dobou aktivace 1 akce či 1 bonusová akce (např. Požehnání, Uřknutí, Rozkaz) do akcí."
+        "hint": "Ve výchozím nastavení zahrne záložku/panel akcí kouzla s dobou trvání do jedné minuty (např. 1 kolo) a dobou aktivace 1 akce či 1 bonusová akce (např. Požehnání, Uřknutí, Rozkaz) do akcí."
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
-        "hint": "Ve výchozím nastavení zahrne kouzla s připojenými aktivními efekty (např. Kůrokůže) do karty/panelu akcí.",
+        "hint": "Ve výchozím nastavení zahrne kouzla s připojenými aktivními efekty (např. Kůrokůže) do záložky/panelu akcí.",
         "name": "Zahrnout kouzla s aktivními efekty do akcí?"
     },
     "TIDY5E.Settings.About": {
@@ -769,8 +769,8 @@
     "TIDY5E.ModuleName": "Deníky Tidy 5e",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "LimitToSpecificSheetsLabel": "Omezení zobrazených sekcí v konkrétním deníku",
-        "ShowWhenEmptyTooltip": "Všechny karty s tabulkovými položkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když v sekci nejsou žádné položky. Sekce se vždy zobrazí, i když je prázdná.",
-        "LimitToSpecificTabsLabel": "Omezení zobrazené sekce na konkrétní karty",
+        "ShowWhenEmptyTooltip": "Všechny záložky s tabulkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když tam nejsou žádné položky. Sekce se zobrazí vždy , i když je prázdná.",
+        "LimitToSpecificTabsLabel": "Limit zobrazených sekcí na konkrétních záložkách",
         "tabLabel": "Vlastní sekce",
         "CustomizedIndicatorLabel": "Přizpůsobené",
         "ShowWhenEmptyLabel": "Zobrazit sekci, i když je prázdná"
@@ -873,7 +873,7 @@
     "TIDY5E.SettingsMenu.TabConfiguration": {
         "name": "Záložky deníků",
         "label": "Nastavit záložky deníku",
-        "hint": "Pouze nové deníky Tidy: Nastav, které karty budou viditelné pro všechny deníky aktérů a položek."
+        "hint": "Pouze nové deníky Tidy: Nastav, které záložky budou viditelné u všech deníků aktérů a položek."
     },
     "TIDY5E.Settings.BankedInspiration.title": "Uložená Inspirace",
     "TIDY5E.Settings.EnableBankedInspiration": {
