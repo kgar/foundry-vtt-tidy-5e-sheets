@@ -41,7 +41,7 @@
       text-overflow: ellipsis;
 
       &::before {
-        @badge_encounter_difficulty : '../../modules/tidy5e-sheet/images/badge_encounter_difficulty.png';
+        @badge_encounter_difficulty : '../../modules/tidy5e-sheet/images/badge_encounter_difficulty_dark.webp';
         background-image: url('@{badge_encounter_difficulty}');
         background-size: contain;
         background-repeat: no-repeat;
@@ -260,6 +260,15 @@
     .tidy-tab.combat {
       .tidy-table-cell[data-tidy-column-key="initiative"] {
         padding-left: 0.625rem;
+      }
+    }
+  }
+
+  &.theme-light.sheet-parchment {
+    .difficulty-block {
+      &::before {
+        @badge_encounter_difficulty : '../../modules/tidy5e-sheet/images/badge_encounter_difficulty_light.webp';
+        background-image: url('@{badge_encounter_difficulty}');
       }
     }
   }
