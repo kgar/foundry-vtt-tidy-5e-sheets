@@ -83,7 +83,7 @@
         </div>
 
         {#if context.difficulty.label}
-          <div class="difficulty-block theme-dark">
+          <div class={['difficulty-block', context.themeSettings.useHeaderBackground ? 'theme-dark' : '']}>
             <span class="label difficulty font-label-medium color-text-default">
               {context.difficulty.label}
             </span>
