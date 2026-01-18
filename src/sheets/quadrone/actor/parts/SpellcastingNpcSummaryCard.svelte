@@ -10,9 +10,10 @@
   interface Props {
     info: NpcSpellcastingContext;
     mode: 'expanded' | 'compact';
+    onNameClick?: () => void;
   }
 
-  let { info, mode }: Props = $props();
+  let { info, mode, onNameClick }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
@@ -30,7 +31,7 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <span class="name font-title-small">{info.name}</span>
+      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
 
       <i
         data-tooltip="DND5E.SpellAbility"
@@ -113,7 +114,7 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <span class="name font-title-small">{info.name}</span>
+      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
 
       <i
         data-tooltip="DND5E.SpellAbility"

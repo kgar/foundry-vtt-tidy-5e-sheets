@@ -18,9 +18,10 @@
     multiclass: boolean;
     tabId: string;
     mode: 'expanded' | 'compact';
+    onNameClick?: () => void;
   }
 
-  let { info, multiclass, tabId, mode }: Props = $props();
+  let { info, multiclass, tabId, mode, onNameClick }: Props = $props();
 
   let itemFilterService = getContext<ItemFilterService>(
     CONSTANTS.SVELTE_CONTEXT.ITEM_FILTER_SERVICE,
@@ -59,7 +60,7 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <span class="name font-title-small">{info.name}</span>
+      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
 
       {#if info.primary}
         <i
@@ -144,7 +145,7 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <span class="name font-title-small">{info.name}</span>
+      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
 
       {#if info.primary}
         <i

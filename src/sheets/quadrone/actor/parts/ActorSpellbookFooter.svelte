@@ -34,9 +34,14 @@
 
   let multiclass = $derived(context.spellcasting.length > 1);
   let mode: 'expanded' | 'compact' = $state('expanded');
+  let collapsed = $state(false);
   let tabRef = getContext<Ref<HTMLElement | undefined>>(
     CONSTANTS.SVELTE_CONTEXT.TAB_CONTENT_ELEMENT_REF,
   );
+
+  function toggleCollapsed() {
+    collapsed = !collapsed;
+  }
 </script>
 
 <div
@@ -52,12 +57,12 @@
 ></div>
 
 <div class={['sheet-footer spellbook-footer flexrow', classValue]}>
-  <div class="sheet-footer-left spellcasting-cards flexcol">
+  <div class={['sheet-footer-left spellcasting-cards flexcol', { 'collapse-spellcasting-cards': collapsed }]}>
     {#each context.spellcasting as info}
       {#if info.type === 'class'}
-        <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} />
+        <SpellcastingClassSummaryCard {info} {multiclass} {tabId} {mode} onNameClick={toggleCollapsed} />
       {:else if info.type === 'npc'}
-        <SpellcastingNpcSummaryCard {info} {mode} />
+        <SpellcastingNpcSummaryCard {info} {mode} onNameClick={toggleCollapsed} />
       {/if}
     {/each}
   </div>
