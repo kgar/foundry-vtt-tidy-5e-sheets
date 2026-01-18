@@ -74,6 +74,7 @@
     <div class="sheet-footer-right flexshrink">
       {#if context.isConcentrating && context.saves.concentration}
         {@const save = context.saves.concentration}
+        <!-- svelte-ignore a11y_mouse_events_have_key_events -->
         <button
           type="button"
           aria-label={localize('EFFECT.DND5E.StatusConcentrating')}
@@ -84,49 +85,45 @@
               legacy: false,
             })}
           onmouseover={(event) => {
-            event.target.querySelector('.active-concentration-icon').style.display = 'none';
-            event.target.querySelector('.fas.fa-head-side-brain').style.display = 'block';
+            const button = event.currentTarget as HTMLElement;
+            (button.querySelector('[data-label="icon-concentrating"]') as HTMLElement).style.display = 'none';
+            (button.querySelector('[data-label="icon-concentration"]') as HTMLElement).style.display = 'block';
           }}
           onmouseout={(event) => {
-            event.target.querySelector('.active-concentration-icon').style.display = 'block';
-            event.target.querySelector('.fas.fa-head-side-brain').style.display = 'none';
+            const button = event.currentTarget as HTMLElement;
+            (button.querySelector('[data-label="icon-concentrating"]') as HTMLElement).style.display = 'block';
+            (button.querySelector('[data-label="icon-concentration"]') as HTMLElement).style.display = 'none';
           }}
           class="button button-secondary button-icon-only"
           data-has-roll-modes
         >
           <i
+            data-label="icon-concentrating"
             class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
             aria-label={localize('DND5E.Concentration')}
           ></i>
           <i
+            data-label="icon-concentration"
             class="fas fa-head-side-brain color-text-gold"
             style="display: none;"
             aria-label={localize('DND5E.Concentration')}
           ></i>
         </button>
-        <!-- {#if context.unlocked}
-          {@const tooltip = localize('DND5E.AbilityConfigure', {
-            ability: context.saves.concentration.label,
-          })}
-          <div class="config-container">
-            <button
-              aria-label={tooltip}
-              data-tooltip
-              type="button"
-              class="button button-borderless button-icon-only button-config"
-              onclick={() =>
-                FoundryAdapter.openConcentrationConfig(context.actor)}
-            >
-              <i class="fas fa-cog"></i>
-            </button>
-          </div>
-        {/if} -->
       {/if}
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
+        aria-label={localize('DND5E.ItemCreate')}
+        role="button"
+        tabindex="0"
         data-tooltip="DND5E.ItemCreate"
         class="button button-icon-only button-primary item-create"
         class:disabled={!context.editable}
         onclick={onAddClicked}
+        onkeydown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            onAddClicked();
+          }
+        }}
       >
         <i class="fas fa-plus"></i>
       </a>
