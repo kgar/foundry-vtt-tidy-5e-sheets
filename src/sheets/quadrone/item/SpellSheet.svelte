@@ -144,7 +144,7 @@
           <div
             class="school"
             aria-label={context.labels.school}
-            data-tooltip={context.labels.school}
+            data-tooltip
           >
             <Dnd5eIcon src={spellSchoolConfig.icon} />
           </div>

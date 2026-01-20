@@ -28,6 +28,7 @@
     children?: Snippet<
       [{ toggleSummary: TidyTableToggleSummaryFunction; expanded: boolean }]
     >;
+    afterInlineActivities?: Snippet<[Item5e]>;
     expanded?: boolean;
   }
 
@@ -37,6 +38,7 @@
     rowClass = '',
     hidden = false,
     children,
+    afterInlineActivities,
     expanded = $bindable(false),
   }: Props = $props();
 
@@ -154,7 +156,7 @@
 
   {#snippet afterRow()}
     <ExpandableContainer {expanded} deferRendering>
-      <TidyItemSummary chatData={chatData ?? emptyChatData} {item} />
+      <TidyItemSummary chatData={chatData ?? emptyChatData} {item} {afterInlineActivities} />
     </ExpandableContainer>
   {/snippet}
 </TidyTableRow>

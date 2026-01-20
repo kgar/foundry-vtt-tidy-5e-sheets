@@ -59,11 +59,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-    position: {
-      width: 740,
-      height: 810,
-    },
-  };
+      position: {
+        width: 740,
+        height: 810,
+      },
+    };
 
   _createComponent(node: HTMLElement): Record<string, any> {
     if (this.actor.limited) {
@@ -102,7 +102,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
     const currentPace =
       paces.find(
-        (pace) => pace.key === this.actor.system.attributes.movement.pace
+        (pace) => pace.key === this.actor.system.attributes.travel.pace
       ) ?? paces[0];
 
     const enrichmentArgs = {
@@ -131,13 +131,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           currentPace.index === 0
             ? 1 // Slow
             : currentPace.index > 0 && currentPace.index >= paces.length - 1
-            ? 3 // Fast
-            : 2, // Normal
+              ? 3 // Fast
+              : 2, // Normal
         units: {
           label:
-            CONFIG.DND5E.movementUnits[
-              this.actor.system.attributes.movement.units
-            ]?.abbreviation ?? this.actor.system.attributes.movement.units,
+            CONFIG.DND5E.travelUnits[
+              this.actor.system.attributes.travel.units
+            ]?.abbreviationDay ?? this.actor.system.attributes.travel.units,
         },
       },
       type: 'group',
@@ -437,11 +437,11 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     if (Number.isNaN(increment)) return;
     const paces = Object.keys(CONFIG.DND5E.travelPace);
     const current = paces.indexOf(
-      this.actor.system._source.attributes.movement.pace
+      this.actor.system._source.attributes.travel.pace
     );
     const next =
       (((current + increment) % paces.length) + paces.length) % paces.length;
-    this.actor.update({ 'system.attributes.movement.pace': paces[next] });
+    this.actor.update({ 'system.attributes.travel.pace': paces[next] });
   }
 
   award() {

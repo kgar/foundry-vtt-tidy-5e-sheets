@@ -39,6 +39,7 @@ export type Tidy5eSettings = {
 /** Any Foundry Core Settings that are relevant to Tidy and need cached access. */
 export type FoundryCoreSettings = {
   fontSizePx: number;
+  performanceMode: number;
 };
 
 /** Any D&D 5E System Settings that are relevant to Tidy and need cached access. */
@@ -129,6 +130,7 @@ export type Tidy5eSetting = {
    * Denotes which CSS Variable is represented by the target setting. Used for color picking.
    */
   representsCssVariable?: string;
+  debugOnly?: boolean;
 };
 
 /**
@@ -137,6 +139,7 @@ export type Tidy5eSetting = {
 let _settings: CurrentSettings = $state()!; // For ergonomics, pretend like this is never undefined, because it is initialized in the hooks lifecycle.
 let _foundryCoreSettings: FoundryCoreSettings = $state({
   fontSizePx: 16,
+  performanceMode: 2, // 2 - High is the default until we know better
 });
 let _systemSettings: Dnd5eSystemSettings = $state({
   currencyWeight: false,
@@ -341,7 +344,7 @@ export function createSettings() {
             TabManager.getTabsAsConfigOptions(
               CharacterSheetClassicRuntime.getAllRegisteredTabs()
             ),
-          default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+          default: CONSTANTS.TAB_ACTOR_ACTIONS,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>(
@@ -391,7 +394,9 @@ export function createSettings() {
               }
             ),
             { initial: {} },
-            { name: 'Document Names to Document Type Header Control Configuration Object' }
+            {
+              name: 'Document Names to Document Type Header Control Configuration Object',
+            }
           ),
           default: {},
         },
@@ -882,7 +887,8 @@ export function createSettings() {
           type: Array,
           default: [
             CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-            CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
+            CONSTANTS.TAB_VEHICLE_CARGO_LEGACY,
+            CONSTANTS.TAB_VEHICLE_CREW_AND_PASSENGERS,
             CONSTANTS.TAB_EFFECTS,
             CONSTANTS.TAB_VEHICLE_DESCRIPTION_LEGACY,
           ],
@@ -2052,6 +2058,21 @@ export function createSettings() {
         },
       },
 
+      performanceMode: {
+        options: {
+          name: 'Performance Mode',
+          hint: "Disable all Tidy sheet transition animations and drop shadows. Turning off Foundry's Performance Mode or Animation Duration settings will also modify this setting. (This currently only works when Debug is enabled.)",
+          scope: 'client',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('performanceMode');
+        },
+        debugOnly: true,
+      },
+
       truesight: {
         options: {
           name: 'Tidy 5e Truesight',
@@ -2074,6 +2095,10 @@ function refreshFoundryCoreSettings() {
   _foundryCoreSettings.fontSizePx = parseFloat(
     document.documentElement.style.fontSize
   );
+  _foundryCoreSettings.performanceMode = game.settings.get(
+    'core',
+    'performanceMode'
+  );
 }
 
 function refreshSystemSettings() {
@@ -2093,6 +2118,20 @@ function refreshSystemSettings() {
 
 export let SettingsProvider: ReturnType<typeof createSettings>;
 
+export type Tidy5eSheetsPerformanceClassToggles = [string, boolean][];
+
+export function getTidyPerformanceSettings(): Tidy5eSheetsPerformanceClassToggles {
+  const performanceModeEnabled =
+    (SettingsProvider.settings.debug.get() &&
+      SettingsProvider.settings.performanceMode.get()) ||
+    foundryCoreSettings.value.performanceMode === 0;
+
+  return [
+    ['disable-shadows', performanceModeEnabled],
+    ['disable-transitions', performanceModeEnabled],
+  ];
+}
+
 export function initSettings() {
   SettingsProvider = createSettings();
 
@@ -2100,9 +2139,28 @@ export function initSettings() {
     _settings = getCurrentSettings();
   }, 100);
 
-  for (let setting of Object.entries(SettingsProvider.settings)) {
+  for (let setting of Object.entries(SettingsProvider.settings).filter(
+    (x: [string, Tidy5eSetting]) => !x[1].debugOnly
+  )) {
     const options = {
       ...setting[1].options,
+      onChange: (...args: any[]) => {
+        debouncedSettingStoreRefresh();
+
+        (setting[1].options as any).onChange?.(...args);
+      },
+    };
+    FoundryAdapter.registerTidySetting(setting[0], options);
+  }
+
+  const debug = SettingsProvider.settings.debug.get();
+
+  for (let setting of Object.entries(SettingsProvider.settings).filter(
+    (x: [string, Tidy5eSetting]) => x[1].debugOnly
+  )) {
+    const options = {
+      ...setting[1].options,
+      config: debug,
       onChange: (...args: any[]) => {
         debouncedSettingStoreRefresh();
 
@@ -2139,6 +2197,16 @@ export function initSettings() {
   });
 
   Hooks.on('clientSettingChanged', () => {
+    refreshFoundryCoreSettings();
+    refreshSystemSettings();
+  });
+
+  Hooks.on('userSettingChanged', () => {
+    refreshFoundryCoreSettings();
+    refreshSystemSettings();
+  });
+
+  Hooks.on('worldSettingChanged', () => {
     refreshFoundryCoreSettings();
     refreshSystemSettings();
   });

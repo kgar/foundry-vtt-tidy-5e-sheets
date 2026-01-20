@@ -169,7 +169,7 @@
       <!-- Units -->
       <div class="form-group label-top">
         <label for="{appId}-target-template-units"
-          >{localize('DND5E.MovementUnits')}</label
+          >{localize('DND5E.MOVEMENT.FIELDS.units.label')}</label
         >
         <Select
           id="{appId}-target-template-units"

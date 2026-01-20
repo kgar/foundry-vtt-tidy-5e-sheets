@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ActorAttributeEncumbrance } from 'src/foundry/dnd5e.types';
+    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import WeightDistributionTooltip from 'src/tooltips/WeightDistributionTooltip.svelte';
   import type { Actor5e } from 'src/types/types';
 
@@ -23,10 +24,10 @@
         : `low`,
   );
 
-  let readableValue = $derived((encumbrance.value ?? 0).toFixed(1));
+  let readableValue = $derived(FoundryAdapter.formatNumber((encumbrance.value ?? 0).toNearest(0.1)));
 
   let encumbranceMaxText = $derived(
-    encumbrance.max === Infinity ? '∞' : encumbrance.max,
+    encumbrance.max === Infinity ? '∞' : FoundryAdapter.formatNumber(encumbrance.max),
   );
 
   let weightDistributionTooltip: WeightDistributionTooltip;

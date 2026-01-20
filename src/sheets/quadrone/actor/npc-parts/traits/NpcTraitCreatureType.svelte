@@ -37,7 +37,7 @@
           aria-label={localize('DND5E.CreatureType.Add')}
           type="button"
           class="button button-borderless button-icon-only button-config flexshrink"
-          data-tooltip={localize('DND5E.CreatureType.Add')}
+          data-tooltip
           onclick={onconfig}
         >
           <i class="fa-solid fa-cog"></i>

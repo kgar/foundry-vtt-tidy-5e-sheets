@@ -49,7 +49,7 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
-import { SettingsProvider } from 'src/settings/settings.svelte';
+import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
@@ -67,7 +67,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
+    // Default to Character tab if no class, otherwise first tab
+    const hasClass = this.actor.itemTypes.class?.length > 0;
+    this.currentTabId = hasClass
+      ? CONSTANTS.TAB_ACTOR_ACTIONS
+      : CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
     this.currentSidebarTabId = CONSTANTS.TAB_CHARACTER_SIDEBAR_FAVORITES;
   }
 
@@ -344,24 +348,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return context;
   }
 
-  private _getSpecialTraits(): ActorTraitContext[] {
-    const dnd5eFlags = this.actor.flags.dnd5e;
-
-    if (!dnd5eFlags) {
-      return [];
-    }
-
-    const characterFlags = CONFIG.DND5E.characterFlags;
-
-    return Object.entries(characterFlags)
-      .filter(([name]) => name in dnd5eFlags && dnd5eFlags[name] !== false)
-      .map(([key, val]) => {
-        if ('type' in val && val.type === Number)
-          return { label: val.name, value: dnd5eFlags[key] };
-        return { label: val.name };
-      });
-  }
-
   public static async tryGetInspirationSource(
     actor: Actor5e
   ): Promise<InspirationSource | undefined> {
@@ -541,6 +527,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   }
 
   _prepareItems(context: CharacterSheetQuadroneContext) {
+    const eligibleItems = Array.from(this.actor.items).filter(
+      (item: Item5e) => {
+        // Suppress riders for disabled enchantments
+        return item.dependentOrigin?.active !== false;
+      }
+    );
+
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: true }
@@ -554,7 +547,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     // Partition items by category
     let { backgrounds, classes, feats, items, species, spells, subclasses } =
-      Array.from(this.actor.items).reduce(
+      eligibleItems.reduce(
         (obj: CharacterItemPartitions, item: Item5e) => {
           const { quantity } = item.system;
 
@@ -710,7 +703,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     });
 
     context.features = Object.values(features);
-
     context.features.forEach(applyStandardItemHeaderActions);
   }
 

@@ -38,6 +38,7 @@ import type {
   ThemeSettingsV3,
 } from 'src/theme/theme-quadrone.types';
 import type { Tidy5eNpcSheetQuadrone } from 'src/sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
+import type { Tidy5eVehicleSheetQuadrone } from 'src/sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import type { Tidy5eGroupSheetQuadrone } from 'src/sheets/quadrone/Tidy5eGroupSheetQuadrone.svelte';
 import type { Tidy5eEncounterSheetQuadrone } from 'src/sheets/quadrone/Tidy5eEncounterSheetQuadrone.svelte';
 import type { TravelPaceConfig } from 'src/foundry/config.types';
@@ -201,6 +202,7 @@ export type SectionCommand = {
   iconClass?: string;
   tooltip?: string;
   execute?: (params: SectionCommandExecuteParams) => void;
+  attributes?: HTMLAttributes<HTMLElement>;
 };
 
 export type SectionCommandExecuteParams = {
@@ -227,18 +229,10 @@ export type ActivitySection = {
   activities: Activity5e[];
 } & TidySectionBase;
 
-export type VehicleCargoSection = {
-  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
-  items: Item5e[];
-  css?: string;
-  editableName?: boolean;
-  columns: SimpleEditableColumn[];
-} & TidySectionBase;
-
 export type VehicleFeatureSection = {
-  crewable?: boolean;
-  columns?: SimpleEditableColumn[];
-} & FeatureSection;
+  type: typeof CONSTANTS.SECTION_TYPE_FEATURE;
+  items: Item5e[];
+} & TidySectionBase;
 
 export type SimpleEditableColumn = {
   label: string;
@@ -451,8 +445,8 @@ export type CharacterSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
@@ -558,19 +552,25 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContextV1;
 
+export type VehicleItemCrewAssignment = {
+  // TODO: reconsider doing this?
+  actor: Actor5e | { uuid: string } | undefined;
+  brokenLink?: boolean;
+};
+
 export type VehicleItemContext = {
   actionSubtitle?: string;
   activities?: ActivityItemContext[];
-  canToggle?: boolean;
   containerContents?: ContainerContents;
   cover?: string;
+  crew?: VehicleItemCrewAssignment[];
   hasUses?: boolean;
   save?: ItemSaveContext;
   toHit?: number | null;
@@ -579,12 +579,37 @@ export type VehicleItemContext = {
   toggleTitle?: string;
 };
 
+export type VehicleMember = {
+  actor: Actor5e;
+  quantity: number;
+  // etc.
+};
+
+export type VehicleMemberSection = {
+  members: VehicleMember[];
+  dropLabel: string;
+  // etc.
+} & TidySectionBase;
+
 export type VehicleSheetContext = {
-  cargo: VehicleCargoSection[];
-  features: VehicleFeatureSection[];
+  inventory: InventorySection[];
+  draft: VehicleMemberSection;
+  passengers: VehicleMemberSection;
+  crew: VehicleMemberSection;
+  features: FeatureSection;
+  weaponStations: InventorySection;
+  equipmentStations: InventorySection;
   itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities<VehicleSheetContext>;
 } & ActorSheetContextV1;
+
+export type VehicleCargoSection = {
+  type: typeof CONSTANTS.SECTION_TYPE_CARGO;
+  items: any[];
+  css?: string;
+  editableName?: boolean;
+  columns?: SimpleEditableColumn[];
+} & TidySectionBase;
 
 export type DerivedDamage = {
   label: string;
@@ -615,15 +640,15 @@ export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
-      options?: { includeInlineToggles?: boolean };
-    }
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+    options?: { includeInlineToggles?: boolean };
+  }
   | {
-      tabId: string;
-      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
-      options?: { includeInlineToggles?: boolean };
-    };
+    tabId: string;
+    message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+    options?: { includeInlineToggles?: boolean };
+  };
 
 export type Utilities<TContext> = Record<
   string,
@@ -1288,6 +1313,7 @@ export type NpcSheetQuadroneContext = {
   showLegendariesOnStatblockTab: boolean;
   size: ActorSizeContext;
   skills: ActorSkillsToolsContext<SkillData>[];
+  specialTraits: ActorTraitContext[];
   species?: ActorTraitItemContext;
   speeds: ActorSpeedSenseEntryContext[];
   spellbook: SpellbookSection[];
@@ -1515,12 +1541,103 @@ export type EncounterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_ENCOUNTER;
 } & MultiActorQuadroneContext<Tidy5eEncounterSheetQuadrone>;
 
+export type DraftAnimalContext = {
+  actor: Actor5e;
+  subtitle: string;
+  quantity: number;
+};
+
+export type DraftAnimalSection = {
+  type: 'draft';
+  members: DraftAnimalContext[];
+} & TidySectionBase;
+
+export type CrewMemberContext = {
+  actor: Actor5e;
+  subtitle: string;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
+  assignedTo?: Item5e;
+};
+
+export type CrewSection = {
+  type: 'crew';
+  members: CrewMemberContext[];
+} & TidySectionBase;
+
+export type CrewSections = {
+  assigned: CrewSection;
+  unassigned: CrewSection;
+};
+
+export type PassengerMemberContext = {
+  actor: Actor5e;
+  subtitle: string;
+  // TODO: Any calculations / subtitle material that is easier done in data context prep
+  quantity: number;
+};
+
+export type PassengerSection = {
+  type: 'passengers';
+  members: PassengerMemberContext[];
+} & TidySectionBase;
+
 export type VehicleSheetQuadroneContext = {
+  conditions: Dnd5eActorCondition[];
+  containerPanelItems: ContainerPanelItemContext[];
+  cost: {
+    value: number;
+    denomination: string;
+  };
+  crew: CrewSections;
+  currencies: CurrencyContext[];
+  effects: ActiveEffectSection[];
+  encumbrance: EncumbranceContext;
   enriched: {
     biography: string;
   };
+  features: InventorySection[];
+  inventory: InventorySection[];
+  itemContext: Record<string, VehicleItemContext>;
+  mountableItems: Record<
+    string,
+    {
+      img: string;
+      name: string;
+      uuid: string;
+      id: string;
+      crew: { value: number; max: number | undefined };
+    }
+  >;
+  passengers: PassengerSection;
+  quality: number;
+  showContainerPanel: boolean;
+  size: ActorSizeContext;
+  speeds: ActorSpeedSenseEntryContext[];
+  statblock: (InventorySection | DraftAnimalSection)[];
+  traits: Record<string, ActorTraitContext[]>;
+  travelSpeeds: {
+    currentSpeed: TravelSpeedConfigEntry;
+    travelSpeeds: TravelSpeedConfigEntry[];
+    units: {
+      day: string;
+      hour: string;
+    };
+  };
   type: typeof CONSTANTS.SHEET_TYPE_VEHICLE;
-} & SingleActorContext<unknown>;
+  useActionsFeature?: boolean;
+  utilities: Utilities<VehicleSheetQuadroneContext>;
+  lockSensitiveFields?: boolean;
+} & SingleActorContext<Tidy5eVehicleSheetQuadrone>;
+
+export type TravelSpeedConfigEntry = {
+  key: string;
+  label: string;
+  valueDay: number;
+  valueHour: number;
+  unitsDay: string;
+  unitsHour: string;
+};
 
 /* Misc - Svelte */
 

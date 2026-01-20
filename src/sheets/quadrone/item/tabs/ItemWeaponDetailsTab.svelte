@@ -224,7 +224,7 @@
 
     <!-- Units -->
     <FormGroup
-      label="DND5E.MovementUnits"
+      label="DND5E.MOVEMENT.FIELDS.units.label"
       labelFor="{appId}-range-units"
       document={context.document}
       field={context.fields.range.fields.units}
@@ -257,7 +257,7 @@
       {/if}
       <!-- Units -->
       <FormGroup
-        label="DND5E.MovementUnits"
+        label="DND5E.MOVEMENT.FIELDS.units.label"
         labelFor="{appId}-range-units"
         document={context.document}
         field={context.fields.range.fields.units}

@@ -48,8 +48,8 @@
   );
 
   let currentVehicleType: DropdownListOption = $derived({
-    value: context.system.vehicleType,
-    text: context.config.vehicleTypes[context.system.vehicleType],
+    value: context.system.details.type,
+    text: context.config.vehicleTypes[context.system.details.type],
   });
 
   let abilities = $derived(Object.entries<any>(context.abilities));
@@ -104,7 +104,7 @@
             selected={currentVehicleType}
             onOptionClicked={(option) =>
               context.actor.update({
-                'system.vehicleType': option,
+                'system.details.type': option.value,
               })}
             title={localize('DND5E.VehicleType')}
           />
@@ -116,40 +116,12 @@
       </div>
       <span>&#8226;</span>
       {#key context.lockSensitiveFields}
-        <DelimitedTruncatedContent cssClass="flex-1 align-items-center">
-          <ContentEditableFormField
-            element="span"
-            document={context.actor}
-            field="system.traits.dimensions"
-            value={context.system.traits.dimensions}
-            title={context.system.traits.dimensions}
-            editable={context.editable && !context.lockSensitiveFields}
-            placeholder={localize('DND5E.Dimensions')}
-            selectOnFocus={true}
-          />
-          <InlineSource
-            document={context.actor}
-            keyPath="system.source"
-            editable={context.unlocked}
-          />
-        </DelimitedTruncatedContent>
+        <InlineSource
+          document={context.actor}
+          keyPath="system.source"
+          editable={context.unlocked}
+        />
       {/key}
-      <div class="flex-row align-items-center extra-small-gap">
-        {#if context.editable && !context.lockSensitiveFields}
-          <button
-            type="button"
-            onclick={() =>
-              new ActorOriginSummaryConfigFormApplication(context.actor).render(
-                true,
-              )}
-            class="origin-summary-tidy inline-icon-button"
-            title={localize('TIDY5E.OriginSummaryConfig')}
-            tabindex={settings.value.useAccessibleKeyboardSupport ? 0 : -1}
-          >
-            <i class="fas fa-cog"></i>
-          </button>
-        {/if}
-      </div>
     </div>
     <HorizontalLineSeparator
       borderColor="light"
@@ -197,7 +169,6 @@
     .origin-summary {
       margin-left: 0.25rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
       gap: 0.25rem;
       line-height: 1rem;
@@ -206,6 +177,7 @@
 
       :global(button) {
         font-size: 0.75rem;
+        flex-grow: 0;
       }
     }
   }

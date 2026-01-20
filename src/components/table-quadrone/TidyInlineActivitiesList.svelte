@@ -19,6 +19,8 @@
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { getDefaultItemColumns } from 'src/runtime/tables/default-item-columns';
+  import TidyTableHeaderRow from './TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from './TidyTableHeaderCell.svelte';
 
   interface Props {
     item?: Item5e | null;
@@ -60,6 +62,8 @@
   });
 
   let actionsColumnWidthRems = $derived(actionsColumn.widthRems(section));
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <TidyTable
@@ -67,6 +71,24 @@
   toggleable={false}
   class="inline-activities-table"
 >
+  {#snippet header()}
+    <TidyTableHeaderRow class="theme-dark">
+      <TidyTableHeaderCell primary={true} class="header-label-cell">
+        <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
+      </TidyTableHeaderCell>
+      <TidyTableHeaderCell {...columns.uses}
+        >{localize('DND5E.Uses')}</TidyTableHeaderCell
+      >
+      <TidyTableHeaderCell {...columns.time}
+        >{localize('DND5E.SpellHeader.Time')}</TidyTableHeaderCell
+      >
+      <TidyTableHeaderCell {...columns.formula}
+        >{localize('DND5E.SpellHeader.Formula')}</TidyTableHeaderCell
+      >
+      <TidyTableHeaderCell columnWidth="{actionsColumnWidthRems}rem"
+      ></TidyTableHeaderCell>
+    </TidyTableHeaderRow>
+  {/snippet}
   {#snippet body()}
     {#each activities as ctx (ctx.activity.id)}
       {@const configurable = Activities.isConfigurable(ctx.activity)}
@@ -84,9 +106,6 @@
         onmousedown={(event) =>
           FoundryAdapter.editOnMiddleClick(event, ctx.activity)}
       >
-        <span class="activity-indent-icon">
-          <i class="fa-solid fa-arrow-turn-right flip-y"></i>
-        </span>
         <a
           class={['tidy-table-row-use-button', { disabled: !context.editable }]}
           onclick={(ev) => item.isOwner && rollActivity(ctx.activity, ev)}

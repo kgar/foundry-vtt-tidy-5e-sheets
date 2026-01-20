@@ -149,7 +149,7 @@
             <div class="config-container">
               <button
                 aria-label={tooltip}
-                data-tooltip={tooltip}
+                data-tooltip
                 type="button"
                 class="button button-borderless button-icon-only button-config"
                 onclick={() =>

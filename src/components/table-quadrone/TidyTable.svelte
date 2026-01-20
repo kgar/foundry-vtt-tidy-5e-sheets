@@ -50,6 +50,11 @@
         };
       },
     );
+  } else {
+    setContext<ExpansionTrackerToggleProvider>(
+      CONSTANTS.SVELTE_CONTEXT.SECTION_EXPANSION_TOGGLE_PROVIDER,
+      false,
+    );
   }
 
   let expanded = $derived(

@@ -1,9 +1,12 @@
 import { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { CONSTANTS } from 'src/constants';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 
 export function initKeybindings() {
   registerSheetLockToggleKeybinding();
   registerHeaderMenuToggleKeybinding();
+  registerSheetToggleKeybinding();
 }
 
 function registerSheetLockToggleKeybinding() {
@@ -52,4 +55,130 @@ function registerHeaderMenuToggleKeybinding() {
       },
     ],
   });
+}
+
+function registerSheetToggleKeybinding() {
+  if (SettingsProvider.settings.debug.get() === false) {
+    return;
+  }
+
+  new QuickSheetSwitchKeybind({
+    registrationKey: 'tidyQssQuadrone',
+    name: 'Quick Sheet Switch - Tidy Quadrone Sheet',
+    debounceDelay: 1000,
+    invocationCountToTrigger: 3,
+    getSheetKey: (sheetClasses) =>
+      Object.keys(sheetClasses).find(
+        (x) =>
+          x.toLocaleLowerCase().includes('tidy') &&
+          x.toLocaleLowerCase().includes('quadrone')
+      ),
+    downKey: 'KeyQ',
+    modifiers: ['Shift'],
+  });
+
+  new QuickSheetSwitchKeybind({
+    registrationKey: 'tidyQssClassic',
+    name: 'Quick Sheet Switch - Tidy Classic Sheet',
+    debounceDelay: 1000,
+    invocationCountToTrigger: 3,
+    getSheetKey: (sheetClasses) =>
+      Object.keys(sheetClasses).find(
+        (x) =>
+          x.toLocaleLowerCase().includes('tidy') &&
+          !x.toLocaleLowerCase().includes('quadrone') &&
+          !x.toLocaleLowerCase().includes('debug')
+      ),
+    downKey: 'KeyT',
+    modifiers: ['Shift'],
+  });
+
+  new QuickSheetSwitchKeybind({
+    registrationKey: 'tidyQssDefault',
+    name: 'Quick Sheet Switch - System Default Sheet',
+    debounceDelay: 1000,
+    invocationCountToTrigger: 3,
+    getSheetKey: (sheetClasses) =>
+      Object.entries(sheetClasses).find(
+        ([key, value]) =>
+          !key.toLocaleLowerCase().includes('tidy') &&
+          value.toLocaleLowerCase().includes('default')
+      )?.[0],
+    downKey: 'KeyD',
+    modifiers: ['Shift'],
+  });
+}
+
+type QuickSheetSwitchKeybindSettings = {
+  registrationKey: string;
+  downKey: string;
+  modifiers?: string[];
+  getSheetKey: (sheetClasses: Record<string, string>) => string | undefined;
+  name: string;
+  debounceDelay: number;
+  invocationCountToTrigger: number;
+};
+
+class QuickSheetSwitchKeybind {
+  _settings: QuickSheetSwitchKeybindSettings;
+
+  constructor(settings: QuickSheetSwitchKeybindSettings) {
+    this._settings = settings;
+    this.register();
+  }
+
+  register() {
+    let {
+      debounceDelay,
+      getSheetKey,
+      downKey,
+      name,
+      invocationCountToTrigger,
+      modifiers,
+      registrationKey,
+    } = this._settings;
+
+    let switchKeyInvocationCount = 0;
+
+    let debouncedInovationCountReset = FoundryAdapter.debounce(() => {
+      switchKeyInvocationCount = 0;
+    }, debounceDelay);
+
+    game.keybindings.register(CONSTANTS.MODULE_ID, registrationKey, {
+      name: name,
+      hint: `Press this keybind combination ${invocationCountToTrigger} times in a row to switch the indicated sheet type.`,
+      onDown: async () => {
+        if (!ui.activeWindow) {
+          return;
+        }
+
+        if (switchKeyInvocationCount >= invocationCountToTrigger - 1) {
+          const { sheetClasses } =
+            foundry.applications.apps.DocumentSheetConfig.getSheetClassesForSubType(
+              ui.activeWindow.document.documentName,
+              ui.activeWindow.document.type
+            );
+
+          const sheetKey = getSheetKey(sheetClasses);
+
+          if (!sheetKey) {
+            return;
+          }
+
+          ui.activeWindow.document.setFlag('core', 'sheetClass', sheetKey);
+        } else {
+          switchKeyInvocationCount++;
+          debouncedInovationCountReset();
+        }
+      },
+      onUp: () => {},
+      precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
+      editable: [
+        {
+          key: downKey,
+          modifiers: modifiers ?? [],
+        },
+      ],
+    });
+  }
 }

@@ -41,9 +41,9 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
 
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
-    
+
     this._fixedMode = CONSTANTS.SHEET_MODE_EDIT;
-    
+
     this.sectionExpansionTracker = new ExpansionTracker(
       true,
       this.document,
@@ -1023,11 +1023,6 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       {},
       {
         parent: this.item,
-        types: Object.entries(CONFIG.DND5E.activityTypes)
-          .filter(([, { configurable }]: any) => {
-            return configurable !== false;
-          })
-          .map(([k]) => k),
       }
     );
   }

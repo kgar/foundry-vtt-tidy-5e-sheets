@@ -5,12 +5,13 @@ import { SpellUtils } from 'src/utils/SpellUtils';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
+import { Activities } from 'src/features/activities/activities';
 
 export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_ACTION]: {
     name: 'activationCostAction',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION
       ),
     text: 'DND5E.Action',
@@ -19,7 +20,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_BONUS]: {
     name: 'activationCostBonus',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS
       ),
     text: 'DND5E.BonusAction',
@@ -28,7 +29,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_REACTION]: {
     name: 'activationCostReaction',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION
       ),
     text: 'DND5E.Reaction',
@@ -37,7 +38,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_LEGENDARY]: {
     name: 'activationCostLegendary',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LEGENDARY
       ),
     text: 'DND5E.LegendaryAction.Label',
@@ -45,7 +46,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_MYTHIC]: {
     name: 'activationCostMythic',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_MYTHIC
       ),
     text: 'DND5E.MythicActionLabel',
@@ -53,7 +54,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_LAIR]: {
     name: 'activationCostLair',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR
       ),
     text: 'DND5E.LAIR.Action.Label',
@@ -61,7 +62,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_CREW]: {
     name: 'activationCostCrew',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_CREW
       ),
     text: 'DND5E.VehicleCrewAction',
@@ -69,7 +70,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_SPECIAL]: {
     name: 'activationCostSpecial',
     predicate: (item) =>
-      !!item.system.activities?.some(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_SPECIAL
       ),
     text: 'DND5E.Special',
@@ -77,7 +78,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   [CONSTANTS.FILTER_ACTIVATION_COST_OTHER]: {
     name: 'activationCostOther',
     predicate: (item) =>
-      !!item.system.activities?.every(
+      !!Activities.getVisibleActivities(item, item.system.activities)?.every(
         (a: any) =>
           ![
             CONSTANTS.ACTIVATION_COST_ACTION,

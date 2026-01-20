@@ -27,6 +27,9 @@
   "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
 
   "TIDY5E.AddSpecific": "Add {name}",
+  "TIDY5E.AddCustom": "Add Custom {name}",
+  "TIDY5E.CompendiumBrowser": "Add {name} from Compendium",
+  "TIDY5E.RemoveSpecific": "Remove {name}",
 
   "TIDY5E.SheetPin": {
     "Label": "Sheet Pin",
@@ -70,6 +73,8 @@
     "SetOverrideTrue": "Add to Actions List",
     "ResetActionDefault": "Reset Action Default"
   },
+  "TIDY5E.LegendaryAbbr": "LA",
+  "TIDY5E.LairAbbr": "Lair",
 
   "TIDY5E.HitDC": "Hit / DC",
 
@@ -86,6 +91,8 @@
   "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
   "TIDY5E.SheetEdit.Disable.Hint": "Disable Edit - {description}",
   "TIDY5E.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
+  "TIDY5E.SheetMode.Edit": "Switch to Play Mode",
+  "TIDY5E.SheetMode.Play": "Switch to Edit Mode",
 
   "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
   "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
@@ -114,6 +121,8 @@
   "TIDY5E.ContextMenuActionRemoveAsInspirationSource": "Remove as Inspiration Source",
   "TIDY5E.ContextMenuActionAddToSheetTab": "Add to Sheet tab",
   "TIDY5E.ContextMenuActionRemoveFromSheetTab": "Remove from Sheet Tab",
+  "TIDY5E.ContextMenuActionUnassign": "Unassign",
+  "TIDY5E.ContextMenuActionAssignToEntity": "Assign to {entityName}",
 
   "TIDY5E.InspirationSource.ItemIsSourceTooltip": "Inspiration Source",
   "TIDY5E.InspirationAdd": "Add Inspiration",
@@ -798,6 +807,8 @@
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor.title": "Accent Color",
+    "UseHeaderBackground.title": "Use Header Background",
+    "UseHeaderBackground.hint": "Includes styles that support a colorful sheet header with an image background.",
     "ActorHeaderBackground.title": "Actor Header Background",
     "ItemSidebarBackground.title": "Item Sidebar Background",
     "PortraitShape": {
@@ -819,6 +830,21 @@
   "TIDY5E.Reset": "Reset",
   "TIDY5E.VehicleInMotion": "Vehicle is in motion",
   "TIDY5E.VehicleMotionless": "Vehicle is motionless",
+  "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Assigned Crew",
+  "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Unassigned Crew",
+  "TIDY5E.Vehicle.Member.Passenger.Label": "Passenger",
+  "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Draft Animal / Working Creature",
+  "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Draft Animals / Working Creatures",
+  "TIDY5E.Vehicle.Member.AssignTo.Label": "Assign to",
+  "TIDY5E.Vehicle.Member.Assigned.Label": "Assigned",
+  "TIDY5E.Vehicle.Repair.Label": "Repair",
+  "TIDY5E.Vehicle.Features.EmptyState": "Drag and drop features here, or click to add.",
+  "TIDY5E.Vehicle.Weapons.EmptyState": "Drag and drop weapons here, or click to add.",
+  "TIDY5E.Vehicle.Equipment.EmptyState": "Drag and drop equipment here, or click to add. Crew can then be assigned to vehicle equipment.",
+  "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Drag and drop draft animals or working creatures here, or click to add.",
+  "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. HP",
+  "TIDY5E.Vehicle.Unassigned.EmptyState": "Drag and drop crew here, or click to add. Crew can then be assigned to vehicle equipment or features.",
+  "TIDY5E.Vehicle.Passenger.EmptyState": "Drag and drop passengers here, or click to add.",
   "TIDY5E.TotalCrewCount": "Total Crew",
   "TIDY5E.ActionsPerTurn": "Actions Per Turn",
   "TIDY5E.SheetMenu": {
@@ -914,6 +940,7 @@
   "TIDY5E.SortMenu.OptionPriority": "Priority",
   "TIDY5E.Activities.Cast.SourceHintText": "From {itemName}",
   "TIDY5E.Containers.HoldsNumberUnits": "{holdsElementStart}Holds{holdsElementEnd} {numberElementStart}{number}{numberElementEnd} {unitsElementStart}{units}{unitsElementEnd}",
+  "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Transfer all currency to parent actor",
   "TIDY5E.BrokenLink": "Broken Link",
   "TIDY5E.Visible": "Visible",
   "TIDY5E.Hidden": "Hidden",
@@ -954,5 +981,7 @@
     "PlaceholderNameField.PlaceholderText": "Placeholder Name",
     "PlaceholderNotesField.PlaceholderText": "Notes"
   },
-  "TIDY5E.Actor.Characteristics": "Characteristics"
+  "TIDY5E.Actor.Characteristics": "Characteristics",
+  "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> will be removed from the Tidy 5e Sheets module in Foundry v14.",
+  "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> have been removed from the Tidy 5e Sheets module as of Foundry v14."
 }

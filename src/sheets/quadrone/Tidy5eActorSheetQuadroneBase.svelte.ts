@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { getActorActionSectionsQuadrone } from 'src/features/actions/actions.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
 import { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
@@ -42,7 +41,6 @@ import type {
 import { randomItem, splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { getModifierData } from 'src/utils/formatting';
-import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { mount } from 'svelte';
 import ActorLimitedSheet from './actor/ActorLimitedSheet.svelte';
 import ActorHeaderStart from './actor/parts/ActorHeaderStart.svelte';
@@ -62,6 +60,7 @@ import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
+import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -324,7 +323,12 @@ export function Tidy5eActorSheetQuadroneBase<
         isConcentrating,
         itemContext: {},
         items: Array.from(this.actor.items)
-          .filter((i: Item5e) => !this.actor.items.has(i.system.container))
+          .filter(
+            (i: Item5e) =>
+              !this.actor.items.has(i.system.container) &&
+              // Suppress riders for disabled enchantments
+              i.dependentOrigin?.active !== false
+          )
           .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)),
         journal: TidyFlags.documentJournal.get(this.actor),
         labels: this._getLabels(),
@@ -390,7 +394,9 @@ export function Tidy5eActorSheetQuadroneBase<
         src,
         token: showToken,
         path: showToken ? 'prototypeToken.texture.src' : 'img',
-        shape: showToken ? 'token' : themeSettings.portraitShape ?? 'round',
+        shape: showToken
+          ? 'token'
+          : themeSettings.portraitShape ?? ThemeQuadrone.DEFAULT_PORTRAIT_SHAPE,
         isVideo,
         isRandom,
       };
@@ -421,6 +427,31 @@ export function Tidy5eActorSheetQuadroneBase<
       }
 
       return labels;
+    }
+
+    protected _getSpecialTraits(): ActorTraitContext[] {
+      const dnd5eFlags = this.actor.flags.dnd5e;
+
+      if (!dnd5eFlags) {
+        return [];
+      }
+
+      // Character Flags - don't be fooled by the config prop name. It's for PCs and NPCs.
+      const characterFlags = CONFIG.DND5E.characterFlags;
+
+      return Object.entries(characterFlags)
+        .filter(
+          ([name]) => name in dnd5eFlags && !isNil(dnd5eFlags[name], false, '')
+        )
+        .map<ActorTraitContext>(([key, val]) => {
+          if ('type' in val && [Number, String].includes(val.type)) {
+            return {
+              label: val.name,
+              value: dnd5eFlags[key],
+            };
+          }
+          return { label: val.name };
+        });
     }
 
     _prepareSpellcastingClassContext(): SpellcastingClassContext[] {
@@ -782,7 +813,9 @@ export function Tidy5eActorSheetQuadroneBase<
         this.actor.system._source.attributes?.movement ?? {};
 
       function excludeSpeed(key: string) {
-        return isNil(systemMovement[key], 0) && isNil(sourceMovement[key], 0);
+        return (
+          isNil(systemMovement[key], 0, '') && isNil(sourceMovement[key], 0, '')
+        );
       }
 
       const speeds = Object.entries(CONFIG.DND5E.movementTypes)
@@ -793,13 +826,15 @@ export function Tidy5eActorSheetQuadroneBase<
 
           const parenthetical =
             key === CONSTANTS.MOVEMENT_FLY && systemMovement.hover
-              ? FoundryAdapter.localize('DND5E.MovementHover')
+              ? FoundryAdapter.localize('DND5E.MOVEMENT.Hover')
               : undefined;
 
           acc.push({
             key,
             label: config.label,
-            value: Math.round(+systemMovement[key]).toString() ?? '',
+            value:
+              FoundryAdapter.formatNumber(Math.round(+systemMovement[key])) ??
+              '',
             units:
               CONFIG.DND5E.movementUnits[systemMovement.units]?.abbreviation ??
               systemMovement.units,
@@ -998,6 +1033,31 @@ export function Tidy5eActorSheetQuadroneBase<
       return html;
     }
 
+    _updateFrame(options: ApplicationRenderOptions) {
+      super._updateFrame(options);
+
+      const themeSettings =
+        this._context.data?.themeSettings ??
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+        });
+
+      this._applySheetThemeClasses(themeSettings);
+    }
+
+    _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+      this.element.classList.toggle(
+        'sheet-parchment',
+        !themeSettings.useHeaderBackground
+      );
+
+      for (const node of this.element.querySelectorAll(
+        '.window-header, .sheet-header'
+      )) {
+        node.classList.toggle('theme-dark', themeSettings.useHeaderBackground);
+      }
+    }
+
     async _onRender(
       context: ActorSheetQuadroneContext,
       options: TidyDocumentSheetRenderOptions
@@ -1025,6 +1085,16 @@ export function Tidy5eActorSheetQuadroneBase<
         element.dataset.tooltipClass = 'property-attribution';
     }
 
+    onThemeConfigChanged(settingsOverride?: ThemeSettingsV3) {
+      const themeSettings =
+        settingsOverride ??
+        ThemeQuadrone.getSheetThemeSettings({
+          doc: this.actor,
+        });
+
+      this._applySheetThemeClasses(themeSettings);
+    }
+
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
@@ -1049,11 +1119,18 @@ export function Tidy5eActorSheetQuadroneBase<
         );
       }
 
-      const types = this._addDocumentItemTypes(args.tabId).filter(
+      let types = this._addDocumentItemTypes(args.tabId).filter(
         (type) =>
           !CONFIG.Item.dataModels[type].metadata?.singleton ||
           !this.actor.itemTypes[type].length
       );
+
+      if (datasetType) {
+        const proposedTypes = types.filter((t) => t === datasetType);
+        if (proposedTypes.length) {
+          types = proposedTypes;
+        }
+      }
 
       if (types.length > 1) {
         let dialogV1HookId: number | null = null;
@@ -1102,7 +1179,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * @returns {string[]}  Types of items to allow to create.
      */
     _addDocumentItemTypes(tab: string): string[] {
-      return TabDocumentItemTypesRuntime.getTypes(tab);
+      return TabDocumentItemTypesRuntime.getTypes(tab, this.document);
     }
 
     private async setExpandedItemData() {
@@ -1122,7 +1199,7 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     /* -------------------------------------------- */
-    /*  Drag and Drop
+    /*  Drag and Drop                               */
     /* -------------------------------------------- */
 
     _allowedDropBehaviors(
@@ -1735,7 +1812,7 @@ export function Tidy5eActorSheetQuadroneBase<
      */
     async _onDropActivity(
       event: DragEvent & { currentTarget: HTMLElement; target: HTMLElement },
-      document: Activity5e
+      activity: Activity5e
     ) {
       const targetItemId = event.target
         .closest('[data-item-id]')
@@ -1744,15 +1821,15 @@ export function Tidy5eActorSheetQuadroneBase<
       const targetItem = this.actor.items.get(targetItemId);
 
       // Reordering
-      if (!!targetItem && targetItem.uuid === document.item?.uuid) {
-        const source = targetItem.system.activities.get(document._id);
+      if (!!targetItem && targetItem.uuid === activity.item?.uuid) {
+        const source = targetItem.system.activities.get(activity._id);
         const targetId = event.target.closest<HTMLElement>(
           '.activity[data-activity-id]'
         )?.dataset.activityId;
         const target = targetItem.system.activities.get(targetId);
         if (!target || target === source) return;
         const siblings = targetItem.system.activities.filter(
-          (a: any) => a._id !== document._id
+          (a: any) => a._id !== activity._id
         );
         const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
           source,
@@ -1769,18 +1846,19 @@ export function Tidy5eActorSheetQuadroneBase<
           )
         );
         targetItem.update({ 'system.activities': updateData });
+      } else if (activity.constructor.availableForItem(targetItem) === false) {
+        return;
       }
-
       // Copying/Moving
       else if (targetItem) {
-        const data = document.toObject();
+        const data = activity.toObject();
         delete data._id;
-        const behavior = this._dropBehavior(event, document.toDragData());
+        const behavior = this._dropBehavior(event, activity.toDragData());
         await targetItem.createActivity(data.type, data, {
           renderSheet: false,
         });
         if (behavior === 'move') {
-          await document.delete();
+          await activity.delete();
         }
       }
     }

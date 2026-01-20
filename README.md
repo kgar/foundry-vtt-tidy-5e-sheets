@@ -25,7 +25,7 @@ Completely rewritten from the ground up, based on the original [Tidy5e Sheet](ht
 
 ## Get Involved
 
-Tidy runs on community feedback! If you like something you see, reach out in the [Tidy 5e Sheets community Discord](https://discord.gg/865zzNscRA), or put in a [GitHub issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) if you find something amiss.
+Tidy runs on community feedback! If you like something you see, reach out in the [Tidy 5e Sheets community Discord](https://discord.gg/dQWAnm59vq), or put in a [GitHub issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) if you find something amiss.
 
 
 ### **kgar**  • 📜 The Keeper of Sheets, Head Modron 👨‍💻 development, ✨ some design
@@ -69,7 +69,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 
 ## Tidy 5e Sheets UI
 
-⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, has begun, and we are gradually releasing new sheets into the beta. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
+⚙️ The new Tidy 5e Sheets overhaul, codenamed Quadrone, is complete. ⚙️ To make these sheets your own, change to the new **Tidy 5e Sheet** options in the Sheet Configuration pages.
 
 [![New Tidy 5e Sheets Trailer](https://img.youtube.com/vi/Rrfd9VPGQNA/0.jpg)](https://www.youtube.com/watch?v=Rrfd9VPGQNA)
 
@@ -85,7 +85,7 @@ Or, you can still install Tidy manually via the `module.json` URL:
 | ✅ Class  | ✅ NPC |
 | ✅ Consumable  | ✅ Group  |
 | ✅ Container  | ✅ Encounter |
-| ✅ Equipment | ⬜ Vehicle |
+| ✅ Equipment | ✅ Vehicle |
 | ✅ Facility | |
 | ✅ Feat | |
 | ✅ Loot | |
@@ -141,7 +141,7 @@ An alternate view of items that brings more functionality to the surface.
 | Equip, attune, identify from the sidebar | Prominent rarity/spellcasting mode theming |
 | Container contents as powerful as Character inventory | Player identification optionally hidden |
 | Fully themed descriptions including statblocks | Feat origin source selection |
-| Resizable and responsive sheets | |
+| Resizable and responsive sheets | Quick temp and max HP editing |
 
 &nbsp;
 
@@ -159,19 +159,23 @@ An alternate view of items that brings more functionality to the surface.
 | Detailed tables with drag and drop, sorting, and filtering | Custom sections |
 | Statblock tab with all traits, actions, and spells in one place | NPC journal |
 | HP and vitals in one spot similar to character sheets | Roll HP |
+| NPC sheet theming | |
 
 &nbsp;
 
 ## Vehicle Sheets
 
-![Vehicle Sheet](readme-assets/vehicle-sheet.png)
+![Vehicle Sheet](readme-assets/t5e-vehicle-hero.webp)
+![Vehicle Sheet](readme-assets/t5e-vehicle-edit.webp)
 
 ### What's unique about Tidy's Vehicle sheets?
 
 | Core Functionality | Additional Features |
 | --- | --- |
-| Sheets closely aligned with character sheet functionality | Combined attributes and features |
-| Detailed tables with drag and drop, sorting, and filtering |  |
+| Sheets closely aligned with character sheet functionality | Vehicle sheet theming |
+| Drag and drop organization, including crew, passengers, and working creatures | Easy crew assignment |
+| Structure mirroring all other sheets | Improved speeds display |
+
 
 &nbsp;
 

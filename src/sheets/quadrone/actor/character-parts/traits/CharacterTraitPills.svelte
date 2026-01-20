@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ActorTraitConfigurableListEntry from '../../parts/ActorTraitConfigurableListEntry.svelte';
-  import ActorTraitSize from '../../parts/ActorTraitSize.svelte';
+  import CharacterTraitSize from '../../parts/CharacterTraitSize.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { Snippet } from 'svelte';
   import ActorCustomTraitListEntries from '../../parts/ActorCustomTraitListEntries.svelte';
@@ -19,7 +19,7 @@
 </script>
 
 <!-- Size -->
-<ActorTraitSize />
+<CharacterTraitSize />
 
 <!-- Speed -->
 <ActorTraitConfigurableListEntry

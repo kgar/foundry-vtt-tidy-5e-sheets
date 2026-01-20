@@ -35,10 +35,6 @@
       (ev) => {
         if (ev.target === expandableContainer) {
           overflowYHidden = true;
-
-          if (expanded) {
-            renderContents = true;
-          }
         }
       },
       {
@@ -65,6 +61,12 @@
       controller.abort();
     };
   });
+
+  $effect(() => {
+    if (expanded) {
+      renderContents = true;
+    }
+  })
 </script>
 
 <div

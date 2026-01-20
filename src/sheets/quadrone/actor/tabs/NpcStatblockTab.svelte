@@ -228,7 +228,7 @@
               type="button"
               class="button button-secondary"
               aria-label={localize('DND5E.FlagsTitle')}
-              data-tooltip={localize('DND5E.FlagsTitle')}
+              data-tooltip
               onclick={() =>
                 new SpecialTraitsApplication({
                   document: context.actor,

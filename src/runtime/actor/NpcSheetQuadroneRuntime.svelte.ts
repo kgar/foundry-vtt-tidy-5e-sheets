@@ -17,7 +17,7 @@ export const NpcSheetQuadroneRuntime =
           component: NpcStatblockTab,
           type: 'svelte',
         },
-        id: CONSTANTS.TAB_NPC_STATBLOCK,
+        id: CONSTANTS.TAB_STATBLOCK,
         layout: 'quadrone',
         iconClass: 'fa-solid fa-wreath-laurel',
       },
@@ -73,7 +73,7 @@ export const NpcSheetQuadroneRuntime =
       },
     ],
     [
-      CONSTANTS.TAB_NPC_STATBLOCK,
+      CONSTANTS.TAB_STATBLOCK,
       CONSTANTS.TAB_ACTOR_INVENTORY,
       CONSTANTS.TAB_ACTOR_SPELLBOOK,
       CONSTANTS.TAB_EFFECTS,

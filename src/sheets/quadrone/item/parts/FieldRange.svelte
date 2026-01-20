@@ -22,7 +22,7 @@
       field={context.fields.range.fields.value}
       config={{
         id: `${appId}-range-value`,
-        value: context.source.range.value,
+        value: (context.source.range.value === undefined || context.source.range.value === null || Number.isNaN(context.source.range.value)) ? '—' : context.source.range.value,
         hint: false,
       }}
       groupClasses="label-top"
@@ -30,7 +30,7 @@
   {/if}
   <!-- Units -->
   <FormGroup
-    label="DND5E.MovementUnits"
+    label="DND5E.MOVEMENT.FIELDS.units.label"
     labelFor="{appId}-range-units"
     document={context.document}
     field={context.fields.range.fields.units}

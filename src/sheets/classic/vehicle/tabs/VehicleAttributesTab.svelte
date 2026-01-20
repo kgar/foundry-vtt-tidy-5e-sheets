@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { getContext, type ComponentProps } from 'svelte';
+  import { type ComponentProps } from 'svelte';
   import Traits from '../../actor/traits/Traits.svelte';
   import VehicleAttributes from '../parts/VehicleAttributes.svelte';
   import type {
+    InventorySection,
     RenderableClassicControl,
-    VehicleFeatureSection,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
@@ -26,15 +26,13 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import ItemCrewedControl from 'src/sheets/classic/vehicle/parts/ItemCrewedControl.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/classic/shared/ClassicControls.svelte';
   import { ItemUtils } from 'src/utils/ItemUtils';
-  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getVehicleSheetContext } from 'src/sheets/sheet-context.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { isItemInActionList } from 'src/features/actions/actions.svelte';
-
+  
   let context = $derived(getVehicleSheetContext());
 
   const localize = FoundryAdapter.localize;
@@ -53,10 +51,10 @@
     )}"></i>`,
   };
 
-  let noFeatures = $derived(
-    !context.features.some(
-      (section: VehicleFeatureSection) => section.items.length,
-    ),
+  let noEntries = $derived(
+    !context.features.items.length &&
+      !context.weaponStations.items.length &&
+      !context.equipmentStations.items.length,
   );
 
   declareLocation('attributes');
@@ -64,23 +62,13 @@
   let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] =
     $derived.by(() => {
       let result: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
-      result.push(
-        {
-          component: ItemCrewedControl,
-          props: ({ item, ctx }) =>
-            ({
-              item,
-              ctx,
-            }) satisfies ComponentProps<typeof ItemCrewedControl>,
-        },
-        {
-          component: ItemEditControl,
-          props: ({ item }) =>
-            ({
-              item,
-            }) satisfies ComponentProps<typeof ItemEditControl>,
-        },
-      );
+      result.push({
+        component: ItemEditControl,
+        props: ({ item }) =>
+          ({
+            item,
+          }) satisfies ComponentProps<typeof ItemEditControl>,
+      });
 
       if (context.unlocked) {
         result.push({
@@ -120,200 +108,244 @@
     <Traits useSenses={false} enableSpecialTraitsConfiguration={false} />
   </div>
   <div class="main-panel flex-column small-gap">
-    {#if noFeatures && !context.unlocked}
+    {#if noEntries && !context.unlocked}
       <Notice>
         {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}
-      {#each context.features as section (section.key)}
-        {#if context.unlocked || section.items.length}
-          {@const itemEntries = section.items.map((item) => ({
-            item,
-            ctx: context.itemContext[item.id],
-          }))}
-
-          <ItemTable key={section.key}>
-            {#snippet header()}
-              <ItemTableHeaderRow>
-                <ItemTableColumn primary={true}>
-                  {localize(section.label)}
-                  <span class="item-table-count">{section.items.length}</span>
-                </ItemTableColumn>
-                {#if section.hasActions}
-                  <ItemTableColumn baseWidth="3.125rem">
-                    {localize('DND5E.Uses')}
-                  </ItemTableColumn>
-                  <ItemTableColumn baseWidth="7.5rem">
-                    {localize('DND5E.Usage')}
-                  </ItemTableColumn>
-                {/if}
-                {#if section.columns}
-                  {#each section.columns as column}
-                    <ItemTableColumn
-                      cssClass="items-header-{column.css}"
-                      baseWidth={baseWidths[column.property] ?? '3.125rem'}
-                    >
-                      {#if alternateColumnHeaderContent[column.property]}
-                        {@html alternateColumnHeaderContent[column.property]}
-                      {:else}
-                        {column.label}
-                      {/if}
-                    </ItemTableColumn>
-                  {/each}
-                {/if}
-                {#if context.editable && context.useClassicControls}
-                  <ItemTableColumn baseWidth={classicControlsColumnWidth} />
-                {/if}
-              </ItemTableHeaderRow>
-            {/snippet}
-            {#snippet body()}
-              {#each itemEntries as { item, ctx } (item.id)}
-                <ItemTableRow
-                  onMouseDown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(event, item)}
-                  contextMenu={{
-                    type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                    uuid: item.uuid,
-                  }}
-                  {item}
-                  cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-                >
-                  {#snippet children({ toggleSummary })}
-                    <ItemTableCell primary={true}>
-                      <ItemUseButton disabled={!context.editable} {item} />
-                      <ItemName
-                        onToggle={() => toggleSummary(context.actor)}
-                        cssClass="extra-small-gap"
-                        {item}
-                      >
-                        <span
-                          class="truncate flex-1"
-                          data-tidy-item-name={item.name}
-                          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                          >{item.name}</span
-                        >
-                      </ItemName>
-                    </ItemTableCell>
-                    {#if section.hasActions}
-                      <ItemTableCell baseWidth="3.125rem">
-                        {#if item.isOnCooldown}
-                          <RechargeControl
-                            document={item}
-                            field={'system.uses.spent'}
-                            uses={item.system.uses}
-                          />
-                        {:else if item.hasRecharge}
-                          {@const remaining =
-                            item.system.uses.max - item.system.uses.spent}
-                          {#if remaining > 1}
-                            <span>{remaining}</span>
-                          {/if}
-                          <i
-                            class="fas fa-bolt"
-                            title={localize('DND5E.Charged')}
-                          ></i>
-                        {:else if ctx?.hasUses}
-                          <ItemUses {item} />
-                        {:else}
-                          <span class="text-body-tertiary">&mdash;</span>
-                        {/if}
-                      </ItemTableCell>
-                      <ItemTableCell baseWidth="7.5rem">
-                        {#if ItemUtils.hasActivationType(item)}
-                          <span>{item.labels?.activation ?? ''}</span>
-                        {/if}
-                      </ItemTableCell>
-                    {/if}
-                    {#if section.columns}
-                      {#each section.columns as column}
-                        {#if column.property === 'system.hp.value'}
-                          <!-- TODO: Extract to its own component; formalize this feature of overriding specific columns based on property matching -->
-                          <ItemTableCell baseWidth="4.375rem">
-                            <div
-                              class="item-hp"
-                              title={localize('DND5E.HitPoints')}
-                            >
-                              <ResourceWithBar
-                                document={item}
-                                value={item.system.hp?.value}
-                                valueField="system.hp.value"
-                                valueTitle={localize('DND5E.HitPointsCurrent')}
-                                valueDisabled={!context.editable}
-                                max={item.system.hp?.max}
-                                maxField="system.hp.max"
-                                maxTitle={localize('DND5E.HitPointsMax')}
-                                maxDisabled={!context.editable ||
-                                  context.lockSensitiveFields}
-                                Bar={HpBar}
-                              />
-                            </div>
-                          </ItemTableCell>
-                        {:else}
-                          {@const isNumber = column.editable === 'Number'}
-                          {@const fallback = isNumber ? '0' : ''}
-                          {@const value =
-                            FoundryAdapter.getProperty(
-                              item,
-                              column.property,
-                            )?.toString() ??
-                            FoundryAdapter.getProperty(
-                              ctx,
-                              column.property,
-                            )?.toString() ??
-                            fallback}
-                          <ItemTableCell
-                            baseWidth={baseWidths[column.property] ??
-                              '3.125rem'}
-                          >
-                            {#if column.editable}
-                              <TextInput
-                                document={item}
-                                field={column.property}
-                                allowDeltaChanges={isNumber}
-                                selectOnFocus={true}
-                                {value}
-                                disabled={!context.editable}
-                              />
-                            {:else}
-                              {FoundryAdapter.getProperty(
-                                item,
-                                column.property,
-                              ) ??
-                                FoundryAdapter.getProperty(
-                                  ctx,
-                                  column.property,
-                                ) ??
-                                fallback}
-                            {/if}
-                          </ItemTableCell>
-                        {/if}
-                      {/each}
-                    {/if}
-                    {#if context.editable && context.useClassicControls}
-                      <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                        <ClassicControls
-                          {controls}
-                          params={{ item: item, ctx: ctx }}
-                        />
-                      </ItemTableCell>
-                    {/if}
-                  {/snippet}
-                </ItemTableRow>
-              {/each}
-              {#if context.unlocked && section.dataset}
-                <ItemTableFooter
-                  actor={context.actor}
-                  {section}
-                  isItem={true}
-                />
-              {/if}
-            {/snippet}
-          </ItemTable>
-        {/if}
-      {/each}
+      {@render featuresTable()}
+      {@render stationsTable(context.equipmentStations)}
+      {@render stationsTable(context.weaponStations)}
     {/if}
   </div>
 </div>
+
+{#snippet featuresTable()}
+  {@const section = context.features}
+  {#if context.unlocked || section.items.length}
+    {@const itemEntries = section.items.map((item) => ({
+      item,
+      ctx: context.itemContext[item.id],
+    }))}
+
+    <ItemTable key={section.key}>
+      {#snippet header()}
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(section.label)}
+            <span class="item-table-count">{section.items.length}</span>
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="3.125rem">
+            {localize('DND5E.Uses')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Usage')}
+          </ItemTableColumn>
+          {#if context.editable && context.useClassicControls}
+            <ItemTableColumn baseWidth={classicControlsColumnWidth} />
+          {/if}
+        </ItemTableHeaderRow>
+      {/snippet}
+      {#snippet body()}
+        {#each itemEntries as { item, ctx } (item.id)}
+          <ItemTableRow
+            onMouseDown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              uuid: item.uuid,
+            }}
+            {item}
+            cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+          >
+            {#snippet children({ toggleSummary })}
+              <ItemTableCell primary={true}>
+                <ItemUseButton disabled={!context.editable} {item} />
+                <ItemName
+                  onToggle={() => toggleSummary(context.actor)}
+                  cssClass="extra-small-gap"
+                  {item}
+                >
+                  <span
+                    class="truncate flex-1"
+                    data-tidy-item-name={item.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                    >{item.name}</span
+                  >
+                </ItemName>
+              </ItemTableCell>
+
+              <ItemTableCell baseWidth="3.125rem">
+                {#if item.isOnCooldown}
+                  <RechargeControl
+                    document={item}
+                    field={'system.uses.spent'}
+                    uses={item.system.uses}
+                  />
+                {:else if item.hasRecharge}
+                  {@const remaining =
+                    item.system.uses.max - item.system.uses.spent}
+                  {#if remaining > 1}
+                    <span>{remaining}</span>
+                  {/if}
+                  <i class="fas fa-bolt" title={localize('DND5E.Charged')}></i>
+                {:else if ctx?.hasUses}
+                  <ItemUses {item} />
+                {:else}
+                  <span class="text-body-tertiary">&mdash;</span>
+                {/if}
+              </ItemTableCell>
+              <ItemTableCell baseWidth="7.5rem">
+                {#if ItemUtils.hasActivationType(item)}
+                  <span>{item.labels?.activation ?? ''}</span>
+                {/if}
+              </ItemTableCell>
+
+              {#if context.editable && context.useClassicControls}
+                <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                  <ClassicControls
+                    {controls}
+                    params={{ item: item, ctx: ctx }}
+                  />
+                </ItemTableCell>
+              {/if}
+            {/snippet}
+          </ItemTableRow>
+        {/each}
+        {#if context.unlocked && section.dataset}
+          <ItemTableFooter actor={context.actor} {section} isItem={true} />
+        {/if}
+      {/snippet}
+    </ItemTable>
+  {/if}
+{/snippet}
+
+{#snippet stationsTable(section: InventorySection)}
+  {#if context.unlocked || section.items.length}
+    {@const itemEntries = section.items.map((item) => ({
+      item,
+      ctx: context.itemContext[item.id],
+    }))}
+
+    <ItemTable key={section.key}>
+      {#snippet header()}
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(section.label)}
+            <span class="item-table-count">{section.items.length}</span>
+          </ItemTableColumn>
+          <ItemTableColumn
+            baseWidth="3.125rem"
+            cssClass="items-header-item-qty"
+          >
+            {localize('DND5E.QuantityAbbr')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="3.125rem" cssClass="items-header-item-ac">
+            {localize('DND5E.AC')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="5rem" cssClass="items-header-item-hp">
+            {localize('DND5E.HP')}
+          </ItemTableColumn>
+          <ItemTableColumn
+            baseWidth="3.125rem"
+            cssClass="items-header-item-threshold"
+          >
+            {localize('DND5E.Threshold')}
+          </ItemTableColumn>
+
+          {#if context.editable && context.useClassicControls}
+            <ItemTableColumn baseWidth={classicControlsColumnWidth} />
+          {/if}
+        </ItemTableHeaderRow>
+      {/snippet}
+      {#snippet body()}
+        {#each itemEntries as { item, ctx } (item.id)}
+          <ItemTableRow
+            onMouseDown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              uuid: item.uuid,
+            }}
+            {item}
+            cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+          >
+            {#snippet children({ toggleSummary })}
+              <ItemTableCell primary={true}>
+                <ItemUseButton disabled={!context.editable} {item} />
+                <ItemName
+                  onToggle={() => toggleSummary(context.actor)}
+                  cssClass="extra-small-gap"
+                  {item}
+                >
+                  <span
+                    class="truncate flex-1"
+                    data-tidy-item-name={item.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                    >{item.name}</span
+                  >
+                </ItemName>
+              </ItemTableCell>
+
+              <!-- QTY -->
+              <ItemTableCell baseWidth="3.125rem">
+                <TextInput
+                  document={item}
+                  field="system.quantity"
+                  allowDeltaChanges={true}
+                  selectOnFocus={true}
+                  value={item.system.quantity}
+                  disabled={!context.editable}
+                />
+              </ItemTableCell>
+
+              <!-- AC -->
+              <ItemTableCell baseWidth="3.125rem">
+                {item.system.armor.value}
+              </ItemTableCell>
+
+              <!-- HP -->
+              <ItemTableCell baseWidth="5rem">
+                <div class="item-hp" title={localize('DND5E.HitPoints')}>
+                  <ResourceWithBar
+                    document={item}
+                    value={item.system.hp?.value}
+                    valueField="system.hp.value"
+                    valueTitle={localize('DND5E.HitPointsCurrent')}
+                    valueDisabled={!context.editable}
+                    max={item.system.hp?.max}
+                    maxField="system.hp.max"
+                    maxTitle={localize('DND5E.HitPointsMax')}
+                    maxDisabled={!context.editable ||
+                      context.lockSensitiveFields}
+                    Bar={HpBar}
+                  />
+                </div>
+              </ItemTableCell>
+
+              <!-- Threshold -->
+              <ItemTableCell baseWidth="3.125rem">
+                {ctx.threshold}
+              </ItemTableCell>
+
+              {#if context.editable && context.useClassicControls}
+                <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                  <ClassicControls
+                    {controls}
+                    params={{ item: item, ctx: ctx }}
+                  />
+                </ItemTableCell>
+              {/if}
+            {/snippet}
+          </ItemTableRow>
+        {/each}
+        {#if context.unlocked && section.dataset}
+          <ItemTableFooter actor={context.actor} {section} isItem={true} />
+        {/if}
+      {/snippet}
+    </ItemTable>
+  {/if}
+{/snippet}
 
 <style lang="less">
   .attributes-tab-contents {

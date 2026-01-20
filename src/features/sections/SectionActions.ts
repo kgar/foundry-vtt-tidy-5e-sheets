@@ -1,8 +1,11 @@
 import { ActorItemRuntime } from '../../runtime/ActorItemRuntime';
 import type {
   Actor5e,
+  CrewSection,
+  DraftAnimalSection,
   GroupMemberQuadroneContext,
   GroupMemberSection,
+  PassengerSection,
   SectionCommand,
   TidyItemSectionBase,
 } from 'src/types/types';
@@ -208,6 +211,32 @@ class SectionActions {
     return controls;
   }
 
+  getVehicleMemberHeaderActions(
+    section: CrewSection | PassengerSection | DraftAnimalSection
+  ): SectionCommand[] {
+    const entityNameKey =
+      section.type === 'crew'
+        ? 'DND5E.VEHICLE.Crew.Label'
+        : section.type === 'draft'
+          ? 'TIDY5E.Vehicle.Member.DraftAnimal.Label'
+          : 'TIDY5E.Vehicle.Member.Passenger.Label';
+
+    const addSpecificLabel = FoundryAdapter.localize('TIDY5E.CompendiumBrowser', {
+      name: FoundryAdapter.localize(entityNameKey),
+    });
+
+    return [
+      {
+        label: addSpecificLabel,
+        iconClass: 'fa-solid fa-book-atlas',
+        tooltip: addSpecificLabel,
+        attributes: {
+          ['data-action']: 'browseActors',
+        },
+      },
+    ];
+  }
+
   getCreateItemHeaderSectionAction(): SectionCommand {
     return {
       execute({ section, document, event }) {
@@ -236,38 +265,38 @@ class SectionActions {
   ): SectionCommand | undefined {
     return unlocked && actor.isOwner && !!section.items.length
       ? {
-          execute: () => {
-            new SectionSelectorApplication({
-              flag: flagProp,
-              callingDocument: actor,
-              document: section.items[0],
-              async onSave(newSectionName) {
-                const updates = section.items.map((i) => ({
-                  _id: i.id,
-                  [flagProp]: newSectionName,
-                }));
+        execute: () => {
+          new SectionSelectorApplication({
+            flag: flagProp,
+            callingDocument: actor,
+            document: section.items[0],
+            async onSave(newSectionName) {
+              const updates = section.items.map((i) => ({
+                _id: i.id,
+                [flagProp]: newSectionName,
+              }));
 
-                return Item.implementation.updateDocuments(updates, {
-                  parent: actor,
-                });
-              },
-              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-              window: {
-                title: FoundryAdapter.localize(
-                  'TIDY5E.Section.SectionSelectorTitle',
-                  {
-                    sectionType: FoundryAdapter.localize(
-                      'TIDY5E.Section.Label'
-                    ),
-                    documentName: FoundryAdapter.localize(section.label),
-                  }
-                ),
-              },
-            }).render({ force: true });
-          },
-          iconClass: 'fa-solid fa-diagram-cells',
-          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-        }
+              return Item.implementation.updateDocuments(updates, {
+                parent: actor,
+              });
+            },
+            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+            window: {
+              title: FoundryAdapter.localize(
+                'TIDY5E.Section.SectionSelectorTitle',
+                {
+                  sectionType: FoundryAdapter.localize(
+                    'TIDY5E.Section.Label'
+                  ),
+                  documentName: FoundryAdapter.localize(section.label),
+                }
+              ),
+            },
+          }).render({ force: true });
+        },
+        iconClass: 'fa-solid fa-diagram-cells',
+        label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+      }
       : undefined;
   }
 
@@ -279,36 +308,36 @@ class SectionActions {
   ): SectionCommand | undefined {
     return unlocked && container.isOwner && !!section.items.length
       ? {
-          execute: () => {
-            new SectionSelectorApplication({
-              flag: flagProp,
-              callingDocument: container,
-              document: section.items[0],
-              async onSave(newSectionName) {
-                const updates = section.items.map((i) => ({
-                  _id: i.id,
-                  [flagProp]: newSectionName,
-                }));
+        execute: () => {
+          new SectionSelectorApplication({
+            flag: flagProp,
+            callingDocument: container,
+            document: section.items[0],
+            async onSave(newSectionName) {
+              const updates = section.items.map((i) => ({
+                _id: i.id,
+                [flagProp]: newSectionName,
+              }));
 
-                return Item.implementation.updateDocuments(updates);
-              },
-              window: {
-                title: FoundryAdapter.localize(
-                  'TIDY5E.Section.SectionSelectorTitle',
-                  {
-                    sectionType: FoundryAdapter.localize(
-                      'TIDY5E.Section.Label'
-                    ),
-                    documentName: FoundryAdapter.localize(section.label),
-                  }
-                ),
-              },
-              sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-            }).render({ force: true });
-          },
-          iconClass: 'fa-solid fa-diagram-cells',
-          label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
-        }
+              return Item.implementation.updateDocuments(updates);
+            },
+            window: {
+              title: FoundryAdapter.localize(
+                'TIDY5E.Section.SectionSelectorTitle',
+                {
+                  sectionType: FoundryAdapter.localize(
+                    'TIDY5E.Section.Label'
+                  ),
+                  documentName: FoundryAdapter.localize(section.label),
+                }
+              ),
+            },
+            sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+          }).render({ force: true });
+        },
+        iconClass: 'fa-solid fa-diagram-cells',
+        label: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
+      }
       : undefined;
   }
 

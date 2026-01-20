@@ -26,6 +26,7 @@ import { initReadyHooks } from './features/ready-hooks';
 import '@melloware/coloris/dist/coloris.css';
 import { debug } from './utils/logging';
 import { Tidy5eItemSheetQuadrone } from './sheets/quadrone/Tidy5eItemSheetQuadrone.svelte';
+import { Tidy5eVehicleSheetQuadrone } from './sheets/quadrone/Tidy5eVehicleSheetQuadrone.svelte';
 import { Tidy5eCharacterSheetQuadrone } from './sheets/quadrone/Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './sheets/quadrone/Tidy5eNpcSheetQuadrone.svelte';
 import { ThemeQuadrone } from './theme/theme-quadrone.svelte';
@@ -203,6 +204,16 @@ Hooks.once('init', () => {
     }
   );
 
+  documentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eVehicleSheetQuadrone,
+    {
+      types: [CONSTANTS.SHEET_TYPE_VEHICLE],
+      label: 'TIDY5E.Tidy5eVehicleSheetQuadrone',
+    }
+  );
+  
   /* FOR THOSE WITH TRUE SIGHT */
   if (settings.value.truesight) {
     documentSheetConfig.registerSheet(

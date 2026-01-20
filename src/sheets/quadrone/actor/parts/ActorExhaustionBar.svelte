@@ -16,7 +16,7 @@
 <div class="exhaustion-bar flexrow">
   {#each Array(effectiveTotal) as _, i}
     <button
-      aria-label="Exhaustion level {i}"
+      aria-label={FoundryAdapter.localize('DND5E.ExhaustionLevel', { n: i })}
       type="button"
       class={[
         'button button-borderless button-icon-only button-config',
@@ -26,7 +26,7 @@
         onExhaustionLevelSet?.(i);
         onClose?.();
       }}
-      data-tooltip={FoundryAdapter.localize('DND5E.ExhaustionLevel', { n: i })}
+      data-tooltip
     >
       {i}
     </button>

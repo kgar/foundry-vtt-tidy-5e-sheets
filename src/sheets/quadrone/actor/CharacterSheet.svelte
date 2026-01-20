@@ -96,7 +96,7 @@
   });
 </script>
 
-<header class="sheet-header flexcol theme-dark">
+<header class="sheet-header flexcol">
   <div class="sheet-header-content flexrow">
     <div class="actor-details-container flexcol">
       <div
@@ -290,20 +290,21 @@
                 {:else}
                   <i class="fas fa-head-side-brain color-text-gold"></i>
                 {/if}
-                <span class="modifier font-label-medium color-text-lightest">
-                  {save.sign}
-                </span>
-                <span class="value font-data-medium color-text-default">
-                  {save.mod}
-                </span>
-                {#if context.unlocked}
+                {#if !context.unlocked}
+                  <span class="modifier font-label-medium color-text-lightest">
+                    {save.sign}
+                  </span>
+                  <span class="value font-data-medium color-text-default">
+                    {save.mod}
+                  </span>
+                {:else}
                   {@const tooltip = localize('DND5E.AbilityConfigure', {
                     ability: context.saves.concentration.label,
                   })}
                   <div class="config-container">
                     <button
                       aria-label={tooltip}
-                      data-tooltip={tooltip}
+                      data-tooltip
                       type="button"
                       class="button button-borderless button-icon-only button-config"
                       onclick={() =>
@@ -336,7 +337,7 @@
     <div class="actor-vitals-container">
       <!-- TODO: Add switch for size -->
       <ActorPortrait />
-      <div class="actor-vitals">
+      <div class="actor-vitals theme-dark">
         <div class="hp-row flexrow">
           <div
             class="meter progress hit-points"
@@ -422,7 +423,6 @@
                 type="button"
                 class="button button-borderless button-icon-only temp-hp"
                 onclick={() => {
-                  console.log('onclick');
                   hpOverlayFocusTarget = 'temp';
                   hpOverlayOpen = true;
                 }}
@@ -607,7 +607,7 @@
                   type="button"
                   class="button button-borderless button-icon-only"
                   aria-label={localize('DND5E.Exhaustion')}
-                  data-tooltip={'DND5E.Exhaustion'}
+                  data-tooltip
                   onclick={() => (exhaustionBarFocused = !exhaustionBarFocused)}
                   disabled={!context.editable}
                 >

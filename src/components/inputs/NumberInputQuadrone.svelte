@@ -7,6 +7,8 @@
     document: any;
     selectOnFocus?: boolean;
     stopClickPropagation?: boolean;
+    /** When true, empty input falls back to min (if defined) or 0 instead of null */
+    valueRequired?: boolean;
   } & HTMLInputAttributes;
 
   let {
@@ -15,6 +17,7 @@
     document,
     selectOnFocus = false,
     stopClickPropagation = false,
+    valueRequired = false,
     ...rest
   }: Props = $props();
 
@@ -31,9 +34,14 @@
 
     const proposedValueToSave = parseFloat(event.currentTarget.value);
 
-    const parsedValueToSave = !isNaN(proposedValueToSave)
+    let parsedValueToSave: number | null = !isNaN(proposedValueToSave)
       ? proposedValueToSave
       : null;
+
+    if (parsedValueToSave === null && valueRequired) {
+      const minValue = parseFloat(String(rest.min));
+      parsedValueToSave = !isNaN(minValue) ? minValue : 0;
+    }
 
     await document.update({
       [field]: parsedValueToSave,

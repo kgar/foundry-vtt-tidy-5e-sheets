@@ -11,7 +11,7 @@ import type {
 
 export class Activities {
   static isConfigurable(activity: Activity5e) {
-    return CONFIG.DND5E.activityTypes[activity.type]?.configurable !== false;
+    return activity.canConfigure;
   }
 
   static getVisibleActivities(
@@ -24,7 +24,8 @@ export class Activities {
       activities:
         activities?.filter(
           (a: Activity5e) =>
-            !item.getFlag('dnd5e', 'riders.activity')?.includes(a.id)
+            !item.getFlag('dnd5e', 'riders.activity')?.includes(a.id) &&
+            a.canUse
         ) ?? [],
     };
 
@@ -46,7 +47,7 @@ export class Activities {
 
   static getActivityItemContext(activity: Activity5e): ActivityItemContext {
     // To Hit
-    const toHit = parseInt(activity.labels.toHit);
+    const toHit = parseInt(activity.labels.modifier);
 
     // Activation
     const activationAbbr =

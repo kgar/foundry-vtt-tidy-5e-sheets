@@ -50,6 +50,10 @@
 
 ### Short List
 
+- [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
+  - [ ] Sortable with the others? Or fixed to the top?
+- [ ] Possibly fix usability complaint for Loyalty Score setup: <https://discord.com/channels/@me/1243307347682529423/1451341294881341480>
+- [ ] Favorite Facilities need "disabled" styles to indicate their state of disrepair
 - [ ] Move attunement to the item row actions as a toggle
 - [ ] Sheet Tab Configuration: "Use World Default" checkbox on the form. It basically just means `undefined` under the hood. If you do not check the box, we do not set your tabs config to `undefined`, even if it matches the world default.
   - [ ] When checked, the shuttle should be in the appropriate state that reflects the world default.
@@ -73,11 +77,11 @@
   - [ ] Plug into Weapon Details damage types
   - [ ] Determine where else could benefit, namely limited checkbox lists
 - [ ] Facility Details - Harvest UI at bottom needs some flex layout applied to it.
-- [ ] Attunement, Magical indicators: https://discord.com/channels/@me/1243307347682529423/1422428816877420564
+- [ ] Attunement, Magical indicators: <https://discord.com/channels/@me/1243307347682529423/1422428816877420564>
 - [ ] Group, Encounter: pull back all identical context prep, like inventory, to the MultiActorQuadroneContext
   - [ ] If it can be taken another step back, to Actor base prep, then we'll save a lot on code
 - [ ] PC Sidebar Tab Selection - update tab styles to accommodate tab overflow or ellipses or both.
-- [ ] Tools card header - has cursor hover style without interactivity
+- [x] Tools card header - has cursor hover style without interactivity
 - [ ] Effects tab - Conditions - Observer permissions - conditions have interactivity styles while being disabled. Pointer cursor, some highlighting (not sure if that one is supposed to be there or not when disabled)
 - [ ] Character: HD bar has a cursor pointer, but there's no interactivity related to it
 - [ ] PC - Bastion tab - progress meters have a cursor pointer but are not interactive
@@ -85,18 +89,16 @@
 - [ ] Group Sheet - Plan and task Bastions tab
   - [ ] Prep Bastions context
 - [ ] Group Sheet, Members tab, Sidebar, Weapon Mastery indicators where relevant?
-- [ ] NPC: (work with hightouch) Need to be able to conveniently toggle Saving Throw proficiencies rather than just using the config cog in Edit mode
 - [ ] Extract and share: TidyTableRowUseButton
-- [ ] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
-- [ ] Image blurriness again: https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082
+- [x] Are we able to reunite AbilityScore and AbilityScoreNPC, or are they too divergent from each other?
+- [ ] Image blurriness again: <https://discord.com/channels/1167985253072257115/1170003836556017755/1408567469697667082>
 - [ ] PC and NPC Sheets
-  - [ ] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
+  - [x] Update class/subclass/background/species rows to View on double-click and Edit on middle-click
 - [ ] NPC: Statblock tab - include remainder of inventory items with any action economy
 - [ ] NPC: Click HD to trigger a short rest (aka the only way to spend NPC HD)
-- [ ] NPC: Add tools section to the sidebar if NPC sheets even supports it
+- [x] NPC: Add tools section to the sidebar if NPC sheets even supports it
 - [ ] Refactor: `_preparePortraitContext` at the base actor level, providing everything that each sheet type might need.
-- [ ] Show Currency "item table section" when the user has configured more than 5 currencies. https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876 - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
-
+- [ ] Show Currency "item table section" when the user has configured more than 5 currencies. <https://discord.com/channels/1167985253072257115/1170003836556017755/1410735599111114876> - include a three-dots (or some other) hyperlink indicator that will scroll the item table for currency into view.
 
 ### (Almost) Everything after the short list
 
@@ -106,7 +108,7 @@
 - [ ] Stretch, post-release, Encounter sheet - Configuration to allow GMs to add more of these and specify their default images. Be able to drag onto combatants list from Encounter Sheet sidebar or click-to-add.
 - [ ] Stretch/discuss, post-release, Encounter sheet, member combat tracker placeholders - I want to: sideload to sidebar, then add those sideloaded actors to the tracker at configured initiative, so they can be double-clicked to open their details and roll things
 - [ ] Encounter XP bar with stops: add hook and API for passing in custom calculations. The hook should provide app and members with their quantities
-- [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437
+- [ ] Consider adding options like opacity, blend mode, grayscaling, etc., as advanced header options to theme settings. Based on this conversation and the cool stuff people are doing with backgrounds when we untie their hands: <https://discord.com/channels/1167985253072257115/1170021717524107274/1416750794765500437>
 - [ ] `isNil(somevalue, '')` - Let me facepalm 🤦‍♂️; empty string is already nullish. Simplify any expressions that match this logic so that they leverage type coercion of boolean type inference rather than calling a function. Test each one and be paranoid about making sure they work.
 - [ ] Refactor idea: Gather row actions as derived values of the sheet's own context state on the sheet class itself. See if it will reactively update based on context changes.
 - [ ] Effect table rows: when effect is disabled / suppressed, use the italicized / sad styles from unprepared spells and unidentified items.
@@ -134,10 +136,6 @@
 - [ ] Add World Setting to disable ruletips in Tidy
 - [ ] Only show Action tab control when the action tab is in use.
   - This is way more difficult than it has any business being. The ActorSheetRuntime refactor might be needed to make this viable.
-- [ ] Scaffold the Group Sheet
-- [ ] Set up Group Sheet Tab Selection
-- [ ] Scaffold the Vehicle Sheet
-- [ ] Set up Vehicle Sheet Tab Selection
 - [ ] Propagate Table Row Actions to Activities tables
 - [ ] Propagate Table Row Actions to Effects tables
 - [ ] Propagate Data-Driven Columns to Activities tables
@@ -182,28 +180,29 @@
   - Note: Section headers disappear when there are no results. I'm guessing I noted this wrong. Are we instead wanting to put a `search-no-results` class on the container for all the sections on that tab? Is it a means of showing a No Results UI?
 - [ ] // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
 - [ ] Like with the getSheetContext() functions, make other common ones, like getMessageBus() and getTabId(). At this point, should they be housed in a containing static class or exported object constant?
-- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904
+- [ ] Wonky formulas like `0 + 2 + 1d4 + 0 / 2` are clearly able to be simplified when reading them with human eyes. Is there a way with standard Foundry/dnd5e APIs to resolve all deterministic parts and make the formula look like `2 + 1d4`, or even better, `1d4 + 2`? Update, Zhell has some input on how to simplify: <https://github.com/foundryvtt/dnd5e/issues/5466#issuecomment-3211554904>
 - [ ] Stretch: Sheet config Visibility tab - For each tab entry, trim away options whose value is less than the established world value. If no world visibility is set, then do not trim. (Punting for later, because this is enough complexity that I don't want to bother with it at the moment.)
 - [ ] DocumentTag upgrade - show rich preview of found document
 - [ ] Create DocumentTags - Support multiple tags, show rich previews of found documents
 - [ ] Stretch: Update Content Registration API to allow an array of Elements during the HTML Content callback
 - [ ] Add ActorEffects, ActorConditions section commands APIs
   - [ ] ConditionsAndEffects.ts - API conditions and effects commands API
+- [ ] If possible, forward the parent sheet's theme to all dialogs/applications they open
+- [ ] accountForExternalSections is not being used quite right. It needs to happen after any callers have updated context with their own data. How do we account for this?
+- [ ] // TODO: Make the character sheet handle bastion tab check. This is violating separation of concerns.
+- [ ] Inline the custom Tidy modifications for spellbook preparation; ensure modules can still add spells / sections and have Tidy perform a post-operation to backfill spell section keys / Tidy props.
+- [ ] There are some layout changes to Rider effects: <https://discord.com/channels/170995199584108546/670336046164213761/1453597835550396529> ; what is Tidy doing currently, and can we do something differently?
+- [ ] Vehicle Sheet 💡: Show assignments and excess crew max empty slots in item sheet sidebar, entitled "Assigned Crew {assignedCount}"
 
 ## hightouch To Do
-
 
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
   - [ ] hightouch - make the necessary updates needed to support classes which disable animations, drop shadows, and whatever other things we can disable to increase perf.
 - [ ] Item sheet sidebar background image (low)
-- [ ] Make a generic roll button component
-  - [ ] Fix Slot favorite roll icon not appearing
-  - [x] Add Bastion facility roll icon on hover
-  - [ ] Add Character tab roll icon on hover
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
-- [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: https://discord.com/channels/@me/1243307347682529423/1409228016176992378
+- [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: <https://discord.com/channels/@me/1243307347682529423/1409228016176992378>
 
 ### Huh?
 
@@ -225,7 +224,6 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 <https://discord.com/channels/@me/1243307347682529423/1363003038482038836>
 > The issue was that there's a Damages label that is empty with the absorbing tattoo. It is possibly just a weird setup. The fix I did for now was to filter out damage labels that are null/undefined/empty.
 
-
 ### Bonus
 
 - [ ] Activity card / summary: Activities can be summarized via activity.activationLabels
@@ -242,111 +240,11 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 
 - [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 
-### More Sheet Pins
+## To Do Graveyard
 
-- [x] Set up the Show Sheet Pins per tab as a Global User Preference. No sheet-local override.
-- [x] Propagate UI for saving sheet pin visibility (local and global) to the relevant tabs.
-  - [x] Inventory (all of em)
-  - [x] Spellbook
-  - [x] Features
-  - [x] Statblock
-  - [x] Sheet
-- [x] Update all sheet pin component references to honor user setting value.
-- [x] Demo "More Sheet Pins" to hightouch and determine if/how to toggle visibility on them
-- [x] Stretch: Sheet Pins / Multi-actor Members tab upgrade
-  - [x] Add action bar with search, sort, and config
-  - [x] Enable custom sections for members tabs
-  - [x] Add Custom Sections to dialog and ensure section sorting and visibility work
-  - [x] Add Context menu "Choose a section" (or whatever)
-  - [x] Ensure columns loadout works for custom sections. Just use the Character loadout and make the relevant columns resilient to non-character actors.
-  - [x] Enable Search
-  - [x] Implement Show Sheet Pins option
-  - [x] Support drop to transfer sections. Dropping to a default section clears the section affiliation. Dropping to a custom section assigns the dropped to the custom section. If dropping to a section that the member is already a part of, do a sort.
-  - [x] Make custom action bar for Group Members to exclude filters and sorting.
-- [x] Ensure string-tags changes actually perform a form submission. Then remove the manual change event / form submission wire-up
-- [x] Ditto for document-tags: check on Facility details document-tags usage.
-- [x] Evolve the hands-free data field input to its own component that uses the ~~HTMLElement adapter~~ outerHTML approach. 
-  - Like Foundry, we can simply slam down outerHTML and call it a day, because the form will handle form submission.
-- [x] Create `TidyFormInput` component (quadrone only) that will take a data field and try to resolve to a particular input type. When it cannot, then have it spit out the `FoundryFormInput`, passing options through. Determine the best place to put such code, because it's gonna be pretty vast.
-- [x] Rename the current `FormGroup` to `FormGroupClassic`, purge it of Quadrone controls, and ensure classic special traits are using it
-- [x] Create new `FormGroup` component to handle Quadrone form groups and ensure Quadrone special traits is using the new `FormGroup`
-- [x] Ensure all basic HTML inputs are handled by Tidy, and allow the exotic ones like string-tags to be handled by core controls for now.
-  - [x] Convert Item Sheet Details tabs to vet this out
-    - [x] Background
-    - [x] Class
-    - [x] .. DetailsSpellcasting
-    - [x] .. ItemStartingEquipment
-    - [x] Consumable
-    - [x] .. QuantityWeightPriceFormGroups
-    - [x] .. FieldDamage
-    - [x] .. FieldUses
-    - [x] Equipment
-    - [x] .. DetailsMountable
-    - [x] Facility
-    - [x] Feat
-    - [x] Loot
-    - [x] Species
-    - [x] Spell
-    - [x] .. FieldActivation
-    - [x] .. FieldRange
-    - [x] .. FieldDuration
-    - [x] .. FieldTargets
-    - [x] Subclass
-    - [x] Tool
-    - [x] Weapon
-    - [x] Tattoo
-    - [x] ~~MCDM Power?~~ Let Michael do it if he wishes.
-  - [x] Find out why `context.fields.hirelings.fields.max` is not automatically using step=1 min=1; it's not being specified in the default sheets and works fine for it
-  - [x] Refactor: `disabled` config prop in most item sheet inputs can be removed in favor of `fieldset[disabled]`
-  - [x] Rename FormGroup `blank` prop to `blankLabel`
-  - [x] If a FormGroup is supplied a blank label, then consider usesBlank to be true
-- [x] Create string-tags replacement
-  - [x] Plug in to Required Items
-- [x] Create document-tags replacement for single documents as DocumentTag.
-  - [x] Support single tag
-    - [x] Plug into Facility details
-- [x] Container details - roll out FormGroup
-- [x] Set an error boundary on TidyFormInput and on FormGroup; should log error to console
-- [x] ~~Investigate `dnd5e.prepareSheetContext` and determine if I need to do something about this. realistically, what is my part ID for "all the context"?~~ We don't need it.
-- [x] Create Sheet Section Commands API as replacement for Sheet Footer Commands API
-- [x] Deprecate Sheet Footer Commands API and forward calls to Sheet Section Commands API
-- [x] Update sheet header commands column to leverage API ~~and place options in reverse order~~, favoring tidy default content on the far right. ~~Flex row-reverse might suffice for this.~~
-- [x] Evolve the header commands setup so that commands are supplied to the sections through context rather than derived in the component. Designate visible controls.
-  - [x] // TODO: add headerActions here
-  - [x] Sheet tab - section rename (unlocked only), API commands
-  - [x] Quadrone Character Feature Sections
-  - [x] Quadrone NPC Feature Sections
-  - [x] Quadrone Inventory Sections
-  - [x] Quadrone Spellbook Sections
-    - [x] Include slots config when usesSlots is true
-  - [x] MCDM Powers (be conservative about this one, just use the add control)
-  - [x] Group Sheet Members
-  - [x] NPC Statblock Section
-- [x] Consider renaming them "sectionActions"
-- [x] Ensure Quick Insert shows magnifying glass per configuration
-- [x] Ensure API callers can leverage context to determine if the sheet is locked or unlocked
-- [x] Limit availability of section rename to appropriate section types and only when the sheet is unlocked
-- [x] ~~Ensure context menu options are always available regardless of lock state~~ Nah. If the caller doesn't want it seen, we don't show it. The model should account for the alternate enabled state, perhaps through the enabled params ‼️.
-- [x] Convert all section actions to the API model. Render them into the custom action component at render time, using the data.
-- [x] Implement Overflow control 
-  - [x] When 4+ commands, replace all header actions with single 3-dots menu button that opens context menu. All enabled options should be present. This can trivially be done in the component where section actions are rendered.
-- [x] ~~Add context menu support to the section header at large with same behavior~~ Not worth it.
-- [x] ~~Need to Handle: be able to show a field in the context menu even when locked. Take some time to think how to do this one. Example: Section Rename option should always be available in the menu but not available in the header controls when unlocked.~~ Not worth it.
-- [x] ~~Implement section rename command in context menu as always available, even when locked~~ Standalone context menu abandoned. Not worth it.
-- [x] When unlocked, show section rename control in table head
-- [x] Review the section command API to determine if there's more information that can be included in the enabled callback
-- [x] Submit API changes to Quick Insert author for consideration; it should try for the updated command API and fall back to the deprecated one.
-- [x] Section Actions are actor-oriented right now. Further generalize to simply action actions or something. They should work without actors on containers, so the prop and type names should be generic when it comes to the document.
-- [x] Reorder the header actions to put them in the ideal order of importance. Then use flex reverse or a reverse array iteration to put the header actions from highest to lowest index.
-- [x] #1422 - Test and look for trouble
-  - [x] Character - Sheet, Inventory, Spellbook, Features, Effects
-  - [x] NPC - Statblock, Inventory, Spellbook
-  - [x] Group - Members, Inventory
-  - [x] Encounter - Loot
-  - [x] Container - Contents
-  - [x] Item - Effects, Activities
-- [x] Bulk Section title override - Use the section name instead of the first item's name in the title.
-- [x] Bug: Setting default sheet preference is reportedly resetting. 
-- [x] Always show the spell icon in spellbook, whether locked or unlocked
-- [x] Trigger `tidy5e.prepareSheetContext` hook to provide visibility into Tidy's prepared context. Provide all relevant info. This is not a parts-based prep hook like `dnd5e.prepareSheetContext`
-- [x] Eliminate scoped CSS styles from ExpandableContainer.svelte. Ensure Quadrone sheets have the CSS they need for it.
+- [x] Review and refine empty states on the Statblock tab
+  - [x] Weapons do not have an empty state.
+  - [x] Equipment empty state says it pulls from the compendium browser but instead creates an item. It would be more familiar if it just claimed to create an item.
+    - [x] Additionally, it presents the full Add Item dialog instead of just fast-forwarding creation to a correctly-configured Equipment vehicle item.
+  - [x] Features do no have an empty state.
+- [x] Draft Animals need their own columns. The default sheets fixate on creature size and carrying capacity.

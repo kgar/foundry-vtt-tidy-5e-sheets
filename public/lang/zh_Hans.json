@@ -24,7 +24,7 @@
     "TIDY5E.Group.ShowMemberTabInfoPanel": "显示信息面板",
     "TIDY5E.Group.HideMemberTabInfoPanel": "隐藏信息面板",
     "TIDY5E.RestHint": "休息",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e 经典群组卡",
+    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e 经典小队卡",
     "TIDY5E.Group.NamePlaceholder": "群组名称",
     "TIDY5E.ShortRest": "短休",
     "TIDY5E.LongRest": "长休",
@@ -64,7 +64,7 @@
     "TIDY5E.ContextMenuActionShowLimitedUses": "显示有限使用次数",
     "TIDY5E.ContextMenuActionShowQuantity": "显示数量",
     "TIDY5E.EmptyContainer": "该容器是空的。",
-    "TIDY5E.GMOnlyEdit": "只有你的GM可以编辑此部分。",
+    "TIDY5E.GMOnlyEdit": "只有你的GM可以编辑此分区。",
     "TIDY5E.AttunementWarning": "同调：无法对超过 {number} 件物品进行同调。",
     "TIDY5E.AttunementItems": "同调物品",
     "TIDY5E.AttunementMax": "最大同调",
@@ -83,13 +83,13 @@
     "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e 经典角色卡",
     "TIDY5E.ShowTokenArt": "显示指示物",
     "TIDY5E.Group.EmptyMembersTabHint": "此群组为空。从侧边栏拖放一个角色以添加成员。",
-    "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 群组卡",
+    "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e 小队卡",
     "TIDY5E.SearchClear": "清除搜索",
     "TIDY5E.JournalQuests": "任务",
     "TIDY5E.JournalMisc": "杂项",
-    "TIDY5E.SheetEdit.Description": "切换添加/删除按钮和空白部分的可见性",
+    "TIDY5E.SheetEdit.Description": "切换添加/删除按钮和空白分区的可见性",
     "TIDY5E.ContextMenuActionUnprepare": "未准备",
-    "TIDY5E.EmptySection": "此部分为空。解锁以进行编辑。",
+    "TIDY5E.EmptySection": "此分区为空。解锁以进行编辑。",
     "TIDY5E.LayoutNotSupported": "布局模式不受支持",
     "TIDY5E.SpellSourceIdentifierLabelHint": "拥有此法术的角色不属于此处指定的源职业。",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - 法术攻击",
@@ -139,7 +139,9 @@
         "SelectedHeader": "显示选项卡",
         "UnsupportedDocumentErrorMessage": "文档类型 {documentType} 当前尚未设置为可选项卡选择。",
         "AtLeastOneRequiredErrorMessage": "至少需要一个标签卡。",
-        "Explanation": "即使已选择，用户或卡的配置为不显示的任何选项卡（例如，在配置设置中禁用日志）也不会出现在卡上。"
+        "Explanation": "即使已选择，用户或卡的配置为不显示的任何选项卡（例如，在配置设置中禁用日志）也不会出现在卡上。",
+        "SelectionTab.Title": "选项卡",
+        "VisibilityTab.Title": "选项卡可见性"
     },
     "TIDY5E.ButtonConfirm.Text": "确认",
     "TIDY5E.Listbox": {
@@ -214,7 +216,7 @@
         "CustomizedIndicatorLabel": "自定义",
         "tabLabel": "自定义分区",
         "ShowWhenEmptyLabel": "当为空时显示分区",
-        "LimitToSpecificSheetsLabel": "将“显示分区”限制为特定卡",
+        "LimitToSpecificSheetsLabel": "将“显示分区”限制为特定表单",
         "LimitToSpecificTabsLabel": "将“显示分区”限制为特定选项卡",
         "ShowWhenEmptyTooltip": "所有包含物品列表的标签页都有一组默认的分区，即使分区中没有物品，这些分区也会始终显示。即使分区为空，也始终显示此分区。"
     },
@@ -339,7 +341,7 @@
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
         "name": "显示法术书选项卡",
-        "hint": "显示 NPC 的法术书标签。禁用后将法术书部分移至属性标签。"
+        "hint": "显示 NPC 的法术书分区。禁用后将法术书分区移至属性选项卡。"
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "显示主动效应标记",
@@ -589,5 +591,97 @@
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "滚动条轨道"
+    },
+    "TIDY5E.Show": "展示",
+    "TIDY5E.Hide": "隐藏",
+    "TIDY5E.LegendaryLairToolbar": "传奇/巢穴工具栏",
+    "TIDY5E.SpellbookSections": "法术书分区",
+    "TIDY5E.UserDefaultPrefix": "用户默认：{value}",
+    "TIDY5E.Group.PrimaryParty.Label": "主要队伍",
+    "TIDY5E.CombatTabName": "战斗",
+    "TIDY5E.ContextMenuActionPin": "固定至顶部",
+    "TIDY5E.ContextMenuActionUnpin": "解除顶部固定",
+    "TIDY5E.InspirationAdd": "添加激励",
+    "TIDY5E.InspirationRemove": "移除激励",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "菜单",
+        "LocationHeader": "标题"
+    },
+    "TIDY5E.SheetPin": {
+        "LabelPl": "表单固定",
+        "Label": "表单固定"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "标题控制器",
+        "label": "配置标题控制器",
+        "hint": "仅新 Tidy 表单：配置表单标题控制器位置。"
+    },
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "使用小队卡成员权限设置",
+        "hint": "允许 DM 控制用户在小队卡上可以看到的小队成员信息。当玩家对小队成员没有权限时，小队卡不会显示该成员或其信息。具有有限权限时，用户可以看到成员的名称，但看不到其他信息。具有观察员或更高权限时，用户可以看到关于该成员的小队卡上的所有信息。"
+    },
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": "魔法物品轮廓描边"
+    },
+    "TIDY5E.Settings.AllowHpMaxOverride": {
+        "name": "允许角色最大生命值上限覆盖",
+        "hint": "允许 DM 在角色卡上手动更改最大生命值。"
+    },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "name": "使用 Tidy 法术学派图标",
+        "hint": "使用 Tidy 精心挑选的法术学派图标。若要通过 CONFIG.DND5E 或其他模块自定义法术学派图标，请禁用此选项。若要扩展 Tidy 的自定义法术学派图标，请参考 Tidy API 文档。"
+    },
+    "TIDY5E.Settings.InlineActivitiesPosition": {
+        "name": "内联行动位置",
+        "hint": "展开某一物品时，会显示该物品的行动。使用此设置来确定行动是置于顶部（在物品描述之前），还是置于底部（在物品描述、按钮和标签之后）。",
+        "top": "顶部",
+        "bottom": "底部"
+    },
+    "TIDY5E.Settings.Reset": {
+        "name": "重置默认设置",
+        "hint": "此操作将把所有配置重置为当前激活游戏系统的默认值。该重置仅作用于全局范围的设置，例如GM选项。",
+        "dialogs": {
+            "title": "重置模组设置",
+            "content": "你确定要将所有模组设置重置为当前系统的默认值吗？<strong>这无法撤销。</strong>",
+            "confirm": "重置模组设置",
+            "cancel": "取消"
+        }
+    },
+    "TIDY5E.Settings.Migrations": {
+        "name": "迁移",
+        "buttonLabel": "迁移 Tidy 数据",
+        "dialogTitle": "迁移 Tidy 数据",
+        "hint": "如果你曾是旧版 Tidy5e 表单模组的用户，可选择使用此“迁移”菜单来迁移你的 DM 设置和 Tidy 表单数据。",
+        "chatNotification": "新 Tidy 5e 表单迁移功能现已推出。请查看 Tidy 5e 表单游戏设置以了解可用的迁移选项。",
+        "migrationBeginningMessage": "迁移数据。直至完成前请勿刷新页面。",
+        "migrationErrorMessage": "出错了。更多详情可在开发控制台中查看。",
+        "migrationCompleteMessage": "迁移完成。",
+        "migrateDocumentFlagsButtonLabel": "迁移文档标志",
+        "migrateGmSettingsButtonLabel": "迁移 GM 设置",
+        "migrateConfirmTitle": "配置迁移",
+        "migrateConfirmMessage1": "你确定要执行此次迁移操作吗？",
+        "migrateConfirmMessage2": "{boldStart}注意{boldEnd}：请务必记得定期备份你的数据。",
+        "migrateConfirmButtonYes": "迁移",
+        "migrateConfirmButtonNo": "取消",
+        "OptionsHeader": "迁移选项",
+        "OptionOverwrite.Text": "覆盖",
+        "OptionOverwrite.Tooltip": "允许覆盖现有表单中的数据。若未勾选，则仅系统中空缺的字段会接收迁移后的 Tidy 数据。",
+        "OptionDeleteFlags.Text": "删除受影响的 Tidy 标志",
+        "OptionDeleteFlags.Tooltip": "在将自定义的 Tidy 标志数据迁移至官方系统数据的过程中，这些标志默认会保留不变。请勾选此选项以删除这些标志。",
+        "ButtonMigration.Text": "迁移",
+        "MigrateCompendia.CompendiumLabel": "合集包",
+        "MigrateCompendia.Title": "迁移合集包",
+        "MigrateCompendia.SelectionDialogTitle": "选择迁移合集包",
+        "MigrateCompendia.TotalEntriesLabel": "总条目数",
+        "CcssToTidy": {
+            "sectionTitle": "CCSS 至 Tidy 5e",
+            "selectionDialogTitle": "迁移：CCSS 至 Tidy 5e",
+            "ccss": "CCSS",
+            "section": "分区",
+            "explanation1": "Tidy 5e 现已原生支持自定义分区，并提供了围绕自定义分区的其他功能。此次迁移会将自定义角色卡分区（CCSS）的分区名称复制到 Tidy 的分区设置中。",
+            "overwrite": "覆盖",
+            "overwriteTooltip": "允许选择覆盖现有的 Tidy 分区标志。若未勾选，则仅空的 Tidy 标志将接收迁移过来的 CCSS 数据。",
+            "deleteFlags": "删除受影响的 CCSS 标签"
+        }
     }
 }

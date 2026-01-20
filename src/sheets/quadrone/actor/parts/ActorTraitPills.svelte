@@ -54,7 +54,7 @@
     {@const onClick = value.onClick}
     <li
       class={[
-        'pill pill-medium',
+        'pill pill-medium trait-pill',
         pillClass,
         value.cssClass,
         value.icons?.length && aggregateIcons?.pillClass
@@ -63,9 +63,15 @@
       ]}
       data-tooltip-direction="UP"
       onmouseover={(ev) => onHover(ev, value)}
+      onfocus={(ev) => onHover(ev, value)}
     >
       {#if onClick}
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
+          role="button"
+          tabindex="0"
+          aria-label={value.label}
+          data-keyboard-focus
           class="button button-borderless"
           onclick={(event) =>
             onClick({
@@ -73,6 +79,14 @@
               context,
               element: context.sheet.element,
               event,
+            })}
+          onkeydown={(ev) =>
+            ev.key === 'Enter' &&
+            onClick({
+              app: context.sheet,
+              context,
+              element: context.sheet.element,
+              event: ev as unknown as MouseEvent,
             })}
         >
           {@render pillContents(value)}

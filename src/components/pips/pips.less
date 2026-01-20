@@ -4,7 +4,7 @@
 
   :where(.pip) {
     border-radius: 50%;
-    transition: background 0.125s;
+    transition: background var(--t5e-transition-default);
   }
 }
 
@@ -35,7 +35,7 @@
 }
 
 // .pip-end: goes after the final pip to allow for deactivation previews.
-.pips .pip.active:hover ~ .pip.active:has(~ .pip-end) {
+.pips .pip.active:hover~.pip.active:has(~ .pip-end) {
   background: var(--pip-bg-to-deactivate, --pip-bg-active);
 }
 
@@ -73,6 +73,7 @@
     &.animate-expended {
       animation: expended-pip 0.5s ease;
     }
+
     &.animate-restored {
       animation: restored-pip 0.5s ease;
     }
@@ -81,6 +82,7 @@
       0% {
         box-shadow: 0 0 0 0 var(--t5e-primary-accent-color);
       }
+
       100% {
         box-shadow: 0 0 0 0.375rem rgba(0, 0, 0, 0);
       }
@@ -90,6 +92,7 @@
       0% {
         box-shadow: 0 0 0 0.375rem var(--t5e-primary-accent-color);
       }
+
       100% {
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
       }

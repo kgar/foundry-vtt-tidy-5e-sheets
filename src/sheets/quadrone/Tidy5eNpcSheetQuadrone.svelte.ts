@@ -4,6 +4,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
+  ActorTraitContext,
   FeatureSection,
   NpcHabitat,
   NpcItemContext,
@@ -11,7 +12,6 @@ import type {
   NpcSpellcastingContext,
   SpellcastingClassContext,
   TidyItemSectionBase,
-  TidySectionBase,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import type {
@@ -48,7 +48,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   constructor(options?: Partial<ApplicationConfiguration> | undefined) {
     super(options);
 
-    this.currentTabId = CONSTANTS.TAB_NPC_STATBLOCK;
+    this.currentTabId = CONSTANTS.TAB_STATBLOCK;
   }
 
   static DEFAULT_OPTIONS: Partial<
@@ -210,6 +210,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         important &&
         game.settings.get('dnd5e', 'loyaltyScore') &&
         game.user.isGM,
+      specialTraits: this._getSpecialTraits(),
       species: species
         ? {
             id: species.id,
@@ -311,6 +312,11 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   }
 
   _prepareItems(context: NpcSheetQuadroneContext) {
+    const items: Item5e[] = this.actor.items.filter((item: Item5e) => {
+      // Suppress riders for disabled enchantments
+      return item.dependentOrigin?.active !== false;
+    });
+
     const isImportant = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
@@ -327,7 +333,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       inventoryItems: Item5e[];
     };
 
-    let { inventoryItems } = Array.from(this.actor.items).reduce(
+    let { inventoryItems } = items.reduce(
       (obj: NpcPartitions, item: Item5e) => {
         const ctx = (context.itemContext[item.id] ??= {});
 
@@ -399,7 +405,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     const inventoryTypesSet = new Set(inventoryTypes);
 
     // TODO: We could loop less by doing all of this in the single pass over items.
-    this.actor.items.forEach((item: Item5e) => {
+    items.forEach((item: Item5e) => {
       if (
         !inventoryTypesSet.has(item.type) &&
         item.type !== CONSTANTS.ITEM_TYPE_FEAT
@@ -454,7 +460,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
       this.actor,
-      CONSTANTS.TAB_NPC_STATBLOCK
+      CONSTANTS.TAB_STATBLOCK
     ).forEach((sectionName) => {
       featureSections[sectionName] ??= createNewStatblockSection(
         sectionName,
@@ -598,7 +604,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
   }
 
   protected _getSheetPinTabIdsForItem(item: Item5e): string[] {
-    const tabIds: string[] = [CONSTANTS.TAB_NPC_STATBLOCK];
+    const tabIds: string[] = [CONSTANTS.TAB_STATBLOCK];
 
     const originTab = Inventory.isItemInventoryType(item)
       ? CONSTANTS.TAB_ACTOR_INVENTORY
@@ -613,18 +619,22 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     return tabIds;
   }
 
+  protected _getSpecialTraits(): ActorTraitContext[] {
+    const traits = super._getSpecialTraits();
+
+    if (this.document.system.traits.important) {
+      traits.unshift({
+        label: this.document.system.schema.fields.traits.fields.important.label,
+      });
+    }
+
+    return traits;
+  }
+
   /* -------------------------------------------- */
   /*  Life-Cycle Handlers                         */
   /* -------------------------------------------- */
 
-  async _renderFrame(options: TidyDocumentSheetRenderOptions) {
-    const element = await super._renderFrame(options);
-
-    const theme = getThemeV2(this.actor);
-    element.querySelector('.window-header').classList.add(`theme-${theme}`);
-
-    return element;
-  }
 
   async _preRender(
     context: NpcSheetQuadroneContext,

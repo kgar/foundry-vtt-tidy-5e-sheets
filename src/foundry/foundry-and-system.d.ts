@@ -90,6 +90,7 @@ declare global {
       apps: any;
       elements: any;
       handlebars: any;
+      instances: Map<string, any /* AppV2 instance */>;
       sheets: any;
       ui: any;
       ux: {

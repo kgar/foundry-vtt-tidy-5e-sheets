@@ -65,12 +65,14 @@ export class Inventory {
     inventory: Record<string, InventorySection>,
     item: Item5e,
     defaultInventoryTypes: string[],
-    customSectionOptions: Partial<InventorySection>
+    customSectionOptions: Partial<InventorySection>,
+    fallbackInventoryKey: string = '',
   ) {
     const customSectionName = TidyFlags.section.get(item);
 
     if (!customSectionName) {
-      inventory[item.type].items.push(item);
+      let partition = inventory[item.type] ?? inventory[fallbackInventoryKey];
+      partition?.items.push(item);
       return;
     }
 

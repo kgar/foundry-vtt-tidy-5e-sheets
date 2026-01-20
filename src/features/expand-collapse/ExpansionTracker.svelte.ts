@@ -23,10 +23,10 @@ interface TabStats {
   topLevelLocation: string;
 }
 
-export type ExpansionTrackerToggleProvider = () => {
+export type ExpansionTrackerToggleProvider = (() => {
   expanded: boolean;
   toggle: Function;
-};
+}) | false;
 
 export class ExpansionTracker {
   #tabs = $state<TrackedTabs>({});

@@ -161,7 +161,7 @@
       </button>
       <div>
         <span class="font-label-medium color-text-gold">
-          {localize('DND5E.Travel.Label')}
+          {localize('DND5E.TRAVEL.Label')}
         </span>
         <span class="label font-label-medium color-text-default flexshrink">
           {context.travel.currentPace.config.label}
@@ -169,42 +169,42 @@
       </div>
     </div>
   {/if}
-  {#if context.actor.system.attributes.movement.paces.land > 0}
+  {#if context.actor.system.attributes.travel.paces.land > 0}
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
-        >{localize('DND5E.MovementLand')}</span
+        >{localize('DND5E.TRAVEL.Type.Land')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.actor.system.attributes.movement.paces.land}</span
+        >{context.actor.system.attributes.travel.paces.land}</span
       >
       <span class="color-text-lighter font-label-medium"
         >{context.travel.units.label}</span
       >
     </span>
   {/if}
-  {#if context.actor.system.attributes.movement.paces.air > 0}
+  {#if context.actor.system.attributes.travel.paces.air > 0}
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
-        >{localize('DND5E.MovementAir')}</span
+        >{localize('DND5E.TRAVEL.Type.Air')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.actor.system.attributes.movement.paces.air}</span
+        >{context.actor.system.attributes.travel.paces.air}</span
       >
       <span class="color-text-lighter font-label-medium"
         >{context.travel.units.label}</span
       >
     </span>
   {/if}
-  {#if context.actor.system.attributes.movement.paces.water > 0}
+  {#if context.actor.system.attributes.travel.paces.water > 0}
     <div class="divider-dot"></div>
     <span class="speed">
       <span class="color-text-gold font-label-medium"
-        >{localize('DND5E.MovementWater')}</span
+        >{localize('DND5E.TRAVEL.Type.Water')}</span
       >
       <span class="color-text-default font-data-medium"
-        >{context.actor.system.attributes.movement.paces.water}</span
+        >{context.actor.system.attributes.travel.paces.water}</span
       >
       <span class="color-text-lighter font-label-medium"
         >{context.travel.units.label}</span
@@ -214,7 +214,7 @@
   {#if context.unlocked}
     <span class="config-speeds">
       <button
-        aria-label={localize('DND5E.MovementConfig')}
+        aria-label={localize('DND5E.MOVEMENT.Action.Configure')}
         type="button"
         class={[
           'button button-borderless button-icon-only button-config flexshrink',

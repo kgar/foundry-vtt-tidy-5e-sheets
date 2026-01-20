@@ -67,7 +67,12 @@
   });
 </script>
 
-<ItemsActionBar bind:searchCriteria sections={features} {tabId} {tabOptionGroups} />
+<ItemsActionBar
+  bind:searchCriteria
+  sections={features}
+  {tabId}
+  {tabOptionGroups}
+/>
 
 {#if showSheetPins}
   <SheetPins />

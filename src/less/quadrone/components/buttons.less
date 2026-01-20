@@ -484,6 +484,11 @@ a.button.icon {
   flex: 0 0 var(--button-size);
   width: var(--button-size);
   font-weight: 600;
+  
+  &:is(.fab, .fa-brands) {
+    font-family: var(--fa-style-family-brands);
+    font-weight: 400;
+  }
 }
 
 &.theme-dark {

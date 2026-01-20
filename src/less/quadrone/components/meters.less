@@ -144,6 +144,20 @@
         var(--t5e-color-palette-gold-75) 100%);
   }
 
+  &.uses {
+    --bar-background: linear-gradient(to right,
+        var(--t5e-color-palette-blue-57) 0%,
+        var(--t5e-color-palette-blue-70) 100%);
+    --bar-border-color: var(--t5e-color-palette-blue-57);
+
+    &.warning {
+      --bar-background: linear-gradient(to right,
+          var(--t5e-color-palette-orange-40) 0%,
+          var(--t5e-color-palette-orange-55) 100%);
+      --bar-border-color: var(--t5e-color-palette-orange-40);
+    }
+  }
+
   input {
     position: relative;
     text-align: center;
