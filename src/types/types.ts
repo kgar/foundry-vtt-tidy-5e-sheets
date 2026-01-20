@@ -445,8 +445,8 @@ export type CharacterSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
@@ -552,8 +552,8 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
@@ -640,15 +640,15 @@ export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | {
-    tabId: string;
-    message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
-    options?: { includeInlineToggles?: boolean };
-  }
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+      options?: { includeInlineToggles?: boolean };
+    }
   | {
-    tabId: string;
-    message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
-    options?: { includeInlineToggles?: boolean };
-  };
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+      options?: { includeInlineToggles?: boolean };
+    };
 
 export type Utilities<TContext> = Record<
   string,
@@ -844,7 +844,7 @@ export type SheetExpandedItemsCacheable = {
 export type OnItemToggledFn = (
   itemId: string,
   isVisible: boolean,
-  location: string
+  location: string,
 ) => void;
 
 export type SearchFilterCacheable = {
@@ -1234,6 +1234,15 @@ export type ActorTraitItemContext = {
   img: string;
 };
 
+export type SheetTabSection =
+  | ActiveEffectSection
+  | ActivitySection
+  | FacilitySection
+  | FeatureSection
+  | InventorySection
+  | SpellbookSection
+  | TidyItemSectionBase;
+
 export type CharacterSheetQuadroneContext = {
   actions: TidyItemSectionBase[];
   background?: ActorTraitItemContext;
@@ -1264,6 +1273,7 @@ export type CharacterSheetQuadroneContext = {
   itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
+  sheetTabSections: SheetTabSection[]; // TODO: Got a better name?
   showContainerPanel: boolean;
   showDeathSaves: boolean;
   sidebarTabs: Tab[];
@@ -1644,5 +1654,5 @@ export type TravelSpeedConfigEntry = {
 export type SvelteInputEvent = (
   event: Event & {
     currentTarget: EventTarget & HTMLInputElement;
-  }
+  },
 ) => any;
