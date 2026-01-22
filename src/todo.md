@@ -1,5 +1,31 @@
 ## kgar To Do
 
+### Origin Sections Implementation
+
+- [x] Extract any shareable table components that are needed
+- [x] Prepare the data
+- [x] Create new tab component that is meant to accommodate both section arrangements
+- [x] Set up logic to choose between origin and action sections and hardcode to Origin for now
+- [ ] Fix: Sheet tab Feature sections don't have columns
+- [ ] Make the default order Inventory, Spellbook, Features, Facilities
+- [ ] Ensure Action sections are handled in new character sheet tab component
+- [ ] Fix: Custom sections for Sheet tab should be pulling from the Action Section flag instead of the regular one
+- [ ] Combine items with equivalent section keys into "custom" sections with the fallback / action tab columns
+- [ ] Implement Search
+- [ ] Implement Sort button
+- [ ] Implement Manual Sort via drag/drop
+- [ ] Implement Section Config
+- [ ] Implement Filters
+- [ ] Decide how drop behaviors should work
+- [ ] Set up World setting for default Sheet tab section organization
+- [ ] Set up per-sheet toggle for Sheet tab section organization
+- [ ] Replace hardcoded Origin section setup with determined current setting, starting with sheet flag and falling back to world setting
+- [ ] Review with hightouch to determine next steps
+- [ ] Do some perf tests around how long it takes to prepare the origin sections
+- [ ] Clean up the code and reduce redundancy
+- [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
+
+
 ### Short List
 
 - [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
