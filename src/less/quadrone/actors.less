@@ -491,24 +491,68 @@
   }
 
   .spellbook-footer {
-    align-items: flex-start;
+    align-content: end;
+    align-items: end;
+    bottom: 0;
     min-height: 2.25rem;
     position: sticky;
-    bottom: 0;
+
+    .spellcasting-cards.collapse-spellcasting-cards {
+
+      gap: var(--t5e-size-2x);
+      flex-wrap: wrap;
+      flex-direction: row;
+
+      .spellcasting-class-card {
+        width: auto;
+        flex: 1 1 auto;
+        align-self: initial;
+
+        .name {
+          padding: 0.0625rem 0 0.125rem;
+        }
+
+        .hide-collapsed {
+          display: none;
+        }
+      }
+    }
 
     .sheet-footer-right {
+      display: flex;
+      flex-direction: row;
+      align-self: flex-end;
       padding-block-start: 0.375rem;
+    }
+    .footer-concentration-button i[data-label="icon-concentration"] {
+      display: none;
+    }
+
+    .footer-concentration-button:hover,
+    .footer-concentration-button:focus-within,
+    .footer-concentration-button:active {
+      i[data-label="icon-concentrating"] {
+        display: none;
+      }
+      i[data-label="icon-concentration"] {
+        display: block;
+      }
     }
 
     .sheet-footer-left:has(.compact)+.sheet-footer-right {
+      flex-direction: column;
+
       padding-block-start: 0.25rem;
     }
 
     .spellcasting-class-card {
+      align-self: flex-end;
       border-radius: var(--t5e-size-1x);
       border: 0.0625rem solid var(--t5e-component-field-border);
       background: var(--t5e-component-field-background);
-      padding: var(--t5e-size-2x) var(--t5e-size-3x);
+      direction: ltr;
+      padding: var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-2x);
+      width: 100%;
 
       .header {
         height: 1.25rem;
@@ -544,9 +588,20 @@
     &:has(.compact) {
       @container tab-content (width > 35rem) {
         >.spellcasting-cards {
-          display: grid;
-          grid-template-columns: repeat(auto-fit,
-              minmax(18rem, 1fr));
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+
+          &:not(.collapse-spellcasting-cards) > * {
+            width: auto;
+            flex: 1 1 auto;
+            min-width: 20rem;
+          }
+
+          &:has(:nth-child(2)) {
+            flex: 1;
+            max-width: 100%;
+          }
         }
       }
     }

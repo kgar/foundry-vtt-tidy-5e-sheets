@@ -54,7 +54,7 @@
   var showUnassignedOnly = $state(false);
 </script>
 
-<section class="flexcol flexgap-3 full-height">
+<section class="dialog-content-container flexcol flexgap-3 full-height">
   <div role="presentation" class="flexrow flexgap-3">
     <Search bind:value={searchCriteria} />
     <label class="flexshrink checkbox">
