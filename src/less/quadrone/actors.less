@@ -504,17 +504,18 @@
       flex-direction: row;
 
       .spellcasting-class-card {
-      width: auto;
-      flex: 1 1 auto;
-      align-self: initial;
+        width: auto;
+        flex: 1 1 auto;
+        align-self: initial;
 
-      .name {
-        padding: 0.0625rem 0 0.125rem;
+        .name {
+          padding: 0.0625rem 0 0.125rem;
+        }
+
+        .hide-collapsed {
+          display: none;
+        }
       }
-
-      .info {
-        display: none;
-      }}
     }
 
     .sheet-footer-right {
@@ -522,6 +523,20 @@
       flex-direction: row;
       align-self: flex-end;
       padding-block-start: 0.375rem;
+    }
+    .footer-concentration-button i[data-label="icon-concentration"] {
+      display: none;
+    }
+
+    .footer-concentration-button:hover,
+    .footer-concentration-button:focus-within,
+    .footer-concentration-button:active {
+      i[data-label="icon-concentrating"] {
+        display: none;
+      }
+      i[data-label="icon-concentration"] {
+        display: block;
+      }
     }
 
     .sheet-footer-left:has(.compact)+.sheet-footer-right {
@@ -573,14 +588,12 @@
     &:has(.compact) {
       @container tab-content (width > 35rem) {
         >.spellcasting-cards {
-          direction: rtl;
           display: flex;
           flex-direction: row;
-          flex-wrap: wrap-reverse;
+          flex-wrap: wrap;
 
           &:not(.collapse-spellcasting-cards) > * {
             width: auto;
-            direction: ltr;
             flex: 1 1 auto;
             min-width: 20rem;
           }

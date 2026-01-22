@@ -31,8 +31,19 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
-
+      <!-- svelte-ignore a11y_missing_attribute -->
+      <a type="button" 
+        role="button" 
+        tabindex="0" 
+        aria-label={info.name}
+        class="name font-title-small" 
+        onclick={onNameClick}
+        onkeydown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            onNameClick?.();
+          }
+        }}
+        >{info.name}</a>
       <i
         data-tooltip="DND5E.SpellAbility"
         class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"
@@ -43,7 +54,7 @@
       {#if context.unlocked}
         <div
           class={[
-            'spellcasting-ability pill pill-medium',
+            'spellcasting-ability pill pill-medium hide-collapsed',
             { borderless: context.unlocked },
           ]}
         >
@@ -52,7 +63,7 @@
       {:else if !isNil(context.system.attributes.spellcasting, '')}
         <div
           class={[
-            'spellcasting-ability pill pill-medium',
+            'spellcasting-ability pill pill-medium hide-collapsed',
             { borderless: context.unlocked },
           ]}
         >
@@ -79,7 +90,7 @@
           ><span class="font-data-medium">{info.attack.mod.value}</span>
         </span>
       </div>
-      <div class="save pill pill-medium">
+      <div class="save pill pill-medium hide-collapsed">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellDC')}</span
         >
@@ -88,7 +99,7 @@
         </span>
       </div>
       <div
-        class="level pill pill-medium {context.unlocked ? 'borderless' : ''}"
+        class="level pill pill-medium hide-collapsed {context.unlocked ? 'borderless' : ''}"
       >
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellcasterLevel')}</span

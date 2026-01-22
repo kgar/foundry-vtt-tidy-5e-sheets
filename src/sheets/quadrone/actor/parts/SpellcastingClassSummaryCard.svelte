@@ -60,7 +60,19 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
+      <!-- svelte-ignore a11y_missing_attribute -->
+      <a type="button" 
+        role="button" 
+        tabindex="0" 
+        aria-label={info.name}
+        class="name font-title-small" 
+        onclick={onNameClick}
+        onkeydown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            onNameClick?.();
+          }
+        }}
+        >{info.name}</a>
 
       {#if info.primary}
         <i
@@ -69,13 +81,25 @@
         >
         </i>
       {:else if context.unlocked}
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
-          data-tooltip="DND5E.SpellAbilitySet"
+          type="button"
+          role="button"
+          tabindex="0"
+          aria-label={localize('DND5E.SpellAbilitySet')}
+          data-tooltip=""
           class="button button-borderless button-icon-only"
           onclick={() =>
             context.actor.update({
               'system.attributes.spellcasting': info.ability.key,
             })}
+          onkeydown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              context.actor.update({
+                'system.attributes.spellcasting': info.ability.key,
+              });
+            }
+          }}
         >
           <i
             class="fa-regular fa-chess-queen primary-icon color-text-gold-emphasis"
@@ -84,7 +108,7 @@
       {/if}
     </div>
     <div class="info pills flex1">
-      <div class="spellcasting-ability pill pill-medium">
+      <div class="spellcasting-ability pill pill-medium hide-collapsed">
         {info.ability.label}
       </div>
       <div class="pill pill-medium">
@@ -107,7 +131,7 @@
           ><span class="font-data-medium">{info.attack.mod.value}</span>
         </span>
       </div>
-      <div class="pill pill-medium">
+      <div class="pill pill-medium hide-collapsed">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.SpellDC')}</span
         >
@@ -115,9 +139,20 @@
           <span class="font-data-medium">{info.save}</span>
         </span>
       </div>
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
-        class="pill pill-medium interactive"
+        type="button"
+        role="button"
+        tabindex="0"
+        aria-label={localize('DND5E.Prepared')}
+        data-tooltip=""
+        class="pill pill-medium interactive hide-collapsed"
         onclick={() => onPreparedClicked()}
+        onkeydown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            onPreparedClicked();
+          }
+        }}
       >
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.Prepared')}</span
@@ -145,7 +180,20 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
+      <!-- svelte-ignore a11y_missing_attribute -->
+      <a 
+        type="button" 
+        role="button" 
+        tabindex="0" 
+        class="name font-title-small" 
+        onclick={onNameClick}
+        onkeydown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            onNameClick?.();
+          }
+        }}
+        aria-label={info.name}
+        >{info.name}</a>
 
       {#if info.primary}
         <i
@@ -154,13 +202,25 @@
         >
         </i>
       {:else if context.unlocked}
+        <!-- svelte-ignore a11y_missing_attribute -->
         <a
-          data-tooltip="DND5E.SpellAbilitySet"
+          type="button"
+          role="button"
+          tabindex="0"
+          aria-label={localize('DND5E.SpellAbilitySet')}
+          data-tooltip=""
           class="button button-borderless button-icon-only"
           onclick={() =>
             context.actor.update({
               'system.attributes.spellcasting': info.ability.key,
             })}
+          onkeydown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              context.actor.update({
+                'system.attributes.spellcasting': info.ability.key,
+              });
+            }
+          }}
         >
           <i
             class="fa-regular fa-chess-queen primary-icon color-text-gold-emphasis"
@@ -190,8 +250,8 @@
           ><span class="font-data-medium">{info.attack.mod.value}</span>
         </span>
       </div>
-      <div class="divider-dot"></div>
-      <div data-tooltip={localize('DND5E.SpellDC')}>
+      <div class="divider-dot hide-collapsed"></div>
+      <div data-tooltip={localize('DND5E.SpellDC')} class="hide-collapsed">
         <span class="label font-label-medium color-text-lighter"
           >{localize('DND5E.AbbreviationDC')}</span
         >
@@ -201,7 +261,7 @@
       </div>
       <button
         type="button"
-        class="prepared pill pill-medium interactive"
+        class="prepared pill pill-medium interactive hide-collapsed"
         data-tooltip={localize('DND5E.Prepared')}
         aria-label={localize('DND5E.Prepared')}
         onclick={() => onPreparedClicked()}

@@ -84,17 +84,7 @@
               event,
               legacy: false,
             })}
-          onmouseover={(event) => {
-            const button = event.currentTarget as HTMLElement;
-            (button.querySelector('[data-label="icon-concentrating"]') as HTMLElement).style.display = 'none';
-            (button.querySelector('[data-label="icon-concentration"]') as HTMLElement).style.display = 'block';
-          }}
-          onmouseout={(event) => {
-            const button = event.currentTarget as HTMLElement;
-            (button.querySelector('[data-label="icon-concentrating"]') as HTMLElement).style.display = 'block';
-            (button.querySelector('[data-label="icon-concentration"]') as HTMLElement).style.display = 'none';
-          }}
-          class="button button-secondary button-icon-only"
+          class="button button-secondary button-icon-only footer-concentration-button"
           data-has-roll-modes
         >
           <i
@@ -105,7 +95,6 @@
           <i
             data-label="icon-concentration"
             class="fas fa-head-side-brain color-text-gold"
-            style="display: none;"
             aria-label={localize('DND5E.Concentration')}
           ></i>
         </button>
