@@ -1234,8 +1234,12 @@ export type ActorTraitItemContext = {
   img: string;
 };
 
+export type SheetTabEffectSection = ActiveEffectSection & {
+  type: typeof CONSTANTS.SECTION_TYPE_EFFECT;
+};
+
 export type SheetTabSection =
-  | ActiveEffectSection
+  | SheetTabEffectSection
   | ActivitySection
   | FacilitySection
   | FeatureSection

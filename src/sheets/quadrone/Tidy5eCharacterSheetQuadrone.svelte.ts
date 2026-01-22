@@ -339,6 +339,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           section,
         );
       });
+
+      this.prepareSheetTabSections(context);
     }
 
     context.customContent =
@@ -360,25 +362,111 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       return isItemInActionList(item);
     };
 
+    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+      context,
+      { hasActionsTab: true },
+    );
+    const inventoryTypes = Inventory.getInventoryTypes();
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections({
+        rowActions: inventoryRowActions,
+      });
+
     // Get eligible items (note: in Origin Sections, we do not dump out their containers into the top-level table; nesting is supported).
-    const items = context.items.filter(isEligibleItem);
+    const partitions = context.items.filter(isEligibleItem).reduce(
+      (partitions, item) => {
+        CharacterSheetSections.partitionItem(item, partitions, inventory);
+
+        return partitions;
+      },
+      {
+        items: [] as Item5e[],
+        spells: [] as Item5e[],
+        facilities: [] as Item5e[],
+        feats: [] as Item5e[],
+        species: [] as Item5e[],
+        backgrounds: [] as Item5e[],
+        classes: [] as Item5e[],
+        subclasses: [] as Item5e[],
+      },
+    );
 
     // Partition into origin sections
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
 
-    const inventoryTypes = Inventory.getInventoryTypes();
-
     // Inventory
-    halp;
+    for (let item of partitions.items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
+        canCreate: true,
+        rowActions: inventoryRowActions,
+      });
+    }
 
     // Spellbook
+    const spellbook = SheetSections.prepareTidySpellbook(
+      context,
+      CONSTANTS.TAB_ACTOR_SPELLBOOK,
+      partitions.spells,
+      {
+        canCreate: true,
+        rowActions: TableRowActionsRuntime.getSpellRowActions(context, {
+          hasActionsTab: true,
+        }),
+      },
+    );
+
     // Features
-    // Facilities
+    const features: FeatureSection[] =
+      CharacterSheetSections.buildQuadroneFeatureSections(
+        this.actor,
+        context.unlocked,
+        CONSTANTS.TAB_CHARACTER_FEATURES,
+        partitions.feats,
+        {
+          canCreate: true,
+          rowActions:
+            TableRowActionsRuntime.getCharacterFeatureRowActions(context),
+        },
+      );
 
-    //
-    // TODO: Effects, Activities, Skills/Tools, Spell Slots
+    const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
+      section.sectionActions = SectionActions.getStandardItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section,
+      );
+    };
 
-    // Sort based on section configuration (section config key is going to be `${favoriteType}|${sectionKey}`)
+    const featureSections = Object.values(features);
+    featureSections.forEach(applyStandardItemHeaderActions);
+
+    const inventorySections = Object.values(inventory);
+    inventorySections.forEach(applyStandardItemHeaderActions);
+
+    const spellbookSections = Object.values(spellbook);
+    spellbookSections.forEach((section) => {
+      section.sectionActions = SectionActions.getSpellbookItemHeaderActions(
+        this.actor,
+        this.actor.isOwner,
+        context.unlocked,
+        section,
+      );
+    });
+
+    context.sheetTabSections = [
+      ...featureSections,
+      ...inventorySections,
+      ...spellbookSections,
+    ];
+
+    // TODO: Facilities(?), Effects, Activities, Skills/Tools, Spell Slots
+
+    // Combine item sections with the same key into generic action item sections.
+
+    // Sort based on section configuration (section config key is going to be `${sectionType}|${sectionKey}`); for generic item sections, section type should be "custom".
   }
 
   public static async tryGetInspirationSource(
