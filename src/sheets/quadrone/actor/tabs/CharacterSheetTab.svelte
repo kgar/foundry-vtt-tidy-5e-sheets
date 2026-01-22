@@ -12,7 +12,6 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
-  import ActionTables from '../../shared/ActionTables.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
@@ -20,6 +19,7 @@
   import SpellTable from '../../shared/SpellTable.svelte';
   import FeatureTable from '../../shared/FeatureTable.svelte';
   import InventoryTable from '../../shared/InventoryTable.svelte';
+  import ActionTable from '../../shared/ActionTable.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -111,35 +111,68 @@
     {#each sections as section}
       {#if 'type' in section}
         {#if section.type === 'spellbook'}
-          <SpellTable
-            {section}
-            sheetDocument={context.document}
-            {sectionsInlineWidth}
-            {itemToggleMap}
-            tabId={CONSTANTS.TAB_ACTOR_ACTIONS}
-          />
+          {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            section.items,
+            searchResults.uuids,
+          )}
+
+          {#if hasViewableItems}
+            <SpellTable
+              {section}
+              sheetDocument={context.document}
+              {sectionsInlineWidth}
+              {itemToggleMap}
+              tabId={CONSTANTS.TAB_ACTOR_SPELLBOOK}
+            />
+          {/if}
         {:else if section.type === 'inventory'}
-          <InventoryTable
-            containingDocument={context.document}
-            editable={context.editable}
-            {inlineToggleService}
-            itemContext={context.itemContext}
-            root={true}
-            {searchCriteria}
-            {section}
-            {sectionsInlineWidth}
-            sheetDocument={context.document}
-            {tabId}
-          />
+          {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            section.items,
+            searchResults.uuids,
+          )}
+          {#if hasViewableItems}
+            <InventoryTable
+              containingDocument={context.document}
+              editable={context.editable}
+              {inlineToggleService}
+              itemContext={context.itemContext}
+              root={true}
+              {searchCriteria}
+              {section}
+              {sectionsInlineWidth}
+              sheetDocument={context.document}
+              tabId={CONSTANTS.TAB_ACTOR_INVENTORY}
+            />
+          {/if}
         {:else if section.type === 'feature'}
-          <FeatureTable
-            {section}
-            {itemToggleMap}
-            {sectionsInlineWidth}
-            sheetDocument={context.document}
-          />
-        {:else}
-          TODO: get section for {section.type} (also get section for "custom")
+          {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            section.items,
+            searchResults.uuids,
+          )}
+          {#if hasViewableItems}
+            <FeatureTable
+              {section}
+              {itemToggleMap}
+              {sectionsInlineWidth}
+              sheetDocument={context.document}
+              tabId={CONSTANTS.TAB_CHARACTER_FEATURES}
+            />
+          {/if}
+        {:else if section.type === 'custom'}
+          {@const hasViewableItems = ItemVisibility.hasViewableItems(
+            section.items,
+            searchResults.uuids,
+          )}
+          {#if hasViewableItems}
+            <ActionTable
+              {inlineToggleService}
+              itemContext={context.itemContext}
+              {section}
+              {sectionsInlineWidth}
+              sheetDocument={context.document}
+              {tabId}
+            />
+          {/if}
         {/if}
       {/if}
     {/each}

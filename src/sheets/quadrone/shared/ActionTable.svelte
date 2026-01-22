@@ -1,44 +1,47 @@
 <script lang="ts">
-  import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
-  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
-  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
-  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import { CONSTANTS } from 'src/constants';
+  import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
-  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { Item5e } from 'src/types/item.types';
   import type {
+    TidyItemSectionBase,
     Actor5e,
+    CharacterItemContext,
     CharacterSheetQuadroneContext,
-    FeatureSection,
+    NpcItemContext,
     NpcSheetQuadroneContext,
+    VehicleItemContext,
   } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
+  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+  import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
+  import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
+  import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
+  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
 
   interface Props {
-    section: FeatureSection;
-    sheetDocument: Actor5e;
+    section: TidyItemSectionBase;
+    itemContext: Record<
+      string,
+      CharacterItemContext | NpcItemContext | VehicleItemContext
+    >;
+    inlineToggleService: InlineToggleService;
+    sheetDocument: Actor5e | Item5e;
     sectionsInlineWidth: number;
-    itemToggleMap: SvelteMap<string, SvelteSet<string>>;
-    tabId?: string;
+    tabId: string;
   }
 
   let {
     section,
+    itemContext,
+    inlineToggleService,
     sheetDocument,
     sectionsInlineWidth,
-    itemToggleMap,
-    tabId: tabIdOverride,
+    tabId,
   }: Props = $props();
-
-  const tabId =
-    tabIdOverride ?? getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-      
-  let searchResults = getSearchResultsContext();
 
   let context =
     $derived(
@@ -49,7 +52,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  let columns = $derived(
+  const searchResults = getSearchResultsContext();
+
+  const columns = $derived(
     new ColumnsLoadout(
       ItemColumnRuntime.getConfiguredColumnSpecifications({
         sheetType: sheetDocument.type,
@@ -57,14 +62,16 @@
         sectionKey: section.key,
         rowActions: section.rowActions,
         section: section,
-        sheetDocument: context.document,
+        sheetDocument: context.actor,
       }),
     ),
   );
 
-  let hiddenColumns = $derived(
+  const hiddenColumns = $derived(
     ItemColumnRuntime.determineHiddenColumns(sectionsInlineWidth, columns),
   );
+
+  let itemToggleMap = $derived(inlineToggleService.map);
 </script>
 
 <TidyTable
@@ -109,7 +116,7 @@
   {#snippet body()}
     {@const itemEntries = section.items.map((item) => ({
       item,
-      ctx: context.itemContext[item.id],
+      ctx: itemContext[item.id],
     }))}
     {#each itemEntries as { item, ctx }, i (item.id)}
       {@const expanded = !!itemToggleMap.get(tabId)?.has(item.id)}
@@ -124,6 +131,7 @@
         }}
       >
         {#snippet children({ toggleSummary, expanded })}
+          <div class="highlight"></div>
           <a
             class={[
               'tidy-table-row-use-button',
@@ -143,8 +151,8 @@
             <a class="item-name" onclick={(ev) => toggleSummary()}>
               <span class="cell-text">
                 <span class="cell-name">{item.name}</span>
-                {#if ctx.subtitle}
-                  <span class="cell-context">{@html ctx.subtitle}</span>
+                {#if 'actionSubtitle' in ctx && ctx.actionSubtitle}
+                  <span class="cell-context">{@html ctx.actionSubtitle}</span>
                 {/if}
               </span>
               <span class="row-detail-expand-indicator">
@@ -156,17 +164,6 @@
               </span>
             </a>
           </TidyTableCell>
-          {#if 'inspirationSource' in context && context.inspirationSource?.itemId === item.id}
-            <i
-              class={[
-                'fa-solid',
-                'fa-sparkles',
-                'item-state-indicator',
-                'color-text-gold-emphasis',
-              ]}
-              data-tooltip="TIDY5E.InspirationSource.ItemIsSourceTooltip"
-            ></i>
-          {/if}
           {#each columns.ordered as column}
             {@const hidden = hiddenColumns.has(column.key)}
 

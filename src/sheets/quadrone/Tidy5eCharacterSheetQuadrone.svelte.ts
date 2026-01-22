@@ -324,23 +324,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       // skills/tools, and spell slots and churns out sections and any side-effecting context changes
       // (like pinning skills/tools/slots(?) when in Origin mode).
 
-      context.actions = await getActorActionSectionsQuadrone(this.actor, {
-        rowActions: TableRowActionsRuntime.getActionsRowActions(
-          this.actor.isOwner,
-          actorContext.unlocked,
-        ),
-      });
-
-      context.actions.forEach((section) => {
-        section.sectionActions = SectionActions.getActionHeaderActions(
-          this.actor,
-          this.actor.isOwner,
-          actorContext.unlocked,
-          section,
-        );
-      });
-
-      this.prepareSheetTabSections(context);
+      await this.prepareSheetTabSections(context);
     }
 
     context.customContent =
@@ -356,12 +340,44 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return context;
   }
 
-  prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
+  async prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
+    const sectionMode: 'action' | 'origin' = 'origin';
+
     const isEligibleItem = (item: Item5e) => {
       // TODO: based on settings, source from favorites instead.
       return isItemInActionList(item);
     };
 
+    if (sectionMode === 'origin') {
+      this.setUpSheetTabOriginSections(context, isEligibleItem);
+      // TODO: Facilities(?), Effects, Activities, Skills/Tools, Spell Slots
+      // Sort based on section configuration (section config key is going to be `${sectionType}|${sectionKey}`); for generic item sections, section type should be "custom".
+    } else {
+      const actionSections = await getActorActionSectionsQuadrone(this.actor, {
+        rowActions: TableRowActionsRuntime.getActionsRowActions(
+          this.actor.isOwner,
+          context.unlocked,
+        ),
+      });
+
+      actionSections.forEach((section) => {
+        section.type = 'custom';
+        section.sectionActions = SectionActions.getActionHeaderActions(
+          this.actor,
+          this.actor.isOwner,
+          context.unlocked,
+          section,
+        );
+      });
+
+      context.sheetTabSections = actionSections;
+    }
+  }
+
+  private setUpSheetTabOriginSections(
+    context: CharacterSheetQuadroneContext,
+    isEligibleItem: (item: Item5e) => boolean,
+  ) {
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: true },
@@ -393,7 +409,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     // Partition into origin sections
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
-
     // Inventory
     for (let item of partitions.items) {
       const ctx = (context.itemContext[item.id] ??= {});
@@ -461,12 +476,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       ...inventorySections,
       ...spellbookSections,
     ];
-
-    // TODO: Facilities(?), Effects, Activities, Skills/Tools, Spell Slots
-
-    // Combine item sections with the same key into generic action item sections.
-
-    // Sort based on section configuration (section config key is going to be `${sectionType}|${sectionKey}`); for generic item sections, section type should be "custom".
   }
 
   public static async tryGetInspirationSource(
