@@ -32,7 +32,7 @@
   >
     <div class="header flexshrink">
       <!-- svelte-ignore a11y_missing_attribute -->
-      <a type="button" 
+      <a
         role="button" 
         tabindex="0" 
         aria-label={info.name}
@@ -125,8 +125,18 @@
     data-ability={info.ability.key}
   >
     <div class="header flexshrink">
-      <a type="button" class="name font-title-small" onclick={onNameClick}>{info.name}</a>
-
+      <!-- svelte-ignore a11y_missing_attribute -->
+      <a
+        role="button"
+        tabindex="0"
+        class="name font-title-small"
+        onclick={onNameClick}
+        onkeydown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            onNameClick?.();
+          }
+        }}
+        >{info.name}</a>
       <i
         data-tooltip="DND5E.SpellAbility"
         class="fa-solid fa-chess-queen primary-icon color-text-gold-emphasis"

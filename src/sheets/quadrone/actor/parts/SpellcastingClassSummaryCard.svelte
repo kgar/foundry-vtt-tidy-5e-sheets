@@ -61,7 +61,7 @@
   >
     <div class="header flexshrink">
       <!-- svelte-ignore a11y_missing_attribute -->
-      <a type="button" 
+      <a 
         role="button" 
         tabindex="0" 
         aria-label={info.name}
@@ -83,7 +83,6 @@
       {:else if context.unlocked}
         <!-- svelte-ignore a11y_missing_attribute -->
         <a
-          type="button"
           role="button"
           tabindex="0"
           aria-label={localize('DND5E.SpellAbilitySet')}
@@ -141,7 +140,6 @@
       </div>
       <!-- svelte-ignore a11y_missing_attribute -->
       <a
-        type="button"
         role="button"
         tabindex="0"
         aria-label={localize('DND5E.Prepared')}
@@ -182,7 +180,6 @@
     <div class="header flexshrink">
       <!-- svelte-ignore a11y_missing_attribute -->
       <a 
-        type="button" 
         role="button" 
         tabindex="0" 
         class="name font-title-small" 
@@ -204,7 +201,6 @@
       {:else if context.unlocked}
         <!-- svelte-ignore a11y_missing_attribute -->
         <a
-          type="button"
           role="button"
           tabindex="0"
           aria-label={localize('DND5E.SpellAbilitySet')}
