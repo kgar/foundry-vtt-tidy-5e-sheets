@@ -6,9 +6,9 @@
 - [x] Prepare the data
 - [x] Create new tab component that is meant to accommodate both section arrangements
 - [x] Set up logic to choose between origin and action sections and hardcode to Origin for now
-- [ ] Fix: Sheet tab Feature sections don't have columns
-- [ ] Make the default order Inventory, Spellbook, Features, Facilities
-- [ ] Ensure Action sections are handled in new character sheet tab component
+- [x] Fix: Sheet tab Feature sections don't have columns
+- [x] Make the default order Inventory, Spellbook, Features
+- [x] Ensure Action sections are handled in new character sheet tab component
 - [ ] Fix: Custom sections for Sheet tab should be pulling from the Action Section flag instead of the regular one
 - [ ] Combine items with equivalent section keys into "custom" sections with the fallback / action tab columns
 - [ ] Implement Search
@@ -24,6 +24,9 @@
 - [ ] Do some perf tests around how long it takes to prepare the origin sections
 - [ ] Clean up the code and reduce redundancy
 - [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
+  - [ ] Differences between existing tables
+    - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
+    - [ ] ...
 
 
 ### Short List
