@@ -341,6 +341,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   }
 
   async prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
+    // TODO: Derive this from Sheet Flag ?? World setting
     const sectionMode: 'action' | 'origin' = 'origin';
 
     const isEligibleItem = (item: Item5e) => {
@@ -472,9 +473,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     });
 
     context.sheetTabSections = [
-      ...featureSections,
       ...inventorySections,
       ...spellbookSections,
+      ...featureSections,
     ];
   }
 
