@@ -631,6 +631,10 @@ export type ActionSectionClassic = {
   actions: ActionItem[];
 } & TidySectionBase;
 
+export type CustomItemSectionQuadrone = {
+  type: 'custom';
+} & TidyItemSectionBase;
+
 export type ExtensibleComponent = {
   cssClasses: string[];
   dataset: Record<string, string>;
@@ -1239,13 +1243,11 @@ export type SheetTabEffectSection = ActiveEffectSection & {
 };
 
 export type SheetTabSection =
-  | SheetTabEffectSection
-  | ActivitySection
-  | FacilitySection
   | FeatureSection
   | InventorySection
   | SpellbookSection
-  | TidyItemSectionBase;
+  // TODO: Make a type for this an propagate
+  | CustomItemSectionQuadrone;
 
 export type CharacterSheetQuadroneContext = {
   actions: TidyItemSectionBase[];

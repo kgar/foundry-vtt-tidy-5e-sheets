@@ -22,6 +22,8 @@ import type {
   FeatureSection,
   ActorTraitContext,
   TidyItemSectionBase,
+  CharacterFeatureSection,
+  SheetTabSection,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -60,6 +62,7 @@ import {
   isItemInActionList,
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -414,10 +417,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     for (let item of partitions.items) {
       const ctx = (context.itemContext[item.id] ??= {});
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
+      Inventory.applyInventoryItemToSection(
+        inventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: true,
+          rowActions: inventoryRowActions,
+        },
+        '',
+        'actionSection',
+      );
     }
 
     // Spellbook
@@ -431,6 +441,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           hasActionsTab: true,
         }),
       },
+      'actionSection',
     );
 
     // Features
@@ -445,6 +456,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           rowActions:
             TableRowActionsRuntime.getCharacterFeatureRowActions(context),
         },
+        'actionSection',
       );
 
     const applyStandardItemHeaderActions = (section: TidyItemSectionBase) => {
@@ -477,6 +489,68 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       ...spellbookSections,
       ...featureSections,
     ];
+
+    function createGenericFavoriteSection(
+      key: string,
+      items: Item5e[],
+    ): TidyItemSectionBase & { type: 'custom' } {
+      return {
+        type: 'custom',
+        dataset: [],
+        items: items,
+        key: key,
+        label: FoundryAdapter.localize(key),
+        custom: {
+          creationItemTypes: [],
+          section: key,
+        },
+        isExternal: false,
+        show: true,
+        rowActions: [
+          {
+            component: MenuButton,
+            props: () => ({
+              targetSelector: '[data-context-menu]',
+            }),
+          },
+        ],
+        sectionActions: [],
+      };
+    }
+
+    let sectionsMap: Record<string, SheetTabSection> = {};
+    for (let section of context.sheetTabSections) {
+      const mappedSection = sectionsMap[section.key];
+
+      if (!mappedSection) {
+        sectionsMap[section.key] = section;
+        continue;
+      }
+
+      const incomingItems = section.items;
+
+      if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
+        const mappedItems = mappedSection.items;
+
+        sectionsMap[section.key] = createGenericFavoriteSection(section.key, [
+          ...incomingItems,
+          ...mappedItems,
+        ]);
+
+        continue;
+      }
+
+      mappedSection.items.push(...incomingItems);
+    }
+
+    context.sheetTabSections = Object.values(sectionsMap);
+
+    context.sheetTabSections = SheetSections.configureActionsQuadrone(
+      context.sheetTabSections,
+      CONSTANTS.TAB_ACTOR_ACTIONS,
+      UserSheetPreferencesService.getByType(this.actor.type),
+      TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
+    );
   }
 
   public static async tryGetInspirationSource(

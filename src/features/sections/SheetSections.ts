@@ -18,6 +18,7 @@ import type {
   NpcAbilitySection,
   NpcSheetContext,
   NpcSheetQuadroneContext,
+  SheetTabSection,
   SpellbookSection,
   SpellbookSectionLegacy,
   TidyItemSectionBase,
@@ -162,9 +163,12 @@ export class SheetSections {
       | ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
-    options: Partial<SpellbookSection> = {}
+    options: Partial<SpellbookSection> = {},
+    customSectionFlag: 'section' | 'actionSection' = 'section',
   ): SpellbookSection[] {
-    const customSectionSpells = spells.filter((s) => TidyFlags.section.get(s));
+    const customSectionSpells = spells.filter((s) =>
+      TidyFlags[customSectionFlag].get(s),
+    );
     spells = spells.filter((s) => !TidyFlags.section.get(s));
 
     // TODO: Absorb _prepareSpellbookLegacy
@@ -183,7 +187,7 @@ export class SheetSections {
           show: true,
           rowActions: options.rowActions ?? [], // for the UI Overhaul
           sectionActions: options.sectionActions ?? [], // for the UI Overhaul
-        } satisfies SpellbookSection)
+        }) satisfies SpellbookSection
     );
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
@@ -248,7 +252,7 @@ export class SheetSections {
         config?.getLabel({ level }) ??
         game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook');
       const method = config?.key ?? key;
-      const order = level === 0 ? 0 : config?.order ?? 1000;
+      const order = level === 0 ? 0 : (config?.order ?? 1000);
       const usesSlots = config?.slots && level;
 
       const spells = foundry.utils.getProperty(

@@ -7,6 +7,7 @@ import type {
   ActionItem,
   ActionSectionClassic,
   Actor5e,
+  CustomItemSectionQuadrone,
   TidyItemSectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -144,7 +145,7 @@ function buildActionSections(
 export async function getActorActionSectionsQuadrone(
   actor: Actor5e,
   options?: Partial<TidyItemSectionBase>
-): Promise<TidyItemSectionBase[]> {
+): Promise<CustomItemSectionQuadrone[]> {
   try {
     let eligibleItems: Item5e[] = [];
 
@@ -185,15 +186,16 @@ export function getSortedActionsQuadrone(
 
 function buildActionSectionsQuadrone(
   items: Item5e[],
-  options?: Partial<TidyItemSectionBase>
-): TidyItemSectionBase[] {
+  options?: Partial<CustomItemSectionQuadrone>,
+): CustomItemSectionQuadrone[] {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
 
-  let actionSections: Record<string, TidyItemSectionBase> = {};
+  let actionSections: Record<string, CustomItemSectionQuadrone> = {};
 
   // Initialize the default sections in their default order.
   Object.keys(activationTypeSortValues).forEach((activationType) => {
     actionSections[activationType] = {
+      type: 'custom',
       items: [],
       dataset: {},
       label: FoundryAdapter.getActivationTypeLabel(activationType),
@@ -210,6 +212,7 @@ function buildActionSectionsQuadrone(
     const customSectionName = TidyFlags.actionSection.get(item);
     if (customSectionName) {
       const customSection = (actionSections[customSectionName] ??= {
+        type: 'custom',
         items: [],
         dataset: {},
         key: customSectionName,
@@ -231,6 +234,7 @@ function buildActionSectionsQuadrone(
       );
 
       const section = (actionSections[activationType] ??= {
+        type: 'custom',
         items: [],
         dataset: {},
         key: activationType,
