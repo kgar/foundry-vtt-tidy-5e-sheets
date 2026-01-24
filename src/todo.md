@@ -9,8 +9,8 @@
 - [x] Fix: Sheet tab Feature sections don't have columns
 - [x] Make the default order Inventory, Spellbook, Features
 - [x] Ensure Action sections are handled in new character sheet tab component
-- [ ] Fix: Custom sections for Sheet tab should be pulling from the Action Section flag instead of the regular one
-- [ ] Combine items with equivalent section keys into "custom" sections with the fallback / action tab columns
+- [x] Fix: Custom sections for Sheet tab should be pulling from the Action Section flag instead of the regular one
+- [x] Combine items with equivalent section keys into "custom" sections with the fallback / action tab columns
 - [ ] Implement Search
 - [ ] Implement Sort button
 - [ ] Implement Manual Sort via drag/drop
