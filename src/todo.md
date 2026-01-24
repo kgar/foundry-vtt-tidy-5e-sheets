@@ -16,6 +16,7 @@
 - [x] Implement Manual Sort via drag/drop
 - [x] Implement Section Config
 - [x] Implement Filters
+- [ ] Fix: No Add buttons allowed on sheet tab sections
 - [ ] Fix: Nested container contents not showing when expanded in Sheet tab
 - [ ] Decide how drop behaviors should work
 - [ ] Set up World setting for default Sheet tab section organization
