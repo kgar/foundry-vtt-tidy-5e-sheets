@@ -11,11 +11,12 @@
 - [x] Ensure Action sections are handled in new character sheet tab component
 - [x] Fix: Custom sections for Sheet tab should be pulling from the Action Section flag instead of the regular one
 - [x] Combine items with equivalent section keys into "custom" sections with the fallback / action tab columns
-- [ ] Implement Search
-- [ ] Implement Sort button
-- [ ] Implement Manual Sort via drag/drop
-- [ ] Implement Section Config
-- [ ] Implement Filters
+- [x] Implement Search
+- [x] Implement Sort button
+- [x] Implement Manual Sort via drag/drop
+- [x] Implement Section Config
+- [x] Implement Filters
+- [ ] Fix: Nested container contents not showing when expanded in Sheet tab
 - [ ] Decide how drop behaviors should work
 - [ ] Set up World setting for default Sheet tab section organization
 - [ ] Set up per-sheet toggle for Sheet tab section organization
@@ -23,6 +24,8 @@
 - [ ] Review with hightouch to determine next steps
 - [ ] Do some perf tests around how long it takes to prepare the origin sections
 - [ ] Clean up the code and reduce redundancy
+- [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
+- [ ] Fix: Sheet tab Prepared filter doesn't seem to work quite right
 - [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
   - [ ] Differences between existing tables
     - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle

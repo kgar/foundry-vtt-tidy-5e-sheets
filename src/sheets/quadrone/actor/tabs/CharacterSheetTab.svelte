@@ -8,9 +8,7 @@
     createSearchResultsState,
     setSearchResultsContext,
   } from 'src/features/search/search.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
@@ -34,15 +32,7 @@
   const searchResults = createSearchResultsState();
   setSearchResultsContext(searchResults);
 
-  let sections = $derived(
-    // SheetSections.configureActionsQuadrone(
-    //   context.actions,
-    //   tabId,
-    //   UserSheetPreferencesService.getByType(context.actor.type),
-    //   TidyFlags.sectionConfig.get(context.actor)?.[tabId],
-    // ),
-    context.sheetTabSections, // TODO: Apply section preparation.
-  );
+  let sections = $derived(context.sheetTabSections);
 
   let tabOptionGroups = $derived<SectionOptionGroup[]>([
     {
@@ -61,20 +51,19 @@
     ) ?? true,
   );
 
-  //   $effect(() => {
-  //     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
-  //       criteria: searchCriteria,
-  //       itemContext: context.itemContext,
-  //       sections: sections,
-  //       tabId: tabId,
-  //     });
-  //   });
+  $effect(() => {
+    searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
+      criteria: searchCriteria,
+      itemContext: context.itemContext,
+      sections: sections,
+      tabId: tabId,
+    });
+  });
 
   const localize = FoundryAdapter.localize;
 
-  let totalActionCount = $derived(
-    // sections.reduce((count, s) => count + s.items.length, 0),
-    1, // TODO: fixme
+  let hasAtLeastOneItem = $derived(
+    sections.some((section) => section.items.length > 0),
   );
 
   let sectionsContainer: HTMLElement;
@@ -103,7 +92,7 @@
 {/if}
 
 <div class="tidy-table-container" bind:this={sectionsContainer}>
-  {#if totalActionCount === 0}
+  {#if !hasAtLeastOneItem}
     <div class="empty-state-container empty-state-description">
       {localize('TIDY5E.SheetLock.Empty.Hint')}
     </div>
@@ -116,7 +105,7 @@
             searchResults.uuids,
           )}
 
-          {#if hasViewableItems}
+          {#if section.show && hasViewableItems}
             <SpellTable
               {section}
               sheetDocument={context.document}
@@ -130,7 +119,7 @@
             section.items,
             searchResults.uuids,
           )}
-          {#if hasViewableItems}
+          {#if section.show && hasViewableItems}
             <InventoryTable
               containingDocument={context.document}
               editable={context.editable}
@@ -149,7 +138,7 @@
             section.items,
             searchResults.uuids,
           )}
-          {#if hasViewableItems}
+          {#if section.show && hasViewableItems}
             <FeatureTable
               {section}
               {itemToggleMap}
@@ -163,7 +152,7 @@
             section.items,
             searchResults.uuids,
           )}
-          {#if hasViewableItems}
+          {#if section.show && hasViewableItems}
             <ActionTable
               {inlineToggleService}
               itemContext={context.itemContext}
