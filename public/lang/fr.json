@@ -407,7 +407,9 @@
         "AccentColor.title": "Couleur de surbrillance",
         "ItemSidebarBackground.title": "Arrière-plan de la barre latérale des éléments",
         "RarityColors.title": "Couleurs des raretés",
-        "SpellcastingMethodColors.title": "Couleurs de la méthode d'incantation"
+        "SpellcastingMethodColors.title": "Couleurs de la méthode d'incantation",
+        "UseHeaderBackground.title": "Utiliser l'arrière-plan de l'en-tête",
+        "UseHeaderBackground.hint": "Comprend les styles qui prennent en charge un en-tête de feuille coloré avec une image en arrière-plan."
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Niveau de sort {number}",
     "TIDY5E.ApplyChanges": "Appliquer les changements",
@@ -990,5 +992,21 @@
     "TIDY5E.SheetMode.Play": "Passer en mode édition",
     "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Transférer toutes les devises à l'acteur parent",
     "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Avis</strong> : Tidy 5e's <strong>fiches classiques</strong> seront supprimé du module Tidy 5e Sheets dans Foundry v14.",
-    "TIDY5E.Notifications.ClassicsRetired": "<strong>Avis</strong> : Tidy 5e's <strong>fiches classiques</strong>ont été supprimés du module Tidy 5e Sheets à partir de Foundry v14."
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Avis</strong> : Tidy 5e's <strong>fiches classiques</strong>ont été supprimés du module Tidy 5e Sheets à partir de Foundry v14.",
+    "TIDY5E.RemoveSpecific": "Supprimer {name}",
+    "TIDY5E.ContextMenuActionUnassign": "Non attribué",
+    "TIDY5E.ContextMenuActionAssignToEntity": "Attribuer à {entityName}",
+    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Équipage assigné",
+    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Équipage non affecté",
+    "TIDY5E.Vehicle.Member.Passenger.Label": "Passager",
+    "TIDY5E.Vehicle.Member.AssignTo.Label": "Attribuer à",
+    "TIDY5E.Vehicle.Member.Assigned.Label": "Attribué",
+    "TIDY5E.Vehicle.Repair.Label": "Réparation",
+    "TIDY5E.Vehicle.Features.EmptyState": "Glissez-déposez ici, ou cliquez pour ajouter.",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "Glissez-déposez les armes ici, ou cliquez pour les ajouter.",
+    "TIDY5E.Vehicle.Equipment.EmptyState": "Glissez-déposez l'équipement ici ou cliquez pour l'ajouter. L'équipage peut ensuite être affecté à l'équipement du véhicule.",
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Glissez-déposez ici les animaux de trait ou les créatures de travail, ou cliquez pour les ajouter.",
+    "TIDY5E.Vehicle.Unassigned.EmptyState": "Glissez-déposez l'équipage ici ou cliquez pour l'ajouter. L'équipage peut ensuite être affecté à l'équipement ou aux fonctionnalités du véhicule.",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Glissez-déposez les passagers ici ou cliquez pour les ajouter.",
+    "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. PV"
 }
