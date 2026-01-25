@@ -39,8 +39,10 @@
     context.unlocked ? context.source.rarity : context.system.rarity,
   );
 
+  const unidentified = $derived(context.system.identified === false);
+
   let rarityText = $derived(
-    context.system.identified === false
+    unidentified
       ? localize('DND5E.Unidentified.Title')
       : RarityColors.getRarityText(rarity).titleCase(),
   );
@@ -89,9 +91,11 @@
 
   // TODO: Consider a reusable function and also feeding it through item context for item sheets.
   let itemColorClasses = $derived<ClassValue>([
-    context.system.identified === false ? 'disabled' : undefined,
-    !isNil(rarity, '') ? 'rarity' : undefined,
-    coalesce(rarity?.slugify(), 'none'),
+    unidentified && !FoundryAdapter.isInGmEditMode(context.document) ? 'disabled' : undefined,
+    !unidentified && !isNil(rarity, '') ? 'rarity' : undefined,
+    !unidentified && 'rarity' in context.system
+      ? coalesce(rarity?.slugify(), 'none')
+      : undefined,
     !isNil(config?.key) ? 'spell-method' : undefined,
     !isNil(config?.key) ? 'method-' + config.key.slugify() : undefined,
   ]);
@@ -209,14 +213,14 @@
     </div>
     {#if 'rarity' in context.system}
       <div class="item-rarity-container">
-        {#if context.unlocked}
+        {#if context.unlocked && (!unidentified || FoundryAdapter.isInGmEditMode(context.document))}
           <SelectQuadrone
             id="rarity-{context.sheet.id}"
             document={context.item}
             field="system.rarity"
             class={['item-rarity-selector', 'capitalize', itemColorClasses]}
             value={context.source.rarity}
-            disabled={!context.editable}
+            disabled={!context.editable && !FoundryAdapter.isInGmEditMode(context.document)}
             blankValue=""
           >
             <option class="none" value="">{localize('DND5E.None')}</option>
