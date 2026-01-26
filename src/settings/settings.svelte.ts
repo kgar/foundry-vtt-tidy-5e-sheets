@@ -67,7 +67,7 @@ export type CurrentSettings = {
 
 export function getCurrentSettings(): CurrentSettings {
   const keys = Object.keys(
-    SettingsProvider.settings
+    SettingsProvider.settings,
   ) as (keyof (typeof SettingsProvider)['settings'])[];
 
   return keys.reduce<Record<string, any>>((obj, key) => {
@@ -2037,7 +2037,30 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<Record<string, TrackedTabs>>(
-            'sectionExpansionState'
+            'sectionExpansionState',
+          );
+        },
+      },
+      characterSheetTabOrganization: {
+        options: {
+          name: 'TIDY5E.Settings.CharacterSheetTabSectionOrganization.name',
+          hint: 'TIDY5E.Settings.CharacterSheetTabSectionOrganization.hint',
+          scope: 'world',
+          config: true,
+          type: String,
+          choices: {
+            // TODO: to constants
+            action:
+              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
+            origin:
+              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
+          },
+          // TODO: to constant
+          default: 'action',
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<'action' | 'origin'>(
+            'characterSheetTabOrganization',
           );
         },
       },
