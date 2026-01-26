@@ -11,7 +11,10 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';
   import SheetPins from '../../shared/SheetPins.svelte';
-  import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
+  import type {
+    RadioSetting,
+    SectionOptionGroup,
+  } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SpellTable from '../../shared/SpellTable.svelte';
@@ -20,6 +23,8 @@
   import ActionTable from '../../shared/ActionTable.svelte';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
+  import { SettingsProvider } from 'src/settings/settings.svelte';
+  import { TidyFlags } from 'src/api';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -36,7 +41,45 @@
 
   let sections = $derived(context.sheetTabSections);
 
+  const organization = $derived(
+    SettingsProvider.settings.characterSheetTabOrganization.get(),
+  );
+
   let tabOptionGroups = $derived<SectionOptionGroup[]>([
+    {
+      title: 'TIDY5E.SectionOrganization',
+      settings: [
+        {
+          type: 'radio',
+          options: [
+            {
+              label: FoundryAdapter.localize('TIDY5E.GenericDefaultPrefix', {
+                value: FoundryAdapter.localize(
+                  SettingsProvider.settings.characterSheetTabOrganization
+                    .options.choices[organization],
+                ),
+              }),
+              value: null,
+            },
+            {
+              label:
+                SettingsProvider.settings.characterSheetTabOrganization.options
+                  .choices.action,
+              value: CONSTANTS.SECTION_ORGANIZATION_ACTION,
+            },
+            {
+              label:
+                SettingsProvider.settings.characterSheetTabOrganization.options
+                  .choices.origin,
+              value: CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
+            },
+          ],
+          prop: TidyFlags.characterSheetTabSectionOrganization.prop,
+          doc: context.actor,
+          default: null,
+        } satisfies RadioSetting<string | null>,
+      ],
+    },
     {
       title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
       settings: [

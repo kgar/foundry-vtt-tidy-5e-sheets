@@ -39,12 +39,15 @@
   "TIDY5E.Show": "Show",
   "TIDY5E.Hide": "Hide",
 
+  "TIDY5E.SectionOrganization": "Section Organization",
+
   "TIDY5E.LegendaryLairToolbar": "Legendary/Lair Toolbar",
   "TIDY5E.SpellbookSections": "Spellbook Sections",
 
   "TIDY5E.ExhaustionLevelTooltip": "Exhaustion Level {level}",
 
   "TIDY5E.UserDefaultPrefix": "User Default: {value}",
+  "TIDY5E.GenericDefaultPrefix": "Default: {value}",
 
   "TIDY5E.AbbrInitiative": "Ini",
 
@@ -699,7 +702,7 @@
   },
   "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
     "name": "Character Sheet Tab Section Organization",
-    "hint": "Determines how the sections should be organized in the Character Sheet tab.",
+    "hint": "Determines how the sections should be organized in the Character Sheet tab by default.",
     "option.action": "By action economy",
     "option.origin": "By item or feature type"
   },

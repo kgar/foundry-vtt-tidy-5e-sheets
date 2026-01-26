@@ -348,6 +348,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     const sectionMode:
       | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
       | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN =
+      TidyFlags.characterSheetTabSectionOrganization.get(this.document) ??
       SettingsProvider.settings.characterSheetTabOrganization.get();
 
     const isEligibleItem = (item: Item5e) => {

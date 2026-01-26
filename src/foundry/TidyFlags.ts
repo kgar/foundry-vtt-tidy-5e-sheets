@@ -239,6 +239,44 @@ export class TidyFlags {
   };
 
   /**
+   * Determines how the sections should be organized in a 
+   * particular character's sheet tab.
+   */
+  static characterSheetTabSectionOrganization = {
+    key: 'characterSheetTabSectionOrganization' as const,
+    prop: TidyFlags.getFlagPropertyPath('characterSheetTabSectionOrganization'),
+    /** Gets the character's sheet tab organization scheme. */
+    get(
+      actor: Actor5e,
+    ):
+      | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+      | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN
+      | undefined {
+      return (
+        TidyFlags.tryGetFlag<
+          | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+          | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN
+        >(actor, TidyFlags.characterSheetTabSectionOrganization.key) ??
+        undefined
+      );
+    },
+    /** Sets the character's sheet tab organization scheme. */
+    set(
+      actor: Actor5e, 
+      value: 
+        | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+        | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN
+        | undefined,
+    ): Promise<void> {
+      return TidyFlags.setFlag(
+        actor,
+        TidyFlags.characterSheetTabSectionOrganization.key,
+        value,
+      );
+    },
+  };
+
+  /**
    * The level exhaustion for a given actor.
    * This flag applies to actors which don't yet possess
    * standard exhaustion schema from the dnd5e system.

@@ -19,20 +19,20 @@
 - [x] Fix: No Add buttons allowed on sheet tab sections
 - [x] Fix: Nested container contents not showing when expanded in Sheet tab
 - [x] Set up World setting for default Sheet tab section organization
-- [ ] Set up per-sheet toggle for Sheet tab section organization
-- [ ] Replace hardcoded Origin section setup with determined current setting, starting with sheet flag and falling back to world setting
-- [ ] Review with hightouch to determine next steps
+- [x] Set up per-sheet toggle for Sheet tab section organization
+- [x] Replace hardcoded Origin section setup with determined current setting, starting with sheet flag and falling back to world setting
+- [ ] Fix: Sheet tab Prepared filter doesn't seem to work quite right
+- [ ] Clean up: the 'custom' section type needs a constant
 - [ ] Do some perf tests around how long it takes to prepare the origin sections
 - [ ] Clean up the code and reduce redundancy
 - [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
-- [ ] Fix: Sheet tab Prepared filter doesn't seem to work quite right
 - [ ] Refactor: can column loadouts be somehow pushed further back and simplified?
 - [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
   - [ ] Differences between existing tables
     - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
     - [ ] ...
+- [ ] Review with hightouch to determine next steps
 - [ ] Decide how drop behaviors should work
-- [ ] Clean up: the 'custom' section type needs a constant
 
 
 ### Short List
