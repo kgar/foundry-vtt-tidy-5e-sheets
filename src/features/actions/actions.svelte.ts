@@ -195,7 +195,7 @@ function buildActionSectionsQuadrone(
   // Initialize the default sections in their default order.
   Object.keys(activationTypeSortValues).forEach((activationType) => {
     actionSections[activationType] = {
-      type: 'custom',
+      type: CONSTANTS.SECTION_TYPE_CUSTOM,
       items: [],
       dataset: {},
       label: FoundryAdapter.getActivationTypeLabel(activationType),
@@ -212,7 +212,7 @@ function buildActionSectionsQuadrone(
     const customSectionName = TidyFlags.actionSection.get(item);
     if (customSectionName) {
       const customSection = (actionSections[customSectionName] ??= {
-        type: 'custom',
+        type: CONSTANTS.SECTION_TYPE_CUSTOM,
         items: [],
         dataset: {},
         key: customSectionName,
@@ -234,7 +234,7 @@ function buildActionSectionsQuadrone(
       );
 
       const section = (actionSections[activationType] ??= {
-        type: 'custom',
+        type: CONSTANTS.SECTION_TYPE_CUSTOM,
         items: [],
         dataset: {},
         key: activationType,

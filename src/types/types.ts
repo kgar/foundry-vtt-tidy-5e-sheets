@@ -632,7 +632,7 @@ export type ActionSectionClassic = {
 } & TidySectionBase;
 
 export type CustomItemSectionQuadrone = {
-  type: 'custom';
+  type: typeof CONSTANTS.SECTION_TYPE_CUSTOM;
 } & TidyItemSectionBase;
 
 export type ExtensibleComponent = {

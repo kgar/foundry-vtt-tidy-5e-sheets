@@ -144,7 +144,7 @@
   {:else}
     {#each sections as section}
       {#if 'type' in section}
-        {#if section.type === 'spellbook'}
+        {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
           {@const hasViewableItems = ItemVisibility.hasViewableItems(
             section.items,
             searchResults.uuids,
@@ -169,7 +169,7 @@
               {columns}
             />
           {/if}
-        {:else if section.type === 'inventory'}
+        {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
           {@const hasViewableItems = ItemVisibility.hasViewableItems(
             section.items,
             searchResults.uuids,
@@ -199,7 +199,7 @@
               {columns}
             />
           {/if}
-        {:else if section.type === 'feature'}
+        {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
           {@const hasViewableItems = ItemVisibility.hasViewableItems(
             section.items,
             searchResults.uuids,
@@ -223,7 +223,7 @@
               {columns}
             />
           {/if}
-        {:else if section.type === 'custom'}
+        {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
           {@const hasViewableItems = ItemVisibility.hasViewableItems(
             section.items,
             searchResults.uuids,

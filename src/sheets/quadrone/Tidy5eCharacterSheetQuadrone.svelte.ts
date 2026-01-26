@@ -24,6 +24,7 @@ import type {
   TidyItemSectionBase,
   CharacterFeatureSection,
   SheetTabSection,
+  CustomItemSectionQuadrone,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -369,7 +370,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       });
 
       actionSections.forEach((section) => {
-        section.type = 'custom';
+        section.type = CONSTANTS.SECTION_TYPE_CUSTOM;
         section.sectionActions = SectionActions.getActionHeaderActions(
           this.actor,
           this.actor.isOwner,
@@ -497,9 +498,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     function createGenericSheetTabSection(
       key: string,
       items: Item5e[],
-    ): TidyItemSectionBase & { type: 'custom' } {
+    ): CustomItemSectionQuadrone {
       return {
-        type: 'custom',
+        type: CONSTANTS.SECTION_TYPE_CUSTOM,
         dataset: [],
         items: items,
         key: key,

@@ -22,8 +22,8 @@
 - [x] Set up per-sheet toggle for Sheet tab section organization
 - [x] Replace hardcoded Origin section setup with determined current setting, starting with sheet flag and falling back to world setting
 - [x] Fix: There are build errors
-- [ ] Fix: Sheet tab Prepared filter doesn't seem to work quite right
-- [ ] Clean up: the 'custom' section type needs a constant
+- [x] Fix: Sheet tab Prepared filter doesn't seem to work quite right
+- [x] Clean up: the 'custom' section type needs a constant
 - [ ] Do some perf tests around how long it takes to prepare the origin sections
 - [ ] Clean up the code and reduce redundancy
 - [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
