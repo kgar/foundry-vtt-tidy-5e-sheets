@@ -700,8 +700,8 @@
   "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
     "name": "Character Sheet Tab Section Organization",
     "hint": "Determines how the sections should be organized in the Character Sheet tab.",
-    "option.action": "By Action Economy",
-    "option.origin": "Like Original Tab Sections"
+    "option.action": "By action economy",
+    "option.origin": "By item or feature type"
   },
   "TIDY5E.Settings.Reset": {
     "name": "Reset Settings to Default",

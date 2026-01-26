@@ -345,15 +345,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   }
 
   async prepareSheetTabSections(context: CharacterSheetQuadroneContext) {
-    // TODO: Derive this from Sheet Flag ?? World setting
-    const sectionMode: 'action' | 'origin' = SettingsProvider.settings.characterSheetTabOrganization.get();
+    const sectionMode:
+      | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+      | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN =
+      SettingsProvider.settings.characterSheetTabOrganization.get();
 
     const isEligibleItem = (item: Item5e) => {
       // TODO: based on settings, source from favorites instead.
       return isItemInActionList(item);
     };
 
-    if (sectionMode === 'origin') {
+    if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
       this.setUpSheetTabOriginSections(context, isEligibleItem);
       // TODO: Facilities(?), Effects, Activities, Skills/Tools, Spell Slots
       // Sort based on section configuration (section config key is going to be `${sectionType}|${sectionKey}`); for generic item sections, section type should be "custom".

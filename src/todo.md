@@ -18,7 +18,7 @@
 - [x] Implement Filters
 - [x] Fix: No Add buttons allowed on sheet tab sections
 - [x] Fix: Nested container contents not showing when expanded in Sheet tab
-- [ ] Set up World setting for default Sheet tab section organization
+- [x] Set up World setting for default Sheet tab section organization
 - [ ] Set up per-sheet toggle for Sheet tab section organization
 - [ ] Replace hardcoded Origin section setup with determined current setting, starting with sheet flag and falling back to world setting
 - [ ] Review with hightouch to determine next steps
@@ -32,6 +32,7 @@
     - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
     - [ ] ...
 - [ ] Decide how drop behaviors should work
+- [ ] Clean up: the 'custom' section type needs a constant
 
 
 ### Short List

@@ -2049,19 +2049,18 @@ export function createSettings() {
           config: true,
           type: String,
           choices: {
-            // TODO: to constants
-            action:
+            [CONSTANTS.SECTION_ORGANIZATION_ACTION]:
               'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
-            origin:
+            [CONSTANTS.SECTION_ORGANIZATION_ORIGIN]:
               'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
           },
-          // TODO: to constant
           default: 'action',
         },
         get() {
-          return FoundryAdapter.getTidySetting<'action' | 'origin'>(
-            'characterSheetTabOrganization',
-          );
+          return FoundryAdapter.getTidySetting<
+            | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+            | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN
+          >('characterSheetTabOrganization');
         },
       },
 
