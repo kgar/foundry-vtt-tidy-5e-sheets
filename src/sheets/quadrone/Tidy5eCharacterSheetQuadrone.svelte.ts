@@ -63,6 +63,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
+import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/ActionsTabToggleButton.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -490,7 +491,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       ...featureSections,
     ];
 
-    function createGenericFavoriteSection(
+    function createGenericSheetTabSection(
       key: string,
       items: Item5e[],
     ): TidyItemSectionBase & { type: 'custom' } {
@@ -507,6 +508,10 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         isExternal: false,
         show: true,
         rowActions: [
+          {
+            component: ActionsTabToggleButton,
+            props: (args) => ({ doc: args.data }),
+          },
           {
             component: MenuButton,
             props: () => ({
@@ -532,7 +537,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       if (mappedSection.type !== CONSTANTS.SECTION_TYPE_FEATURE) {
         const mappedItems = mappedSection.items;
 
-        sectionsMap[section.key] = createGenericFavoriteSection(section.key, [
+        sectionsMap[section.key] = createGenericSheetTabSection(section.key, [
           ...incomingItems,
           ...mappedItems,
         ]);
@@ -550,6 +555,16 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       CONSTANTS.TAB_ACTOR_ACTIONS,
       UserSheetPreferencesService.getByType(this.actor.type),
       TidyFlags.sectionConfig.get(context.actor)?.[CONSTANTS.TAB_ACTOR_ACTIONS],
+    );
+
+    context.sheetTabSections.forEach(
+      (section) =>
+        (section.sectionActions = SectionActions.getActionHeaderActions(
+          this.document,
+          context.owner,
+          context.unlocked,
+          section,
+        )),
     );
   }
 
