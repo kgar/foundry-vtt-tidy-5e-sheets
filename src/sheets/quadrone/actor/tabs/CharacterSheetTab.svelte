@@ -18,6 +18,8 @@
   import FeatureTable from '../../shared/FeatureTable.svelte';
   import InventoryTable from '../../shared/InventoryTable.svelte';
   import ActionTable from '../../shared/ActionTable.svelte';
+  import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
+  import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -106,12 +108,22 @@
           )}
 
           {#if section.show && hasViewableItems}
+            {@const columns = new ColumnsLoadout(
+              ItemColumnRuntime.getConfiguredColumnSpecifications({
+                sheetType: context.document.type,
+                tabId: tabId,
+                sectionKey: section.key,
+                rowActions: section.rowActions,
+                section: section,
+                sheetDocument: context.document,
+              }),
+            )}
             <SpellTable
               {section}
               sheetDocument={context.document}
               {sectionsInlineWidth}
               {itemToggleMap}
-              tabId={CONSTANTS.TAB_ACTOR_SPELLBOOK}
+              {columns}
             />
           {/if}
         {:else if section.type === 'inventory'}
@@ -120,6 +132,16 @@
             searchResults.uuids,
           )}
           {#if section.show && hasViewableItems}
+            {@const columns = new ColumnsLoadout(
+              ItemColumnRuntime.getConfiguredColumnSpecifications({
+                sheetType: context.document.type,
+                tabId: tabId,
+                sectionKey: section.key,
+                rowActions: section.rowActions,
+                section: section,
+                sheetDocument: context.document,
+              }),
+            )}
             <InventoryTable
               containingDocument={context.document}
               editable={context.editable}
@@ -130,7 +152,8 @@
               {section}
               {sectionsInlineWidth}
               sheetDocument={context.document}
-              tabId={CONSTANTS.TAB_ACTOR_INVENTORY}
+              {tabId}
+              {columns}
             />
           {/if}
         {:else if section.type === 'feature'}
@@ -139,12 +162,22 @@
             searchResults.uuids,
           )}
           {#if section.show && hasViewableItems}
+            {@const columns = new ColumnsLoadout(
+              ItemColumnRuntime.getConfiguredColumnSpecifications({
+                sheetType: context.document.type,
+                tabId,
+                sectionKey: section.key,
+                rowActions: section.rowActions,
+                section: section,
+                sheetDocument: context.document,
+              }),
+            )}
             <FeatureTable
               {section}
               {itemToggleMap}
               {sectionsInlineWidth}
               sheetDocument={context.document}
-              tabId={CONSTANTS.TAB_CHARACTER_FEATURES}
+              {columns}
             />
           {/if}
         {:else if section.type === 'custom'}

@@ -25,6 +25,7 @@
     sectionsInlineWidth: number;
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId?: string;
+    columns?: ColumnsLoadout;
   }
 
   let {
@@ -33,11 +34,12 @@
     sectionsInlineWidth,
     itemToggleMap,
     tabId: tabIdOverride,
+    columns: columnsOverride,
   }: Props = $props();
 
   const tabId =
     tabIdOverride ?? getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
-      
+
   let searchResults = getSearchResultsContext();
 
   let context =
@@ -50,16 +52,17 @@
   const localize = FoundryAdapter.localize;
 
   let columns = $derived(
-    new ColumnsLoadout(
-      ItemColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: sheetDocument.type,
-        tabId: tabId,
-        sectionKey: section.key,
-        rowActions: section.rowActions,
-        section: section,
-        sheetDocument: context.document,
-      }),
-    ),
+    columnsOverride ??
+      new ColumnsLoadout(
+        ItemColumnRuntime.getConfiguredColumnSpecifications({
+          sheetType: sheetDocument.type,
+          tabId: tabId,
+          sectionKey: section.key,
+          rowActions: section.rowActions,
+          section: section,
+          sheetDocument: context.document,
+        }),
+      ),
   );
 
   let hiddenColumns = $derived(

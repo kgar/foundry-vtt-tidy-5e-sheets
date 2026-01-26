@@ -20,7 +20,7 @@
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { CONSTANTS } from 'src/constants';
-  
+
   type Props = {
     containingDocument: any;
     editable: boolean;
@@ -37,6 +37,7 @@
     /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
     tabId: string;
+    columns?: ColumnsLoadout;
   };
 
   let {
@@ -50,6 +51,7 @@
     sectionsInlineWidth,
     sheetDocument,
     tabId,
+    columns: columnsOverride,
   }: Props = $props();
 
   let context = $derived(getSheetContext());
@@ -57,16 +59,17 @@
   const localize = FoundryAdapter.localize;
 
   const columns = $derived(
-    new ColumnsLoadout(
-      ItemColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: containingDocument.type,
-        tabId: tabId,
-        sectionKey: section.key,
-        rowActions: section.rowActions,
-        section: section,
-        sheetDocument: containingDocument,
-      }),
-    ),
+    columnsOverride ??
+      new ColumnsLoadout(
+        ItemColumnRuntime.getConfiguredColumnSpecifications({
+          sheetType: containingDocument.type,
+          tabId: tabId,
+          sectionKey: section.key,
+          rowActions: section.rowActions,
+          section: section,
+          sheetDocument: containingDocument,
+        }),
+      ),
   );
 
   const hiddenColumns = $derived(
@@ -123,7 +126,6 @@
     }))}
     {#each itemEntries as { item, ctx }, i (item.id)}
       {@const expanded = !!containerToggleMap.get(tabId)?.has(item.id)}
-
       <TidyItemTableRow
         {item}
         hidden={!searchResults.show(item.uuid)}
