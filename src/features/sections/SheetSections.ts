@@ -770,8 +770,8 @@ export class SheetSections {
     return sections;
   }
 
-  static configureActionsQuadrone(
-    sections: TidyItemSectionBase[],
+  static configureActionsQuadrone<T extends TidyItemSectionBase>(
+    sections: T[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
