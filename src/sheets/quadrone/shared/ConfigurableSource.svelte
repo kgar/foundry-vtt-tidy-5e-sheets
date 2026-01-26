@@ -44,8 +44,8 @@
       </button>
     {/if}
   {:else}
-    <span class="source-text">
-      {''.padStart(sourceText.length, '?')}
+    <span class="source-text color-text-disabled">
+      {localize('DND5E.Unidentified.Value')}
     </span>
   {/if}
 </div>
