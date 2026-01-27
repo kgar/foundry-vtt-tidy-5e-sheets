@@ -34,7 +34,6 @@
 - [x] Do some perf tests around how long it takes to prepare the origin sections
   - On average, 5-15ms on a high-end machine. Optimizing perf here would make a difference more likely when there are thousands upon thousands of items being included.
 - [x] Do not include the "CharacterSheetTabToggleButton" in TableRowActionsRuntime arrays when there's not a PC involved.
-- [ ] Refactor: can column loadouts be somehow pushed further back and simplified?
 - [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
 - [ ] Clean up the code and reduce redundancy
 - [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
@@ -47,6 +46,7 @@
 
 ### Short List
 
+- [ ] Refactor: can column loadouts be somehow pushed further back and simplified?
 - [ ] Try to fold Vehicle Actions pips into the sheet pins UI.
   - [ ] Sortable with the others? Or fixed to the top?
 - [ ] Possibly fix usability complaint for Loyalty Score setup: <https://discord.com/channels/@me/1243307347682529423/1451341294881341480>
