@@ -284,7 +284,7 @@
               <div class="flexrow concentration-bonus">
                 {#if context.isConcentrating}
                   <i
-                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse color-text-gold-emphasis"
                     aria-label={localize('DND5E.Concentration')}
                   ></i>
                 {:else}
