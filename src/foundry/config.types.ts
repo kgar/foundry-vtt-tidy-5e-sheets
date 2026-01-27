@@ -2591,15 +2591,18 @@ export type CONFIG = {
     };
     difficultTerrainTypes: {
       [k in
-        | 'snow'
-        | 'plans'
+        | 'all'
+        | 'ice'
+        | 'magical'
+        | 'nonmagical'
+        | 'plants'
         | 'rocks'
         | 'liquid'
+        | 'mud'
         | 'sand'
-        | 'ice'
         | 'slope'
-        | 'web'
-        | 'mud']: { label: string };
+        | 'snow'
+        | 'web']: { label: string };
     } & Record<string, { label: string }>;
     skills: {
       acr: Skill;

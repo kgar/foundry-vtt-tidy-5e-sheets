@@ -990,5 +990,7 @@
   },
   "TIDY5E.Actor.Characteristics": "Characteristics",
   "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> will be removed from the Tidy 5e Sheets module in Foundry v14.",
-  "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> have been removed from the Tidy 5e Sheets module as of Foundry v14."
+  "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> have been removed from the Tidy 5e Sheets module as of Foundry v14.",
+  "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignore {value}",
+  "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignore All Difficult Terrain"
 }
