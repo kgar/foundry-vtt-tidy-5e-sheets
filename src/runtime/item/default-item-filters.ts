@@ -65,7 +65,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
       !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_CREW
       ),
-    text: 'DND5E.VehicleCrewAction',
+    text: 'DND5E.ACTIVATION.Type.Crew.Label',
   },
   [CONSTANTS.FILTER_ACTIVATION_COST_SPECIAL]: {
     name: 'activationCostSpecial',
