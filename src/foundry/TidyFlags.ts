@@ -239,6 +239,40 @@ export class TidyFlags {
   };
 
   /**
+   * Include usable items in the character sheet tab automatically.
+   */
+  static characterSheetTabAutomaticallyIncludeUsableItems = {
+    key: 'characterSheetTabAutomaticallyIncludeUsableItems' as const,
+    prop: TidyFlags.getFlagPropertyPath(
+      'characterSheetTabAutomaticallyIncludeUsableItems',
+    ),
+    /** Gets whether to automatically include usable items in the sheet tab. */
+    get(actor: Actor5e): boolean | undefined {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          actor,
+          TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
+        ) ?? undefined
+      );
+    },
+    /** Sets whether to automatically include usable items in the sheet tab. */
+    set(actor: Actor5e, value: boolean | undefined): Promise<void> {
+      return TidyFlags.setFlag(
+        actor,
+        TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
+        value,
+      );
+    },
+    /** Clears flag for whether to automatically include usable items in the sheet tab. */
+    unset(actor: Actor5e) {
+      return TidyFlags.unsetFlag(
+        actor,
+        TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
+      );
+    },
+  };
+
+  /**
    * Determines how the sections should be organized in a
    * particular character's sheet tab.
    */
@@ -284,35 +318,35 @@ export class TidyFlags {
   };
 
   /**
-   * Include usable items in the character sheet tab automatically.
+   * Determines an item's position in a manually sorted Character Sheet Tab item table.
    */
-  static characterSheetTabAutomaticallyIncludeUsableItems = {
-    key: 'characterSheetTabAutomaticallyIncludeUsableItems' as const,
+  static characterSheetTabSortOrder = {
+    key: 'characterSheetTabSortOrder' as const,
     prop: TidyFlags.getFlagPropertyPath(
-      'characterSheetTabAutomaticallyIncludeUsableItems',
+      'characterSheetTabSortOrder',
     ),
-    /** Gets whether to automatically include usable items in the sheet tab. */
-    get(actor: Actor5e): boolean | undefined {
+    /** Gets Character Sheet Tab sort order. */
+    get(item: Item5e): number {
       return (
-        TidyFlags.tryGetFlag<boolean>(
-          actor,
-          TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
-        ) ?? undefined
+        TidyFlags.tryGetFlag<number>(
+          item,
+          TidyFlags.characterSheetTabSortOrder.key,
+        ) ?? Number.MAX_SAFE_INTEGER
       );
     },
-    /** Sets whether to automatically include usable items in the sheet tab. */
-    set(actor: Actor5e, value: boolean | undefined): Promise<void> {
+    /** Sets Character Sheet Tab sort order. */
+    set(item: Item5e, value: number): Promise<void> {
       return TidyFlags.setFlag(
-        actor,
-        TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
+        item,
+        TidyFlags.characterSheetTabSortOrder.key,
         value,
       );
     },
-    /** Clears flag for whether to automatically include usable items in the sheet tab. */
-    unset(actor: Actor5e) {
+    /** Clears flag for Character Sheet Tab sort order. */
+    unset(item: Item5e) {
       return TidyFlags.unsetFlag(
-        actor,
-        TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
+        item,
+        TidyFlags.characterSheetTabSortOrder.key,
       );
     },
   };

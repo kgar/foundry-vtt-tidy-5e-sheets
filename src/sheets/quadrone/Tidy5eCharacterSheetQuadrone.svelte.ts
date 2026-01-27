@@ -361,10 +361,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       return isItemInActionList(item, inclusionMode);
     };
 
+    const sheetTabPreferences = UserSheetPreferencesService.getByType(
+      this.actor.type
+    )?.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
+
+    const sortMode = sheetTabPreferences?.sort ?? 'm';
+
     if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
       this.setUpSheetTabOriginSections(context, isEligibleItem);
-      // TODO: Facilities(?), Effects, Activities, Skills/Tools, Spell Slots
-      // Sort based on section configuration (section config key is going to be `${sectionType}|${sectionKey}`); for generic item sections, section type should be "custom".
     } else {
       const actionSections = await getActorActionSectionsQuadrone(
         this.actor,
@@ -385,6 +389,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           context.unlocked,
           section,
         );
+        
       });
 
       context.sheetTabSections = actionSections;
@@ -1447,7 +1452,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         return f.id !== srcId;
       },
     );
-    const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+    const updates = foundry.utils.performIntegerSort(source, {
       target,
       siblings,
     });

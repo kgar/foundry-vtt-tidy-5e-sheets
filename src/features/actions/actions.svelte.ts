@@ -166,26 +166,6 @@ export async function getActorActionSectionsQuadrone(
   }
 }
 
-export function getSortedActionsQuadrone(
-  section: TidyItemSectionBase,
-  sortMode: string
-) {
-  return section.items.toSorted((a, b) => {
-    if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
-      return a.name.localeCompare(b.name, game.i18n.lang);
-    }
-
-    // Sort by Arbitrary Action List Rules
-    if (a.type !== b.type) {
-      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-    }
-    if (a.type === 'spell' && b.type === 'spell') {
-      return a.system.level - b.system.level;
-    }
-    return (a.sort || 0) - (b.sort || 0);
-  });
-}
-
 function buildActionSectionsQuadrone(
   items: Item5e[],
   options?: Partial<CustomItemSectionQuadrone>,

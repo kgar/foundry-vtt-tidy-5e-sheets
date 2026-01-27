@@ -18,7 +18,6 @@ import type {
   NpcAbilitySection,
   NpcSheetContext,
   NpcSheetQuadroneContext,
-  SheetTabSection,
   SpellbookSection,
   SpellbookSectionLegacy,
   TidyItemSectionBase,
@@ -33,7 +32,6 @@ import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import {
   getSortedActions,
-  getSortedActionsQuadrone,
 } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
@@ -782,7 +780,25 @@ export class SheetSections {
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
       return sections.map(({ ...section }) => {
-        section.items = getSortedActionsQuadrone(section, sortMode);
+        section.items.sort((a, b) => {
+          if (
+            sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
+          ) {
+            return a.name.localeCompare(b.name, game.i18n.lang);
+          }
+
+          if (
+            sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
+          ) {
+            return b.name.localeCompare(a.name, game.i18n.lang);
+          }
+
+          const aSort = TidyFlags.characterSheetTabSortOrder.get(a);
+          const bSort = TidyFlags.characterSheetTabSortOrder.get(b);
+
+          return aSort - bSort;
+        });
+
 
         section.show = sectionConfigs?.[section.key]?.show !== false;
 

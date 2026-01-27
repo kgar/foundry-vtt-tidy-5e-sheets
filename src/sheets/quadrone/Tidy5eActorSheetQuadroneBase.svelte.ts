@@ -1394,7 +1394,7 @@ export function Tidy5eActorSheetQuadroneBase<
           return f.id !== srcId;
         });
 
-      const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+      const updates = foundry.utils.performIntegerSort(source, {
         target,
         siblings,
       });
@@ -1831,7 +1831,7 @@ export function Tidy5eActorSheetQuadroneBase<
         const siblings = targetItem.system.activities.filter(
           (a: any) => a._id !== activity._id
         );
-        const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
+        const sortUpdates = foundry.utils.performIntegerSort(
           source,
           {
             target,
