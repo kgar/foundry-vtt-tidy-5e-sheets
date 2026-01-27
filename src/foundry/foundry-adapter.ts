@@ -1295,13 +1295,10 @@ export const FoundryAdapter = {
     }
 
     // Perform the sort
-    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
-      source, 
-      {
-        target,
-        siblings,
-      }
-    );
+    const sortUpdates = foundry.utils.performIntegerSort(source, {
+      target,
+      siblings,
+    });
 
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
