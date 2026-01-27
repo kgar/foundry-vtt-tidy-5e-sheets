@@ -1297,6 +1297,10 @@ export type CharacterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & SingleActorContext<Tidy5eCharacterSheetQuadrone>;
 
+export type ActionItemInclusionMode =
+  | 'usable-and-flag'
+  | 'flag-only';
+
 export type NpcSheetQuadroneContext = {
   background?: ActorTraitItemContext;
   classes: ActorClassEntryContext[];

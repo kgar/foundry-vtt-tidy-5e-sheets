@@ -5,6 +5,7 @@ import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type {
   ActionItem,
+  ActionItemInclusionMode,
   ActionSectionClassic,
   Actor5e,
   CustomItemSectionQuadrone,
@@ -144,13 +145,14 @@ function buildActionSections(
 
 export async function getActorActionSectionsQuadrone(
   actor: Actor5e,
-  options?: Partial<TidyItemSectionBase>
+  options?: Partial<TidyItemSectionBase>,
+  inclusionMode: ActionItemInclusionMode = 'usable-and-flag',
 ): Promise<CustomItemSectionQuadrone[]> {
   try {
     let eligibleItems: Item5e[] = [];
 
     for (let item of actor.items) {
-      if (!isItemInActionList(item)) {
+      if (!isItemInActionList(item, inclusionMode)) {
         continue;
       }
 
@@ -251,12 +253,19 @@ function buildActionSectionsQuadrone(
   return Object.values(actionSections);
 }
 
-export function isItemInActionList(item: Item5e): boolean {
+export function isItemInActionList(
+  item: Item5e,
+  mode: ActionItemInclusionMode = 'usable-and-flag',
+): boolean {
   // check our override
   const override = TidyFlags.actionFilterOverride.get(item);
 
   if (override !== undefined && override !== null) {
     return override;
+  }
+
+  if (mode === 'flag-only') {
+    return false;
   }
 
   // perform normal filtering logic

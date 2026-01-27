@@ -2049,10 +2049,10 @@ export function createSettings() {
           config: true,
           type: String,
           choices: {
-            [CONSTANTS.SECTION_ORGANIZATION_ACTION]:
-              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
             [CONSTANTS.SECTION_ORGANIZATION_ORIGIN]:
               'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
+            [CONSTANTS.SECTION_ORGANIZATION_ACTION]:
+              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
           },
           default: CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
         },
@@ -2061,6 +2061,22 @@ export function createSettings() {
             | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
             | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN
           >('characterSheetTabOrganization');
+        },
+      },
+      
+      characterSheetTabAutomaticallyIncludeUsableItems: {
+        options: {
+          name: 'TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems.name',
+          hint: 'TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems.hint',
+          scope: 'world',
+          config: true,
+          type: Boolean,
+          default: true,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'characterSheetTabAutomaticallyIncludeUsableItems',
+          );
         },
       },
 

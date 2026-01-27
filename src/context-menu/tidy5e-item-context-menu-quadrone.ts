@@ -10,6 +10,7 @@ import { SettingsProvider } from 'src/settings/settings.svelte';
 import type { Item5e } from 'src/types/item.types';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import { isNil } from 'src/utils/data';
+import type { ActionItemInclusionMode } from 'src/types/types';
 
 /**
  * Prepare an array of context menu options which are available for owned Item documents.
@@ -227,7 +228,10 @@ export function getItemContextOptionsQuadrone(
 
   // Customize - These are things Tidy provides above and beyond the system for greater customization of the sheet.
 
-  const inSheetTab = isItemInActionList(item);
+  const inclusionMode: ActionItemInclusionMode =
+    itemParent?.sheet.autoIncludeSheetTabUsableItems?.() ? 'usable-and-flag' : 'flag-only';
+
+  const inSheetTab = isItemInActionList(item, inclusionMode);
   options.push({
     name: inSheetTab
       ? 'TIDY5E.ContextMenuActionRemoveFromSheetTab'

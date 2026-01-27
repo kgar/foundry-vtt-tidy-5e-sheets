@@ -20,7 +20,7 @@ import type {
 import type { Component } from 'svelte';
 import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
-import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/ActionsTabToggleButton.svelte';
+import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import type { ContainerContentsRowActionsContext } from '../types';
@@ -85,9 +85,9 @@ class TableRowActionsRuntime {
 
           if (config?.hasActionsTab) {
             result.push({
-              component: ActionsTabToggleButton,
+              component: CharacterSheetTabToggleButton,
               props: (args) => ({ doc: args.data }),
-            } satisfies TableAction<typeof ActionsTabToggleButton>);
+            } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
       }
@@ -131,9 +131,9 @@ class TableRowActionsRuntime {
           } satisfies TableAction<typeof DeleteButton>);
         } else {
           result.push({
-            component: ActionsTabToggleButton,
+            component: CharacterSheetTabToggleButton,
             props: (args) => ({ doc: args.data }),
-          } satisfies TableAction<typeof ActionsTabToggleButton>);
+          } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
         }
       }
 
@@ -201,9 +201,9 @@ class TableRowActionsRuntime {
         } else {
           if (config?.hasActionsTab) {
             result.push({
-              component: ActionsTabToggleButton,
+              component: CharacterSheetTabToggleButton,
               props: (args) => ({ doc: args.data }),
-            } satisfies TableAction<typeof ActionsTabToggleButton>);
+            } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
       }
@@ -246,9 +246,9 @@ class TableRowActionsRuntime {
         } satisfies TableAction<typeof DeleteButton>);
       } else if (context.hasActor) {
         result.push({
-          component: ActionsTabToggleButton,
+          component: CharacterSheetTabToggleButton,
           props: (args) => ({ doc: args.data }),
-        } satisfies TableAction<typeof ActionsTabToggleButton>);
+        } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
       }
 
       result.push({

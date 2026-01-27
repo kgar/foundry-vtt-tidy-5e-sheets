@@ -40,6 +40,7 @@
   "TIDY5E.Hide": "Hide",
 
   "TIDY5E.SectionOrganization": "Section Organization",
+  "TIDY5E.AutomaticallyIncludeUsableItems": "Automatically include usable items",
 
   "TIDY5E.LegendaryLairToolbar": "Legendary/Lair Toolbar",
   "TIDY5E.SpellbookSections": "Spellbook Sections",
@@ -705,6 +706,10 @@
     "hint": "Determines how the sections should be organized in the Character Sheet tab by default.",
     "option.action": "By action economy",
     "option.origin": "By item or feature type"
+  },
+  "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+    "name": "Character Sheet Tab: Automatically Include Usable Items",
+    "hint": "Automatically include all presently usable items, spells, and features in the sheet tab."
   },
   "TIDY5E.Settings.Reset": {
     "name": "Reset Settings to Default",

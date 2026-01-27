@@ -24,7 +24,16 @@
 - [x] Fix: There are build errors
 - [x] Fix: Sheet tab Prepared filter doesn't seem to work quite right
 - [x] Clean up: the 'custom' section type needs a constant
-- [ ] Do some perf tests around how long it takes to prepare the origin sections
+- [x] World setting: Character sheet tab: Automatically Include Usable Items
+- [x] Sheet section config flag: Automatically Include Usable Items
+- [x] Refactor: Create type for sheet tab inclusion mode and propagate
+- [x] Refactor: pull derived inclusion setting into context variable and ensure all callers can access it reactively
+  - [x] Sheet prep
+  - [x] ActionsTabToggleButton
+  - [x] Context menu
+- [x] Do some perf tests around how long it takes to prepare the origin sections
+  - On average, 5-15ms on a high-end machine. Optimizing perf here would make a difference more likely when there are thousands upon thousands of items being included.
+- [ ] Do not include the "CharacterSheetTabToggleButton" in TableRowActionsRuntime arrays when there's not a PC involved.
 - [ ] Clean up the code and reduce redundancy
 - [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
 - [ ] Refactor: can column loadouts be somehow pushed further back and simplified?

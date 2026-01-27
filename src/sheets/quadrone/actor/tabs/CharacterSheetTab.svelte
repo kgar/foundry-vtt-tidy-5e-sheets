@@ -81,6 +81,36 @@
       ],
     },
     {
+      title: 'TIDY5E.AutomaticallyIncludeUsableItems',
+      settings: [
+        {
+          type: 'radio',
+          options: [
+            {
+              label: FoundryAdapter.localize('TIDY5E.GenericDefaultPrefix', {
+                value:
+                  SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get()
+                    ? 'Yes'
+                    : 'No',
+              }),
+              value: null,
+            },
+            {
+              label: 'Yes',
+              value: true,
+            },
+            {
+              label: 'No',
+              value: false,
+            },
+          ],
+          prop: TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.prop,
+          doc: context.actor,
+          default: null,
+        } satisfies RadioSetting<boolean | null>,
+      ],
+    },
+    {
       title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
       settings: [
         SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),

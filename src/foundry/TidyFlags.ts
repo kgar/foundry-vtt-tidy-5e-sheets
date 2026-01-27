@@ -239,7 +239,7 @@ export class TidyFlags {
   };
 
   /**
-   * Determines how the sections should be organized in a 
+   * Determines how the sections should be organized in a
    * particular character's sheet tab.
    */
   static characterSheetTabSectionOrganization = {
@@ -262,8 +262,8 @@ export class TidyFlags {
     },
     /** Sets the character's sheet tab organization scheme. */
     set(
-      actor: Actor5e, 
-      value: 
+      actor: Actor5e,
+      value:
         | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
         | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN
         | undefined,
@@ -272,6 +272,47 @@ export class TidyFlags {
         actor,
         TidyFlags.characterSheetTabSectionOrganization.key,
         value,
+      );
+    },
+    /** Clears flag for the character's sheet tab organization scheme. */
+    unset(actor: Actor5e) {
+      return TidyFlags.unsetFlag(
+        actor,
+        TidyFlags.characterSheetTabSectionOrganization.key,
+      );
+    },
+  };
+
+  /**
+   * Include usable items in the character sheet tab automatically.
+   */
+  static characterSheetTabAutomaticallyIncludeUsableItems = {
+    key: 'characterSheetTabAutomaticallyIncludeUsableItems' as const,
+    prop: TidyFlags.getFlagPropertyPath(
+      'characterSheetTabAutomaticallyIncludeUsableItems',
+    ),
+    /** Gets whether to automatically include usable items in the sheet tab. */
+    get(actor: Actor5e): boolean | undefined {
+      return (
+        TidyFlags.tryGetFlag<boolean>(
+          actor,
+          TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
+        ) ?? undefined
+      );
+    },
+    /** Sets whether to automatically include usable items in the sheet tab. */
+    set(actor: Actor5e, value: boolean | undefined): Promise<void> {
+      return TidyFlags.setFlag(
+        actor,
+        TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
+        value,
+      );
+    },
+    /** Clears flag for whether to automatically include usable items in the sheet tab. */
+    unset(actor: Actor5e) {
+      return TidyFlags.unsetFlag(
+        actor,
+        TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.key,
       );
     },
   };

@@ -25,6 +25,7 @@ import type {
   CharacterFeatureSection,
   SheetTabSection,
   CustomItemSectionQuadrone,
+  ActionItemInclusionMode,
 } from 'src/types/types';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -64,7 +65,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
-import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/ActionsTabToggleButton.svelte';
+import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -352,9 +353,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       TidyFlags.characterSheetTabSectionOrganization.get(this.document) ??
       SettingsProvider.settings.characterSheetTabOrganization.get();
 
+    const inclusionMode: ActionItemInclusionMode =
+      this.autoIncludeSheetTabUsableItems() ? 'usable-and-flag' : 'flag-only';
+
     const isEligibleItem = (item: Item5e) => {
       // TODO: based on settings, source from favorites instead.
-      return isItemInActionList(item);
+      return isItemInActionList(item, inclusionMode);
     };
 
     if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
@@ -362,12 +366,16 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       // TODO: Facilities(?), Effects, Activities, Skills/Tools, Spell Slots
       // Sort based on section configuration (section config key is going to be `${sectionType}|${sectionKey}`); for generic item sections, section type should be "custom".
     } else {
-      const actionSections = await getActorActionSectionsQuadrone(this.actor, {
-        rowActions: TableRowActionsRuntime.getActionsRowActions(
-          this.actor.isOwner,
-          context.unlocked,
-        ),
-      });
+      const actionSections = await getActorActionSectionsQuadrone(
+        this.actor,
+        {
+          rowActions: TableRowActionsRuntime.getActionsRowActions(
+            this.actor.isOwner,
+            context.unlocked,
+          ),
+        },
+        inclusionMode,
+      );
 
       actionSections.forEach((section) => {
         section.type = CONSTANTS.SECTION_TYPE_CUSTOM;
@@ -1538,5 +1546,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     value = value.filter((_: any, i: number) => i !== index);
 
     return facility.update({ [`${prop}.value`]: value });
+  }
+
+  autoIncludeSheetTabUsableItems() {
+    return (
+      TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.get(
+        this.document,
+      ) ??
+      SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get()
+    );
   }
 }
