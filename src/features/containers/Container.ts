@@ -24,7 +24,7 @@ export class Container {
     const containerContentsInventory =
       await Inventory.getContainerContentsInventory(container, {
         rowActions:
-          TableRowActionsRuntime.getContainerContentsRowActions(context),
+          TableRowActionsRuntime.getContainerContentsRowActions(context, container.parent),
       });
 
     // Build currencies array from container's currency data

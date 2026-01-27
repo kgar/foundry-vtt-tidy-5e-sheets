@@ -221,7 +221,10 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getContainerContentsRowActions(context: ContainerContentsRowActionsContext) {
+  getContainerContentsRowActions(
+    context: ContainerContentsRowActionsContext,
+    itemParent?: Actor5e | undefined,
+  ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Item5e,
@@ -244,7 +247,10 @@ class TableRowActionsRuntime {
             deleteFn: () => args.data.deleteDialog(),
           }),
         } satisfies TableAction<typeof DeleteButton>);
-      } else if (context.hasActor) {
+      } else if (
+        context.hasActor &&
+        itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ) {
         result.push({
           component: CharacterSheetTabToggleButton,
           props: (args) => ({ doc: args.data }),

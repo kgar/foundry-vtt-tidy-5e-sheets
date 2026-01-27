@@ -33,16 +33,16 @@
   - [x] Context menu
 - [x] Do some perf tests around how long it takes to prepare the origin sections
   - On average, 5-15ms on a high-end machine. Optimizing perf here would make a difference more likely when there are thousands upon thousands of items being included.
-- [ ] Do not include the "CharacterSheetTabToggleButton" in TableRowActionsRuntime arrays when there's not a PC involved.
-- [ ] Clean up the code and reduce redundancy
-- [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
+- [x] Do not include the "CharacterSheetTabToggleButton" in TableRowActionsRuntime arrays when there's not a PC involved.
 - [ ] Refactor: can column loadouts be somehow pushed further back and simplified?
+- [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
+- [ ] Clean up the code and reduce redundancy
 - [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
   - [ ] Differences between existing tables
     - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
     - [ ] ...
-- [ ] Review with hightouch to determine next steps
 - [ ] Decide how drop behaviors should work
+- [ ] Review with hightouch to determine next steps
 
 
 ### Short List
