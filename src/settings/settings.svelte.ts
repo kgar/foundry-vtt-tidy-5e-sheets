@@ -2054,7 +2054,7 @@ export function createSettings() {
             [CONSTANTS.SECTION_ORGANIZATION_ORIGIN]:
               'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
           },
-          default: 'action',
+          default: CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
         },
         get() {
           return FoundryAdapter.getTidySetting<
