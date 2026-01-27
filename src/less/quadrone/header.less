@@ -1,3 +1,12 @@
+@keyframes death-saves-pulse {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
 .tidy5e-sheet.application:where(.quadrone.actor) {
   @banner-character: '../../modules/tidy5e-sheet/images/banner-character.webp';
   --t5e-background-image: url('@{banner-character}');
@@ -777,6 +786,42 @@
       }
     }
 
+    &:has(.death-saves-overlay) {
+      .actor-image {
+        &:not(.transparent) {
+          background-color: var(--t5e-component-card-dark-darker);
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: var(--t5e-color-palette-red-100);
+              opacity: 0.6;
+              mix-blend-mode: multiply;
+              animation: death-saves-pulse 2.5s ease-in-out infinite;
+            }
+        }
+
+        &.transparent {
+          img {
+            filter: grayscale(1);
+            opacity: 0.75;
+          }
+
+          &::before {
+            border-color: var(--t5e-color-palette-red-60);
+          }
+        }
+      }
+      .death-saves-overlay .death-save-roll-button {
+        opacity: 0.2;
+        animation: death-saves-pulse 2.5s ease-in-out infinite;
+      }
+    }
+
     .death-saves-overlay {
       // TODO: Somehow move this to the component to load on-demand only? The css doesn't quite work when I try it right now.
       position: absolute;
@@ -785,13 +830,11 @@
       right: 0;
       bottom: var(--t5e-size-8x);
 
-      pointer-events: none;
-
       >* {
         pointer-events: all;
       }
 
-      :where(.successes, .failures) button {
+      :where(.successes, .failures) button:not(:disabled) {
         cursor: pointer;
         border-radius: 100%;
         border: 0.125rem solid var(--t5e-color-gold);
@@ -822,6 +865,7 @@
         &:hover {
           border: 0.125rem solid var(--t5e-color-palette-white);
           box-shadow: 0 0 0.3125rem var(--t5e-color-gold);
+          background-color: var(--t5e-color-palette-black);
 
           i {
             color: var(--t5e-color-palette-gold-89);
@@ -840,6 +884,7 @@
 
       &:hover .death-save-roll-button {
         opacity: 1;
+        animation: none;
       }
 
       .death-save-roll-button {
@@ -1817,7 +1862,8 @@
         width: calc(100% - var(--t5e-npc-vitals-offset));
         padding: 0;
 
-        .roll-hp i {
+        .roll-hp i,
+        .death-saves i {
           color: var(--t5e-vitals-button-icon-color);
         }
 
