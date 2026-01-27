@@ -1579,38 +1579,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
         const itemData = document.toObject();
 
-        const sourceSection = foundry.utils.getProperty(
-          itemData,
-          TidyFlags.section.prop
-        );
-
-        const targetSection = (event.target as HTMLElement | null)
-          ?.closest('[data-tidy-section-key][data-custom-section="true"]')
-          ?.getAttribute('data-tidy-section-key');
-
-        const isMovedToNewSection =
-          !isNil(targetSection?.trim(), '') && sourceSection !== targetSection;
-
-        const isMovedToDefaultSection =
-          !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
-
         const initialSortResult = await FoundryAdapter.onSortItemForActor(
           this.actor,
           event,
-          itemData
+          itemData,
+          !removingFromContainer
         );
-
-        if (removingFromContainer) {
-          return initialSortResult;
-        }
-
-        if (isMovedToNewSection) {
-          TidyFlags.section.set(document, targetSection);
-          return;
-        } else if (isMovedToDefaultSection) {
-          TidyFlags.section.unset(document);
-          return;
-        }
 
         return initialSortResult;
       }

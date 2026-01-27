@@ -1261,7 +1261,12 @@ export const FoundryAdapter = {
   /**
    * Handle a drop event for an existing embedded Item to sort that Item relative to its siblings
    */
-  onSortItemForActor(actor: Actor5e, event: Event, itemData: any): any {
+  onSortItemForActor(
+    actor: Actor5e,
+    event: Event,
+    itemData: any,
+    allowSectionTransfer: boolean = true,
+  ): any {
     const eventTarget = event.target as HTMLElement | null;
 
     if (!eventTarget) {
@@ -1291,22 +1296,21 @@ export const FoundryAdapter = {
 
     // Perform the sort
     const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
-      source,
+      source, 
       {
         target,
         siblings,
       }
     );
 
-    const sectionUpdate = FoundryAdapter.getSectionUpdateForDropTarget(
-      eventTarget,
-      itemData
-    );
-
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target._id;
-      if (update._id === source.id) {
+      if (update._id === source.id && allowSectionTransfer) {
+        const sectionUpdate = FoundryAdapter.getSectionUpdateForDropTarget(
+          eventTarget,
+          itemData,
+        );
         foundry.utils.mergeObject(update, sectionUpdate);
       }
       return update;
