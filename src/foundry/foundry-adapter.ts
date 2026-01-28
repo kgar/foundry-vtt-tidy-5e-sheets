@@ -1266,6 +1266,7 @@ export const FoundryAdapter = {
     event: Event,
     itemData: any,
     allowSectionTransfer: boolean = true,
+    sortKeyOverride?: string
   ): any {
     const eventTarget = event.target as HTMLElement | null;
 
@@ -1275,41 +1276,56 @@ export const FoundryAdapter = {
 
     // Get the drag source and drop target
     const items = actor.items;
-    const source = items.get(itemData._id);
+    const source = items.get(itemData._id).toObject();
 
     const dropTarget = eventTarget.closest<HTMLElement>('[data-item-id]');
     if (!dropTarget) return;
-    const target = items.get(dropTarget.dataset.itemId);
+    const target = items.get(dropTarget.dataset.itemId).toObject();
 
     // Don't sort on yourself
-    if (source.id === target.id) return;
+    if (source._id === target._id) return;
 
     // Identify sibling items based on adjacent HTML elements
     const siblings = [];
     for (let el of Array.from(dropTarget.parentElement!.children)) {
       if (el instanceof HTMLElement) {
         const siblingId = el.dataset.itemId;
-        if (siblingId && siblingId !== source.id)
-          siblings.push(items.get(el.dataset.itemId));
+        if (siblingId && siblingId !== source.id) {
+          // performIntegerSort does object reference comparison rather 
+          // than by an ID, so the same reference must be used.
+          siblings.push(
+            target._id === siblingId
+              ? target
+              : items.get(el.dataset.itemId).toObject(),
+          );
+        }
       }
+    }
+
+    if (!isNil(sortKeyOverride)) {
+      source[sortKeyOverride] = FoundryAdapter.getProperty(source, sortKeyOverride);
+      target[sortKeyOverride] = FoundryAdapter.getProperty(target, sortKeyOverride);
+      siblings.forEach(sibling => sibling[sortKeyOverride] = FoundryAdapter.getProperty(sibling, sortKeyOverride));
     }
 
     // Perform the sort
     const sortUpdates = foundry.utils.performIntegerSort(source, {
       target,
       siblings,
+      sortKey: sortKeyOverride
     });
 
     const updateData = sortUpdates.map((u: any) => {
       const update = u.update;
       update._id = u.target._id;
-      if (update._id === source.id && allowSectionTransfer) {
+      if (update._id === source._id && allowSectionTransfer) {
         const sectionUpdate = FoundryAdapter.getSectionUpdateForDropTarget(
           eventTarget,
           itemData,
         );
         foundry.utils.mergeObject(update, sectionUpdate);
       }
+
       return update;
     });
 

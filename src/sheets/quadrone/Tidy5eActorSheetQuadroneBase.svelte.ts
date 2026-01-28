@@ -1562,9 +1562,14 @@ export function Tidy5eActorSheetQuadroneBase<
 
     async _onDropItem(
       event: DragEvent & { currentTarget: HTMLElement },
-      document: Item5e
+      document: Item5e,
     ): Promise<object | boolean | undefined> {
       const behavior = (event as any)._behavior;
+
+      const sortKeyOverride =
+        (event.target as HTMLElement)
+          ?.closest<HTMLElement>('[data-sort-key]')
+          ?.getAttribute('data-sort-key') ?? undefined;
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
@@ -1583,7 +1588,8 @@ export function Tidy5eActorSheetQuadroneBase<
           this.actor,
           event,
           itemData,
-          !removingFromContainer
+          !removingFromContainer,
+          sortKeyOverride,
         );
 
         return initialSortResult;

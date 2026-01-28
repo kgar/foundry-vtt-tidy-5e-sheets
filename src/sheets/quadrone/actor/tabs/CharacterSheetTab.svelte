@@ -166,7 +166,11 @@
   <SheetPins />
 {/if}
 
-<div class="tidy-table-container" bind:this={sectionsContainer}>
+<div
+  class="tidy-table-container"
+  bind:this={sectionsContainer}
+  data-sort-key={TidyFlags.characterSheetTabSortOrder.prop}
+>
   {#if !hasAtLeastOneItem}
     <div class="empty-state-container empty-state-description">
       {localize('TIDY5E.SheetLock.Empty.Hint')}
