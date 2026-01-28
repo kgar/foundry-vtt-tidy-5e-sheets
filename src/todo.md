@@ -34,13 +34,16 @@
 - [x] Do some perf tests around how long it takes to prepare the origin sections
   - On average, 5-15ms on a high-end machine. Optimizing perf here would make a difference more likely when there are thousands upon thousands of items being included.
 - [x] Do not include the "CharacterSheetTabToggleButton" in TableRowActionsRuntime arrays when there's not a PC involved.
-- [ ] Ensure manual sort is based on Sheet tab sort order (if possible)
-- [ ] Clean up the code and reduce redundancy
+- [x] Ensure manual sort is based on Sheet tab sort order (if possible)
+- [x] Decide how drop behaviors should work
+  - [x] Support drop to sort using flag sort key on sheet tab
+  - [x] Support drop to transfer sections
 - [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
   - [ ] Differences between existing tables
     - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
     - [ ] ...
-- [ ] Decide how drop behaviors should work
+- [ ] Decide what to do about contained items and whether they should surface their parent container
+- [ ] Clean up the code and reduce redundancy
 - [ ] Review with hightouch to determine next steps
 
 
