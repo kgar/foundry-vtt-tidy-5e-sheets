@@ -10,7 +10,6 @@
     CharacterItemContext,
     InventorySection,
     NpcItemContext,
-    TidySectionBase,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
@@ -20,6 +19,7 @@
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import { getSearchResultsContext } from 'src/features/search/search.svelte';
   import { CONSTANTS } from 'src/constants';
+  import TidyFredTable from 'src/components/table-quadrone/TidyFredTable.svelte';
 
   type Props = {
     containingDocument: any;
@@ -80,6 +80,62 @@
 
   const searchResults = getSearchResultsContext();
 </script>
+
+<TidyFredTable
+  {section}
+  entries={section.items}
+  {sheetDocument}
+  entryContext={context.itemContext}
+  {sectionsInlineWidth}
+  itemToggleMap={containerToggleMap}
+  {tabId}
+  {columns}
+>
+  {#snippet beforeImage(entry)}
+    <div class="highlight"></div>
+  {/snippet}
+
+  {#snippet afterImage(entry, ctx)}
+    {#if 'containerContents' in ctx && !!ctx.containerContents}
+      <a
+        class="container-expander"
+        onclick={() => inlineToggleService.toggle(tabId, entry.id)}
+      >
+        <i
+          class="fa-solid fa-angle-right expand-indicator"
+          class:expanded={containerToggleMap.get(tabId)?.has(entry.id)}
+        >
+        </i>
+      </a>
+    {/if}
+  {/snippet}
+
+  {#snippet afterFirstCell(entry, ctx)}
+    {#if ctx.attunement}
+      {@const iconClass = entry.system.attuned
+        ? 'fa-solid fa-sun color-text-highlight highlighted'
+        : 'fa-regular fa-sun color-text-lighter'}
+
+      {@const title = localize(ctx.attunement.title)}
+
+      <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
+      <i class={[iconClass, 'item-state-indicator']} data-tooltip={title}></i>
+    {/if}
+  {/snippet}
+
+  {#snippet afterEntryRow(entry, ctx)}
+    {#if 'containerContents' in ctx && !!ctx.containerContents}
+      <InlineContainerView
+        container={entry}
+        containerContents={ctx.containerContents}
+        {editable}
+        {inlineToggleService}
+        {searchCriteria}
+        {sheetDocument}
+      />
+    {/if}
+  {/snippet}
+</TidyFredTable>
 
 <TidyTable key={section.key} data-custom-section={section.custom ? true : null}>
   {#snippet header(expanded)}
