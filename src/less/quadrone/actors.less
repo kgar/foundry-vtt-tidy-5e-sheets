@@ -496,6 +496,7 @@
     bottom: 0;
     min-height: 2.25rem;
     position: sticky;
+    flex: 0 0 fit-content;
 
     .spellcasting-cards.collapse-spellcasting-cards {
 
@@ -539,9 +540,9 @@
       }
     }
 
-    .sheet-footer-left:has(.compact)+.sheet-footer-right {
+    .sheet-footer-left:has(.compact)+.sheet-footer-right,
+    &:has(.spellcasting-class-card:nth-child(2)) .sheet-footer-right {
       flex-direction: column;
-
       padding-block-start: 0.25rem;
     }
 
