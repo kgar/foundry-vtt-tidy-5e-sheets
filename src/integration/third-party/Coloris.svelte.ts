@@ -36,7 +36,7 @@ export class ColorisThirdPartyIntegration extends ThirdPartyIntegrationBase {
       'rgba(116, 27, 43, 1)',
       'rgba(101, 56, 14, 1)',
       'rgba(115, 99, 63, 1)',
-      'rgba(255, 182, 42, 1)',
+      'rgba(184, 119, 0, 1)',
       'rgba(55, 109, 71, 1)',
       'rgba(62, 74, 117, 1)',
       'rgba(31, 76, 145, 1)',

@@ -289,13 +289,13 @@
     border-width: 0 0.0625rem 0 0;
     box-shadow: none;
     min-height: calc(var(--t5e-field-size-default) - 0.125rem);
+    outline: 0.0625rem solid transparent;
 
     &:hover,
-    &.active,
     &:active,
-    &:focus {
+    &:focus-within {
       &:not(:disabled) {
-        outline: 0.0625rem solid var(--t5e-component-field-border-hover);
+        outline-color: var(--t5e-component-field-border-hover);
 
         &:not(:last-child) {
           border-width: 0 0.0625rem 0 0;
@@ -509,20 +509,6 @@ a.button.icon {
       background: var(--t5e-component-card-darker);
     }
   }
-
-  .button-group {
-    :is(button, .button) {
-
-      &.active:not(:hover),
-      &:active,
-      &:focus {
-        &:not(:disabled) {
-          outline: 0.0625rem solid var(--t5e-component-field-border);
-        }
-      }
-    }
-  }
-
 
   :is(button, .button) {
     i {
