@@ -879,14 +879,8 @@ export function Tidy5eActorSheetQuadroneBase<
         const hasAll = systemMovement.ignoredDifficultTerrain.has('all');
 
         const label = hasAll
-          ? game.i18n.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
-          : game.i18n.format('TIDY5E.CharacterTraits.IgnoredDifficultTerrain', {
-              value: [...systemMovement.ignoredDifficultTerrain]
-                .map(
-                  (t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label
-                )
-                .filterJoin(', '),
-            });
+          ? FoundryAdapter.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
+          : new Intl.ListFormat(game.i18n.lang).format([...systemMovement.ignoredDifficultTerrain].map((t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label));
 
         speeds.push({
           key: 'ignoredDifficultTerrain',
