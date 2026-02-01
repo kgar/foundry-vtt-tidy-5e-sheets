@@ -25,15 +25,14 @@ import { ConditionsAndEffects } from 'src/features/conditions-and-effects/Condit
 import { Activities } from 'src/features/activities/activities';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
-import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
-import { actorUsesActionFeature } from 'src/features/actions/actions.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
+import { Inventory } from 'src/features/sections/Inventory';
 import { Container } from 'src/features/containers/Container';
 
 const localize = FoundryAdapter.localize;
@@ -247,11 +246,8 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       traits: this._prepareTraits(),
       travelSpeeds: this._prepareTravelSpeeds(),
       type: CONSTANTS.SHEET_TYPE_VEHICLE,
-      utilities: {},
       ...actorContext,
     };
-
-    context.useActionsFeature = actorUsesActionFeature(this.actor);
 
     await this._prepareItems(context);
 

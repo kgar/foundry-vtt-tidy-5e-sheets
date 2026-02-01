@@ -1,12 +1,5 @@
 {
   "TIDY5E.ModuleName": "Tidy 5e Sheets",
-  "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Classic Character Sheet",
-  "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e Classic NPC Sheet",
-  "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Classic Item Sheet",
-  "TIDY5E.Tidy5eContainerSheetClassic": "Tidy 5e Classic Container Sheet",
-  "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Classic Vehicle Sheet",
-  "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e Classic Group Sheet",
-  "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e Classic Encounter Sheet",
   "TIDY5E.Tidy5eCharacterSheetQuadrone": "Tidy 5e Character Sheet",
   "TIDY5E.Tidy5eNpcSheetQuadrone": "Tidy 5e NPC Sheet",
   "TIDY5E.Tidy5eContainerSheetQuadrone": "Tidy 5e Container Sheet",
@@ -14,17 +7,6 @@
   "TIDY5E.Tidy5eVehicleSheetQuadrone": "Tidy 5e Vehicle Sheet",
   "TIDY5E.Tidy5eGroupSheetQuadrone": "Tidy 5e Group Sheet",
   "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Encounter Sheet",
-  "TIDY5E.PlayerName": "Player Name",
-  "TIDY5E.EditSheetImageHint": "Left Click: Edit Image",
-  "TIDY5E.PreviewSheetImageHint": "Left Click: Preview Image",
-  "TIDY5E.SheetImageOptionsHint": "Right Click: Show Image Options",
-  "TIDY5E.ShowPortraitArt": "Show Portrait",
-  "TIDY5E.PortraitTitle": "Portrait: {subject}",
-  "TIDY5E.ItemImageTitle": "Item: {subject}",
-  "TIDY5E.ShowTokenArt": "Show Token",
-  "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
-  "TIDY5E.ShowItemArt": "Show Image",
-  "TIDY5E.Tidy5eSettings": "Tidy 5e Sheets Settings",
 
   "TIDY5E.AddSpecific": "Add {name}",
   "TIDY5E.AddCustom": "Add Custom {name}",
@@ -42,23 +24,9 @@
   "TIDY5E.LegendaryLairToolbar": "Legendary/Lair Toolbar",
   "TIDY5E.SpellbookSections": "Spellbook Sections",
 
-  "TIDY5E.ExhaustionLevelTooltip": "Exhaustion Level {level}",
-
-  "TIDY5E.UserDefaultPrefix": "User Default: {value}",
-
-  "TIDY5E.AbbrInitiative": "Ini",
-
-  "TIDY5E.NoSpecialSenses": "No Special Senses",
-
-  "TIDY5E.Group.NamePlaceholder": "Group Name",
-  "TIDY5E.Group.ShowMemberTabInfoPanel": "Show Info Panel",
-  "TIDY5E.Group.HideMemberTabInfoPanel": "Hide Info Panel",
   "TIDY5E.Group.EmptyMembersTabHint": "This group is empty. Drop an actor from the sidebar to add a member.",
   "TIDY5E.Group.PrimaryParty.Label": "Primary Party",
 
-  "TIDY5E.RestHint": "Rest",
-  "TIDY5E.ShortRest": "Short Rest",
-  "TIDY5E.LongRest": "Long Rest",
   "TIDY5E.HitDiceRollAverage": "Right Click: Apply Average",
 
   "TIDY5E.JournalTabName": "Journal",
@@ -66,41 +34,17 @@
   "TIDY5E.CombatTabName": "Combat",
 
   "TIDY5E.Actions": {
-    "TabName": "Actions",
-    "OverriddenSetOverrideFalse": "Remove from Actions List (Shift+Click to clear override)",
-    "OverriddenSetOverrideTrue": "Add to Actions List (Shift+Click to clear override)",
-    "SetOverrideFalse": "Remove from Actions List",
-    "SetOverrideTrue": "Add to Actions List",
-    "ResetActionDefault": "Reset Action Default"
+    "TabName": "Actions"
   },
   "TIDY5E.LegendaryAbbr": "LA",
   "TIDY5E.LairAbbr": "Lair",
 
-  "TIDY5E.HitDC": "Hit / DC",
-
-  "TIDY5E.RestoreOnRest": "Restore on Rest",
-
-  "TIDY5E.JournalPersonsOfInterest": "Persons of Interest",
-  "TIDY5E.JournalLocationsOfInterest": "Locations of Interest",
-  "TIDY5E.JournalQuests": "Quests",
-  "TIDY5E.JournalMisc": "Miscellaneous",
-  "TIDY5E.JournalEntries": "Journal Entries",
   "TIDY5E.JournalEntry.NewTitle": "Journal Entry {number}",
-  "TIDY5E.TogglePersonalityInfo": "Toggle Personality Info",
 
-  "TIDY5E.SheetEdit.Enable.Hint": "Enable Edit - {description}",
-  "TIDY5E.SheetEdit.Disable.Hint": "Disable Edit - {description}",
-  "TIDY5E.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
   "TIDY5E.SheetMode.Edit": "Switch to Play Mode",
   "TIDY5E.SheetMode.Play": "Switch to Edit Mode",
 
-  "TIDY5E.SheetLock.Unlock.Hint": "Unlock - {description}",
-  "TIDY5E.SheetLock.Lock.Hint": "Lock - {description}",
-  "TIDY5E.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
   "TIDY5E.SheetLock.Empty.Hint": "Start by adding a class and your first items. Then, use the item menu or right-click and choose \"Add to Sheet tab\" to add them here.",
-
-  "TIDY5E.Inventory.Weight.Tooltip": "Weight: {weight} {weightUnit}",
-  "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
 
   "TIDY5E.ContextMenuActionEquip": "Equip",
   "TIDY5E.ContextMenuActionUnequip": "Unequip",
@@ -111,8 +55,6 @@
   "TIDY5E.ContextMenuActionEdit": "Edit",
   "TIDY5E.ContextMenuActionView": "View",
   "TIDY5E.ContextMenuActionDelete": "Delete",
-  "TIDY5E.ContextMenuActionPinToAttributes": "Pin to Attributes",
-  "TIDY5E.ContextMenuActionUnpinFromAttributes": "Unpin from Attributes",
   "TIDY5E.ContextMenuActionPin": "Pin to top",
   "TIDY5E.ContextMenuActionUnpin": "Unpin from top",
   "TIDY5E.ContextMenuActionShowLimitedUses": "Show Limited Uses",
@@ -129,62 +71,28 @@
   "TIDY5E.InspirationRemove": "Remove Inspiration",
 
   "TIDY5E.EmptyContainer": "This container is empty.",
-  "TIDY5E.EmptySection": "This section is empty. Unlock the sheet to edit.",
-  "TIDY5E.GMOnlyEdit": "Only your GM can edit this section.",
 
-  "TIDY5E.AttunementWarning": "Attunement: Unable to attune to more than {number} items.",
   "TIDY5E.AttunementItems": "Attuned Items",
-  "TIDY5E.AttunementMax": "Attunement Maximum",
-
-  "TIDY5E.GridLayout": "Grid Layout",
-  "TIDY5E.ListLayout": "List Layout",
-  "TIDY5E.LayoutNotSupported": "Layout mode not supported",
-
-  "TIDY5E.Encumbrance": "Encumbrance",
 
   "TIDY5E.AddFavorite": "Add Favorite",
-  "TIDY5E.Favorite": "Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
   "TIDY5E.EmptyFavorites": "Right-click and Favorite, or drag anything from your sheet here to for quick access.",
 
-  "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
-  "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
-
-  "TIDY5E.Abilities": "Abilities",
   "TIDY5E.Ability.EditScore.label": "Edit Score",
 
   "TIDY5E.EmptyTools": "No tool proficiencies.",
 
-  "TIDY5E.Environment": "Environment",
-  "TIDY5E.EnvironmentTooltip": "Environment: {environment}",
-
   "TIDY5E.Search": "Search",
-  "TIDY5E.SearchClear": "Clear Search",
   "TIDY5E.SearchHint": "Start typing to show search results",
 
-  "TIDY5E.InfoCardInspectHint": "{inspectKey} Inspect",
-
-  "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item",
-
-  "TIDY5E.AbbrMod": "Mod",
-  "TIDY5E.AbbrSavingThrow": "Save",
-  "TIDY5E.AttackMod": "Attack Mod",
   "TIDY5E.ActorSpellAttackTitle": "{actorName} - Spell Attack",
   "TIDY5E.ActorSpellAttackFlavorText": "Spell Attack",
   "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Melee Spell Attack",
   "TIDY5E.ActorMeleeSpellAttackFlavorText": "Melee Spell Attack",
   "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ranged Spell Attack",
   "TIDY5E.ActorRangedSpellAttackFlavorText": "Ranged Spell Attack",
-  "TIDY5E.SpellAttackMod": "Spell Attack Mod",
-  "TIDY5E.MeleeSpellAttackMod": "Melee Spell Attack Mod",
-  "TIDY5E.RangedSpellAttackMod": "Ranged Spell Attack Mod",
-  "TIDY5E.PreparedSpells": "Prepared spells",
 
-  "TIDY5E.TokenLinked": "Token linked to actor",
   "TIDY5E.TokenUnlinked": "Token not linked to actor",
-
-  "TIDY5E.SpellSourceIdentifierSelectText": "Class Identifier: {identifier}",
-  "TIDY5E.SpellSourceIdentifierLabelHint": "The actor who has this spell does not have the source class that is specified here.",
 
   "TIDY5E.Class.Artificer": "Artificer",
   "TIDY5E.Class.Barbarian": "Barbarian",
@@ -201,12 +109,9 @@
   "TIDY5E.Class.Wizard": "Wizard",
   "TIDY5E.Class.Custom": "Custom Class",
 
-  "TIDY5E.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
-
   "TIDY5E.MaxPreparedSpellsConfig": {
     "Title": "Max Prepared Spells Configuration: {documentName}",
     "ExamplesHeader": "Sample Formulas",
-    "ButtonTooltip": "Configure Max Prepared Spells",
     "MoreFormulas": "More formulas"
   },
 
@@ -221,10 +126,7 @@
     "SelectionTab.Title": "Tab Selection",
     "AvailableHeader": "Hidden Tabs",
     "SelectedHeader": "Visible Tabs",
-    "VisibilityTab.Title": "Tab Visibility",
-    "UnsupportedDocumentErrorMessage": "The document type {documentType} is not currently set up for tab selection.",
-    "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
-    "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
+    "VisibilityTab.Title": "Tab Visibility"
   },
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",
@@ -241,34 +143,6 @@
   "TIDY5E.WorldSettings.TabCharacter": {
     "tabLabel": "Character"
   },
-  "TIDY5E.WorldSettings.TabNpc": {
-    "tabLabel": "NPC"
-  },
-  "TIDY5E.WorldSettings.TabVehicle": {
-    "tabLabel": "Vehicle"
-  },
-  "TIDY5E.WorldSettings.TabExhaustion": {
-    "tabLabel": "Exhaustion"
-  },
-  "TIDY5E.WorldSettings.Exhaustion": {
-    "Header": "Character/NPC Exhaustion",
-    "name": "Exhaustion Configuration",
-    "hint": "Determines how non-vehicle exhaustion is configured and presented on the character and NPC sheets.",
-    "options.specific.text": "Specific Levels",
-    "options.specific.levels.name": "Total Levels",
-    "options.specific.levels.hint": "Determines the maximum number of levels of exhaustion.",
-    "options.specific.levels.tooltip.name": "Exhaustion Level {level} Tooltip",
-    "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
-    "options.open.text": "Open Number Input",
-    "options.open.explanation": "Shows the user a numeric input for entering levels of exhaustion.",
-    "AtLeastOneLevelRequiredErrorMessage": "At least one exhaustion level is required."
-  },
-  "TIDY5E.WorldSettings.VehicleExhaustion": {
-    "Header": "Vehicle Exhaustion",
-    "name": "Vehicular Exhaustion Configuration",
-    "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet.",
-    "AtLeastOneLevelRequiredErrorMessage": "At least one vehicle exhaustion level is required."
-  },
   "TIDY5E.WorldSettings.TabItem": {
     "tabLabel": "Item"
   },
@@ -284,18 +158,10 @@
   },
   "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": "Sheet Lock",
-    "header": "Lock Options",
-    "hint": "Prevent players from making changes to aspects of their character sheets that should change infrequently. Optionally hide some elements that you don't want to use at all.",
-    "hint2": "Important: sheet lock features are intended to guide player sheet use and to help prevent mistakes such as accidentally adding/removing a saving throw proficiency. Sheet lock settings do not provide a secure lockdown against players with malicious intent.",
-    "labelGeneralLocks": "General Locks",
-    "labelInventoryLocks": "Inventory Locks",
-    "labelFeaturesLocks": "Features Locks"
+    "header": "Lock Options"
   },
   "TIDY5E.WorldSettings.TabMisc": {
     "tabLabel": "GM Options"
-  },
-  "TIDY5E.WorldSettings.TabIcons": {
-    "tabLabel": "Icons"
   },
   "TIDY5E.WorldSettings.TabCustomSections": {
     "tabLabel": "Custom Sections",
@@ -340,8 +206,6 @@
     "hint": "Enable this option to limit banked inspiration management to the GM."
   },
 
-  "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
-
   "TIDY5E.WorldSettings.Menu": {
     "name": "World Settings",
     "hint": "Adjust world-level settings to customize the Tidy 5e Sheets experience. These settings are saved to this Foundry world and apply to all relevant Tidy 5e Sheets content.",
@@ -355,206 +219,19 @@
     "label": "User Settings",
     "title": "User Settings: {userName}"
   },
-  "TIDY5E.UserSettings.TabPlayers": {
-    "tabLabel": "Players",
-    "header": "Player Character Sheets"
-  },
-  "TIDY5E.UserSettings.TabNPCs": {
-    "tabLabel": "NPCs",
-    "header": "NPC Sheets"
-  },
-  "TIDY5E.UserSettings.TabVehicles": {
-    "tabLabel": "Vehicles",
-    "header": "Vehicle Sheets"
-  },
   "TIDY5E.UserSettings.TabActionsList": {
     "tabLabel": "Actions List"
   },
   "TIDY5E.UserSettings.TabActivities": {
     "tabLabel": "Activities"
   },
-  "TIDY5E.Settings.ItemCardsForAllItems": {
-    "name": "Show Item Cards in All Layouts",
-    "hint": "When this setting is disabled, item cards only show in the grid."
-  },
-  "TIDY5E.Settings.UseEffectCards": {
-    "name": "Show Active Effect Info Cards",
-    "hint": "Enable to show info cards for active effects on all actors and items with active effects."
-  },
-  "TIDY5E.Settings.ItemCardsAreFloating": {
-    "name": "Show Floating Item Cards",
-    "hint": "Enable to have item info cards float next to the mouse cursor. Recommended: use delay with this feature."
-  },
-  "TIDY5E.Settings.ItemCardsDelay": {
-    "name": "Item Card Delay (ms)",
-    "hint": "Delays showing item cards for the specified milliseconds (ms). 0 means no delay. Default: 300."
-  },
-  "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-    "name": "Use Accessible Keyboard Support",
-    "hint": "Enables users to tab through most of the buttons/commands on Tidy 5e Sheets and execute them with conventional button-based keyboard hotkeys. Note: when focused on a button in Foundry, keybindings from \"Configure Controls\" do not respond. If a module uses this Foundry feature for controls on the sheets, such as using items while holding a special key, then enabling this Tidy 5e Sheets option will interfere with those keybindings."
-  },
-  "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-    "name": "Use default sheet attribute keyboard tabbing",
-    "hint": "The default 5e sheet allows keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-  },
-  "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-    "name": "Use default sheet HP keyboard tabbing",
-    "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
-  },
-  "TIDY5E.Settings.InfoCardsInspectKey": {
-    "name": "Info Card Inspect Key",
-    "hint": "Press this keyboard character (for example, the \"t\" key) while viewing an info card to pop it out."
-  },
-  "TIDY5E.Settings.UseClassicControls": {
-    "name": "Use Classic List Controls",
-    "hint": "Shows controls in the list view."
-  },
-  "TIDY5E.Settings.ShowTraitLabels": {
-    "name": "Show Trait Labels",
-    "hint": "Shows labels for PC, NPC, and Vehicle traits. Disable to show only icons."
-  },
-  "TIDY5E.Settings.ShowPlayerName": {
-    "name": "Show Player Name",
-    "hint": "Shows a field for the player name below the character's name."
-  },
-  "TIDY5E.Settings.ShowClassList": {
-    "name": "Show Class List",
-    "hint": "Shows the class list below the character's name."
-  },
-  "TIDY5E.Settings.InspirationAnimation": {
-    "name": "Animate Inspiration Tracker",
-    "hint": "Shows inspiration tracker glow animation."
-  },
-  "TIDY5E.Settings.HideIfZero": {
-    "name": "Hide Exhaustion and Inspiration Tracker on 0",
-    "hint": "Hides exhaustion and inspiration if 0 but still shows on hover."
-  },
-  "TIDY5E.Settings.ShowInspirationOnHover": {
-    "name": "Show Inspiration Indicator Only on Hover",
-    "hint": "Shows the inspiration indicator only when hovering over the portrait."
-  },
-  "TIDY5E.Settings.ShowExhaustionOnHover": {
-    "name": "Show Exhaustion Tracker Only on Hover",
-    "hint": "Shows the exhaustion tracker only when hovering over the portrait."
-  },
-  "TIDY5E.Settings.UseHpBar": {
-    "name": "Use HP Bar",
-    "hint": "Shows a colored bar indicating remaining HP. Health numbers will still be visible."
-  },
-  "TIDY5E.Settings.UseHpOverlay": {
-    "name": "Use Health Overlay",
-    "hint": "Shows a colored HP overlay."
-  },
-  "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-    "name": "Toggle Empty Character Skills",
-    "hint": "Adds a toggle button for showing/hiding empty skills."
-  },
-  "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-    "name": "Move Traits to Right of Skills",
-    "hint": "Positions traits to the right of the skill list, above most other UIs on the right side (e.g. Favorites, NPC Abilities)."
-  },
-  "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-    "name": "Show Equipped Ammunition Only",
-    "hint": "Shows only currently equipped ammunition in the weapon ammo selector."
-  },
-  "TIDY5E.Settings.AlwaysShowSkills": {
-    "name": "Always Show Skills",
-    "hint": "Removes the visibility toggle button for non-proficient skills and shows all."
-  },
-  "TIDY5E.Settings.ShowNPCSpellbookTab": {
-    "name": "Show Spellbook Tab",
-    "hint": "Shows a spellbook tab for NPCs. Disable to move the spellbook section to the Attributes tab."
-  },
-  "TIDY5E.Settings.ShowActiveEffectsMarker": {
-    "name": "Show Active Effects Marker",
-    "hint": "Shows a marker for list view items that have active effects."
-  },
-  "TIDY5E.Settings.UseContextMenu": {
-    "name": "Use Context Menu",
-    "hint": "Enables right-click context menu on items."
-  },
-  "TIDY5E.Settings.ShowExpandedLimitedView": {
-    "name": "Show Expanded Limited View",
-    "hint": "Displays the entire sheet (minus the journal) to players with limited permission."
-  },
-  "TIDY5E.Settings.UseCircularPortraitStyle": {
-    "name": "Use Circular Portraits",
-    "hint": "Shows circular portraits/icons for actors.",
-    "all": "All actors",
-    "pc": "PCs",
-    "npc": "NPCs/Vehicles",
-    "none": "None"
-  },
-  "TIDY5E.Settings.UseTotalSheetLock": {
-    "name": "Lock Down Sensitive Fields",
-    "hint": "Locks infrequently changed fields (name, proficiency toggles) and hides configuration buttons when the sheet is locked."
-  },
-  "TIDY5E.Settings.LimitEffectsManagementToGM": {
-    "name": "Limit Active Effects Management to GMs",
-    "hint": "Limits permission to edit or toggle active effects to GMs only."
-  },
-  "TIDY5E.Settings.UseInspiration": {
-    "name": "Use Inspiration Tracker",
-    "hint": "Shows an inspiration tracker on the character profile."
-  },
-  "TIDY5E.Settings.UseVehicleMotion": {
-    "name": "Use Vehicle Motion Tracker",
-    "hint": "Shows a motion tracker on the vehicle profile."
-  },
-  "TIDY5E.Settings.UseExhaustion": {
-    "name": "Use Exhaustion Tracker",
-    "hint": "Shows an exhaustion tracker for characters, NPCs, and vehicles."
-  },
-  "TIDY5E.Settings.ShowNPCRestInChat": {
-    "name": "Show NPC Rest in Chat",
-    "hint": "Shows a chat card when an NPC rests."
-  },
-  "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-    "name": "Mark Linked/Unlinked NPCs",
-    "hint": "Adds a colored border and icon to linked/unlinked NPC sheets.",
-    "default": "No link marker (default)",
-    "unlinked": "Highlight unlinked tokens",
-    "linked": "Highlight linked tokens",
-    "both": "Highlight linked and unlinked tokens"
-  },
   "TIDY5E.Settings.InitialSheetTab": {
     "name": "Initial Sheet Tab",
     "hint": "Shows the indicated tab when opening a sheet for the first time."
   },
-  "TIDY5E.Settings.DefaultSheetTabs": {
-    "name": "Default Sheet Tabs",
-    "hint": "Determines which tabs will show and in what order by default. Applies when no tab selections have been made for an actor.",
-    "AvailableHeader": "Available Tabs",
-    "SelectedHeader": "Selected Tabs",
-    "AtLeastOneTabRequiredErrorMessage": "Default tabs: at least one tab is required for each actor type."
-  },
-  "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-    "name": "Hide Death Saves From Players",
-    "hint": "Makes death save totals visible only to the GM. The death save roll button remains visible."
-  },
   "TIDY5E.Settings.DefaultDeathSaveRoll": {
     "name": "Default Death Save Roll",
     "hint": "Determines the default roll type to use when rolling a death saving throw."
-  },
-  "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-    "name": "Use Character Encumbrance Bar",
-    "hint": "Shows an encumbrance bar on character sheets."
-  },
-  "TIDY5E.Settings.UseNPCEncumbranceBar": {
-    "name": "Use NPC Encumbrance Bar",
-    "hint": "Shows an encumbrance bar on NPC sheets."
-  },
-  "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-    "name": "Use Vehicle Encumbrance Bar",
-    "hint": "Shows an encumbrance bar on vehicle sheets."
-  },
-  "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-    "name": "Use Multiclass Spellbook Filter",
-    "hint": "Allows filtering spells by class in the spellbook tab. The spell must be associated with a class using the Class selector on the spell edit sheet."
-  },
-  "TIDY5E.Settings.UseSpellClassIcons": {
-    "name": "Use Spell Class Icon for Spells",
-    "hint": "Shows spell class's image on spells instead of the spell's own image. The spell must be associated with a class using the Class selector on the spell edit sheet. When multiclassing, this feature distinguishes which spells belong to which class at a glance."
   },
   "TIDY5E.Settings.AllowCantripsToBePrepared": {
     "name": "Allow Cantrips to be Prepared",
@@ -563,22 +240,6 @@
   "TIDY5E.Settings.LockMoneyChanges": {
     "name": "Lock Currency",
     "hint": "Prevents non-GMs from making changes to currency."
-  },
-  "TIDY5E.Settings.LockExpChanges": {
-    "name": "Lock Experience",
-    "hint": "Prevents non-GMs from making changes to experience."
-  },
-  "TIDY5E.Settings.LockHpMaxChanges": {
-    "name": "Lock Max HP Changes",
-    "hint": "Prevents non-GMs from making changes to max HP."
-  },
-  "TIDY5E.Settings.LockLevelSelector": {
-    "name": "Lock Level Selector",
-    "hint": "Prevents non-GMs from changing player levels with the class level selector."
-  },
-  "TIDY5E.Settings.LockItemQuantity": {
-    "name": "Lock Item Quantity",
-    "hint": "Prevents non-GMs from making changes to item quantity."
   },
   "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
     "name": "Use Group Sheet Member Security",
@@ -601,96 +262,6 @@
     "name": "Include Consumables as Actions",
     "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
   },
-  "TIDY5E.Settings.ColorPickerEnabled": {
-    "name": "Use Custom Theme Colors",
-    "hint": "Shows custom theme colors"
-  },
-  "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-    "name": "Primary Accent"
-  },
-  "TIDY5E.Settings.ColorPickerEquipped": {
-    "name": "Equipped"
-  },
-  "TIDY5E.Settings.ColorPickerHpBar": {
-    "name": "HP Bars"
-  },
-  "TIDY5E.Settings.ColorPickerEquippedOutline": {
-    "name": "Equipped Outline"
-  },
-  "TIDY5E.Settings.ColorPickerEquippedAccent": {
-    "name": "Equipped Accent"
-  },
-  "TIDY5E.Settings.ColorPickerPrepared": {
-    "name": "Prepared"
-  },
-  "TIDY5E.Settings.ColorPickerPreparedOutline": {
-    "name": "Prepared Outline"
-  },
-  "TIDY5E.Settings.ColorPickerPreparedAccent": {
-    "name": "Prepared Accent"
-  },
-  "TIDY5E.Settings.ColorPickerPact": {
-    "name": "Pact"
-  },
-  "TIDY5E.Settings.ColorPickerPactOutline": {
-    "name": "Pact Outline"
-  },
-  "TIDY5E.Settings.ColorPickerPactAccent": {
-    "name": "Pact Accent"
-  },
-  "TIDY5E.Settings.ColorPickerAtWill": {
-    "name": "At Will"
-  },
-  "TIDY5E.Settings.ColorPickerAtWillOutline": {
-    "name": "At Will Outline"
-  },
-  "TIDY5E.Settings.ColorPickerAtWillAccent": {
-    "name": "At Will Accent"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnly": {
-    "name": "Ritual Only"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-    "name": "Ritual Only Outline"
-  },
-  "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-    "name": "Ritual Only Accent"
-  },
-  "TIDY5E.Settings.ColorPickerInnate": {
-    "name": "Innate"
-  },
-  "TIDY5E.Settings.ColorPickerInnateOutline": {
-    "name": "Innate Outline"
-  },
-  "TIDY5E.Settings.ColorPickerInnateAccent": {
-    "name": "Innate Accent"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-    "name": "Always Prepared"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": "Always Prepared Outline"
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": "Always Prepared Accent"
-  },
-  "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-    "name": "Scrollbar Thumb"
-  },
-  "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-    "name": "Scrollbar Track"
-  },
-  "TIDY5E.Settings.ColorPickerMagicAccent": {
-    "name": "Magic Item Accent Outline"
-  },
-  "TIDY5E.Settings.AllowHpMaxOverride": {
-    "name": "Allow HP Max Override on Character",
-    "hint": "Allows the GM to manually change max HP on the character sheet."
-  },
-  "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-    "name": "Use Tidy Spell School Icons",
-    "hint": "Use Tidy's handpicked icons for spell schools. To customize spell school icons through CONFIG.DND5E or through other modules, disable this option. To extend Tidy's custom spell school icons, refer to the Tidy API documentation."
-  },
   "TIDY5E.Settings.InlineActivitiesPosition": {
     "name": "Inline Activities Position",
     "hint": "When expanding an item, activities for that item are shown. Use this setting to determine if activities are put at the top, before the item description, or bottom, below the item description, buttons, and tags.",
@@ -702,58 +273,12 @@
     "hint": "This will reset all of the settings of back to the active game system's default. This affects \"world\"-scoped settings only, such as GM options.",
     "dialogs": {
       "title": "Reset Module Settings",
-      "content": "Are you sure you want to reset all of the module settings to the current system's defaults? <strong>This cannot be undone.</strong>",
-      "confirm": "Reset Module Settings",
-      "cancel": "Cancel"
+      "content": "Are you sure you want to reset all of the module settings to the current system's defaults? <strong>This cannot be undone.</strong>"
     }
   },
-  "TIDY5E.Settings.Migrations": {
-    "name": "Migrations",
-    "buttonLabel": "Migrate Tidy Data",
-    "dialogTitle": "Migrate Tidy Data",
-    "hint": "If you were a user of the original Tidy5e Sheet module, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
-    "chatNotification": "A new Tidy 5e Sheets migration is available. See Tidy 5e Sheets Game Settings to view available migrations.",
-    "migrationBeginningMessage": "Migrating data. Please do not refresh the page until done.",
-    "migrationErrorMessage": "An error occurred. More details are in the dev console.",
-    "migrationCompleteMessage": "Migration complete.",
-    "migrateDocumentFlagsButtonLabel": "Migrate Document Flags",
-    "migrateGmSettingsButtonLabel": "Migrate GM Settings",
-    "migrateConfirmTitle": "Confirm Migration",
-    "migrateConfirmMessage1": "Are you sure you wish to perform this migration?",
-    "migrateConfirmMessage2": "{boldStart}Note{boldEnd}: always remember to {boldStart}back up your data{boldEnd}.",
-    "migrateConfirmButtonYes": "Migrate",
-    "migrateConfirmButtonNo": "Cancel",
-    "OptionsHeader": "Migration Options",
-    "OptionOverwrite.Text": "Overwrite",
-    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
-    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
-    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
-    "ButtonMigration.Text": "Migrate",
-    "MigrateCompendia.CompendiumLabel": "Compendium",
-    "MigrateCompendia.Title": "Migrate Compendia",
-    "MigrateCompendia.SelectionDialogTitle": "Select Compendia to Migrate",
-    "MigrateCompendia.TotalEntriesLabel": "Total Entries",
-    "CcssToTidy": {
-      "sectionTitle": "CCSS to Tidy 5e",
-      "selectionDialogTitle": "Migration: CCSS to Tidy 5e",
-      "ccss": "CCSS",
-      "section": "Section",
-      "explanation1": "Tidy 5e now natively supports custom sections and provides additional features around custom sections. This migration will copy Custom Character Sheet Sections (CCSS) section names into Tidy's section setup.",
-      "overwrite": "Overwrite",
-      "overwriteTooltip": "Enable to overwrite existing Tidy section flag. If unchecked, only empty Tidy flags will receive migrated CCSS data.",
-      "deleteFlags": "Delete Affected CCSS Flags",
-      "deleteFlagsTooltip": "When migrating from CCSS to Tidy custom sections, the CCSS flags remain in place by default. Check this option to remove those flags."
-    },
-    "Journal": {
-      "explanation1": "The UI Overhaul of Tidy 5e Sheets has revamped the Journal to be as many entries as you want. To accommodate this, a migration from the old Journal structure to the new extensible journal structure is needed. Old Journal data will not be visible in the overhauled Tidy 5e Sheets."
-    },
-    "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
-    "Selection": {
-      "TotalSelectedLabel": "Total Selected: {total}",
-      "ToMigrate": "To Migrate",
-      "SelectAllNoneTooltip": "Select all or none"
-    },
-    "Parent": "Parent"
+  "TIDY5E.Selection": {
+    "TotalSelectedLabel": "Total Selected: {total}",
+    "SelectAllNoneTooltip": "Select all or none"
   },
   "TIDY5E.Settings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",
@@ -789,21 +314,14 @@
   "TIDY5E.ThemeSettings": {
     "SheetMenu": {
       "name": "Tidy Theme Settings",
-      "buttonLabel": "Theme Settings",
-      "hint": "Classic Tidy Sheets Only: Customize the colors of Tidy 5e Sheets."
+      "buttonLabel": "Theme Settings"
     },
     "Sheet": {
       "title": "Theme Settings: {userName}",
-      "header": "Custom Theme Colors",
-      "useDefaultLightColors": "Default Light",
-      "useDefaultDarkColors": "Default Dark",
       "export": "Export",
       "import": "Import",
-      "importDropHint": "Hint: You can drag a \".tidy5e-theme\" file onto this form to import it.",
       "importError": "Theme import failed. See console for more details.",
-      "importSuccess": "Theme imported successfully!",
-      "menuLabel": "Menu",
-      "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
+      "importSuccess": "Theme imported successfully!"
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
     "AccentColor": {
@@ -830,13 +348,9 @@
     "SheetTheme.hint": "For best results, choose a color near the center of the color palette.",
     "SpellcastingMethodColors.title": "Spellcasting Method Colors"
   },
-  "TIDY5E.FavoriteSpellLevelLabel": "Spell Level {number}",
   "TIDY5E.ApplyChanges": "Apply Changes",
   "TIDY5E.SaveChanges": "Save Changes",
   "TIDY5E.UseDefault": "Use Default",
-  "TIDY5E.Reset": "Reset",
-  "TIDY5E.VehicleInMotion": "Vehicle is in motion",
-  "TIDY5E.VehicleMotionless": "Vehicle is motionless",
   "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Assigned Crew",
   "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Unassigned Crew",
   "TIDY5E.Vehicle.Member.Passenger.Label": "Passenger",
@@ -852,21 +366,9 @@
   "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. HP",
   "TIDY5E.Vehicle.Unassigned.EmptyState": "Drag and drop crew here, or click to add. Crew can then be assigned to vehicle equipment or features.",
   "TIDY5E.Vehicle.Passenger.EmptyState": "Drag and drop passengers here, or click to add.",
-  "TIDY5E.TotalCrewCount": "Total Crew",
-  "TIDY5E.ActionsPerTurn": "Actions Per Turn",
-  "TIDY5E.SheetMenu": {
-    "label": "Menu",
-    "themeLabel": "Theme"
-  },
-  "TIDY5E.ActiveEffectsMarkerTitle": "This item has active effects",
-  "TIDY5E.SortMode.ActionListDefault": "Default Action List Sort",
   "TIDY5E.Commands.ExpandAll": "Expand All",
   "TIDY5E.Commands.CollapseAll": "Collapse All",
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",
-  "TIDY5E.Commands.ShowLegendaryToolbar": "Show Legendary Toolbar",
-  "TIDY5E.Commands.HideLegendaryToolbar": "Hide Legendary Toolbar",
-  "TIDY5E.Commands.ShowContainerPanel": "Show Container Panel",
-  "TIDY5E.Commands.HideContainerPanel": "Hide Container Panel",
   "TIDY5E.ItemFilters.CanCast": "Can Cast",
   "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Include Rituals in \"Can Cast\"",
   "TIDY5E.ItemFilters.CanUse": "Can Use",
@@ -877,12 +379,8 @@
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
   "TIDY5E.Utilities.Tools": "Tools",
-  "TIDY5E.Utilities.GMTools": "GM Tools",
-  "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
   "TIDY5E.Utilities.AssignSpellsToClasses": "Assign Spells to Classes",
   "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details.",
-  "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
-  "TIDY5E.Utilities.ConfigureSections": "Configure Sections",
   "TIDY5E.Utilities.SpellSlotTrackingModeTitle": "Spell Slot Tracking",
   "TIDY5E.Utilities.SpellPips": "Spell Pips",
   "TIDY5E.Utilities.SpellValueMax": "Spell Value/Max",
@@ -893,12 +391,9 @@
   "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Show Legendary/Lair trackers in the Statblock tab",
   "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Include Spellbook sections in the Statblock tab",
   "TIDY5E.Section": {
-    "Default": "Default Section",
     "Label": "Section",
     "LabelPl": "Sections",
-    "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
     "ActionLabel": "Action Section",
-    "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
     "ConfigDialog": {
       "title": "Configure Section: {tabTitle}",
       "showTooltip": "Show this section",
@@ -934,11 +429,9 @@
     "ContextMenuActionRemove": "Remove from {facilityName}",
     "Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}"
   },
-  "TIDY5E.LocalizationTestKey": "Localization Test Key",
   "TIDY5E.ExpandCollapseMenu.OptionTitle": "Expand/Collapse Behavior",
   "TIDY5E.ExpandCollapseMenu.OptionTopLevel": "Top-Level Sections",
   "TIDY5E.ExpandCollapseMenu.OptionAllSections": "All Sections",
-  "TIDY5E.SortMenu.OptionAlphabetical": "Alphabetical (A-Z)",
   "TIDY5E.SortMethod.AlphabeticalAscending.Label": "Ascending",
   "TIDY5E.SortMethod.AlphabeticalAscending.Tooltip": "Sort Alphabetically Ascending",
   "TIDY5E.SortMethod.AlphabeticalDescending.Label": "Descending",
@@ -989,7 +482,6 @@
     "PlaceholderNotesField.PlaceholderText": "Notes"
   },
   "TIDY5E.Actor.Characteristics": "Characteristics",
-  "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> will be removed from the Tidy 5e Sheets module in Foundry v14.",
   "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> have been removed from the Tidy 5e Sheets module as of Foundry v14.",
   "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignore {value}",
   "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignore All Difficult Terrain"

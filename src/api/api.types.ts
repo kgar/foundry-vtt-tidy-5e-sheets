@@ -305,8 +305,7 @@ export interface ActorItemSectionFooterCommandEnabledParams {
    */
   section: any;
   /**
-   * The sheet is in Edit Mode, or unlocked. For Classic sheets, this is always `true`.
-   * For Quadrone sheets, this corresponds to the sheet lock toggle.
+   * The sheet is in Edit Mode, or unlocked. This corresponds to the sheet lock toggle.
    */
   unlocked: boolean;
 }

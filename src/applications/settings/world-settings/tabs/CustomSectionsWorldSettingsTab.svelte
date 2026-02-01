@@ -5,12 +5,11 @@
   import type { WorldSettingsContext } from '../WorldSettings.types';
   import { CONSTANTS } from 'src/constants';
   import type { GlobalCustomSectionsetting as GlobalCustomSectionSetting } from 'src/settings/settings.types';
-  import CharacterSheetClassicRuntime from 'src/runtime/actor/CharacterSheetClassicRuntime.svelte';
+  import { CharacterSheetQuadroneRuntime } from 'src/runtime/actor/CharacterSheetQuadroneRuntime.svelte';
   import { error } from 'src/utils/logging';
   import type { RegisteredTab } from 'src/runtime/types';
-  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
-  import NpcSheetClassicRuntime from 'src/runtime/actor/NpcSheetClassicRuntime.svelte';
-  import GroupSheetClassicRuntime from 'src/runtime/actor/GroupSheetClassicRuntime.svelte';
+  import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
+  import { GroupSheetQuadroneRuntime } from 'src/runtime/actor/GroupSheetQuadroneRuntime.svelte';
 
   const context = getContext<WorldSettingsContext>(
     CONSTANTS.SVELTE_CONTEXT.CONTEXT,
@@ -41,18 +40,18 @@
     tabs: TabFilterOption[];
   };
 
-  let classicCharacterTabs =
-    CharacterSheetClassicRuntime.getAllRegisteredTabs();
+  let quadroneCharacterTabs =
+    CharacterSheetQuadroneRuntime.getAllRegisteredTabs();
 
-  let classicNpcTabs = NpcSheetClassicRuntime.getAllRegisteredTabs();
+  let quadroneNpcTabs = NpcSheetQuadroneRuntime.getAllRegisteredTabs();
 
-  let classicGroupTabs = GroupSheetClassicRuntime.getAllRegisteredTabs();
+  let quadroneGroupTabs = GroupSheetQuadroneRuntime.getAllRegisteredTabs();
 
   let sheetTypes: SheetFilterOption[] = [
     {
       type: CONSTANTS.SHEET_TYPE_CHARACTER,
       label: localize('TYPES.Actor.character'),
-      tabs: mapTabs(classicCharacterTabs, [
+      tabs: mapTabs(quadroneCharacterTabs, [
         CONSTANTS.TAB_ACTOR_INVENTORY,
         CONSTANTS.TAB_ACTOR_SPELLBOOK,
         CONSTANTS.TAB_CHARACTER_FEATURES,
@@ -61,7 +60,7 @@
     {
       type: CONSTANTS.SHEET_TYPE_NPC,
       label: localize('DND5E.NPC.Label'),
-      tabs: mapTabs(classicNpcTabs, [
+      tabs: mapTabs(quadroneNpcTabs, [
         CONSTANTS.TAB_NPC_ABILITIES,
         CONSTANTS.TAB_ACTOR_INVENTORY,
         CONSTANTS.TAB_ACTOR_SPELLBOOK,
@@ -70,7 +69,7 @@
     {
       type: CONSTANTS.SHEET_TYPE_GROUP,
       label: localize('TYPES.Actor.group'),
-      tabs: mapTabs(classicGroupTabs, [CONSTANTS.TAB_ACTOR_INVENTORY]),
+      tabs: mapTabs(quadroneGroupTabs, [CONSTANTS.TAB_ACTOR_INVENTORY]),
     },
   ];
 
@@ -261,7 +260,7 @@
           </div>
         </details>
 
-        <HorizontalLineSeparator />
+        <!-- <HorizontalLineSeparator /> -->
       {/each}
       <button
         type="button"

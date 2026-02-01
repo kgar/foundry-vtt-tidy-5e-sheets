@@ -32,8 +32,8 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
     classes: [
       CONSTANTS.MODULE_ID,
       'settings',
-      'application-shell',
-      CONSTANTS.SHEET_LAYOUT_CLASSIC,
+      'application',
+      CONSTANTS.SHEET_LAYOUT_QUADRONE,
     ],
     tag: 'div',
     id: 'tidy5e-sheet-user-settings',
@@ -71,33 +71,7 @@ export class UserSettingsFormApplication extends SvelteApplicationMixin<
           currentSettings.actionListIncludeSpellsWithActiveEffects,
         actionListLimitActionsToCantrips:
           currentSettings.actionListLimitActionsToCantrips,
-        alwaysShowNpcSkills: currentSettings.alwaysShowNpcSkills,
-        animateInspiration: currentSettings.animateInspiration,
-        hideIfZero: currentSettings.hideIfZero,
         inlineActivitiesPosition: currentSettings.inlineActivitiesPosition,
-        moveCharacterTraitsToRightOfSkills:
-          currentSettings.moveCharacterTraitsToRightOfSkills,
-        moveNpcTraitsToRightOfSkills:
-          currentSettings.moveNpcTraitsToRightOfSkills,
-        showClassList: currentSettings.showClassList,
-        showEquippedAmmoOnly: currentSettings.showEquippedAmmoOnly,
-        showExhaustionOnHover: currentSettings.showExhaustionOnHover,
-        showInspirationOnHover: currentSettings.showInspirationOnHover,
-        showSpellbookTabNpc: currentSettings.showSpellbookTabNpc,
-        toggleEmptyCharacterSkills: currentSettings.toggleEmptyCharacterSkills,
-        useClassicControlsForCharacter:
-          currentSettings.useClassicControlsForCharacter,
-        useClassicControlsForNpc: currentSettings.useClassicControlsForNpc,
-        useClassicControlsForVehicle:
-          currentSettings.useClassicControlsForVehicle,
-        useContextMenu: currentSettings.useContextMenu,
-        useHpBar: currentSettings.useHpBar,
-        useHpBarNpc: currentSettings.useHpBarNpc,
-        useHpBarVehicle: currentSettings.useHpBarVehicle,
-        useHpOverlay: currentSettings.useHpOverlay,
-        useHpOverlayNpc: currentSettings.useHpOverlayNpc,
-        useHpOverlayVehicle: currentSettings.useHpOverlayVehicle,
-        useSpellClassFilterIcons: currentSettings.useSpellClassFilterIcons,
       },
     };
   }

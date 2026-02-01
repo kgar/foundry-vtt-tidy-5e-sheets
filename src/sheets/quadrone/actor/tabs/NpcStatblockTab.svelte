@@ -10,7 +10,7 @@
   } from 'src/features/search/search.svelte';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import ItemsActionBar from '../../shared/ItemsActionBar.svelte';
   import Legendaries from '../npc-parts/Legendaries.svelte';
   import { ItemVisibility } from 'src/features/sections/ItemVisibility';

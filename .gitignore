@@ -32,3 +32,6 @@ foundry-data-path-config.json
 /playwright/.cache/
 tests/.env
 tests/state.json
+
+# Tidy-specific
+broom-closet/output/*

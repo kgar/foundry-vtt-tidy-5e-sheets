@@ -3,7 +3,7 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import SelectQuadrone from 'src/components/inputs/SelectQuadrone.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getNpcSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getNpcSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { NpcSpellcastingContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
 
@@ -17,7 +17,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let context = $derived(getNpcSheetContext());
+  let context = $derived(getNpcSheetQuadroneContext());
 </script>
 
 {#if mode === 'expanded'}

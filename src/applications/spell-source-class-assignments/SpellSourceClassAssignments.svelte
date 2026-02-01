@@ -5,7 +5,6 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item.types';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { CoarseReactivityProvider } from 'src/features/reactivity/CoarseReactivityProvider.svelte';
   import TidyTable from 'src/components/table-quadrone/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
@@ -13,6 +12,7 @@
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
+    import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
 
   let context = $derived(
     getContext<CoarseReactivityProvider<SpellSourceClassAssignmentsContext>>(
@@ -131,7 +131,7 @@
               </TidyTableCell>
             {/each}
             <TidyTableCell columnWidth="12.5rem">
-              <TextInput
+              <TextInputQuadrone
                 document={assignment.item}
                 disabled={!assignment.item.isOwner}
                 field="system.sourceClass"

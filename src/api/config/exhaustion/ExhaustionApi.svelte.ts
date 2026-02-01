@@ -1,10 +1,5 @@
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
 import type { UseSpecificLevelExhaustionParams } from '../../api.types';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type {
-  OpenExhaustionConfig,
-  SpecificExhaustionConfig,
-} from 'src/features/exhaustion/exhaustion.types';
+import { warn } from 'src/utils/logging';
 
 /**
  * API functionality related to the Exhaustion feature.
@@ -24,10 +19,12 @@ export class ExhaustionApi {
    * ```
    */
   async useOpenNumberExhaustion(): Promise<void> {
-    const config: OpenExhaustionConfig = {
-      type: 'open',
-    };
-    await FoundryAdapter.setTidySetting('exhaustionConfig', config);
+    warn(
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
+    );
   }
 
   /**
@@ -53,18 +50,12 @@ export class ExhaustionApi {
   async useSpecificLevelExhaustion(
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
-    const exhaustion = settings.value.exhaustionConfig;
-
-    const fallbackHints =
-      exhaustion.type === 'specific' ? exhaustion.hints : [];
-
-    const config: SpecificExhaustionConfig = {
-      type: 'specific',
-      hints: params?.hints ?? fallbackHints,
-      levels: Math.max(params?.totalLevels ?? 1, 1),
-    };
-
-    await FoundryAdapter.setTidySetting('exhaustionConfig', config);
+    warn(
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
+    );
   }
 
   /**
@@ -79,10 +70,12 @@ export class ExhaustionApi {
    * ```
    */
   async useOpenNumberVehicleExhaustion(): Promise<void> {
-    const config: OpenExhaustionConfig = {
-      type: 'open',
-    };
-    await FoundryAdapter.setTidySetting('vehicleExhaustionConfig', config);
+    warn(
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
+    );
   }
 
   /**
@@ -103,16 +96,11 @@ export class ExhaustionApi {
   async useSpecificLevelVehicleExhaustion(
     params?: UseSpecificLevelExhaustionParams
   ): Promise<void> {
-    const exhaustion = settings.value.vehicleExhaustionConfig;
-
-    const fallbackHints =
-      exhaustion.type === 'specific' ? exhaustion.hints : [];
-
-    const config: SpecificExhaustionConfig = {
-      type: 'specific',
-      hints: params?.hints ?? fallbackHints,
-      levels: Math.max(params?.totalLevels ?? 1, 1),
-    };
-    await FoundryAdapter.setTidySetting('vehicleExhaustionConfig', config);
+    warn(
+      `The API ${ExhaustionApi.name} is no longer supported and will be removed in Foundry version 15`,
+      false,
+      undefined,
+      true
+    );
   }
 }

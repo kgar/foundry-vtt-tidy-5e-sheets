@@ -64,7 +64,7 @@ function registerSheetToggleKeybinding() {
 
   new QuickSheetSwitchKeybind({
     registrationKey: 'tidyQssQuadrone',
-    name: 'Quick Sheet Switch - Tidy Quadrone Sheet',
+    name: 'Quick Sheet Switch - Tidy Sheet',
     debounceDelay: 1000,
     invocationCountToTrigger: 3,
     getSheetKey: (sheetClasses) =>
@@ -74,22 +74,6 @@ function registerSheetToggleKeybinding() {
           x.toLocaleLowerCase().includes('quadrone')
       ),
     downKey: 'KeyQ',
-    modifiers: ['Shift'],
-  });
-
-  new QuickSheetSwitchKeybind({
-    registrationKey: 'tidyQssClassic',
-    name: 'Quick Sheet Switch - Tidy Classic Sheet',
-    debounceDelay: 1000,
-    invocationCountToTrigger: 3,
-    getSheetKey: (sheetClasses) =>
-      Object.keys(sheetClasses).find(
-        (x) =>
-          x.toLocaleLowerCase().includes('tidy') &&
-          !x.toLocaleLowerCase().includes('quadrone') &&
-          !x.toLocaleLowerCase().includes('debug')
-      ),
-    downKey: 'KeyT',
     modifiers: ['Shift'],
   });
 

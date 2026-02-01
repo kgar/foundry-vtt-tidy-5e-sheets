@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
   import {

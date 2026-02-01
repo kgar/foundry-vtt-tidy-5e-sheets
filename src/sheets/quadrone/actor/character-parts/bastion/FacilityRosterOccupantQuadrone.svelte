@@ -2,10 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    getCharacterSheetContext,
-    getCharacterSheetQuadroneContext,
-  } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { Actor5e } from 'src/types/types';
   import { EventHelper } from 'src/utils/events';
   import { getContext } from 'svelte';

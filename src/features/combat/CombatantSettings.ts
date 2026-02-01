@@ -1,8 +1,8 @@
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import {
-  TidyFlags,
   type EncounterCombatantSettings,
   type EncounterCombatantsSettings,
-} from 'src/api';
+} from 'src/foundry/TidyFlags.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';

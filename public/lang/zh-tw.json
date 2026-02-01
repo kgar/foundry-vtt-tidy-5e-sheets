@@ -1,34 +1,6 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Character Sheet",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e NPC Sheet",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e Item Sheet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e Vechicle Sheet",
-    "TIDY5E.PlayerName": "Player Name",
-    "TIDY5E.EditSheetImageHint": "編輯圖片",
-    "TIDY5E.SheetImageOptionsHint": "右鍵單擊: 顯示角色立繪",
-    "TIDY5E.ShowPortraitArt": "顯示立繪",
-    "TIDY5E.ShowTokenArt": "顯示指示物",
-    "TIDY5E.ShowItemImage": "right click: show item art",
-    "TIDY5E.ShowItemArt": "show image",
-    "TIDY5E.AbbrInitiative": "Ini",
-    "TIDY5E.RestHint": "進行休息",
-    "TIDY5E.ShortRest": "短休",
-    "TIDY5E.LongRest": "長休",
     "TIDY5E.HitDiceRollAverage": "Right Click: Average",
     "TIDY5E.JournalTabName": "日誌",
-    "TIDY5E.RestoreOnRest": "休息時恢復",
-    "TIDY5E.JournalPersonsOfInterest": "相關人物",
-    "TIDY5E.JournalLocationsOfInterest": "相關地點",
-    "TIDY5E.JournalQuests": "任務",
-    "TIDY5E.JournalMisc": "雜項",
-    "TIDY5E.JournalEntries": "日誌條目",
-    "TIDY5E.TogglePersonalityInfo": "切換個人信息顯示",
-    "TIDY5E.SheetEdit.Enable.Hint": "",
-    "TIDY5E.SheetEdit.Disable.Hint": "",
-    "TIDY5E.SheetEdit.Description": "切換添加/刪除按鈕和未空區塊的顯示",
-    "TIDY5E.SheetLock.Unlock.Hint": "",
-    "TIDY5E.SheetLock.Lock.Hint": "",
-    "TIDY5E.SheetLock.Description": "",
     "TIDY5E.ContextMenuActionEquip": "",
     "TIDY5E.ContextMenuActionUnequip": "",
     "TIDY5E.ContextMenuActionAttune": "",
@@ -37,31 +9,11 @@
     "TIDY5E.ContextMenuActionUnprepare": "",
     "TIDY5E.ContextMenuActionEdit": "",
     "TIDY5E.ContextMenuActionDelete": "",
-    "TIDY5E.EmptySection": "該區塊沒有內容。解鎖該卡片以編輯。",
-    "TIDY5E.GMOnlyEdit": "僅有你的 GM 可以編輯該區塊。",
-    "TIDY5E.AttunementWarning": "同調警告: 你不可以同調超過 {number} 件物品!",
     "TIDY5E.AttunementItems": "已同調物品",
-    "TIDY5E.AttunementMax": "同調上限",
-    "TIDY5E.GridLayout": "網格佈局",
-    "TIDY5E.ListLayout": "列表佈局",
-    "TIDY5E.LayoutNotSupported": "",
-    "TIDY5E.Encumbrance": "負重",
     "TIDY5E.AddFavorite": "添加到收藏",
-    "TIDY5E.Favorite": "收藏",
     "TIDY5E.RemoveFavorite": "從收藏中移除",
-    "TIDY5E.ShowNotProficientSkills": "",
-    "TIDY5E.HideNotProficientSkills": "",
-    "TIDY5E.Abilities": "屬性",
-    "TIDY5E.Environment": "環境",
     "TIDY5E.Search": "",
-    "TIDY5E.SearchClear": "",
     "TIDY5E.SearchHint": "輸入你想要搜索的東西就夠了。",
-    "TIDY5E.ItemCardsMouseHint": "middle mouse to view/edit item.",
-    "TIDY5E.AbbrMod": "加值",
-    "TIDY5E.AbbrSavingThrow": "豁免",
-    "TIDY5E.SpellAttackMod": "攻擊加值",
-    "TIDY5E.PreparedSpells": "已準備法術",
-    "TIDY5E.TokenLinked": "指示物已鏈接到角色",
     "TIDY5E.TokenUnlinked": "指示物未鏈接到角色",
     "TIDY5E.SpellClass": null,
     "TIDY5E.Class.Artificer": "",
@@ -78,188 +30,24 @@
     "TIDY5E.Class.Sorcerer": "",
     "TIDY5E.Class.Warlock": "",
     "TIDY5E.Class.Wizard": "",
-    "TIDY5E.OriginSummaryConfig": "",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "",
     "TIDY5E.UserSettings.Menu": {
         "name": "",
         "hint": "",
         "label": "卡片設定",
         "title": ""
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "",
-        "header": ""
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "",
-        "header": ""
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "",
-        "header": ""
-    },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": ""
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "",
-        "header": "",
-        "hint": "",
-        "hint2": "",
-        "labelGeneralLocks": "",
-        "labelInventoryLocks": "",
-        "labelFeaturesLocks": ""
-    },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "列表視圖下使用舊版物品操作按鈕。",
-        "hint": "始終顯示物品操作按鈕並禁用右鍵菜單。僅適用於 PC 物品和法術的列表視圖。"
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "無效時隱藏力竭和激勵 (0).",
-        "hint": "如果想要力竭為 0 和沒有激勵時隱藏兩項請勾選該項，將會在鼠標懸停其上時顯示。"
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "僅在鼠標懸停時顯示激勵追踪器。",
-        "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示激勵追踪器。"
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "僅在鼠標懸停時顯示力竭追踪器。",
-        "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示力竭追踪器。"
-    },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "",
-        "hint": "",
-        "all": "",
-        "pc": "",
-        "npc": "",
-        "none": "",
-        "default": null
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "",
-        "hint": ""
+        "header": ""
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": null,
         "hint": null
     },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "標記鏈接/未鏈接的 NPC。",
-        "hint": "在鏈接/未鏈接的 NPC 卡上添加著色邊框和圖標。",
-        "default": "無鏈接標記 (默認)",
-        "unlinked": "高亮未鏈接指示物的卡片",
-        "linked": "高亮已鏈接指示物的卡片",
-        "both": "高亮已鏈接和未鏈接的指示物的卡片"
-    },
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
         "name": "",
         "hint": ""
     },
@@ -275,98 +63,12 @@
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "",
-        "hint": ""
-    },
     "TIDY5E.Settings.Reset": {
         "name": "",
         "hint": "",
         "dialogs": {
             "title": "",
-            "content": "",
-            "confirm": "",
-            "cancel": ""
+            "content": ""
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -376,138 +78,29 @@
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "",
-            "buttonLabel": "",
-            "hint": ""
+            "buttonLabel": ""
         },
         "Sheet": {
             "title": "",
-            "header": "",
-            "useDefaultLightColors": "",
-            "useDefaultDarkColors": "",
             "export": "",
             "import": "",
-            "importDropHint": "",
             "importError": "",
-            "importSuccess": "",
-            "menuLabel": "",
-            "explanation": ""
+            "importSuccess": ""
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": "",
     "TIDY5E.ApplyChanges": "",
     "TIDY5E.SaveChanges": "",
-    "TIDY5E.VehicleInMotion": "",
-    "TIDY5E.VehicleMotionless": "",
-    "TIDY5E.TotalCrewCount": "",
-    "TIDY5E.ActionsPerTurn": "",
-    "TIDY5E.SheetMenu": {
-        "label": "",
-        "themeLabel": ""
-    },
-    "TIDY5E.ActiveEffectsMarkerTitle": "",
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "hint": "",
         "name": ""
-    },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "",
-        "hint": ""
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "hint": "",
         "name": ""
     },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "hint": "",
-        "AtLeastOneLevelRequiredErrorMessage": "",
-        "name": "",
-        "Header": ""
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "",
-        "name": ""
-    },
-    "TIDY5E.Settings.Migrations": {
-        "Notification": {
-            "Title": "",
-            "Button.DoNotShowAgain": "",
-            "DoNotShowAgain.ConfirmMessage": "",
-            "Explanation": "",
-            "Explanation2": ""
-        },
-        "OptionDeleteFlags.Text": "",
-        "CcssToTidy": {
-            "overwrite": "",
-            "deleteFlags": "",
-            "overwriteTooltip": "",
-            "explanation1": "",
-            "sectionTitle": "",
-            "selectionDialogTitle": "",
-            "ccss": "",
-            "section": "",
-            "deleteFlagsTooltip": ""
-        },
-        "MigrateCompendia.TotalEntriesLabel": "",
-        "OptionOverwrite.Tooltip": "",
-        "BondsIdealsFlawsToSystem": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "Selection": {
-            "ToMigrate": "",
-            "SelectAllNoneTooltip": "",
-            "TotalSelectedLabel": ""
-        },
-        "MigrateCompendia.CompendiumLabel": "",
-        "MigrateCompendia.Title": "",
-        "CharacterBiography": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "MigrateCompendia.SelectionDialogTitle": "",
-        "name": "",
-        "buttonLabel": "",
-        "FavoritesToSystem": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "migrationErrorMessage": "",
-        "dialogTitle": "",
-        "migrateDocumentFlagsButtonLabel": "",
-        "migrationBeginningMessage": "",
-        "OptionOverwrite.Text": "",
-        "migrateConfirmButtonNo": "",
-        "migrateGmSettingsButtonLabel": "",
-        "ButtonMigration.Text": "",
-        "v1": {
-            "sectionTitle": "",
-            "mainExplanation1": "",
-            "originalHeader": "",
-            "originalExplanation": "",
-            "mainExplanation2": ""
-        },
-        "OptionDeleteFlags.Tooltip": "",
-        "Parent": "",
-        "hint": "",
-        "migrateConfirmMessage2": "",
-        "NpcDeathSaves": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
-        "UnlinkedExplanation": "",
-        "migrateConfirmTitle": "",
-        "migrateConfirmButtonYes": "",
-        "migrateConfirmMessage1": "",
-        "NpcExhaustion": {
-            "sectionTitle": "",
-            "selectionDialogTitle": ""
-        },
-        "migrationCompleteMessage": "",
-        "OptionsHeader": ""
+    "TIDY5E.Selection": {
+        "SelectAllNoneTooltip": "",
+        "TotalSelectedLabel": ""
     },
     "TIDY5E.ActorRangedSpellAttackFlavorText": "",
     "TIDY5E.UseDefaultDialog": {
@@ -523,22 +116,6 @@
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": ""
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "name": "",
-        "AtLeastOneLevelRequiredErrorMessage": "",
-        "Header": "",
-        "options.specific.levels.hint": "",
-        "options.specific.text": "",
-        "options.specific.levels.name": "",
-        "hint": "",
-        "options.specific.levels.tooltip.name": "",
-        "options.specific.levels.tooltip.hint": "",
-        "options.open.text": "",
-        "options.open.explanation": ""
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": ""
-    },
     "TIDY5E.EmptyContainer": "",
     "TIDY5E.Listbox": {
         "MoveAllRight": "",
@@ -547,13 +124,6 @@
         "MoveRight": "",
         "MoveUp": "",
         "MoveAllLeft": ""
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "",
-        "hint": "",
-        "AvailableHeader": "",
-        "SelectedHeader": "",
-        "AtLeastOneTabRequiredErrorMessage": ""
     },
     "TIDY5E.Settings.About": {
         "FinancialSupportParagraph": "",
@@ -571,64 +141,30 @@
         "GithubParagraph": "",
         "PatreonLink": ""
     },
-    "TIDY5E.PortraitTitle": "",
-    "TIDY5E.ItemImageTitle": "",
     "TIDY5E.Actions": {
-        "SetOverrideTrue": "",
-        "ResetActionDefault": "",
-        "OverriddenSetOverrideTrue": "",
-        "TabName": "",
-        "OverriddenSetOverrideFalse": "",
-        "SetOverrideFalse": ""
+        "TabName": ""
     },
-    "TIDY5E.EnvironmentTooltip": "",
-    "TIDY5E.AttackMod": "",
     "TIDY5E.ActorRangedSpellAttackTitle": "",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "",
     "TIDY5E.TabConfiguration": {
         "Title": "",
         "MenuOptionText": "",
-        "UnsupportedDocumentErrorMessage": "",
         "AvailableHeader": "",
-        "SelectedHeader": "",
-        "AtLeastOneRequiredErrorMessage": "",
-        "Explanation": ""
+        "SelectedHeader": ""
     },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "MoreFormulas": "",
-        "ButtonTooltip": "",
         "Title": "",
         "ExamplesHeader": ""
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": ""
     },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "",
-        "name": ""
-    },
-    "TIDY5E.HitDC": "",
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "hint": "",
-        "name": ""
-    },
-    "TIDY5E.SpellSourceIdentifierSelectText": "",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "",
     "TIDY5E.Utilities.Tools": "",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "",
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
-    "TIDY5E.Inventory.Weight.Tooltip": "",
-    "TIDY5E.Inventory.Weight.Text": "",
-    "TIDY5E.MeleeSpellAttackMod": "",
-    "TIDY5E.RangedSpellAttackMod": "",
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": ""
-    },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": ""
-    },
     "TIDY5E.WorldSettings.Menu": {
         "label": "",
         "hint": "",
@@ -640,85 +176,45 @@
         "hint": "",
         "name": ""
     },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": ""
-    },
-    "TIDY5E.SortMode.ActionListDefault": "",
     "TIDY5E.Commands.ExpandAll": "",
     "TIDY5E.ItemFilters.CanCast": "",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "",
     "TIDY5E.Section": {
-        "Tooltip": "",
         "ConfigDialog": {
             "title": "",
             "hideTooltip": "",
             "showTooltip": ""
         },
-        "ActionTooltip": "",
-        "Default": "",
         "Label": "",
         "ActionLabel": ""
     },
     "TIDY5E.GenericErrorNotification": "",
     "TIDY5E.RollRecharge.Hint": "",
-    "TIDY5E.LocalizationTestKey": "",
     "TIDY5E.Settings.SheetPreferences": {
         "explanation": "",
         "buttonLabel": "",
         "hint": "",
         "name": ""
     },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": ""
-    },
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": ""
-    },
     "TIDY5E.UseDefault": "",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "",
-    "TIDY5E.Commands.ShowContainerPanel": "",
     "TIDY5E.ItemFilters.ClearAll": "",
-    "TIDY5E.Commands.HideLegendaryToolbar": "",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "",
-    "TIDY5E.Utilities.GMTools": "",
-    "TIDY5E.Utilities.IdentifyAll": "",
     "TIDY5E.GMOnly.Message": "",
     "TIDY5E.ItemFilters.Filter.Other": "",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": ""
-    },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
-        "name": "",
-        "hint": ""
-    },
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "name": "",
         "hint": ""
     },
     "TIDY5E.ReminderToBackUp": "",
     "TIDY5E.Commands.CollapseAll": "",
-    "TIDY5E.Utilities.ConfigureSections": "",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "",
         "hint": ""
     },
-    "TIDY5E.Commands.HideContainerPanel": "",
     "TIDY5E.ItemFilters.CanUse": "",
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "",
-    "TIDY5E.Reset": "",
     "TIDY5E.ActorSpellAttackTitle": "",
     "TIDY5E.ActorSpellAttackFlavorText": "",
     "TIDY5E.ActorMeleeSpellAttackTitle": "",
-    "TIDY5E.Tidy5eContainerSheetClassic": "",
     "TIDY5E.ButtonConfirm.Text": "",
     "TIDY5E.WorldSettings.TabItem": {
         "tabLabel": ""

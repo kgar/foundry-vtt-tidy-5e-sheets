@@ -1,34 +1,6 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Tidy 5e Feuille de personnage classique",
-    "TIDY5E.Tidy5eNpcSheetClassic": "Tidy 5e feuille de PNJ",
-    "TIDY5E.Tidy5eItemSheetClassic": "Tidy 5e feuille d'objet",
-    "TIDY5E.Tidy5eVehicleSheetClassic": "Tidy 5e feuille de véhicule",
-    "TIDY5E.PlayerName": "Nom du joueur",
-    "TIDY5E.EditSheetImageHint": "Clic gauche : éditer l'image",
-    "TIDY5E.SheetImageOptionsHint": "Clic droit : voir les options de l'image",
-    "TIDY5E.ShowPortraitArt": "Voir le portrait",
-    "TIDY5E.ShowTokenArt": "Voir le token",
-    "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
-    "TIDY5E.ShowItemArt": "Montrer l'image",
-    "TIDY5E.AbbrInitiative": "Ini",
-    "TIDY5E.RestHint": "Se reposer",
-    "TIDY5E.ShortRest": "Repos Court",
-    "TIDY5E.LongRest": "Repos Long",
     "TIDY5E.HitDiceRollAverage": "Clic droit : Appliquer la moyenne",
     "TIDY5E.JournalTabName": "Journal",
-    "TIDY5E.RestoreOnRest": "Restaurer lors d'un repos",
-    "TIDY5E.JournalPersonsOfInterest": "Personnages importants",
-    "TIDY5E.JournalLocationsOfInterest": "Lieux importants",
-    "TIDY5E.JournalQuests": "Quêtes",
-    "TIDY5E.JournalMisc": "Divers",
-    "TIDY5E.JournalEntries": "Journal de bord",
-    "TIDY5E.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
-    "TIDY5E.SheetEdit.Enable.Hint": "Activer l'édition - {description}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Désactiver l'édition - {description}",
-    "TIDY5E.SheetEdit.Description": "Visibilité des boutons d'ajout/suppression et des sections vides",
-    "TIDY5E.SheetLock.Unlock.Hint": "Déverrouiller - {description}",
-    "TIDY5E.SheetLock.Lock.Hint": "Vérrouiller - {description}",
-    "TIDY5E.SheetLock.Description": "Basculer le verrouillage des champs sensibles qui ne doivent pas être modifiés souvent",
     "TIDY5E.ContextMenuActionEquip": "Équiper l'objet",
     "TIDY5E.ContextMenuActionUnequip": "Déséquiper l'objet",
     "TIDY5E.ContextMenuActionAttune": "Se lier à l'objet",
@@ -37,31 +9,11 @@
     "TIDY5E.ContextMenuActionUnprepare": "Supprimer la préparation",
     "TIDY5E.ContextMenuActionEdit": "Editer",
     "TIDY5E.ContextMenuActionDelete": "Effacer",
-    "TIDY5E.EmptySection": "Cette section est vide. Déverrouiller la feuille pour la modifier.",
-    "TIDY5E.GMOnlyEdit": "Seul votre MJ peut modifier cette section.",
-    "TIDY5E.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !.",
     "TIDY5E.AttunementItems": "Objets liés",
-    "TIDY5E.AttunementMax": "Liens maximum",
-    "TIDY5E.GridLayout": "Affichage grille",
-    "TIDY5E.ListLayout": "Affichage liste",
-    "TIDY5E.LayoutNotSupported": "Mise en page non supporter",
-    "TIDY5E.Encumbrance": "Encombrement",
     "TIDY5E.AddFavorite": "Ajouter aux Favoris",
     "TIDY5E.RemoveFavorite": "Enlever des Favoris",
-    "TIDY5E.Favorite": "Favori",
-    "TIDY5E.ShowNotProficientSkills": "Indiquer comme non compétent",
-    "TIDY5E.HideNotProficientSkills": "cacher comme non compétent",
-    "TIDY5E.Abilities": "Capacités",
-    "TIDY5E.Environment": "Environnement",
     "TIDY5E.Search": "Chercher",
-    "TIDY5E.SearchClear": "Vider la recherche",
     "TIDY5E.SearchHint": "Saisir votre recherche",
-    "TIDY5E.ItemCardsMouseHint": "Clic central de la souris pour voir / éditer",
-    "TIDY5E.AbbrMod": "Mod",
-    "TIDY5E.AbbrSavingThrow": "Sauvegarde",
-    "TIDY5E.SpellAttackMod": "Bonus d'attaque",
-    "TIDY5E.PreparedSpells": "Sorts préparés",
-    "TIDY5E.TokenLinked": "Token lié à l'acteur",
     "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
     "TIDY5E.SpellClass": "Classe de sort",
     "TIDY5E.Class.Artificer": "Artificier",
@@ -78,190 +30,26 @@
     "TIDY5E.Class.Sorcerer": "Sorcier",
     "TIDY5E.Class.Warlock": "Occultiste",
     "TIDY5E.Class.Wizard": "Magicien",
-    "TIDY5E.OriginSummaryConfig": "Configuration du sommaire d'origine : {actorName}",
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtre de sortilèges multi-classes",
     "TIDY5E.UserSettings.Menu": {
         "name": "Paramètres utilisateur",
         "hint": "Personnalisez votre propre version des Feuilles Tidy 5e. Ces paramètres sont enregistrés dans votre navigateur et s'appliquent à vos feuilles.",
         "label": "Configuration des feuilles",
         "title": "Configuration des feuilles Tidy5e"
     },
-    "TIDY5E.UserSettings.TabPlayers": {
-        "tabLabel": "Joueur",
-        "header": "Option des feuilles de joueur"
-    },
-    "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "PNJs",
-        "header": "Feuilles PNJ"
-    },
-    "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": "Véhicules",
-        "header": "Feuilles de véhicules"
-    },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Options MJ"
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Verrouillage de la feuille",
-        "header": "Options de verrouillage",
-        "hint": "Empêcher les joueurs de modifier des aspects de leur feuille de personnage qui devraient changer rarement. Cachez éventuellement certains éléments que vous ne souhaitez pas utiliser du tout.",
-        "hint2": "Important : les fonctions de verrouillage des feuilles sont destinées à guider l'utilisation des feuilles par les joueurs et à éviter les erreurs telles que l'ajout ou la suppression accidentelle d'une compétence ou de jet de sauvegarde. Les paramètres de verrouillage des feuilles n'offrent pas de protection contre les joueurs mal intentionnés.",
-        "labelGeneralLocks": "Verrouillages général",
-        "labelInventoryLocks": "Verrouillage de l'inventaire",
-        "labelFeaturesLocks": "Verrouillages des caractéristiques"
-    },
-    "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
-        "hint": "Désactiver cette option pour afficher la carte d'information uniquement en mode grille."
-    },
-    "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Carte d'information flottante",
-        "hint": "Activer cette option pour détacher la carte d'information et l'afficher près du curseur (fonctionne mieux avec un délai ou quand la fiche est en pop-up)."
-    },
-    "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Délai avant l'affichage de la carte d'information",
-        "hint": "La carte d'information s'affichera au survol d'un élément après un délai en millisecondes (0 = pas de délai, 300 par défaut)."
-    },
-    "TIDY5E.Settings.UseClassicControls": {
-        "name": "Contrôles classiques en mode liste",
-        "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
-    },
-    "TIDY5E.Settings.ShowTraitLabels": {
-        "name": "Afficher les noms de traits",
-        "hint": "Par défaut, seules des icones sont affichées pour les traits. Activer cette option pour afficher les noms également."
-    },
-    "TIDY5E.Settings.ShowPlayerName": {
-        "name": "Afficher le nom du joueur",
-        "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
-    },
-    "TIDY5E.Settings.ShowClassList": {
-        "name": "Afficher la liste des classes",
-        "hint": "Affiche la liste des classes sous le nom du personnage."
-    },
-    "TIDY5E.Settings.InspirationAnimation": {
-        "name": "Pas d'animation de l'indicateur d'inspiration",
-        "hint": "Activer cette option pour masquer l'animation lumineuse de l'indicateur d'inspiration."
-    },
-    "TIDY5E.Settings.HideIfZero": {
-        "name": "Cacher l'épuisement et l'inspiration lorsqu'ils ne sont pas affectés",
-        "hint": "Activer cette option pour masquer l'épuisment si son niveau est de 0 et l'inspiration si elle n'est pas donnée."
-    },
-    "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Afficher l'indicateur d'inspiration uniquement au survol",
-        "hint": "Activer cette option pour rendre l'indicateur d'inspiration visible uniquement au survol du portrait avec la souris."
-    },
-    "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Afficher l'indicateur d'épuisement uniquement au survol",
-        "hint": "Activer cette option pour rendre l'indicateur d'épuisement visible uniquement au survol du portrait avec la souris."
-    },
-    "TIDY5E.Settings.UseHpBar": {
-        "name": "Utiliser la barre de PV",
-        "hint": "Affiche une barre colorée indiquant les PV restants. Les chiffres de santé restent visibles."
-    },
-    "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Utiliser la superposition de santé",
-        "hint": "Affiche une superposition PV colorée."
-    },
-    "TIDY5E.Settings.MoveTraitsToRightOfSkills": {
-        "name": "Déplacer les traits sous les ressources",
-        "hint": "Activer cette option pour afficher les traits sous les ressources."
-    },
-    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Montrer les munitions équipées uniquement",
-        "hint": "N'affiche que les munitions actuellement équipées dans le sélecteur de munitions de l'arme."
-    },
-    "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Toujours montrer les caractéristiques",
-        "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
-    },
-    "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Afficher l'onglet Livre de sort",
-        "hint": "Affiche un onglet de livre de sorts pour les PNJ. Désactiver pour déplacer la section du livre de sorts vers l'onglet Attributs."
-    },
-    "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Afficher le marqueru d'effet actif sur les objets",
-        "hint": "Activer cette option pour visualiser les objets avec un effet actif (uniquement pour la vue liste)."
-    },
-    "TIDY5E.Settings.UseContextMenu": {
-        "name": "Utiliser le menu contextuel",
-        "hint": "Active le menu contextuel du clic droit sur les éléments."
-    },
-    "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Vue étendue pour la feuille limitée",
-        "hint": "Activer cette option pour afficher l'intégralité de la feuille de personnage (sans l'onglet Notes Privées) pour les joueurs ayant une autorisation limitée pour cet acteur."
-    },
-    "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Utiliser des portraits ronds",
-        "hint": "Activer cette option pour utiliser des portraits ronds.",
-        "all": "Tous les acteurs",
-        "pc": "PJs",
-        "npc": "PNJs / véhicules",
-        "none": "Aucun",
-        "default": "Aucun"
-    },
-    "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Verrouiller les champs sensibles",
-        "hint": "Activer cette option pour prévenir les modifications de champs sensibles."
-    },
-    "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Seul le MJ peut éditer les effets actifs",
-        "hint": "Activer cette option pour interdire aux joueurs de modifier les effets actifs sur leur feuille. Ils verront toujours les effets appliqués."
-    },
-    "TIDY5E.Settings.UseInspiration": {
-        "name": "Utiliser le suivi de l'inspiration",
-        "hint": "Affiche un indicateur d'inspiration sur le profil du personnage."
-    },
-    "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Utiliser l'indicateur des déplacements des véhicules",
-        "hint": "Affiche un curseur de mouvement sur le profil du véhicule."
-    },
-    "TIDY5E.Settings.UseExhaustion": {
-        "name": "Utiliser le curseur de suivi de l'épuisement",
-        "hint": "Affiche un compteur d'épuisement pour les personnages, les PNJ et les véhicules."
+        "header": "Options de verrouillage"
     },
     "TIDY5E.Settings.UseNPCRest": {
         "name": "Repos pour les PNJs",
         "hint": "Activer cette option pour afficher le bouton de repos sur les feuilles de PNJs."
     },
-    "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Afficher le repos du PNJ dans le chat",
-        "hint": "Affiche un message dans le chat lorsqu'un PNJ se repose."
-    },
-    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Marquer les PNJs liés / non liés",
-        "hint": "Ajoute un contour coloré et une icone liés / non liés pour les feuilles de PNJs.",
-        "default": "Aucun marqueur de lien (par défaut)",
-        "unlinked": "Mise en évidence des tokens non liés",
-        "linked": "Mise en évidence des tokens liés",
-        "both": "Mise en évidence des tokens liés ET non liés"
-    },
     "TIDY5E.Settings.InitialSheetTab": {
         "name": "Onglet initial de la feuille",
         "hint": "ffiche l'onglet indiqué lors de la première ouverture de la feuille."
-    },
-    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Cacher les jets de sauvegardes de mort aux joueurs",
-        "hint": "Rend les jets de sauvegardes de mort et les résultats des jets de sauvegardes de mort visibles uniquement par le MJ. Le bouton de jet de sauvegarde reste visible."
-    },
-    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Utiliser la barre d'encombrement des personnages",
-        "hint": "Affiche une barre d'encombrement sur les feuilles de personnage."
-    },
-    "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Utiliser la barre d'encombrement des PNJ",
-        "hint": "Affiche une barre d'encombrement sur les feuilles des PNJ."
-    },
-    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Utiliser la barre d'encombrement des véhicules",
-        "hint": "Affiche une barre d'encombrement sur les feuilles de véhicule."
-    },
-    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Utiliser le filtre de livre de sorts multi-classes",
-        "hint": "Permet de filtrer les sorts par classe dans l'onglet du livre des sorts. Le sort doit être associé à une classe en utilisant le sélecteur de classe sur la feuille d'édition des sorts."
-    },
-    "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Utiliser l'icône de classe pour les sorts",
-        "hint": "Affiche l'image de la classe sur les sorts au lieu de l'image du sort lui-même. Le sort doit être associé à une classe à l'aide du sélecteur de classe de la feuille d'édition des sorts. En cas de multi-classage, cette caractéristique permet de distinguer d'un coup d'œil les sorts appartenant à telle ou telle classe."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": "Classes supplémentaires pour le filtrage multiclasse du livre des sorts",
@@ -275,98 +63,12 @@
         "name": "Verrouiller la monnaie",
         "hint": "Empêche les non-MJ d'apporter des modifications à la monnaie."
     },
-    "TIDY5E.Settings.LockExpChanges": {
-        "name": "Verrouiller l'expérience",
-        "hint": "Empêche les non-MJ d'apporter des changements à l'expérience."
-    },
-    "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": "Verrouiller les changements de PV max",
-        "hint": "Empêche les non-MJ d'apporter des modifications aux PV max."
-    },
-    "TIDY5E.Settings.LockLevelSelector": {
-        "name": "Verrouiller le sélecteur de niveaux",
-        "hint": "Empêche les non-MJ de modifier le niveau des joueurs à l'aide du sélecteur de niveau de classe."
-    },
-    "TIDY5E.Settings.LockItemQuantity": {
-        "name": "Verrouiller la quantité d'objets",
-        "hint": "Empêche les non-MJ d'apporter des modifications à la quantité des objets."
-    },
-    "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Utiliser des couleurs de thème personnalisées",
-        "hint": "Affiche les couleurs personnalisées du thème"
-    },
-    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": "Surbrillance principale"
-    },
-    "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": "Equiper"
-    },
-    "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": "Barre de PV"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": "Contour équipé"
-    },
-    "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": "Surbrillance équipé"
-    },
-    "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": "Préparer"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": "Aperçu des préparé"
-    },
-    "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": "Surbrillance préparé"
-    },
-    "TIDY5E.Settings.ColorPickerPact": {
-        "name": "Pacte"
-    },
-    "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "Pacte contours"
-    },
-    "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": "Surbrillance pacte"
-    },
-    "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": "À volonté"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": "A volonté contours"
-    },
-    "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Surbrillance à volonté"
-    },
-    "TIDY5E.Settings.ColorPickerInnate": {
-        "name": "Inné"
-    },
-    "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": "Inné contours"
-    },
-    "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": "Surbrillance inné"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": "Toujours préparé"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": "Toujours préparé contours"
-    },
-    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": "Surbrillance toujours préparé"
-    },
-    "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": "Autoriser l'annulation des PV Max sur le personnage",
-        "hint": "Permet au MJ de modifier manuellement le nombre maximum de PV sur la feuille de personnage."
-    },
     "TIDY5E.Settings.Reset": {
         "name": "Rétablir les paramètres par défaut",
         "hint": "Cette opération réinitialise tous les paramètres du système de jeu actif à leur valeur par défaut. Cela n'affecte que les paramètres du \"monde\", tels que les options du MJ.",
         "dialogs": {
             "title": "Réinitialisation des paramètres du module",
-            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel ? <strong>Il n'est pas possible de revenir en arrière.</strong>",
-            "confirm": "Réinitialisation des paramètres du module",
-            "cancel": "Annuler"
+            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel ? <strong>Il n'est pas possible de revenir en arrière.</strong>"
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -376,21 +78,14 @@
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
             "name": "Paramètres Tidy du thème",
-            "buttonLabel": "Paramètres du thème",
-            "hint": "Personnalisez les couleurs des feuilles Tidy 5e classique uniquement."
+            "buttonLabel": "Paramètres du thème"
         },
         "Sheet": {
             "title": "Paramètres du thème : {userName}",
-            "header": "Couleurs personnalisées du thème",
-            "useDefaultLightColors": "Lumineux par défaut",
-            "useDefaultDarkColors": "Sombre par défaut",
             "export": "Exporter",
             "import": "Importer",
-            "importDropHint": "Astuce : Vous pouvez faire glisser un fichier \".tidy5e-theme\" sur ce formulaire pour l'importer.",
             "importError": "L'importation du thème a échoué. Voir la console pour plus de détails.",
-            "importSuccess": "Thème importé avec succès !",
-            "menuLabel": "Menu",
-            "explanation": "Sélectionnez la couleur que vous souhaitez utiliser pour chaque option. La valeur \"#00000000\" équivaut à désactiver la couleur."
+            "importSuccess": "Thème importé avec succès !"
         },
         "hint": "Personnalisez votre feuille pour créer une expérience immersive qui complète votre jeu.",
         "ActorHeaderBackground.title": "Arrière-plan de l'en-tête du personnage",
@@ -411,40 +106,20 @@
         "UseHeaderBackground.title": "Utiliser l'arrière-plan de l'en-tête",
         "UseHeaderBackground.hint": "Comprend les styles qui prennent en charge un en-tête de feuille coloré avec une image en arrière-plan."
     },
-    "TIDY5E.FavoriteSpellLevelLabel": "Niveau de sort {number}",
     "TIDY5E.ApplyChanges": "Appliquer les changements",
     "TIDY5E.SaveChanges": "Enregistrer les modifications",
-    "TIDY5E.VehicleInMotion": "Le véhicule est en mouvement",
-    "TIDY5E.VehicleMotionless": "Le véhicule n'a pas de mouvement",
-    "TIDY5E.TotalCrewCount": "Équipage total",
-    "TIDY5E.ActionsPerTurn": "Actions par tour",
-    "TIDY5E.SheetMenu": {
-        "label": "Menu",
-        "themeLabel": "Thème"
-    },
-    "TIDY5E.ActiveEffectsMarkerTitle": "Cet objet a des effets actifs",
     "TIDY5E.Actions": {
-        "TabName": "Actions",
-        "OverriddenSetOverrideFalse": "Supprimer de la liste des actions (Shift+Click pour annuler)",
-        "OverriddenSetOverrideTrue": "Ajouter à la liste d'actions (Shift+Click pour annuler)",
-        "SetOverrideFalse": "Supprimer de la liste des actions",
-        "SetOverrideTrue": "Ajouter à la liste des actions",
-        "ResetActionDefault": "Réinitialisation action par défaut"
+        "TabName": "Actions"
     },
-    "TIDY5E.Inventory.Weight.Tooltip": "Poids : {weight} {weightUnit}",
-    "TIDY5E.EnvironmentTooltip": "Environnement : {environnement}",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Attaque de sort au contact",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Attaque de sort à distance",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Attaque de sort",
     "TIDY5E.ActorSpellAttackFlavorText": "Attaque de sort",
     "TIDY5E.TabConfiguration": {
-        "Explanation": "Les onglets que l'utilisateur ou la feuille sont configurés pour ne pas les voir (par exemple, en désactivant le journal dans les paramètres de configuration) n'apparaîtront pas sur la feuille, même s'ils sont sélectionnés.",
         "MenuOptionText": "Onglet de sélection",
         "Title": "Onglet de sélection : {documentName}",
         "AvailableHeader": "Onglets masqués",
         "SelectedHeader": "Onglets visible",
-        "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
-        "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis.",
         "SelectionTab.Title": "Sélection de l'onglet",
         "VisibilityTab.Title": "Visibilité des onglets"
     },
@@ -456,59 +131,18 @@
         "MoveAllRight": "Déplacer tout vers la droite",
         "MoveLeft": "Déplacement vers la gauche (Espace)"
     },
-    "TIDY5E.WorldSettings.Exhaustion": {
-        "options.specific.levels.tooltip.name": "Niveau d'épuisement {level} Info-bulle",
-        "options.specific.levels.tooltip.hint": "Infobulle pour ce niveau d'épuisement. Les touches de localisation fonctionnent également.",
-        "Header": "Personnage/PNJ Épuisement",
-        "name": "Configuration de l'épuisement",
-        "hint": "Détermine comment l'épuisement hors véhicule est configuré et présenté sur les feuilles de personnage et de PNJ.",
-        "options.specific.text": "Niveaux spécifiques",
-        "options.specific.levels.name": "Niveaux totaux",
-        "options.specific.levels.hint": "Détermine le nombre maximum de niveaux d'épuisement.",
-        "options.open.explanation": "Présente à l'utilisateur une entrée numérique pour saisir les niveaux d'épuisement.",
-        "AtLeastOneLevelRequiredErrorMessage": "Au moins un niveau d'épuisement est requis.",
-        "options.open.text": "Entrer un nombre au choix"
-    },
     "TIDY5E.MaxPreparedSpellsConfig": {
         "Title": "Configuration Max de sorts préparer : {documentName}",
         "ExamplesHeader": "Exemple de formules",
-        "ButtonTooltip": "Configuration Max des sorts préparés",
         "MoreFormulas": "Plus de formules"
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Liste des actions"
     },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "name": "Utiliser le support de clavier accessible",
-        "hint": "Permet aux utilisateurs de parcourir la plupart des boutons/commandes des feuilles Tidy 5e et de les exécuter à l'aide de touches de raccourci clavier conventionnelles basées sur des boutons. Remarque : lorsque l'utilisateur se concentre sur un bouton dans Foundry, les raccourcis clavier de \"Configurer les contrôles\" ne répondent pas. Si un module utilise cette fonctionnalité de Foundry pour les contrôles sur les feuilles, comme l'utilisation d'éléments en maintenant une touche spéciale, l'activation de cette option de Tidy 5e Sheets interférera avec ces raccourcis clavier."
-    },
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "name": "Afficher les compétences des personnages vides",
-        "hint": "Ajout d'un bouton pour basculer afficher/masquer les compétences vides."
-    },
-    "TIDY5E.MeleeSpellAttackMod": "Modificateur d'attaque de sort",
-    "TIDY5E.HitDC": "Dés de vie",
-    "TIDY5E.AttackMod": "Modificateur d'attaque",
-    "TIDY5E.RangedSpellAttackMod": "Modificateur d'attaque de sort à distance",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Attaque sort de mêlée",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Attaque de sort à distance",
     "TIDY5E.WorldSettings.TabCharacter": {
         "tabLabel": "Personnage"
-    },
-    "TIDY5E.WorldSettings.TabNpc": {
-        "tabLabel": "PNJ"
-    },
-    "TIDY5E.WorldSettings.TabVehicle": {
-        "tabLabel": "Véhicule"
-    },
-    "TIDY5E.WorldSettings.TabExhaustion": {
-        "tabLabel": "Épuisement"
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "Épuisement du véhicule",
-        "name": "Configuration de l'épuisement des véhicules",
-        "hint": "Détermine comment l'épuisement du véhicule est configuré et présenté sur la fiche du véhicule.",
-        "AtLeastOneLevelRequiredErrorMessage": "Au moins un niveau d'épuisement du véhicule est requis."
     },
     "TIDY5E.WorldSettings.Menu": {
         "name": "Paramètres du monde",
@@ -516,117 +150,13 @@
         "label": "Paramètres du monde",
         "title": "Paramètres du monde (MD seulement)"
     },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Utiliser la tabulation par défaut du clavier pour les PV",
-        "hint": "La feuille 5e par défaut permet la tabulation du clavier de l'entrée des PV actuels à l'entrée PV temporaire actuels. L'activation de ce paramètre reproduit ce comportement. Ce paramètre est ignoré si l'option \"Utiliser le support de clavier accessible\" est désactivée."
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "name": "Utiliser l'attribut par défaut de la feuille pour la tabulation au clavier",
-        "hint": "La feuille 5e par défaut permet la tabulation au clavier d'une entrée d'attribut à la suivante en cachant les contrôles autour d'eux de l'ordre de tabulation. L'activation de ce paramètre reproduit ce comportement. Ce paramètre est ignoré si l'option \"Utiliser un support clavier accessible\" est désactivée."
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Onglets de la feuille par défaut",
-        "hint": "Détermine quels onglets seront affichés et dans quel ordre par défaut. S'applique lorsqu'aucun onglet n'a été sélectionné pour un acteur.",
-        "AvailableHeader": "Onglets disponibles",
-        "SelectedHeader": "Onglets sélectionnés",
-        "AtLeastOneTabRequiredErrorMessage": "Onglets par défaut : au moins un onglet est requis pour chaque type d'acteur."
-    },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
         "name": "Inclure les sorts à effets actifs dans les actions",
         "hint": "Inclut les sorts avec des effets actifs attachés (par exemple Barkskin(Peau d'écorce)) dans l'onglet/panneau Actions par défaut."
     },
-    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
-        "name": "Barre de défilement"
-    },
-    "TIDY5E.Settings.Migrations": {
-        "dialogTitle": "Migrer des données de Tidy",
-        "migrationBeginningMessage": "Migration des données. Ne rafraîchissez pas la page avant d'avoir terminé.",
-        "migrateGmSettingsButtonLabel": "Migrer les paramètres du MJ",
-        "migrateConfirmTitle": "Confirmer la migration",
-        "migrateConfirmMessage1": "Êtes-vous sûr de vouloir effectuer cette migration ?",
-        "migrateConfirmMessage2": "{boldStart}Note{boldEnd} : n'oubliez jamais de {boldStart} sauvegarder vos données{boldEnd}.",
-        "migrateConfirmButtonYes": "Migrer",
-        "v1": {
-            "originalHeader": "Feuille originale Tidy5e",
-            "alphaExplanation2": "{boldStart}Note{boldEnd} : Cette migration n'affecte pas le contenu du compendium.",
-            "mainExplanation1": "Il n'est pas nécessaire de migrer les données vers le nouveau module Tidy 5e Sheets pour pouvoir l'utiliser. Dans le pire des cas, si vous êtes un utilisateur original de Tidy5e Sheet et que vous sautez les migrations, vous devrez réappliquer vos paramètres à votre convenance.",
-            "alphaHeader": "Feuilles Alpha Tidy 5e",
-            "originalExplanation": "La migration des paramètres du MJ et des indicateurs de données de la feuille Tidy à partir de la feuille Tidy5e originale. La plupart des différences dans les données proviennent des paramètres du MJ. Si vous migrez vos paramètres et que vous constatez qu'un paramètre ne vous convient pas, il vous suffit de le modifier à partir du menu de configuration.",
-            "mainExplanation2": "{boldStart}Note{boldEnd} : Les paramètres du client ne font pas partie de cette migration. La façon dont les paramètres des clients fonctionnent dans Tidy n'a pas changé, il est donc recommandé de jeter un nouveau coup d'œil aux paramètres des clients.",
-            "alphaExplanation1": "La migration des paramètres MJ et des indicateurs de données des feuilles Tidy depuis les feuilles Alpha Tidy 5e. La plupart des différences de données proviennent des drapeaux de données des feuilles. La migration des indicateurs Alpha cible les acteurs de premier niveau, les objets des acteurs de premier niveau et les objets de premier niveau. Cela apportera des données biographiques, des favoris et d'autres indicateurs de données Alpha spécifiques à la feuille.",
-            "sectionTitle": "Accueil des migrations de Tidy V1"
-        },
-        "migrationErrorMessage": "Une erreur s'est produite. Plus de détails dans la console.",
-        "buttonLabel": "Migrer des données de Tidy5e",
-        "migrateConfirmButtonNo": "Annuler",
-        "migrateDocumentFlagsButtonLabel": "Migrer les indicateurs des documents",
-        "migrationCompleteMessage": "Migration terminée.",
-        "name": "Migrations",
-        "hint": "Si vous avez utilisé le module original Tidy5e Sheet, vous pouvez éventuellement utiliser ce menu Migrations pour migrer vos paramètres MJ et les données de vos feuilles Tidy 5e.",
-        "Notification": {
-            "Title": "Feuilles Tidy 5e : Migrations disponibles",
-            "Explanation": "De nouvelles migrations de données Tidy 5e Sheets sont disponibles. Consultez le menu {boldStart}paramètres de configuration des Migrations{boldEnd} pour en savoir plus.",
-            "Button.DoNotShowAgain": "Ne pas montrer à nouveau",
-            "DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
-            "Explanation2": "Note: Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire."
-        },
-        "OptionsHeader": "Options de migrations",
-        "OptionOverwrite.Text": "Écraser",
-        "OptionOverwrite.Tooltip": "Permet d'écraser les données de la feuille existante. Si cette option n'est pas cochée, seuls les champs vides du système recevront les données Tidy migrées.",
-        "OptionDeleteFlags.Text": "Supprimer les indicateurs Tidy affectés",
-        "ButtonMigration.Text": "Migrer",
-        "CharacterBiography": {
-            "sectionTitle": "Biographie du personnage",
-            "selectionDialogTitle": "Migration : Biographie du personnage"
-        },
-        "Selection": {
-            "TotalSelectedLabel": "Total sélectionné : {total}",
-            "ToMigrate": "Pour migrer",
-            "SelectAllNoneTooltip": "Sélectionner tous ou aucun"
-        },
-        "OptionDeleteFlags.Tooltip": "Lors de la migration des données des indicateurs Tidy personnalisées vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs.",
-        "NpcDeathSaves": {
-            "selectionDialogTitle": "Migration : Sauvegarde contre la mort des PNJ",
-            "sectionTitle": "Sauvegarde contre la mort des PNJ"
-        },
-        "UnlinkedExplanation": "Cette migration offre la possibilité de migrer les documents non liés aux acteurs dans la scène actuelle. Vous pouvez exécuter la migration sur d'autres scènes si nécessaire.",
-        "CcssToTidy": {
-            "sectionTitle": "CCSS pour Tidy 5e",
-            "selectionDialogTitle": "Migration : CCSS pour Tidy 5e",
-            "section": "Section",
-            "ccss": "CCSS",
-            "explanation1": "Tidy 5e supporte désormais nativement les sections personnalisées et fournit des fonctionnalités supplémentaires autour des sections personnalisées. Cette migration copiera les noms des sections des feuilles de caractères personnalisées (CCSS) dans la configuration des sections de Tidy5e.",
-            "explanation2": "{boldStart}Note{boldEnd}: Le CCSS a la priorité sur les sections personnalisées. Pour désactiver le CCSS pour un élément, assurez-vous d'utiliser l'option de suppression des indicateurs concernés ou d'effacer manuellement la valeur de la section personnalisée CCSS.",
-            "overwrite": "Écraser",
-            "overwriteTooltip": "Permet d'écraser l'indicateur de section Tidy existant. Si la case n'est pas cochée, seuls les indicateurs Tidy vides recevront les données CCSS migrées.",
-            "deleteFlags": "Supprimer les indicateurs CCSS concernés",
-            "deleteFlagsTooltip": "Lors de la migration des sections CCSS vers les sections personnalisées Tidy, les indicateurs CCSS restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
-        },
-        "Parent": "Parent",
-        "MigrateCompendia.CompendiumLabel": "Compendium",
-        "MigrateCompendia.Title": "Migrer les compendiums",
-        "MigrateCompendia.SelectionDialogTitle": "Sélection des compendiums pour migration",
-        "NpcExhaustion": {
-            "selectionDialogTitle": "Migration : Épuisement du PNJ vers le système",
-            "sectionTitle": "Épuisement des PNJ"
-        },
-        "BondsIdealsFlawsToSystem": {
-            "selectionDialogTitle": "Migration : Liens, idéaux et défauts des PNJ vers le système",
-            "sectionTitle": "Liens, idéaux et défauts des PNJ"
-        },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Classe de sort vers Classe source",
-            "selectionDialogTitle": "Migration : Classe de sort vers la classe source"
-        },
-        "MigrateCompendia.TotalEntriesLabel": "Total des entrées",
-        "FavoritesToSystem": {
-            "selectionDialogTitle": "Migration : Personnages favoris vers le système",
-            "sectionTitle": "Personnages préférés"
-        },
-        "chatNotification": "Une nouvelle migration des feuilles Tidy 5e est disponible. Voir Paramètres du jeu Tidy 5e Sheets pour voir les migrations disponibles.",
-        "Journal": {
-            "explanation1": "La refonte de l'interface utilisateur de Tidy 5e Sheets a permis de réorganiser le journal afin qu'il puisse contenir autant d'entrées que vous le souhaitez. Pour cela, une migration de l'ancienne structure du journal vers la nouvelle structure extensible est nécessaire. Les anciennes données du journal ne seront pas visibles dans la version remaniée de Tidy 5e Sheets."
-        }
+    "TIDY5E.Selection": {
+        "TotalSelectedLabel": "Total sélectionné : {total}",
+        "SelectAllNoneTooltip": "Sélectionner tous ou aucun"
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -656,43 +186,14 @@
     },
     "TIDY5E.Commands.CollapseAll": "Réduire tout",
     "TIDY5E.UseDefault": "Utiliser la valeur par défaut",
-    "TIDY5E.Reset": "Remise à zéro",
     "TIDY5E.Commands.ExpandAll": "Tout développer",
     "TIDY5E.Settings.ActionList.Header": "Liste des actions",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "name": "Limiter les actions au sorts mineurs (Cantrips)",
         "hint": "Au lieu d'afficher tous les sorts qui infligent des dégâts dans l'onglet/panneau Actions par défaut, limite aux seuls cantrips (sorts mineurs). C'est le comportement par défaut de D&D Beyond."
     },
-    "TIDY5E.Commands.ShowLegendaryToolbar": "Afficher la barre d'actions légendaire",
-    "TIDY5E.SortMode.ActionListDefault": "Tri par défaut de la liste d'actions",
-    "TIDY5E.Commands.HideLegendaryToolbar": "Cacher la barre d'actions légendaires",
     "TIDY5E.ItemFilters.Category.Miscellaneous": "Divers",
     "TIDY5E.ItemFilters.Filter.Other": "Autre",
-    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
-    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
-        "name": "Fond barre de défilement"
-    },
-    "TIDY5E.Settings.ColorPickerMagicAccent": {
-        "name": "Surbrillance contours objet magique"
-    },
-    "TIDY5E.SheetMigrations": {
-        "MenuOptionText": "Migrations de feuilles",
-        "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
-        "Notification.SheetMigrationsAvailable.Explanation2": "Note : Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire.",
-        "OptionApplyAll.Tooltip": "Appliquer cette migration à toutes les feuilles qui peuvent recevoir cette migration. Les autres options sélectionnées ici seront également appliquées à toutes les feuilles migrées.",
-        "ButtonMigration.Text": "Migrer",
-        "Title": "Migrations des feuilles : {documentNameOrType}",
-        "Introduction": "Les migrations suivantes sont disponibles pour {actorNameOrType}:",
-        "NoMigrations": "Aucune migration n'est disponible.",
-        "Notification.SheetMigrationsAvailable.Title": "Feuilles Tidy 5e : Migrations disponibles",
-        "Notification.SheetMigrationsAvailable.Explanation": "De nouvelles migrations de données de feuilles sont disponibles. Pour visualiser les migrations de feuilles, ouvrez n'importe quelle feuille Tidy et sélectionnez l'option \"Migrations de feuilles\" dans le menu de la feuille.",
-        "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Ne pas montrer à nouveau",
-        "OptionOverwrite.Text": "Écraser",
-        "OptionOverwrite.Tooltip": "Permet d'écraser les données de la feuille existante. Si cette option n'est pas cochée, seuls les champs vides du système recevront les données Tidy migrées.",
-        "OptionApplyAll.Text": "Appliquer à toutes les fiches concernées",
-        "OptionDeleteFlags.Text": "Supprimer les indicateurs Tidy affectés",
-        "OptionDeleteFlags.Tooltip": "Lors de la migration des données personnalisées de Tidy vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
-    },
     "TIDY5E.Settings.ShowSheetMigrationsMenu": {
         "OptionNone.Text": "Ne pas montrer",
         "OptionGMOnly.Text": "MJ seulement",
@@ -712,16 +213,8 @@
         "options.GmOnly": "MJ seulement",
         "options.GmAndOwners": "MJ et propriétaires des objets"
     },
-    "TIDY5E.Commands.ShowContainerPanel": "Afficher le panneau conteneur",
-    "TIDY5E.Tidy5eContainerSheetClassic": "Feuille de conteneur Tidy 5e",
-    "TIDY5E.Commands.HideContainerPanel": "Masquer le panneau conteneur",
-    "TIDY5E.Utilities.GMTools": "Outils du MJ",
-    "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés",
-    "TIDY5E.ItemImageTitle": "Objet : {subject}",
     "TIDY5E.ItemFilters.CanCast": "Peu incanter",
     "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
-    "TIDY5E.PortraitTitle": "Portrait : {subject}",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Inclure les indicateurs dans la création des parchemins de sorts",
         "hint": "Les sorts peuvent parfois contenir des données spéciales provenant d'autres modules, qu'il peut être utile de transférer dans un parchemin de sort. Activer pour copier toutes les données basées sur les indicateurs dans le parchemin de sort lors de sa création."
@@ -735,15 +228,12 @@
     "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails.",
     "TIDY5E.Section": {
         "Label": "Section",
-        "Default": "Section par défaut",
         "ActionLabel": "Section Action",
         "ConfigDialog": {
             "hideTooltip": "Masquer cette section",
             "title": "Configurer la section : {tabTitle}",
             "showTooltip": "Afficher cette section"
         },
-        "ActionTooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans l'onglet Actions, ou laissez-la vide pour un comportement par défaut.",
-        "Tooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans une fiche d'acteur, ou laissez-la vide pour un comportement par défaut.",
         "LabelPl": "Sections",
         "SectionSelectorChooseActionSectionTooltip": "Choisir une section d'action",
         "SectionSelectorChooseSectionTooltip": "Choisir une section",
@@ -754,46 +244,20 @@
         "SectionSelectorSaveNewSection": "Sauvegarder la nouvelle section",
         "SectionSelectorChooseTabSectionTooltip": "Choisissez la section {tabName}"
     },
-    "TIDY5E.Utilities.ConfigureSections": "Configurer les sections",
-    "TIDY5E.WorldSettings.TabIcons": {
-        "tabLabel": "Icones"
-    },
     "TIDY5E.UseDefaultDialog": {
         "title": "Confirmer : Utiliser par défaut",
         "text": "Êtes-vous sûr de vouloir utiliser la valeur par défaut ?"
     },
-    "TIDY5E.LocalizationTestKey": "Clé de test de localisation",
-    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
-        "hint": "Utilisez les icônes sélectionnées par Tidy pour les écoles de magie. Pour personnaliser les icônes des écoles de magie via CONFIG.DND5E ou d'autres modules, désactivez cette option. Pour étendre les icônes personnalisées des écoles de sorts de Tidy, reportez-vous à la documentation de l'API de Tidy.",
-        "name": "Utiliser les icônes d'écoles de Tidy"
-    },
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) ",
-    "TIDY5E.Settings.ColorPickerRitualOnly": {
-        "name": "Rituel Seulement"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
-        "name": "Surbrillance Rituel seulement"
-    },
-    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
-        "name": "Contour Rituel seulement"
-    },
     "TIDY5E.EmptyContainer": "Ce conteneur est vide.",
-    "TIDY5E.SpellSourceIdentifierSelectText": "Identifiant de classe : {identifier}",
-    "TIDY5E.SpellSourceIdentifierLabelHint": "L'acteur qui bénéficie de ce sort n'a pas la classe source spécifiée ici.",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Attribuer des sorts aux classes",
     "TIDY5E.SpellSourceClassAssignments.Identifier": "Identifiant de la classe source",
     "TIDY5E.Utilities.Tools": "Outils",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identifiant de classe source du sort apparaît ici. Pour attribuer un identifiant que le personnage ne possède pas, saisissez l'identifiant de classe dans cette zone de texte.",
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Afficher uniquement les non assignés",
-    "TIDY5E.Group.NamePlaceholder": "Nom du groupe",
-    "TIDY5E.Group.HideMemberTabInfoPanel": "Cacher le panneau d'information",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Changer le verrouillage de la feuille",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Si une feuille Tidy est la fenêtre active dans l'interface utilisateur, ce raccourci clavier active le verrouillage de la feuille.",
-    "TIDY5E.Tidy5eGroupSheetClassic": "Tidy 5e feuille de groupe classique",
-    "TIDY5E.Group.ShowMemberTabInfoPanel": "Afficher le panneau d'information",
-    "TIDY5E.NoSpecialSenses": "Pas de perceptions spéciales",
     "TIDY5E.Group.EmptyMembersTabHint": "Ce groupe est vide. Cliquez sur un acteur dans la barre latérale pour ajouter un membre.",
-    "TIDY5E.PreviewSheetImageHint": "Clic gauche : Aperçu de l'image",
     "TIDY5E.ModuleName": "Feuilles Tidy 5e",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "CustomizedIndicatorLabel": "personnalisée",
@@ -803,20 +267,11 @@
         "LimitToSpecificTabsLabel": "Limiter la section affichée à des onglets spécifiques",
         "ShowWhenEmptyLabel": "Afficher la section lorsqu'elle est vide"
     },
-    "TIDY5E.Settings.InfoCardsInspectKey": {
-        "name": "Clé de la Carte d'information",
-        "hint": "Appuyez sur ce caractère du clavier (par exemple, la touche \"t\") lorsque vous visualisez une carte d'information pour la détacher."
-    },
     "TIDY5E.ContextMenuActionView": "Voir",
     "TIDY5E.ContextMenuActionShowLimitedUses": "Afficher les utilisations limitées",
     "TIDY5E.ContextMenuActionShowQuantity": "Afficher la quantité",
-    "TIDY5E.ContextMenuActionUnpinFromAttributes": "décrocher des attributs",
     "TIDY5E.UserSettings.TabActivities": {
         "tabLabel": "Activités"
-    },
-    "TIDY5E.Settings.UseEffectCards": {
-        "hint": "Permet d'afficher les fiches d'information sur les effets actifs pour tous les acteurs et éléments ayant des effets actifs.",
-        "name": "Afficher les fiches d'information sur les effets actifs"
     },
     "TIDY5E.Settings.InlineActivitiesPosition": {
         "bottom": "En bas",
@@ -833,18 +288,14 @@
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Feuille de conteneur Tidy 5e",
     "TIDY5E.Tidy5eItemSheetQuadrone": "Feuille d'objet Tidy 5e",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Feuille de personnage Tidy5e",
-    "TIDY5E.ContextMenuActionPinToAttributes": "Accrocher des Attributs",
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Feuille de véhicule Tidy 5e",
     "TIDY5E.Settings.DefaultDeathSaveRoll": {
         "hint": "Détermine le type de jet par défaut à utiliser lors d'un jet de sauvegarde contre la mort.",
         "name": "Jet de sauvegarde de la mort par défaut"
     },
-    "TIDY5E.Tidy5eSettings": "Paramètre de la feuille Tidy 5e",
     "TIDY5E.Utilities.SpellPips": "Slots d'incantation",
     "TIDY5E.ItemFilters.Options.IncludeRitualsInCanCast": "Inclure les rituels dans la catégorie \"peut lancer\"",
     "TIDY5E.Tidy5eGroupSheetQuadrone": "Feuille de groupe Tidy 5e",
-    "TIDY5E.InfoCardInspectHint": "{inspectKey} Contrôler",
-    "TIDY5E.ExhaustionLevelTooltip": "Niveau d'épuisement {level}",
     "TIDY5E.ExpandCollapseMenu.OptionTitle": "Comportement d'expansion/réduction",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Name": "Basculer sur le menu d'en-tête",
     "TIDY5E.ExpandCollapseMenu.OptionAllSections": "Toutes les sections",
@@ -860,7 +311,6 @@
     "TIDY5E.SortMenu.OptionPriority": "Priorité",
     "TIDY5E.Keybindings.ToggleHeaderMenu.Hint": "Si une feuille Tidy est la fenêtre active dans l'interface utilisateur, ce raccourci clavier permet d'activer le menu d'en-tête de la feuille.",
     "TIDY5E.Facilities.Progress.OrderAndCraftLabel": "{orderName} - {craftingItemName}",
-    "TIDY5E.SortMenu.OptionAlphabetical": "Alphabétique (A-Z)",
     "TIDY5E.DisplayOptions.ShowContainerRow.Label": "Afficher la rangée du conteneur",
     "TIDY5E.RollRecharge.Label": "Recharge",
     "TIDY5E.Activities.Cast.SourceHintText": "De {itemName}",
@@ -922,7 +372,6 @@
     "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Inclure les sections du livre de sorts dans l'onglet Statblock",
     "TIDY5E.UseSpecificDefaultValue.Label": "Par défaut ({value})",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Incanté en {ordinal}",
-    "TIDY5E.Tidy5eEncounterSheetClassic": "Tidy 5e feuille de rencontre classique",
     "TIDY5E.Tidy5eEncounterSheetQuadrone": "Tidy 5e Feuille de rencontre",
     "TIDY5E.CharacterTraits.Title": "Capacités du personnage",
     "TIDY5E.ItemSheet.FeatureOriginLabel": "composantes d'origine",
@@ -959,7 +408,6 @@
     "TIDY5E.Hide": "Cacher",
     "TIDY5E.LegendaryLairToolbar": "Barre d'outils Légendaire/Repaire",
     "TIDY5E.SpellbookSections": "Sections livres de sorts",
-    "TIDY5E.UserDefaultPrefix": "Paramètres par défaut de l'utilisateur :{value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Options d'affichage globale par défaut",
     "TIDY5E.Character.Sidebar.Title": "Barre latérale du personnage joueur",
     "TIDY5E.Actor.Characteristics": "Caractéristiques",

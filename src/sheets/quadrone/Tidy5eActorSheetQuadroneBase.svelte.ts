@@ -59,7 +59,8 @@ import { TabDocumentItemTypesRuntime } from 'src/runtime/item/TabDocumentItemTyp
 import { debug } from 'src/utils/logging';
 import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
-import type { SheetPinFlag } from 'src/api';
+import type { SheetPinFlag } from 'src/foundry/TidyFlags.types';
+import { Tidy5eContainerSheetQuadrone } from './Tidy5eContainerSheetQuadrone.svelte';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
@@ -1341,6 +1342,19 @@ export function Tidy5eActorSheetQuadroneBase<
       const actor = this.actor;
       const allowed = TidyHooks.foundryDropActorSheetData(actor, this, data);
       if (allowed === false) return;
+
+      // Nested Container Drop
+      const nestedContainerUuid = event.target
+        .closest('[data-tidy-nested-container-uuid]')
+        ?.getAttribute('data-tidy-nested-container-uuid');
+
+      if (nestedContainerUuid) {
+        const container = await fromUuid(nestedContainerUuid);
+        const containerSheet = new Tidy5eContainerSheetQuadrone({
+          document: container,
+        });
+        return await containerSheet._onDrop(event);
+      }
 
       // Sheet Pins
       const doc = await fromUuid(data.uuid);

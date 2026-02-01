@@ -341,7 +341,6 @@ export class Tidy5eContainerSheetQuadrone
       items: Array.from(await this.item.system.contents),
       itemType: game.i18n.localize(CONFIG.Item.typeLabels[this.item.type]),
       labels: this.document.labels,
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       modernRules: FoundryAdapter.checkIfModernRules(this.item),
       name: {
@@ -483,6 +482,20 @@ export class Tidy5eContainerSheetQuadrone
 
       if (data.type === 'Folder') {
         return await this._onDropFolder(event, document);
+      }
+
+      // Nested Container Drop
+      const nestedContainerUuid = event.target
+        .closest('[data-tidy-nested-container-uuid]')
+        ?.getAttribute('data-tidy-nested-container-uuid');
+
+      if (nestedContainerUuid && nestedContainerUuid !== this.document.uuid) {
+        const container = await fromUuid(nestedContainerUuid);
+        const containerSheet = new Tidy5eContainerSheetQuadrone({
+          document: container,
+        });
+
+        return await containerSheet._onDrop(event);
       }
 
       return await this._onDropItem(event, document);

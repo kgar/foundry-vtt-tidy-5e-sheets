@@ -52,7 +52,25 @@ export function info(info: string, notify = false, args?: any) {
   }
 }
 
-export function warn(warning: string, notify = false, args?: any) {
+/**
+ * Warnings that have already been logged.
+ */
+const warnings = new Set<string>();
+
+export function warn(
+  warning: string,
+  notify = false,
+  args?: any,
+  once: boolean = false
+) {
+  if (once) {
+    if (warnings.has(warning)) {
+      return;
+    }
+
+    warnings.add(warning);
+  }
+
   warning = `${CONSTANTS.MODULE_ID} | ${warning}`;
 
   if (notify) {
