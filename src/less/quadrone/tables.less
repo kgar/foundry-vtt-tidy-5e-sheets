@@ -780,14 +780,15 @@
   }
 
   /* Inline Containers */
-  .tidy-table-row~.expandable {
+  .tidy-table-row~.expandable .expandable-child-animation-wrapper {
+    padding-inline-start: 1rem;
+    padding-block-start: 0.25rem;
+  }
+  .tidy-table-row~.expandable.expanded {
     --t5e-item-row-background: rgba(255, 255, 255, 0.08);
     background: linear-gradient(120deg,
         var(--t5e-component-card-darker) 10%,
         var(--t5e-component-card-default) 120%);
-
-    padding-inline-start: 1rem;
-    padding-block-start: 0.25rem;
   }
 
   .empty-container {
