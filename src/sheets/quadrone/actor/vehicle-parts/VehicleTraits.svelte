@@ -449,6 +449,13 @@
               </span>
             </li>
           {/if}
+
+          <!-- Special Movement and Ignored Difficult Terrain -->
+          {#each context.speeds.filter((s) => s.key === 'special' || s.key === 'ignoredDifficultTerrain') as speed}
+            <li class="pill">
+              <span class="font-label-medium">{speed.label}</span>
+            </li>
+          {/each}
         </ul>
       </div>
     </div>
