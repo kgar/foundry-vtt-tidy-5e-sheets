@@ -21,27 +21,17 @@ export const CharacterSheetQuadroneSidebarRuntime =
         layout: 'quadrone',
       },
       {
-        id: CONSTANTS.TAB_SKILLS,
-        title: 'DND5E.Skills',
-        content: {
-          type: 'svelte',
-          component: SidebarTabSkills,
-        },
-        iconClass: 'fa-solid fa-briefcase',
-        layout: 'quadrone',
-      },
-      {
         id: CONSTANTS.TAB_TRAITS,
         title: 'DND5E.Traits',
         content: {
           type: 'svelte',
           component: SidebarTabTraits,
         },
-        iconClass: 'fa-solid fa-list-ul',
+        iconClass: 'fa-solid fa-briefcase',
         layout: 'quadrone',
       },
     ],
-    [CONSTANTS.TAB_FAVORITES, CONSTANTS.TAB_SKILLS, CONSTANTS.TAB_TRAITS],
+    [CONSTANTS.TAB_FAVORITES, CONSTANTS.TAB_TRAITS],
     {
       getTabConfig: TidyFlags.sidebarTabConfiguration.get,
       docTypeKeyOverride: CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,

@@ -5,7 +5,7 @@
   import NpcSubtitle from './npc-parts/NpcSubtitle.svelte';
   import TextInputQuadrone from 'src/components/inputs/TextInputQuadrone.svelte';
   import { getModifierData } from 'src/utils/formatting';
-  import AbilityScoreNPC from './character-parts/AbilityScoreNPC.svelte';
+  import AbilityScore from './character-parts/AbilityScore.svelte';
   import ActorPortrait from './parts/ActorPortrait.svelte';
   import ActorExhaustionBar from './parts/ActorExhaustionBar.svelte';
   import ActorHealthBar from './parts/ActorHealthBar.svelte';
@@ -15,7 +15,7 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import { untrack } from 'svelte';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
-  
+
   let context = $derived(getNpcSheetQuadroneContext());
 
   let appId = $derived(context.actor.uuid.slugify());
@@ -172,7 +172,10 @@
       >
         <div class="initiative-container flexcol">
           <div
-            class="initiative score bonus-container"
+            class={[
+              'initiative score bonus-container',
+              Number(ini.value) >= 10 ? 'double-digit' : '',
+            ]}
             data-tooltip="DND5E.Initiative"
           >
             <button
@@ -216,7 +219,7 @@
           </div>
         </div>
         {#each context.abilities as ability}
-          <AbilityScoreNPC
+          <AbilityScore
             {ability}
             unlocked={context.unlocked}
             onScoreChanged={(score) =>
@@ -232,6 +235,42 @@
             disabled={!context.owner}
           />
         {/each}
+        {#if context.showLoyaltyTracker && context.system.attributes.loyalty.value != null && context.system.attributes.loyalty.value >= 0}
+          <div class="ability loyalty-container flexcol">
+            <div class="bonus-container">
+              <span class="bonus color-text-default font-data-xlarge">
+                {context.system.attributes.loyalty.value}
+              </span>
+              <div class="loyalty-modifier-container">
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only"
+                  onclick={async () =>
+                    await context.actor.update({
+                      'system.attributes.loyalty.value':
+                        (context.system.attributes.loyalty.value ?? 0) - 1,
+                    })}
+                >
+                  <i class="fas fa-hexagon-minus"></i>
+                </button>
+                <button
+                  type="button"
+                  class="button button-borderless button-icon-only"
+                  onclick={async () =>
+                    await context.actor.update({
+                      'system.attributes.loyalty.value':
+                        (context.system.attributes.loyalty.value ?? 0) + 1,
+                    })}
+                >
+                  <i class="fas fa-hexagon-plus"></i>
+                </button>
+              </div>
+            </div>
+            <span class="label font-label-medium color-text-gold"
+              >{localize('DND5E.Loyalty')}</span
+            >
+          </div>
+        {/if}
       </AbilitiesContainer>
     </div>
     <div class="actor-vitals-container">
@@ -282,8 +321,8 @@
                   inputmode="numeric"
                   placeholder="+{localize('DND5E.Max')}"
                   class="max-hp uninput centered"
+                  data-tooltip="DND5E.HitPointsTempMax"
                   aria-label={localize('DND5E.HitPointsTempMax')}
-                  data-tooltip
                   disabled={!context.editable}
                 />
               </div>
@@ -318,10 +357,19 @@
                   <button
                     type="button"
                     class="button button-borderless button-icon-only"
-                    aria-label={localize('DND5E.DeathSave')}
-                    data-tooltip="DND5E.DeathSave"
+                    aria-label={localize(context.showDeathSaves ? 'DND5E.DeathSaveHide' : 'DND5E.DeathSaveShow')}
+                    data-tooltip=""
                     onclick={() => context.actor.sheet.toggleDeathSaves()}
                     disabled={!context.editable}
+                    oncontextmenu={(ev) => {
+                      ev.preventDefault();
+                      (async () => {
+                        await context.actor.update({
+                          'system.attributes.death.success': 0,
+                          'system.attributes.death.failure': 0,
+                        });
+                      })();
+                    }}
                   >
                     <i class="fas fa-skull"></i>
                   </button>

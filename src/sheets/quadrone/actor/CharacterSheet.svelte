@@ -164,7 +164,7 @@
             actor={context.actor}
             inspirationSource={context.inspirationSource}
           />
-          <div class="level-block theme-dark">
+          <div class="level-block">
             <span
               class="level bonus font-data-xlarge color-text-default"
               data-tooltip="DND5E.Level"
@@ -284,19 +284,20 @@
               <div class="flexrow concentration-bonus">
                 {#if context.isConcentrating}
                   <i
-                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse color-text-gold-emphasis"
                     aria-label={localize('DND5E.Concentration')}
                   ></i>
                 {:else}
                   <i class="fas fa-head-side-brain color-text-gold"></i>
                 {/if}
-                <span class="modifier font-label-medium color-text-lightest">
-                  {save.sign}
-                </span>
-                <span class="value font-data-medium color-text-default">
-                  {save.mod}
-                </span>
-                {#if context.unlocked}
+                {#if !context.unlocked}
+                  <span class="modifier font-label-medium color-text-lightest">
+                    {save.sign}
+                  </span>
+                  <span class="value font-data-medium color-text-default">
+                    {save.mod}
+                  </span>
+                {:else}
                   {@const tooltip = localize('DND5E.AbilityConfigure', {
                     ability: context.saves.concentration.label,
                   })}
@@ -632,10 +633,19 @@
                   <button
                     type="button"
                     class="button button-borderless button-icon-only button-death-saves"
-                    aria-label={localize('DND5E.DeathSave')}
-                    data-tooltip="DND5E.DeathSave"
+                    aria-label={localize(context.showDeathSaves ? 'DND5E.DeathSaveHide' : 'DND5E.DeathSaveShow')}
+                    data-tooltip=""
                     onclick={() => context.actor.sheet.toggleDeathSaves()}
                     disabled={!context.editable}
+                    oncontextmenu={(ev) => {
+                      ev.preventDefault();
+                      (async () => {
+                        await context.actor.update({
+                          'system.attributes.death.success': 0,
+                          'system.attributes.death.failure': 0,
+                        });
+                      })();
+                    }}
                   >
                     <i class="fas fa-skull"></i>
                   </button>

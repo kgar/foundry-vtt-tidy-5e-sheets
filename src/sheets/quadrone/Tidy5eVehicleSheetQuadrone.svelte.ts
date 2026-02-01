@@ -33,6 +33,7 @@ import SectionActions from 'src/features/sections/SectionActions';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
 import { Inventory } from 'src/features/sections/Inventory';
+import { Container } from 'src/features/containers/Container';
 
 const localize = FoundryAdapter.localize;
 
@@ -49,23 +50,23 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
   static DEFAULT_OPTIONS: Partial<
     ApplicationConfiguration & { dragDrop: Partial<DragDropConfiguration>[] }
   > = {
-      position: {
-        width: 740,
-        height: 810,
-      },
-      actions: {
-        browseActors: function (
-          this: Tidy5eVehicleSheetQuadrone,
-          _event: MouseEvent,
-          target: HTMLElement
-        ) {
-          const area =
-            target.closest('[data-area]')?.getAttribute('data-area') ?? 'crew';
+    position: {
+      width: 740,
+      height: 810,
+    },
+    actions: {
+      browseActors: function (
+        this: Tidy5eVehicleSheetQuadrone,
+        _event: MouseEvent,
+        target: HTMLElement
+      ) {
+        const area =
+          target.closest('[data-area]')?.getAttribute('data-area') ?? 'crew';
 
-          return this.browseAddActor(area);
-        },
+        return this.browseAddActor(area);
       },
-    };
+    },
+  };
 
   async browseAssignActor(item: Item5e) {
     const newCrewmateUuid = await this.browseActors();
@@ -541,6 +542,13 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         },
       };
     }
+
+    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+      ctx.containerContents = await Container.getContainerContents(item, {
+        hasActor: true,
+        unlocked: context.unlocked,
+      });
+    }
   }
 
   /**
@@ -864,12 +872,12 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     const quantity =
       src === 'passenger'
         ? context.passengers.members.find((m) => m.actor.uuid === document.uuid)
-          ?.quantity
+            ?.quantity
         : src === 'crew' && sectionKey === 'unassigned'
-          ? context.crew.unassigned.members.find(
+        ? context.crew.unassigned.members.find(
             (m) => m.actor.uuid === document.uuid
           )?.quantity
-          : undefined;
+        : undefined;
 
     // TODO: Handle Assignment, if relevant, instead of adjusting crew
 
@@ -958,7 +966,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       value: value.sort((a, b) => {
         return (
           (b.cr ?? 0) - (a.cr ?? 0) ||
-          a.quantity - b.quantity ||
           a.actor.name.localeCompare(b.actor.name, game.i18n.lang)
         );
       }),
@@ -973,13 +980,13 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
       system.details?.type?.label,
       system.details?.cr
         ? game.i18n.format('DND5E.CRLabel', {
-          cr: dnd5e.utils.formatCR(system.details.cr),
-        })
+            cr: dnd5e.utils.formatCR(system.details.cr),
+          })
         : null,
       system.details?.level
         ? game.i18n.format('DND5E.LevelNumber', {
-          level: system.details.level,
-        })
+            level: system.details.level,
+          })
         : null,
     ].filterJoin(' • ');
   }

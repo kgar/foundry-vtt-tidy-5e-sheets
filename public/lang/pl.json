@@ -123,7 +123,9 @@
         "RarityColors.title": "Kolory rzadkości",
         "SheetTheme.title": "Motyw karty",
         "SheetTheme.hint": "Najlepsze rezultaty uzyskasz, wybierając kolor znajdujący się w pobliżu środka palety barw.",
-        "SpellcastingMethodColors.title": "Kolory stanu przygotowania zaklęć"
+        "SpellcastingMethodColors.title": "Kolory stanu przygotowania zaklęć",
+        "UseHeaderBackground.title": "Użyj tła nagłówka",
+        "UseHeaderBackground.hint": "Zawiera style wspierające kolorowy nagłówek karty z tłem w postaci obrazu."
     },
     "TIDY5E.Settings.About": {
         "buttonLabel": "Informacje o Tidy 5e Sheets",
@@ -424,10 +426,26 @@
     "TIDY5E.InspirationRemove": "Usuń inspirację",
     "TIDY5E.SheetMode.Edit": "Przełącz na tryb rozgrywki",
     "TIDY5E.SheetMode.Play": "Przełącz na tryb edycji",
-    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Zwierzę pociągowe",
-    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Zwierzęta pociągowe",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Zwierzę pociągowe / Istota robocza",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Zwierzęta pociągowe / Istoty robocze",
     "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Przenieś całą walutę do postaci nadrzędnej",
     "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Uwaga</strong>: <strong>Klasyczne karty</strong> Tidy 5e zostaną usunięte z modułu Tidy 5e Sheets w Foundry v14.",
     "TIDY5E.Notifications.ClassicsRetired": "<strong>Uwaga</strong>: <strong>Klasyczne karty</strong> Tidy 5e zostały usunięte z modułu Tidy 5e Sheets od wersji Foundry v14.",
-    "TIDY5E.UserDefaultPrefix": "Domyślne użytkownika: {value}"
+    "TIDY5E.UserDefaultPrefix": "Domyślne użytkownika: {value}",
+    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Przydzielona załoga",
+    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Nieprzydzielona załoga",
+    "TIDY5E.Vehicle.Member.Passenger.Label": "Pasażer",
+    "TIDY5E.Vehicle.Member.AssignTo.Label": "Przydziel do",
+    "TIDY5E.Vehicle.Member.Assigned.Label": "Przydzielony",
+    "TIDY5E.Vehicle.Features.EmptyState": "Przeciągnij i upuść zdolności tutaj albo kliknij, aby dodać.",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "Przeciągnij i upuść bronie tutaj albo kliknij, aby dodać.",
+    "TIDY5E.Vehicle.Equipment.EmptyState": "Przeciągnij i upuść wyposażenie tutaj albo kliknij, aby dodać. Załoga może następnie zostać przydzielona do wyposażenia pojazdu.",
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Przeciągnij i upuść zwierzęta pociągowe lub istoty robocze tutaj albo kliknij, aby dodać.",
+    "TIDY5E.Vehicle.Unassigned.EmptyState": "Przeciągnij i upuść załogę tutaj albo kliknij, aby dodać. Można ją następnie przydzielić do wyposażenia pojazdu lub zdolności.",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Przeciągnij i upuść pasażerów tutaj albo kliknij, aby dodać.",
+    "TIDY5E.Vehicle.Equipment.HP.Label": "Śr. HP",
+    "TIDY5E.RemoveSpecific": "Usuń {name}",
+    "TIDY5E.ContextMenuActionUnassign": "Odwołaj",
+    "TIDY5E.ContextMenuActionAssignToEntity": "Przydziel do {entityName}",
+    "TIDY5E.Vehicle.Repair.Label": "Napraw"
 }

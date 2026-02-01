@@ -65,7 +65,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
       !!Activities.getVisibleActivities(item, item.system.activities)?.some(
         (a: any) => a.activation?.type === CONSTANTS.ACTIVATION_COST_CREW
       ),
-    text: 'DND5E.VehicleCrewAction',
+    text: 'DND5E.ACTIVATION.Type.Crew.Label',
   },
   [CONSTANTS.FILTER_ACTIVATION_COST_SPECIAL]: {
     name: 'activationCostSpecial',
@@ -166,12 +166,12 @@ export function getItemRarityFilters(): ItemFilter[] {
 
   return Object.entries(itemRarity).map<ItemFilter>(
     ([key, text]) =>
-      ({
-        name: key,
-        predicate: (item) =>
-          !FoundryAdapter.concealDetails(item) && item.system.rarity === key,
-        text: text,
-      } satisfies ItemFilter)
+    ({
+      name: key,
+      predicate: (item) =>
+        !FoundryAdapter.concealDetails(item) && item.system.rarity === key,
+      text: text,
+    } satisfies ItemFilter)
   );
 }
 
@@ -205,11 +205,11 @@ export function getSpellSchoolFilters(): ItemFilter[] {
 
   return Object.entries(spellSchools).map<ItemFilter>(
     ([key, schoolData]) =>
-      ({
-        name: key,
-        predicate: (item) => item.system.school === key,
-        text: schoolData.label,
-      } satisfies ItemFilter)
+    ({
+      name: key,
+      predicate: (item) => item.system.school === key,
+      text: schoolData.label,
+    } satisfies ItemFilter)
   );
 }
 
@@ -244,7 +244,7 @@ export function getAttunementFilters(): ItemFilter[] {
       predicate: (item) =>
         !FoundryAdapter.concealDetails(item) &&
         !!CONFIG.DND5E.attunementTypes[
-          item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
+        item.system.attunement as keyof typeof CONFIG.DND5E.attunementTypes
         ] &&
         item.system.attuned,
       text: 'DND5E.AttunementAttuned',

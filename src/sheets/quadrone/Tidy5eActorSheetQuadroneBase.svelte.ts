@@ -865,6 +865,33 @@ export function Tidy5eActorSheetQuadroneBase<
         });
       }
 
+      // Add special movement if set
+      if (sourceMovement.special && sourceMovement.special.trim() !== '') {
+        speeds.push({
+          key: 'special',
+          label: sourceMovement.special,
+          units: '',
+          value: '',
+          unitsKey: '',
+        });
+      }
+
+      if (systemMovement.ignoredDifficultTerrain?.size > 0) {
+        const hasAll = systemMovement.ignoredDifficultTerrain.has('all');
+
+        const label = hasAll
+          ? FoundryAdapter.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
+          : new Intl.ListFormat(game.i18n.lang).format([...systemMovement.ignoredDifficultTerrain].map((t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label));
+
+        speeds.push({
+          key: 'ignoredDifficultTerrain',
+          label,
+          units: '',
+          value: '',
+          unitsKey: '',
+        });
+      }
+
       return speeds;
     }
 
@@ -1593,38 +1620,12 @@ export function Tidy5eActorSheetQuadroneBase<
 
         const itemData = document.toObject();
 
-        const sourceSection = foundry.utils.getProperty(
-          itemData,
-          TidyFlags.section.prop
-        );
-
-        const targetSection = (event.target as HTMLElement | null)
-          ?.closest('[data-tidy-section-key][data-custom-section="true"]')
-          ?.getAttribute('data-tidy-section-key');
-
-        const isMovedToNewSection =
-          !isNil(targetSection?.trim(), '') && sourceSection !== targetSection;
-
-        const isMovedToDefaultSection =
-          !isNil(sourceSection?.trim(), '') && isNil(targetSection?.trim(), '');
-
         const initialSortResult = await FoundryAdapter.onSortItemForActor(
           this.actor,
           event,
-          itemData
+          itemData,
+          !removingFromContainer
         );
-
-        if (removingFromContainer) {
-          return initialSortResult;
-        }
-
-        if (isMovedToNewSection) {
-          TidyFlags.section.set(document, targetSection);
-          return;
-        } else if (isMovedToDefaultSection) {
-          TidyFlags.section.unset(document);
-          return;
-        }
 
         return initialSortResult;
       }

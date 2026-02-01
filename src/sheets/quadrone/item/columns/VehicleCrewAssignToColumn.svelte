@@ -17,10 +17,10 @@
   async function handleChange(
     event: Event & { currentTarget: EventTarget & HTMLSelectElement },
   ) {
-    const item = await fromUuid(uuid);
     const src =
       event.currentTarget.closest('[data-area]')?.getAttribute('data-area') ??
       'crew';
+    const item = await fromUuid(uuid);
     await context.sheet._assignCrew(rowDocument, item, { src });
     uuid = '';
   }
@@ -30,7 +30,7 @@
   <select
     bind:value={uuid}
     onchange={handleChange}
-    class={[{ uninput: !context.unlocked }]}
+    class={[{ 'select-diminished': !context.unlocked }]}
   >
     <option value="">{localize('CONTROLS.CommonSelect')}</option>
     {#each mountableItems as item}

@@ -48,8 +48,8 @@
         "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
     },
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": "Úvodní karta deníku",
-        "hint": "Při prvním otevření deníku se zobrazí uvedená karta."
+        "name": "Úvodní záložka deníku",
+        "hint": "Při prvním otevření deníku se zobrazí uvedená záložka."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
@@ -101,7 +101,9 @@
         "RarityColors.title": "Vzácné barvy",
         "SheetTheme.title": "Motiv deníku",
         "SheetTheme.hint": "Pro dosažení nejlepších výsledků vyber barvu blízko prostředku palety barev.",
-        "SpellcastingMethodColors.title": "Barvy režimu přípravy kouzel"
+        "SpellcastingMethodColors.title": "Barvy režimu přípravy kouzel",
+        "UseHeaderBackground.title": "Použít pozadí záhlaví",
+        "UseHeaderBackground.hint": "Zahrnuje styly podporující barevné záhlaví deníku s obrázkovým pozadím."
     },
     "TIDY5E.ApplyChanges": "Použít změny",
     "TIDY5E.SaveChanges": "Uložit změny",
@@ -114,10 +116,10 @@
     },
     "TIDY5E.ItemFilters.Filter.Other": "Další",
     "TIDY5E.TabConfiguration": {
-        "SelectedHeader": "Viditelné karty",
-        "Title": "Výběr karty: {documentName}",
-        "MenuOptionText": "Výběr karet",
-        "AvailableHeader": "Skryté karty",
+        "SelectedHeader": "Viditelné záložky",
+        "Title": "Výběr záložky: {documentName}",
+        "MenuOptionText": "Nastavení záložek",
+        "AvailableHeader": "Skryté záložky",
         "SelectionTab.Title": "Výběr záložky",
         "VisibilityTab.Title": "Viditelnost záložky"
     },
@@ -179,7 +181,7 @@
         "TabName": "Akce"
     },
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
-        "hint": "Místo toho, aby se na kartě/panelu akce ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
+        "hint": "Místo toho, aby se v záložce/panelu akcí ve výchozím nastavení zobrazovala všechna kouzla způsobující zranění, omezuje se pouze na triky. Je to výchozí nastavení D&DBeyond.",
         "name": "Omezit akce na triky?"
     },
     "TIDY5E.Settings.SheetPreferences": {
@@ -205,10 +207,10 @@
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Zahrnout kouzla do minuty do akcí?",
-        "hint": "Ve výchozím nastavení zahrne karty/panely akcí kouzla s dobou trvání do jedné minuty (např. 1 kolo) a dobou aktivace 1 akce či 1 bonusová akce (např. Požehnání, Uřknutí, Rozkaz) do akcí."
+        "hint": "Ve výchozím nastavení zahrne záložku/panel akcí kouzla s dobou trvání do jedné minuty (např. 1 kolo) a dobou aktivace 1 akce či 1 bonusová akce (např. Požehnání, Uřknutí, Rozkaz) do akcí."
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
-        "hint": "Ve výchozím nastavení zahrne kouzla s připojenými aktivními efekty (např. Kůrokůže) do karty/panelu akcí.",
+        "hint": "Ve výchozím nastavení zahrne kouzla s připojenými aktivními efekty (např. Kůrokůže) do záložky/panelu akcí.",
         "name": "Zahrnout kouzla s aktivními efekty do akcí?"
     },
     "TIDY5E.Settings.About": {
@@ -248,11 +250,11 @@
     "TIDY5E.Group.EmptyMembersTabHint": "Tato skupina je prázdná. Chceš-li přidat člena, přetáhni aktéra z postranního panelu.",
     "TIDY5E.Keybindings.ToggleSheetLock.Name": "Přepínací zámek deníku",
     "TIDY5E.Keybindings.ToggleSheetLock.Hint": "Pokud je deník Tidy aktuálním aktivním oknem v uživatelském rozhraní, přepne tato volba uzamčení listu.",
-    "TIDY5E.ModuleName": "Deníky Tidy 5E",
+    "TIDY5E.ModuleName": "Deníky Tidy 5e",
     "TIDY5E.WorldSettings.TabCustomSections": {
         "LimitToSpecificSheetsLabel": "Omezení zobrazených sekcí v konkrétním deníku",
-        "ShowWhenEmptyTooltip": "Všechny karty s tabulkovými položkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když v sekci nejsou žádné položky. Sekce se vždy zobrazí, i když je prázdná.",
-        "LimitToSpecificTabsLabel": "Omezení zobrazené sekce na konkrétní karty",
+        "ShowWhenEmptyTooltip": "Všechny záložky s tabulkami mají sadu výchozích sekcí, které jsou vždy zobrazeny, i když tam nejsou žádné položky. Sekce se zobrazí vždy , i když je prázdná.",
+        "LimitToSpecificTabsLabel": "Limit zobrazených sekcí na konkrétních záložkách",
         "tabLabel": "Vlastní sekce",
         "CustomizedIndicatorLabel": "Přizpůsobené",
         "ShowWhenEmptyLabel": "Zobrazit sekci, i když je prázdná"
@@ -303,7 +305,7 @@
     "TIDY5E.Utilities.SpellPips": "Označení kouzel",
     "TIDY5E.Utilities.SpellValueMax": "Hodnota kouzla/Max",
     "TIDY5E.Tidy5eCharacterSheetQuadrone": "Deník postavy Tidy 5e",
-    "TIDY5E.Tidy5eNpcSheetQuadrone": "Deník NP Tidy 5e",
+    "TIDY5E.Tidy5eNpcSheetQuadrone": "Deník NPC Tidy 5e",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Deník kontejneru Tidy 5e",
     "TIDY5E.Visible": "Viditelné",
     "TIDY5E.DisplayOptions.Title": "Zobrazit možnosti",
@@ -343,7 +345,7 @@
     "TIDY5E.SettingsMenu.TabConfiguration": {
         "name": "Záložky deníků",
         "label": "Nastavit záložky deníku",
-        "hint": "Pouze nové deníky Tidy: Nastav, které karty budou viditelné pro všechny deníky aktérů a položek."
+        "hint": "Pouze nové deníky Tidy: Nastav, které záložky budou viditelné u všech deníků aktérů a položek."
     },
     "TIDY5E.Settings.BankedInspiration.title": "Uložená Inspirace",
     "TIDY5E.Settings.EnableBankedInspiration": {
@@ -428,9 +430,25 @@
     "TIDY5E.CompendiumBrowser": "Přidat {name} z kompendia",
     "TIDY5E.SheetMode.Edit": "Přepnout do herního režimu",
     "TIDY5E.SheetMode.Play": "Přepnout do režimu úprav",
-    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Tažné zvíře",
-    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Tažná zvířata",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Tažné zvíře / Zvíře k práci",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Tažná zvířata / Zvířata k práci",
     "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "Převést veškeré mince nadřazenému aktérovi",
     "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e budou ve Foundry v14 z modulu Tidy 5e odstraněny.",
-    "TIDY5E.Notifications.ClassicsRetired": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e byly ve Foundry v14 z modulu Tidy 5e odstraněny."
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>Upozornění</strong>: <strong>Klasické deníky</strong> Tidy 5e byly ve Foundry v14 z modulu Tidy 5e odstraněny.",
+    "TIDY5E.RemoveSpecific": "Odstranit {name}",
+    "TIDY5E.ContextMenuActionUnassign": "Zrušit přiřazení",
+    "TIDY5E.ContextMenuActionAssignToEntity": "Přiřadit k {entityName}",
+    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "Přiřazená posádka",
+    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "Nepřiřazená posádka",
+    "TIDY5E.Vehicle.Member.Passenger.Label": "Cestující",
+    "TIDY5E.Vehicle.Member.AssignTo.Label": "Přiřadit k",
+    "TIDY5E.Vehicle.Member.Assigned.Label": "Přiřazeno",
+    "TIDY5E.Vehicle.Repair.Label": "Opravit",
+    "TIDY5E.Vehicle.Features.EmptyState": "Klikni na přidání schopností, nebo je sem přetáhni a pusť.",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "Klikni na přidání zbraní, nebo je sem přetáhni a pusť.",
+    "TIDY5E.Vehicle.Equipment.EmptyState": "Klikni na přidání vybavení, nebo jej sem přetáhni a pusť. Posádku pak lze přiřadit k vybavení dopravního prostředku.",
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Klikni na přidání tažných či pracovních zvířat, nebo je sem přetáhni a pusť.",
+    "TIDY5E.Vehicle.Equipment.HP.Label": "Prům. BV",
+    "TIDY5E.Vehicle.Unassigned.EmptyState": "Klikni na přidání posádku, nebo ji sem přetáhni a pusť. Posádku pak lze přiřadit k vybavení či schopnostem dopravního prostředku.",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Klikni na přidání cestujících, nebo je sem přetáhni a pusť."
 }

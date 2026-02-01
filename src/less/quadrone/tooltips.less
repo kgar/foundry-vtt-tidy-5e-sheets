@@ -167,4 +167,65 @@
     visibility: visible !important;
     opacity: 1 !important;
   }
+
+  
+  .hp-tooltip {
+    ul.hp-tooltip-list {
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      margin: var(--t5e-size-2x) 0 0;
+      padding: 0;
+
+      li {
+        position: relative;
+        padding-left: 1rem;
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0.125rem;
+          left: 0;
+          bottom: 0;
+          border-radius: 100%;
+          width: 0.625rem;
+          height: 0.625rem;
+        }
+        
+        &.hp-current::before{
+          background: var(--t5e-color-hp-medium);
+        }
+        &.hp-temp::before{
+          background: var(--t5e-color-hp-temp);
+        }
+        &.hp-max::before{
+          background: var(--t5e-color-hp-dark);
+        }
+        &.hp-tempmax-positive::before{
+          background: var(--t5e-color-hp-temp-dark);
+        }
+        &.hp-tempmax-negative::before{
+          background: var(--t5e-color-hp-hd-light);
+        }
+      }
+    }
+
+    .label {
+      text-wrap: nowrap;
+    }
+    .value {
+      flex: 0 1 fit-content;
+      align-content: flex-end;
+      justify-self: flex-end;
+      text-align: right;
+    }
+
+    .flexrow {
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .hp-tooltip-row + .hp-tooltip-row {
+      margin-top: 0.25rem;
+    }
+  }
 }

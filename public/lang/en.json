@@ -324,11 +324,18 @@
       "importSuccess": "Theme imported successfully!"
     },
     "hint": "Customize your sheet to create an immersive experience that complements your game.",
-    "AccentColor.title": "Accent Color",
+    "AccentColor": {
+      "title": "Accent Color",
+      "hint": "Customize the accent color of the sheet including buttons, table headers, and other UI elements."
+    },
     "UseHeaderBackground.title": "Use Header Background",
     "UseHeaderBackground.hint": "Includes styles that support a colorful sheet header with an image background.",
     "ActorHeaderBackground.title": "Actor Header Background",
     "ItemSidebarBackground.title": "Item Sidebar Background",
+    "HeaderColor": {
+      "title": "Header Background Color",
+      "hint": "Use a different color than the sheet accent color for the sheet header."
+    },
     "PortraitShape": {
       "title": "{type} Portrait Shape",
       "option.round": "Round",
@@ -475,5 +482,7 @@
     "PlaceholderNotesField.PlaceholderText": "Notes"
   },
   "TIDY5E.Actor.Characteristics": "Characteristics",
-  "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> have been removed from the Tidy 5e Sheets module as of Foundry v14."
+  "TIDY5E.Notifications.ClassicsRetired": "<strong>Notice</strong>: Tidy 5e's <strong>Classic Sheets</strong> have been removed from the Tidy 5e Sheets module as of Foundry v14.",
+  "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignore {value}",
+  "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignore All Difficult Terrain"
 }
