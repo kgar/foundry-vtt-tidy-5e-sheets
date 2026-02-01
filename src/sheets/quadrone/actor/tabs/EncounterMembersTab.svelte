@@ -16,9 +16,14 @@
   import EncounterXPBudgetBar from '../encounter-parts/EncounterXPBudgetBar.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+  import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
+  import { setContext } from 'svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
+
+  let hpTooltip = $state<GroupMemberHpTooltip | undefined>();
+  setContext(CONSTANTS.SVELTE_CONTEXT.HP_TOOLTIP, () => hpTooltip);
 
   const localize = FoundryAdapter.localize;
 
@@ -51,6 +56,8 @@
 </script>
 
 <MembersTabSidebar />
+
+<GroupMemberHpTooltip bind:this={hpTooltip} sheetDocument={context.document} />
 
 <section
   class="group-tab-content group-members-content flexcol"

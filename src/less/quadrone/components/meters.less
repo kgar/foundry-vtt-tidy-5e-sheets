@@ -79,8 +79,6 @@
       block-size: 100%;
       inline-size: calc(var(--bar-percentage, 0%));
       transition: all 0.5s ease;
-
-      border-radius: var(--t5e-radius-card);
     }
   }
 
@@ -164,6 +162,26 @@
 
     &[hidden] {
       display: none;
+    }
+  }
+
+  &.meter-small {
+
+    &::before {
+      border: none;
+      position: relative;
+    }
+    
+    &::after {
+      block-size: 100%;
+      background: var(--bar-adjusted-background);
+      border: none;
+      content: var(--bar-adjusted-content);
+      inline-size: calc(var(--bar-adjusted, 0%));
+      margin-left: 0.0625rem;
+      min-width: 0.125rem;
+      position: relative;
+      transition: all 0.5s ease;
     }
   }
 }
