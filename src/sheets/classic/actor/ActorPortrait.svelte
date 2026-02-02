@@ -121,6 +121,7 @@
     transition: height 0.5s ease-in-out;
     mix-blend-mode: multiply;
     height: var(--overlay-height);
+    pointer-events: none;
   }
 
   .actor-image {
