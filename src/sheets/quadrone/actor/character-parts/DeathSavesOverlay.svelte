@@ -2,10 +2,13 @@
   import { CONSTANTS } from 'src/constants';
   import { settings } from 'src/settings/settings.svelte';
   import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   // TODO: Use the same hooks and sheet parts that supports the Hidden Death Saves module.
 
   let totalsaves = 6;
+  
+  const localize = FoundryAdapter.localize;
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -41,6 +44,8 @@
       {@const path = 'system.attributes.death.failure'}
       <button
         type="button"
+        aria-label={localize('DND5E.DeathSaveFailureLabel')}
+        data-tooltip=""
         class={[
           'button button-borderless button-icon-only',
           { checked: filled },
@@ -55,6 +60,8 @@
     {/each}
   </div>
   <button
+    aria-label={localize('DND5E.DeathSaveRoll')}
+    data-tooltip=""
     type="button"
     onclick={(event) =>
       context.actor.rollDeathSave(
@@ -70,8 +77,16 @@
           },
         },
       )}
+    oncontextmenu={(ev) => {
+      ev.preventDefault();
+      (async () => {
+        await context.actor.update({
+          'system.attributes.death.success': 0,
+          'system.attributes.death.failure': 0,
+        });
+      })();
+    }}
     class="death-save-roll-button button button-borderless button-icon-only"
-    data-tooltip="DND5E.DeathSave"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_ROLLER}
   >
     <i class="fas fa-dice-d20"></i>
@@ -85,6 +100,8 @@
       {@const path = 'system.attributes.death.success'}
       <button
         type="button"
+        aria-label={localize('DND5E.DeathSaveSuccessLabel')}
+        data-tooltip=""
         class={[
           'button button-borderless button-icon-only',
           { checked: filled },

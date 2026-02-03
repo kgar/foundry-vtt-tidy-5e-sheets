@@ -284,7 +284,7 @@
               <div class="flexrow concentration-bonus">
                 {#if context.isConcentrating}
                   <i
-                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse"
+                    class="active-concentration-icon fas fa-arrow-rotate-left fa-spin fa-spin-reverse color-text-gold-emphasis"
                     aria-label={localize('DND5E.Concentration')}
                   ></i>
                 {:else}
@@ -633,10 +633,19 @@
                   <button
                     type="button"
                     class="button button-borderless button-icon-only button-death-saves"
-                    aria-label={localize('DND5E.DeathSave')}
-                    data-tooltip="DND5E.DeathSave"
+                    aria-label={localize(context.showDeathSaves ? 'DND5E.DeathSaveHide' : 'DND5E.DeathSaveShow')}
+                    data-tooltip=""
                     onclick={() => context.actor.sheet.toggleDeathSaves()}
                     disabled={!context.editable}
+                    oncontextmenu={(ev) => {
+                      ev.preventDefault();
+                      (async () => {
+                        await context.actor.update({
+                          'system.attributes.death.success': 0,
+                          'system.attributes.death.failure': 0,
+                        });
+                      })();
+                    }}
                   >
                     <i class="fas fa-skull"></i>
                   </button>

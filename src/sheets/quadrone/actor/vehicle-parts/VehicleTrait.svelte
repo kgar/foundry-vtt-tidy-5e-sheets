@@ -47,7 +47,7 @@
           >{value ?? '—'}</span
         >
         {#if units}
-          <span class="units font-label-medium color-text-lighter">{units}</span
+          <span class="units font-default-medium color-text-lighter">{units}</span
           >
         {/if}
       {/if}
