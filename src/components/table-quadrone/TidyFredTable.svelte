@@ -32,8 +32,10 @@
     itemToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
     columns: ColumnsLoadout;
+    bodyNoItems?: Snippet;
     subtitleText?: Snippet<[entry: TEntry, ctx: any]>;
     afterFirstCell?: Snippet<[entry: TEntry, ctx: any]>;
+    afterInlineActivities?: Snippet<[entry: TEntry, ctx: any]>;
     beforeImage?: Snippet<[entry: TEntry, ctx: any]>;
     afterImage?: Snippet<[entry: TEntry, ctx: any]>;
     afterEntryRow?: Snippet<[entry: TEntry, ctx: any]>;
@@ -50,10 +52,12 @@
     tabId,
     columns,
     subtitleText,
+    afterInlineActivities,
     afterFirstCell,
     beforeImage,
     afterImage,
     afterEntryRow,
+    bodyNoItems,
     root = true,
   }: Props = $props();
 
@@ -120,88 +124,98 @@
       entry,
       ctx: entryContext[entry.id],
     }))}
-    {#each itemEntries as { entry, ctx }, i (entry.uuid)}
-      {@const expanded = !!itemToggleMap.get(tabId)?.has(entry.id)}
 
-      <TidyItemTableRow
-        item={entry}
-        hidden={!searchResults.show(entry.uuid)}
-        rowClass={[{ expanded }]}
-        contextMenu={{
-          type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-          uuid: entry.uuid,
-        }}
-      >
-        {#snippet children({ toggleSummary, expanded })}
-          {@render beforeImage?.(entry, ctx)}
-          <a
-            class={[
-              'tidy-table-row-use-button',
-              { disabled: !context.editable },
-            ]}
-            onclick={(ev) =>
-              context.editable && FoundryAdapter.actorTryUseItem(entry, ev)}
-            data-has-roll-modes
-          >
-            <img class="item-image" alt={entry.name} src={entry.img} />
-            <span class="roll-prompt">
-              <i class="fa fa-dice-d20"></i>
-            </span>
-          </a>
+    {#if itemEntries.length}
+      {#each itemEntries as { entry, ctx }, i (entry.uuid)}
+        {@const expanded = !!itemToggleMap.get(tabId)?.has(entry.id)}
 
-          {@render afterImage?.(entry, ctx)}
-          <TidyTableCell primary={true} class="item-label text-cell">
+        <TidyItemTableRow
+          item={entry}
+          hidden={!searchResults.show(entry.uuid)}
+          rowClass={[{ expanded }]}
+          contextMenu={{
+            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+            uuid: entry.uuid,
+          }}
+          {afterInlineActivities}
+          {ctx}
+        >
+          {#snippet children({ toggleSummary, expanded })}
+            {@render beforeImage?.(entry, ctx)}
             <a
-              class="item-name"
-              role="button"
-              data-keyboard-focus
-              tabindex="0"
-              onclick={(ev) => toggleSummary()}
+              class={[
+                'tidy-table-row-use-button',
+                { disabled: !context.editable },
+              ]}
+              onclick={(ev) =>
+                context.editable && FoundryAdapter.actorTryUseItem(entry, ev)}
+              data-has-roll-modes
             >
-              <span class="cell-text">
-                <span class="cell-name">{entry.name}</span>
-
-                {#if subtitleText}
-                  <span class="cell-context">
-                    {@render subtitleText(entry, ctx)}
-                  </span>
-                {:else if ctx.subtitle}
-                  <span class="cell-context">{@html ctx.subtitle}</span>
-                {/if}
-              </span>
-              <span class="row-detail-expand-indicator">
-                <i
-                  class="fa-solid fa-angle-right expand-indicator"
-                  class:expanded
-                >
-                </i>
+              <img class="item-image" alt={entry.name} src={entry.img} />
+              <span class="roll-prompt">
+                <i class="fa fa-dice-d20"></i>
               </span>
             </a>
-          </TidyTableCell>
-          {@render afterFirstCell?.(entry, ctx)}
-          {#each columns.ordered as column}
-            {@const hidden = hiddenColumns.has(column.key)}
 
-            <TidyTableCell
-              columnWidth="{column.widthRems}rem"
-              class={[column.cellClasses, { hidden }]}
-              attributes={{ ['data-tidy-column-key']: column.key }}
-            >
-              {#if column.cellContent.type === 'callback'}
-                {@html column.cellContent.callback?.(context.document, context)}
-              {:else if column.cellContent.type === 'component'}
-                <column.cellContent.component
-                  rowContext={ctx}
-                  rowDocument={entry}
-                  {section}
-                />
-              {/if}
+            {@render afterImage?.(entry, ctx)}
+            <TidyTableCell primary={true} class="item-label text-cell">
+              <a
+                class="item-name"
+                role="button"
+                data-keyboard-focus
+                tabindex="0"
+                onclick={(ev) => toggleSummary()}
+              >
+                <span class="cell-text">
+                  <span class="cell-name">{entry.name}</span>
+
+                  {#if subtitleText}
+                    <span class="cell-context">
+                      {@render subtitleText(entry, ctx)}
+                    </span>
+                  {:else if ctx.subtitle}
+                    <span class="cell-context">{@html ctx.subtitle}</span>
+                  {/if}
+                </span>
+                <span class="row-detail-expand-indicator">
+                  <i
+                    class="fa-solid fa-angle-right expand-indicator"
+                    class:expanded
+                  >
+                  </i>
+                </span>
+              </a>
             </TidyTableCell>
-          {/each}
-        {/snippet}
-      </TidyItemTableRow>
+            {@render afterFirstCell?.(entry, ctx)}
+            {#each columns.ordered as column}
+              {@const hidden = hiddenColumns.has(column.key)}
 
-      {@render afterEntryRow?.(entry, ctx)}
-    {/each}
+              <TidyTableCell
+                columnWidth="{column.widthRems}rem"
+                class={[column.cellClasses, { hidden }]}
+                attributes={{ ['data-tidy-column-key']: column.key }}
+              >
+                {#if column.cellContent.type === 'callback'}
+                  {@html column.cellContent.callback?.(
+                    context.document,
+                    context,
+                  )}
+                {:else if column.cellContent.type === 'component'}
+                  <column.cellContent.component
+                    rowContext={ctx}
+                    rowDocument={entry}
+                    {section}
+                  />
+                {/if}
+              </TidyTableCell>
+            {/each}
+          {/snippet}
+        </TidyItemTableRow>
+
+        {@render afterEntryRow?.(entry, ctx)}
+      {/each}
+    {:else}
+      {@render bodyNoItems?.()}
+    {/if}
   {/snippet}
 </TidyTable>

@@ -25,6 +25,7 @@
   } from 'src/types/types';
   import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
+  import TidyFredTable from 'src/components/table-quadrone/TidyFredTable.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -37,6 +38,8 @@
   let inlineToggleService = getContext<InlineToggleService>(
     CONSTANTS.SVELTE_CONTEXT.INLINE_TOGGLE_SERVICE,
   );
+
+  const itemToggleMap = $derived(inlineToggleService.map);
 
   // const searchResults = createSearchResultsState();
   // setSearchResultsContext(searchResults);
@@ -109,9 +112,7 @@
   );
 
   // Hide empty states when 2+ sections have content and sheet is locked
-  let hideEmptyStates = $derived(
-    sectionsWithContent >= 2 && !context.unlocked,
-  );
+  let hideEmptyStates = $derived(sectionsWithContent >= 2 && !context.unlocked);
 
   // Vehicle Actions calculations (when stations are OFF)
   let showActionsPin = $derived(
@@ -269,71 +270,29 @@
             sheetDocument: context.document,
           }),
         )}
-        {@const hiddenColumns = ItemColumnRuntime.determineHiddenColumns(
-          sectionsInlineWidth,
-          columns,
-        )}
-        <TidyTable
-          key={section.key}
-          data-custom-section={section.custom ? true : null}
+
+        <TidyFredTable
+          {section}
+          entries={section.items}
+          sheetDocument={context.document}
+          entryContext={context.itemContext}
+          {sectionsInlineWidth}
+          {itemToggleMap}
+          {tabId}
+          {columns}
         >
-          {#snippet header(expanded)}
-            <TidyTableHeaderRow class="theme-dark">
-              <TidyTableHeaderCell primary={true} class="header-label-cell">
-                <h3>
-                  {localize(section.label)}
-                </h3>
-                <span class="table-header-count">{section.items.length}</span>
-              </TidyTableHeaderCell>
-              {#each columns.ordered as column}
-                {@const hidden = hiddenColumns.has(column.key)}
+          {#snippet bodyNoItems()}
+            {#if !hideEmptyStates}
+              {@const buttonTextKey =
+                section.key === CONSTANTS.ITEM_TYPE_EQUIPMENT
+                  ? 'TIDY5E.Vehicle.Equipment.EmptyState'
+                  : section.key === CONSTANTS.ITEM_TYPE_FEAT
+                    ? 'TIDY5E.Vehicle.Features.EmptyState'
+                    : section.key === CONSTANTS.ITEM_TYPE_WEAPON
+                      ? 'TIDY5E.Vehicle.Weapons.EmptyState'
+                      : null}
 
-                <TidyTableHeaderCell
-                  class={[column.headerClasses, { hidden }]}
-                  columnWidth="{column.widthRems}rem"
-                  data-tidy-column-key={column.key}
-                >
-                  {#if !!column.headerContent}
-                    {#if column.headerContent.type === 'callback'}
-                      {@html column.headerContent.callback?.(
-                        context.document,
-                        context,
-                      )}
-                    {:else if column.headerContent.type === 'component'}
-                      <column.headerContent.component
-                        sheetContext={context}
-                        sheetDocument={context.document}
-                        {section}
-                      />
-                    {:else if column.headerContent.type === 'html'}
-                      {@html column.headerContent.html}
-                    {/if}
-                  {/if}
-                </TidyTableHeaderCell>
-              {/each}
-            </TidyTableHeaderRow>
-          {/snippet}
-
-          {#snippet body()}
-            {#if section.key === CONSTANTS.ITEM_TYPE_EQUIPMENT && section.items.length === 0}
-              {#if !hideEmptyStates}
-                <div class="inventory-empty empty-state-container">
-                  <button
-                    type="button"
-                    class="button button-tertiary"
-                    onclick={() =>
-                      context.document.sheet._addDocument({
-                        tabId,
-                        data: section.dataset
-                      })}
-                  >
-                    <i class="fas fa-plus"></i>
-                    {localize('TIDY5E.Vehicle.Equipment.EmptyState')}
-                  </button>
-                </div>
-              {/if}
-            {:else if section.key === CONSTANTS.ITEM_TYPE_FEAT && section.items.length === 0}
-              {#if !hideEmptyStates}
+              {#if buttonTextKey}
                 <div class="inventory-empty empty-state-container">
                   <button
                     type="button"
@@ -345,112 +304,19 @@
                       })}
                   >
                     <i class="fas fa-plus"></i>
-                    {localize('TIDY5E.Vehicle.Features.EmptyState')}
+                    {localize(buttonTextKey)}
                   </button>
                 </div>
               {/if}
-            {:else if section.key === CONSTANTS.ITEM_TYPE_WEAPON && section.items.length === 0}
-              {#if !hideEmptyStates}
-                <div class="inventory-empty empty-state-container">
-                  <button
-                    type="button"
-                    class="button button-tertiary"
-                    onclick={() =>
-                      context.document.sheet._addDocument({
-                        tabId,
-                        data: section.dataset,
-                      })}
-                  >
-                    <i class="fas fa-plus"></i>
-                    {localize('TIDY5E.Vehicle.Weapons.EmptyState')}
-                  </button>
-                </div>
-              {/if}
-            {:else}
-              {@const itemEntries = section.items.map((item) => ({
-                item,
-                ctx: context.itemContext[item.id] as VehicleItemContext,
-              }))}
-              {#each itemEntries as { item, ctx }, i (item.id)}
-                <TidyItemTableRow
-                  {item}
-                  contextMenu={{
-                    type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                    uuid: item.uuid,
-                  }}
-                >
-                  {#snippet children({ toggleSummary, expanded })}
-                    <div class="highlight"></div>
-                    <a
-                      class={[
-                        'tidy-table-row-use-button',
-                        { disabled: !context.editable },
-                      ]}
-                      onclick={(ev) =>
-                        context.editable &&
-                        FoundryAdapter.actorTryUseItem(item, ev)}
-                      data-has-roll-modes
-                    >
-                      <img class="item-image" alt={item.name} src={item.img} />
-                      <span class="roll-prompt">
-                        <i class="fa fa-dice-d20"></i>
-                      </span>
-                    </a>
-
-                    <TidyTableCell primary={true} class="item-label text-cell">
-                      <a
-                        class="item-name"
-                        role="button"
-                        data-keyboard-focus
-                        tabindex="0"
-                        onclick={(ev) => toggleSummary()}
-                      >
-                        <span class="cell-text">
-                          <span class="cell-name">{item.name}</span>
-                        </span>
-                        <span class="row-detail-expand-indicator">
-                          <i
-                            class="fa-solid fa-angle-right expand-indicator"
-                            class:expanded
-                          >
-                          </i>
-                        </span>
-                      </a>
-                    </TidyTableCell>
-                    {#each columns.ordered as column}
-                      {@const hidden = hiddenColumns.has(column.key)}
-
-                      <TidyTableCell
-                        columnWidth="{column.widthRems}rem"
-                        class={[column.cellClasses, { hidden }]}
-                        attributes={{ ['data-tidy-column-key']: column.key }}
-                      >
-                        {#if column.cellContent.type === 'callback'}
-                          {@html column.cellContent.callback?.(
-                            context.document,
-                            context,
-                          )}
-                        {:else if column.cellContent.type === 'component'}
-                          <column.cellContent.component
-                            rowContext={ctx}
-                            rowDocument={item}
-                            {section}
-                          />
-                        {/if}
-                      </TidyTableCell>
-                    {/each}
-                  {/snippet}
-
-                  {#snippet afterInlineActivities(item)}
-                    {#if ctx.crew?.length}
-                      <VehicleItemCrewAssignments {ctx} {item} />
-                    {/if}
-                  {/snippet}
-                </TidyItemTableRow>
-              {/each}
             {/if}
           {/snippet}
-        </TidyTable>
+
+          {#snippet afterInlineActivities(item, ctx)}
+            {#if ctx.crew?.length}
+              <VehicleItemCrewAssignments {ctx} {item} />
+            {/if}
+          {/snippet}
+        </TidyFredTable>
       {/if}
     {:else if section.type === 'draft'}
       {@const columns = new ColumnsLoadout(
@@ -517,7 +383,9 @@
                   type="button"
                   class="button button-tertiary"
                   title={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
-                  aria-label={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
+                  aria-label={localize(
+                    'TIDY5E.Vehicle.DraftAnimals.EmptyState',
+                  )}
                 >
                   <i class="fas fa-plus"></i>
                   {localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
