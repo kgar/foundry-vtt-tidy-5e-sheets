@@ -18,6 +18,7 @@ export type ThemeSettingsV2Old = {
 export type ThemeSettingsV3 = {
   accentColor: string;
   useHeaderBackground: boolean;
+  headerColor: string;
   actorHeaderBackground: string;
   itemSidebarBackground: string;
   portraitShape: PortraitShape | undefined;

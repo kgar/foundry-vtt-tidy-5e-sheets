@@ -196,6 +196,8 @@
 
 ## hightouch To Do
 
+- [ ] Request from Kharmans: Specify base overrides for different sheet images instead of just a global setting.
+- [ ] Add support for sheet highlight color and separate header color.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.
   - [ ] both - identify the things that can be disabled to appreciably improve perf
   - [ ] kgar - establish client (or user) setting(s) for disabling animations, shadows, etc.
@@ -203,10 +205,6 @@
 - [ ] Item sheet sidebar background image (low)
 - [ ] Sidebar.svelte - comment: hightouch, please make this nice, lol | item HP UI
 - [ ] (Lower priority) Currency footer scalability - given a world script (paste it at the bottom of `main.svelte.ts` for quick testing), Tidy has trouble actually showing currency amounts when the user uses a large number of currencies. To combat this, we could potentially switch to a grid auto-fill (or auto-fit, depending on preference) column template with a min width specified. This would also require some additional attention on the inventory-footer container query for the same content. See below for sample script. Reference: <https://discord.com/channels/@me/1243307347682529423/1409228016176992378>
-
-### Huh?
-
-- [ ] Check that the theming is using --t5e-theme-color-default: oklch(from #ff74c5 40% 35% h);
 
 ### Post-Beta Stretch Goals
 

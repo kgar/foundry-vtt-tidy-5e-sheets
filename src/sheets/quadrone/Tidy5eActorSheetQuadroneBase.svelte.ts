@@ -864,6 +864,33 @@ export function Tidy5eActorSheetQuadroneBase<
         });
       }
 
+      // Add special movement if set
+      if (sourceMovement.special && sourceMovement.special.trim() !== '') {
+        speeds.push({
+          key: 'special',
+          label: sourceMovement.special,
+          units: '',
+          value: '',
+          unitsKey: '',
+        });
+      }
+
+      if (systemMovement.ignoredDifficultTerrain?.size > 0) {
+        const hasAll = systemMovement.ignoredDifficultTerrain.has('all');
+
+        const label = hasAll
+          ? FoundryAdapter.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
+          : new Intl.ListFormat(game.i18n.lang).format([...systemMovement.ignoredDifficultTerrain].map((t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label));
+
+        speeds.push({
+          key: 'ignoredDifficultTerrain',
+          label,
+          units: '',
+          value: '',
+          unitsKey: '',
+        });
+      }
+
       return speeds;
     }
 

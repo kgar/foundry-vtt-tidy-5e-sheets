@@ -357,10 +357,19 @@
                   <button
                     type="button"
                     class="button button-borderless button-icon-only"
-                    aria-label={localize('DND5E.DeathSave')}
-                    data-tooltip="DND5E.DeathSave"
+                    aria-label={localize(context.showDeathSaves ? 'DND5E.DeathSaveHide' : 'DND5E.DeathSaveShow')}
+                    data-tooltip=""
                     onclick={() => context.actor.sheet.toggleDeathSaves()}
                     disabled={!context.editable}
+                    oncontextmenu={(ev) => {
+                      ev.preventDefault();
+                      (async () => {
+                        await context.actor.update({
+                          'system.attributes.death.success': 0,
+                          'system.attributes.death.failure': 0,
+                        });
+                      })();
+                    }}
                   >
                     <i class="fas fa-skull"></i>
                   </button>

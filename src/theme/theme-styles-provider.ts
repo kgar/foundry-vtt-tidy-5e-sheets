@@ -28,6 +28,12 @@ export class ThemeStylesProvider {
         doc,
         idOverride
       ),
+      ...this.getHeaderColorDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
       ...this.getItemSidebarBackgroundDeclarations(
         selectorPrefix,
         settings,
@@ -145,6 +151,36 @@ export class ThemeStylesProvider {
           {
             property: '--t5e-sidebar-bg',
             value: urlValue,
+          },
+        ],
+      },
+    ];
+  }
+
+  static getHeaderColorDeclarations(
+    selectorPrefix: string,
+    settings: ThemeSettingsV3,
+    doc: any | undefined,
+    idOverride?: string
+  ): ThemeQuadroneStyleDeclaration[] {
+    if (isNil(settings.headerColor, '')) {
+      return [];
+    }
+
+    const identifierRule = this.getDeclarationKeyRule(
+      'headerColor',
+      doc,
+      idOverride
+    );
+    return [
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: selectorPrefix,
+        ruleset: [
+          identifierRule,
+          {
+            property: '--t5e-theme-header-color',
+            value: settings.headerColor,
           },
         ],
       },
