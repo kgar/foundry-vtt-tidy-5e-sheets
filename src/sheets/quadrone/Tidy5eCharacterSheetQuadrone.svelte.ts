@@ -309,15 +309,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
 
-    for (const panelItem of context.containerPanelItems) {
-      const ctx = context.itemContext[panelItem.container.id];
-      ctx.containerContents = await Container.getContainerContents(
-        panelItem.container,
-        {
+    for (const item of this.actor.itemTypes.container) {
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        const ctx = context.itemContext[item.id];
+        ctx.containerContents = await Container.getContainerContents(item, {
           hasActor: true,
           unlocked: actorContext.unlocked,
-        },
-      );
+        });
+      }
     }
 
     const tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
@@ -362,7 +361,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     };
 
     const sheetTabPreferences = UserSheetPreferencesService.getByType(
-      this.actor.type
+      this.actor.type,
     )?.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
 
     const sortMode = sheetTabPreferences?.sort ?? 'm';
@@ -389,7 +388,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           context.unlocked,
           section,
         );
-        
       });
 
       context.sheetTabSections = actionSections;
