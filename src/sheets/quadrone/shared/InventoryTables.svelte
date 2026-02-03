@@ -45,7 +45,7 @@
 
   const tabId = getContext<string>(CONSTANTS.SVELTE_CONTEXT.TAB_ID);
 
-  const effectiveTabId = $derived(
+  const columnsEffectiveTabId = $derived(
     container ? CONSTANTS.TAB_CONTAINER_CONTENTS : tabId,
   );
 
@@ -111,7 +111,8 @@
           {section}
           {sectionsInlineWidth}
           {sheetDocument}
-          tabId={effectiveTabId}
+          {tabId}
+          {columnsEffectiveTabId}
           {root}
         />
       {/if}

@@ -37,6 +37,7 @@
     /** The sheet which is rendering this recursive set of container contents. */
     sheetDocument: Actor5e | Item5e;
     tabId: string;
+    columnsEffectiveTabId?: string;
     columns?: ColumnsLoadout;
   };
 
@@ -51,6 +52,7 @@
     sectionsInlineWidth,
     sheetDocument,
     tabId,
+    columnsEffectiveTabId,
     columns: columnsOverride,
   }: Props = $props();
 
@@ -63,7 +65,7 @@
       new ColumnsLoadout(
         ItemColumnRuntime.getConfiguredColumnSpecifications({
           sheetType: containingDocument.type,
-          tabId: tabId,
+          tabId: columnsEffectiveTabId ?? tabId,
           sectionKey: section.key,
           rowActions: section.rowActions,
           section: section,
