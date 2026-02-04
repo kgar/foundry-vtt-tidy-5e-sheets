@@ -1,8 +1,5 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import { getSearchResultsContext } from 'src/features/search/search.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { Item5e } from 'src/types/item.types';
