@@ -22,6 +22,7 @@
   } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
+    import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
 
   interface Props {
     section: TidySectionBase;
@@ -33,7 +34,7 @@
     tabId: string;
     columns: ColumnsLoadout;
     bodyNoItems?: Snippet;
-    subtitleText?: Snippet<[entry: TEntry, ctx: any]>;
+    subtitle?: Snippet<[entry: TEntry, ctx: any]>;
     afterFirstCell?: Snippet<[entry: TEntry, ctx: any]>;
     afterInlineActivities?: Snippet<[entry: TEntry, ctx: any]>;
     beforeImage?: Snippet<[entry: TEntry, ctx: any]>;
@@ -51,7 +52,7 @@
     itemToggleMap,
     tabId,
     columns,
-    subtitleText,
+    subtitle,
     afterInlineActivities,
     afterFirstCell,
     beforeImage,
@@ -169,12 +170,12 @@
                 <span class="cell-text">
                   <span class="cell-name">{entry.name}</span>
 
-                  {#if subtitleText}
-                    <span class="cell-context">
-                      {@render subtitleText(entry, ctx)}
-                    </span>
+                  {#if subtitle}
+                    {@render subtitle(entry, ctx)}
                   {:else if ctx.subtitle}
-                    <span class="cell-context">{@html ctx.subtitle}</span>
+                    <TidyTableSubtitle>
+                      {@html ctx.subtitle}
+                    </TidyTableSubtitle>
                   {/if}
                 </span>
                 <span class="row-detail-expand-indicator">
