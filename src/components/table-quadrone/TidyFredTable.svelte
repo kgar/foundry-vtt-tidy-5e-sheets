@@ -22,7 +22,9 @@
   } from 'src/types/types';
   import { getContext, type Snippet } from 'svelte';
   import type { SvelteMap, SvelteSet } from 'svelte/reactivity';
-    import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
+  import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
+  import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
 
   interface Props {
     section: TidySectionBase;
@@ -91,32 +93,14 @@
         </h3>
         <span class="table-header-count">{entries.length}</span>
       </TidyTableHeaderCell>
-      {#each columns.ordered as column}
-        {@const hidden = hiddenColumns.has(column.key)}
-
-        <TidyTableHeaderCell
-          class={[
-            column.headerClasses,
-            { hidden: (!expanded && !root) || hidden },
-          ]}
-          columnWidth="{column.widthRems}rem"
-          data-tidy-column-key={column.key}
-        >
-          {#if !!column.headerContent}
-            {#if column.headerContent.type === 'callback'}
-              {@html column.headerContent.callback?.(context.document, context)}
-            {:else if column.headerContent.type === 'component'}
-              <column.headerContent.component
-                sheetContext={context}
-                sheetDocument={context.document}
-                {section}
-              />
-            {:else if column.headerContent.type === 'html'}
-              {@html column.headerContent.html}
-            {/if}
-          {/if}
-        </TidyTableHeaderCell>
-      {/each}
+      <TidyTableCustomHeaderCells
+        {columns}
+        {hiddenColumns}
+        {section}
+        {context}
+        {expanded}
+        {root}
+      />
     </TidyTableHeaderRow>
   {/snippet}
 
@@ -188,28 +172,14 @@
               </a>
             </TidyTableCell>
             {@render afterFirstCell?.(entry, ctx)}
-            {#each columns.ordered as column}
-              {@const hidden = hiddenColumns.has(column.key)}
-
-              <TidyTableCell
-                columnWidth="{column.widthRems}rem"
-                class={[column.cellClasses, { hidden }]}
-                attributes={{ ['data-tidy-column-key']: column.key }}
-              >
-                {#if column.cellContent.type === 'callback'}
-                  {@html column.cellContent.callback?.(
-                    context.document,
-                    context,
-                  )}
-                {:else if column.cellContent.type === 'component'}
-                  <column.cellContent.component
-                    rowContext={ctx}
-                    rowDocument={entry}
-                    {section}
-                  />
-                {/if}
-              </TidyTableCell>
-            {/each}
+            <TidyTableCustomCells
+              {columns}
+              {hiddenColumns}
+              {ctx}
+              {entry}
+              {section}
+              {context}
+            />
           {/snippet}
         </TidyItemTableRow>
 
