@@ -45,7 +45,7 @@
 <GroupTraitTooltip bind:this={traitTooltip} sheetDocument={context.actor} />
 
 <aside
-  class="sidebar"
+  class="sidebar expanded"
   style:--t5e-member-color-hover={emphasizedMember?.highlightColor}
   style:--t5e-member-color-background={emphasizedMember?.backgroundColor}
 >
