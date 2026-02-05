@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Pips from 'src/components/pips/Pips.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ActorSheetClassicContextV2,
@@ -16,7 +15,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let contanimationLevel = $derived(
+  let contaminationLevel = $derived(
     FoundryAdapter.getProperty<number | undefined>(
       context.actor,
       DRAKKENHEIM_CORE_CONSTANTS.CONTAMINATION_LEVEL_FLAG_PROP,
@@ -48,7 +47,7 @@
     await roll.evaluate();
     await roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: context.actor }),
-      flavor: localize('TIDY5E.Drakkenheim.Contamination.rolledMutation', { name: actorName, level: contanimationLevel }),
+      flavor: localize('TIDY5E.Drakkenheim.Contamination.rolledMutation', { name: actorName, level: contaminationLevel }),
     });
   }
 
@@ -116,7 +115,7 @@
   <div class="contamination-levels flexcol">
     <button 
       tabindex={0}
-      class:active={0 === contanimationLevel} 
+      class:active={0 === contaminationLevel} 
       class="symptom level-0" 
       onclick={() => clearContamination()}
       onkeydown={(ev) => clearContamination()}
@@ -130,7 +129,7 @@
       {@const level = i + 1}
       <button 
         tabindex={0}
-        class:active={level <= contanimationLevel} 
+        class:active={level <= contaminationLevel} 
         class="symptom" 
         onclick={() => onContaminationLevelChanged(level)}
         onkeydown={(ev) => onContaminationLevelChanged(level)}
