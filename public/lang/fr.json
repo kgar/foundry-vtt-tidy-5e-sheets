@@ -409,7 +409,14 @@
         "RarityColors.title": "Couleurs des raretés",
         "SpellcastingMethodColors.title": "Couleurs de la méthode d'incantation",
         "UseHeaderBackground.title": "Utiliser l'arrière-plan de l'en-tête",
-        "UseHeaderBackground.hint": "Comprend les styles qui prennent en charge un en-tête de feuille coloré avec une image en arrière-plan."
+        "UseHeaderBackground.hint": "Comprend les styles qui prennent en charge un en-tête de feuille coloré avec une image en arrière-plan.",
+        "AccentColor": {
+            "hint": "Personnalisez la couleur d'accentuation de la feuille, y compris les boutons, les en-têtes de tableau et d'autres éléments de l'interface utilisateur."
+        },
+        "HeaderColor": {
+            "title": "Couleur d'arrière-plan de l'en-tête",
+            "hint": "Utilisez une couleur différente de celle utilisée pour mettre en valeur l'en-tête de la feuille."
+        }
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Niveau de sort {number}",
     "TIDY5E.ApplyChanges": "Appliquer les changements",
@@ -984,7 +991,7 @@
     "TIDY5E.InspirationRemove": "Enlever une inspiration",
     "TIDY5E.LegendaryAbbr": "AL",
     "TIDY5E.LairAbbr": "Antre",
-    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animal de trait",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animal de trait / Créature de travail",
     "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animaux de trait",
     "TIDY5E.AddCustom": "Ajouter un {name} personalisé",
     "TIDY5E.CompendiumBrowser": "Ajouter un {name} à partir du Compendium",
@@ -1008,5 +1015,7 @@
     "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Glissez-déposez ici les animaux de trait ou les créatures de travail, ou cliquez pour les ajouter.",
     "TIDY5E.Vehicle.Unassigned.EmptyState": "Glissez-déposez l'équipage ici ou cliquez pour l'ajouter. L'équipage peut ensuite être affecté à l'équipement ou aux fonctionnalités du véhicule.",
     "TIDY5E.Vehicle.Passenger.EmptyState": "Glissez-déposez les passagers ici ou cliquez pour les ajouter.",
-    "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. PV"
+    "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. PV",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignorer {value}",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorer tous les terrains difficiles"
 }

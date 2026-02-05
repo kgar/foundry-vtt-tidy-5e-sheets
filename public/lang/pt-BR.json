@@ -684,7 +684,14 @@
         "SheetTheme.hint": "Para melhores resultados, escolha uma cor próxima ao centro da paleta de cores.",
         "SpellcastingMethodColors.title": "Cores do Modo de Preparação de Magias",
         "UseHeaderBackground.title": "Usar Fundo do Cabeçalho",
-        "UseHeaderBackground.hint": "Inclui estilos que suportam um cabeçalho colorido de ficha com uma imagem de fundo."
+        "UseHeaderBackground.hint": "Inclui estilos que suportam um cabeçalho colorido de ficha com uma imagem de fundo.",
+        "AccentColor": {
+            "hint": "Personalize a cor de destaque da ficha, incluindo botões, cabeçalhos de tabela e outros elementos da interface."
+        },
+        "HeaderColor": {
+            "title": "Cor de Fundo do Cabeçalho",
+            "hint": "Use uma cor diferente da cor de destaque da ficha para o cabeçalho da ficha."
+        }
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Nível da Magia {number}",
     "TIDY5E.ApplyChanges": "Aplicar Alterações",
@@ -971,5 +978,7 @@
     "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Arraste e solte animais de carga ou criaturas de trabalho aqui, ou clique para adicionar.",
     "TIDY5E.Vehicle.Equipment.HP.Label": "PV Médio",
     "TIDY5E.Vehicle.Unassigned.EmptyState": "Arraste e solte a tripulação aqui ou clique para adicionar. A tripulação pode então ser atribuída a equipamentos ou recursos do veículo.",
-    "TIDY5E.Vehicle.Passenger.EmptyState": "Arraste e solte os passageiros aqui ou clique para adicionar."
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Arraste e solte os passageiros aqui ou clique para adicionar.",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignorar {value}",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorar Todos Terrenos Difíceis"
 }
