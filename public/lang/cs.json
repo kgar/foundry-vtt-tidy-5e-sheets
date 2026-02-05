@@ -408,7 +408,14 @@
         "SheetTheme.hint": "Pro dosažení nejlepších výsledků vyber barvu blízko prostředku palety barev.",
         "SpellcastingMethodColors.title": "Barvy režimu přípravy kouzel",
         "UseHeaderBackground.title": "Použít pozadí záhlaví",
-        "UseHeaderBackground.hint": "Zahrnuje styly podporující barevné záhlaví deníku s obrázkovým pozadím."
+        "UseHeaderBackground.hint": "Zahrnuje styly podporující barevné záhlaví deníku s obrázkovým pozadím.",
+        "AccentColor": {
+            "hint": "Přizpůsob barvu zvýraznění deníku včetně tlačítek, záhlaví tabulek a dalších prvků uživatelského rozhraní."
+        },
+        "HeaderColor": {
+            "title": "Barva pozadí záhlaví",
+            "hint": "Pro záhlaví deníku použij jinou barvu než barvu zvýraznění."
+        }
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Stupeň kouzla {number}",
     "TIDY5E.ApplyChanges": "Použít změny",
@@ -980,5 +987,16 @@
     "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Klikni na přidání tažných či pracovních zvířat, nebo je sem přetáhni a pusť.",
     "TIDY5E.Vehicle.Equipment.HP.Label": "Prům. BV",
     "TIDY5E.Vehicle.Unassigned.EmptyState": "Klikni na přidání posádku, nebo ji sem přetáhni a pusť. Posádku pak lze přiřadit k vybavení či schopnostem dopravního prostředku.",
-    "TIDY5E.Vehicle.Passenger.EmptyState": "Klikni na přidání cestujících, nebo je sem přetáhni a pusť."
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Klikni na přidání cestujících, nebo je sem přetáhni a pusť.",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignorovat {value}",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorovat veškerý obtížný terén",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollSave": "Hod záchrany před kontaminací",
+            "rollMutation": "Hod na mutaci",
+            "rolledMutation": "{name} hodil na mutaci s úrovní kontaminace {level}.",
+            "clear": "Vyčistit kontaminaci",
+            "none": "Žádná kontaminace ani symptomy."
+        }
+    }
 }
