@@ -48,7 +48,7 @@
     await roll.evaluate();
     await roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: context.actor }),
-      flavor: localize('TIDY5E.Drakkenheim.MutationRoll'),
+      flavor: localize('TIDY5E.Drakkenheim.Contamination.rolledMutation', { name: actorName, level: contanimationLevel }),
     });
   }
 
@@ -61,7 +61,7 @@
       : 'DRAKKENHEIM.CONTAMINATION.rollIncrease';
     await roll.toMessage({
       speaker: ChatMessage.getSpeaker({ actor: context.actor }),
-      flavor: `<strong>${localize(resultKey, { name: actorName })}</strong>`,
+      flavor: `${localize(resultKey, { name: actorName })}`,
     });
   }
 

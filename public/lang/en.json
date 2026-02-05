@@ -997,6 +997,7 @@
     "Contamination": {
       "rollSave": "Roll Contamination Save",
       "rollMutation": "Roll for Mutation",
+      "rolledMutation": "{name} rolled for a mutation with a contamination level of {level}.",
       "clear": "Clear Contamination",
       "none": "No contamination or symptoms."
     }

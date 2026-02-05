@@ -3,25 +3,47 @@
 /* -------------------------------------- */
 .tidy5e-sheet.quadrone {
   [data-tab-contents-for='drakkenheim-contamination-tab'] {
-    --dod-color-background-primary: #361163;
-    --dod-color-background-transparent: #36116366;
-    --dod-color-background-secondary: #57417e;
-    --dod-color-background-tertiary: #8879a7;
-    --dod-color-background-quaternary: #9f94b5;
+    /* Primary palette */
+    --dod-color-primary-background: #361163;
+    --dod-color-primary-background-transparent: #36116366;
+    --dod-color-primary-background-light: #57417e;
+    --dod-color-primary-background-lighter: #8879a7;
+    --dod-color-primary-background-lightest: #aaa0bc;
     --dod-color-accent: hsl(267, 71%, 35%);
-    --dod-color-icon: var(--dod-color-background-secondary);
-    --dod-color-icon-hover: var(--dod-color-background-primary);
-    
-    --dod-color-background-alt: var(--t5e-color-hp-hd-dark);
-    --dod-color-background-alt-lighter: var(--t5e-color-hp-hd-medium);
-    --dod-color-background-alt-lightest: var(--t5e-color-hp-hd-light);
-    --dod-color-icon-alt: rgba(255, 255, 255, .5);
 
-    /* Legacy aliases for compatibility */
-    --dod-font-color: var(--dod-color-text);
-    --dod-background-color: var(--dod-color-primary);
-    --dod-background-color-light: var(--dod-color-secondary);
-    --dod-background-color-lighter: var(--dod-color-tertiary);
+    /* Base (level-0) palette */
+    --dod-color-base-background: var(--t5e-color-palette-red-27);
+    --dod-color-base-background-lighter: var(--t5e-color-palette-red-45);
+    --dod-color-base-background-lightest: var(--t5e-color-palette-red-60);
+
+    /* Icon colors */
+    --dod-color-icon: var(--dod-color-primary-background-light);
+    --dod-color-icon-hover: var(--dod-color-primary-background);
+    --dod-color-icon-background: var(--dod-color-primary-background);
+    --dod-color-icon-background-hover: var(--dod-color-primary-background-light);
+    --dod-color-icon-alt: rgba(255, 255, 255, 0.5);
+
+    /* Symptom row colors */
+    --dod-color-symptom-background: linear-gradient(to right, var(--dod-color-primary-background-transparent), transparent);
+    --dod-color-symptom-background-hover: linear-gradient(to right, var(--dod-color-primary-background), transparent);
+    --dod-color-symptom-background-active: linear-gradient(to right, var(--dod-color-primary-background-light), transparent);
+    --dod-color-symptom-background-active-hover: linear-gradient(to right, var(--dod-color-primary-background-lighter) 0%, var(--dod-color-primary-background-light) 25%, transparent);
+    --dod-color-symptom-border: var(--dod-color-primary-background-light);
+    --dod-color-symptom-text: inherit;
+    --dod-color-symptom-text-active: inherit;
+    --dod-color-symptom-text-inactive: var(--t5e-color-text-lightest);
+
+    /* Level-0 specific symptom colors */
+    --dod-color-symptom-level0-background-active: linear-gradient(to right, var(--dod-color-base-background-lighter), transparent);
+    --dod-color-symptom-level0-background-hover: linear-gradient(to right, var(--dod-color-base-background-lightest), transparent);
+    --dod-color-symptom-level0-icon-background-active: var(--dod-color-base-background);
+    --dod-color-symptom-level0-icon-background-hover: var(--dod-color-base-background-lighter);
+    --dod-color-symptom-level0-icon-color-active: var(--dod-color-icon-alt);
+    --dod-color-symptom-level0-icon-color-hover: white;
+
+    /* Level number */
+    --dod-color-level-number: var(--t5e-color-text-default);
+    --dod-color-level-number-shadow: var(--dod-background-color);
 
     .description {
       margin-bottom: var(--t5e-size-8x);
@@ -45,14 +67,15 @@
       gap: 0.0625rem;
 
       .symptom {
+        --t5e-enricher-background: rgba(255,255,255, 0.12);
         align-items: center;
         background-color: transparent;
-        background: linear-gradient(to right, var(--dod-color-background-transparent), transparent);
+        background: var(--dod-color-symptom-background);
         border-top: none;
         border-left: none;
         border-right: none;
-        border-bottom: 0.0625rem solid var(--dod-color-background-secondary);
-        border-image: linear-gradient(to right,  transparent 0%, var(--dod-color-background-secondary) 25%, transparent) 1;
+        border-bottom: 0.0625rem solid var(--dod-color-symptom-border);
+        border-image: linear-gradient(to right, transparent 0%, var(--dod-color-symptom-border) 25%, transparent) 1;
         border-radius: var(--t5e-component-card-radius);
         box-shadow: none;
         display: flex;
@@ -65,39 +88,39 @@
         position: relative;
         text-align: left;
         font-weight: var(--font-weight-default);
+        color: var(--dod-color-symptom-text);
 
         &.level-0.active {
-          background: linear-gradient(to right,  var(--dod-color-background-alt-lighter), transparent);
+          background: var(--dod-color-symptom-level0-background-active);
 
           .level-icon {
-            background: var(--dod-color-background-alt);
+            background: var(--dod-color-symptom-level0-icon-background-active);
             i {
-              color: var(--dod-color-icon-alt);
+              color: var(--dod-color-symptom-level0-icon-color-active);
             }
           }
 
           &:hover,
           &:focus-within,
           &:active:not(:disabled) {
-            background: linear-gradient(to right,  var(--dod-color-background-alt-lighter), transparent);
+            background: var(--dod-color-symptom-level0-background-hover);
 
             .level-icon {
-              background: var(--dod-color-background-alt);
+              background: var(--dod-color-symptom-level0-icon-background-hover);
               i {
-                color: white;
+                color: var(--dod-color-symptom-level0-icon-color-hover);
               }
             }
           }
         }
 
         &.level-0:not(.active) {
-          color: var(--t5e-color-text-lightest);
+          color: var(--dod-color-symptom-text-inactive);
         }
-
 
         .level-icon {
           align-items: center;
-          background: var(--dod-color-background-primary);
+          background: var(--dod-color-icon-background);
           border-radius: 100%;
           display: flex;
           height: 2.5rem;
@@ -118,38 +141,39 @@
             left: 0;
             width: 100%;
             height: 100%;
-  
+
             font: var(--t5e-font-title-medium);
-  
-            color: var(--t5e-color-text-default);
-  
+
+            color: var(--dod-color-level-number);
+
             display: flex;
             align-items: center;
             justify-content: center;
-            text-shadow: 0 0 0.3125rem var(--dod-background-color), 0 0 0.125rem var(--dod-background-color);
+            text-shadow: 0 0 0.3125rem var(--dod-color-level-number-shadow), 0 0 0.125rem var(--dod-color-level-number-shadow);
           }
         }
 
         &:hover,
         &:focus-within,
-        &:active:not(:disabled) { 
+        &:active:not(:disabled) {
+          --t5e-enricher-background: rgba(255,255,255, 0.2);
+
           background-color: transparent;
-          background: linear-gradient(to right,  var(--dod-color-background-primary), transparent);
+          background: var(--dod-color-symptom-background-hover);
           outline: none;
           box-shadow: none;
-          border-top:none;
-          border-left:none;
-          border-right:none;
-          border-bottom: 0.0625rem solid var(--dod-color-background-secondary);
-          border-image: linear-gradient(to right,  transparent 0%, var(--dod-color-background-secondary) 25%, transparent) 1;
+          border-top: none;
+          border-left: none;
+          border-right: none;
+          border-bottom: 0.0625rem solid var(--dod-color-symptom-border);
+          border-image: linear-gradient(to right, transparent 0%, var(--dod-color-symptom-border) 25%, transparent) 1;
 
           &.active {
-            
-            background: linear-gradient(to right,  var(--dod-color-background-tertiary) 0%, var(--dod-color-background-secondary) 25%, transparent);
+            background: var(--dod-color-symptom-background-active-hover);
           }
 
           .level-icon {
-            background-color: var(--dod-color-background-secondary);
+            background-color: var(--dod-color-icon-background-hover);
             i {
               color: var(--dod-color-icon-hover);
             }
@@ -160,9 +184,10 @@
         }
 
         &.active {
-          background: linear-gradient(to right,  var(--dod-color-background-secondary), transparent);
+          background: var(--dod-color-symptom-background-active);
           font-weight: var(--font-weight-label);
-          
+          color: var(--dod-color-symptom-text-active);
+
           .level-number {
             opacity: 1;
           }
@@ -172,84 +197,42 @@
           border-bottom: none;
         }
       }
-      
     }
   }
 }
 
 .tidy5e-sheet.quadrone.theme-light {
   [data-tab-contents-for='drakkenheim-contamination-tab'] {
-    --dod-color-background-primary: #361163;
-    --dod-color-background-transparent: #36116366;
-    --dod-color-background-secondary: #57417e;
-    --dod-color-background-tertiary: #8879a7;
-    --dod-color-background-quaternary: #a294bd77;
+    /* Primary palette - light theme adjustments */
+    --dod-color-primary-background-lightest: #a294bd77;
     --dod-color-accent: hsl(266, 21%, 72%);
-    --dod-color-icon: var(--dod-color-background-secondary);
-    --dod-color-icon-hover: var(--dod-color-background-primary);
-    
-    --dod-color-background-alt: oklch(from var(--t5e-color-hp-hd-medium) calc(l * 0.75) calc(c * 1.2) h / 0.5);
-    --dod-color-background-alt-lighter: var(--t5e-color-palette-red-45);
-    --dod-color-background-alt-lightest: var(--t5e-color-palette-red-60);
-    --dod-color-icon-alt: rgba(255, 255, 255, .5);
 
-    .contamination-levels {
-      .symptom.active {
-        background: var(--dod-color-background-secondary);
-        color: var(--t5e-color-text-oninverse-default);
+    /* Base (level-0) palette - light theme adjustments */
+    --dod-color-base-background: oklch(from var(--t5e-color-hp-hd-medium) calc(l * 0.75) calc(c * 1.2) h / 0.5);
+    --dod-color-base-background-lighter: var(--t5e-color-palette-red-45);
+    --dod-color-base-background-lightest: var(--t5e-color-palette-red-60);
 
-        &:hover,
-        &:focus-within,
-        &:active {
-          background: var(--dod-color-background-primary);
-        }
-      }
-      .symptom {
-        background: var(--dod-color-background-quaternary);
+    /* Symptom row colors - light theme uses solid backgrounds */
+    --dod-color-symptom-background: var(--dod-color-primary-background-lightest);
+    --dod-color-symptom-background-hover: var(--dod-color-primary-background-lighter);
+    --dod-color-symptom-background-active: var(--dod-color-primary-background-light);
+    --dod-color-symptom-background-active-hover: var(--dod-color-primary-background);
+    --dod-color-symptom-text-active: var(--t5e-color-text-oninverse-default);
 
-        .level-number {
-          color: var(--t5e-color-text-oninverse-default);
-        }
+    /* Icon colors - light theme adjustments */
+    --dod-color-icon: var(--dod-color-primary-background-light);
+    --dod-color-icon-hover: var(--dod-color-primary-background-lighter);
+    --dod-color-icon-background: var(--dod-color-primary-background-lightest);
+    --dod-color-icon-background-hover: var(--dod-color-primary-background-light);
 
-        &:hover,
-        &:focus-within,
-        &:active {
-          background: var(--dod-color-background-tertiary);
-        }
-      }
+    /* Level-0 specific - light theme */
+    --dod-color-symptom-level0-background-active: var(--dod-color-base-background-lightest);
+    --dod-color-symptom-level0-background-hover: var(--dod-color-base-background-lighter);
+    --dod-color-symptom-level0-icon-background-active: var(--dod-color-base-background-lighter);
+    --dod-color-symptom-level0-icon-background-hover: var(--dod-color-base-background-lightest);
 
-      .symptom.level-0 {
-
-        .level-icon {
-          background: var(--dod-color-background-tertiary);
-
-          i {
-            color: var(--dod-color-background-quaternary);
-          }
-        }
-
-        &.active {
-          color: var(--t5e-color-text-oninverse-default);
-          background: var(--dod-color-background-alt-lightest);
-          
-        }
-
-        &:hover,
-        &:focus-within,
-        &:active {
-          background: var(--dod-color-background-alt-lighter);
-          color: var(--t5e-color-text-oninverse-default);
-
-          .level-icon {
-            background: var(--dod-color-background-alt-lightest);
-            
-            i {
-              color: var(--dod-color-icon-alt);
-            }
-          }
-        }
-      }
-    }
+    /* Level number - light theme */
+    --dod-color-level-number: var(--t5e-color-text-oninverse-default);
   }
 }
 
@@ -264,122 +247,240 @@
 
 .tidy5e-sheet.classic {
   [data-tab-contents-for='drakkenheim-contamination-tab'] {
+    /* Primary palette */
+    --dod-color-primary-background: #361163;
+    --dod-color-primary-background-transparent: #36116366;
+    --dod-color-primary-background-light: #57417e;
+    --dod-color-primary-background-lighter: #8879a7;
+    --dod-color-primary-background-lightest: #9f94b5;
+    --dod-color-accent: hsl(267, 71%, 35%);
+
+    /* Base (level-0) palette */
+    --dod-color-base-background: #8b0000;
+    --dod-color-base-background-lighter: #a52a2a;
+    --dod-color-base-background-lightest: #cd5c5c;
+
+    /* Icon colors */
+    --dod-color-icon: var(--dod-color-primary-background-light);
+    --dod-color-icon-hover: var(--dod-color-primary-background);
+    --dod-color-icon-background: var(--dod-color-primary-background);
+    --dod-color-icon-background-hover: var(--dod-color-primary-background-light);
+    --dod-color-icon-alt: rgba(255, 255, 255, 0.5);
+
+    /* Symptom row colors */
+    --dod-color-symptom-background: linear-gradient(to right, var(--dod-color-primary-background-transparent), transparent);
+    --dod-color-symptom-background-hover: linear-gradient(to right, var(--dod-color-primary-background), transparent);
+    --dod-color-symptom-background-active: linear-gradient(to right, var(--dod-color-primary-background-light), transparent);
+    --dod-color-symptom-background-active-hover: linear-gradient(to right, var(--dod-color-primary-background-lighter) 0%, var(--dod-color-primary-background-light) 25%, transparent);
+    --dod-color-symptom-border: var(--dod-color-primary-background-light);
+    --dod-color-symptom-text: inherit;
+    --dod-color-symptom-text-active: inherit;
+    --dod-color-symptom-text-inactive: var(--color-text-dark-secondary);
+
+    /* Level-0 specific symptom colors */
+    --dod-color-symptom-level0-background-active: linear-gradient(to right, var(--dod-color-base-background-lighter), transparent);
+    --dod-color-symptom-level0-background-hover: linear-gradient(to right, var(--dod-color-base-background), transparent);
+    --dod-color-symptom-level0-icon-background-active: var(--dod-color-base-background);
+    --dod-color-symptom-level0-icon-background-hover: var(--dod-color-base-background-lighter);
+    --dod-color-symptom-level0-icon-color-active: var(--dod-color-icon-alt);
+    --dod-color-symptom-level0-icon-color-hover: white;
+
+    /* Level number */
+    --dod-color-level-number: var(--color-text-dark-primary);
+    --dod-color-level-number-shadow: var(--dod-background-color);
+
     .description {
-      color: #361163;
-      font-family: var(--dnd5e-font-roboto-slab);
-      font-size: 1rem;
-      font-style: italic;
-      padding: 0 0.5rem 0.25rem 0.5rem;
-      text-align: left;
+      margin-bottom: 2rem;
+      font-size: 0.875rem;
     }
 
-    .contamination-table {
-      border: 0.0625rem solid #361163;
-      box-shadow: 0 0 0.625rem #361163;
-      font-family: var(--dnd5e-font-roboto-slab);
-      font-size: 0.875rem;
+    .contamination-actions {
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
 
-      thead {
-        background: linear-gradient(90deg, #361163, #8879a7);
-        border: none;
-        border-bottom: 0.0625rem solid #361163;
-
-        .symptom {
-          padding: 0.5em 1em;
-        }
+      > * {
+        flex: 1 1 fit-content;
       }
+    }
 
-      tbody tr {
-        opacity: 0.8;
-        transition: opacity 0.2s;
+    .contamination-levels {
+      gap: 0;
+      list-style: none;
+      padding: 0.5rem 0 0;
+      gap: 0.0625rem;
 
-        .symptom {
-          font-weight: 700;
-          padding: 0.5em;
-        }
+      .symptom {
+        align-items: center;
+        background-color: transparent;
+        background: var(--dod-color-symptom-background);
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 0.0625rem solid var(--dod-color-symptom-border);
+        border-image: linear-gradient(to right, transparent 0%, var(--dod-color-symptom-border) 25%, transparent) 1;
+        border-radius: 0.3125rem;
+        box-shadow: none;
+        display: flex;
+        flex-direction: row;
+        gap: 0.5rem;
+        justify-content: flex-start;
+        min-height: 3.25rem;
+        outline: none;
+        padding: 0.5rem;
+        position: relative;
+        text-align: left;
+        font-weight: normal;
+        color: var(--dod-color-symptom-text);
 
-        &.active {
-          background: linear-gradient(
-            to right,
-            #8879a7,
-            var(--dnd5e-color-card)
-          );
-          opacity: 1;
+        &.level-0.active {
+          background: var(--dod-color-symptom-level0-background-active);
 
-          .symptom {
-            color: #000;
-            color: initial;
+          .level-icon {
+            background: var(--dod-color-symptom-level0-icon-background-active);
+            i {
+              color: var(--dod-color-symptom-level0-icon-color-active);
+            }
+          }
+
+          &:hover,
+          &:focus-within,
+          &:active:not(:disabled) {
+            background: var(--dod-color-symptom-level0-background-hover);
+
+            .level-icon {
+              background: var(--dod-color-symptom-level0-icon-background-hover);
+              i {
+                color: var(--dod-color-symptom-level0-icon-color-hover);
+              }
+            }
           }
         }
-      }
-    }
 
-    .pips {
-      display: flex;
-      justify-content: space-around;
-      gap: 0.3125rem;
-      padding: 0.625rem 0.75rem;
-
-      .pip {
-        --pip-size: 3.125rem;
-        --pip-bg-inactive: #8879a7;
-        --pip-bg-active: #361163;
-        --pip-bg-to-activate: #6e5e8f;
-        --pip-bg-to-deactivate: hsl(267, 71%, 35%);
-
-        border: 0.125rem solid #361163;
-        border-radius: 100%;
-        box-shadow: 0 0 0.375rem var(--dnd5e-shadow-45);
-        display: grid;
-        filter: drop-shadow(0 0 0.3125rem #361163);
-        font-family: var(--font-awesome);
-        font-size: var(--font-size-18);
-        font-style: normal;
-        font-weight: 700;
-        justify-content: center;
-        margin: 0;
-        opacity: 0.6;
-        place-content: center;
-        text-align: center;
-
-        i {
-          transform: scale(0);
-          transition: transform 0.2s;
+        &.level-0:not(.active) {
+          color: var(--dod-color-symptom-text-inactive);
         }
 
-        i:after {
-          color: #fff;
-          content: '';
-          opacity: 0.5;
+        .level-icon {
+          align-items: center;
+          background: var(--dod-color-icon-background);
+          border-radius: 100%;
+          display: flex;
+          height: 2.5rem;
+          justify-content: center;
+          position: relative;
+          width: 2.5rem;
+
+          i {
+            color: var(--dod-color-icon);
+            font-size: 1.5rem;
+            font-weight: 700;
+          }
+
+          .level-number {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            font-family: var(--dnd5e-font-modesto);
+            font-size: 1.25rem;
+            font-weight: 700;
+
+            color: var(--dod-color-level-number);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 0 0.3125rem var(--dod-color-level-number-shadow), 0 0 0.125rem var(--dod-color-level-number-shadow);
+          }
         }
 
-        &.active i,
-        &:hover i,
-        &:not(.active):has(~ .pip:hover) i {
-          transform: scale(1);
+        &:hover,
+        &:focus-within,
+        &:active:not(:disabled) {
+          background-color: transparent;
+          background: var(--dod-color-symptom-background-hover);
+          outline: none;
+          box-shadow: none;
+          border-top: none;
+          border-left: none;
+          border-right: none;
+          border-bottom: 0.0625rem solid var(--dod-color-symptom-border);
+          border-image: linear-gradient(to right, transparent 0%, var(--dod-color-symptom-border) 25%, transparent) 1;
+
+          &.active {
+            background: var(--dod-color-symptom-background-active-hover);
+          }
+
+          .level-icon {
+            background-color: var(--dod-color-icon-background-hover);
+            i {
+              color: var(--dod-color-icon-hover);
+            }
+            .level-number {
+              opacity: 1;
+            }
+          }
         }
 
         &.active {
-          opacity: 1;
+          background: var(--dod-color-symptom-background-active);
+          font-weight: 700;
+          color: var(--dod-color-symptom-text-active);
 
-          i:after {
+          .level-number {
             opacity: 1;
           }
         }
+
+        &:last-child {
+          border-bottom: none;
+        }
       }
     }
   }
 }
 
-.tidy5e-sheet.classic.theme-dark {
+.tidy5e-sheet.classic.theme-light {
   [data-tab-contents-for='drakkenheim-contamination-tab'] {
-    .description {
-      color: var(--color-text-light-highlight);
+    /* Primary palette - light theme adjustments */
+    --dod-color-primary-background-lightest: #a294bd77;
+    --dod-color-accent: hsl(266, 21%, 72%);
+
+    /* Base (level-0) palette - light theme adjustments */
+    --dod-color-base-background: #8b0000;
+    --dod-color-base-background-lighter: #b33b3b;
+    --dod-color-base-background-lightest: #d96666;
+
+    /* Symptom row colors - light theme uses solid backgrounds */
+    --dod-color-symptom-background: var(--dod-color-primary-background-lightest);
+    --dod-color-symptom-background-hover: var(--dod-color-primary-background-lightest);
+    --dod-color-symptom-background-active: var(--dod-color-primary-background-light);
+    --dod-color-symptom-background-active-hover: var(--dod-color-primary-background);
+    --dod-color-symptom-text-active: white;
+
+    /* Icon colors - light theme adjustments */
+    --dod-color-icon: var(--dod-color-primary-background-light);
+    --dod-color-icon-hover: var(--dod-color-primary-background-lighter);
+    --dod-color-icon-background: var(--dod-color-primary-background-lightest);
+    --dod-color-icon-background-hover: var(--dod-color-primary-background-light);
+
+    /* Level-0 specific - light theme */
+    --dod-color-symptom-level0-background-active: var(--dod-color-base-background-lighter);
+    --dod-color-symptom-level0-background-hover: var(--dod-color-base-background);
+    --dod-color-symptom-level0-icon-background-active: var(--dod-color-base-background);
+    --dod-color-symptom-level0-icon-background-hover: var(--dod-color-base-background-lighter);
+
+    /* Level number - light theme */
+    --dod-color-level-number: white;
+
+    .symptom a,
+    .symptom a i {
+      background-color: rgba(0,0,0, 0.2);
+      color: white;
     }
   }
-}
-
-// Hide the Legacy sheet counter which is being injected in Tidy
-.tidy5e-sheet .counter.contamination {
-  display: none;
 }
