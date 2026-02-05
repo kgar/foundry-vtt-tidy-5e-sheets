@@ -880,7 +880,11 @@ export function Tidy5eActorSheetQuadroneBase<
 
         const label = hasAll
           ? FoundryAdapter.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
-          : new Intl.ListFormat(game.i18n.lang).format([...systemMovement.ignoredDifficultTerrain].map((t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label));
+          : new Intl.ListFormat(game.i18n.lang).format(
+              [...systemMovement.ignoredDifficultTerrain]
+                .map((t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label ?? t)
+                .filter((l): l is string => !!l)
+            );
 
         speeds.push({
           key: 'ignoredDifficultTerrain',
