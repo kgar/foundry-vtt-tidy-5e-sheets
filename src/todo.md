@@ -41,7 +41,10 @@
 - [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
   - [ ] Differences between existing tables
     - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
-    - [ ] ...
+    - [ ] Spell table
+      - [ ] Table Header conditional classes and attributes
+      - [ ] Table Header primary cell end of content (slots content)
+      - [ ] Item table row conditional rowClass
 - [ ] Decide what to do about contained items and whether they should surface their parent container
 - [ ] Clean up the code and reduce redundancy
 - [ ] Review with hightouch to determine next steps
