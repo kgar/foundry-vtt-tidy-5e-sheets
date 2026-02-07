@@ -35,13 +35,14 @@ export class SpellUtils {
   /** Spell is castable in this moment. */
   static isCastableSpell(item: Item5e) {
     return (
-      SpellUtils.isSpell(item) &&
+      SpellUtils.isLevelledSpell(item) &&
       (SpellUtils.isPrepared(item) ||
         SpellUtils.isAlwaysPrepared(item) ||
         SpellUtils.isUnlimitedAtWill(item) ||
         SpellUtils.isUnlimitedInnate(item) ||
         ItemUtils.hasSufficientLimitedUses(item) ||
-        SpellUtils.isRitualSpellForRitualCaster(item))
+        SpellUtils.isRitualSpellForRitualCaster(item) ||
+        SpellUtils.isCastActivitySpell(item))
     );
   }
 
@@ -54,7 +55,7 @@ export class SpellUtils {
   }
 
   /** A spell item with a non-cantrip level. */
-  static isSpell(item: any) {
+  static isLevelledSpell(item: any) {
     return item.type === CONSTANTS.ITEM_TYPE_SPELL && item.system.level > 0;
   }
 
@@ -118,6 +119,10 @@ export class SpellUtils {
     );
   }
 
+  static isCastActivitySpell(item: Item5e) {
+    return !!item.system.linkedActivity?.item;
+  }
+
   static getToggleTitle(item: Item5e) {
     return (
       CONFIG.DND5E.spellPreparationStates[item.system.prepared]?.label ??
@@ -128,7 +133,7 @@ export class SpellUtils {
   static tryFilterByClass(
     actor: Actor5e,
     spells: any[],
-    selectedClassFilter?: string
+    selectedClassFilter?: string,
   ) {
     const classesCount = Object.keys(actor.classes ?? {}).length;
 
@@ -138,7 +143,7 @@ export class SpellUtils {
 
     return spells.filter(
       (spell) =>
-        spell.system.sourceClass?.trim() === selectedClassFilter?.trim()
+        spell.system.sourceClass?.trim() === selectedClassFilter?.trim(),
     );
   }
 }

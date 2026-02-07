@@ -42,7 +42,7 @@
   });
 </script>
 
-<aside class="sidebar flexcol">
+<aside class="sidebar expanded flexcol">
   <button
     type="button"
     class="button button-primary button-preroll-initiative"
