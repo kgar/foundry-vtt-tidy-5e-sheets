@@ -8,7 +8,6 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { EncounterMemberQuadroneContext } from 'src/types/types';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
@@ -18,6 +17,8 @@
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let npcs = $derived(context.members.npc);
@@ -120,31 +121,15 @@
 </section>
 
 {#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
-  {#each columns.ordered as column}
-    {@const hidden = hiddenColumns.has(column.key)}
-    <TidyTableHeaderCell
-      class={[column.headerClasses, { hidden }]}
-      columnWidth="{column.widthRems}rem"
-      data-tidy-column-key={column.key}
-    >
-      {#if !!column.headerContent}
-        {#if column.headerContent.type === 'callback'}
-          {@html column.headerContent.callback?.(context.document, context)}
-        {:else if column.headerContent.type === 'component'}
-          <column.headerContent.component
-            sheetContext={context}
-            sheetDocument={context.document}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
-          />
-        {:else if column.headerContent.type === 'html'}
-          {@html column.headerContent.html}
-        {/if}
-      {/if}
-    </TidyTableHeaderCell>
-  {/each}
+  <TidyTableCustomHeaderCells
+    {columns}
+    {context}
+    section={{
+      ...SheetSections.EMPTY,
+      rowActions: rowActions,
+    }}
+    {hiddenColumns}
+  />
 {/snippet}
 
 {#snippet tableRow(
@@ -162,26 +147,17 @@
     data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ENCOUNTER_MEMBER}
   >
     <EncounterMemberNameCell {member} />
-    {#each columns.ordered as column}
-      {@const hidden = hiddenColumns.has(column.key)}
-      <TidyTableCell
-        columnWidth="{column.widthRems}rem"
-        class={[column.cellClasses, { hidden }]}
-        attributes={{ ['data-tidy-column-key']: column.key }}
-      >
-        {#if column.cellContent.type === 'callback'}
-          {@html column.cellContent.callback?.(context.document, context)}
-        {:else if column.cellContent.type === 'component'}
-          <column.cellContent.component
-            rowContext={member}
-            rowDocument={member.actor}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
-          />
-        {/if}
-      </TidyTableCell>
-    {/each}
+
+    <TidyTableCustomCells
+      {context}
+      {columns}
+      ctx={member}
+      entry={member.actor}
+      section={{
+        ...SheetSections.EMPTY,
+        rowActions: rowActions,
+      }}
+      {hiddenColumns}
+    />
   </div>
 {/snippet}
