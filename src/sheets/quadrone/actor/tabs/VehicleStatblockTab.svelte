@@ -15,17 +15,11 @@
   import TidyTableHeaderRow from 'src/components/table-quadrone/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table-quadrone/TidyTableHeaderCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TidyItemTableRow from 'src/components/table-quadrone/TidyItemTableRow.svelte';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
   import { VehicleMemberColumnRuntime } from 'src/runtime/tables/VehicleCrewMemberColumnRuntime';
-  import type {
-    VehicleItemContext,
-    VehicleItemCrewAssignment,
-  } from 'src/types/types';
-  import NumberInputQuadrone from 'src/components/inputs/NumberInputQuadrone.svelte';
   import VehicleItemCrewAssignments from '../vehicle-parts/VehicleItemCrewAssignments.svelte';
-  import TidyFredTable from 'src/components/table-quadrone/TidyFredTable.svelte';
+  import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
 
   const localize = FoundryAdapter.localize;
 
@@ -271,17 +265,17 @@
           }),
         )}
 
-        <TidyFredTable
+        <TidyItemTable
           {section}
           entries={section.items}
           sheetDocument={context.document}
           entryContext={context.itemContext}
           {sectionsInlineWidth}
-          {itemToggleMap}
+          entryToggleMap={itemToggleMap}
           {tabId}
           {columns}
         >
-          {#snippet bodyNoItems()}
+          {#snippet bodyNoEntries()}
             {#if !hideEmptyStates}
               {@const buttonTextKey =
                 section.key === CONSTANTS.ITEM_TYPE_EQUIPMENT
@@ -316,7 +310,7 @@
               <VehicleItemCrewAssignments {ctx} {item} />
             {/if}
           {/snippet}
-        </TidyFredTable>
+        </TidyItemTable>
       {/if}
     {:else if section.type === 'draft'}
       {@const columns = new ColumnsLoadout(

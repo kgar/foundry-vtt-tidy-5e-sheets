@@ -38,14 +38,15 @@
 - [x] Decide how drop behaviors should work
   - [x] Support drop to sort using flag sort key on sheet tab
   - [x] Support drop to transfer sections
-- [ ] It would be nice if we could have one ItemTable component that works for all item table use cases...
-  - [ ] Differences between existing tables
-    - [ ] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
-    - [ ] Spell table
-      - [ ] Table Header conditional classes and attributes
-      - [ ] Table Header primary cell end of content (slots content)
-      - [ ] Item table row conditional rowClass
-- [ ] Decide what to do about contained items and whether they should surface their parent container
+- [x] It would be nice if we could have one ItemTable component that works for all item table use cases...
+  - [x] Differences between existing tables
+    - [x] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
+    - [x] Spell table
+      - [x] Table Header row conditional classes and attributes
+      - [x] Table Header primary cell end of content (slots content)
+      - [x] Item table row conditional rowClass
+- [x] Decide what to do about contained items and whether they should surface their parent container
+- [ ] ...
 - [ ] Clean up the code and reduce redundancy
 - [ ] Review with hightouch to determine next steps
 

@@ -185,6 +185,7 @@
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                 uuid: item.uuid,
               }}
+              {ctx}
             >
               {#snippet children({ toggleSummary, expanded })}
                 <div class="highlight"></div>

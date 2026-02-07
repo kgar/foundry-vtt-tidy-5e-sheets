@@ -13,7 +13,7 @@
     VehicleItemContext,
   } from 'src/types/types';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
-  import TidyFredTable from 'src/components/table-quadrone/TidyFredTable.svelte';
+  import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
 
   interface Props {
     section: TidyItemSectionBase;
@@ -59,13 +59,13 @@
   let itemToggleMap = $derived(inlineToggleService.map);
 </script>
 
-<TidyFredTable
+<TidyItemTable
   {section}
   entries={section.items}
   {sheetDocument}
   entryContext={itemContext}
   {sectionsInlineWidth}
-  {itemToggleMap}
+  entryToggleMap={itemToggleMap}
   {tabId}
   {columns}
 >
@@ -74,4 +74,4 @@
       <span class="cell-context">{@html ctx.actionSubtitle}</span>
     {/if}
   {/snippet}
-</TidyFredTable>
+</TidyItemTable>

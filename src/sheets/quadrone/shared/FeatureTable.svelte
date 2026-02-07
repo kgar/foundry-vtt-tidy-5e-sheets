@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TidyFredTable from 'src/components/table-quadrone/TidyFredTable.svelte';
+  import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
   import { CONSTANTS } from 'src/constants';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
@@ -56,13 +56,13 @@
   );
 </script>
 
-<TidyFredTable
+<TidyItemTable
   {section}
   entries={section.items}
   {sheetDocument}
   entryContext={context.itemContext}
   {sectionsInlineWidth}
-  {itemToggleMap}
+  entryToggleMap={itemToggleMap}
   {tabId}
   {columns}
 >
@@ -79,4 +79,4 @@
       ></i>
     {/if}
   {/snippet}
-</TidyFredTable>
+</TidyItemTable>

@@ -11,7 +11,7 @@
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type { InlineToggleService } from 'src/features/expand-collapse/InlineToggleService.svelte';
-  import TidyFredTable from 'src/components/table-quadrone/TidyFredTable.svelte';
+  import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
 
   type Props = {
     containingDocument: any;
@@ -67,13 +67,13 @@
   let containerToggleMap = $derived(inlineToggleService.map);
 </script>
 
-<TidyFredTable
+<TidyItemTable
   {section}
   entries={section.items}
   {sheetDocument}
   entryContext={itemContext}
   {sectionsInlineWidth}
-  itemToggleMap={containerToggleMap}
+  entryToggleMap={containerToggleMap}
   {tabId}
   {columns}
   {root}
@@ -122,4 +122,4 @@
       />
     {/if}
   {/snippet}
-</TidyFredTable>
+</TidyItemTable>

@@ -25,6 +25,7 @@
   import TidyTableSubtitle from './parts/TidyTableSubtitle.svelte';
   import TidyTableCustomCells from './parts/TidyTableCustomCells.svelte';
   import TidyTableCustomHeaderCells from './parts/TidyTableCustomHeaderCells.svelte';
+  import type { ClassValue, HTMLAttributes } from 'svelte/elements';
 
   interface Props {
     section: TidySectionBase;
@@ -32,10 +33,14 @@
     entryContext: Record<string, any>;
     sheetDocument: Actor5e;
     sectionsInlineWidth: number;
-    itemToggleMap: SvelteMap<string, SvelteSet<string>>;
+    entryToggleMap: SvelteMap<string, SvelteSet<string>>;
     tabId: string;
     columns: ColumnsLoadout;
-    bodyNoItems?: Snippet;
+    headerRowClasses?: ClassValue;
+    headerRowAttributes?: Omit<HTMLAttributes<HTMLElement>, 'class'>;
+    rowClassFunction?: (entry: TEntry) => ClassValue;
+    bodyNoEntries?: Snippet;
+    endOfPrimaryHeaderCell?: Snippet;
     subtitle?: Snippet<[entry: TEntry, ctx: any]>;
     afterFirstCell?: Snippet<[entry: TEntry, ctx: any]>;
     afterInlineActivities?: Snippet<[entry: TEntry, ctx: any]>;
@@ -51,16 +56,20 @@
     sheetDocument,
     entryContext,
     sectionsInlineWidth,
-    itemToggleMap,
+    entryToggleMap,
     tabId,
     columns,
+    rowClassFunction,
     subtitle,
     afterInlineActivities,
     afterFirstCell,
     beforeImage,
     afterImage,
     afterEntryRow,
-    bodyNoItems,
+    bodyNoEntries,
+    endOfPrimaryHeaderCell,
+    headerRowClasses,
+    headerRowAttributes,
     root = true,
   }: Props = $props();
 
@@ -86,12 +95,16 @@
   dataset={section.dataset}
 >
   {#snippet header(expanded)}
-    <TidyTableHeaderRow class={{ 'theme-dark': root }}>
+    <TidyTableHeaderRow
+      class={[{ 'theme-dark': root }, headerRowClasses]}
+      {...headerRowAttributes}
+    >
       <TidyTableHeaderCell primary={true} class="header-label-cell">
         <h3>
           {localize(section.label)}
         </h3>
         <span class="table-header-count">{entries.length}</span>
+        {@render endOfPrimaryHeaderCell?.()}
       </TidyTableHeaderCell>
       <TidyTableCustomHeaderCells
         {columns}
@@ -105,19 +118,20 @@
   {/snippet}
 
   {#snippet body()}
-    {@const itemEntries = entries.map((entry) => ({
+    {@const entriesWithContext = entries.map((entry) => ({
       entry,
       ctx: entryContext[entry.id],
     }))}
 
-    {#if itemEntries.length}
-      {#each itemEntries as { entry, ctx }, i (entry.uuid)}
-        {@const expanded = !!itemToggleMap.get(tabId)?.has(entry.id)}
+    {#if entriesWithContext.length}
+      {#each entriesWithContext as { entry, ctx }, i (entry.uuid)}
+        {@const expanded = !!entryToggleMap.get(tabId)?.has(entry.id)}
+        {@const classes = rowClassFunction ? rowClassFunction(entry) : {}}
 
         <TidyItemTableRow
           item={entry}
           hidden={!searchResults.show(entry.uuid)}
-          rowClass={[{ expanded }]}
+          rowClass={[{ expanded }, classes]}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
             uuid: entry.uuid,
@@ -186,7 +200,7 @@
         {@render afterEntryRow?.(entry, ctx)}
       {/each}
     {:else}
-      {@render bodyNoItems?.()}
+      {@render bodyNoEntries?.()}
     {/if}
   {/snippet}
 </TidyTable>
