@@ -408,7 +408,14 @@
         "SheetTheme.hint": "Per risultati ottimali, scegli un colore vicino al centro della tavolozza dei colori.",
         "SpellcastingMethodColors.title": "Colori Modalità Preparazione Incantesimi",
         "UseHeaderBackground.title": "Usa Sfondo Intestazione",
-        "UseHeaderBackground.hint": "Include stili che supportano un'intestazione di scheda colorata con una immagine di sfondo."
+        "UseHeaderBackground.hint": "Include stili che supportano un'intestazione di scheda colorata con una immagine di sfondo.",
+        "AccentColor": {
+            "hint": "Personalizza il colore principale della scheda, inclusi pulsanti, intestazioni tabella e altri elementi dell'interfaccia utente."
+        },
+        "HeaderColor": {
+            "title": "Colore Sfondo Intestazione",
+            "hint": "Per l'intestazione della scheda, utilizzare un colore diverso dal colore principale della scheda."
+        }
     },
     "TIDY5E.FavoriteSpellLevelLabel": "Livello Incantesimo {number}",
     "TIDY5E.ApplyChanges": "Applica Modifiche",
@@ -1010,5 +1017,7 @@
     "TIDY5E.Vehicle.DraftAnimals.EmptyState": "Trascina e rilascia qui gli animali da tiro o le creature da lavoro, oppure clicca per aggiungerli.",
     "TIDY5E.Vehicle.Equipment.HP.Label": "PF Medi",
     "TIDY5E.Vehicle.Unassigned.EmptyState": "Trascina e rilascia l'equipaggio qui, oppure clicca per aggiungerlo. L'equipaggio può quindi essere assegnato all'equipaggiamento o alle caratteristiche del veicolo.",
-    "TIDY5E.Vehicle.Passenger.EmptyState": "Trascina e rilascia i passeggeri qui oppure clicca per aggiungerli."
+    "TIDY5E.Vehicle.Passenger.EmptyState": "Trascina e rilascia i passeggeri qui oppure clicca per aggiungerli.",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignora {value}",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignora Tutti Terreni Difficili"
 }

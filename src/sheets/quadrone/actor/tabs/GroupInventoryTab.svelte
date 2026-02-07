@@ -67,7 +67,7 @@
   );
 </script>
 
-<aside class="sidebar">
+<aside class="sidebar expanded">
   {#each members as member}
     {@const actorIsDead =
       member.actor.system.attributes?.hp?.value === 0 &&
