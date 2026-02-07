@@ -18,6 +18,8 @@ export type ThemeSettingsV2Old = {
 export type ThemeSettingsV3 = {
   accentColor: string;
   useHeaderBackground: boolean;
+  disableHeaderImageEffects: boolean;
+  headerBackgroundSize: string;
   headerColor: string;
   actorHeaderBackground: string;
   itemSidebarBackground: string;

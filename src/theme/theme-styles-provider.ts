@@ -28,6 +28,18 @@ export class ThemeStylesProvider {
         doc,
         idOverride
       ),
+      ...this.getHeaderBackgroundSizeDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
+      ...this.getDisableHeaderImageEffectsDeclarations(
+        selectorPrefix,
+        settings,
+        doc,
+        idOverride
+      ),
       ...this.getHeaderColorDeclarations(
         selectorPrefix,
         settings,
@@ -119,6 +131,86 @@ export class ThemeStylesProvider {
             property: '--t5e-sheet-header-bg',
             value: urlValue,
           },
+        ],
+      },
+    ];
+  }
+
+  static getHeaderBackgroundSizeDeclarations(
+    selectorPrefix: string,
+    settings: ThemeSettingsV3,
+    doc: any | undefined,
+    idOverride?: string
+  ): ThemeQuadroneStyleDeclaration[] {
+    if (isNil(settings.headerBackgroundSize, '')) {
+      return [];
+    }
+
+    const identifierRule = this.getDeclarationKeyRule(
+      'headerBackgroundSize',
+      doc,
+      idOverride
+    );
+
+    return [
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: selectorPrefix,
+        ruleset: [
+          identifierRule,
+          {
+            property: '--t5e-sheet-header-bg-size',
+            value: settings.headerBackgroundSize,
+          },
+        ],
+      },
+    ];
+  }
+
+  static getDisableHeaderImageEffectsDeclarations(
+    selectorPrefix: string,
+    settings: ThemeSettingsV3,
+    doc: any | undefined,
+    idOverride?: string
+  ): ThemeQuadroneStyleDeclaration[] {
+    if (!settings.disableHeaderImageEffects) {
+      return [];
+    }
+
+    const identifierRule = this.getDeclarationKeyRule(
+      'disableHeaderImageEffects',
+      doc,
+      idOverride
+    );
+
+    const baseSelector =
+      !doc && !idOverride ? '.tidy5e-sheet.application' : selectorPrefix;
+
+    return [
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: `${baseSelector}:not(.sheet-parchment)::before`,
+        ruleset: [
+          identifierRule,
+          { property: 'filter', value: 'none !important' },
+          { property: 'mix-blend-mode', value: 'normal !important' },
+          { property: 'opacity', value: '1 !important' },
+        ],
+      },
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: `${baseSelector}:not(.sheet-parchment)::after`,
+        ruleset: [
+          identifierRule,
+          { property: 'content', value: 'none !important' },
+        ],
+      },
+      {
+        identifier: `${identifierRule.property}: "${identifierRule.value}"`,
+        selector: `${baseSelector}:not(.sheet-parchment) .sheet-header`,
+        ruleset: [
+          identifierRule,
+          { property: 'background', value: 'none !important' },
         ],
       },
     ];

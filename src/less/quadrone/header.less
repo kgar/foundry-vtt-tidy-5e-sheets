@@ -57,13 +57,12 @@
     &::before {
       background-image: var(--t5e-sheet-header-bg, var(--t5e-background-image));
       background-position: top center;
-      background-size: auto;
+      background-size: var(--t5e-sheet-header-bg-size, cover);
       background-repeat: no-repeat;
 
       filter: grayscale(100%);
       mix-blend-mode: luminosity;
       opacity: 0.4;
-      background-size: cover;
       content: '';
       position: absolute;
       top: 0;

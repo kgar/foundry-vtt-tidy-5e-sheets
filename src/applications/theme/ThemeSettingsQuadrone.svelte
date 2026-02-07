@@ -188,6 +188,53 @@
             />
           </div>
         </div>
+
+        <div class="form-group">
+          <label for="{idPrefix}-disable-header-image-effects">
+            {localize('TIDY5E.ThemeSettings.DisableHeaderImageEffects.title')}
+          </label>
+          <div class="form-fields">
+            <input
+              id="{idPrefix}-disable-header-image-effects"
+              type="checkbox"
+              bind:checked={context.value.disableHeaderImageEffects}
+            />
+          </div>
+          <p class="hint">
+            {localize('TIDY5E.ThemeSettings.DisableHeaderImageEffects.hint')}
+          </p>
+        </div>
+
+        <div class="form-group">
+          <label for="{idPrefix}-header-background-size">
+            {localize('TIDY5E.ThemeSettings.HeaderBackgroundSize.title')}
+          </label>
+          <div class="form-fields">
+            <select
+              id="{idPrefix}-header-background-size"
+              bind:value={context.value.headerBackgroundSize}
+            >
+              <option value="cover">
+                {localize(
+                  'TIDY5E.ThemeSettings.HeaderBackgroundSize.option.cover',
+                )}
+              </option>
+              <option value="contain">
+                {localize(
+                  'TIDY5E.ThemeSettings.HeaderBackgroundSize.option.contain',
+                )}
+              </option>
+              <option value="auto">
+                {localize(
+                  'TIDY5E.ThemeSettings.HeaderBackgroundSize.option.auto',
+                )}
+              </option>
+            </select>
+          </div>
+          <p class="hint">
+            {localize('TIDY5E.ThemeSettings.HeaderBackgroundSize.hint')}
+          </p>
+        </div>
         
         <ThemeSettingColorFormGroupQuadrone
           key="header-color"

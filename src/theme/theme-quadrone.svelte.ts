@@ -58,6 +58,8 @@ export class ThemeQuadrone {
     const defaults = {
       accentColor: '',
       useHeaderBackground: true,
+      disableHeaderImageEffects: false,
+      headerBackgroundSize: 'cover',
       headerColor: '',
       actorHeaderBackground: '',
       itemSidebarBackground: '',

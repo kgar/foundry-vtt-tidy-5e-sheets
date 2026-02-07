@@ -812,6 +812,13 @@
     },
     "UseHeaderBackground.title": "Use Header Background",
     "UseHeaderBackground.hint": "Includes styles that support a colorful sheet header with an image background.",
+    "DisableHeaderImageEffects.title": "Disable Header Image Effects",
+    "DisableHeaderImageEffects.hint": "Removes filters and overlays applied to the header image.",
+    "HeaderBackgroundSize.title": "Header Background Size",
+    "HeaderBackgroundSize.hint": "Controls how the header image is scaled.",
+    "HeaderBackgroundSize.option.cover": "Cover",
+    "HeaderBackgroundSize.option.contain": "Contain",
+    "HeaderBackgroundSize.option.auto": "Auto",
     "ActorHeaderBackground.title": "Actor Header Background",
     "ItemSidebarBackground.title": "Item Sidebar Background",
     "HeaderColor": {
