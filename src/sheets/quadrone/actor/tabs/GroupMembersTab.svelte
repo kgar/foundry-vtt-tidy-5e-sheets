@@ -14,7 +14,6 @@
     GroupMemberSection,
     TidySectionBase,
   } from 'src/types/types';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
@@ -26,6 +25,8 @@
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -137,9 +138,7 @@
 
       <TidyTable key={section.key} data-custom-section={section.custom}>
         {#snippet header()}
-          <TidyTableHeaderRow
-            class="theme-dark"
-          >
+          <TidyTableHeaderRow class="theme-dark">
             <TidyTableHeaderCell primary={true}>
               <h3>
                 {localize(section.label)}
@@ -170,28 +169,7 @@
   hiddenColumns: Set<string>,
   section: TidySectionBase,
 )}
-  {#each columns.ordered as column}
-    {@const hidden = hiddenColumns.has(column.key)}
-    <TidyTableHeaderCell
-      class={[column.headerClasses, { hidden }]}
-      columnWidth="{column.widthRems}rem"
-      data-tidy-column-key={column.key}
-    >
-      {#if !!column.headerContent}
-        {#if column.headerContent.type === 'callback'}
-          {@html column.headerContent.callback?.(context.document, context)}
-        {:else if column.headerContent.type === 'component'}
-          <column.headerContent.component
-            sheetContext={context}
-            sheetDocument={context.document}
-            {section}
-          />
-        {:else if column.headerContent.type === 'html'}
-          {@html column.headerContent.html}
-        {/if}
-      {/if}
-    </TidyTableHeaderCell>
-  {/each}
+  <TidyTableCustomHeaderCells {columns} {context} {hiddenColumns} {section} />
 {/snippet}
 
 {#snippet tableRow(
@@ -216,24 +194,14 @@
   >
     <GroupMemberNameCell {member} />
     {#if member.canObserve}
-      {#each columns.ordered as column}
-        {@const hidden = hiddenColumns.has(column.key)}
-        <TidyTableCell
-          columnWidth="{column.widthRems}rem"
-          class={[column.cellClasses, { hidden }]}
-          attributes={{ ['data-tidy-column-key']: column.key }}
-        >
-          {#if column.cellContent.type === 'callback'}
-            {@html column.cellContent.callback?.(context.document, context)}
-          {:else if column.cellContent.type === 'component'}
-            <column.cellContent.component
-              rowContext={member}
-              rowDocument={member.actor}
-              {section}
-            />
-          {/if}
-        </TidyTableCell>
-      {/each}
+      <TidyTableCustomCells
+        {columns}
+        {context}
+        ctx={member}
+        entry={member.actor}
+        {hiddenColumns}
+        {section}
+      />
     {/if}
   </div>
 {/snippet}

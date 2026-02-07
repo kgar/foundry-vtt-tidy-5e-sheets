@@ -17,10 +17,11 @@
   interface Props {
     chatData: ItemChatData;
     item?: Item5e | undefined;
-    afterInlineActivities?: Snippet<[Item5e]>;
+    afterInlineActivities?: Snippet<[Item5e | undefined, any | undefined]>;
+    ctx?: any;
   }
 
-  let { chatData, item, afterInlineActivities }: Props = $props();
+  let { chatData, item, afterInlineActivities, ctx }: Props = $props();
 
   let itemSummaryCommands = $derived(
     ItemSummaryRuntime.getItemSummaryCommands(item),
@@ -56,7 +57,7 @@
   {#if activities.length > 0}
     <TidyInlineActivitiesList {item} {activities} />
   {/if}
-  {@render afterInlineActivities?.(item)}
+  {@render afterInlineActivities?.(item, ctx)}
 {/if}
 
 <div
@@ -117,5 +118,5 @@
   {#if activities.length > 0}
     <TidyInlineActivitiesList {item} {activities} />
   {/if}
-  {@render afterInlineActivities?.(item)}
+  {@render afterInlineActivities?.(item, ctx)}
 {/if}
