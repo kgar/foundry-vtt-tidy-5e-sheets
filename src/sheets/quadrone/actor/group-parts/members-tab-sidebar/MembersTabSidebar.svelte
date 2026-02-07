@@ -48,7 +48,7 @@
 <GroupToolTooltip bind:this={toolTooltip} sheetDocument={context.document} />
 
 <aside
-  class="sidebar"
+  class="sidebar expanded"
   style:--t5e-member-color-hover={emphasizedMember?.highlightColor}
   style:--t5e-member-color-background={emphasizedMember?.backgroundColor}
 >
