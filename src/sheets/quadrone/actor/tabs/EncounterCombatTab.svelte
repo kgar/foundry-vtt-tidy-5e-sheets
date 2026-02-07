@@ -13,9 +13,10 @@
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
   import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let combatants = $derived(context.combatants);
@@ -176,31 +177,15 @@
 </section>
 
 {#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
-  {#each columns.ordered as column}
-    {@const hidden = hiddenColumns.has(column.key)}
-    <TidyTableHeaderCell
-      class={[column.headerClasses, { hidden }]}
-      columnWidth="{column.widthRems}rem"
-      data-tidy-column-key={column.key}
-    >
-      {#if !!column.headerContent}
-        {#if column.headerContent.type === 'callback'}
-          {@html column.headerContent.callback?.(context.document, context)}
-        {:else if column.headerContent.type === 'component'}
-          <column.headerContent.component
-            sheetContext={context}
-            sheetDocument={context.document}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
-          />
-        {:else if column.headerContent.type === 'html'}
-          {@html column.headerContent.html}
-        {/if}
-      {/if}
-    </TidyTableHeaderCell>
-  {/each}
+  <TidyTableCustomHeaderCells
+    {columns}
+    {context}
+    {hiddenColumns}
+    section={{
+      ...SheetSections.EMPTY,
+      rowActions: rowActions,
+    }}
+  />
 {/snippet}
 
 {#snippet tableRow(
@@ -232,26 +217,17 @@
     {:else if member}
       <EncounterMemberNameCell {member} />
     {/if}
-    {#each columns.ordered as column}
-      {@const hidden = hiddenColumns.has(column.key)}
-      <TidyTableCell
-        columnWidth="{column.widthRems}rem"
-        class={[column.cellClasses, { hidden }]}
-        attributes={{ ['data-tidy-column-key']: column.key }}
-      >
-        {#if column.cellContent.type === 'callback'}
-          {@html column.cellContent.callback?.(context.document, context)}
-        {:else if column.cellContent.type === 'component'}
-          <column.cellContent.component
-            rowContext={combatant}
-            rowDocument={member?.actor}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
-          />
-        {/if}
-      </TidyTableCell>
-    {/each}
+
+    <TidyTableCustomCells
+      {columns}
+      {context}
+      ctx={combatant}
+      section={{
+        ...SheetSections.EMPTY,
+        rowActions: rowActions,
+      }}
+      entry={member?.actor}
+      {hiddenColumns}
+    />
   </div>
 {/snippet}
