@@ -30,17 +30,6 @@
       }
     }
 
-    // h3 {
-    //   margin-block-end: var(--t5e-size-1x);
-    //   font-size: var(--font-size-13);
-    //   font-family: var(--t5e-font-roboto-condensed);
-    //   font-weight: 500;
-    // }
-
-    // label.checkbox {
-    //   min-height: 1.5rem;
-    // }
-
     .dialog-content-container {
       display: flex;
       flex: 1;
@@ -73,6 +62,30 @@
         flex: 1;
         text-wrap: none;
       }
+    }
+  }
+
+  // Sheet Default Preferences
+  &.tidy5e-sheet-preferences {
+    .settings-header {
+      margin-bottom: var(--t5e-size-1x);
+    }
+    .settings-description {
+      margin-bottom: var(--t5e-size-3x);
+    }
+
+    .tidy-table-header-row {
+      max-height: fit-content;
+    }
+
+    .tidy-table-header-row .tidy-table-header-cell {
+      padding-top: var(--t5e-size-1x);
+      padding-bottom: var(--t5e-size-1x);
+    }
+
+    .tidy-table-row .tidy-table-cell {
+      align-items: center;
+      padding-left: var(--t5e-size-2x);
     }
   }
 

@@ -135,16 +135,18 @@
 <div class="button-bar">
   <button
     type="button"
-    class="button button-primary save-changes-btn"
-    onclick={() => app.save()}
+    class="button button-secondary button-large use-default-btn"
+    onclick={() => app.useDefault()}
   >
-    {localize('TIDY5E.SaveChanges')}
+    <i class="fas fa-rotate-left"></i>
+    {localize('TIDY5E.UseDefault')}
   </button>
   <button
     type="button"
-    class="button button-secondary use-default-btn"
-    onclick={() => app.useDefault()}
+    class="button button-primary button-large button-save save-changes-btn"
+    onclick={() => app.save()}
   >
-    {localize('TIDY5E.UseDefault')}
+    <i class="fas fa-save"></i>
+    {localize('TIDY5E.SaveChanges')}
   </button>
 </div>
