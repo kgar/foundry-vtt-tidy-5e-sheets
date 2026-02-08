@@ -980,5 +980,14 @@
     "TIDY5E.Vehicle.Unassigned.EmptyState": "Arraste e solte a tripulação aqui ou clique para adicionar. A tripulação pode então ser atribuída a equipamentos ou recursos do veículo.",
     "TIDY5E.Vehicle.Passenger.EmptyState": "Arraste e solte os passageiros aqui ou clique para adicionar.",
     "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignorar {value}",
-    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorar Todos Terrenos Difíceis"
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorar Todos Terrenos Difíceis",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollSave": "Rolar Salvaguarda de Contaminação",
+            "rollMutation": "Role para Mutação",
+            "rolledMutation": "{name} rolou para uma mutação com um nível de contaminação de {level}.",
+            "clear": "Limpar Contaminação",
+            "none": "Sem contaminação ou sintomas."
+        }
+    }
 }
