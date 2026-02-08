@@ -18,8 +18,7 @@ export type ThemeSettingsV2Old = {
 export type ThemeSettingsV3 = {
   accentColor: string;
   useHeaderBackground: boolean;
-  disableHeaderImageEffects: boolean;
-  headerBackgroundSize: string;
+  headerStyle?: HeaderStyle;
   headerColor: string;
   actorHeaderBackground: string;
   itemSidebarBackground: string;
@@ -70,3 +69,5 @@ export type ThemeSettingsConfigurationOptions = {
 };
 
 export type PortraitShape = 'transparent' | 'round' | 'square' | 'token';
+
+export type HeaderStyle = 'default' | 'unstyled' | 'parchment';

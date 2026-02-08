@@ -97,6 +97,18 @@
     }
   }
 
+  &:not(.sheet-parchment).sheet-header-unstyled {
+    &::before {
+      filter: none;
+      mix-blend-mode: normal;
+      opacity: 1;
+    }
+
+    &::after {
+      content: none;
+    }
+  }
+
   /* PARCHMENT HEADER STYLES
   /* ------------------------------------------------------------ */
   &.sheet-parchment {
@@ -111,22 +123,32 @@
     --t5e-sheet-header-bg: url('@{banner-npc-dark}');
     @denim065: '../../modules/tidy5e-sheet/images/denim065.png';
     --t5e-background-image: url('@{denim065}');
-    background: var(--t5e-background-image), var(--t5e-component-card-dark-darker);
+    background:
+      var(--t5e-background-image),
+      var(--t5e-component-card-dark-darker);
     background-position: top center, center;
     background-repeat: repeat, no-repeat;
     background-size: auto, cover;
 
     &::before {
       @texture-gray-1: '../../modules/tidy5e-sheet/images/texture-gray-1.webp';
-      --t5e-background-image: url('@{texture-gray-1}');
-
       content: '';
-      background-image: var(--t5e-background-image);
+      background-image:
+        var(--t5e-sheet-header-bg, none),
+        url('@{texture-gray-1}');
       background-position: top center;
       background-repeat: no-repeat;
+      background-size: cover, auto;
       filter: none;
       mix-blend-mode: normal;
       opacity: 0.24;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: -2;
+      width: 100%;
+      height: 18.75rem;
     }
 
     &::after {

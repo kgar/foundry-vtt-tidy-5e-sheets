@@ -58,8 +58,7 @@ export class ThemeQuadrone {
     const defaults = {
       accentColor: '',
       useHeaderBackground: true,
-      disableHeaderImageEffects: false,
-      headerBackgroundSize: 'cover',
+      headerStyle: 'default',
       headerColor: '',
       actorHeaderBackground: '',
       itemSidebarBackground: '',
@@ -120,6 +119,12 @@ export class ThemeQuadrone {
       defaultSettings,
       sheetFlagSettings
     ) as ThemeSettingsV3;
+
+    if (!preferences.headerStyle) {
+      preferences.headerStyle = preferences.useHeaderBackground
+        ? 'default'
+        : 'parchment';
+    }
 
     if (
       options.doc?.flags.dnd5e?.[CONSTANTS.SYSTEM_FLAG_SHOW_TOKEN_PORTRAIT] ===

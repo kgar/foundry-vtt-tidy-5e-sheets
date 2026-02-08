@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { SvelteApplicationMixin } from 'src/mixins/SvelteApplicationMixin.svelte';
 import type {
+  HeaderStyle,
   PortraitShape,
   ThemeColorSetting,
   ThemeSettingsConfigurationOptions,
@@ -26,9 +27,7 @@ export type ThemeColorSettingConfigEntry = ThemeColorSetting & {
 export type ThemeSettingsContext = {
   value: {
     accentColor: string;
-    useHeaderBackground: boolean;
-    disableHeaderImageEffects: boolean;
-    headerBackgroundSize: string;
+    headerStyle: HeaderStyle;
     headerColor: string;
     actorHeaderBackground: string;
     itemSidebarBackground: string;
@@ -48,9 +47,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   _settings: ThemeSettingsContext = $state({
     value: {
       accentColor: '',
-      useHeaderBackground: true,
-      disableHeaderImageEffects: false,
-      headerBackgroundSize: 'cover',
+      headerStyle: 'default',
       headerColor: '',
       actorHeaderBackground: '',
       itemSidebarBackground: '',
@@ -144,6 +141,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
               applyWorldThemeSetting: false,
               alternateDefaults: {
                 useHeaderBackground: worldSettings.useHeaderBackground,
+                    headerStyle: worldSettings.headerStyle,
               },
             })
           : worldSettings
@@ -158,9 +156,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {
       value: {
         accentColor: themeSettings.accentColor,
-        useHeaderBackground: themeSettings.useHeaderBackground,
-        disableHeaderImageEffects: themeSettings.disableHeaderImageEffects,
-        headerBackgroundSize: themeSettings.headerBackgroundSize,
+        headerStyle: themeSettings.headerStyle ?? 'default',
         headerColor: themeSettings.headerColor,
         actorHeaderBackground: themeSettings.actorHeaderBackground,
         itemSidebarBackground: themeSettings.itemSidebarBackground,
@@ -211,9 +207,8 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
   mapContextToSettings(context: ThemeSettingsContext): ThemeSettingsV3 {
     return {
       accentColor: context.value.accentColor ?? '',
-      useHeaderBackground: context.value.useHeaderBackground,
-      disableHeaderImageEffects: context.value.disableHeaderImageEffects,
-      headerBackgroundSize: context.value.headerBackgroundSize,
+      useHeaderBackground: context.value.headerStyle !== 'parchment',
+      headerStyle: context.value.headerStyle,
       headerColor: context.value.headerColor,
       actorHeaderBackground: context.value.actorHeaderBackground,
       itemSidebarBackground: context.value.itemSidebarBackground,

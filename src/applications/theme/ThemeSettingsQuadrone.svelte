@@ -154,22 +154,25 @@
 
     {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
       <div class="form-group">
-        <label for="{idPrefix}-use-header-background">
-          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
+        <label for="{idPrefix}-header-style">
+          {localize('TIDY5E.ThemeSettings.HeaderStyle.title')}
         </label>
         <div class="form-fields">
-          <input
-            id="{idPrefix}-use-header-background"
-            type="checkbox"
-            bind:checked={context.value.useHeaderBackground}
-          />
+          <select id="{idPrefix}-header-style" bind:value={context.value.headerStyle}>
+            <option value="default">
+              {localize('TIDY5E.ThemeSettings.HeaderStyle.option.default')}
+            </option>
+            <option value="unstyled">
+              {localize('TIDY5E.ThemeSettings.HeaderStyle.option.unstyled')}
+            </option>
+            <option value="parchment">
+              {localize('TIDY5E.ThemeSettings.HeaderStyle.option.parchment')}
+            </option>
+          </select>
         </div>
-        <p class="hint">
-          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.hint')}
-        </p>
       </div>
 
-      {#if context.value.useHeaderBackground}
+      {#if context.value.headerStyle !== 'parchment'}
         <div class="form-group">
           <label for="{idPrefix}-actor-header-background">
             {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
@@ -187,53 +190,6 @@
                 (context.value.actorHeaderBackground = image)}
             />
           </div>
-        </div>
-
-        <div class="form-group">
-          <label for="{idPrefix}-disable-header-image-effects">
-            {localize('TIDY5E.ThemeSettings.DisableHeaderImageEffects.title')}
-          </label>
-          <div class="form-fields">
-            <input
-              id="{idPrefix}-disable-header-image-effects"
-              type="checkbox"
-              bind:checked={context.value.disableHeaderImageEffects}
-            />
-          </div>
-          <p class="hint">
-            {localize('TIDY5E.ThemeSettings.DisableHeaderImageEffects.hint')}
-          </p>
-        </div>
-
-        <div class="form-group">
-          <label for="{idPrefix}-header-background-size">
-            {localize('TIDY5E.ThemeSettings.HeaderBackgroundSize.title')}
-          </label>
-          <div class="form-fields">
-            <select
-              id="{idPrefix}-header-background-size"
-              bind:value={context.value.headerBackgroundSize}
-            >
-              <option value="cover">
-                {localize(
-                  'TIDY5E.ThemeSettings.HeaderBackgroundSize.option.cover',
-                )}
-              </option>
-              <option value="contain">
-                {localize(
-                  'TIDY5E.ThemeSettings.HeaderBackgroundSize.option.contain',
-                )}
-              </option>
-              <option value="auto">
-                {localize(
-                  'TIDY5E.ThemeSettings.HeaderBackgroundSize.option.auto',
-                )}
-              </option>
-            </select>
-          </div>
-          <p class="hint">
-            {localize('TIDY5E.ThemeSettings.HeaderBackgroundSize.hint')}
-          </p>
         </div>
         
         <ThemeSettingColorFormGroupQuadrone

@@ -57,12 +57,9 @@
     "TIDY5E.JournalEntry.NewTitle": "Запись в Журнале {number}",
     "TIDY5E.TogglePersonalityInfo": "Переключить Подробности Личности",
     "TIDY5E.ThemeSettings": {
-        "DisableHeaderImageEffects.title": "Отключить эффекты изображения заголовка",
-        "DisableHeaderImageEffects.hint": "Убирает фильтры и наложения, применяемые к изображению заголовка.",
-        "HeaderBackgroundSize.title": "Размер фонового изображения заголовка",
-        "HeaderBackgroundSize.hint": "Управляет масштабированием изображения заголовка.",
-        "HeaderBackgroundSize.option.cover": "Покрыть",
-        "HeaderBackgroundSize.option.contain": "Вместить",
-        "HeaderBackgroundSize.option.auto": "Авто"
+        "HeaderStyle.title": "Стиль заголовка",
+        "HeaderStyle.option.default": "По умолчанию",
+        "HeaderStyle.option.unstyled": "Без стилей",
+        "HeaderStyle.option.parchment": "Пергамент"
     }
 }
