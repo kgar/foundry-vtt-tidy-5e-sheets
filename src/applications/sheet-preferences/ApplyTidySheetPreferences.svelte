@@ -42,7 +42,8 @@
 </script>
 
 <div class="dialog-content-container flexcol">
-  <div>
+  <h2 class="settings-header">{localize('TIDY5E.Settings.SheetPreferences.name')}</h2>
+  <div class="settings-description">
     {localize('TIDY5E.Settings.SheetPreferences.explanation')}
   </div>
   <div class="scroll-container">
@@ -92,9 +93,10 @@
   </p>
   <button
     type="button"
-    class="button button-secondary use-default-btn"
+    class="button button-primary button-large use-default-btn"
     onclick={() => onConfirm()}
   >
-    {localize('TIDY5E.ButtonConfirm.Text')}
+  <i class="fas fa-save"></i>
+    {localize('TIDY5E.SaveChanges')}
   </button>
 </div>

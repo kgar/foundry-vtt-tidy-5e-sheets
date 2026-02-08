@@ -259,24 +259,26 @@
 <div class="button-bar">
   <button
     type="button"
-    class="button button-primary save-changes-btn"
-    onclick={() => app.save()}
-  >
-    {localize('TIDY5E.SaveChanges')}
-  </button>
-  <button
-    type="button"
-    class="button button-secondary use-default-btn"
+    class="button button-secondary button-large use-default-btn"
     onclick={() => app.useDefault()}
   >
+    <i class="fas fa-rotate-left"></i>
     {localize('TIDY5E.UseDefault')}
   </button>
   <button
     type="button"
-    class="button button-secondary apply-changes-btn"
+    class="button button-secondary button-large apply-changes-btn"
     data-testid="section-config-apply-changes"
     onclick={() => app.close()}
   >
     {localize('Cancel')}
+  </button>
+  <button
+    type="button"
+    class="button button-primary button-large button-save save-changes-btn"
+    onclick={() => app.save()}
+  >
+    <i class="fas fa-save"></i>
+    {localize('TIDY5E.SaveChanges')}
   </button>
 </div>
