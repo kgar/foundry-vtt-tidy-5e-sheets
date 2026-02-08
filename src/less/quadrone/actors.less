@@ -1309,9 +1309,19 @@
     padding-inline-end: 0;
   }
 
-  .tidy-tab.inventory {
+  .main-content .tidy-tab {
+    &:has(.tab-content) {
+      padding-right: 0;
+      padding-top: 0;
+      row-gap: 0;
+    }
 
-    .inventory-content {
+    .action-bar {
+      padding-block-start: var(--t5e-size-3x);
+      padding-inline-end: var(--t5e-size-4x);
+    }
+    
+    .tab-content {
       display: flex;
       flex-direction: column;
       flex: 1 1 0;
@@ -1320,6 +1330,19 @@
       padding-inline-end: var(--t5e-size-4x);
       row-gap: var(--t5e-size-3x);
     }
+  }
+
+  .tidy-tab.inventory {
+
+    // .tab-content {
+    //   display: flex;
+    //   flex-direction: column;
+    //   flex: 1 1 0;
+    //   overflow: auto;
+    //   padding-block-start: var(--t5e-size-3x);
+    //   padding-inline-end: var(--t5e-size-4x);
+    //   row-gap: var(--t5e-size-3x);
+    // }
 
     .inline-content-view .currency-container {
       gap: var(--t5e-size-1x);

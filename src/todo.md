@@ -148,6 +148,8 @@
 
 ## hightouch To Do
 
+- [ ] Surface edit icon in non-edit mode Biography tab
+- [ ] Add fallback image for broken image links (text appears today)
 - [ ] Request from Kharmans: Specify base overrides for different sheet images instead of just a global setting.
 - [ ] Add support for sheet highlight color and separate header color.
 - [ ] Request from Tyler: provide performance settings in Tidy that can disable animations and other similarly taxing CSS.

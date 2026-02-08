@@ -68,14 +68,16 @@
 
 <ItemsActionBar bind:searchCriteria sections={actions} {tabId} {tabOptionGroups} />
 
-{#if showSheetPins}
-  <SheetPins />
-{/if}
+<div class="tab-content">
+  {#if showSheetPins}
+    <SheetPins />
+  {/if}
 
-<ActionTables
-  sections={actions}
-  {inlineToggleService}
-  itemContext={context.itemContext}
-  {searchCriteria}
-  sheetDocument={context.actor}
-/>
+  <ActionTables
+    sections={actions}
+    {inlineToggleService}
+    itemContext={context.itemContext}
+    {searchCriteria}
+    sheetDocument={context.actor}
+  />
+</div>
