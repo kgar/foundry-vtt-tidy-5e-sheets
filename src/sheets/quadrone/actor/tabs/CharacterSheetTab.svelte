@@ -162,118 +162,120 @@
 
 <ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
-{#if showSheetPins}
-  <SheetPins />
-{/if}
+<div class="tab-content">
+  {#if showSheetPins}
+    <SheetPins />
+  {/if}
 
-<div
-  class="tidy-table-container"
-  bind:this={sectionsContainer}
-  data-sort-key={TidyFlags.characterSheetTabSortOrder.prop}
->
-  {#if !hasAtLeastOneItem}
-    <div class="empty-state-container empty-state-description">
-      {localize('TIDY5E.SheetLock.Empty.Hint')}
-    </div>
-  {:else}
-    {#each sections as section}
-      {#if 'type' in section}
-        {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
-          {@const hasViewableItems = ItemVisibility.hasViewableItems(
-            section.items,
-            searchResults.uuids,
-          )}
+  <div
+    class="tidy-table-container"
+    bind:this={sectionsContainer}
+    data-sort-key={TidyFlags.characterSheetTabSortOrder.prop}
+  >
+    {#if !hasAtLeastOneItem}
+      <div class="empty-state-container empty-state-description">
+        {localize('TIDY5E.SheetLock.Empty.Hint')}
+      </div>
+    {:else}
+      {#each sections as section}
+        {#if 'type' in section}
+          {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
+            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+              section.items,
+              searchResults.uuids,
+            )}
 
-          {#if section.show && hasViewableItems}
-            {@const columns = new ColumnsLoadout(
-              ItemColumnRuntime.getConfiguredColumnSpecifications({
-                sheetType: context.document.type,
-                tabId: tabId,
-                sectionKey: section.key,
-                rowActions: section.rowActions,
-                section: section,
-                sheetDocument: context.document,
-              }),
+            {#if section.show && hasViewableItems}
+              {@const columns = new ColumnsLoadout(
+                ItemColumnRuntime.getConfiguredColumnSpecifications({
+                  sheetType: context.document.type,
+                  tabId: tabId,
+                  sectionKey: section.key,
+                  rowActions: section.rowActions,
+                  section: section,
+                  sheetDocument: context.document,
+                }),
+              )}
+              <SpellTable
+                {section}
+                sheetDocument={context.document}
+                {sectionsInlineWidth}
+                {itemToggleMap}
+                {columns}
+              />
+            {/if}
+          {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
+            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+              section.items,
+              searchResults.uuids,
             )}
-            <SpellTable
-              {section}
-              sheetDocument={context.document}
-              {sectionsInlineWidth}
-              {itemToggleMap}
-              {columns}
-            />
-          {/if}
-        {:else if section.type === CONSTANTS.SECTION_TYPE_INVENTORY}
-          {@const hasViewableItems = ItemVisibility.hasViewableItems(
-            section.items,
-            searchResults.uuids,
-          )}
-          {#if section.show && hasViewableItems}
-            {@const columns = new ColumnsLoadout(
-              ItemColumnRuntime.getConfiguredColumnSpecifications({
-                sheetType: context.document.type,
-                tabId: tabId,
-                sectionKey: section.key,
-                rowActions: section.rowActions,
-                section: section,
-                sheetDocument: context.document,
-              }),
+            {#if section.show && hasViewableItems}
+              {@const columns = new ColumnsLoadout(
+                ItemColumnRuntime.getConfiguredColumnSpecifications({
+                  sheetType: context.document.type,
+                  tabId: tabId,
+                  sectionKey: section.key,
+                  rowActions: section.rowActions,
+                  section: section,
+                  sheetDocument: context.document,
+                }),
+              )}
+              <InventoryTable
+                containingDocument={context.document}
+                editable={context.editable}
+                {inlineToggleService}
+                itemContext={context.itemContext}
+                root={true}
+                {searchCriteria}
+                {section}
+                {sectionsInlineWidth}
+                sheetDocument={context.document}
+                {tabId}
+                {columns}
+              />
+            {/if}
+          {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
+            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+              section.items,
+              searchResults.uuids,
             )}
-            <InventoryTable
-              containingDocument={context.document}
-              editable={context.editable}
-              {inlineToggleService}
-              itemContext={context.itemContext}
-              root={true}
-              {searchCriteria}
-              {section}
-              {sectionsInlineWidth}
-              sheetDocument={context.document}
-              {tabId}
-              {columns}
-            />
-          {/if}
-        {:else if section.type === CONSTANTS.SECTION_TYPE_FEATURE}
-          {@const hasViewableItems = ItemVisibility.hasViewableItems(
-            section.items,
-            searchResults.uuids,
-          )}
-          {#if section.show && hasViewableItems}
-            {@const columns = new ColumnsLoadout(
-              ItemColumnRuntime.getConfiguredColumnSpecifications({
-                sheetType: context.document.type,
-                tabId,
-                sectionKey: section.key,
-                rowActions: section.rowActions,
-                section: section,
-                sheetDocument: context.document,
-              }),
+            {#if section.show && hasViewableItems}
+              {@const columns = new ColumnsLoadout(
+                ItemColumnRuntime.getConfiguredColumnSpecifications({
+                  sheetType: context.document.type,
+                  tabId,
+                  sectionKey: section.key,
+                  rowActions: section.rowActions,
+                  section: section,
+                  sheetDocument: context.document,
+                }),
+              )}
+              <FeatureTable
+                {section}
+                {itemToggleMap}
+                {sectionsInlineWidth}
+                sheetDocument={context.document}
+                {columns}
+              />
+            {/if}
+          {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
+            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+              section.items,
+              searchResults.uuids,
             )}
-            <FeatureTable
-              {section}
-              {itemToggleMap}
-              {sectionsInlineWidth}
-              sheetDocument={context.document}
-              {columns}
-            />
-          {/if}
-        {:else if section.type === CONSTANTS.SECTION_TYPE_CUSTOM}
-          {@const hasViewableItems = ItemVisibility.hasViewableItems(
-            section.items,
-            searchResults.uuids,
-          )}
-          {#if section.show && hasViewableItems}
-            <ActionTable
-              {inlineToggleService}
-              itemContext={context.itemContext}
-              {section}
-              {sectionsInlineWidth}
-              sheetDocument={context.document}
-              {tabId}
-            />
+            {#if section.show && hasViewableItems}
+              <ActionTable
+                {inlineToggleService}
+                itemContext={context.itemContext}
+                {section}
+                {sectionsInlineWidth}
+                sheetDocument={context.document}
+                {tabId}
+              />
+            {/if}
           {/if}
         {/if}
-      {/if}
-    {/each}
-  {/if}
+      {/each}
+    {/if}
+  </div>
 </div>
