@@ -165,7 +165,7 @@
   {/each}
 </aside>
 <div class="group-tab-content flexcol">
-  <div class="inventory-content">
+  <div class="tab-content">
     <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
     {#if showSheetPins}
