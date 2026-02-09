@@ -14,7 +14,6 @@
     tabId: string;
     sections: TidySectionBase[];
     tabOptionGroups?: SectionOptionGroup[];
-    className?: string;
   }
 
   let {
@@ -22,7 +21,6 @@
     tabId,
     sections,
     tabOptionGroups = [],
-    className = '',
   }: Props = $props();
 
   let context = $derived(getSheetContext<DocumentSheetV2Context>());
@@ -50,7 +48,6 @@
 </script>
 
 <ItemsActionBar
-  class={className}
   bind:searchCriteria
   {tabId}
   {sections}

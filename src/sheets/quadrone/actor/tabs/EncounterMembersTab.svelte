@@ -60,66 +60,69 @@
 
 <GroupMemberHpTooltip bind:this={hpTooltip} sheetDocument={context.document} />
 
-<section
-  class="group-tab-content group-members-content flexcol"
-  bind:this={sectionsContainer}
->
-  {#if showSheetPins}
-    <SheetPins />
-  {/if}
+<div class="tab-right-column">
+  <div class="tab-content">
+    <section
+      class="group-tab-content group-members-content flexcol"
+      bind:this={sectionsContainer}
+    >
+      {#if showSheetPins}
+        <SheetPins />
+      {/if}
 
-  {#if npcs.length}
-    {@const columns = new ColumnsLoadout(
-      EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
-        tabId: CONSTANTS.TAB_MEMBERS,
-        sectionKey: CONSTANTS.SHEET_TYPE_NPC,
-        rowActions: rowActions,
-        section: { ...SheetSections.EMPTY, rowActions },
-        sheetDocument: context.actor,
-      }),
-    )}
-    {@const visibleItemCount = npcs.length}
-    {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth,
-      columns,
-    )}
+      {#if npcs.length}
+        {@const columns = new ColumnsLoadout(
+          EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
+            sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
+            tabId: CONSTANTS.TAB_MEMBERS,
+            sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+            rowActions: rowActions,
+            section: { ...SheetSections.EMPTY, rowActions },
+            sheetDocument: context.actor,
+          }),
+        )}
+        {@const visibleItemCount = npcs.length}
+        {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
+          sectionsInlineWidth,
+          columns,
+        )}
 
-    {#if context.difficulty?.label}
-      <div class="difficulty-row flexrow">
-        <div
-          class="pill pill-medium flexshrink"
-          data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
-            .label}"
-        >
-          {context.difficulty.label}
-        </div>
+        {#if context.difficulty?.label}
+          <div class="difficulty-row flexrow">
+            <div
+              class="pill pill-medium flexshrink"
+              data-tooltip="{localize('TIDY5E.Difficulty')}: {context.difficulty
+                .label}"
+            >
+              {context.difficulty.label}
+            </div>
 
-        <EncounterXPBudgetBar difficulty={context.difficulty} />
-      </div>
-    {/if}
+            <EncounterXPBudgetBar difficulty={context.difficulty} />
+          </div>
+        {/if}
 
-    <TidyTable key="npcs">
-      {#snippet header()}
-        <TidyTableHeaderRow class="theme-dark">
-          <TidyTableHeaderCell primary={true}>
-            <h3>
-              {localize('DND5E.ENCOUNTER.Tab.Members')}
-              <span class="table-header-count">{visibleItemCount}</span>
-            </h3>
-          </TidyTableHeaderCell>
-          {@render headerColumns(columns, hiddenColumns)}
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each npcs as member}
-          {@render tableRow(member, columns, hiddenColumns)}
-        {/each}
-      {/snippet}
-    </TidyTable>
-  {/if}
-</section>
-
+        <TidyTable key="npcs">
+          {#snippet header()}
+            <TidyTableHeaderRow class="theme-dark">
+              <TidyTableHeaderCell primary={true}>
+                <h3>
+                  {localize('DND5E.ENCOUNTER.Tab.Members')}
+                  <span class="table-header-count">{visibleItemCount}</span>
+                </h3>
+              </TidyTableHeaderCell>
+              {@render headerColumns(columns, hiddenColumns)}
+            </TidyTableHeaderRow>
+          {/snippet}
+          {#snippet body()}
+            {#each npcs as member}
+              {@render tableRow(member, columns, hiddenColumns)}
+            {/each}
+          {/snippet}
+        </TidyTable>
+      {/if}
+    </section>
+  </div>
+</div>
 {#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
   <TidyTableCustomHeaderCells
     {columns}
