@@ -100,18 +100,6 @@
         z-index: -1;
       }
 
-
-      >.tidy-tab {
-        flex: 1;
-        overflow-y: auto;
-        padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x) var(--t5e-size-4x);
-        position: relative;
-
-        &.inventory {
-          padding-top: 0;
-        }
-      }
-
       /* Sidebar skills */
       .use-ability-header .skill-expand-button {
         gap: 0.1875rem;
@@ -304,10 +292,12 @@
     display: flex;
     align-items: center;
 
+    >i, .title>i {
+      font-size: var(--font-size-12);
+      color: var(--t5e-color-text-default);
+    }
     >i {
-      font-size: var(--font-size-14);
       margin-inline-end: var(--t5e-size-1x);
-      color: var(--t5e-color-text-lightest);
     }
 
     .counter {
@@ -1309,7 +1299,18 @@
     padding-inline-end: 0;
   }
 
-  .main-content .tidy-tab {
+  .main-content > .tidy-tab {
+    --padding-vertical: var(--t5e-size-3x);
+    --padding-horizontal: var(--t5e-size-4x);
+    flex: 1;
+    overflow-y: auto;
+    padding-left: var(--padding-horizontal);
+    position: relative;
+
+    &.inventory {
+      padding-top: 0;
+    }
+      
     &:has(.tab-content) {
       padding-right: 0;
       padding-top: 0;
@@ -1317,8 +1318,8 @@
     }
 
     .action-bar {
-      padding-block-start: var(--t5e-size-3x);
-      padding-inline-end: var(--t5e-size-4x);
+      padding-top: var(--padding-vertical);
+      padding-right: var(--padding-horizontal);
     }
     
     .tab-content {
@@ -1326,23 +1327,19 @@
       flex-direction: column;
       flex: 1 1 0;
       overflow: auto;
-      padding-block-start: var(--t5e-size-3x);
-      padding-inline-end: var(--t5e-size-4x);
+      padding-top: var(--padding-vertical);
+      padding-right: var(--padding-horizontal);
+      padding-bottom: var(--padding-vertical);
       row-gap: var(--t5e-size-3x);
+    }
+
+    .sheet-footer {
+      padding-right: var(--padding-horizontal);
+      padding-bottom: var(--padding-vertical);
     }
   }
 
   .tidy-tab.inventory {
-
-    // .tab-content {
-    //   display: flex;
-    //   flex-direction: column;
-    //   flex: 1 1 0;
-    //   overflow: auto;
-    //   padding-block-start: var(--t5e-size-3x);
-    //   padding-inline-end: var(--t5e-size-4x);
-    //   row-gap: var(--t5e-size-3x);
-    // }
 
     .inline-content-view .currency-container {
       gap: var(--t5e-size-1x);
@@ -1374,12 +1371,18 @@
     }
 
     .tidy-inline-quantity-tracker {
-      gap: -0.25rem;
+      gap: -var(--t5e-size-1x);
     }
   }
 
   .tidy-tab.journal {
-    gap: 0.75rem;
+    gap: var(--t5e-size-3x);
+
+    .title {
+      margin-top: -0.25rem;
+      display: flex;
+      align-items: flex-end;
+    }
 
     &.active {
       display: flex;
@@ -1398,9 +1401,13 @@
       overflow-y: auto;
     }
 
+    .tab-content {
+      flex-direction: row;
+    }
+
     .action-buttons {
       display: flex;
-      gap: 0.5rem;
+      gap: var(--t5e-size-2x);
 
       .add {
         flex: 1;
