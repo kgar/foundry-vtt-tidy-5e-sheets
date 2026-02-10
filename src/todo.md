@@ -46,10 +46,21 @@
       - [x] Table Header primary cell end of content (slots content)
       - [x] Item table row conditional rowClass
 - [x] Decide what to do about contained items and whether they should surface their parent container
-- [ ] ...
+- [ ] Handle Contained Items with "Paradigm 5"
 - [ ] Clean up the code and reduce redundancy
 - [ ] Review with hightouch to determine next steps
 
+### Paradigm 5: Containers are always manual additions**
+
+- Containers and items within are opt-in only and are not automatically included.
+- Containers display if added, and can be expanded, no special treatment or filtering applied to contents.
+- Items within a container display only if manually added, with visual indicators
+
+Pros:
+Should be performant, and doesn't clutter the tab with auto-additions for container-heavy tables. Model also works for Activities.
+
+Cons:
+Manual
 
 ### Short List
 
