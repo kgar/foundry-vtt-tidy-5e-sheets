@@ -46,7 +46,7 @@
       - [x] Table Header primary cell end of content (slots content)
       - [x] Item table row conditional rowClass
 - [x] Decide what to do about contained items and whether they should surface their parent container
-- [ ] Handle Contained Items with "Paradigm 5"
+- [x] Handle Contained Items with "Paradigm 5"
 - [ ] Clean up the code and reduce redundancy
 - [ ] Review with hightouch to determine next steps
 
