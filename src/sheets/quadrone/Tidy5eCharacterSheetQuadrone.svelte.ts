@@ -349,16 +349,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     const sectionMode:
       | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
       | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN =
-      TidyFlags.characterSheetTabSectionOrganization.get(this.document) ??
-      SettingsProvider.settings.characterSheetTabOrganization.get();
-
-    const inclusionMode: ActionItemInclusionMode =
-      this.autoIncludeSheetTabUsableItems() ? 'usable-and-flag' : 'flag-only';
-
-    const isEligibleItem = (item: Item5e) => {
-      // TODO: based on settings, source from favorites instead.
-      return isItemInActionList(item, inclusionMode);
-    };
+      this.getSheetTabSectionOrganization();
 
     const sheetTabPreferences = UserSheetPreferencesService.getByType(
       this.actor.type,
@@ -367,17 +358,17 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     const sortMode = sheetTabPreferences?.sort ?? 'm';
 
     if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
-      this.setUpSheetTabOriginSections(context, isEligibleItem);
+      this.setUpSheetTabOriginSections(context);
     } else {
       const actionSections = await getActorActionSectionsQuadrone(
         this.actor,
+        context,
         {
           rowActions: TableRowActionsRuntime.getActionsRowActions(
             this.actor.isOwner,
             context.unlocked,
           ),
         },
-        inclusionMode,
       );
 
       actionSections.forEach((section) => {
@@ -394,10 +385,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     }
   }
 
-  private setUpSheetTabOriginSections(
-    context: CharacterSheetQuadroneContext,
-    isEligibleItem: (item: Item5e) => boolean,
-  ) {
+  private getSheetTabSectionOrganization(): 'action' | 'origin' {
+    return (
+      TidyFlags.characterSheetTabSectionOrganization.get(this.document) ??
+      SettingsProvider.settings.characterSheetTabOrganization.get()
+    );
+  }
+
+  private setUpSheetTabOriginSections(context: CharacterSheetQuadroneContext) {
     const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
       context,
       { hasActionsTab: true },
@@ -409,23 +404,28 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       });
 
     // Get eligible items (note: in Origin Sections, we do not dump out their containers into the top-level table; nesting is supported).
-    const partitions = context.items.filter(isEligibleItem).reduce(
-      (partitions, item) => {
-        CharacterSheetSections.partitionItem(item, partitions, inventory);
+    const partitions = (this.actor.items as any[])
+      .filter(
+        (item) =>
+          context.itemContext[item.id]?.includeInCharacterSheetTab === true,
+      )
+      .reduce(
+        (partitions, item) => {
+          CharacterSheetSections.partitionItem(item, partitions, inventory);
 
-        return partitions;
-      },
-      {
-        items: [] as Item5e[],
-        spells: [] as Item5e[],
-        facilities: [] as Item5e[],
-        feats: [] as Item5e[],
-        species: [] as Item5e[],
-        backgrounds: [] as Item5e[],
-        classes: [] as Item5e[],
-        subclasses: [] as Item5e[],
-      },
-    );
+          return partitions;
+        },
+        {
+          items: [] as Item5e[],
+          spells: [] as Item5e[],
+          facilities: [] as Item5e[],
+          feats: [] as Item5e[],
+          species: [] as Item5e[],
+          backgrounds: [] as Item5e[],
+          classes: [] as Item5e[],
+          subclasses: [] as Item5e[],
+        },
+      );
 
     // Partition into origin sections
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
@@ -583,7 +583,25 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     );
   }
 
-  public static async tryGetInspirationSource(
+  shouldIncludeItemInSheetTab(
+    item: Item5e,
+    inclusionMode: ActionItemInclusionMode,
+    sheetTabOrganization:
+      | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+      | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
+  ) {
+    if (item.actor?.type !== CONSTANTS.SHEET_TYPE_CHARACTER) {
+      return false;
+    }
+
+    return sheetTabOrganization == 'origin'
+      ? (!item.actor.items.has(item.system.container) &&
+          isItemInActionList(item, inclusionMode)) ||
+          TidyFlags.actionFilterOverride.get(item) === true
+      : isItemInActionList(item, inclusionMode);
+  }
+
+  static async tryGetInspirationSource(
     actor: Actor5e,
   ): Promise<InspirationSource | undefined> {
     let apiConfig = ActorInspirationRuntime.bankedInspirationConfig;
@@ -780,6 +798,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         rowActions: inventoryRowActions,
       });
 
+    const inclusionMode = this.getSheetTabInclusionMode();
+    const sheetTabOrganization = this.getSheetTabSectionOrganization();
+
     // Partition items by category
     let { backgrounds, classes, feats, items, species, spells, subclasses } =
       eligibleItems.reduce(
@@ -787,7 +808,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           const { quantity } = item.system;
 
           // Item details
-          const ctx = (context.itemContext[item.id] ??= {});
+          const ctx: CharacterItemContext = (context.itemContext[item.id] ??=
+            {});
           ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
           ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
@@ -818,6 +840,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
             default:
               ctx.group = 'other';
           }
+
+          ctx.includeInCharacterSheetTab = this.shouldIncludeItemInSheetTab(
+            item,
+            inclusionMode,
+            sheetTabOrganization,
+          );
 
           // Individual item preparation
           this._prepareItem(item, ctx);
@@ -1551,12 +1579,13 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return facility.update({ [`${prop}.value`]: value });
   }
 
-  autoIncludeSheetTabUsableItems() {
-    return (
+  getSheetTabInclusionMode() {
+    const enableAutoInclusion =
       TidyFlags.characterSheetTabAutomaticallyIncludeUsableItems.get(
         this.document,
       ) ??
-      SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get()
-    );
+      SettingsProvider.settings.characterSheetTabAutomaticallyIncludeUsableItems.get();
+
+    return enableAutoInclusion ? 'usable-and-flag' : 'flag-only';
   }
 }

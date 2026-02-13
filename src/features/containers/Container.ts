@@ -19,12 +19,20 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 export class Container {
   static async getContainerContents(
     container: Item5e,
-    context: ContainerContentsRowActionsContext
+    context: ContainerContentsRowActionsContext,
   ): Promise<ContainerContents> {
+    const itemContext = await Container.getContainerItemContext(
+      container,
+      context,
+    );
+
     const containerContentsInventory =
       await Inventory.getContainerContentsInventory(container, {
-        rowActions:
-          TableRowActionsRuntime.getContainerContentsRowActions(context, container.parent),
+        rowActions: TableRowActionsRuntime.getContainerContentsRowActions(
+          context,
+          itemContext,
+          container.parent,
+        ),
       });
 
     // Build currencies array from container's currency data
@@ -44,7 +52,7 @@ export class Container {
       currency: container.system.currency,
       currencies,
       contents: containerContentsInventory,
-      itemContext: await Container.getContainerItemContext(container, context),
+      itemContext: itemContext,
     };
   }
 
@@ -58,6 +66,10 @@ export class Container {
       container.actor?.system.favorites;
 
     const containerValues = (await container.system.contents).values();
+
+    const inclusionMode = container.actor?.sheet.getSheetTabInclusionMode?.();
+    const sheetTabOrganization =
+      container.actor?.sheet.getSheetTabSectionOrganization?.();
 
     for (const item of containerValues) {
       const ctx = (itemContext[item.id] ??= {});
@@ -84,6 +96,15 @@ export class Container {
         item,
         item.system.activities
       )?.map(Activities.getActivityItemContext);
+
+      ctx.includeInCharacterSheetTab =
+        inclusionMode !== undefined &&
+        sheetTabOrganization !== undefined &&
+        container.actor.sheet.shouldIncludeItemInSheetTab?.(
+          item,
+          inclusionMode,
+          sheetTabOrganization,
+        );
     }
 
     return itemContext;

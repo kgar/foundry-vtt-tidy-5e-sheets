@@ -316,6 +316,7 @@ export type CharacterItemContext = {
   concentration?: boolean;
   parent?: Item5e;
   subtitle?: string;
+  includeInCharacterSheetTab?: boolean;
 };
 
 export type ActivityItemContext = {

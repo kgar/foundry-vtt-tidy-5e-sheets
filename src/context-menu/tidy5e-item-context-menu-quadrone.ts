@@ -229,7 +229,7 @@ export function getItemContextOptionsQuadrone(
   // Customize - These are things Tidy provides above and beyond the system for greater customization of the sheet.
 
   const inclusionMode: ActionItemInclusionMode =
-    itemParent?.sheet.autoIncludeSheetTabUsableItems?.() ? 'usable-and-flag' : 'flag-only';
+    itemParent?.sheet.getSheetTabInclusionMode?.();
 
   const inSheetTab = isItemInActionList(item, inclusionMode);
   options.push({

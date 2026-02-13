@@ -1,5 +1,9 @@
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-import type { ContainerSection, Item5e } from 'src/types/item.types';
+import type {
+  ContainerItemContext,
+  ContainerSection,
+  Item5e,
+} from 'src/types/item.types';
 import type {
   ActiveEffect5e,
   ActiveEffectSection,
@@ -86,7 +90,7 @@ class TableRowActionsRuntime {
           if (config?.hasActionsTab) {
             result.push({
               component: CharacterSheetTabToggleButton,
-              props: (args) => ({ doc: args.data }),
+              props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
             } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
@@ -132,7 +136,7 @@ class TableRowActionsRuntime {
         } else {
           result.push({
             component: CharacterSheetTabToggleButton,
-            props: (args) => ({ doc: args.data }),
+            props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
           } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
         }
       }
@@ -202,7 +206,7 @@ class TableRowActionsRuntime {
           if (config?.hasActionsTab) {
             result.push({
               component: CharacterSheetTabToggleButton,
-              props: (args) => ({ doc: args.data }),
+              props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
             } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
@@ -223,6 +227,7 @@ class TableRowActionsRuntime {
 
   getContainerContentsRowActions(
     context: ContainerContentsRowActionsContext,
+    itemContext: Record<string, ContainerItemContext>,
     itemParent?: Actor5e | undefined,
   ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
@@ -253,7 +258,7 @@ class TableRowActionsRuntime {
       ) {
         result.push({
           component: CharacterSheetTabToggleButton,
-          props: (args) => ({ doc: args.data }),
+          props: (args) => ({ doc: args.data, itemContext: itemContext }),
         } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
       }
 

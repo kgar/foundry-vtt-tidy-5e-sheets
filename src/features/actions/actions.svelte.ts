@@ -8,6 +8,7 @@ import type {
   ActionItemInclusionMode,
   ActionSectionClassic,
   Actor5e,
+  CharacterSheetQuadroneContext,
   CustomItemSectionQuadrone,
   TidyItemSectionBase,
 } from 'src/types/types';
@@ -145,14 +146,14 @@ function buildActionSections(
 
 export async function getActorActionSectionsQuadrone(
   actor: Actor5e,
+  context: CharacterSheetQuadroneContext,
   options?: Partial<TidyItemSectionBase>,
-  inclusionMode: ActionItemInclusionMode = 'usable-and-flag',
 ): Promise<CustomItemSectionQuadrone[]> {
   try {
     let eligibleItems: Item5e[] = [];
 
     for (let item of actor.items) {
-      if (!isItemInActionList(item, inclusionMode)) {
+      if (context.itemContext[item.id]?.includeInCharacterSheetTab === true) {
         continue;
       }
 
