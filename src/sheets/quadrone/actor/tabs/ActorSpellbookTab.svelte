@@ -143,6 +143,6 @@
     sheetDocument={context.actor}
     {searchCriteria}
   />
-</div>
 
-<ActorSpellbookFooter {tabId} />
+  <ActorSpellbookFooter {tabId} />
+</div>

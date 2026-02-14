@@ -556,9 +556,10 @@
     align-content: end;
     align-items: end;
     bottom: 0;
-    min-height: 2.25rem;
-    position: sticky;
     flex: 0 0 fit-content;
+    min-height: 2.25rem;
+    padding: var(--t5e-size-2x) 0 0;
+    position: sticky;
 
     .spellcasting-cards.collapse-spellcasting-cards {
 
@@ -1401,6 +1402,12 @@
 
     .tidy-inline-quantity-tracker {
       gap: -var(--t5e-size-1x);
+    }
+  }
+
+  .tidy-tab.spellbook {
+    .tidy-table-container {
+      padding-bottom: var(--t5e-size-2x);
     }
   }
 
