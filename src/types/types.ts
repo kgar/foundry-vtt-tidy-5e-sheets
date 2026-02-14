@@ -302,6 +302,7 @@ export type CharacterItemContext = {
   availableLevels?: AvailableLevel[];
   chosen?: ChosenFacilityContext;
   concealDetails?: boolean;
+  containerName?: string;
   containerContents?: ContainerContents;
   favoriteId?: string;
   group?: string;

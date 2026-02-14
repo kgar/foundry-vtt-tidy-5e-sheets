@@ -53,7 +53,7 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import type { DropEffectValue } from 'src/mixins/DragAndDropBaseMixin';
 import { clamp } from 'src/utils/numbers';
 import { ActorInspirationRuntime } from 'src/runtime/actor/ActorInspirationRuntime.svelte';
-import { settings, SettingsProvider } from 'src/settings/settings.svelte';
+import { SettingsProvider } from 'src/settings/settings.svelte';
 import { error } from 'src/utils/logging';
 import { CharacterSheetQuadroneSidebarRuntime } from 'src/runtime/actor/CharacterSheetQuadroneSidebarRuntime.svelte';
 import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-configuration/SheetTabConfigurationQuadroneApplication.svelte';
@@ -846,6 +846,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
             inclusionMode,
             sheetTabOrganization,
           );
+
+          ctx.containerName = this.actor.items.get(item.system.container)?.name;
 
           // Individual item preparation
           this._prepareItem(item, ctx);

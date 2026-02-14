@@ -78,6 +78,14 @@
   {columns}
   {root}
 >
+  {#snippet subtitle(_item, ctx)}
+    {#if root && ctx.containerName}
+      <span class="cell-context">{@html ctx.containerName}</span>
+    {:else if ctx.subtitle}
+      <span class="cell-context">{@html ctx.subtitle}</span>
+    {/if}
+  {/snippet}
+
   {#snippet beforeImage(entry)}
     <div class="highlight"></div>
   {/snippet}
