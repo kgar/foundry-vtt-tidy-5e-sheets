@@ -25,6 +25,8 @@
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import { SettingsProvider } from 'src/settings/settings.svelte';
   import { TidyFlags } from 'src/api';
+  import { tick } from 'svelte';
+  import { ConfigureSectionsApplication } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
 
   let context = $derived(getCharacterSheetQuadroneContext());
 
@@ -118,13 +120,18 @@
     },
   ]);
 
-  let showSheetPins = $derived(
-    UserSheetPreferencesService.getDocumentTypeTabPreference(
-      context.document.type,
-      tabId,
-      'showSheetPins',
-    ) ?? true,
-  );
+  let showSheetPins = $state(true);
+  let groupItemsBySetting = $state(true);
+
+  // Sync from persisted preference when context/tab changes; persist on toggle via onclick
+  $effect(() => {
+    showSheetPins =
+      UserSheetPreferencesService.getDocumentTypeTabPreference(
+        context.document.type,
+        tabId,
+        'showSheetPins',
+      ) ?? true;
+  });
 
   $effect(() => {
     searchResults.uuids = ItemVisibility.getItemsToShowAtDepth({
@@ -158,11 +165,36 @@
   });
 
   let itemToggleMap = $derived(inlineToggleService.map);
+
+  // Effective organization: per-actor override or global setting
+  let effectiveOrganization = $derived(
+    TidyFlags.characterSheetTabSectionOrganization.get(context.actor) ??
+      SettingsProvider.settings.characterSheetTabOrganization.get(),
+  );
+
+  let tabContent: HTMLElement;
+
+  // Toggle between origin and action organization, then scroll to top
+  async function switchSectionOrganization() {
+    const newValue =
+      effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ORIGIN
+        ? CONSTANTS.SECTION_ORGANIZATION_ACTION
+        : CONSTANTS.SECTION_ORGANIZATION_ORIGIN;
+    await context.actor.update({
+      [TidyFlags.characterSheetTabSectionOrganization.prop]: newValue,
+    });
+    await tick();
+    tabContent?.scrollTo({ top: 0 });
+  }
+
+  let tab = $derived(context.tabs.find((t) => t.id === tabId));
+
+  let tabName = $derived(localize(tab?.title ?? ''));
 </script>
 
 <ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
-<div class="tab-content">
+<div class="tab-content" bind:this={tabContent}>
   {#if showSheetPins}
     <SheetPins />
   {/if}
@@ -277,5 +309,66 @@
         {/if}
       {/each}
     {/if}
+  </div>
+
+  <div class="sheet-footer sheet-tab-footer flexrow">
+    <div class="sheet-footer-left flexrow">
+      <button
+        type="button"
+        class="button button-borderless button-small"
+        class:active={effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION}
+        onclick={() => switchSectionOrganization()}
+      >
+        <i class="fas fa-arrow-right-arrow-left"></i>
+        {effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION ? localize('TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action') : localize('TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin')}
+      </button>
+      <button
+        type="button"
+        class="button button-borderless button-small"
+        class:active={showSheetPins}
+        onclick={async () => {
+          showSheetPins = !showSheetPins;
+          await UserSheetPreferencesService.setDocumentTypeTabPreference(
+            context.document.type,
+            tabId,
+            'showSheetPins',
+            showSheetPins,
+          );
+          await tick();
+          tabContent?.scrollTo({ top: 0 });
+        }}
+      >
+        <i class="fas fa-thumbtack"></i>
+        {localize(showSheetPins ? 'TIDY5E.Utilities.HideSheetPins' : 'TIDY5E.Utilities.ShowSheetPins')}
+      </button>
+    </div>
+    <div class="sheet-footer-right footer-content-right">
+      {#if context.editable}
+        <button
+          type="button"
+          aria-label={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
+          class="button button-borderless button-icon-only"
+          class:active={showSheetPins}
+          onclick={() =>
+            context.editable &&
+            new ConfigureSectionsApplication({
+              document: context.document,
+              settings: {
+                tabId,
+                sections: sections,
+                optionsGroups: tabOptionGroups,
+                formTitle: localize('TIDY5E.ConfigureTab.Title', {
+                  tabName: tabName,
+                }),
+              },
+              window: {
+                title: localize('TIDY5E.ConfigureTab.Title', { tabName: tabName }),
+              },
+            }).render({ force: true })}
+        >
+          <i class="fas fa-gear"></i>
+        </button>  
+      {/if}
+    </div>
   </div>
 </div>

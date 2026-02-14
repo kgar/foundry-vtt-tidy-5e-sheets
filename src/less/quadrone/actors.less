@@ -442,6 +442,8 @@
 
   .sheet-footer {
     gap: var(--t5e-size-2x);
+    padding-right: var(--padding-horizontal);
+    padding-bottom: var(--padding-vertical);
 
     >* {
       gap: var(--t5e-size-2x);
@@ -460,11 +462,43 @@
     }
 
     .footer-content-left {
+      display: flex;
       justify-content: flex-start;
     }
 
     .footer-content-right {
+      display: flex;
       justify-content: flex-end;
+    }
+  }
+
+  .sheet-tab-footer {
+    padding: var(--t5e-size-3x) 0 0 0;
+
+    .button-borderless:not(:hover) {
+      --button-text: var(--t5e-color-text-lightest);
+      --button-icon: var(--t5e-color-text-lightest);
+    }
+
+    .sheet-footer-left>*,
+    .sheet-footer-right>* {
+      flex: 0 1 auto;
+    }
+
+    // &:hover,
+    // &:focus-within,
+    // &:active {
+    //   .button-borderless {
+    //     color: var(--t5e-color-text-default);
+
+    //     i {
+    //       color: var(--t5e-color-text-default);
+    //     }
+    //   }
+    // }
+
+    .button-borderless:first-child {
+      padding-left: 0;
     }
   }
 
@@ -1331,11 +1365,6 @@
       padding-right: var(--padding-horizontal);
       padding-bottom: var(--padding-vertical);
       row-gap: var(--t5e-size-3x);
-    }
-
-    .sheet-footer {
-      padding-right: var(--padding-horizontal);
-      padding-bottom: var(--padding-vertical);
     }
   }
 

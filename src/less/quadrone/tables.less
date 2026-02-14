@@ -65,11 +65,12 @@
     }
 
     .button.expand-button {
-      width: var(--t5e-table-header-row-height);
       height: var(--t5e-table-header-row-height);
+      max-height: unset;
+      min-height: unset;
+      width: var(--t5e-table-header-row-height);
       background: none;
       border: none;
-      padding: var(--t5e-spacing-halfx) 0 0;
       box-shadow: none;
 
       i {
@@ -107,7 +108,6 @@
       justify-content: flex-start;
       margin: 0;
       padding-inline-start: 0;
-      padding-block-end: 0.09375rem;
 
       >* {
         font-family: var(--t5e-font-family-title);
@@ -508,6 +508,7 @@
   .container-expander {
     flex: 0;
     width: var(--t5e-table-button-width);
+    height: var(--t5e-table-button-width);
     transition: opacity var(--t5e-transition-default);
     transition-property: opacity, max-width;
     align-content: center;
