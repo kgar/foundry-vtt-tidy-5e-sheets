@@ -568,9 +568,9 @@
       flex-direction: row;
 
       .spellcasting-class-card {
-        width: auto;
-        flex: 1 1 auto;
         align-self: initial;
+        flex: 1 1 auto;
+        width: auto;
 
         .name {
           padding: 0.0625rem 0 0.125rem;
@@ -579,6 +579,10 @@
         .hide-collapsed {
           display: none;
         }
+      }
+
+      .compact {
+        padding-right: var(--t5e-size-2x);
       }
     }
 
@@ -641,10 +645,11 @@
       }
 
       &.compact {
-        padding: var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-3x);
+        padding: var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-2x);
 
         button {
           margin-inline-start: 0.375rem;
+          height: 1.5rem;
         }
       }
     }
