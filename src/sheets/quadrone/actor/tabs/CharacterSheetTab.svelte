@@ -316,7 +316,6 @@
       <button
         type="button"
         class="button button-borderless button-small"
-        class:active={effectiveOrganization === CONSTANTS.SECTION_ORGANIZATION_ACTION}
         onclick={() => switchSectionOrganization()}
       >
         <i class="fas fa-arrow-right-arrow-left"></i>
@@ -324,8 +323,7 @@
       </button>
       <button
         type="button"
-        class="button button-borderless button-small"
-        class:active={showSheetPins}
+        class="button button-small button-borderless"
         onclick={async () => {
           showSheetPins = !showSheetPins;
           await UserSheetPreferencesService.setDocumentTypeTabPreference(
@@ -348,7 +346,6 @@
           type="button"
           aria-label={localize('TIDY5E.ConfigureTab.Title', { tabName: tabName })}
           class="button button-borderless button-icon-only"
-          class:active={showSheetPins}
           onclick={() =>
             context.editable &&
             new ConfigureSectionsApplication({
