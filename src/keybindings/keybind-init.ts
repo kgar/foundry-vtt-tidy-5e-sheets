@@ -2,11 +2,13 @@ import { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings.svelte';
+import { getThemeV2 } from 'src/theme/theme';
 
 export function initKeybindings() {
   registerSheetLockToggleKeybinding();
   registerHeaderMenuToggleKeybinding();
   registerSheetToggleKeybinding();
+  registerThemeToggleKeybinding();
 }
 
 function registerSheetLockToggleKeybinding() {
@@ -71,7 +73,7 @@ function registerSheetToggleKeybinding() {
       Object.keys(sheetClasses).find(
         (x) =>
           x.toLocaleLowerCase().includes('tidy') &&
-          x.toLocaleLowerCase().includes('quadrone')
+          x.toLocaleLowerCase().includes('quadrone'),
       ),
     downKey: 'KeyQ',
     modifiers: ['Shift'],
@@ -87,7 +89,7 @@ function registerSheetToggleKeybinding() {
         (x) =>
           x.toLocaleLowerCase().includes('tidy') &&
           !x.toLocaleLowerCase().includes('quadrone') &&
-          !x.toLocaleLowerCase().includes('debug')
+          !x.toLocaleLowerCase().includes('debug'),
       ),
     downKey: 'KeyT',
     modifiers: ['Shift'],
@@ -102,10 +104,49 @@ function registerSheetToggleKeybinding() {
       Object.entries(sheetClasses).find(
         ([key, value]) =>
           !key.toLocaleLowerCase().includes('tidy') &&
-          value.toLocaleLowerCase().includes('default')
+          value.toLocaleLowerCase().includes('default'),
       )?.[0],
     downKey: 'KeyD',
     modifiers: ['Shift'],
+  });
+}
+
+function registerThemeToggleKeybinding() {
+  if (SettingsProvider.settings.debug.get() === false) {
+    return;
+  }
+
+  game.keybindings.register(CONSTANTS.MODULE_ID, 'tidyQuickThemeToggle', {
+    name: 'Quick Theme Toggle',
+    hint: 'Toggles theme between dark and light on a given sheet.',
+    onDown: async () => {
+      const doc = ui.activeWindow?.document;
+      if (!doc) {
+        return;
+      }
+
+      const currentTheme = getThemeV2(doc);
+      const newTheme = currentTheme == 'light' ? 'dark' : 'light';
+
+      const themes = game.settings.get('core', 'sheetThemes');
+      themes.documents ??= {};
+      themes.documents[doc.uuid] = newTheme;
+      await game.settings.set('core', 'sheetThemes', themes);
+
+      if (doc.sheet.applyTidyTheming) {
+        doc.sheet.applyTidyTheming();
+      } else {
+        doc._onSheetChange({ sheetOpen: true });
+      }
+    },
+    onUp: () => {},
+    precedence: CONST.KEYBINDING_PRECEDENCE.NORMAL,
+    editable: [
+      {
+        key: 'KeyL',
+        modifiers: ['Alt'],
+      },
+    ],
   });
 }
 
@@ -156,7 +197,7 @@ class QuickSheetSwitchKeybind {
           const { sheetClasses } =
             foundry.applications.apps.DocumentSheetConfig.getSheetClassesForSubType(
               ui.activeWindow.document.documentName,
-              ui.activeWindow.document.type
+              ui.activeWindow.document.type,
             );
 
           const sheetKey = getSheetKey(sheetClasses);
