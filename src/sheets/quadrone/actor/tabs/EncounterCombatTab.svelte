@@ -133,48 +133,50 @@
   </button>
 </aside>
 
-<section
-  class="group-tab-content group-members-content flexcol"
-  bind:this={sectionsContainer}
->
-  {#if combatants.length}
-    {@const columns = new ColumnsLoadout(
-      EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
-        tabId: CONSTANTS.TAB_ACTOR_COMBAT,
-        /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
-        sectionKey: CONSTANTS.SHEET_TYPE_NPC,
-        rowActions: rowActions,
-        section: { ...SheetSections.EMPTY, rowActions },
-        sheetDocument: context.actor,
-      }),
-    )}
-    {@const visibleItemCount = combatants.length}
-    {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth,
-      columns,
-    )}
+<div class="tab-right-column">
+  <section
+    class="tab-content"
+    bind:this={sectionsContainer}
+  >
+    {#if combatants.length}
+      {@const columns = new ColumnsLoadout(
+        EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
+          sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
+          tabId: CONSTANTS.TAB_ACTOR_COMBAT,
+          /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
+          sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+          rowActions: rowActions,
+          section: { ...SheetSections.EMPTY, rowActions },
+          sheetDocument: context.actor,
+        }),
+      )}
+      {@const visibleItemCount = combatants.length}
+      {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
+        sectionsInlineWidth,
+        columns,
+      )}
 
-    <TidyTable key="npcs">
-      {#snippet header()}
-        <TidyTableHeaderRow class="theme-dark">
-          <TidyTableHeaderCell primary={true}>
-            <h3>
-              {localize('TIDY5E.Encounter.CombatantsSection.Title')}
-              <span class="table-header-count">{visibleItemCount}</span>
-            </h3>
-          </TidyTableHeaderCell>
-          {@render headerColumns(columns, hiddenColumns)}
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each combatants as member}
-          {@render tableRow(member, columns, hiddenColumns)}
-        {/each}
-      {/snippet}
-    </TidyTable>
-  {/if}
-</section>
+      <TidyTable key="npcs">
+        {#snippet header()}
+          <TidyTableHeaderRow class="theme-dark">
+            <TidyTableHeaderCell primary={true}>
+              <h3>
+                {localize('TIDY5E.Encounter.CombatantsSection.Title')}
+                <span class="table-header-count">{visibleItemCount}</span>
+              </h3>
+            </TidyTableHeaderCell>
+            {@render headerColumns(columns, hiddenColumns)}
+          </TidyTableHeaderRow>
+        {/snippet}
+        {#snippet body()}
+          {#each combatants as member}
+            {@render tableRow(member, columns, hiddenColumns)}
+          {/each}
+        {/snippet}
+      </TidyTable>
+    {/if}
+  </section>
+</div>
 
 {#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
   <TidyTableCustomHeaderCells

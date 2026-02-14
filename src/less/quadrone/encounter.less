@@ -57,12 +57,6 @@
     }
   }
 
-  .window-content .main-content>.tidy-tab {
-    &.inventory .group-tab-content {
-      padding-left: var(--t5e-size-4x);
-    }
-  }
-
   /* Tab-specific styles */
   .tidy-tab {
 
@@ -163,6 +157,12 @@
     }
 
     &.inventory {
+      flex-direction: column;
+      padding-left: var(--t5e-size-4x);
+
+      .group-tab-content {
+        padding-left: 0;
+      }
 
       .inventory-footer {
         justify-content: flex-end;

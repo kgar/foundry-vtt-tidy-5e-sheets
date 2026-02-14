@@ -704,8 +704,8 @@
   "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
     "name": "Character Sheet Tab Section Organization",
     "hint": "Determines how the sections should be organized in the Character Sheet tab by default.",
-    "option.action": "By action economy",
-    "option.origin": "By item or feature type"
+    "option.action": "Group by action economy",
+    "option.origin": "Group by item or feature type"
   },
   "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
     "name": "Character Sheet Tab: Automatically Include Usable Items",
@@ -773,7 +773,9 @@
     "name": "Set Tidy as Default Sheet",
     "hint": "If you would like to set Tidy 5e Sheets as your default for one or more document types, but the core default sheets config menu is not working as expected, use this menu to select your preferences.",
     "buttonLabel": "Set Tidy as Default Sheet",
-    "explanation": "Select all document types where you would prefer Tidy 5e Sheets to be the default."
+    "explanation": "Select all document types where you would prefer Tidy 5e Sheets to be the default.",
+    "disableAll": "Use for no sheets",
+    "enableAll": "Use for all sheets"
   },
   "TIDY5E.Settings.About": {
     "name": "About",
@@ -904,6 +906,7 @@
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionAdditional": "Additional Spells section",
   "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "Section Per Item",
   "TIDY5E.Utilities.ShowSheetPins": "Show Sheet Pins",
+  "TIDY5E.Utilities.HideSheetPins": "Hide Sheet Pins",
   "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "Show Legendary/Lair trackers in the Statblock tab",
   "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "Include Spellbook sections in the Statblock tab",
   "TIDY5E.Section": {

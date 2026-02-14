@@ -32,8 +32,8 @@
 
 <a class="tidy-table-button" data-tooltip={tooltip} onclick={toggleBookmark}>
   {#if included}
-    <i class="fa-solid fa-bookmark fa-fw"></i>
+    <i class="fa-solid fa-bookmark fa-fw color-text-default"></i>
   {:else}
-    <i class="fa-regular fa-bookmark fa-fw"></i>
+    <i class="fa-regular fa-bookmark fa-fw color-text-lighter"></i>
   {/if}
 </a>
