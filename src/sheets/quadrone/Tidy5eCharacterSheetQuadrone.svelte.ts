@@ -1037,8 +1037,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const speeds = super._getMovementSpeeds();
 
-    const main = speeds.slice(0, 2);
-    const secondary = speeds.slice(2);
+    const standardSpeeds = speeds.filter((s) => s.key in CONFIG.DND5E.movementTypes);
+    console.log('standardSpeeds', standardSpeeds);
+    const main = standardSpeeds.slice(0, 2);
+    const secondary = speeds.filter((s) => !main.includes(s));
+    console.log('secondary', secondary);
     return {
       main: main,
       secondary: secondary,
