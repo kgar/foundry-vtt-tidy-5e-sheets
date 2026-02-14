@@ -199,23 +199,23 @@
     <SheetPins />
   {/if}
 
-<div
-  class="tidy-table-container"
-  bind:this={sectionsContainer}
-  data-sort-key={TidyFlags.characterSheetTabSortOrder.prop}
->
-  {#if !hasAtLeastOneItem}
-    <div class="empty-state-container empty-state-description">
-      {localize('TIDY5E.SheetLock.Empty.Hint')}
-    </div>
-  {:else}
-    {#each sections as section}
-      {#if 'type' in section}
-        {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
-          {@const hasViewableItems = ItemVisibility.hasViewableItems(
-            section.items,
-            searchResults.uuids,
-          )}
+  <div
+    class="tidy-table-container"
+    bind:this={sectionsContainer}
+    data-sort-key={TidyFlags.characterSheetTabSortOrder.prop}
+  >
+    {#if !hasAtLeastOneItem}
+      <div class="empty-state-container empty-state-description">
+        {localize('TIDY5E.SheetLock.Empty.Hint')}
+      </div>
+    {:else}
+      {#each sections as section}
+        {#if 'type' in section}
+          {#if section.type === CONSTANTS.SECTION_TYPE_SPELLBOOK}
+            {@const hasViewableItems = ItemVisibility.hasViewableItems(
+              section.items,
+              searchResults.uuids,
+            )}
 
             {#if section.show && hasViewableItems}
               {@const columns = new ColumnsLoadout(
