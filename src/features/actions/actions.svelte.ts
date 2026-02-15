@@ -5,8 +5,11 @@ import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type {
   ActionItem,
+  ActionItemInclusionMode,
   ActionSectionClassic,
   Actor5e,
+  CharacterSheetQuadroneContext,
+  CustomItemSectionQuadrone,
   TidyItemSectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -143,13 +146,14 @@ function buildActionSections(
 
 export async function getActorActionSectionsQuadrone(
   actor: Actor5e,
-  options?: Partial<TidyItemSectionBase>
-): Promise<TidyItemSectionBase[]> {
+  context: CharacterSheetQuadroneContext,
+  options?: Partial<TidyItemSectionBase>,
+): Promise<CustomItemSectionQuadrone[]> {
   try {
     let eligibleItems: Item5e[] = [];
 
     for (let item of actor.items) {
-      if (!isItemInActionList(item)) {
+      if (context.itemContext[item.id]?.includeInCharacterSheetTab === true) {
         continue;
       }
 
@@ -163,37 +167,18 @@ export async function getActorActionSectionsQuadrone(
   }
 }
 
-export function getSortedActionsQuadrone(
-  section: TidyItemSectionBase,
-  sortMode: string
-) {
-  return section.items.toSorted((a, b) => {
-    if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
-      return a.name.localeCompare(b.name, game.i18n.lang);
-    }
-
-    // Sort by Arbitrary Action List Rules
-    if (a.type !== b.type) {
-      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-    }
-    if (a.type === 'spell' && b.type === 'spell') {
-      return a.system.level - b.system.level;
-    }
-    return (a.sort || 0) - (b.sort || 0);
-  });
-}
-
 function buildActionSectionsQuadrone(
   items: Item5e[],
-  options?: Partial<TidyItemSectionBase>
-): TidyItemSectionBase[] {
+  options?: Partial<CustomItemSectionQuadrone>,
+): CustomItemSectionQuadrone[] {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
 
-  let actionSections: Record<string, TidyItemSectionBase> = {};
+  let actionSections: Record<string, CustomItemSectionQuadrone> = {};
 
   // Initialize the default sections in their default order.
   Object.keys(activationTypeSortValues).forEach((activationType) => {
     actionSections[activationType] = {
+      type: CONSTANTS.SECTION_TYPE_CUSTOM,
       items: [],
       dataset: {},
       label: FoundryAdapter.getActivationTypeLabel(activationType),
@@ -210,6 +195,7 @@ function buildActionSectionsQuadrone(
     const customSectionName = TidyFlags.actionSection.get(item);
     if (customSectionName) {
       const customSection = (actionSections[customSectionName] ??= {
+        type: CONSTANTS.SECTION_TYPE_CUSTOM,
         items: [],
         dataset: {},
         key: customSectionName,
@@ -231,6 +217,7 @@ function buildActionSectionsQuadrone(
       );
 
       const section = (actionSections[activationType] ??= {
+        type: CONSTANTS.SECTION_TYPE_CUSTOM,
         items: [],
         dataset: {},
         key: activationType,
@@ -247,12 +234,19 @@ function buildActionSectionsQuadrone(
   return Object.values(actionSections);
 }
 
-export function isItemInActionList(item: Item5e): boolean {
+export function isItemInActionList(
+  item: Item5e,
+  mode: ActionItemInclusionMode = 'usable-and-flag',
+): boolean {
   // check our override
   const override = TidyFlags.actionFilterOverride.get(item);
 
   if (override !== undefined && override !== null) {
     return override;
+  }
+
+  if (mode === 'flag-only') {
+    return false;
   }
 
   // perform normal filtering logic

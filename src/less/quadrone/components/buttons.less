@@ -470,8 +470,24 @@
 }
 
 .button-bar {
+  align-items: center;
   display: flex;
+  flex-direction: row;
   gap: var(--t5e-size-2x);
+
+  .button-save {
+    flex: 2;
+  }
+}
+
+/* Button sizes */
+.button-large {
+  min-height: var(--t5e-field-size-large);
+
+  &.button-icon-only {
+    width: var(--t5e-field-size-large);
+    height: var(--t5e-field-size-large);
+  }
 }
 
 /* ---------------------------------------- */

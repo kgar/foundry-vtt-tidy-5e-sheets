@@ -9,8 +9,8 @@ import CharacterAttributesTab from 'src/sheets/quadrone/actor/tabs/CharacterAttr
 import CharacterBiographyTab from 'src/sheets/quadrone/actor/tabs/CharacterBiographyTab.svelte';
 import CharacterFeaturesTab from 'src/sheets/quadrone/actor/tabs/CharacterFeaturesTab.svelte';
 import CharacterBastionTab from 'src/sheets/quadrone/actor/tabs/CharacterBastionTab.svelte';
-import CharacterActionsTab from 'src/sheets/quadrone/actor/tabs/CharacterActionsTab.svelte';
 import { systemSettings } from 'src/settings/settings.svelte';
+import CharacterSheetTab from 'src/sheets/quadrone/actor/tabs/CharacterSheetTab.svelte';
 
 export const CharacterSheetQuadroneRuntime =
   new ActorSheetQuadroneRuntime<CharacterSheetQuadroneContext>(
@@ -108,7 +108,7 @@ export const CharacterSheetQuadroneRuntime =
       {
         title: 'Sheet',
         content: {
-          component: CharacterActionsTab,
+          component: CharacterSheetTab,
           type: 'svelte',
         },
         id: CONSTANTS.TAB_ACTOR_ACTIONS,
