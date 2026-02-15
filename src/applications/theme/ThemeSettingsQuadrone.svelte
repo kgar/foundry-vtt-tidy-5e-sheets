@@ -188,7 +188,7 @@
             />
           </div>
         </div>
-        
+
         <ThemeSettingColorFormGroupQuadrone
           key="header-color"
           bind:value={context.value.headerColor}
@@ -199,6 +199,22 @@
           {localize('TIDY5E.ThemeSettings.HeaderColor.hint')}
         </p>
       {/if}
+
+      <div class="form-group">
+        <label for="{idPrefix}-use-compact-header">
+          {localize('TIDY5E.ThemeSettings.UseCompactHeader.title')}
+        </label>
+        <div class="form-fields">
+          <input
+            id="{idPrefix}-use-compact-header"
+            type="checkbox"
+            bind:checked={context.value.useCompactHeader}
+          />
+        </div>
+        <p class="hint">
+          {localize('TIDY5E.ThemeSettings.UseCompactHeader.hint')}
+        </p>
+      </div>
     {/if}
 
     <!-- TODO: Add item sidebar background setting -->
