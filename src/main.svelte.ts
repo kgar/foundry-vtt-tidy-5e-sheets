@@ -296,3 +296,5 @@ function handleMigrationNotification() {
     );
   }
 }
+
+console.warn(1/0);
