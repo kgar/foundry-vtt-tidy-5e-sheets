@@ -74,14 +74,16 @@
   {tabOptionGroups}
 />
 
-{#if showSheetPins}
-  <SheetPins />
-{/if}
+<div class="tab-content">
+  {#if showSheetPins}
+    <SheetPins />
+  {/if}
 
-<FeatureTables
-  sections={features}
-  {inlineToggleService}
-  itemContext={context.itemContext}
-  {searchCriteria}
-  sheetDocument={context.actor}
-/>
+  <FeatureTables
+    sections={features}
+    {inlineToggleService}
+    itemContext={context.itemContext}
+    {searchCriteria}
+    sheetDocument={context.actor}
+  />
+</div>

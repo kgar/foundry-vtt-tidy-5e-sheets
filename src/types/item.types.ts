@@ -305,6 +305,7 @@ export type ContainerItemContext = {
   favoriteId?: string;
   isStack?: boolean;
   totalWeight?: number;
+  includeInCharacterSheetTab?: boolean;
 };
 
 export type ContainerSheetClassicContext = {

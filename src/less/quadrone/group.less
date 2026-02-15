@@ -206,11 +206,15 @@
       width: var(--t5e-group-sidebar-width);
     }
 
-    .group-tab-content {
+    .tab-right-column {
       display: flex;
       flex: 1;
-      overflow-y: auto;
+      flex-direction: column;
       padding-left: var(--t5e-size-3x);
+    }
+
+    &:not(:has(.sidebar)) .tab-right-column {
+      padding-left: var(--t5e-size-4x);
     }
 
     .group-description-content {
@@ -218,9 +222,7 @@
     }
 
     .group-members-content {
-      padding-top: var(--t5e-size-3x);
-      padding-right: var(--t5e-size-4x);
-      padding-bottom: var(--t5e-size-8x);
+      padding: 0 0 var(--t5e-size-8x) 0;
     }
   }
 
@@ -455,6 +457,12 @@
     }
 
     &.members {
+
+      .tab-content {
+        flex-direction: column;
+        padding-bottom: 0;
+      }
+
       .inspiration-badge {
         @badge_inspiration_single: '../../modules/tidy5e-sheet/images/badge_inspiration_single_dark.webp';
         --t5e-inspiration-image-single: url('@{badge_inspiration_single}');
@@ -469,9 +477,6 @@
     }
 
     &.inventory {
-      .group-tab-content {
-        padding-bottom: var(--t5e-size-3x);
-      }
 
       .sidebar {
         padding-top: var(--t5e-size-4x);

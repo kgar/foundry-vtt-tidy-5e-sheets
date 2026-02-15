@@ -1,5 +1,9 @@
 import type { TidyTableAction } from 'src/components/table-quadrone/table-buttons/table.types';
-import type { ContainerSection, Item5e } from 'src/types/item.types';
+import type {
+  ContainerItemContext,
+  ContainerSection,
+  Item5e,
+} from 'src/types/item.types';
 import type {
   ActiveEffect5e,
   ActiveEffectSection,
@@ -20,7 +24,7 @@ import type {
 import type { Component } from 'svelte';
 import SpellButton from 'src/components/table-quadrone/table-buttons/SpellButton.svelte';
 import EquipButton from 'src/components/table-quadrone/table-buttons/EquipButton.svelte';
-import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/ActionsTabToggleButton.svelte';
+import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import EditButton from 'src/components/table-quadrone/table-buttons/EditButton.svelte';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import type { ContainerContentsRowActionsContext } from '../types';
@@ -85,9 +89,9 @@ class TableRowActionsRuntime {
 
           if (config?.hasActionsTab) {
             result.push({
-              component: ActionsTabToggleButton,
-              props: (args) => ({ doc: args.data }),
-            } satisfies TableAction<typeof ActionsTabToggleButton>);
+              component: CharacterSheetTabToggleButton,
+              props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
+            } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
       }
@@ -131,9 +135,9 @@ class TableRowActionsRuntime {
           } satisfies TableAction<typeof DeleteButton>);
         } else {
           result.push({
-            component: ActionsTabToggleButton,
-            props: (args) => ({ doc: args.data }),
-          } satisfies TableAction<typeof ActionsTabToggleButton>);
+            component: CharacterSheetTabToggleButton,
+            props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
+          } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
         }
       }
 
@@ -201,9 +205,9 @@ class TableRowActionsRuntime {
         } else {
           if (config?.hasActionsTab) {
             result.push({
-              component: ActionsTabToggleButton,
-              props: (args) => ({ doc: args.data }),
-            } satisfies TableAction<typeof ActionsTabToggleButton>);
+              component: CharacterSheetTabToggleButton,
+              props: (args) => ({ doc: args.data, itemContext: context.itemContext }),
+            } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
           }
         }
       }
@@ -221,7 +225,11 @@ class TableRowActionsRuntime {
     return rowActions;
   }
 
-  getContainerContentsRowActions(context: ContainerContentsRowActionsContext) {
+  getContainerContentsRowActions(
+    context: ContainerContentsRowActionsContext,
+    itemContext: Record<string, ContainerItemContext>,
+    itemParent?: Actor5e | undefined,
+  ) {
     type TableAction<TComponent extends Component<any>> = TidyTableAction<
       TComponent,
       Item5e,
@@ -244,11 +252,14 @@ class TableRowActionsRuntime {
             deleteFn: () => args.data.deleteDialog(),
           }),
         } satisfies TableAction<typeof DeleteButton>);
-      } else if (context.hasActor) {
+      } else if (
+        context.hasActor &&
+        itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ) {
         result.push({
-          component: ActionsTabToggleButton,
-          props: (args) => ({ doc: args.data }),
-        } satisfies TableAction<typeof ActionsTabToggleButton>);
+          component: CharacterSheetTabToggleButton,
+          props: (args) => ({ doc: args.data, itemContext: itemContext }),
+        } satisfies TableAction<typeof CharacterSheetTabToggleButton>);
       }
 
       result.push({

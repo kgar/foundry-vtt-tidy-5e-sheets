@@ -60,8 +60,9 @@
   });
 </script>
 
-<div class="inventory-content">
-  <InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
+<InventoryActionBar bind:searchCriteria sections={cargo} {tabId} />
+
+<div class="tab-content">
 
   <div class="encumbrance-container pills flexrow">
     <div class="pill flexshrink">

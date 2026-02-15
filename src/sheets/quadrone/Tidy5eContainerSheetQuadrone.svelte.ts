@@ -694,7 +694,7 @@ export class Tidy5eContainerSheetQuadrone
     );
 
     // Perform the sort
-    const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(item, {
+    const sortUpdates = foundry.utils.performIntegerSort(item, {
       target,
       siblings,
     });

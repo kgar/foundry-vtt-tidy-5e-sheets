@@ -71,7 +71,8 @@
   }
 </script>
 
-<div class="scroll-container">
+
+<div class="tab-content">
   <div class="contamination-actions flexrow">
     <button type="button" 
       onclick={rollContaminationSave}
@@ -96,9 +97,6 @@
       <span class="flex1">{localize('DRAKKENHEIM.CONTAMINATION.tab')}</span>
     </h3>
     <tidy-gold-header-underline></tidy-gold-header-underline>
-  </div>
-  <div class="pin">
-
   </div>
   <p class="description">
     {#await FoundryAdapter.enrichHtml(localize('DRAKKENHEIM.CONTAMINATION.TABLE.caption')) then text}

@@ -91,6 +91,16 @@
     <Search bind:searchCriteria />
   
     <section class="existing-sections">
+      <button
+        type="button"
+        class="button button-toggle {isDefault ? 'button-primary' : ''}"
+        onclick={() => useDefault()}
+      >
+        {#if isDefault}
+          <i class="fa-solid fa-check"></i>
+        {/if}
+        {localize('TIDY5E.UseDefault')}
+      </button>
       {#each filteredResults as section (section)}
         {@const isSelected = context.data?.currentSection === section}
         <button
@@ -105,16 +115,6 @@
           {localize(section)}
         </button>
       {/each}
-      <button
-        type="button"
-        class="button button-toggle {isDefault ? 'button-primary' : ''}"
-        onclick={() => useDefault()}
-      >
-        {#if isDefault}
-          <i class="fa-solid fa-check"></i>
-        {/if}
-        {localize('TIDY5E.UseDefault')}
-      </button>
     </section>
   </fieldset>
 </div>

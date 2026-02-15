@@ -21,10 +21,10 @@ export function initRuntime() {
  */
 export function initRuntimeOnReady() {
   ActivityColumnRuntime.initOnReady();
-  VehicleMemberColumnRuntime.initOnReady();
   EffectColumnRuntime.initOnReady();
   EncounterMemberColumnRuntime.initOnReady();
   GroupMemberColumnRuntime.initOnReady();
   ItemColumnRuntime.initOnReady();
   TabDocumentItemTypesRuntime.initOnReady();
+  VehicleMemberColumnRuntime.initOnReady();
 }

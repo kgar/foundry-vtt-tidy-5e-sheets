@@ -137,141 +137,143 @@
   }
 </script>
 
-{#if editing}
-  {#key contentToEdit}
-    <article class="flexible-editor-container singleton">
-      <SheetEditorV2
-        enriched={enrichedText}
-        content={contentToEdit}
-        field={fieldToEdit}
-        editorOptions={{
-          editable: context.editable,
-          toggled: false,
-        }}
-        documentUuid={context.actor.uuid}
-        onSave={() => stopEditing()}
-        manageSecrets={context.actor.isOwner}
-      />
-    </article>
-  {/key}
-{/if}
-
-{#if context.enriched.biography !== '' || context.enriched.publicBiography !== '' || context.unlocked}
-  <div class="tidy-tab-column flexcol" class:hidden={editing}>
-    {@render bioEditorEntry(
-      'fa-book',
-      'DND5E.Biography',
-      context.system.details.biography.value,
-      context.enriched.biography,
-      'system.details.biography.value',
-    )}
-
-    {@render bioEditorEntry(
-      'fa-book-user',
-      'DND5E.BiographyPublic',
-      context.system.details.biography.public,
-      context.enriched.publicBiography,
-      'system.details.biography.public',
-    )}
-  </div>
-{/if}
-<div class="tidy-tab-row flexrow" class:hidden={editing}>
-  {#if hasPersonalityEntries || context.unlocked}
-    <div class="tidy-tab-column flexcol">
-      {#each personalityEntries as entry (entry.field)}
-        {@render bioEditorEntry(
-          entry.icon,
-          entry.label,
-          entry.value,
-          entry.enriched,
-          entry.field,
-        )}
-      {/each}
-    </div>
+<div class="tab-content">
+  {#if editing}
+    {#key contentToEdit}
+      <article class="flexible-editor-container singleton">
+        <SheetEditorV2
+          enriched={enrichedText}
+          content={contentToEdit}
+          field={fieldToEdit}
+          editorOptions={{
+            editable: context.editable,
+            toggled: false,
+          }}
+          documentUuid={context.actor.uuid}
+          onSave={() => stopEditing()}
+          manageSecrets={context.actor.isOwner}
+        />
+      </article>
+    {/key}
   {/if}
 
-  {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
-    <div class="tidy-tab-column flexcol">
-      <div class="biography-editor-title title-underlined">
-        <h3 class="font-title-small flexrow">
-          <i class="fa-solid fa-address-card flexshrink"></i>
-          <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
-        </h3>
-        <tidy-gold-header-underline></tidy-gold-header-underline>
-      </div>
-      <ul class="biography-entries">
-        {#each bioFields as bioField (bioField.field)}
-          {#if (bioField.value != null && bioField.value !== '') || context.unlocked}
-            <li class="form-group">
-              <label class="biography-entry-label" for={bioField.field}
-                >{localize(bioField.text)}</label
-              >
-              <div class="form-fields">
-                <TextInputQuadrone
-                  id={bioField.field}
-                  document={context.actor}
-                  field={bioField.field}
-                  value={bioField.value}
-                  selectOnFocus={true}
-                  class="biography-entry-value"
-                  disabled={!context.unlocked}
-                />
-              </div>
-            </li>
-          {/if}
+  {#if context.enriched.biography !== '' || context.enriched.publicBiography !== '' || context.unlocked}
+    <div class="tidy-tab-column flexcol" class:hidden={editing}>
+      {@render bioEditorEntry(
+        'fa-book',
+        'DND5E.Biography',
+        context.system.details.biography.value,
+        context.enriched.biography,
+        'system.details.biography.value',
+      )}
+
+      {@render bioEditorEntry(
+        'fa-book-user',
+        'DND5E.BiographyPublic',
+        context.system.details.biography.public,
+        context.enriched.publicBiography,
+        'system.details.biography.public',
+      )}
+    </div>
+  {/if}
+  <div class="tidy-tab-row flexrow" class:hidden={editing}>
+    {#if hasPersonalityEntries || context.unlocked}
+      <div class="tidy-tab-column flexcol">
+        {#each personalityEntries as entry (entry.field)}
+          {@render bioEditorEntry(
+            entry.icon,
+            entry.label,
+            entry.value,
+            entry.enriched,
+            entry.field,
+          )}
         {/each}
-      </ul>
-    </div>
-  {/if}
-</div>
-
-{#snippet bioEditorEntry(
-  icon: string,
-  label: string,
-  value: string,
-  enriched: string,
-  field: string,
-)}
-  {#if enriched !== '' || context.unlocked}
-    {@const expanded = expansionTracker.isExpanded(field, tabId, location)}
-    <article class="biography-editor-container collapsible-editor">
-      <div class="biography-editor-title title-underlined">
-        <h3 class="font-title-small flexrow">
-          <a
-            class="title"
-            onclick={() => expansionTracker.toggle(field, tabId, location)}
-          >
-            <i class="fa-solid {icon} flexshrink"></i>
-            <span class="flex1">{localize(label)}</span>
-            {#if enriched}
-              <i
-                class="fas fa-angle-right fa-fw expand-indicator"
-                class:expanded
-              ></i>
-            {/if}
-          </a>
-          {#if context.editable}
-            <button
-              type="button"
-              class="button button-borderless button-icon-only flexshrink"
-              aria-label={localize('TIDY5E.ContextMenuActionEdit')}
-              onclick={() => edit(value, enriched, field)}
-            >
-              <i class="fa-solid fa-feather"></i>
-            </button>
-          {/if}
-        </h3>
-        <tidy-gold-header-underline></tidy-gold-header-underline>
       </div>
-      <ExpandableContainer {expanded}>
-        {#key enriched}
-          <div class="editor" use:manageSecrets={{ document: context.actor }}>
-            <div data-field={field} class="user-select-text">
-              {@html enriched}
+    {/if}
+
+    {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
+      <div class="tidy-tab-column flexcol">
+        <div class="biography-editor-title title-underlined">
+          <h3 class="font-title-small flexrow">
+            <i class="fa-solid fa-address-card flexshrink"></i>
+            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
+          </h3>
+          <tidy-gold-header-underline></tidy-gold-header-underline>
+        </div>
+        <ul class="biography-entries">
+          {#each bioFields as bioField (bioField.field)}
+            {#if (bioField.value != null && bioField.value !== '') || context.unlocked}
+              <li class="form-group">
+                <label class="biography-entry-label" for={bioField.field}
+                  >{localize(bioField.text)}</label
+                >
+                <div class="form-fields">
+                  <TextInputQuadrone
+                    id={bioField.field}
+                    document={context.actor}
+                    field={bioField.field}
+                    value={bioField.value}
+                    selectOnFocus={true}
+                    class="biography-entry-value"
+                    disabled={!context.unlocked}
+                  />
+                </div>
+              </li>
+            {/if}
+          {/each}
+        </ul>
+      </div>
+    {/if}
+  </div>
+
+  {#snippet bioEditorEntry(
+    icon: string,
+    label: string,
+    value: string,
+    enriched: string,
+    field: string,
+  )}
+    {#if enriched !== '' || context.unlocked}
+      {@const expanded = expansionTracker.isExpanded(field, tabId, location)}
+      <article class="biography-editor-container collapsible-editor">
+        <div class="biography-editor-title title-underlined">
+          <h3 class="font-title-small flexrow">
+            <a
+              class="title"
+              onclick={() => expansionTracker.toggle(field, tabId, location)}
+            >
+              <i class="fa-solid {icon} flexshrink"></i>
+              <span class="flex1">{localize(label)}</span>
+              {#if enriched}
+                <i
+                  class="fas fa-angle-right fa-fw expand-indicator"
+                  class:expanded
+                ></i>
+              {/if}
+            </a>
+            {#if context.editable}
+              <button
+                type="button"
+                class="button button-borderless button-icon-only flexshrink"
+                aria-label={localize('TIDY5E.ContextMenuActionEdit')}
+                onclick={() => edit(value, enriched, field)}
+              >
+                <i class="fa-solid fa-feather"></i>
+              </button>
+            {/if}
+          </h3>
+          <tidy-gold-header-underline></tidy-gold-header-underline>
+        </div>
+        <ExpandableContainer {expanded}>
+          {#key enriched}
+            <div class="editor" use:manageSecrets={{ document: context.actor }}>
+              <div data-field={field} class="user-select-text">
+                {@html enriched}
+              </div>
             </div>
-          </div>
-        {/key}
-      </ExpandableContainer>
-    </article>
-  {/if}
-{/snippet}
+          {/key}
+        </ExpandableContainer>
+      </article>
+    {/if}
+  {/snippet}
+</div>

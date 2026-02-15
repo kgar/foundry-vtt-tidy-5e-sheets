@@ -127,93 +127,96 @@
   }
 </script>
 
-{#if editing}
-  {#key contentToEdit}
-    <article class="flexible-editor-container singleton">
-      <SheetEditorV2
-        enriched={enrichedText}
-        content={contentToEdit}
-        field={fieldToEdit}
-        editorOptions={{
-          editable: context.editable,
-          toggled: false,
-        }}
-        documentUuid={context.actor.uuid}
-        onSave={() => stopEditing()}
-        manageSecrets={context.actor.isOwner}
-      />
-    </article>
-  {/key}
-{/if}
 
-{#if context.enriched.biography !== '' || context.enriched.appearance !== '' || context.unlocked}
-  <div class="tidy-tab-column flexcol" class:hidden={editing}>
-    {@render bioEditorEntry(
-      'fa-image-portrait',
-      'DND5E.Appearance',
-      context.system.details.appearance,
-      context.enriched.appearance,
-      'system.details.appearance',
-    )}
+<div class="tab-content">
+  {#if editing}
+    {#key contentToEdit}
+      <article class="flexible-editor-container singleton">
+        <SheetEditorV2
+          enriched={enrichedText}
+          content={contentToEdit}
+          field={fieldToEdit}
+          editorOptions={{
+            editable: context.editable,
+            toggled: false,
+          }}
+          documentUuid={context.actor.uuid}
+          onSave={() => stopEditing()}
+          manageSecrets={context.actor.isOwner}
+        />
+      </article>
+    {/key}
+  {/if}
 
-    {@render bioEditorEntry(
-      'fa-book-user',
-      'DND5E.BiographyPublic',
-      context.system.details.biography.value,
-      context.enriched.biography,
-      'system.details.biography.value',
-    )}
-  </div>
-{/if}
+  {#if context.enriched.biography !== '' || context.enriched.appearance !== '' || context.unlocked}
+    <div class="tidy-tab-column flexcol" class:hidden={editing}>
+      {@render bioEditorEntry(
+        'fa-image-portrait',
+        'DND5E.Appearance',
+        context.system.details.appearance,
+        context.enriched.appearance,
+        'system.details.appearance',
+      )}
 
-<div class="tidy-tab-row flexrow" class:hidden={editing}>
-  {#if hasPersonalityEntries || context.unlocked}
-    <div class="tidy-tab-column flexcol">
-      {#each personalityEntries as entry (entry.field)}
-        {@render bioEditorEntry(
-          entry.icon,
-          entry.label,
-          entry.value,
-          entry.enriched,
-          entry.field,
-        )}
-      {/each}
+      {@render bioEditorEntry(
+        'fa-book-user',
+        'DND5E.BiographyPublic',
+        context.system.details.biography.value,
+        context.enriched.biography,
+        'system.details.biography.value',
+      )}
     </div>
   {/if}
 
-  {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
-    <div class="tidy-tab-column flexcol">
-      <div class="biography-editor-title title-underlined">
-        <h3 class="font-title-small flexrow">
-          <i class="fa-solid fa-address-card flexshrink"></i>
-          <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
-        </h3>
-        <tidy-gold-header-underline></tidy-gold-header-underline>
-      </div>
-      <ul class="biography-entries">
-        {#each bioFields as bioField (bioField.field)}
-          {#if (bioField.value != null && bioField.value !== '') || context.unlocked}
-            <li class="form-group">
-              <label class="biography-entry-label" for={bioField.field}
-                >{localize(bioField.text)}</label
-              >
-              <div class="form-fields">
-                <TextInputQuadrone
-                  id={bioField.field}
-                  document={context.actor}
-                  field={bioField.field}
-                  value={bioField.value}
-                  selectOnFocus={true}
-                  class="biography-entry-value"
-                  disabled={!context.unlocked}
-                />
-              </div>
-            </li>
-          {/if}
+  <div class="tidy-tab-row flexrow" class:hidden={editing}>
+    {#if hasPersonalityEntries || context.unlocked}
+      <div class="tidy-tab-column flexcol">
+        {#each personalityEntries as entry (entry.field)}
+          {@render bioEditorEntry(
+            entry.icon,
+            entry.label,
+            entry.value,
+            entry.enriched,
+            entry.field,
+          )}
         {/each}
-      </ul>
-    </div>
-  {/if}
+      </div>
+    {/if}
+
+    {#if bioFields.some((bioField) => bioField.value != null && bioField.value !== '') || context.unlocked}
+      <div class="tidy-tab-column flexcol">
+        <div class="biography-editor-title title-underlined">
+          <h3 class="font-title-small flexrow">
+            <i class="fa-solid fa-address-card flexshrink"></i>
+            <span class="flex1">{localize('TIDY5E.Actor.Characteristics')}</span>
+          </h3>
+          <tidy-gold-header-underline></tidy-gold-header-underline>
+        </div>
+        <ul class="biography-entries">
+          {#each bioFields as bioField (bioField.field)}
+            {#if (bioField.value != null && bioField.value !== '') || context.unlocked}
+              <li class="form-group">
+                <label class="biography-entry-label" for={bioField.field}
+                  >{localize(bioField.text)}</label
+                >
+                <div class="form-fields">
+                  <TextInputQuadrone
+                    id={bioField.field}
+                    document={context.actor}
+                    field={bioField.field}
+                    value={bioField.value}
+                    selectOnFocus={true}
+                    class="biography-entry-value"
+                    disabled={!context.unlocked}
+                  />
+                </div>
+              </li>
+            {/if}
+          {/each}
+        </ul>
+      </div>
+    {/if}
+  </div>
 </div>
 
 {#snippet bioEditorEntry(

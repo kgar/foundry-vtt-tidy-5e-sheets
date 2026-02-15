@@ -5,13 +5,15 @@
   import ToolsCard from '../parts/ToolsCard.svelte';
 </script>
 
-<div class="columns">
-  <div class="attributes-column">
-    <SkillsCard />
-    <ToolsCard />
-  </div>
-  <div class="attributes-column">
-    <SavingThrowsCard />
-    <CharacterTraits />
+<div class="tab-content">
+  <div class="columns">
+    <div class="attributes-column">
+      <SkillsCard />
+      <ToolsCard />
+    </div>
+    <div class="attributes-column">
+      <SavingThrowsCard />
+      <CharacterTraits />
+    </div>
   </div>
 </div>

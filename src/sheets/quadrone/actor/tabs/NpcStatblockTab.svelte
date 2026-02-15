@@ -189,59 +189,61 @@
 
 <ItemsActionBar bind:searchCriteria {sections} {tabId} {tabOptionGroups} />
 
-{#if context.showLegendariesOnStatblockTab && (context.showLegendaryActions || context.showLegendaryResistances || context.showLairTracker)}
-  <div class="legendaries cards-container flexrow">
-    <Legendaries />
-  </div>
-{/if}
-
-{#if showSheetPins}
-  <SheetPins />
-{/if}
-
-<StatblockTables
-  {sections}
-  {inlineToggleService}
-  itemContext={context.itemContext}
-  {searchCriteria}
-  sheetDocument={context.actor}
-/>
-
-{#if context.unlocked || context.background || context.species || context.classes.length > 0}
-  <div class="tidy-table character-traits">
-    <div class="tidy-table-header-row theme-dark">
-      <h3>{localize('TIDY5E.CharacterTraits.Title')}</h3>
+<div class="tab-content">
+  {#if context.showLegendariesOnStatblockTab && (context.showLegendaryActions || context.showLegendaryResistances || context.showLairTracker)}
+    <div class="legendaries cards-container flexrow">
+      <Legendaries />
     </div>
-    <div class="list traits">
-      <ActorTraitClasses />
-      <ActorTraitBackground />
-      <NpcTraitSpecies />
-      <div class="list-entry">
-        <div class="list-label">
-          <h4 class="font-weight-label">
-            {localize('DND5E.SpecialTraits')}
-          </h4>
-        </div>
-        <div class="list-content">
-          <div class="list-values trait-item">
-            <button
-              type="button"
-              class="button button-secondary"
-              aria-label={localize('DND5E.FlagsTitle')}
-              data-tooltip
-              onclick={() =>
-                new SpecialTraitsApplication({
-                  document: context.actor,
-                }).render({
-                  force: true,
-                })}
-            >
-              <i class="fa-solid fa-star"></i>
-              {localize('DND5E.FlagsTitle')}
-            </button>
+  {/if}
+
+  {#if showSheetPins}
+    <SheetPins />
+  {/if}
+
+  <StatblockTables
+    {sections}
+    {inlineToggleService}
+    itemContext={context.itemContext}
+    {searchCriteria}
+    sheetDocument={context.actor}
+  />
+
+  {#if context.unlocked || context.background || context.species || context.classes.length > 0}
+    <div class="tidy-table character-traits">
+      <div class="tidy-table-header-row theme-dark">
+        <h3>{localize('TIDY5E.CharacterTraits.Title')}</h3>
+      </div>
+      <div class="list traits">
+        <ActorTraitClasses />
+        <ActorTraitBackground />
+        <NpcTraitSpecies />
+        <div class="list-entry">
+          <div class="list-label">
+            <h4 class="font-weight-label">
+              {localize('DND5E.SpecialTraits')}
+            </h4>
+          </div>
+          <div class="list-content">
+            <div class="list-values trait-item">
+              <button
+                type="button"
+                class="button button-secondary"
+                aria-label={localize('DND5E.FlagsTitle')}
+                data-tooltip
+                onclick={() =>
+                  new SpecialTraitsApplication({
+                    document: context.actor,
+                  }).render({
+                    force: true,
+                  })}
+              >
+                <i class="fa-solid fa-star"></i>
+                {localize('DND5E.FlagsTitle')}
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-{/if}
+  {/if}
+</div>

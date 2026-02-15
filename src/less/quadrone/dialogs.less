@@ -1,24 +1,6 @@
 /* The place for all dialogs and their specific layout styles. */
 .tidy5e-sheet.application:where(.quadrone) {
 
-  // Section Selector Dialog
-  &.tidy-section-selector-application {
-    .existing-sections {
-      flex: 1 1 auto;
-      overflow: auto;
-      min-height: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 0.125rem;
-    }
-
-    .new-section {
-      display: flex;
-      flex-direction: column;
-      gap: 0.125rem;
-    }
-  }
-
   .window-content {
     gap: 0;
     padding: 0;
@@ -29,17 +11,6 @@
         margin-block-start: var(--t5e-size-2x);
       }
     }
-
-    // h3 {
-    //   margin-block-end: var(--t5e-size-1x);
-    //   font-size: var(--font-size-13);
-    //   font-family: var(--t5e-font-roboto-condensed);
-    //   font-weight: 500;
-    // }
-
-    // label.checkbox {
-    //   min-height: 1.5rem;
-    // }
 
     .dialog-content-container {
       display: flex;
@@ -73,6 +44,51 @@
         flex: 1;
         text-wrap: none;
       }
+    }
+  }
+
+  // Section Selector Dialog
+  &.tidy-section-selector-application {
+
+    .window-content .button-bar {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .existing-sections {
+      flex: 1 1 auto;
+      overflow: auto;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+
+    .new-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+    }
+  }
+
+  // Sheet Default Preferences
+  &.tidy5e-sheet-preferences {
+    .settings-header {
+      margin-bottom: var(--t5e-size-1x);
+    }
+    .settings-description {
+      margin-bottom: var(--t5e-size-3x);
+    }
+    .settings-actions {
+      gap: var(--t5e-size-2x);
+      margin-bottom: var(--t5e-size-4x);
+    }
+    .title-underlined {
+      margin-bottom: var(--t5e-size-2x);
+    }
+    .tidy-table-header-row .tidy-table-header-cell {
+      padding-top: var(--t5e-size-1x);
+      padding-bottom: var(--t5e-size-1x);
     }
   }
 

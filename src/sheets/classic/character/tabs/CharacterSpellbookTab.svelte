@@ -172,9 +172,8 @@
   {#if noSpells && !context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {/if}
+  <SpellbookFooter />
 </div>
-
-<SpellbookFooter />
 
 <style lang="less">
   .spellbook-class-filter {

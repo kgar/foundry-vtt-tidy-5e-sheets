@@ -67,9 +67,9 @@
   });
 </script>
 
-<div class="inventory-content">
-  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+<InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
 
+<div class="tab-content">
   {#if showSheetPins}
     <SheetPins />
   {/if}

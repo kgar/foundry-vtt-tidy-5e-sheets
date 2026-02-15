@@ -14,7 +14,6 @@
     GroupMemberSection,
     TidySectionBase,
   } from 'src/types/types';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import GroupMemberNameCell from '../group-parts/GroupMemberNameColumn.svelte';
   import { GroupMemberColumnRuntime } from 'src/runtime/tables/GroupMemberColumnRuntime.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
@@ -26,6 +25,8 @@
   import GroupMembersActionBar from '../../shared/GroupMembersActionBar.svelte';
   import GroupMemberHpTooltip from 'src/tooltips/GroupMemberHpTooltip.svelte';
   import { setContext } from 'svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -99,99 +100,81 @@
 
 <GroupMemberHpTooltip bind:this={hpTooltip} sheetDocument={context.document} />
 
-<section
-  class="group-tab-content group-members-content flexcol"
-  bind:this={sectionsContainer}
->
+<div class="tab-right-column">
   <GroupMembersActionBar
-    bind:searchCriteria
-    {sections}
-    tabId={CONSTANTS.TAB_MEMBERS}
-    {tabOptionGroups}
+  bind:searchCriteria
+  {sections}
+  tabId={CONSTANTS.TAB_MEMBERS}
+  {tabOptionGroups}
   />
 
-  {#if showSheetPins}
-    <SheetPins />
-  {/if}
+  <div class="tab-content">
+    <section
+      class="group-tab-content group-members-content flexcol"
+      bind:this={sectionsContainer}
+    >
 
-  {#each sections as section (section.key)}
-    {@const hasViewableItems =
-      !searchResults.uuids ||
-      section.members.some((m) => searchResults.uuids?.has(m.actor.uuid))}
-    {#if section.show && hasViewableItems}
-      {@const columns = new ColumnsLoadout(
-        GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
-          sheetType: CONSTANTS.SHEET_TYPE_GROUP,
-          tabId: CONSTANTS.TAB_MEMBERS,
-          sectionKey: section.key,
-          rowActions: section.rowActions,
-          section,
-          sheetDocument: context.actor,
-        }),
-      )}
-      {@const visibleItemCount = section.members.length}
-      {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
-        sectionsInlineWidth,
-        columns,
-      )}
+      {#if showSheetPins}
+        <SheetPins />
+      {/if}
 
-      <TidyTable key={section.key} data-custom-section={section.custom}>
-        {#snippet header()}
-          <TidyTableHeaderRow
-            class="theme-dark"
-          >
-            <TidyTableHeaderCell primary={true}>
-              <h3>
-                {localize(section.label)}
-                <span class="table-header-count">{visibleItemCount}</span>
-              </h3>
-            </TidyTableHeaderCell>
-            {@render headerColumns(columns, hiddenColumns, section)}
-          </TidyTableHeaderRow>
-        {/snippet}
-        {#snippet body()}
-          {#each section.members as member}
-            {@render tableRow(member, columns, hiddenColumns, section)}
-          {/each}
-        {/snippet}
-      </TidyTable>
-    {/if}
-  {/each}
+      {#each sections as section (section.key)}
+        {@const hasViewableItems =
+          !searchResults.uuids ||
+          section.members.some((m) => searchResults.uuids?.has(m.actor.uuid))}
+        {#if section.show && hasViewableItems}
+          {@const columns = new ColumnsLoadout(
+            GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
+              sheetType: CONSTANTS.SHEET_TYPE_GROUP,
+              tabId: CONSTANTS.TAB_MEMBERS,
+              sectionKey: section.key,
+              rowActions: section.rowActions,
+              section,
+              sheetDocument: context.actor,
+            }),
+          )}
+          {@const visibleItemCount = section.members.length}
+          {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
+            sectionsInlineWidth,
+            columns,
+          )}
 
-  {#if !context.system.members.length}
-    <div class="empty-state-container empty-state-description">
-      {localize('TIDY5E.Group.EmptyMembersTabHint')}
-    </div>
-  {/if}
-</section>
+          <TidyTable key={section.key} data-custom-section={section.custom}>
+            {#snippet header()}
+              <TidyTableHeaderRow class="theme-dark">
+                <TidyTableHeaderCell primary={true}>
+                  <h3>
+                    {localize(section.label)}
+                    <span class="table-header-count">{visibleItemCount}</span>
+                  </h3>
+                </TidyTableHeaderCell>
+                {@render headerColumns(columns, hiddenColumns, section)}
+              </TidyTableHeaderRow>
+            {/snippet}
+            {#snippet body()}
+              {#each section.members as member}
+                {@render tableRow(member, columns, hiddenColumns, section)}
+              {/each}
+            {/snippet}
+          </TidyTable>
+        {/if}
+      {/each}
+
+      {#if !context.system.members.length}
+        <div class="empty-state-container empty-state-description">
+          {localize('TIDY5E.Group.EmptyMembersTabHint')}
+        </div>
+      {/if}
+    </section>
+  </div>
+</div>
 
 {#snippet headerColumns(
   columns: ColumnsLoadout,
   hiddenColumns: Set<string>,
   section: TidySectionBase,
 )}
-  {#each columns.ordered as column}
-    {@const hidden = hiddenColumns.has(column.key)}
-    <TidyTableHeaderCell
-      class={[column.headerClasses, { hidden }]}
-      columnWidth="{column.widthRems}rem"
-      data-tidy-column-key={column.key}
-    >
-      {#if !!column.headerContent}
-        {#if column.headerContent.type === 'callback'}
-          {@html column.headerContent.callback?.(context.document, context)}
-        {:else if column.headerContent.type === 'component'}
-          <column.headerContent.component
-            sheetContext={context}
-            sheetDocument={context.document}
-            {section}
-          />
-        {:else if column.headerContent.type === 'html'}
-          {@html column.headerContent.html}
-        {/if}
-      {/if}
-    </TidyTableHeaderCell>
-  {/each}
+  <TidyTableCustomHeaderCells {columns} {context} {hiddenColumns} {section} />
 {/snippet}
 
 {#snippet tableRow(
@@ -216,24 +199,14 @@
   >
     <GroupMemberNameCell {member} />
     {#if member.canObserve}
-      {#each columns.ordered as column}
-        {@const hidden = hiddenColumns.has(column.key)}
-        <TidyTableCell
-          columnWidth="{column.widthRems}rem"
-          class={[column.cellClasses, { hidden }]}
-          attributes={{ ['data-tidy-column-key']: column.key }}
-        >
-          {#if column.cellContent.type === 'callback'}
-            {@html column.cellContent.callback?.(context.document, context)}
-          {:else if column.cellContent.type === 'component'}
-            <column.cellContent.component
-              rowContext={member}
-              rowDocument={member.actor}
-              {section}
-            />
-          {/if}
-        </TidyTableCell>
-      {/each}
+      <TidyTableCustomCells
+        {columns}
+        {context}
+        ctx={member}
+        entry={member.actor}
+        {hiddenColumns}
+        {section}
+      />
     {/if}
   </div>
 {/snippet}

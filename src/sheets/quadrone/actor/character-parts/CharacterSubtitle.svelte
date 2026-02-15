@@ -57,13 +57,6 @@
     {#each context.speeds.main as speed}
       {@render speedSenseSummary(speed, ['speed', 'main-speed'])}
     {/each}
-    {#each context.speeds.secondary as speed}
-      {@render speedSenseSummary(
-        speed,
-        ['speed', 'secondary-speed'],
-        ['hide-under-500'],
-      )}
-    {/each}
     {#each context.senses.main as sense}
       {@render speedSenseSummary(
         sense,

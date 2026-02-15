@@ -85,9 +85,7 @@
   );
 
   // Check if container has any currency to transfer
-  let hasCurrency = $derived(
-    currencies.some((c) => c.value > 0),
-  );
+  let hasCurrency = $derived(currencies.some((c) => c.value > 0));
 
   // Transfer all currency from container to parent actor
   async function transferCurrencyToParent() {
@@ -122,7 +120,6 @@
   class={!searchResults.show(container.uuid) ? 'hidden' : ''}
   deferRendering
 >
-
   <div class="inline-content-view full-height">
     <div
       class="flex-column extra-small-gap flex-1 inline-container-view"
@@ -147,7 +144,9 @@
       {/if}
     </div>
 
-    <div class="currency-container flexrow flex1 extra-small-gap align-items-center">
+    <div
+      class="currency-container flexrow flex1 extra-small-gap align-items-center"
+    >
       {#each currencies as currency (currency.key)}
         <label class="input-group">
           <i class="currency {currency.key}" aria-label={currency.key}></i>
@@ -182,7 +181,7 @@
         >
           <i class="fas fa-person-arrow-up-from-line"></i>
           {FoundryAdapter.localize('DND5E.CurrencyManager.Transfer.Label')}
-          </a>
+        </a>
       {/if}
     </div>
   </div>

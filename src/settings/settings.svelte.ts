@@ -67,7 +67,7 @@ export type CurrentSettings = {
 
 export function getCurrentSettings(): CurrentSettings {
   const keys = Object.keys(
-    SettingsProvider.settings
+    SettingsProvider.settings,
   ) as (keyof (typeof SettingsProvider)['settings'])[];
 
   return keys.reduce<Record<string, any>>((obj, key) => {
@@ -2037,7 +2037,45 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<Record<string, TrackedTabs>>(
-            'sectionExpansionState'
+            'sectionExpansionState',
+          );
+        },
+      },
+      characterSheetTabOrganization: {
+        options: {
+          name: 'TIDY5E.Settings.CharacterSheetTabSectionOrganization.name',
+          hint: 'TIDY5E.Settings.CharacterSheetTabSectionOrganization.hint',
+          scope: 'world',
+          config: true,
+          type: String,
+          choices: {
+            [CONSTANTS.SECTION_ORGANIZATION_ORIGIN]:
+              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.origin',
+            [CONSTANTS.SECTION_ORGANIZATION_ACTION]:
+              'TIDY5E.Settings.CharacterSheetTabSectionOrganization.option.action',
+          },
+          default: CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<
+            | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
+            | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN
+          >('characterSheetTabOrganization');
+        },
+      },
+      
+      characterSheetTabAutomaticallyIncludeUsableItems: {
+        options: {
+          name: 'TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems.name',
+          hint: 'TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems.hint',
+          scope: 'world',
+          config: true,
+          type: Boolean,
+          default: true,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'characterSheetTabAutomaticallyIncludeUsableItems',
           );
         },
       },

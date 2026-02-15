@@ -31,10 +31,12 @@
   });
 </script>
 
-<div bind:this={sectionsContainer} class="tidy-table-container">
-  <EffectsTables inlineWidth={sectionsInlineWidth} />
+<div class="tab-content">
+  <div bind:this={sectionsContainer} class="tidy-table-container">
+    <EffectsTables inlineWidth={sectionsInlineWidth} />
 
-  {#if 'conditions' in context}
-    <ActorConditionsQuadrone conditions={context.conditions} />
-  {/if}
+    {#if 'conditions' in context}
+      <ActorConditionsQuadrone conditions={context.conditions} />
+    {/if}
+  </div>
 </div>

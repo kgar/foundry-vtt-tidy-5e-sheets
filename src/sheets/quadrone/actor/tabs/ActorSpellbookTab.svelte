@@ -131,16 +131,18 @@
 
 <ItemsActionBar bind:searchCriteria sections={spellbook} {tabId} {tabOptionGroups} />
 
-{#if showSheetPins}
-  <SheetPins />
-{/if}
+<div class="tab-content">
+  {#if showSheetPins}
+    <SheetPins />
+  {/if}
 
-<SpellTables
-  sections={spellbook}
-  itemContext={context.itemContext}
-  {inlineToggleService}
-  sheetDocument={context.actor}
-  {searchCriteria}
-/>
+  <SpellTables
+    sections={spellbook}
+    itemContext={context.itemContext}
+    {inlineToggleService}
+    sheetDocument={context.actor}
+    {searchCriteria}
+  />
 
-<ActorSpellbookFooter {tabId} />
+  <ActorSpellbookFooter {tabId} />
+</div>

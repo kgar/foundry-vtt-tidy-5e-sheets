@@ -15,6 +15,8 @@
   import { SheetSections } from 'src/features/sections/SheetSections';
   import type { Activity5e } from 'src/foundry/dnd5e.types';
   import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
 
   let context = $derived(getSheetContext<ItemSheetQuadroneContext>());
 
@@ -83,32 +85,13 @@
           <h3>{localize('DND5E.ACTIVITY.Title.other')}</h3>
           <span class="table-header-count">{context.activities.length}</span>
         </TidyTableHeaderCell>
-        {#each columns.ordered as column}
-          {@const hidden = hiddenColumns.has(column.key)}
 
-          <TidyTableHeaderCell
-            class={[column.headerClasses, { hidden }]}
-            columnWidth="{column.widthRems}rem"
-            data-tidy-column-key={column.key}
-          >
-            {#if !!column.headerContent}
-              {#if column.headerContent.type === 'callback'}
-                {@html column.headerContent.callback?.(
-                  context.document,
-                  context,
-                )}
-              {:else if column.headerContent.type === 'component'}
-                <column.headerContent.component
-                  sheetContext={context}
-                  sheetDocument={context.document}
-                  {section}
-                />
-              {:else if column.headerContent.type === 'html'}
-                {@html column.headerContent.html}
-              {/if}
-            {/if}
-          </TidyTableHeaderCell>
-        {/each}
+        <TidyTableCustomHeaderCells
+          {columns}
+          {context}
+          {hiddenColumns}
+          {section}
+        />
       </TidyTableHeaderRow>
     {/snippet}
     {#snippet body()}
@@ -140,28 +123,15 @@
               </span> -->
               </span>
             </TidyTableCell>
-            {#each columns.ordered as column}
-              {@const hidden = hiddenColumns.has(column.key)}
 
-              <TidyTableCell
-                columnWidth="{column.widthRems}rem"
-                class={[column.cellClasses, { hidden }]}
-                attributes={{ ['data-tidy-column-key']: column.key }}
-              >
-                {#if column.cellContent.type === 'callback'}
-                  {@html column.cellContent.callback?.(
-                    context.document,
-                    context,
-                  )}
-                {:else if column.cellContent.type === 'component'}
-                  <column.cellContent.component
-                    rowContext={ctx}
-                    rowDocument={ctx.activity}
-                    {section}
-                  />
-                {/if}
-              </TidyTableCell>
-            {/each}
+            <TidyTableCustomCells
+              {columns}
+              {context}
+              {ctx}
+              entry={ctx.activity}
+              {hiddenColumns}
+              {section}
+            />
           {/snippet}
         </TidyActivityTableRow>
       {/each}

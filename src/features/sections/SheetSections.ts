@@ -32,7 +32,6 @@ import type { Activity5e, CharacterFavorite } from 'src/foundry/dnd5e.types';
 import { error } from 'src/utils/logging';
 import {
   getSortedActions,
-  getSortedActionsQuadrone,
 } from '../actions/actions.svelte';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { settings } from 'src/settings/settings.svelte';
@@ -162,9 +161,12 @@ export class SheetSections {
       | ActorSheetQuadroneContext,
     tabId: string,
     spells: Item5e[],
-    options: Partial<SpellbookSection> = {}
+    options: Partial<SpellbookSection> = {},
+    customSectionFlag: 'section' | 'actionSection' = 'section',
   ): SpellbookSection[] {
-    const customSectionSpells = spells.filter((s) => TidyFlags.section.get(s));
+    const customSectionSpells = spells.filter((s) =>
+      TidyFlags[customSectionFlag].get(s),
+    );
     spells = spells.filter((s) => !TidyFlags.section.get(s));
 
     // TODO: Absorb _prepareSpellbookLegacy
@@ -183,7 +185,7 @@ export class SheetSections {
           show: true,
           rowActions: options.rowActions ?? [], // for the UI Overhaul
           sectionActions: options.sectionActions ?? [], // for the UI Overhaul
-        } satisfies SpellbookSection)
+        }) satisfies SpellbookSection
     );
 
     const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
@@ -248,7 +250,7 @@ export class SheetSections {
         config?.getLabel({ level }) ??
         game.i18n.localize('DND5E.CAST.SECTIONS.Spellbook');
       const method = config?.key ?? key;
-      const order = level === 0 ? 0 : config?.order ?? 1000;
+      const order = level === 0 ? 0 : (config?.order ?? 1000);
       const usesSlots = config?.slots && level;
 
       const spells = foundry.utils.getProperty(
@@ -766,8 +768,8 @@ export class SheetSections {
     return sections;
   }
 
-  static configureActionsQuadrone(
-    sections: TidyItemSectionBase[],
+  static configureActionsQuadrone<T extends TidyItemSectionBase>(
+    sections: T[],
     tabId: string,
     sheetPreferences: UserSheetPreference,
     sectionConfigs: Record<string, SectionConfig> | undefined
@@ -778,7 +780,25 @@ export class SheetSections {
       const sortMode = sheetPreferences.tabs?.[tabId]?.sort ?? 'm';
 
       return sections.map(({ ...section }) => {
-        section.items = getSortedActionsQuadrone(section, sortMode);
+        section.items.sort((a, b) => {
+          if (
+            sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING
+          ) {
+            return a.name.localeCompare(b.name, game.i18n.lang);
+          }
+
+          if (
+            sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_DESCENDING
+          ) {
+            return b.name.localeCompare(a.name, game.i18n.lang);
+          }
+
+          const aSort = TidyFlags.characterSheetTabSortOrder.get(a);
+          const bSort = TidyFlags.characterSheetTabSortOrder.get(b);
+
+          return aSort - bSort;
+        });
+
 
         section.show = sectionConfigs?.[section.key]?.show !== false;
 

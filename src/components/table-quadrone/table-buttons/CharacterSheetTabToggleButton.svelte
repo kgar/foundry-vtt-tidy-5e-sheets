@@ -1,17 +1,21 @@
 <script lang="ts">
-  import { TidyFlags } from "src/foundry/TidyFlags";
-  import { isItemInActionList } from 'src/features/actions/actions.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { CharacterItemContext } from 'src/types/types';
+  import type { ContainerItemContext } from 'src/types/item.types';
 
   interface Props {
     doc: any;
+    itemContext: Record<string, CharacterItemContext | ContainerItemContext>;
   }
 
-  let { doc }: Props = $props();
+  let { doc, itemContext }: Props = $props();
 
   const localize = FoundryAdapter.localize;
 
-  let included = $derived(isItemInActionList(doc));
+  let included = $derived(
+    itemContext[doc.id]?.includeInCharacterSheetTab === true,
+  );
 
   let tooltip = $derived(
     localize(
@@ -28,8 +32,8 @@
 
 <a class="tidy-table-button" data-tooltip={tooltip} onclick={toggleBookmark}>
   {#if included}
-    <i class="fa-solid fa-bookmark fa-fw"></i>
+    <i class="fa-solid fa-bookmark fa-fw color-text-default"></i>
   {:else}
-    <i class="fa-regular fa-bookmark fa-fw"></i>
+    <i class="fa-regular fa-bookmark fa-fw color-text-lighter"></i>
   {/if}
 </a>

@@ -64,7 +64,7 @@ export class JournalQuadrone {
       return;
     }
 
-    const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+    const updates = foundry.utils.performIntegerSort(source, {
       target,
       siblings,
     });

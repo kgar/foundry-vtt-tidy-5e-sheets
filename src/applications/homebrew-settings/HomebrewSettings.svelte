@@ -61,9 +61,10 @@
 <div class="button-bar">
   <button
     type="button"
-    class="button button-primary save-changes-btn"
+    class="button button-primary button-large button-save save-changes-btn"
     onclick={() => app.save()}
   >
+    <i class="fas fa-save"></i>
     {localize('TIDY5E.SaveChanges')}
   </button>
 </div>

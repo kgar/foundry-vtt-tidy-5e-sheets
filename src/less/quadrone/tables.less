@@ -65,11 +65,12 @@
     }
 
     .button.expand-button {
-      width: var(--t5e-table-header-row-height);
       height: var(--t5e-table-header-row-height);
+      max-height: unset;
+      min-height: unset;
+      width: var(--t5e-table-header-row-height);
       background: none;
       border: none;
-      padding: var(--t5e-spacing-halfx) 0 0;
       box-shadow: none;
 
       i {
@@ -107,7 +108,6 @@
       justify-content: flex-start;
       margin: 0;
       padding-inline-start: 0;
-      padding-block-end: 0.09375rem;
 
       >* {
         font-family: var(--t5e-font-family-title);
@@ -229,7 +229,8 @@
       }
 
       .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 0%, transparent 32%);
+        background: linear-gradient(to right, oklch(from var(--t5e-color-palette-grey-100) l c h / 0.24) 0%, transparent 42%), 
+                    linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 0%, transparent 42%);
       }
 
       .tidy-table-row-use-button {
@@ -250,7 +251,7 @@
           rgba(255, 255, 255, 0.24) 50%);
 
       .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.25) 10%, transparent 48%);
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.36) 10%, transparent 64%);
       }
     }
 
@@ -973,31 +974,24 @@
         background: var(--t5e-component-card-default);
       }
 
+      &.rarity .highlight {
+        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 0%, transparent 52%);
+      }
+
       &.equipped {
         background: linear-gradient(to right,
             var(--t5e-component-card-default) 10%,
-            transparent 60%);
+            transparent 64%);
 
         &.expanded {
           --t5e-item-row-background: rgba(255, 255, 255, 0.08);
           background: var(--t5e-component-card-default);
         }
+
+        .highlight {
+          background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.32) 10%, transparent 64%);
+        }
       }
-
-      // TODO: Find a different approach. mode-always no longer exists.
-      // &.spell-preparation.mode-always .highlight {
-      //   background: linear-gradient(to right, oklch(from var(--t5e-method-color) l c h / 0.25) 10%, transparent 40%);
-      // }
-
-      &.rarity .highlight {
-        background: linear-gradient(to right, oklch(from var(--t5e-item-color) l c h / 0.28) 10%, transparent 48%);
-      }
-
-      // TODO: Find a different approach. mode-always no longer exists.
-      // /* Hide if this is a normally prepared spell. */
-      // &.mode-prepared .highlight {
-      //   opacity: 0;
-      // }
 
       /* If a spell is prepared, use full background gradient. */
       &.spell-method:not(.diminished) {
@@ -1011,14 +1005,6 @@
         --t5e-item-row-background: rgba(255, 255, 255, 0.08);
         background: var(--t5e-component-card-default);
       }
-
-      // TODO: Find a different approach. mode-always no longer exists.
-      // &.mode-always .highlight {
-      //   opacity: 1;
-      //   background: linear-gradient(to right,
-      //       var(--t5e-theme-color-darkest) -25%,
-      //       transparent 25%);
-      // }
 
       &.advancement-item {
         .tidy-table-row-use-button img {

@@ -302,6 +302,7 @@ export type CharacterItemContext = {
   availableLevels?: AvailableLevel[];
   chosen?: ChosenFacilityContext;
   concealDetails?: boolean;
+  containerName?: string;
   containerContents?: ContainerContents;
   favoriteId?: string;
   group?: string;
@@ -316,6 +317,7 @@ export type CharacterItemContext = {
   concentration?: boolean;
   parent?: Item5e;
   subtitle?: string;
+  includeInCharacterSheetTab?: boolean;
 };
 
 export type ActivityItemContext = {
@@ -445,8 +447,8 @@ export type CharacterSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContextV1;
@@ -552,8 +554,8 @@ export type NpcSheetContext = {
   spellbook: SpellbookSection[];
   spellcastingInfo: SpellcastingInfo;
   spellSlotTrackerMode:
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
-  | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   treasure: { label: string }[];
   utilities: Utilities<NpcSheetContext>;
@@ -631,6 +633,10 @@ export type ActionSectionClassic = {
   actions: ActionItem[];
 } & TidySectionBase;
 
+export type CustomItemSectionQuadrone = {
+  type: typeof CONSTANTS.SECTION_TYPE_CUSTOM;
+} & TidyItemSectionBase;
+
 export type ExtensibleComponent = {
   cssClasses: string[];
   dataset: Record<string, string>;
@@ -640,15 +646,15 @@ export type MessageBus = { message: MessageBusMessage | undefined };
 
 export type MessageBusMessage =
   | {
-    tabId: string;
-    message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
-    options?: { includeInlineToggles?: boolean };
-  }
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL;
+      options?: { includeInlineToggles?: boolean };
+    }
   | {
-    tabId: string;
-    message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
-    options?: { includeInlineToggles?: boolean };
-  };
+      tabId: string;
+      message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL;
+      options?: { includeInlineToggles?: boolean };
+    };
 
 export type Utilities<TContext> = Record<
   string,
@@ -844,7 +850,7 @@ export type SheetExpandedItemsCacheable = {
 export type OnItemToggledFn = (
   itemId: string,
   isVisible: boolean,
-  location: string
+  location: string,
 ) => void;
 
 export type SearchFilterCacheable = {
@@ -1234,6 +1240,17 @@ export type ActorTraitItemContext = {
   img: string;
 };
 
+export type SheetTabEffectSection = ActiveEffectSection & {
+  type: typeof CONSTANTS.SECTION_TYPE_EFFECT;
+};
+
+export type SheetTabSection =
+  | FeatureSection
+  | InventorySection
+  | SpellbookSection
+  // TODO: Make a type for this an propagate
+  | CustomItemSectionQuadrone;
+
 export type CharacterSheetQuadroneContext = {
   actions: TidyItemSectionBase[];
   background?: ActorTraitItemContext;
@@ -1264,6 +1281,7 @@ export type CharacterSheetQuadroneContext = {
   itemContext: Record<string, CharacterItemContext>;
   orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
+  sheetTabSections: SheetTabSection[]; // TODO: Got a better name?
   showContainerPanel: boolean;
   showDeathSaves: boolean;
   sidebarTabs: Tab[];
@@ -1280,6 +1298,10 @@ export type CharacterSheetQuadroneContext = {
   traits: Record<string, ActorTraitContext[]>;
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & SingleActorContext<Tidy5eCharacterSheetQuadrone>;
+
+export type ActionItemInclusionMode =
+  | 'usable-and-flag'
+  | 'flag-only';
 
 export type NpcSheetQuadroneContext = {
   background?: ActorTraitItemContext;
@@ -1644,5 +1666,5 @@ export type TravelSpeedConfigEntry = {
 export type SvelteInputEvent = (
   event: Event & {
     currentTarget: EventTarget & HTMLInputElement;
-  }
+  },
 ) => any;

@@ -29,9 +29,13 @@
   }
 
   &.minimized {
+    .window-header {
+      margin-top: 0.0625rem;
+    }
     .window-title {
       color: var(--t5e-color-text-default);
       font: var(--t5e-font-label-medium);
+      margin-bottom: 0.0625rem;
     }
 
     .header-control {
@@ -43,6 +47,9 @@
   /* Font Color */
   &:not(.minimized) {
     --color-light-text-heading: var(--t5e-color-text-lighter);
+    .window-title {
+      margin-bottom: 0.125rem;
+    }
   }
 
   color: var(--t5e-color-text-default);
@@ -56,12 +63,12 @@
 
   /* Window Header */
   .window-header {
-    border: none;
     align-items: center;
-    padding-inline-start: var(--t5e-size-3x);
+    border: none;
+    padding-inline-start: var(--t5e-size-4x);
 
     h1 {
-      color: var(--t5e-color-text-default);
+      color: var(--t5e-color-text-lighter);
       font: var(--t5e-font-label-medium);
     }
 
@@ -71,6 +78,7 @@
 
     .window-title {
       font-size: inherit;
+      line-height: var(--t5e-lineheight-default);
     }
 
     button.header-control {
@@ -91,6 +99,7 @@
   &.application {
     &:not(.minimized) .window-header {
       background: none;
+      color: var(--t5e-color-text-lighter);
     }
   }
 
@@ -155,6 +164,10 @@
 
     &::before,
     &::after {
+      display: none;
+    }
+
+    .actor-header-start {
       display: none;
     }
 

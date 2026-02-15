@@ -13,9 +13,10 @@
     EncounterPlaceholderQuadroneContext,
   } from 'src/types/types';
   import EncounterMemberNameCell from '../encounter-parts/EncounterMemberNameColumn.svelte';
-  import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import { EncounterMemberColumnRuntime } from 'src/runtime/tables/EncounterMemberColumnRuntime.svelte';
   import EncounterPlaceholderNameColumn from '../encounter-parts/EncounterPlaceholderNameColumn.svelte';
+  import TidyTableCustomCells from 'src/components/table-quadrone/parts/TidyTableCustomCells.svelte';
+  import TidyTableCustomHeaderCells from 'src/components/table-quadrone/parts/TidyTableCustomHeaderCells.svelte';
 
   let context = $derived(getEncounterSheetQuadroneContext());
   let combatants = $derived(context.combatants);
@@ -132,75 +133,61 @@
   </button>
 </aside>
 
-<section
-  class="group-tab-content group-members-content flexcol"
-  bind:this={sectionsContainer}
->
-  {#if combatants.length}
-    {@const columns = new ColumnsLoadout(
-      EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
-        sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
-        tabId: CONSTANTS.TAB_ACTOR_COMBAT,
-        /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
-        sectionKey: CONSTANTS.SHEET_TYPE_NPC,
-        rowActions: rowActions,
-        section: { ...SheetSections.EMPTY, rowActions },
-        sheetDocument: context.actor,
-      }),
-    )}
-    {@const visibleItemCount = combatants.length}
-    {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
-      sectionsInlineWidth,
-      columns,
-    )}
+<div class="tab-right-column">
+  <section
+    class="tab-content"
+    bind:this={sectionsContainer}
+  >
+    {#if combatants.length}
+      {@const columns = new ColumnsLoadout(
+        EncounterMemberColumnRuntime.getConfiguredColumnSpecifications({
+          sheetType: CONSTANTS.SHEET_TYPE_ENCOUNTER,
+          tabId: CONSTANTS.TAB_ACTOR_COMBAT,
+          /* Encounter Placeholders are a special case; they share NPC columns but leave empty space for unimplemented columns. */
+          sectionKey: CONSTANTS.SHEET_TYPE_NPC,
+          rowActions: rowActions,
+          section: { ...SheetSections.EMPTY, rowActions },
+          sheetDocument: context.actor,
+        }),
+      )}
+      {@const visibleItemCount = combatants.length}
+      {@const hiddenColumns = EncounterMemberColumnRuntime.determineHiddenColumns(
+        sectionsInlineWidth,
+        columns,
+      )}
 
-    <TidyTable key="npcs">
-      {#snippet header()}
-        <TidyTableHeaderRow class="theme-dark">
-          <TidyTableHeaderCell primary={true}>
-            <h3>
-              {localize('TIDY5E.Encounter.CombatantsSection.Title')}
-              <span class="table-header-count">{visibleItemCount}</span>
-            </h3>
-          </TidyTableHeaderCell>
-          {@render headerColumns(columns, hiddenColumns)}
-        </TidyTableHeaderRow>
-      {/snippet}
-      {#snippet body()}
-        {#each combatants as member}
-          {@render tableRow(member, columns, hiddenColumns)}
-        {/each}
-      {/snippet}
-    </TidyTable>
-  {/if}
-</section>
+      <TidyTable key="npcs">
+        {#snippet header()}
+          <TidyTableHeaderRow class="theme-dark">
+            <TidyTableHeaderCell primary={true}>
+              <h3>
+                {localize('TIDY5E.Encounter.CombatantsSection.Title')}
+                <span class="table-header-count">{visibleItemCount}</span>
+              </h3>
+            </TidyTableHeaderCell>
+            {@render headerColumns(columns, hiddenColumns)}
+          </TidyTableHeaderRow>
+        {/snippet}
+        {#snippet body()}
+          {#each combatants as member}
+            {@render tableRow(member, columns, hiddenColumns)}
+          {/each}
+        {/snippet}
+      </TidyTable>
+    {/if}
+  </section>
+</div>
 
 {#snippet headerColumns(columns: ColumnsLoadout, hiddenColumns: Set<string>)}
-  {#each columns.ordered as column}
-    {@const hidden = hiddenColumns.has(column.key)}
-    <TidyTableHeaderCell
-      class={[column.headerClasses, { hidden }]}
-      columnWidth="{column.widthRems}rem"
-      data-tidy-column-key={column.key}
-    >
-      {#if !!column.headerContent}
-        {#if column.headerContent.type === 'callback'}
-          {@html column.headerContent.callback?.(context.document, context)}
-        {:else if column.headerContent.type === 'component'}
-          <column.headerContent.component
-            sheetContext={context}
-            sheetDocument={context.document}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
-          />
-        {:else if column.headerContent.type === 'html'}
-          {@html column.headerContent.html}
-        {/if}
-      {/if}
-    </TidyTableHeaderCell>
-  {/each}
+  <TidyTableCustomHeaderCells
+    {columns}
+    {context}
+    {hiddenColumns}
+    section={{
+      ...SheetSections.EMPTY,
+      rowActions: rowActions,
+    }}
+  />
 {/snippet}
 
 {#snippet tableRow(
@@ -232,26 +219,17 @@
     {:else if member}
       <EncounterMemberNameCell {member} />
     {/if}
-    {#each columns.ordered as column}
-      {@const hidden = hiddenColumns.has(column.key)}
-      <TidyTableCell
-        columnWidth="{column.widthRems}rem"
-        class={[column.cellClasses, { hidden }]}
-        attributes={{ ['data-tidy-column-key']: column.key }}
-      >
-        {#if column.cellContent.type === 'callback'}
-          {@html column.cellContent.callback?.(context.document, context)}
-        {:else if column.cellContent.type === 'component'}
-          <column.cellContent.component
-            rowContext={combatant}
-            rowDocument={member?.actor}
-            section={{
-              ...SheetSections.EMPTY,
-              rowActions: rowActions,
-            }}
-          />
-        {/if}
-      </TidyTableCell>
-    {/each}
+
+    <TidyTableCustomCells
+      {columns}
+      {context}
+      ctx={combatant}
+      section={{
+        ...SheetSections.EMPTY,
+        rowActions: rowActions,
+      }}
+      entry={member?.actor}
+      {hiddenColumns}
+    />
   </div>
 {/snippet}

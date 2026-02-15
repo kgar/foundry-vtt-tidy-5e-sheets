@@ -25,7 +25,7 @@
   }
 </script>
 
-<div class="vehicle-tab-content vehicle-description-content flexcol">
+<div class="tab-content vehicle-tab-content vehicle-description-content flexcol">
   {#if editing}
     {#key contentToEdit}
       <article class="flexible-editor-container singleton">
