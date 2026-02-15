@@ -4,7 +4,6 @@ on:
     push:
         branches:
             - i18n
-            - test-branch # delete after confirming success
 
 jobs:
     create_pull_request:
