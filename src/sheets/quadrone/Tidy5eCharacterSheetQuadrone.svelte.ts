@@ -60,7 +60,7 @@ import { SheetTabConfigurationQuadroneApplication } from 'src/applications/tab-c
 import { getActorTabContext } from 'src/applications/tab-configuration/tab-configuration-functions';
 import type { RenderedSheetPart } from '../CustomContentRendererV2';
 import {
-  getActorActionSectionsQuadrone,
+  getCharacterSheetTabActionSectionsQuadrone,
   isItemInActionList,
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
@@ -360,7 +360,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     if (sectionMode === CONSTANTS.SECTION_ORGANIZATION_ORIGIN) {
       this.setUpSheetTabOriginSections(context);
     } else {
-      const actionSections = await getActorActionSectionsQuadrone(
+      const actionSections = await getCharacterSheetTabActionSectionsQuadrone(
         this.actor,
         context,
         {
@@ -1037,7 +1037,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const speeds = super._getMovementSpeeds();
 
-    const standardSpeeds = speeds.filter((s) => s.key in CONFIG.DND5E.movementTypes);
+    const standardSpeeds = speeds.filter(
+      (s) => s.key in CONFIG.DND5E.movementTypes,
+    );
     const main = standardSpeeds.slice(0, 2);
     const secondary = speeds.filter((s) => !main.includes(s));
 
