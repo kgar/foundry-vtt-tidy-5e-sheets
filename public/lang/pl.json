@@ -57,7 +57,7 @@
         "ResetActionDefault": "Zresetuj Akcje do domyślnych",
         "TabName": "Akcje",
         "OverriddenSetOverrideFalse": "Usuń z listy Akcji (Shift+LPM by wyczyścić zastąpienie)",
-        "OverriddenSetOverrideTrue": "Dodaj do listy Akcji (SHIFT+LPM by wyczyścić zastąpienie)",
+        "OverriddenSetOverrideTrue": "Dodaj do listy Akcji (Shift + LPM by wyczyścić zastąpienie)",
         "SetOverrideFalse": "Usuń z listy Akcji",
         "SetOverrideTrue": "Dodaj do listy Akcji"
     },
@@ -125,10 +125,10 @@
     "TIDY5E.Class.Wizard": "Mag",
     "TIDY5E.OriginSummaryConfig": "Konfiguracja podsumowania pochodzenia dla {actorName}",
     "TIDY5E.Listbox": {
-        "MoveUp": "Do góry (ALT + Strzałka w górę)",
-        "MoveDown": "W dół (ALT + Strzałka w dół)",
-        "MoveLeft": "W lewo (SPACE)",
-        "MoveRight": "W prawo (SPACE)",
+        "MoveUp": "Do góry (Alt + strzałka w górę)",
+        "MoveDown": "W dół (Alt + strzałka w dół)",
+        "MoveLeft": "W lewo (Spacja)",
+        "MoveRight": "W prawo (Spacja)",
         "MoveAllLeft": "Przenieś wszystko w lewo",
         "MoveAllRight": "Przenieś wszystko w prawo"
     },
