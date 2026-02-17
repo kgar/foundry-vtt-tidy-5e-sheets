@@ -9,7 +9,7 @@
   - [ ] Implement Features iterative sectioning
   - [ ] Implement Sheet tab Actions iterative sectioning
   - [ ] Implement Sheet tab Origin Sections iterative sectioning
-  - [ ] Implement Sheet Pins iterative sectioning
+  - [ ] Implement iterative Sheet Pins
 - [ ] Determine if there is a measurable difference in performance for character sheets. Small, then large.
 - [ ] Evaluate if the new approach is more or less maintainable.
 - [ ] Decide whether it's worth it to continue.
