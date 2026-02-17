@@ -271,7 +271,7 @@
     },
     "TIDY5E.Settings.HideIfZero": {
         "name": "Ocultar o Rastreador de Exaustão e Inspiração em 0",
-        "hint": "Oculta exaustão e inspiração se cair a 0 PV, mas ainda aparece ao passar o mouse."
+        "hint": "Oculta exaustão e inspiração se cair a 0, mas ainda aparece ao passar o mouse."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Mostrar Indicador de Inspiração Apenas ao Passar o Cursor",
@@ -377,7 +377,7 @@
         "hint": "Faz as marcações de Salvaguarda Contra Morte serem visíveis apenas para o Mestre. O botão de rolagem de Salvaguarda Contra Morte continua visível."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Usar Barra de Carga para PJ",
+        "name": "Usar Barra de Carga do Personagem",
         "hint": "Mostra uma barra de carga nas fichas de personagem."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
@@ -955,7 +955,7 @@
     "TIDY5E.InspirationAdd": "Adicionar Inspiração",
     "TIDY5E.InspirationRemove": "Remover Inspiração",
     "TIDY5E.LegendaryAbbr": "AL",
-    "TIDY5E.LairAbbr": "AC",
+    "TIDY5E.LairAbbr": "Covil",
     "TIDY5E.AddCustom": "Adicionar {name} Personalizado",
     "TIDY5E.CompendiumBrowser": "Adicionar {name} do Compêndio",
     "TIDY5E.SheetMode.Edit": "Mudar para Modo de Jogo",
