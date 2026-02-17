@@ -65,7 +65,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
-import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
+import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -524,8 +524,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         show: true,
         rowActions: [
           {
-            component: ActionsTabToggleButton,
-            props: (args) => ({ doc: args.data }),
+            component: CharacterSheetTabToggleButton,
+            props: (args) => ({
+              doc: args.data,
+              itemContext: context.itemContext,
+            }),
           },
           {
             component: MenuButton,
