@@ -66,6 +66,7 @@ import {
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
+import { ActorInventoryPreparer } from '../organize-me/InventoryPreparer';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -302,22 +303,22 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     }
 
     // Prepare owned items
-    this._prepareItems(context);
+    await this._prepareItems(context);
 
     await this._prepareFacilities(context);
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
 
-    for (const item of this.actor.itemTypes.container) {
-      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-        const ctx = context.itemContext[item.id];
-        ctx.containerContents = await Container.getContainerContents(item, {
-          hasActor: true,
-          unlocked: actorContext.unlocked,
-        });
-      }
-    }
+    // for (const item of this.actor.itemTypes.container) {
+    //   if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+    //     // const ctx = context.itemContext[item.id];
+    //     // ctx.containerContents = await Container.getContainerContents(item, {
+    //     //   hasActor: true,
+    //     //   unlocked: actorContext.unlocked,
+    //     // });
+    //   }
+    // }
 
     const tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
@@ -779,121 +780,86 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     return entries;
   }
 
-  _prepareItems(context: CharacterSheetQuadroneContext) {
-    const eligibleItems = Array.from(this.actor.items).filter(
+  async _prepareItems(context: CharacterSheetQuadroneContext) {
+    const eligibleItems = Array.from<Item5e>(this.actor.items).filter(
       (item: Item5e) => {
         // Suppress riders for disabled enchantments
         return item.dependentOrigin?.active !== false;
       },
     );
 
-    const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-      context,
-      { hasActionsTab: true },
-    );
+    const inventoryPreparer = new ActorInventoryPreparer(context);
 
-    // Categorize items as inventory, spellbook, features, and classes
-    const inventory: ActorInventoryTypes =
-      Inventory.getDefaultInventorySections({
-        rowActions: inventoryRowActions,
-      });
+    // const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
+    //   context,
+    //   { hasActionsTab: true },
+    // );
+
+    // // Categorize items as inventory, spellbook, features, and classes
+    // const inventory: ActorInventoryTypes =
+    //   Inventory.getDefaultInventorySections({
+    //     rowActions: inventoryRowActions,
+    //   });
+
+    const inventoryTypes = Inventory.getInventoryTypes();
 
     const inclusionMode = this.getSheetTabInclusionMode();
     const sheetTabOrganization = this.getSheetTabSectionOrganization();
 
+    await Promise.all(
+      eligibleItems.map(async (item) => {
+        await this._prepareItem(item, {
+          context,
+          inclusionMode,
+          sheetTabOrganization,
+        });
+
+        // Suppress riders for disabled enchantments
+        if (item.dependentOrigin?.active === false) {
+          return;
+        } else if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+          // TODO: Spell
+        } else if (item.type === CONSTANTS.ITEM_TYPE_CLASS) {
+          // TODO: Class
+        } else if (item.type === CONSTANTS.ITEM_TYPE_SUBCLASS) {
+          // TODO: Subclass
+        } else if (item.type === CONSTANTS.ITEM_TYPE_FACILITY) {
+          // TODO: Facility
+        } else if (inventoryPreparer.isEligible(item)) {
+          inventoryPreparer.processItem(item);
+        } else if (SheetSections.showInFeatures(item)) {
+          // TODO: Feat
+        }
+      }),
+    );
+
     // Partition items by category
-    let { backgrounds, classes, feats, items, species, spells, subclasses } =
-      eligibleItems.reduce(
-        (obj: CharacterItemPartitions, item: Item5e) => {
-          const { quantity } = item.system;
+    let { classes, feats, spells, subclasses } = eligibleItems.reduce(
+      (obj: CharacterItemPartitions, item: Item5e) => {
+        const isWithinContainer = this.actor.items.has(item.system.container);
 
-          // Item details
-          const ctx: CharacterItemContext = (context.itemContext[item.id] ??=
-            {});
-          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = FoundryAdapter.getAttunementContext(item);
-
-          // Item usage
-          ctx.hasUses = item.hasLimitedUses;
-          ctx.hasRecharge = item.hasRecharge;
-
-          // Unidentified items
-          ctx.concealDetails =
-            !game.user.isGM && item.system.identified === false;
-
-          // Item grouping
-          const originId = FoundryAdapter.getAdvancementOriginId(item);
-          const originItem = this.actor.items.get(originId);
-          switch (originItem?.type) {
-            case CONSTANTS.ITEM_TYPE_RACE:
-              ctx.group = 'species';
-              break;
-            case CONSTANTS.ITEM_TYPE_BACKGROUND:
-              ctx.group = CONSTANTS.ITEM_TYPE_BACKGROUND;
-              break;
-            case CONSTANTS.ITEM_TYPE_CLASS:
-              ctx.group = originItem.identifier;
-              break;
-            case CONSTANTS.ITEM_TYPE_SUBCLASS:
-              ctx.group = originItem.class?.identifier ?? 'other';
-              break;
-            default:
-              ctx.group = 'other';
-          }
-
-          ctx.includeInCharacterSheetTab = this.shouldIncludeItemInSheetTab(
+        // Classify items into types
+        if (!isWithinContainer) {
+          CharacterSheetSections.partitionItem(
             item,
-            inclusionMode,
-            sheetTabOrganization,
+            obj,
+            {} /* This is just a stopgap during this dev work */,
           );
+        }
 
-          ctx.containerName = this.actor.items.get(item.system.container)?.name;
-
-          // Individual item preparation
-          this._prepareItem(item, ctx);
-
-          const isWithinContainer = this.actor.items.has(item.system.container);
-
-          // Classify items into types
-          if (!isWithinContainer) {
-            CharacterSheetSections.partitionItem(item, obj, inventory);
-          }
-
-          return obj;
-        },
-        {
-          items: [] as Item5e[],
-          spells: [] as Item5e[],
-          facilities: [] as Item5e[],
-          feats: [] as Item5e[],
-          species: [] as Item5e[],
-          backgrounds: [] as Item5e[],
-          classes: [] as Item5e[],
-          subclasses: [] as Item5e[],
-        },
-      );
-
-    const inventoryTypes = Inventory.getInventoryTypes();
-    // Organize items
-    // Section the items by type
-    for (let item of items) {
-      const ctx = (context.itemContext[item.id] ??= {});
-      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
-    }
-
-    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      context.actor,
-      CONSTANTS.TAB_ACTOR_INVENTORY,
-    ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
-    });
+        return obj;
+      },
+      {
+        items: [] as Item5e[],
+        spells: [] as Item5e[],
+        facilities: [] as Item5e[],
+        feats: [] as Item5e[],
+        species: [] as Item5e[],
+        backgrounds: [] as Item5e[],
+        classes: [] as Item5e[],
+        subclasses: [] as Item5e[],
+      },
+    );
 
     // Section spells
     const spellbook = SheetSections.prepareTidySpellbook(
@@ -949,11 +915,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       );
     };
 
-    // Apply sections to their section lists
-    context.inventory = Object.values(inventory);
-
-    // TODO: Find a more organized / sane way to apply header actions to sections?
-    context.inventory.forEach(applyStandardItemHeaderActions);
+    context.inventory = inventoryPreparer.toSections();
 
     context.spellbook = spellbook;
 
@@ -976,12 +938,45 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
    * @param {object} context  Context data for display.
    * @protected
    */
-  protected _prepareItem(item: Item5e, context: CharacterItemContext) {
+  protected async _prepareItem(
+    item: Item5e,
+    {
+      context,
+      inclusionMode,
+      sheetTabOrganization,
+    }: {
+      context: ActorSheetQuadroneContext;
+      inclusionMode: ActionItemInclusionMode;
+      sheetTabOrganization: 'origin' | 'action';
+    },
+  ) {
+    const { quantity } = item.system;
+
+    // Item details
+    const ctx: CharacterItemContext = (context.itemContext[item.id] ??= {});
+    ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+    ctx.attunement = FoundryAdapter.getAttunementContext(item);
+
+    // Item usage
+    ctx.hasUses = item.hasLimitedUses;
+    ctx.hasRecharge = item.hasRecharge;
+
+    // Unidentified items
+    ctx.concealDetails = !game.user.isGM && item.system.identified === false;
+
+    ctx.includeInCharacterSheetTab = this.shouldIncludeItemInSheetTab(
+      item,
+      inclusionMode,
+      sheetTabOrganization,
+    );
+
+    ctx.containerName = this.actor.items.get(item.system.container)?.name;
+
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       const linked = item.system.linkedActivity?.item;
 
       if (this._concentration.items.has(item)) {
-        context.concentration = true;
+        ctx.concentration = true;
       }
 
       const vsmcr = game.i18n.getListFormatter({ style: 'narrow' }).format(
@@ -990,7 +985,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           .map((a: any) => a.abbr),
       );
 
-      context.subtitle = context.actionSubtitle = [
+      ctx.subtitle = ctx.actionSubtitle = [
         linked
           ? linked.name
           : this.actor.classes[item.system.sourceClass]?.name,
@@ -998,22 +993,31 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       ].filterJoin(' &bull; ');
     } else if (Inventory.isItemInventoryType(item)) {
       const containerName = this.actor.items.get(item.system.container)?.name;
-      context.actionSubtitle = [containerName].filterJoin(' &bull; ');
+      ctx.actionSubtitle = [containerName].filterJoin(' &bull; ');
     }
 
     // Save
-    context.save = ItemContext.getItemSaveContext(item);
+    ctx.save = ItemContext.getItemSaveContext(item);
 
     // To Hit
-    context.toHit = ItemContext.getToHit(item);
+    ctx.toHit = ItemContext.getToHit(item);
 
     // Activities
-    context.activities = Activities.getVisibleActivities(
+    ctx.activities = Activities.getVisibleActivities(
       item,
       item.system.activities,
     )?.map(Activities.getActivityItemContext);
 
-    context.linkedUses = Activities.getLinkedUses(item);
+    ctx.linkedUses = Activities.getLinkedUses(item);
+
+    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+      ctx.containerContents = await Container.getContainerContents(item, {
+        hasActor: true,
+        unlocked: context.unlocked,
+      });
+    }
+
+    ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
   }
 
   /* -------------------------------------------- */
