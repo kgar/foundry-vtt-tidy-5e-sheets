@@ -188,7 +188,8 @@ export class CharacterSheetSections {
     unlocked: boolean,
     tabId: string,
     feats: Item5e[],
-    options: Partial<CharacterFeatureSection>
+    options: Partial<CharacterFeatureSection>,
+    customSectionFlag: 'section' | 'actionSection' = 'section',
   ): FeatureSection[] {
     let featuresMap: Record<string, FeatureSection> = {};
 
@@ -226,7 +227,7 @@ export class CharacterSheetSections {
 
     for (let feat of feats) {
       // custom section
-      let customSection = TidyFlags.section.get(feat);
+      let customSection = TidyFlags[customSectionFlag].get(feat);
 
       if (!isNil(customSection)) {
         // Partition/Create Custom Section and add item
@@ -373,12 +374,10 @@ export class CharacterSheetSections {
     partitions: CharacterItemPartitions,
     inventory: ActorInventoryTypes
   ) {
-
     // Suppress riders for disabled enchantments
-    if ( item.dependentOrigin?.active === false ) {
+    if (item.dependentOrigin?.active === false) {
       return;
-    }
-    else if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+    } else if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       partitions.spells.push(item);
     } else if (item.type === CONSTANTS.ITEM_TYPE_RACE) {
       partitions.species.push(item);

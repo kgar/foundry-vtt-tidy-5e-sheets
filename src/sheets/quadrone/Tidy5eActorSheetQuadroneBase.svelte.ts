@@ -1433,7 +1433,7 @@ export function Tidy5eActorSheetQuadroneBase<
           return f.id !== srcId;
         });
 
-      const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+      const updates = foundry.utils.performIntegerSort(source, {
         target,
         siblings,
       });
@@ -1601,9 +1601,14 @@ export function Tidy5eActorSheetQuadroneBase<
 
     async _onDropItem(
       event: DragEvent & { currentTarget: HTMLElement },
-      document: Item5e
+      document: Item5e,
     ): Promise<object | boolean | undefined> {
       const behavior = (event as any)._behavior;
+
+      const sortKeyOverride =
+        (event.target as HTMLElement)
+          ?.closest<HTMLElement>('[data-sort-key]')
+          ?.getAttribute('data-sort-key') ?? undefined;
 
       if (!this.actor.isOwner || behavior === 'none') {
         return false;
@@ -1622,7 +1627,8 @@ export function Tidy5eActorSheetQuadroneBase<
           this.actor,
           event,
           itemData,
-          !removingFromContainer
+          !removingFromContainer,
+          sortKeyOverride,
         );
 
         return initialSortResult;
@@ -1844,7 +1850,7 @@ export function Tidy5eActorSheetQuadroneBase<
         const siblings = targetItem.system.activities.filter(
           (a: any) => a._id !== activity._id
         );
-        const sortUpdates = foundry.utils.SortingHelpers.performIntegerSort(
+        const sortUpdates = foundry.utils.performIntegerSort(
           source,
           {
             target,

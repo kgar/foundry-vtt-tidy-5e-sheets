@@ -1,0 +1,31 @@
+name: Auto Create i18n PR on New Commits
+
+on:
+    push:
+        branches:
+            - i18n
+
+jobs:
+    create_pull_request:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0 # fetch all history to check diffs
+
+        - name: Check for new commits not in main and create PR
+          id: create-pr
+          uses: peter-evans/create-pull-request@v6
+          with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            commit-message: Automatic pull request update
+            title: "i18n: Latest from Weblate"
+            body: |
+                The latest changes from weblate.
+            branch: ${{ github.ref }}
+            base: main

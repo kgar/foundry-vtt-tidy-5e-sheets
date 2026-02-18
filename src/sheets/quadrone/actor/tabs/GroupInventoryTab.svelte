@@ -66,129 +66,32 @@
     context.members.sections.flatMap((s) => s.members),
   );
 </script>
+<div class="tab-right-column">
+  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+  <div class="tab-content">
+    <div class="group-tab-content flexcol">
 
-<aside class="sidebar expanded">
-  {#each members as member}
-    {@const actorIsDead =
-      member.actor.system.attributes?.hp?.value === 0 &&
-      member.actor.system.attributes?.hp?.max > 0 &&
-      (member.actor.system.attributes.death === undefined ||
-        (member.actor.system.attributes.death.failure >= 3 &&
-          member.actor.system.attributes.death.success < 3))}
+      {#if showSheetPins}
+        <SheetPins />
+      {/if}
 
-    <div
-      class="actor-container flexrow"
-      style:--t5e-theme-color-default={member.accentColor}
-      style:--t5e-theme-color-highlight={member.highlightColor}
-      style:--t5e-member-color-hover={member.highlightColor}
-      role="button"
-      data-keyboard-focus
-      tabindex={0}
-      onclick={() => member.actor.sheet.render(true)}
-      onkeydown={(e) =>
-        e.key === 'Enter' || e.key === ' '
-          ? member.actor.sheet.render(true)
-          : null}
-      onmouseenter={() => (hoveredMember = member.actor.uuid)}
-      onmouseleave={() => (hoveredMember = null)}
-      data-uuid={member.actor.uuid}
-      {@attach dropzoneClass('hovered', '.actor-image')}
-    >
-      <div class={['actor-image-container flexshrink']}>
-        <div
-          class={[
-            'actor-image',
-            { hovered: hoveredMember === member.actor.uuid },
-            { dead: actorIsDead },
-            member.portrait.shape,
-            { video: member.portrait.isVideo },
-          ]}
-        >
-          {#if member.portrait.isVideo}
-            <video
-              src={member.portrait.src}
-              autoplay
-              muted
-              playsinline
-              disablepictureinpicture
-              loop
-              class={{ dead: actorIsDead }}
-            ></video>
-          {:else}
-            <img
-              src={member.portrait.src}
-              alt={member.actor.name}
-              class={{ dead: actorIsDead }}
-            />
-          {/if}
-          {#if actorIsDead}
-            <div class="dead-overlay"></div>
-          {/if}
-        </div>
-      </div>
-      <div class="actor-name flexcol">
-        <h4 class="font-label-medium">
-          {member.actor.name}
-        </h4>
-        {#if member.canObserve}
-          {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-            <div class="separated-list">
-              <span class="actor-currency">
-                <span class="font-label-medium color-text-default flexshrink"
-                  >{member.gold}</span
-                >
-                <span class="font-body-medium color-text-lighter flexshrink"
-                  >{member.goldAbbreviation}</span
-                >
-              </span>
-            </div>
-            <ActorEncumbranceBar actor={member.actor} />
-          {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
-            <div class="separated-list">
-              <span class="actor-cargo separated-list">
-                <span class="font-body-medium color-text-lighter"
-                  >{localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label')}</span
-                >
-                <span class="font-label-medium color-text-default"
-                  >{member.encumbrance.value.toNearest(0.01)}</span
-                >
-                <span class="font-body-medium color-text-lightest">/</span>
-                <span class="font-label-medium color-text-lighter"
-                  >{member.encumbrance.max}</span
-                >
-              </span>
-            </div>
-          {/if}
-        {/if}
-      </div>
-    </div>
-  {/each}
-</aside>
-<div class="group-tab-content flexcol">
-  <div class="inventory-content">
-    <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+      {#if context.showContainerPanel && !!context.containerPanelItems.length}
+        <ContainerPanel
+          {searchCriteria}
+          containerPanelItems={context.containerPanelItems}
+        />
+      {/if}
 
-    {#if showSheetPins}
-      <SheetPins />
-    {/if}
-
-    {#if context.showContainerPanel && !!context.containerPanelItems.length}
-      <ContainerPanel
+      <InventoryTables
+        sections={inventory}
+        editable={context.editable}
+        itemContext={context.itemContext}
+        {inlineToggleService}
         {searchCriteria}
-        containerPanelItems={context.containerPanelItems}
+        sheetDocument={context.actor}
+        root={true}
       />
-    {/if}
-
-    <InventoryTables
-      sections={inventory}
-      editable={context.editable}
-      itemContext={context.itemContext}
-      {inlineToggleService}
-      {searchCriteria}
-      sheetDocument={context.actor}
-      root={true}
-    />
+    </div>
   </div>
-
   <ActorInventoryFooter useAttunement={false} />
 </div>

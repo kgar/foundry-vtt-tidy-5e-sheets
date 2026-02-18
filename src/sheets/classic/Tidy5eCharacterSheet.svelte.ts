@@ -1674,7 +1674,7 @@ export class Tidy5eCharacterSheet
         return f.id !== srcId;
       });
 
-    const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+    const updates = foundry.utils.performIntegerSort(source, {
       target,
       siblings,
     });
@@ -1749,7 +1749,7 @@ export class Tidy5eCharacterSheet
         return f.id !== srcId;
       }
     );
-    const updates = foundry.utils.SortingHelpers.performIntegerSort(source, {
+    const updates = foundry.utils.performIntegerSort(source, {
       target,
       siblings,
     });

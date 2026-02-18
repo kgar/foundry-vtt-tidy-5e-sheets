@@ -5,8 +5,11 @@ import { settings } from 'src/settings/settings.svelte';
 import type { ContainerContents, Item5e } from 'src/types/item.types';
 import type {
   ActionItem,
+  ActionItemInclusionMode,
   ActionSectionClassic,
   Actor5e,
+  CharacterSheetQuadroneContext,
+  CustomItemSectionQuadrone,
   TidyItemSectionBase,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -41,7 +44,7 @@ const activationTypeSortValues: Record<string, number> = {
 };
 
 export async function getActorActionSections(
-  actor: Actor5e
+  actor: Actor5e,
 ): Promise<ActionSectionClassic[]> {
   try {
     let eligibleItems: ActionItem[] = [];
@@ -63,7 +66,7 @@ export async function getActorActionSections(
 
 export function getSortedActions(
   section: ActionSectionClassic,
-  sortMode: string
+  sortMode: string,
 ) {
   return section.actions.toSorted(({ item: a }, { item: b }) => {
     if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
@@ -83,7 +86,7 @@ export function getSortedActions(
 
 function buildActionSections(
   actor: Actor5e,
-  actionItems: ActionItem[]
+  actionItems: ActionItem[],
 ): ActionSectionClassic[] {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
 
@@ -123,7 +126,7 @@ function buildActionSections(
     } else {
       const activationType = getActivationType(
         actionItem.item.system.activities?.contents[0]?.activation.type,
-        customMappings
+        customMappings,
       );
       const section = (actionSections[activationType] ??= {
         actions: [],
@@ -141,20 +144,16 @@ function buildActionSections(
   return Object.values(actionSections);
 }
 
-export async function getActorActionSectionsQuadrone(
+export async function getCharacterSheetTabActionSectionsQuadrone(
   actor: Actor5e,
-  options?: Partial<TidyItemSectionBase>
-): Promise<TidyItemSectionBase[]> {
+  context: CharacterSheetQuadroneContext,
+  options?: Partial<TidyItemSectionBase>,
+): Promise<CustomItemSectionQuadrone[]> {
   try {
-    let eligibleItems: Item5e[] = [];
-
-    for (let item of actor.items) {
-      if (!isItemInActionList(item)) {
-        continue;
-      }
-
-      eligibleItems.push(item);
-    }
+    let eligibleItems: Item5e[] = actor.items.filter(
+      (item: Item5e) =>
+        context.itemContext[item.id]?.includeInCharacterSheetTab,
+    );
 
     return buildActionSectionsQuadrone(eligibleItems, options);
   } catch (e) {
@@ -163,37 +162,18 @@ export async function getActorActionSectionsQuadrone(
   }
 }
 
-export function getSortedActionsQuadrone(
-  section: TidyItemSectionBase,
-  sortMode: string
-) {
-  return section.items.toSorted((a, b) => {
-    if (sortMode === CONSTANTS.ITEM_SORT_METHOD_KEY_ALPHABETICAL_ASCENDING) {
-      return a.name.localeCompare(b.name, game.i18n.lang);
-    }
-
-    // Sort by Arbitrary Action List Rules
-    if (a.type !== b.type) {
-      return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-    }
-    if (a.type === 'spell' && b.type === 'spell') {
-      return a.system.level - b.system.level;
-    }
-    return (a.sort || 0) - (b.sort || 0);
-  });
-}
-
 function buildActionSectionsQuadrone(
   items: Item5e[],
-  options?: Partial<TidyItemSectionBase>
-): TidyItemSectionBase[] {
+  options?: Partial<CustomItemSectionQuadrone>,
+): CustomItemSectionQuadrone[] {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
 
-  let actionSections: Record<string, TidyItemSectionBase> = {};
+  let actionSections: Record<string, CustomItemSectionQuadrone> = {};
 
   // Initialize the default sections in their default order.
   Object.keys(activationTypeSortValues).forEach((activationType) => {
     actionSections[activationType] = {
+      type: CONSTANTS.SECTION_TYPE_CUSTOM,
       items: [],
       dataset: {},
       label: FoundryAdapter.getActivationTypeLabel(activationType),
@@ -210,6 +190,7 @@ function buildActionSectionsQuadrone(
     const customSectionName = TidyFlags.actionSection.get(item);
     if (customSectionName) {
       const customSection = (actionSections[customSectionName] ??= {
+        type: CONSTANTS.SECTION_TYPE_CUSTOM,
         items: [],
         dataset: {},
         key: customSectionName,
@@ -226,11 +207,12 @@ function buildActionSectionsQuadrone(
       customSection.items.push(item);
     } else {
       const activationType = getActivationType(
-        item.system.activities?.contents[0]?.activation.type,
-        customMappings
+        item.system.activities?.contents[0]?.activation?.type,
+        customMappings,
       );
 
       const section = (actionSections[activationType] ??= {
+        type: CONSTANTS.SECTION_TYPE_CUSTOM,
         items: [],
         dataset: {},
         key: activationType,
@@ -247,12 +229,19 @@ function buildActionSectionsQuadrone(
   return Object.values(actionSections);
 }
 
-export function isItemInActionList(item: Item5e): boolean {
+export function isItemInActionList(
+  item: Item5e,
+  mode: ActionItemInclusionMode = 'usable-and-flag',
+): boolean {
   // check our override
   const override = TidyFlags.actionFilterOverride.get(item);
 
   if (override !== undefined && override !== null) {
     return override;
+  }
+
+  if (mode === 'flag-only') {
+    return false;
   }
 
   // perform normal filtering logic
@@ -389,7 +378,7 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
               damageType,
               damageHealingTypeLabel,
             };
-          }
+          },
         )
       : [];
 
@@ -412,7 +401,7 @@ async function mapActionItem(item: Item5e): Promise<ActionItem> {
     error(
       'An error occurred while processing an item for the action list',
       false,
-      e
+      e,
     );
     debug('Action list mapping error troubleshooting info', { item });
 
@@ -443,10 +432,10 @@ function getRangeTitles(item: Item5e): {
     firstActivity.target?.type === 'self'
       ? item.labels.target
       : hasRange(item)
-      ? item.labels.range
-      : rangeSubtitle !== null
-      ? '—'
-      : null;
+        ? item.labels.range
+        : rangeSubtitle !== null
+          ? '—'
+          : null;
 
   return {
     rangeTitle,
@@ -460,7 +449,7 @@ function hasRange(item: Item5e): boolean {
 
 function getActivationType(
   activationType: string,
-  customMappings: Record<string, string>
+  customMappings: Record<string, string>,
 ) {
   const customMapping = customMappings[activationType];
   if (customMapping) {
@@ -517,10 +506,10 @@ export function actorUsesActionFeature(actor: Actor5e) {
     actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
       ? settings.value.defaultCharacterSheetTabs
       : actor.type === CONSTANTS.SHEET_TYPE_NPC
-      ? settings.value.defaultNpcSheetTabs
-      : actor.type === CONSTANTS.SHEET_TYPE_VEHICLE
-      ? settings.value.defaultVehicleSheetTabs
-      : [];
+        ? settings.value.defaultNpcSheetTabs
+        : actor.type === CONSTANTS.SHEET_TYPE_VEHICLE
+          ? settings.value.defaultVehicleSheetTabs
+          : [];
 
   return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
 }
