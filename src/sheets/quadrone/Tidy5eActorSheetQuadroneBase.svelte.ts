@@ -1077,15 +1077,23 @@ export function Tidy5eActorSheetQuadroneBase<
     }
 
     _applySheetThemeClasses(themeSettings: ThemeSettingsV3) {
+      const headerStyle =
+        themeSettings.headerStyle ??
+        (themeSettings.useHeaderBackground ? 'default' : 'parchment');
+
       this.element.classList.toggle(
         'sheet-parchment',
-        !themeSettings.useHeaderBackground
+        headerStyle === 'parchment'
+      );
+      this.element.classList.toggle(
+        'sheet-header-unstyled',
+        headerStyle === 'unstyled'
       );
 
       for (const node of this.element.querySelectorAll(
         '.window-header, .sheet-header'
       )) {
-        node.classList.toggle('theme-dark', themeSettings.useHeaderBackground);
+        node.classList.toggle('theme-dark', headerStyle !== 'parchment');
       }
     }
 
