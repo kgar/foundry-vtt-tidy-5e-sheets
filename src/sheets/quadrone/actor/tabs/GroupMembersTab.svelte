@@ -102,70 +102,64 @@
 
 <div class="tab-right-column">
   <GroupMembersActionBar
-  bind:searchCriteria
-  {sections}
-  tabId={CONSTANTS.TAB_MEMBERS}
-  {tabOptionGroups}
+    bind:searchCriteria
+    {sections}
+    tabId={CONSTANTS.TAB_MEMBERS}
+    {tabOptionGroups}
   />
 
-  <div class="tab-content">
-    <section
-      class="group-tab-content group-members-content flexcol"
-      bind:this={sectionsContainer}
-    >
+  <div class="tab-content" bind:this={sectionsContainer}>
+    {#if showSheetPins}
+      <SheetPins />
+    {/if}
 
-      {#if showSheetPins}
-        <SheetPins />
+    {#each sections as section (section.key)}
+      {@const hasViewableItems =
+        !searchResults.uuids ||
+        section.members.some((m) => searchResults.uuids?.has(m.actor.uuid))}
+      {#if section.show && hasViewableItems}
+        {@const columns = new ColumnsLoadout(
+          GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
+            sheetType: CONSTANTS.SHEET_TYPE_GROUP,
+            tabId: CONSTANTS.TAB_MEMBERS,
+            sectionKey: section.key,
+            rowActions: section.rowActions,
+            section,
+            sheetDocument: context.actor,
+          }),
+        )}
+        {@const visibleItemCount = section.members.length}
+        {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
+          sectionsInlineWidth,
+          columns,
+        )}
+
+        <TidyTable key={section.key} data-custom-section={section.custom}>
+          {#snippet header()}
+            <TidyTableHeaderRow class="theme-dark">
+              <TidyTableHeaderCell primary={true}>
+                <h3>
+                  {localize(section.label)}
+                  <span class="table-header-count">{visibleItemCount}</span>
+                </h3>
+              </TidyTableHeaderCell>
+              {@render headerColumns(columns, hiddenColumns, section)}
+            </TidyTableHeaderRow>
+          {/snippet}
+          {#snippet body()}
+            {#each section.members as member}
+              {@render tableRow(member, columns, hiddenColumns, section)}
+            {/each}
+          {/snippet}
+        </TidyTable>
       {/if}
+    {/each}
 
-      {#each sections as section (section.key)}
-        {@const hasViewableItems =
-          !searchResults.uuids ||
-          section.members.some((m) => searchResults.uuids?.has(m.actor.uuid))}
-        {#if section.show && hasViewableItems}
-          {@const columns = new ColumnsLoadout(
-            GroupMemberColumnRuntime.getConfiguredColumnSpecifications({
-              sheetType: CONSTANTS.SHEET_TYPE_GROUP,
-              tabId: CONSTANTS.TAB_MEMBERS,
-              sectionKey: section.key,
-              rowActions: section.rowActions,
-              section,
-              sheetDocument: context.actor,
-            }),
-          )}
-          {@const visibleItemCount = section.members.length}
-          {@const hiddenColumns = GroupMemberColumnRuntime.determineHiddenColumns(
-            sectionsInlineWidth,
-            columns,
-          )}
-
-          <TidyTable key={section.key} data-custom-section={section.custom}>
-            {#snippet header()}
-              <TidyTableHeaderRow class="theme-dark">
-                <TidyTableHeaderCell primary={true}>
-                  <h3>
-                    {localize(section.label)}
-                    <span class="table-header-count">{visibleItemCount}</span>
-                  </h3>
-                </TidyTableHeaderCell>
-                {@render headerColumns(columns, hiddenColumns, section)}
-              </TidyTableHeaderRow>
-            {/snippet}
-            {#snippet body()}
-              {#each section.members as member}
-                {@render tableRow(member, columns, hiddenColumns, section)}
-              {/each}
-            {/snippet}
-          </TidyTable>
-        {/if}
-      {/each}
-
-      {#if !context.system.members.length}
-        <div class="empty-state-container empty-state-description">
-          {localize('TIDY5E.Group.EmptyMembersTabHint')}
-        </div>
-      {/if}
-    </section>
+    {#if !context.system.members.length}
+      <div class="empty-state-container empty-state-description">
+        {localize('TIDY5E.Group.EmptyMembersTabHint')}
+      </div>
+    {/if}
   </div>
 </div>
 
