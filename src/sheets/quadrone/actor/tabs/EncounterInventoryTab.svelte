@@ -60,30 +60,26 @@
 <div class="tab-right-column">
   <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
   <div class="tab-content">
-    <div class="group-tab-content flexcol">
+    {#if showSheetPins}
+      <SheetPins />
+    {/if}
 
-      {#if showSheetPins}
-        <SheetPins />
-      {/if}
-
-      {#if context.showContainerPanel && !!context.containerPanelItems.length}
-        <ContainerPanel
-          {searchCriteria}
-          containerPanelItems={context.containerPanelItems}
-        />
-      {/if}
-
-      <InventoryTables
-        sections={inventory}
-        editable={context.editable}
-        itemContext={context.itemContext}
-        {inlineToggleService}
+    {#if context.showContainerPanel && !!context.containerPanelItems.length}
+      <ContainerPanel
         {searchCriteria}
-        sheetDocument={context.actor}
-        root={true}
+        containerPanelItems={context.containerPanelItems}
       />
-    </div>
+    {/if}
+
+    <InventoryTables
+      sections={inventory}
+      editable={context.editable}
+      itemContext={context.itemContext}
+      {inlineToggleService}
+      {searchCriteria}
+      sheetDocument={context.actor}
+      root={true}
+    />
   </div>
   <ActorInventoryFooter useAttunement={false} />
 </div>
-
