@@ -55,5 +55,11 @@
     "TIDY5E.JournalMisc": "Прочее",
     "TIDY5E.JournalEntries": "Личные Записи",
     "TIDY5E.JournalEntry.NewTitle": "Запись в Журнале {number}",
-    "TIDY5E.TogglePersonalityInfo": "Переключить Подробности Личности"
+    "TIDY5E.TogglePersonalityInfo": "Переключить Подробности Личности",
+    "TIDY5E.ThemeSettings": {
+        "HeaderStyle.title": "Стиль заголовка",
+        "HeaderStyle.option.default": "По умолчанию",
+        "HeaderStyle.option.unstyled": "Без стилей",
+        "HeaderStyle.option.parchment": "Пергамент"
+    }
 }

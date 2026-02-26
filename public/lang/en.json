@@ -828,6 +828,10 @@
     },
     "UseHeaderBackground.title": "Use Header Background",
     "UseHeaderBackground.hint": "Includes styles that support a colorful sheet header with an image background.",
+    "HeaderStyle.title": "Header Style",
+    "HeaderStyle.option.default": "Default (Header Image)",
+    "HeaderStyle.option.unstyled": "Unstyled Image",
+    "HeaderStyle.option.parchment": "Parchment",
     "ActorHeaderBackground.title": "Actor Header Background",
     "ItemSidebarBackground.title": "Item Sidebar Background",
     "HeaderColor": {

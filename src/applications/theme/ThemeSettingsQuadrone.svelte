@@ -154,22 +154,25 @@
 
     {#if !app.document || app.actorHeaderBackgroundSupportedActorTypes.has(app.document.type)}
       <div class="form-group">
-        <label for="{idPrefix}-use-header-background">
-          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.title')}
+        <label for="{idPrefix}-header-style">
+          {localize('TIDY5E.ThemeSettings.HeaderStyle.title')}
         </label>
         <div class="form-fields">
-          <input
-            id="{idPrefix}-use-header-background"
-            type="checkbox"
-            bind:checked={context.value.useHeaderBackground}
-          />
+          <select id="{idPrefix}-header-style" bind:value={context.value.headerStyle}>
+            <option value="default">
+              {localize('TIDY5E.ThemeSettings.HeaderStyle.option.default')}
+            </option>
+            <option value="unstyled">
+              {localize('TIDY5E.ThemeSettings.HeaderStyle.option.unstyled')}
+            </option>
+            <option value="parchment">
+              {localize('TIDY5E.ThemeSettings.HeaderStyle.option.parchment')}
+            </option>
+          </select>
         </div>
-        <p class="hint">
-          {localize('TIDY5E.ThemeSettings.UseHeaderBackground.hint')}
-        </p>
       </div>
 
-      {#if context.value.useHeaderBackground}
+      {#if context.value.headerStyle !== 'parchment'}
         <div class="form-group">
           <label for="{idPrefix}-actor-header-background">
             {localize('TIDY5E.ThemeSettings.ActorHeaderBackground.title')}
