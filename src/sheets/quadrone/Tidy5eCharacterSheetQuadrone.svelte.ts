@@ -1040,12 +1040,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const speeds = super._getMovementSpeeds();
 
-    const standardSpeeds = speeds.filter(
-      (s) => s.key in CONFIG.DND5E.movementTypes,
-    );
-    const main = standardSpeeds.slice(0, 2);
-    const secondary = speeds.filter((s) => !main.includes(s));
+    const movementSpeeds = speeds.filter((s) => s.key !== 'ignoredDifficultTerrain');
+    const difficultTerrainSpeeds = speeds.filter((s) => s.key === 'ignoredDifficultTerrain');
 
+    const main = movementSpeeds.slice(0, 2);
+    const secondary = [...movementSpeeds.slice(2), ...difficultTerrainSpeeds];
     return {
       main: main,
       secondary: secondary,

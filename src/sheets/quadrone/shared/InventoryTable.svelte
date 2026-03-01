@@ -92,9 +92,16 @@
 
   {#snippet afterImage(entry, ctx)}
     {#if 'containerContents' in ctx && !!ctx.containerContents}
+      <!-- svelte-ignore a11y_missing_attribute -->
       <a
         class="container-expander"
         onclick={() => inlineToggleService.toggle(tabId, entry.id)}
+        role="button"
+        tabindex="0"
+        aria-label={localize('DND5E.ExpandCollapse')}
+        onkeydown={(ev) =>
+          ev.key === 'Enter' ||
+          (ev.key === ' ' && inlineToggleService.toggle(tabId, entry.id))}
       >
         <i
           class="fa-solid fa-angle-right expand-indicator"
@@ -112,9 +119,12 @@
         : 'fa-regular fa-sun color-text-lighter'}
 
       {@const title = localize(ctx.attunement.title)}
-
-      <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
       <i class={[iconClass, 'item-state-indicator']} data-tooltip={title}></i>
+    {:else if entry.system.equipped}
+      <i
+        class="fa-solid fa-hand-fist equip-icon color-icon-theme item-state-indicator"
+        data-tooltip={localize('DND5E.Equipped')}
+      ></i>
     {/if}
   {/snippet}
 

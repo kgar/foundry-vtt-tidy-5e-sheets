@@ -186,7 +186,7 @@ export function getDefaultItemColumns() {
         type: 'component',
         component: ItemUsesColumn,
       },
-      widthRems: 5,
+      widthRems: 4,
       cellClasses: 'inline-uses',
     },
     weight: {

@@ -34,6 +34,6 @@
   {#if included}
     <i class="fa-solid fa-bookmark fa-fw color-text-default"></i>
   {:else}
-    <i class="fa-regular fa-bookmark fa-fw color-text-lighter"></i>
+    <i class="fa-regular fa-bookmark fa-fw color-text-lightest"></i>
   {/if}
 </a>
