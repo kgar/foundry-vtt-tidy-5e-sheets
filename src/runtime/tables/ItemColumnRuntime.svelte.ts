@@ -217,7 +217,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
           type: 'component',
           component: VehicleItemUsesColumn,
         },
-        widthRems: 5,
+        widthRems: 4,
         order: 20,
         priority: 100,
       },
