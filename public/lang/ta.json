@@ -22,13 +22,15 @@
     "TIDY5E.Class.Sorcerer": "சூனியக்காரர்",
     "TIDY5E.Class.Warlock": "வார்லாக்",
     "TIDY5E.TabConfiguration": {
-        "MenuOptionText": "தாவல் தேர்வு",
+        "MenuOptionText": "தாவல் கட்டமைப்பு",
         "AvailableHeader": "மறைக்கப்பட்ட தாவல்கள்",
         "AtLeastOneRequiredErrorMessage": "குறைந்தது ஒரு தாவல் தேவை.",
         "Title": "தாவல் தேர்வு: {documentName}",
         "SelectedHeader": "தெரியும் தாவல்கள்",
         "UnsupportedDocumentErrorMessage": "ஆவண வகை {documentType} தற்போது தாவல் தேர்வுக்கு அமைக்கப்படவில்லை.",
-        "Explanation": "பார்க்கக்கூடாது என்று பயனர் அல்லது தாள் கட்டமைக்கப்பட்ட எந்த தாவல்களும் (எ.கா., பத்திரிகையை கட்டமைப்பு அமைப்புகளில் முடக்குவது) தேர்ந்தெடுக்கப்பட்டாலும் கூட தாளில் இன்னும் தோன்றாது."
+        "Explanation": "பார்க்கக்கூடாது என்று பயனர் அல்லது தாள் கட்டமைக்கப்பட்ட எந்த தாவல்களும் (எ.கா., பத்திரிகையை கட்டமைப்பு அமைப்புகளில் முடக்குவது) தேர்ந்தெடுக்கப்பட்டாலும் கூட தாளில் இன்னும் தோன்றாது.",
+        "SelectionTab.Title": "தாவல் தேர்வு",
+        "VisibilityTab.Title": "தாவல் தெரிவுநிலை"
     },
     "TIDY5E.Listbox": {
         "MoveLeft": "இடதுபுறம் நகர்த்தவும் (இடம்)",
@@ -288,12 +290,22 @@
             "title": "{type} உருவப்படம் வடிவம்",
             "option.round": "சுற்று",
             "option.transparent": "வெளிப்படையானது",
-            "option.square": "நாற்கை"
+            "option.square": "நாற்கை",
+            "option.token": "கிள்ளாக்கு"
         },
         "RarityColors.title": "அரிதான வண்ணங்கள்",
         "SheetTheme.title": "தாள் கருப்பொருள்",
         "SheetTheme.hint": "சிறந்த முடிவுகளுக்கு, வண்ணத் தட்டின் மையத்திற்கு அருகில் ஒரு வண்ணத்தைத் தேர்வுசெய்க.",
-        "SpellcastingMethodColors.title": "எழுத்துப்பிழை தயாரிப்பு முறை வண்ணங்கள்"
+        "SpellcastingMethodColors.title": "எழுத்துப்பிழை தயாரிப்பு முறை வண்ணங்கள்",
+        "AccentColor": {
+            "hint": "பட்டன்கள், அட்டவணை தலைப்புகள் மற்றும் பிற இடைமுகம் கூறுகள் உட்பட தாளின் உச்சரிப்பு நிறத்தைத் தனிப்பயனாக்குங்கள்."
+        },
+        "UseHeaderBackground.title": "தலைப்பு பின்னணியைப் பயன்படுத்தவும்",
+        "UseHeaderBackground.hint": "படப் பின்புலத்துடன் கூடிய வண்ணமயமான தாள் தலைப்பை ஆதரிக்கும் பாணிகளை உள்ளடக்கியது.",
+        "HeaderColor": {
+            "title": "தலைப்பு பின்னணி நிறம்",
+            "hint": "தாள் தலைப்பிற்கு தாள் உச்சரிப்பு நிறத்தை விட வேறு நிறத்தைப் பயன்படுத்தவும்."
+        }
     },
     "TIDY5E.ReminderToBackUp": "உங்கள் உலகத்தை காப்புப் பிரதி எடுக்க எப்போதும் நினைவில் கொள்ளுங்கள்.",
     "TIDY5E.Utilities.ConfigureSections": "பிரிவுகளை உள்ளமைக்கவும்",
@@ -315,7 +327,8 @@
         "SectionSelectorExistingSections": "தற்போதுள்ள பிரிவுகள்",
         "SectionSelectorCreateNewSection": "புதிய பகுதியை உருவாக்கவும்",
         "SectionSelectorNewSectionName": "புதிய பிரிவு பெயர்",
-        "SectionSelectorSaveNewSection": "புதிய பகுதியைச் சேமிக்கவும்"
+        "SectionSelectorSaveNewSection": "புதிய பகுதியைச் சேமிக்கவும்",
+        "SectionSelectorChooseTabSectionTooltip": "{tabName} பிரிவைத் தேர்ந்தெடுக்கவும்"
     },
     "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "ஒதுக்கப்படாததை மட்டும் காட்டு",
     "TIDY5E.SortMenu.OptionAlphabetical": "அகரவரிசை (A-Z)",
@@ -368,7 +381,7 @@
     "TIDY5E.SheetEdit.Description": "சேர்/நீக்கு பொத்தான்கள் மற்றும் வெற்று பிரிவுகளின் தெரிவுநிலையை மாற்றவும்",
     "TIDY5E.SheetLock.Unlock.Hint": "திறத்தல் - {description}",
     "TIDY5E.ContextMenuActionEquip": "உபகரணங்கள்",
-    "TIDY5E.ContextMenuActionUnequip": "WAKIP",
+    "TIDY5E.ContextMenuActionUnequip": "பொருத்தமற்றது",
     "TIDY5E.ContextMenuActionUnprepare": "தயாராக இல்லை",
     "TIDY5E.ContextMenuActionEdit": "தொகு",
     "TIDY5E.ContextMenuActionDelete": "நீக்கு",
@@ -408,9 +421,9 @@
     "TIDY5E.Class.Bard": "பார்ட்",
     "TIDY5E.Class.Cleric": "மதகுரு",
     "TIDY5E.SpellSourceIdentifierLabelHint": "இந்த எழுத்துப்பிழை கொண்ட நடிகருக்கு இங்கே குறிப்பிடப்பட்டுள்ள மூல வகுப்பு இல்லை.",
-    "TIDY5E.Class.Custom": "தனிப்பயன்",
+    "TIDY5E.Class.Custom": "விருப்ப வகுப்பு",
     "TIDY5E.Class.Druid": "ட்ரூயிட்",
-    "TIDY5E.Class.Fighter": "போர்",
+    "TIDY5E.Class.Fighter": "போராளி",
     "TIDY5E.Class.Monk": "துறவி",
     "TIDY5E.Class.Paladin": "பாலாடின்",
     "TIDY5E.Class.Wizard": "வழிகாட்டி",
@@ -662,7 +675,7 @@
         "name": "ஒப்பந்தம்"
     },
     "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": "PACT அவுட்லைன்"
+        "name": "ஒப்பந்த அவுட்லைன்"
     },
     "TIDY5E.Settings.ColorPickerPactAccent": {
         "name": "ஒப்பந்தம் உச்சரிப்பு"
@@ -712,7 +725,9 @@
         "name": "இயல்புநிலை தாளாக நேர்த்தியாக அமைக்கவும்",
         "hint": "ஒன்று அல்லது அதற்கு மேற்பட்ட ஆவண வகைகளுக்கு உங்கள் இயல்புநிலையாக நேர்த்தியான 5e தாள்களை அமைக்க விரும்பினால், ஆனால் முக்கிய இயல்புநிலை தாள்கள் கட்டமைப்பு பட்டியல் எதிர்பார்த்தபடி செயல்படவில்லை என்றால், உங்கள் விருப்பங்களை தேர்ந்தெடுக்க இந்த மெனுவைப் பயன்படுத்தவும்.",
         "buttonLabel": "இயல்புநிலை தாளாக நேர்த்தியாக அமைக்கவும்",
-        "explanation": "நேர்த்தியான 5e தாள்களை இயல்புநிலையாக நீங்கள் விரும்பும் அனைத்து ஆவண வகைகளையும் தேர்ந்தெடுக்கவும்."
+        "explanation": "நேர்த்தியான 5e தாள்களை இயல்புநிலையாக நீங்கள் விரும்பும் அனைத்து ஆவண வகைகளையும் தேர்ந்தெடுக்கவும்.",
+        "disableAll": "தாள்கள் இல்லாமல் பயன்படுத்தவும்",
+        "enableAll": "அனைத்து தாள்களுக்கும் பயன்படுத்தவும்"
     },
     "TIDY5E.Settings.Debug": {
         "name": "பிழைத்திருத்தத்தை இயக்கவும்",
@@ -873,5 +888,121 @@
     "TIDY5E.Utilities.CastActivitySpellGroupingOptionPerItem": "ஒரு பொருளுக்கு பிரிவு",
     "TIDY5E.SortMethod.AlphabeticalAscending.Label": "ஏறுதல்",
     "TIDY5E.SortMethod.AlphabeticalDescending.Label": "இறங்கு",
-    "TIDY5E.Notifications.FirstTimeWelcome1": "நேர்த்தியான 5e தாள்களுக்கு வருக! தொடங்குவதற்கு, நீங்கள் நேர்த்தியான பதிப்பைப் பயன்படுத்த {sheetLinkStart} a sheet {sheetLinkEnd} (அல்லது {allSheetsLinkStart} உங்கள் அனைத்து தாள்கள் {allSheetsLinkEnd}!) ஐ மாற்ற வேண்டும். இந்த தொகுதி மற்றும் {wikiLinkStart} அதிகாரப்பூர்வ விக்கி {wikiLinkEnd} இல் என்ன செய்ய முடியும் என்பதைப் பற்றி மேலும் அறிக."
+    "TIDY5E.Notifications.FirstTimeWelcome1": "நேர்த்தியான 5e தாள்களுக்கு வருக! தொடங்குவதற்கு, நீங்கள் நேர்த்தியான பதிப்பைப் பயன்படுத்த {sheetLinkStart} a sheet {sheetLinkEnd} (அல்லது {allSheetsLinkStart} உங்கள் அனைத்து தாள்கள் {allSheetsLinkEnd}!) ஐ மாற்ற வேண்டும். இந்த தொகுதி மற்றும் {wikiLinkStart} அதிகாரப்பூர்வ விக்கி {wikiLinkEnd} இல் என்ன செய்ய முடியும் என்பதைப் பற்றி மேலும் அறிக.",
+    "TIDY5E.Tidy5eEncounterSheetClassic": "நேர்த்தியான 5e கிளாசிக் என்கவுண்டர் தாள்",
+    "TIDY5E.Tidy5eEncounterSheetQuadrone": "நேர்த்தியான 5e சந்திப்பு தாள்",
+    "TIDY5E.AddCustom": "தனிப்பயன் {name} சேர்",
+    "TIDY5E.CompendiumBrowser": "Compendium இலிருந்து {name} ஐச் சேர்க்கவும்",
+    "TIDY5E.RemoveSpecific": "{name}ஐ அகற்று",
+    "TIDY5E.SheetPin": {
+        "Label": "தாள் பின்",
+        "LabelPl": "தாள் ஊசிகள்"
+    },
+    "TIDY5E.Show": "காட்டு",
+    "TIDY5E.Hide": "மறை",
+    "TIDY5E.SectionOrganization": "பிரிவு அமைப்பு",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "பயன்படுத்தக்கூடிய பொருட்களை தானாகச் சேர்க்கவும்",
+    "TIDY5E.LegendaryLairToolbar": "லெசண்டரி/லேர் டூல்பார்",
+    "TIDY5E.SpellbookSections": "ச்பெல்புக் பிரிவுகள்",
+    "TIDY5E.UserDefaultPrefix": "பயனர் இயல்புநிலை: {value}",
+    "TIDY5E.GenericDefaultPrefix": "இயல்புநிலை: {value}",
+    "TIDY5E.Group.PrimaryParty.Label": "முதன்மைக் கட்சி",
+    "TIDY5E.CombatTabName": "போர்",
+    "TIDY5E.LegendaryAbbr": "தி",
+    "TIDY5E.LairAbbr": "லாயர்",
+    "TIDY5E.SheetMode.Edit": "பிளே பயன்முறைக்கு மாறவும்",
+    "TIDY5E.SheetMode.Play": "திருத்து பயன்முறைக்கு மாறவும்",
+    "TIDY5E.SheetLock.Empty.Hint": "வகுப்பையும் உங்கள் முதல் உருப்படிகளையும் சேர்ப்பதன் மூலம் தொடங்கவும். பின்னர், உருப்படி மெனுவைப் பயன்படுத்தவும் அல்லது வலது சொடுக்கு செய்து அவற்றை இங்கே சேர்க்க \"தாள் தாவலில் சேர்\" என்பதைத் தேர்ந்தெடுக்கவும்.",
+    "TIDY5E.ContextMenuActionPin": "மேலே பின்",
+    "TIDY5E.ContextMenuActionUnpin": "மேலே இருந்து அன்பின் செய்யவும்",
+    "TIDY5E.ContextMenuActionUnassign": "ஒதுக்கப்படாதது",
+    "TIDY5E.ContextMenuActionAssignToEntity": "{entityName}க்கு ஒதுக்கு",
+    "TIDY5E.InspirationAdd": "ஊக்கம் சேர்க்கவும்",
+    "TIDY5E.InspirationRemove": "உத்வேகத்தை அகற்று",
+    "TIDY5E.EmptyFavorites": "வலது சொடுக்கு செய்து பிடித்தது, அல்லது விரைவான அணுகலுக்கு உங்கள் தாளில் இருந்து எதையும் இழுக்கவும்.",
+    "TIDY5E.EmptyTools": "கருவி திறன்கள் இல்லை.",
+    "TIDY5E.HeaderControlConfiguration": {
+        "LocationMenu": "பட்டியல்",
+        "LocationHeader": "தலைப்பி"
+    },
+    "TIDY5E.SettingsMenu.HeaderControlConfiguration": {
+        "name": "தலைப்பு கட்டுப்பாடுகள்",
+        "label": "தலைப்பு கட்டுப்பாடுகளை உள்ளமைக்கவும்",
+        "hint": "புதிய நேர்த்தியான தாள்கள் மட்டும்: தாள் தலைப்புக் கட்டுப்பாடுகளின் இருப்பிடத்தை உள்ளமைக்கவும்."
+    },
+    "TIDY5E.Settings.UseGroupSheetMemberSecurity": {
+        "name": "குழு தாள் உறுப்பினர் பாதுகாப்பைப் பயன்படுத்தவும்",
+        "hint": "குழு தாளில் ஒரு பயனர் பார்க்கக்கூடிய குழு உறுப்பினர் தகவலை GM கட்டுப்பாட்டை இயக்குகிறது. ஒரு குழு உறுப்பினருக்கு பிளேயருக்கு இசைவு இல்லை என்றால், குழு தாள் அந்த உறுப்பினரையோ அல்லது அதன் மொத்த தகவலையோ காட்டாது. வரையறுக்கப்பட்ட அனுமதியுடன், பயனர் உறுப்பினரின் பெயரைப் பார்க்க முடியும் ஆனால் வேறு எந்த தகவலும் இல்லை. பார்வையாளர் அல்லது அதற்கு மேற்பட்டவர்கள் மூலம், உறுப்பினர் பற்றிய அனைத்து குழு தாள் தகவலையும் பயனர் பார்க்கலாம்."
+    },
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "name": "எழுத்து தாள் தாவல் பிரிவு அமைப்பு",
+        "hint": "இயல்புநிலையாக எழுத்துத் தாள் தாவலில் பிரிவுகள் எவ்வாறு ஒழுங்கமைக்கப்பட வேண்டும் என்பதைத் தீர்மானிக்கிறது.",
+        "option.action": "செயல் பொருளாதாரத்தின் அடிப்படையில் குழு",
+        "option.origin": "உருப்படி அல்லது அம்ச வகையின்படி குழுவாக்கவும்"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "எழுத்துத் தாள் தாவல்: பயன்படுத்தக்கூடிய பொருட்களைத் தானாகச் சேர்க்கவும்",
+        "hint": "தாள் தாவலில் தற்போது பயன்படுத்தக்கூடிய அனைத்து உருப்படிகள், எழுத்துப்பிழைகள் மற்றும் அம்சங்களை தானாகச் சேர்க்கவும்."
+    },
+    "TIDY5E.Vehicle.Section.Crew.Assigned.Label": "ஒதுக்கப்பட்ட குழு",
+    "TIDY5E.Vehicle.Section.Crew.Unassigned.Label": "ஒதுக்கப்படாத குழுவினர்",
+    "TIDY5E.Vehicle.Member.Passenger.Label": "பயணி",
+    "TIDY5E.Vehicle.Member.DraftAnimal.Label": "வரைவு விலங்கு / வேலை செய்யும் உயிரினம்",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "வரைவு விலங்குகள் / வேலை செய்யும் உயிரினங்கள்",
+    "TIDY5E.Vehicle.Member.AssignTo.Label": "ஒதுக்குங்கள்",
+    "TIDY5E.Vehicle.Member.Assigned.Label": "ஒதுக்கப்பட்டது",
+    "TIDY5E.Vehicle.Repair.Label": "பழுது",
+    "TIDY5E.Vehicle.Features.EmptyState": "அம்சங்களை இங்கே இழுத்து விடுங்கள் அல்லது சேர்க்க சொடுக்கு செய்யவும்.",
+    "TIDY5E.Vehicle.Weapons.EmptyState": "ஆயுதங்களை இங்கே இழுத்து விடுங்கள் அல்லது சேர்க்க சொடுக்கு செய்யவும்.",
+    "TIDY5E.Vehicle.Equipment.EmptyState": "உபகரணங்களை இங்கே இழுத்து விடுங்கள் அல்லது சேர்க்க சொடுக்கு செய்யவும். பின்னர் வாகன உபகரணங்களுக்கு பணியாளர்களை நியமிக்கலாம்.",
+    "TIDY5E.Vehicle.DraftAnimals.EmptyState": "வரைவு விலங்குகள் அல்லது வேலை செய்யும் உயிரினங்களை இங்கே இழுத்து விடுங்கள் அல்லது சேர்க்க சொடுக்கு செய்யவும்.",
+    "TIDY5E.Vehicle.Equipment.HP.Label": "சராசரி எச்பி",
+    "TIDY5E.Vehicle.Unassigned.EmptyState": "குழுவை இங்கே இழுத்து விடுங்கள் அல்லது சேர்க்க சொடுக்கு செய்யவும். பின்னர் வாகன உபகரணங்கள் அல்லது அம்சங்களுக்கு குழுவை நியமிக்கலாம்.",
+    "TIDY5E.Vehicle.Passenger.EmptyState": "பயணிகளை இங்கே இழுத்து விடுங்கள் அல்லது சேர்க்க சொடுக்கு செய்யவும்.",
+    "TIDY5E.GMOnly.Title": "GM மட்டும்",
+    "TIDY5E.Utilities.ShowSheetPins": "தாள் பின்களைக் காட்டு",
+    "TIDY5E.Utilities.HideSheetPins": "தாள் பின்களை மறை",
+    "TIDY5E.Utilities.ShowLegendaryTrackersOnNpcStatblock": "ச்டேட்பிளாக் தாவலில் லெசண்டரி/லேர் டிராக்கர்களைக் காட்டு",
+    "TIDY5E.Utilities.IncludeSpellbookInNpcStatblockTab": "ச்டேட்பிளாக் தாவலில் ச்பெல்புக் பிரிவுகளைச் சேர்க்கவும்",
+    "TIDY5E.Containers.TransferCurrencyToParent.Tooltip": "அனைத்து நாணயங்களையும் பெற்றோர் நடிகருக்கு மாற்றவும்",
+    "TIDY5E.DisplayOptionsGlobalDefault.Title": "உலகளாவிய இயல்புநிலை காட்சி விருப்பங்கள்",
+    "TIDY5E.UseSpecificDefaultValue.Label": "இயல்புநிலையைப் பயன்படுத்தவும் ({value})",
+    "TIDY5E.AggregateSkill.HighMeasure": "உயர்",
+    "TIDY5E.AggregateSkill.LowMeasure": "குறைந்த",
+    "TIDY5E.Difficulty": "தொல்லை",
+    "TIDY5E.Character.Sidebar.Title": "பிளேயர் கேரக்டர் பக்கப்பட்டி",
+    "TIDY5E.Encounter": {
+        "CombatantsSection.Title": "போராளிகள்",
+        "Combat.IncludeInCombat.Tooltip": "போர் நடவடிக்கைகளில் அடங்கும்",
+        "Combat.ExcludeFromCombat.Tooltip": "போர் நடவடிக்கைகளில் இருந்து விலக்கு",
+        "AddMember.Label": "உறுப்பினரைச் சேர்க்கவும்",
+        "AddPlaceholderToCombatTracker.Label": "தற்போதைய சந்திப்பில் ப்ளேச்ஓல்டராக சேர்க்கவும்",
+        "AddPlaceholder.Label": "காம்பாட் பிளேச்ஓல்டரை உருவாக்கவும்",
+        "DeletePlaceholder.Label": "ஒதுக்கிடத்தை நீக்கு",
+        "DifficultyTarget.Label": "சிரம இலக்கு",
+        "AddAllPlaceholders.Label": "அனைத்தையும் ப்ளாச்ஓல்டர்களாகச் சேர்க்கவும்",
+        "PrerollInitiative": "முன்னோட்ட முன்முயற்சி",
+        "NewPlaceholder.Name": "புதிய ப்ளேச்ஓல்டர்",
+        "NewPlaceholder.SubtitlePlaceholderText": "இந்த ஒதுக்கிடத்தைப் பற்றிய குறிப்பு",
+        "AddCombatants.MustHaveEncounter.Message": "என்கவுண்டர் டிராக்கரில் சேர்க்க ஒரு என்கவுன்டர் தேர்ந்தெடுக்கப்பட்டிருக்க வேண்டும்",
+        "CombatVisibility.Hidden.Label": "டிராக்கரில் சேர்க்கப்படும் போது பிளேயர்களிடமிருந்து மறைக்கப்பட்டது",
+        "CombatVisibility.Visible.Label": "டிராக்கரில் சேர்க்கும்போது பிளேயர்களுக்குத் தெரியும்",
+        "InitiativeCount.Label": "முன்முயற்சி எண்ணைச் சேர் {count}",
+        "PlaceholderNameField.PlaceholderText": "ப்ளாச்ஓல்டர் பெயர்",
+        "PlaceholderNotesField.PlaceholderText": "குறிப்புகள்"
+    },
+    "TIDY5E.Actor.Characteristics": "சிறப்பியல்புகள்",
+    "TIDY5E.Notifications.ClassicsRetirementImminent": "<strong>அறிவிப்பு</strong>: Tidy 5e இன் <strong>கிளாசிக் தாள்கள்</strong> Foundry v14 இல் உள்ள Tidy 5e Sheets தொகுதியிலிருந்து அகற்றப்படும்.",
+    "TIDY5E.Notifications.ClassicsRetired": "<strong>அறிவிப்பு</strong>: Tidy 5e இன் <strong>கிளாசிக் தாள்கள்</strong> Foundry v14 இன் படி Tidy 5e Sheets தொகுதியிலிருந்து அகற்றப்பட்டது.",
+    "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "{value} ஐப் புறக்கணி",
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "அனைத்து கடினமான நிலப்பரப்புகளையும் புறக்கணிக்கவும்",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollSave": "ரோல் மாசுபாடு சேமிக்கவும்",
+            "rollMutation": "பிறழ்வுக்கான ரோல்",
+            "rolledMutation": "மாசு அளவு {level} கொண்ட பிறழ்வுக்காக {name} உருட்டப்பட்டது.",
+            "clear": "தெளிவான மாசுபாடு",
+            "none": "மாசு அல்லது அறிகுறிகள் இல்லை."
+        }
+    }
 }
