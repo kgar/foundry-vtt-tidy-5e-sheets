@@ -189,7 +189,10 @@
               >
                 {#snippet children({ toggleSummary, expanded })}
                   <div class="highlight"></div>
+                  <!-- svelte-ignore a11y_missing_attribute -->
                   <a
+                    role="button"
+                    tabindex="0"
                     class={[
                       'tidy-table-row-use-button',
                       { disabled: !context.editable },
@@ -197,6 +200,11 @@
                     onclick={(ev) =>
                       context.editable &&
                       FoundryAdapter.actorTryUseItem(item, ev)}
+                    onkeydown={(ev) =>
+                      ev.key === 'Enter' ||
+                      (ev.key === ' ' &&
+                        context.editable &&
+                        FoundryAdapter.actorTryUseItem(item, ev))}
                     data-has-roll-modes
                   >
                     <img class="item-image" alt={item.name} src={item.img} />
@@ -205,9 +213,17 @@
                     </span>
                   </a>
                   {#if 'containerContents' in ctx && !!ctx.containerContents}
+                    <!-- svelte-ignore a11y_missing_attribute -->
                     <a
+                      role="button"
+                      tabindex="0"
+                      aria-label={localize('DND5E.ExpandCollapse')}
                       class="container-expander"
                       onclick={() => inlineToggleService.toggle(tabId, item.id)}
+                      onkeydown={(ev) =>
+                        ev.key === 'Enter' ||
+                        (ev.key === ' ' &&
+                          inlineToggleService.toggle(tabId, item.id))}
                     >
                       <i
                         class="fa-solid fa-angle-right expand-indicator"
@@ -220,12 +236,17 @@
                   {/if}
 
                   <TidyTableCell primary={true} class="item-label text-cell">
+                    <!-- svelte-ignore a11y_missing_attribute -->
                     <a
+                      aria-label={item.name}
                       class="item-name"
                       role="button"
                       data-keyboard-focus
                       tabindex="0"
                       onclick={(ev) => toggleSummary()}
+                      onkeydown={(ev) =>
+                        ev.key === 'Enter' ||
+                        (ev.key === ' ' && toggleSummary())}
                     >
                       <span class="cell-text">
                         <span class="cell-name">{item.name}</span>
@@ -245,11 +266,14 @@
                       : 'fa-regular fa-sun color-text-lighter'}
 
                     {@const title = localize(ctx.attunement.title)}
-
-                    <!-- 👋 hightouch - I'm not sure on the class name, but this is a charm or indicator in a tidy table row that decorates the name column and declares a particular state that the item is in. In this case, attuned or unattuned. -->
                     <i
                       class={[iconClass, 'item-state-indicator']}
                       data-tooltip={title}
+                    ></i>
+                  {:else if item.system.equipped}
+                    <i
+                      class="fa-solid fa-hand-fist equip-icon color-icon-theme item-state-indicator"
+                      data-tooltip={localize('DND5E.Equipped')}
                     ></i>
                   {/if}
                   {#each columns.ordered as column}
