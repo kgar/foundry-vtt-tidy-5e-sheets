@@ -823,6 +823,9 @@ export function Tidy5eActorSheetQuadroneBase<
           if (excludeSpeed(key)) {
             return acc;
           }
+          if(systemMovement[key] === 0) {
+            return acc;
+          }
 
           const parenthetical =
             key === CONSTANTS.MOVEMENT_FLY && systemMovement.hover
@@ -878,11 +881,23 @@ export function Tidy5eActorSheetQuadroneBase<
       if (systemMovement.ignoredDifficultTerrain?.size > 0) {
         const hasAll = systemMovement.ignoredDifficultTerrain.has('all');
 
+        // Core dnd5e keeps all/magical/nonmagical outside CONFIG.difficultTerrainTypes;
+        // they're added as extras when building the field. Fall back to dnd5e loc keys.
+        const EXTRAS: Record<string, string> = {
+          all: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.All',
+          magical: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.Magical',
+          nonmagical: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.Nonmagical',
+          webs: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.Webs',
+        };
+        const getTerrainLabel = (t: string): string =>
+          CONFIG.DND5E.difficultTerrainTypes[t]?.label ??
+          (EXTRAS[t] ? FoundryAdapter.localize(EXTRAS[t]) : t);
+
         const label = hasAll
           ? FoundryAdapter.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
           : new Intl.ListFormat(game.i18n.lang).format(
               [...systemMovement.ignoredDifficultTerrain]
-                .map((t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label ?? t)
+                .map((t: string) => getTerrainLabel(t))
                 .filter((l): l is string => !!l)
             );
 

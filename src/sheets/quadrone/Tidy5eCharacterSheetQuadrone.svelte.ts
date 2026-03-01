@@ -773,8 +773,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const speeds = super._getMovementSpeeds();
 
-    const main = speeds.slice(0, 2);
-    const secondary = speeds.slice(2);
+    const movementSpeeds = speeds.filter((s) => s.key !== 'ignoredDifficultTerrain');
+    const difficultTerrainSpeeds = speeds.filter((s) => s.key === 'ignoredDifficultTerrain');
+
+    const main = movementSpeeds.slice(0, 2);
+    const secondary = [...movementSpeeds.slice(2), ...difficultTerrainSpeeds];
     return {
       main: main,
       secondary: secondary,
