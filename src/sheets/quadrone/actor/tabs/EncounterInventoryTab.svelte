@@ -57,10 +57,9 @@
   });
 </script>
 
-<div class="group-tab-content flexcol">
-  <div class="inventory-content">
-    <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
-
+<div class="tab-right-column">
+  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+  <div class="tab-content">
     {#if showSheetPins}
       <SheetPins />
     {/if}
@@ -82,6 +81,5 @@
       root={true}
     />
   </div>
-
   <ActorInventoryFooter useAttunement={false} />
 </div>

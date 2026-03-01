@@ -62,9 +62,7 @@
 
   let hoveredMember = $state<string | null>(null);
 
-  let members = $derived(
-    context.members.sections.flatMap((s) => s.members),
-  );
+  let members = $derived(context.members.sections.flatMap((s) => s.members));
 </script>
 
 <aside class="sidebar expanded">
@@ -147,7 +145,9 @@
             <div class="separated-list">
               <span class="actor-cargo separated-list">
                 <span class="font-body-medium color-text-lighter"
-                  >{localize('DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label')}</span
+                  >{localize(
+                    'DND5E.VEHICLE.FIELDS.attributes.capacity.cargo.value.label',
+                  )}</span
                 >
                 <span class="font-label-medium color-text-default"
                   >{member.encumbrance.value.toNearest(0.01)}</span
@@ -164,10 +164,9 @@
     </div>
   {/each}
 </aside>
-<div class="group-tab-content flexcol">
-  <div class="inventory-content">
-    <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
-
+<div class="tab-right-column">
+  <InventoryActionBar bind:searchCriteria sections={inventory} {tabId} />
+  <div class="tab-content">
     {#if showSheetPins}
       <SheetPins />
     {/if}
@@ -189,6 +188,5 @@
       root={true}
     />
   </div>
-
   <ActorInventoryFooter useAttunement={false} />
 </div>

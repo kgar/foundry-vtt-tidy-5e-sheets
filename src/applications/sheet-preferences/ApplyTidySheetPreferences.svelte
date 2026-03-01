@@ -42,7 +42,7 @@
       }}
     >
     <i class="fas fa-xmark"></i>
-      Use for no sheets
+      {localize('TIDY5E.Settings.SheetPreferences.disableAll')}
     </button>
     
     <button
@@ -53,7 +53,7 @@
       }}
     >
     <i class="fas fa-check-double"></i>
-      Use for all sheets
+      {localize('TIDY5E.Settings.SheetPreferences.enableAll')}
     </button>
   </div>
   <div class="title-underlined">

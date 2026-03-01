@@ -100,18 +100,6 @@
         z-index: -1;
       }
 
-
-      >.tidy-tab {
-        flex: 1;
-        overflow-y: auto;
-        padding: var(--t5e-size-3x) var(--t5e-size-4x) var(--t5e-size-3x) var(--t5e-size-4x);
-        position: relative;
-
-        &.inventory {
-          padding-top: 0;
-        }
-      }
-
       /* Sidebar skills */
       .use-ability-header .skill-expand-button {
         gap: 0.1875rem;
@@ -304,10 +292,12 @@
     display: flex;
     align-items: center;
 
+    >i, .title>i {
+      font-size: var(--font-size-12);
+      color: var(--t5e-color-text-default);
+    }
     >i {
-      font-size: var(--font-size-14);
       margin-inline-end: var(--t5e-size-1x);
-      color: var(--t5e-color-text-lightest);
     }
 
     .counter {
@@ -452,6 +442,8 @@
 
   .sheet-footer {
     gap: var(--t5e-size-2x);
+    padding-right: var(--padding-horizontal);
+    padding-bottom: var(--padding-vertical);
 
     >* {
       gap: var(--t5e-size-2x);
@@ -470,11 +462,43 @@
     }
 
     .footer-content-left {
+      display: flex;
       justify-content: flex-start;
     }
 
     .footer-content-right {
+      display: flex;
       justify-content: flex-end;
+    }
+  }
+
+  .sheet-tab-footer {
+    padding: var(--t5e-size-3x) 0 0 0;
+
+    .button-borderless:not(:hover) {
+      --button-text: var(--t5e-color-text-lightest);
+      --button-icon: var(--t5e-color-text-lightest);
+    }
+
+    .sheet-footer-left>*,
+    .sheet-footer-right>* {
+      flex: 0 1 auto;
+    }
+
+    // &:hover,
+    // &:focus-within,
+    // &:active {
+    //   .button-borderless {
+    //     color: var(--t5e-color-text-default);
+
+    //     i {
+    //       color: var(--t5e-color-text-default);
+    //     }
+    //   }
+    // }
+
+    .button-borderless:first-child {
+      padding-left: 0;
     }
   }
 
@@ -532,9 +556,10 @@
     align-content: end;
     align-items: end;
     bottom: 0;
-    min-height: 2.25rem;
-    position: sticky;
     flex: 0 0 fit-content;
+    min-height: 2.25rem;
+    padding: var(--t5e-size-2x) 0 0;
+    position: sticky;
 
     .spellcasting-cards.collapse-spellcasting-cards {
 
@@ -543,9 +568,9 @@
       flex-direction: row;
 
       .spellcasting-class-card {
-        width: auto;
-        flex: 1 1 auto;
         align-self: initial;
+        flex: 1 1 auto;
+        width: auto;
 
         .name {
           padding: 0.0625rem 0 0.125rem;
@@ -554,6 +579,10 @@
         .hide-collapsed {
           display: none;
         }
+      }
+
+      .compact {
+        padding-right: var(--t5e-size-2x);
       }
     }
 
@@ -616,10 +645,11 @@
       }
 
       &.compact {
-        padding: var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-3x);
+        padding: var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-1x) var(--t5e-size-2x);
 
         button {
           margin-inline-start: 0.375rem;
+          height: 1.5rem;
         }
       }
     }
@@ -1309,17 +1339,42 @@
     padding-inline-end: 0;
   }
 
-  .tidy-tab.inventory {
+  .main-content > .tidy-tab {
+    --padding-vertical: var(--t5e-size-3x);
+    --padding-horizontal: var(--t5e-size-4x);
+    flex: 1;
+    overflow-y: auto;
+    padding-left: var(--padding-horizontal);
+    position: relative;
 
-    .inventory-content {
+    &.inventory {
+      padding-top: 0;
+    }
+      
+    &:has(.tab-content) {
+      padding-right: 0;
+      padding-top: 0;
+      row-gap: 0;
+    }
+
+    .action-bar {
+      padding-top: var(--padding-vertical);
+      padding-right: var(--padding-horizontal);
+    }
+    
+    .tab-content {
       display: flex;
       flex-direction: column;
       flex: 1 1 0;
       overflow: auto;
-      padding-block-start: var(--t5e-size-3x);
-      padding-inline-end: var(--t5e-size-4x);
+      padding-top: var(--padding-vertical);
+      padding-right: var(--padding-horizontal);
+      padding-bottom: var(--padding-vertical);
       row-gap: var(--t5e-size-3x);
     }
+  }
+
+  .tidy-tab.inventory {
 
     .inline-content-view .currency-container {
       gap: var(--t5e-size-1x);
@@ -1351,12 +1406,24 @@
     }
 
     .tidy-inline-quantity-tracker {
-      gap: -0.25rem;
+      gap: -var(--t5e-size-1x);
+    }
+  }
+
+  .tidy-tab.spellbook {
+    .tidy-table-container {
+      padding-bottom: var(--t5e-size-2x);
     }
   }
 
   .tidy-tab.journal {
-    gap: 0.75rem;
+    gap: var(--t5e-size-3x);
+
+    .title {
+      margin-top: -0.25rem;
+      display: flex;
+      align-items: flex-end;
+    }
 
     &.active {
       display: flex;
@@ -1375,9 +1442,13 @@
       overflow-y: auto;
     }
 
+    .tab-content {
+      flex-direction: row;
+    }
+
     .action-buttons {
       display: flex;
-      gap: 0.5rem;
+      gap: var(--t5e-size-2x);
 
       .add {
         flex: 1;

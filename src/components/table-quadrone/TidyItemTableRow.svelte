@@ -28,8 +28,9 @@
     children?: Snippet<
       [{ toggleSummary: TidyTableToggleSummaryFunction; expanded: boolean }]
     >;
-    afterInlineActivities?: Snippet<[Item5e]>;
+    afterInlineActivities?: Snippet<[item: Item5e, ctx: any]>;
     expanded?: boolean;
+    ctx: any;
   }
 
   let {
@@ -40,6 +41,7 @@
     children,
     afterInlineActivities,
     expanded = $bindable(false),
+    ctx,
   }: Props = $props();
 
   const emptyChatData: ItemChatData = {
@@ -156,7 +158,12 @@
 
   {#snippet afterRow()}
     <ExpandableContainer {expanded} deferRendering>
-      <TidyItemSummary chatData={chatData ?? emptyChatData} {item} {afterInlineActivities} />
+      <TidyItemSummary
+        chatData={chatData ?? emptyChatData}
+        {item}
+        {afterInlineActivities}
+        {ctx}
+      />
     </ExpandableContainer>
   {/snippet}
 </TidyTableRow>

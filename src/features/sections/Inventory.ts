@@ -61,14 +61,16 @@ export class Inventory {
     return inventory;
   }
 
+  // TODO: switch to object param 
   static applyInventoryItemToSection(
     inventory: Record<string, InventorySection>,
     item: Item5e,
     defaultInventoryTypes: string[],
     customSectionOptions: Partial<InventorySection>,
     fallbackInventoryKey: string = '',
+    customSectionFlag: 'section' | 'actionSection' = 'section',
   ) {
-    const customSectionName = TidyFlags.section.get(item);
+    const customSectionName = TidyFlags[customSectionFlag].get(item);
 
     if (!customSectionName) {
       let partition = inventory[item.type] ?? inventory[fallbackInventoryKey];

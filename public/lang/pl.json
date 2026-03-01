@@ -57,7 +57,7 @@
         "ResetActionDefault": "Zresetuj Akcje do domyślnych",
         "TabName": "Akcje",
         "OverriddenSetOverrideFalse": "Usuń z listy Akcji (Shift+LPM by wyczyścić zastąpienie)",
-        "OverriddenSetOverrideTrue": "Dodaj do listy Akcji (SHIFT+LPM by wyczyścić zastąpienie)",
+        "OverriddenSetOverrideTrue": "Dodaj do listy Akcji (Shift + LPM by wyczyścić zastąpienie)",
         "SetOverrideFalse": "Usuń z listy Akcji",
         "SetOverrideTrue": "Dodaj do listy Akcji"
     },
@@ -125,10 +125,10 @@
     "TIDY5E.Class.Wizard": "Mag",
     "TIDY5E.OriginSummaryConfig": "Konfiguracja podsumowania pochodzenia dla {actorName}",
     "TIDY5E.Listbox": {
-        "MoveUp": "Do góry (ALT + Strzałka w górę)",
-        "MoveDown": "W dół (ALT + Strzałka w dół)",
-        "MoveLeft": "W lewo (SPACE)",
-        "MoveRight": "W prawo (SPACE)",
+        "MoveUp": "Do góry (Alt + strzałka w górę)",
+        "MoveDown": "W dół (Alt + strzałka w dół)",
+        "MoveLeft": "W lewo (Spacja)",
+        "MoveRight": "W prawo (Spacja)",
         "MoveAllLeft": "Przenieś wszystko w lewo",
         "MoveAllRight": "Przenieś wszystko w prawo"
     },
@@ -411,9 +411,11 @@
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Oznacz wszystkie przedmioty jako niezidentyfikowane",
     "TIDY5E.Settings.SheetPreferences": {
         "explanation": "Zaznacz wszystkie typy kart, dla których chcesz, aby Tidy 5e było używane domyślnie.",
-        "buttonLabel": "Ustaw Tidy 5e jako domyślne dla Kart",
+        "buttonLabel": "Ustaw Tidy 5e jako domyślną kartę",
         "hint": "Jeśli chcesz ustawić Tidy 5e Sheets jako domyślne dla jednego lub więcej typów kart, ale menu konfiguracji domyślnych kart nie działa zgodnie z oczekiwaniami, użyj tego menu, aby wybrać ustawienia.",
-        "name": "Ustaw Tidy 5e jako domyślną kartę"
+        "name": "Ustaw Tidy 5e jako domyślną kartę",
+        "disableAll": "Nie używaj dla żadnej karty",
+        "enableAll": "Używaj dla wszystkich kart"
     },
     "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
     "TIDY5E.Commands.ShowContainerPanel": "Pokaż panel pojemnika",
@@ -996,5 +998,19 @@
             "clear": "Usuń skażenie",
             "none": "Brak skażenia ani objawów."
         }
-    }
+    },
+    "TIDY5E.SectionOrganization": "Organizacja sekcji",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Automatycznie uwzględniaj używalne przedmioty",
+    "TIDY5E.GenericDefaultPrefix": "Domyślne: {value}",
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "name": "Organizacja sekcji zakładki karty postaci",
+        "hint": "Określa domyślny sposób organizacji sekcji w zakładce Karta karty postaci.",
+        "option.action": "Grupuj według typu akcji",
+        "option.origin": "Grupuj według typu przedmiotu lub zdolności"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "Zakładka karty postaci: Automatycznie uwzględniaj używalne przedmioty",
+        "hint": "Automatycznie uwzględniaj w zakładce Karta wszystkie aktualnie używalne przedmioty, zaklęcia i zdolności."
+    },
+    "TIDY5E.Utilities.HideSheetPins": "Ukryj przypięcia karty"
 }

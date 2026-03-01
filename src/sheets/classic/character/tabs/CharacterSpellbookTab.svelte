@@ -173,7 +173,6 @@
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {/if}
 </div>
-
 <SpellbookFooter />
 
 <style lang="less">
