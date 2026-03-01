@@ -27,6 +27,7 @@ export type ThemeSettingsContext = {
   value: {
     accentColor: string;
     useHeaderBackground: boolean;
+    useCompactHeader: boolean;
     headerColor: string;
     actorHeaderBackground: string;
     itemSidebarBackground: string;
@@ -39,7 +40,7 @@ export type ThemeSettingsContext = {
 type ConstructorArgs = Partial<ApplicationConfiguration & { document?: any }>;
 
 export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<ConstructorArgs>(
-  foundry.applications.api.ApplicationV2
+  foundry.applications.api.ApplicationV2,
 ) {
   document?: any;
 
@@ -47,6 +48,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     value: {
       accentColor: '',
       useHeaderBackground: true,
+      useCompactHeader: true,
       headerColor: '',
       actorHeaderBackground: '',
       itemSidebarBackground: '',
@@ -142,7 +144,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
                 useHeaderBackground: worldSettings.useHeaderBackground,
               },
             })
-          : worldSettings
+          : worldSettings,
       );
 
     let context: ThemeSettingsContext = this._mapSettings(themeSettings);
@@ -155,6 +157,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
       value: {
         accentColor: themeSettings.accentColor,
         useHeaderBackground: themeSettings.useHeaderBackground,
+        useCompactHeader: themeSettings.useCompactHeader,
         headerColor: themeSettings.headerColor,
         actorHeaderBackground: themeSettings.actorHeaderBackground,
         itemSidebarBackground: themeSettings.itemSidebarBackground,
@@ -166,10 +169,10 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
               key: key,
               value: themeSettings.rarityColors[key] ?? '',
             };
-          }
+          },
         ),
         spellPreparationMethodColors: Object.entries(
-          CONFIG.DND5E.spellcasting
+          CONFIG.DND5E.spellcasting,
         ).map(([key, config]) => {
           return {
             label: config.label,
@@ -206,6 +209,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
     return {
       accentColor: context.value.accentColor ?? '',
       useHeaderBackground: context.value.useHeaderBackground,
+      useCompactHeader: context.value.useCompactHeader,
       headerColor: context.value.headerColor,
       actorHeaderBackground: context.value.actorHeaderBackground,
       itemSidebarBackground: context.value.itemSidebarBackground,
@@ -231,7 +235,7 @@ export class ThemeSettingsQuadroneApplication extends SvelteApplicationMixin<Con
         title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
       },
       content: `<p>${FoundryAdapter.localize(
-        'TIDY5E.UseDefaultDialog.text'
+        'TIDY5E.UseDefaultDialog.text',
       )}</p>`,
     });
 

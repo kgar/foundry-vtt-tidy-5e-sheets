@@ -44,8 +44,12 @@
 
   let responsiveClasses: ClassValue = $derived({
     'ability-smaller':
-      widthRems >= abilityCollapsedRems && widthRems < abilitySmallerRems,
-    'ability-collapsed': widthRems < abilityCollapsedRems,
+      !context.themeSettings.useCompactHeader &&
+      widthRems >= abilityCollapsedRems &&
+      widthRems < abilitySmallerRems,
+    'ability-collapsed':
+      context.themeSettings.useCompactHeader ||
+      widthRems < abilityCollapsedRems,
   });
 </script>
 
