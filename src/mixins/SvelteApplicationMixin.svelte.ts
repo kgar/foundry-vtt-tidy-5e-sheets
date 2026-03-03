@@ -136,6 +136,64 @@ export function SvelteApplicationMixin<
       this.render({ soft: true });
     }
 
+    _tidyDragPerfCleanup?: () => void;
+
+    #installTidyDragPerformanceMode(element: HTMLElement) {
+      this._tidyDragPerfCleanup?.();
+      this._tidyDragPerfCleanup = undefined;
+
+      try {
+        const header =
+          element.querySelector<HTMLElement>('.window-header') ??
+          element.querySelector<HTMLElement>('header') ??
+          element;
+
+        let dragging = false;
+        let stopToken = 0;
+
+        const startDrag = (ev: PointerEvent) => {
+          if (ev?.button != null && ev.button !== 0) return;
+
+          stopToken++;
+          dragging = true;
+          element.classList.add('tidy-dragging');
+        };
+
+        const stopDrag = () => {
+          if (!dragging) return;
+          dragging = false;
+
+          // Defer class removal so Foundry’s final position updates happen
+          const token = ++stopToken;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (token !== stopToken) return;
+              element.classList.remove('tidy-dragging');
+            });
+          });
+        };
+
+        header.addEventListener('pointerdown', startDrag);
+        window.addEventListener('pointerup', stopDrag, true);
+        window.addEventListener('pointercancel', stopDrag, true);
+        window.addEventListener('blur', stopDrag);
+
+        this._tidyDragPerfCleanup = () => {
+          header.removeEventListener('pointerdown', startDrag);
+          window.removeEventListener('pointerup', stopDrag, true);
+          window.removeEventListener('pointercancel', stopDrag, true);
+          window.removeEventListener('blur', stopDrag);
+          element.classList.remove('tidy-dragging');
+        };
+      } catch (e) {
+        error(
+          'An error occurred while installing Tidy drag performance mode.',
+          false,
+          { error: e, sheet: this }
+        );
+      }
+    }
+
     async _renderFrame(options: ApplicationRenderOptions) {
       const element = await super._renderFrame(options);
 
@@ -145,15 +203,20 @@ export function SvelteApplicationMixin<
 
       this.applyTidyTheming(element);
 
-      this._hookSubscriptions.push(
-        Hooks.on('updateSetting', (setting: any) => {
+      // toggle `.tidy-dragging` class during drag.
+      this.#installTidyDragPerformanceMode(element);
+
+      // store hook subscription as {name, id} so close() can unsubscribe correctly.
+      this._hookSubscriptions.push({
+        name: 'updateSetting',
+        id: Hooks.on('updateSetting', (setting: any) => {
           if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
             debug('Tidy setting update detected. Requesting sheet re-render');
             this.#debouncedRerenderForSettings();
             this.applyTidyTheming();
           }
-        })
-      );
+        }),
+      });
 
       return element;
     }
@@ -227,6 +290,9 @@ export function SvelteApplicationMixin<
     /* -------------------------------------------- */
 
     async close(options: ApplicationClosingOptions = {}) {
+      this._tidyDragPerfCleanup?.();
+      this._tidyDragPerfCleanup = undefined;
+
       this.themeSettingsSubscription?.unsubscribe();
 
       this._hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
@@ -351,7 +417,18 @@ export function SvelteApplicationMixin<
     _updatePosition(position: ApplicationPosition) {
       const newPosition = super._updatePosition(position);
 
-      this._position.value = newPosition;
+      // Only update the Svelte-reactive position ref when size/scale/zIndex changes.
+      const prev = this._position.value;
+      const shouldUpdateReactivePosition =
+        !prev ||
+        prev.width !== newPosition.width ||
+        prev.height !== newPosition.height ||
+        prev.scale !== newPosition.scale ||
+        prev.zIndex !== newPosition.zIndex;
+
+      if (shouldUpdateReactivePosition) {
+        this._position.value = newPosition;
+      }
 
       return newPosition;
     }
