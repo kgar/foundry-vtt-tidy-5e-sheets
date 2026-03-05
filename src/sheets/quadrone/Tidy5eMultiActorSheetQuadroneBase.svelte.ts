@@ -42,13 +42,14 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     async _renderFrame(options: ApplicationRenderOptions) {
       const result = await super._renderFrame(options);
 
-      this._hookSubscriptions.push(
-        Hooks.on('updateSetting', (setting: any) => {
+      this._hookSubscriptions.push({
+        name: 'updateSetting',
+        id: Hooks.on('updateSetting', (setting: any) => {
           if (setting?.key === 'dnd5e.primaryParty') {
             this.render();
           }
-        })
-      );
+        }),
+      });
 
       return result;
     }

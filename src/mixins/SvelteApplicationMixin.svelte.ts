@@ -145,15 +145,16 @@ export function SvelteApplicationMixin<
 
       this.applyTidyTheming(element);
 
-      this._hookSubscriptions.push(
-        Hooks.on('updateSetting', (setting: any) => {
+      this._hookSubscriptions.push({
+        name: 'updateSetting',
+        id: Hooks.on('updateSetting', (setting: any) => {
           if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
             debug('Tidy setting update detected. Requesting sheet re-render');
             this.#debouncedRerenderForSettings();
             this.applyTidyTheming();
           }
-        })
-      );
+        }),
+      });
 
       return element;
     }
