@@ -422,7 +422,18 @@ export function SvelteApplicationMixin<
     _updatePosition(position: ApplicationPosition) {
       const newPosition = super._updatePosition(position);
 
-      this._position.value = newPosition;
+      // Only update the Svelte-reactive position ref when size/scale/zIndex changes.
+      const prev = this._position.value;
+      const shouldUpdateReactivePosition =
+        !prev ||
+        prev.width !== newPosition.width ||
+        prev.height !== newPosition.height ||
+        prev.scale !== newPosition.scale ||
+        prev.zIndex !== newPosition.zIndex;
+
+      if (shouldUpdateReactivePosition) {
+        this._position.value = newPosition;
+      }
 
       return newPosition;
     }
