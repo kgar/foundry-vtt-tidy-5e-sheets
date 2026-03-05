@@ -145,17 +145,87 @@ export function SvelteApplicationMixin<
 
       this.applyTidyTheming(element);
 
-      this._hookSubscriptions.push(
-        Hooks.on('updateSetting', (setting: any) => {
+      this.#trackApplicationWindowDrag(element);
+
+      this._hookSubscriptions.push({
+        name: 'updateSetting',
+        id: Hooks.on('updateSetting', (setting: any) => {
           if (setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)) {
             debug('Tidy setting update detected. Requesting sheet re-render');
             this.#debouncedRerenderForSettings();
             this.applyTidyTheming();
           }
-        })
-      );
+        }),
+      });
 
       return element;
+    }
+
+    _dragTrackingCleanup?: () => void;
+
+    #trackApplicationWindowDrag(element: HTMLElement) {
+      this._dragTrackingCleanup?.();
+      this._dragTrackingCleanup = undefined;
+
+      try {
+        const header =
+          element.querySelector<HTMLElement>('.window-header') ??
+          element.querySelector<HTMLElement>('header') ??
+          element;
+
+        let dragging = false;
+        let stopToken = 0;
+
+        const startDrag = (ev: PointerEvent) => {
+          if (ev?.button != null && ev.button !== 0) return;
+
+          stopToken++;
+          dragging = true;
+          element.classList.add('tidy-dragging');
+        };
+
+        const stopDrag = () => {
+          if (!dragging) return;
+          dragging = false;
+
+          // Defer class removal so Foundry’s final position updates happen
+          const token = ++stopToken;
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (token !== stopToken) return;
+              element.classList.remove('tidy-dragging');
+            });
+          });
+        };
+
+        const abortController = new AbortController();
+
+        header.addEventListener('pointerdown', startDrag, {
+          signal: abortController.signal,
+        });
+        window.addEventListener('pointerup', stopDrag, {
+          signal: abortController.signal,
+          capture: true,
+        });
+        window.addEventListener('pointercancel', stopDrag, {
+          signal: abortController.signal,
+          capture: true,
+        });
+        window.addEventListener('blur', stopDrag, {
+          signal: abortController.signal,
+        });
+
+        this._dragTrackingCleanup = () => {
+          abortController.abort();
+          element.classList.remove('tidy-dragging');
+        };
+      } catch (e) {
+        error(
+          'An error occurred while installing Tidy drag performance mode.',
+          false,
+          { error: e, sheet: this },
+        );
+      }
     }
 
     applyTidyTheming(element: HTMLElement = this.element) {
@@ -228,6 +298,7 @@ export function SvelteApplicationMixin<
 
     async close(options: ApplicationClosingOptions = {}) {
       this.themeSettingsSubscription?.unsubscribe();
+      this._dragTrackingCleanup?.();
 
       this._hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
       this._hookSubscriptions = [];
@@ -351,7 +422,18 @@ export function SvelteApplicationMixin<
     _updatePosition(position: ApplicationPosition) {
       const newPosition = super._updatePosition(position);
 
-      this._position.value = newPosition;
+      // Only update the Svelte-reactive position ref when size/scale/zIndex changes.
+      const prev = this._position.value;
+      const shouldUpdateReactivePosition =
+        !prev ||
+        prev.width !== newPosition.width ||
+        prev.height !== newPosition.height ||
+        prev.scale !== newPosition.scale ||
+        prev.zIndex !== newPosition.zIndex;
+
+      if (shouldUpdateReactivePosition) {
+        this._position.value = newPosition;
+      }
 
       return newPosition;
     }
