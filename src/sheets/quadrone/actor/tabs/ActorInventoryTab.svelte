@@ -19,7 +19,6 @@
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import CharacterEncumbranceRow from '../parts/CharacterEncumbranceRow.svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
-  import ContainerPanel from 'src/sheets/quadrone/shared/ContainerPanel.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
 
   let context =
@@ -75,13 +74,6 @@
   {/if}
 
   <CharacterEncumbranceRow />
-
-  {#if context.showContainerPanel && !!context.containerPanelItems.length}
-    <ContainerPanel
-      {searchCriteria}
-      containerPanelItems={context.containerPanelItems}
-    />
-  {/if}
 
   <InventoryTables
     sections={inventory}

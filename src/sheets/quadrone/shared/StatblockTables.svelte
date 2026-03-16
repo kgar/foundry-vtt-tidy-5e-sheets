@@ -7,7 +7,7 @@
   import type {
     Actor5e,
     FeatureSection,
-    NpcItemContext,
+    NpcItemQuadroneContext,
     NpcSheetQuadroneContext,
     SpellbookSection,
   } from 'src/types/types';
@@ -18,7 +18,7 @@
 
   interface Props {
     sections: (FeatureSection | SpellbookSection)[];
-    itemContext: Record<string, NpcItemContext>;
+    itemContext: Record<string, NpcItemQuadroneContext>;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
     sheetDocument: Actor5e;

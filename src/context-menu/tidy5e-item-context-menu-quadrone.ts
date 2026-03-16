@@ -371,9 +371,9 @@ export function getItemContextOptionsQuadrone(
     group: 'customize',
   });
 
-  const isAttributeItemPin = !!element.closest('[data-pin-id]');
+  const isSheetPin = !!element.closest('[data-pin-id]');
 
-  if (isAttributeItemPin) {
+  if (isSheetPin && item.system.activities) {
     options.push({
       name: 'TIDY5E.ContextMenuActionShowLimitedUses',
       icon: '<i class="fa-solid fa-fw"></i>',

@@ -6,11 +6,11 @@
   import type {
     TidyItemSectionBase,
     Actor5e,
-    CharacterItemContext,
+    CharacterItemQuadroneContext,
     CharacterSheetQuadroneContext,
-    NpcItemContext,
+    NpcItemQuadroneContext,
     NpcSheetQuadroneContext,
-    VehicleItemContext,
+    VehicleItemQuadroneContext,
   } from 'src/types/types';
   import { ItemColumnRuntime } from 'src/runtime/tables/ItemColumnRuntime.svelte';
   import TidyItemTable from 'src/components/table-quadrone/TidyItemTable.svelte';
@@ -19,7 +19,7 @@
     section: TidyItemSectionBase;
     itemContext: Record<
       string,
-      CharacterItemContext | NpcItemContext | VehicleItemContext
+      CharacterItemQuadroneContext | NpcItemQuadroneContext | VehicleItemQuadroneContext
     >;
     inlineToggleService: InlineToggleService;
     sheetDocument: Actor5e | Item5e;

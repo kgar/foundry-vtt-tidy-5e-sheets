@@ -16,7 +16,7 @@ export class SheetPinsProvider {
     type: SheetPinFlag['type']
   ): boolean {
     return type === 'item'
-      ? !!doc.system.schema.fields.uses
+      ? !!doc.system.schema.fields.uses || doc.type === CONSTANTS.ITEM_TYPE_CONTAINER
       : type === 'activity'
       ? !!doc.schema.fields.uses
       : false;
