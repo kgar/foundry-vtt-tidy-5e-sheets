@@ -112,9 +112,9 @@ Evocative character sheets that give players and DMs more control, with more way
 
 | Core Functionality | New Features |
 | --- | --- |
-| Custom sheet themes, colors, and images | Custom sections |
+| Sheet tab for all a character's most used items, grouped by type or action action | Custom sections |
+| Custom sheet themes, colors, and images | Journal Tab |
 | Sidebar for quick access to Favorites and Skills | Hidden Tabs |
-| Sheet tab for all a character's most used items, grouped by action | Journal Tab |
 | Easy module integration | Extensible inspiration and exhaustion |
 | Fully expandable containers | Easy to expand items |
 | Quick edit with middle click, open with double-click | Expanded context menus |
