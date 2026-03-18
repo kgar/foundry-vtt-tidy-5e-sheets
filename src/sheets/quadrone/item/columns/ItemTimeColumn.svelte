@@ -27,9 +27,11 @@
         : abbrOrLabel.label),
   );
 
-  let fullLabel = $derived(
-    (inferredActivation?.value ?? '') + ' ' + localize(abbrOrLabel.label),
-  );
+  function getFullLabel() {
+    return [inferredActivation?.value, localize(abbrOrLabel.label)].filterJoin(
+      ' ',
+    );
+  }
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
@@ -38,6 +40,7 @@
     {localize(abbrOrLabel.abbreviation)}
   </span>
 {:else if !isNil(abbrOrLabel.label, '')}
+  {@const fullLabel = getFullLabel()}
   <span data-tooltip={tooltipContent}>
     {fullLabel}
   </span>

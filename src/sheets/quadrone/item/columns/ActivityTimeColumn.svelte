@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/types';
   import { isNil } from 'src/utils/data';
+    import { coalesce } from 'src/utils/formatting';
 
   let { rowDocument: activity, rowContext }: ColumnCellProps = $props();
 
@@ -10,6 +11,8 @@
   let abbrOrLabel = $derived(
     FoundryAdapter.getActivationText(inferredActivation?.type),
   );
+
+  let text = $derived(coalesce(abbrOrLabel.abbreviation, abbrOrLabel.label, ""));
 
   let tooltipContent = $derived(
     (inferredActivation?.value ?? '') +
@@ -23,15 +26,10 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if !isNil(abbrOrLabel.abbreviation, '')}
+{#if !isNil(text, '')}
   <span data-tooltip={tooltipContent}>
     {inferredActivation?.value ?? ''}&nbsp;
-    {localize(abbrOrLabel.abbreviation)}
-  </span>
-{:else if !isNil(abbrOrLabel.label, '')}
-  <span class="truncate" data-tooltip={tooltipContent}>
-    {inferredActivation?.value ?? ''}&nbsp;
-    {localize(abbrOrLabel.label)}
+    {localize(text)}
   </span>
 {:else}
   <span class="color-text-disabled">—</span>
