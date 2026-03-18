@@ -33,14 +33,14 @@
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
-  <span class="property-time" data-tooltip={tooltipContent}>
+  <span data-tooltip={tooltipContent}>
     {inferredActivation?.value ?? ''}&nbsp;
     {localize(abbrOrLabel.abbreviation)}
   </span>
 {:else if !isNil(abbrOrLabel.label, '')}
-  <span class="property-time truncate" data-tooltip={tooltipContent}>
+  <span data-tooltip={tooltipContent}>
     {fullLabel}
   </span>
 {:else}
-  <span class="property-time color-text-disabled">—</span>
+  <span class="color-text-disabled">—</span>
 {/if}
