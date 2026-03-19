@@ -29,7 +29,7 @@
 </script>
 
 {#if !isNil(text, '')}
-  <span class="break-word" data-tooltip={tooltipContent}>
+  <span class="overflow-wrap-anywhere" data-tooltip={tooltipContent}>
     {inferredActivation?.value ?? ''}&nbsp;
     {localize(text)}
   </span>
