@@ -35,13 +35,13 @@
 </script>
 
 {#if !isNil(abbrOrLabel.abbreviation, '')}
-  <span data-tooltip={tooltipContent}>
+  <span class="break-word" data-tooltip={tooltipContent}>
     {inferredActivation?.value ?? ''}&nbsp;
     {localize(abbrOrLabel.abbreviation)}
   </span>
 {:else if !isNil(abbrOrLabel.label, '')}
   {@const fullLabel = getFullLabel()}
-  <span data-tooltip={tooltipContent}>
+  <span class="break-word" data-tooltip={tooltipContent}>
     {fullLabel}
   </span>
 {:else}

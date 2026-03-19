@@ -27,7 +27,7 @@
 </script>
 
 {#if !isNil(text, '')}
-  <span data-tooltip={tooltipContent}>
+  <span class="break-word" data-tooltip={tooltipContent}>
     {inferredActivation?.value ?? ''}&nbsp;
     {localize(text)}
   </span>
