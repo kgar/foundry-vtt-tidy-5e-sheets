@@ -3,9 +3,9 @@
   import type { ContainerItemContext, Item5e } from 'src/types/item.types';
   import type {
     Actor5e,
-    CharacterItemContext,
+    CharacterItemQuadroneContext,
     InventorySection,
-    NpcItemContext,
+    NpcItemQuadroneContext,
     TidySectionBase,
   } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
@@ -22,7 +22,7 @@
     editable: boolean;
     itemContext: Record<
       string,
-      ContainerItemContext | CharacterItemContext | NpcItemContext
+      ContainerItemContext | CharacterItemQuadroneContext | NpcItemQuadroneContext
     >;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;

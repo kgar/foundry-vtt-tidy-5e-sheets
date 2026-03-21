@@ -12,7 +12,6 @@
   import { getEncounterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import { getContext } from 'svelte';
   import InventoryActionBar from '../../shared/InventoryActionBar.svelte';
-  import ContainerPanel from '../../shared/ContainerPanel.svelte';
   import InventoryTables from '../../shared/InventoryTables.svelte';
   import ActorInventoryFooter from '../parts/ActorInventoryFooter.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
@@ -62,13 +61,6 @@
   <div class="tab-content">
     {#if showSheetPins}
       <SheetPins />
-    {/if}
-
-    {#if context.showContainerPanel && !!context.containerPanelItems.length}
-      <ContainerPanel
-        {searchCriteria}
-        containerPanelItems={context.containerPanelItems}
-      />
     {/if}
 
     <InventoryTables

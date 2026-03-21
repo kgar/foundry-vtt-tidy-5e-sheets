@@ -1,14 +1,13 @@
 <script lang="ts">
   import { InputAttachments } from 'src/attachments/input-attachments.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ColumnCellProps } from 'src/runtime/types';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
-  import type { VehicleItemContext } from 'src/types/types';
+  import type { VehicleItemQuadroneContext } from 'src/types/types';
 
   let {
     rowDocument: item,
     rowContext,
-  }: ColumnCellProps<any, VehicleItemContext> = $props();
+  }: ColumnCellProps<any, VehicleItemQuadroneContext> = $props();
 
   let context = $derived(getSheetContext());
 

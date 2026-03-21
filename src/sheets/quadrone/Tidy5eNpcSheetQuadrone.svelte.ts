@@ -7,7 +7,7 @@ import type {
   ActorTraitContext,
   FeatureSection,
   NpcHabitat,
-  NpcItemContext,
+  NpcItemQuadroneContext,
   NpcSheetQuadroneContext,
   NpcSpellcastingContext,
   SpellcastingClassContext,
@@ -135,9 +135,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
             name: background.name,
           }
         : undefined,
-      containerPanelItems: await Inventory.getContainerPanelItems(
-        actorContext.items
-      ),
       conditions: conditions,
       currencies,
       effects: enhancedEffectSections,
@@ -179,7 +176,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         userPreferences.includeSpellbookInNpcStatblockTab ??
         true,
       inventory: [],
-      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       senses: super._getSenses(),
       size: {
@@ -238,17 +234,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     // Prepare owned items
     this._prepareItems(context);
-
-    for (const panelItem of context.containerPanelItems) {
-      const ctx = context.itemContext[panelItem.container.id];
-      ctx.containerContents = await Container.getContainerContents(
-        panelItem.container,
-        {
-          hasActor: true,
-          unlocked: actorContext.unlocked,
-        }
-      );
-    }
 
     let details = this.actor.system.details;
 
@@ -472,7 +457,6 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     // Section the items by type
     for (let item of inventoryItems) {
       const ctx = (context.itemContext[item.id] ??= {});
-      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
         canCreate: true,
         rowActions: inventoryRowActions,
@@ -531,7 +515,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     context.features.forEach(applyStandardItemHeaderActions);
   }
 
-  protected _prepareItem(item: Item5e, ctx: NpcItemContext) {
+  protected _prepareItem(item: Item5e, ctx: NpcItemQuadroneContext) {
     ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {

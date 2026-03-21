@@ -313,6 +313,7 @@ class ItemColumnRuntimeImpl extends TableColumnRuntimeBase {
             formula: { ...columns.formula, order: 300, priority: 600 },
             range: { ...columns.range, order: 400, priority: 300 },
             target: { ...columns.target, order: 500, priority: 200 },
+            time: { ...columns.time, order: 600, priority: 250 },
             actions: { ...columns.actions, order: 1000, priority: 1000 },
           },
         },

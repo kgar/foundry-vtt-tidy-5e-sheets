@@ -12,7 +12,7 @@ import type {
   PassengerMemberContext,
   TravelPaceConfigEntry,
   TravelSpeedConfigEntry,
-  VehicleItemContext,
+  VehicleItemQuadroneContext,
   VehicleSheetQuadroneContext,
 } from 'src/types/types';
 import VehicleSheet from './actor/VehicleSheet.svelte';
@@ -22,7 +22,6 @@ import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.sve
 import { VehicleSheetQuadroneRuntime } from 'src/runtime/actor/VehicleSheetQuadroneRuntime.svelte';
 import { ItemContext } from 'src/features/item/ItemContext';
 import { ConditionsAndEffects } from 'src/features/conditions-and-effects/ConditionsAndEffects';
-import { Activities } from 'src/features/activities/activities';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { Inventory } from 'src/features/sections/Inventory';
@@ -34,7 +33,6 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { CrewArea5e } from 'src/foundry/foundry.types';
-import { Container } from 'src/features/containers/Container';
 
 const localize = FoundryAdapter.localize;
 
@@ -209,9 +207,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
           key: 'unassigned',
         },
       },
-      containerPanelItems: await Inventory.getContainerPanelItems(
-        actorContext.items
-      ),
       currencies,
       effects: enhancedEffectSections,
       encumbrance: await this.actor.system.getEncumbrance(),
@@ -231,7 +226,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         key: 'passengers',
       },
       quality: this.actor.system.attributes.quality?.value ?? 0,
-      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       size: {
         key: this.actor.system.traits.size,
         label:
@@ -499,7 +493,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
   protected async _prepareItem(
     item: any,
-    ctx: VehicleItemContext,
+    ctx: VehicleItemQuadroneContext,
     context: VehicleSheetQuadroneContext
   ): Promise<void> {
     const { uses } = item.system;
@@ -510,12 +504,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
 
     // To Hit
     ctx.toHit = ItemContext.getToHit(item);
-
-    // Activities
-    ctx.activities = Activities.getVisibleActivities(
-      item,
-      item.system.activities
-    )?.map(Activities.getActivityItemContext);
 
     // Crew Assignment
     const crew = item.system.crew;
@@ -546,13 +534,6 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
         },
       };
     }
-
-    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-      ctx.containerContents = await Container.getContainerContents(item, {
-        hasActor: true,
-        unlocked: context.unlocked,
-      });
-    }
   }
 
   /**
@@ -561,7 +542,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
    * @param ctx  Display context for the item.
    * @protected
    */
-  protected _prepareCrewedItem(item: any, ctx: VehicleItemContext) {
+  protected _prepareCrewedItem(item: any, ctx: VehicleItemQuadroneContext) {
     // Determine crewed status
     const isCrewed = item.system.crewed;
     ctx.toggleClass = isCrewed ? 'active' : '';

@@ -7,12 +7,12 @@
   import ActivityUsesColumn from './ActivityUsesColumn.svelte';
   import { Activities } from 'src/features/activities/activities';
   import { SheetSections } from 'src/features/sections/SheetSections';
-  import type { VehicleItemContext } from 'src/types/types';
+  import type { VehicleItemQuadroneContext } from 'src/types/types';
 
   let {
     rowDocument: item,
     rowContext,
-  }: ColumnCellProps<any, VehicleItemContext> = $props();
+  }: ColumnCellProps<any, VehicleItemQuadroneContext> = $props();
 
   let conceal = $derived(item.system.identified === false);
 

@@ -2,9 +2,9 @@
   import InlineContainerView from '../container/parts/InlineContainerView.svelte';
   import type {
     Actor5e,
-    CharacterItemContext,
+    CharacterItemQuadroneContext,
     InventorySection,
-    NpcItemContext,
+    NpcItemQuadroneContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { ColumnsLoadout } from 'src/runtime/item/ColumnsLoadout.svelte';
@@ -19,7 +19,7 @@
     inlineToggleService: InlineToggleService;
     itemContext: Record<
       string,
-      ContainerItemContext | CharacterItemContext | NpcItemContext
+      ContainerItemContext | CharacterItemQuadroneContext | NpcItemQuadroneContext
     >;
     /** Denotes whether this layer of nested tables is the root (top) layer. This affects what styles go into effect. */
     root?: boolean;

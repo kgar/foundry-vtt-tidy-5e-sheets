@@ -2,65 +2,8 @@
 
 ### Origin Sections Implementation
 
-- [x] Extract any shareable table components that are needed
-- [x] Prepare the data
-- [x] Create new tab component that is meant to accommodate both section arrangements
-- [x] Set up logic to choose between origin and action sections and hardcode to Origin for now
-- [x] Fix: Sheet tab Feature sections don't have columns
-- [x] Make the default order Inventory, Spellbook, Features
-- [x] Ensure Action sections are handled in new character sheet tab component
-- [x] Fix: Custom sections for Sheet tab should be pulling from the Action Section flag instead of the regular one
-- [x] Combine items with equivalent section keys into "custom" sections with the fallback / action tab columns
-- [x] Implement Search
-- [x] Implement Sort button
-- [x] Implement Manual Sort via drag/drop
-- [x] Implement Section Config
-- [x] Implement Filters
-- [x] Fix: No Add buttons allowed on sheet tab sections
-- [x] Fix: Nested container contents not showing when expanded in Sheet tab
-- [x] Set up World setting for default Sheet tab section organization
-- [x] Set up per-sheet toggle for Sheet tab section organization
-- [x] Replace hardcoded Origin section setup with determined current setting, starting with sheet flag and falling back to world setting
-- [x] Fix: There are build errors
-- [x] Fix: Sheet tab Prepared filter doesn't seem to work quite right
-- [x] Clean up: the 'custom' section type needs a constant
-- [x] World setting: Character sheet tab: Automatically Include Usable Items
-- [x] Sheet section config flag: Automatically Include Usable Items
-- [x] Refactor: Create type for sheet tab inclusion mode and propagate
-- [x] Refactor: pull derived inclusion setting into context variable and ensure all callers can access it reactively
-  - [x] Sheet prep
-  - [x] ActionsTabToggleButton
-  - [x] Context menu
-- [x] Do some perf tests around how long it takes to prepare the origin sections
-  - On average, 5-15ms on a high-end machine. Optimizing perf here would make a difference more likely when there are thousands upon thousands of items being included.
-- [x] Do not include the "CharacterSheetTabToggleButton" in TableRowActionsRuntime arrays when there's not a PC involved.
-- [x] Ensure manual sort is based on Sheet tab sort order (if possible)
-- [x] Decide how drop behaviors should work
-  - [x] Support drop to sort using flag sort key on sheet tab
-  - [x] Support drop to transfer sections
-- [x] It would be nice if we could have one ItemTable component that works for all item table use cases...
-  - [x] Differences between existing tables
-    - [x] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
-    - [x] Spell table
-      - [x] Table Header row conditional classes and attributes
-      - [x] Table Header primary cell end of content (slots content)
-      - [x] Item table row conditional rowClass
-- [x] Decide what to do about contained items and whether they should surface their parent container
-- [x] Handle Contained Items with "Paradigm 5"
 - [ ] Clean up the code and reduce redundancy
 - [ ] Review with hightouch to determine next steps
-
-### Paradigm 5: Containers are always manual additions**
-
-- Containers and items within are opt-in only and are not automatically included.
-- Containers display if added, and can be expanded, no special treatment or filtering applied to contents.
-- Items within a container display only if manually added, with visual indicators
-
-Pros:
-Should be performant, and doesn't clutter the tab with auto-additions for container-heavy tables. Model also works for Activities.
-
-Cons:
-Manual
 
 ### Short List
 
@@ -255,6 +198,18 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
 
 - [ ] hightouch: If it's super simple (and only if it's super simple) it could be nice to hard link some of the currency/weight/item type directly to the fields (e.g. click it, opens the tab, focuses the input). But if it's not out-of-the-box it's not worth it. Just wasn't sure if it was actually possible
 
+### Paradigm 5: Containers are always manual additions**
+
+- Containers and items within are opt-in only and are not automatically included.
+- Containers display if added, and can be expanded, no special treatment or filtering applied to contents.
+- Items within a container display only if manually added, with visual indicators
+
+Pros:
+Should be performant, and doesn't clutter the tab with auto-additions for container-heavy tables. Model also works for Activities.
+
+Cons:
+Manual
+
 ## To Do Graveyard
 
 - [x] Review and refine empty states on the Statblock tab
@@ -263,3 +218,60 @@ OK then tattoos the one thing I see is that some of the tattoos like the Absorbi
     - [x] Additionally, it presents the full Add Item dialog instead of just fast-forwarding creation to a correctly-configured Equipment vehicle item.
   - [x] Features do no have an empty state.
 - [x] Draft Animals need their own columns. The default sheets fixate on creature size and carrying capacity.
+- [x] Eliminate container panel and config from quadrone
+  - [x] Create quadrone-specific item contexts
+    - [x] Actor Base
+      - [x] Shared props: containerContents, activities, ... 
+    - [x] Character
+    - [x] NPC
+    - [x] Vehicle
+    - [x] Multi-actor
+  - [x] Remove containerPanelItems
+  - [x] Remove showContainerPanel
+  - [x] Remove container panel settings UI
+- [x] Implement section origins
+  - [x] Extract any shareable table components that are needed
+  - [x] Prepare the data
+  - [x] Create new tab component that is meant to accommodate both section arrangements
+  - [x] Set up logic to choose between origin and action sections and hardcode to Origin for now
+  - [x] Fix: Sheet tab Feature sections don't have columns
+  - [x] Make the default order Inventory, Spellbook, Features
+  - [x] Ensure Action sections are handled in new character sheet tab component
+  - [x] Fix: Custom sections for Sheet tab should be pulling from the Action Section flag instead of the regular one
+  - [x] Combine items with equivalent section keys into "custom" sections with the fallback / action tab columns
+  - [x] Implement Search
+  - [x] Implement Sort button
+  - [x] Implement Manual Sort via drag/drop
+  - [x] Implement Section Config
+  - [x] Implement Filters
+  - [x] Fix: No Add buttons allowed on sheet tab sections
+  - [x] Fix: Nested container contents not showing when expanded in Sheet tab
+  - [x] Set up World setting for default Sheet tab section organization
+  - [x] Set up per-sheet toggle for Sheet tab section organization
+  - [x] Replace hardcoded Origin section setup with determined current setting, starting with sheet flag and falling back to world setting
+  - [x] Fix: There are build errors
+  - [x] Fix: Sheet tab Prepared filter doesn't seem to work quite right
+  - [x] Clean up: the 'custom' section type needs a constant
+  - [x] World setting: Character sheet tab: Automatically Include Usable Items
+  - [x] Sheet section config flag: Automatically Include Usable Items
+  - [x] Refactor: Create type for sheet tab inclusion mode and propagate
+  - [x] Refactor: pull derived inclusion setting into context variable and ensure all callers can access it reactively
+    - [x] Sheet prep
+    - [x] ActionsTabToggleButton
+    - [x] Context menu
+  - [x] Do some perf tests around how long it takes to prepare the origin sections
+    - On average, 5-15ms on a high-end machine. Optimizing perf here would make a difference more likely when there are thousands upon thousands of items being included.
+  - [x] Do not include the "CharacterSheetTabToggleButton" in TableRowActionsRuntime arrays when there's not a PC involved.
+  - [x] Ensure manual sort is based on Sheet tab sort order (if possible)
+  - [x] Decide how drop behaviors should work
+    - [x] Support drop to sort using flag sort key on sheet tab
+    - [x] Support drop to transfer sections
+  - [x] It would be nice if we could have one ItemTable component that works for all item table use cases...
+    - [x] Differences between existing tables
+      - [x] actionSubtitle versus subtitle: expose snippets with args, where default is subtitle
+      - [x] Spell table
+        - [x] Table Header row conditional classes and attributes
+        - [x] Table Header primary cell end of content (slots content)
+        - [x] Item table row conditional rowClass
+  - [x] Decide what to do about contained items and whether they should surface their parent container
+  - [x] Handle Contained Items with "Paradigm 5"

@@ -10,7 +10,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  CharacterItemContext,
+  CharacterItemQuadroneContext,
   CharacterItemPartitions,
   CharacterSheetQuadroneContext,
   CharacterSpeedSenseContext,
@@ -20,9 +20,7 @@ import type {
   FavoriteContextEntry,
   InspirationSource,
   FeatureSection,
-  ActorTraitContext,
   TidyItemSectionBase,
-  CharacterFeatureSection,
   SheetTabSection,
   CustomItemSectionQuadrone,
   ActionItemInclusionMode,
@@ -199,9 +197,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           }
         : undefined,
       conditions: conditions,
-      containerPanelItems: await Inventory.getContainerPanelItems(
-        actorContext.items,
-      ),
       creatureType: this._getCreatureType(),
       currencies,
       defenders: [],
@@ -261,7 +256,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       },
       skills: [],
       sheetTabSections: [],
-      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       species: species
         ? {
@@ -308,16 +302,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
-
-    for (const item of this.actor.itemTypes.container) {
-      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-        const ctx = context.itemContext[item.id];
-        ctx.containerContents = await Container.getContainerContents(item, {
-          hasActor: true,
-          unlocked: actorContext.unlocked,
-        });
-      }
-    }
 
     const tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
@@ -431,8 +415,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
     // Inventory
     for (let item of partitions.items) {
-      const ctx = (context.itemContext[item.id] ??= {});
-      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(
         inventory,
         item,
@@ -811,7 +793,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           const { quantity } = item.system;
 
           // Item details
-          const ctx: CharacterItemContext = (context.itemContext[item.id] ??=
+          const ctx: CharacterItemQuadroneContext = (context.itemContext[item.id] ??=
             {});
           ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
           ctx.attunement = FoundryAdapter.getAttunementContext(item);
@@ -881,7 +863,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     // Section the items by type
     for (let item of items) {
       const ctx = (context.itemContext[item.id] ??= {});
-      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
         canCreate: true,
         rowActions: inventoryRowActions,
@@ -979,7 +960,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
    * @param {object} context  Context data for display.
    * @protected
    */
-  protected _prepareItem(item: Item5e, context: CharacterItemContext) {
+  protected _prepareItem(item: Item5e, context: CharacterItemQuadroneContext) {
     if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       const linked = item.system.linkedActivity?.item;
 
@@ -1009,14 +990,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     // To Hit
     context.toHit = ItemContext.getToHit(item);
-
-    // Activities
-    context.activities = Activities.getVisibleActivities(
-      item,
-      item.system.activities,
-    )?.map(Activities.getActivityItemContext);
-
-    context.linkedUses = Activities.getLinkedUses(item);
   }
 
   /* -------------------------------------------- */
