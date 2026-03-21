@@ -28,17 +28,6 @@
   let allTabOptionGroups = $derived<SectionOptionGroup[]>([
     ...tabOptionGroups,
     {
-      title: 'TIDY5E.DisplayOptions.Title',
-      settings: [
-        {
-          type: 'boolean',
-          checked: false,
-          label: 'TIDY5E.DisplayOptions.ShowContainerRow.Label',
-          prop: TidyFlags.showContainerPanel.prop,
-        },
-      ],
-    },
-    {
       title: 'TIDY5E.DisplayOptionsGlobalDefault.Title',
       settings: [
         SheetPinsProvider.getGlobalSectionSetting(context.document.type, tabId),

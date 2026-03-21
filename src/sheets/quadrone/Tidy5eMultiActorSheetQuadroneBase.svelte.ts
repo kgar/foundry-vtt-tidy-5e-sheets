@@ -3,23 +3,19 @@ import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.sve
 import type {
   Actor5e,
   ActorInventoryTypes,
-  ActorSheetQuadroneContext,
   GroupMemberSkillContext,
   GroupSkill,
   GroupTrait,
   GroupTraitBase,
   MeasurableGroupTrait,
-  MultiActorMemberPortraitContext,
   MultiActorQuadroneContext,
   TidyItemSectionBase,
 } from 'src/types/types';
 import type {
-  ApplicationClosingOptions,
   ApplicationRenderOptions,
 } from 'src/types/application.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
-import { Container } from 'src/features/containers/Container';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { TidyFlags } from 'src/api';
@@ -58,7 +54,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     ): Promise<MultiActorQuadroneContext<Tidy5eMultiActorSheetQuadroneBase>> {
       const actorContext = (await super._prepareContext(
         options
-      )) as ActorSheetQuadroneContext;
+      ));
 
       const currencies: CurrencyContext[] = [];
       Object.keys(CONFIG.DND5E.currencies).forEach((key) =>
@@ -71,30 +67,14 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         })
       );
 
-      const context = {
-        containerPanelItems: await Inventory.getContainerPanelItems(
-          actorContext.items
-        ),
+      const context: MultiActorQuadroneContext<Tidy5eMultiActorSheetQuadroneBase> = {
         currencies,
         inventory: [],
-        showContainerPanel:
-          TidyFlags.showContainerPanel.get(this.actor) == true,
         ...actorContext,
       };
 
       // Prepare owned items
       this._prepareItems(context);
-
-      for (const panelItem of context.containerPanelItems) {
-        const ctx = context.itemContext[panelItem.container.id];
-        ctx.containerContents = await Container.getContainerContents(
-          panelItem.container,
-          {
-            hasActor: true,
-            unlocked: actorContext.unlocked,
-          }
-        );
-      }
 
       return context;
     }
@@ -117,11 +97,6 @@ export function Tidy5eMultiActorSheetQuadroneBase<
 
       let inventoryItems = Array.from(items).reduce(
         (inventoryItems: Item5e[], item: Item5e) => {
-          const ctx = (context.itemContext[item.id] ??= {});
-
-          // Individual item preparation
-          this._prepareItem(item, ctx);
-
           const isWithinContainer = this.actor.items.has(item.system.container);
 
           if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
@@ -138,7 +113,6 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       // Section the items by type
       for (let item of inventoryItems) {
         const ctx = (context.itemContext[item.id] ??= {});
-        ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
         Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
           canCreate: true,
           rowActions: inventoryRowActions,
@@ -166,8 +140,6 @@ export function Tidy5eMultiActorSheetQuadroneBase<
         );
       });
     }
-
-    protected _prepareItem(item: Item5e, ctx: TContext) {}
 
     getGpSummary(actor: Actor5e) {
       const currency = actor.system.currency;

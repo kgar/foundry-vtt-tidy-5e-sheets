@@ -4,12 +4,14 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getCharacterSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinItemContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
   import { coalesce } from 'src/utils/formatting';
   import SpellPip from 'src/components/pips/SpellPip.svelte';
+  import CapacityBar from '../container/parts/CapacityBar.svelte';
+  import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -75,7 +77,7 @@
     }
   }
 
-  let context = $derived(getCharacterSheetContext());
+  let context = $derived(getCharacterSheetQuadroneContext());
 
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
@@ -91,6 +93,10 @@
   let localize = FoundryAdapter.localize;
 
   function getType() {
+    if (ctx.document.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+      return 'container';
+    }
+
     // Check for limited uses with recharge first (applies to any item type including spells)
     if (ctx.resource === 'limited-uses' && ctx.document.isOnCooldown) {
       return 'limited-uses-recharging';
@@ -140,6 +146,8 @@
       [`system.spells.${slotKey}.value`]: value,
     });
   }
+
+  let containerCapacityTooltip: ContainerCapacityTooltip | undefined = $state();
 </script>
 
 {#snippet spellSlots(section: any, slotKey: string, cssClass: string)}
@@ -258,13 +266,38 @@
           </span>
         {/if}
       </div>
-      <!-- TODO:
-      * Hide if 0 max charges.
-      * Hide if innate/atwill spell slot.
-      * Switch to spell slot uses if spell.
-      * Switch spell slots to pips if active?
-      -->
-      {#if pinType !== 'none'}
+
+      {#if pinType === 'container'}
+        {@const capacity =
+          context.itemContext[ctx.document.id].containerCapacity}
+        {#if capacity}
+          <ContainerCapacityTooltip
+            bind:this={containerCapacityTooltip}
+            container={ctx.document}
+            {capacity}
+            showIcon={false}
+          />
+
+          <div
+            class="pin-container"
+            onmouseover={(ev) => containerCapacityTooltip?.tryShow(ev)}
+            onfocus={(ev) => containerCapacityTooltip?.tryShow(ev)}
+          >
+            <CapacityBar
+              container={ctx.document}
+              showTracker={false}
+              {capacity}
+              showWeightDistributionTooltip={false}
+            />
+          </div>
+        {/if}
+      {:else if pinType !== 'none'}
+        <!-- TODO:
+        * Hide if 0 max charges.
+        * Hide if innate/atwill spell slot.
+        * Switch to spell slot uses if spell.
+        * Switch spell slots to pips if active?
+        -->
         <div class="pin-counter {ctx.resource}">
           {#if pinType === 'limited-uses-recharging'}
             <RechargeControl document={ctx.document} field={spentProp} {uses} />
@@ -317,7 +350,7 @@
             />
           {/if}
         </div>
-      {:else if ctx.document.system.activities.size > 0}
+      {:else if ctx.document.system.activities?.size > 0}
         <div class="pin-counter {ctx.resource}">
           <span class="subtitle font-default-medium color-text-lighter"
             >{ctx.document.system.activities.size}
