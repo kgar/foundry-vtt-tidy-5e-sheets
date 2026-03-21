@@ -11,6 +11,7 @@
   import { coalesce } from 'src/utils/formatting';
   import SpellPip from 'src/components/pips/SpellPip.svelte';
   import CapacityBar from '../container/parts/CapacityBar.svelte';
+  import ContainerCapacityTooltip from 'src/tooltips/ContainerCapacityTooltip.svelte';
 
   interface Props {
     ctx: SheetPinItemContext;
@@ -145,6 +146,8 @@
       [`system.spells.${slotKey}.value`]: value,
     });
   }
+
+  let containerCapacityTooltip: ContainerCapacityTooltip | undefined = $state();
 </script>
 
 {#snippet spellSlots(section: any, slotKey: string, cssClass: string)}
@@ -268,11 +271,23 @@
         {@const capacity =
           context.itemContext[ctx.document.id].containerCapacity}
         {#if capacity}
-          <div class="pin-container">
+          <ContainerCapacityTooltip
+            bind:this={containerCapacityTooltip}
+            container={ctx.document}
+            {capacity}
+            showIcon={false}
+          />
+
+          <div
+            class="pin-container"
+            onmouseover={(ev) => containerCapacityTooltip?.tryShow(ev)}
+            onfocus={(ev) => containerCapacityTooltip?.tryShow(ev)}
+          >
             <CapacityBar
               container={ctx.document}
-              showTracker={true}
+              showTracker={false}
               {capacity}
+              showWeightDistributionTooltip={false}
             />
           </div>
         {/if}
