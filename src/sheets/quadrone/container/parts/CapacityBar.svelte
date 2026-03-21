@@ -22,9 +22,15 @@
     container: Item5e;
     capacity: ContainerCapacityContext;
     showTracker?: boolean;
+    showWeightDistributionTooltip?: boolean;
   }
 
-  let { container, capacity, showTracker = true }: Props = $props();
+  let {
+    container,
+    capacity,
+    showTracker = true,
+    showWeightDistributionTooltip = true,
+  }: Props = $props();
 
   let percentage = $derived(Math.round(capacity.pct));
 
@@ -45,15 +51,18 @@
         : `low`,
   );
 
-  let weightDistributionTooltip: WeightDistributionTooltip;
+  let weightDistributionTooltip: WeightDistributionTooltip | undefined =
+    $state();
 </script>
 
-<WeightDistributionTooltip
-  bind:this={weightDistributionTooltip}
-  sheetDocument={context.document}
-  fullWeight={container.system.contentsWeight}
-  currencyWeight={container.system.currencyWeight}
-/>
+{#if showWeightDistributionTooltip}
+  <WeightDistributionTooltip
+    bind:this={weightDistributionTooltip}
+    sheetDocument={context.document}
+    fullWeight={container.system.contentsWeight}
+    currencyWeight={container.system.currencyWeight}
+  />
+{/if}
 
 <div
   class={[
@@ -69,8 +78,10 @@
   aria-valuemax={capacity.max}
   style="--bar-percentage: {percentage}%;"
   data-tooltip-direction="UP"
-  onmouseover={(ev) => weightDistributionTooltip.tryShow(ev)}
-  onfocus={(ev) => weightDistributionTooltip.tryShow(ev)}
+  onmouseover={(ev) =>
+    showWeightDistributionTooltip && weightDistributionTooltip?.tryShow(ev)}
+  onfocus={(ev) =>
+    showWeightDistributionTooltip && weightDistributionTooltip?.tryShow(ev)}
 >
   {#if showTracker}
     {@render tracker()}
