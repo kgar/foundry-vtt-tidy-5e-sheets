@@ -288,6 +288,7 @@
               showTracker={false}
               {capacity}
               showWeightDistributionTooltip={false}
+              class="meter-small"
             />
           </div>
         {/if}

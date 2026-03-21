@@ -17,12 +17,14 @@
   import CapacityTracker from './CapacityTracker.svelte';
   import WeightDistributionTooltip from 'src/tooltips/WeightDistributionTooltip.svelte';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { ClassValue } from 'svelte/elements';
 
   interface Props {
     container: Item5e;
     capacity: ContainerCapacityContext;
     showTracker?: boolean;
     showWeightDistributionTooltip?: boolean;
+    class?: ClassValue;
   }
 
   let {
@@ -30,6 +32,7 @@
     capacity,
     showTracker = true,
     showWeightDistributionTooltip = true,
+    class: cssClass,
   }: Props = $props();
 
   let percentage = $derived(Math.round(capacity.pct));
@@ -69,6 +72,7 @@
     'meter progress capacity theme-dark',
     { empty: (capacity.value ?? 0) === 0 },
     barSeverity,
+    cssClass,
   ]}
   role="meter"
   aria-label={localize('DND5E.CONTAINER.FIELDS.capacity.label')}
