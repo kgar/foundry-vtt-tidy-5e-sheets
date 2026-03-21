@@ -61,6 +61,7 @@ import { Activities } from 'src/features/activities/activities';
 import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
 import type { SheetPinFlag } from 'src/api';
 import type { ThemeSettingsV3 } from 'src/theme/theme-quadrone.types';
+import { Container } from 'src/features/containers/Container';
 
 const POST_WINDOW_TITLE_ANCHOR_CLASS_NAME = 'sheet-warning-anchor';
 
@@ -363,7 +364,41 @@ export function Tidy5eActorSheetQuadroneBase<
 
       await this.setExpandedItemData();
 
+      // TODO: Fold this into a singular items loop that is triggered by inheritors
+      for (const item of this.actor.items) {
+        this._prepareItemBase(context, item);
+      }
+
       return context;
+    }
+
+    protected async _prepareItemBase(
+      context: ActorSheetQuadroneContext,
+      item: Item5e,
+    ) {
+      const ctx = (context.itemContext[item.id] ??= {});
+
+      ctx.containerName = this.actor.items.get(item.system.container)?.name;
+      
+      if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
+        ctx.containerCapacity = await item.system.computeCapacity();
+        
+        ctx.containerContents = await Container.getContainerContents(item, {
+          hasActor: true,
+          unlocked: context.unlocked,
+        });
+      }
+      
+      if (item.system.activities) {
+        ctx.activities = Activities.getVisibleActivities(
+          item,
+          item.system.activities,
+        )?.map(Activities.getActivityItemContext);
+      }
+
+      ctx.linkedUses = Activities.getLinkedUses(item);
+      
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
     }
 
     async _preparePortrait(
@@ -823,6 +858,9 @@ export function Tidy5eActorSheetQuadroneBase<
           if (excludeSpeed(key)) {
             return acc;
           }
+          if(systemMovement[key] === 0) {
+            return acc;
+          }
 
           const parenthetical =
             key === CONSTANTS.MOVEMENT_FLY && systemMovement.hover
@@ -878,11 +916,23 @@ export function Tidy5eActorSheetQuadroneBase<
       if (systemMovement.ignoredDifficultTerrain?.size > 0) {
         const hasAll = systemMovement.ignoredDifficultTerrain.has('all');
 
+        // Core dnd5e keeps all/magical/nonmagical outside CONFIG.difficultTerrainTypes;
+        // they're added as extras when building the field. Fall back to dnd5e loc keys.
+        const EXTRAS: Record<string, string> = {
+          all: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.All',
+          magical: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.Magical',
+          nonmagical: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.Nonmagical',
+          webs: 'DND5E.REGIONBEHAVIORS.DIFFICULTTERRAIN.Type.Webs',
+        };
+        const getTerrainLabel = (t: string): string =>
+          CONFIG.DND5E.difficultTerrainTypes[t]?.label ??
+          (EXTRAS[t] ? FoundryAdapter.localize(EXTRAS[t]) : t);
+
         const label = hasAll
           ? FoundryAdapter.localize('TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain')
           : new Intl.ListFormat(game.i18n.lang).format(
               [...systemMovement.ignoredDifficultTerrain]
-                .map((t: string) => CONFIG.DND5E.difficultTerrainTypes[t]?.label ?? t)
+                .map((t: string) => getTerrainLabel(t))
                 .filter((l): l is string => !!l)
             );
 

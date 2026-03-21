@@ -10,6 +10,7 @@ import {
 } from 'src/foundry/foundry-adapter';
 import type { SheetHeaderControlPosition } from 'src/api';
 import type { HeaderControlConfiguration } from 'src/settings/settings.types';
+import { coalesce } from 'src/utils/formatting';
 
 type HeaderControlConfigMember = {
   sheetClass: DocumentSheetConstructor;
@@ -123,13 +124,13 @@ export class WorldHeaderControlConfigurationQuadroneApplication extends SvelteAp
     const controlSettings: ConfigHeaderControlSetting[] = [];
 
     controls.forEach((control) => {
-      const id = control.label;
+      const id = coalesce(control.label, control.icon);
 
       controlSettings.push({
         id,
         icon: control.icon,
         title: FoundryAdapter.localize(control.label),
-        location: headerSet.has(id) ? 'header' : control.position ?? 'menu',
+        location: headerSet.has(id) ? 'header' : (control.position ?? 'menu'),
       });
     });
 

@@ -271,7 +271,7 @@
     },
     "TIDY5E.Settings.HideIfZero": {
         "name": "Ocultar o Rastreador de Exaustão e Inspiração em 0",
-        "hint": "Oculta exaustão e inspiração se cair a 0 PV, mas ainda aparece ao passar o mouse."
+        "hint": "Oculta exaustão e inspiração se cair a 0, mas ainda aparece ao passar o mouse."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Mostrar Indicador de Inspiração Apenas ao Passar o Cursor",
@@ -377,7 +377,7 @@
         "hint": "Faz as marcações de Salvaguarda Contra Morte serem visíveis apenas para o Mestre. O botão de rolagem de Salvaguarda Contra Morte continua visível."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Usar Barra de Carga para PJ",
+        "name": "Usar Barra de Carga do Personagem",
         "hint": "Mostra uma barra de carga nas fichas de personagem."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
@@ -627,7 +627,9 @@
         "name": "Definir Tidy como Ficha Padrão",
         "hint": "Se você deseja definir o Tidy 5e Sheets como padrão para um ou mais tipos de documentos, mas o menu de configuração principal das fichas padrão não está funcionando conforme o esperado, use este menu para selecionar suas preferências.",
         "buttonLabel": "Definir Tidy como Ficha Padrão",
-        "explanation": "Selecione todos os tipos de documentos onde você prefere que o Tidy 5e Sheets seja o padrão."
+        "explanation": "Selecione todos os tipos de documentos onde você prefere que o Tidy 5e Sheets seja o padrão.",
+        "disableAll": "Uso para nenhuma ficha",
+        "enableAll": "Use para todas as fichas"
     },
     "TIDY5E.Settings.About": {
         "name": "Sobre",
@@ -953,7 +955,7 @@
     "TIDY5E.InspirationAdd": "Adicionar Inspiração",
     "TIDY5E.InspirationRemove": "Remover Inspiração",
     "TIDY5E.LegendaryAbbr": "AL",
-    "TIDY5E.LairAbbr": "AC",
+    "TIDY5E.LairAbbr": "Covil",
     "TIDY5E.AddCustom": "Adicionar {name} Personalizado",
     "TIDY5E.CompendiumBrowser": "Adicionar {name} do Compêndio",
     "TIDY5E.SheetMode.Edit": "Mudar para Modo de Jogo",
@@ -989,5 +991,19 @@
             "clear": "Limpar Contaminação",
             "none": "Sem contaminação ou sintomas."
         }
-    }
+    },
+    "TIDY5E.SectionOrganization": "Organização da Seção",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Inclui automaticamente itens utilizáveis",
+    "TIDY5E.GenericDefaultPrefix": "Padrão: {value}",
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "name": "Organização da Seção de Abas da Ficha de Personagem",
+        "hint": "Determina como as seções devem ser organizadas na aba Ficha de Personagem por padrão.",
+        "option.action": "Grupo por economia de ação",
+        "option.origin": "Grupo por item ou tipo de característica"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "Aba Ficha de Personagem: Incluir Itens Utilizáveis Automaticamente",
+        "hint": "Inclui automaticamente todos os itens, magias e características atualmente utilizáveis na aba da ficha."
+    },
+    "TIDY5E.Utilities.HideSheetPins": "Ocultar Fixados da Ficha"
 }

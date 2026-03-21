@@ -8,9 +8,9 @@
   import type { Item5e } from 'src/types/item.types';
   import type {
     Actor5e,
-    CharacterItemContext,
+    CharacterItemQuadroneContext,
     CharacterSheetQuadroneContext,
-    NpcItemContext,
+    NpcItemQuadroneContext,
     NpcSheetQuadroneContext,
     FeatureSection,
   } from 'src/types/types';
@@ -19,7 +19,7 @@
 
   interface Props {
     sections: FeatureSection[];
-    itemContext: Record<string, CharacterItemContext | NpcItemContext>;
+    itemContext: Record<string, CharacterItemQuadroneContext | NpcItemQuadroneContext>;
     inlineToggleService: InlineToggleService;
     searchCriteria: string;
     sheetDocument: Actor5e | Item5e;

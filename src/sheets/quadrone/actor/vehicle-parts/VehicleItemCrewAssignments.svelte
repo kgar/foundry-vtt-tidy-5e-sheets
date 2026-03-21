@@ -7,12 +7,12 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyTableCell from 'src/components/table-quadrone/TidyTableCell.svelte';
   import TidyTableRow from 'src/components/table-quadrone/TidyTableRow.svelte';
-  import type { Actor5e, VehicleItemContext } from 'src/types/types';
+  import type { Actor5e, VehicleItemQuadroneContext } from 'src/types/types';
   import type { Item5e } from 'src/types/item.types';
   import { EventHelper } from 'src/utils/events';
 
   type Props = {
-    ctx: VehicleItemContext;
+    ctx: VehicleItemQuadroneContext;
     item: Item5e;
   };
 

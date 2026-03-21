@@ -648,7 +648,9 @@
         "buttonLabel": "Tidy jako základní deníky",
         "hint": "Pokud chceš nastavit deníky Tidy 5e jako výchozí pro jeden nebo více typů dokumentů, ale základní nabídka konfigurace výchozích deníků nefunguje dle očekávání, použij tuto nabídku pro výběr předvoleb.",
         "explanation": "Vyber všechny typy dokumentů, u kterých chceš, aby byly jako výchozí nastaveny deníky Tidy 5e.",
-        "name": "Nastavit Tidy jako základní deníky"
+        "name": "Nastavit Tidy jako základní deníky",
+        "disableAll": "Použít bez deníků",
+        "enableAll": "Použít pro všechny deníky"
     },
     "TIDY5E.Utilities.Tools": "Nástroje",
     "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Zde se zobrazí identifikátor zdrojového povolání kouzla. Chceš-li přiřadit povolání, které postava nemá, zadej identifikátor povolání do tohoto textového pole.",
@@ -998,5 +1000,19 @@
             "clear": "Vyčistit kontaminaci",
             "none": "Žádná kontaminace ani symptomy."
         }
-    }
+    },
+    "TIDY5E.SectionOrganization": "Organizace sekcí",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Automaticky včetně použitelných položek",
+    "TIDY5E.GenericDefaultPrefix": "Výchozí: {value}",
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "name": "Organizace sekcí deníku postavy",
+        "hint": "Určuje, jak by měly být sekce ve výchozím nastavení deníku postavy uspořádány.",
+        "option.action": "Seskupit podle ekonomiky akcí",
+        "option.origin": "Seskupit podle položek nebo typu schopností"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "Záložka deníku postavy: Automaticky včetně použitelných položek",
+        "hint": "Automaticky včetně všech aktuálně použitelných položek, kouzla a schopností v záložce deníku."
+    },
+    "TIDY5E.Utilities.HideSheetPins": "Skrýt špendlíky deníku"
 }

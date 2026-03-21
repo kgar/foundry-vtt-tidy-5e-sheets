@@ -90,6 +90,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       return this._context.data;
     }
 
+    // TODO: figure out and fix the type error that necessitates the `as` cast here
     const actorContext = (await super._prepareContext(
       options
     )) as MultiActorQuadroneContext<Tidy5eGroupSheetQuadrone>;

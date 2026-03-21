@@ -320,6 +320,27 @@ export type CharacterItemContext = {
   includeInCharacterSheetTab?: boolean;
 };
 
+export type CharacterItemQuadroneContext = {
+  actionSubtitle?: string;
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
+  chosen?: ChosenFacilityContext;
+  concealDetails?: boolean;
+  favoriteId?: string;
+  group?: string;
+  hasRecharge?: boolean;
+  hasUses?: boolean;
+  isStack?: boolean;
+  needsSubclass?: boolean;
+  save?: ItemSaveContext;
+  toHit?: number | null;
+  totalWeight?: number;
+  concentration?: boolean;
+  parent?: Item5e;
+  subtitle?: string;
+  includeInCharacterSheetTab?: boolean;
+} & ActorItemQuadroneContext;
+
 export type ActivityItemContext = {
   activation: string;
   hasRecharge: boolean;
@@ -520,6 +541,23 @@ export type NpcItemContext = {
   subtitle?: string;
 };
 
+export type NpcItemQuadroneContext = {
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
+  canToggle?: boolean;
+  concentration?: boolean;
+  hasRecharge?: boolean;
+  hasUses?: boolean;
+  isStack?: boolean;
+  needsSubclass?: boolean;
+  parent?: Item5e;
+  save?: ItemSaveContext;
+  toHit?: number | null;
+  toggleTitle?: string;
+  totalWeight?: number;
+  subtitle?: string;
+} & ActorItemQuadroneContext;
+
 export type NpcHabitat = {
   type: string;
   subtype?: string;
@@ -580,6 +618,18 @@ export type VehicleItemContext = {
   toggleClass?: string;
   toggleTitle?: string;
 };
+
+export type VehicleItemQuadroneContext = {
+  actionSubtitle?: string;
+  cover?: string;
+  crew?: VehicleItemCrewAssignment[];
+  hasUses?: boolean;
+  save?: ItemSaveContext;
+  toHit?: number | null;
+  threshold?: number | string;
+  toggleClass?: string;
+  toggleTitle?: string;
+} & ActorItemQuadroneContext;
 
 export type VehicleMember = {
   actor: Actor5e;
@@ -1035,6 +1085,17 @@ export type ActorTraitContext<TValue = unknown> = {
   onClick?: (params: RegisteredCustomTraitOnClickParams) => void;
 };
 
+export type ActorItemQuadroneContext = {
+  activities?: ActivityItemContext[];
+  containerName?: string;
+  containerCapacity?: ContainerCapacityContext;
+  containerContents?: ContainerContents;
+  linkedUses?: LinkedUses;
+  subtitle?: string;
+  totalWeight?: number;
+  // TODO: Merge more universal item context here before PR
+}
+
 export type ActorSheetQuadroneContext<TSheet = any> = {
   actor: { sheet: TSheet } & Record<string, any>;
   appId: string; // do we need this ? or is rootId sufficient?
@@ -1048,7 +1109,7 @@ export type ActorSheetQuadroneContext<TSheet = any> = {
   filterPins: Record<string, Set<string>>;
   currentTabId: string;
   isConcentrating: boolean;
-  itemContext: Record<string, any>; // TODO: Consider adding itemContext generic
+  itemContext: Record<string, ActorItemQuadroneContext>;
   /** All items without a container. */
   items: Item5e[];
   journal: DocumentJournalEntries;
@@ -1082,10 +1143,8 @@ export type SingleActorContext<TSheet> = {
 } & ActorSheetQuadroneContext<TSheet>;
 
 export type MultiActorQuadroneContext<TSheet> = {
-  containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
   inventory: InventorySection[];
-  showContainerPanel: boolean;
 } & ActorSheetQuadroneContext<TSheet>;
 
 export type ActorAbilityContextEntry = Ability & {
@@ -1257,7 +1316,6 @@ export type CharacterSheetQuadroneContext = {
   // TODO: Populate with context data as needed
   classes: ActorClassEntryContext[];
   conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
   creatureType: CreatureTypeContext;
   currencies: CurrencyContext[];
   defenders: Actor5e[];
@@ -1278,11 +1336,10 @@ export type CharacterSheetQuadroneContext = {
   inspirationSource?: InspirationSource;
   initialSidebarTabId: string;
   inventory: InventorySection[];
-  itemContext: Record<string, CharacterItemContext>;
+  itemContext: Record<string, CharacterItemQuadroneContext>;
   orphanedSubclasses: Item5e[];
   senses: CharacterSpeedSenseContext;
   sheetTabSections: SheetTabSection[]; // TODO: Got a better name?
-  showContainerPanel: boolean;
   showDeathSaves: boolean;
   sidebarTabs: Tab[];
   size: ActorSizeContext;
@@ -1307,7 +1364,6 @@ export type NpcSheetQuadroneContext = {
   background?: ActorTraitItemContext;
   classes: ActorClassEntryContext[];
   conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
   currencies: CurrencyContext[];
   effects: ActiveEffectSection[];
   enriched: {
@@ -1324,8 +1380,8 @@ export type NpcSheetQuadroneContext = {
   important: boolean;
   includeSpellbookInStatblockTab: boolean;
   inventory: InventorySection[];
+  itemContext: NpcItemQuadroneContext;
   orphanedSubclasses: Item5e[];
-  showContainerPanel: boolean;
   showDeathSaves: boolean;
   showLairTracker: boolean;
   showLegendaryActions: boolean;
@@ -1606,7 +1662,6 @@ export type PassengerSection = {
 
 export type VehicleSheetQuadroneContext = {
   conditions: Dnd5eActorCondition[];
-  containerPanelItems: ContainerPanelItemContext[];
   cost: {
     value: number;
     denomination: string;
@@ -1620,7 +1675,7 @@ export type VehicleSheetQuadroneContext = {
   };
   features: InventorySection[];
   inventory: InventorySection[];
-  itemContext: Record<string, VehicleItemContext>;
+  itemContext: Record<string, VehicleItemQuadroneContext>;
   mountableItems: Record<
     string,
     {
@@ -1633,7 +1688,6 @@ export type VehicleSheetQuadroneContext = {
   >;
   passengers: PassengerSection;
   quality: number;
-  showContainerPanel: boolean;
   size: ActorSizeContext;
   speeds: ActorSpeedSenseEntryContext[];
   statblock: (InventorySection | DraftAnimalSection)[];

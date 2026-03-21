@@ -111,7 +111,8 @@
     <tidy-gold-header-underline></tidy-gold-header-underline>
   </div>
   <div class="contamination-levels flexcol">
-    <button 
+    <button
+      type="button"
       tabindex={0}
       class:active={0 === contaminationLevel} 
       class="symptom level-0" 
@@ -125,7 +126,8 @@
   </button>
     {#each enrichedPromises as promise, i}
       {@const level = i + 1}
-      <button 
+      <button
+        type="button"
         tabindex={0}
         class:active={level <= contaminationLevel} 
         class="symptom" 

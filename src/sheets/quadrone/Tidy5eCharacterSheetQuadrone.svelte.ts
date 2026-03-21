@@ -10,7 +10,7 @@ import type {
   Actor5e,
   ActorInventoryTypes,
   ActorSheetQuadroneContext,
-  CharacterItemContext,
+  CharacterItemQuadroneContext,
   CharacterItemPartitions,
   CharacterSheetQuadroneContext,
   CharacterSpeedSenseContext,
@@ -20,9 +20,7 @@ import type {
   FavoriteContextEntry,
   InspirationSource,
   FeatureSection,
-  ActorTraitContext,
   TidyItemSectionBase,
-  CharacterFeatureSection,
   SheetTabSection,
   CustomItemSectionQuadrone,
   ActionItemInclusionMode,
@@ -65,7 +63,7 @@ import {
 } from 'src/features/actions/actions.svelte';
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
-import ActionsTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
+import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
 import { ActorInventoryPreparer } from '../organize-me/InventoryPreparer';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
@@ -200,9 +198,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           }
         : undefined,
       conditions: conditions,
-      containerPanelItems: await Inventory.getContainerPanelItems(
-        actorContext.items,
-      ),
       creatureType: this._getCreatureType(),
       currencies,
       defenders: [],
@@ -262,7 +257,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       },
       skills: [],
       sheetTabSections: [],
-      showContainerPanel: TidyFlags.showContainerPanel.get(this.actor) == true,
       showDeathSaves: this._showDeathSaves,
       species: species
         ? {
@@ -309,16 +303,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     context.skills = this._getSkillsToolsContext(context, 'skills');
     context.tools = this._getSkillsToolsContext(context, 'tools');
-
-    // for (const item of this.actor.itemTypes.container) {
-    //   if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-    //     // const ctx = context.itemContext[item.id];
-    //     // ctx.containerContents = await Container.getContainerContents(item, {
-    //     //   hasActor: true,
-    //     //   unlocked: actorContext.unlocked,
-    //     // });
-    //   }
-    // }
 
     const tabs = await CharacterSheetQuadroneRuntime.getTabs(context);
 
@@ -432,8 +416,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     //   -> allow mixed-type items wherever custom sections are supported, and use the fallback columns for the page.
     // Inventory
     for (let item of partitions.items) {
-      const ctx = (context.itemContext[item.id] ??= {});
-      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
       Inventory.applyInventoryItemToSection(
         inventory,
         item,
@@ -525,8 +507,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         show: true,
         rowActions: [
           {
-            component: ActionsTabToggleButton,
-            props: (args) => ({ doc: args.data }),
+            component: CharacterSheetTabToggleButton,
+            props: (args) => ({
+              doc: args.data,
+              itemContext: context.itemContext,
+            }),
           },
           {
             component: MenuButton,
@@ -953,7 +938,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
     const { quantity } = item.system;
 
     // Item details
-    const ctx: CharacterItemContext = (context.itemContext[item.id] ??= {});
+    const ctx: CharacterItemQuadroneContext = (context.itemContext[item.id] ??= {});
     ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
     ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
@@ -1001,23 +986,6 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
 
     // To Hit
     ctx.toHit = ItemContext.getToHit(item);
-
-    // Activities
-    ctx.activities = Activities.getVisibleActivities(
-      item,
-      item.system.activities,
-    )?.map(Activities.getActivityItemContext);
-
-    ctx.linkedUses = Activities.getLinkedUses(item);
-
-    if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
-      ctx.containerContents = await Container.getContainerContents(item, {
-        hasActor: true,
-        unlocked: context.unlocked,
-      });
-    }
-
-    ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
   }
 
   /* -------------------------------------------- */
@@ -1041,12 +1009,11 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const speeds = super._getMovementSpeeds();
 
-    const standardSpeeds = speeds.filter(
-      (s) => s.key in CONFIG.DND5E.movementTypes,
-    );
-    const main = standardSpeeds.slice(0, 2);
-    const secondary = speeds.filter((s) => !main.includes(s));
+    const movementSpeeds = speeds.filter((s) => s.key !== 'ignoredDifficultTerrain');
+    const difficultTerrainSpeeds = speeds.filter((s) => s.key === 'ignoredDifficultTerrain');
 
+    const main = movementSpeeds.slice(0, 2);
+    const secondary = [...movementSpeeds.slice(2), ...difficultTerrainSpeeds];
     return {
       main: main,
       secondary: secondary,

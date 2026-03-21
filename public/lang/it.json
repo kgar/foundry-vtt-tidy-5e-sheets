@@ -1,11 +1,11 @@
 {
-    "TIDY5E.Tidy5eCharacterSheetClassic": "Scheda PG Classica Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetClassic": "Scheda Personaggio Classica Tidy 5e",
     "TIDY5E.Tidy5eNpcSheetClassic": "Scheda PNG Classica Tidy 5e",
     "TIDY5E.Tidy5eItemSheetClassic": "Scheda Oggetti Classica Tidy 5e",
     "TIDY5E.Tidy5eVehicleSheetClassic": "Scheda Veicoli Classica Tidy 5e",
     "TIDY5E.PlayerName": "Nome del Giocatore",
     "TIDY5E.EditSheetImageHint": "Tasto Sinistro: Modifica Immagine",
-    "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Ritratto PG",
+    "TIDY5E.SheetImageOptionsHint": "Tasto Destro: Mostra Opzioni Immagine",
     "TIDY5E.ShowPortraitArt": "Mostra Ritratto",
     "TIDY5E.ShowTokenArt": "Mostra Token",
     "TIDY5E.ShowItemImage": "Tasto Destro: Mostra Immagine Oggetto",
@@ -187,7 +187,7 @@
         "hint": "Abilita il menu contestuale del tasto destro sugli elementi."
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
-        "name": "Vista limitata espansa per le schede PG",
+        "name": "Mostra Vista Limitata Espansa",
         "hint": "Mostra l'intera scheda del personaggio (meno il diario) ai giocatori con autorizzazioni limitate."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
@@ -493,7 +493,7 @@
         "migrateGmSettingsButtonLabel": "Migrazione delle impostazioni DM",
         "migrateConfirmTitle": "Conferma la migrazione",
         "migrateConfirmMessage1": "Sei sicuro di voler eseguire questa migrazione?",
-        "migrateConfirmMessage2": "{boldStart}NB{boldEnd}: ricorda sempre di {boldStart}fare il backup dei tuoi dati{boldEnd}.",
+        "migrateConfirmMessage2": "{boldStart}Nota{boldEnd}: ricorda sempre di {boldStart}fare il backup dei tuoi dati{boldEnd}.",
         "v1": {
             "mainExplanation1": "La migrazione dei dati al nuovo modulo Tidy 5e Sheets non è necessaria per utilizzarlo. Nel peggiore dei casi, se sei un utente originale di Tidy5e Sheet e salti le migrazioni, dovrai riapplicare le tue impostazioni a tuo piacimento.",
             "originalHeader": "Scheda originale Tidy5e",
@@ -736,7 +736,9 @@
         "hint": "Se desideri impostare Tidy 5e Sheets come predefinito per uno o più tipi di documenti, ma il menu di configurazione delle schede predefinite principali non funziona come previsto, utilizza questo menu per selezionare le tue preferenze.",
         "explanation": "Seleziona tutti i tipi di documento in cui preferisci che Tidy 5e Sheets sia quello predefinito.",
         "name": "Imposta Tidy come scheda predefinita",
-        "buttonLabel": "Imposta Tidy come scheda predefinita"
+        "buttonLabel": "Imposta Tidy come scheda predefinita",
+        "disableAll": "Non usare per nessuna scheda",
+        "enableAll": "Usa per tutte le schede"
     },
     "TIDY5E.GenericErrorNotification": "Si è verificato un errore durante l'esecuzione di questa azione. Vedi la console devtools per maggiori dettagli.",
     "TIDY5E.Utilities.ConfigureSections": "Configura sezioni",
@@ -879,7 +881,7 @@
     "TIDY5E.Tidy5eVehicleSheetQuadrone": "Scheda Veicolo Tidy 5e",
     "TIDY5E.Tidy5eNpcSheetQuadrone": "Scheda PNG Tidy 5e",
     "TIDY5E.Tidy5eContainerSheetQuadrone": "Scheda Contenitore Tidy 5e",
-    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Scheda PG Tidy 5e",
+    "TIDY5E.Tidy5eCharacterSheetQuadrone": "Scheda Personaggio Tidy 5e",
     "TIDY5E.ItemSheet.PactLevelCastLabel": "Lanciato al {ordinal}",
     "TIDY5E.AddSpecific": "Aggiungi {name}",
     "TIDY5E.Ability.EditScore.label": "Modifica punteggio",
@@ -971,7 +973,7 @@
     "TIDY5E.SpellbookSections": "Sezioni Libro Incantesimi",
     "TIDY5E.UserDefaultPrefix": "Predefinito utente: {value}",
     "TIDY5E.DisplayOptionsGlobalDefault.Title": "Opzioni Visualizzazione Predefinite Globali",
-    "TIDY5E.Character.Sidebar.Title": "Barra laterale PG",
+    "TIDY5E.Character.Sidebar.Title": "Barra Laterale Personaggio",
     "TIDY5E.ContextMenuActionPin": "Fissa in Alto",
     "TIDY5E.ContextMenuActionUnpin": "Sblocca dall'Alto",
     "TIDY5E.HeaderControlConfiguration": {
@@ -1019,5 +1021,28 @@
     "TIDY5E.Vehicle.Unassigned.EmptyState": "Trascina e rilascia l'equipaggio qui, oppure clicca per aggiungerlo. L'equipaggio può quindi essere assegnato all'equipaggiamento o alle caratteristiche del veicolo.",
     "TIDY5E.Vehicle.Passenger.EmptyState": "Trascina e rilascia i passeggeri qui oppure clicca per aggiungerli.",
     "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignora {value}",
-    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignora Tutti Terreni Difficili"
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignora Tutti Terreni Difficili",
+    "TIDY5E.SectionOrganization": "Organizzazione Sezione",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Includi automaticamente elementi utilizzabili",
+    "TIDY5E.GenericDefaultPrefix": "Predefinito: {value}",
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "name": "Organizzazione Sezione Scheda Personaggio",
+        "hint": "Determina come devono essere organizzate per impostazione predefinita le sezioni nella scheda Scheda Personaggio.",
+        "option.action": "Raggruppa per action economy",
+        "option.origin": "Raggruppa per tipo di elemento o privilegio"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "Scheda Personaggio: includi automaticamente elementi utilizzabili",
+        "hint": "Includi automaticamente tutti gli elementi, incantesimi e funzionalità attualmente utilizzabili nella scheda."
+    },
+    "TIDY5E.Utilities.HideSheetPins": "Nascondi Pin Schede",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollSave": "Tiro Salvezza Contaminazione",
+            "rollMutation": "Tira per Mutazione",
+            "rolledMutation": "{name} ha ottenuto una mutazione con un livello di contaminazione di {level}.",
+            "clear": "Elimina Contaminazione",
+            "none": "Nessuna contaminazione o sintomi."
+        }
+    }
 }

@@ -833,13 +833,15 @@ export function TidyExtensibleDocumentSheetMixin<
       const uniqueControls = new Set<string>();
 
       for (const c of super._headerControlButtons()) {
-        if (uniqueControls.has(c.label)) {
+        const id = coalesce(c.label, c.icon);
+        
+        if (uniqueControls.has(id)) {
           continue;
         }
 
-        uniqueControls.add(c.label);
+        uniqueControls.add(id);
 
-        if (this._headerControlIsConfiguredForPosition(c, position)) {
+        if (this._headerControlIsConfiguredForPosition(c, id, position)) {
           yield c;
         }
       }
@@ -847,11 +849,12 @@ export function TidyExtensibleDocumentSheetMixin<
 
     private _headerControlIsConfiguredForPosition(
       c: CustomHeaderControlsEntry,
+      id: string,
       position: string
     ) {
       return (
-        this._headerControlSettings.get(c.label) === position ||
-        (!this._headerControlSettings.has(c.label) &&
+        this._headerControlSettings.get(id) === position ||
+        (!this._headerControlSettings.has(id) &&
           coalesce(c.position, 'menu') === position)
       );
     }

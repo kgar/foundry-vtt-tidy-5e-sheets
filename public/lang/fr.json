@@ -737,7 +737,9 @@
         "hint": "Si vous souhaitez définir les feuilles Tidy 5e par défaut pour un ou plusieurs types de documents, mais que le menu de configuration des feuilles par défaut ne fonctionne pas comme prévu, utilisez ce menu pour sélectionner vos préférences.",
         "buttonLabel": "Définir Tidy 5e comme feuille par défaut",
         "explanation": "Sélectionnez tous les types de documents pour lesquels vous préférez que les feuilles Tidy 5e soient utilisées par défaut.",
-        "name": "Définir Tidy5e comme feuille par défaut"
+        "name": "Définir Tidy5e comme feuille par défaut",
+        "disableAll": "A utiliser sur aucunes feuilles",
+        "enableAll": "À utiliser pour toutes les feuilles"
     },
     "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails.",
     "TIDY5E.Section": {
@@ -992,7 +994,7 @@
     "TIDY5E.LegendaryAbbr": "AL",
     "TIDY5E.LairAbbr": "Antre",
     "TIDY5E.Vehicle.Member.DraftAnimal.Label": "Animal de trait / Créature de travail",
-    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animaux de trait",
+    "TIDY5E.Vehicle.Member.DraftAnimal.LabelPl": "Animaux de trait / Bêtes de somme",
     "TIDY5E.AddCustom": "Ajouter un {name} personalisé",
     "TIDY5E.CompendiumBrowser": "Ajouter un {name} à partir du Compendium",
     "TIDY5E.SheetMode.Edit": "Passer en mode lecture",
@@ -1017,5 +1019,28 @@
     "TIDY5E.Vehicle.Passenger.EmptyState": "Glissez-déposez les passagers ici ou cliquez pour les ajouter.",
     "TIDY5E.Vehicle.Equipment.HP.Label": "Avg. PV",
     "TIDY5E.CharacterTraits.IgnoredDifficultTerrain": "Ignorer {value}",
-    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorer tous les terrains difficiles"
+    "TIDY5E.CharacterTraits.IgnoreAllDifficultTerrain": "Ignorer tous les terrains difficiles",
+    "TIDY5E.SectionOrganization": "Organisation de la section",
+    "TIDY5E.AutomaticallyIncludeUsableItems": "Inclure automatiquement les éléments utilisables",
+    "TIDY5E.GenericDefaultPrefix": "Par défaut: {value}",
+    "TIDY5E.Settings.CharacterSheetTabSectionOrganization": {
+        "name": "Organisation de la section Onglet Fiche de personnage",
+        "hint": "Détermine comment les sections doivent être organisées par défaut dans l'onglet Fiche de personnage.",
+        "option.action": "Regrouper par économie d'action",
+        "option.origin": "Regrouper par type d'élément ou de fonctionnalité"
+    },
+    "TIDY5E.Settings.CharacterSheetTabAutomaticallyIncludeUsableItems": {
+        "name": "Onglet Fiche de personnage : inclure automatiquement les objets utilisables",
+        "hint": "Inclure automatiquement tous les objets, sorts et fonctionnalités actuellement utilisables dans l'onglet de la fiche."
+    },
+    "TIDY5E.Utilities.HideSheetPins": "Masquer les épingles de la fiche",
+    "TIDY5E.Drakkenheim": {
+        "Contamination": {
+            "rollSave": "Jet de sauvegarde de contamination",
+            "rollMutation": "Jet de Mutation",
+            "rolledMutation": "{name} a subi une mutation avec un niveau de contamination de {level}.",
+            "clear": "Éliminer la contamination",
+            "none": "Aucune contamination ni symptômes."
+        }
+    }
 }
