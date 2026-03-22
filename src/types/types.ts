@@ -308,7 +308,6 @@ export type CharacterItemContext = {
   group?: string;
   hasRecharge?: boolean;
   hasUses?: boolean;
-  isStack?: boolean;
   linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   save?: ItemSaveContext;
@@ -330,7 +329,6 @@ export type CharacterItemQuadroneContext = {
   group?: string;
   hasRecharge?: boolean;
   hasUses?: boolean;
-  isStack?: boolean;
   needsSubclass?: boolean;
   save?: ItemSaveContext;
   toHit?: number | null;
@@ -530,7 +528,6 @@ export type NpcItemContext = {
   containerContents?: ContainerContents;
   hasRecharge?: boolean;
   hasUses?: boolean;
-  isStack?: boolean;
   linkedUses?: LinkedUses;
   needsSubclass?: boolean;
   parent?: Item5e;
@@ -548,7 +545,6 @@ export type NpcItemQuadroneContext = {
   concentration?: boolean;
   hasRecharge?: boolean;
   hasUses?: boolean;
-  isStack?: boolean;
   needsSubclass?: boolean;
   parent?: Item5e;
   save?: ItemSaveContext;

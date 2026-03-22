@@ -112,7 +112,6 @@ export interface GroupItemContext {
   canToggle?: false;
   containerContents?: ContainerContents;
   hasUses?: boolean;
-  isStack?: boolean;
   save?: ItemSaveContext;
   toHit?: number | null;
   totalWeight?: number;

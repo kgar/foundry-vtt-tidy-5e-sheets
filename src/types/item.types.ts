@@ -303,7 +303,6 @@ export type ContainerItemContext = {
   attunement?: AttunementContext;
   containerContents?: ContainerContents;
   favoriteId?: string;
-  isStack?: boolean;
   totalWeight?: number;
   includeInCharacterSheetTab?: boolean;
 };
