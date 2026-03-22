@@ -11,7 +11,8 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { CONSTANTS } from 'src/constants';
 import SectionActions from 'src/features/sections/SectionActions';
 
-export class ActorInventoryPreparer {
+/** Prepares the root-level inventory sections of an actor. */
+export class ActorRootInventoryPreparer {
   context: ActorSheetQuadroneContext;
   inventoryTypes: string[];
   inventory: ActorInventoryTypes;
@@ -30,7 +31,10 @@ export class ActorInventoryPreparer {
   }
 
   isEligible(item: Item5e) {
-    return this.inventoryTypes.includes(item.type);
+    return (
+      this.inventoryTypes.includes(item.type) &&
+      !this.context.actor.items.get(item.system.container)
+    );
   }
 
   processItem(item: Item5e) {

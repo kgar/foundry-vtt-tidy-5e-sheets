@@ -44,7 +44,7 @@ export class Container {
         abbr:
           CONFIG.DND5E.currencies[key as keyof typeof CONFIG.DND5E.currencies]
             ?.abbreviation ?? key,
-      })
+      }),
     );
 
     return {
@@ -58,7 +58,7 @@ export class Container {
 
   static async getContainerItemContext(
     container: Item5e,
-    context: ContainerContentsRowActionsContext
+    context: ContainerContentsRowActionsContext,
   ): Promise<Record<string, ContainerItemContext>> {
     const itemContext: Record<string, ContainerItemContext> = {};
 
@@ -74,27 +74,26 @@ export class Container {
     for (const item of containerValues) {
       const ctx = (itemContext[item.id] ??= {});
       ctx.totalWeight = (await item.system.totalWeight).toNearest(0.1);
-      ctx.isStack = item.system.quantity > 1;
       ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
       if (favorites) {
         const relativeUuid = item.getRelativeUUID(container.actor);
         // TODO: Determine if this looped array traversal is going to be an issue; if so, consider passing in a context object with a favorites map.
         ctx.favoriteId = item.actor.system.favorites?.find(
-          (f: CharacterFavorite) => f.id === relativeUuid
+          (f: CharacterFavorite) => f.id === relativeUuid,
         )?.id;
       }
 
       if (item.type === CONSTANTS.ITEM_TYPE_CONTAINER) {
         ctx.containerContents = await Container.getContainerContents(
           item,
-          context
+          context,
         );
       }
 
       ctx.activities = Activities.getVisibleActivities(
         item,
-        item.system.activities
+        item.system.activities,
       )?.map(Activities.getActivityItemContext);
 
       ctx.includeInCharacterSheetTab =
@@ -163,17 +162,17 @@ export class Container {
   }
 
   static async computeCapacity(
-    container: Item5e
+    container: Item5e,
   ): Promise<ContainerCapacityContext> {
     const context = await container.system.computeCapacity();
 
     context.units = container.system.capacity.count
       ? FoundryAdapter.localize('DND5E.Items')
       : container.system.capacity.weight.value
-      ? CONFIG.DND5E.weightUnits[container.system.capacity.weight.units]
-          ?.abbreviation ?? container.system.capacity.weight.units
-      // TODO: someday deal with volume; currently, the system has no answer for volume tracking. You can set a max volume amount, but no items track how much volume they take up.
-      : undefined;
+        ? (CONFIG.DND5E.weightUnits[container.system.capacity.weight.units]
+            ?.abbreviation ?? container.system.capacity.weight.units)
+        : // TODO: someday deal with volume; currently, the system has no answer for volume tracking. You can set a max volume amount, but no items track how much volume they take up.
+          undefined;
 
     return context;
   }

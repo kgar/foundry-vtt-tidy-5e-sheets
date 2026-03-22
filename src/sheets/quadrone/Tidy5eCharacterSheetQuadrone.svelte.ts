@@ -42,9 +42,7 @@ import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentShee
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { Inventory } from 'src/features/sections/Inventory';
-import { Activities } from 'src/features/activities/activities';
 import { ItemContext } from 'src/features/item/ItemContext';
-import { Container } from 'src/features/containers/Container';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import SectionActions from 'src/features/sections/SectionActions';
 import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -64,7 +62,7 @@ import {
 import { TidyHooks } from 'src/foundry/TidyHooks';
 import MenuButton from 'src/components/table-quadrone/table-buttons/MenuButton.svelte';
 import CharacterSheetTabToggleButton from 'src/components/table-quadrone/table-buttons/CharacterSheetTabToggleButton.svelte';
-import { ActorInventoryPreparer } from '../organize-me/InventoryPreparer';
+import { ActorRootInventoryPreparer } from '../organize-me/InventoryPreparer';
 
 export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<CharacterSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -773,20 +771,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       },
     );
 
-    const inventoryPreparer = new ActorInventoryPreparer(context);
-
-    // const inventoryRowActions = TableRowActionsRuntime.getInventoryRowActions(
-    //   context,
-    //   { hasActionsTab: true },
-    // );
-
-    // // Categorize items as inventory, spellbook, features, and classes
-    // const inventory: ActorInventoryTypes =
-    //   Inventory.getDefaultInventorySections({
-    //     rowActions: inventoryRowActions,
-    //   });
-
-    const inventoryTypes = Inventory.getInventoryTypes();
+    const inventoryPreparer = new ActorRootInventoryPreparer(context);
 
     const inclusionMode = this.getSheetTabInclusionMode();
     const sheetTabOrganization = this.getSheetTabSectionOrganization();
@@ -802,19 +787,14 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
         // Suppress riders for disabled enchantments
         if (item.dependentOrigin?.active === false) {
           return;
-        } else if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
-          // TODO: Spell
-        } else if (item.type === CONSTANTS.ITEM_TYPE_CLASS) {
-          // TODO: Class
-        } else if (item.type === CONSTANTS.ITEM_TYPE_SUBCLASS) {
-          // TODO: Subclass
-        } else if (item.type === CONSTANTS.ITEM_TYPE_FACILITY) {
-          // TODO: Facility
-        } else if (inventoryPreparer.isEligible(item)) {
-          inventoryPreparer.processItem(item);
-        } else if (SheetSections.showInFeatures(item)) {
-          // TODO: Feat
         }
+        // TODO: Send the item through every preparer. This enables action / origin section Sheet tab partitioning.
+        // ----------------
+        // TODO: Sheet Tab - Actions or Origin Sections
+        // TODO: Spell
+        // TODO: Facility
+        inventoryPreparer.processItem(item);
+        // TODO: Feat
       }),
     );
 
@@ -935,11 +915,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       sheetTabOrganization: 'origin' | 'action';
     },
   ) {
-    const { quantity } = item.system;
+    const ctx: CharacterItemQuadroneContext = (context.itemContext[item.id] =
+      await super._createBaseItemContext(context, item));
 
-    // Item details
-    const ctx: CharacterItemQuadroneContext = (context.itemContext[item.id] ??= {});
-    ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
     ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
     // Item usage
@@ -1009,8 +987,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const speeds = super._getMovementSpeeds();
 
-    const movementSpeeds = speeds.filter((s) => s.key !== 'ignoredDifficultTerrain');
-    const difficultTerrainSpeeds = speeds.filter((s) => s.key === 'ignoredDifficultTerrain');
+    const movementSpeeds = speeds.filter(
+      (s) => s.key !== 'ignoredDifficultTerrain',
+    );
+    const difficultTerrainSpeeds = speeds.filter(
+      (s) => s.key === 'ignoredDifficultTerrain',
+    );
 
     const main = movementSpeeds.slice(0, 2);
     const secondary = [...movementSpeeds.slice(2), ...difficultTerrainSpeeds];
