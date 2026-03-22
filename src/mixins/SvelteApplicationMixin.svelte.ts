@@ -161,44 +161,42 @@ export function SvelteApplicationMixin<
       return element;
     }
 
-    _dragTrackingCleanup?: () => void;
+    _dragTrackingCleanupOnWindowClose?: () => void;
 
     #trackApplicationWindowDrag(element: HTMLElement) {
-      this._dragTrackingCleanup?.();
-      this._dragTrackingCleanup = undefined;
+      this._dragTrackingCleanupOnWindowClose?.();
 
       try {
-        const header =
-          element.querySelector<HTMLElement>('.window-header') ??
-          element.querySelector<HTMLElement>('header') ??
-          element;
-
         let dragging = false;
-        let stopToken = 0;
 
         const startDrag = (ev: PointerEvent) => {
           if (ev?.button != null && ev.button !== 0) return;
 
-          stopToken++;
           dragging = true;
           element.classList.add('tidy-dragging');
         };
 
         const stopDrag = () => {
-          if (!dragging) return;
+          if (!dragging) {
+            return;
+          }
+
           dragging = false;
 
           // Defer class removal so Foundry’s final position updates happen
-          const token = ++stopToken;
           requestAnimationFrame(() => {
             requestAnimationFrame(() => {
-              if (token !== stopToken) return;
               element.classList.remove('tidy-dragging');
             });
           });
         };
 
         const abortController = new AbortController();
+
+        const header =
+          element.querySelector<HTMLElement>('.window-header') ??
+          element.querySelector<HTMLElement>('header') ??
+          element;
 
         header.addEventListener('pointerdown', startDrag, {
           signal: abortController.signal,
@@ -215,7 +213,7 @@ export function SvelteApplicationMixin<
           signal: abortController.signal,
         });
 
-        this._dragTrackingCleanup = () => {
+        this._dragTrackingCleanupOnWindowClose = () => {
           abortController.abort();
           element.classList.remove('tidy-dragging');
         };
@@ -298,7 +296,7 @@ export function SvelteApplicationMixin<
 
     async close(options: ApplicationClosingOptions = {}) {
       this.themeSettingsSubscription?.unsubscribe();
-      this._dragTrackingCleanup?.();
+      this._dragTrackingCleanupOnWindowClose?.();
 
       this._hookSubscriptions.forEach((sub) => Hooks.off(sub.name, sub.id));
       this._hookSubscriptions = [];
