@@ -1094,7 +1094,7 @@ export type ActorItemQuadroneContext = {
   subtitle?: string;
   totalWeight?: number;
   // TODO: Merge more universal item context here before PR
-}
+};
 
 export type ActorSheetQuadroneContext<TSheet = any> = {
   actor: { sheet: TSheet } & Record<string, any>;
@@ -1356,9 +1356,7 @@ export type CharacterSheetQuadroneContext = {
   type: typeof CONSTANTS.SHEET_TYPE_CHARACTER;
 } & SingleActorContext<Tidy5eCharacterSheetQuadrone>;
 
-export type ActionItemInclusionMode =
-  | 'usable-and-flag'
-  | 'flag-only';
+export type ActionItemInclusionMode = 'usable-and-flag' | 'flag-only';
 
 export type NpcSheetQuadroneContext = {
   background?: ActorTraitItemContext;
@@ -1507,6 +1505,19 @@ export type GroupSkillRollProcessConfiguration = {
   ability: string;
   event: Event;
   // members?: Set<string>; 🤞 https://github.com/foundryvtt/dnd5e/issues/6165
+};
+
+export type SkillToolRollProcessConfiguration = {
+  ability: string;
+  bonus: string;
+  item: Item5e;
+  skill: string;
+  tool: string;
+  page: TravelPaceConfig;
+} & D20RollProcessConfiguration;
+
+type D20RollProcessConfiguration = {
+  // TODO: Type this out if it's actually needed at some point.
 };
 
 export type GroupSheetQuadroneContext = {

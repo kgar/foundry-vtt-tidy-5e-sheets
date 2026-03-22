@@ -248,6 +248,8 @@ Hooks.once('ready', async () => {
   ThemeQuadrone.onReady();
 
   TidyNotificationsManager.onReady();
+
+  registerCustomTidyRollRequests();
 });
 
 Hooks.once('setup', async () => {
@@ -265,6 +267,53 @@ Hooks.once('setup', async () => {
     )
     .join('\n\n');
 });
+
+function registerCustomTidyRollRequests() {
+  CONFIG.DND5E.requests[CONSTANTS.ROLL_REQUEST_TOOL_KEY] ??= async (
+    actor,
+    request,
+    config,
+    { event } = {}
+  ) => {
+    const data = {};
+    foundry.utils.setProperty(data, 'flags.dnd5e.requestResult', {
+      actorUuid: actor.uuid,
+      requestId: request.id,
+    });
+    const [roll] = (await actor.rollToolCheck({ ...config, event }, {}, { data })) ?? [];
+    return roll?.parent ?? null;
+  };
+
+  CONFIG.DND5E.requests[CONSTANTS.ROLL_REQUEST_ABILITY_KEY] ??= async (
+    actor,
+    request,
+    config,
+    { event } = {}
+  ) => {
+    const data = {};
+    foundry.utils.setProperty(data, 'flags.dnd5e.requestResult', {
+      actorUuid: actor.uuid,
+      requestId: request.id,
+    });
+    const [roll] = (await actor.rollAbilityCheck({ ...config, event }, {}, { data })) ?? [];
+    return roll?.parent ?? null;
+  };
+
+  CONFIG.DND5E.requests[CONSTANTS.ROLL_REQUEST_SAVE_KEY] ??= async (
+    actor,
+    request,
+    config,
+    { event } = {}
+  ) => {
+    const data = {};
+    foundry.utils.setProperty(data, 'flags.dnd5e.requestResult', {
+      actorUuid: actor.uuid,
+      requestId: request.id,
+    });
+    const [roll] = (await actor.rollSavingThrow({ ...config, event }, {}, { data })) ?? [];
+    return roll?.parent ?? null;
+  };
+}
 
 function handleMigrationNotification() {
   let tally = SettingsProvider.settings.migrationsConfirmationTally.get();
