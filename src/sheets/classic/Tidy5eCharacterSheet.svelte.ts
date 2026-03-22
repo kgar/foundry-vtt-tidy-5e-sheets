@@ -1002,7 +1002,6 @@ export class Tidy5eCharacterSheet
 
         // Item details
         const ctx = (context.itemContext[item.id] ??= {});
-        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
         // Item usage

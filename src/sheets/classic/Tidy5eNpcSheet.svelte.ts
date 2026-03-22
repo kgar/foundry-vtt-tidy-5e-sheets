@@ -932,7 +932,6 @@ export class Tidy5eNpcSheet
         ctx.linkedUses = Activities.getLinkedUses(item);
 
         ctx.attunement = FoundryAdapter.getAttunementContext(item);
-        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
         ctx.hasUses = uses && uses.max > 0;
         ctx.canToggle = 'equipped' in item.system;
 
