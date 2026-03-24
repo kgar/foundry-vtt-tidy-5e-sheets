@@ -497,6 +497,108 @@
   }
 
 
+  @container actor-sheet (max-width: 34rem) {
+    .tabs-row {
+      > .sidebar-toggle {
+        z-index: 1;
+        background-color: var(--t5e-component-card-darker);
+      }
+    }
+
+    .abilities-container-inner {
+      margin-left: 0;
+    }
+
+    .sheet-header .abilities-container {
+      margin-right: 0;
+    }
+
+    .actor-details-container.flexcol {
+      width: 100%;
+      padding: 4px 8px;
+    }
+
+    .actor-vitals-container {
+      width: calc(100% - 20px);
+    }
+
+    .actor-context-row {
+      .actor-name {
+        margin-left: 0;
+      }
+
+      .actor-subtitle.flexrow {
+        margin-left: 0;
+      }
+    }
+
+    .sidebar.flexcol {
+      position: absolute;
+      height: 100%;
+      background-color: #19191b;
+      z-index: 10;
+      border-right: 1px solid #02020278;
+      box-shadow: 6px 6px #0000002e;
+    }
+
+    .tabs-row .tidy-tabs.actor-tabs {
+      justify-content: flex-start;
+      gap: var(--t5e-size-3x);
+      padding-inline-start: 2.5rem;
+
+      > .tab-option {
+        padding: 0.375rem 0.2rem;
+      }
+    }
+
+    .sheet-header {
+      .sheet-header-content {
+        flex-direction: column;
+
+        .actor-vitals-container {
+          order: -1;
+          max-width: 100%;
+          padding-bottom: 0;
+          margin-left: 0;
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          gap: var(--t5e-size-2x);
+
+          .actor-image {
+            min-width: 3.63rem;
+            max-width: 3.63rem;
+            max-height: 3.63rem;
+
+            img {
+              height: 3.63rem;
+              width: 3.63rem;
+              border-radius: 2px;
+            }
+          }
+
+          .actor-vitals {
+            position: relative;
+            bottom: auto;
+            flex: 1;
+            margin-top: 0;
+            width: auto;
+          }
+        }
+
+        .actor-details-container {
+          .actor-name {
+            font-size: 2rem;
+          }
+
+          .sheet-header-actions-container {
+            padding-top: 4px;
+          }
+        }
+      }
+    }
+  }
+
   &.theme-dark,
   .theme-dark {
 

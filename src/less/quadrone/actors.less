@@ -1374,6 +1374,13 @@
     }
   }
 
+  // Override: prevent external modules from reversing the inventory tab flex direction on mobile.
+  @media (max-width: 800px) {
+    &.actor.character .tidy-tab.inventory.tidy-tab-contents.active {
+      flex-direction: column;
+    }
+  }
+
   .tidy-tab.inventory {
 
     .inline-content-view .currency-container {
