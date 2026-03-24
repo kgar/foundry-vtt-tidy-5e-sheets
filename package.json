@@ -21,7 +21,7 @@
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
     "@tsconfig/svelte": "^5.0.8",
     "@types/chroma-js": "^3.1.2",
-    "@types/node": "^25.1.0",
+    "@types/node": "^25.5.0",
     "dotenv": "^17.3.1",
     "fs-extra": "^11.3.4",
     "less": "^4.5.1",
