@@ -1,9 +1,13 @@
 .tidy5e-sheet.application:where(.quadrone.character) {
   &:not(.minimized) {
-    min-width: 20rem; /* 320px - mobile friendly */
+    min-width: 23rem; /* 368px - mobile friendly */
   }
 
   .sheet-header {
+
+    .header-collapse-toggle {
+      display: none;
+    }
 
     .show-xp {
       .actor-details-name-row {
@@ -583,6 +587,40 @@
             flex: 1;
             margin-top: 0;
             width: auto;
+          }
+
+          .header-collapse-toggle {
+            display: flex;
+            align-self: center;
+            flex-shrink: 0;
+            color: var(--t5e-color-text-lighter);
+            opacity: 0.7;
+            transition: opacity var(--t5e-transition-default);
+
+            &:hover {
+              opacity: 1;
+            }
+
+            i {
+              transition: transform 0.3s ease;
+            }
+          }
+        }
+
+        .header-collapsible {
+          display: grid;
+          grid-template-rows: 1fr;
+          transition: grid-template-rows 0.3s ease;
+          width: 100%;
+
+          > * {
+            overflow: hidden;
+          }
+        }
+
+        &.header-collapsed {
+          .header-collapsible {
+            grid-template-rows: 0fr;
           }
         }
 

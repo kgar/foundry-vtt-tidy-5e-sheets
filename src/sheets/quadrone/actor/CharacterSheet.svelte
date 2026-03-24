@@ -26,6 +26,7 @@
   let selectedTabId: string = $derived(context.currentTabId);
 
   let sidebarExpanded = $state(true);
+  let headerCollapsed = $state(false);
 
   // When the user changes tabs, check their preference on the new tab and apply expanded state.
   $effect(() => {
@@ -97,7 +98,8 @@
 </script>
 
 <header class="sheet-header flexcol">
-  <div class="sheet-header-content flexrow">
+  <div class={['sheet-header-content flexrow', { 'header-collapsed': headerCollapsed }]}>
+    <div class="header-collapsible">
     <div class="actor-details-container flexcol">
       <div
         class="actor-context-row flexrow {context.enableXp ? 'show-xp' : ''}"
@@ -333,6 +335,7 @@
           {/if}
         </div>
       </AbilitiesContainer>
+    </div>
     </div>
     <div class="actor-vitals-container">
       <!-- TODO: Add switch for size -->
@@ -655,6 +658,15 @@
           {/if}
         </div>
       </div>
+      <button
+        type="button"
+        class="header-collapse-toggle button button-borderless button-icon-only"
+        onclick={() => (headerCollapsed = !headerCollapsed)}
+        aria-label={headerCollapsed ? localize('JOURNAL.ViewExpand') : localize('JOURNAL.ViewCollapse')}
+        data-tooltip={headerCollapsed ? localize('JOURNAL.ViewExpand') : localize('JOURNAL.ViewCollapse')}
+      >
+        <i class={headerCollapsed ? 'fas fa-chevron-down' : 'fas fa-chevron-up'}></i>
+      </button>
     </div>
   </div>
   <div class="tabs-row">
