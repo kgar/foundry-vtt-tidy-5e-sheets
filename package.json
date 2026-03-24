@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.4",
-    "@tsconfig/svelte": "^5.0.6",
+    "@tsconfig/svelte": "^5.0.8",
     "@types/chroma-js": "^3.1.2",
     "@types/node": "^25.1.0",
     "dotenv": "^17.2.3",
