@@ -44,7 +44,7 @@
 
   export async function tryShow(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
-    hoveredSkill: Omit<GroupSkill, 'total'>,
+    hoveredSkill: GroupSkill,
   ): Promise<any> {
     if (!hoveredSkill.members.length) {
       return;
