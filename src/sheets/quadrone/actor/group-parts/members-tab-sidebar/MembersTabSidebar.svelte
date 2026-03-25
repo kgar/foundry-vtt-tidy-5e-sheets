@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getGroupSheetQuadroneContext } from 'src/sheets/sheet-context.svelte';
-  import GroupSkills from './GroupSkillsCard.svelte';
+  import GroupSkills from './GroupSkills.svelte';
   import { getContext } from 'svelte';
   import type { Ref } from 'src/features/reactivity/reactivity.types';
   import { CONSTANTS } from 'src/constants';
@@ -14,6 +14,7 @@
   import GroupToolTooltip from 'src/tooltips/GroupToolTooltip.svelte';
   import GroupTraitTooltip from 'src/tooltips/GroupTraitTooltip.svelte';
   import ActorCustomTraitListEntries from '../../parts/ActorCustomTraitListEntries.svelte';
+  import GroupAbilities from './GroupAbilities.svelte';
 
   let context = $derived(getGroupSheetQuadroneContext());
 
@@ -186,6 +187,9 @@
 
     <!-- Aggregate Skills -->
     <GroupSkills />
+
+    <!-- Aggregate Abilities -->
+    <GroupAbilities />
 
     <!-- Specials -->
     <div class="list-entry traits-specials">
