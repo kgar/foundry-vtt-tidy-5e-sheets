@@ -1447,8 +1447,9 @@ export type MeasurableEmphasizable<TValue> = {
 };
 
 export type GroupSkillModContext = {
-  total: number;
+  mod: number;
   sign: string;
+  /** Absolute value of total as a string. */
   value: string;
 };
 
@@ -1467,6 +1468,28 @@ export type GroupSkill = {
   passive: number;
   reference: string | undefined;
 } & MeasurableEmphasizable<GroupMemberSkillContext>;
+
+export type GroupMemberAbilityContext = {
+  mod: number;
+  modSign: string;
+  /** Absolute value of mod as a string. */
+  modValue: string;
+  proficient: number;
+  save: number;
+  saveSign: string;
+  /** Absolute value of save as a string. */
+  saveValue: string;
+  score: number;
+};
+
+export type GroupAbility = {
+  name: string;
+  key: string;
+  proficient: boolean;
+  high: GroupSkillModContext;
+  low: GroupSkillModContext;
+  save: number;
+} & MeasurableEmphasizable<GroupMemberAbilityContext>;
 
 export type GroupTraitBase<TValue = string> = {
   /** Optional key for traits that leverage keys. */
@@ -1521,6 +1544,7 @@ type D20RollProcessConfiguration = {
 };
 
 export type GroupSheetQuadroneContext = {
+  abilities: GroupAbility[];
   enriched: {
     description: {
       full: string;
