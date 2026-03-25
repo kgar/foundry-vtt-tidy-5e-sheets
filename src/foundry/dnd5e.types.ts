@@ -1,11 +1,15 @@
 /* Actors */
 
 export type RollConfigField = {
-  ability: string;
   roll: {
-    min: number;
-    max: number;
+    min: number | null;
+    max: number | null;
     mode: number;
+    modeCounts: {
+      advantages: { count: number; suppressed: boolean };
+      disadvantages: { count: number; suppressed: boolean };
+      override: boolean | null;
+    };
   };
 };
 
@@ -50,7 +54,43 @@ export type ToolData = {
   total: number;
 };
 
+export type Proficiency = {
+    deterministic: boolean;
+    multiplier: number;
+    rounding: string;
+    _baseProficiency: number;
+    dice: string;
+    flat: number;
+    hasProficiency: boolean;
+    term: string;
+  }
+
+export type AbilityData = {
+  attack: number;
+  bonuses: {
+    check: string;
+    save: string;
+  };
+  check: {
+    roll: RollConfigField;
+  };
+  checkBonus: number;
+  checkProf: Proficiency;
+  dc: number;
+  max: number;
+  mod: number;
+  proficient: number;
+  save: {
+    roll: RollConfigField;
+    value: number;
+  };
+  saveBonus: number;
+  saveProf: Proficiency;
+  value: number;
+};
+
 export type SkillData = {
+  ability: string;
   bonus: number;
   bonuses: {
     check: string;
@@ -61,9 +101,11 @@ export type SkillData = {
   passive: number;
   prof: ActorProficiency;
   proficient: number;
-  total: number; // mod + bonuses
+  roll: RollConfigField;
+  /** mod + bonuses */
+  total: number;
   value: number;
-} & RollConfigField;
+};
 
 export type CharacterFavoriteType =
   | 'activity'
