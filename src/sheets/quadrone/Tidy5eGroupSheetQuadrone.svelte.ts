@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type {
   Actor5e,
   ActorSheetQuadroneContext,
+  GroupAbility,
   GroupMemberQuadroneContext,
   GroupMemberSection,
   GroupMembersQuadroneContext,
@@ -160,6 +161,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   async _prepareMemberDependentContext(
     actorContext: ActorSheetQuadroneContext
   ): Promise<{
+    abilities: GroupAbility[];
     members: GroupMembersQuadroneContext;
     skills: GroupSkill[];
     traits: GroupTraits;
@@ -217,6 +219,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       skilled: [],
     };
 
+    let abilities = this._getMemberGroupAbilityMap();
     let skills = this._getMemberGroupSkillMap();
 
     let languages = new Map<string, MeasurableGroupTrait<number>>();
@@ -308,6 +311,9 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           Tidy5eNpcSheetQuadrone.isImportantNpc(actor));
 
       if (prepareCreatureInformation) {
+        // Abilities
+        this._prepareMemberAbilities(actor, abilities);
+
         // Skills
         skilled.get(actor.type)?.push(groupMemberContext);
         this._prepareMemberSkills(actor, skills);
@@ -353,6 +359,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
       }, [])
     );
 
+    let groupAbilities = [...abilities.values()];
     let groupSkills = [...skills.values()].toSorted((a, b) =>
       a.name.localeCompare(b.name, game.i18n.lang)
     );
@@ -360,6 +367,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     membersContext.sections = [...sections.values()];
 
     return {
+      abilities: groupAbilities,
       members: membersContext,
       skills: groupSkills,
       traits: {
@@ -512,7 +520,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
     return false;
   }
 
-  onRollAbility(options: { ability: string }) {
+  onRollAbility(options: { ability: string; event: Event }) {
     // TODO: Supply hook for overriding
 
     this.rollAbility(options);

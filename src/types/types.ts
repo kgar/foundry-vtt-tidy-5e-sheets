@@ -1446,8 +1446,9 @@ export type MeasurableEmphasizable<TValue> = {
   identifiers: Map<string, TValue>;
 };
 
+// TODO: are these even being used? If not, trash em. Else, make separate one for abilities
 export type GroupSkillModContext = {
-  mod: number;
+  total: number;
   sign: string;
   /** Absolute value of total as a string. */
   value: string;
