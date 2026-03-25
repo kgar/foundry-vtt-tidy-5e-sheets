@@ -129,6 +129,25 @@
     gap: 0.25rem;
   }
 
+  .group-ability-grid {
+    display: grid;
+    grid-template-columns: repeat(6, min-content);
+    gap: 0.25rem;
+    align-items: center;
+
+    li {
+      display: contents;
+    }
+
+    .proficiency-pip-container {
+      text-align: center;
+
+      i { 
+        margin: 0.125rem 0; 
+      }
+    }
+  }
+
   .group-skill-grid {
     display: grid;
     grid-template-columns: 1.5rem 9rem 2.25rem 2.25rem 2.5rem;
