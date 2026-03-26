@@ -247,6 +247,12 @@ export const CONSTANTS = {
   /** The attribute which indicates a particular part of a sheet. */
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
+    /** The container for one ability's information and potentially interactive elements. */
+    ABILITY_CONTAINER: 'abilities-container',
+
+    /** A repeating list of ability information and potentially interactive elements. */
+    ABILITIES_LIST: 'abilities-list',
+        
     /** An interactable control that can open configuration settings for a target ability. */
     ABILITY_CONFIGURATION_CONTROL: 'ability-configuration-control',
 
