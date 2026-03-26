@@ -15,6 +15,7 @@
   import { untrack } from 'svelte';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
   import AbilitiesContainer from './parts/AbilitiesContainer.svelte';
+  import DeathSavesOverlay from './character-parts/DeathSavesOverlay.svelte';
   import { CONSTANTS } from 'src/constants';
 
   let context = $derived(getCharacterSheetQuadroneContext());
@@ -667,6 +668,11 @@
       >
         <i class={headerCollapsed ? 'fas fa-chevron-down' : 'fas fa-chevron-up'}></i>
       </button>
+      <div class={['death-saves-mobile-accordion', { active: context.showDeathSaves }]}>
+        <div class="death-saves-mobile-inner">
+          {#if context.showDeathSaves} <DeathSavesOverlay /> {/if}
+        </div>
+      </div>
     </div>
   </div>
   <div class="tabs-row">

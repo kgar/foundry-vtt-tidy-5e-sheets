@@ -9,6 +9,10 @@
       display: none;
     }
 
+    .death-saves-mobile-accordion {
+      display: none;
+    }
+
     .show-xp {
       .actor-details-name-row {
         margin-top: var(--t5e-size-1x);
@@ -509,6 +513,7 @@
       }
     }
 
+
     .abilities-container-inner {
       margin-left: 0;
     }
@@ -522,9 +527,7 @@
       padding: 4px 8px;
     }
 
-    .actor-vitals-container {
-      width: calc(100% - 20px);
-    }
+    
 
     .actor-context-row {
       .actor-name {
@@ -560,6 +563,7 @@
         flex-direction: column;
 
         .actor-vitals-container {
+          width: calc(100% - 20px);
           order: -1;
           max-width: 100%;
           padding-bottom: 0;
@@ -568,6 +572,10 @@
           flex-direction: row;
           align-items: flex-start;
           gap: var(--t5e-size-2x);
+
+          .death-saves-overlay{
+            display: none;
+          }
 
           .actor-image {
             min-width: 3.63rem;
@@ -621,6 +629,66 @@
         &.header-collapsed {
           .header-collapsible {
             grid-template-rows: 0fr;
+          }
+        }
+
+        .death-saves-mobile-accordion {
+          order: -1;
+          display: grid;
+          grid-template-rows: 0fr;
+          transition: grid-template-rows 0.3s ease;
+          width: 100%;
+          flex-basis: 100%;
+
+          > * {
+            overflow: hidden;
+          }
+
+          &.active {
+            grid-template-rows: 1fr;
+          }
+
+          .death-saves-mobile-inner {
+            .death-saves-overlay {
+              position: relative;
+              top: auto;
+              left: auto;
+              right: auto;
+              bottom: auto;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: center;
+              padding: var(--t5e-size-1x) 0;
+
+              .failures,
+              .successes {
+                position: relative;
+                top: auto;
+                transform: none;
+                flex-direction: row;
+                gap: var(--t5e-size-1x);
+              }
+
+              .death-save-roll-button {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                // opacity: 1;
+                // animation: none;
+                margin: 0 12px;
+
+                i {
+                  font-size: 1.75rem;
+                }
+              }
+
+              &:hover .death-save-roll-button {
+                // opacity: 1;
+                // animation: none;
+              }
+            }
           }
         }
 
