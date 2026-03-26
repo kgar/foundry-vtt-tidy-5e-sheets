@@ -5547,4 +5547,5 @@ type WeightUnitConfig = {
 
 type WeaponMasteryConfig = {
   label: string;
+  reference: string | undefined;
 }
