@@ -119,9 +119,9 @@
       {
         "id": "dnd5e",
         "compatibility": {
-          "minimum": "5.2.0",
-          "verified": "5.2.0",
-          "maximum": "5.2.x"
+          "minimum": "5.3.0",
+          "verified": "5.3.0",
+          "maximum": "5.3.x"
         }
       }
     ],

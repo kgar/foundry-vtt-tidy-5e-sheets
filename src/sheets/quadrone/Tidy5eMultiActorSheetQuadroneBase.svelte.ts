@@ -300,7 +300,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
       let units = unitsConfig?.abbreviation ?? unitsKey;
 
-      Object.entries(actor.system.attributes.senses ?? {}).forEach(
+      Object.entries(actor.system.attributes.senses.ranges ?? {}).forEach(
         ([key, sense]) => {
           const label = CONFIG.DND5E.senses[key];
           if (typeof sense !== 'number' || sense === 0 || !label) {

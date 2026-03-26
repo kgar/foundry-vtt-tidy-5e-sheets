@@ -954,7 +954,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const senses = Object.entries(CONFIG.DND5E.senses).reduce<
         ActorSpeedSenseEntryContext[]
       >((acc, [key, label]) => {
-        const value = senseConfig[key];
+        const value = senseConfig.ranges[key];
 
         if (!value || value === 0) {
           return acc;

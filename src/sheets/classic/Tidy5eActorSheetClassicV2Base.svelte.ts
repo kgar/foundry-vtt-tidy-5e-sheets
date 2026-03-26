@@ -427,7 +427,7 @@ export function Tidy5eActorSheetClassicV2Base<
       const tags: Record<string, string> = {};
       const units = senses.units ?? dnd5e.utils.defaultUnits('length');
       for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
-        const v = senses[k] ?? 0;
+        const v = senses.ranges[k] ?? 0;
         if (v === 0) continue;
         tags[k] = `${game.i18n.localize(label)} ${dnd5e.utils.formatLength(
           v,
