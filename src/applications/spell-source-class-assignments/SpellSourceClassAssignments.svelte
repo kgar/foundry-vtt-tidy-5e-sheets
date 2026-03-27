@@ -36,16 +36,16 @@
 
   let classColumns = $derived(
     Object.entries<Item5e>(context.actor.spellcastingClasses).map(
-      ([key, value]) => ({
-        key: key,
+      ([identifier, value]) => ({
+        identifier: `${CONSTANTS.ITEM_TYPE_CLASS}:${identifier}`,
         item: value,
       }),
     ),
   );
 
-  async function setItemSourceClass(item: Item5e, sourceClass: string) {
+  async function setSourceItem(item: Item5e, identifier: string) {
     await item.update({
-      'system.sourceClass': sourceClass,
+      'system.sourceItem': identifier,
     });
   }
 
@@ -101,7 +101,7 @@
       {#snippet body()}
         {#each context.assignments as assignment (assignment.item.id)}
           {@const sourceClassIsUnassigned =
-            (assignment.item.system.sourceClass?.trim() ?? '') === ''}
+            (assignment.item.system.sourceItem?.trim() ?? '') === ''}
           {@const hideRow =
             !visibleSelectablesIdSubset.has(assignment.item.id) ||
             (showUnassignedOnly && !sourceClassIsUnassigned)}
@@ -118,14 +118,14 @@
             </TidyTableCell>
             {#each classColumns as classColumn}
               {@const selected =
-                assignment.item.system.sourceClass === classColumn.key}
+                assignment.item.system.sourceItem === classColumn.identifier}
               <TidyTableCell columnWidth="8rem">
                 <FieldToggle
                   checked={selected}
                   onchange={(ev) =>
-                    setItemSourceClass(
+                    setSourceItem(
                       assignment.item,
-                      ev.currentTarget.checked ? classColumn.key : '',
+                      ev.currentTarget.checked ? classColumn.identifier : '',
                     )}
                 />
               </TidyTableCell>
@@ -134,9 +134,9 @@
               <TextInput
                 document={assignment.item}
                 disabled={!assignment.item.isOwner}
-                field="system.sourceClass"
+                field="system.sourceItem"
                 selectOnFocus={true}
-                value={assignment.item.system.sourceClass}
+                value={assignment.item.system.sourceItem}
               />
             </TidyTableCell>
           </TidyTableRow>

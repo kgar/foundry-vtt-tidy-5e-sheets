@@ -17,9 +17,9 @@ export type SpellSourceClassAssignment = {
    */
   item: Item5e;
   /**
-   * Represents the chosen source class.
+   * Represents the chosen source item. Always a class in this context.
    */
-  sourceClass: string;
+  sourceItem: string;
 };
 
 export type SpellSourceClassAssignmentsContext = {
@@ -73,14 +73,21 @@ export default class SpellSourceClassAssignmentsFormApplication extends Document
     return {
       actor: this.document,
       assignments: this.document.items
-        .filter(
-          (item: Item5e) =>
+        .filter((item: Item5e) => {
+          const sourceItemLocked =
+            item.system.sourceItem &&
+            this.document.identifiedItems.get(item.system.sourceItem)?.first()
+              ?.type !== CONSTANTS.ITEM_TYPE_CLASS;
+
+          return (
+            !sourceItemLocked &&
             item.type === CONSTANTS.ITEM_TYPE_SPELL &&
             !item.system.linkedActivity
-        )
+          );
+        })
         .map((item: Item5e) => ({
           item,
-          sourceClass: 'test',
+          sourceItem: 'test',
         })),
     };
   }

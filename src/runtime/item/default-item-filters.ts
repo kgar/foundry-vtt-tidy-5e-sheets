@@ -159,7 +159,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
 } as const satisfies Record<string, ItemFilter>;
 
 export function getSourceClassFilterName(classIdentifier: string) {
-  return `source-class-${classIdentifier}`;
+  return `source-class-${classIdentifier.replaceAll(':', '-')}`;
 }
 
 export function getItemRarityFilters(): ItemFilter[] {
@@ -178,10 +178,11 @@ export function getItemRarityFilters(): ItemFilter[] {
 
 export function getSourceClassFilters(actor: Actor5e): ItemFilter[] {
   return Object.entries<Item5e>(actor.spellcastingClasses).map(
-    ([key, item]) => {
+    ([identifier, item]) => {
+      const typedIdentifier = `${CONSTANTS.ITEM_TYPE_CLASS}:${identifier}`;
       return {
-        name: getSourceClassFilterName(key),
-        predicate: (item) => item.system.sourceClass === key,
+        name: getSourceClassFilterName(typedIdentifier),
+        predicate: (item) => item.system.sourceItem === typedIdentifier,
         text:
           item.system.spellcasting.progression === item.spellcasting.progression
             ? item.name

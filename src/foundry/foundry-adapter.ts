@@ -502,11 +502,13 @@ export const FoundryAdapter = {
       return spell.img;
     }
 
-    const sourceClass = spell.system.sourceClass;
+    const identifier = spell.system.sourceItem?.substring(
+      spell.system.sourceItem?.indexOf(':') + 1,
+    );
 
     const classImage =
-      sourceClass && 'actorClassesToImages' in context
-        ? context.actorClassesToImages[sourceClass]
+      identifier && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[identifier]
         : undefined;
 
     return classImage ?? spell.img;
@@ -1431,7 +1433,7 @@ export const FoundryAdapter = {
   },
   getFilteredClass(actor: Actor5e): Item5e | undefined {
     const classSpellbookFilter = actor.sheet.classSpellbookFilter;
-    return actor.classes?.[classSpellbookFilter];
+    return actor.identifiedItems.get(classSpellbookFilter)?.first();
   },
   getSpellcastingInfo(actor: Actor5e): SpellcastingInfo {
     const currentFilteredClass =

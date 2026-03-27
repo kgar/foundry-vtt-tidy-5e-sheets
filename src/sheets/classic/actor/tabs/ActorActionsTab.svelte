@@ -171,9 +171,9 @@
                     useActiveEffectsMarker={false}
                   >
                     {@const sourceClassText =
-                      context.actor.spellcastingClasses?.[
-                        actionItem.item.system.sourceClass
-                      ]?.name ?? ''}
+                      context.actor.identifiedItems?.[
+                        actionItem.item.system.sourceItem
+                      ]?.first()?.name ?? ''}
                     <div class="flex-1 min-width-0">
                       <div
                         data-tidy-item-name={actionItem.item.name}
