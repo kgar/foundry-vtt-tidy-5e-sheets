@@ -473,6 +473,8 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       canPrepare: undefined,
       spellcastingMethods: [],
 
+      ...this._getSourceItemContext(),
+
       ...documentSheetContext,
     };
 
@@ -854,6 +856,42 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     }
 
     return undefined;
+  }
+
+  _getSourceItemContext(): {
+    sourceItemOptions: { text: string; value: string }[];
+    sourceItemLocked: boolean;
+  } {
+    const actor = this.document.actor;
+
+    if (!actor) {
+      return {
+        sourceItemLocked: true,
+        sourceItemOptions: [],
+      };
+    }
+
+    const sourceItemValue = this.document.system.sourceItem;
+    const sourceItem = actor.identifiedItems.get(sourceItemValue)?.first();
+    const sourceItemLocked =
+      sourceItem && sourceItem.type !== CONSTANTS.ITEM_TYPE_CLASS;
+
+    return {
+      sourceItemLocked,
+      sourceItemOptions: sourceItemLocked
+        ? [
+            {
+              text: sourceItem.name,
+              value: sourceItemValue,
+            },
+          ]
+        : Object.entries<Item5e>(actor.spellcastingClasses).map(
+            ([identifier, item]) => ({
+              text: item.name,
+              value: `${item.type}:${identifier}`,
+            }),
+          ),
+    };
   }
 
   static ShouldShowAc(item: Item5e) {

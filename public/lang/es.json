@@ -614,10 +614,6 @@
             "sectionTitle": "Vínculos, ideales y defectos de los NPC",
             "selectionDialogTitle": "Migración: vínculos, ideales y defectos de los NPC con el sistema"
         },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Clase de hechizo a clase de origen",
-            "selectionDialogTitle": "Migración: Clase de hechizo a clase de origen"
-        },
         "NpcExhaustion": {
             "selectionDialogTitle": "Migración: NPC Exhaustion a Sistema",
             "sectionTitle": "NPC Exhaustion"
@@ -751,9 +747,9 @@
     "TIDY5E.SpellSourceIdentifierLabelHint": "El actor que tiene este hechizo no tiene la clase de origen que se especifica aquí.",
     "TIDY5E.Utilities.Tools": "Herramientas",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Asignar hechizos a las clases",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificador de clase de origen",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "Identificador de clase de origen",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "Aquí aparece el identificador de clase de origen del hechizo. Para asignar un identificador que no posea el personaje, introduce el identificador de clase en este campo de texto.",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "Mostrar solo los sin asignar",
     "TIDY5E.PreviewSheetImageHint": "Click Izquierdo: Vista Previa de la Imagen",
     "TIDY5E.NoSpecialSenses": "Sin Sentidos Especiales",
     "TIDY5E.Group.ShowMemberTabInfoPanel": "Mostrar Panel de Información",

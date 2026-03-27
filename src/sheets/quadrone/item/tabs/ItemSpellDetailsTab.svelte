@@ -159,15 +159,20 @@
   <!-- Source Class -->
   {#if context.isEmbedded}
     <FormGroup
-      labelFor="{appId}-sourceClass"
+      labelFor="{appId}-sourceItem"
       document={context.document}
-      field={context.fields.sourceClass}
+      field={context.fields.sourceItem}
       config={{
-        id: `${appId}-sourceClass`,
-        value: context.source.sourceClass,
+        id: `${appId}-sourceItem`,
+        value: context.source.sourceItem,
+        disabled: context.sourceItemLocked,
       }}
-      labelAttr="name"
-      choices={context.document.parent.spellcastingClasses}
+      labelAttr="text"
+      valueAttr="value"
+      choices={context.sourceItemOptions}
+      hint={context.sourceItemLocked
+        ? 'DND5E.SourceItem.LockedHint'
+        : undefined}
     />
 
     <FormGroup
@@ -180,16 +185,6 @@
       }}
       blankLabel={context.defaultAbility}
       choices={context.config.abilities}
-    />
-  {:else}
-    <FormGroup
-      labelFor="{appId}-sourceClass"
-      document={context.document}
-      field={context.fields.sourceClass}
-      config={{
-        id: `${appId}-sourceClass`,
-        value: context.source.sourceClass,
-      }}
     />
   {/if}
 </fieldset>

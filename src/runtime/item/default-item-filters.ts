@@ -158,7 +158,7 @@ export const defaultItemFilters: Record<string, ItemFilter> = {
   },
 } as const satisfies Record<string, ItemFilter>;
 
-export function getSourceClassFilterName(classIdentifier: string) {
+export function getSourceItemFilterName(classIdentifier: string) {
   return `source-class-${classIdentifier.replaceAll(':', '-')}`;
 }
 
@@ -176,21 +176,35 @@ export function getItemRarityFilters(): ItemFilter[] {
   );
 }
 
-export function getSourceClassFilters(actor: Actor5e): ItemFilter[] {
-  return Object.entries<Item5e>(actor.spellcastingClasses).map(
-    ([identifier, item]) => {
-      const typedIdentifier = `${CONSTANTS.ITEM_TYPE_CLASS}:${identifier}`;
-      return {
-        name: getSourceClassFilterName(typedIdentifier),
-        predicate: (item) => item.system.sourceItem === typedIdentifier,
-        text:
-          item.system.spellcasting.progression === item.spellcasting.progression
-            ? item.name
-            : item.subclass?.name,
-      };
-    }
+export function getSourceItemFilters(actor: Actor5e): ItemFilter[] {
+  const filters = actor.itemTypes.spell.reduce(
+    (map: Map<string, ItemFilter>, spell: Item5e) => {
+      const sourceItem = actor.identifiedItems
+        .get(spell.system.sourceItem)
+        ?.first();
+
+      if (sourceItem && !map.has(spell.system.sourceItem)) {
+        map.set(spell.system.sourceItem, {
+          name: sourceItem.name,
+          predicate: (item: Item5e) =>
+            item.system.sourceItem === spell.system.sourceItem,
+          text:
+            spell.type !== CONSTANTS.ITEM_TYPE_CLASS
+              ? sourceItem.name
+              : spell.system.spellcasting.progression ===
+                  spell.spellcasting.progression
+                ? spell.name
+                : spell.subclass?.name,
+        });
+      }
+      return map;
+    },
+    new Map<string, ItemFilter>(),
   );
+
+  return [...filters.values()];
 }
+
 
 export function getItemRarityFiltersAsObject(): Record<string, ItemFilter> {
   return getItemRarityFilters().reduce<Record<string, ItemFilter>>(

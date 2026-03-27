@@ -1,5 +1,5 @@
 import { mount } from 'svelte';
-import AssignSpellsToSourceClasses from './SpellSourceClassAssignments.svelte';
+import AssignSpellsToSourceItems from './SpellSourceItemAssignments.svelte';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { CONSTANTS } from 'src/constants';
@@ -11,7 +11,7 @@ import type {
 } from 'src/types/application.types';
 import { DocumentSheetDialog } from 'src/applications-quadrone/DocumentSheetDialog.svelte';
 
-export type SpellSourceClassAssignment = {
+export type SpellSourceItemAssignment = {
   /**
    * The spell to receive an assignment.
    */
@@ -22,17 +22,17 @@ export type SpellSourceClassAssignment = {
   sourceItem: string;
 };
 
-export type SpellSourceClassAssignmentsContext = {
+export type SpellSourceItemAssignmentsContext = {
   actor: Actor5e;
-  assignments: SpellSourceClassAssignment[];
+  assignments: SpellSourceItemAssignment[];
 };
 
-export default class SpellSourceClassAssignmentsFormApplication extends DocumentSheetDialog<
+export default class SpellSourceItemAssignmentsFormApplication extends DocumentSheetDialog<
   DocumentSheetApplicationConfiguration,
-  SpellSourceClassAssignmentsContext
+  SpellSourceItemAssignmentsContext
 >() {
   context = new CoarseReactivityProvider<
-    SpellSourceClassAssignmentsContext | undefined
+    SpellSourceItemAssignmentsContext | undefined
   >(undefined);
   updateHook: number | undefined;
 
@@ -60,7 +60,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends Document
   };
 
   _createComponent(node: HTMLElement): Record<string, any> {
-    return mount(AssignSpellsToSourceClasses, {
+    return mount(AssignSpellsToSourceItems, {
       target: node,
       context: new Map<any, any>([
         ['appId', this.appId],
@@ -69,7 +69,7 @@ export default class SpellSourceClassAssignmentsFormApplication extends Document
     });
   }
 
-  async _prepareContext(): Promise<SpellSourceClassAssignmentsContext> {
+  async _prepareContext(): Promise<SpellSourceItemAssignmentsContext> {
     return {
       actor: this.document,
       assignments: this.document.items

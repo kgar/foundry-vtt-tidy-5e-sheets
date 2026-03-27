@@ -18,7 +18,7 @@
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
-  import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
+  import SpellSourceItemAssignmentsFormApplication from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
   import {
     createSearchResultsState,
     setSearchResultsContext,
@@ -101,7 +101,7 @@
   >
     <ButtonMenuCommand
       onMenuClick={() => {
-        new SpellSourceClassAssignmentsFormApplication({
+        new SpellSourceItemAssignmentsFormApplication({
           document: context.actor,
         }).render({ force: true });
       }}

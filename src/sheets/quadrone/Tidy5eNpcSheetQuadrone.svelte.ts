@@ -532,7 +532,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       ctx.subtitle = [
         linked
           ? linked.name
-          : this.actor.classes[item.system.sourceClass]?.name,
+          : this.actor.identifiedItems.get(item.system.sourceItem)?.first()
+              ?.name,
         vsmcr,
       ].filterJoin(' &bull; ');
     }

@@ -17,7 +17,7 @@
   } from 'src/features/search/search.svelte';
   import type { SectionOptionGroup } from 'src/applications-quadrone/configure-sections/ConfigureSectionsApplication.svelte';
   import ActorSpellbookFooter from '../parts/ActorSpellbookFooter.svelte';
-  import SpellSourceClassAssignmentsFormApplication from 'src/applications/spell-source-class-assignments/SpellSourceClassAssignmentsFormApplication.svelte';
+  import SpellSourceItemAssignmentsFormApplication from 'src/applications/spell-source-item-assignments/SpellSourceItemAssignmentsFormApplication.svelte';
   import SheetPins from '../../shared/SheetPins.svelte';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { UserSheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
@@ -103,7 +103,7 @@
           icon: 'fa-solid fa-list-check',
           label: 'TIDY5E.Utilities.AssignSpellsToClasses',
           onclick: (ev, doc) =>
-            new SpellSourceClassAssignmentsFormApplication({
+            new SpellSourceItemAssignmentsFormApplication({
               document: context.actor,
             }).render({ force: true }),
         },

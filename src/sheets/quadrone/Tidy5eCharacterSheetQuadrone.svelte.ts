@@ -793,8 +793,9 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
           const { quantity } = item.system;
 
           // Item details
-          const ctx: CharacterItemQuadroneContext = (context.itemContext[item.id] ??=
-            {});
+          const ctx: CharacterItemQuadroneContext = (context.itemContext[
+            item.id
+          ] ??= {});
           ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
           ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
@@ -977,7 +978,8 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       context.subtitle = context.actionSubtitle = [
         linked
           ? linked.name
-          : this.actor.classes[item.system.sourceClass]?.name,
+          : this.actor.identifiedItems.get(item.system.sourceItem)?.first()
+              ?.name,
         vsmcr,
       ].filterJoin(' &bull; ');
     } else if (Inventory.isItemInventoryType(item)) {
@@ -1013,8 +1015,12 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
   _getCharacterMovementSpeeds(): CharacterSpeedSenseContext {
     const speeds = super._getMovementSpeeds();
 
-    const movementSpeeds = speeds.filter((s) => s.key !== 'ignoredDifficultTerrain');
-    const difficultTerrainSpeeds = speeds.filter((s) => s.key === 'ignoredDifficultTerrain');
+    const movementSpeeds = speeds.filter(
+      (s) => s.key !== 'ignoredDifficultTerrain',
+    );
+    const difficultTerrainSpeeds = speeds.filter(
+      (s) => s.key === 'ignoredDifficultTerrain',
+    );
 
     const main = movementSpeeds.slice(0, 2);
     const secondary = [...movementSpeeds.slice(2), ...difficultTerrainSpeeds];

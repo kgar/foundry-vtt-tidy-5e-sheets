@@ -443,10 +443,6 @@
             "selectionDialogTitle": "",
             "sectionTitle": ""
         },
-        "SpellClassToSourceClass": {
-            "selectionDialogTitle": "",
-            "sectionTitle": ""
-        },
         "Selection": {
             "TotalSelectedLabel": "",
             "ToMigrate": "",
@@ -615,10 +611,10 @@
     },
     "TIDY5E.ButtonConfirm.Text": "",
     "TIDY5E.Utilities.Tools": "",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "",
     "TIDY5E.Utilities.AssignSpellsToClasses": "",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "",
     "TIDY5E.Inventory.Weight.Text": "",
     "TIDY5E.RangedSpellAttackMod": "",
     "TIDY5E.WorldSettings.TabNpc": {

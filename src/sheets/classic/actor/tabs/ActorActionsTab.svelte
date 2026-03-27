@@ -170,7 +170,7 @@
                     onToggle={() => toggleSummary(context.actor)}
                     useActiveEffectsMarker={false}
                   >
-                    {@const sourceClassText =
+                    {@const sourceItemText =
                       context.actor.identifiedItems?.[
                         actionItem.item.system.sourceItem
                       ]?.first()?.name ?? ''}
@@ -189,14 +189,14 @@
                         {:else if actionItem.item.system.level !== 0}
                           {actionItem.item.labels?.level ?? ''}
                           {actionItem.item.labels?.school ?? ''}
-                          {#if sourceClassText}
-                            • {localize(sourceClassText)}
+                          {#if sourceItemText}
+                            • {localize(sourceItemText)}
                           {/if}
                         {:else}
                           {actionItem.item.labels?.school ?? ''}
                           {actionItem.item.labels?.level ?? ''}
-                          {#if sourceClassText}
-                            • {localize(sourceClassText)}
+                          {#if sourceItemText}
+                            • {localize(sourceItemText)}
                           {/if}
                         {/if}
                       </small>
