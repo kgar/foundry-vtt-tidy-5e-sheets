@@ -195,7 +195,6 @@
             </div>
             <span
               class="item-quantity"
-              class:isStack={item.isStack}
               title={localize('DND5E.Quantity')}
             >
               <TextInput

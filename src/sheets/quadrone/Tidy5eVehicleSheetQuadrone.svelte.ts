@@ -452,7 +452,9 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
     ];
 
     for (const item of context.items) {
-      const ctx = (context.itemContext[item.id] ??= {});
+      const ctx = (context.itemContext[item.id] =
+        await super._createBaseItemContext(context, item));
+      
       await this._prepareItem(item, ctx, context);
 
       // partition to section
@@ -471,7 +473,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
             canCreate: false,
             rowActions: statblockRowActions,
           },
-          CONSTANTS.ITEM_TYPE_FEAT
+          CONSTANTS.ITEM_TYPE_FEAT,
         );
       }
     }

@@ -26,19 +26,18 @@ import { UserSheetPreferencesService } from 'src/features/user-preferences/Sheet
 import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { Container } from 'src/features/containers/Container';
 import { NpcSheetQuadroneRuntime } from 'src/runtime/actor/NpcSheetQuadroneRuntime.svelte';
 import TableRowActionsRuntime from 'src/runtime/tables/TableRowActionsRuntime.svelte';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import type { TidyDocumentSheetRenderOptions } from 'src/mixins/TidyDocumentSheetMixin.svelte';
 import { splitSemicolons } from 'src/utils/array';
-import { getThemeV2 } from 'src/theme/theme';
 import { getModifierData } from 'src/utils/formatting';
 import UserPreferencesService from 'src/features/user-preferences/UserPreferencesService';
 import { isNil } from 'src/utils/data';
 import { ItemContext } from 'src/features/item/ItemContext';
 import SectionActions from 'src/features/sections/SectionActions';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { ActorRootInventoryPreparer } from '../organize-me/InventoryPreparer';
 
 export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcSheetQuadroneContext>(
   CONSTANTS.SHEET_TYPE_NPC
@@ -233,7 +232,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     context.tools = this._getSkillsToolsContext(context, 'tools');
 
     // Prepare owned items
-    this._prepareItems(context);
+    await this._prepareItems(context);
 
     let details = this.actor.system.details;
 
@@ -296,7 +295,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     );
   }
 
-  _prepareItems(context: NpcSheetQuadroneContext) {
+  async _prepareItems(context: NpcSheetQuadroneContext) {
     const items: Item5e[] = this.actor.items.filter((item: Item5e) => {
       // Suppress riders for disabled enchantments
       return item.dependentOrigin?.active !== false;
@@ -314,26 +313,18 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         rowActions: inventoryRowActions,
       });
 
-    type NpcPartitions = {
-      inventoryItems: Item5e[];
-    };
+    const inventoryPreparer = new ActorRootInventoryPreparer(context);
 
-    let { inventoryItems } = items.reduce(
-      (obj: NpcPartitions, item: Item5e) => {
-        const ctx = (context.itemContext[item.id] ??= {});
+    await Promise.all(
+      items.map(async (item) => {
+        const ctx: NpcItemQuadroneContext = (context.itemContext[item.id] =
+          await super._createBaseItemContext(context, item));
 
         // Individual item preparation
         this._prepareItem(item, ctx);
 
-        const isWithinContainer = this.actor.items.has(item.system.container);
-
-        if (!isWithinContainer && Inventory.isItemInventoryType(item)) {
-          obj.inventoryItems.push(item);
-        }
-
-        return obj;
-      },
-      { inventoryItems: [] as Item5e[] }
+        inventoryPreparer.processItem(item);
+      }),
     );
 
     const statblockRowActions =
@@ -455,23 +446,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     // Organize items
     // Section the items by type
-    for (let item of inventoryItems) {
-      const ctx = (context.itemContext[item.id] ??= {});
-      Inventory.applyInventoryItemToSection(inventory, item, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
-    }
-
-    SheetSections.getFilteredGlobalSectionsToShowWhenEmpty(
-      context.actor,
-      CONSTANTS.TAB_ACTOR_INVENTORY
-    ).forEach((s) => {
-      inventory[s] ??= Inventory.createInventorySection(s, inventoryTypes, {
-        canCreate: true,
-        rowActions: inventoryRowActions,
-      });
-    });
+    context.inventory = inventoryPreparer.toSections();
 
     const spellbook = SheetSections.prepareTidySpellbook(
       context,

@@ -24,6 +24,7 @@ import type {
   Actor5e,
   ActorAbilityContextEntry,
   ActorClassEntryContext,
+  ActorItemQuadroneContext,
   ActorSaves,
   ActorSheetQuadroneContext,
   ActorSkillsToolsContext as ActorSkillsToolsContext,
@@ -364,19 +365,14 @@ export function Tidy5eActorSheetQuadroneBase<
 
       await this.setExpandedItemData();
 
-      // TODO: Fold this into a singular items loop that is triggered by inheritors
-      for (const item of this.actor.items) {
-        this._prepareItemBase(context, item);
-      }
-
       return context;
     }
 
-    protected async _prepareItemBase(
+    protected async _createBaseItemContext(
       context: ActorSheetQuadroneContext,
       item: Item5e,
-    ) {
-      const ctx = (context.itemContext[item.id] ??= {});
+    ): Promise<ActorItemQuadroneContext> {
+      const ctx: ActorItemQuadroneContext = {};
 
       ctx.containerName = this.actor.items.get(item.system.container)?.name;
       
@@ -399,6 +395,8 @@ export function Tidy5eActorSheetQuadroneBase<
       ctx.linkedUses = Activities.getLinkedUses(item);
       
       ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+
+      return ctx;
     }
 
     async _preparePortrait(

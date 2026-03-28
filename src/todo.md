@@ -1,5 +1,27 @@
 ## kgar To Do
 
+- [ ] Implement Character sheet as vertical slice | for each implementation of iterative, simply add an alternate function wherever the original lives. We can make organization a separate task from this.
+  - [x] Set up a single passageway for preparing context and sectioning (to multiple sections / section groups, potentially)
+  - [x] Implement iterative ItemContext
+  - [x] Implement Inventory iterative sectioning
+  - [x] ~~Implement Container panel iterative sectioning~~ Container Panel has been removed.
+  - [ ] Implement Spellbook iterative sectioning
+  - [ ] Implement Features iterative sectioning
+  - [ ] Implement Sheet tab Actions iterative sectioning
+  - [ ] Implement Sheet tab Origin Sections iterative sectioning
+  - [ ] Implement iterative Sheet Pins
+- [ ] Determine if there is a measurable difference in performance for character sheets. Small, then large.
+- [ ] Evaluate if the new approach is more or less maintainable.
+- [ ] Decide whether it's worth it to continue.
+- [ ] Implement NPC changes
+  - [ ] Base Actor Item Context
+  - [ ] Inventory section preparer
+  - [ ] Statblock section preparer
+  - [ ] ...?
+- [ ] Plan Vehicle
+- [ ] Plan Group
+- [ ] Plan Encounter
+
 ### Origin Sections Implementation
 
 - [ ] Clean up the code and reduce redundancy
