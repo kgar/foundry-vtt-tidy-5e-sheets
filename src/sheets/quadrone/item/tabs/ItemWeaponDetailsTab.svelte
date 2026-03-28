@@ -147,7 +147,6 @@
           value: context.source.magicalBonus,
           disabled: !context.unlocked,
           placeholder: '0',
-          step: 1,
         }}
       />
     </FormGroup>
