@@ -288,11 +288,11 @@
   </div>
 
   <FieldDamage
+    denominationOptions={context.denominationOptions.base}
+    fields={context.fields.damage.fields.base.fields}
     prefix="system.damage.base."
     source={context.source.damage.base}
     system={context.system.damage.base}
-    fields={context.fields.damage.fields.base.fields}
-    denominationOptions={context.denominationOptions.base}
     types={context.damageTypes}
   />
 </fieldset>
@@ -306,11 +306,11 @@
 
     <FieldDamage
       denominationOptions={context.denominationOptions.base}
-      source={context.source.damage.versatile}
       fields={context.fields.damage.fields.versatile.fields}
-      system={context.system.damage.versatile}
-      prefix="system.damage.versatile."
       numberPlaceholder={context.source.damage.base.number}
+      prefix="system.damage.versatile."
+      source={context.source.damage.versatile}
+      system={context.system.damage.versatile}
     />
   </fieldset>
 {/if}
