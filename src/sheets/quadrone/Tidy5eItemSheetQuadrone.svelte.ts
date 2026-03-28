@@ -938,7 +938,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
       dragged.classList.contains('advancement-item') &&
       !isNil(dragged.dataset.id)
     ) {
-      dragData = this.item.advancement.byId[dragged.dataset.id]?.toDragData();
+      dragData = this.item.system.advancement.get(dragged.dataset.id)?.toDragData();
     }
 
     if (!dragData) return;
@@ -1123,7 +1123,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
         CONFIG.DND5E.advancementTypes[a.constructor.typeName]?.validItemTypes ??
         a.metadata.validItemTypes;
       return (
-        !this.item.advancement.byId[a.id] &&
+        !this.item.system.advancement.get(a.id) &&
         validItemTypes.has(this.item.type) &&
         a.constructor.availableForItem(this.item)
       );
@@ -1157,9 +1157,12 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     }
 
     // If no advancements need to be applied, just add them to the item
-    const advancementArray = this.item.system.toObject().advancement;
-    advancementArray.push(...advancements.map((a: any) => a.toObject()));
-    this.item.update({ 'system.advancement': advancementArray });
+   this.item.update({
+      "system.advancement": advancements.reduce((obj: any, a: any) => {
+        obj[a.id] = a.toObject();
+        return obj;
+      }, {})
+    });
   }
 
   /* -------------------------------------------- */

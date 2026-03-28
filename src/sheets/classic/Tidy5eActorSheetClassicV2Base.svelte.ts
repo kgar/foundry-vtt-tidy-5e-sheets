@@ -1048,7 +1048,7 @@ export function Tidy5eActorSheetClassicV2Base<
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
       const itemsWithoutAdvancement = items.filter(
-        (i) => !i.system.advancement?.length
+        (i) => !i.system.advancement?.size
       );
       const multipleAdvancements =
         items.length - itemsWithoutAdvancement.length > 1;
@@ -1157,7 +1157,7 @@ export function Tidy5eActorSheetClassicV2Base<
       // Bypass normal creation flow for any items with advancement
       if (
         this.actor.system.metadata?.supportsAdvancement &&
-        itemData.system.advancement?.length &&
+        !foundry.utils.isEmpty(itemData.system.advancement) &&
         !game.settings.get('dnd5e', 'disableAdvancements')
       ) {
         // Ensure that this item isn't violating the singleton rule

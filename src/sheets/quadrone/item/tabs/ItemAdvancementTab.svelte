@@ -39,16 +39,16 @@
       result.push({
         component: EditButton,
         props: (args) => ({
-          doc: context.item.advancement?.byId[args.data.id],
+          doc: context.item.system.advancement?.get(args.data.id),
         }),
       } satisfies TableAction<typeof EditButton>);
 
       result.push({
         component: DeleteButton,
         props: (args) => ({
-          doc: context.item.advancement?.byId[args.data.id],
+          doc: context.item.system.advancement?.get(args.data.id),
           deleteFn: () =>
-            context.item.advancement?.byId[args.data.id]?.deleteDialog(),
+            context.item.system.advancement?.get(args.data.id)?.deleteDialog(),
         }),
       } satisfies TableAction<typeof DeleteButton>);
     }

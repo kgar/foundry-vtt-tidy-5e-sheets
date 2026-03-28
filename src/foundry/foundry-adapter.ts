@@ -838,7 +838,7 @@ export const FoundryAdapter = {
     );
   },
   deleteAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
+    const advancement = item.system.advancement.get(advancementItemId);
     return advancement?.deleteDialog();
   },
   modifyAdvancementChoices(advancementLevel: string, item: Item5e) {
@@ -854,7 +854,7 @@ export const FoundryAdapter = {
     }
   },
   editAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
+    const advancement = item.system.advancement.get(advancementItemId);
 
     return new advancement.constructor.metadata.apps.config(advancement).render(
       true
