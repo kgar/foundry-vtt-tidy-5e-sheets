@@ -108,10 +108,6 @@
           </div>
         {/if}
       {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
-        {@const formattedCr = dnd5e.utils.formatCR(
-          member.actor.system.details.cr,
-        )}
-
         {@const size =
           CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
           member.actor.system.traits.size}
@@ -134,16 +130,21 @@
             </div>
           {/each}
 
-          <span class="cr">
-            <span class="font-label-medium color-text-gold-emphasis"
-              >{localize('DND5E.AbbreviationCR')}</span
-            >
-            <span class="font-data-medium color-text-default"
-              >{formattedCr}</span
-            >
-          </span>
+          {#if member.actor.system.details.cr}
+            {@const formattedCr = dnd5e.utils.formatCR(
+              member.actor.system.details.cr,
+            )}
+            <span class="cr">
+              <span class="font-label-medium color-text-gold-emphasis"
+                >{localize('DND5E.AbbreviationCR')}</span
+              >
+              <span class="font-data-medium color-text-default"
+                >{formattedCr}</span
+              >
+            </span>
+            <div class="divider-dot"></div>
+          {/if}
 
-          <div class="divider-dot"></div>
           <span class="size">
             <span class="font-label-medium color-text-gold-emphasis"
               >{size}</span

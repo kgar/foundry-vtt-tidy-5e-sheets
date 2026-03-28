@@ -207,7 +207,7 @@
                     &nbsp;—&nbsp;
                     <span class="text-body semibold">
                       {FoundryAdapter.formatNumber(
-                        member.system.details.xp.value *
+                        (member.system.details.xp.value ?? 0) *
                           (ctx.quantity?.value ?? 1),
                       )}
                     </span>&nbsp;
