@@ -824,7 +824,9 @@ export function Tidy5eActorSheetQuadroneBase<
         if (property === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
         return src ?? 'int';
       };
+
       return Object.entries(context.system[property] ?? {})
+        .filter(([key]) => key in CONFIG.DND5E[property])
         .map(([key, entry]: [string, any]) => ({
           ...entry,
           key,
