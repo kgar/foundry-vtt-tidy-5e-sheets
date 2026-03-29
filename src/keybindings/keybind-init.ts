@@ -59,6 +59,16 @@ function registerHeaderMenuToggleKeybinding() {
   });
 }
 
+const defaultSheetNames = [
+  'dnd5e.CharacterActorSheet',
+  'dnd5e.NPCActorSheet',
+  'dnd5e.VehicleActorSheet',
+  'dnd5e.GroupActorSheet',
+  'dnd5e.EncounterActorSheet',
+  'dnd5e.ItemSheet5e',
+  'dnd5e.ContainerSheet',
+];
+
 function registerSheetToggleKeybinding() {
   if (SettingsProvider.settings.debug.get() === false) {
     return;
@@ -70,10 +80,12 @@ function registerSheetToggleKeybinding() {
     debounceDelay: 1000,
     invocationCountToTrigger: 3,
     getSheetKey: (sheetClasses) =>
+      // Use the list of known default actor and item sheets
       Object.keys(sheetClasses).find(
         (x) =>
           x.toLocaleLowerCase().includes('tidy') &&
-          x.toLocaleLowerCase().includes('quadrone'),
+          x.toLocaleLowerCase().includes('quadrone') &&
+          !defaultSheetNames.includes(x),
       ),
     downKey: 'KeyQ',
     modifiers: ['Shift'],
@@ -101,11 +113,15 @@ function registerSheetToggleKeybinding() {
     debounceDelay: 1000,
     invocationCountToTrigger: 3,
     getSheetKey: (sheetClasses) =>
-      Object.entries(sheetClasses).find(
-        ([key, value]) =>
-          !key.toLocaleLowerCase().includes('tidy') &&
-          value.toLocaleLowerCase().includes('default'),
-      )?.[0],
+      Object.keys(sheetClasses).find(
+        (x) =>
+          !x.toLocaleLowerCase().includes('tidy') &&
+          defaultSheetNames.includes(x),
+      )  ??
+      // Grab the first non-Tidy sheet
+      Object.keys(sheetClasses).find((x) =>
+        x.toLocaleLowerCase().includes('tidy'),
+      ),
     downKey: 'KeyD',
     modifiers: ['Shift'],
   });
