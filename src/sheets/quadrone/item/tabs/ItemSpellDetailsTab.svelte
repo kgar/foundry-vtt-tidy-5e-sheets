@@ -86,8 +86,8 @@
         {#snippet formLabel()}
           <label
             for="{appId}-materials-cost"
-            class="label-icon currency gp"
-            aria-label={localize('DND5E.CostGP')}
+            class="label-icon currency {context.defaultCurrency.key}"
+            aria-label={localize('DND5E.Cost')}
           >
             {localize('DND5E.Cost')}
           </label>

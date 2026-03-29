@@ -189,7 +189,7 @@ export class Tidy5eVehicleSheetQuadrone extends Tidy5eActorSheetQuadroneBase<Veh
             this.actor.system.attributes.price?.denomination
           ]?.abbreviation ??
           this.actor.system.attributes.price?.denomination ??
-          'gp',
+          actorContext.defaultCurrency.key,
       },
       crew: {
         assigned: {

@@ -1,6 +1,6 @@
 import type { Actor5e, GroupableSelectOption } from 'src/types/types';
 
-type CurrencyItemConfig = {
+export type CurrencyItemConfig = {
   label: string;
   abbreviation: string;
   conversion: number;
@@ -3527,6 +3527,7 @@ export type CONFIG = {
       sp: CurrencyItemConfig;
       cp: CurrencyItemConfig;
     } & Record<string, CurrencyItemConfig>;
+    defaultCurrency: string,
     dieSteps: Array<number>;
     damageScalingModes: {
       whole: {

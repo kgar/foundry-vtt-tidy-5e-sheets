@@ -28,6 +28,7 @@ import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -142,16 +143,33 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       });
     }
 
-    getGpSummary(actor: Actor5e) {
+    getDefaultCurrencySummary(actor: Actor5e) {
       const currency = actor.system.currency;
+      const defaultCurrency = FoundryAdapter.getDefaultCurrencyConfig();
 
-      return Math.round(
-        Object.keys(currency).reduce((total, key) => {
-          return key in CONFIG.DND5E.currencies
-            ? total + currency[key] / CONFIG.DND5E.currencies[key].conversion
-            : total;
-        }, 0)
+      const currencies = Object.entries(CONFIG.DND5E.currencies)
+        .filter(([, c]) => c.conversion)
+        .sort((a, b) => a[1].conversion - b[1].conversion);
+
+      // Convert all currently to smallest denomination
+      const smallestConversion = currencies.at(-1)?.[1].conversion ?? 0;
+      let amount = currencies.reduce(
+        (amount, [denomination, config]) =>
+          amount +
+          currency[denomination] * (smallestConversion / config.conversion),
+        0,
       );
+
+      // TODO: Then, convert it up to the default currency.
+      
+      // const currenciesLowestToDefault = currencies.filter(c => c[1].conversion >= defaultCurrency.conversion)
+      // for ( const [denomination, config] of currencies) {
+      //   const ratio = smallestConversion / config.conversion;
+      //   currency[denomination] = Math.floor(amount / ratio);
+      //   amount -= currency[denomination] * ratio;
+      // }
+
+      return amount;
     }
 
     _prepareMemberLanguages(

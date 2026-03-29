@@ -291,8 +291,8 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
         portrait: await this._preparePortrait(actor),
-        gold: FoundryAdapter.formatNumber(this.getGpSummary(actor)),
-        goldAbbreviation: CONFIG.DND5E.currencies.gp?.abbreviation ?? '',
+        gold: FoundryAdapter.formatNumber(this.getDefaultCurrencySummary(actor)),
+        goldAbbreviation: FoundryAdapter.getDefaultCurrencyConfig()?.abbreviation ?? '',
       };
 
       section.members.push(groupMemberContext);

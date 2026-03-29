@@ -24,6 +24,7 @@ import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type { CurrencyItemConfig } from './config.types';
 
 const quadroneSheetRegex = /Tidy.*Quadrone/;
 export type DocumentSheetConstructor = new (...args: any[]) => InstanceType<
@@ -1688,5 +1689,16 @@ export const FoundryAdapter = {
     }
 
     return result;
+  },
+  getDefaultCurrencyConfig(): CurrencyItemConfig & { key: string } {
+    return CONFIG.DND5E.currencies[CONFIG.DND5E.defaultCurrency]
+      ? {
+          ...CONFIG.DND5E.currencies[CONFIG.DND5E.defaultCurrency],
+          key: CONFIG.DND5E.defaultCurrency,
+        }
+      : {
+          ...CONFIG.DND5E.currencies.gp,
+          key: 'gp',
+        };
   },
 };
