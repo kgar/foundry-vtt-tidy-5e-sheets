@@ -305,7 +305,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
   static isImportantNpc(actor: Actor5e) {
     return (
-      (actor.type === CONSTANTS.SHEET_TYPE_NPC &&
+      (actor.system.isNPC &&
         !foundry.utils.isEmpty(actor.classes)) ||
       actor.system.traits.important
     );

@@ -737,7 +737,7 @@ export const FoundryAdapter = {
   },
   showLimitedSheet(actor: any): boolean {
     const showLimitedSheet = !FoundryAdapter.userIsGm() && actor.limited;
-    if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+    if (actor.system.isCharacter) {
       return showLimitedSheet && !settings.value.showExpandedLimitedView;
     }
     return showLimitedSheet;
@@ -1130,11 +1130,11 @@ export const FoundryAdapter = {
   },
   useClassicControls(document: any) {
     return (
-      (document.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+      (document.system.isCharacter &&
         settings.value.useClassicControlsForCharacter) ||
-      (document.type === CONSTANTS.SHEET_TYPE_NPC &&
+      (document.system.isNPC &&
         settings.value.useClassicControlsForNpc) ||
-      (document.type === CONSTANTS.SHEET_TYPE_VEHICLE &&
+      (document.system.isVehicle &&
         settings.value.useClassicControlsForVehicle) ||
       // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
       settings.value.useClassicControlsForCharacter

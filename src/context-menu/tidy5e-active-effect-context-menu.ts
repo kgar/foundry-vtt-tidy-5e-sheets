@@ -44,7 +44,7 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
   }
 
   if (
-    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+    actor.system.isCharacter &&
     !FoundryAdapter.allowCharacterEffectsManagement(actor)
   ) {
     return [];

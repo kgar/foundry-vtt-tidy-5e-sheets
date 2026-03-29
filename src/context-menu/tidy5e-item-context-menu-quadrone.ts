@@ -28,7 +28,7 @@ export function getItemContextOptionsQuadrone(
   const itemParentIsActor =
     itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
   const isCharacter =
-    itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+    itemParentIsActor && itemParent.system.isCharacter;
 
   const isInFavorites = !!element.closest('.favorites');
 
@@ -332,12 +332,12 @@ export function getItemContextOptionsQuadrone(
   });
 
   let actionSectionContextName =
-    itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+    itemParent?.system.isCharacter
       ? FoundryAdapter.localize(
           'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
           { tabName: FoundryAdapter.localize('Sheet') },
         )
-      : itemParent?.type === CONSTANTS.SHEET_TYPE_NPC
+      : itemParent?.system.isNPC
         ? FoundryAdapter.localize(
             'TIDY5E.Section.SectionSelectorChooseTabSectionTooltip',
             { tabName: FoundryAdapter.localize('TIDY5E.StatblockTabName') },
@@ -345,9 +345,9 @@ export function getItemContextOptionsQuadrone(
         : 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip';
 
   let actionSectionConfigTitle =
-    itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+    itemParent?.system.isCharacter
       ? FoundryAdapter.localize('Sheet')
-      : itemParent?.type === CONSTANTS.SHEET_TYPE_NPC
+      : itemParent?.system.isNPC
         ? FoundryAdapter.localize('TIDY5E.StatblockTabName')
         : FoundryAdapter.localize('TIDY5E.Section.ActionLabel');
 

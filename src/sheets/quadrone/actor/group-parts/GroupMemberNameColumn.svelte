@@ -88,7 +88,7 @@
       {member.actor.name}
     </h4>
     {#if member.canObserve}
-      {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+      {#if member.actor.system.isCharacter}
         {@const classes = Object.values<Item5e>(member.actor.classes)}
         {#if classes.length > 0}
           <div class="separated-list">
@@ -107,7 +107,7 @@
             {/each}
           </div>
         {/if}
-      {:else if member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+      {:else if member.actor.system.isNPC}
         {@const size =
           CONFIG.DND5E.actorSizes[member.actor.system.traits.size]?.label ??
           member.actor.system.traits.size}
@@ -160,7 +160,7 @@
             </span>
           {/if}
         </span>
-      {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+      {:else if member.actor.system.isVehicle}
         {@const vehicleType =
           CONFIG.DND5E.vehicleTypes[member.actor.system.details.type] ??
           member.actor.system.details.type}

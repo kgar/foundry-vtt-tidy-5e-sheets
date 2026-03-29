@@ -87,7 +87,7 @@
       <div class="max" aria-label={localize('DND5E.HitPointsMax')}>
         {effectiveMaxHp}
       </div>
-      {#if effectiveMaxHp !== hpMax && context.actor.type !== CONSTANTS.SHEET_TYPE_NPC}
+      {#if effectiveMaxHp !== hpMax && !context.actor.system.isNPC}
         <div class="max-hp-override-container">
           <span class="font-default-small color-text-lighter">
             {hpTempMax < 0 ? '-' : '+'}

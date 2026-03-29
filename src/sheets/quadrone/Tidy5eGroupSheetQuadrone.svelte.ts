@@ -287,7 +287,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
           ? `oklch(from ${accentColor} calc(l * 1.4) 60% h)`
           : undefined,
         inspirationSource:
-          actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+          actor.system.isCharacter
             ? await Tidy5eCharacterSheetQuadrone.tryGetInspirationSource(actor)
             : undefined,
         portrait: await this._preparePortrait(actor),
@@ -297,13 +297,13 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
       section.members.push(groupMemberContext);
       membersContext.all.set(actor.uuid, groupMemberContext);
-      if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+      if (actor.system.isCharacter) {
         membersContext.character.push(actor);
       }
 
       const prepareCreatureInformation =
         canObserve &&
-        (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER ||
+        (actor.system.isCharacter ||
           Tidy5eNpcSheetQuadrone.isImportantNpc(actor));
 
       if (prepareCreatureInformation) {
@@ -326,7 +326,7 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
 
       const prepareSpeed =
         prepareCreatureInformation ||
-        actor.type === CONSTANTS.SHEET_TYPE_VEHICLE;
+        actor.system.isVehicle;
 
       if (prepareSpeed) {
         // Speeds

@@ -254,7 +254,7 @@ class TableRowActionsRuntime {
         } satisfies TableAction<typeof DeleteButton>);
       } else if (
         context.hasActor &&
-        itemParent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+        itemParent?.system.isCharacter
       ) {
         result.push({
           component: CharacterSheetTabToggleButton,

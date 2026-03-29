@@ -308,8 +308,8 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
       if (
         itemData.type === 'spell' &&
         (isOnInventoryTab ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_GROUP)
+          this.actor.system.isVehicle ||
+          this.actor.system.isGroup)
       ) {
         const options: Record<string, unknown> = {};
 

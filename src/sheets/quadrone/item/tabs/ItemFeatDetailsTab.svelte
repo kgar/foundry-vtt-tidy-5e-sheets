@@ -44,7 +44,7 @@
     choices={context.config.featureTypes}
   />
 
-  {#if context.item.actor?.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+  {#if context.item.actor?.system.isCharacter}
     <FeatureOriginFormGroup />
   {/if}
 

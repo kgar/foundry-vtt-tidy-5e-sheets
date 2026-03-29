@@ -128,7 +128,7 @@
           {member.actor.name}
         </h4>
         {#if member.canObserve}
-          {#if member.actor.type === CONSTANTS.SHEET_TYPE_CHARACTER || member.actor.type === CONSTANTS.SHEET_TYPE_NPC}
+          {#if member.actor.system.isCharacter || member.actor.system.isNPC}
             <div class="separated-list">
               <span class="actor-currency">
                 <span class="font-label-medium color-text-default flexshrink"
@@ -140,7 +140,7 @@
               </span>
             </div>
             <ActorEncumbranceBar actor={member.actor} />
-          {:else if member.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE}
+          {:else if member.actor.system.isVehicle}
             <div class="separated-list">
               <span class="actor-cargo separated-list">
                 <span class="font-body-medium color-text-lighter"

@@ -575,7 +575,7 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       | typeof CONSTANTS.SECTION_ORGANIZATION_ACTION
       | typeof CONSTANTS.SECTION_ORGANIZATION_ORIGIN,
   ) {
-    if (item.actor?.type !== CONSTANTS.SHEET_TYPE_CHARACTER) {
+    if (!item.actor?.system.isCharacter) {
       return false;
     }
 

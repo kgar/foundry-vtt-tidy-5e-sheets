@@ -159,9 +159,9 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       languages: Map<string, MeasurableGroupTrait<number>>
     ) {
       let memberLanguages =
-        actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+        actor.system.isCharacter
           ? Tidy5eCharacterSheetQuadrone._getLanguageTraits(actor)
-          : actor.type === CONSTANTS.SHEET_TYPE_NPC
+          : actor.system.isNPC
           ? Tidy5eNpcSheetQuadrone._getLanguageTraits(actor)
           : [];
 

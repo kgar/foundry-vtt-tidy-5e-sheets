@@ -10,7 +10,7 @@
 </script>
 
 {#if rowDocument.system.details.xp}
-  {#if rowDocument.type === CONSTANTS.SHEET_TYPE_CHARACTER}
+  {#if rowDocument.system.isCharacter}
     <div
       class="meter meter-small progress xp"
       style="--bar-percentage: {rowDocument.system.details.xp.pct}%;"

@@ -196,7 +196,7 @@
             </TidyTableCell>
             {#if section.showCrColumn}
               <TidyTableCell>
-                {#if member.type === CONSTANTS.SHEET_TYPE_NPC}
+                {#if member.system.isNPC}
                   <abbr class="text-body-secondary"
                     >{localize('DND5E.AbbreviationCR')}</abbr
                   >&nbsp;
