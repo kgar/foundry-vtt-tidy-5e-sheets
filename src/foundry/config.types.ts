@@ -3835,7 +3835,10 @@ export type CONFIG = {
           gritty: number;
           epic: number;
         };
-        recoverPeriods: Array<string>;
+        label: string;
+        icon: string;
+        activationPeriods: string[];
+        recoverPeriods: string[];
         recoverSpellSlotTypes: {};
       };
       long: {
@@ -3844,10 +3847,17 @@ export type CONFIG = {
           gritty: number;
           epic: number;
         };
+        exhaustionDelta: number;
+        label: string;
+        icon: string;
+        newDay: boolean;
+        activationPeriods: string[];
         recoverHitDice: boolean;
         recoverHitPoints: boolean;
         recoverPeriods: Array<string>;
         recoverSpellSlotTypes: {};
+        recoverTemp: boolean;
+        recoverTempMax: boolean;
       };
     };
     senses: {

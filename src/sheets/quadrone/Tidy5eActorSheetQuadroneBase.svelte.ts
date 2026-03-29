@@ -176,6 +176,9 @@ export function Tidy5eActorSheetQuadroneBase<
             document: this.document,
           }).render({ force: true });
         },
+        rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
+          this.actor.initiateRest({ type: target.dataset.type });
+        },
         showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
           const { src } = await this._preparePortrait(this.actor);
 
