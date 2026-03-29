@@ -96,7 +96,7 @@ export const FoundryAdapter = {
 
     const effectData = {
       name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
-      icon: isActor ? 'icons/svg/aura.svg' : parent.img,
+      img: isActor ? 'icons/svg/aura.svg' : parent.img,
       origin: parent.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
       disabled: effectType === 'inactive',
@@ -110,6 +110,13 @@ export const FoundryAdapter = {
       )
     ) {
       return;
+    }
+
+    if (parent.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
+      return ActiveEffect.implementation.createDialog(effectData, {
+        parent: parent,
+        renderSheet: true,
+      });
     }
 
     return ActiveEffect.implementation.create(effectData, {

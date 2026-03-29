@@ -1211,7 +1211,7 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     let { type: datasetType, ...restDataSet } = args.data ?? {};
 
     if (args.tabId === CONSTANTS.TAB_EFFECTS) {
-      return await ActiveEffect.implementation.create(
+      return await ActiveEffect.implementation.createDialog(
         {
           name: game.i18n.localize('DND5E.EffectNew'),
           icon: 'icons/svg/aura.svg',
