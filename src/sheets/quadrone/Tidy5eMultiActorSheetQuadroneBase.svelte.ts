@@ -144,32 +144,40 @@ export function Tidy5eMultiActorSheetQuadroneBase<
     }
 
     getDefaultCurrencySummary(actor: Actor5e) {
-      const currency = actor.system.currency;
       const defaultCurrency = FoundryAdapter.getDefaultCurrencyConfig();
+
+      if (!defaultCurrency) {
+        return 0;
+      }
+
+      const currency = actor.system.currency;
 
       const currencies = Object.entries(CONFIG.DND5E.currencies)
         .filter(([, c]) => c.conversion)
         .sort((a, b) => a[1].conversion - b[1].conversion);
 
-      // Convert all currently to smallest denomination
-      const smallestConversion = currencies.at(-1)?.[1].conversion ?? 0;
-      let amount = currencies.reduce(
+      const smallestCurrency = currencies.at(-1)?.[1];
+
+      if (!smallestCurrency) {
+        return 0;
+      }
+
+      const smallestConversion = smallestCurrency.conversion ?? 0;
+
+      let sumCurrencyInCheapestDenomination = currencies.reduce(
         (amount, [denomination, config]) =>
           amount +
           currency[denomination] * (smallestConversion / config.conversion),
         0,
       );
 
-      // TODO: Then, convert it up to the default currency.
-      
-      // const currenciesLowestToDefault = currencies.filter(c => c[1].conversion >= defaultCurrency.conversion)
-      // for ( const [denomination, config] of currencies) {
-      //   const ratio = smallestConversion / config.conversion;
-      //   currency[denomination] = Math.floor(amount / ratio);
-      //   amount -= currency[denomination] * ratio;
-      // }
+      const conversion = smallestCurrency.conversion;
+      const multiplier = defaultCurrency.conversion / conversion;
+      const sumCurrencyInDefaultDenomination = Math.floor(
+        sumCurrencyInCheapestDenomination * multiplier,
+      );
 
-      return amount;
+      return sumCurrencyInDefaultDenomination;
     }
 
     _prepareMemberLanguages(
