@@ -3667,7 +3667,7 @@ export type CONFIG = {
     travelUnits: {
       mph: TravelUnitConfig;
       kph: TravelUnitConfig;
-      } & Record<string, TravelUnitConfig>;
+    } & Record<string, TravelUnitConfig>;
     rangeTypes: {
       self: string;
       touch: string;
@@ -4424,6 +4424,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4432,6 +4433,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4440,6 +4442,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4448,6 +4451,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         configKey: string;
       };

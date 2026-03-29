@@ -671,7 +671,7 @@ export function Tidy5eActorSheetQuadroneBase<
                 const type = CONFIG.DND5E.itemProperties[p]?.label;
                 return {
                   icon: p,
-                  label: game.i18n.format('DND5E.DamagePhysicalBypassesShort', {
+                  label: game.i18n.format('DND5E.DAMAGE.PhysicalBypasses.DescriptionShort', {
                     type,
                   }),
                 };
@@ -693,7 +693,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // If petrified, display "All Damage" instead of all damage types separately
       if (this.document.hasConditionEffect('petrification')) {
-        traits.dr = [{ label: game.i18n.localize('DND5E.DamageAll') }];
+        traits.dr = [{ label: game.i18n.localize('DND5E.DAMAGE.All') }];
       }
 
       // Prepare damage modifications
@@ -726,7 +726,7 @@ export function Tidy5eActorSheetQuadroneBase<
                   return {
                     icon: p,
                     label: game.i18n.format(
-                      'DND5E.DamagePhysicalBypassesShort',
+                      'DND5E.DAMAGE.PhysicalBypasses.DescriptionShort',
                       { type }
                     ),
                   };
