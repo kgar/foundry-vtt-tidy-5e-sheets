@@ -126,6 +126,8 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
 
     const important = Tidy5eNpcSheetQuadrone.isImportantNpc(this.actor);
 
+    const gear: Item5e[] = await this.actor.system.getGear();
+
     const context: NpcSheetQuadroneContext = {
       abilities: this._prepareAbilities(actorContext),
       background: background
@@ -169,6 +171,19 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         ),
       },
       features: [],
+      gear: gear.map<ActorTraitContext>((item: Item5e) => ({
+        label: item.name,
+        onClick: () => item.sheet.render({ force: true }),
+        key: item.uuid,
+        value: item.system.quantity > 1 ? item.system.quantity : undefined,
+        attributes: {
+          'data-item-id': foundry.utils.parseUuid(
+            item.getFlag('dnd5e', 'gearSource'),
+          )?.id,
+          'data-gear': '',
+          'data-tidy-draggable': '',
+        },
+      })),
       habitats: [],
       important,
       includeSpellbookInStatblockTab:
@@ -614,6 +629,34 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
     }
 
     return traits;
+  }
+
+  /* -------------------------------------------- */
+  /*  Drag & Drop                                 */
+  /* -------------------------------------------- */
+
+  /** @inheritDoc */
+  async _onDragStart(
+    event: DragEvent & { target: HTMLElement; currentTarget: HTMLElement },
+  ) {
+    const target = event.currentTarget;
+    if (target?.matches('[data-item-id][data-gear]')) {
+      const itemId = target.getAttribute('data-item-id');
+      const item = await this.actor.items.get(itemId)?.system.asGear?.();
+      if (item) {
+        event.dataTransfer?.setData(
+          'text/plain',
+          JSON.stringify({
+            data: item.isEmbedded
+              ? item.toObject()
+              : game.items.fromCompendium(item),
+            type: 'Item',
+          }),
+        );
+        return;
+      }
+    }
+    return super._onDragStart(event);
   }
 
   /* -------------------------------------------- */

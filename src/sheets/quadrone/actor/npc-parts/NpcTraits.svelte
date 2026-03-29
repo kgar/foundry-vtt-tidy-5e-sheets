@@ -203,7 +203,17 @@
     pillClass="trait-habitat"
   />
 
-  <!-- Treasure -->
+  <!-- Gear -->
+  <ActorTraitConfigurableListEntry
+    configButtonLocation="label"
+    label={localize('DND5E.Gear.Label')}
+    entries={context.gear}
+    icon="fa-solid fa-axe"
+    traitClass="traits-gear"
+    pillClass="trait-gear"
+  />
+
+<!-- Treasure -->
   <ActorTraitConfigurableListEntry
     configButtonLocation="label"
     label={localize('DND5E.Treasure.Configuration.Label')}

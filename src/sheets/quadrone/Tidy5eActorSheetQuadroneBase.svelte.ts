@@ -1402,14 +1402,13 @@ export function Tidy5eActorSheetQuadroneBase<
       if (allowed === false) return;
 
       // Sheet Pins
-      const doc = await fromUuid(data.uuid);
-
+      const sheetPinDoc = await fromUuid(data.uuid);
       if (
-        doc.actor === this.actor &&
+        sheetPinDoc?.actor === this.actor &&
         event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
       ) {
-        let relativeUuid = SheetPinsProvider.getRelativeUUID(doc);
-        return await this._onDropPin(event, { id: relativeUuid, doc });
+        let relativeUuid = SheetPinsProvider.getRelativeUUID(sheetPinDoc);
+        return await this._onDropPin(event, { id: relativeUuid, doc: sheetPinDoc });
       }
 
       // Dropped Documents
@@ -1721,8 +1720,16 @@ export function Tidy5eActorSheetQuadroneBase<
       const containers = new Set(
         items.filter((i) => i.type === 'container').map((i) => i._id)
       );
-
       items = items.filter((i) => !containers.has(i.system.container));
+
+      // Transform physical items from NPCs to their gear versions
+      items = await Promise.all(
+        items.map((i) =>
+          i.actor?.system.isNPC && i.actor !== this.actor && i.system.asGear
+            ? i.system.asGear()
+            : i,
+        ),
+      );
 
       // Create the owned items & contents as normal
       const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
@@ -1798,7 +1805,7 @@ export function Tidy5eActorSheetQuadroneBase<
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData, {});
+      const stacked = this._onDropStackConsumables(event, itemData, {});
 
       if (stacked) {
         return false;
@@ -1849,6 +1856,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
      */
     _onDropStackConsumables(
+      _event: Event,
       itemData: any,
       { container = null } = {}
     ): Promise<Item5e> | null {

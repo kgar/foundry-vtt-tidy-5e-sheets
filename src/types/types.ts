@@ -1083,6 +1083,8 @@ export type ActorTraitContext<TValue = unknown> = {
   parenthetical?: string;
   /** An optional handler for when the pill is clicked. If a function is provided, then the pill will render as an interactive HTML element such as an anchor or a button. */
   onClick?: (params: RegisteredCustomTraitOnClickParams) => void;
+  /** HTML attributes to apply to the trait UI element. */
+  attributes?: Record<string, string>;
 };
 
 export type ActorItemQuadroneContext = {
@@ -1376,6 +1378,7 @@ export type NpcSheetQuadroneContext = {
     trait: string;
   };
   features: FeatureSection[];
+  gear: ActorTraitContext[];
   habitats: { label: string }[];
   important: boolean;
   includeSpellbookInStatblockTab: boolean;

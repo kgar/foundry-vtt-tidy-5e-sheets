@@ -52,7 +52,9 @@
 <ul class="pills">
   {#each values as value}
     {@const onClick = value.onClick}
+
     <li
+      {...value.attributes}
       class={[
         'pill pill-medium trait-pill',
         pillClass,
