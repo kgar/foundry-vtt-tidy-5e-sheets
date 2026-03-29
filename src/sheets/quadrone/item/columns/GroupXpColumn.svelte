@@ -18,9 +18,12 @@
     <span class="font-label-medium color-text-default"
       >{rowDocument.system.details.xp.value}</span
     >
-  {:else}
+  {:else if rowDocument.system.details.xp.value}
+
     <span class="font-label-large color-text-default"
       >{rowDocument.system.details.xp.value.toLocaleString()}</span
     >
+  {:else}
+    <span class="color-text-disabled">—</span>
   {/if}
 {/if}
