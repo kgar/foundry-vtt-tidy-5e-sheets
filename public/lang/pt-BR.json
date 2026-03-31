@@ -825,7 +825,7 @@
     },
     "TIDY5E.ItemSummaryCommands.ShowDescriptionInChatTooltip": "Mostrar descrição no chat",
     "TIDY5E.ContextMenuActionView": "Visualizar",
-    "TIDY5E.Utilities.SpellPips": "Magias",
+    "TIDY5E.Utilities.SpellPips": "Marcador de Magias",
     "TIDY5E.Utilities.SpellValueMax": "Valor da Magia/Máx",
     "TIDY5E.RollRecharge.Label": "Recarregar",
     "TIDY5E.ConfigureTab.Title": "Configurar {tabName}",
