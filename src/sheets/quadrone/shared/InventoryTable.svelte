@@ -126,7 +126,7 @@
     {@const mastered = actor.system.traits?.weaponProf?.mastery?.value?.has(
       entry.system.type?.baseItem ?? '',
     )}
-
+    
     {#if mastered}
       {@const mastery = CONFIG.DND5E.weaponMasteries[entry.system.mastery]}
       {@const tooltip = !isNil(mastery?.label, '')
@@ -136,7 +136,7 @@
         : game.i18n.format('DND5E.WEAPON.Mastery.Label')}
 
       <i
-        class="fa-solid fa-circle-star color-text-highlight highlighted mastery item-state-indicator"
+        class="fa-solid fa-circle-star color-text-gold-emphasis highlighted mastery item-state-indicator"
         data-tooltip={!mastery?.reference ? tooltip : null}
         data-reference-tooltip={mastery?.reference}
       ></i>
@@ -144,14 +144,14 @@
 
     {#if ctx.attunement}
       {@const iconClass = entry.system.attuned
-        ? 'fa-solid fa-sun color-text-highlight highlighted'
-        : 'fa-regular fa-sun color-text-lighter'}
+        ? 'fa-solid fa-sun color-text-gold-emphasis highlighted'
+        : 'fa-regular fa-sun color-text-lightest'}
 
       {@const title = localize(ctx.attunement.title)}
       <i class={[iconClass, 'item-state-indicator']} data-tooltip={title}></i>
     {:else if entry.system.equipped}
       <i
-        class="fa-solid fa-hand-fist equip-icon color-icon-theme item-state-indicator"
+        class="fa-solid fa-hand-fist equip-icon color-text-lightest item-state-indicator"
         data-tooltip={localize('DND5E.Equipped')}
       ></i>
     {/if}
