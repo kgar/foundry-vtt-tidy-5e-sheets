@@ -59,6 +59,7 @@
                   <!-- svelte-ignore a11y-missing-attribute -->
                   <a
                     class="inline-icon-button edit-item-description"
+                    data-target={itemDescription.field}
                     on:click|stopPropagation={() =>
                       dispatcher('edit', {
                         valueToEdit: itemDescription.content,
@@ -69,7 +70,6 @@
                 {/if}
               </span>
               <div
-                data-edit={itemDescription.field}
                 class="item-editor-descriptions-html-container user-select-text"
               >
                 {@html itemDescription.content}
