@@ -57,7 +57,6 @@
     class="skill-list unlist use-ability-list"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
   >
-    <!-- TODO: Prepare data and iterate! -->
     {#each context.skills as skill}
       {#if expanded || skill.proficient}
         {@const memberSkill = skill.identifiers.get(

@@ -3,6 +3,8 @@ import { Tidy5eActorSheetQuadroneBase } from './Tidy5eActorSheetQuadroneBase.sve
 import type {
   Actor5e,
   ActorInventoryTypes,
+  GroupAbility,
+  GroupMemberAbilityContext,
   GroupMemberSkillContext,
   GroupSkill,
   GroupTrait,
@@ -11,9 +13,7 @@ import type {
   MultiActorQuadroneContext,
   TidyItemSectionBase,
 } from 'src/types/types';
-import type {
-  ApplicationRenderOptions,
-} from 'src/types/application.types';
+import type { ApplicationRenderOptions } from 'src/types/application.types';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CurrencyContext, Item5e } from 'src/types/item.types';
 import { SheetSections } from 'src/features/sections/SheetSections';
@@ -25,7 +25,7 @@ import { isNil } from 'src/utils/data';
 import { mapGetOrInsertComputed } from 'src/utils/map';
 import { Tidy5eCharacterSheetQuadrone } from './Tidy5eCharacterSheetQuadrone.svelte';
 import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
-import type { SkillData } from 'src/foundry/dnd5e.types';
+import type { AbilityData, SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
 
@@ -387,6 +387,34 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       });
     }
 
+    _getMemberGroupAbilityMap(): Map<string, GroupAbility> {
+      return new Map<string, GroupAbility>(
+        Object.entries(CONFIG.DND5E.abilities).map<[string, GroupAbility]>(
+          ([key, ability]) => [
+            key,
+            {
+              name: ability.label,
+              key,
+              proficient: false,
+              high: {
+                total: -Infinity,
+                value: '∞',
+                sign: '-',
+              },
+              low: {
+                total: Infinity,
+                value: '∞',
+                sign: '+',
+              },
+              save: -Infinity,
+              score: -Infinity,
+              identifiers: new Map<string, GroupMemberAbilityContext>(),
+            },
+          ],
+        ),
+      );
+    }
+
     _getMemberGroupSkillMap(): Map<string, GroupSkill> {
       return new Map<string, GroupSkill>(
         Object.entries(CONFIG.DND5E.skills).map<[string, GroupSkill]>(
@@ -411,8 +439,55 @@ export function Tidy5eMultiActorSheetQuadroneBase<
               proficient: false,
               reference: skill.reference,
             },
-          ]
-        )
+          ],
+        ),
+      );
+    }
+
+    _prepareMemberAbilities(actor: any, abilities: Map<string, GroupAbility>) {
+      Object.entries<AbilityData>(actor.system.abilities ?? {}).forEach(
+        ([key, ability]) => {
+          let groupAbility = abilities.get(key);
+
+          if (!groupAbility) {
+            return;
+          }
+
+          const modData = getModifierData(ability.mod);
+          const saveData = getModifierData(ability.save.value);
+
+          if (ability.mod > groupAbility.high.total) {
+            groupAbility.high = {
+              total: ability.mod,
+              ...modData,
+            };
+          }
+
+          if (ability.mod < groupAbility.low.total) {
+            groupAbility.low = {
+              total: ability.mod,
+              ...modData,
+            };
+          }
+
+          groupAbility.identifiers.set(actor.uuid, {
+            mod: ability.mod,
+            modSign: modData.sign,
+            modValue: modData.value,
+            proficient: ability.proficient,
+            save: ability.save.value,
+            saveSign: saveData.sign,
+            saveValue: saveData.value,
+            score: ability.value,
+          });
+
+          groupAbility.proficient ||= ability.proficient > 0;
+
+          groupAbility.save = Math.max(
+            groupAbility.save,
+            ability.save.value,
+          );
+        },
       );
     }
 
