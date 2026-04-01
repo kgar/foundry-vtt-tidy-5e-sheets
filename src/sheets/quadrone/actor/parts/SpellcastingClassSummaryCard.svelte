@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getSourceClassFilterName } from 'src/runtime/item/default-item-filters';
+  import { getSourceItemFilterName } from 'src/runtime/item/default-item-filters';
   import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type {
     CharacterSheetQuadroneContext,
@@ -41,7 +41,7 @@
     itemFilterService.onFilter(tabId, CONSTANTS.FILTER_PREPARED, true);
     itemFilterService.onFilter(
       tabId,
-      getSourceClassFilterName(info.classIdentifier),
+      getSourceItemFilterName(info.classIdentifier),
       true,
     );
   }

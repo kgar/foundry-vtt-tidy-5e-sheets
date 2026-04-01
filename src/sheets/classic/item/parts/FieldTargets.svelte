@@ -97,22 +97,40 @@
 </h3>
 
 <!-- Template Type -->
-<div class="form-group">
+<div class="form-group split-group">
   <label for="{appId}-target-template-type">{localize('DND5E.Shape')}</label>
-  <Select
-    id="{appId}-target-template-type"
-    document={context.item}
-    field="system.target.template.type"
-    value={context.source.target.template.type}
-    disabled={!context.editable}
-    blankValue=""
-  >
-    <SelectOptions
-      data={context.config.areaTargetOptions}
-      labelProp="label"
-      valueProp="value"
-    />
-  </Select>
+  <div class="form-fields">
+    <div class="form-group label-top">
+      <label for="{appId}-target-template-type">{localize('DND5E.Type')}</label>
+      <Select
+        id="{appId}-target-template-type"
+        document={context.item}
+        field="system.target.template.type"
+        value={context.source.target.template.type}
+        disabled={!context.editable}
+        blankValue=""
+      >
+        <SelectOptions
+          data={context.config.areaTargetOptions}
+          labelProp="label"
+          valueProp="value"
+        />
+      </Select>
+    </div>
+    {#if context.source.target.template.type === 'radius'}
+      <div class="form-group checkbox" style="flex: 0;">
+        <label for="{appId}-target-template-stationary">
+          {localize('DND5E.TARGET.FIELDS.target.template.stationary.label')}
+        </label>
+        <Checkbox
+          id="{appId}-target-template-stationary"
+          document={context.document}
+          field="system.target.template.stationary"
+          value={context.source.target.template.stationary}
+        />
+      </div>
+    {/if}
+  </div>
 </div>
 
 <!-- Dimensions -->

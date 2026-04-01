@@ -427,7 +427,7 @@ export function Tidy5eActorSheetClassicV2Base<
       const tags: Record<string, string> = {};
       const units = senses.units ?? dnd5e.utils.defaultUnits('length');
       for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
-        const v = senses[k] ?? 0;
+        const v = senses.ranges[k] ?? 0;
         if (v === 0) continue;
         tags[k] = `${game.i18n.localize(label)} ${dnd5e.utils.formatLength(
           v,
@@ -506,7 +506,7 @@ export function Tidy5eActorSheetClassicV2Base<
             type: 'disjunction',
           });
           data.selected.physical = game.i18n.format(
-            'DND5E.DamagePhysicalBypasses',
+            'DND5E.DAMAGE.PhysicalBypasses.Description',
             {
               damageTypes: damageTypesFormatter.format(
                 physical.map((t) =>
@@ -536,7 +536,7 @@ export function Tidy5eActorSheetClassicV2Base<
           trait === 'dr' &&
           this.document.hasConditionEffect('petrification')
         ) {
-          data.selected = { custom1: game.i18n.localize('DND5E.DamageAll') };
+          data.selected = { custom1: game.i18n.localize('DND5E.DAMAGE.All') };
           data.cssClass = '';
         }
       }
@@ -1048,7 +1048,7 @@ export function Tidy5eActorSheetClassicV2Base<
     ): Promise<Item5e[]> {
       let items = itemData instanceof Array ? itemData : [itemData];
       const itemsWithoutAdvancement = items.filter(
-        (i) => !i.system.advancement?.length
+        (i) => !i.system.advancement?.size
       );
       const multipleAdvancements =
         items.length - itemsWithoutAdvancement.length > 1;
@@ -1127,8 +1127,8 @@ export function Tidy5eActorSheetClassicV2Base<
       if (
         itemData.type === 'spell' &&
         (isOnInventoryTab ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_GROUP)
+          this.actor.system.isVehicle ||
+          this.actor.system.isGroup)
       ) {
         const options: Record<string, unknown> = {};
 
@@ -1157,7 +1157,7 @@ export function Tidy5eActorSheetClassicV2Base<
       // Bypass normal creation flow for any items with advancement
       if (
         this.actor.system.metadata?.supportsAdvancement &&
-        itemData.system.advancement?.length &&
+        !foundry.utils.isEmpty(itemData.system.advancement) &&
         !game.settings.get('dnd5e', 'disableAdvancements')
       ) {
         // Ensure that this item isn't violating the singleton rule

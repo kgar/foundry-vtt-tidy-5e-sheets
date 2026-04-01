@@ -562,10 +562,6 @@
             "selectionDialogTitle": "Migrazione: Legami, Ideali e Difetti PNG a System",
             "sectionTitle": "Legami, Ideali e Difetti PNG"
         },
-        "SpellClassToSourceClass": {
-            "sectionTitle": "Classe Incantesimo a Classe Sorgente",
-            "selectionDialogTitle": "Migrazione: Classe Incantesimo a Classe Sorgente"
-        },
         "NpcExhaustion": {
             "sectionTitle": "Indebolimento PNG",
             "selectionDialogTitle": "Migrazione: Indebolimento PNG a System"
@@ -789,9 +785,9 @@
     "TIDY5E.SpellSourceIdentifierLabelHint": "Il personaggio che possiede questo incantesimo non ha la classe sorgente specificata qui.",
     "TIDY5E.Utilities.Tools": "Strumenti",
     "TIDY5E.Utilities.AssignSpellsToClasses": "Assegna Incantesimi a Classi",
-    "TIDY5E.SpellSourceClassAssignments.Identifier": "Identificatore Classe Sorgente",
-    "TIDY5E.SpellSourceClassAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
-    "TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
+    "TIDY5E.SpellSourceItemAssignments.Identifier": "Identificatore Classe Sorgente",
+    "TIDY5E.SpellSourceItemAssignments.IdentifierHint": "L'identificatore della classe sorgente dell'incantesimo appare qui. Per assegnare un identificatore che il personaggio non possiede, inserisci l'identificatore della classe in questo campo di testo.",
+    "TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text": "Mostra Solo Non Assegnato",
     "TIDY5E.SpellSourceIdentifierSelectText": "Identificatore Classe: {identifier}",
     "TIDY5E.PreviewSheetImageHint": "Clic Sinistro: Anteprima Immagine",
     "TIDY5E.Tidy5eGroupSheetClassic": "Scheda Gruppo Classica Tidy 5e",

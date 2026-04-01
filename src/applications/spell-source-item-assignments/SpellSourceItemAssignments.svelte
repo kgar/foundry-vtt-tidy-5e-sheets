@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SpellSourceClassAssignmentsContext } from './SpellSourceClassAssignmentsFormApplication.svelte';
+  import type { SpellSourceItemAssignmentsContext } from './SpellSourceItemAssignmentsFormApplication.svelte';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -15,7 +15,7 @@
   import FieldToggle from 'src/components/toggles/FieldToggle.svelte';
 
   let context = $derived(
-    getContext<CoarseReactivityProvider<SpellSourceClassAssignmentsContext>>(
+    getContext<CoarseReactivityProvider<SpellSourceItemAssignmentsContext>>(
       CONSTANTS.SVELTE_CONTEXT.CONTEXT,
     ).data,
   );
@@ -36,16 +36,16 @@
 
   let classColumns = $derived(
     Object.entries<Item5e>(context.actor.spellcastingClasses).map(
-      ([key, value]) => ({
-        key: key,
+      ([identifier, value]) => ({
+        identifier: `${CONSTANTS.ITEM_TYPE_CLASS}:${identifier}`,
         item: value,
       }),
     ),
   );
 
-  async function setItemSourceClass(item: Item5e, sourceClass: string) {
+  async function setSourceItem(item: Item5e, identifier: string) {
     await item.update({
-      'system.sourceClass': sourceClass,
+      'system.sourceItem': identifier,
     });
   }
 
@@ -59,7 +59,7 @@
     <Search bind:value={searchCriteria} />
     <label class="flexshrink checkbox">
       <input type="checkbox" bind:checked={showUnassignedOnly} />
-      {localize('TIDY5E.SpellSourceClassAssignments.ShowUnassignedOnly.Text')}
+      {localize('TIDY5E.SpellSourceItemAssignments.ShowUnassignedOnly.Text')}
     </label>
   </div>
   <div role="presentation" class="scroll-container flex1">
@@ -87,12 +87,12 @@
           {/each}
           <TidyTableHeaderCell columnWidth="12.5rem" class="flexgap-1">
             <span
-              >{localize('TIDY5E.SpellSourceClassAssignments.Identifier')}</span
+              >{localize('TIDY5E.SpellSourceItemAssignments.Identifier')}</span
             >
             <i
               class="fas fa-question-circle"
               title={localize(
-                'TIDY5E.SpellSourceClassAssignments.IdentifierHint',
+                'TIDY5E.SpellSourceItemAssignments.IdentifierHint',
               )}
             ></i>
           </TidyTableHeaderCell>
@@ -100,11 +100,11 @@
       {/snippet}
       {#snippet body()}
         {#each context.assignments as assignment (assignment.item.id)}
-          {@const sourceClassIsUnassigned =
-            (assignment.item.system.sourceClass?.trim() ?? '') === ''}
+          {@const sourceItemIsUnassigned =
+            (assignment.item.system.sourceItem?.trim() ?? '') === ''}
           {@const hideRow =
             !visibleSelectablesIdSubset.has(assignment.item.id) ||
-            (showUnassignedOnly && !sourceClassIsUnassigned)}
+            (showUnassignedOnly && !sourceItemIsUnassigned)}
           <TidyTableRow hidden={hideRow}>
             <TidyTableCell primary={true} class="flexrow">
               <a
@@ -118,14 +118,14 @@
             </TidyTableCell>
             {#each classColumns as classColumn}
               {@const selected =
-                assignment.item.system.sourceClass === classColumn.key}
+                assignment.item.system.sourceItem === classColumn.identifier}
               <TidyTableCell columnWidth="8rem">
                 <FieldToggle
                   checked={selected}
                   onchange={(ev) =>
-                    setItemSourceClass(
+                    setSourceItem(
                       assignment.item,
-                      ev.currentTarget.checked ? classColumn.key : '',
+                      ev.currentTarget.checked ? classColumn.identifier : '',
                     )}
                 />
               </TidyTableCell>
@@ -134,9 +134,9 @@
               <TextInput
                 document={assignment.item}
                 disabled={!assignment.item.isOwner}
-                field="system.sourceClass"
+                field="system.sourceItem"
                 selectOnFocus={true}
-                value={assignment.item.system.sourceClass}
+                value={assignment.item.system.sourceItem}
               />
             </TidyTableCell>
           </TidyTableRow>

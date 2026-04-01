@@ -153,7 +153,7 @@ export function getItemContextOptions(
   });
 
   const isCharacter =
-    itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+    itemParentIsActor && itemParent.system.isCharacter;
   if (isCharacter) {
     // Add favorites to context menu
     let isFav = FoundryAdapter.isItemFavorited(item);

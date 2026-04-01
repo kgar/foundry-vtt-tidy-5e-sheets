@@ -176,6 +176,9 @@ export function Tidy5eActorSheetQuadroneBase<
             document: this.document,
           }).render({ force: true });
         },
+        rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
+          this.actor.initiateRest({ type: target.dataset.type });
+        },
         showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
           const { src } = await this._preparePortrait(this.actor);
 
@@ -671,7 +674,7 @@ export function Tidy5eActorSheetQuadroneBase<
                 const type = CONFIG.DND5E.itemProperties[p]?.label;
                 return {
                   icon: p,
-                  label: game.i18n.format('DND5E.DamagePhysicalBypassesShort', {
+                  label: game.i18n.format('DND5E.DAMAGE.PhysicalBypasses.DescriptionShort', {
                     type,
                   }),
                 };
@@ -693,7 +696,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       // If petrified, display "All Damage" instead of all damage types separately
       if (this.document.hasConditionEffect('petrification')) {
-        traits.dr = [{ label: game.i18n.localize('DND5E.DamageAll') }];
+        traits.dr = [{ label: game.i18n.localize('DND5E.DAMAGE.All') }];
       }
 
       // Prepare damage modifications
@@ -726,7 +729,7 @@ export function Tidy5eActorSheetQuadroneBase<
                   return {
                     icon: p,
                     label: game.i18n.format(
-                      'DND5E.DamagePhysicalBypassesShort',
+                      'DND5E.DAMAGE.PhysicalBypasses.DescriptionShort',
                       { type }
                     ),
                   };
@@ -824,7 +827,9 @@ export function Tidy5eActorSheetQuadroneBase<
         if (property === 'skills') src = CONFIG.DND5E.skills[key]?.ability;
         return src ?? 'int';
       };
+
       return Object.entries(context.system[property] ?? {})
+        .filter(([key]) => key in CONFIG.DND5E[property])
         .map(([key, entry]: [string, any]) => ({
           ...entry,
           key,
@@ -954,7 +959,7 @@ export function Tidy5eActorSheetQuadroneBase<
       const senses = Object.entries(CONFIG.DND5E.senses).reduce<
         ActorSpeedSenseEntryContext[]
       >((acc, [key, label]) => {
-        const value = senseConfig[key];
+        const value = senseConfig.ranges[key];
 
         if (!value || value === 0) {
           return acc;
@@ -1397,14 +1402,13 @@ export function Tidy5eActorSheetQuadroneBase<
       if (allowed === false) return;
 
       // Sheet Pins
-      const doc = await fromUuid(data.uuid);
-
+      const sheetPinDoc = await fromUuid(data.uuid);
       if (
-        doc.actor === this.actor &&
+        sheetPinDoc?.actor === this.actor &&
         event.target.closest('[data-tidy-sheet-part="sheet-pins"]')
       ) {
-        let relativeUuid = SheetPinsProvider.getRelativeUUID(doc);
-        return await this._onDropPin(event, { id: relativeUuid, doc });
+        let relativeUuid = SheetPinsProvider.getRelativeUUID(sheetPinDoc);
+        return await this._onDropPin(event, { id: relativeUuid, doc: sheetPinDoc });
       }
 
       // Dropped Documents
@@ -1698,7 +1702,7 @@ export function Tidy5eActorSheetQuadroneBase<
     ) {
       behavior ??= (event as any)._behavior;
       const itemsWithoutAdvancement = items.filter(
-        (i) => !i.system.advancement?.length
+        (i) => !i.system.advancement?.size
       );
       const multipleAdvancements =
         items.length - itemsWithoutAdvancement.length > 1;
@@ -1716,8 +1720,16 @@ export function Tidy5eActorSheetQuadroneBase<
       const containers = new Set(
         items.filter((i) => i.type === 'container').map((i) => i._id)
       );
-
       items = items.filter((i) => !containers.has(i.system.container));
+
+      // Transform physical items from NPCs to their gear versions
+      items = await Promise.all(
+        items.map((i) =>
+          i.actor?.system.isNPC && i.actor !== this.actor && i.system.asGear
+            ? i.system.asGear()
+            : i,
+        ),
+      );
 
       // Create the owned items & contents as normal
       const toCreate = await dnd5e.documents.Item5e.createWithContents(items, {
@@ -1772,8 +1784,8 @@ export function Tidy5eActorSheetQuadroneBase<
       if (
         itemData.type === 'spell' &&
         (isOnInventoryTab ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_VEHICLE ||
-          this.actor.type === CONSTANTS.SHEET_TYPE_GROUP)
+          this.actor.system.isVehicle ||
+          this.actor.system.isGroup)
       ) {
         const options: Record<string, unknown> = {};
 
@@ -1793,7 +1805,7 @@ export function Tidy5eActorSheetQuadroneBase<
       this._onDropResetData(itemData);
 
       // Stack identical consumables
-      const stacked = this._onDropStackConsumables(itemData, {});
+      const stacked = this._onDropStackConsumables(event, itemData, {});
 
       if (stacked) {
         return false;
@@ -1802,7 +1814,7 @@ export function Tidy5eActorSheetQuadroneBase<
       // Bypass normal creation flow for any items with advancement
       if (
         this.actor.system.metadata?.supportsAdvancement &&
-        itemData.system.advancement?.length &&
+        !foundry.utils.isEmpty(itemData.system.advancement) &&
         !game.settings.get('dnd5e', 'disableAdvancements')
       ) {
         // Ensure that this item isn't violating the singleton rule
@@ -1844,6 +1856,7 @@ export function Tidy5eActorSheetQuadroneBase<
      * Stack identical consumables when a new one is dropped rather than creating a duplicate item.
      */
     _onDropStackConsumables(
+      _event: Event,
       itemData: any,
       { container = null } = {}
     ): Promise<Item5e> | null {

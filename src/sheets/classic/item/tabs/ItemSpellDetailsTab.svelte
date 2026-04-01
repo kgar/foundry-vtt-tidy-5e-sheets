@@ -13,6 +13,7 @@
   import FieldRange from '../parts/FieldRange.svelte';
   import FieldDuration from '../parts/FieldDuration.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
   let context = $derived(getItemSheetContext());
 
@@ -187,21 +188,27 @@
 
 <!-- Source Class -->
 {#if context.isEmbedded}
+  {@const options = Object.entries<Item5e>(
+    context.document.parent.spellcastingClasses,
+  ).map(([identifier, item]) => ({
+    text: item.name,
+    value: `${CONSTANTS.ITEM_TYPE_CLASS}:${identifier}`,
+  }))}
   <div class="form-group">
-    <label for="{appId}-sourceClass">{localize('DND5E.SpellSourceClass')}</label
-    >
+    <label for="{appId}-sourceItem">{localize('DND5E.SourceItem.Label')}</label>
     <div class="form-fields">
       <Select
-        id="{appId}-sourceClass"
+        id="{appId}-sourceItem"
         document={context.item}
-        field="system.sourceClass"
-        value={context.source.sourceClass}
+        field="system.sourceItem"
+        value={context.source.sourceItem}
         disabled={!context.editable}
         blankValue=""
       >
         <SelectOptions
-          data={context.document.parent.spellcastingClasses}
-          labelProp="name"
+          data={options}
+          labelProp="text"
+          valueProp="value"
           blank=""
         />
       </Select>
@@ -225,20 +232,6 @@
           blank={context.defaultAbility}
         />
       </Select>
-    </div>
-  </div>
-{:else}
-  <div class="form-group">
-    <label for="{appId}-sourceClass">{localize('DND5E.SpellSourceClass')}</label
-    >
-    <div class="form-fields">
-      <TextInput
-        id="{appId}-sourceClass"
-        document={context.item}
-        field="system.sourceClass"
-        value={context.source.sourceClass}
-        disabled={!context.editable}
-      />
     </div>
   </div>
 {/if}

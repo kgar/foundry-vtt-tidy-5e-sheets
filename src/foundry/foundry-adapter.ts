@@ -24,6 +24,7 @@ import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import type { Activity5e } from './dnd5e.types';
 import type { ClassValue } from 'svelte/elements';
 import type { TidyExtensibleDocumentSheetMixin } from 'src/mixins/TidyDocumentSheetMixin.svelte';
+import type { CurrencyItemConfig } from './config.types';
 
 const quadroneSheetRegex = /Tidy.*Quadrone/;
 export type DocumentSheetConstructor = new (...args: any[]) => InstanceType<
@@ -96,7 +97,7 @@ export const FoundryAdapter = {
 
     const effectData = {
       name: isActor ? game.i18n.localize('DND5E.EffectNew') : parent.name,
-      icon: isActor ? 'icons/svg/aura.svg' : parent.img,
+      img: isActor ? 'icons/svg/aura.svg' : parent.img,
       origin: parent.uuid,
       'duration.rounds': effectType === 'temporary' ? 1 : undefined,
       disabled: effectType === 'inactive',
@@ -110,6 +111,13 @@ export const FoundryAdapter = {
       )
     ) {
       return;
+    }
+
+    if (parent.documentName === CONSTANTS.DOCUMENT_NAME_ITEM) {
+      return ActiveEffect.implementation.createDialog(effectData, {
+        parent: parent,
+        renderSheet: true,
+      });
     }
 
     return ActiveEffect.implementation.create(effectData, {
@@ -502,11 +510,13 @@ export const FoundryAdapter = {
       return spell.img;
     }
 
-    const sourceClass = spell.system.sourceClass;
+    const identifier = spell.system.sourceItem?.substring(
+      spell.system.sourceItem?.indexOf(':') + 1,
+    );
 
     const classImage =
-      sourceClass && 'actorClassesToImages' in context
-        ? context.actorClassesToImages[sourceClass]
+      identifier && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[identifier]
         : undefined;
 
     return classImage ?? spell.img;
@@ -735,7 +745,7 @@ export const FoundryAdapter = {
   },
   showLimitedSheet(actor: any): boolean {
     const showLimitedSheet = !FoundryAdapter.userIsGm() && actor.limited;
-    if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+    if (actor.system.isCharacter) {
       return showLimitedSheet && !settings.value.showExpandedLimitedView;
     }
     return showLimitedSheet;
@@ -836,7 +846,7 @@ export const FoundryAdapter = {
     );
   },
   deleteAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
+    const advancement = item.system.advancement.get(advancementItemId);
     return advancement?.deleteDialog();
   },
   modifyAdvancementChoices(advancementLevel: string, item: Item5e) {
@@ -852,7 +862,7 @@ export const FoundryAdapter = {
     }
   },
   editAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
+    const advancement = item.system.advancement.get(advancementItemId);
 
     return new advancement.constructor.metadata.apps.config(advancement).render(
       true
@@ -1128,11 +1138,11 @@ export const FoundryAdapter = {
   },
   useClassicControls(document: any) {
     return (
-      (document.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+      (document.system.isCharacter &&
         settings.value.useClassicControlsForCharacter) ||
-      (document.type === CONSTANTS.SHEET_TYPE_NPC &&
+      (document.system.isNPC &&
         settings.value.useClassicControlsForNpc) ||
-      (document.type === CONSTANTS.SHEET_TYPE_VEHICLE &&
+      (document.system.isVehicle &&
         settings.value.useClassicControlsForVehicle) ||
       // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
       settings.value.useClassicControlsForCharacter
@@ -1431,7 +1441,7 @@ export const FoundryAdapter = {
   },
   getFilteredClass(actor: Actor5e): Item5e | undefined {
     const classSpellbookFilter = actor.sheet.classSpellbookFilter;
-    return actor.classes?.[classSpellbookFilter];
+    return actor.identifiedItems.get(classSpellbookFilter)?.first();
   },
   getSpellcastingInfo(actor: Actor5e): SpellcastingInfo {
     const currentFilteredClass =
@@ -1679,5 +1689,16 @@ export const FoundryAdapter = {
     }
 
     return result;
+  },
+  getDefaultCurrencyConfig(): CurrencyItemConfig & { key: string } {
+    return CONFIG.DND5E.currencies[CONFIG.DND5E.defaultCurrency]
+      ? {
+          ...CONFIG.DND5E.currencies[CONFIG.DND5E.defaultCurrency],
+          key: CONFIG.DND5E.defaultCurrency,
+        }
+      : {
+          ...CONFIG.DND5E.currencies.gp,
+          key: 'gp',
+        };
   },
 };

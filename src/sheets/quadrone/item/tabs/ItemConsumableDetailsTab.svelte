@@ -123,7 +123,6 @@
             id: `${appId}-magical-bonus`,
             value: context.source.magicalBonus,
             placeholder: '0',
-            step: 1,
           }}
           field={context.fields.magicalBonus}
         />

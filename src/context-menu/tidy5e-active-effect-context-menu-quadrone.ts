@@ -19,7 +19,7 @@ export function getActiveEffectContextOptionsQuadrone(
   }
 
   if (
-    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+    actor.system.isCharacter &&
     !FoundryAdapter.allowCharacterEffectsManagement(actor)
   ) {
     return [];

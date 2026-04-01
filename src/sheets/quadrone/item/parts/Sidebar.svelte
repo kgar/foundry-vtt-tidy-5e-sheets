@@ -506,7 +506,7 @@
       context.item,
     )}
     {@const sectionType =
-      context.item.parent?.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      context.item.parent?.system.isCharacter
         ? 'Sheet'
         : 'TIDY5E.Section.Label'}
     <div>

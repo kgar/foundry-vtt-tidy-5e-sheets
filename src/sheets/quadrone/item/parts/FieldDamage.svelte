@@ -111,21 +111,25 @@
   <div class="form-group stacked damage-types checkbox-grid">
     <label for="">{localize('DND5E.Type')}</label>
     <div class="form-fields">
-      {#each types as { value, label, selected } (value)}
-        <label class="checkbox" for="{idPrefix}types-{value?.slugify()}">
-          <CheckboxQuadrone
-            id="{idPrefix}types-{value?.slugify()}"
-            document={context.item}
-            field="{prefix}types"
-            checked={selected}
-            {value}
-            disabledChecked={system.types.has(value)}
-            disabled={!context.unlocked}
-            onDataPreparing={(ev) =>
-              mapSystemDamageTypesToSave(prefix, source, ev)}
-          />
-          {label}
-        </label>
+      {#each types as { value, label, selected }}
+        <!-- TODO: remove inline localization when https://github.com/foundryvtt/dnd5e/issues/6850 is resolved -->
+        {@const locLabel = localize(label)}
+        {#if value}
+          <label class="checkbox" for="{idPrefix}types-{value?.slugify()}">
+            <CheckboxQuadrone
+              id="{idPrefix}types-{value?.slugify()}"
+              document={context.item}
+              field="{prefix}types"
+              checked={selected}
+              {value}
+              disabledChecked={system.types.has(value)}
+              disabled={!context.unlocked}
+              onDataPreparing={(ev) =>
+                mapSystemDamageTypesToSave(prefix, source, ev)}
+            />
+            {locLabel}
+          </label>
+        {/if}
       {/each}
     </div>
   </div>

@@ -8,7 +8,7 @@ export function configureKeyedFavoriteContextMenu(
   element: HTMLElement,
   app: Tidy5eCharacterSheetQuadrone
 ) {
-  if (app.actor.type === CONSTANTS.SHEET_TYPE_GROUP) {
+  if (app.actor.system.isGroup) {
     return;
   }
 

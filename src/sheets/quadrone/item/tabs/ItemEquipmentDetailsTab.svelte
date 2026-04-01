@@ -174,7 +174,6 @@
           id: `${appId}-armor-magical-bonus`,
           value: context.source.armor.magicalBonus,
           placeholder: '0',
-          step: 1,
         }}
         field={context.fields.armor.fields.magicalBonus}
       />

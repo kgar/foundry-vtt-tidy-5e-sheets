@@ -1,6 +1,6 @@
 import type { Actor5e, GroupableSelectOption } from 'src/types/types';
 
-type CurrencyItemConfig = {
+export type CurrencyItemConfig = {
   label: string;
   abbreviation: string;
   conversion: number;
@@ -3527,6 +3527,7 @@ export type CONFIG = {
       sp: CurrencyItemConfig;
       cp: CurrencyItemConfig;
     } & Record<string, CurrencyItemConfig>;
+    defaultCurrency: string,
     dieSteps: Array<number>;
     damageScalingModes: {
       whole: {
@@ -3667,7 +3668,7 @@ export type CONFIG = {
     travelUnits: {
       mph: TravelUnitConfig;
       kph: TravelUnitConfig;
-      } & Record<string, TravelUnitConfig>;
+    } & Record<string, TravelUnitConfig>;
     rangeTypes: {
       self: string;
       touch: string;
@@ -3835,7 +3836,10 @@ export type CONFIG = {
           gritty: number;
           epic: number;
         };
-        recoverPeriods: Array<string>;
+        label: string;
+        icon: string;
+        activationPeriods: string[];
+        recoverPeriods: string[];
         recoverSpellSlotTypes: {};
       };
       long: {
@@ -3844,10 +3848,17 @@ export type CONFIG = {
           gritty: number;
           epic: number;
         };
+        exhaustionDelta: number;
+        label: string;
+        icon: string;
+        newDay: boolean;
+        activationPeriods: string[];
         recoverHitDice: boolean;
         recoverHitPoints: boolean;
         recoverPeriods: Array<string>;
         recoverSpellSlotTypes: {};
+        recoverTemp: boolean;
+        recoverTempMax: boolean;
       };
     };
     senses: {
@@ -4424,6 +4435,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4432,6 +4444,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4440,6 +4453,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         icon: string;
         configKey: string;
@@ -4448,6 +4462,7 @@ export type CONFIG = {
         labels: {
           title: string;
           localization: string;
+          all: string;
         };
         configKey: string;
       };

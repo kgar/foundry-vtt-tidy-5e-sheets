@@ -10,6 +10,7 @@
   import FieldDamage from '../parts/FieldDamage.svelte';
   import FieldUses from '../parts/FieldUses.svelte';
   import { getItemSheetContext } from 'src/sheets/sheet-context.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = $derived(getItemSheetContext());
 
@@ -113,14 +114,13 @@
         {#if context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
           <div class="form-group label-top">
             <label for="{appId}-magical-bonus">{localize('DND5E.Bonus')}</label>
-            <NumberInput
+            <TextInput
               id="{appId}-magical-bonus"
               value={context.system.magicalBonus}
               field="system.magicalBonus"
               document={context.item}
               disabled={!context.editable}
-              min="0"
-              step="1"
+              data-formula-editor
               placeholder="0"
             />
           </div>

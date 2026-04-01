@@ -27,7 +27,7 @@
           context.config.itemProperties[icon]?.label ?? ''}
         <i
           class="damage-modification-icon {icon}"
-          title={localize('DND5E.DamagePhysicalBypassesShort', {
+          title={localize('DND5E.DAMAGE.PhysicalBypasses.DescriptionShort', {
             type: propertyLabel,
           })}
         ></i>

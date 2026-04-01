@@ -639,7 +639,7 @@ export class Tidy5eEncounterSheetClassic extends Tidy5eActorSheetBaseMixin(
         const senses = member.system.attributes.senses ?? {};
         const tags: Record<string, string> = {};
         for (let [k, label] of Object.entries(CONFIG.DND5E.senses)) {
-          const v = senses[k] ?? 0;
+          const v = senses.ranges[k] ?? 0;
           if (v === 0) continue;
           tags[k] = `${game.i18n.localize(label)} ${v} ${
             CONFIG.DND5E.movementUnits[senses.units]?.abbreviation ??

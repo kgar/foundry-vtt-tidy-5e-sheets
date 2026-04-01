@@ -28,6 +28,7 @@ import { Tidy5eNpcSheetQuadrone } from './Tidy5eNpcSheetQuadrone.svelte';
 import type { SkillData } from 'src/foundry/dnd5e.types';
 import { getModifierData } from 'src/utils/formatting';
 import SectionActions from 'src/features/sections/SectionActions';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function Tidy5eMultiActorSheetQuadroneBase<
   TContext extends MultiActorQuadroneContext<any>
@@ -142,16 +143,41 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       });
     }
 
-    getGpSummary(actor: Actor5e) {
+    getDefaultCurrencySummary(actor: Actor5e) {
+      const defaultCurrency = FoundryAdapter.getDefaultCurrencyConfig();
+
+      if (!defaultCurrency) {
+        return 0;
+      }
+
       const currency = actor.system.currency;
 
-      return Math.round(
-        Object.keys(currency).reduce((total, key) => {
-          return key in CONFIG.DND5E.currencies
-            ? total + currency[key] / CONFIG.DND5E.currencies[key].conversion
-            : total;
-        }, 0)
+      const currencies = Object.entries(CONFIG.DND5E.currencies)
+        .filter(([, c]) => c.conversion)
+        .sort((a, b) => a[1].conversion - b[1].conversion);
+
+      const smallestCurrency = currencies.at(-1)?.[1];
+
+      if (!smallestCurrency) {
+        return 0;
+      }
+
+      const smallestConversion = smallestCurrency.conversion ?? 0;
+
+      let sumCurrencyInCheapestDenomination = currencies.reduce(
+        (amount, [denomination, config]) =>
+          amount +
+          currency[denomination] * (smallestConversion / config.conversion),
+        0,
       );
+
+      const conversion = smallestCurrency.conversion;
+      const multiplier = defaultCurrency.conversion / conversion;
+      const sumCurrencyInDefaultDenomination = Math.floor(
+        sumCurrencyInCheapestDenomination * multiplier,
+      );
+
+      return sumCurrencyInDefaultDenomination;
     }
 
     _prepareMemberLanguages(
@@ -159,9 +185,9 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       languages: Map<string, MeasurableGroupTrait<number>>
     ) {
       let memberLanguages =
-        actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+        actor.system.isCharacter
           ? Tidy5eCharacterSheetQuadrone._getLanguageTraits(actor)
-          : actor.type === CONSTANTS.SHEET_TYPE_NPC
+          : actor.system.isNPC
           ? Tidy5eNpcSheetQuadrone._getLanguageTraits(actor)
           : [];
 
@@ -300,7 +326,7 @@ export function Tidy5eMultiActorSheetQuadroneBase<
       let unitsConfig = CONFIG.DND5E.movementUnits[unitsKey];
       let units = unitsConfig?.abbreviation ?? unitsKey;
 
-      Object.entries(actor.system.attributes.senses ?? {}).forEach(
+      Object.entries(actor.system.attributes.senses.ranges ?? {}).forEach(
         ([key, sense]) => {
           const label = CONFIG.DND5E.senses[key];
           if (typeof sense !== 'number' || sense === 0 || !label) {

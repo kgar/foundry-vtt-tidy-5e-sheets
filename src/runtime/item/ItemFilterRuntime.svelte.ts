@@ -10,7 +10,7 @@ import {
   getActionListFilterCategories,
   getAttunementFilters,
   getItemRarityFilters,
-  getSourceClassFilters,
+  getSourceItemFilters,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
 import { debug, error } from 'src/utils/logging';
@@ -404,7 +404,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostOther,
         ],
         ...getStandardSpellSchoolFilterCategories(),
-        'DND5E.SpellSourceClass': (document) => getSourceClassFilters(document),
+        'DND5E.SourceItem.Label': (document) => getSourceItemFilters(document),
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
         'DND5E.ItemActivationCost': [
@@ -530,7 +530,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostOther,
         ],
         ...getStandardSpellSchoolFilterCategories(),
-        'DND5E.SpellSourceClass': (document) => getSourceClassFilters(document),
+        'DND5E.SourceItem.Label': (document) => getSourceItemFilters(document),
       },
     },
     [CONSTANTS.SHEET_TYPE_GROUP]: {

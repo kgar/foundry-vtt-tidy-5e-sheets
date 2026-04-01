@@ -177,7 +177,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           ),
         },
       },
-      totalGold: this.getGpSummary(this.actor),
+      totalCurrency: this.getDefaultCurrencySummary(this.actor),
       totalXp: await this.actor.system.getXPValue(),
       type: 'encounter',
       ...(await this._prepareMemberDependentContext(actorContext)),
