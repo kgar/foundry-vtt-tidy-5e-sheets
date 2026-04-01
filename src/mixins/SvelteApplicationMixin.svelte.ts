@@ -435,6 +435,34 @@ export function SvelteApplicationMixin<
 
       return newPosition;
     }
+
+    /**
+     * Get render options to open an application as its own detached window.
+     * @returns options for a detached window.
+     */
+    _detachOptions(): Record<string, any> {
+      if ( game.release.generation < 14 ) return {};
+      const { windowId } = (this.parent ?? this).window ?? {};
+      return windowId ? { window: { detached: true, windowId } } : {};
+    }
+
+    /**
+     * Render an application in the same workspace as this one.
+     * @param app        The application to render.
+     * @param [options]  Options passed to render.
+     * @returns an app v2 instance
+     */
+    _renderChild(app: any, options = {}) {
+      if (game.release.generation < 14) {
+        return app.render({ force: true, ...options });
+      }
+
+      if (this.parent) {
+        return this.parent.renderChild(app, options);
+      }
+      
+      return this.renderChild(app, options);
+    }
   }
 
   return SvelteApplication;
