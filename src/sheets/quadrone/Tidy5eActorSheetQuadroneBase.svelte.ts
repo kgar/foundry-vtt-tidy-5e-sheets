@@ -1236,7 +1236,8 @@ export function Tidy5eActorSheetQuadroneBase<
             parent: this.actor,
             pack: this.actor.pack,
             types,
-          }
+          }, 
+          { sheet: this }
         );
 
         Hooks.off('renderDialog', dialogV1HookId);
