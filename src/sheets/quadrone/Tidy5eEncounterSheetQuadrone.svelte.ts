@@ -484,7 +484,7 @@ export class Tidy5eEncounterSheetQuadrone extends Tidy5eMultiActorSheetQuadroneB
           types: new Set([CONSTANTS.SHEET_TYPE_NPC]),
         },
       },
-    });
+    }, this._detachOptions());
 
     if (result) {
       const actor = await fromUuid(result);

@@ -61,7 +61,7 @@
           types: new Set(['character', 'npc', 'vehicle', 'group']),
         },
       },
-    });
+    }, context.sheet._detachOptions());
 
     if (result) {
       context.actor.sheet._onDropActorAddToFacility(

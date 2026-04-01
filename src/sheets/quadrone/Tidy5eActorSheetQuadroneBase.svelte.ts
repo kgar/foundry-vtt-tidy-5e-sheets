@@ -2003,7 +2003,7 @@ export function Tidy5eActorSheetQuadroneBase<
 
       let result = await dnd5e.applications.CompendiumBrowser.selectOne({
         filters,
-      });
+      }, this._detachOptions());
 
       if (result) {
         this._onDropItemCreate(

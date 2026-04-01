@@ -82,7 +82,7 @@
           },
         },
       },
-    });
+    }, context.sheet._detachOptions());
 
     if (result) {
       context.actor.sheet._onDropItemCreate(await fromUuid(result), ev, 'copy');
