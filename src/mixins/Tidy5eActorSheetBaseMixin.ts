@@ -459,16 +459,21 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      * @this {ActorSheetV2}
      * @param {PointerEvent} event
      */
-    static async #onShowPortraitArtwork(
+    static #onShowPortraitArtwork(
       this: { actor?: Actor5e },
-      event: PointerEvent
+      event: PointerEvent,
     ) {
       const { img, name, uuid } = this.actor;
-      new foundry.applications.apps.ImagePopout({
+      
+      const app = new foundry.applications.apps.ImagePopout({
         src: img,
         title: name,
         uuid: uuid,
-      }).render(true);
+      });
+
+      return this.actor
+        ? this.actor.sheet._renderChild(app)
+        : app.render({ force: true });
     }
 
     /* -------------------------------------------- */
@@ -479,15 +484,15 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
      * @param {PointerEvent} event
      */
     static async #onShowTokenArtwork(
-      this: { actor?: Actor5e },
+      this: Tidy5eActorSheetBase,
       event: PointerEvent
     ) {
       const { prototypeToken, name, uuid } = this.actor;
-      new foundry.applications.apps.ImagePopout({
+      this._renderChild(new foundry.applications.apps.ImagePopout({
         src: prototypeToken.texture.src,
         title: name,
         uuid: uuid,
-      }).render(true);
+      }));
     }
   }
 

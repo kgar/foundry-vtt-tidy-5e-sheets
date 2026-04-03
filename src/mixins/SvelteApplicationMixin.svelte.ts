@@ -436,6 +436,44 @@ export function SvelteApplicationMixin<
       return newPosition;
     }
 
+    /* -------------------------------------------- */
+    /*  Detached Windows                            */
+    /* -------------------------------------------- */
+
+    /**
+     * Render a confirm dialog as a child of this application.
+     */
+    _confirmDialog(config: Record<string, any>): Promise<any> {
+      const { promise, resolve } = Promise.withResolvers();
+      const { yes = {}, no = {}, ...rest } = config;
+      const app = new foundry.applications.api.DialogV2({
+        ...rest,
+        buttons: [
+          foundry.utils.mergeObject(
+            {
+              action: 'yes',
+              icon: 'fa-solid fa-check',
+              label: game.i18n.localize('Yes'),
+              default: true,
+            },
+            yes,
+          ),
+          foundry.utils.mergeObject(
+            {
+              action: 'no',
+              icon: 'fa-solid fa-xmark',
+              label: game.i18n.localize('No'),
+            },
+            no,
+          ),
+        ],
+        submit: (result: unknown) => resolve(result),
+      });
+      app.addEventListener('close', () => resolve(null), { once: true });
+      this._renderChild(app);
+      return promise;
+    }
+
     /**
      * Get render options to open an application as its own detached window.
      * @returns options for a detached window.

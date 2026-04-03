@@ -78,11 +78,14 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        new foundry.applications.apps.ImagePopout({
+
+        const app = new foundry.applications.apps.ImagePopout({
           src: this.item.img,
           uuid: this.item.uuid,
           window: { title },
-        }).render({ force: true });
+        });
+
+        this._renderChild(app);
       },
     },
     dragDrop: [
@@ -982,7 +985,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
         advancements =
           await dnd5e.applications.advancement.AdvancementMigrationDialog.createDialog(
             this.item,
-            advancements
+            advancements,
+            { sheet: this }
           );
       } catch (err) {
         return false;
@@ -1026,7 +1030,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       {},
       {
         parent: this.item,
-      }
+      },
+      { sheet: this }
     );
   }
 
@@ -1077,7 +1082,8 @@ export class Tidy5eItemSheetClassic extends TidyExtensibleDocumentSheetMixin(
       case 'add':
         return dnd5e.documents.advancement.Advancement.createDialog(
           {},
-          { parent: this.item }
+          { parent: this.item },
+          { sheet: this }
         );
       case 'edit':
         return new advancement.constructor.metadata.apps.config(

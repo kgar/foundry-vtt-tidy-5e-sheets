@@ -72,17 +72,20 @@
         ? CONSTANTS.FACILITY_TYPE_SPECIAL
         : CONSTANTS.FACILITY_TYPE_BASIC;
 
-    const result = await dnd5e.applications.CompendiumBrowser.selectOne({
-      filters: {
-        locked: {
-          types: new Set(['facility']),
-          additional: {
-            type: { [type]: 1, [otherType]: -1 },
-            level: { max: context.actor.system.details.level },
+    const result = await dnd5e.applications.CompendiumBrowser.selectOne(
+      {
+        filters: {
+          locked: {
+            types: new Set(['facility']),
+            additional: {
+              type: { [type]: 1, [otherType]: -1 },
+              level: { max: context.actor.system.details.level },
+            },
           },
         },
       },
-    }, context.sheet._detachOptions());
+      context.sheet._detachOptions(),
+    );
 
     if (result) {
       context.actor.sheet._onDropItemCreate(await fromUuid(result), ev, 'copy');
@@ -91,7 +94,10 @@
 
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
     const facility = context.actor.items.get(chosen.id);
-    return facility?.use({ legacy: false, chooseActivity: true, event });
+    return facility?.use(
+      { legacy: false, chooseActivity: true, event },
+      { options: { sheet: context.sheet } },
+    );
   }
 
   let localize = FoundryAdapter.localize;
@@ -198,8 +204,10 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-header-details"
-                  onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
-                  onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+                  onmouseenter={(ev) =>
+                    onMouseEnterFacility(ev, chosen.facility)}
+                  onmouseleave={(ev) =>
+                    onMouseLeaveFacility(ev, chosen.facility)}
                   onmousedown={(ev) =>
                     FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                   onclick={(ev) => context.editable && useFacility(ev, chosen)}
@@ -388,8 +396,10 @@
                 <!-- svelte-ignore a11y_missing_attribute -->
                 <a
                   class="facility-header-details"
-                  onmouseenter={(ev) => onMouseEnterFacility(ev, chosen.facility)}
-                  onmouseleave={(ev) => onMouseLeaveFacility(ev, chosen.facility)}
+                  onmouseenter={(ev) =>
+                    onMouseEnterFacility(ev, chosen.facility)}
+                  onmouseleave={(ev) =>
+                    onMouseLeaveFacility(ev, chosen.facility)}
                   onmousedown={(ev) =>
                     FoundryAdapter.editOnMiddleClick(ev, chosen.facility)}
                   onclick={(ev) => context.editable && useFacility(ev, chosen)}

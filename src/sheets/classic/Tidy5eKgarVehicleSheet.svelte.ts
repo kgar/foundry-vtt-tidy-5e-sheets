@@ -88,7 +88,7 @@ export class Tidy5eVehicleSheet
       height: 810,
     },
     actions: {
-      browseActors: async function () {
+      browseActors: async function (this: Tidy5eVehicleSheet) {
         new dnd5e.applications.CompendiumBrowser({
           filters: {
             locked: {
@@ -96,7 +96,7 @@ export class Tidy5eVehicleSheet
               types: new Set(['character', 'npc']),
             },
           },
-        }).render({ force: true });
+        }, this._detachOptions()).render({ force: true });
       },
     },
   };

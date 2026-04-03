@@ -3,7 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SheetPinsProvider } from 'src/features/sheet-pins/SheetPinsProvider';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCharacterSheetContext } from 'src/sheets/sheet-context.svelte';
+  import { getSheetContext } from 'src/sheets/sheet-context.svelte';
   import type { SheetPinActivityContext } from 'src/types/types';
   import { isNil } from 'src/utils/data';
   import { EventHelper } from 'src/utils/events';
@@ -58,7 +58,7 @@
     }
   }
 
-  let context = $derived(getCharacterSheetContext());
+  let context = $derived(getSheetContext());
 
   let isSpell = $derived(ctx.document.type === CONSTANTS.ITEM_TYPE_SPELL);
   let spellMethodIcon = $derived(FoundryAdapter.getSpellIcon(ctx.document));
@@ -105,7 +105,9 @@
       role="button"
       tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
-      onclick={(event) => context.editable && ctx.document.use({ event })}
+      onclick={(event) =>
+        context.editable &&
+        ctx.document.use({ event }, { options: { sheet: context.sheet } })}
       data-has-roll-modes
     >
       <img class="item-image" alt={ctx.document.name} src={img} />

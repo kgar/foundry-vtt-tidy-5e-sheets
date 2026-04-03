@@ -289,7 +289,7 @@ export function getItemContextOptions(
       callback: () => {
         return itemParent
           ? FoundryAdapter.onActorItemDelete(itemParent, item)
-          : item.deleteDialog();
+          : item.deleteDialog({ sheet: app?.sheet });
       },
       condition: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),

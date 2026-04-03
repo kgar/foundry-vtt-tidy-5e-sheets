@@ -92,7 +92,7 @@ export function getActiveEffectContextOptionsQuadrone(
     {
       name: 'DND5E.ContextMenuActionDelete',
       icon: `<i class="fas fa-trash fa-fw" style='color: var(--t5e-warning-accent-color);'></i>`,
-      callback: () => effect.deleteDialog(),
+      callback: () => effect.deleteDialog({ sheet: actor?.sheet }),
       condition: () =>
         !isInFavorites && canEditEffect(effect) && !isConcentrationEffect,
       group: 'be-careful',

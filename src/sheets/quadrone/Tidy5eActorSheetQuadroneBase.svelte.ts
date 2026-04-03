@@ -172,9 +172,9 @@ export function Tidy5eActorSheetQuadroneBase<
         openTabConfiguration: async function (
           this: Tidy5eActorSheetQuadroneBase
         ) {
-          new SheetTabConfigurationQuadroneApplication({
+          this._renderChild(new SheetTabConfigurationQuadroneApplication({
             document: this.document,
-          }).render({ force: true });
+          }));
         },
         rest: async function (this: Tidy5eActorSheetQuadroneBase, _event, target) {
           this.actor.initiateRest({ type: target.dataset.type });
@@ -182,18 +182,16 @@ export function Tidy5eActorSheetQuadroneBase<
         showArtwork: async function (this: Tidy5eActorSheetQuadroneBase) {
           const { src } = await this._preparePortrait(this.actor);
 
-          new foundry.applications.apps.ImagePopout({
+          this._renderChild(new foundry.applications.apps.ImagePopout({
             src,
             uuid: this.actor.uuid,
             window: { title: this.actor.name },
-          }).render({ force: true });
+          }));
         },
         themeSettings: async function (this: Tidy5eActorSheetQuadroneBase) {
-          await new ThemeSettingsQuadroneApplication({
+          await this._renderChild(new ThemeSettingsQuadroneApplication({
             document: this.document,
-          }).render({
-            force: true,
-          });
+          }));
         },
       },
       dragDrop: [
@@ -1845,7 +1843,7 @@ export function Tidy5eActorSheetQuadroneBase<
           );
 
         if (manager.steps.length) {
-          manager.render(true);
+          this._renderChild(manager);
           return false;
         }
       }

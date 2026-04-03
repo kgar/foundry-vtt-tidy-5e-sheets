@@ -173,7 +173,7 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
       features: [],
       gear: gear.map<ActorTraitContext>((item: Item5e) => ({
         label: item.name,
-        onClick: () => item.sheet.render({ force: true }),
+        onClick: () => this._renderChild(item.sheet),
         key: item.uuid,
         value: item.system.quantity > 1 ? item.system.quantity : undefined,
         attributes: {

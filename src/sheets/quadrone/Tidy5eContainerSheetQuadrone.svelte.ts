@@ -139,11 +139,11 @@ export class Tidy5eContainerSheetQuadrone
           this.item.system.identified === false
             ? this.item.system.unidentified.name
             : this.item.name;
-        new foundry.applications.apps.ImagePopout({
+        this._renderChild(new foundry.applications.apps.ImagePopout({
           src: this.item.img,
           uuid: this.item.uuid,
           window: { title },
-        }).render({ force: true });
+        }));
       },
       themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
         await new ThemeSettingsQuadroneApplication({

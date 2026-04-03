@@ -103,7 +103,7 @@ export function getContextMenuOptionsQuadrone(
     name: 'DND5E.ContextMenuActionDelete',
     icon: `<i class="fas fa-trash fa-fw" style="color: var(--t5e-warning-accent-color);"></i>`,
     condition: () => !isInFavorites && configurable && isUnlockedForOwner,
-    callback: async () => await activity.deleteDialog(),
+    callback: async () => await activity.deleteDialog({ sheet: app?.sheet }),
     group: 'be-careful',
   });
 

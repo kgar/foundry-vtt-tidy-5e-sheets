@@ -435,7 +435,7 @@ export function getItemContextOptionsQuadrone(
     callback: () =>
       itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR
         ? FoundryAdapter.onActorItemDelete(itemParent, item)
-        : item.deleteDialog(),
+        : item.deleteDialog({ sheet: app?.sheet }),
   });
 
   return options;

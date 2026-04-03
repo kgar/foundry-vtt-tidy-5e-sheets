@@ -1269,11 +1269,9 @@ export function Tidy5eActorSheetClassicV2Base<
       if (this._inspectWarning(event, target) === false) return;
       switch (target.dataset.target) {
         case 'armor':
-          new dnd5e.applications.actor.ArmorClassConfig({
+          this._renderChild(new dnd5e.applications.actor.ArmorClassConfig({
             document: this.actor,
-          }).render({
-            force: true,
-          });
+          }));
           break;
         default:
           const item = await fromUuid(target.dataset.target);

@@ -19,6 +19,7 @@ export class ActorPortraitRuntime {
             }),
           },
           uuid: params.actor.uuid,
+          sheet: params.actor.sheet
         });
       },
       iconClass: 'fa-solid fa-image fa-fw',
@@ -48,6 +49,7 @@ export class ActorPortraitRuntime {
             }),
           },
           uuid: params.actor.uuid,
+          sheet: params.actor.sheet
         });
       },
       iconClass: 'fa-regular fa-circle-user fa-fw',

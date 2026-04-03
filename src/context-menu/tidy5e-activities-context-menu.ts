@@ -85,7 +85,7 @@ function getContextMenuOptions(
       {
         name: 'DND5E.ContextMenuActionDelete',
         icon: '<i class="fas fa-trash fa-fw"></i>',
-        callback: async () => await activity.deleteDialog(),
+        callback: async () => await activity.deleteDialog({ sheet: app?.sheet }),
         condition: () => configurable,
       }
     );

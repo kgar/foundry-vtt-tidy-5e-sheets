@@ -81,7 +81,7 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
     {
       name: 'DND5E.ContextMenuActionDelete',
       icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
-      callback: () => effect.deleteDialog(),
+      callback: () => effect.deleteDialog({ sheet: actor?.sheet }),
       condition: () => canEditEffect(effect) && !isConcentrationEffect,
     },
     {
