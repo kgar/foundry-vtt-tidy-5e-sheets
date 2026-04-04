@@ -757,6 +757,26 @@ export class Tidy5eContainerSheetQuadrone
     }
   }
 
+  _renderChild(app: any, options = {}) {
+    if (game.release.generation < 14) {
+      return app.render({ force: true, ...options });
+    }
+
+    if (this.parent) {
+      return this.parent.renderChild(app, options);
+    }
+
+    if (this.window?.windowId) {
+      return app.render({
+        force: true,
+        window: { detached: true, windowId: this.window.windowId },
+        ...options,
+      });
+    }
+
+    return app.render({ force: true, ...options });
+  }
+
   /* -------------------------------------------- */
   /* SheetTabCacheable
   /* -------------------------------------------- */

@@ -251,23 +251,23 @@ export const FoundryAdapter = {
       FoundryAdapter.editOnMouseEvent(event, entityWithSheet)
     );
   },
-  editOnMouseEvent(
-    event: MouseEvent,
-    entityWithSheet: {
-      sheet: {
-        render: (force: boolean, options?: any) => void;
-        isEditable: boolean;
-      };
-    }
-  ) {
-    if (!entityWithSheet.sheet.isEditable) {
+  editOnMouseEvent(event: MouseEvent, doc: any) {
+    if (!doc.sheet.isEditable) {
       return;
     }
 
     event.preventDefault();
     event.stopImmediatePropagation();
 
-    entityWithSheet.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_EDIT });
+    const options = { mode: CONSTANTS.SHEET_MODE_EDIT };
+
+    const parent = doc.parent ?? doc.container;
+
+    if (parent) {
+      parent.sheet._renderChild(doc.sheet);
+    } else {
+      doc.sheet.render({ force: true }, options);
+    }
   },
   createItem({ type, ...data }: Record<string, any>, actor: Actor5e) {
     // Check to make sure the newly created class doesn't take player over level cap

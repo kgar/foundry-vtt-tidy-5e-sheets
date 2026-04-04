@@ -22,7 +22,7 @@ export function getContextMenuOptionsQuadrone(
     name: 'DND5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',
     condition: () => configurable && !isUnlockedForOwner,
-    callback: async () => await activity.sheet.render({ force: true }),
+    callback: async () => await app._renderChild(activity.sheet),
     group: 'common',
   });
 
@@ -30,7 +30,7 @@ export function getContextMenuOptionsQuadrone(
     name: 'DND5E.ContextMenuActionEdit',
     icon: '<i class="fas fa-pen-to-square fa-fw"></i>',
     condition: () => configurable && isUnlockedForOwner,
-    callback: async () => await activity.sheet.render({ force: true }),
+    callback: async () => await app._renderChild(activity.sheet),
     group: 'common',
   });
 
@@ -103,7 +103,7 @@ export function getContextMenuOptionsQuadrone(
     name: 'DND5E.ContextMenuActionDelete',
     icon: `<i class="fas fa-trash fa-fw" style="color: var(--t5e-warning-accent-color);"></i>`,
     condition: () => !isInFavorites && configurable && isUnlockedForOwner,
-    callback: async () => await activity.deleteDialog({ sheet: app?.sheet }),
+    callback: async () => await activity.deleteDialog({ sheet: app }),
     group: 'be-careful',
   });
 

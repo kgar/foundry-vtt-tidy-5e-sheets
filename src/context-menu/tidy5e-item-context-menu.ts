@@ -232,14 +232,14 @@ export function getItemContextOptions(
     name: 'TIDY5E.ContextMenuActionView',
     icon: '<i class="fas fa-eye fa-fw"></i>',
     callback: () =>
-      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_PLAY }),
+      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_PLAY }),
   });
 
   options.push({
     name: 'TIDY5E.ContextMenuActionEdit',
     icon: '<i class="fas fa-pencil-alt fa-fw"></i>',
     callback: () =>
-      item.sheet.render(true, { mode: CONSTANTS.SHEET_MODE_EDIT }),
+      app._renderChild(item.sheet, { mode: CONSTANTS.SHEET_MODE_EDIT }),
     condition: () => item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
   });
 
@@ -275,7 +275,7 @@ export function getItemContextOptions(
     options.push({
       name: 'DOCUMENT.DND5E.Activity',
       icon: "<i class='fas fa-gear fa-fw'></i>",
-      callback: () => item.system.linkedActivity.sheet.render(true),
+      callback: () => app._renderChild(item.system.linkedActivity.sheet),
       condition: () =>
         !item.canDelete &&
         item.system.linkedActivity &&
@@ -289,7 +289,7 @@ export function getItemContextOptions(
       callback: () => {
         return itemParent
           ? FoundryAdapter.onActorItemDelete(itemParent, item)
-          : item.deleteDialog({ sheet: app?.sheet });
+          : item.deleteDialog({ sheet: app });
       },
       condition: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
@@ -356,12 +356,13 @@ export function getItemContextOptions(
     name: 'TIDY5E.Section.SectionSelectorChooseSectionTooltip',
     icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
+      app._renderChild(
       new SectionSelectorApplication({
         flag: TidyFlags.section.prop,
         sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
         callingDocument: itemParent ?? item,
         document: item,
-      }).render(true),
+      })),
     condition: () =>
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&
@@ -374,12 +375,12 @@ export function getItemContextOptions(
     name: 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
     icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
-      new SectionSelectorApplication({
+      app._renderChild(new SectionSelectorApplication({
         flag: TidyFlags.actionSection.prop,
         sectionType: FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
         callingDocument: itemParent ?? item,
         document: item,
-      }).render(true),
+      })),
     condition: () =>
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&

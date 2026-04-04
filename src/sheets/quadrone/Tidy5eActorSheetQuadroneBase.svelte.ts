@@ -1283,6 +1283,21 @@ export function Tidy5eActorSheetQuadroneBase<
       }
     }
 
+    /** @override */
+    _openDocumentSheet(doc: any, options = {}) {
+      // Actor sheets are too large to render as children of the group sheet window.
+      // If the group sheet is detached, open the actor sheet in its own detached window.
+      if (doc instanceof foundry.documents.Actor) {
+        const { windowId } = this.window ?? {};
+        const windowOptions = windowId
+          ? { window: { detached: true, windowId } }
+          : {};
+        doc?.sheet?.render({ force: true, ...windowOptions, ...options });
+      } else if ( doc?.sheet ) { 
+        this._renderChild(doc.sheet, options);
+      }
+    }
+
     /* -------------------------------------------- */
     /*  Drag and Drop                               */
     /* -------------------------------------------- */

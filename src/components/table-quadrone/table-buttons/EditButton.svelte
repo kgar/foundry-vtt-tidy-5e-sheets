@@ -1,21 +1,25 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-
   interface Props {
     disabled?: boolean;
     doc: any;
   }
 
   let { doc, disabled }: Props = $props();
+
+  function onClick() {
+    if (disabled) {
+      return;
+    }
+
+    const parent = doc.parent ?? doc.container;
+    parent.sheet._renderChild(doc.sheet);
+  }
 </script>
 
 <a
-  class="tidy-table-button"
+  class={['tidy-table-button', { disabled }]}
   data-tooltip={'DND5E.ItemEdit'}
-  onclick={() =>
-    !disabled &&
-    doc.sheet.render({ force: true, mode: CONSTANTS.SHEET_MODE_EDIT })}
+  onclick={onClick}
 >
   <i class="fas fa-edit fa-fw"></i>
 </a>

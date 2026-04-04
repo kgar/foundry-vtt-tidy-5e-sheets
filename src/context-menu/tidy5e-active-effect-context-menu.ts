@@ -62,7 +62,7 @@ export function getActiveEffectContextOptions(effect: any, app: any) {
     {
       name: 'DND5E.ContextMenuActionEdit',
       icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-      callback: () => effect.sheet.render(true),
+      callback: () => app._renderChild(effect.sheet),
     },
     {
       name: 'DND5E.ContextMenuActionDuplicate',
