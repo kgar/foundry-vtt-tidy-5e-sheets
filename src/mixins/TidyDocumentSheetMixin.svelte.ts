@@ -78,57 +78,11 @@ export function TidyExtensibleDocumentSheetMixin<
         controls: [],
       },
       actions: {
-        editImage: async function (this: TidyDocumentSheet, _event, target) {
-          const attr = target.dataset.edit;
-
-          if (!attr) {
-            return;
-          }
-
-          const current = foundry.utils.getProperty(
-            this.document._source,
-            attr
-          );
-
-          const defaultArtwork =
-            this.document.constructor.getDefaultArtwork?.(
-              this.document._source
-            ) ?? {};
-
-          const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
-
-          const schemaTypes =
-            this.document.schema.getField(attr)?.categories ?? [];
-          const acceptsImage = schemaTypes.includes('IMAGE');
-          const acceptsVideo = schemaTypes.includes('VIDEO');
-          const type = [acceptsImage && 'image', acceptsVideo && 'video']
-            .filter(Boolean)
-            .join('');
-          if (!type)
-            throw new Error(
-              `Unsupported Schema type. Received: ${schemaTypes}`
-            );
-
-          const fp = new CONFIG.ux.FilePicker({
-            current,
-            type: type,
-            redirectToRoot: defaultImage ? [defaultImage] : [],
-            callback: (path: string) => {
-              if (
-                target instanceof HTMLVideoElement ||
-                target instanceof HTMLImageElement
-              ) {
-                target.src = path;
-              }
-              this._onEditPortrait(attr, path);
-            },
-            position: {
-              top: this.position.top + 40,
-              left: this.position.left + 10,
-            },
-          });
-          await fp.browse();
-        },
+        //changeMode: PrimarySheet5e.#changeMode,
+        editDocument: TidyDocumentSheet.#showDocument,
+        deleteDocument: TidyDocumentSheet.#deleteDocument,
+        showDocument: TidyDocumentSheet.#showDocument,
+        editImage: TidyDocumentSheet.#editImage,
       },
     };
 
@@ -864,6 +818,56 @@ export function TidyExtensibleDocumentSheetMixin<
     /*  Event Listeners and Handlers                */
     /* -------------------------------------------- */
 
+    static async #editImage(
+      this: TidyDocumentSheet,
+      _event: Event,
+      target: HTMLElement,
+    ) {
+      const attr = target.dataset.edit;
+
+      if (!attr) {
+        return;
+      }
+
+      const current = foundry.utils.getProperty(this.document._source, attr);
+
+      const defaultArtwork =
+        this.document.constructor.getDefaultArtwork?.(this.document._source) ??
+        {};
+
+      const defaultImage = foundry.utils.getProperty(defaultArtwork, attr);
+
+      const schemaTypes = this.document.schema.getField(attr)?.categories ?? [];
+      const acceptsImage = schemaTypes.includes('IMAGE');
+      const acceptsVideo = schemaTypes.includes('VIDEO');
+      const type = [acceptsImage && 'image', acceptsVideo && 'video']
+        .filter(Boolean)
+        .join('');
+      if (!type)
+        throw new Error(`Unsupported Schema type. Received: ${schemaTypes}`);
+
+      const fp = new CONFIG.ux.FilePicker({
+        current,
+        type: type,
+        redirectToRoot: defaultImage ? [defaultImage] : [],
+        callback: (path: string) => {
+          if (
+            target instanceof HTMLVideoElement ||
+            target instanceof HTMLImageElement
+          ) {
+            target.src = path;
+          }
+          this._onEditPortrait(attr, path);
+        },
+        position: {
+          top: this.position.top + 40,
+          left: this.position.left + 10,
+        },
+      });
+      await fp.browse();
+    }
+      
+
     /**
      * Adds a document when only one creation type is available. Presents the item creation dialog when multiple are available.
      * @param args The tab where this Add operation is occurring, and other optional parameters.
@@ -874,6 +878,83 @@ export function TidyExtensibleDocumentSheetMixin<
       creationItemTypes?: string[];
       data?: Record<string, any>;
     }): Promise<any> {}
+
+    /**
+     * Handle removing an document.
+     * @this {PrimarySheet5e}
+     * @param {Event} event         Triggering click event.
+     * @param {HTMLElement} target  Button that was clicked.
+     */
+    static async #deleteDocument(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._deleteDocument(event, target)) === false) {
+        return;
+      }
+      const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+      const doc = await fromUuid(uuid);
+      doc?.deleteDialog({ sheet: this });
+    }
+
+    /**
+     * Handle removing an document.
+     * @param {Event} event         Triggering click event.
+     * @param {HTMLElement} target  Button that was clicked.
+     * @returns {any}               Return `false` to prevent default behavior.
+     */
+    async _deleteDocument(event: Event, target: HTMLElement): Promise<any> {}
+
+    /**
+     * Handle opening a document sheet.
+     * @this {PrimarySheet5e}
+     * @param {Event} event         Triggering click event.
+     * @param {HTMLElement} target  Button that was clicked.
+     */
+    static async #showDocument(
+      this: TidyDocumentSheet,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if ((await this._showDocument(event, target)) === false) {
+        return;
+      }
+
+      if (
+        [HTMLInputElement, HTMLSelectElement].some(
+          (el) => event.target instanceof el,
+        )
+      ) {
+        return;
+      }
+
+      const uuid = target.closest<HTMLElement>('[data-uuid]')?.dataset.uuid;
+      const doc = await fromUuid(uuid);
+      const mode =
+        target.dataset.action === 'showDocument'
+          ? CONSTANTS.SHEET_MODE_PLAY
+          : CONSTANTS.SHEET_MODE_EDIT;
+
+      this._openDocumentSheet(doc, { mode: mode });
+    }
+
+    /**
+     * Handle opening a document sheet.
+     * @param event         Triggering click event.
+     * @param target  Button that was clicked.
+     * @returns {any}               Return `false` to prevent default behavior.
+     */
+    async _showDocument(event: Event, target: HTMLElement): Promise<any> {}
+
+    /**
+     * Open a document's sheet, rendering it as a child of this application if supported.
+     */
+    _openDocumentSheet(doc: any, options: ApplicationRenderOptions = {}) {
+      if (doc?.sheet) {
+        this._renderChild(doc.sheet, options);
+      }
+    }
 
     /* -------------------------------------------- */
     /*  Form Handling                               */
