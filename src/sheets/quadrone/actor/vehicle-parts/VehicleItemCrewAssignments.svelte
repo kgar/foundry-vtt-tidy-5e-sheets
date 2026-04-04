@@ -77,10 +77,17 @@
                 </a>
               </li>
             {:else if slot.actor}
+              {@const memberAttributes = context.editable
+                ? {
+                    'data-action': 'showDocument',
+                    'data-uuid': slot.actor.uuid,
+                  }
+                : {}}
               <li
                 class="slot member-slot"
                 data-uuid={slot.actor.uuid}
                 data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_VEHICLE_MEMBER}
+                {...memberAttributes}
               >
                 <a
                   onclick={(ev) =>

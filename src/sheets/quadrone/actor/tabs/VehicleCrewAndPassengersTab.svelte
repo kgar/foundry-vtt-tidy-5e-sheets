@@ -274,7 +274,8 @@
                   role="button"
                   data-keyboard-focus
                   tabindex="0"
-                  onclick={() => member.actor.sheet.render({ force: true })}
+                  data-action="showDocument"
+                  data-uuid={member.actor.uuid}
                 >
                   <span class="cell-text">
                     <span class="cell-name">{member.actor.name}</span>
