@@ -14,7 +14,7 @@
   }: Props = $props();
 
   const attributes = $derived(
-    !disabled
+    !disabled && !!doc
       ? {
           'data-action': 'deleteDocument',
           'data-uuid': doc.uuid,
@@ -26,7 +26,7 @@
 <a
   class="tidy-table-button"
   aria-label={tooltip}
-  data-tooltip
+  data-tooltip=""
   {...attributes}
 >
   <i class="fa-solid fa-trash fa-fw"></i>
