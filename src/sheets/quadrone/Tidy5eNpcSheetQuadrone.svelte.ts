@@ -177,13 +177,14 @@ export class Tidy5eNpcSheetQuadrone extends Tidy5eActorSheetQuadroneBase<NpcShee
         const { name, uuid } = item.system.gearPresentationData();
         return {
           label: name,
-          onClick: () => this._renderChild(item.sheet),
           key: uuid,
           value: item.system.quantity > 1 ? item.system.quantity : undefined,
           attributes: {
             'data-item-id': item.id,
             'data-gear': '',
             'data-tidy-draggable': '',
+            'data-action': 'showDocument',
+            'data-uuid': uuid
           },
         };
       }),
