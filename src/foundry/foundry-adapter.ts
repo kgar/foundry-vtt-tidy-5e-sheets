@@ -340,13 +340,13 @@ export const FoundryAdapter = {
           delta
         );
       if (manager.steps.length) {
-        if (delta > 0) return manager.render(true);
+        if (delta > 0) return actor.sheet._renderChild(manager);
         try {
           const shouldRemoveAdvancements =
             await dnd5e.applications.advancement.AdvancementConfirmationDialog.forLevelDown(
               item, { sheet: actor.sheet }
             );
-          if (shouldRemoveAdvancements) return manager.render(true);
+          if (shouldRemoveAdvancements) return actor.sheet._renderChild(manager);
         } catch (err) {
           return;
         }
@@ -859,18 +859,24 @@ export const FoundryAdapter = {
       );
 
     if (manager.steps.length) {
-      manager.render(true);
+      (item.actor ?? item).sheet._renderChild(manager);
     }
   },
   editAdvancement(advancementItemId: string, item: Item5e) {
     const advancement = item.system.advancement.get(advancementItemId);
 
-    return new advancement.constructor.metadata.apps.config(advancement).render(
-      true
+    return (item.actor ?? item).sheet._renderChild(
+      new advancement.constructor.metadata.apps.config(advancement),
     );
   },
   async renderSheetFromUuid(uuid: string) {
-    (await fromUuid(uuid))?.sheet?.render(true);
+    const doc = await fromUuid(uuid);
+    const parent = doc?.parent ?? doc?.container;
+    if (parent) {
+      parent.sheet._renderChild(doc);
+    } else {
+      doc?.sheet?.render(true);
+    }
   },
   renderImagePopout(args: {
     src: string;
@@ -928,7 +934,7 @@ export const FoundryAdapter = {
     return document.sheet._renderChild(new dnd5e.applications.actor.HitDiceConfig({ document }));
   },
   renderActorSheetFlags(actor: any) {
-    return new dnd5e.applications.actor.ActorSheetFlags(actor).render(true);
+    return actor.sheet._renderChild(new dnd5e.applications.actor.ActorSheetFlags(actor));
   },
   renderToolsConfig(document: any) {
     return document.sheet._renderChild(
@@ -989,7 +995,7 @@ export const FoundryAdapter = {
             );
 
           if (shouldRemoveAdvancements) {
-            return manager.render(true);
+            return actor.sheet._renderChild(manager);
           }
 
           return item.delete({ shouldRemoveAdvancements });
@@ -1225,7 +1231,7 @@ export const FoundryAdapter = {
     return document.sheet._renderChild(new dnd5e.applications.actor.SpellSlotsConfig({ document }));
   },
   openSummonConfig(item: Item5e) {
-    new dnd5e.applications.item.SummoningConfig(item).render(true);
+    item.sheet._renderChild(new dnd5e.applications.item.SummoningConfig(item));
   },
   openDamagesConfig(document: Actor5e, trait: 'dr' | 'di' | 'dv' | 'dm') {
     return document.sheet._renderChild(

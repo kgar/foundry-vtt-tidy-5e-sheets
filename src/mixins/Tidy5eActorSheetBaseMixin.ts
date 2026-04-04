@@ -55,8 +55,8 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
           },
         },
         action: {
-          openTabSelection: async function (this: { actor?: Actor5e }) {
-            new ClassicTabSelectionFormApplication(this.actor).render(true);
+          openTabSelection: async function (this: Tidy5eActorSheetBase) {
+            this._renderChild(new ClassicTabSelectionFormApplication(this.actor));
           },
         },
       },
@@ -368,7 +368,7 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
             itemData
           );
         if (manager.steps.length) {
-          manager.render(true);
+          this._renderChild(manager);
           return false;
         }
       }
@@ -426,32 +426,6 @@ export function Tidy5eActorSheetBaseMixin(BaseApplication: any) {
 
     /* -------------------------------------------- */
     /*  Event Listeners and Handlers                */
-    /* -------------------------------------------- */
-
-    /**
-     * Handle header control button clicks to render the Prototype Token configuration sheet.
-     * @this {ActorSheetV2}
-     * @param {PointerEvent} event
-     */
-    static async #onConfigureToken(
-      this: { position: ApplicationPosition; token?: any; actor?: Actor5e },
-      event: PointerEvent
-    ) {
-      event.preventDefault();
-      const renderOptions = {
-        left: Math.max(this.position.left - 560 - 10, 10),
-        top: this.position.top,
-      };
-      if (this.token) {
-        return this.token.sheet.render(true, renderOptions);
-      } else {
-        new CONFIG.Token.prototypeSheetClass(
-          this.actor.prototypeToken,
-          renderOptions
-        ).render(true);
-      }
-    }
-
     /* -------------------------------------------- */
 
     /**
