@@ -344,7 +344,7 @@ class TableRowActionsRuntime {
       result.push({
         component: DeleteButton,
         props: (args) => ({
-          doc: args.data.effect,
+          doc: args.data,
           deleteFn: () => args.data.deleteDialog({ sheet: args.data?.sheet }),
         }),
       } satisfies TableAction<typeof DeleteButton>);
