@@ -264,7 +264,7 @@ export const FoundryAdapter = {
     const parent = doc.parent ?? doc.container;
 
     if (parent) {
-      parent.sheet._renderChild(doc.sheet);
+      parent.sheet._renderChild(doc.sheet, options);
     } else {
       doc.sheet.render({ force: true }, options);
     }
