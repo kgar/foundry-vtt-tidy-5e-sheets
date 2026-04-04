@@ -1235,6 +1235,10 @@ export class Tidy5eItemSheetQuadrone extends TidyExtensibleDocumentSheetMixin<
     return undefined;
   }
 
+  /* -------------------------------------------- */
+  /*  Event and Lifecycle                         */
+  /* -------------------------------------------- */  
+
   _renderChild(app: any, options = {}) {
     if (game.release.generation < 14) {
       return app.render({ force: true, ...options });
