@@ -975,39 +975,6 @@ export const FoundryAdapter = {
       }
     ));
   },
-  async onActorItemDelete(actor: Actor5e, item: Item5e) {
-    // If item has advancement, handle it separately
-    if (
-      actor?.system.metadata?.supportsAdvancement &&
-      !game.settings.get('dnd5e', 'disableAdvancements')
-    ) {
-      const manager =
-        dnd5e.applications.advancement.AdvancementManager.forDeletedItem(
-          actor,
-          item.id
-        );
-
-      if (manager.steps.length) {
-        try {
-          const shouldRemoveAdvancements =
-            await dnd5e.applications.advancement.AdvancementConfirmationDialog.forDelete(
-              item, { sheet: actor.sheet }
-            );
-
-          if (shouldRemoveAdvancements) {
-            return actor.sheet._renderChild(manager);
-          }
-
-          return item.delete({ shouldRemoveAdvancements });
-        } catch (err) {
-          // This dialog throws an exception when you click cancel. We'll ignore it.
-          return;
-        }
-      }
-    }
-
-    return item.deleteDialog({ sheet: actor?.sheet });
-  },
   getActivationTypeLabel(activationType: string) {
     return activationType === 'other'
       ? FoundryAdapter.localize('DND5E.ActionOther')

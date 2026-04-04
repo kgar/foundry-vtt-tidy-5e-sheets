@@ -45,7 +45,7 @@ export function configureItemContextMenu(element: HTMLElement, app: any) {
 export function getItemContextOptions(
   app: any,
   item: Item5e,
-  element: HTMLElement
+  element: HTMLElement,
 ): ContextMenuEntry[] {
   if (!settings.value.useContextMenu) {
     return [];
@@ -152,8 +152,7 @@ export function getItemContextOptions(
       !FoundryAdapter.isLockedInCompendium(item),
   });
 
-  const isCharacter =
-    itemParentIsActor && itemParent.system.isCharacter;
+  const isCharacter = itemParentIsActor && itemParent.system.isCharacter;
   if (isCharacter) {
     // Add favorites to context menu
     let isFav = FoundryAdapter.isItemFavorited(item);
@@ -258,7 +257,7 @@ export function getItemContextOptions(
             name: item.name,
           }),
         },
-        { save: true }
+        { save: true },
       ),
   });
 
@@ -266,7 +265,7 @@ export function getItemContextOptions(
     options.push({
       name: 'TIDY5E.ContextMenuActionDelete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-      callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
+      callback: () => item.deleteDialog({ sheet: app }),
       condition: () =>
         item.canDelete &&
         item.isOwner &&
@@ -287,9 +286,7 @@ export function getItemContextOptions(
       name: 'DND5E.ContextMenuActionDelete',
       icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
       callback: () => {
-        return itemParent
-          ? FoundryAdapter.onActorItemDelete(itemParent, item)
-          : item.deleteDialog({ sheet: app });
+        item.deleteDialog({ sheet: app });
       },
       condition: () =>
         item.isOwner && !FoundryAdapter.isLockedInCompendium(item),
@@ -308,7 +305,7 @@ export function getItemContextOptions(
 
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
         item,
-        options
+        options,
       );
       if (scroll) {
         dnd5e.documents.Item5e.create(scroll, { parent: itemParent });
@@ -357,12 +354,13 @@ export function getItemContextOptions(
     icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
       app._renderChild(
-      new SectionSelectorApplication({
-        flag: TidyFlags.section.prop,
-        sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
-        callingDocument: itemParent ?? item,
-        document: item,
-      })),
+        new SectionSelectorApplication({
+          flag: TidyFlags.section.prop,
+          sectionType: FoundryAdapter.localize('TIDY5E.Section.Label'),
+          callingDocument: itemParent ?? item,
+          document: item,
+        }),
+      ),
     condition: () =>
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&
@@ -375,12 +373,14 @@ export function getItemContextOptions(
     name: 'TIDY5E.Section.SectionSelectorChooseActionSectionTooltip',
     icon: '<i class="fas fa-diagram-cells"></i>',
     callback: () =>
-      app._renderChild(new SectionSelectorApplication({
-        flag: TidyFlags.actionSection.prop,
-        sectionType: FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
-        callingDocument: itemParent ?? item,
-        document: item,
-      })),
+      app._renderChild(
+        new SectionSelectorApplication({
+          flag: TidyFlags.actionSection.prop,
+          sectionType: FoundryAdapter.localize('TIDY5E.Section.ActionLabel'),
+          callingDocument: itemParent ?? item,
+          document: item,
+        }),
+      ),
     condition: () =>
       item.isOwner &&
       SheetSections.itemSupportsCustomSections(item.type) &&

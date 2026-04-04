@@ -437,9 +437,7 @@ export function getItemContextOptionsQuadrone(
       !FoundryAdapter.isLockedInCompendium(item),
     group: 'be-careful',
     callback: () =>
-      itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR
-        ? FoundryAdapter.onActorItemDelete(itemParent, item)
-        : item.deleteDialog({ sheet: app }),
+      item.deleteDialog({ sheet: app }),
   });
 
   return options;
