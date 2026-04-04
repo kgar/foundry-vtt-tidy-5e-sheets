@@ -223,11 +223,8 @@
               type="button"
               class="button button-borderless button-icon-only"
               data-tooltip="DND5E.ItemEdit"
-              onclick={() =>
-                cls.item.sheet.render({
-                  force: true,
-                  mode: CONSTANTS.SHEET_MODE_EDIT,
-                })}
+              data-action="editDocument"
+              data-uuid={cls.item.uuid}
             >
               <i class="fa-solid fa-edit"></i>
             </button>
