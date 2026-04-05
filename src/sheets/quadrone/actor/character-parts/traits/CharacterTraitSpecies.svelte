@@ -17,10 +17,7 @@
 
   function openSheet(mode: number) {
     if (species) {
-      context.actor.items.get(species.id).sheet.render({
-        force: true,
-        mode: mode,
-      });
+      context.sheet._renderChild(context.actor.items.get(species.id), { mode });
     }
   }
 </script>
@@ -54,7 +51,8 @@
         })}
         data-keyboard-focus
         class="list-values trait-item"
-        onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+        data-action="showDocument"
+        data-uuid={speciesItem?.uuid}
         onmousedown={(event) =>
           FoundryAdapter.editOnMiddleClick(event, speciesItem)}
         onkeydown={(e) =>
@@ -76,8 +74,9 @@
             })}
             type="button"
             class="button button-borderless button-icon-only"
-            data-tooltip
-            onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
+            data-tooltip=""
+            data-action="editDocument"
+            data-uuid={speciesItem?.uuid}
           >
             <i class="fa-solid fa-edit"></i>
           </button>

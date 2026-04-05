@@ -21,15 +21,6 @@
   );
 
   const localize = FoundryAdapter.localize;
-
-  function openSheet(mode: number) {
-    if (background) {
-      context.actor.items.get(background.id).sheet.render({
-        force: true,
-        mode: mode,
-      });
-    }
-  }
 </script>
 
 {#if context.unlocked || background}
@@ -61,12 +52,10 @@
           })}
           data-keyboard-focus
           class="list-values trait-item"
-          onclick={() => openSheet(CONSTANTS.SHEET_MODE_PLAY)}
+          data-action="showDocument"
+          data-uuid={backgroundItem?.uuid}
           onmousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, backgroundItem)}
-          onkeydown={(e) =>
-            (e.key === 'Enter' || e.key === ' ') &&
-            openSheet(CONSTANTS.SHEET_MODE_PLAY)}
         >
           <!-- svelte-ignore a11y_missing_attribute -->
           <span class="item-image-link">
@@ -89,7 +78,8 @@
               type="button"
               class="button button-borderless button-icon-only"
               data-tooltip
-              onclick={() => openSheet(CONSTANTS.SHEET_MODE_EDIT)}
+              data-action="editDocument"
+              data-uuid={backgroundItem?.uuid}
             >
               <i class="fa-solid fa-edit"></i>
             </button>
