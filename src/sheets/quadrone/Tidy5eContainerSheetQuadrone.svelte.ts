@@ -129,9 +129,11 @@ export class Tidy5eContainerSheetQuadrone
       openTabConfiguration: async function (
         this: Tidy5eContainerSheetQuadrone
       ) {
-        new SheetTabConfigurationQuadroneApplication({
-          document: this.document,
-        }).render({ force: true });
+        this._renderChild(
+          new SheetTabConfigurationQuadroneApplication({
+            document: this.document,
+          }),
+        );
       },
       // TODO: Item and Container Sheets duplicate this functionality; consolidate somewhere
       showIcon: async function (this: Tidy5eContainerSheetQuadrone) {
@@ -146,11 +148,9 @@ export class Tidy5eContainerSheetQuadrone
         }));
       },
       themeSettings: async function (this: Tidy5eContainerSheetQuadrone) {
-        await new ThemeSettingsQuadroneApplication({
+        this._renderChild(new ThemeSettingsQuadroneApplication({
           document: this.document,
-        }).render({
-          force: true,
-        });
+        }));
       },
     },
     dragDrop: [

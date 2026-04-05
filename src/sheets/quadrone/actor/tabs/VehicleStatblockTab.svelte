@@ -216,7 +216,8 @@
                 'color-text-default',
                 'font-label-large',
                 {
-                  'color-text-warning': actionsPerTurn === 0 && totalActions > 0,
+                  'color-text-warning':
+                    actionsPerTurn === 0 && totalActions > 0,
                 },
               ]}
             >
@@ -358,7 +359,8 @@
               {#if !hideEmptyStates}
                 <div class="inventory-empty empty-state-container">
                   <button
-                    onclick={() => context.document.sheet.browseAddActor('draft')}
+                    onclick={() =>
+                      context.document.sheet.browseAddActor('draft')}
                     type="button"
                     class="button button-tertiary"
                     title={localize('TIDY5E.Vehicle.DraftAnimals.EmptyState')}
@@ -404,7 +406,8 @@
                         role="button"
                         data-keyboard-focus
                         tabindex="0"
-                        onclick={() => member.actor.sheet.render({ force: true })}
+                        data-action="showDocument"
+                        data-uuid={member.actor.uuid}
                       >
                         <span class="cell-text">
                           <span class="cell-name">{member.actor.name}</span>

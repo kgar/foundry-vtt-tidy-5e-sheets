@@ -999,7 +999,9 @@ export const FoundryAdapter = {
       return;
     }
 
-    return await item.use(config);
+    return await item.use(config, {
+      options: { sheet: item.parent?.sheet ?? item.container?.sheet },
+    });
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.

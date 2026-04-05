@@ -446,12 +446,12 @@ export class Tidy5eGroupSheetQuadrone extends Tidy5eMultiActorSheetQuadroneBase<
   }
 
   award() {
-    new dnd5e.applications.Award({
+    this._renderChild(new dnd5e.applications.Award({
       award: {
         savedDestinations: this.actor.getFlag('dnd5e', 'awardDestinations'),
       },
       origin: this.actor,
-    }).render({ force: true });
+    }));
   }
 
   onRollSkill(options: Partial<GroupSkillRollProcessConfiguration>) {

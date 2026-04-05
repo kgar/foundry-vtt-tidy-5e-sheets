@@ -93,27 +93,29 @@ export class Tidy5eCharacterSheetQuadrone extends Tidy5eActorSheetQuadroneBase<C
       openSidebarTabConfiguration: async function (
         this: Tidy5eCharacterSheetQuadrone,
       ) {
-        new SheetTabConfigurationQuadroneApplication({
-          document: this.document,
-          customTabConfigProvider: {
-            getTabConfig: TidyFlags.sidebarTabConfiguration.get,
-            setTabConfig: TidyFlags.sidebarTabConfiguration.set,
-            getTabContext: (doc, setting) => {
-              return getActorTabContext(
-                CharacterSheetQuadroneSidebarRuntime,
-                doc.documentName,
-                setting,
-                true,
-                CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
-              );
+        this._renderChild(
+          new SheetTabConfigurationQuadroneApplication({
+            document: this.document,
+            customTabConfigProvider: {
+              getTabConfig: TidyFlags.sidebarTabConfiguration.get,
+              setTabConfig: TidyFlags.sidebarTabConfiguration.set,
+              getTabContext: (doc, setting) => {
+                return getActorTabContext(
+                  CharacterSheetQuadroneSidebarRuntime,
+                  doc.documentName,
+                  setting,
+                  true,
+                  CONSTANTS.WORLD_TAB_CONFIG_KEY_CHARACTER_SIDEBAR,
+                );
+              },
             },
-          },
-          title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
-            documentName: FoundryAdapter.localize(
-              'TIDY5E.Character.Sidebar.Title',
-            ),
+            title: FoundryAdapter.localize('TIDY5E.TabConfiguration.Title', {
+              documentName: FoundryAdapter.localize(
+                'TIDY5E.Character.Sidebar.Title',
+              ),
+            }),
           }),
-        }).render({ force: true });
+        );
       },
     },
   };
