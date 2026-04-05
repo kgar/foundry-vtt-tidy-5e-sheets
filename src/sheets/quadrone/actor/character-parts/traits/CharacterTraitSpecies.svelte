@@ -99,11 +99,8 @@
         type="button"
         class="button button-primary"
         data-tooltip
-        onclick={(ev) =>
-          context.actor.sheet.findItem({
-            event: ev,
-            type: 'race',
-          })}
+        data-action="findItem"
+        data-item-type="race"
       >
         <i class="fa-solid fa-book-atlas"></i>
         {localize('DND5E.Species.Add')}

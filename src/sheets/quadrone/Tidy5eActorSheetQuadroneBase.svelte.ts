@@ -164,6 +164,7 @@ export function Tidy5eActorSheetQuadroneBase<
         frame: true,
       },
       actions: {
+        findItem: Tidy5eActorSheetQuadroneBase.#findItem,
         restoreTransformation: async function (
           this: Tidy5eActorSheetQuadroneBase
         ) {
@@ -1980,10 +1981,39 @@ export function Tidy5eActorSheetQuadroneBase<
     /**
      * Handle finding an available item of a given type.
      */
+    static async #findItem(
+      this: Tidy5eActorSheetQuadroneBase,
+      event: Event,
+      target: HTMLElement,
+    ) {
+      if (!this.isEditable) {
+        return;
+      }
+
+      const { classIdentifier, facilityType, itemType: type } = target.dataset;
+
+      return this.findItem({
+        event,
+        type,
+        facilityType,
+        classIdentifier,
+      });
+    }
+
+    /**
+     * Handle finding an available item of a given type.
+     */
     async findItem(args: {
+      /** Any triggering event. Passed along to item creation. */
       event: Event;
-      type: string;
+      /** The item type, like "class", "race", "weapon", etc. */
+      type?: string;
+      /** 
+       * A class identifier such as "cleric" or "barbarian". 
+       * This constrains the compendium to subclasses of a specific class. 
+       */
       classIdentifier?: string;
+      /** The type of facility, e.g., "special" or "basic" */
       facilityType?: string;
     }) {
       const { event, classIdentifier, facilityType, type } = args;

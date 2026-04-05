@@ -96,11 +96,8 @@
         data-tooltip={localize('TIDY5E.CompendiumBrowser', {
           name: localize('TYPES.Item.race'),
         })}
-        onclick={(ev) =>
-          context.actor.sheet.findItem({
-            event: ev,
-            type: 'race',
-          })}
+        data-action="findItem"
+        data-item-type="race"
       >
         <i class="fa-solid fa-book-atlas"></i>
         {localize('DND5E.Species.Add')}

@@ -44,11 +44,8 @@
           type="button"
           class="button button-tertiary"
           data-tooltip="DND5E.ClassAdd"
-          onclick={(ev) =>
-            context.actor.sheet.findItem({
-              event: ev,
-              type: 'class',
-            })}
+          data-action="findItem"
+          data-item-type="class"
         >
           <i class="fa-solid fa-plus"></i>
           {localize('DND5E.ClassAdd')}
@@ -118,11 +115,8 @@
           type="button"
           class="button button-secondary"
           data-tooltip
-          onclick={(ev) =>
-            context.actor.sheet.findItem({
-              event: ev,
-              type: 'class',
-            })}
+          data-action="findItem"
+          data-item-type="class"
         >
           <i class="fa-solid fa-book-atlas"></i>
           {localize('DND5E.ClassAdd')}
@@ -369,13 +363,10 @@
           })}
           type="button"
           class="button button-primary"
-          data-tooltip
-          onclick={async (ev) =>
-            await context.actor.sheet.findItem({
-              event: ev,
-              type: 'subclass',
-              classIdentifier: cls.system.identifier,
-            })}
+          data-tooltip=""
+          data-action="findItem"
+          data-item-type="subclass"
+          data-class-identifier={cls.system.identifier}
         >
           <i class="fa-solid fa-book-atlas"></i>
           {localize('DND5E.SubclassAdd')}

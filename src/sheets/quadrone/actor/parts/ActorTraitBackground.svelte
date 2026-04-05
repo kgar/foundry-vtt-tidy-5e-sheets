@@ -93,11 +93,8 @@
           type="button"
           class="button button-primary"
           data-tooltip
-          onclick={(ev) =>
-            context.actor.sheet.findItem({
-              event: ev,
-              type: 'background',
-            })}
+          data-action="findItem"
+          data-item-type="background"
         >
           <i class="fa-solid fa-book-atlas"></i>
           {localize('DND5E.BackgroundAdd')}
