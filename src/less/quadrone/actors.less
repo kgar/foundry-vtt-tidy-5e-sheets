@@ -8,7 +8,7 @@
   container-type: inline-size;
 
   &:not(.minimized) {
-    min-width: 43.75rem;
+    min-width: 23rem; /* 368px - mobile friendly */
   }
 
   section.window-content {
@@ -1371,6 +1371,13 @@
       padding-right: var(--padding-horizontal);
       padding-bottom: var(--padding-vertical);
       row-gap: var(--t5e-size-3x);
+    }
+  }
+
+  // Override: prevent external modules from reversing the inventory tab flex direction on mobile.
+  @media (max-width: 800px) {
+    &.actor.character .tidy-tab.inventory.tidy-tab-contents.active {
+      flex-direction: column;
     }
   }
 
