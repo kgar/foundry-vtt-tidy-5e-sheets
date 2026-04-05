@@ -989,20 +989,6 @@ export const FoundryAdapter = {
   lookupAbility(abbr: string) {
     return game.dnd5e.config.abilities[abbr];
   },
-  async actorTryUseItem(item: Item5e, event: Event) {
-    const config = { legacy: false, event };
-
-    const suppressItemUse =
-      TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
-
-    if (suppressItemUse) {
-      return;
-    }
-
-    return await item.use(config, {
-      options: { sheet: item.parent?.sheet ?? item.container?.sheet },
-    });
-  },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
     TidyHooks.tidy5eSheetsActorItemUseContextMenu(item, options);

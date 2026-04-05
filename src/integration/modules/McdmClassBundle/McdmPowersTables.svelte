@@ -182,7 +182,7 @@
                   ]}
                   onclick={(ev) =>
                     context.editable &&
-                    FoundryAdapter.actorTryUseItem(item, ev)}
+                    context.sheet.tryUseItem(item, ev)}
                 >
                   <img class="item-image" alt={item.name} src={item.img} />
                   <span class="roll-prompt">
