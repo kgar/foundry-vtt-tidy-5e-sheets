@@ -18,7 +18,8 @@
 
 <a
   class="item-use-button"
-  onclick={(event) => !disabled && activity.use({ event })}
+  onclick={(event) =>
+    !disabled && activity.use({ event }, { options: { sheet: activity.item.sheet } })}
 >
   <img
     class="item-image"

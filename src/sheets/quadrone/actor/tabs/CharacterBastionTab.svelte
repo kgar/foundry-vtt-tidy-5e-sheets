@@ -95,8 +95,8 @@
   function useFacility(event: MouseEvent, chosen: ChosenFacilityContext) {
     const facility = context.actor.items.get(chosen.id);
     return facility?.use(
-      { legacy: false, chooseActivity: true, event },
-      { options: { sheet: context.sheet } },
+      { legacy: false, chooseActivity: true, event, options: { sheet: context.sheet } },
+      {  },
     );
   }
 

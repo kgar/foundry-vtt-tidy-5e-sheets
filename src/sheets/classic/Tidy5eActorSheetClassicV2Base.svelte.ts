@@ -32,11 +32,11 @@ import type {
 import { splitSemicolons } from 'src/utils/array';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
-import { firstOfSet } from 'src/utils/set';
 import { mount } from 'svelte';
 import AttachedInfoCard from 'src/components/info-card/AttachedInfoCard.svelte';
 import SheetHeaderModeToggleV2 from './shared/SheetHeaderModeToggleV2.svelte';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService.svelte';
+import { TidyHooks } from 'src/api';
 
 // TODO: Simplify mixins to mostly a class hierarchy
 export function Tidy5eActorSheetClassicV2Base<
@@ -1288,6 +1288,21 @@ export function Tidy5eActorSheetClassicV2Base<
      * @protected
      */
     _inspectWarning(event: Event, target: HTMLElement): any {}
+
+    async tryUseItem(item: Item5e, event: Event) {
+      const config = { legacy: false, event };
+
+      const suppressItemUse =
+        TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
+
+      if (suppressItemUse) {
+        return;
+      }
+
+      return await item.use(config, {
+        options: { sheet: item.parent?.sheet ?? item.container?.sheet },
+      });
+    }
   }
 
   return Tidy5eActorSheetClassicV2Base;

@@ -57,10 +57,7 @@
     img={favorite.activity.img}
     title={favorite.activity.name}
     onUse={async (event) =>
-      await favorite.activity.use(
-        { event },
-        { options: { sheet: context.sheet } },
-      )}
+      await favorite.activity.use({ event, options: { sheet: context.sheet } })}
     name={favorite.activity.name}
     {subtitle}
   />

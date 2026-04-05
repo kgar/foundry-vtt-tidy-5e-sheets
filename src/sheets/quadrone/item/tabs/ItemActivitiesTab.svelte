@@ -101,7 +101,7 @@
             <a
               class={['tidy-table-row-use-button']}
               onclick={(ev) =>
-                ctx.activity.use({ ev }, { options: { sheet: context.sheet } })}
+                ctx.activity.use({ event: ev, options: { sheet: context.sheet } })}
               data-has-roll-modes
             >
               <img class="item-image" alt="" src={ctx.activity.img} />

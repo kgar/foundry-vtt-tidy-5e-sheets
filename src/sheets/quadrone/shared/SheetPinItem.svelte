@@ -191,12 +191,12 @@
       tabindex="0"
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(ev) =>
-        context.editable && FoundryAdapter.actorTryUseItem(ctx.document, ev)}
+        context.editable && context.sheet.tryUseItem(ctx.document, ev)}
       onkeydown={(ev) =>
         ev.key === 'Enter' ||
         (ev.key === ' ' &&
           context.editable &&
-          FoundryAdapter.actorTryUseItem(ctx.document, ev))}
+          context.sheet.tryUseItem(ctx.document, ev))}
       data-has-roll-modes
       aria-label={ctx.document.name}
     >

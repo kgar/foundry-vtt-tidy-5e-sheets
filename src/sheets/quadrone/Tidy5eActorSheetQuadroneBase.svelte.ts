@@ -2027,6 +2027,21 @@ export function Tidy5eActorSheetQuadroneBase<
       }
     }
 
+    async tryUseItem(item: Item5e, event: Event) {
+      const config = { legacy: false, event };
+
+      const suppressItemUse =
+        TidyHooks.tidy5eSheetsActorPreUseItem(item, config) === false;
+
+      if (suppressItemUse) {
+        return;
+      }
+
+      return await item.use(config, {
+        options: { sheet: item.parent?.sheet ?? item.container?.sheet },
+      });
+    }
+
     /* -------------------------------------------- */
     /* SheetTabCacheable
     /* -------------------------------------------- */

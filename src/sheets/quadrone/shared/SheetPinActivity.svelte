@@ -107,7 +107,7 @@
       class={['tidy-table-row-use-button', { disabled: !context.editable }]}
       onclick={(event) =>
         context.editable &&
-        ctx.document.use({ event }, { options: { sheet: context.sheet } })}
+        ctx.document.use({ event, options: { sheet: context.sheet } })}
       data-has-roll-modes
     >
       <img class="item-image" alt={ctx.document.name} src={img} />
